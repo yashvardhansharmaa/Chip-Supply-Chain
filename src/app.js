@@ -858,7 +858,14 @@
     }
   };
 
-  /* ---------------- AI chips: compare two to four ---------------- */
+  /* ---------------- AI chips: the timeline, and two to four chips side by side ----------------
+     The redesign's option C, "The timeline" (qa/design4/ai-chips/ in the main checkout, chosen 25 Oct 2026). A chart opens the
+     page: every chip at the month it was announced, against one measure the reader picks. Rule B: the largest value is the one
+     solid ink dot and the rest take the light tint; the reader's own picks are ringed in red wine, since they are the reader's
+     selection. The specimen stands beside the chart on a wide screen (the stage's canvas is hosted in .aic-spec-draw, as The
+     Chain hosts it in a chapter's slot) and stays in the strip on a phone. A dot, a pill, a pair, Try with, the folded list,
+     the picker or search fills the row of picks; the comparison then sets each figure as its own row of bars (rule B in each
+     row) and the descriptive rows as a table of words. No country is ever a color: a maker's country is a plain label. */
   var Landscape = {
     chips: DATA.landscape || [],
     notes: DATA.landscapeNotes || {},
@@ -871,12 +878,13 @@
     compare: DATA.landscapeCompare || { pairs: [], with: {} }, // data/landscape-compare.json: the empty page's pairs, each chip's Try with partners
     said: '',         // the picks last read out by the live region, so each change is announced once
     pop: null,        // the open chip picker: { slot, trigger }
+    measure: 'fp16',  // the chart's measure (MEAS)
+    chartFocus: null, // the dot that holds the chart's one Tab stop (arrow keys move it)
 
     /* ---- data ---- */
     byId: function (id) { for (var i = 0; i < this.chips.length; i++) if (this.chips[i].id === id) return this.chips[i]; return null; },
     selection: function () { var self = this, out = []; this.picked.forEach(function (id) { var c = self.byId(id); if (c) out.push(c); }); return out; },
     initSelection: function () { // the page opens with nothing chosen
-      var self = this;
       this.picked = []; this.sel = null; // the page opens with nothing chosen: the reader picks the chips to compare
       this.syncExport();
     },
@@ -889,62 +897,101 @@
     /* ---- lifecycle ---- */
     activate: function () {
       if (!this.built) this.buildUI();
+      else this.renderChart(); // the chart measures its box, which was hidden while another view showed
+      this.hostStage();
       var c = this.byId(this.sel);
       if (c) this.showStage(c); else this.showGeneric(); // with nothing picked the stage shows the package, never the last page's specimen
     },
+    // a wide screen draws the specimen beside the chart, in .aic-spec-draw; a phone keeps it in the strip at the foot of the screen.
+    // The router hands the canvas back to the stage on every route (Router.route), so this runs on each arrival and resize
+    hostStage: function () {
+      if (Router.current !== 'landscape' || !Stage.ok) return;
+      var el = $('.aic-spec-draw');
+      if (el && !narrow()) { if (Stage.hostEl !== el) Stage.host(el); }
+      else if (Stage.hostEl) Stage.host(null);
+    },
     buildUI: function () {
       this.built = true;
-      var self = this, pk = $('#picker'), html = '';
-      // countries in the order they first appear, China last; within a country one row per maker, chips in data order (newest first)
-      var ccs = [], byCC = {};
-      this.chips.forEach(function (c) { var cc = c.vendorCountry || '??'; if (!byCC[cc]) { byCC[cc] = { vendors: [], byV: {} }; ccs.push(cc); } var g = byCC[cc]; if (!g.byV[c.vendor]) { g.byV[c.vendor] = []; g.vendors.push(c.vendor); } g.byV[c.vendor].push(c); });
-      ccs.sort(function (a, b) { return (a === 'CN') - (b === 'CN'); });
-      ccs.forEach(function (cc) {
-        var g = byCC[cc];
-        html += '<div class="group" data-cc="' + esc(cc) + '">' + esc(cname(cc)) + '</div>';
-        g.vendors.forEach(function (v) {
-          html += '<div class="vrow"><span class="vname">' + esc(v) + '</span><div class="vchips">' + g.byV[v].map(function (c) {
-            var sub = c.family && c.family !== c.name ? c.family : (c.announced ? String(c.announced).slice(0, 4) : '');
-            // the checklist shows the name alone; the family (Blackwell, Hopper) or the year moves to the tooltip (src/modules/chips.css)
-            return '<button type="button" data-id="' + esc(c.id) + '" data-cc="' + esc(cc) + '" aria-pressed="false"' + (sub ? ' title="' + esc(sub) + '"' : '') + '><b>' + esc(c.name) + '</b>' + (sub ? '<span>' + esc(sub) + '</span>' : '') + '</button>';
-          }).join('') + '</div></div>';
-        });
+      var self = this, pk = $('#picker'), html = '', cc = null;
+      // the folded list: countries as they first appear, China last, as plain labels; one row per maker; chips in data order (newest first)
+      this.ordered().forEach(function (g) {
+        if (g.cc !== cc) { if (cc) html += '</div>'; cc = g.cc; html += '<div class="aic-lg"><p class="aic-lg-h">' + esc(cname(cc)) + '</p>'; }
+        html += '<div class="aic-lr"><span class="aic-ln">' + esc(g.vendor) + '</span><span class="aic-lc">' + g.chips.map(function (c) {
+          var sub = c.family && c.family !== c.name ? c.family : self.year(c); // the family (Blackwell, Hopper) or the year goes to the tooltip
+          return '<button type="button" class="aic-pill sm" data-id="' + esc(c.id) + '" aria-pressed="false"' + (sub ? ' title="' + esc(sub) + '"' : '') + '>' + esc(c.name) + '</button>';
+        }).join('') + '</span></div>';
       });
-      pk.innerHTML = html;
-      pk.addEventListener('click', function (e) { var b = e.target.closest('button'); if (b) self.toggle(b.getAttribute('data-id')); });
+      pk.innerHTML = html + (cc ? '</div>' : '');
+      pk.addEventListener('click', function (e) { var b = e.target.closest('button[data-id]'); if (b) self.toggle(b.getAttribute('data-id')); });
       pk.addEventListener('keydown', function (e) { self.arrows(e, $$('button', pk)); });
-      // the slots: a chip's Change and an empty slot open the picker; Remove empties the slot; Try with fills slot 2
+      var sum = $('#cxa-browse summary');
+      if (sum) sum.textContent = 'Browse all ' + this.chips.length + ' chips by maker';
+      // the measures over the chart: one pressed at a time
+      var ms = $('#cx-measures');
+      if (ms) {
+        ms.innerHTML = this.MEAS.map(function (m) { return '<button type="button" class="aic-pill" data-m="' + m[0] + '" aria-pressed="' + (m[0] === self.measure) + '">' + esc(m[1]) + '</button>'; }).join('');
+        ms.addEventListener('click', function (e) { var b = e.target.closest('button[data-m]'); if (!b) return; self.measure = b.getAttribute('data-m'); self.chartFocus = null; self.renderChart(); });
+        ms.addEventListener('keydown', function (e) { self.arrows(e, $$('button', ms)); });
+      }
+      // the chart: a dot adds its chip or takes it out; one dot holds the Tab stop and the arrow keys walk the dots by date
+      var chart = $('#cx-chart'), tip = $('#cx-tip');
+      if (chart) {
+        chart.addEventListener('click', function (e) { var g = e.target.closest('.pt'); if (!g) return; var id = g.getAttribute('data-id'); self.chartFocus = id; self.toggle(id); });
+        chart.addEventListener('mouseover', function (e) { var g = e.target.closest('.pt'); if (g) self.showTip(g); });
+        chart.addEventListener('mouseout', function (e) { var g = e.target.closest('.pt'); if (g && !g.contains(e.relatedTarget) && tip) tip.hidden = true; });
+        chart.addEventListener('focusin', function (e) { var g = e.target.closest('.pt'); if (g) { self.chartFocus = g.getAttribute('data-id'); self.showTip(g); } });
+        chart.addEventListener('focusout', function () { if (tip) tip.hidden = true; });
+        chart.addEventListener('keydown', function (e) {
+          var g = e.target.closest('.pt'); if (!g) return;
+          var k = e.key;
+          if (k === 'Enter' || k === ' ') {
+            e.preventDefault(); var id = g.getAttribute('data-id'); self.chartFocus = id; self.toggle(id);
+            var again = $('#cx-chart .pt[data-id="' + id + '"]'); if (again) again.focus();
+            return;
+          }
+          var all = $$('#cx-chart .pt').sort(function (a, b) { return +a.getAttribute('data-x') - +b.getAttribute('data-x'); }), i = all.indexOf(g), n = null;
+          if (k === 'ArrowRight' || k === 'ArrowDown') n = (i + 1) % all.length;
+          else if (k === 'ArrowLeft' || k === 'ArrowUp') n = (i - 1 + all.length) % all.length;
+          else if (k === 'Home') n = 0; else if (k === 'End') n = all.length - 1;
+          if (n == null) return;
+          e.preventDefault(); g.setAttribute('tabindex', '-1'); all[n].setAttribute('tabindex', '0'); all[n].focus();
+        });
+      }
+      var gut = $('#cx-gutter');
+      if (gut) gut.addEventListener('click', function (e) { var b = e.target.closest('button[data-id]'); if (b) self.toggle(b.getAttribute('data-id')); });
+      // the picks: a chip's name puts it on the stage; Change and an empty pick open the picker; Remove empties it
       var srow = $('#cxa-row');
       if (srow) srow.addEventListener('click', function (e) {
+        var nm = e.target.closest('button.cxa-name'); if (nm) { self.focus(nm.getAttribute('data-id')); return; }
         var b = e.target.closest('button[data-act]'); if (!b) return;
         var i = b.hasAttribute('data-slot') ? +b.getAttribute('data-slot') : +b.closest('.cxa-slot').getAttribute('data-i'), act = b.getAttribute('data-act');
         if (act === 'choose') { if (self.pop && self.pop.trigger === b) self.closePicker(true); else self.openPicker(i, b, 'slot'); }
         else if (act === 'remove') { self.setSlot(i, ''); self.focusSlot(Math.min(i, self.picked.length)); }
-        else if (act === 'try') { self.setSlot(i, b.getAttribute('data-id')); self.focusSlot(i); }
       });
+      // the line under the picks: five pairs before the first pick, then Try with while one chip waits for a second
       var pairs = $('#cxa-pairs');
-      if (pairs) {
-        pairs.innerHTML = this.compare.pairs.length ? '<span class="cxa-pk">Or start from a pair</span>' + this.compare.pairs.map(function (p, k) { return '<button type="button" data-pair="' + k + '">' + esc(p.label) + '</button>'; }).join('') : '';
-        pairs.addEventListener('click', function (e) { var b = e.target.closest('button[data-pair]'); if (!b) return; self.setPair(self.compare.pairs[+b.getAttribute('data-pair')].ids); self.focusSlot(1); });
-      }
-      var sum = $('#cxa-browse summary');
-      if (sum) sum.textContent = 'Browse all ' + this.chips.length + ' chips by maker';
+      if (pairs) pairs.addEventListener('click', function (e) {
+        var b = e.target.closest('button[data-pair]');
+        if (b) { self.setPair(self.compare.pairs[+b.getAttribute('data-pair')].ids); self.focusSlot(1); return; }
+        var t = e.target.closest('button[data-try]');
+        if (t) { self.setSlot(1, t.getAttribute('data-try')); self.focusSlot(1); }
+      });
       var clear = $('#cx-clear');
       if (clear) clear.addEventListener('click', function () { self.clear(); self.focusSlot(0); });
       var plans = $('#cx-plans');
       if (plans) {
-        plans.addEventListener('click', function (e) {
-          var a = e.target.closest('button[data-act]'); if (a) { self.colAct(a, '#cx-plans'); return; }
-          var b = e.target.closest('button[data-id]'); if (b) self.focus(b.getAttribute('data-id'));
-        });
+        plans.addEventListener('click', function (e) { var b = e.target.closest('button[data-id]'); if (b) self.focus(b.getAttribute('data-id')); });
         plans.addEventListener('keydown', function (e) { self.arrows(e, $$('button[data-id]', plans)); });
       }
-      // the bar that follows the reader once the slots scroll away: each chip with its ×, + Add, Clear
+      // a figure whose source the chip's list does not name row by row points to the whole list ("all")
+      var strips = $('#cx-strips');
+      if (strips) strips.addEventListener('click', function (e) { var j = e.target.closest('button[data-notes]'); if (j) { var id = j.getAttribute('data-notes'); self.focus(id); self.jumpToNotes(id); } });
+      // the bar that follows the reader once the picks scroll away: each chip with its ×, + Add, Clear
       var bar = $('#cxs-in');
       if (bar) bar.addEventListener('click', function (e) {
         var b = e.target.closest('button[data-bar]'); if (!b) return;
         var act = b.getAttribute('data-bar'), i = +b.getAttribute('data-slot');
-        if (act === 'name' || act === 'add') { // back to the slot, its picker open
+        if (act === 'name' || act === 'add') { // back to the pick, its picker open
           scrollToEl($('#cx-slots'), false); self.updateBar();
           var t = $('#cxa-row .cxa-slot[data-i="' + (act === 'add' ? self.picked.length : i) + '"] [data-act="choose"]');
           if (t) self.openPicker(act === 'add' ? self.picked.length : i, t, 'slot');
@@ -957,11 +1004,16 @@
       var bt = 0;
       window.addEventListener('scroll', function () { if (!bt) bt = requestAnimationFrame(function () { bt = 0; self.updateBar(); }); }, { passive: true });
       window.addEventListener('hashchange', function () { setTimeout(function () { self.updateBar(); }, 0); }); // leaving AI Chips takes the bar and its scroll padding away
-      var rt = null;
+      var rt = null, lastW = window.innerWidth;
       window.addEventListener('resize', function () {
         if (Router.current !== 'landscape') return;
-        clearTimeout(rt); rt = setTimeout(function () { self.renderPlans(); self.scrollCue(); self.replacePicker(); self.updateBar(); }, 160);
+        clearTimeout(rt); rt = setTimeout(function () {
+          self.hostStage();
+          if (window.innerWidth !== lastW) { lastW = window.innerWidth; self.renderChart(); } // a phone's toolbar changes only the height
+          self.renderPlans(); self.scrollCue(); self.replacePicker(); self.updateBar();
+        }, 160);
       });
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { self.renderChart(); }); // the labels are placed by their measured width
       var tw = $('#cx-table-wrap');
       if (tw) tw.addEventListener('scroll', function () { self.scrollCue(); }, { passive: true });
       var tb = $('#cx-table');
@@ -985,7 +1037,6 @@
       e.preventDefault();
       list[n].focus();
     },
-
     /* ---- selection ---- */
     say: function (msg) { this.hint = msg; this.renderSlots(); this.announce(msg); }, // a refusal shows in the guidance line until the next change, and is read out
     toggle: function (id) {
@@ -1024,7 +1075,6 @@
       this.render();
       this.showGeneric();
     },
-    showGeneric: function () { Stage.show('package', { plan: true }, 'An AI accelerator package, drawn from above.', 'AI chips · <b>Package</b>'); },
 
     /* ---- the slots: two to four columns that ask for their chips (redesign of 21 Oct 2026, qa/design/chips-ux/) ----
        An empty slot and a chip's Change open the picker; Remove empties a slot; the folded checklist and the search box change the
@@ -1073,46 +1123,48 @@
         : 'Now ' + this.names(now) + '.';
       this.announce(lead + ' ' + this.guide());
     },
-    thumbSVG: function (c) { // the package plan at thumbnail size, fitted to its box; the size is not to scale with the other slots
-      return this.planBounds(c.layout) ? this.planSVG(c, 1) : '<i class="cxa-noplan"></i>';
-    },
     renderSlots: function () {
       var self = this, row = $('#cxa-row'); if (!row) return;
       var n = this.picked.length, shown = n < 2 ? 2 : Math.min(this.max, n + 1), html = '';
       for (var i = 0; i < shown; i++) html += this.slotHTML(i, n);
-      if (n === 1) { // Try with sits in its own cell under slot 2, so the cards in the row keep one height
-        var sug = (this.compare.with[this.picked[0]] || []).filter(function (s) { return self.byId(s) && self.picked.indexOf(s) < 0; }).slice(0, 3);
-        if (sug.length) html += '<p class="cxa-try"><span class="cxa-pk">Try with</span>' + sug.map(function (s) { var t = self.short(self.byId(s)); return '<button type="button" data-act="try" data-slot="1" data-id="' + esc(s) + '" aria-label="Add ' + esc(t) + ' as chip 2">' + esc(t) + '</button>'; }).join('') + '</p>';
-      }
       row.innerHTML = html;
       row.setAttribute('data-n', String(shown));
       var ask = $('#cxa-ask'); if (ask) ask.textContent = this.hint || this.guide();
       var clr = $('#cx-clear'); if (clr) clr.hidden = !n;
-      var pairs = $('#cxa-pairs'); if (pairs) pairs.hidden = n > 0 || !this.compare.pairs.length; // after a pick, Try with under slot 2 takes over
-      // at four the checklist's other chips say they are unavailable; they stay in the tab order, and a tick on one says why
+      // the line under the picks: the five pairs before any pick; Try with while one chip waits for a second; nothing after
+      var pairs = $('#cxa-pairs');
+      if (pairs) {
+        var sug = n === 1 ? (this.compare.with[this.picked[0]] || []).filter(function (s) { return self.byId(s) && self.picked.indexOf(s) < 0; }).slice(0, 3) : [];
+        pairs.innerHTML = !n && this.compare.pairs.length ? '<span class="cxa-pk">Or start from a pair</span>' + this.compare.pairs.map(function (p, k) { return '<button type="button" class="aic-pill" data-pair="' + k + '">' + esc(p.label) + '</button>'; }).join('')
+          : sug.length ? '<span class="cxa-pk">Try with</span>' + sug.map(function (s) { var t = self.short(self.byId(s)); return '<button type="button" class="aic-pill" data-try="' + esc(s) + '" aria-label="Add ' + esc(t) + ' as chip 2">' + esc(t) + '</button>'; }).join('') : '';
+        pairs.hidden = !pairs.innerHTML;
+      }
+      // at four the list's other chips say they are unavailable; they stay in the tab order, and a press on one says why
       $$('#picker button').forEach(function (b) { if (n >= self.max && b.getAttribute('aria-pressed') !== 'true') b.setAttribute('aria-disabled', 'true'); else b.removeAttribute('aria-disabled'); });
     },
+    badge: function (i) { return '<i class="cx-no">' + (i + 1) + '</i> '; }, // the chip's number, as the chart's labels, the bars and the table carry it
     slotHTML: function (i, n) {
-      var self = this, id = this.picked[i], c = id ? this.byId(id) : null, k = 'cxa-k' + i;
-      var state = c ? 'filled' : (i === n && n < 2) ? 'next' : i >= 2 ? 'more' : 'empty'; // "next" is the one slot drawn in garnet
-      var head = '<p class="cxa-k" id="' + k + '">Chip ' + (i + 1) + (state === 'more' ? ', optional' : '') + '</p>';
+      var id = this.picked[i], c = id ? this.byId(id) : null, k = 'cxa-k' + i;
+      var state = c ? 'filled' : (i === n && n < 2) ? 'next' : i >= 2 ? 'more' : 'empty'; // "next" is the one pick drawn in red wine, the reader's place
+      var head = '<p class="cxa-k" id="' + k + '">' + (c ? this.badge(i) : '') + 'Chip ' + (i + 1) + (state === 'more' ? ', optional' : '') + '</p>';
       if (c) {
-        return '<div class="cxa-slot" data-i="' + i + '" data-state="filled">' + head + '<div class="cxa-card cxa-chip">' +
-          '<span class="cxa-thumb" aria-hidden="true">' + this.thumbSVG(c) + '</span>' +
-          '<span class="cxa-id"><b class="cxa-name">' + esc(c.name) + '</b><span class="cxa-meta">' + esc(this.metaLine(c)) + '</span></span>' +
+        var on = c.id === this.sel;
+        return '<div class="cxa-slot" data-i="' + i + '" data-state="filled"' + (on ? ' data-on="1"' : '') + '>' + head +
+          '<button type="button" class="cxa-name" data-id="' + esc(c.id) + '" aria-pressed="' + on + '" title="Show it on the stage">' + esc(c.name) + '</button>' +
+          '<span class="cxa-meta">' + esc(this.metaLine(c)) + '</span>' +
           '<span class="cxa-acts"><button type="button" class="cxa-act" data-act="choose" aria-haspopup="dialog" aria-expanded="false" aria-label="Change chip ' + (i + 1) + ', ' + esc(c.name) + '">Change</button>' +
-          '<button type="button" class="cxa-act" data-act="remove" aria-label="Remove ' + esc(c.name) + ' from chip ' + (i + 1) + '">Remove</button></span></div></div>';
+          '<button type="button" class="cxa-act" data-act="remove" aria-label="Remove ' + esc(c.name) + ' from chip ' + (i + 1) + '">Remove</button></span></div>';
       }
-      var text = state === 'more' ? 'Add a ' + this.ORD[i] + ' chip (optional)' : 'Choose a chip';
+      var text = state === 'more' ? 'Add a ' + this.ORD[i] + ' chip (optional)' : 'Choose a chip, or a dot above';
       return '<div class="cxa-slot" data-i="' + i + '" data-state="' + state + '">' + head +
-        '<button type="button" class="cxa-card cxa-add" data-act="choose" aria-haspopup="dialog" aria-expanded="false" aria-describedby="' + k + '"><span class="cxa-plus" aria-hidden="true">+</span><span>' + esc(text) + '</span></button></div>';
+        '<button type="button" class="cxa-add" data-act="choose" aria-haspopup="dialog" aria-expanded="false" aria-describedby="' + k + '"><span class="cxa-plus" aria-hidden="true">+</span><span>' + esc(text) + '</span></button></div>';
     },
-    // Change and × on every column head of the comparison (a package card, a table column), so the reader never has to go back up
+    // Change and × on every column head of the table of words, so the reader never has to go back up
     colActs: function (c, i) {
       return { change: '<button type="button" class="cx-act" data-act="change" data-slot="' + i + '" aria-haspopup="dialog" aria-expanded="false" aria-label="Change chip ' + (i + 1) + ', ' + esc(c.name) + '">Change</button>',
         remove: '<button type="button" class="cx-x" data-act="remove" data-slot="' + i + '" aria-label="Remove ' + esc(this.short(c)) + ' from the comparison"><span aria-hidden="true">&times;</span></button>' };
     },
-    colAct: function (b, region) { // region: '#cx-plans' or '#cx-table'; focus stays in that region after the change
+    colAct: function (b, region) { // region: '#cx-table', the column heads; focus stays there after the change
       var i = +b.getAttribute('data-slot'), act = b.getAttribute('data-act');
       if (act === 'change') { if (this.pop && this.pop.trigger === b) this.closePicker(true); else this.openPicker(i, b, region); return; }
       if (act !== 'remove') return;
@@ -1149,7 +1201,7 @@
       var ccs = [], by = {}, out = [];
       this.chips.forEach(function (c) { var cc = c.vendorCountry || '??'; if (!by[cc]) { by[cc] = { vs: [], v: {} }; ccs.push(cc); } if (!by[cc].v[c.vendor]) { by[cc].v[c.vendor] = []; by[cc].vs.push(c.vendor); } by[cc].v[c.vendor].push(c); });
       ccs.sort(function (a, b) { return (a === 'CN') - (b === 'CN'); });
-      ccs.forEach(function (cc) { by[cc].vs.forEach(function (v) { out.push({ vendor: v, chips: by[cc].v[v] }); }); });
+      ccs.forEach(function (cc) { by[cc].vs.forEach(function (v) { out.push({ cc: cc, vendor: v, chips: by[cc].v[v] }); }); });
       return out;
     },
     buildPicker: function () {
@@ -1185,7 +1237,7 @@
       window.addEventListener('hashchange', function () { self.closePicker(false); }); // Back or a link must not leave the picker over another page
       return el;
     },
-    openPicker: function (i, trigger, origin) { // origin: 'slot', or the region of a column head ('#cx-plans', '#cx-table') where focus returns
+    openPicker: function (i, trigger, origin) { // origin: 'slot', or '#cx-table' for a column head's Change, where focus returns
       var self = this, el = this.popEl || this.buildPicker(), cur = this.picked[i] || null, sheet = narrow();
       if (this.pop) this.closePicker(false);
       this.pop = { slot: i, trigger: trigger, origin: origin || 'slot' };
@@ -1206,7 +1258,7 @@
     },
     placePicker: function () { // under its slot's card or column head, as wide as that or 340 px, kept inside the column; the page moves only if the list cannot fit
       var el = this.popEl, p = this.pop; if (!p) return;
-      var slot = p.trigger.closest('.cxa-slot'), card = (slot && $('.cxa-card', slot)) || p.trigger.closest('.cx-plan, th') || p.trigger, r = card.getBoundingClientRect(), col = $('#cx-slots').getBoundingClientRect();
+      var slot = p.trigger.closest('.cxa-slot'), card = (slot && ($('.cxa-add', slot) || slot)) || p.trigger.closest('th') || p.trigger, r = card.getBoundingClientRect(), col = $('#cx-slots').getBoundingClientRect();
       var w = Math.min(Math.max(r.width, 340), col.width), left = r.left;
       if (left + w > col.right) left = Math.max(col.left, r.right - w);
       el.style.bottom = ''; el.style.maxHeight = '';
@@ -1271,7 +1323,9 @@
         if (id === self.sel) b.setAttribute('data-focus', '1'); else b.removeAttribute('data-focus');
       });
       this.renderCount();
+      this.renderChart();
       this.renderPlans();
+      this.renderStrips();
       this.renderTable();
       this.renderNotes();
       this.syncExport();
@@ -1279,10 +1333,97 @@
       this.renderBar();
       this.announceChange();
     },
-    renderCount: function () { // the count line went with the slots: the guidance line over them says where the reader is
+    renderCount: function () { // the guidance line over the picks says where the reader is; these two flags let the CSS follow
       var sec = $('section[data-view="landscape"]'); if (!sec) return;
       sec.setAttribute('data-empty', this.picked.length ? '0' : '1');
       sec.setAttribute('data-full', this.picked.length >= this.max ? '1' : '0');
+      var t = $('#cx-title'), sel = this.selection(), self = this;
+      if (t) t.textContent = sel.length >= 2 ? sel.slice(0, -1).map(function (c) { return self.short(c); }).join(', ') + ' and ' + this.short(sel[sel.length - 1]) + ', side by side' : 'Two chips, side by side';
+    },
+
+    /* ---- the chart: every chip by the month it was announced, against the measure the reader picks ---- */
+    MEAS: [['fp16', 'Speed at FP16'], ['fp8', 'Speed at FP8'], ['fp4', 'Speed at FP4'], ['mem', 'Memory'], ['bw', 'Bandwidth'], ['tdp', 'Power']],
+    // the month a chip was announced, as a year and a fraction: a chip dated only to a year sits in its middle
+    when: function (c) { var a = String(c.announced || ''), y = +a.slice(0, 4), mo = a.length >= 7 ? +a.slice(5, 7) : 0; return { t: mo ? y + (mo - 0.5) / 12 : y + 0.5, yearOnly: !mo, y: y }; },
+    nice: function (v) { var e = Math.pow(10, Math.floor(Math.log10(v))), f = v / e; return (f <= 1 ? 1 : f <= 2 ? 2 : f <= 2.5 ? 2.5 : f <= 5 ? 5 : 10) * e; },
+    textW: function (s, px, bold) { // a label's width in the interface face, so labels are placed where they fit
+      var c = this._tc || (this._tc = document.createElement('canvas').getContext('2d'));
+      c.font = (bold ? '600 ' : '400 ') + px + 'px "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif';
+      return c.measureText(String(s)).width + 3;
+    },
+    renderChart: function () {
+      var host = $('#cx-chart'); if (!host) return;
+      var self = this, row = this.row(this.measure);
+      $$('#cx-measures [data-m]').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-m') === self.measure ? 'true' : 'false'); });
+      var W = Math.round(host.clientWidth); if (!W) return; // hidden: activate() draws it on arrival
+      var nar = W < 560, H = nar ? 320 : 440, m = { l: nar ? 42 : 56, r: nar ? 10 : 18, t: 34, b: 30 };
+      var pts = this.chips.map(function (c) { return { c: c, v: row.num(c), d: self.when(c) }; }), have = pts.filter(function (p) { return typeof p.v === 'number' && p.d.y > 0; });
+      var none = pts.filter(function (p) { return have.indexOf(p) < 0; });
+      if (!have.length) { host.innerHTML = ''; return; }
+      var years = have.map(function (p) { return p.d.y; }), X0 = Math.min.apply(null, years), X1 = Math.max.apply(null, years) + 1;
+      var vals = have.map(function (p) { return p.v; }).sort(function (a, b) { return b - a; }), max = vals[0], second = vals[1] || max;
+      // one chip far above the rest (the wafer-scale WSE-3 Turbo's bandwidth): the scale follows the others, and its dot sits over the top
+      var outlier = max > 4 * second, top = outlier ? second : max, step = this.nice(top / 4), yMax = Math.ceil(top / step) * step;
+      var x = function (t) { return m.l + (t - X0) / (X1 - X0) * (W - m.l - m.r); }, y = function (v) { return H - m.b - Math.min(v, yMax) / yMax * (H - m.t - m.b); };
+      var r1 = function (v) { return String(Math.round(v * 10) / 10); };
+      var g = '';
+      for (var yr = X0; yr <= X1; yr++) g += '<line class="gx" x1="' + r1(x(yr)) + '" x2="' + r1(x(yr)) + '" y1="' + m.t + '" y2="' + (H - m.b) + '"/>' + (yr < X1 ? '<text class="ax" x="' + r1(x(yr + 0.5)) + '" y="' + (H - m.b + 19) + '" text-anchor="middle">' + (nar ? '’' + String(yr).slice(2) : yr) + '</text>' : '');
+      for (var v = 0; v <= yMax + 1e-9; v += step) g += '<line class="gy' + (v === 0 ? ' base' : '') + '" x1="' + m.l + '" x2="' + (W - m.r) + '" y1="' + r1(y(v)) + '" y2="' + r1(y(v)) + '"/><text class="ax" x="' + (m.l - 8) + '" y="' + r1(y(v) + 4) + '" text-anchor="end">' + this.nf(v) + '</text>';
+      g += '<text class="ax" x="0" y="' + (m.t - 16) + '">' + esc(row.unit) + '</text>';
+      // dots: the largest in ink, the rest in the tint (rule B); the reader's picks ringed in red wine
+      var P = have.map(function (p) { return { p: p, cx: x(p.d.t), cy: p.v > yMax ? m.t - 6 : y(p.v), top: p.v === max, at: self.picked.indexOf(p.c.id) }; });
+      var boxes = P.map(function (q) { return [q.cx - 7, q.cy - 7, q.cx + 7, q.cy + 7]; });
+      P.forEach(function (q) { if (q.p.d.yearOnly) boxes.push([x(q.p.d.y) + 3, q.cy - 2, x(q.p.d.y + 1) - 3, q.cy + 2]); }); // a year-only chip's line across its year
+      var clash = function (b) { for (var i = 0; i < boxes.length; i++) { var o = boxes[i]; if (b[0] < o[2] && b[2] > o[0] && b[1] < o[3] && b[3] > o[1]) return true; } return b[0] < m.l - 2 || b[2] > W - 2 || b[1] < 0 || b[3] > H - m.b; };
+      var inside = function (b) { return b[0] >= m.l - 4 && b[2] <= W - 2 && b[1] >= 0; };
+      var labels = '';
+      // labels: the picks first, then the largest, then the rest by value, each where it clears every dot and label so far; a
+      // narrow chart names only the picks and the largest
+      P.slice().sort(function (a, b) { return (b.at >= 0) - (a.at >= 0) || b.top - a.top || b.p.v - a.p.v; }).forEach(function (q) {
+        var must = q.at >= 0 || q.top; if (nar && !must) return;
+        var name = self.short(q.p.c), fs = must ? 12.5 : 11.5, h = fs + 3, o = q.at >= 0 ? 15 : 10;
+        var w = self.textW((q.at >= 0 ? (q.at + 1) + ' ' : '') + name + (q.top ? ', ' + self.nf(q.p.v) : ''), fs, must);
+        var cands = [[q.cx + o, q.cy + 4, 'start', [q.cx + o - 1, q.cy - h / 2 - 1, q.cx + o + w, q.cy + h / 2]], [q.cx - o, q.cy + 4, 'end', [q.cx - o - w, q.cy - h / 2 - 1, q.cx - o + 1, q.cy + h / 2]],
+          [q.cx, q.cy - o - 3, 'middle', [q.cx - w / 2, q.cy - o - 2 - h + 2, q.cx + w / 2, q.cy - o + 1]], [q.cx, q.cy + o + 11, 'middle', [q.cx - w / 2, q.cy + o - 1, q.cx + w / 2, q.cy + o - 1 + h]]];
+        var pick = cands.filter(function (cd) { return !clash(cd[3]); })[0];
+        if (!pick && must) pick = cands.filter(function (cd) { return inside(cd[3]); })[0] || cands[1]; // a pick or the largest keeps its label
+        if (!pick) return;
+        boxes.push(pick[3]);
+        labels += '<text class="lab' + (q.at >= 0 ? ' mine' : '') + (q.top ? ' top' : '') + '" x="' + r1(pick[0]) + '" y="' + r1(pick[1]) + '" text-anchor="' + pick[2] + '" aria-hidden="true">' +
+          (q.at >= 0 ? '<tspan class="lno">' + (q.at + 1) + '</tspan> ' : '') + esc(name) + (q.top ? '<tspan class="lv">, ' + esc(self.nf(q.p.v)) + '</tspan>' : '') + '</text>';
+      });
+      // one dot holds the chart's Tab stop: the one last chosen or focused, else the largest
+      var fid = this.chartFocus && P.some(function (q) { return q.p.c.id === self.chartFocus; }) ? this.chartFocus : (P.filter(function (q) { return q.top; })[0] || P[0]).p.c.id;
+      var dots = P.slice().sort(function (a, b) { return (a.at >= 0) - (b.at >= 0) || a.top - b.top; }).map(function (q) {
+        var c = q.p.c, d = q.p.d, mine = q.at >= 0, cx = r1(q.cx), cy = r1(q.cy);
+        return '<g class="pt' + (q.top ? ' top' : '') + (mine ? ' mine' : '') + '" data-id="' + esc(c.id) + '" data-x="' + cx + '" tabindex="' + (c.id === fid ? '0' : '-1') + '" role="button" aria-pressed="' + mine + '" aria-label="' +
+          esc(c.name + ', ' + [c.vendor, cname(c.vendorCountry), self.year(c)].filter(Boolean).join(', ') + ', ' + self.nf(q.p.v) + ' ' + row.unit + (mine ? '. Chip ' + (q.at + 1) + ' in the comparison' : '. Add it to the comparison')) + '">' +
+          (d.yearOnly ? '<line class="yr" x1="' + r1(x(d.y) + 3) + '" x2="' + r1(x(d.y + 1) - 3) + '" y1="' + cy + '" y2="' + cy + '"/>' : '') +
+          (q.p.v > yMax ? '<path class="arr" d="M' + cx + ' ' + r1(q.cy - 19) + 'l-5 8h10z"/>' : '') +
+          '<circle class="hit" cx="' + cx + '" cy="' + cy + '" r="12"/>' + (mine ? '<circle class="ring" cx="' + cx + '" cy="' + cy + '" r="10.5"/>' : '') +
+          '<circle class="dot" cx="' + cx + '" cy="' + cy + '" r="' + (q.top ? 7 : 5.5) + '"/></g>';
+      }).join('');
+      host.innerHTML = '<svg width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '" role="group" aria-label="' + esc(row.short + ' of ' + have.length + ' chips, by the month each was announced') + '">' + g + dots + labels + '</svg>';
+      // the words over the chart, and the chips with no figure for this measure under it
+      var hi = have.filter(function (p) { return p.v === max; })[0];
+      var k = $('#cx-atlas-k'), t = $('#cx-atlas-t'), s = $('#cx-atlas-s'), gut = $('#cx-gutter');
+      if (k) k.textContent = have.length + ' of ' + this.chips.length + ' chips have a published figure';
+      if (t) t.textContent = row.short + ', by the year each chip was announced';
+      if (s) s.textContent = 'The ' + this.short(hi.c) + ' is the highest, at ' + this.nf(hi.v) + ' ' + row.unit + '.' + (outlier ? ' Its dot sits above the top of the scale, which follows the other ' + (have.length - 1) + ' chips.' : '') + ' Choose a dot to add its chip to the comparison.';
+      var no = none.filter(function (p) { return row.fmt && ((p.c.compute || {}).support || {})[row.fmt] === 'no'; }), np = none.filter(function (p) { return no.indexOf(p) < 0; });
+      var pills = function (list) { return list.map(function (p) { var at = self.picked.indexOf(p.c.id); return '<button type="button" class="aic-pill sm" data-id="' + esc(p.c.id) + '" aria-pressed="' + (at >= 0) + '">' + (at >= 0 ? self.badge(at) : '') + esc(self.short(p.c)) + '</button>'; }).join(''); };
+      var at = row.fmt ? ' at ' + row.fmt.toUpperCase() : '';
+      if (gut) gut.innerHTML = (np.length ? '<p class="aic-gut"><span class="aic-gut-k">Not published' + at + '</span>' + pills(np) + '</p>' : '') + (no.length ? '<p class="aic-gut"><span class="aic-gut-k">Not supported' + at + '</span>' + pills(no) + '</p>' : '');
+      var tip = $('#cx-tip'); if (tip) tip.hidden = true;
+    },
+    showTip: function (g) { // a dot's card: the chip, its maker, country and year, the figure, and what a press does
+      var tip = $('#cx-tip'), fig = $('.aic-fig'), c = this.byId(g.getAttribute('data-id')), dot = $('.dot', g); if (!tip || !fig || !c || !dot) return;
+      var row = this.row(this.measure), at = this.picked.indexOf(c.id), r = dot.getBoundingClientRect(), f = fig.getBoundingClientRect();
+      tip.innerHTML = '<b>' + esc(c.name) + '</b><span>' + esc(this.metaLine(c)) + '</span><span class="tv">' + esc(this.nf(row.num(c))) + ' ' + esc(row.unit) + '</span><span class="ta">' +
+        (at >= 0 ? 'Chip ' + (at + 1) + ' in the comparison' : this.picked.length >= this.max ? 'The comparison holds four' : 'Choose it to compare') + '</span>';
+      tip.hidden = false;
+      var w = tip.offsetWidth, left = r.right - f.left + 12; if (left + w > f.width) left = r.left - f.left - w - 12;
+      tip.style.left = Math.round(Math.max(0, left)) + 'px'; tip.style.top = Math.round(Math.max(0, r.top - f.top - 10)) + 'px';
     },
 
     /* ---- package plans, all at one millimetres-per-pixel scale ---- */
@@ -1298,15 +1439,15 @@
       });
       return (w && h) ? [w, h] : null;
     },
+    PLAN_MIN: 128, PLAN_GAP: 48, // a card is never narrower than its name needs; the gap between cards
     scaleFor: function (sel, room) { // one scale for every plan on screen: the widest part sets it, and the row fits the column when it can
       var self = this, span = 0, total = 0;
       sel.forEach(function (c) { var b = self.planBounds(c.layout); if (b) { span = Math.max(span, b[0], b[1]); total += b[0]; } });
       if (!span) return 1;
-      var k = Math.min((narrow() ? 148 : 196) / span, 2.6);
-      // a card is never narrower than PLAN_MIN, so a long name wraps in two lines; a plan narrower than that stops shrinking
-      var avail = (room || 0) - sel.length * 22 - (sel.length - 1) * 20 - 4; // card padding and borders, the gaps between cards
-      // where even the narrowest cards cannot share one row (1024, a phone), the row wraps and keeps this scale; the cards are never cut
-      if (!narrow() && total > 0 && avail >= sel.length * self.PLAN_MIN) {
+      var k = Math.min((narrow() ? 150 : 210) / span, 2.6);
+      var avail = (room || 0) - (sel.length - 1) * this.PLAN_GAP - 4;
+      // where even the narrowest cards cannot share one row (a phone), the row wraps and keeps this scale; the cards are never cut
+      if (!narrow() && total > 0 && avail >= sel.length * this.PLAN_MIN) {
         for (var it = 0; it < 3; it++) {
           var fixed = 0, flex = 0;
           sel.forEach(function (c) { var b = self.planBounds(c.layout); if (!b || b[0] * k < self.PLAN_MIN) fixed += self.PLAN_MIN; else flex += b[0]; });
@@ -1315,7 +1456,6 @@
       }
       return k;
     },
-    PLAN_MIN: 132,
     rects: function (list, cls) {
       var self = this;
       return (list || []).map(function (r) {
@@ -1360,29 +1500,31 @@
     },
     renderPlans: function () {
       var self = this, host = $('#cx-plans'); if (!host) return;
-      var sel = this.selection(), k = this.scaleFor(sel, host.clientWidth);
+      var sel = this.selection(), k = this.scaleFor(sel, host.clientWidth), tall = sel.length < 2 ? 84 : 40;
+      // every drawing stands on one line: the art boxes take the tallest drawing's height
+      sel.forEach(function (c) { var b = self.planBounds(c.layout); tall = Math.max(tall, b ? Math.max(16, self.mm(b[1] * k)) : 72); });
+      host.style.setProperty('--plan-h', Math.ceil(tall) + 'px');
       host.innerHTML = sel.map(function (c, i) {
-        // a card: a button that puts the chip on the stage (the one there says so), and the column's Change and ×
-        var L = c.layout || {}, tip = L.note || (c.package || {}).type || '', b = self.planBounds(L), on = c.id === self.sel, acts = self.colActs(c, i);
+        // a card is a button that puts the chip on the stage; the one there says so under its name
+        var L = c.layout || {}, tip = L.note || (c.package || {}).type || '', b = self.planBounds(L), on = c.id === self.sel;
         var w = Math.max(self.PLAN_MIN, b ? Math.round(b[0] * k) : 0);
-        return '<div class="cx-plan' + (on ? ' is-on' : '') + '" style="width:' + (w + 22) + 'px">' +
+        return '<div class="cx-plan' + (on ? ' is-on' : '') + '" style="width:' + w + 'px">' +
           '<button type="button" class="cx-plan-hit" data-id="' + esc(c.id) + '" aria-pressed="' + (on ? 'true' : 'false') + '" title="' + esc((on ? '' : 'Show ' + c.name + ' on the stage. ') + tip) + '">' +
-          '<span class="cx-on">' + (on ? 'On the stage' : '') + '</span>' + // the line is kept on every card, so the names stay level
-          '<span class="cx-plan-name"><b>' + esc(c.name) + '</b><em>' + esc(c.vendor) + '</em></span>' +
           '<span class="cx-plan-art">' + (b ? self.planSVG(c, k) : '<i class="cx-noplan">No published layout</i>') + '</span>' +
+          '<span class="cx-plan-name">' + self.badge(i) + '<b>' + esc(c.name) + '</b><em>' + esc(c.vendor) + '</em></span>' +
           '<span class="cx-plan-size">' + esc(self.planSize(c)) + '</span></button>' +
-          acts.remove + '<span class="cx-plan-foot">' + acts.change + '</span></div>';
+          '<span class="cx-on">' + (on ? 'On the stage' : '') + '</span></div>'; // the line is kept on every card, so the cards stay level
       }).join('') + this.ghostPlans(sel.length);
       var key = $('#cx-key');
-      if (key) key.innerHTML = '<span><i class="cx-sw die"></i>Logic die</span><span><i class="cx-sw hbm"></i>Memory stack</span><span><i class="cx-sw int"></i>Interposer</span><span><i class="cx-sw sub"></i>Substrate</span>' + this.scaleKey(k);
+      if (key) key.innerHTML = '<span><i class="cx-sw die"></i>Logic die</span><span><i class="cx-sw hbm"></i>Memory stack</span><span><i class="cx-sw int"></i>Interposer</span><span><i class="cx-sw sub"></i>Substrate</span>' + (sel.length ? this.scaleKey(k) : '');
     },
-    ghostPlans: function (n) { // until two chips are in, a dashed outline holds the place of each one missing
+    ghostPlans: function (n) { // until two chips are in, a hatched box holds the place of each one missing
       var h = '';
-      for (var i = n + 1; i <= 2; i++) h += '<div class="cx-plan cx-plan--ghost" aria-hidden="true"><span class="cx-plan-name"><b>Chip ' + i + '</b><em>Not chosen yet</em></span><span class="cx-plan-art"><i></i></span><span class="cx-plan-size">&nbsp;</span></div>';
+      for (var i = n + 1; i <= 2; i++) h += '<div class="cx-plan cx-plan--ghost" aria-hidden="true"><span class="cx-plan-art"><i></i></span><span class="cx-plan-name"><b>Chip ' + i + '</b><em>Not chosen yet</em></span></div>';
       return h;
     },
 
-    /* ---- the side-by-side table ---- */
+    /* ---- the comparison's rows: each figure is a row of bars (FIG), the rest a table of words (WORDS) ---- */
     nf: function (v) { return (Math.round(v * 100) / 100).toLocaleString('en-US'); },
     // An empty cell says which kind of empty it is: a format the hardware cannot run reads
     // "not supported", anything else "not published". compute.support carries yes/no/unknown.
@@ -1390,54 +1532,56 @@
       var f = row && row.fmt, sup = f ? ((c && c.compute || {}).support || {})[f] : null;
       return sup === 'no' ? '<span class="cx-nil cx-nil--no">not supported</span>' : '<span class="cx-nil">not published</span>';
     },
+    // label and hint lead each row: build/modules/reference-pages.js reads them in that order for the /chips/ page
     rows: [
-      { label: 'Vendor', hint: ['product page', 'press release', 'corporate'], text: function (c) { return esc(c.vendor) + '<span class="cx-2">' + esc(cname(c.vendorCountry)) + '</span>'; } },
-      { label: 'Availability', hint: ['product page', 'press release', 'spec table'], text: function (c) { return c.status ? esc(c.status) + (c.shipping ? '<span class="cx-2">from ' + esc(c.shipping) + '</span>' : '') : null; } },
-      { label: 'Built for', hint: ['product page', 'blog', 'documentation'], text: function (c) { return c.target ? esc(c.target) : null; } },
-      { label: 'Foundry, process node', hint: ['architecture', 'deep dive', 'white paper', 'documentation'], text: function (c) { var p = c.process || {}; return p.foundry ? esc(p.foundry) + '<span class="cx-2">' + esc(p.node || '') + (p.country ? ' · ' + esc(cname(p.country)) : '') + '</span>' : null; } },
-      { label: 'Logic dies', hint: ['architecture', 'deep dive', 'white paper'], num: function (c) { return (c.die || {}).count; }, sub: function (c) { var a = (c.die || {}).areaMm2Each; return a != null ? a + ' mm² each' : 'area not published'; } },
-      { label: 'Transistors, billion', hint: ['architecture', 'deep dive', 'white paper'], num: function (c) { return (c.die || {}).transistorsB; }, better: 'high' },
-      { label: 'Package', hint: ['cowos', 'packag', 'deep dive', 'architecture'], text: function (c) { var p = c.package || {}; return p.type ? esc(p.type) + (p.assembler ? '<span class="cx-2">assembled by ' + esc(p.assembler) + '</span>' : '') : null; } },
-      { label: 'Memory type', hint: ['hbm', 'micron', 'memory', 'datasheet'], text: function (c) { var m = c.memory || {}; return m.type ? esc(m.type) + (m.stacks ? '<span class="cx-2">' + m.stacks + ' stacks</span>' : '') : null; } },
-      { label: 'Memory, gigabytes', hint: ['spec table', 'datasheet', 'product page'], num: function (c) { return (c.memory || {}).capacityGB; }, better: 'high' },
-      { label: 'Bandwidth, terabytes/s', hint: ['spec table', 'datasheet', 'product page'], num: function (c) { return (c.memory || {}).bandwidthTBs; }, better: 'high' },
-      { label: 'Speed at FP16, TFLOPS', hint: ['spec table', 'datasheet', 'product page'], num: function (c) { return (c.compute || {}).fp16TFLOPS; }, better: 'high', fn: true, fmt: 'fp16' },
-      { label: 'Speed at FP8, TFLOPS', hint: ['spec table', 'datasheet', 'product page'], num: function (c) { return (c.compute || {}).fp8TFLOPS; }, better: 'high', fn: true, fmt: 'fp8' },
-      { label: 'Speed at FP4, TFLOPS', hint: ['spec table', 'datasheet', 'product page'], num: function (c) { return (c.compute || {}).fp4TFLOPS; }, better: 'high', fn: true, fmt: 'fp4' },
-      { label: 'Power, watts', hint: ['spec table', 'datasheet', 'product page'], num: function (c) { return c.tdpW; } },
-      { label: 'Chip-to-chip links', hint: ['architecture', 'deep dive', 'white paper'], long: true, text: function (c) { return (c.interconnect || {}).chipToChip ? esc(c.interconnect.chipToChip) : null; } },
-      { label: 'Scale-up, in one rack', hint: ['nvl', 'rack', 'system', 'deep dive', 'spec table'], long: true, text: function (c) { return (c.interconnect || {}).scaleUp ? esc(c.interconnect.scaleUp) : null; } },
-      { label: 'Price estimate', hint: ['price', 'semianalysis', 'rack', 'press release'], long: true, text: function (c) { return c.priceEstimate ? esc(c.priceEstimate) : null; } },
-      { label: 'Cost to make, estimate', hint: ['cost', 'semianalysis'], long: true, text: function (c) { return c.bomEstimate ? esc(c.bomEstimate) : null; } },
-      { label: 'Export-control status', hint: ['federal register', 'entity list', 'institute for progress', 'mofcom'], long: true, text: function (c) { return c.exportStatus ? esc(c.exportStatus) : null; } }
+      { label: 'Vendor', hint: ['product page', 'press release', 'corporate'], key: 'vendor', text: function (c) { return esc(c.vendor) + '<span class="cx-2">' + esc(cname(c.vendorCountry)) + '</span>'; } },
+      { label: 'Availability', hint: ['product page', 'press release', 'spec table'], key: 'status', text: function (c) { return c.status ? esc(c.status) + (c.shipping ? '<span class="cx-2">from ' + esc(c.shipping) + '</span>' : '') : null; } },
+      { label: 'Built for', hint: ['product page', 'blog', 'documentation'], key: 'target', text: function (c) { return c.target ? esc(c.target) : null; } },
+      { label: 'Foundry, process node', hint: ['architecture', 'deep dive', 'white paper', 'documentation'], key: 'process', text: function (c) { var p = c.process || {}; return p.foundry ? esc(p.foundry) + '<span class="cx-2">' + esc(p.node || '') + (p.country ? ' · ' + esc(cname(p.country)) : '') + '</span>' : null; } },
+      { label: 'Logic dies', hint: ['architecture', 'deep dive', 'white paper'], key: 'dies', short: 'Logic dies', unit: 'count', num: function (c) { return (c.die || {}).count; }, sub: function (c) { var a = (c.die || {}).areaMm2Each; return a != null ? a + ' mm² each' : 'area not published'; } },
+      { label: 'Transistors, billion', hint: ['architecture', 'deep dive', 'white paper'], key: 'transistors', short: 'Transistors', unit: 'billion', num: function (c) { return (c.die || {}).transistorsB; } },
+      { label: 'Package', hint: ['cowos', 'packag', 'deep dive', 'architecture'], key: 'package', text: function (c) { var p = c.package || {}; return p.type ? esc(p.type) + (p.assembler ? '<span class="cx-2">assembled by ' + esc(p.assembler) + '</span>' : '') : null; } },
+      { label: 'Memory type', hint: ['hbm', 'micron', 'memory', 'datasheet'], key: 'memtype', text: function (c) { var m = c.memory || {}; return m.type ? esc(m.type) + (m.stacks ? '<span class="cx-2">' + m.stacks + ' stacks</span>' : '') : null; } },
+      { label: 'Memory, gigabytes', hint: ['spec table', 'datasheet', 'product page'], key: 'mem', short: 'Memory', unit: 'gigabytes', num: function (c) { return (c.memory || {}).capacityGB; } },
+      { label: 'Bandwidth, terabytes/s', hint: ['spec table', 'datasheet', 'product page'], key: 'bw', short: 'Bandwidth', unit: 'terabytes a second', num: function (c) { return (c.memory || {}).bandwidthTBs; } },
+      { label: 'Speed at FP16, TFLOPS', hint: ['spec table', 'datasheet', 'product page'], key: 'fp16', short: 'Speed at FP16', unit: 'TFLOPS', num: function (c) { return (c.compute || {}).fp16TFLOPS; }, fn: true, fmt: 'fp16' },
+      { label: 'Speed at FP8, TFLOPS', hint: ['spec table', 'datasheet', 'product page'], key: 'fp8', short: 'Speed at FP8', unit: 'TFLOPS', num: function (c) { return (c.compute || {}).fp8TFLOPS; }, fn: true, fmt: 'fp8' },
+      { label: 'Speed at FP4, TFLOPS', hint: ['spec table', 'datasheet', 'product page'], key: 'fp4', short: 'Speed at FP4', unit: 'TFLOPS', num: function (c) { return (c.compute || {}).fp4TFLOPS; }, fn: true, fmt: 'fp4' },
+      { label: 'Power, watts', hint: ['spec table', 'datasheet', 'product page'], key: 'tdp', short: 'Power', unit: 'watts', num: function (c) { return c.tdpW; } },
+      { label: 'Chip-to-chip links', hint: ['architecture', 'deep dive', 'white paper'], key: 'c2c', long: true, text: function (c) { return (c.interconnect || {}).chipToChip ? esc(c.interconnect.chipToChip) : null; } },
+      { label: 'Scale-up, in one rack', hint: ['nvl', 'rack', 'system', 'deep dive', 'spec table'], key: 'scale', long: true, text: function (c) { return (c.interconnect || {}).scaleUp ? esc(c.interconnect.scaleUp) : null; } },
+      { label: 'Price estimate', hint: ['price', 'semianalysis', 'rack', 'press release'], key: 'price', long: true, text: function (c) { return c.priceEstimate ? esc(c.priceEstimate) : null; } },
+      { label: 'Cost to make, estimate', hint: ['cost', 'semianalysis'], key: 'bom', long: true, text: function (c) { return c.bomEstimate ? esc(c.bomEstimate) : null; } },
+      { label: 'Export-control status', hint: ['federal register', 'entity list', 'institute for progress', 'mofcom'], key: 'export', long: true, text: function (c) { return c.exportStatus ? esc(c.exportStatus) : null; } }
     ],
-    sourceTitle: function (c, row) { // the chip's sources are not tagged per field, so match the row's subject against the labels
+    row: function (key) { if (!this._rk) { var m = {}; this.rows.forEach(function (r) { m[r.key] = r; }); this._rk = m; } return this._rk[key]; },
+    FIG: ['fp16', 'fp8', 'fp4', 'mem', 'bw', 'tdp', 'transistors', 'dies'],
+    WORDS: ['vendor', 'status', 'target', 'process', 'package', 'memtype', 'c2c', 'scale', 'price', 'bom', 'export'],
+    // the chip's sources are not tagged per field, so the row's subject is matched against their labels (as /chips/ does)
+    srcIndex: function (c, row) {
+      var srcs = c.sources || [], hints = row.hint || [];
+      for (var h = 0; h < hints.length; h++) for (var i = 0; i < srcs.length; i++) if ((srcs[i].label || '').toLowerCase().indexOf(hints[h]) >= 0) return i;
+      return -1;
+    },
+    // every figure carries its source: the number of the source in the chip's list under Notes and sources, a link to it that opens
+    // the site's source card (Cite); where nothing in the list is about the row, "all" goes to the chip's whole list
+    cite: function (c, row) {
       var srcs = c.sources || []; if (!srcs.length) return '';
-      var hints = row.hint || [];
-      for (var h = 0; h < hints.length; h++) for (var i = 0; i < srcs.length; i++) {
-        if ((srcs[i].label || '').toLowerCase().indexOf(hints[h]) >= 0) return 'Source: ' + (srcs[i].label || srcs[i].url);
-      }
-      // nothing in the list is about this row, so list the chip's sources rather than claim one of them
-      return 'Sources for the ' + c.name + ': ' + srcs.map(function (x) { return x.label || x.url; }).join(' · ');
+      var i = this.srcIndex(c, row);
+      if (i >= 0) { var s = srcs[i], l = s.label || s.url; return '<sup class="cite"><a href="' + safeUrl(s.url) + '" target="_blank" rel="noopener" data-t="' + esc(l) + '" aria-label="Source ' + (i + 1) + ', ' + esc(l) + '">' + (i + 1) + '</a></sup>'; }
+      return '<sup class="cite cx-all"><button type="button" data-notes="' + esc(c.id) + '" aria-label="All sources for the ' + esc(c.name) + '">all</button></sup>';
     },
-    cellHTML: function (c, row, max, marker, multi) {
-      var title = this.sourceTitle(c, row), inner;
-      if (row.num) {
-        var v = row.num(c);
-        if (v == null) inner = this.nil(c, row);
-        else {
-          var best = row.better === 'high' && max > 0 && v === max;
-          inner = '<span class="cx-v' + (best ? ' is-best' : '') + '">' + esc(this.nf(v)) + '</span>' + (marker || '') +
-            (row.sub ? '<span class="cx-2">' + esc(row.sub(c)) + '</span>' : '') +
-            (multi && max > 0 ? '<span class="cx-meter"><i style="width:' + Math.round(Math.max(0, v) / max * 100) + '%"></i></span>' : '');
-        }
-      } else {
-        var t = row.text(c);
-        inner = (t == null || t === '') ? this.nil(c, row) : t + (marker || '');
-      }
-      return '<td class="' + (row.long ? 'cx-long' : '') + (c.id === this.sel ? ' is-focus' : '') + '"' + (title ? ' title="' + esc(title) + '"' : '') + '>' + inner + '</td>';
+    fnMarks: function (sel) { // the speed rows' notes: one per chip that has a note on how its figures are measured
+      var list = []; sel.forEach(function (c) { var n = (c.compute || {}).precisionNote; if (n) list.push({ c: c, n: n }); });
+      return { list: list, mark: function (c) { for (var i = 0; i < list.length; i++) if (list[i].c.id === c.id) return '<sup class="cx-fn">' + (i + 1) + '</sup>'; return ''; } };
     },
-    // where the table is still wider than its box (a phone, a narrow window), the right edge fades and a line says it scrolls,
+    cellHTML: function (c, row, i) {
+      var t = row.text(c), inner;
+      if (t == null || t === '') inner = this.nil(c, row);
+      else { var at = t.indexOf('<span class="cx-2">'), mk = this.cite(c, row); inner = at >= 0 ? t.slice(0, at) + mk + t.slice(at) : t + mk; } // the mark sits on the value, before its second line
+      return '<td class="' + (row.long ? 'cx-long' : '') + (c.id === this.sel ? ' is-focus' : '') + '" data-n="' + (i + 1) + ' · ' + esc(this.short(c)) + '">' + inner + '</td>';
+    },
+    // where the table is still wider than its box (four chips in a narrow window), the right edge fades and a line says it scrolls,
     // since Mac and phone browsers hide the scrollbar until the reader scrolls
     scrollCue: function () {
       var w = $('#cx-table-wrap'), hint = $('#cx-more'); if (!w) return;
@@ -1445,16 +1589,33 @@
       w.setAttribute('data-more', over && w.scrollWidth - w.clientWidth - w.scrollLeft > 4 ? '1' : '0');
       if (hint) hint.hidden = !over;
     },
+    // the figures: one row of bars per measure, rule B in each row (the largest solid ink, the rest the light tint)
+    renderStrips: function () {
+      var self = this, host = $('#cx-strips'); if (!host) return;
+      var sel = this.selection(), fm = this.fnMarks(sel), g = Math.max(0, 2 - sel.length);
+      host.innerHTML = this.FIG.map(function (key) {
+        var row = self.row(key), max = 0;
+        sel.forEach(function (c) { var v = row.num(c); if (typeof v === 'number' && v > max) max = v; });
+        var lines = sel.map(function (c, i) {
+          var v = row.num(c), on = c.id === self.sel, name = '<span class="sl-n">' + self.badge(i) + esc(self.short(c)) + '</span>';
+          if (typeof v !== 'number') return '<div class="sl' + (on ? ' is-on' : '') + '">' + name + '<span class="sl-b"></span><span class="sl-v">' + self.nil(c, row) + '</span></div>';
+          var top = max > 0 && v === max, w = max > 0 ? Math.max(1, v / max * 100) : 0;
+          return '<div class="sl' + (on ? ' is-on' : '') + '">' + name + '<span class="sl-b" aria-hidden="true"><i' + (top ? ' class="top"' : '') + ' style="width:' + w.toFixed(1) + '%"></i></span>' +
+            '<span class="sl-v"><span class="cx-v' + (top ? ' is-top' : '') + '">' + esc(self.nf(v)) + '</span>' + (row.fn ? fm.mark(c) : '') + self.cite(c, row) + (row.sub ? '<span class="cx-2">' + esc(row.sub(c)) + '</span>' : '') + '</span></div>';
+        }).join('');
+        for (var j = 0; j < g; j++) lines += '<div class="sl ghost" aria-hidden="true"><span class="sl-n">Chip ' + (sel.length + j + 1) + '</span><span class="sl-b"><i></i></span><span class="sl-v"><span class="cx-nil">not chosen yet</span></span></div>';
+        return '<div class="srow' + (row.sub ? ' has-sub' : '') + '"><h4 class="srow-h">' + esc(row.short) + ' <span>' + esc(row.unit) + '</span></h4>' + lines + '</div>';
+      }).join('');
+    },
+    // the words: a table with one column per chip, Change, × and Read the notes on each head
     renderTable: function () {
       var self = this, tb = $('#cx-table'); if (!tb) return;
-      var sel = this.selection(), multi = sel.length > 1, fns = [];
-      sel.forEach(function (c) { var n = (c.compute || {}).precisionNote; if (n) fns.push({ c: c, n: n }); });
-      var marker = function (c) { for (var i = 0; i < fns.length; i++) if (fns[i].c.id === c.id) return '<sup class="cx-fn">' + (i + 1) + '</sup>'; return ''; };
+      var sel = this.selection();
       var html = '<thead><tr><th class="cx-rowhead" scope="col"><span class="sr-only">Specification</span></th>';
       sel.forEach(function (c, i) {
         var acts = self.colActs(c, i);
         html += '<th scope="col" class="cx-col' + (c.id === self.sel ? ' is-focus' : '') + '">' + acts.remove +
-          '<button type="button" class="cx-colhead" data-id="' + esc(c.id) + '" aria-pressed="' + (c.id === self.sel ? 'true' : 'false') + '"><b>' + esc(c.name) + '</b><span>' + esc(c.vendor) + '</span></button>' +
+          '<button type="button" class="cx-colhead" data-id="' + esc(c.id) + '" aria-pressed="' + (c.id === self.sel ? 'true' : 'false') + '">' + self.badge(i) + '<b>' + esc(c.name) + '</b><span>' + esc(c.vendor) + '</span></button>' +
           '<span class="cx-colacts">' + acts.change + '<button type="button" class="cx-jump" data-notes="' + esc(c.id) + '">Read the notes</button></span></th>';
       });
       // until two chips are in, an empty hatched column waits for each one missing, so the reader sees what the table will hold
@@ -1464,11 +1625,10 @@
         gd += '<td class="cx-ghost"></td>';
       }
       html += '</tr></thead><tbody>';
-      this.rows.forEach(function (row) {
-        var max = 0;
-        if (row.num) sel.forEach(function (c) { var v = row.num(c); if (typeof v === 'number' && v > max) max = v; });
-        html += '<tr><th scope="row" class="cx-rowhead">' + esc(row.label) + '</th>';
-        sel.forEach(function (c) { html += self.cellHTML(c, row, max, row.fn ? marker(c) : '', multi); });
+      this.WORDS.forEach(function (key) {
+        var row = self.row(key);
+        html += '<tr' + (row.long ? ' class="cx-tr-long"' : '') + '><th scope="row" class="cx-rowhead">' + esc(row.label) + '</th>';
+        sel.forEach(function (c, i) { html += self.cellHTML(c, row, i); });
         html += gd + '</tr>';
       });
       tb.innerHTML = html + '</tbody>';
@@ -1476,19 +1636,20 @@
       var tw = $('#cx-table-wrap'); // with no chip the table is a preview of its rows, so a screen reader skips it
       if (tw) { if (sel.length) tw.removeAttribute('aria-hidden'); else tw.setAttribute('aria-hidden', 'true'); }
       this.scrollCue();
-      var foot = $('#cx-foot');
+      var fns = this.fnMarks(sel).list, foot = $('#cx-foot');
       if (foot) foot.innerHTML = fns.length ? '<p class="label">How the speed figures are measured</p><ol class="cx-fns">' +
         fns.map(function (f) { return '<li><b>' + esc(f.c.name) + '</b> ' + esc(f.n) + '</li>'; }).join('') + '</ol>' : '';
     },
     renderNotes: function () {
       var self = this, host = $('#cx-notes'); if (!host) return;
-      host.innerHTML = '<h3 class="label cx-h">Notes and sources</h3>' + this.selection().map(function (c) {
+      host.innerHTML = '<h3 class="cx-notes-h">Notes and sources</h3>' + this.selection().map(function (c) {
         var body = self.notes[c.id] || (c.notes ? '<p>' + esc(c.notes) + '</p>' : '<p class="cx-nil">No note yet.</p>');
         body = body.replace(/^\s*<p><code>[^<]*<\/code><\/p>\s*/, ''); // the notes file opens each block with the chip id, which is keying, not copy
-        var srcs = (c.sources || []).map(function (s) { return '<a href="' + safeUrl(s.url) + '" target="_blank" rel="noopener">' + esc(s.label || s.url) + '</a>'; }).join('');
+        // the sources numbered as the figures cite them
+        var srcs = (c.sources || []).map(function (s) { return '<li><a href="' + safeUrl(s.url) + '" target="_blank" rel="noopener">' + esc(s.label || s.url) + '</a></li>'; }).join('');
         return '<details class="cx-note" id="cx-note-' + esc(c.id) + '"' + (c.id === self.sel ? ' open' : '') + '>' +
           '<summary><b>' + esc(c.name) + '</b><span>' + esc(c.vendor) + ' · ' + esc(cname(c.vendorCountry)) + '</span></summary>' +
-          '<div class="cx-note-body">' + body + '</div>' + (srcs ? '<p class="cx-srcs">' + srcs + '</p>' : '') + '</details>';
+          '<div class="cx-note-body">' + body + '</div>' + (srcs ? '<ol class="cx-srcs" aria-label="Sources for the ' + esc(c.name) + '">' + srcs + '</ol>' : '') + '</details>';
       }).join('');
     },
     jumpToNotes: function (id) {
@@ -1498,12 +1659,24 @@
       scrollToEl(el, true);
     },
 
-    /* ---- the stage keeps drawing the focused chip's package from above ---- */
+    /* ---- the stage draws the focused chip's package from above, beside the chart (or in the phone's strip) ---- */
+    // the package type sits mid-sentence, so a phrase such as "Two silicon interposers" takes a small letter (CoWoS-L keeps its own)
+    lowerFirst: function (s) { s = String(s || ''); var w = s.split(/[\s,]/)[0]; return /^[A-Z][a-z]+$/.test(w) ? s.charAt(0).toLowerCase() + s.slice(1) : s; },
+    stageCaption: function (c) {
+      var lay = c.layout || null, hb = (c.memory && c.memory.stacks) || 0, n = (c.die && c.die.count) || 1;
+      if (lay && lay.waferScale) return 'Wafer-scale: one ' + esc(c.name) + ' is a whole 300 mm wafer.';
+      return esc(c.name) + ': ' + n + ' logic die' + (n > 1 ? 's' : '') + (hb ? ' and ' + hb + ' ' + esc((c.memory && c.memory.type) || 'high-bandwidth memory') + ' stacks' : '') + ' on ' + esc(this.lowerFirst((c.package && c.package.type) || 'the package')) + '.';
+    },
+    specText: function (tag, cap) { var t = $('#cx-spec-tag'), p = $('#cx-spec-text'); if (t) t.innerHTML = tag; if (p) p.innerHTML = cap; },
+    showGeneric: function () {
+      var cap = 'An AI accelerator package, drawn from above.', tag = 'AI chips · <b>Package</b>';
+      Stage.show('package', { plan: true }, cap, tag); this.specText(tag, cap);
+    },
     showStage: function (c) {
       if (!c) return;
-      var lay = c.layout || null, hb = (c.memory && c.memory.stacks) || 0;
-      var cap = lay && lay.waferScale ? 'Wafer-scale: one ' + esc(c.name) + ' is a whole 300 mm wafer.' : esc(c.name) + ': ' + ((c.die && c.die.count) || 1) + ' logic die' + (((c.die && c.die.count) || 1) > 1 ? 's' : '') + (hb ? ' and ' + hb + ' ' + esc((c.memory && c.memory.type) || 'high-bandwidth memory') + ' stacks' : '') + ' on ' + esc((c.package && c.package.type) || 'the package') + '.';
-      Stage.show('package', lay ? { layout: lay, plan: true } : { plan: true }, cap, 'AI chips · <b>' + esc(c.name) + '</b>');
+      var lay = c.layout || null, cap = this.stageCaption(c), tag = 'AI chips · <b>' + esc(c.name) + '</b>';
+      Stage.show('package', lay ? { layout: lay, plan: true } : { plan: true }, cap, tag);
+      this.specText(tag, cap);
     }
   };
   Landscape.initSelection();

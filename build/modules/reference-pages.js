@@ -65,7 +65,7 @@ module.exports = function (ctx) {
   const tmpl = (re, name) => { const m = re.exec(template); if (!m) { warn(`reference pages: ${name} is missing from src/template.html`); return ''; } return m[1].trim(); };
   // each view's own <section> (the template names the views earlier too, in its pre-boot CSS and the nav)
   const chipsDek = tmpl(/<section class="view[^"]*" data-view="landscape"[^>]*>[\s\S]*?<p class="dek">([\s\S]*?)<\/p>/, 'the AI Chips dek');
-  const specsSub = tmpl(/Specs side by side<\/h3>\s*<p class="cx-sub">([\s\S]*?)<\/p>/, 'the AI Chips specs note');
+  const specsSub = tmpl(/<span class="aic-tflops">([\s\S]*?)<\/span>/, 'the AI Chips note on TFLOPS');
   const glossaryDek = tmpl(/<section class="view[^"]*" data-view="glossary"[^>]*>[\s\S]*?<p class="dek">([\s\S]*?)<\/p>/, 'the Glossary dek');
   const ladderLabel = tmpl(/id="sup-ladder-h">([^<]*)</, 'the Suppliers ladder heading');
   const LEGEND = [];
@@ -125,7 +125,7 @@ ${S.ICONS}
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="${S.FONTS}">
 ${S.THEME_JS}
-<style>${css}</style>
+<style>${css}${o.css || ''}</style>
 ${analytics}
 </head>
 <body>
@@ -332,6 +332,37 @@ ${body}
   }
 
   /* ================= /chips/ ================= */
+  /* the FP16 chart on /chips/ (chipsPage): kept with the page that draws it, so the shared reference sheet stays as it is */
+  const CHIPS_CSS = S.minCSS(`
+.ctl { position: relative; margin: 18px 0 0; padding: 26px 18px 34px 56px; }
+.ctl-unit { position: absolute; left: 0; top: 0; margin: 0; font-family: var(--font-code); font-size: 11px; line-height: 16px; color: var(--muted); }
+.ctl-plot { position: relative; height: 400px; }
+.ctl-grid { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.ctl-grid line { stroke: var(--line); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.ctl-grid line.base { stroke: var(--rule-ink); }
+.ctl-y { position: absolute; right: 100%; margin-right: 8px; transform: translateY(-50%); font-family: var(--font-code); font-size: 11px; line-height: 1; color: var(--muted); white-space: nowrap; }
+.ctl-x { position: absolute; top: 100%; margin-top: 12px; transform: translateX(-50%); font-family: var(--font-code); font-size: 11px; line-height: 1; color: var(--muted); }
+.ctl-yr { position: absolute; height: 0; border-top: 1.5px solid var(--line-2); }
+.ctl-dot { position: absolute; z-index: 1; display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; transform: translate(-50%, -50%); }
+.ctl-dot i { display: block; width: 11px; height: 11px; border-radius: 50%; background: var(--ctx); }
+.ctl-dot:hover i { background: var(--rule-ink); }
+.ctl-dot.top i, .ctl-dot.top:hover i { width: 14px; height: 14px; background: var(--ink); }
+.ctl-dot:focus-visible { outline: 2px solid var(--accent); outline-offset: 0; }
+.ctl-lab { position: absolute; display: none; white-space: nowrap; pointer-events: none; font-family: var(--font-label); font-weight: 400; font-size: 11.5px; line-height: 16px; color: var(--muted); }
+.ctl-lab.top { font-size: 12.5px; font-weight: 600; color: var(--ink); }
+.ctl-lab b { font-weight: 700; }
+.ctl-lab.a-s { transform: translate(11px, -50%); }
+.ctl-lab.a-e { transform: translate(calc(-100% - 11px), -50%); }
+.ctl-lab.a-u { transform: translate(-50%, calc(-100% - 11px)); }
+.ctl-lab.a-d { transform: translate(-50%, 11px); }
+@media (min-width: 1024px) { .ctl-lab.in-w { display: block; } }
+@media (min-width: 761px) and (max-width: 1023px) { .ctl-lab.in-m { display: block; } }
+@media (max-width: 760px) { .ctl { padding: 26px 10px 34px 42px; } .ctl-plot { height: 280px; } .ctl-lab.in-p { display: block; } }
+.ctl-none { margin: 16px 0 0; font-family: var(--font-label); font-size: 13.5px; line-height: 1.6; color: var(--ink-2); }
+.ctl-none span { margin-right: 8px; font-family: var(--font-code); font-size: 12px; color: var(--muted); }
+.ctl-none a { color: var(--ink); }
+.ctl-note { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); }
+`);
   const chips = (data.landscape || []).slice();
   const chipIds = new Map();
   function chipsPage() {
@@ -377,6 +408,71 @@ ${body}
       return `<td${col.wide ? ' class="wide"' : ''}>${at >= 0 ? t.slice(0, at) + m + t.slice(at) : t + m}</td>`;
     };
     const rowHTML = (c) => `<tr id="${chipIds.get(c.id)}"><th scope="row"><a href="#${chipIds.get(c.id)}-sources">${esc(c.name)}</a>${c.family && c.family !== c.name ? sub(esc(c.family)) : ''}</th>${COLS.map((col) => cell(c, col)).join('')}</tr>`;
+    /* the chart the interactive page opens with, at FP16 (the redesign's option C): every chip with a published figure at the
+       month its maker announced it, the highest the one solid dot (rule B), the rest the light tint. The marks are HTML set by
+       percent over a grid drawn to fit, so the labels keep their size at every width; each width shows the labels that were placed
+       clear of every dot and label at its narrowest (wide, medium; a phone names only the highest). Each dot links to its row. */
+    const timeline = (() => {
+      const unit = 'TFLOPS', val = (c) => (c.compute || {}).fp16TFLOPS;
+      const when = (c) => { const a = String(c.announced || ''), y = +a.slice(0, 4), mo = a.length >= 7 ? +a.slice(5, 7) : 0; return { t: mo ? y + (mo - 0.5) / 12 : y + 0.5, yearOnly: !mo, y }; };
+      const short = (c) => String(c.name).replace(/\s*\(.*\)\s*$/, ''); // Landscape.short
+      const pts = chips.map((c) => ({ c, v: val(c), d: when(c) })), have = pts.filter((p) => typeof p.v === 'number' && p.d.y > 0);
+      if (!have.length) { warn('reference pages: no chip has an FP16 figure, so /chips/ has no chart'); return ''; }
+      const none = pts.filter((p) => !have.includes(p));
+      const X0 = Math.min(...have.map((p) => p.d.y)), X1 = Math.max(...have.map((p) => p.d.y)) + 1;
+      const max = Math.max(...have.map((p) => p.v));
+      const nice = (v) => { const e = Math.pow(10, Math.floor(Math.log10(v))), f = v / e; return (f <= 1 ? 1 : f <= 2 ? 2 : f <= 2.5 ? 2.5 : f <= 5 ? 5 : 10) * e; };
+      const step = nice(max / 4), yMax = Math.ceil(max / step) * step;
+      const fx = (t) => (t - X0) / (X1 - X0), fy = (v) => 1 - v / yMax, pc = (f) => (Math.round(f * 10000) / 100) + '%';
+      const hi = have.find((p) => p.v === max);
+      // a label's width in the interface face, estimated a little wide so the placing errs toward fewer labels
+      const textW = (s, px) => [...String(s)].reduce((a, ch) => a + (/[0-9]/.test(ch) ? 0.6 : /[A-Z]/.test(ch) ? 0.66 : /[a-z]/.test(ch) ? 0.54 : ch === ' ' ? 0.28 : 0.34), 0) * px + 6;
+      // place the labels for a plot W px wide and H px tall: the highest first, then by value, each where it clears the rest
+      const place = (W, H, all) => {
+        const boxes = have.map((p) => { const x = fx(p.d.t) * W, y = fy(p.v) * H; return [x - 8, y - 8, x + 8, y + 8]; });
+        have.forEach((p) => { if (p.d.yearOnly) { const y = fy(p.v) * H; boxes.push([fx(p.d.y) * W + 3, y - 2, fx(p.d.y + 1) * W - 3, y + 2]); } });
+        const clash = (b) => b[0] < -2 || b[2] > W + 12 || b[1] < -30 || b[3] > H || boxes.some((o) => b[0] < o[2] && b[2] > o[0] && b[1] < o[3] && b[3] > o[1]);
+        const out = new Map();
+        have.slice().sort((a, b) => (b.v === max) - (a.v === max) || b.v - a.v).forEach((p) => {
+          const top = p.v === max; if (!all && !top) return;
+          const fs = top ? 12.5 : 11.5, h = 16, w = textW(short(p.c) + (top ? ', ' + nf(p.v) : ''), fs), x = fx(p.d.t) * W, y = fy(p.v) * H, o = 11;
+          const cands = [['s', [x + o, y - h / 2, x + o + w, y + h / 2]], ['e', [x - o - w, y - h / 2, x - o, y + h / 2]], ['u', [x - w / 2, y - o - h, x + w / 2, y - o]], ['d', [x - w / 2, y + o, x + w / 2, y + o + h]]];
+          let pick = cands.find((cd) => !clash(cd[1]));
+          if (!pick && top) pick = cands[1];
+          if (!pick) return;
+          boxes.push(pick[1]); out.set(p.c.id, pick[0]);
+        });
+        return out;
+      };
+      const tiers = [['w', place(870, 400, true)], ['m', place(620, 400, true)], ['p', place(236, 280, false)]];
+      let grid = '';
+      for (let yr = X0; yr <= X1; yr++) { const x = fx(yr) * 1000; grid += `<line x1="${x.toFixed(1)}" x2="${x.toFixed(1)}" y1="0" y2="1000"/>`; }
+      for (let v = 0; v <= yMax + 1e-9; v += step) { const y = fy(v) * 1000; grid += `<line class="${v === 0 ? 'base' : ''}" x1="0" x2="1000" y1="${y.toFixed(1)}" y2="${y.toFixed(1)}"/>`; }
+      let marks = '';
+      for (let v = 0; v <= yMax + 1e-9; v += step) marks += `<span class="ctl-y" style="top:${pc(fy(v))}">${esc(nf(v))}</span>`;
+      for (let yr = X0; yr < X1; yr++) marks += `<span class="ctl-x" style="left:${pc(fx(yr + 0.5))}">${yr}</span>`;
+      have.filter((p) => p.d.yearOnly).forEach((p) => { marks += `<span class="ctl-yr" style="left:${pc(fx(p.d.y))};width:${pc(fx(p.d.y + 1) - fx(p.d.y))};top:${pc(fy(p.v))}" aria-hidden="true"></span>`; });
+      have.forEach((p) => {
+        const c = p.c, top = p.v === max;
+        marks += `<a class="ctl-dot${top ? ' top' : ''}" href="#${chipIds.get(c.id)}" style="left:${pc(fx(p.d.t))};top:${pc(fy(p.v))}" aria-label="${esc(`${c.name}, ${[c.vendor, cname(c.vendorCountry), String(c.announced || '').slice(0, 4)].filter(Boolean).join(', ')}, ${nf(p.v)} ${unit}`)}"><i></i></a>`;
+      });
+      have.forEach((p) => {
+        const top = p.v === max, at = tiers.filter(([, m]) => m.has(p.c.id));
+        if (!at.length) return;
+        // one label element per side it stands on; each width shows the ones placed for it
+        const bySide = new Map(); at.forEach(([k, m]) => { const s = m.get(p.c.id); bySide.set(s, (bySide.get(s) || []).concat(k)); });
+        bySide.forEach((ks, s) => { marks += `<span class="ctl-lab a-${s}${top ? ' top' : ''} ${ks.map((k) => 'in-' + k).join(' ')}" style="left:${pc(fx(p.d.t))};top:${pc(fy(p.v))}" aria-hidden="true">${esc(short(p.c))}${top ? `<b>, ${esc(nf(p.v))}</b>` : ''}</span>`; });
+      });
+      const links = (list) => list.map((p) => `<a href="#${chipIds.get(p.c.id)}">${esc(short(p.c))}</a>`).join(', ');
+      const no = none.filter((p) => ((p.c.compute || {}).support || {}).fp16 === 'no'), np = none.filter((p) => !no.includes(p));
+      const tid = uid('fp16-timeline', 'sections');
+      return `<section class="ref-sec" aria-labelledby="${tid}"><h2 class="ref-h2" id="${tid}">Speed at FP16, by the year each chip was announced<small>${have.length} of ${chips.length} chips have a published figure</small></h2>`
+        + `<p class="ref-sub">The ${esc(short(hi.c))} is the highest, at ${esc(nf(hi.v))} ${unit}. Each dot links to its chip's row in the table.</p>`
+        + `<figure class="ctl" role="group" aria-label="Speed at FP16 of ${have.length} chips, by the month each was announced"><p class="ctl-unit" aria-hidden="true">${unit}</p><div class="ctl-plot">`
+        + `<svg class="ctl-grid" viewBox="0 0 1000 1000" preserveAspectRatio="none" aria-hidden="true" focusable="false">${grid}</svg>${marks}</div></figure>`
+        + (np.length ? `<p class="ctl-none"><span>Not published at FP16</span> ${links(np)}</p>` : '') + (no.length ? `<p class="ctl-none"><span>Not supported at FP16</span> ${links(no)}</p>` : '')
+        + `<p class="ref-sub ctl-note">Each dot is a chip, placed at the month its maker announced it. A chip dated only to a year sits in that year's middle, on a line across the year. The highest value is the one solid dot.</p></section>`;
+    })();
     const table = `<section class="ref-sec" aria-labelledby="specs"><h2 class="ref-h2" id="specs">Specs side by side<small>${chips.length} chips</small></h2>${specsSub ? `<p class="ref-sub">${specsSub}</p>` : ''}`
       + `<p class="ref-sub">Each figure carries the number of its source in the chip's list below.</p>`
       + `<p class="tbl-cue always" aria-hidden="true">Scroll the table sideways to see every column.</p><div class="tbl chips-t" role="region" aria-labelledby="specs" tabindex="0"><table><thead><tr><th scope="col">Chip</th>${COLS.map((col) => `<th scope="col"${col.num ? ' class="num"' : ''}>${esc(col.label)}</th>`).join('')}</tr></thead><tbody>${chips.map(rowHTML).join('')}</tbody></table></div></section>`;
@@ -397,7 +493,7 @@ ${body}
       dekHTML: chipsDek,
       facts: [`${chips.length} chips`, `${makers} makers`],
       ctaNote: 'The interactive page draws each chip\'s package to scale and sets up to four chips side by side.',
-      body: table + sources,
+      body: timeline + table + sources, css: CHIPS_CSS,
       ld: dataset('AI accelerator specifications', `${chips.length} AI accelerators from ${makers} makers: the foundry, process node, memory type, capacity and suppliers, package and assembler, memory bandwidth, dense speed at FP16, FP8 and FP4, and power of each, with the sources for every figure.`,
         ['landscape.json'], ['Foundry', 'Process node', 'Memory', 'Memory bandwidth', 'Dense TFLOPS', 'Power']),
     });
@@ -499,5 +595,6 @@ ${body}
     if (/\{\{REF:/.test(html)) warn(`reference page /${s}/ kept a placeholder`);
   }
   console.log('reference pages: ' + sizes.join(' · '));
-  return {};
+  // the AI Chips view's counts under its standfirst (src/template.html {{AIC_FACTS}}), counted from the data as /chips/ counts them
+  return { AIC_FACTS: `<span>${chips.length} chips</span><span>${new Set(chips.map((c) => c.vendor)).size} makers</span>` };
 };

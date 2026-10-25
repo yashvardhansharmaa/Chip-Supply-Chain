@@ -1665,317 +1665,371 @@ article.ch-page { padding-top: 56px; border-top: 0; }
 
 
 /* module: chips.css */
-/* AI Chips: compare two to four accelerators.
-   Plans and table share one grammar: ink is silicon, amber is memory, and amber marks only
-   the focused chip, never a winning number. Row leaders are bold; bars use --bar-4. */
+/* AI Chips (redesign, option C "The timeline", chosen 25 Oct 2026; qa/design4/ai-chips/ in the main checkout).
+   The page reads top to bottom: the title, the chart of every chip by the month it was announced with the specimen beside it,
+   the row of picks, then the comparison (the packages at one scale, the figures as rows of bars, the rest as a table of words,
+   the notes and sources). Rule B on every chart: the largest value is solid ink, the rest the light tint (--ctx). Red wine
+   marks only links, the reader's place (the pick waiting for a chip) and the reader's own selection (the picked dots' rings,
+   the chip on the stage). No country is ever a color: a maker's country is a plain label. src/app.js Landscape draws it. */
 
-/* ---------- picker ---------- */
-.cx-picker button { padding-left: 30px; position: relative; }
-.cx-picker button::before {
-  content: ""; position: absolute; left: 10px; top: 11px; width: 12px; height: 12px;
-  border: 1px solid var(--control-edge); border-radius: 0; background: var(--bg); /* the empty box is the state, so it takes the 3:1 control edge */
-}
-/* chosen: the box becomes a tick in the ground color on the ink fill */
-.cx-picker button[aria-pressed="true"]::before { left: 12px; top: 10px; width: 5px; height: 9px; border: solid var(--bg); border-width: 0 1.5px 1.5px 0; background: none; transform: rotate(45deg); }
-.cx-picker button[data-focus="1"] { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
-/* the picker as a checklist: makers in three columns, one line a chip with a square check. The group heading names the
-   country, so the chips drop their country code; the family name (Blackwell, Hopper) moves to the button's title */
-.cx-picker { display: block; columns: 3 220px; column-gap: 28px; }
-.cx-picker .group { column-span: all; margin: 14px 0 4px; padding-top: 10px; }
-.cx-picker .group:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
-.cx-picker .vrow { display: block; break-inside: avoid; margin: 0 0 12px; }
-.cx-picker .vname { display: block; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap-s); letter-spacing: 0; color: var(--muted); padding: 0 0 3px; border-bottom: 1px solid var(--line); margin-bottom: 2px; }
-.cx-picker .vchips { display: block; }
-.cx-picker button { display: flex; align-items: baseline; gap: 7px; width: 100%; min-width: 0; min-height: 30px; padding: 5px 4px 5px 24px; border: 0; background: none; color: var(--ink); }
-.cx-picker button:hover { background: var(--bg-2); }
-.cx-picker button[data-cc]::after, .cx-picker button span { display: none; }
-.cx-picker button::before { left: 4px; top: 50%; margin-top: -6px; }
-.picker.cx-picker button[data-cc][aria-pressed="true"] { background: var(--bg-2); color: var(--ink); border-color: transparent; }
-.cx-picker button[aria-pressed="true"]::before { left: 4px; top: 50%; margin-top: -6px; width: 12px; height: 12px; transform: none; border: 0; background: var(--ink); box-shadow: inset 0 0 0 2.5px var(--bg), 0 0 0 1px var(--ink); }
-.cx-picker button[aria-pressed="true"] b { font-weight: 600; }
-.cx-picker button[data-focus="1"] { box-shadow: inset 2px 0 0 var(--accent); }
-.cx-picker button b { font-size: var(--fs-ui); }
+.view[data-view="landscape"] { width: 100%; padding: 0 var(--margin); --aic-hbm: #8c8a84; }
 
-/* ---------- the slots: two to four columns that ask for their chips (21 Oct 2026, qa/design/chips-ux/) ----------
-   Garnet marks only the slot waiting for the next pick and the focus ring. A chosen slot and an empty one are the same height. */
-.cxa { margin: 4px 0 40px; container: cxa / inline-size; }
-.cxa-head { display: flex; align-items: baseline; gap: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--ink); }
-.cxa-ask { margin: 0 auto 0 0; font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 400; font-size: var(--fs-d3); line-height: 1.2; color: var(--ink); }
-.cxa-clear, .cxa-act, .cxa-try button {
-  min-height: 24px; padding: 2px 0; font-family: var(--font-mono); color: var(--ink-2);
-  text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 3px;
+/* ---------- the head: the title, and the standfirst with its counts beside it ---------- */
+.view-head.aic-head { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 24px; align-items: start; padding: clamp(40px, 7vh, 64px) 0 0; }
+.view-head.aic-head h1 { margin: -6px 0 0 -0.03em; font-family: var(--font-display); font-weight: 350; font-variation-settings: var(--opsz-title); font-size: clamp(52px, 4.6vw, 66px); line-height: 1.02; letter-spacing: -0.02em; }
+.aic-head .dek { margin: 0; max-width: 34em; font-family: var(--font-body); font-size: clamp(19px, 1.46vw, 21px); line-height: 1.5; color: var(--ink-2); }
+.aic-meta { display: flex; flex-wrap: wrap; gap: 4px 0; margin: 16px 0 0; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); }
+.aic-meta span:not(:last-child)::after { content: "\00b7"; margin: 0 10px; }
+
+/* ---------- pills: the measures, the pairs, Try with, the chips with no figure, the folded list ---------- */
+.aic-pill { display: inline-flex; align-items: center; min-height: 36px; padding: 0 15px; border: 1px solid var(--control-edge); border-radius: 999px; background: none; color: var(--ink); font-family: var(--font-ui); font-weight: 500; font-size: 14px; line-height: 1.15; white-space: nowrap; text-align: left; }
+.aic-pill.sm { min-height: 30px; padding: 0 12px; font-size: 13px; }
+.aic-pill:hover { border-color: var(--ink); }
+.aic-pill[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.aic-pill[aria-disabled="true"] { opacity: 0.45; }
+/* a chip's number in the comparison, as the chart's labels, the picks, the bars and the table carry it */
+.cx-no { display: inline-grid; font-style: normal; place-items: center; box-sizing: border-box; min-width: 19px; height: 19px; padding: 0 4px; margin-right: 4px; border: 1px solid var(--ink-2); border-radius: 10px; font-family: var(--font-code); font-weight: 400; font-size: 11px; line-height: 1; color: var(--ink); vertical-align: 2px; }
+.aic-pill[aria-pressed="true"] .cx-no { border-color: currentColor; color: inherit; }
+
+/* ---------- the chart, with the specimen beside it ---------- */
+.aic-atlas { margin-top: 64px; padding-top: 14px; border-top: 1px solid var(--ink); }
+.aic-bar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px 24px; }
+.aic-k { margin: 0; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); }
+.aic-measures { display: flex; flex-wrap: wrap; gap: 6px; }
+.aic-grid { display: grid; grid-template-columns: minmax(0, 8fr) minmax(0, 4fr); gap: 0 48px; margin-top: 22px; }
+.aic-fig { position: relative; margin: 0; min-width: 0; }
+.aic-h { margin: 0; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 21px; line-height: 1.25; letter-spacing: -0.005em; color: var(--ink); }
+.aic-sub { margin: 8px 0 0; max-width: 46em; font-family: var(--font-body); font-size: 15.5px; line-height: 1.55; color: var(--ink-2); }
+.aic-chart { margin-top: 18px; min-height: 320px; }
+.aic-chart svg { display: block; overflow: visible; }
+.aic-chart .ax { font-family: var(--font-code); font-size: 11px; fill: var(--muted); }
+.aic-chart .gx, .aic-chart .gy { stroke: var(--line); stroke-width: 1; }
+.aic-chart .gy.base { stroke: var(--rule-ink); }
+.aic-chart .pt { cursor: pointer; outline: none; }
+.aic-chart .pt .hit { fill: transparent; }
+.aic-chart .pt .dot { fill: var(--ctx); }
+.aic-chart .pt:hover .dot { fill: var(--rule-ink); }
+.aic-chart .pt.top .dot { fill: var(--ink); }
+.aic-chart .pt .ring { fill: none; stroke: var(--accent); stroke-width: 2; }
+.aic-chart .pt .yr { stroke: var(--line-2); stroke-width: 1.5; }
+.aic-chart .pt .arr { fill: var(--ink); }
+.aic-chart .pt:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.aic-chart .pt:focus-visible .hit { stroke: var(--accent); stroke-width: 2; stroke-dasharray: 3 2; }
+.aic-chart .lab { font-family: var(--font-ui); font-weight: 400; font-size: 11.5px; fill: var(--muted); pointer-events: none; }
+.aic-chart .lab.top, .aic-chart .lab.mine { font-size: 12.5px; font-weight: 600; fill: var(--ink); }
+.aic-chart .lab .lv { font-weight: 700; }
+.aic-chart .lab .lno { font-family: var(--font-code); font-weight: 400; fill: var(--accent-ink); }
+/* a dot's card, on hover or focus */
+.aic-tip { position: absolute; z-index: 5; display: flex; flex-direction: column; gap: 2px; max-width: 250px; padding: 10px 12px; background: var(--bg-2); border-top: 2px solid var(--ink); box-shadow: var(--shadow); pointer-events: none; font-family: var(--font-ui); font-size: 13px; line-height: 1.35; color: var(--ink-2); }
+.aic-tip[hidden] { display: none; }
+.aic-tip b { font-weight: 600; font-size: 14px; color: var(--ink); }
+.aic-tip .tv { font-family: var(--font-code); font-size: 12.5px; color: var(--ink); }
+.aic-tip .ta { font-size: 12px; color: var(--muted); }
+/* the chips with no figure for the measure, as pills that pick them */
+.aic-gutter { margin-top: 18px; }
+.aic-gut { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 0 0 8px; }
+.aic-gut-k { min-width: 180px; margin-right: 6px; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); }
+.aic-note { max-width: 60em; margin: 14px 0 0; padding-top: 12px; border-top: 1px solid var(--line); font-family: var(--font-ui); font-size: 13px; line-height: 1.5; color: var(--muted); }
+/* the specimen beside the chart: the stage's canvas moves here on a wide screen (Landscape.hostStage), with its label, pause
+   and caption under it; the caption stands on the drawing's foot (--slack, src/app.js Stage.fit) */
+.aic-spec.ch-spec { position: sticky; top: calc(var(--masthead) + 24px); align-self: start; min-width: 0; margin: 0; }
+.aic-spec-draw { position: relative; height: min(46vh, 400px); min-height: 220px; }
+.aic-spec-draw canvas { display: block; width: 100%; height: 100%; }
+@media (hover: hover) and (pointer: fine) {
+  .aic-spec-draw canvas { cursor: grab; touch-action: none; outline: none; }
+  .aic-spec-draw canvas.is-dragging { cursor: grabbing; }
+  .aic-spec-draw canvas:focus-visible { box-shadow: inset 0 0 0 2px var(--accent); }
 }
-.cxa-clear { flex: none; font-weight: 500; font-size: var(--fs-cap); letter-spacing: 0; }
-.cxa-clear:hover, .cxa-act:hover, .cxa-try button:hover { color: var(--ink); text-decoration-color: var(--ink-2); }
-.cxa-row { --n: 2; display: grid; grid-template-columns: repeat(var(--n), minmax(0, 1fr)); gap: 12px; padding-top: 12px; }
-.cxa-row[data-n="3"] { --n: 3; }
-.cxa-row[data-n="4"] { --n: 4; }
-.cxa-slot { min-width: 0; display: flex; flex-direction: column; container: cxa-slot / inline-size; } /* the card fills the row, so the cards in a row match */
-.cxa-k { margin: 0 0 6px; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: 0; color: var(--muted); }
-.cxa-card { flex: 1 1 auto; display: grid; box-sizing: border-box; width: 100%; min-height: 116px; border: 1px solid var(--line-2); border-radius: 0; background: var(--bg); text-align: left; }
-/* an empty slot is one button */
-.cxa-add { display: flex; align-items: center; gap: 9px; padding: 0 14px; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-ui); color: var(--ink); cursor: pointer; }
-.cxa-add:hover { border-color: var(--ink); background: var(--bg-2); }
-.cxa-plus { font-size: 20px; font-weight: 400; line-height: 1; color: var(--ink-2); }
-.cxa-slot[data-state="next"] .cxa-k, .cxa-slot[data-state="next"] .cxa-plus { color: var(--accent-ink); }
-.cxa-slot[data-state="next"] .cxa-add { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
-.cxa-slot[data-state="more"] .cxa-add { border-style: dashed; font-weight: 400; color: var(--ink-2); }
-/* a chosen slot looks like the chip: its plan, its name, maker · country · year, and two quiet actions */
-.cxa-chip { grid-template-columns: auto minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) auto; column-gap: 12px; padding: 10px 12px 8px; }
-.cxa-thumb { grid-row: 1 / -1; display: flex; align-items: center; justify-content: center; width: 64px; }
-.cxa-thumb svg { width: 64px; height: 56px; max-width: none; } /* the viewBox fits each plan to the box, so thumbnails are not to scale with one another */
-.cxa-thumb .cx-hbm { fill: var(--muted); } /* memory goes grey here: in the slots garnet belongs to the slot waiting for a pick */
-.cxa-noplan { display: block; width: 50px; height: 38px; border: 1px dashed var(--line-2); background: repeating-linear-gradient(135deg, transparent 0 5px, var(--line) 5px 6px); }
-.cxa-id { min-width: 0; align-self: start; }
-.cxa-name { display: block; overflow-wrap: break-word; font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 400; font-size: var(--fs-d5); line-height: 1.15; color: var(--ink); }
-.cxa-meta { display: block; margin-top: 4px; overflow-wrap: break-word; font-family: var(--font-mono); font-size: var(--fs-cap-s); letter-spacing: 0; line-height: 1.4; color: var(--muted); }
-.cxa-acts { grid-column: 2; display: flex; gap: 14px; }
-.cxa-act { font-size: var(--fs-ui-s); }
-/* Try with: under the slot waiting for the second chip */
-.cxa-try { grid-column: 2; margin: -4px 0 0; font-family: var(--font-mono); font-size: var(--fs-ui-s); line-height: 1.6; color: var(--muted); }
-.cxa-pk { margin-right: 10px; }
-.cxa-try button { margin-right: 12px; font-weight: 500; font-size: var(--fs-ui-s); color: var(--ink); }
-/* the empty page's pairs: small ruled buttons */
-.cxa-pairs { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 16px 0 0; font-family: var(--font-mono); font-size: var(--fs-ui-s); color: var(--muted); }
-.cxa-pairs .cxa-pk { margin-right: 4px; }
-.cxa-pairs button { min-height: 32px; padding: 5px 10px; border: 1px solid var(--line-2); border-radius: 0; background: var(--bg); font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-ui-s); color: var(--ink); }
-.cxa-pairs button:hover { border-color: var(--ink); background: var(--bg-2); }
-/* the checklist, folded under the slots; a tick fills the next free slot */
-.cxa-browse { margin: 18px 0 0; border-top: 1px solid var(--line); }
-.cxa-browse summary { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; cursor: pointer; list-style: none; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: 0; color: var(--ink-2); }
+.aic-spec-cap { position: relative; margin: calc(-1 * var(--slack, 0px)) 0 0; max-width: 34em; transition: margin-top 0.3s var(--ease, ease); }
+.aic-spec-cap .label { display: flex; align-items: center; gap: 10px; margin: 0 0 6px; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); }
+.aic-spec-cap .label b { font-weight: 400; color: inherit; }
+.aic-spec-cap > p:not(.label) { margin: 0; font-family: var(--font-body); font-size: 14px; line-height: 1.5; color: var(--ink-2); text-wrap: pretty; }
+.aic-spec-cap .stage-pause { pointer-events: auto; display: inline-grid; place-items: center; width: 24px; height: 24px; margin: -4px 0; padding: 0; border: 1px solid var(--line-2); border-radius: 50%; background: var(--bg); color: var(--ink-2); }
+.aic-spec-cap .stage-pause svg { width: 10px; height: 10px; fill: currentColor; stroke: none; }
+.aic-spec-cap .stage-pause:hover { color: var(--ink); border-color: var(--ink); }
+@media (prefers-reduced-motion: reduce) { .aic-spec-cap { transition: none; } }
+html.no-stage .aic-spec { display: none; }
+html.no-stage .aic-grid { grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 900px) {
+  /* the stage beside the page stands down: the specimen sits beside the chart */
+  html[data-view="landscape"] .stage { display: none; }
+  html[data-view="landscape"] body:has(.stage[data-hidden]) .to-top { top: auto; bottom: 20px; }
+}
+
+/* ---------- the picks: a row of two to four chips, each with Change and Remove ---------- */
+.cxa { margin-top: 80px; }
+.cxa-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--ink); }
+.cxa-ask { margin: 0; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: 25px; line-height: 1.25; color: var(--ink); }
+.cxa-clear, .cxa-act, .cx-act, .cx-jump, .cxs-clear {
+  display: inline-flex; align-items: center; min-height: 24px; padding: 4px 0; background: none; border: 0;
+  font-family: var(--font-ui); font-weight: 500; font-size: 13px; line-height: 1.2; color: var(--ink);
+  text-decoration: underline; text-decoration-color: var(--rule-ink); text-underline-offset: 4px;
+}
+.cxa-clear:hover, .cxa-act:hover, .cx-act:hover, .cx-jump:hover, .cxs-clear:hover { color: var(--accent-ink); text-decoration-color: var(--accent); }
+.cxa-clear { flex: none; }
+.cxa-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-bottom: 1px solid var(--line); }
+.cxa-slot { display: flex; flex-direction: column; min-width: 0; padding: 16px 20px 18px 0; }
+.cxa-slot + .cxa-slot { padding-left: 20px; border-left: 1px solid var(--line); }
+.cxa-k { display: flex; align-items: center; margin: 0 0 8px; font-family: var(--font-code); font-size: 12px; line-height: 19px; color: var(--muted); }
+.cxa-slot[data-state="next"] .cxa-k { color: var(--accent-ink); }
+.cxa-name { align-self: flex-start; padding: 0; background: none; border: 0; text-align: left; overflow-wrap: anywhere; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: 26px; line-height: 1.12; color: var(--ink); }
+.cxa-name:hover { text-decoration: underline; text-decoration-color: var(--rule-ink); text-decoration-thickness: 1px; text-underline-offset: 6px; }
+.cxa-slot[data-on="1"] .cxa-name { text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 6px; }
+.cxa-meta { margin-top: 6px; font-family: var(--font-ui); font-size: 13px; line-height: 1.4; color: var(--muted); overflow-wrap: anywhere; }
+.cxa-acts { display: flex; flex-wrap: wrap; gap: 0 16px; margin-top: 6px; }
+.cxa-add { display: flex; align-items: center; gap: 8px; flex: 1 1 auto; width: 100%; min-height: 92px; padding: 0 16px; border: 1px dashed var(--control-edge); background: none; text-align: left; font-family: var(--font-ui); font-weight: 500; font-size: 15px; line-height: 1.3; color: var(--ink); }
+.cxa-add:hover { border-color: var(--ink); }
+.cxa-plus { font-size: 18px; font-weight: 400; line-height: 1; }
+.cxa-slot[data-state="next"] .cxa-add { border: 1.5px solid var(--accent); }
+.cxa-slot[data-state="more"] .cxa-add { font-weight: 400; color: var(--ink-2); }
+/* the line under the picks: pairs, then Try with */
+.cxa-pairs { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 18px; }
+.cxa-pk { margin-right: 6px; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); }
+/* the folded list of every chip, by country and maker */
+.cxa-browse { margin-top: 18px; border-top: 1px solid var(--line); }
+.cxa-browse summary { display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 0; cursor: pointer; list-style: none; font-family: var(--font-ui); font-weight: 500; font-size: 14px; line-height: 1.2; color: var(--ink); }
 .cxa-browse summary::-webkit-details-marker { display: none; }
-.cxa-browse summary::before { content: "+"; width: 12px; font-size: var(--fs-ui); color: var(--muted); }
+.cxa-browse summary::before { content: "+"; width: 12px; font-size: 16px; font-weight: 400; color: var(--muted); }
 .cxa-browse[open] summary::before { content: "\2212"; }
-.cxa-browse summary:hover { color: var(--ink); }
-.cxa-browse .cx-picker { margin: 6px 0 4px; }
-section[data-view="landscape"][data-full="1"] .cx-picker button[aria-pressed="false"] { opacity: 0.42; }
-@container cxa (max-width: 700px) { .cxa-row[data-n="3"], .cxa-row[data-n="4"] { --n: 2; } } /* a third and fourth wrap under the pair */
-@container cxa-slot (max-width: 230px) { /* a narrow slot stacks: plan, name, maker line, actions */
-  .cxa-card { min-height: 152px; }
-  .cxa-add { padding: 0 10px; }
-  .cxa-chip { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr) auto; row-gap: 6px; padding: 10px 10px 8px; }
-  .cxa-thumb { grid-row: auto; justify-content: flex-start; width: auto; }
-  .cxa-thumb svg { width: 46px; height: 34px; }
-  .cxa-noplan { width: 40px; height: 30px; }
-  .cxa-acts { grid-column: 1; gap: 12px; }
-}
+.aic-lg { padding: 4px 0 14px; }
+.aic-lg-h { margin: 6px 0 8px; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); }
+.aic-lr { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 6px 16px; align-items: baseline; padding: 8px 0; border-top: 1px solid var(--line); }
+.aic-ln { font-family: var(--font-ui); font-weight: 500; font-size: 14px; line-height: 1.3; color: var(--ink); }
+.aic-lc { display: flex; flex-wrap: wrap; gap: 6px; }
 
-/* ---------- the chip picker: a popover under its slot, a sheet from the bottom on phones ---------- */
-.cxp { position: absolute; z-index: 39; display: flex; flex-direction: column; background: var(--bg); border: 1px solid var(--line-2); border-top: 2px solid var(--ink); border-radius: 0; box-shadow: var(--shadow); }
-.cxp-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 8px 0 12px; }
-.cxp-t { margin: 0; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: 0; color: var(--muted); }
-.cxp-x { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; font-size: 20px; line-height: 1; color: var(--ink-2); }
+/* ---------- the chip picker: a popover under its pick, a sheet from the bottom on phones ---------- */
+.cxp { position: absolute; z-index: 39; display: flex; flex-direction: column; background: var(--bg); border: 1px solid var(--ink); box-shadow: var(--shadow); padding-top: 12px; font-family: var(--font-ui); }
+.cxp-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 0 10px 8px 16px; }
+.cxp-t { margin: 0; font-weight: 500; font-size: 15px; line-height: 1.2; color: var(--ink); }
+.cxp-x { display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; font-size: 20px; line-height: 1; color: var(--ink-2); }
 .cxp-x:hover { color: var(--ink); background: var(--bg-2); }
-.cxp-in { display: block; margin: 6px 12px 0; padding: 9px 10px; font: inherit; font-family: var(--font-mono); font-size: var(--fs-ui); color: var(--ink); background: var(--bg); border: 1px solid var(--control-edge); border-radius: 0; }
+.cxp-in { display: block; box-sizing: border-box; width: calc(100% - 32px); height: 40px; margin: 0 16px 10px; padding: 0 12px; border: 1px solid var(--control-edge); border-radius: 0; background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 15px; }
 .cxp-in::placeholder { color: var(--muted); }
-.cxp-in:focus-visible { outline: 1.5px solid var(--accent); outline-offset: 2px; }
-.cxp-list { position: relative; flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; margin-top: 10px; padding-bottom: 6px; border-top: 1px solid var(--line); }
-.cxp-gh { position: sticky; top: 0; z-index: 1; padding: 9px 12px 4px; background: var(--bg); font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap-s); letter-spacing: 0; color: var(--muted); }
-.cxp-o { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 10px; padding: 6px 12px; cursor: pointer; }
-.cxp-n { font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-ui); line-height: 1.35; color: var(--ink); }
-.cxp-m { grid-column: 1; font-family: var(--font-mono); font-size: var(--fs-ui-s); line-height: 1.4; color: var(--muted); }
-.cxp-s { grid-column: 2; grid-row: 1 / span 2; align-self: center; font-family: var(--font-mono); font-size: var(--fs-cap-s); letter-spacing: 0; color: var(--muted); }
-.cxp-o:hover { background: var(--bg-2); }
-.cxp-o.is-active { background: var(--bg-2); box-shadow: inset 2px 0 0 var(--accent); } /* the active chip is the list's focus ring */
-.cxp-o.is-mine .cxp-n { font-weight: 600; }
+.cxp-in:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.cxp-list { position: relative; flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding-bottom: 6px; border-top: 1px solid var(--line); }
+.cxp-gh { position: sticky; top: 0; z-index: 1; padding: 10px 16px 4px; background: var(--bg); font-family: var(--font-code); font-size: 11.5px; line-height: 16px; color: var(--muted); }
+.cxp-o { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 10px; padding: 7px 16px; cursor: pointer; }
+.cxp-n { font-weight: 500; font-size: 15px; line-height: 1.3; color: var(--ink); }
+.cxp-m { grid-column: 1; font-size: 12.5px; line-height: 1.35; color: var(--muted); }
+.cxp-s { grid-column: 2; grid-row: 1 / span 2; align-self: center; font-family: var(--font-code); font-size: 11.5px; line-height: 1; color: var(--muted); }
+.cxp-o:hover, .cxp-o.is-active { background: var(--bg-2); }
+.cxp-o.is-active { box-shadow: inset 2px 0 0 var(--accent); } /* the active chip is the list's focus mark */
+.cxp-o.is-active .cxp-n { color: var(--accent-ink); }
+.cxp-o.is-mine .cxp-s { color: var(--accent-ink); }
 .cxp-o[aria-disabled="true"] { cursor: default; }
 .cxp-o[aria-disabled="true"]:hover { background: none; }
 .cxp-o[aria-disabled="true"] .cxp-n, .cxp-o[aria-disabled="true"] .cxp-m { color: var(--muted); opacity: 0.6; }
-.cxp-none { margin: 12px; font-size: var(--fs-small); color: var(--muted); }
+.cxp-none { margin: 10px 16px 16px; font-size: 14px; line-height: 1.4; color: var(--muted); }
 .cxp-scrim { position: fixed; inset: 0; z-index: 59; background: var(--scrim); }
-.cxp.is-sheet { position: fixed; left: 0; right: 0; bottom: 0; z-index: 60; border-left: 0; border-right: 0; border-bottom: 0; box-shadow: none; padding-bottom: env(safe-area-inset-bottom, 0px); }
-.cxp.is-sheet .cxp-head { padding: 10px 6px 0 16px; }
+.cxp.is-sheet { position: fixed; left: 0; right: 0; bottom: 0; z-index: 60; border: 0; border-top: 2px solid var(--ink); box-shadow: none; padding-bottom: env(safe-area-inset-bottom, 0px); }
 .cxp.is-sheet .cxp-x { width: 44px; height: 44px; font-size: 24px; }
-.cxp.is-sheet .cxp-in { margin: 4px 16px 0; padding: 11px 12px; font-size: 16px; } /* 16 px, or iOS zooms the page when the field takes focus */
-.cxp.is-sheet .cxp-gh { padding: 10px 16px 4px; }
+.cxp.is-sheet .cxp-in { font-size: 16px; } /* 16 px, or iOS zooms the page when the field takes focus */
 .cxp.is-sheet .cxp-o { padding: 9px 16px; }
 
-/* ---------- the empty frame: dashed plans and hatched columns wait for each chip not yet chosen ---------- */
-.cx-plan--ghost { gap: 8px; padding: 8px 10px 10px; border: 1px dashed var(--line-2); cursor: default; min-width: 150px; }
-.cx-plan--ghost:hover { border-color: var(--line-2); }
-.cx-plan--ghost .cx-plan-name b, .cx-plan--ghost .cx-plan-name em { color: var(--muted); }
-.cx-plan--ghost .cx-plan-art i { display: block; width: 128px; height: 92px; background: repeating-linear-gradient(135deg, transparent 0 7px, var(--line) 7px 8px); }
-.cx-col--ghost .cx-ghost-h { display: block; font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 400; font-size: var(--fs-d5); line-height: 1.1; color: var(--muted); }
-.cx-col--ghost .cx-ghost-s { display: block; margin-top: 3px; font-family: var(--font-mono); font-size: var(--fs-cap-s); letter-spacing: 0; color: var(--muted); }
-.cx-table td.cx-ghost { background: repeating-linear-gradient(135deg, transparent 0 6px, var(--line) 6px 7px); }
-.cx-h { display: block; margin: 30px 0 4px; }
-.cx-sub { font-size: var(--fs-small); color: var(--muted); margin: 0 0 12px; max-width: 58ch; }
+/* ---------- the comparison ---------- */
+.aic-cmp { margin-top: 96px; }
+.aic-cmp-t { margin: 0; font-family: var(--font-display); font-weight: 350; font-variation-settings: var(--opsz-title); font-size: 46px; line-height: 1.08; letter-spacing: -0.015em; color: var(--ink); }
+.aic-cmp .aic-lede { margin: 10px 0 0; max-width: 38em; font-family: var(--font-body); font-size: 15.5px; line-height: 1.55; color: var(--ink-2); }
+.aic-sec { margin-top: 56px; padding-top: 12px; border-top: 1px solid var(--ink); }
+.aic-sec-h { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px 24px; }
+.aic-sec-h .cx-h { margin: 0; }
+.aic-sec-r { margin: 0; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); }
+.aic-pk .cx-sub { margin: 12px 0 0; max-width: 46em; font-family: var(--font-body); font-size: 14px; line-height: 1.55; color: var(--ink-2); }
 
-/* ---------- key and scale bar ---------- */
-.cx-key {
-  display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: center; margin: 0 0 10px;
-  font-family: var(--font-mono); font-size: var(--fs-cap-s); letter-spacing: 0; color: var(--muted);
-}
-.cx-key span { display: inline-flex; align-items: center; gap: 6px; }
-.cx-sw { width: 10px; height: 10px; border-radius: 0; display: inline-block; }
+/* the key and the scale bar */
+.cx-key { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; font-family: var(--font-ui); font-size: 12.5px; line-height: 1; color: var(--ink-2); }
+.cx-key span { display: inline-flex; align-items: center; gap: 7px; }
+.cx-sw { display: inline-block; width: 11px; height: 11px; }
 .cx-sw.die { background: var(--ink); }
-.cx-sw.hbm { background: var(--accent); }
-.cx-sw.int { background: var(--bg-3); border: 1px solid var(--line-2); }
-.cx-sw.sub { background: var(--bg-2); border: 1px solid var(--line-2); }
-.cx-scale { margin-left: auto; }
-.cx-scale i { display: inline-block; height: 5px; border: 1px solid var(--muted); border-top: 0; }
+.cx-sw.hbm { background: var(--aic-hbm); }
+.cx-sw.int { background: var(--bg-3); box-shadow: inset 0 0 0 1px var(--line-2); }
+.cx-sw.sub { background: var(--bg-2); box-shadow: inset 0 0 0 1px var(--line-2); }
+.cx-scale { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-code); font-size: 12px; color: var(--muted); }
+.cx-scale i { display: inline-block; height: 6px; border: 1px solid var(--muted); border-top: 0; }
 
-/* ---------- package plans, one scale ---------- */
-.cx-plans {
-  display: flex; flex-wrap: wrap; align-items: stretch; gap: 20px; max-width: 100%; /* the cards wrap where they cannot share a row, so none is cut off */
-  padding: 6px 2px 14px; margin-bottom: 6px;
-}
-.cx-plan {
-  position: relative; flex: 0 0 auto; display: flex; flex-direction: column; box-sizing: border-box; text-align: left;
-  border: 1px solid transparent; border-radius: 0;
-}
-.cx-plan:hover { border-color: var(--line-2); }
-/* the chip on the 3D stage: an ink outline and a label that says so */
-.cx-plan.is-on, .cx-plan.is-on:hover { border-color: var(--ink); }
-.cx-plan-hit { display: flex; flex: 1 1 auto; flex-direction: column; gap: 8px; width: 100%; padding: 8px 10px 4px; text-align: left; }
-.cx-on { display: block; min-height: 15px; padding-right: 26px; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap-s); letter-spacing: 0; color: var(--muted); }
-.cx-plan.is-on .cx-on { font-weight: 600; color: var(--ink); }
-.cx-plan-hit:hover .cx-on { color: var(--ink); }
-.cx-plan-foot { display: flex; align-items: center; gap: 12px; padding: 0 10px 8px; }
-.cx-noplan { display: flex; align-items: center; justify-content: center; width: 112px; height: 72px; padding: 6px; box-sizing: border-box; border: 1px dashed var(--line-2); background: repeating-linear-gradient(135deg, transparent 0 7px, var(--line) 7px 8px); font-family: var(--font-mono); font-style: normal; font-size: var(--fs-cap-s); letter-spacing: 0; text-align: center; color: var(--muted); }
-.cx-plan-name b { display: block; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-ui); line-height: 1.2; overflow-wrap: break-word; }
-.cx-plan-name em {
-  display: block; font-style: normal; font-family: var(--font-mono);
-  font-size: var(--fs-cap-s); letter-spacing: 0; color: var(--muted); margin-top: 2px;
-}
-.cx-plan-art { display: flex; align-items: flex-end; flex: 1 1 auto; min-height: 0; }
-.cx-plan-size { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; color: var(--muted); }
+/* the packages at one scale: each drawing over a rule, its number and name, its size; the chip on the stage says so in wine */
+.cx-plans { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 28px 48px; margin-top: 28px; }
+.cx-plan { display: flex; flex-direction: column; min-width: 0; max-width: 100%; }
+.cx-plan-hit { display: flex; flex-direction: column; width: 100%; padding: 0; background: none; border: 0; text-align: left; color: var(--ink); }
+.cx-plan-art { display: flex; align-items: flex-end; box-sizing: content-box; height: var(--plan-h, 84px); padding-bottom: 12px; border-bottom: 1px solid var(--line-2); }
+.cx-plan.is-on .cx-plan-art { padding-bottom: 11px; border-bottom: 2px solid var(--accent); }
+.cx-plan-hit:hover .cx-plan-name b { text-decoration: underline; text-decoration-color: var(--rule-ink); text-underline-offset: 3px; }
 .cx-plan-svg { display: block; max-width: none; }
+.cx-plan-name { display: block; margin-top: 10px; font-family: var(--font-ui); font-size: 15px; line-height: 1.3; overflow-wrap: anywhere; }
+.cx-plan-name b { font-weight: 500; }
+.cx-plan-name em { display: block; margin-top: 1px; font-style: normal; font-size: 13px; color: var(--muted); }
+.cx-plan-size { display: block; margin-top: 4px; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); }
+.cx-on { display: block; min-height: 16px; margin-top: 6px; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--accent-ink); }
+.cx-noplan { display: flex; align-items: center; justify-content: center; box-sizing: border-box; width: 112px; height: 72px; padding: 6px; border: 1px dashed var(--line-2); font-family: var(--font-code); font-style: normal; font-size: 11px; line-height: 1.3; text-align: center; color: var(--muted); }
+.cx-plan--ghost .cx-plan-art i { display: block; width: 128px; height: 84px; border: 1px dashed var(--line-2); background: repeating-linear-gradient(135deg, var(--line) 0 1px, transparent 1px 8px); }
+.cx-plan--ghost .cx-plan-name b { color: var(--ink-2); }
 .cx-plan-svg rect, .cx-plan-svg circle, .cx-plan-svg line { vector-effect: non-scaling-stroke; }
 .cx-substrate { fill: var(--bg-2); stroke: var(--line-2); stroke-width: 1; }
 .cx-interposer { fill: var(--bg-3); stroke: var(--line-2); stroke-width: 1; }
 .cx-base { fill: var(--ink); opacity: 0.3; }
 .cx-die { fill: var(--ink); }
-.cx-hbm { fill: var(--accent); }
+.cx-hbm { fill: var(--aic-hbm); } /* memory is gray: red wine never marks a part */
 .cx-wafer { fill: var(--bg-2); stroke: var(--line-2); stroke-width: 1; stroke-dasharray: 4 3; }
 .cx-grid { stroke: var(--bg); stroke-width: 0.6; opacity: 0.55; }
 
-/* ---------- the side-by-side table ---------- */
-.cx-tablewrap {
-  max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; container-type: inline-size;
-  border: 0; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--line-2);
-}
-/* the scroll cue: the right edge fades while more of the table sits past it */
-.cx-tablewrap[data-more="1"] { -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 56px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 56px), transparent); }
-.cx-more { margin: 0 0 6px; text-align: right; font-family: var(--font-mono); font-size: var(--fs-cap); letter-spacing: 0; color: var(--muted); }
+/* the figures: each measure a row of bars, the largest solid ink and the rest the light tint */
+.aic-strips { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 56px; }
+.srow { min-width: 0; padding: 18px 0 16px; border-bottom: 1px solid var(--line); }
+.srow-h { margin: 0 0 10px; font-family: var(--font-ui); font-weight: 600; font-size: 15px; line-height: 1.3; color: var(--ink); }
+.srow-h span { margin-left: 4px; font-family: var(--font-code); font-weight: 400; font-size: 11.5px; color: var(--muted); }
+.sl { display: grid; grid-template-columns: 150px minmax(0, 1fr) 148px; gap: 4px 14px; align-items: center; min-height: 30px; }
+.sl-n { min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-family: var(--font-ui); font-size: 13.5px; line-height: 1.6; color: var(--ink); }
+.sl.is-on .sl-n { text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+.sl-b { display: block; height: 12px; }
+.srow.has-sub .sl + .sl { margin-top: 10px; } /* a figure with a second line (a die's area) keeps clear of the next chip's mark */
+.sl-b i { display: block; height: 100%; background: var(--ctx); }
+.sl-b i.top { background: var(--ink); }
+.sl.ghost .sl-n { color: var(--muted); }
+.sl.ghost .sl-b i { width: 100%; background: repeating-linear-gradient(135deg, var(--line-2) 0 1px, transparent 1px 7px); }
+.sl-v { min-width: 0; font-family: var(--font-code); font-size: 14px; line-height: 1.3; color: var(--ink-2); }
+.cx-v.is-top { font-weight: 700; color: var(--ink); } /* rule B: the largest figure bold in ink */
+.sl-v .cx-2 { display: block; margin-top: 1px; font-family: var(--font-ui); font-size: 11.5px; line-height: 1.3; color: var(--muted); }
+.cx-nil { font-family: var(--font-code); font-size: 12px; line-height: 1.4; color: var(--muted); }
+.cx-fn { margin-left: 1px; font-family: var(--font-code); font-size: 11px; line-height: 0; vertical-align: super; color: var(--muted); }
+/* "all": a figure whose source the chip's list does not name row by row goes to the whole list */
+sup.cite.cx-all button { position: relative; padding: 0 1px; background: none; border: 0; font-family: var(--font-mono); font-weight: 500; font-size: inherit; line-height: inherit; color: var(--accent); cursor: pointer; }
+sup.cite.cx-all button::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 24px); height: max(100%, 26px); transform: translate(-50%, -50%); }
+sup.cite.cx-all button:hover { background: var(--accent-soft); }
+
+/* the words: one column per chip, Change, × and Read the notes on each head */
+.cx-more { margin: 10px 0 0; text-align: right; font-family: var(--font-code); font-size: 12px; color: var(--muted); }
 .cx-more[hidden] { display: none; }
-.cx-table { border-collapse: collapse; width: 100%; font-size: var(--fs-note); font-variant-numeric: tabular-nums; }
-.cx-table th, .cx-table td { padding: 9px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
-.cx-table tr:last-child th, .cx-table tr:last-child td { border-bottom: 0; }
-.cx-table td { color: var(--ink-2); }
-.cx-rowhead {
-  position: sticky; left: 0; z-index: 1; background: var(--bg); min-width: 128px;
-  font-family: var(--font-mono); font-size: var(--fs-cap-s); font-weight: 500; letter-spacing: 0; color: var(--muted); white-space: nowrap;
-  border-right: 1px solid var(--line);
-}
-.cx-table thead th { background: var(--bg); border-bottom: 1px solid var(--line-2); vertical-align: bottom; }
-.cx-table thead .cx-rowhead { background: var(--bg); }
-.cx-col { min-width: 152px; }
-.cx-col { position: relative; }
-.cx-col.is-focus { box-shadow: inset 0 -2px 0 var(--ink); }
-/* three or four chips: the columns share the box equally and the row names wrap, so every chip shows without scrolling */
-@container (min-width: 520px) {
-  .cx-table[data-n="3"] { table-layout: fixed; }
-  .cx-table[data-n="3"] .cx-col { min-width: 0; }
-  .cx-table[data-n="3"] .cx-rowhead { width: 120px; min-width: 0; white-space: normal; }
-}
-@container (min-width: 640px) {
-  .cx-table[data-n="4"] { table-layout: fixed; }
-  .cx-table[data-n="4"] .cx-col { min-width: 0; }
-  .cx-table[data-n="4"] .cx-rowhead { width: 112px; min-width: 0; white-space: normal; }
-  .cx-table[data-n="4"] th, .cx-table[data-n="4"] td { padding-left: 10px; padding-right: 10px; overflow-wrap: anywhere; }
-}
-.cx-colhead { display: block; padding-right: 30px; text-align: left; overflow-wrap: break-word; }
-.cx-colhead b { display: block; font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 500; font-size: var(--fs-d5); line-height: 1.1; }
-.cx-colhead span { display: block; font-family: var(--font-mono); font-size: var(--fs-cap-s); letter-spacing: 0; color: var(--muted); margin-top: 3px; }
-.cx-colhead:hover b { text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 0.18em; }
-.cx-colacts { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 14px; margin-top: 6px; }
-.cx-jump {
-  margin-top: 0; font-family: var(--font-mono); font-size: var(--fs-cap-s); letter-spacing: 0; color: var(--muted); border-bottom: 1px solid var(--line-2); padding-bottom: 1px;
-}
-.cx-jump:hover { color: var(--ink); border-color: var(--ink-2); }
+.cx-tablewrap { max-width: 100%; margin-top: 10px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.cx-tablewrap[data-more="1"] { -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 56px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 56px), transparent); }
+.cx-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+.cx-table[data-n="3"], .cx-table[data-n="4"] { min-width: 720px; }
+.cx-table th.cx-rowhead { width: 150px; padding: 13px 14px 13px 0; text-align: left; vertical-align: top; font-family: var(--font-ui); font-weight: 400; font-size: 13.5px; line-height: 1.35; color: var(--ink-2); }
+.cx-table thead th { position: relative; padding: 0 14px 12px; text-align: left; vertical-align: bottom; border-bottom: 2px solid var(--ink); }
+.cx-table thead th.cx-rowhead { padding-left: 0; }
+.cx-table thead th.is-focus { box-shadow: inset 0 -2px 0 var(--accent); }
+.cx-table td { padding: 13px 14px; vertical-align: top; border-bottom: 1px solid var(--line); font-family: var(--font-body); font-size: 15px; line-height: 1.45; color: var(--ink); overflow-wrap: anywhere; }
+.cx-table tbody th { border-bottom: 1px solid var(--line); }
+.cx-table td.cx-long { font-size: 14px; line-height: 1.5; }
 .cx-table td.is-focus { background: var(--bg-2); }
-.cx-v { font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 400; font-size: var(--fs-d6); color: var(--ink); font-variant-numeric: tabular-nums; }
-.cx-v.is-best { font-weight: 600; }
-.cx-2 { display: block; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; color: var(--muted); margin-top: 3px; }
-.cx-nil { font-family: var(--font-mono); font-size: var(--fs-ui-s); color: var(--muted); }
-.cx-meter { display: block; height: 3px; max-width: 118px; margin-top: 7px; background: var(--line); }
-.cx-meter i { display: block; height: 100%; background: var(--bar-4); }
-.cx-long { font-size: 13px; line-height: 1.45; min-width: 190px; max-width: 280px; white-space: normal; }
-.cx-fn { font-family: var(--font-mono); font-size: 11px; color: var(--muted); vertical-align: super; margin-left: 2px; }
-
-/* ---------- footnotes and notes ---------- */
-.cx-foot { margin: 14px 0 0; }
-.cx-fns { margin: 8px 0 0; padding-left: 20px; font-size: var(--fs-note); line-height: 1.5; color: var(--ink-2); }
-.cx-fns li { margin-bottom: 8px; }
-.cx-fns b { font-weight: 600; color: var(--ink); }
-.cx-notes { margin: 24px 0 56px; }
-.cx-note { border-top: 1px solid var(--line); }
-.cx-note:last-child { border-bottom: 1px solid var(--line); }
-.cx-note summary { display: flex; align-items: baseline; gap: 10px; padding: 12px 0; list-style: none; }
-.cx-note summary::-webkit-details-marker { display: none; }
-.cx-note summary::before {
-  content: "+"; font-family: var(--font-mono); font-size: var(--fs-ui); color: var(--muted); width: 12px; flex: 0 0 12px;
-}
-.cx-note[open] summary::before { content: "−"; }
-.cx-note summary b { font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 500; font-size: var(--fs-d5); }
-.cx-note summary span { font-family: var(--font-mono); font-size: var(--fs-cap-s); letter-spacing: 0; color: var(--muted); }
-.cx-note-body { padding: 0 0 6px 22px; font-size: var(--fs-plain); line-height: 1.55; color: var(--ink-2); }
-.cx-note-body p:last-child { margin-bottom: 0.6em; }
-.cx-srcs { padding-left: 22px; font-family: var(--font-mono); font-size: var(--fs-ui-s); color: var(--muted); overflow-wrap: anywhere; }
-.cx-srcs a { color: var(--muted); margin-right: 14px; }
-
-@media (max-width: 900px) {
-  .cx-picker button { min-width: 116px; }
-  .cx-plans { gap: 14px; }
-  .cx-sub { font-size: var(--fs-small); }
-  .cx-table { font-size: var(--fs-note); }
-  .cx-table th, .cx-table td { padding: 8px 10px; }
-  .cx-rowhead { min-width: 112px; }
-  .cx-col { min-width: 138px; }
-  .cx-long { min-width: 172px; max-width: 220px; }
-  .cx-note-body { font-size: var(--fs-small); }
-  .cxa-ask { font-size: var(--fs-d4); }
-  .cx-col--ghost { min-width: 104px; }
-  .cx-plan--ghost { min-width: 120px; }
-  .cx-plan--ghost .cx-plan-art i { width: 96px; height: 70px; }
-}
-
-/* nothing picked: the slots lead, and the plans and the table show their empty frame; the explanations, key, notes and export wait */
-section[data-view="landscape"][data-empty="1"] .cx-key, section[data-view="landscape"][data-empty="1"] .cx-foot, section[data-view="landscape"][data-empty="1"] .cx-notes, section[data-view="landscape"][data-empty="1"] .export-bar, section[data-view="landscape"][data-empty="1"] .cx-plans-head, section[data-view="landscape"][data-empty="1"] .cx-table-head, section[data-view="landscape"][data-empty="1"] .cx-sub, section[data-view="landscape"][data-empty="1"] .cx-more { display: none; }
-@media print { .cxp, .cxp-scrim { display: none !important; } }
-
-/* ---------- Change and × on every column head of the comparison (21 Oct 2026, fix2) ---------- */
-.cx-act { min-height: 24px; padding: 2px 0; font-family: var(--font-mono); font-size: var(--fs-ui-s); color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 3px; }
-.cx-act:hover { color: var(--ink); text-decoration-color: var(--ink-2); }
-.cx-x { position: absolute; top: 4px; right: 4px; z-index: 1; display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; font-size: 17px; line-height: 1; color: var(--ink-2); }
+.cx-table td .cx-2 { display: block; margin-top: 3px; font-family: var(--font-ui); font-size: 12.5px; line-height: 1.4; color: var(--muted); }
+.cx-table td.cx-ghost { background: repeating-linear-gradient(135deg, var(--line) 0 1px, transparent 1px 8px); }
+.cx-colhead { display: block; padding: 0 34px 0 0; background: none; border: 0; text-align: left; color: var(--ink); }
+.cx-colhead b { font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: 23px; line-height: 1.15; overflow-wrap: anywhere; }
+.cx-colhead .cx-no { vertical-align: 4px; }
+.cx-colhead span { display: block; margin-top: 3px; font-family: var(--font-ui); font-size: 13px; line-height: 1.4; color: var(--muted); }
+.cx-colhead:hover b { text-decoration: underline; text-decoration-color: var(--rule-ink); text-decoration-thickness: 1px; text-underline-offset: 4px; }
+.cx-colacts { display: flex; flex-wrap: wrap; gap: 0 14px; margin-top: 4px; }
+.cx-x { position: absolute; top: 0; right: 10px; display: inline-grid; place-items: center; width: 28px; height: 28px; padding: 0; border: 0; border-radius: 50%; background: none; font-family: var(--font-ui); font-size: 18px; line-height: 1; color: var(--muted); }
 .cx-x:hover { color: var(--ink); background: var(--bg-2); }
-.cx-table th.cx-col .cx-x { top: 6px; right: 6px; z-index: 0; } /* under the sticky row heads when a phone scrolls the table sideways */
+.cx-ghost-h { display: block; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: 23px; line-height: 1.15; color: var(--ink-2); }
+.cx-ghost-s { display: block; margin-top: 3px; font-family: var(--font-ui); font-size: 13px; color: var(--muted); }
 
-/* ---------- the bar that follows the reader once the slots scroll away ---------- */
-:root { --cx-sticky: 0px; } /* Landscape.updateBar sets it to the bar's height while the bar shows; any scroll padding for the masthead can add it */
-.cxs { position: fixed; top: var(--masthead); left: 0; z-index: 30; box-sizing: border-box; width: var(--col); padding: 0 clamp(16px, 4vw, 56px) 0 clamp(16px, 3vw, 44px); background: var(--bg); }
-.cxs-in { display: flex; align-items: center; gap: 8px 14px; min-height: 46px; padding: 6px 0; border-bottom: 1px solid var(--line-2); }
-.cxs-k { flex: none; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: 0; color: var(--muted); }
+/* the speed notes, and the notes and sources */
+.cx-foot { margin-top: 28px; }
+.cx-foot .label { margin: 0 0 10px; }
+.cx-fns { margin: 0; padding-left: 20px; max-width: 60em; font-family: var(--font-body); font-size: 14px; line-height: 1.55; color: var(--ink-2); }
+.cx-fns li { margin-bottom: 8px; }
+.cx-fns b { margin-right: 6px; font-family: var(--font-ui); font-weight: 600; font-size: 13px; color: var(--ink); }
+.cx-notes { margin-top: 88px; }
+.cx-notes-h { margin: 0 0 16px; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: 32px; line-height: 1.15; letter-spacing: -0.012em; color: var(--ink); }
+.cx-note { border-top: 1px solid var(--line-2); }
+.cx-note:last-child { border-bottom: 1px solid var(--line-2); }
+.cx-note summary { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; padding: 14px 0; cursor: pointer; list-style: none; }
+.cx-note summary::-webkit-details-marker { display: none; }
+.cx-note summary::before { content: "+"; flex: 0 0 12px; width: 12px; font-family: var(--font-ui); font-size: 16px; line-height: 1; color: var(--muted); }
+.cx-note[open] summary::before { content: "\2212"; }
+.cx-note summary b { font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 21px; line-height: 1.2; color: var(--ink); }
+.cx-note summary span { font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); }
+.cx-note-body { max-width: 40em; padding-left: 24px; font-family: var(--font-body); font-size: 16.5px; line-height: 1.65; color: var(--ink); }
+.cx-note-body p { margin: 0 0 14px; }
+.cx-srcs { margin: 6px 0 22px 24px; padding: 12px 0 0; border-top: 1px solid var(--line); list-style: none; counter-reset: cxs; columns: 2; column-gap: 32px; font-family: var(--font-ui); font-size: 13px; line-height: 1.45; }
+.cx-srcs li { display: grid; grid-template-columns: 26px minmax(0, 1fr); padding: 0 0 7px; break-inside: avoid; }
+.cx-srcs li::before { counter-increment: cxs; content: counter(cxs); font-family: var(--font-code); font-size: 11.5px; line-height: 1.6; color: var(--muted); }
+.cx-srcs a { color: var(--ink); text-decoration-color: var(--rule-ink); overflow-wrap: anywhere; }
+.cx-srcs a:hover { color: var(--accent-ink); text-decoration-color: var(--accent); }
+
+/* nothing picked: the comparison shows its empty frame; the notes, the speed notes and the copy line wait */
+section[data-view="landscape"][data-empty="1"] .cx-foot, section[data-view="landscape"][data-empty="1"] .cx-notes, section[data-view="landscape"][data-empty="1"] .export-bar, section[data-view="landscape"][data-empty="1"] .cx-more { display: none; }
+section[data-view="landscape"] .export-bar.xq { margin-top: 16px; }
+
+/* ---------- the bar that follows the reader once the picks scroll away ---------- */
+:root { --cx-sticky: 0px; } /* Landscape.updateBar sets it to the bar's height while a chip is in */
+.cxs { position: fixed; top: var(--masthead); left: 0; right: 0; z-index: 30; background: var(--bg); border-bottom: 1px solid var(--line-2); }
+.cxs-in { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; min-height: 48px; padding: 7px var(--margin); box-sizing: border-box; }
+.cxs-k { flex: none; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); }
 .cxs-list { display: flex; flex: 1 1 auto; flex-wrap: wrap; align-items: center; gap: 6px; min-width: 0; }
-.cxs-chip { display: inline-flex; align-items: center; border: 1px solid var(--line-2); background: var(--bg); }
-.cxs-name { min-height: 28px; padding: 2px 2px 2px 9px; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-ui-s); color: var(--ink); }
-.cxs-name:hover { text-decoration: underline; text-decoration-color: var(--ink-2); text-underline-offset: 3px; }
-.cxs-x { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; font-size: 16px; line-height: 1; color: var(--ink-2); }
+.cxs-chip { display: inline-flex; align-items: center; min-height: 32px; padding: 0 2px 0 13px; border: 1px solid var(--control-edge); border-radius: 999px; }
+.cxs-name { padding: 0; background: none; border: 0; font-family: var(--font-ui); font-weight: 500; font-size: 14px; line-height: 1; color: var(--ink); }
+.cxs-name:hover { text-decoration: underline; text-decoration-color: var(--rule-ink); text-underline-offset: 3px; }
+.cxs-x { display: inline-grid; place-items: center; width: 26px; height: 26px; padding: 0; border: 0; border-radius: 50%; background: none; font-size: 16px; line-height: 1; color: var(--muted); }
 .cxs-x:hover { color: var(--ink); background: var(--bg-2); }
-.cxs-add { min-height: 30px; padding: 2px 10px; border: 1px dashed var(--line-2); font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-ui-s); color: var(--ink-2); }
-.cxs-add:hover { border-color: var(--ink); color: var(--ink); }
-.cxs-clear { flex: none; min-height: 24px; padding: 2px 0; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: 0; color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 3px; }
-.cxs-clear:hover { color: var(--ink); }
+.cxs-add { min-height: 32px; padding: 0 13px; border: 1px dashed var(--control-edge); border-radius: 999px; background: none; font-family: var(--font-ui); font-weight: 500; font-size: 14px; line-height: 1; color: var(--ink); }
+.cxs-add:hover { border-color: var(--ink); }
+.cxs-clear { flex: none; margin-left: auto; }
 /* nothing focused may sit under the masthead and the bar (WCAG 2.4.11) */
 html.kb:has(section[data-view="landscape"]:not([hidden])) { scroll-padding-top: calc(var(--masthead) + var(--band, 0px) + var(--cx-sticky) + 12px); }
 section[data-view="landscape"] .cx-h, section[data-view="landscape"] .cx-note, section[data-view="landscape"] .cx-tablewrap { scroll-margin-top: calc(var(--masthead) + var(--band, 0px) + var(--cx-sticky) + 16px); }
-@media (max-width: 900px) {
-  .cxs { padding: 0 18px; }
+
+/* ---------- narrower screens ---------- */
+@media (max-width: 1200px) {
+  .aic-grid { grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: 0 32px; }
+  .aic-strips { gap: 0 32px; }
+  .sl { grid-template-columns: 120px minmax(0, 1fr) 132px; }
+}
+@media (max-width: 899px) {
+  /* a phone keeps the specimen in the strip at the foot of the screen, so the chart takes the width */
+  .aic-grid { grid-template-columns: minmax(0, 1fr); }
+  .aic-spec { display: none; }
+  .cx-table th.cx-rowhead { width: 120px; }
+}
+@media (max-width: 760px) {
+  .view-head.aic-head { grid-template-columns: minmax(0, 1fr); gap: 16px; padding-top: 32px; }
+  .view-head.aic-head h1 { margin-top: 0; font-size: 44px; }
+  .aic-head .dek { font-size: 18px; line-height: 1.45; }
+  .aic-atlas { margin-top: 44px; }
+  .aic-gut-k { flex-basis: 100%; min-width: 0; }
+  .aic-pill { white-space: normal; }
+  .cxa { margin-top: 56px; }
+  .cxa-ask { font-size: 21px; }
+  .cxa-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cxa-slot { padding-right: 12px; }
+  .cxa-slot + .cxa-slot { padding-left: 12px; }
+  .cxa-slot:nth-child(odd) { padding-left: 0; border-left: 0; }
+  .cxa-slot:nth-child(n+3) { border-top: 1px solid var(--line); }
+  .cxa-name { font-size: 21px; }
+  .cxa-add { min-height: 76px; padding: 0 12px; font-size: 14px; }
+  .aic-lr { grid-template-columns: minmax(0, 1fr); }
+  .aic-cmp { margin-top: 72px; }
+  .aic-cmp-t { font-size: 32px; }
+  .aic-strips { grid-template-columns: minmax(0, 1fr); }
+  .sl { grid-template-columns: minmax(0, 1fr) 112px; gap: 2px 12px; margin-bottom: 6px; }
+  .sl-n { grid-column: 1 / -1; font-size: 13px; }
+  .sl-v { font-size: 13px; }
+  .cx-plans { gap: 24px 28px; }
   .cxs-k { display: none; }
   .cxs-in { gap: 6px 10px; }
+  /* the table of words stacks: each row's name, then the chips two to a line, so nothing scrolls sideways */
+  .cx-tablewrap { overflow: visible; }
+  .cx-table[data-n="3"], .cx-table[data-n="4"] { min-width: 0; }
+  .cx-table, .cx-table thead, .cx-table tbody, .cx-table tr, .cx-table th, .cx-table td { display: block; width: auto; }
+  .cx-table thead tr { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; border-bottom: 2px solid var(--ink); }
+  .cx-table thead th.cx-rowhead { display: none; }
+  .cx-table thead th { padding: 0 0 12px; border: 0; }
+  .cx-table thead th.is-focus { box-shadow: inset 0 -2px 0 var(--accent); }
+  .cx-table tbody tr { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 12px; border-bottom: 1px solid var(--line); }
+  .cx-table tbody th.cx-rowhead { grid-column: 1 / -1; width: auto; padding: 12px 0 2px; border: 0; font-size: 13px; color: var(--muted); }
+  .cx-table td { padding: 4px 0 12px; border: 0; font-size: 14.5px; }
+  .cx-table td.is-focus { background: none; }
+  .cx-table td.cx-ghost { min-height: 40px; }
+  .cx-table[data-n="3"] td::before, .cx-table[data-n="4"] td::before { content: attr(data-n); display: block; margin-bottom: 2px; font-family: var(--font-code); font-size: 11px; line-height: 16px; color: var(--muted); }
+  .cx-colhead { padding-right: 30px; }
+  .cx-colhead b { font-size: 20px; }
+  .cx-x { right: 0; }
+  .cx-more { display: none; }
+  .cx-srcs { columns: 1; margin-left: 0; }
+  .cx-note-body { padding-left: 0; font-size: 16px; }
 }
-@media print { .cxs { display: none !important; } }
+@media print { .cxp, .cxp-scrim, .cxs { display: none !important; } }
 
 
 /* module: controls.css */
@@ -4447,31 +4501,65 @@ html:not(.booted)[data-pick] .view[data-view="suppliers"] > :not(.view-head) { d
 </div>
 </div><footer class="site-footer"><span class="ft-mark" aria-hidden="true"><svg class="wm-tile" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect width="16" height="16" rx="3.2"/><path transform="translate(3.3324 11.8693) scale(0.009179 -0.009179)" d="M1011 683 Q1011 612 960 564 Q909 515 823 515 Q739 515 696 561 Q653 607 653 680 L653 720 Q653 786 623 823 Q594 861 544 861 Q502 861 468 831 Q433 801 412 741 Q391 682 391 594 Q391 474 431 393 Q470 312 540 270 Q609 229 697 229 Q769 229 825 251 Q880 273 924 326 Q946 348 959 356 Q971 363 983 363 Q1000 363 1007 347 Q1015 330 1015 307 Q1012 216 954 140 Q896 64 796 19 Q695 -26 563 -26 Q417 -26 301 33 Q185 91 118 198 Q51 305 51 450 Q51 602 118 721 Q184 840 305 909 Q425 978 588 978 Q720 978 815 938 Q909 898 960 832 Q1011 765 1011 683 Z"/></svg></span><p class="credits">Made by <b><a href="https://www.linkedin.com/in/yashvardhan07/" target="_blank" rel="noopener">Yashvardhan Sharma</a></b> with Claude. Corrections and questions: <a href="mailto:contact@chipsupplychain.org">contact@chipsupplychain.org</a>.<span class="updated">Updated 25 October 2026</span></p></footer></section>
 
-    <section class="view column" data-view="landscape" data-specimen="package">
-      <div class="view-head">
+    <section class="view column wide" data-view="landscape" data-specimen="package">
+      <!-- AI Chips (redesign, option C "The timeline", qa/design4/ai-chips/ in the main checkout): the title; the chart of every chip
+           by the month it was announced against one measure the reader picks, with the specimen beside it; the row of picks; then
+           the comparison: the packages at one scale, each figure as a row of bars, the rest as a table of words, notes and sources.
+           src/app.js Landscape draws it, src/modules/chips.css styles it -->
+      <div class="view-head aic-head">
         <h1>AI Chips</h1>
-        <p class="dek">The chips that train and run AI models, from the A100 of 2020 to the parts shipping in 2026. Each entry names the foundry, process node, memory supplier and packaging plant behind the chip wherever the maker or a cited source has published them.</p>
+        <div class="aic-head-r">
+          <p class="dek">The chips that train and run AI models, from the A100 of 2020 to the parts shipping in 2026. Each entry names the foundry, process node, memory supplier and packaging plant behind the chip wherever the maker or a cited source has published them.</p>
+          <p class="aic-meta"><span>38 chips</span><span>13 makers</span><span>Updated 21 October 2026</span></p>
+        </div>
       </div>
-      <div class="cxa" id="cx-slots">
+      <section class="aic-atlas" aria-labelledby="cx-atlas-t">
+        <div class="aic-bar"><p class="aic-k" id="cx-atlas-k"></p><div class="aic-measures" id="cx-measures" role="group" aria-label="The measure on the chart"></div></div>
+        <div class="aic-grid">
+          <figure class="aic-fig">
+            <h2 class="aic-h" id="cx-atlas-t"></h2>
+            <p class="aic-sub" id="cx-atlas-s"></p>
+            <div class="aic-chart" id="cx-chart"></div>
+            <div class="aic-tip" id="cx-tip" aria-hidden="true" hidden></div>
+            <div class="aic-gutter" id="cx-gutter"></div>
+            <p class="aic-note">Each dot is a chip, placed at the month its maker announced it. A chip dated only to a year sits in that year's middle, on a line across the year. The highest value is the one solid dot.</p>
+          </figure>
+          <figure class="ch-spec aic-spec">
+            <div class="ch-spec-draw aic-spec-draw"></div>
+            <figcaption class="ch-spec-cap aic-spec-cap"><p class="label"><span id="cx-spec-tag">AI chips · Package</span></p><p id="cx-spec-text">An AI accelerator package, drawn from above.</p></figcaption>
+          </figure>
+        </div>
+      </section>
+      <section class="cxa" id="cx-slots" aria-labelledby="cxa-ask">
         <div class="cxa-head"><p class="cxa-ask" id="cxa-ask">Choose two chips to compare. Add up to four.</p><button type="button" class="cxa-clear" id="cx-clear" hidden>Clear</button></div>
         <div class="cxa-row" id="cxa-row" role="group" aria-labelledby="cxa-ask"></div>
         <div class="cxa-pairs" id="cxa-pairs"></div>
         <details class="cxa-browse" id="cxa-browse"><summary>Browse all chips by maker</summary>
-          <div id="picker" class="picker cx-picker" role="group" aria-label="All chips, by maker"></div>
+          <div id="picker" class="aic-list" role="group" aria-label="All chips, by maker"></div>
         </details>
         <p class="sr-only" id="cxa-live" aria-live="polite"></p>
-      </div>
+      </section>
       <div class="cxs" id="cx-sticky" role="region" aria-label="Chips in the comparison" hidden><div class="cxs-in" id="cxs-in"></div></div>
-      <h3 class="label cx-h">Packages at one scale</h3>
-      <p class="cx-sub">The logic dies are the pieces of silicon that do the computing, and the memory stacks feed them data. The interposer is the layer of wiring that connects the two, and the substrate is the small circuit board underneath.</p>
-      <div class="cx-key" id="cx-key"></div>
-      <div id="cx-plans" class="cx-plans"></div>
-      <h3 class="label cx-h">Specs side by side</h3>
-      <p class="cx-sub">TFLOPS counts trillions of calculations a second. FP16, FP8 and FP4 are number formats that use 16, 8 and 4 bits per number. The fewer the bits, the more calculations a chip can do.</p>
-      <p class="cx-more" id="cx-more" hidden>Scroll sideways to see every chip &rarr;</p>
-      <div id="cx-table-wrap" class="cx-tablewrap"><table class="cx-table" id="cx-table"></table></div>
-      <div id="cx-foot" class="cx-foot"></div>
-      <div id="cx-notes" class="cx-notes"></div>
+      <section class="aic-cmp" id="cx-compare" aria-labelledby="cx-title">
+        <h2 class="aic-cmp-t" id="cx-title">Two chips, side by side</h2>
+        <p class="cx-sub aic-lede"><span class="aic-tflops">TFLOPS counts trillions of calculations a second. FP16, FP8 and FP4 are number formats that use 16, 8 and 4 bits per number. The fewer the bits, the more calculations a chip can do.</span> Each figure carries the number of its source in the chip's list under Notes and sources.</p>
+        <div class="aic-sec aic-pk">
+          <div class="aic-sec-h"><h3 class="label cx-h">Packages at one scale</h3><div class="cx-key" id="cx-key"></div></div>
+          <p class="cx-sub">The logic dies are the pieces of silicon that do the computing, and the memory stacks feed them data. The interposer is the layer of wiring that connects the two, and the substrate is the small circuit board underneath.</p>
+          <div id="cx-plans" class="cx-plans"></div>
+        </div>
+        <div class="aic-sec">
+          <div class="aic-sec-h"><h3 class="label cx-h">Figures</h3><p class="aic-sec-r">In each row, the largest figure has the solid bar</p></div>
+          <div class="aic-strips" id="cx-strips"></div>
+        </div>
+        <div class="aic-sec">
+          <div class="aic-sec-h"><h3 class="label cx-h">In words</h3></div>
+          <p class="cx-more" id="cx-more" hidden>Scroll sideways to see every chip &rarr;</p>
+          <div id="cx-table-wrap" class="cx-tablewrap"><table class="cx-table" id="cx-table"></table></div>
+        </div>
+        <div id="cx-foot" class="cx-foot"></div>
+        <div id="cx-notes" class="cx-notes"></div>
+      </section>
       <footer class="site-footer"><span class="ft-mark" aria-hidden="true"><svg class="wm-tile" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect width="16" height="16" rx="3.2"/><path transform="translate(3.3324 11.8693) scale(0.009179 -0.009179)" d="M1011 683 Q1011 612 960 564 Q909 515 823 515 Q739 515 696 561 Q653 607 653 680 L653 720 Q653 786 623 823 Q594 861 544 861 Q502 861 468 831 Q433 801 412 741 Q391 682 391 594 Q391 474 431 393 Q470 312 540 270 Q609 229 697 229 Q769 229 825 251 Q880 273 924 326 Q946 348 959 356 Q971 363 983 363 Q1000 363 1007 347 Q1015 330 1015 307 Q1012 216 954 140 Q896 64 796 19 Q695 -26 563 -26 Q417 -26 301 33 Q185 91 118 198 Q51 305 51 450 Q51 602 118 721 Q184 840 305 909 Q425 978 588 978 Q720 978 815 938 Q909 898 960 832 Q1011 765 1011 683 Z"/></svg></span><p class="credits">Made by <b><a href="https://www.linkedin.com/in/yashvardhan07/" target="_blank" rel="noopener">Yashvardhan Sharma</a></b> with Claude. Corrections and questions: <a href="mailto:contact@chipsupplychain.org">contact@chipsupplychain.org</a>.<span class="updated">Updated 25 October 2026</span></p></footer>
     </section>
 
@@ -11376,7 +11464,14 @@ PC.register('wafer', function (p) {
     }
   };
 
-  /* ---------------- AI chips: compare two to four ---------------- */
+  /* ---------------- AI chips: the timeline, and two to four chips side by side ----------------
+     The redesign's option C, "The timeline" (qa/design4/ai-chips/ in the main checkout, chosen 25 Oct 2026). A chart opens the
+     page: every chip at the month it was announced, against one measure the reader picks. Rule B: the largest value is the one
+     solid ink dot and the rest take the light tint; the reader's own picks are ringed in red wine, since they are the reader's
+     selection. The specimen stands beside the chart on a wide screen (the stage's canvas is hosted in .aic-spec-draw, as The
+     Chain hosts it in a chapter's slot) and stays in the strip on a phone. A dot, a pill, a pair, Try with, the folded list,
+     the picker or search fills the row of picks; the comparison then sets each figure as its own row of bars (rule B in each
+     row) and the descriptive rows as a table of words. No country is ever a color: a maker's country is a plain label. */
   var Landscape = {
     chips: DATA.landscape || [],
     notes: DATA.landscapeNotes || {},
@@ -11389,12 +11484,13 @@ PC.register('wafer', function (p) {
     compare: DATA.landscapeCompare || { pairs: [], with: {} }, // data/landscape-compare.json: the empty page's pairs, each chip's Try with partners
     said: '',         // the picks last read out by the live region, so each change is announced once
     pop: null,        // the open chip picker: { slot, trigger }
+    measure: 'fp16',  // the chart's measure (MEAS)
+    chartFocus: null, // the dot that holds the chart's one Tab stop (arrow keys move it)
 
     /* ---- data ---- */
     byId: function (id) { for (var i = 0; i < this.chips.length; i++) if (this.chips[i].id === id) return this.chips[i]; return null; },
     selection: function () { var self = this, out = []; this.picked.forEach(function (id) { var c = self.byId(id); if (c) out.push(c); }); return out; },
     initSelection: function () { // the page opens with nothing chosen
-      var self = this;
       this.picked = []; this.sel = null; // the page opens with nothing chosen: the reader picks the chips to compare
       this.syncExport();
     },
@@ -11407,62 +11503,101 @@ PC.register('wafer', function (p) {
     /* ---- lifecycle ---- */
     activate: function () {
       if (!this.built) this.buildUI();
+      else this.renderChart(); // the chart measures its box, which was hidden while another view showed
+      this.hostStage();
       var c = this.byId(this.sel);
       if (c) this.showStage(c); else this.showGeneric(); // with nothing picked the stage shows the package, never the last page's specimen
     },
+    // a wide screen draws the specimen beside the chart, in .aic-spec-draw; a phone keeps it in the strip at the foot of the screen.
+    // The router hands the canvas back to the stage on every route (Router.route), so this runs on each arrival and resize
+    hostStage: function () {
+      if (Router.current !== 'landscape' || !Stage.ok) return;
+      var el = $('.aic-spec-draw');
+      if (el && !narrow()) { if (Stage.hostEl !== el) Stage.host(el); }
+      else if (Stage.hostEl) Stage.host(null);
+    },
     buildUI: function () {
       this.built = true;
-      var self = this, pk = $('#picker'), html = '';
-      // countries in the order they first appear, China last; within a country one row per maker, chips in data order (newest first)
-      var ccs = [], byCC = {};
-      this.chips.forEach(function (c) { var cc = c.vendorCountry || '??'; if (!byCC[cc]) { byCC[cc] = { vendors: [], byV: {} }; ccs.push(cc); } var g = byCC[cc]; if (!g.byV[c.vendor]) { g.byV[c.vendor] = []; g.vendors.push(c.vendor); } g.byV[c.vendor].push(c); });
-      ccs.sort(function (a, b) { return (a === 'CN') - (b === 'CN'); });
-      ccs.forEach(function (cc) {
-        var g = byCC[cc];
-        html += '<div class="group" data-cc="' + esc(cc) + '">' + esc(cname(cc)) + '</div>';
-        g.vendors.forEach(function (v) {
-          html += '<div class="vrow"><span class="vname">' + esc(v) + '</span><div class="vchips">' + g.byV[v].map(function (c) {
-            var sub = c.family && c.family !== c.name ? c.family : (c.announced ? String(c.announced).slice(0, 4) : '');
-            // the checklist shows the name alone; the family (Blackwell, Hopper) or the year moves to the tooltip (src/modules/chips.css)
-            return '<button type="button" data-id="' + esc(c.id) + '" data-cc="' + esc(cc) + '" aria-pressed="false"' + (sub ? ' title="' + esc(sub) + '"' : '') + '><b>' + esc(c.name) + '</b>' + (sub ? '<span>' + esc(sub) + '</span>' : '') + '</button>';
-          }).join('') + '</div></div>';
-        });
+      var self = this, pk = $('#picker'), html = '', cc = null;
+      // the folded list: countries as they first appear, China last, as plain labels; one row per maker; chips in data order (newest first)
+      this.ordered().forEach(function (g) {
+        if (g.cc !== cc) { if (cc) html += '</div>'; cc = g.cc; html += '<div class="aic-lg"><p class="aic-lg-h">' + esc(cname(cc)) + '</p>'; }
+        html += '<div class="aic-lr"><span class="aic-ln">' + esc(g.vendor) + '</span><span class="aic-lc">' + g.chips.map(function (c) {
+          var sub = c.family && c.family !== c.name ? c.family : self.year(c); // the family (Blackwell, Hopper) or the year goes to the tooltip
+          return '<button type="button" class="aic-pill sm" data-id="' + esc(c.id) + '" aria-pressed="false"' + (sub ? ' title="' + esc(sub) + '"' : '') + '>' + esc(c.name) + '</button>';
+        }).join('') + '</span></div>';
       });
-      pk.innerHTML = html;
-      pk.addEventListener('click', function (e) { var b = e.target.closest('button'); if (b) self.toggle(b.getAttribute('data-id')); });
+      pk.innerHTML = html + (cc ? '</div>' : '');
+      pk.addEventListener('click', function (e) { var b = e.target.closest('button[data-id]'); if (b) self.toggle(b.getAttribute('data-id')); });
       pk.addEventListener('keydown', function (e) { self.arrows(e, $$('button', pk)); });
-      // the slots: a chip's Change and an empty slot open the picker; Remove empties the slot; Try with fills slot 2
+      var sum = $('#cxa-browse summary');
+      if (sum) sum.textContent = 'Browse all ' + this.chips.length + ' chips by maker';
+      // the measures over the chart: one pressed at a time
+      var ms = $('#cx-measures');
+      if (ms) {
+        ms.innerHTML = this.MEAS.map(function (m) { return '<button type="button" class="aic-pill" data-m="' + m[0] + '" aria-pressed="' + (m[0] === self.measure) + '">' + esc(m[1]) + '</button>'; }).join('');
+        ms.addEventListener('click', function (e) { var b = e.target.closest('button[data-m]'); if (!b) return; self.measure = b.getAttribute('data-m'); self.chartFocus = null; self.renderChart(); });
+        ms.addEventListener('keydown', function (e) { self.arrows(e, $$('button', ms)); });
+      }
+      // the chart: a dot adds its chip or takes it out; one dot holds the Tab stop and the arrow keys walk the dots by date
+      var chart = $('#cx-chart'), tip = $('#cx-tip');
+      if (chart) {
+        chart.addEventListener('click', function (e) { var g = e.target.closest('.pt'); if (!g) return; var id = g.getAttribute('data-id'); self.chartFocus = id; self.toggle(id); });
+        chart.addEventListener('mouseover', function (e) { var g = e.target.closest('.pt'); if (g) self.showTip(g); });
+        chart.addEventListener('mouseout', function (e) { var g = e.target.closest('.pt'); if (g && !g.contains(e.relatedTarget) && tip) tip.hidden = true; });
+        chart.addEventListener('focusin', function (e) { var g = e.target.closest('.pt'); if (g) { self.chartFocus = g.getAttribute('data-id'); self.showTip(g); } });
+        chart.addEventListener('focusout', function () { if (tip) tip.hidden = true; });
+        chart.addEventListener('keydown', function (e) {
+          var g = e.target.closest('.pt'); if (!g) return;
+          var k = e.key;
+          if (k === 'Enter' || k === ' ') {
+            e.preventDefault(); var id = g.getAttribute('data-id'); self.chartFocus = id; self.toggle(id);
+            var again = $('#cx-chart .pt[data-id="' + id + '"]'); if (again) again.focus();
+            return;
+          }
+          var all = $$('#cx-chart .pt').sort(function (a, b) { return +a.getAttribute('data-x') - +b.getAttribute('data-x'); }), i = all.indexOf(g), n = null;
+          if (k === 'ArrowRight' || k === 'ArrowDown') n = (i + 1) % all.length;
+          else if (k === 'ArrowLeft' || k === 'ArrowUp') n = (i - 1 + all.length) % all.length;
+          else if (k === 'Home') n = 0; else if (k === 'End') n = all.length - 1;
+          if (n == null) return;
+          e.preventDefault(); g.setAttribute('tabindex', '-1'); all[n].setAttribute('tabindex', '0'); all[n].focus();
+        });
+      }
+      var gut = $('#cx-gutter');
+      if (gut) gut.addEventListener('click', function (e) { var b = e.target.closest('button[data-id]'); if (b) self.toggle(b.getAttribute('data-id')); });
+      // the picks: a chip's name puts it on the stage; Change and an empty pick open the picker; Remove empties it
       var srow = $('#cxa-row');
       if (srow) srow.addEventListener('click', function (e) {
+        var nm = e.target.closest('button.cxa-name'); if (nm) { self.focus(nm.getAttribute('data-id')); return; }
         var b = e.target.closest('button[data-act]'); if (!b) return;
         var i = b.hasAttribute('data-slot') ? +b.getAttribute('data-slot') : +b.closest('.cxa-slot').getAttribute('data-i'), act = b.getAttribute('data-act');
         if (act === 'choose') { if (self.pop && self.pop.trigger === b) self.closePicker(true); else self.openPicker(i, b, 'slot'); }
         else if (act === 'remove') { self.setSlot(i, ''); self.focusSlot(Math.min(i, self.picked.length)); }
-        else if (act === 'try') { self.setSlot(i, b.getAttribute('data-id')); self.focusSlot(i); }
       });
+      // the line under the picks: five pairs before the first pick, then Try with while one chip waits for a second
       var pairs = $('#cxa-pairs');
-      if (pairs) {
-        pairs.innerHTML = this.compare.pairs.length ? '<span class="cxa-pk">Or start from a pair</span>' + this.compare.pairs.map(function (p, k) { return '<button type="button" data-pair="' + k + '">' + esc(p.label) + '</button>'; }).join('') : '';
-        pairs.addEventListener('click', function (e) { var b = e.target.closest('button[data-pair]'); if (!b) return; self.setPair(self.compare.pairs[+b.getAttribute('data-pair')].ids); self.focusSlot(1); });
-      }
-      var sum = $('#cxa-browse summary');
-      if (sum) sum.textContent = 'Browse all ' + this.chips.length + ' chips by maker';
+      if (pairs) pairs.addEventListener('click', function (e) {
+        var b = e.target.closest('button[data-pair]');
+        if (b) { self.setPair(self.compare.pairs[+b.getAttribute('data-pair')].ids); self.focusSlot(1); return; }
+        var t = e.target.closest('button[data-try]');
+        if (t) { self.setSlot(1, t.getAttribute('data-try')); self.focusSlot(1); }
+      });
       var clear = $('#cx-clear');
       if (clear) clear.addEventListener('click', function () { self.clear(); self.focusSlot(0); });
       var plans = $('#cx-plans');
       if (plans) {
-        plans.addEventListener('click', function (e) {
-          var a = e.target.closest('button[data-act]'); if (a) { self.colAct(a, '#cx-plans'); return; }
-          var b = e.target.closest('button[data-id]'); if (b) self.focus(b.getAttribute('data-id'));
-        });
+        plans.addEventListener('click', function (e) { var b = e.target.closest('button[data-id]'); if (b) self.focus(b.getAttribute('data-id')); });
         plans.addEventListener('keydown', function (e) { self.arrows(e, $$('button[data-id]', plans)); });
       }
-      // the bar that follows the reader once the slots scroll away: each chip with its ×, + Add, Clear
+      // a figure whose source the chip's list does not name row by row points to the whole list ("all")
+      var strips = $('#cx-strips');
+      if (strips) strips.addEventListener('click', function (e) { var j = e.target.closest('button[data-notes]'); if (j) { var id = j.getAttribute('data-notes'); self.focus(id); self.jumpToNotes(id); } });
+      // the bar that follows the reader once the picks scroll away: each chip with its ×, + Add, Clear
       var bar = $('#cxs-in');
       if (bar) bar.addEventListener('click', function (e) {
         var b = e.target.closest('button[data-bar]'); if (!b) return;
         var act = b.getAttribute('data-bar'), i = +b.getAttribute('data-slot');
-        if (act === 'name' || act === 'add') { // back to the slot, its picker open
+        if (act === 'name' || act === 'add') { // back to the pick, its picker open
           scrollToEl($('#cx-slots'), false); self.updateBar();
           var t = $('#cxa-row .cxa-slot[data-i="' + (act === 'add' ? self.picked.length : i) + '"] [data-act="choose"]');
           if (t) self.openPicker(act === 'add' ? self.picked.length : i, t, 'slot');
@@ -11475,11 +11610,16 @@ PC.register('wafer', function (p) {
       var bt = 0;
       window.addEventListener('scroll', function () { if (!bt) bt = requestAnimationFrame(function () { bt = 0; self.updateBar(); }); }, { passive: true });
       window.addEventListener('hashchange', function () { setTimeout(function () { self.updateBar(); }, 0); }); // leaving AI Chips takes the bar and its scroll padding away
-      var rt = null;
+      var rt = null, lastW = window.innerWidth;
       window.addEventListener('resize', function () {
         if (Router.current !== 'landscape') return;
-        clearTimeout(rt); rt = setTimeout(function () { self.renderPlans(); self.scrollCue(); self.replacePicker(); self.updateBar(); }, 160);
+        clearTimeout(rt); rt = setTimeout(function () {
+          self.hostStage();
+          if (window.innerWidth !== lastW) { lastW = window.innerWidth; self.renderChart(); } // a phone's toolbar changes only the height
+          self.renderPlans(); self.scrollCue(); self.replacePicker(); self.updateBar();
+        }, 160);
       });
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { self.renderChart(); }); // the labels are placed by their measured width
       var tw = $('#cx-table-wrap');
       if (tw) tw.addEventListener('scroll', function () { self.scrollCue(); }, { passive: true });
       var tb = $('#cx-table');
@@ -11503,7 +11643,6 @@ PC.register('wafer', function (p) {
       e.preventDefault();
       list[n].focus();
     },
-
     /* ---- selection ---- */
     say: function (msg) { this.hint = msg; this.renderSlots(); this.announce(msg); }, // a refusal shows in the guidance line until the next change, and is read out
     toggle: function (id) {
@@ -11542,7 +11681,6 @@ PC.register('wafer', function (p) {
       this.render();
       this.showGeneric();
     },
-    showGeneric: function () { Stage.show('package', { plan: true }, 'An AI accelerator package, drawn from above.', 'AI chips · <b>Package</b>'); },
 
     /* ---- the slots: two to four columns that ask for their chips (redesign of 21 Oct 2026, qa/design/chips-ux/) ----
        An empty slot and a chip's Change open the picker; Remove empties a slot; the folded checklist and the search box change the
@@ -11591,46 +11729,48 @@ PC.register('wafer', function (p) {
         : 'Now ' + this.names(now) + '.';
       this.announce(lead + ' ' + this.guide());
     },
-    thumbSVG: function (c) { // the package plan at thumbnail size, fitted to its box; the size is not to scale with the other slots
-      return this.planBounds(c.layout) ? this.planSVG(c, 1) : '<i class="cxa-noplan"></i>';
-    },
     renderSlots: function () {
       var self = this, row = $('#cxa-row'); if (!row) return;
       var n = this.picked.length, shown = n < 2 ? 2 : Math.min(this.max, n + 1), html = '';
       for (var i = 0; i < shown; i++) html += this.slotHTML(i, n);
-      if (n === 1) { // Try with sits in its own cell under slot 2, so the cards in the row keep one height
-        var sug = (this.compare.with[this.picked[0]] || []).filter(function (s) { return self.byId(s) && self.picked.indexOf(s) < 0; }).slice(0, 3);
-        if (sug.length) html += '<p class="cxa-try"><span class="cxa-pk">Try with</span>' + sug.map(function (s) { var t = self.short(self.byId(s)); return '<button type="button" data-act="try" data-slot="1" data-id="' + esc(s) + '" aria-label="Add ' + esc(t) + ' as chip 2">' + esc(t) + '</button>'; }).join('') + '</p>';
-      }
       row.innerHTML = html;
       row.setAttribute('data-n', String(shown));
       var ask = $('#cxa-ask'); if (ask) ask.textContent = this.hint || this.guide();
       var clr = $('#cx-clear'); if (clr) clr.hidden = !n;
-      var pairs = $('#cxa-pairs'); if (pairs) pairs.hidden = n > 0 || !this.compare.pairs.length; // after a pick, Try with under slot 2 takes over
-      // at four the checklist's other chips say they are unavailable; they stay in the tab order, and a tick on one says why
+      // the line under the picks: the five pairs before any pick; Try with while one chip waits for a second; nothing after
+      var pairs = $('#cxa-pairs');
+      if (pairs) {
+        var sug = n === 1 ? (this.compare.with[this.picked[0]] || []).filter(function (s) { return self.byId(s) && self.picked.indexOf(s) < 0; }).slice(0, 3) : [];
+        pairs.innerHTML = !n && this.compare.pairs.length ? '<span class="cxa-pk">Or start from a pair</span>' + this.compare.pairs.map(function (p, k) { return '<button type="button" class="aic-pill" data-pair="' + k + '">' + esc(p.label) + '</button>'; }).join('')
+          : sug.length ? '<span class="cxa-pk">Try with</span>' + sug.map(function (s) { var t = self.short(self.byId(s)); return '<button type="button" class="aic-pill" data-try="' + esc(s) + '" aria-label="Add ' + esc(t) + ' as chip 2">' + esc(t) + '</button>'; }).join('') : '';
+        pairs.hidden = !pairs.innerHTML;
+      }
+      // at four the list's other chips say they are unavailable; they stay in the tab order, and a press on one says why
       $$('#picker button').forEach(function (b) { if (n >= self.max && b.getAttribute('aria-pressed') !== 'true') b.setAttribute('aria-disabled', 'true'); else b.removeAttribute('aria-disabled'); });
     },
+    badge: function (i) { return '<i class="cx-no">' + (i + 1) + '</i> '; }, // the chip's number, as the chart's labels, the bars and the table carry it
     slotHTML: function (i, n) {
-      var self = this, id = this.picked[i], c = id ? this.byId(id) : null, k = 'cxa-k' + i;
-      var state = c ? 'filled' : (i === n && n < 2) ? 'next' : i >= 2 ? 'more' : 'empty'; // "next" is the one slot drawn in garnet
-      var head = '<p class="cxa-k" id="' + k + '">Chip ' + (i + 1) + (state === 'more' ? ', optional' : '') + '</p>';
+      var id = this.picked[i], c = id ? this.byId(id) : null, k = 'cxa-k' + i;
+      var state = c ? 'filled' : (i === n && n < 2) ? 'next' : i >= 2 ? 'more' : 'empty'; // "next" is the one pick drawn in red wine, the reader's place
+      var head = '<p class="cxa-k" id="' + k + '">' + (c ? this.badge(i) : '') + 'Chip ' + (i + 1) + (state === 'more' ? ', optional' : '') + '</p>';
       if (c) {
-        return '<div class="cxa-slot" data-i="' + i + '" data-state="filled">' + head + '<div class="cxa-card cxa-chip">' +
-          '<span class="cxa-thumb" aria-hidden="true">' + this.thumbSVG(c) + '</span>' +
-          '<span class="cxa-id"><b class="cxa-name">' + esc(c.name) + '</b><span class="cxa-meta">' + esc(this.metaLine(c)) + '</span></span>' +
+        var on = c.id === this.sel;
+        return '<div class="cxa-slot" data-i="' + i + '" data-state="filled"' + (on ? ' data-on="1"' : '') + '>' + head +
+          '<button type="button" class="cxa-name" data-id="' + esc(c.id) + '" aria-pressed="' + on + '" title="Show it on the stage">' + esc(c.name) + '</button>' +
+          '<span class="cxa-meta">' + esc(this.metaLine(c)) + '</span>' +
           '<span class="cxa-acts"><button type="button" class="cxa-act" data-act="choose" aria-haspopup="dialog" aria-expanded="false" aria-label="Change chip ' + (i + 1) + ', ' + esc(c.name) + '">Change</button>' +
-          '<button type="button" class="cxa-act" data-act="remove" aria-label="Remove ' + esc(c.name) + ' from chip ' + (i + 1) + '">Remove</button></span></div></div>';
+          '<button type="button" class="cxa-act" data-act="remove" aria-label="Remove ' + esc(c.name) + ' from chip ' + (i + 1) + '">Remove</button></span></div>';
       }
-      var text = state === 'more' ? 'Add a ' + this.ORD[i] + ' chip (optional)' : 'Choose a chip';
+      var text = state === 'more' ? 'Add a ' + this.ORD[i] + ' chip (optional)' : 'Choose a chip, or a dot above';
       return '<div class="cxa-slot" data-i="' + i + '" data-state="' + state + '">' + head +
-        '<button type="button" class="cxa-card cxa-add" data-act="choose" aria-haspopup="dialog" aria-expanded="false" aria-describedby="' + k + '"><span class="cxa-plus" aria-hidden="true">+</span><span>' + esc(text) + '</span></button></div>';
+        '<button type="button" class="cxa-add" data-act="choose" aria-haspopup="dialog" aria-expanded="false" aria-describedby="' + k + '"><span class="cxa-plus" aria-hidden="true">+</span><span>' + esc(text) + '</span></button></div>';
     },
-    // Change and × on every column head of the comparison (a package card, a table column), so the reader never has to go back up
+    // Change and × on every column head of the table of words, so the reader never has to go back up
     colActs: function (c, i) {
       return { change: '<button type="button" class="cx-act" data-act="change" data-slot="' + i + '" aria-haspopup="dialog" aria-expanded="false" aria-label="Change chip ' + (i + 1) + ', ' + esc(c.name) + '">Change</button>',
         remove: '<button type="button" class="cx-x" data-act="remove" data-slot="' + i + '" aria-label="Remove ' + esc(this.short(c)) + ' from the comparison"><span aria-hidden="true">&times;</span></button>' };
     },
-    colAct: function (b, region) { // region: '#cx-plans' or '#cx-table'; focus stays in that region after the change
+    colAct: function (b, region) { // region: '#cx-table', the column heads; focus stays there after the change
       var i = +b.getAttribute('data-slot'), act = b.getAttribute('data-act');
       if (act === 'change') { if (this.pop && this.pop.trigger === b) this.closePicker(true); else this.openPicker(i, b, region); return; }
       if (act !== 'remove') return;
@@ -11667,7 +11807,7 @@ PC.register('wafer', function (p) {
       var ccs = [], by = {}, out = [];
       this.chips.forEach(function (c) { var cc = c.vendorCountry || '??'; if (!by[cc]) { by[cc] = { vs: [], v: {} }; ccs.push(cc); } if (!by[cc].v[c.vendor]) { by[cc].v[c.vendor] = []; by[cc].vs.push(c.vendor); } by[cc].v[c.vendor].push(c); });
       ccs.sort(function (a, b) { return (a === 'CN') - (b === 'CN'); });
-      ccs.forEach(function (cc) { by[cc].vs.forEach(function (v) { out.push({ vendor: v, chips: by[cc].v[v] }); }); });
+      ccs.forEach(function (cc) { by[cc].vs.forEach(function (v) { out.push({ cc: cc, vendor: v, chips: by[cc].v[v] }); }); });
       return out;
     },
     buildPicker: function () {
@@ -11703,7 +11843,7 @@ PC.register('wafer', function (p) {
       window.addEventListener('hashchange', function () { self.closePicker(false); }); // Back or a link must not leave the picker over another page
       return el;
     },
-    openPicker: function (i, trigger, origin) { // origin: 'slot', or the region of a column head ('#cx-plans', '#cx-table') where focus returns
+    openPicker: function (i, trigger, origin) { // origin: 'slot', or '#cx-table' for a column head's Change, where focus returns
       var self = this, el = this.popEl || this.buildPicker(), cur = this.picked[i] || null, sheet = narrow();
       if (this.pop) this.closePicker(false);
       this.pop = { slot: i, trigger: trigger, origin: origin || 'slot' };
@@ -11724,7 +11864,7 @@ PC.register('wafer', function (p) {
     },
     placePicker: function () { // under its slot's card or column head, as wide as that or 340 px, kept inside the column; the page moves only if the list cannot fit
       var el = this.popEl, p = this.pop; if (!p) return;
-      var slot = p.trigger.closest('.cxa-slot'), card = (slot && $('.cxa-card', slot)) || p.trigger.closest('.cx-plan, th') || p.trigger, r = card.getBoundingClientRect(), col = $('#cx-slots').getBoundingClientRect();
+      var slot = p.trigger.closest('.cxa-slot'), card = (slot && ($('.cxa-add', slot) || slot)) || p.trigger.closest('th') || p.trigger, r = card.getBoundingClientRect(), col = $('#cx-slots').getBoundingClientRect();
       var w = Math.min(Math.max(r.width, 340), col.width), left = r.left;
       if (left + w > col.right) left = Math.max(col.left, r.right - w);
       el.style.bottom = ''; el.style.maxHeight = '';
@@ -11789,7 +11929,9 @@ PC.register('wafer', function (p) {
         if (id === self.sel) b.setAttribute('data-focus', '1'); else b.removeAttribute('data-focus');
       });
       this.renderCount();
+      this.renderChart();
       this.renderPlans();
+      this.renderStrips();
       this.renderTable();
       this.renderNotes();
       this.syncExport();
@@ -11797,10 +11939,97 @@ PC.register('wafer', function (p) {
       this.renderBar();
       this.announceChange();
     },
-    renderCount: function () { // the count line went with the slots: the guidance line over them says where the reader is
+    renderCount: function () { // the guidance line over the picks says where the reader is; these two flags let the CSS follow
       var sec = $('section[data-view="landscape"]'); if (!sec) return;
       sec.setAttribute('data-empty', this.picked.length ? '0' : '1');
       sec.setAttribute('data-full', this.picked.length >= this.max ? '1' : '0');
+      var t = $('#cx-title'), sel = this.selection(), self = this;
+      if (t) t.textContent = sel.length >= 2 ? sel.slice(0, -1).map(function (c) { return self.short(c); }).join(', ') + ' and ' + this.short(sel[sel.length - 1]) + ', side by side' : 'Two chips, side by side';
+    },
+
+    /* ---- the chart: every chip by the month it was announced, against the measure the reader picks ---- */
+    MEAS: [['fp16', 'Speed at FP16'], ['fp8', 'Speed at FP8'], ['fp4', 'Speed at FP4'], ['mem', 'Memory'], ['bw', 'Bandwidth'], ['tdp', 'Power']],
+    // the month a chip was announced, as a year and a fraction: a chip dated only to a year sits in its middle
+    when: function (c) { var a = String(c.announced || ''), y = +a.slice(0, 4), mo = a.length >= 7 ? +a.slice(5, 7) : 0; return { t: mo ? y + (mo - 0.5) / 12 : y + 0.5, yearOnly: !mo, y: y }; },
+    nice: function (v) { var e = Math.pow(10, Math.floor(Math.log10(v))), f = v / e; return (f <= 1 ? 1 : f <= 2 ? 2 : f <= 2.5 ? 2.5 : f <= 5 ? 5 : 10) * e; },
+    textW: function (s, px, bold) { // a label's width in the interface face, so labels are placed where they fit
+      var c = this._tc || (this._tc = document.createElement('canvas').getContext('2d'));
+      c.font = (bold ? '600 ' : '400 ') + px + 'px "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif';
+      return c.measureText(String(s)).width + 3;
+    },
+    renderChart: function () {
+      var host = $('#cx-chart'); if (!host) return;
+      var self = this, row = this.row(this.measure);
+      $$('#cx-measures [data-m]').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-m') === self.measure ? 'true' : 'false'); });
+      var W = Math.round(host.clientWidth); if (!W) return; // hidden: activate() draws it on arrival
+      var nar = W < 560, H = nar ? 320 : 440, m = { l: nar ? 42 : 56, r: nar ? 10 : 18, t: 34, b: 30 };
+      var pts = this.chips.map(function (c) { return { c: c, v: row.num(c), d: self.when(c) }; }), have = pts.filter(function (p) { return typeof p.v === 'number' && p.d.y > 0; });
+      var none = pts.filter(function (p) { return have.indexOf(p) < 0; });
+      if (!have.length) { host.innerHTML = ''; return; }
+      var years = have.map(function (p) { return p.d.y; }), X0 = Math.min.apply(null, years), X1 = Math.max.apply(null, years) + 1;
+      var vals = have.map(function (p) { return p.v; }).sort(function (a, b) { return b - a; }), max = vals[0], second = vals[1] || max;
+      // one chip far above the rest (the wafer-scale WSE-3 Turbo's bandwidth): the scale follows the others, and its dot sits over the top
+      var outlier = max > 4 * second, top = outlier ? second : max, step = this.nice(top / 4), yMax = Math.ceil(top / step) * step;
+      var x = function (t) { return m.l + (t - X0) / (X1 - X0) * (W - m.l - m.r); }, y = function (v) { return H - m.b - Math.min(v, yMax) / yMax * (H - m.t - m.b); };
+      var r1 = function (v) { return String(Math.round(v * 10) / 10); };
+      var g = '';
+      for (var yr = X0; yr <= X1; yr++) g += '<line class="gx" x1="' + r1(x(yr)) + '" x2="' + r1(x(yr)) + '" y1="' + m.t + '" y2="' + (H - m.b) + '"/>' + (yr < X1 ? '<text class="ax" x="' + r1(x(yr + 0.5)) + '" y="' + (H - m.b + 19) + '" text-anchor="middle">' + (nar ? '’' + String(yr).slice(2) : yr) + '</text>' : '');
+      for (var v = 0; v <= yMax + 1e-9; v += step) g += '<line class="gy' + (v === 0 ? ' base' : '') + '" x1="' + m.l + '" x2="' + (W - m.r) + '" y1="' + r1(y(v)) + '" y2="' + r1(y(v)) + '"/><text class="ax" x="' + (m.l - 8) + '" y="' + r1(y(v) + 4) + '" text-anchor="end">' + this.nf(v) + '</text>';
+      g += '<text class="ax" x="0" y="' + (m.t - 16) + '">' + esc(row.unit) + '</text>';
+      // dots: the largest in ink, the rest in the tint (rule B); the reader's picks ringed in red wine
+      var P = have.map(function (p) { return { p: p, cx: x(p.d.t), cy: p.v > yMax ? m.t - 6 : y(p.v), top: p.v === max, at: self.picked.indexOf(p.c.id) }; });
+      var boxes = P.map(function (q) { return [q.cx - 7, q.cy - 7, q.cx + 7, q.cy + 7]; });
+      P.forEach(function (q) { if (q.p.d.yearOnly) boxes.push([x(q.p.d.y) + 3, q.cy - 2, x(q.p.d.y + 1) - 3, q.cy + 2]); }); // a year-only chip's line across its year
+      var clash = function (b) { for (var i = 0; i < boxes.length; i++) { var o = boxes[i]; if (b[0] < o[2] && b[2] > o[0] && b[1] < o[3] && b[3] > o[1]) return true; } return b[0] < m.l - 2 || b[2] > W - 2 || b[1] < 0 || b[3] > H - m.b; };
+      var inside = function (b) { return b[0] >= m.l - 4 && b[2] <= W - 2 && b[1] >= 0; };
+      var labels = '';
+      // labels: the picks first, then the largest, then the rest by value, each where it clears every dot and label so far; a
+      // narrow chart names only the picks and the largest
+      P.slice().sort(function (a, b) { return (b.at >= 0) - (a.at >= 0) || b.top - a.top || b.p.v - a.p.v; }).forEach(function (q) {
+        var must = q.at >= 0 || q.top; if (nar && !must) return;
+        var name = self.short(q.p.c), fs = must ? 12.5 : 11.5, h = fs + 3, o = q.at >= 0 ? 15 : 10;
+        var w = self.textW((q.at >= 0 ? (q.at + 1) + ' ' : '') + name + (q.top ? ', ' + self.nf(q.p.v) : ''), fs, must);
+        var cands = [[q.cx + o, q.cy + 4, 'start', [q.cx + o - 1, q.cy - h / 2 - 1, q.cx + o + w, q.cy + h / 2]], [q.cx - o, q.cy + 4, 'end', [q.cx - o - w, q.cy - h / 2 - 1, q.cx - o + 1, q.cy + h / 2]],
+          [q.cx, q.cy - o - 3, 'middle', [q.cx - w / 2, q.cy - o - 2 - h + 2, q.cx + w / 2, q.cy - o + 1]], [q.cx, q.cy + o + 11, 'middle', [q.cx - w / 2, q.cy + o - 1, q.cx + w / 2, q.cy + o - 1 + h]]];
+        var pick = cands.filter(function (cd) { return !clash(cd[3]); })[0];
+        if (!pick && must) pick = cands.filter(function (cd) { return inside(cd[3]); })[0] || cands[1]; // a pick or the largest keeps its label
+        if (!pick) return;
+        boxes.push(pick[3]);
+        labels += '<text class="lab' + (q.at >= 0 ? ' mine' : '') + (q.top ? ' top' : '') + '" x="' + r1(pick[0]) + '" y="' + r1(pick[1]) + '" text-anchor="' + pick[2] + '" aria-hidden="true">' +
+          (q.at >= 0 ? '<tspan class="lno">' + (q.at + 1) + '</tspan> ' : '') + esc(name) + (q.top ? '<tspan class="lv">, ' + esc(self.nf(q.p.v)) + '</tspan>' : '') + '</text>';
+      });
+      // one dot holds the chart's Tab stop: the one last chosen or focused, else the largest
+      var fid = this.chartFocus && P.some(function (q) { return q.p.c.id === self.chartFocus; }) ? this.chartFocus : (P.filter(function (q) { return q.top; })[0] || P[0]).p.c.id;
+      var dots = P.slice().sort(function (a, b) { return (a.at >= 0) - (b.at >= 0) || a.top - b.top; }).map(function (q) {
+        var c = q.p.c, d = q.p.d, mine = q.at >= 0, cx = r1(q.cx), cy = r1(q.cy);
+        return '<g class="pt' + (q.top ? ' top' : '') + (mine ? ' mine' : '') + '" data-id="' + esc(c.id) + '" data-x="' + cx + '" tabindex="' + (c.id === fid ? '0' : '-1') + '" role="button" aria-pressed="' + mine + '" aria-label="' +
+          esc(c.name + ', ' + [c.vendor, cname(c.vendorCountry), self.year(c)].filter(Boolean).join(', ') + ', ' + self.nf(q.p.v) + ' ' + row.unit + (mine ? '. Chip ' + (q.at + 1) + ' in the comparison' : '. Add it to the comparison')) + '">' +
+          (d.yearOnly ? '<line class="yr" x1="' + r1(x(d.y) + 3) + '" x2="' + r1(x(d.y + 1) - 3) + '" y1="' + cy + '" y2="' + cy + '"/>' : '') +
+          (q.p.v > yMax ? '<path class="arr" d="M' + cx + ' ' + r1(q.cy - 19) + 'l-5 8h10z"/>' : '') +
+          '<circle class="hit" cx="' + cx + '" cy="' + cy + '" r="12"/>' + (mine ? '<circle class="ring" cx="' + cx + '" cy="' + cy + '" r="10.5"/>' : '') +
+          '<circle class="dot" cx="' + cx + '" cy="' + cy + '" r="' + (q.top ? 7 : 5.5) + '"/></g>';
+      }).join('');
+      host.innerHTML = '<svg width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '" role="group" aria-label="' + esc(row.short + ' of ' + have.length + ' chips, by the month each was announced') + '">' + g + dots + labels + '</svg>';
+      // the words over the chart, and the chips with no figure for this measure under it
+      var hi = have.filter(function (p) { return p.v === max; })[0];
+      var k = $('#cx-atlas-k'), t = $('#cx-atlas-t'), s = $('#cx-atlas-s'), gut = $('#cx-gutter');
+      if (k) k.textContent = have.length + ' of ' + this.chips.length + ' chips have a published figure';
+      if (t) t.textContent = row.short + ', by the year each chip was announced';
+      if (s) s.textContent = 'The ' + this.short(hi.c) + ' is the highest, at ' + this.nf(hi.v) + ' ' + row.unit + '.' + (outlier ? ' Its dot sits above the top of the scale, which follows the other ' + (have.length - 1) + ' chips.' : '') + ' Choose a dot to add its chip to the comparison.';
+      var no = none.filter(function (p) { return row.fmt && ((p.c.compute || {}).support || {})[row.fmt] === 'no'; }), np = none.filter(function (p) { return no.indexOf(p) < 0; });
+      var pills = function (list) { return list.map(function (p) { var at = self.picked.indexOf(p.c.id); return '<button type="button" class="aic-pill sm" data-id="' + esc(p.c.id) + '" aria-pressed="' + (at >= 0) + '">' + (at >= 0 ? self.badge(at) : '') + esc(self.short(p.c)) + '</button>'; }).join(''); };
+      var at = row.fmt ? ' at ' + row.fmt.toUpperCase() : '';
+      if (gut) gut.innerHTML = (np.length ? '<p class="aic-gut"><span class="aic-gut-k">Not published' + at + '</span>' + pills(np) + '</p>' : '') + (no.length ? '<p class="aic-gut"><span class="aic-gut-k">Not supported' + at + '</span>' + pills(no) + '</p>' : '');
+      var tip = $('#cx-tip'); if (tip) tip.hidden = true;
+    },
+    showTip: function (g) { // a dot's card: the chip, its maker, country and year, the figure, and what a press does
+      var tip = $('#cx-tip'), fig = $('.aic-fig'), c = this.byId(g.getAttribute('data-id')), dot = $('.dot', g); if (!tip || !fig || !c || !dot) return;
+      var row = this.row(this.measure), at = this.picked.indexOf(c.id), r = dot.getBoundingClientRect(), f = fig.getBoundingClientRect();
+      tip.innerHTML = '<b>' + esc(c.name) + '</b><span>' + esc(this.metaLine(c)) + '</span><span class="tv">' + esc(this.nf(row.num(c))) + ' ' + esc(row.unit) + '</span><span class="ta">' +
+        (at >= 0 ? 'Chip ' + (at + 1) + ' in the comparison' : this.picked.length >= this.max ? 'The comparison holds four' : 'Choose it to compare') + '</span>';
+      tip.hidden = false;
+      var w = tip.offsetWidth, left = r.right - f.left + 12; if (left + w > f.width) left = r.left - f.left - w - 12;
+      tip.style.left = Math.round(Math.max(0, left)) + 'px'; tip.style.top = Math.round(Math.max(0, r.top - f.top - 10)) + 'px';
     },
 
     /* ---- package plans, all at one millimetres-per-pixel scale ---- */
@@ -11816,15 +12045,15 @@ PC.register('wafer', function (p) {
       });
       return (w && h) ? [w, h] : null;
     },
+    PLAN_MIN: 128, PLAN_GAP: 48, // a card is never narrower than its name needs; the gap between cards
     scaleFor: function (sel, room) { // one scale for every plan on screen: the widest part sets it, and the row fits the column when it can
       var self = this, span = 0, total = 0;
       sel.forEach(function (c) { var b = self.planBounds(c.layout); if (b) { span = Math.max(span, b[0], b[1]); total += b[0]; } });
       if (!span) return 1;
-      var k = Math.min((narrow() ? 148 : 196) / span, 2.6);
-      // a card is never narrower than PLAN_MIN, so a long name wraps in two lines; a plan narrower than that stops shrinking
-      var avail = (room || 0) - sel.length * 22 - (sel.length - 1) * 20 - 4; // card padding and borders, the gaps between cards
-      // where even the narrowest cards cannot share one row (1024, a phone), the row wraps and keeps this scale; the cards are never cut
-      if (!narrow() && total > 0 && avail >= sel.length * self.PLAN_MIN) {
+      var k = Math.min((narrow() ? 150 : 210) / span, 2.6);
+      var avail = (room || 0) - (sel.length - 1) * this.PLAN_GAP - 4;
+      // where even the narrowest cards cannot share one row (a phone), the row wraps and keeps this scale; the cards are never cut
+      if (!narrow() && total > 0 && avail >= sel.length * this.PLAN_MIN) {
         for (var it = 0; it < 3; it++) {
           var fixed = 0, flex = 0;
           sel.forEach(function (c) { var b = self.planBounds(c.layout); if (!b || b[0] * k < self.PLAN_MIN) fixed += self.PLAN_MIN; else flex += b[0]; });
@@ -11833,7 +12062,6 @@ PC.register('wafer', function (p) {
       }
       return k;
     },
-    PLAN_MIN: 132,
     rects: function (list, cls) {
       var self = this;
       return (list || []).map(function (r) {
@@ -11878,29 +12106,31 @@ PC.register('wafer', function (p) {
     },
     renderPlans: function () {
       var self = this, host = $('#cx-plans'); if (!host) return;
-      var sel = this.selection(), k = this.scaleFor(sel, host.clientWidth);
+      var sel = this.selection(), k = this.scaleFor(sel, host.clientWidth), tall = sel.length < 2 ? 84 : 40;
+      // every drawing stands on one line: the art boxes take the tallest drawing's height
+      sel.forEach(function (c) { var b = self.planBounds(c.layout); tall = Math.max(tall, b ? Math.max(16, self.mm(b[1] * k)) : 72); });
+      host.style.setProperty('--plan-h', Math.ceil(tall) + 'px');
       host.innerHTML = sel.map(function (c, i) {
-        // a card: a button that puts the chip on the stage (the one there says so), and the column's Change and ×
-        var L = c.layout || {}, tip = L.note || (c.package || {}).type || '', b = self.planBounds(L), on = c.id === self.sel, acts = self.colActs(c, i);
+        // a card is a button that puts the chip on the stage; the one there says so under its name
+        var L = c.layout || {}, tip = L.note || (c.package || {}).type || '', b = self.planBounds(L), on = c.id === self.sel;
         var w = Math.max(self.PLAN_MIN, b ? Math.round(b[0] * k) : 0);
-        return '<div class="cx-plan' + (on ? ' is-on' : '') + '" style="width:' + (w + 22) + 'px">' +
+        return '<div class="cx-plan' + (on ? ' is-on' : '') + '" style="width:' + w + 'px">' +
           '<button type="button" class="cx-plan-hit" data-id="' + esc(c.id) + '" aria-pressed="' + (on ? 'true' : 'false') + '" title="' + esc((on ? '' : 'Show ' + c.name + ' on the stage. ') + tip) + '">' +
-          '<span class="cx-on">' + (on ? 'On the stage' : '') + '</span>' + // the line is kept on every card, so the names stay level
-          '<span class="cx-plan-name"><b>' + esc(c.name) + '</b><em>' + esc(c.vendor) + '</em></span>' +
           '<span class="cx-plan-art">' + (b ? self.planSVG(c, k) : '<i class="cx-noplan">No published layout</i>') + '</span>' +
+          '<span class="cx-plan-name">' + self.badge(i) + '<b>' + esc(c.name) + '</b><em>' + esc(c.vendor) + '</em></span>' +
           '<span class="cx-plan-size">' + esc(self.planSize(c)) + '</span></button>' +
-          acts.remove + '<span class="cx-plan-foot">' + acts.change + '</span></div>';
+          '<span class="cx-on">' + (on ? 'On the stage' : '') + '</span></div>'; // the line is kept on every card, so the cards stay level
       }).join('') + this.ghostPlans(sel.length);
       var key = $('#cx-key');
-      if (key) key.innerHTML = '<span><i class="cx-sw die"></i>Logic die</span><span><i class="cx-sw hbm"></i>Memory stack</span><span><i class="cx-sw int"></i>Interposer</span><span><i class="cx-sw sub"></i>Substrate</span>' + this.scaleKey(k);
+      if (key) key.innerHTML = '<span><i class="cx-sw die"></i>Logic die</span><span><i class="cx-sw hbm"></i>Memory stack</span><span><i class="cx-sw int"></i>Interposer</span><span><i class="cx-sw sub"></i>Substrate</span>' + (sel.length ? this.scaleKey(k) : '');
     },
-    ghostPlans: function (n) { // until two chips are in, a dashed outline holds the place of each one missing
+    ghostPlans: function (n) { // until two chips are in, a hatched box holds the place of each one missing
       var h = '';
-      for (var i = n + 1; i <= 2; i++) h += '<div class="cx-plan cx-plan--ghost" aria-hidden="true"><span class="cx-plan-name"><b>Chip ' + i + '</b><em>Not chosen yet</em></span><span class="cx-plan-art"><i></i></span><span class="cx-plan-size">&nbsp;</span></div>';
+      for (var i = n + 1; i <= 2; i++) h += '<div class="cx-plan cx-plan--ghost" aria-hidden="true"><span class="cx-plan-art"><i></i></span><span class="cx-plan-name"><b>Chip ' + i + '</b><em>Not chosen yet</em></span></div>';
       return h;
     },
 
-    /* ---- the side-by-side table ---- */
+    /* ---- the comparison's rows: each figure is a row of bars (FIG), the rest a table of words (WORDS) ---- */
     nf: function (v) { return (Math.round(v * 100) / 100).toLocaleString('en-US'); },
     // An empty cell says which kind of empty it is: a format the hardware cannot run reads
     // "not supported", anything else "not published". compute.support carries yes/no/unknown.
@@ -11908,54 +12138,56 @@ PC.register('wafer', function (p) {
       var f = row && row.fmt, sup = f ? ((c && c.compute || {}).support || {})[f] : null;
       return sup === 'no' ? '<span class="cx-nil cx-nil--no">not supported</span>' : '<span class="cx-nil">not published</span>';
     },
+    // label and hint lead each row: build/modules/reference-pages.js reads them in that order for the /chips/ page
     rows: [
-      { label: 'Vendor', hint: ['product page', 'press release', 'corporate'], text: function (c) { return esc(c.vendor) + '<span class="cx-2">' + esc(cname(c.vendorCountry)) + '</span>'; } },
-      { label: 'Availability', hint: ['product page', 'press release', 'spec table'], text: function (c) { return c.status ? esc(c.status) + (c.shipping ? '<span class="cx-2">from ' + esc(c.shipping) + '</span>' : '') : null; } },
-      { label: 'Built for', hint: ['product page', 'blog', 'documentation'], text: function (c) { return c.target ? esc(c.target) : null; } },
-      { label: 'Foundry, process node', hint: ['architecture', 'deep dive', 'white paper', 'documentation'], text: function (c) { var p = c.process || {}; return p.foundry ? esc(p.foundry) + '<span class="cx-2">' + esc(p.node || '') + (p.country ? ' · ' + esc(cname(p.country)) : '') + '</span>' : null; } },
-      { label: 'Logic dies', hint: ['architecture', 'deep dive', 'white paper'], num: function (c) { return (c.die || {}).count; }, sub: function (c) { var a = (c.die || {}).areaMm2Each; return a != null ? a + ' mm² each' : 'area not published'; } },
-      { label: 'Transistors, billion', hint: ['architecture', 'deep dive', 'white paper'], num: function (c) { return (c.die || {}).transistorsB; }, better: 'high' },
-      { label: 'Package', hint: ['cowos', 'packag', 'deep dive', 'architecture'], text: function (c) { var p = c.package || {}; return p.type ? esc(p.type) + (p.assembler ? '<span class="cx-2">assembled by ' + esc(p.assembler) + '</span>' : '') : null; } },
-      { label: 'Memory type', hint: ['hbm', 'micron', 'memory', 'datasheet'], text: function (c) { var m = c.memory || {}; return m.type ? esc(m.type) + (m.stacks ? '<span class="cx-2">' + m.stacks + ' stacks</span>' : '') : null; } },
-      { label: 'Memory, gigabytes', hint: ['spec table', 'datasheet', 'product page'], num: function (c) { return (c.memory || {}).capacityGB; }, better: 'high' },
-      { label: 'Bandwidth, terabytes/s', hint: ['spec table', 'datasheet', 'product page'], num: function (c) { return (c.memory || {}).bandwidthTBs; }, better: 'high' },
-      { label: 'Speed at FP16, TFLOPS', hint: ['spec table', 'datasheet', 'product page'], num: function (c) { return (c.compute || {}).fp16TFLOPS; }, better: 'high', fn: true, fmt: 'fp16' },
-      { label: 'Speed at FP8, TFLOPS', hint: ['spec table', 'datasheet', 'product page'], num: function (c) { return (c.compute || {}).fp8TFLOPS; }, better: 'high', fn: true, fmt: 'fp8' },
-      { label: 'Speed at FP4, TFLOPS', hint: ['spec table', 'datasheet', 'product page'], num: function (c) { return (c.compute || {}).fp4TFLOPS; }, better: 'high', fn: true, fmt: 'fp4' },
-      { label: 'Power, watts', hint: ['spec table', 'datasheet', 'product page'], num: function (c) { return c.tdpW; } },
-      { label: 'Chip-to-chip links', hint: ['architecture', 'deep dive', 'white paper'], long: true, text: function (c) { return (c.interconnect || {}).chipToChip ? esc(c.interconnect.chipToChip) : null; } },
-      { label: 'Scale-up, in one rack', hint: ['nvl', 'rack', 'system', 'deep dive', 'spec table'], long: true, text: function (c) { return (c.interconnect || {}).scaleUp ? esc(c.interconnect.scaleUp) : null; } },
-      { label: 'Price estimate', hint: ['price', 'semianalysis', 'rack', 'press release'], long: true, text: function (c) { return c.priceEstimate ? esc(c.priceEstimate) : null; } },
-      { label: 'Cost to make, estimate', hint: ['cost', 'semianalysis'], long: true, text: function (c) { return c.bomEstimate ? esc(c.bomEstimate) : null; } },
-      { label: 'Export-control status', hint: ['federal register', 'entity list', 'institute for progress', 'mofcom'], long: true, text: function (c) { return c.exportStatus ? esc(c.exportStatus) : null; } }
+      { label: 'Vendor', hint: ['product page', 'press release', 'corporate'], key: 'vendor', text: function (c) { return esc(c.vendor) + '<span class="cx-2">' + esc(cname(c.vendorCountry)) + '</span>'; } },
+      { label: 'Availability', hint: ['product page', 'press release', 'spec table'], key: 'status', text: function (c) { return c.status ? esc(c.status) + (c.shipping ? '<span class="cx-2">from ' + esc(c.shipping) + '</span>' : '') : null; } },
+      { label: 'Built for', hint: ['product page', 'blog', 'documentation'], key: 'target', text: function (c) { return c.target ? esc(c.target) : null; } },
+      { label: 'Foundry, process node', hint: ['architecture', 'deep dive', 'white paper', 'documentation'], key: 'process', text: function (c) { var p = c.process || {}; return p.foundry ? esc(p.foundry) + '<span class="cx-2">' + esc(p.node || '') + (p.country ? ' · ' + esc(cname(p.country)) : '') + '</span>' : null; } },
+      { label: 'Logic dies', hint: ['architecture', 'deep dive', 'white paper'], key: 'dies', short: 'Logic dies', unit: 'count', num: function (c) { return (c.die || {}).count; }, sub: function (c) { var a = (c.die || {}).areaMm2Each; return a != null ? a + ' mm² each' : 'area not published'; } },
+      { label: 'Transistors, billion', hint: ['architecture', 'deep dive', 'white paper'], key: 'transistors', short: 'Transistors', unit: 'billion', num: function (c) { return (c.die || {}).transistorsB; } },
+      { label: 'Package', hint: ['cowos', 'packag', 'deep dive', 'architecture'], key: 'package', text: function (c) { var p = c.package || {}; return p.type ? esc(p.type) + (p.assembler ? '<span class="cx-2">assembled by ' + esc(p.assembler) + '</span>' : '') : null; } },
+      { label: 'Memory type', hint: ['hbm', 'micron', 'memory', 'datasheet'], key: 'memtype', text: function (c) { var m = c.memory || {}; return m.type ? esc(m.type) + (m.stacks ? '<span class="cx-2">' + m.stacks + ' stacks</span>' : '') : null; } },
+      { label: 'Memory, gigabytes', hint: ['spec table', 'datasheet', 'product page'], key: 'mem', short: 'Memory', unit: 'gigabytes', num: function (c) { return (c.memory || {}).capacityGB; } },
+      { label: 'Bandwidth, terabytes/s', hint: ['spec table', 'datasheet', 'product page'], key: 'bw', short: 'Bandwidth', unit: 'terabytes a second', num: function (c) { return (c.memory || {}).bandwidthTBs; } },
+      { label: 'Speed at FP16, TFLOPS', hint: ['spec table', 'datasheet', 'product page'], key: 'fp16', short: 'Speed at FP16', unit: 'TFLOPS', num: function (c) { return (c.compute || {}).fp16TFLOPS; }, fn: true, fmt: 'fp16' },
+      { label: 'Speed at FP8, TFLOPS', hint: ['spec table', 'datasheet', 'product page'], key: 'fp8', short: 'Speed at FP8', unit: 'TFLOPS', num: function (c) { return (c.compute || {}).fp8TFLOPS; }, fn: true, fmt: 'fp8' },
+      { label: 'Speed at FP4, TFLOPS', hint: ['spec table', 'datasheet', 'product page'], key: 'fp4', short: 'Speed at FP4', unit: 'TFLOPS', num: function (c) { return (c.compute || {}).fp4TFLOPS; }, fn: true, fmt: 'fp4' },
+      { label: 'Power, watts', hint: ['spec table', 'datasheet', 'product page'], key: 'tdp', short: 'Power', unit: 'watts', num: function (c) { return c.tdpW; } },
+      { label: 'Chip-to-chip links', hint: ['architecture', 'deep dive', 'white paper'], key: 'c2c', long: true, text: function (c) { return (c.interconnect || {}).chipToChip ? esc(c.interconnect.chipToChip) : null; } },
+      { label: 'Scale-up, in one rack', hint: ['nvl', 'rack', 'system', 'deep dive', 'spec table'], key: 'scale', long: true, text: function (c) { return (c.interconnect || {}).scaleUp ? esc(c.interconnect.scaleUp) : null; } },
+      { label: 'Price estimate', hint: ['price', 'semianalysis', 'rack', 'press release'], key: 'price', long: true, text: function (c) { return c.priceEstimate ? esc(c.priceEstimate) : null; } },
+      { label: 'Cost to make, estimate', hint: ['cost', 'semianalysis'], key: 'bom', long: true, text: function (c) { return c.bomEstimate ? esc(c.bomEstimate) : null; } },
+      { label: 'Export-control status', hint: ['federal register', 'entity list', 'institute for progress', 'mofcom'], key: 'export', long: true, text: function (c) { return c.exportStatus ? esc(c.exportStatus) : null; } }
     ],
-    sourceTitle: function (c, row) { // the chip's sources are not tagged per field, so match the row's subject against the labels
+    row: function (key) { if (!this._rk) { var m = {}; this.rows.forEach(function (r) { m[r.key] = r; }); this._rk = m; } return this._rk[key]; },
+    FIG: ['fp16', 'fp8', 'fp4', 'mem', 'bw', 'tdp', 'transistors', 'dies'],
+    WORDS: ['vendor', 'status', 'target', 'process', 'package', 'memtype', 'c2c', 'scale', 'price', 'bom', 'export'],
+    // the chip's sources are not tagged per field, so the row's subject is matched against their labels (as /chips/ does)
+    srcIndex: function (c, row) {
+      var srcs = c.sources || [], hints = row.hint || [];
+      for (var h = 0; h < hints.length; h++) for (var i = 0; i < srcs.length; i++) if ((srcs[i].label || '').toLowerCase().indexOf(hints[h]) >= 0) return i;
+      return -1;
+    },
+    // every figure carries its source: the number of the source in the chip's list under Notes and sources, a link to it that opens
+    // the site's source card (Cite); where nothing in the list is about the row, "all" goes to the chip's whole list
+    cite: function (c, row) {
       var srcs = c.sources || []; if (!srcs.length) return '';
-      var hints = row.hint || [];
-      for (var h = 0; h < hints.length; h++) for (var i = 0; i < srcs.length; i++) {
-        if ((srcs[i].label || '').toLowerCase().indexOf(hints[h]) >= 0) return 'Source: ' + (srcs[i].label || srcs[i].url);
-      }
-      // nothing in the list is about this row, so list the chip's sources rather than claim one of them
-      return 'Sources for the ' + c.name + ': ' + srcs.map(function (x) { return x.label || x.url; }).join(' · ');
+      var i = this.srcIndex(c, row);
+      if (i >= 0) { var s = srcs[i], l = s.label || s.url; return '<sup class="cite"><a href="' + safeUrl(s.url) + '" target="_blank" rel="noopener" data-t="' + esc(l) + '" aria-label="Source ' + (i + 1) + ', ' + esc(l) + '">' + (i + 1) + '</a></sup>'; }
+      return '<sup class="cite cx-all"><button type="button" data-notes="' + esc(c.id) + '" aria-label="All sources for the ' + esc(c.name) + '">all</button></sup>';
     },
-    cellHTML: function (c, row, max, marker, multi) {
-      var title = this.sourceTitle(c, row), inner;
-      if (row.num) {
-        var v = row.num(c);
-        if (v == null) inner = this.nil(c, row);
-        else {
-          var best = row.better === 'high' && max > 0 && v === max;
-          inner = '<span class="cx-v' + (best ? ' is-best' : '') + '">' + esc(this.nf(v)) + '</span>' + (marker || '') +
-            (row.sub ? '<span class="cx-2">' + esc(row.sub(c)) + '</span>' : '') +
-            (multi && max > 0 ? '<span class="cx-meter"><i style="width:' + Math.round(Math.max(0, v) / max * 100) + '%"></i></span>' : '');
-        }
-      } else {
-        var t = row.text(c);
-        inner = (t == null || t === '') ? this.nil(c, row) : t + (marker || '');
-      }
-      return '<td class="' + (row.long ? 'cx-long' : '') + (c.id === this.sel ? ' is-focus' : '') + '"' + (title ? ' title="' + esc(title) + '"' : '') + '>' + inner + '</td>';
+    fnMarks: function (sel) { // the speed rows' notes: one per chip that has a note on how its figures are measured
+      var list = []; sel.forEach(function (c) { var n = (c.compute || {}).precisionNote; if (n) list.push({ c: c, n: n }); });
+      return { list: list, mark: function (c) { for (var i = 0; i < list.length; i++) if (list[i].c.id === c.id) return '<sup class="cx-fn">' + (i + 1) + '</sup>'; return ''; } };
     },
-    // where the table is still wider than its box (a phone, a narrow window), the right edge fades and a line says it scrolls,
+    cellHTML: function (c, row, i) {
+      var t = row.text(c), inner;
+      if (t == null || t === '') inner = this.nil(c, row);
+      else { var at = t.indexOf('<span class="cx-2">'), mk = this.cite(c, row); inner = at >= 0 ? t.slice(0, at) + mk + t.slice(at) : t + mk; } // the mark sits on the value, before its second line
+      return '<td class="' + (row.long ? 'cx-long' : '') + (c.id === this.sel ? ' is-focus' : '') + '" data-n="' + (i + 1) + ' · ' + esc(this.short(c)) + '">' + inner + '</td>';
+    },
+    // where the table is still wider than its box (four chips in a narrow window), the right edge fades and a line says it scrolls,
     // since Mac and phone browsers hide the scrollbar until the reader scrolls
     scrollCue: function () {
       var w = $('#cx-table-wrap'), hint = $('#cx-more'); if (!w) return;
@@ -11963,16 +12195,33 @@ PC.register('wafer', function (p) {
       w.setAttribute('data-more', over && w.scrollWidth - w.clientWidth - w.scrollLeft > 4 ? '1' : '0');
       if (hint) hint.hidden = !over;
     },
+    // the figures: one row of bars per measure, rule B in each row (the largest solid ink, the rest the light tint)
+    renderStrips: function () {
+      var self = this, host = $('#cx-strips'); if (!host) return;
+      var sel = this.selection(), fm = this.fnMarks(sel), g = Math.max(0, 2 - sel.length);
+      host.innerHTML = this.FIG.map(function (key) {
+        var row = self.row(key), max = 0;
+        sel.forEach(function (c) { var v = row.num(c); if (typeof v === 'number' && v > max) max = v; });
+        var lines = sel.map(function (c, i) {
+          var v = row.num(c), on = c.id === self.sel, name = '<span class="sl-n">' + self.badge(i) + esc(self.short(c)) + '</span>';
+          if (typeof v !== 'number') return '<div class="sl' + (on ? ' is-on' : '') + '">' + name + '<span class="sl-b"></span><span class="sl-v">' + self.nil(c, row) + '</span></div>';
+          var top = max > 0 && v === max, w = max > 0 ? Math.max(1, v / max * 100) : 0;
+          return '<div class="sl' + (on ? ' is-on' : '') + '">' + name + '<span class="sl-b" aria-hidden="true"><i' + (top ? ' class="top"' : '') + ' style="width:' + w.toFixed(1) + '%"></i></span>' +
+            '<span class="sl-v"><span class="cx-v' + (top ? ' is-top' : '') + '">' + esc(self.nf(v)) + '</span>' + (row.fn ? fm.mark(c) : '') + self.cite(c, row) + (row.sub ? '<span class="cx-2">' + esc(row.sub(c)) + '</span>' : '') + '</span></div>';
+        }).join('');
+        for (var j = 0; j < g; j++) lines += '<div class="sl ghost" aria-hidden="true"><span class="sl-n">Chip ' + (sel.length + j + 1) + '</span><span class="sl-b"><i></i></span><span class="sl-v"><span class="cx-nil">not chosen yet</span></span></div>';
+        return '<div class="srow' + (row.sub ? ' has-sub' : '') + '"><h4 class="srow-h">' + esc(row.short) + ' <span>' + esc(row.unit) + '</span></h4>' + lines + '</div>';
+      }).join('');
+    },
+    // the words: a table with one column per chip, Change, × and Read the notes on each head
     renderTable: function () {
       var self = this, tb = $('#cx-table'); if (!tb) return;
-      var sel = this.selection(), multi = sel.length > 1, fns = [];
-      sel.forEach(function (c) { var n = (c.compute || {}).precisionNote; if (n) fns.push({ c: c, n: n }); });
-      var marker = function (c) { for (var i = 0; i < fns.length; i++) if (fns[i].c.id === c.id) return '<sup class="cx-fn">' + (i + 1) + '</sup>'; return ''; };
+      var sel = this.selection();
       var html = '<thead><tr><th class="cx-rowhead" scope="col"><span class="sr-only">Specification</span></th>';
       sel.forEach(function (c, i) {
         var acts = self.colActs(c, i);
         html += '<th scope="col" class="cx-col' + (c.id === self.sel ? ' is-focus' : '') + '">' + acts.remove +
-          '<button type="button" class="cx-colhead" data-id="' + esc(c.id) + '" aria-pressed="' + (c.id === self.sel ? 'true' : 'false') + '"><b>' + esc(c.name) + '</b><span>' + esc(c.vendor) + '</span></button>' +
+          '<button type="button" class="cx-colhead" data-id="' + esc(c.id) + '" aria-pressed="' + (c.id === self.sel ? 'true' : 'false') + '">' + self.badge(i) + '<b>' + esc(c.name) + '</b><span>' + esc(c.vendor) + '</span></button>' +
           '<span class="cx-colacts">' + acts.change + '<button type="button" class="cx-jump" data-notes="' + esc(c.id) + '">Read the notes</button></span></th>';
       });
       // until two chips are in, an empty hatched column waits for each one missing, so the reader sees what the table will hold
@@ -11982,11 +12231,10 @@ PC.register('wafer', function (p) {
         gd += '<td class="cx-ghost"></td>';
       }
       html += '</tr></thead><tbody>';
-      this.rows.forEach(function (row) {
-        var max = 0;
-        if (row.num) sel.forEach(function (c) { var v = row.num(c); if (typeof v === 'number' && v > max) max = v; });
-        html += '<tr><th scope="row" class="cx-rowhead">' + esc(row.label) + '</th>';
-        sel.forEach(function (c) { html += self.cellHTML(c, row, max, row.fn ? marker(c) : '', multi); });
+      this.WORDS.forEach(function (key) {
+        var row = self.row(key);
+        html += '<tr' + (row.long ? ' class="cx-tr-long"' : '') + '><th scope="row" class="cx-rowhead">' + esc(row.label) + '</th>';
+        sel.forEach(function (c, i) { html += self.cellHTML(c, row, i); });
         html += gd + '</tr>';
       });
       tb.innerHTML = html + '</tbody>';
@@ -11994,19 +12242,20 @@ PC.register('wafer', function (p) {
       var tw = $('#cx-table-wrap'); // with no chip the table is a preview of its rows, so a screen reader skips it
       if (tw) { if (sel.length) tw.removeAttribute('aria-hidden'); else tw.setAttribute('aria-hidden', 'true'); }
       this.scrollCue();
-      var foot = $('#cx-foot');
+      var fns = this.fnMarks(sel).list, foot = $('#cx-foot');
       if (foot) foot.innerHTML = fns.length ? '<p class="label">How the speed figures are measured</p><ol class="cx-fns">' +
         fns.map(function (f) { return '<li><b>' + esc(f.c.name) + '</b> ' + esc(f.n) + '</li>'; }).join('') + '</ol>' : '';
     },
     renderNotes: function () {
       var self = this, host = $('#cx-notes'); if (!host) return;
-      host.innerHTML = '<h3 class="label cx-h">Notes and sources</h3>' + this.selection().map(function (c) {
+      host.innerHTML = '<h3 class="cx-notes-h">Notes and sources</h3>' + this.selection().map(function (c) {
         var body = self.notes[c.id] || (c.notes ? '<p>' + esc(c.notes) + '</p>' : '<p class="cx-nil">No note yet.</p>');
         body = body.replace(/^\s*<p><code>[^<]*<\/code><\/p>\s*/, ''); // the notes file opens each block with the chip id, which is keying, not copy
-        var srcs = (c.sources || []).map(function (s) { return '<a href="' + safeUrl(s.url) + '" target="_blank" rel="noopener">' + esc(s.label || s.url) + '</a>'; }).join('');
+        // the sources numbered as the figures cite them
+        var srcs = (c.sources || []).map(function (s) { return '<li><a href="' + safeUrl(s.url) + '" target="_blank" rel="noopener">' + esc(s.label || s.url) + '</a></li>'; }).join('');
         return '<details class="cx-note" id="cx-note-' + esc(c.id) + '"' + (c.id === self.sel ? ' open' : '') + '>' +
           '<summary><b>' + esc(c.name) + '</b><span>' + esc(c.vendor) + ' · ' + esc(cname(c.vendorCountry)) + '</span></summary>' +
-          '<div class="cx-note-body">' + body + '</div>' + (srcs ? '<p class="cx-srcs">' + srcs + '</p>' : '') + '</details>';
+          '<div class="cx-note-body">' + body + '</div>' + (srcs ? '<ol class="cx-srcs" aria-label="Sources for the ' + esc(c.name) + '">' + srcs + '</ol>' : '') + '</details>';
       }).join('');
     },
     jumpToNotes: function (id) {
@@ -12016,12 +12265,24 @@ PC.register('wafer', function (p) {
       scrollToEl(el, true);
     },
 
-    /* ---- the stage keeps drawing the focused chip's package from above ---- */
+    /* ---- the stage draws the focused chip's package from above, beside the chart (or in the phone's strip) ---- */
+    // the package type sits mid-sentence, so a phrase such as "Two silicon interposers" takes a small letter (CoWoS-L keeps its own)
+    lowerFirst: function (s) { s = String(s || ''); var w = s.split(/[\s,]/)[0]; return /^[A-Z][a-z]+$/.test(w) ? s.charAt(0).toLowerCase() + s.slice(1) : s; },
+    stageCaption: function (c) {
+      var lay = c.layout || null, hb = (c.memory && c.memory.stacks) || 0, n = (c.die && c.die.count) || 1;
+      if (lay && lay.waferScale) return 'Wafer-scale: one ' + esc(c.name) + ' is a whole 300 mm wafer.';
+      return esc(c.name) + ': ' + n + ' logic die' + (n > 1 ? 's' : '') + (hb ? ' and ' + hb + ' ' + esc((c.memory && c.memory.type) || 'high-bandwidth memory') + ' stacks' : '') + ' on ' + esc(this.lowerFirst((c.package && c.package.type) || 'the package')) + '.';
+    },
+    specText: function (tag, cap) { var t = $('#cx-spec-tag'), p = $('#cx-spec-text'); if (t) t.innerHTML = tag; if (p) p.innerHTML = cap; },
+    showGeneric: function () {
+      var cap = 'An AI accelerator package, drawn from above.', tag = 'AI chips · <b>Package</b>';
+      Stage.show('package', { plan: true }, cap, tag); this.specText(tag, cap);
+    },
     showStage: function (c) {
       if (!c) return;
-      var lay = c.layout || null, hb = (c.memory && c.memory.stacks) || 0;
-      var cap = lay && lay.waferScale ? 'Wafer-scale: one ' + esc(c.name) + ' is a whole 300 mm wafer.' : esc(c.name) + ': ' + ((c.die && c.die.count) || 1) + ' logic die' + (((c.die && c.die.count) || 1) > 1 ? 's' : '') + (hb ? ' and ' + hb + ' ' + esc((c.memory && c.memory.type) || 'high-bandwidth memory') + ' stacks' : '') + ' on ' + esc((c.package && c.package.type) || 'the package') + '.';
-      Stage.show('package', lay ? { layout: lay, plan: true } : { plan: true }, cap, 'AI chips · <b>' + esc(c.name) + '</b>');
+      var lay = c.layout || null, cap = this.stageCaption(c), tag = 'AI chips · <b>' + esc(c.name) + '</b>';
+      Stage.show('package', lay ? { layout: lay, plan: true } : { plan: true }, cap, tag);
+      this.specText(tag, cap);
     }
   };
   Landscape.initSelection();
