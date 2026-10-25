@@ -257,6 +257,16 @@
     },
     /* The chapter's slot the drawing sits in on The Chain (src/modules/chapter.css .ch-spec-draw), or null for the stage beside
        the page (the home, AI Chips) and the phone's strip. The canvas and its pause button move; the canvas keeps its context. */
+    /* Where the stage sits in the page's order (it is fixed, so only the Tab order sees it): on the home, right after the
+       evidence figure, so Tab reaches the fifteen marks that pick the specimen before the specimen itself; elsewhere, its place
+       in src/template.html, before the views */
+    place: function (v) {
+      if (!this.fig) return;
+      if (!this.homeParent) { this.homeParent = this.fig.parentNode; this.homeBefore = $('#main'); }
+      var ev = v === 'walk' ? $('.view[data-view="walk"] .wk-ev') : null;
+      if (ev) { if (this.fig.previousElementSibling !== ev) ev.parentNode.insertBefore(this.fig, ev.nextSibling); }
+      else if (this.fig.parentNode !== this.homeParent && this.homeBefore) this.homeParent.insertBefore(this.fig, this.homeBefore);
+    },
     hostEl: null,
     host: function (el) {
       if (!this.canvas || el === this.hostEl) return;
@@ -540,6 +550,7 @@
       $$('.view').forEach(function (s) { s.hidden = s.getAttribute('data-view') !== v; });
       document.documentElement.setAttribute('data-view', v); // the chapter page's styles read it (src/modules/chapter.css: the stage beside the page goes on The Chain)
       if (v !== 'stack') Stage.host(null); // the drawing leaves a chapter's slot for the stage of the view it goes to
+      Stage.place(v); // on the home the stage follows the marks that pick its specimen in the Tab order
       if (v !== 'stack') document.documentElement.classList.remove('slim-on', 'mast-up'); // the phone's slim bar and the raised masthead belong to The Chain
       // Until the first route the template's CSS showed the view the address names (read in <head> by src/preroute.js), so it
       // could paint while the page arrived. From here the hidden attributes decide. A reader who scrolled or tapped in that
@@ -996,7 +1007,7 @@
       this.render();
       this.showGeneric();
     },
-    showGeneric: function () { Stage.show('package', { plan: true }, 'An AI accelerator package, drawn from above.', 'AI chips · <b>package</b>'); },
+    showGeneric: function () { Stage.show('package', { plan: true }, 'An AI accelerator package, drawn from above.', 'AI chips · <b>Package</b>'); },
 
     /* ---- the slots: two to four columns that ask for their chips (redesign of 21 Oct 2026, qa/design/chips-ux/) ----
        An empty slot and a chip's Change open the picker; Remove empties a slot; the folded checklist and the search box change the
@@ -1346,7 +1357,7 @@
           acts.remove + '<span class="cx-plan-foot">' + acts.change + '</span></div>';
       }).join('') + this.ghostPlans(sel.length);
       var key = $('#cx-key');
-      if (key) key.innerHTML = '<span><i class="cx-sw die"></i>logic die</span><span><i class="cx-sw hbm"></i>memory stack</span><span><i class="cx-sw int"></i>interposer</span><span><i class="cx-sw sub"></i>substrate</span>' + this.scaleKey(k);
+      if (key) key.innerHTML = '<span><i class="cx-sw die"></i>Logic die</span><span><i class="cx-sw hbm"></i>Memory stack</span><span><i class="cx-sw int"></i>Interposer</span><span><i class="cx-sw sub"></i>Substrate</span>' + this.scaleKey(k);
     },
     ghostPlans: function (n) { // until two chips are in, a dashed outline holds the place of each one missing
       var h = '';
@@ -2049,7 +2060,7 @@
           '<td><span class="cc">' + esc(r.country) + '</span> ' + esc(r.city || '') + '</td>' +
           '<td class="num">' + (r.founded || '—') + '</td>' +
           '<td><span class="chk ' + esc(r.chokepoint || '') + '">' + esc(r.chokepoint || '') + '</span>' + (r.shareNote ? '<br><span class="cc" style="color:var(--muted)">' + esc(r.shareNote) + '</span>' : '') + '</td>' +
-          '<td class="role">' + esc(r.role || '') + (r.source ? ' <a href="' + safeUrl(r.source) + '" target="_blank" rel="noopener" class="cc" aria-label="Source for ' + esc(r.name) + '">source</a>' : '') + '</td>' +
+          '<td class="role">' + esc(r.role || '') + (r.source ? ' <a href="' + safeUrl(r.source) + '" target="_blank" rel="noopener" class="cc" aria-label="Source for ' + esc(r.name) + '">Source</a>' : '') + '</td>' +
           '<td style="font-size:13px;color:var(--ink-2)">' + esc((r.customers || []).join(', ')) + '</td></tr>';
       });
       $('#sup-table').innerHTML = html + '</tbody>';
@@ -2412,14 +2423,14 @@
       }
       host.hidden = false;
       host.innerHTML = '<h3 class="label" id="cf-up-h" style="margin:0 0 2px">Coming up</h3><ol style="list-style:none;margin:0;padding:0">' + list.map(function (x) {
-        var u = x.u, when = x.n === 0 ? 'today' : x.n === 1 ? 'tomorrow' : 'in ' + x.n + ' days';
-        // the link is quiet, in sentence case; garnet marks only the deadlines within a month
+        var u = x.u, when = x.n === 0 ? 'Today' : x.n === 1 ? 'Tomorrow' : 'In ' + x.n + ' days'; // sentence case as written: CSS sets no capitals
+        // the link is quiet, in sentence case; a deadline within a month is ink, the others muted (the accent never marks a data value)
         var quiet = 'display:inline-block;padding:4px 0;font-family:var(--font-mono);font-size:11px;line-height:16px;color:var(--muted);margin-left:10px;white-space:nowrap';
         var link = u.event ? '<a class="cf-up-link" href="' + esc('#/controls/' + encodeURIComponent(u.event)) + '" style="' + quiet + '" aria-label="Entry in the timeline">Entry <span aria-hidden="true">→</span></a>'
           : (u.source && safeUrl(u.source) !== '#' ? '<a class="cf-up-link" href="' + safeUrl(u.source) + '" target="_blank" rel="noopener" style="' + quiet + '">Source</a>' : '');
         return '<li style="display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 14px;padding:8px 0;border-bottom:1px solid var(--line)">' +
           '<span style="' + mono + 'flex:0 0 8.6em;color:var(--ink)">' + esc(self.fmtDate(u.date)) + '</span>' +
-          '<span style="' + mono + 'flex:0 0 7em;color:' + (x.n <= 30 ? 'var(--accent)' : 'var(--muted)') + '">' + esc(when) + '</span>' +
+          '<span style="' + mono + 'flex:0 0 7em;color:' + (x.n <= 30 ? 'var(--ink)' : 'var(--muted)') + '">' + esc(when) + '</span>' +
           '<span style="flex:1 1 18em;min-width:0;font-size:15px;line-height:1.4;color:var(--ink-2)">' + esc(u.label || '') + link + '</span></li>';
       }).join('') + '</ol>';
     },

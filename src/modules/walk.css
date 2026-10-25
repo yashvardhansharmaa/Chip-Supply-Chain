@@ -128,7 +128,7 @@
 }
 .wk-leaders .label { flex: 0 0 auto; }
 .wk-lead { font-weight: 500; color: var(--ink); }
-.wk-lead .chip { margin: 0 0 0 3px; } /* the markup already carries a literal space, so the name reads apart from its code */
+.wk-lead .chip { width: auto; margin: 0 0 0 3px; padding: 0; border: 0; font-family: var(--font-code); font-size: 11px; font-weight: 400; letter-spacing: 0; color: var(--muted); vertical-align: baseline; } /* the country code as plain mono text, no box; the markup already carries a literal space */
 .wk-sep { font-style: normal; color: var(--line-2); }
 
 .wk-foot {

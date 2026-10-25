@@ -283,7 +283,7 @@ module.exports = function (ctx) {
     const segs = matrix.filter((r) => r.shares[cc] != null).map((r) => {
       const rank = Object.keys(r.shares).sort((a, b) => r.shares[b] - r.shares[a]).indexOf(cc) + 1;
       const basis = r.basis || (/estimate/i.test((r.metric || '') + ' ' + (r.note || '').slice(0, 40)) ? 'estimate' : '');
-      const flag = basis === 'estimate' ? 'estimate' : basis === 'relayed' ? 'reported by ' + (r.relayedVia || 'a third party') : basis === 'derived' ? 'computed' : '';
+      const flag = basis === 'estimate' ? 'Estimate' : basis === 'relayed' ? 'reported by ' + (r.relayedVia || 'a third party') : basis === 'derived' ? 'computed' : '';
       return { seg: r.segment, v: r.shares[cc], year: r.asOf || r.year, rank: rank, ch: SEG_CH[r.segment] || null, estimate: basis === 'estimate', flag: flag, method: r.method || '' };
     }).sort((a, b) => b.v - a.v);
     const firms = suppliers.filter((s) => s.country === cc);

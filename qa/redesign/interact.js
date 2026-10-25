@@ -13,6 +13,11 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8766';
       const t = await open(chrome, BASE + '/#/', { width, wait: 2500 });
       const tag = () => t.ev("(document.getElementById('stage-tag-text')||{}).textContent||''");
       check(`${width}: the stage opens on Lithography`, /04 · Lithography/.test(await tag()), await tag());
+      check(`${width}: Tab reaches the marks before the specimen`, await t.ev("!!(document.querySelector('.wk-stops').compareDocumentPosition(document.getElementById('stage-canvas')) & Node.DOCUMENT_POSITION_FOLLOWING)"));
+      if (width > 900) {
+        const gap = await t.ev("(function(){var c=document.getElementById('stage-canvas').getBoundingClientRect(),e=CP.Stage.reach(CP.Stage.cur),g=document.querySelector('.stage .stage-tag').getBoundingClientRect();return Math.round(g.top-(c.top+e.bottom));})()");
+        check(`${width}: the caption sits right under the drawing`, gap >= 0 && gap <= 40, gap + ' px between the drawing\'s lowest point and the caption');
+      }
       await t.ev("document.querySelectorAll('.wk-stop')[0].click(), 1"); await sleep(400);
       check(`${width}: mark 01 puts Chip Design on the stage`, /01 · Chip Design/.test(await tag()), await tag());
       check(`${width}: the legend names it`, /Shown: 01 Chip Design/.test(await t.ev("document.querySelector('.wk-shown').textContent")));

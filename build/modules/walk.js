@@ -47,7 +47,7 @@ module.exports = function (ctx) {
   const factsHTML = (ch) => {
     const facts = ((ch.meta && ch.meta.keyFacts) || []).filter((k) => k && k.fact && okUrl(k.source)).slice(0, 2);
     if (!facts.length) return '';
-    return `<ul class="wk-facts" aria-label="Two facts from the chapter">${facts.map((k) => { const e = bib[k.source] || {}; const t = e.title ? `${e.title}${e.publisher ? ', ' + e.publisher : ''}${e.date ? ', ' + e.date : ''}` : k.source; return `<li>${esc(k.fact)} <a class="wk-src" href="${esc(k.source)}" target="_blank" rel="noopener" title="${esc(t)}">source</a></li>`; }).join('')}</ul>`;
+    return `<ul class="wk-facts" aria-label="Two facts from the chapter">${facts.map((k) => { const e = bib[k.source] || {}; const t = e.title ? `${e.title}${e.publisher ? ', ' + e.publisher : ''}${e.date ? ', ' + e.date : ''}` : k.source; return `<li>${esc(k.fact)} <a class="wk-src" href="${esc(k.source)}" target="_blank" rel="noopener" title="${esc(t)}">Source</a></li>`; }).join('')}</ul>`;
   };
   const walkWords = steps.reduce((a, c) => a + wordCount(plainOf(c.id)), 0);
   const mins = Math.max(1, Math.round(walkWords / 230));
@@ -103,13 +103,13 @@ module.exports = function (ctx) {
   /* ---------------- the hero's search field and the two ways in ----------------
      The field opens the site's search (src/app.js Tools) with what is typed. Its counts are the data's own: the firms on
      Suppliers, the chips on AI Chips and the terms in the Glossary. "Introduction" starts the walk below at its first step,
-     with the walk's own counts under it; "Each stage, in detail" opens The Chain. */
+     with a line on what it is and how long it takes; "Each stage, in detail" opens The Chain. */
   const nTerms = (ctx.glossary || []).length, nFirms = (data.suppliers || []).length, nChips = (data.landscape || []).length;
   const FIND = `<div class="wk-find">
 <label class="sr-only" for="wk-q">Search the site</label>
 <div class="wk-qbox"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="7" cy="7" r="5"/><path d="M11 11l3.5 3.5"/></svg><input id="wk-q" type="search" autocomplete="off" spellcheck="false" placeholder="Search ${nFirms} firms, ${nChips} chips, ${nTerms} terms"><kbd aria-hidden="true">/</kbd></div>
 <div class="wk-reads">
-<a class="wk-way" href="#${esc(stepId(steps[0] ? steps[0].id : ''))}"><span class="wk-way-t">Introduction <span aria-hidden="true">→</span></span><span class="wk-way-d">${steps.length}&nbsp;paragraphs, ${walkWords.toLocaleString('en-US')}&nbsp;words, about&nbsp;${mins}&nbsp;min</span></a>
+<a class="wk-way" href="#${esc(stepId(steps[0] ? steps[0].id : ''))}"><span class="wk-way-t">Introduction <span aria-hidden="true">→</span></span><span class="wk-way-d">A short read through the whole chain, about&nbsp;${mins}&nbsp;min</span></a>
 <a class="wk-way" href="chain/" data-route="#/chain"><span class="wk-way-t">Each stage, in detail <span aria-hidden="true">→</span></span><span class="wk-way-d">The Chain, ${all.length} chapters</span></a>
 </div>
 </div>`;
