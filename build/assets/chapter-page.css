@@ -1,36 +1,40 @@
 /* The readable chapter page (dist/<chapter>/index.html, written by build/modules/social.js).
    A static copy of one chapter for search engines, citation and readers who arrive from a shared link.
-   The tokens, type and rules are the site's own (src/styles.css): paper, ink and garnet, Fraunces for display,
-   Source Serif 4 for reading, Instrument Sans for labels, hairlines instead of boxes, square corners.
+   The tokens, type and rules are the site's own (src/styles.css, redesign of 25 Oct 2026): a white ground, warm ink and
+   red wine for links and the reader's place; Fraunces for display, Literata for reading, Hanken Grotesk for interface
+   labels and Fragment Mono for kickers, codes and dates.
    The page follows the reader's system theme, and ?theme= or the site's saved choice overrides it.
    Inlined into each page and lightly minified by social.js, so keep it short and free of commas inside strings. */
 :root {
-  --bg: #f7f6f2; --bg-2: #f1efea; --ink: #14181f; --ink-2: #3b424c; --muted: #5c636d;
-  --line: #d8d4cc; --line-2: #bfb9af; --accent: #7a1f2b; --accent-ink: #611722; --accent-soft: rgba(122, 31, 43, 0.09); --accent-fill: #7a1f2b; --on-accent: #f7f6f2;
+  --bg: #ffffff; --bg-2: #f4f4f2; --ink: #171716; --ink-2: #45443f; --muted: #56554f;
+  --line: #e1e0db; --line-2: #c4c3bd; --rule-ink: #8c8a84; --accent: #7a1f2b; --accent-ink: #7a1f2b; --accent-soft: #f3e3e5; --accent-fill: #7a1f2b; --on-accent: #ffffff;
+  --ctx: #d2d1cc;
   --c1: #2b63c4; --c2: #e06a1f; --c3: #1f9a6d; --c4: #c9a10c; --c5: #5a48b8; --c6: #c3302b; --c7: #2e7d1e; --c8: #8a9099;
-  --bar-5: var(--accent-fill); --bar-4: #3b424c; --bar-3: #bfb9af;
+  --bar-5: var(--ink); --bar-4: #8c8a84; --bar-3: #c4c3bd;
   /* the stacked bars' colors, as src/styles.css sets them (decision 4, 21 Oct 2026) */
   --stk-1: #2b63c4; --stk-2: #1f9a6d; --stk-3: #c9a10c; --stk-4: #5a48b8; --stk-5: #e06a1f; --stk-tail: #c9c6bf; --stk-edge: #a9a49b; --stk-n1: #8a9099; --stk-n2: #b4b9be;
   --font-display: "Fraunces", "Iowan Old Style", Georgia, serif;
-  --font-body: "Source Serif 4", "Iowan Old Style", Georgia, serif;
-  --font-label: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
-  --font-code: ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-body: "Literata", "Iowan Old Style", Georgia, serif;
+  --font-label: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --font-code: "Fragment Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-kicker: var(--font-code);
   --opsz-title: "opsz" 48, "SOFT" 0, "WONK" 0;
-  --measure: 31em; /* about 65 characters of Source Serif at 18.5 px */
+  --measure: 31em; /* about 65 characters of Literata at 18 px */
   --gutter: clamp(16px, 4vw, 40px);
-  /* the site's type scale (src/styles.css :root, design round 21 Oct 2026) */
-  --fs-cap-s: 10px; --tr-cap-s: 0.08em; --fs-cap: 11px; --tr-cap: 0.1em; --fs-ui-s: 12px; --fs-ui: 13.5px;
-  --fs-note: 13.5px; --fs-small: 15.5px; --fs-plain: 17px; --fs-body: 18.5px; --fs-lede: 21px;
-  --fs-d6: 16.5px; --fs-d5: 19px; --fs-d4: 21px; --fs-d3: 24px; --fs-d2: 28px; --fs-d1s: clamp(26px, 2.3vw, 32px); --fs-d1: clamp(40px, 4.4vw, 62px);
+  /* the site's type scale (src/styles.css :root, redesign of 25 Oct 2026): labels in sentence case, nothing under 11 px */
+  --fs-cap-s: 11px; --tr-cap-s: 0.01em; --fs-cap: 12px; --tr-cap: 0.01em; --fs-ui-s: 12.5px; --fs-ui: 14px;
+  --fs-note: 13.5px; --fs-small: 15.5px; --fs-plain: 17px; --fs-body: 18px; --fs-lede: 21px;
+  --fs-d6: 16.5px; --fs-d5: 19px; --fs-d4: 21px; --fs-d3: 24px; --fs-d2: 28px; --fs-d1s: clamp(26px, 2.3vw, 32px); --fs-d1: clamp(40px, 4.6vw, 66px);
   --fs-num-s: 30px; --fs-num-m: 54px; --fs-num-l: 72px;
   color-scheme: light;
 }
 /* dark only on an explicit choice (?theme=dark or the site's saved choice): the site opens light for everyone, the owner's call of 21 Oct */
 :root[data-theme="dark"] {
-  --bg: #14171c; --bg-2: #1b1f25; --ink: #ece9e2; --ink-2: #c3c7cd; --muted: #939aa3;
-  --line: #2c3138; --line-2: #3d434b; --accent: #e25c57; --accent-ink: #ee7a73; --accent-soft: rgba(226, 92, 87, 0.14); --accent-fill: #a8414b; --on-accent: #fff;
+  --bg: #121211; --bg-2: #1c1c1a; --ink: #e8e7e3; --ink-2: #c6c4be; --muted: #a9a7a1;
+  --line: #2c2b28; --line-2: #45443f; --rule-ink: #75736d; --accent: #d98a95; --accent-ink: #d98a95; --accent-soft: rgba(217, 138, 149, 0.16); --accent-fill: #a8414b; --on-accent: #fff;
+  --ctx: #45443f;
   --c1: #5b8ee6; --c2: #ef8140; --c3: #34b585; --c4: #d9b21e; --c5: #8676d8; --c6: #e0504a; --c7: #4f9c3a;
-  --bar-4: #636a73; --bar-3: #4a515a;
+  --bar-4: #8c8a84; --bar-3: #45443f;
   --stk-1: #4f86dc; --stk-2: #2a9670; --stk-3: #ad8f14; --stk-4: #7f6fd4; --stk-5: #c96a2a; --stk-tail: #4b5159; --stk-edge: #6d747c;
   color-scheme: dark;
 }
@@ -51,19 +55,19 @@ strong, b { font-weight: 600; }
 .label, .eyebrow, .ch-meta, .fig-source, .src-meta, .track .n, .track-foot, .site-footer .updated, .tier, .ptag, .chip, .k, dt, th, .anim-steps b {
   font-family: var(--font-label);
 }
-.label { font-size: var(--fs-cap); font-weight: 500; letter-spacing: var(--tr-cap); text-transform: uppercase; color: var(--muted); }
+.label { font-family: var(--font-kicker); font-size: var(--fs-cap); font-weight: 400; letter-spacing: 0; color: var(--muted); }
 
 /* masthead: the wordmark home, then The Chain and the four reference pages (social.js NAV) */
-.masthead { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 56px; padding: 0 var(--gutter); border-bottom: 1px solid var(--line-2); }
+.masthead { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 64px; padding: 0 var(--gutter); border-bottom: 1px solid var(--line); }
 /* the wordmark: the favicon's tile beside the name, as in the app's masthead (src/styles.css); the tile keeps the favicon's garnet in both themes */
 .wordmark { display: flex; align-items: center; gap: 12px; min-height: 44px; text-decoration: none; }
 .wordmark .wm-tile { display: block; flex: none; width: 29px; height: 29px; }
 .wordmark .wm-tile rect { fill: #7a1f2b; }
-.wordmark .wm-tile path { fill: #f7f6f2; }
+.wordmark .wm-tile path { fill: #ffffff; }
 .wordmark .wm-name { font-family: var(--font-display); font-size: 21px; font-weight: 540; font-variation-settings: "opsz" 28, "SOFT" 0, "WONK" 0; letter-spacing: -0.005em; line-height: 1; white-space: nowrap; }
 .masthead nav { display: flex; gap: 4px; }
-.masthead nav a { font-family: var(--font-label); font-weight: 500; font-size: 13.5px; color: var(--ink-2); text-decoration: none; padding: 8px 8px 7px; border-bottom: 1px solid transparent; white-space: nowrap; }
-.masthead nav a:hover { color: var(--ink); border-bottom-color: var(--accent); }
+.masthead nav a { font-family: var(--font-label); font-weight: 400; font-size: 15px; color: var(--ink); text-decoration: none; padding: 8px 8px 7px; border-bottom: 2px solid transparent; white-space: nowrap; }
+.masthead nav a:hover { color: var(--ink-2); border-bottom-color: var(--line-2); }
 .masthead nav a[aria-current="page"] { color: var(--ink); border-bottom-color: var(--accent); }
 /* from 800 px down the five links take a row of their own under the wordmark, wrapping to a second line at 320 px */
 @media (max-width: 800px) {
@@ -74,16 +78,16 @@ strong, b { font-weight: 600; }
 /* the reading column */
 .page { max-width: calc(var(--measure) + 2 * var(--gutter)); margin: 0 auto; padding: 0 var(--gutter); }
 .ch-head { padding: clamp(40px, 8vh, 72px) 0 4px; }
-.eyebrow { margin: 0 0 14px; font-size: var(--fs-cap); font-weight: 500; letter-spacing: var(--tr-cap); text-transform: uppercase; color: var(--muted); }
-.eyebrow b { color: var(--accent); font-weight: 600; }
-.ch-title { font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: clamp(40px, 6.4vw, 60px); line-height: 1.02; letter-spacing: -0.015em; margin: 0 0 18px; }
+.eyebrow { margin: 0 0 14px; font-family: var(--font-kicker); font-size: var(--fs-cap); font-weight: 400; letter-spacing: 0; color: var(--muted); }
+.eyebrow b { color: var(--ink); font-weight: 400; }
+.ch-title { font-family: var(--font-display); font-weight: 350; font-variation-settings: var(--opsz-title); font-size: clamp(40px, 6.4vw, 60px); line-height: 1.02; letter-spacing: -0.015em; margin: 0 0 18px; }
 .ch-lede { font-size: var(--fs-lede); line-height: 1.45; color: var(--ink-2); margin: 0 0 16px; }
-.ch-meta { margin: 0 0 26px; font-size: var(--fs-cap); font-weight: 500; letter-spacing: var(--tr-cap); text-transform: uppercase; color: var(--muted); }
+.ch-meta { margin: 0 0 26px; font-family: var(--font-kicker); font-size: var(--fs-cap); font-weight: 400; letter-spacing: 0; color: var(--muted); }
 
 /* the way into the interactive chapter: one solid button, near the top and again at the end */
 .cta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; margin: 0 0 34px; }
-.btn { display: inline-flex; align-items: center; gap: 10px; padding: 13px 18px 12px; background: var(--accent-fill); color: var(--on-accent); font-family: var(--font-label); font-weight: 600; font-size: 15px; letter-spacing: 0.01em; text-decoration: none; border: 1px solid var(--accent-fill); }
-.btn:hover { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+.btn { display: inline-flex; align-items: center; gap: 10px; padding: 12px 20px; background: var(--ink); color: var(--bg); font-family: var(--font-label); font-weight: 500; font-size: 15px; letter-spacing: 0; text-decoration: none; border: 1px solid var(--ink); border-radius: 999px; }
+.btn:hover { background: var(--ink-2); border-color: var(--ink-2); color: var(--bg); }
 .btn:focus-visible { outline-offset: 3px; }
 .btn span { font-weight: 400; }
 .cta-note { margin: 0; font-family: var(--font-label); font-size: var(--fs-ui); line-height: 1.45; color: var(--muted); max-width: 23em; }
@@ -103,11 +107,11 @@ strong, b { font-weight: 600; }
 .track li[aria-current="page"] .n { color: var(--ink); font-weight: 600; }
 .track li a:focus-visible { outline-offset: 1px; }
 .track li[aria-current="page"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: var(--accent); }
-.track-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px; margin: 8px 0 0; font-size: var(--fs-cap-s); font-weight: 500; letter-spacing: var(--tr-cap-s); text-transform: uppercase; color: var(--muted); }
+.track-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px; margin: 8px 0 0; font-size: var(--fs-cap-s); font-weight: 500; letter-spacing: 0; color: var(--muted); }
 .track-foot b { color: var(--ink); font-weight: 600; }
 .track-foot a { color: var(--ink-2); }
 /* the one-line key under the strip: each band's bar drawn at the height it has in the strip, standing on the baseline */
-.track .track-key { display: flex; flex-wrap: wrap; align-items: baseline; gap: 3px 14px; margin: 7px 0 0; padding-top: 7px; border-top: 1px solid var(--line); font-family: var(--font-label); font-size: var(--fs-cap-s); font-weight: 500; letter-spacing: var(--tr-cap-s); line-height: 1.5; text-transform: uppercase; color: var(--muted); }
+.track .track-key { display: flex; flex-wrap: wrap; align-items: baseline; gap: 3px 14px; margin: 7px 0 0; padding-top: 7px; border-top: 1px solid var(--line); font-family: var(--font-label); font-size: var(--fs-cap-s); font-weight: 500; letter-spacing: 0; line-height: 1.5; color: var(--muted); }
 .track .track-key .tk-k { color: var(--muted); margin-right: 2px; }
 .track .track-key .tk { display: inline-flex; align-items: baseline; gap: 6px; color: var(--ink-2); }
 .track .track-key i { display: inline-block; flex: none; width: 7px; height: 2px; background: var(--bar-3); }
@@ -117,10 +121,10 @@ strong, b { font-weight: 600; }
 
 /* In plain terms, In short */
 .plain { border-top: 1px solid var(--ink); border-bottom: 1px solid var(--line-2); padding: 14px 0 16px; margin: 0 0 28px; }
-.plain .label { color: var(--accent); display: block; margin-bottom: 7px; }
+.plain .label { color: var(--muted); display: block; margin-bottom: 7px; }
 .plain p { font-size: var(--fs-plain); line-height: 1.55; margin: 0; }
 .inshort { margin: 0 0 34px; }
-.inshort h2 { font-family: var(--font-label); font-size: var(--fs-cap); font-weight: 500; letter-spacing: var(--tr-cap); text-transform: uppercase; color: var(--accent); margin: 0 0 10px; }
+.inshort h2 { font-family: var(--font-label); font-size: var(--fs-cap); font-weight: 500; letter-spacing: 0; color: var(--muted); margin: 0 0 10px; }
 .inshort p, .inshort li { font-size: var(--fs-lede); line-height: 1.5; }
 .inshort p { margin: 0 0 0.6em; }
 .inshort ul { padding-left: 1.2em; margin: 0; }
@@ -136,17 +140,17 @@ strong, b { font-weight: 600; }
 .plate-kpis > div { padding: 15px 16px 16px 0; border-right: 1px solid var(--line); min-width: 0; }
 .plate-kpis > div + div { padding-left: 16px; }
 .plate-kpis > div:last-child { border-right: 0; }
-.k { display: block; font-weight: 500; font-size: var(--fs-cap-s); letter-spacing: var(--tr-cap-s); text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.k { display: block; font-weight: 500; font-size: var(--fs-cap-s); letter-spacing: 0; color: var(--muted); margin-bottom: 8px; }
 .plate-kpis .v { display: block; font-family: var(--font-display); font-weight: 400; font-variation-settings: "opsz" 72, "SOFT" 0, "WONK" 0; font-size: var(--fs-d2); line-height: 1.05; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
 .plate-kpis .v.cost { font-size: var(--fs-d3); }
 .plate-kpis .v.cost.long { font-family: var(--font-body); font-weight: 500; font-size: var(--fs-small); line-height: 1.35; font-variation-settings: normal; }
 .plate-kpis .v small { font-size: 14px; color: var(--muted); margin-left: 4px; }
-.plate-kpis .v.Extreme, .plate-kpis .v.sub-4 { color: var(--accent); }
+.plate-kpis .v.Extreme, .plate-kpis .v.sub-4 { color: var(--ink); }
 .plate-kpis .sub { display: block; font-size: var(--fs-note); line-height: 1.45; color: var(--muted); margin-top: 8px; }
 .plate-rows { margin: 0; }
 .plate-rows .row { display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: 20px; padding: 13px 0; border-bottom: 1px solid var(--line); }
 .plate-rows .row:last-child { border-bottom: 0; }
-.plate-rows dt { font-weight: 500; font-size: var(--fs-cap-s); letter-spacing: var(--tr-cap-s); text-transform: uppercase; color: var(--muted); padding-top: 4px; }
+.plate-rows dt { font-weight: 500; font-size: var(--fs-cap-s); letter-spacing: 0; color: var(--muted); padding-top: 4px; }
 .plate-rows dd { margin: 0; font-size: var(--fs-small); line-height: 1.45; }
 .plate-rows ul { list-style: none; margin: 0; padding: 0; }
 .plate-rows li { padding-left: 32px; text-indent: -32px; margin-bottom: 8px; }
@@ -170,7 +174,7 @@ strong, b { font-weight: 600; }
 /* the chapter text */
 .prose h2 { font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: var(--fs-d2); line-height: 1.15; margin: 2em 0 0.65em; scroll-margin-top: 16px; }
 .prose h3 { font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: var(--fs-d4); line-height: 1.25; margin: 1.7em 0 0.5em; scroll-margin-top: 16px; }
-.prose h4 { font-family: var(--font-label); font-weight: 500; font-size: var(--fs-cap); letter-spacing: var(--tr-cap); text-transform: uppercase; color: var(--muted); margin: 1.6em 0 0.5em; }
+.prose h4 { font-family: var(--font-label); font-weight: 500; font-size: var(--fs-cap); letter-spacing: 0; color: var(--muted); margin: 1.6em 0 0.5em; }
 .prose ul, .prose ol { padding-left: 1.3em; margin: 0 0 1.1em; }
 .prose li { margin-bottom: 0.45em; }
 .prose li::marker { color: var(--muted); }
@@ -192,7 +196,7 @@ sup.cite .br { font-size: 0; }
 .table-wrap { overflow-x: auto; margin: 1.3em 0 1.6em; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--line-2); }
 .prose table { border-collapse: collapse; width: 100%; font-size: var(--fs-small); line-height: 1.4; font-variant-numeric: tabular-nums; }
 .prose th, .prose td { text-align: left; padding: 9px 12px 9px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
-.prose th { font-size: var(--fs-cap); letter-spacing: var(--tr-cap); text-transform: uppercase; color: var(--muted); font-weight: 500; }
+.prose th { font-size: var(--fs-cap); letter-spacing: 0; color: var(--muted); font-weight: 500; }
 .prose tr:last-child td { border-bottom: 0; }
 .prose td:first-child { font-weight: 500; }
 /* a figure column (class "n", from the table renderer in build.js): right-aligned on tabular digits */
@@ -204,7 +208,7 @@ sup.cite .br { font-size: 0; }
 /* figures: bars, stacks and timelines as the site draws them; animations as a video with its steps */
 .figure { margin: 1.6em 0 2em; padding: 16px 0 12px; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--line-2); }
 .fig-title { font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: var(--fs-d6); line-height: 1.3; margin: 0 0 12px; }
-.fig-title .unit { font-family: var(--font-label); font-weight: 500; font-size: var(--fs-cap-s); color: var(--muted); letter-spacing: var(--tr-cap-s); margin-left: 8px; text-transform: uppercase; }
+.fig-title .unit { font-family: var(--font-label); font-weight: 500; font-size: var(--fs-cap-s); color: var(--muted); letter-spacing: 0; margin-left: 8px; }
 .figure svg { display: block; width: 100%; height: auto; overflow: visible; }
 .fig-source { margin: 10px 0 0; font-size: var(--fs-ui-s); color: var(--muted); }
 .fig-source a { color: var(--muted); }
@@ -254,7 +258,7 @@ sup.cite .br { font-size: 0; }
 .anim-steps { margin: 18px 0 4px; padding-left: 1.7em; font-size: var(--fs-small); line-height: 1.5; }
 .anim-steps li { margin-bottom: 6px; }
 .anim-steps li::marker { font-family: var(--font-label); font-size: var(--fs-ui-s); color: var(--muted); }
-.anim-steps b { font-size: var(--fs-cap); font-weight: 600; letter-spacing: var(--tr-cap); text-transform: uppercase; color: var(--accent); margin-right: 4px; }
+.anim-steps b { font-size: var(--fs-cap); font-weight: 600; letter-spacing: 0; color: var(--ink); margin-right: 4px; }
 
 /* review questions, from the chapter's flashcards */
 .review { margin: 3em 0 0; border-top: 2px solid var(--ink); padding-top: 14px; }
@@ -298,10 +302,11 @@ sup.cite .br { font-size: 0; }
 .tier-C { border-style: dashed; color: var(--muted); }
 .tier-D, .tier-\? { border-color: var(--c6); color: var(--c6); }
 
-.site-footer { border-top: 1px solid var(--line-2); margin-top: 56px; padding: 26px 0 56px; font-family: var(--font-label); font-size: var(--fs-ui-s); line-height: 1.7; color: var(--muted); }
+.site-footer { border-top: 1px solid var(--rule-ink); margin-top: 64px; padding: 30px 0 60px; font-family: var(--font-label); font-size: 14px; line-height: 1.6; color: var(--muted); }
 .site-footer p { margin: 0; }
-.site-footer a { color: var(--ink-2); }
-.site-footer .updated { display: block; margin-top: 8px; font-weight: 500; font-size: var(--fs-cap); letter-spacing: var(--tr-cap); text-transform: uppercase; }
+.site-footer a { color: var(--ink); }
+.site-footer .credits { font-size: 15px; line-height: 1.5; color: var(--ink); }
+.site-footer .updated { display: block; margin-top: 10px; font-family: var(--font-kicker); font-weight: 400; font-size: 12px; letter-spacing: 0; }
 .site-footer .sources-key { margin-top: 10px; font-size: var(--fs-ui-s); }
 
 @media (max-width: 640px) {
@@ -315,7 +320,7 @@ sup.cite .br { font-size: 0; }
   .inshort p, .inshort li { font-size: var(--fs-body); }
   .btn { width: 100%; justify-content: center; }
   .track ol { gap: 1px; }
-  .track .n { font-size: 9px; letter-spacing: -0.02em; }
+  .track .n { font-size: 11px; letter-spacing: -0.02em; }
   .plate-kpis { grid-template-columns: 1fr; }
   .plate-kpis > div, .plate-kpis > div + div { border-right: 0; border-bottom: 1px solid var(--line); padding-left: 0; }
   .plate-kpis > div:last-child { border-bottom: 0; }

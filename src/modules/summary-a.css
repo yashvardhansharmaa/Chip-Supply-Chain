@@ -91,9 +91,9 @@
 .sa-fact-k { font-family: var(--font-body); font-size: var(--fs-note); font-weight: 500; line-height: 1.25; color: var(--ink); display: block; }
 .sa-fact--share .sa-fact-k { padding-right: 62px; }
 .sa-fact-v { position: absolute; right: 2px; top: 8px; font-family: var(--font-mono); font-size: var(--fs-ui); font-weight: 500; color: var(--ink); font-variant-numeric: tabular-nums; }
-.sa-fact-v small { display: block; font-size: 9.5px; font-weight: 400; color: var(--muted); text-align: right; letter-spacing: 0.04em; }
+.sa-fact-v small { display: block; font-size: 11px; font-weight: 400; color: var(--muted); text-align: right; letter-spacing: 0.04em; }
 .sa-fact-note { display: block; font-size: var(--fs-note); line-height: 1.4; color: var(--muted); margin-top: 2px; }
-.sa-sc { font-family: var(--font-mono); font-size: 10.5px; font-weight: 500; margin-left: 7px; padding: 1px 4px; border-radius: 0; color: var(--bg); background: var(--bar-3); vertical-align: 1px; }
+.sa-sc { font-family: var(--font-mono); font-size: 11px; font-weight: 500; margin-left: 7px; padding: 1px 4px; border-radius: 0; color: var(--bg); background: var(--bar-3); vertical-align: 1px; }
 .sa-sc[data-band="4"] { background: var(--bar-5); }
 .sa-sc[data-band="3"] { background: var(--bar-4); }
 /* dark mode fills the badge in mid tones (the wine, the High gray), so its figure takes the cream ink: 4.9:1 on the wine,
@@ -118,13 +118,13 @@
   font-family: var(--font-mono); font-size: var(--fs-ui); font-weight: 500; line-height: 1;
   padding: 8px 10px; border: 1px solid var(--control-edge); border-radius: 0; background: none; color: var(--ink-2);
 }
-.sa-chip small { font-family: var(--font-mono); font-size: 10px; color: var(--muted); margin-left: 6px; }
+.sa-chip small { font-family: var(--font-mono); font-size: 11px; color: var(--muted); margin-left: 6px; }
 .sa-chip:hover { border-color: var(--ink-2); color: var(--ink); }
 .sa-chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--bg); }
 .sa-chip[aria-pressed="true"] small { color: var(--bg); }
 .sa-chip--minor { font-size: 12.5px; padding: 6px 8px; color: var(--muted); }
 
-.sa-legend { font-family: var(--font-mono); font-size: var(--fs-cap-s); letter-spacing: var(--tr-cap-s); text-transform: uppercase; color: var(--muted); margin: 14px 0 0; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 16px; }
+.sa-legend { font-family: var(--font-mono); font-size: var(--fs-cap-s); letter-spacing: 0; color: var(--muted); margin: 14px 0 0; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 16px; }
 .sa-lg { display: inline-block; margin-right: -8px; }
 .sa-lg--big { width: 14px; height: 14px; border-radius: 50%; border: 1.5px solid var(--ink-2); background: var(--bg); }
 .sa-lg--hard { width: 14px; height: 14px; border-radius: 50%; border: 2.5px solid var(--ink-2); background: var(--bg); }
@@ -140,7 +140,7 @@
 .sa-tile[data-band="4"] .sa-tile-bar i { height: 100%; background: var(--bar-5); }
 .sa-tile[data-band="3"] .sa-tile-bar i { height: 66%; background: var(--bar-4); }
 .sa-tile[data-band="2"] .sa-tile-bar i { height: 38%; background: var(--bar-3); }
-.sa-tile-t { font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap-s); letter-spacing: var(--tr-cap-s); text-transform: uppercase; color: var(--ink-2); line-height: 1.2; }
+.sa-tile-t { font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap-s); letter-spacing: 0; color: var(--ink-2); line-height: 1.2; }
 .sa-tile:hover .sa-tile-t, .sa-tile:hover .sa-tile-n { color: var(--ink); }
 .sa-tile[aria-pressed="true"] .sa-tile-n, .sa-tile[aria-pressed="true"] .sa-tile-t { color: var(--ink); font-weight: 500; }
 .sa-tile[aria-pressed="true"] { position: relative; }
@@ -162,7 +162,7 @@
 .sa-num { border-top: 1px solid var(--ink); padding-top: 12px; }
 .sa-num b { display: block; font-family: var(--font-display); font-variation-settings: var(--opsz-numeral); font-size: clamp(34px, 3.6vw, 52px); font-weight: 300; line-height: 1; letter-spacing: -0.02em; text-transform: none; color: var(--accent); font-variant-numeric: tabular-nums lining-nums; }
 .sa-num p { font-size: 15.5px; line-height: 1.45; color: var(--ink-2); margin: 10px 0 8px; }
-.sa-num a { font-family: var(--font-mono); font-size: var(--fs-cap); letter-spacing: var(--tr-cap); text-transform: uppercase; color: var(--muted); }
+.sa-num a { font-family: var(--font-mono); font-size: var(--fs-cap); letter-spacing: 0; color: var(--muted); }
 .sa-num a:hover { color: var(--ink); }
 
 /* ---------- call to action ---------- */
@@ -222,7 +222,7 @@
 .sa-exit span { display: block; font-family: var(--font-body); font-size: var(--fs-small); line-height: 1.45; color: var(--ink-2); }
 @media (max-width: 700px) { .sa-exits { grid-template-columns: 1fr; } }
 
-.sa-est { font-family: var(--font-mono); font-weight: 500; font-style: normal; font-size: var(--fs-cap-s); letter-spacing: var(--tr-cap-s); text-transform: uppercase; color: var(--ink-2); margin-left: 6px; }
+.sa-est { font-family: var(--font-mono); font-weight: 500; font-style: normal; font-size: var(--fs-cap-s); letter-spacing: 0; color: var(--ink-2); margin-left: 6px; }
 .sa-est--basis { text-transform: none; letter-spacing: 0.02em; }
 
 .sa-town[data-dead="1"] { cursor: default; }
@@ -231,12 +231,12 @@
 .sa-doors { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 10px 0 34px; }
 .sa-door { display: block; border: 0; border-top: 1px solid var(--line-2); background: none; border-radius: 0; padding: 12px 0 15px; text-decoration: none; color: var(--ink); transition: border-color 0.15s; }
 .sa-door:hover, .sa-door:focus-visible { border-top-color: var(--ink); }
-.sa-door-k { display: block; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap-s); letter-spacing: var(--tr-cap-s); text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
+.sa-door-k { display: block; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap-s); letter-spacing: 0; color: var(--accent); margin-bottom: 6px; }
 .sa-door b { display: block; font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 500; font-size: var(--fs-d5); margin-bottom: 3px; }
 .sa-door span:last-child { font-size: 14.5px; color: var(--ink-2); }
 .sa-route { fill: none; stroke: var(--accent); stroke-width: 1; opacity: 0.45; }
 .sa-tail { stroke: var(--ink-2); stroke-width: 0.8; }
-.sa-stop { position: absolute; width: 22px; height: 22px; margin: -11px 0 0 -11px; border-radius: 50%; background: var(--ink); color: var(--bg); border: 1.5px solid var(--bg); display: grid; place-items: center; font-family: var(--font-mono); font-weight: 600; font-size: 10.5px; text-decoration: none; transition: transform 0.15s var(--ease); z-index: 3; }
+.sa-stop { position: absolute; width: 22px; height: 22px; margin: -11px 0 0 -11px; border-radius: 50%; background: var(--ink); color: var(--bg); border: 1.5px solid var(--bg); display: grid; place-items: center; font-family: var(--font-mono); font-weight: 600; font-size: 11px; text-decoration: none; transition: transform 0.15s var(--ease); z-index: 3; }
 .sa-stop[data-cc="JP"] { box-shadow: 0 0 0 3px var(--c1); } .sa-stop[data-cc="NL"] { box-shadow: 0 0 0 3px var(--c2); } .sa-stop[data-cc="TW"] { box-shadow: 0 0 0 3px var(--c3); } .sa-stop[data-cc="KR"] { box-shadow: 0 0 0 3px var(--c5); } .sa-stop[data-cc="MY"] { box-shadow: 0 0 0 3px var(--c8); } .sa-stop[data-cc="CN"] { box-shadow: 0 0 0 3px var(--c6); }
 .sa-stop:hover, .sa-stop:focus-visible { transform: scale(1.25); z-index: 4; outline: none; box-shadow: 0 0 0 2px var(--accent); }
 .sa-stop-tip { position: absolute; z-index: 50; max-width: 300px; padding: 9px 11px 10px; background: var(--ink); color: var(--bg); border-radius: 0; font-family: var(--font-mono); font-size: var(--fs-ui-s); line-height: 1.45; pointer-events: none; }
@@ -251,7 +251,7 @@
 .sa-stopcard:hover .sa-stopcard-t, .sa-stopcard.is-hot .sa-stopcard-t, .sa-stopcard:focus-visible .sa-stopcard-t { color: var(--accent); }
 .sa-stopcard-n { display: block; font-family: var(--font-mono); font-size: var(--fs-cap-s); letter-spacing: var(--tr-cap-s); color: var(--muted); font-variant-numeric: tabular-nums; }
 .sa-stopcard-t { display: block; font-family: var(--font-body); font-weight: 500; font-size: var(--fs-note); line-height: 1.15; margin: 2px 0 3px; overflow-wrap: break-word; hyphens: auto; }
-.sa-stopcard-w { display: block; font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.02em; color: var(--muted); }
+.sa-stopcard-w { display: block; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.02em; color: var(--muted); }
 
 /* the plate: chips across the top, the caption, the map with the panel at its right, the strip as the footer */
 .sa--atlas { padding-bottom: 0; }
@@ -266,8 +266,8 @@
 .sa-role-meta, .sa-role-line { display: none; }
 .sa-role[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
 .atlas-caption { margin: 0; padding: 9px 0 10px 14px; border-bottom: 1px solid var(--line); font-size: var(--fs-small); line-height: 1.4; color: var(--ink-2); }
-.atlas-caption-name { font-family: var(--font-mono); font-weight: 600; font-size: 13px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink); margin-right: 6px; }
-.atlas-caption-meta { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.05em; color: var(--muted); margin-right: 10px; }
+.atlas-caption-name { font-family: var(--font-mono); font-weight: 600; font-size: 13px; letter-spacing: 0; color: var(--ink); margin-right: 6px; }
+.atlas-caption-meta { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.05em; color: var(--muted); margin-right: 10px; }
 .atlas-body { display: grid; grid-template-columns: minmax(0, 1fr) 360px; grid-template-rows: auto auto; align-items: stretch; }
 .atlas .sa-map { grid-column: 1; grid-row: 1; border: 0; border-right: 1px solid var(--line); border-radius: 0; background: var(--bg-2); }
 .atlas .sa-svg { border-radius: 0; }
@@ -290,7 +290,7 @@
 .atlas .sa-stop.is-on::after { content: attr(data-place); }
 .sa-stop::after {
   content: none; position: absolute; left: 27px; top: 50%; transform: translateY(-50%); white-space: nowrap;
-  font-family: var(--font-mono); font-weight: 600; font-size: 10.5px; letter-spacing: 0.04em; color: var(--ink);
+  font-family: var(--font-mono); font-weight: 600; font-size: 11px; letter-spacing: 0.04em; color: var(--ink);
   background: color-mix(in srgb, var(--bg-2) 90%, transparent); padding: 2px 5px; border-radius: 0; pointer-events: none;
 }
 /* where a country's towns crowd, the build gives each label a side (data-lab) so none covers a stop or another label */

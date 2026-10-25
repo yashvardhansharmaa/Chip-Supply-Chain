@@ -51,7 +51,7 @@
 
 .sup-legend {
   margin: 9px 0 0; max-width: 1180px;
-  font-family: var(--font-mono); font-size: 10.5px; line-height: 1.95; letter-spacing: 0.03em; color: var(--muted);
+  font-family: var(--font-mono); font-size: 11px; line-height: 1.95; letter-spacing: 0.03em; color: var(--muted);
 }
 .sup-lg { display: inline-flex; align-items: center; gap: 5px; margin: 0 11px 0 0; white-space: nowrap; }
 .sup-sw { display: block; width: 9px; height: 9px; flex: 0 0 auto; }
@@ -74,10 +74,10 @@
 .sup-tip[hidden] { display: none; }
 @media (hover: hover) { .sup-tip { pointer-events: auto; } } /* a mouse can move onto the tip and it stays (WCAG 1.4.13); a tap still reaches the drawing under it */
 .sup-tip b { display: block; font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 500; font-size: 14px; line-height: 1.2; color: var(--ink); }
-.sup-tip .sup-tip-n { display: block; margin: 2px 0 7px; font-family: var(--font-mono); font-size: var(--fs-cap-s); letter-spacing: var(--tr-cap-s); text-transform: uppercase; color: var(--muted); }
+.sup-tip .sup-tip-n { display: block; margin: 2px 0 7px; font-family: var(--font-mono); font-size: var(--fs-cap-s); letter-spacing: 0; color: var(--muted); }
 .sup-tip .sup-tip-co { display: flex; flex-wrap: wrap; gap: 3px 10px; }
-.sup-tip-c { display: inline-flex; align-items: center; gap: 4px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.04em; color: var(--muted); }
-.sup-tip-c b { display: inline; font-family: var(--font-mono); font-weight: 500; font-size: 10.5px; color: var(--ink-2); }
+.sup-tip-c { display: inline-flex; align-items: center; gap: 4px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; color: var(--muted); }
+.sup-tip-c b { display: inline; font-family: var(--font-mono); font-weight: 500; font-size: 11px; color: var(--ink-2); }
 .sup-tip .sup-tip-crit {
   display: block; margin-top: 8px; padding-top: 7px; border-top: 1px solid var(--line);
   font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-size: 12.5px; line-height: 1.35; color: var(--accent);
@@ -88,7 +88,7 @@
 .sup-toolbar { justify-content: flex-start; scroll-margin-top: calc(var(--masthead) + 14px); }
 .sup-toolbar .count { margin-right: auto; }
 .sup-modes { display: inline-flex; border: 1px solid var(--line-2); border-radius: 0; overflow: hidden; }
-.sup-mode { font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: var(--tr-cap); text-transform: uppercase; padding: 7px 11px; color: var(--muted); background: none; }
+.sup-mode { font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: 0; padding: 7px 11px; color: var(--muted); background: none; }
 .sup-mode + .sup-mode { border-left: 1px solid var(--line-2); }
 .sup-mode[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
 
@@ -111,7 +111,7 @@
 .sup-rung[data-lit="1"] .sup-rank { color: var(--accent); opacity: 1; }
 .sup-rung-head { grid-column: 2; display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 12px; margin-bottom: 5px; }
 .sup-rung-name { margin: 0; font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 500; font-size: var(--fs-d6); line-height: 1.15; color: var(--ink); }
-.sup-rung-n { margin: 0; font-family: var(--font-mono); font-size: var(--fs-cap-s); letter-spacing: var(--tr-cap-s); text-transform: uppercase; color: var(--muted); font-variant-numeric: tabular-nums; }
+.sup-rung-n { margin: 0; font-family: var(--font-mono); font-size: var(--fs-cap-s); letter-spacing: 0; color: var(--muted); font-variant-numeric: tabular-nums; }
 /* the large numeral is the stage's number of firms, the value the ladder is sorted by; the line beside the name counts the
    Critical firms, one garnet square each, and the key under the heading names the three colors of the names */
 .sup-crit-n { display: inline-flex; align-items: center; gap: 7px; color: var(--accent-ink); }
@@ -149,12 +149,12 @@
 .sup-detail-body { padding: 12px 0 4px; margin-top: 6px; border-top: 1px solid var(--line); }
 .sup-detail-h { margin: 0 0 8px; font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 500; font-size: var(--fs-d6); color: var(--ink); }
 .sup-detail-h .chk { margin-left: 8px; vertical-align: 2px; }
-.sup-detail-h em { font-style: normal; font-family: var(--font-mono); font-weight: 400; font-size: 10px; letter-spacing: 0.05em; color: var(--muted); margin-left: 7px; }
+.sup-detail-h em { font-style: normal; font-family: var(--font-mono); font-weight: 400; font-size: 11px; letter-spacing: 0.05em; color: var(--muted); margin-left: 7px; }
 .sup-role { margin: 0 0 11px; max-width: 62ch; font-size: var(--fs-small); line-height: 1.5; color: var(--ink-2); }
 .sup-facts { display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: 4px 14px; margin: 0; max-width: 82ch; }
-.sup-facts dt { padding-top: 3px; font-family: var(--font-mono); font-size: var(--fs-cap-s); letter-spacing: var(--tr-cap-s); text-transform: uppercase; color: var(--muted); }
+.sup-facts dt { padding-top: 3px; font-family: var(--font-mono); font-size: var(--fs-cap-s); letter-spacing: 0; color: var(--muted); }
 .sup-facts dd { margin: 0; font-size: var(--fs-note); line-height: 1.45; color: var(--ink-2); }
-.sup-src { display: inline-block; margin-top: 11px; font-family: var(--font-mono); font-size: var(--fs-cap-s); letter-spacing: var(--tr-cap-s); text-transform: uppercase; color: var(--muted); }
+.sup-src { display: inline-block; margin-top: 11px; font-family: var(--font-mono); font-size: var(--fs-cap-s); letter-spacing: 0; color: var(--muted); }
 .sup-src:hover { color: var(--accent); }
 
 /* the search box is wide enough for its whole prompt; on a phone every control takes the full width (below) */
@@ -220,7 +220,7 @@
 /* ---------- the ribbons' switch and note ---------- */
 .sup-pipe-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 18px; margin: 0 0 10px; max-width: 1180px; }
 .sup-pipe-top .sup-pipe-h { margin: 0; }
-.sup-gbtn { font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: var(--tr-cap); text-transform: uppercase; min-height: 30px; padding: 7px 11px; color: var(--muted); background: none; }
+.sup-gbtn { font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: 0; min-height: 30px; padding: 7px 11px; color: var(--muted); background: none; }
 .sup-gbtn + .sup-gbtn { border-left: 1px solid var(--line-2); }
 .sup-gbtn:hover { color: var(--ink); }
 .sup-gbtn[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
@@ -236,7 +236,7 @@
 
 /* ---------- a firm's China revenue share (the Export Controls panel, joined by build/exposure.js) ---------- */
 /* on its line in the ladder, quiet: after the country code, past a hairline */
-.sup-ex { font-style: normal; font-family: var(--font-mono); font-weight: 400; font-size: 9.5px; letter-spacing: 0.04em; color: var(--muted); margin-left: 6px; padding-left: 6px; border-left: 1px solid var(--line-2); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.sup-ex { font-style: normal; font-family: var(--font-mono); font-weight: 400; font-size: 11px; letter-spacing: 0.04em; color: var(--muted); margin-left: 6px; padding-left: 6px; border-left: 1px solid var(--line-2); font-variant-numeric: tabular-nums; white-space: nowrap; }
 /* in its panel: the label, with the year, linking to its chart */
 .sup-china { margin: 10px 0 0; font-size: 13.5px; line-height: 1.45; }
 .sup-china a { display: inline-block; padding: 3px 0; color: var(--ink); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 3px; }

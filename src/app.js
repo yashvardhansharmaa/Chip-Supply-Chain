@@ -2179,7 +2179,7 @@
         host.style.cssText = 'margin:4px 0 20px;padding-top:9px;border-top:1px solid var(--ink)';
         sub.insertBefore(host, sub.firstChild);
       }
-      var self = this, mono = 'font-family:var(--font-mono);font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;';
+      var self = this, mono = 'font-family:var(--font-code);font-size:12px;letter-spacing:0;';
       if (!host._wired) { // the address may already be that entry's, so no hashchange would come: go there anyway
         host._wired = true;
         host.addEventListener('click', function (e) {

@@ -109,8 +109,8 @@ module.exports = function (ctx) {
 <label class="sr-only" for="wk-q">Search the site</label>
 <div class="wk-qbox"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="7" cy="7" r="5"/><path d="M11 11l3.5 3.5"/></svg><input id="wk-q" type="search" autocomplete="off" spellcheck="false" placeholder="Search ${nFirms} firms, ${nChips} chips, ${nTerms} terms"><kbd aria-hidden="true">/</kbd></div>
 <div class="wk-reads">
-<a class="wk-way" href="#${esc(stepId(steps[0] ? steps[0].id : ''))}"><span class="wk-way-t">Introduction <span aria-hidden="true">→</span></span><span class="wk-way-d"><span>${steps.length} paragraphs</span><span>${walkWords.toLocaleString('en-US')} words</span><span>about ${mins} min</span></span></a>
-<a class="wk-way" href="chain/" data-route="#/chain"><span class="wk-way-t">Each stage, in detail <span aria-hidden="true">→</span></span><span class="wk-way-d"><span>The Chain, ${all.length} chapters</span></span></a>
+<a class="wk-way" href="#${esc(stepId(steps[0] ? steps[0].id : ''))}"><span class="wk-way-t">Introduction <span aria-hidden="true">→</span></span><span class="wk-way-d">${steps.length} paragraphs, ${walkWords.toLocaleString('en-US')} words, about ${mins} min</span></a>
+<a class="wk-way" href="chain/" data-route="#/chain"><span class="wk-way-t">Each stage, in detail <span aria-hidden="true">→</span></span><span class="wk-way-d">The Chain, ${all.length} chapters</span></a>
 </div>
 </div>`;
 

@@ -27,7 +27,7 @@ const PORT = +opt('port', process.env.SMOKE_PORT || 10361);
 const ONLY = opt('only', '').split(',').filter(Boolean);
 const WIDTHS = opt('widths', '320,390,1440').split(',').map(Number);
 const VERBOSE = args.includes('--verbose');
-const LIGHT_GROUND = 'rgb(247, 246, 242)'; // --bg in src/styles.css, build/assets/chapter-page.css and the summary's sheet
+const LIGHT_GROUND = 'rgb(255, 255, 255)'; // --bg in src/styles.css, build/assets/chapter-page.css and the summary's sheet (white since the redesign of 25 Oct 2026)
 
 /* ---------- the routes and the part each must show ---------- */
 // ready(): a script that returns { ok, detail } once the route has drawn its key part; it is polled until ok or timeout
