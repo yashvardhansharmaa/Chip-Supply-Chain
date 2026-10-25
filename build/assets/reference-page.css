@@ -144,6 +144,7 @@
 .gl-thumb a:hover { background: var(--bg-2); box-shadow: inset 0 -2px 0 var(--accent); }
 .gl-thumb span { color: #6e6d67; }
 :root[data-theme="dark"] .gl-thumb span { color: #8a8883; }
+@media (max-width: 900px) { .gl-thumb li > * { min-width: 22px; padding: 0 1px; } }
 .gl-sec { padding-top: 40px; }
 .gl-sec-h { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 24px; border-bottom: 1px solid var(--ink); padding-bottom: 10px; margin-bottom: 22px; }
 .gl-L { font-family: var(--font-display); font-weight: 350; font-variation-settings: var(--opsz-title); font-size: 88px; line-height: 0.8; letter-spacing: -0.02em; scroll-margin-top: 72px; }
@@ -163,7 +164,7 @@
 .gl-wy { color: var(--ink-2); }
 .gl-de dd .gl-refs { margin-top: 8px; font-family: var(--font-label); font-size: 12.5px; line-height: 1.55; color: var(--muted); }
 .gl-refs a { color: var(--accent); text-underline-offset: 3px; text-decoration-color: currentColor; }
-.gl-refs .k2 { margin-left: 10px; }
+.gl-refs-k2 { margin-left: 10px; }
 .idx { columns: 3 15em; column-gap: 32px; list-style: none; margin: 0; padding: 0; font-size: var(--fs-note); line-height: 1.4; }
 .idx li { break-inside: avoid; padding: 5px 0; border-bottom: 1px solid var(--line); scroll-margin-top: 16px; }
 .idx li:target { background: var(--accent-soft); }
