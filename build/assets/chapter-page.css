@@ -184,7 +184,7 @@ strong, b { font-weight: 600; }
 .prose hr { border: 0; border-top: 1px solid var(--line); margin: 2.2em 0; }
 .prose .tl { padding-left: 0; margin-left: 4px; } /* .prose ol would indent it and leave the marks off the rule */
 .prose .tl li { margin-bottom: 0; }
-sup.cite { font-size: 0.62em; line-height: 0; vertical-align: 0.55em; margin-left: 1px; }
+sup.cite { font-size: max(11px, 0.62em); line-height: 0; vertical-align: 0.55em; margin-left: 1px; }
 sup.cite a { position: relative; font-family: var(--font-label); font-weight: 600; color: var(--accent); text-decoration: none; padding: 0 1px; }
 /* the footnote number keeps its size but takes a fingertip: an invisible 24 px box centered on it */
 sup.cite a::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 24px); height: 24px; transform: translate(-50%, -50%); }

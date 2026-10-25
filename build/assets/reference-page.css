@@ -123,7 +123,7 @@
 .chips-t td.wide { min-width: 11em; }
 .chips-t tbody th a { color: var(--ink); text-decoration: none; }
 .chips-t tbody th a:hover { color: var(--accent); }
-.chips-t sup.cite { font-size: 0.75em; }
+.chips-t sup.cite { font-size: max(11px, 0.75em); }
 .srcs { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(22em, 100%), 1fr)); gap: 0 40px; }
 .srcs section { padding: 14px 0 12px; border-top: 1px solid var(--line); scroll-margin-top: 16px; min-width: 0; }
 .srcs section:target { box-shadow: inset 3px 0 0 var(--accent); padding-left: 12px; background: var(--accent-soft); }

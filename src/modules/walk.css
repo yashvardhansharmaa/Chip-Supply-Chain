@@ -284,6 +284,7 @@
   .wk-pn-t { display: block; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 14.5px; line-height: 1.25; overflow-wrap: anywhere; }
 }
 @media (max-width: 380px) {
+  .wk-qbox input::placeholder { font-size: 14px; } /* the field keeps 16 px so iOS does not zoom; the hint fits a 320 px screen */
   .wk-gl-c { gap: 5px; font-size: 12px; }
   .wk-gl-w { min-width: 0; }
   .wk-legend { font-size: 12.5px; gap: 6px 14px; }

@@ -309,8 +309,8 @@ const EXTRA_CSS = minCSS(`
 }
 @media print { .review details::details-content { content-visibility: visible; display: block; block-size: auto; } }
 /* the card (build.js nameplate): its footnote marks, as on the main page (src/styles.css) */
-.plate-kpis .v:not(.long) sup.cite { font-size: 0.4em; vertical-align: 1.1em; margin-left: 0; }
-.plate sup.cite-sep { font-family: var(--font-label); font-size: 0.62em; line-height: 0; vertical-align: 0.55em; color: var(--accent); }
+.plate-kpis .v:not(.long) sup.cite { font-size: max(11px, 0.4em); vertical-align: 1.1em; margin-left: 0; }
+.plate sup.cite-sep { font-family: var(--font-label); font-size: max(11px, 0.62em); line-height: 0; vertical-align: 0.55em; color: var(--accent); }
 `);
 
 

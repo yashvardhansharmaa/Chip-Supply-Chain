@@ -286,7 +286,7 @@ small { font-size: 0.85em; }
 .prose .takeaways { margin: 2.4em 0 1em; padding: 16px 0 8px; border: 0; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--line-2); background: none; border-radius: 0; }
 .prose .takeaways h3 { margin: 0 0 0.6em; font-size: var(--fs-cap); font-family: var(--font-mono); font-weight: 500; letter-spacing: 0; color: var(--muted); }
 .prose .takeaways p { font-size: 18px; }
-sup.cite { font-size: 0.62em; line-height: 0; vertical-align: 0.55em; margin-left: 1px; } /* no space before it (inline() in build.js): the mark sits on its word */
+sup.cite { font-size: max(11px, 0.62em); line-height: 0; vertical-align: 0.55em; margin-left: 1px; } /* no space before it (inline() in build.js): the mark sits on its word */
 sup.cite a { position: relative; font-family: var(--font-mono); font-weight: 500; color: var(--accent); text-decoration: none; padding: 0 1px; border-radius: 0; } /* the ::before box below keeps the 24 px target */
 sup.cite a:hover, sup.cite a:focus-visible { background: var(--accent-soft); text-decoration: none; }
 /* small controls keep their look but take a fingertip: an invisible box at least 24 px square, centered on the control */
@@ -909,8 +909,8 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
 .plate-status p { font-size: var(--fs-small); line-height: 1.5; color: var(--ink-2); margin: 0; }
 /* the card's footnote marks: on a figure set large the mark keeps the size of the card's other marks and rides at the
    figure's cap height; two marks in one place (a field with more urls than sentences) take a comma between them */
-.plate-kpis .v:not(.long) sup.cite { font-size: 0.4em; vertical-align: 1.1em; margin-left: 0; }
-.plate sup.cite-sep { font-family: var(--font-mono); font-size: 0.62em; line-height: 0; vertical-align: 0.55em; color: var(--accent); }
+.plate-kpis .v:not(.long) sup.cite { font-size: max(11px, 0.4em); vertical-align: 1.1em; margin-left: 0; }
+.plate sup.cite-sep { font-family: var(--font-mono); font-size: max(11px, 0.62em); line-height: 0; vertical-align: 0.55em; color: var(--accent); }
 .brief-meta .conc.Extreme, .plate-kpis .v.Extreme { color: var(--ink); }
 
 .dbg-only .hero, .dbg-only .contents, .dbg-only #chain, .dbg-only .chapter:not(.only) { display: none; }
@@ -934,8 +934,8 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
   .stage canvas { order: 0; grid-column: 1; grid-row: 1 / -1; width: 116px; height: 116px; margin: 0; align-self: center; }
   .stage .stage-tag { order: 0; position: static; grid-column: 2; grid-row: 1; margin: 0; padding: 4px 0 0; text-align: left; font-size: 11.5px; letter-spacing: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .stage .stage-actions { display: flex; gap: 6px; grid-column: 2; grid-row: 3; justify-self: end; }
-  .stage .stage-actions button { font-family: var(--font-ui); font-weight: 500; font-size: 13px; letter-spacing: 0; text-transform: none; color: var(--ink); background: none; border: 1px solid var(--rule-ink); border-radius: 999px; padding: 6px 12px; min-height: 32px; cursor: pointer; }
-  .stage figcaption { order: 0; display: -webkit-box; grid-column: 2; grid-row: 2; margin: 0; padding: 0; max-width: none; text-align: left; font-size: 12px; line-height: 1.4; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .stage .stage-actions button { font-family: var(--font-ui); font-weight: 500; font-size: 13px; letter-spacing: 0; text-transform: none; color: var(--ink); background: none; border: 1px solid var(--rule-ink); border-radius: 999px; padding: 4px 12px; min-height: 28px; cursor: pointer; }
+  .stage figcaption { order: 0; display: -webkit-box; grid-column: 2; grid-row: 2; margin: 0; padding: 0; max-width: none; text-align: left; font-size: 12px; line-height: 1.35; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
   .stage[data-collapsed="0"] { height: min(58vh, 480px); grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: 44px minmax(0, 1fr) auto; padding: 0 12px 8px; }
   .stage[data-collapsed="0"] canvas { grid-column: 1 / -1; grid-row: 2; width: 100%; height: 100%; }
   .stage[data-collapsed="0"] .stage-tag { grid-column: 1; grid-row: 1; padding-top: 14px; }
@@ -3280,6 +3280,7 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
   .wk-pn-t { display: block; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 14.5px; line-height: 1.25; overflow-wrap: anywhere; }
 }
 @media (max-width: 380px) {
+  .wk-qbox input::placeholder { font-size: 14px; } /* the field keeps 16 px so iOS does not zoom; the hint fits a 320 px screen */
   .wk-gl-c { gap: 5px; font-size: 12px; }
   .wk-gl-w { min-width: 0; }
   .wk-legend { font-size: 12.5px; gap: 6px 14px; }
