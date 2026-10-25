@@ -4,7 +4,9 @@
    A wider column for the ledgers and tables; running text keeps the reading measure. Wide tables scroll inside their own
    frame with the first column pinned, so the page itself never scrolls sideways. */
 .page.ref { max-width: calc(1160px + 2 * var(--gutter)); }
-.ref .ch-head { max-width: 46em; }
+.ref .ch-head { max-width: 52em; }
+/* the head as the views' (redesign stage 3): the title in Fraunces 350 at display size over its standfirst */
+.ref .ch-title { font-weight: 350; font-size: clamp(56px, 7.4vw, 108px); line-height: 0.92; letter-spacing: -0.03em; margin-left: -0.04em; }
 .ref .ch-lede { max-width: 36em; }
 .ref .cta-note { max-width: 30em; }
 .ref .measure { max-width: var(--measure); }
@@ -14,7 +16,7 @@
 
 /* sections: a heavy rule over each, as the chapter card has */
 .ref-sec { margin: 3em 0 0; }
-.ref-h2 { font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: var(--fs-d2); line-height: 1.15; border-top: 2px solid var(--ink); padding-top: 14px; margin: 0 0 6px; scroll-margin-top: 16px; }
+.ref-h2 { font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 26px; line-height: 1.18; letter-spacing: -0.01em; border-bottom: 1px solid var(--ink); padding: 0 0 12px; margin: 0 0 12px; scroll-margin-top: 16px; }
 .ref-h2 small { display: block; margin-top: 6px; font-family: var(--font-label); font-size: var(--fs-cap); font-weight: 500; letter-spacing: 0; color: var(--muted); }
 .ref-sub { margin: 0 0 14px; font-family: var(--font-label); font-size: var(--fs-ui-s); line-height: 1.5; color: var(--muted); max-width: 52em; }
 .ref-h3 { font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: var(--fs-d4); line-height: 1.25; margin: 1.8em 0 4px; scroll-margin-top: 16px; }
@@ -56,7 +58,7 @@
 .pill.is-open { color: var(--muted); }
 .pill.is-restricted { border-style: dashed; border-color: var(--muted); }
 .pill.is-case { border-style: dashed; border-color: var(--ink); color: var(--ink); }
-.pill.is-denial { border-color: var(--accent); color: var(--accent); }
+.pill.is-denial { border: 1.5px solid var(--ink); color: var(--ink); padding: 1.5px 6.5px 2.5px; } /* a state is data: ink, never the accent */
 .pill.is-prohibited { background: var(--ink); border-color: var(--ink); color: var(--bg); }
 .pill.is-policy { border-color: var(--ink-2); }
 .pill.is-suspended { color: var(--muted); border-color: var(--line-2); background: none; }
@@ -108,13 +110,13 @@
 .ex thead th { text-align: center; padding-right: 0; }
 .ex thead th:first-child { text-align: left; }
 .ex .sh { display: block; padding: 9px 6px; color: var(--ink); text-decoration: none; white-space: nowrap; }
-.ex a.sh:hover { background: var(--accent-soft); }
+.ex a.sh:hover { background: var(--bg-2); }
 .ex .sh.none { color: var(--muted); }
-.ex .sh.peak { color: var(--accent-ink); font-weight: 600; box-shadow: inset 0 -2px 0 var(--accent-fill); }
+.ex .sh.peak { color: var(--ink); font-weight: 700; box-shadow: inset 0 -2px 0 var(--ink); } /* rule B: the peak in ink */
 .ex td.brk { box-shadow: inset 2px 0 0 var(--ink-2); }
 .ex-key { display: flex; flex-wrap: wrap; gap: 4px 22px; margin: 4px 0 0; font-family: var(--font-label); font-size: var(--fs-ui-s); color: var(--muted); }
 .ex-key i { display: inline-block; vertical-align: -2px; margin-right: 7px; width: 18px; height: 12px; }
-.ex-key .k-peak { box-shadow: inset 0 -2px 0 var(--accent-fill); }
+.ex-key .k-peak { box-shadow: inset 0 -2px 0 var(--ink); }
 .ex-key .k-brk { width: 2px; background: var(--ink-2); }
 
 /* the chips: one row a chip */
