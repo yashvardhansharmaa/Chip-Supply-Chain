@@ -1,0 +1,109 @@
+== walk  (360 lines in main, 383 in the redesign)
+   case only: 109 e.g. "THE CHAIN AT A GLANCE", "CHAPTER 01", "STAGE 1 OF 15", "The market for chip design software, simulation software and licensed circuit blocks was about $18B in 2025, with Synopsys, Cadence and Siemens EDA holding over 85%, counting Ansys as part of Synopsys SOURCE", "Synopsys reported $7.054B of revenue for fiscal year 2025, the twelve months to 31 October 2025, of which Ansys contributed $756.6M after the July close SOURCE", "WHO LEADS"
+   - SPECIMEN 01 · CHIP DESIGN, EDA AND IP
+   - A GPU die based on Nvidia's published H100 block diagram. It is drawn at the size of one full reticle field, 26 by 33 mm, the largest area a scanner can print in one shot. The 144 compute tiles fill the center in eight clusters. H100 is a single die. The copper strip on one short edge stands for the die-to-die link that two-die designs such as Blackwell add.
+   - 17 PARAGRAPHS
+   - 2,456 WORDS
+   - ABOUT 11 MIN
+   - 8 of the 15 stages are rated Extreme, meaning three or fewer firms could supply each today, or one firm holds more than half.
+   + Specimen 04 · Lithography
+   + An extreme ultraviolet scanner cut open along its light path. The machine is the size of a bus and weighs about 180 metric tons. The blue-violet thread is the 13.5 nm light, bouncing mirror to mirror from the violet-white tin plasma at bottom left to the wafer. Both ends are drawn about twice their true size.
+   + 8 of the 15
+   + stages are rated Extreme
+   + Extreme means three or fewer firms could supply the stage today, or one firm holds more than half of it. Each bar is a stage, in the order a chip is made.
+   + 01
+   + 02
+   + 03
+   + 04
+   + 05
+   + 06
+   + 07
+   + 08
+   + 09
+   + 10
+   + 11
+   + 12
+   + 13
+   + 14
+   + 15
+   + Extreme, 8
+   + High, 7
+   + Shown: 04 Lithography
+   + Search the site
+   + /
+   + Introduction →
+   + 17 paragraphs, 2,456 words, about 11 min
+   + Each stage, in detail →
+   + The Chain, 17 chapters
+   words lost: design eda ip gpu die die based on on nvidia s published h100 h100 block diagram one one one full reticle field 26 by 33 mm largest area can print shot 144 compute tiles fill center eight clusters single copper strip short edge stands for die-to-die link that two-die designs such as blackwell add meaning
+   words added: to to chain the the the the 04 04 04 lithography lithography an extreme extreme extreme ultraviolet cut open along its light light path machine is is size of bus weighs about about 180 metric tons blue-violet thread 13 13 5 nm bouncing mirror mirror from violet-white tin plasma bottom left wafer both ends are twice their true / 17 made introduction 8 15 means stage stage stage each bar order 02 03 05 06 07 08 09 10 11 12 14 high 7 shown search site detail chapters
+== chain  (2879 lines in main, 2879 in the redesign)
+   case only: 736 e.g. "SPECIMEN 01 · CHIP DESIGN, EDA AND IP", "HOW TO READ A CHAPTER", "DOWNLOAD THE CHAIN AS A PDF", "DOWNLOAD A SHORT SUMMARY", "READ THE SUMMARY ONLINE", "THE FIFTEEN STAGES OF THE CHAIN"
+== ai-chips  (59 lines in main, 59 in the redesign)
+   case only: 32 e.g. "AI CHIPS · PACKAGE", "CHIP 1", "CHIP 2", "BROWSE ALL 38 CHIPS BY MAKER", "PACKAGES AT ONE SCALE", "NOT CHOSEN YET"
+== suppliers  (302 lines in main, 302 in the redesign)
+   case only: 44 e.g. "THE ROUTE OF ONE CHIP", "ALL COUNTRIES Choose one to light its stops on the route", "BY STAGE", "BY COUNTRY", "LADDER", "TABLE"
+== suppliers-by-country  (133 lines in main, 133 in the redesign)
+   case only: 9 e.g. "THE ROUTE OF ONE CHIP", "ALL COUNTRIES Choose one to light its stops on the route", "BY STAGE", "BY COUNTRY", "WHICH COUNTRIES SUPPLY WHICH STAGES", "EACH COUNTRY"
+== export-controls  (731 lines in main, 731 in the redesign)
+   case only: 276 e.g. "WHAT THE RULES DID", "CHINA REVENUE SHARE", "COMING UP", "9 NOV 2026", "IN 15 DAYS", "10 NOV 2026"
+== china-revenue  (258 lines in main, 258 in the redesign)
+   case only: 46 e.g. "WHAT THE RULES DID", "CHINA REVENUE SHARE", "CHINA SHARE OF REVENUE, FROM COMPANY FILINGS", "CHINA'S SHARE OF THE FIRM'S REVENUE, BY FISCAL YEAR", "THE YEAR IT PEAKED", "US EXPORT RULES OF OCT 2022, OCT 2023 AND DEC 2024"
+== glossary  (995 lines in main, 995 in the redesign)
+   case only: 3 e.g. "TRY", "UPDATED 25 OCTOBER 2026", "HOW TO CITE"
+== /advanced-packaging/  (246 lines in main, 246 in the redesign)
+   case only: 40 e.g. "CHAPTER 11 · STAGE 11 OF 15", "2,097 WORDS / 9 MINUPDATED 21 OCTOBER 2026", "CITE THIS CHAPTER", "CHAPTER PDF", "ADVANCED PACKAGING, STAGE 11 OF 15", "NEXT STAGE: 12 SUBSTRATES AND PCBS"
+== /chemicals-gases-and-photoresist/  (261 lines in main, 261 in the redesign)
+   case only: 33 e.g. "CHAPTER 03 · STAGE 3 OF 15", "2,227 WORDS / 10 MINUPDATED 21 OCTOBER 2026", "CITE THIS CHAPTER", "CHAPTER PDF", "CHEMICALS, GASES AND PHOTORESIST, STAGE 3 OF 15", "NEXT STAGE: 04 LITHOGRAPHY"
+== /chips/  (639 lines in main, 639 in the redesign)
+   case only: 7 e.g. "REFERENCE", "REFERENCE", "38 CHIPS13 MAKERSUPDATED 21 OCTOBER 2026", "38 CHIPS", "CHIP VENDOR ANNOUNCED FOUNDRY, PROCESS NODE MEMORY TYPE MEMORY, GIGABYTES MEMORY SUPPLIERS PACKAGE BANDWIDTH, TERABYTES/S SPEED AT FP16, TFLOPS SPEED AT FP8, TFLOPS SPEED AT FP4, TFLOPS POWER, WATTS", "216 SOURCES FOR 38 CHIPS"
+== /component-costs/  (224 lines in main, 224 in the redesign)
+   case only: 27 e.g. "CHAPTER 16 · THE ECONOMICS", "1,879 WORDS / 8 MINUPDATED 21 OCTOBER 2026", "CITE THIS CHAPTER", "CHAPTER PDF", "IN PLAIN TERMS", "IN SHORT"
+== /data-centers-and-power/  (253 lines in main, 253 in the redesign)
+   case only: 39 e.g. "CHAPTER 15 · STAGE 15 OF 15", "1,978 WORDS / 9 MINUPDATED 21 OCTOBER 2026", "CITE THIS CHAPTER", "CHAPTER PDF", "DATA CENTERS AND POWER, STAGE 15 OF 15", "LAST STAGE IN THE CHAIN"
+== /deposition-and-etch/  (302 lines in main, 302 in the redesign)
+   case only: 47 e.g. "CHAPTER 06 · STAGE 6 OF 15", "2,098 WORDS / 9 MINUPDATED 21 OCTOBER 2026", "CITE THIS CHAPTER", "CHAPTER PDF", "DEPOSITION AND ETCH, STAGE 6 OF 15", "NEXT STAGE: 07 METROLOGY AND INSPECTION"
+== /design-and-eda/  (233 lines in main, 233 in the redesign)
+   case only: 38 e.g. "CHAPTER 01 · STAGE 1 OF 15", "2,262 WORDS / 10 MINUPDATED 21 OCTOBER 2026", "CITE THIS CHAPTER", "CHAPTER PDF", "CHIP DESIGN, EDA AND IP, STAGE 1 OF 15", "NEXT STAGE: 02 SILICON AND WAFERS"
+== /export-controls/  (880 lines in main, 880 in the redesign)
+   case only: 99 e.g. "REFERENCE", "REFERENCE", "11 ROWS ON THE BOARD74 ENTRIES24 FIRMSUPDATED 21 OCTOBER 2026", "ON 25 OCTOBER 2026", "CASE BY CASE", "CASE BY CASE"
+== /foundries-and-fabs/  (240 lines in main, 240 in the redesign)
+   case only: 43 e.g. "CHAPTER 09 · STAGE 9 OF 15", "1,884 WORDS / 8 MINUPDATED 21 OCTOBER 2026", "CITE THIS CHAPTER", "CHAPTER PDF", "FOUNDRIES AND FABS, STAGE 9 OF 15", "NEXT STAGE: 10 MEMORY AND HBM"
+== /geopolitics/  (328 lines in main, 328 in the redesign)
+   case only: 28 e.g. "CHAPTER 17 · THE CONTEST", "2,909 WORDS / 13 MINUPDATED 21 OCTOBER 2026", "CITE THIS CHAPTER", "CHAPTER PDF", "IN PLAIN TERMS", "IN SHORT"
+== /glossary/  (1664 lines in main, 1664 in the redesign)
+   case only: 4 e.g. "REFERENCE", "REFERENCE", "208 TERMS226 FIRMS38 CHIPSUPDATED 25 OCTOBER 2026", "UPDATED 25 OCTOBER 2026"
+== /lithography/  (283 lines in main, 283 in the redesign)
+   case only: 34 e.g. "CHAPTER 04 · STAGE 4 OF 15", "2,282 WORDS / 10 MINUPDATED 25 OCTOBER 2026", "CITE THIS CHAPTER", "CHAPTER PDF", "LITHOGRAPHY, STAGE 4 OF 15", "NEXT STAGE: 05 PHOTOMASKS AND PELLICLES"
+== /memory-and-hbm/  (205 lines in main, 205 in the redesign)
+   case only: 36 e.g. "CHAPTER 10 · STAGE 10 OF 15", "1,891 WORDS / 8 MINUPDATED 21 OCTOBER 2026", "CITE THIS CHAPTER", "CHAPTER PDF", "MEMORY AND HBM, STAGE 10 OF 15", "NEXT STAGE: 11 ADVANCED PACKAGING"
+== /metrology-and-inspection/  (252 lines in main, 252 in the redesign)
+   case only: 38 e.g. "CHAPTER 07 · STAGE 7 OF 15", "2,086 WORDS / 9 MINUPDATED 21 OCTOBER 2026", "CITE THIS CHAPTER", "CHAPTER PDF", "METROLOGY AND INSPECTION, STAGE 7 OF 15", "NEXT STAGE: 08 TRANSISTORS AND THE FRONT END"
+== /photomasks-and-pellicles/  (218 lines in main, 218 in the redesign)
+   case only: 35 e.g. "CHAPTER 05 · STAGE 5 OF 15", "2,011 WORDS / 9 MINUPDATED 21 OCTOBER 2026", "CITE THIS CHAPTER", "CHAPTER PDF", "PHOTOMASKS AND PELLICLES, STAGE 5 OF 15", "NEXT STAGE: 06 DEPOSITION AND ETCH"
+== /silicon-and-wafers/  (205 lines in main, 205 in the redesign)
+   case only: 31 e.g. "CHAPTER 02 · STAGE 2 OF 15", "1,959 WORDS / 9 MINUPDATED 21 OCTOBER 2026", "CITE THIS CHAPTER", "CHAPTER PDF", "SILICON AND WAFERS, STAGE 2 OF 15", "NEXT STAGE: 03 CHEMICALS, GASES AND PHOTORESIST"
+== /substrates-and-pcbs/  (245 lines in main, 245 in the redesign)
+   case only: 33 e.g. "CHAPTER 12 · STAGE 12 OF 15", "1,912 WORDS / 8 MINUPDATED 21 OCTOBER 2026", "CITE THIS CHAPTER", "CHAPTER PDF", "SUBSTRATES AND PCBS, STAGE 12 OF 15", "NEXT STAGE: 13 TEST AND ASSEMBLY"
+== /summary/  (367 lines in main, 367 in the redesign)
+   case only: 97 e.g. "SUMMARY · THE WHOLE CHAIN IN ONE READ", "STAGE", "CONCENTRATION", "SUBSTITUTABILITY", "WHO LEADS", "WHO LEADS"
+   - Updated 21 October 2026 · Every figure is cited in the chapter each card links to
+   - UPDATED 21 OCTOBER 2026
+   + Updated 25 October 2026 · Every figure is cited in the chapter each card links to
+   + Updated 25 October 2026
+   words lost: 21 21
+   words added: 25 25
+== /suppliers/  (3602 lines in main, 3602 in the redesign)
+   case only: 1135 e.g. "REFERENCE", "REFERENCE", "226 FIRMS20 STAGESUPDATED 21 OCTOBER 2026", "STAGES BY NUMBER OF FIRMS, FEWEST FIRST", "5 FIRMS · 1 CRITICAL", "CRITICAL"
+== /systems-and-networking/  (243 lines in main, 243 in the redesign)
+   case only: 37 e.g. "CHAPTER 14 · STAGE 14 OF 15", "1,845 WORDS / 8 MINUPDATED 21 OCTOBER 2026", "CITE THIS CHAPTER", "CHAPTER PDF", "SYSTEMS AND NETWORKING, STAGE 14 OF 15", "NEXT STAGE: 15 DATA CENTERS AND POWER"
+== /test-and-assembly/  (230 lines in main, 230 in the redesign)
+   case only: 32 e.g. "CHAPTER 13 · STAGE 13 OF 15", "1,629 WORDS / 7 MINUPDATED 21 OCTOBER 2026", "CITE THIS CHAPTER", "CHAPTER PDF", "TEST AND ASSEMBLY, STAGE 13 OF 15", "NEXT STAGE: 14 SYSTEMS AND NETWORKING"
+== /transistors-and-front-end/  (231 lines in main, 231 in the redesign)
+   case only: 34 e.g. "CHAPTER 08 · STAGE 8 OF 15", "2,143 WORDS / 9 MINUPDATED 21 OCTOBER 2026", "CITE THIS CHAPTER", "CHAPTER PDF", "TRANSISTORS AND THE FRONT END, STAGE 8 OF 15", "NEXT STAGE: 09 FOUNDRIES AND FABS"
+== /home/  (5 lines in main, 5 in the redesign)
+   case only: 0
+== /intro/  (29 lines in main, 29 in the redesign)
+   case only: 0
+== /chain/  (5 lines in main, 5 in the redesign)
+   case only: 0
