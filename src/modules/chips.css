@@ -214,6 +214,7 @@ html.no-stage .aic-grid { grid-template-columns: minmax(0, 1fr); }
 .sl-n { min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-family: var(--font-ui); font-size: 13.5px; line-height: 1.6; color: var(--ink); }
 .sl.is-on .sl-n { text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 4px; }
 .sl-b { display: block; height: 12px; }
+.srow.has-sub .sl + .sl { margin-top: 10px; } /* a figure with a second line (a die's area) keeps clear of the next chip's mark */
 .sl-b i { display: block; height: 100%; background: var(--ctx); }
 .sl-b i.top { background: var(--ink); }
 .sl.ghost .sl-n { color: var(--muted); }

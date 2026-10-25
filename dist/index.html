@@ -1881,6 +1881,7 @@ html.no-stage .aic-grid { grid-template-columns: minmax(0, 1fr); }
 .sl-n { min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-family: var(--font-ui); font-size: 13.5px; line-height: 1.6; color: var(--ink); }
 .sl.is-on .sl-n { text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 4px; }
 .sl-b { display: block; height: 12px; }
+.srow.has-sub .sl + .sl { margin-top: 10px; } /* a figure with a second line (a die's area) keeps clear of the next chip's mark */
 .sl-b i { display: block; height: 100%; background: var(--ctx); }
 .sl-b i.top { background: var(--ink); }
 .sl.ghost .sl-n { color: var(--muted); }
@@ -12209,7 +12210,7 @@ PC.register('wafer', function (p) {
             '<span class="sl-v"><span class="cx-v' + (top ? ' is-top' : '') + '">' + esc(self.nf(v)) + '</span>' + (row.fn ? fm.mark(c) : '') + self.cite(c, row) + (row.sub ? '<span class="cx-2">' + esc(row.sub(c)) + '</span>' : '') + '</span></div>';
         }).join('');
         for (var j = 0; j < g; j++) lines += '<div class="sl ghost" aria-hidden="true"><span class="sl-n">Chip ' + (sel.length + j + 1) + '</span><span class="sl-b"><i></i></span><span class="sl-v"><span class="cx-nil">not chosen yet</span></span></div>';
-        return '<div class="srow"><h4 class="srow-h">' + esc(row.short) + ' <span>' + esc(row.unit) + '</span></h4>' + lines + '</div>';
+        return '<div class="srow' + (row.sub ? ' has-sub' : '') + '"><h4 class="srow-h">' + esc(row.short) + ' <span>' + esc(row.unit) + '</span></h4>' + lines + '</div>';
       }).join('');
     },
     // the words: a table with one column per chip, Change, × and Read the notes on each head
