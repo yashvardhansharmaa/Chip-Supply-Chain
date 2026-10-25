@@ -170,7 +170,7 @@ ${body}
     const order = ORDER.filter((c) => by[c]);
     Object.keys(by).sort().forEach((c) => { if (order.indexOf(c) < 0) order.push(c); });
     const stages = order.map((c, i) => Object.assign(by[c], { i, id: uid('stage-' + slug(c), 'stages') }));
-    const ladder = stages.slice().sort((a, b) => (a.rows.length - b.rows.length) || (b.crit - a.crit) || (a.i - b.i));
+    const ladder = stages.slice().sort((a, b) => a.i - b.i); // the list's own order, from design to power, as the app's ladder
     const rank = (r) => (RANK[r.chokepoint] != null ? RANK[r.chokepoint] : 9);
     suppliers.forEach((r) => firmIds.set(r.name, uid(slug(r.name), 'firms')));
 
@@ -206,7 +206,7 @@ ${body}
       const rows = s.rows.slice().sort((a, b) => (rank(a) - rank(b)) || String(a.name).localeCompare(String(b.name)));
       return `<section class="ref-sec" aria-labelledby="${s.id}-h"><h2 class="ref-h2" id="${s.id}">${esc(s.name)}<small id="${s.id}-h-n">${s.rows.length} ${s.rows.length === 1 ? 'firm' : 'firms'}${s.crit ? ` · ${s.crit} critical` : ''}</small></h2><span hidden id="${s.id}-h">${esc(s.name)}</span><ol class="ledger">${rows.map(firm).join('')}</ol></section>`;
     };
-    const jump = `<nav class="jump" aria-labelledby="stages-k"><span class="label" id="stages-k">${esc(ladderLabel || 'Segments by number of firms, fewest first')}</span><ol>${ladder.map((s) => `<li><a href="#${s.id}">${esc(SHORT[s.name] || s.name)}</a><span class="n">${s.rows.length}</span></li>`).join('')}<li><a href="#countries">What each country makes</a></li></ol></nav>`;
+    const jump = `<nav class="jump" aria-labelledby="stages-k"><span class="label" id="stages-k">${esc(ladderLabel || 'Segments from chip design to power')}</span><ol>${ladder.map((s) => `<li><a href="#${s.id}">${esc(SHORT[s.name] || s.name)}</a><span class="n">${s.rows.length}</span></li>`).join('')}<li><a href="#countries">What each country makes</a></li></ol></nav>`;
 
     // what each country makes: the Suppliers atlas's own lines (build/modules/summary-a.js HOME_MAP), in its order, with the
     // number of firms each has in the supplier list, as the Glossary's country card counts them

@@ -1512,7 +1512,7 @@
      One list of firms, drawn twice and listed three ways. The ribbons run from the countries the firms are based in to the
      twenty segments of the list (its categories), a ribbon's width the number of firms; the firms rated Critical ride on top
      in red wine, the one data color on the site, and every other ribbon is gray. Under them the firms are listed by segment
-     (the ladder, thinnest segment first), by country, or in a table, every name opening its own panel. "Stages" are the
+     (the ladder, from design to power), by country, or in a table, every name opening its own panel. "Stages" are the
      fifteen chapters of the chain; the list's own categories are "segments". */
   var Suppliers = {
     rows: DATA.suppliers || [], built: false, stage: '', country: '', chk: '', q: '', sortKey: 'name', sortDir: 1,
@@ -1921,7 +1921,7 @@
       $('#sup-ladder').hidden = tab !== 'segment';
       $('#sup-ladder-cc').hidden = tab !== 'country';
       $('#sup-wrap').hidden = tab !== 'table';
-      var lh = $('#sup-ladder-h'); if (lh) { lh.hidden = tab === 'table'; lh.textContent = tab === 'country' ? 'Countries by number of firms, most first' : 'Segments by number of firms, fewest first'; }
+      var lh = $('#sup-ladder-h'); if (lh) { lh.hidden = tab === 'table'; lh.textContent = tab === 'country' ? 'Countries by number of firms, most first' : 'Segments from chip design to power'; }
       var key = $('#sup-key'); if (key) key.hidden = tab === 'table'; // the key names the colors of the names, so it goes with the lists
       // a pressed country button (or the route's chosen country) follows its column; else the firm filter lights each ribbon
       // that holds a firm it keeps, so a country drawn inside the Other or EU column lights those ribbons
@@ -1972,11 +1972,9 @@
       if (this.tab === 'table') this.renderTable(rows); else this.applyFilter();
     },
 
-    /* ---- the ladder: the segments ranked thinnest first, every firm named ---- */
-    ladderOrder: function () { // fewest firms first, then the segment with more Critical firms, then chain order
-      return this.stages.slice().sort(function (a, b) {
-        return (a.n - b.n) || (b.crit.length - a.crit.length) || (a.i - b.i);
-      });
+    /* ---- the ladder: the segments in the list's own order, from design to power (owner, 25 Oct), every firm named ---- */
+    ladderOrder: function () {
+      return this.stages.slice().sort(function (a, b) { return a.i - b.i; });
     },
     buildLadder: function () {
       var self = this, html = '';
@@ -1989,7 +1987,7 @@
             (f.chokepoint === 'Critical' || f.chokepoint === 'Diversified' ? '<span class="sr-only">, ' + esc(f.chokepoint) + '</span>' : '') + // the name's color, said aloud
             '</button></span>'; // the list stays names only: a firm's revenue and its China share open with the firm (detail, below)
         }).join(' '); // the lines break at these spaces, so a name never leaves its comma at the start of the next line
-        // the numeral is the segment's number of firms, the value the ladder is sorted by, so ties show at a glance
+        // the numeral is the segment's number of firms
         html += '<section class="sup-rung" id="' + s.id + '" data-i="' + s.i + '" data-crit="' + s.crit.length + '" aria-labelledby="' + s.id + '-h">' +
           '<span class="sup-rank" aria-hidden="true">' + s.n + '</span>' +
           '<div class="sup-rung-head"><h3 class="sup-rung-name" id="' + s.id + '-h">' + esc(s.name) + '</h3>' +

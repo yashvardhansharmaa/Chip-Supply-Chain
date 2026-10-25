@@ -109,6 +109,8 @@ function manifest(root) {
       metaDescription: searchDescription(c.oneLiner || c.plain),
       // a share preview has room for the whole one-line summary, so it is never cut mid-sentence
       shareDescription: c.oneLiner || searchDescription(c.plain),
+      // the share image's alt text says what build/cards.py draws: the title, the one-line summary, the specimen and the row of stages
+      alt: `${c.title}. ${c.oneLiner || describe(c.plain, 140)} A drawing of the chapter's specimen sits beside the text, and small drawings of all 15 stages run along the bottom${si >= 0 ? ', with this one marked' : ''}.`,
     });
   }
 
@@ -129,6 +131,14 @@ function manifest(root) {
     { slug: 'export-controls', route: '#/controls', eyebrow: `${SITE} · Export Controls`, title: 'Export Controls', line: `The main rules since 2018, what can still be sold to China, and China's share of revenue at ${exposureFirms} firms, from their filings.` },
     { slug: 'glossary', route: '#/glossary', eyebrow: `${SITE} · Glossary`, title: 'Glossary', line: 'Every term, firm, chip and country, with the passages that use them.' },
   ];
+  // the share image's alt text, from the words build/cards.py and build/home_card.py put on each card
+  const CARD_TITLE = { intro: 'Start here' };
+  const CARD_LINE = {
+    home: 'An introduction to the entire semiconductor supply chain.',
+    suppliers: `What each of the ${suppliers.length || 226} firms makes, where it is based and how hard it would be to replace.`,
+    'export-controls': 'A timeline of the main chip export rules since 2018 and what can still be sold to China.',
+  };
+  for (const v of views) v.alt = `${CARD_TITLE[v.slug] || v.title}. ${CARD_LINE[v.slug] || v.line} Small drawings of all 15 stages run along the bottom.`;
   for (const v of views) pages.push({ kind: 'view', body: v.description || v.line, linkText: 'Open the page', ...v, description: describe(v.description || v.line) });
   return pages;
 }
@@ -173,7 +183,7 @@ function shareTags(p, versions) {
 <meta property="og:image" content="${esc(image)}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="${esc(p.eyebrow + '. ' + p.title + '. ' + p.line)}">
+<meta property="og:image:alt" content="${esc(p.alt || p.eyebrow + '. ' + p.title + '. ' + p.line)}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${esc(title)}">
 <meta name="twitter:description" content="${esc(description)}">
