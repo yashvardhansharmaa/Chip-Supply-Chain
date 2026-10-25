@@ -44,6 +44,7 @@ const MEASURE = `(() => {
     if (/^(SCRIPT|STYLE|NOSCRIPT|TITLE|OPTION)$/.test(el.tagName)) continue;
     seen.add(el);
     if (!el.getClientRects().length || !shown(el) || srOnly(el)) continue;
+    const fold = el.closest('details'); if (fold && !fold.open && !el.closest('summary')) continue; // a closed <details> shows only its summary
     const cs = getComputedStyle(el);
     let px = parseFloat(cs.fontSize);
     if (el instanceof SVGElement && el.getScreenCTM) { const m = el.getScreenCTM(); if (m) px = px * Math.hypot(m.a, m.b); }
