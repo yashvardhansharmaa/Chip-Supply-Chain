@@ -51,11 +51,12 @@ EDITION_JS = r'''(function (edition, host, pdf) {
     c.textContent = 'Cite as: Sharma, Yashvardhan. ' + (h ? '“' + h.textContent.trim() + '.” ' : '') + 'Chip Supply Chain: How AI Chips Are Made. ' + edition + '. ' + pdf;
     end.insertAdjacentElement('afterend', c);
   }
-  var box = 'font: 7pt "Instrument Sans", system-ui, sans-serif; color: var(--muted, #5c636d);';
+  var box = 'font: 500 7pt "Hanken Grotesk", system-ui, sans-serif; color: var(--ink-2, #45443f);';
   var s = document.createElement('style');
   s.textContent = '@page { @bottom-left { content: ' + JSON.stringify(host + ' · ' + edition) + '; ' + box + ' }'
     + ' @bottom-right { content: counter(page) " / " counter(pages); ' + box + ' } }'
-    + ' @media print { .prt .foot-cite { border-top: 0; margin-top: 3pt; padding-top: 0; } }';
+    + ' @media print { .prt .foot-cite { border-top: 0; margin-top: 3pt; padding-top: 0; } }'
+    + ' @page { @bottom-right { font-family: "Fragment Mono", ui-monospace, monospace; font-weight: 400; } }';
   document.head.appendChild(s);
   return 'dated';
 })'''
@@ -63,16 +64,16 @@ EDITION_JS = r'''(function (edition, host, pdf) {
 # Static fonts for the summary's print, as src/modules/print.js does for the chapters: Chrome puts a variable font into
 # a PDF as Type 3 shapes, which copy and search as broken words, so the page's variable families give way to fixed
 # instances of the same OFL families, one Google Fonts request per instance (several weights in one request come back
-# as one variable file). Fraunces is the summary's heads (600, at optical size 24), Source Serif 4 its text, Instrument
-# Sans its labels; the wordmark is Fraunces 500 at the masthead's optical size, 28, added under a name of its own
-# ("Fraunces Mark", through the FontFace API, as src/modules/print.js does) so it does not take the place of the 500
-# above. Capital labels are tracked at 0.05 em, which copies as words. Only the summary is changed.
-FONTS_JS = r'''(function () {
+# as one variable file), each at a named weight (a weight between them prints as Type 3 again). The redesign's four:
+# Fraunces for the heads (400 and 500, at optical size 48, SOFT and WONK at 0), Literata for the text, Hanken Grotesk for
+# the labels and Fragment Mono for numbers, codes and dates; the wordmark is Fraunces 500 at the masthead's optical size,
+# 28, added under a name of its own ("Fraunces Mark", through the FontFace API, as src/modules/print.js does) so it does
+# not take the place of the 500 above. No bold or italic is made up by the browser (font-synthesis), for the same reason.
+FONTS_JS = r"""(function () {
   if (!document.querySelector('.prt')) return Promise.resolve('as is');
-  var fams = ['Fraunces:opsz,wght@24,600', 'Fraunces:opsz,wght@48,500', 'Fraunces:opsz,wght@72,400',
-    'Source+Serif+4:ital,opsz,wght@0,12,400', 'Source+Serif+4:ital,opsz,wght@0,12,500', 'Source+Serif+4:ital,opsz,wght@0,12,600',
-    'Source+Serif+4:ital,opsz,wght@0,12,700', 'Source+Serif+4:ital,opsz,wght@1,12,400',
-    'Instrument+Sans:wght@400', 'Instrument+Sans:wght@500', 'Instrument+Sans:wght@600', 'Instrument+Sans:wght@700'];
+  var fams = ['Fraunces:opsz,wght,SOFT,WONK@48,400,0,0', 'Fraunces:opsz,wght,SOFT,WONK@48,500,0,0',
+    'Literata:ital,opsz,wght@0,12,400', 'Literata:ital,opsz,wght@0,12,600', 'Literata:ital,opsz,wght@0,12,700', 'Literata:ital,opsz,wght@1,12,400',
+    'Hanken+Grotesk:wght@400', 'Hanken+Grotesk:wght@500', 'Hanken+Grotesk:wght@600', 'Hanken+Grotesk:wght@700', 'Fragment+Mono'];
   Array.prototype.forEach.call(document.querySelectorAll('link[rel="stylesheet"][href*="fonts.googleapis.com"]'), function (l) { l.remove(); });
   var loads = fams.map(function (f) {
     var l = document.createElement('link'); l.rel = 'stylesheet';
@@ -80,7 +81,7 @@ FONTS_JS = r'''(function () {
     var p = new Promise(function (done) { l.onload = done; l.onerror = done; });
     document.head.appendChild(l); return p;
   });
-  loads.push(fetch('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@28,500&display=block').then(function (r) { return r.text(); }).then(function (css) {
+  loads.push(fetch('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@28,500,0,0&display=block').then(function (r) { return r.text(); }).then(function (css) {
     var faces = [], re = /@font-face\s*{([^}]*)}/g, m;
     while ((m = re.exec(css))) {
       var src = /src:\s*([^;]+);/.exec(m[1]), u = /unicode-range:\s*([^;]+);/.exec(m[1]);
@@ -91,16 +92,15 @@ FONTS_JS = r'''(function () {
     return Promise.all(faces);
   }).catch(function () { return null; }));
   var s = document.createElement('style');
-  s.textContent = '@media print { *, *::before, *::after { font-variation-settings: normal !important; font-optical-sizing: none; }'
-    + ' .kicker, th, .k, .cc { letter-spacing: 0.05em !important; } }';
+  s.textContent = '@media print { *, *::before, *::after { font-variation-settings: normal !important; font-optical-sizing: none; font-synthesis: none; } }';
   document.head.appendChild(s);
-  var faces = ['600 22pt Fraunces', '500 14pt Fraunces', '400 14pt Fraunces', '400 9pt "Source Serif 4"', '500 9pt "Source Serif 4"',
-    '600 9pt "Source Serif 4"', '700 9pt "Source Serif 4"', 'italic 400 9pt "Source Serif 4"', '400 8pt "Instrument Sans"',
-    '500 8pt "Instrument Sans"', '600 8pt "Instrument Sans"', '700 8pt "Instrument Sans"', '500 12pt "Fraunces Mark"'];
+  var faces = ['400 22pt Fraunces', '500 14pt Fraunces', '400 9pt Literata', '600 9pt Literata', '700 9pt Literata', 'italic 400 9pt Literata',
+    '400 8pt "Hanken Grotesk"', '500 8pt "Hanken Grotesk"', '600 8pt "Hanken Grotesk"', '700 8pt "Hanken Grotesk"', '400 8pt "Fragment Mono"',
+    '500 12pt "Fraunces Mark"'];
   return Promise.all(loads).then(function () {
     return Promise.all(faces.map(function (f) { return document.fonts.load(f).catch(function () { return []; }); }));
   }).then(function () { return document.fonts.ready; }).then(function () { return 'static fonts'; });
-})()'''
+})()"""
 
 chrome = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
 profile = f'/tmp/cp-summary-pdf-{os.getpid()}'

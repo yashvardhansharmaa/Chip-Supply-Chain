@@ -1,16 +1,17 @@
 #!/usr/bin/env python3
 """Render the PDF cover art: the 300 mm wafer specimen in plan view, one reticle field picked out in
-the specimen's own colour (the wafer declares the faint blue of anti-reflective film), on transparent ground. Writes build/assets/print-title.png; the build copies it into dist/.
+denser ink with a heavier seal ring, on transparent ground. The redesign prints ink on white (qa/redesign/BRIEF.md), so
+the field takes the ink too; --accent paints it in another colour (the wafer declares the faint blue of anti-reflective
+film, which the cover carried before 25 October 2026). Writes build/assets/print-title.png; the build copies it into dist/.
 
 usage: python3 build/cover-art.py [out.png] [--bin wafer.bin] [--width-mm 164] [--dpi 240]
                                   [--rmin 0.9] [--rmax 1.6] [--amin 85] [--amax 220]
-                                  [--ink 12161a] [--accent 5a86b4] [--accent2 <hex>] [--accentgain 1.25]
+                                  [--ink 171716] [--accent <hex>] [--accent2 <hex>] [--accentgain 1.25]
                                   [--ring-mm 0.35] [--no-ring] [--supersample 2] [--no-quantize]
 
 The point cloud comes from `node build/cover-export.js wafer <bin>` (run here unless --bin is
 given): float32 rows of x, y, z, w, where w in [0,1] is ink weight, w in [2,3] is the accent and
-w in (3,4] the second accent. The colours come from the <bin>.json sidecar cover-export.js writes
-(the specimen's declared light-ground colours, as on the page); --accent/--accent2 override them.
+w in (3,4] the second accent. Both accents are drawn in the ink unless --accent/--accent2 name a colour.
 The view is orthographic from directly above (rx pi/2): the notch falls at the foot, the polished
 face is nearest. Points are depth-sorted far-to-near and drawn as small discs with PIL, then the
 image is cropped to the ink and sized so the wafer prints --width-mm wide at --dpi.
@@ -64,8 +65,8 @@ def main():
     ap.add_argument('--rmax', type=float, default=1.6)
     ap.add_argument('--amin', type=float, default=85)           # dot alpha
     ap.add_argument('--amax', type=float, default=220)
-    ap.add_argument('--ink', default='12161a')
-    ap.add_argument('--accent', default='')                    # override the specimen's own colour
+    ap.add_argument('--ink', default='171716')                 # the site's ink
+    ap.add_argument('--accent', default='')                    # a colour for the picked field; the ink by default
     ap.add_argument('--accent2', default='')
     ap.add_argument('--amber', default='', help=argparse.SUPPRESS)  # old name for --accent
     ap.add_argument('--accentgain', type=float, default=1.25)
@@ -79,12 +80,9 @@ def main():
 
     ink = hexcol(args.ink)
     bin_path = args.bin or export(args.specimen)
-    # the specimen's own colours, from the sidecar cover-export.js writes; the site's accent if it declares none
-    declared = None
-    if os.path.exists(bin_path + '.json'):
-        declared = json.load(open(bin_path + '.json')).get('colors')
-    accent = hexcol(args.accent or args.amber) if (args.accent or args.amber) else (tuple(declared['accent']) if declared else hexcol('7a1f2b'))
-    accent2 = hexcol(args.accent2) if args.accent2 else (tuple(declared['accent2']) if declared else accent)
+    # the picked field in the ink, denser (--accentgain) and ringed, unless a colour is named
+    accent = hexcol(args.accent or args.amber) if (args.accent or args.amber) else ink
+    accent2 = hexcol(args.accent2) if args.accent2 else accent
     gain = args.ambergain if args.ambergain is not None else args.accentgain
     data = np.fromfile(bin_path, dtype=np.float32).reshape(-1, 4)
     xyz, w = data[:, :3].astype(np.float64), data[:, 3].astype(np.float64)

@@ -346,15 +346,17 @@ sup.cite .br { font-size: 0; }
 @media print {
   /* paper is always light: the selector list matches the dark blocks above at equal weight and comes later, so it wins in any theme */
   :root, :root[data-theme="dark"], :root:not([data-theme="light"]) {
-    --bg: #fff; --bg-2: #f4f5f6; --ink: #000; --ink-2: #22272b; --muted: #464e55; --line: #c6cacd; --line-2: #a4aaaf;
-    --accent: #7a1f2b; --accent-ink: #611722; --accent-soft: rgba(122, 31, 43, 0.09); --accent-fill: #7a1f2b; --on-accent: #fff;
+    /* the site's light tokens (redesign stage 4): ink on white, the wine for links only */
+    --bg: #fff; --bg-2: #f4f4f2; --ink: #171716; --ink-2: #45443f; --muted: #56554f; --line: #e1e0db; --line-2: #c4c3bd; --rule-ink: #8c8a84;
+    --accent: #7a1f2b; --accent-ink: #7a1f2b; --accent-soft: #f3e3e5; --accent-fill: #7a1f2b; --on-accent: #fff; --ctx: #d2d1cc;
     --c1: #2b63c4; --c2: #e06a1f; --c3: #1f9a6d; --c4: #c9a10c; --c5: #5a48b8; --c6: #c3302b; --c7: #2e7d1e;
-    --bar-4: #3b424c; --bar-3: #bfb9af;
+    --bar-5: #171716; --bar-4: #8c8a84; --bar-3: #c4c3bd;
     --stk-1: #2b63c4; --stk-2: #1f9a6d; --stk-3: #c9a10c; --stk-4: #5a48b8; --stk-5: #e06a1f; --stk-tail: #c9c6bf; --stk-edge: #a9a49b;
     color-scheme: light;
   }
   * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   body { font-size: 10.5pt; }
+  p, li, dd { text-wrap: wrap; }
   .masthead nav, .skip, .cta, .endnav, .track, .specimen a, .anim-frame { display: none !important; }
   .anim-still { display: block; width: 100%; height: auto; border: 1px solid var(--line); } /* paper gets the animation's last frame */
   .page { max-width: none; padding: 0; }

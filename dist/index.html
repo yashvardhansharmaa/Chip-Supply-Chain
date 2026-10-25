@@ -2702,7 +2702,8 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
   .review .fc-end { margin-top: 0; }
   .review .rv-keep { margin: 0; padding-top: 2.6mm; }
   .review .rv-keep h4.label, .review .cp-quiz h4.label { margin: 0 0 1mm; font-family: var(--font-ui); font-weight: 600; font-size: 8pt; line-height: 1.35; letter-spacing: 0; text-transform: none; color: var(--ink); }
-  .review .rv-keep li { margin-top: 1.6mm; padding-bottom: 0; font-family: var(--font-body); font-size: 9.6pt; line-height: 1.45; }
+  .review .rv-keep li { margin-top: 1.6mm; padding: 0 0 0 6mm; font-family: var(--font-body); font-size: 9.6pt; line-height: 1.45; }
+  .review .rv-keep li::before { left: 0.6mm; top: 0.7em; width: 2.8mm; border-top: 0.8pt solid var(--ink); }
   /* the deck's questions, printed above the takeaways (print.js quiz): each with the section that answers it, so a
      reader can answer from memory and then check against the list below. Its rule is ink, as every section's. */
   .review .cp-quiz { margin: 0; padding-top: 2.6mm; border-top: 0.6pt solid var(--ink); }
@@ -2745,21 +2746,21 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
   .howto ul { padding-left: 0; }
   .howto h2 { margin-bottom: 2.4mm; font-family: var(--font-ui); font-size: 8pt; font-weight: 600; }
   .howto h1.howto-title, .howto h2.howto-title { margin: 0 0 2mm; font-family: var(--font-display); font-weight: 400; font-size: 24pt; line-height: 1.04; letter-spacing: -0.02em; }
-  .howto .howto-lede { max-width: 140mm; margin-bottom: 3mm; font-family: var(--font-body); font-size: 10.4pt; line-height: 1.45; color: var(--ink-2); }
+  .howto .howto-lede { max-width: 140mm; margin-bottom: 2.6mm; font-family: var(--font-body); font-size: 9.8pt; line-height: 1.42; color: var(--ink-2); }
   .howto h3.howto-k { margin-bottom: 1.6mm; padding-top: 2.4mm; font-family: var(--font-ui); font-size: 8pt; font-weight: 600; letter-spacing: 0; text-transform: none; color: var(--ink); }
-  .howto p, .howto li { font-family: var(--font-body); font-size: 9pt; line-height: 1.45; }
-  .contents { break-after: page; padding: 3mm 0 0; margin-top: 3mm; border-top: 0.6pt solid var(--ink); }
+  .howto p, .howto li { font-family: var(--font-body); font-size: 8.6pt; line-height: 1.4; }
+  .contents { break-after: page; padding: 2.6mm 0 0; margin-top: 2mm; border-top: 0.6pt solid var(--ink); }
   /* the two group heads ("The fifteen stages", "Across the chain") and the note under the second: the screen's 40 px
      above the second ran the contents' last line onto a page of its own */
   .contents .contents-k { margin: 3.5mm 0 2mm; padding-top: 0; border-top: 0; font-family: var(--font-code); font-size: 7.2pt; font-weight: 400; color: var(--muted); }
   .contents .contents-note { margin: 0 0 2mm; font-family: var(--font-body); font-size: 8.8pt; line-height: 1.4; color: var(--ink-2); }
   .contents h2 { margin-bottom: 3mm; font-family: var(--font-display); font-weight: 400; font-size: 16pt; letter-spacing: -0.012em; }
   .contents-grid { display: block; }
-  .contents-grid .item { break-inside: avoid; display: flex; align-items: baseline; gap: 0; border-top: 0; border-bottom: 0.3pt solid var(--line-2); padding: 0.9mm 0; }
+  .contents-grid .item { break-inside: avoid; display: flex; align-items: baseline; gap: 0; border-top: 0; border-bottom: 0.3pt solid var(--line-2); padding: 0.6mm 0; } /* close enough that the seventeen lines share the page with How to read */
   /* the number in a column of its own, so every title starts on one edge; the page number set in the text's figures, on
      the title's baseline */
   .contents-grid .n { flex: none; width: 9mm; padding: 0; font-family: var(--font-code); font-size: 7.2pt; color: var(--muted); font-variant-numeric: tabular-nums; }
-  .contents-grid .t { flex: 1; display: flex; justify-content: space-between; align-items: baseline; gap: 6mm; margin: 0; font-family: var(--font-display); font-weight: 500; font-size: 10pt; line-height: 1.45; letter-spacing: 0; }
+  .contents-grid .t { flex: 1; display: flex; justify-content: space-between; align-items: baseline; gap: 6mm; margin: 0; font-family: var(--font-display); font-weight: 500; font-size: 9.6pt; line-height: 1.4; letter-spacing: 0; }
   .contents-grid .item ul, .contents-grid .ol { display: none; } /* the section list and the one-liners are the site's; the page wants the spine */
   .contents-grid .t::after { content: target-counter(attr(href url), page); font-family: var(--font-code); font-weight: 400; font-size: 7.6pt; color: var(--ink-2); }
   .contents .item { break-inside: avoid; }
@@ -2785,6 +2786,7 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
      face with the work in italic, the BibTeX in mono, each on a hairline at its left. The edition is in the foot of every
      page, so the screen's "Updated" line is left out. */
   .site-footer { break-before: page; margin-left: 36mm; padding: 0; border-top: 0.6pt solid var(--ink); font-family: var(--font-ui); font-size: 8.4pt; line-height: 1.5; color: var(--ink-2); }
+  .site-footer[data-split-from] { border-top: 0; }
   .site-footer .ft-mark { display: none; }
   .site-footer .credits { margin: 2.6mm 0 0; font-size: 9pt; color: var(--ink); }
   .site-footer .credits b { font-weight: 600; }
