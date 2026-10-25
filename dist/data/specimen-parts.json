@@ -1,5 +1,5 @@
 {
-  "_about": "The numbered parts on a chapter's specimen drawing, keyed by chapter id (the owner's decision of 25 Oct 2026: Lithography only for now; add a chapter only from a sourced list). Each part has its number (n), its name, and either its maker as the chapter's card and text source it (maker) or the chapter that covers it (stage, a chapter id, shown as 'see stage NN, Title'). 'at' lists the points on the specimen its balloon points at, in the specimen's own units as specimens/<specimen>.js draws them; the runtime turns them with the drawing (src/app.js Stage.balloons). build/build.js draws the list under the specimen's caption.",
+  "_about": "The numbered parts on a chapter's specimen drawing, keyed by chapter id (the owner's decision of 25 Oct 2026: Lithography only for now; add a chapter only from a sourced list). Each part has its number (n), its name, and either its maker as the chapter's card and text source it (maker) or the chapter that covers it (stage, a chapter id, shown as 'see stage NN, Title'). 'at' lists the points on the specimen its balloon points at, in the specimen's own units as specimens/<specimen>.js draws them; the runtime turns them with the drawing (src/app.js Stage.balloons). build/build.js draws the list under the specimen's caption. 'still' is the drawing the readable page dist/<chapter>/ shows in place of the live one (build/assets/specimens/, the hybrid mockup's annotated render): its file, its size in pixels, and each part's points on it, in the order of 'parts'.",
   "lithography": {
     "specimen": "euv-scanner",
     "parts": [
@@ -7,6 +7,11 @@
       { "n": 2, "name": "Mirrors", "maker": "Zeiss SMT (DE)", "at": [[1.22, 0.60, 0], [1.06, -0.98, 0]] },
       { "n": 3, "name": "Mask", "stage": "photomasks-and-pellicles", "at": [[0.06, 1.68, 0]] },
       { "n": 4, "name": "Wafer", "stage": "silicon-and-wafers", "at": [[0.44, -1.74, 0]] }
-    ]
+    ],
+    "still": {
+      "file": "lithography-annotated.webp",
+      "size": 772,
+      "points": [[[257.7, 540.2]], [[553.3, 276.5], [546.9, 472.0]], [[512.4, 101.8]], [[453.2, 579.3]]]
+    }
   }
 }

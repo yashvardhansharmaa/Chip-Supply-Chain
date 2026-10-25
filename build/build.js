@@ -193,8 +193,12 @@ function figure(f, ctx) {
     warn(`${ctx.id}: unknown figure type ${f.type}`);
     return '';
   }
+  // the large line is the finding when the figure has one, with the title under it; without one, the title's first sentence,
+  // with any sentences after it under it ("What one lithography system costs" over "The DUV bar is one figure …")
+  const tt = figTitle(f), first = figShort(f), rest = tt.length > first.length ? tt.slice(first.length).replace(/^\.\s*/, '').trim() : '';
+  const [big, small] = finding ? [finding, tt] : rest ? [first, /[.!?)]$/.test(rest) ? rest : rest + '.'] : [tt, ''];
   const head = `<div class="fig-head"><a class="fig-k" href="#${fid}">${esc(kick)}</a>`
-    + (finding ? `<p class="fig-title fig-find">${esc(finding)}</p><p class="fig-sub">${esc(figTitle(f))}${unitTag}</p>` : `<p class="fig-title">${esc(figTitle(f))}${unitTag}</p>`) + `</div>`;
+    + `<p class="fig-title${finding ? ' fig-find' : ''}">${esc(big)}${small ? '' : unitTag}</p>${small ? `<p class="fig-sub">${esc(small)}${unitTag}</p>` : ''}</div>`;
   // the strip: Source (or a note) first, then the address and the actions
   const src = f.source && f.source.url ? `<span class="fs-src"><span class="fs-k">Source</span><a href="${safeUrl(f.source.url)}" target="_blank" rel="noopener">${esc(f.source.label || host(f.source.url))}</a>${srcMark}</span>`
     : (f.source && f.source.label ? `<span class="fs-src"><span class="fs-k">Source</span>${esc(f.source.label)}</span>` : '');
