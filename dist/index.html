@@ -11431,8 +11431,8 @@ PC.register('wafer', function (p) {
         }
         Sections.update();
         // a link to another chapter hid the one it sat in, and with it the focus: the new chapter's title takes it (Keys.land
-        // leaves alone a focus that is still on the page)
-        if (turned && this.routed) Keys.land(location.hash);
+        // leaves alone a focus that is still on the page). Back and Forward return to a place, not to a heading
+        if (turned && this.routed && backY === null) Keys.land(location.hash);
       }
       this.routed = true;
       this.title();

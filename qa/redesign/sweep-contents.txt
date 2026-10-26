@@ -1,0 +1,6 @@
+chain light 390: ok (tabbed 12)
+chain light 1440: ok (tabbed 12)
+chain dark 390: ok (tabbed 12)
+chain dark 1440: ok (tabbed 12)
+
+4 loads, 0 with findings

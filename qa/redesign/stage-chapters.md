@@ -27,4 +27,40 @@ Files: `build/build.js`, `build/modules/social.js`, `src/app.js`, `src/preroute.
 
 ## Checks
 
-RESULTS
+All on the final build unless marked.
+
+| Check | Result |
+|---|---|
+| `node build/build.js` | no warnings (the new preroute check finds every id in its own chapter) |
+| `check-speak`, `check-integrity`, `check-sources`, `check-size` | all pass (exit 0) |
+| `node qa/scripts/smoke.js --port 9351` | 36 loads, no failures (adds the `chapter` route) |
+| 1. Every chapter opens alone at its address | PASS, 17 of 17 on a slow line: one chapter, at y 0, under its own title; before boot each painted only itself. Run on the build before the last two commits (door still, strip fix, focus tweak), which do not touch what it measures |
+| 2. A section and a figure in another chapter | PASS: by a link and on a fresh load, each lands 0 px from its mark in the right chapter; a link in chapter 02's text to Lithography opens it at y 0 |
+| 3. The door, Back, Forward | PASS: door from Lithography (left at y 13,538) opens chapter 05 at y 0, focus on its title; Back returns to y 13,538; Forward to chapter 05's top. The rail, the Glossary tab and the contents rows behave the same; chapter 17's door opens the contents |
+| 4. A search result inside a chapter | PASS: from chapter 01, "Controls and China's answer" opens Lithography with the heading 0 px from its mark, focused |
+| 5. A Glossary passage link | PASS: "EUV", its passage in chapter 03 lands 0 px from its mark and flashes |
+| 6. Suppliers or AI Chips stage link | PASS for Suppliers (Japan's atlas panel to chapter 03). AI Chips has no link to a stage, so nothing to follow |
+| 7. Print emulation | PASS: at `#/chain` and at `#lithography`, all 17 chapters, the head and the contents print; no door prints |
+| 8. Page height at 1440 | Lithography 14,532 px (scroll thumb 56 px), chapters 11,878 to 17,309 px; the whole chain as one page 221,389 px |
+| 9. Every other way in | PASS: home, a look-up card, Export Controls' Read the chapter, the phone's contents sheet, slim bar and strip's Top, The Chain's tab |
+| Text census (`census-chapters.js` against `git archive 11aeb7b dist`) | 0 lines lost, 0 added in all 17 chapters, the contents and 17 readable pages, door aside (`census-chapters.txt`, which also lists each old and new door). `census.js` on the other six views: no difference |
+| Layout sweep, 390 and 1440, light and dark | 0 findings in 20 loads: four doors (Lithography, 15 to 16, 17 to the contents, the readable page) and the contents. Door text overflow probed at 13 widths, 320 to 1920: none |
+| Test PDFs | not finished: `build/pdf.py` on `#/chain` (port 9352) was paginating its second pass when stopped to finish on time; the chapter run (`--chapter lithography`) did not start |
+
+Output: `qa/redesign/stage-chapters.txt`, `census-chapters.txt`, `sweep-doors.txt`, `sweep-contents.txt`.
+
+## Known issues and open questions
+
+- **The book PDF and a chapter PDF were not completed as a test.** The code path is covered (print.js drops `data-chain` before Paged.js; print emulation shows every chapter), but a full `pdf.py` run should confirm page counts against the last edition.
+- **The full sweep (`--set doors` and `--set chapters`, all 17) was cut short.** Only the four doors and the contents above were swept.
+- The contents' standfirst still reads "This page covers each of the fifteen stages ... one chapter per stage". Left as written (content unchanged, and print.js rewrites its start for the book), but now the chapters live one per address the owner may want "The Chain covers".
+- The browser's own find (Cmd-F) now searches one chapter, a cost the plan accepted. Site search covers all.
+- A place kept for Back and Forward lives in memory, so a reload returns to the address's anchor (recommendation 2 is the fix).
+- The door's still is about 100 KB, loaded lazily when the reader reaches the end of a chapter.
+- `build/pdf.py` runs Chrome without the QA host block, so its page loads the fonts and the counter script from the web.
+
+## Shots
+
+`sh qa/redesign/shots-stage-chapters.sh` writes them to `qa/redesign/shots/stage-chapters/` (ignored by git), at 1440 and 390: `contents-top`, `contents-list`, `chapter-top`, `door`, `door-*-dark`, `door-15-to-16`, `door-17-to-contents`, `page-door`, `deep-section`. Taken before the strip fix, so `contents-top-390` still shows Lithography in the strip; rerun to refresh.
+
+Art direction against the mockup: the door first had an empty right third and a pill stretched to its column; it now carries the next specimen's still as the mockup does, and the pill keeps its own width. In dark the still sat in a black box (the app's layer has no ground to blend with), so its box now carries the ground. The readable page's door was capped at the text's measure and its title ran into the still; it now runs the column's width.
