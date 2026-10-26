@@ -12,7 +12,7 @@
        shadow or a border that changes).
    --set chapters (stage 2) measures every chapter instead: each of the 17 in The Chain, landed on by its anchor (the first three
    screens are then its opener, specimen and card, and Tab starts at the chapter), and each readable page dist/<chapter>/.
-   usage: node qa/redesign/sweep.js [--set chapters] [--only walk,lithography] [--widths 390,1440] [--tabs 40] [--out qa/redesign/sweep.txt] */
+   usage: node qa/redesign/sweep.js [--set chapters|glossary] [--only walk,lithography] [--widths 390,1440] [--tabs 40] [--out qa/redesign/sweep.txt] */
 'use strict';
 const fs = require('fs');
 const path = require('path');
@@ -33,6 +33,9 @@ const PAGES = SET === 'chapters' ? CHAPTERS.map((id) => ['chain-' + id, '/#' + i
   ['export-controls', '/#/controls'], ['china-revenue', '/#/exposure'], ['glossary', '/#/glossary'],
   ['page-lithography', '/lithography/'], ['page-geopolitics', '/geopolitics/'], ['page-summary', '/summary/'], ['page-chips', '/chips/'],
   ['page-suppliers', '/suppliers/'], ['page-export-controls', '/export-controls/'], ['page-glossary', '/glossary/']].filter(([n]) => !ONLY.length || ONLY.includes(n));
+// --set glossary (the Glossary as a dictionary, redesign option B): the view at rest, with a term open in the sheet, with a country's card
+// open, and /glossary/
+if (SET === 'glossary') PAGES.splice(0, PAGES.length, ...[['glossary', '/#/glossary'], ['glossary-entry', '/#gl-euv'], ['glossary-country', '/#lk-country-nl'], ['page-glossary', '/glossary/']].filter(([n]) => !ONLY.length || ONLY.includes(n)));
 
 const MEASURE = `(() => {
   const st = document.createElement('style'); st.textContent = 'article.chapter{content-visibility:visible!important}'; document.head.appendChild(st); // the chain's chapters only: a closed <details> must stay closed

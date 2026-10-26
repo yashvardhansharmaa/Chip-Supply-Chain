@@ -1170,6 +1170,9 @@ data.countries = Object.keys(COUNTRY).filter((cc) => /^[A-Z]{2}$/.test(cc) && ((
 data.countries.forEach((c) => lkItems.push({ kind: 'country', id: 'lk-country-' + c.code.toLowerCase(), key: c.code, name: c.name, alias: c.aliases, label: 'Country', text: [c.name, c.code, c.aliases.join(' '), 'country', c.role].join(' ') }));
 lkItems.sort((a, b) => a.name.localeCompare(b.name, 'en', { sensitivity: 'base' }));
 fill('LOOKUP_LIST', lkItems.map((i) => `<li id="${esc(i.id)}" data-kind="${i.kind}" data-key="${esc(i.key || i.name)}"${i.alias && i.alias.length ? ` data-alias="${esc(i.alias.join('|'))}"` : ''} data-text="${esc(i.text.toLowerCase().replace(/\s+/g, ' '))}"><button type="button"><span class="lk-name">${esc(i.name)}</span><span class="lk-lab">${esc(i.label)}</span></button></li>`).join(''));
+// the Glossary's head: how many entries of each kind the list holds (src/template.html, the Glossary view)
+const lkKinds = (k) => lkItems.filter((i) => i.kind === k).length;
+fill('GLOSSARY_TALLY', [[lkKinds('term'), 'terms'], [lkKinds('firm'), 'firms'], [lkKinds('chip'), 'AI chips'], [lkKinds('country'), 'countries']].map(([n, w]) => `<span>${n} ${w}</span>`).join(''));
 fill('CONTROLS_DEK', controlsDek);
 fill('EXPOSURE_VIZ', exposureViz(exposure));
 fill('EXPOSURE_NOTE', exposureNote);

@@ -1,139 +1,255 @@
-/* Look up: the list on the left, the entry and its passages on the right */
-.lk { display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 34px; align-items: start; margin: 6px 0 40px; }
-.lk-list { position: sticky; top: calc(var(--masthead) + 16px); border: 0; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--line-2); border-radius: 0; background: none; overflow: hidden; }
-.lk-search { padding: 12px 0 10px; border-bottom: 1px solid var(--line-2); }
-.lk-search input { width: 100%; font: inherit; font-family: var(--font-ui); font-size: 16px; padding: 9px 12px; border: 1px solid var(--control-edge); border-radius: 0; background: var(--bg); color: var(--ink); }
-.lk-search input:focus { outline: none; border-color: var(--ink); }
-.lk-search input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; } /* the field's focus shows as the site's own ring */
-.lk-search input::placeholder { color: var(--muted); }
-#lk-items { list-style: none; margin: 0; padding: 6px 0; max-height: calc(100vh - var(--masthead) - 160px); min-height: 200px; overflow: auto; overscroll-behavior: contain; }
-#lk-items li { margin: 0; }
-#lk-items button { display: flex; width: 100%; justify-content: space-between; align-items: baseline; gap: 10px; font: inherit; text-align: left; background: none; border: 0; padding: 6px 8px; color: var(--ink-2); cursor: pointer; }
-#lk-items button:hover { background: var(--bg-2); color: var(--ink); }
-#lk-items .lk-name { font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 500; font-size: 15px; line-height: 1.25; }
-#lk-items .lk-lab { flex: none; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap-s); letter-spacing: 0; color: var(--muted); max-width: 46%; text-align: right; line-height: 1.3; }
-/* every label on one line, in sentence case: a firm's stage by its short name (build/build.js), cut with an ellipsis if it must be */
-#lk-items .lk-lab { font-size: var(--fs-ui-s); font-weight: 400; letter-spacing: 0.01em; text-transform: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 58%; }
-#lk-items .lk-name { min-width: 0; }
-#lk-items li.is-on button { background: var(--ink); color: var(--bg); }
-#lk-items li.is-on .lk-lab { color: var(--bg); opacity: 0.7; }
-.lk-browse { display: none; width: 100%; font: inherit; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: 0; padding: 10px 0; border: 0; border-bottom: 1px solid var(--line-2); background: none; color: var(--ink-2); text-align: left; cursor: pointer; }
-.lk-more { margin: 10px 0 0; }
-.lk-more button, .lk-near button { font: inherit; font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 500; font-size: 14px; padding: 5px 10px; border: 1px solid var(--line-2); border-radius: 0; background: none; color: var(--ink); cursor: pointer; }
-.lk-more button:hover, .lk-near button:hover { border-color: var(--ink); }
-.lk-near { margin: 12px 0 0; font-family: var(--font-mono); font-size: var(--fs-cap); letter-spacing: 0; color: var(--muted); display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-.lk-near button { text-transform: none; letter-spacing: 0; }
-.lk-count { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; color: var(--muted); padding: 8px 0 10px; margin: 0; border-top: 1px solid var(--line); }
+/* The Glossary as a printed dictionary (redesign option B, chosen 25 Oct 2026; src/modules/lookup.js).
+   The head (the title, its counts, six things to try), a sticky bar (the search, the kinds, the thumb index of letters), then
+   every entry in columns under its large letter and guide words. An entry opens in a sheet: beside the columns from 1,000 px,
+   over them below that, the whole screen on a phone. The sheet holds the site's own cards and the passages.
+   Color: red wine marks only links, the reader's place (the letter in view, the open entry) and the reader's own choice; the
+   chokepoint marks and the country card's shares are ink and the light tint (rule B). */
+:root { --gl-off: #6e6d67; } /* a letter with no entries: quiet, and still 5.2:1 on white */
+:root[data-theme="dark"] { --gl-off: #8a8883; }
 
-.lk-entry { min-width: 0; max-width: 760px; }
-.lk-rest { border: 1px dashed var(--line-2); border-radius: 0; padding: 22px 24px; color: var(--ink-2); }
-.lk-rest p { margin: 0 0 10px; font-size: 17px; }
-.lk-rest .lk-try { margin: 0; font-family: var(--font-mono); font-size: var(--fs-cap); letter-spacing: 0; color: var(--muted); display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-.lk-rest .lk-try button { font: inherit; font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 500; font-size: 14px; letter-spacing: 0; text-transform: none; padding: 5px 10px; border: 1px solid var(--line-2); border-radius: 0; background: none; color: var(--ink); cursor: pointer; }
-.lk-rest .lk-try button:hover { border-color: var(--ink); }
+.view[data-view="glossary"] { width: 100%; padding: 0 var(--margin); }
 
-/* the selected glossary entry becomes the card */
-.lk-entry .glossary { margin: 0; columns: 1; column-count: 1; column-gap: 0; display: block; }
-.lk-entry .gl-entry { border: 0; border-top: 2px solid var(--ink); border-bottom: 1px solid var(--line-2); border-radius: 0; background: none; padding: 16px 0 16px; box-shadow: none; }
-.lk-entry .gl-entry dt { font-size: var(--fs-d2); line-height: 1.05; font-weight: 400; }
-.lk-entry .gl-entry dt .aka { margin: 6px 0 12px; }
-.lk-entry .gl-entry dd p { font-size: var(--fs-plain); margin-bottom: 10px; }
-.lk-entry .gl-entry dd p.why { font-size: var(--fs-small); }
-.lk-entry .gl-link { font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: 0; color: var(--accent); text-decoration: none; }
-
-.lk-card { border: 0; border-top: 2px solid var(--ink); border-bottom: 1px solid var(--line-2); border-radius: 0; background: none; padding: 16px 0 16px; box-shadow: none; }
-.lk-card h3 { font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 400; font-size: var(--fs-d2); line-height: 1.05; margin: 0 0 6px; }
-.lk-card .lk-native { font-weight: 500; font-size: var(--fs-d6); color: var(--muted); margin-left: 6px; }
-.lk-kind { font-family: var(--font-mono); font-size: var(--fs-cap-s); letter-spacing: 0; color: var(--muted); margin: 0 0 8px; }
-.lk-chk { padding: 1px 6px; border-radius: 0; border: 1px solid var(--line-2); background: none; color: var(--ink-2); }
-.lk-chk--critical { border-color: var(--accent); color: var(--accent); }
-.lk-meta { font-family: var(--font-mono); font-size: var(--fs-ui-s); color: var(--muted); margin: 0 0 12px; line-height: 1.5; }
-.lk-lede { font-size: var(--fs-plain); margin: 0 0 10px; }
-.lk-p { font-size: var(--fs-small); margin: 0 0 10px; }
-.lk-why { color: var(--ink-2); }
-.lk-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 20px; margin: 14px 0 6px; padding-top: 12px; border-top: 1px solid var(--line); }
-.lk-facts div { min-width: 0; }
-.lk-facts dt { font-family: var(--font-mono); font-size: var(--fs-cap-s); letter-spacing: 0; color: var(--muted); margin-bottom: 3px; }
-.lk-facts dd { margin: 0; font-size: var(--fs-small); line-height: 1.4; overflow-wrap: anywhere; }
-.lk-facts .lk-fact-wide { grid-column: 1 / -1; } /* revenue as filed, with its year and dollar figure, on one line where it fits */
-/* the filing's note on the revenue figure: quiet, and free to break a long URL or file name */
-.lk-revnote { margin: 8px 0 10px; font-size: var(--fs-note); line-height: 1.5; color: var(--muted); overflow-wrap: anywhere; }
-.lk-revnote b { font-weight: 600; color: var(--ink-2); }
-.lk-links { margin: 12px 0 0; display: flex; flex-wrap: wrap; gap: 8px 18px; }
-.lk-links a { font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 600; font-size: 13.5px; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
-.lk-noentry { border: 1px dashed var(--line-2); border-radius: 0; padding: 16px 20px; }
-.lk-noentry b { font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 400; font-size: var(--fs-d4); display: block; margin-bottom: 4px; }
-.lk-noentry p { margin: 0; color: var(--ink-2); }
-
-/* the country card: shares as a short ranked list, the cards that name it, its firms by category */
-.lk-h--in { margin: 18px 0 8px; padding-top: 12px; border-top: 1px solid var(--line); }
-.lk-shares, .lk-cards, .lk-stages { list-style: none; margin: 0; padding: 0; }
-.lk-share { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0 12px; align-items: baseline; padding: 7px 0 8px; border-top: 1px solid var(--line); }
-.lk-share:first-child { border-top: 0; }
-.lk-share-bar { position: absolute; left: 0; bottom: -1px; height: 2px; width: var(--w); background: var(--line-2); }
-.lk-share.is-lead .lk-share-bar { background: var(--accent); }
-.lk-share-k { font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 600; font-size: var(--fs-d6); line-height: 1.3; }
-.lk-share-v { font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 400; font-size: var(--fs-d6); font-variant-numeric: tabular-nums; }
-.lk-share-m { grid-column: 1 / -1; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; color: var(--muted); line-height: 1.5; }
-/* the shares as a bar chart: a 0 to 100 percent track beside each value, garnet for the country's largest share */
-.lk-share { grid-template-columns: minmax(0, 1fr) minmax(120px, 34%) 58px; column-gap: 14px; align-items: center; }
-.lk-share-k { grid-column: 1; grid-row: 1; }
-.lk-share-bar { position: static; grid-column: 2; grid-row: 1; width: 100%; height: 8px; background: linear-gradient(to right, var(--ink-2) var(--w), var(--bg-3) var(--w)); }
-.lk-share.is-lead .lk-share-bar { background: linear-gradient(to right, var(--accent-fill) var(--w), var(--bg-3) var(--w)); }
-.lk-share-v { grid-column: 3; grid-row: 1; text-align: right; }
-.lk-share.is-lead .lk-share-v { color: var(--accent-ink); }
-.lk-share-m { grid-row: 2; }
-@media (max-width: 760px) {
-  .lk-share { grid-template-columns: minmax(0, 1fr) 46px; }
-  .lk-share-bar { grid-column: 1 / -1; grid-row: 3; margin-top: 4px; }
-  .lk-share-v { grid-column: 2; }
+/* ---------- the head: the title, its standfirst and counts, and six things to try beside them ---------- */
+.gl-head h1 { grid-column: 1 / 8; }
+.gl-head .dek { grid-column: 1 / 7; }
+.gl-tally { grid-column: 1 / 7; display: flex; flex-wrap: wrap; margin: 16px 0 0; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); }
+.gl-tally span { white-space: nowrap; }
+.gl-tally span + span::before { content: "\00b7"; margin: 0 8px; }
+.gl-try { grid-column: 8 / 13; grid-row: 2 / 4; align-self: end; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0; padding-top: 14px; border-top: 1px solid var(--ink); }
+.gl-try-k { margin-right: 8px; font-family: var(--font-code); font-size: 12px; line-height: 1; color: var(--muted); }
+html:not(.booted) .gl-try { visibility: hidden; } /* its six names arrive at boot */
+@media (max-width: 1199px) {
+  .gl-head h1, .gl-head .dek, .gl-tally { grid-column: 1 / -1; }
+  .gl-try { grid-column: 1 / -1; grid-row: auto; margin-top: 28px; }
 }
-.lk-small { font-family: var(--font-mono); font-size: var(--fs-ui-s); color: var(--muted); margin: 8px 0 0; line-height: 1.5; }
-/* an EU-27 member's card: the bloc's firms counted together, linked to the Suppliers ribbons drawn that way */
-.lk-eu { margin: 0; padding: 8px 0 0; border-top: 1px solid var(--line); font-size: var(--fs-note); line-height: 1.45; color: var(--ink-2); }
-.lk-eu a { display: inline-block; padding: 3px 0; font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 600; font-size: 13.5px; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
-/* how the card's shares and the supplier list give each firm its country */
-.lk-note { margin: 18px 0 0; font-family: var(--font-mono); font-size: var(--fs-ui-s); line-height: 1.6; color: var(--muted); max-width: 92ch; }
-.lk-cards li { border-top: 1px solid var(--line); }
-.lk-cards li:first-child { border-top: 0; }
-.lk-cards a { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 10px; align-items: baseline; padding: 7px 0 8px; text-decoration: none; color: inherit; }
-.lk-cards a:hover .lk-card-t { text-decoration: underline; text-underline-offset: 3px; }
-.lk-card-t { font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 600; font-size: var(--fs-d6); line-height: 1.3; color: var(--ink); }
-.lk-band { font-family: var(--font-mono); font-size: var(--fs-cap-s); letter-spacing: 0; font-weight: 500; padding: 1px 6px; border-radius: 0; border: 1px solid var(--line-2); background: none; color: var(--ink-2); }
-.lk-band--extreme { border-color: var(--accent); color: var(--accent); }
-.lk-card-n { grid-column: 1 / -1; font-size: var(--fs-note); line-height: 1.45; color: var(--ink-2); }
-.lk-stages li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; align-items: baseline; padding: 7px 0 8px; border-top: 1px solid var(--line); }
-.lk-stages li:first-child { border-top: 0; }
-.lk-stage-k { font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 600; font-size: var(--fs-d6); line-height: 1.3; }
-.lk-stage-c { font-family: var(--font-mono); font-size: var(--fs-ui-s); color: var(--muted); font-variant-numeric: tabular-nums; }
-.lk-stage-f { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 6px; }
-.lk-go { font: inherit; font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 500; font-size: 13.5px; padding: 3px 9px; border: 1px solid var(--line-2); border-radius: 0; background: none; color: var(--ink); cursor: pointer; }
-.lk-go:hover { border-color: var(--ink); }
+@media (max-width: 760px) {
+  .gl-tally { gap: 0 16px; }
+  .gl-tally span + span::before { content: none; }
+  .gl-try { margin-top: 24px; }
+}
 
-.lk-mentions { margin-top: 26px; }
-.lk-h { font-family: var(--font-mono); font-size: var(--fs-cap); letter-spacing: 0; color: var(--muted); font-weight: 600; margin: 0 0 10px; display: flex; align-items: center; gap: 10px; }
-.lk-n { font-weight: 400; letter-spacing: 0.06em; padding: 2px 7px; border: 1px solid var(--line-2); border-radius: 0; background: none; color: var(--ink-2); }
-.lk-none { font-family: var(--font-mono); font-size: var(--fs-ui-s); color: var(--muted); margin: 0; }
+/* ---------- buttons with a pill edge: the kinds, the things to try, Did you mean, Show all ---------- */
+.gl-pill { font-family: var(--font-ui); font-weight: 500; font-size: 13.5px; line-height: 1; padding: 9px 13px; border: 1px solid var(--control-edge); border-radius: 999px; color: var(--ink); background: transparent; white-space: nowrap; }
+.gl-pill:hover { border-color: var(--ink); }
+.gl-pill[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+.gl-pill .gl-n { margin-left: 5px; font-family: var(--font-code); font-size: 11.5px; opacity: 0.8; }
+
+/* ---------- the bar: it sticks under the masthead while the columns scroll ---------- */
+.gl-bar-at { height: 0; }
+.gl-bar { position: sticky; top: var(--masthead); z-index: 30; margin: 48px calc(-1 * var(--margin)) 0; padding: 0 var(--margin); background: var(--bg); }
+.gl-bar-row { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: 24px; align-items: center; padding: 14px 0 12px; border-top: 1px solid var(--ink); }
+.gl-field { position: relative; display: block; margin: 0; }
+.gl-field input { width: 100%; height: 44px; padding: 0 44px 0 42px; font-family: var(--font-ui); font-size: 16px; color: var(--ink); background: var(--bg); border: 1px solid var(--control-edge); border-radius: 4px; -webkit-appearance: none; appearance: none; }
+.gl-field input::placeholder { color: var(--muted); }
+.gl-field input:focus { outline: none; border-color: var(--ink); box-shadow: 0 0 0 1px var(--ink); }
+.gl-field input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.gl-field input::-webkit-search-cancel-button { display: none; }
+.gl-field > svg { position: absolute; left: 15px; top: 50%; width: 16px; height: 16px; margin-top: -8px; fill: none; stroke: var(--ink-2); stroke-width: 1.6; stroke-linecap: round; pointer-events: none; }
+/* a narrow phone: the field gives its icon's room to the words, so the hint is never cut */
+@media (max-width: 360px) { .gl-field > svg { display: none; } .gl-field input { padding-left: 12px; } .gl-field input:placeholder-shown { padding-right: 12px; } }
+.gl-clear { position: absolute; right: 4px; top: 50%; margin-top: -18px; width: 36px; height: 36px; display: grid; place-items: center; border-radius: 50%; font-family: var(--font-ui); font-size: 20px; line-height: 1; color: var(--ink-2); }
+.gl-clear:hover { color: var(--ink); background: var(--bg-2); }
+.gl-bar-r { display: flex; justify-content: space-between; align-items: center; gap: 16px; min-width: 0; }
+.gl-kinds { display: flex; flex-wrap: nowrap; gap: 6px; }
+.gl-kinds .gl-pill { padding: 8px 12px; font-size: 13px; }
+.gl-count { margin: 0; font-family: var(--font-code); font-size: 12px; line-height: 1.4; color: var(--muted); text-align: right; white-space: nowrap; }
+.gl-letters-nav { border-top: 1px solid var(--line); border-bottom: 1px solid var(--ink); }
+.gl-letters { display: flex; justify-content: space-between; list-style: none; margin: 0; padding: 4px 0; }
+.gl-letters li { margin: 0; }
+.gl-letters button, .gl-letters span { display: grid; place-items: center; min-width: 28px; height: 30px; padding: 0 3px; font-family: var(--font-code); font-size: 13px; line-height: 1; color: var(--ink); border-radius: 2px; }
+.gl-letters span { color: var(--gl-off); }
+.gl-letters button:hover { background: var(--bg-2); }
+.gl-letters button[aria-current="true"] { color: var(--accent-ink); box-shadow: inset 0 -2px 0 var(--accent); }
+@media (max-width: 1240px) { .gl-bar-row { grid-template-columns: minmax(0, 1fr); row-gap: 10px; } }
+@media (max-width: 900px) { .gl-letters button, .gl-letters span { min-width: 22px; padding: 0 1px; } }
+/* a control reached by Tab lands clear of the bar as well as the masthead (WCAG 2.4.11) */
+html.kb:has(.view[data-view="glossary"]:not([hidden])) { scroll-padding-top: calc(var(--masthead) + var(--gl-bar-h, 0px) + 12px); }
+
+/* ---------- the dictionary: each letter, its guide words, its entries in columns ---------- */
+.gl-dict { min-height: 50vh; }
+.gl-sec { padding-top: 40px; }
+.gl-sec-h { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 24px; margin-bottom: 22px; padding-bottom: 10px; border-bottom: 1px solid var(--ink); }
+.gl-L { margin: 0; font-family: var(--font-display); font-weight: 350; font-variation-settings: var(--opsz-title); font-size: 88px; line-height: 0.8; letter-spacing: -0.02em; color: var(--ink); }
+.gl-best .gl-L { font-size: 40px; line-height: 1; letter-spacing: -0.01em; }
+.gl-gw { display: flex; flex-wrap: wrap; gap: 4px 18px; margin: 0; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); }
+.gl-gw b { font-weight: 400; color: var(--ink-2); }
+.gl-cols { columns: 300px 3; column-gap: 48px; column-rule: 1px solid var(--line); }
+/* a letter's next page, under a hairline (lookup.js paginate) */
+.gl-cols + .gl-cols { margin-top: 4px; padding-top: 22px; border-top: 1px solid var(--line); }
+
+/* one entry: the headword and its kind, its other names, what it is and why it matters, the chapters that use it */
+.gl-de { position: relative; break-inside: avoid; margin: 0; padding: 2px 0 20px; }
+.gl-de.is-on::before { content: ""; position: absolute; left: -14px; top: 4px; bottom: 20px; width: 2px; background: var(--accent); }
+.gl-hw { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; margin: 0; font-family: var(--font-display); font-weight: 600; font-variation-settings: var(--opsz-title); font-size: 18px; line-height: 1.3; color: var(--ink); }
+.gl-hw button { font: inherit; text-align: left; color: var(--ink); overflow-wrap: anywhere; }
+.gl-hw button:hover { color: var(--accent-ink); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.gl-de.is-on .gl-hw button { color: var(--accent-ink); }
+.gl-pos { font-family: var(--font-body); font-style: italic; font-weight: 400; font-size: 14px; line-height: 1.3; color: var(--muted); }
+.gl-aka { margin: 3px 0 0; font-family: var(--font-ui); font-size: 12.5px; line-height: 1.45; color: var(--muted); }
+.gl-meta { display: flex; align-items: flex-start; gap: 8px; margin: 5px 0 0; font-family: var(--font-ui); font-size: 12.5px; line-height: 1.45; color: var(--ink-2); }
+.gl-meta > span { min-width: 0; }
+.gl-mk { display: inline-block; flex: none; width: 4px; margin-top: 3px; background: var(--ink); }
+.gl-mk--critical { width: 6px; height: 14px; }
+.gl-mk--important { height: 10px; }
+.gl-mk--contested { height: 10px; background: none; box-shadow: inset 0 0 0 1.25px var(--ink); }
+.gl-mk--diversified { height: 5px; background: var(--muted); }
+.gl-df, .gl-wy { margin: 7px 0 0; font-family: var(--font-body); font-size: 15.5px; line-height: 1.55; color: var(--ink); }
+.gl-wy { color: var(--ink-2); }
+.gl-refs { margin: 8px 0 0; font-family: var(--font-ui); font-size: 12.5px; line-height: 1.55; color: var(--muted); }
+.gl-refs a { color: var(--accent-ink); text-decoration: underline; text-decoration-color: currentColor; text-underline-offset: 3px; }
+.gl-refs-k2 { margin-left: 10px; }
+.gl-foot { margin: 8px 0 0; }
+.gl-more { display: inline-flex; align-items: center; gap: 6px; padding: 4px 0; font-family: var(--font-ui); font-weight: 500; font-size: 12.5px; line-height: 1; color: var(--ink); border-bottom: 1px solid var(--rule-ink); }
+.gl-more:hover { color: var(--accent-ink); border-color: var(--accent); }
+.gl-nil { font-family: var(--font-ui); font-size: 12.5px; line-height: 1.4; color: var(--muted); }
+
+/* no entry for what was typed: the words, names a typo away, and the passages that mention it */
+.gl-none { max-width: 980px; min-height: 50vh; padding-top: 40px; }
+
+/* ---------- the sheet ---------- */
+.gl-sheet { position: fixed; z-index: 36; top: calc(var(--masthead) + var(--gl-bar-h, 0px)); right: 0; bottom: 0; width: min(640px, 46vw); display: flex; flex-direction: column; background: var(--bg); border-left: 1px solid var(--ink); box-shadow: -24px 0 48px -32px rgba(0, 0, 0, 0.45); transform: none; transition: transform 0.28s var(--ease), visibility 0s; }
+.view .gl-sheet[hidden] { display: flex !important; transform: translateX(105%); visibility: hidden; transition: transform 0.28s var(--ease), visibility 0s linear 0.28s; }
+.gl-sheet-bar { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 12px 28px; border-bottom: 1px solid var(--line); }
+.gl-sheet-k { margin: 0; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); }
+.gl-sheet-nav { display: flex; align-items: center; gap: 8px; }
+.gl-sheet-nav button { min-width: 40px; height: 36px; padding: 0 12px; font-family: var(--font-ui); font-weight: 500; font-size: 14px; line-height: 1; color: var(--ink); border: 1px solid var(--control-edge); border-radius: 999px; }
+.gl-sheet-nav button:hover:not(:disabled) { border-color: var(--ink); }
+.gl-sheet-nav button:disabled { color: var(--gl-off); border-color: var(--line-2); cursor: default; }
+.gl-sheet-nav .gl-close { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+.gl-sheet-nav .gl-close:hover { background: var(--ink-2); border-color: var(--ink-2); }
+.gl-sheet-body { flex: 1 1 auto; overflow: auto; overscroll-behavior: contain; padding: 26px 28px 48px; }
+/* a wide screen keeps the dictionary beside the open entry: the columns reflow into the room the sheet leaves */
+@media (min-width: 1000px) {
+  .view[data-view="glossary"].gl-split .gl-dict, .view[data-view="glossary"].gl-split .gl-none, .view[data-view="glossary"].gl-split > .site-footer { margin-right: min(640px, 46vw); }
+}
+/* narrower, the sheet lies over the page, which waits under a scrim */
+@media (min-width: 761px) and (max-width: 999px) {
+  .gl-sheet { top: var(--masthead); width: min(640px, calc(100vw - 64px)); box-shadow: 0 0 0 100vmax var(--scrim); }
+}
+@media (prefers-reduced-motion: reduce) { .gl-sheet, .view .gl-sheet[hidden] { transition: none; } }
+
+/* ---------- the entry in the sheet: a term as the page lays it out; a firm, a chip or a country as its card ---------- */
+.lk-card { --t: 44px; --lede: 19px; --p: 16px; color: var(--ink); }
+.lk-kind { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 10px; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); }
+.lk-t { margin: 0; font-family: var(--font-display); font-weight: 350; font-variation-settings: var(--opsz-title); font-size: var(--t); line-height: 1.02; letter-spacing: -0.02em; color: var(--ink); overflow-wrap: anywhere; }
+.lk-t:focus { outline: none; }
+.lk-native { margin-left: 10px; font-family: var(--font-body); font-weight: 400; font-size: 0.42em; line-height: 1; letter-spacing: 0; color: var(--muted); white-space: nowrap; }
+.lk-aka { margin: 12px 0 0; font-family: var(--font-ui); font-size: 13.5px; line-height: 1.5; color: var(--muted); }
+.lk-meta { margin: 12px 0 0; font-family: var(--font-code); font-size: 12px; line-height: 1.5; color: var(--muted); }
+.lk-lede { margin: 18px 0 0; font-family: var(--font-body); font-size: var(--lede); line-height: 1.5; }
+.lk-p { margin: 12px 0 0; font-family: var(--font-body); font-size: var(--p); line-height: 1.58; }
+.lk-why { color: var(--ink-2); }
+.lk-why b { font-weight: 600; color: var(--ink); }
+.lk-card .gl-refs { margin-top: 18px; font-size: 14px; line-height: 1.6; color: var(--ink-2); }
+.lk-card .gl-refs-k2 { margin-left: 14px; }
+/* a firm's rating as the Suppliers mark, in ink: the page's one red wine data mark belongs to Suppliers */
+.lk-chk { display: inline-flex; align-items: flex-end; gap: 6px; color: var(--ink); }
+.lk-chk::before { content: ""; display: inline-block; width: 4px; background: var(--ink); }
+.lk-chk--critical::before { width: 6px; height: 14px; }
+.lk-chk--important::before { height: 10px; }
+.lk-chk--contested::before { height: 10px; background: none; box-shadow: inset 0 0 0 1.25px var(--ink); }
+.lk-chk--diversified::before { height: 5px; background: var(--muted); }
+.lk-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 28px; margin: 22px 0 0; padding: 18px 20px 20px; background: var(--bg-2); }
+.lk-facts div { min-width: 0; }
+.lk-facts .lk-fact-wide { grid-column: 1 / -1; } /* revenue as filed, with its year and dollar figure, on one line where it fits */
+.lk-facts dt { margin: 0 0 4px; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); }
+.lk-facts dd { margin: 0; font-family: var(--font-body); font-size: 15.5px; line-height: 1.45; overflow-wrap: anywhere; }
+.lk-facts dd a { color: var(--ink); }
+/* the filing's note on the revenue figure: quiet, and free to break a long address or file name */
+.lk-revnote { margin: 12px 0 0; font-family: var(--font-body); font-size: 13.5px; line-height: 1.5; color: var(--muted); overflow-wrap: anywhere; }
+.lk-revnote b { font-weight: 600; color: var(--ink-2); }
+.lk-links { display: flex; flex-wrap: wrap; gap: 10px 26px; margin: 20px 0 0; }
+.lk-links a, .lk-eu a { padding: 6px 0; font-family: var(--font-ui); font-weight: 500; font-size: 14.5px; line-height: 1; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--ink); }
+.lk-links a:hover, .lk-eu a:hover { color: var(--accent-ink); border-color: var(--accent); }
+
+/* the country card: its shares in rule B (the largest solid ink with a bold label, the rest the light tint), the cards that
+   name it with each stage's band as the chain's mark, its firms by category */
+.lk-h { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; margin: 0; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 17px; line-height: 1.3; color: var(--ink); }
+.lk-h--in { margin: 26px 0 6px; padding-top: 12px; border-top: 1px solid var(--ink); }
+.lk-n { font-family: var(--font-code); font-weight: 400; font-size: 12px; line-height: 16px; color: var(--muted); white-space: nowrap; }
+.lk-shares, .lk-cards, .lk-stages { list-style: none; margin: 0; padding: 0; }
+.lk-share { display: grid; grid-template-columns: minmax(0, 1fr) minmax(120px, 36%) 56px; column-gap: 16px; align-items: center; padding: 9px 0 10px; border-bottom: 1px solid var(--line); }
+.lk-share-k { grid-column: 1; grid-row: 1; font-family: var(--font-body); font-size: 15.5px; line-height: 1.3; }
+.lk-share-bar { grid-column: 2; grid-row: 1; height: 12px; background: linear-gradient(to right, var(--ctx) var(--w), transparent var(--w)); box-shadow: inset 0 -1px 0 var(--line-2); }
+.lk-share-v { grid-column: 3; grid-row: 1; text-align: right; font-family: var(--font-code); font-size: 13px; line-height: 1; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.lk-share-m { grid-column: 1 / -1; grid-row: 2; margin-top: 3px; font-family: var(--font-code); font-size: 12px; line-height: 1.5; color: var(--muted); }
+.lk-shares li:first-child .lk-share-bar { background: linear-gradient(to right, var(--ink) var(--w), transparent var(--w)); }
+.lk-shares li:first-child .lk-share-k { font-weight: 600; }
+.lk-shares li:first-child .lk-share-v { font-family: var(--font-ui); font-weight: 700; font-size: 14px; color: var(--ink); }
+.lk-small { margin: 10px 0 0; font-family: var(--font-code); font-size: 12px; line-height: 1.5; color: var(--muted); }
+.lk-cards li { border-bottom: 1px solid var(--line); }
+.lk-cards a { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 3px 14px; align-items: baseline; padding: 10px 0 11px; text-decoration: none; color: inherit; }
+.lk-card-t { font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 16.5px; line-height: 1.3; }
+.lk-cards a:hover .lk-card-t { color: var(--accent-ink); }
+.lk-band { display: inline-flex; align-items: flex-end; gap: 7px; font-family: var(--font-code); font-weight: 400; font-size: 12px; line-height: 1; color: var(--ink-2); }
+.lk-band::before { content: ""; display: inline-block; width: 5px; height: 12px; background: var(--ink); }
+.lk-band--high::before { height: 6px; background: transparent; box-shadow: inset 0 0 0 1.25px var(--ink); }
+.lk-card-n { grid-column: 1 / -1; font-family: var(--font-body); font-size: 14.5px; line-height: 1.45; color: var(--ink-2); }
+.lk-stages li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 12px; align-items: baseline; padding: 9px 0 10px; border-bottom: 1px solid var(--line); }
+.lk-stage-k { font-family: var(--font-body); font-size: 15.5px; line-height: 1.3; }
+.lk-stage-c { font-family: var(--font-code); font-size: 13px; line-height: 1; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.lk-stage-f { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 6px; }
+.lk-go { padding: 7px 11px; font-family: var(--font-ui); font-weight: 500; font-size: 13px; line-height: 1; color: var(--ink); border: 1px solid var(--control-edge); border-radius: 999px; }
+.lk-go:hover { border-color: var(--ink); }
+/* an EU-27 member's card: the bloc's firms counted together, linked to the Suppliers ribbons drawn that way */
+.lk-eu { margin: 14px 0 0; font-family: var(--font-body); font-size: 14.5px; line-height: 1.55; color: var(--ink-2); }
+.lk-eu a { display: inline-block; margin-top: 6px; }
+/* how the card's shares and the supplier list give each firm its country */
+.lk-note { max-width: 62em; margin: 18px 0 0; font-family: var(--font-body); font-size: 13.5px; line-height: 1.55; color: var(--muted); }
+
+/* no entry */
+.lk-noentry { --t: 44px; }
+.lk-near { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 16px 0 0; }
+.lk-near span { margin-right: 4px; font-family: var(--font-code); font-size: 12px; line-height: 1; color: var(--muted); }
+
+/* ---------- where it appears: the passages ---------- */
+.lk-pass { margin-top: 40px; }
+.lk-pass-h { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin: 0; padding-bottom: 12px; border-bottom: 1px solid var(--ink); font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 19px; line-height: 1.25; color: var(--ink); }
+.lk-none { margin: 12px 0 0; font-family: var(--font-body); font-size: 15px; line-height: 1.5; color: var(--muted); }
 .lk-men { list-style: none; margin: 0; padding: 0; }
-.lk-men li { border-top: 1px solid var(--line); }
-.lk-men li:last-child { border-bottom: 1px solid var(--line); }
-.lk-men a { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 16px; padding: 11px 0; text-decoration: none; color: inherit; }
+.lk-men li { border-bottom: 1px solid var(--line); }
+.lk-men a { display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: 16px; padding: 13px 0 14px; text-decoration: none; color: inherit; }
+.lk-src { padding-top: 3px; font-family: var(--font-ui); font-size: 13px; line-height: 1.4; color: var(--ink-2); overflow-wrap: anywhere; }
+.lk-src b { display: block; margin-bottom: 2px; font-family: var(--font-code); font-weight: 400; font-size: 12px; line-height: 16px; color: var(--muted); }
+.lk-txt { font-family: var(--font-body); font-size: 15.5px; line-height: 1.55; color: var(--ink-2); }
 .lk-men a:hover .lk-txt { color: var(--ink); }
-.lk-src { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; color: var(--ink-2); line-height: 1.5; padding-top: 3px; overflow-wrap: anywhere; }
-.lk-src b { display: block; color: var(--ink); font-weight: 600; }
-.lk-txt { font-size: var(--fs-small); line-height: 1.45; color: var(--ink-2); }
-.lk-txt mark { background: var(--accent-soft); color: var(--accent-ink); padding: 0 2px; border-radius: 0; }
+.lk-men a:hover .lk-src { color: var(--accent-ink); }
+.lk-txt mark { padding: 0 2px; border-radius: 2px; background: var(--accent-soft); color: var(--ink); }
+.lk-more { margin: 16px 0 0; }
+/* the passage a link lands on, for a moment */
 .lk-flash { outline: 1.5px solid var(--accent); outline-offset: 6px; border-radius: 0; transition: outline-color 0.6s ease 1.6s; }
 
+/* ---------- a phone: one column, the bar's rows scroll sideways, the sheet takes the whole screen ---------- */
 @media (max-width: 760px) {
-  .lk { grid-template-columns: 1fr; gap: 18px; }
-  .lk-list { position: static; }
-  .lk-browse { display: block; }
-  .lk-list.is-open .lk-browse { border-bottom-color: var(--line); }
-  #lk-items { display: none; max-height: 44vh; min-height: 0; }
-  .lk-list.is-open #lk-items { display: block; }
-  .lk-count { display: none; }
-  .lk-list.is-open .lk-count { display: block; }
-  .lk-facts { grid-template-columns: 1fr; }
-  .lk-men a { grid-template-columns: 1fr; gap: 4px; }
+  .gl-bar { margin-top: 28px; }
+  .gl-bar-row { padding: 12px 0 8px; }
+  .gl-bar-r { overflow-x: auto; scrollbar-width: none; }
+  .gl-bar-r::-webkit-scrollbar { display: none; }
+  .gl-count { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
+  .gl-letters { justify-content: flex-start; overflow-x: auto; scrollbar-width: none; }
+  .gl-letters::-webkit-scrollbar { display: none; }
+  .gl-letters li { flex: none; }
+  .gl-letters button, .gl-letters span { min-width: 32px; height: 36px; padding: 0 3px; }
+  .gl-cols { columns: 1; }
+  .gl-sec { padding-top: 28px; }
+  .gl-L { font-size: 64px; }
+  .gl-best .gl-sec-h { flex-direction: column; align-items: flex-start; }
+  .gl-best .gl-L { font-size: 30px; }
+  .gl-de.is-on::before { left: -10px; }
+  .gl-sheet { top: 0; z-index: 45; width: 100%; border-left: 0; box-shadow: none; }
+  .view .gl-sheet[hidden] { transform: translateY(100%); }
+  .gl-sheet-bar { padding: 12px 20px; }
+  .gl-sheet-body { padding: 22px 20px 48px; }
+  .lk-card, .lk-noentry { --t: 38px; --lede: 18px; }
+  .lk-facts { grid-template-columns: minmax(0, 1fr); padding: 16px; }
+  .lk-share { grid-template-columns: minmax(0, 1fr) 48px; }
+  .lk-share-bar { grid-column: 1 / -1; grid-row: 3; margin-top: 6px; }
+  .lk-share-v { grid-column: 2; }
+  .lk-men a { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .lk-src b { display: inline; margin-right: 6px; }
+}
+
+@media print {
+  .gl-bar, .gl-sheet, .gl-try, .gl-foot { display: none !important; }
+  .gl-cols { column-rule: 0; }
 }

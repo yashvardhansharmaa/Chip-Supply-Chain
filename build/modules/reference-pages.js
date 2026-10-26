@@ -528,26 +528,42 @@ ${body}
     };
     const chapterOf = new Map(chapters.map((c) => [c.id, c]));
     const chLink = (c) => `<a href="../${esc(c.id)}/">${esc(c.title)}</a>`;
-    const letterOf = (t) => (/^[0-9]/.test(t) ? '0-9' : t.charAt(0).toUpperCase());
+    const letterOf = (t) => (/^[A-Za-z]/.test(t) ? t.charAt(0).toUpperCase() : '0-9');
     const groups = [];
     terms.forEach((g) => { const L = letterOf(g.term); let k = groups.find((x) => x.L === L); if (!k) groups.push(k = { L, rows: [] }); k.rows.push(g); });
     groups.sort((a, b) => (a.L === '0-9' ? -1 : b.L === '0-9' ? 1 : a.L.localeCompare(b.L)));
     const termIds = new Map(terms.map((g) => [g, uid(slug(g.term), 'terms')]));
-    const entry = (g) => {
+    // the chapters each term is read in: its own chapter, then the others whose text uses it. The interactive Glossary prints
+    // the same lines (src/modules/lookup.js reads them from DATA.glossaryRefs, keyed by the term's own address)
+    const refs = new Map(terms.map((g) => {
       // the other names the Glossary list searches by (build.js, LOOKUP_LIST): three letters or more, and not a plain lower-case word
       const akas = String(g.aka || '').split(/[;,]/).map((x) => x.trim()).filter((x) => x.length >= 3 && x.toLowerCase() !== g.term.toLowerCase() && !/^[a-z]+$/.test(x));
       const re = regex([g.term].concat(akas));
       const home = g.chapter && chapterOf.get(g.chapter);
-      const used = re ? corpus.filter((k) => k.c !== home && k.paras.some((s) => re.test(s))).map((k) => k.c) : [];
-      const ch = home || used.length ? `<p class="gl-ch">${home ? `Read it in ${chLink(home)}` : ''}${used.length ? `<span${home ? ' class="k2"' : ''}>${home ? 'Also in' : 'In'}</span> ${used.map(chLink).join(', ')}` : ''}</p>` : '';
-      return `<div class="row" id="${termIds.get(g)}"><dt>${esc(g.term)}${g.aka ? `<span class="aka">${esc(g.aka)}</span>` : ''}</dt><dd><p>${esc(g.plain)}</p>${g.why ? `<p class="why">${esc(g.why)}</p>` : ''}${ch}</dd></div>`;
+      const used = re ? corpus.filter((k) => k.c !== home && k.paras.some((x) => re.test(x))).map((k) => k.c) : [];
+      return [g, { home, used }];
+    }));
+    data.glossaryRefs = {};
+    terms.forEach((g) => { const r = refs.get(g); if (r.home || r.used.length) data.glossaryRefs['gl-' + slug(g.term)] = [r.home ? r.home.id : '', r.used.map((c) => c.id)]; });
+    // one entry as the dictionary sets it (the interactive Glossary's columns, option B): the headword and its kind, its other
+    // names, the definition, the reason it matters, then the chapters that use it
+    const entry = (g) => {
+      const { home, used } = refs.get(g);
+      const ch = home || used.length ? `<p class="gl-refs">${home ? `Read it in ${chLink(home)}` : ''}${used.length ? `${home ? ' <span>Also in</span>' : 'In'} ${used.map(chLink).join(', ')}` : ''}</p>` : '';
+      return `<div class="gl-de" id="${termIds.get(g)}"><dt>${esc(g.term)} <i>${g.chapter === 'geopolitics' ? 'export control' : 'term'}</i></dt><dd>${g.aka ? `<p class="gl-aka">${esc(g.aka)}</p>` : ''}<p>${esc(g.plain)}</p>${g.why ? `<p class="gl-wy">${esc(g.why)}</p>` : ''}${ch}</dd></div>`;
     };
     const letterId = (L) => 'letter-' + (L === '0-9' ? '0-9' : L.toLowerCase());
     const have = new Set(groups.map((g) => g.L));
     const letters = ['0-9'].concat('ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')).filter((L) => L !== '0-9' || have.has(L));
-    const jump = `<nav class="jump letters" aria-label="Terms by letter"><ul>${letters.map((L) => `<li>${have.has(L) ? `<a href="#${letterId(L)}">${L === '0-9' ? '0–9' : L}</a>` : `<span aria-hidden="true">${L}</span>`}</li>`).join('')}</ul></nav>`
-      + `<nav class="jump" aria-label="Other entries"><ul><li><a href="#list-firms">Firms</a><span class="n">${suppliers.length}</span></li><li><a href="#list-chips">AI chips</a><span class="n">${chips.length}</span></li>${countryIds.size ? `<li><a href="#list-countries">Countries</a><span class="n">${countryIds.size}</span></li>` : ''}</ul></nav>`;
-    const termsHTML = groups.map((k) => `<section class="gl-sec" aria-labelledby="${letterId(k.L)}"><h2 class="ref-h2" id="${uid(letterId(k.L), 'letters')}">${k.L === '0-9' ? '0–9' : k.L}</h2><dl class="gl ledger">${k.rows.map(entry).join('')}</dl></section>`).join('');
+    // the thumb index of letters stays at the top of the window while the columns scroll under it
+    const jump = `<nav class="jump gl-other" aria-label="Other entries"><ul><li><a href="#list-firms">Firms</a><span class="n">${suppliers.length}</span></li><li><a href="#list-chips">AI chips</a><span class="n">${chips.length}</span></li>${countryIds.size ? `<li><a href="#list-countries">Countries</a><span class="n">${countryIds.size}</span></li>` : ''}</ul></nav>`
+      + `<nav class="gl-thumb" aria-label="Terms by letter"><ul>${letters.map((L) => `<li>${have.has(L) ? `<a href="#${letterId(L)}">${L === '0-9' ? '0–9' : L}</a>` : `<span aria-hidden="true">${L}</span>`}</li>`).join('')}</ul></nav>`;
+    // a letter's terms set as pages of nine, three to a column on a wide screen, so the eye goes down a column and back up to the
+    // next without a long scroll, as a printed dictionary turns its page (the interactive Glossary does the same, lookup.js paginate)
+    const pages = (rows) => { const out = []; for (let i = 0; i < rows.length; i += 9) out.push(`<dl class="gl-cols">${rows.slice(i, i + 9).map(entry).join('')}</dl>`); return out.join(''); };
+    // each letter heads its columns with its guide words, as a printed dictionary heads its page: the first and last term, and how many
+    const guide = (rows) => `<p class="gl-gw"><b>${esc(rows[0].term)}</b>${rows.length > 1 ? `<span>to</span><b>${esc(rows[rows.length - 1].term)}</b>` : ''}<span>${rows.length} ${rows.length === 1 ? 'entry' : 'entries'}</span></p>`;
+    const termsHTML = `<div class="gl-dict">${groups.map((k) => `<section class="gl-sec" aria-labelledby="${letterId(k.L)}"><div class="gl-sec-h"><h2 class="gl-L" id="${uid(letterId(k.L), 'letters')}">${k.L === '0-9' ? '0–9' : k.L}</h2>${guide(k.rows)}</div>${pages(k.rows)}</section>`).join('')}</div>`;
 
     // firms, chips and countries: one line each, as the Glossary list names them, linked to their place on /suppliers/ and /chips/
     const stageLabel = (c) => SHORT[c] || String(c || 'Firm').split(' ').map((w, i) => (i && !/[A-Z].*[A-Z]/.test(w) ? w.toLowerCase() : w)).join(' ');
