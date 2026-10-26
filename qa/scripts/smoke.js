@@ -4,7 +4,8 @@
  *   - any console error, uncaught exception, "module ... failed" or "specimen ... failed" warning, or a request to the
  *     local server that finds nothing (404), on every route;
  *   - a page that scrolls sideways at 320 or 390 (document wider than the screen);
- *   - a route that is missing its key part (17 chapters on The Chain, a row per flow on the board, and so on);
+ *   - a route that is missing its key part (The Chain's contents with its 17 chapters held in the page and none shown, a
+ *     chapter's address showing that chapter alone with its card and its door, a row per flow on the board, and so on);
  *   - a page that follows the device's dark setting: with prefers-color-scheme: dark and no saved choice, the main page,
  *     a chapter page and the summary must keep the light ground; with ?theme=dark they must turn dark.
  * Nothing leaves this machine: Chrome resolves every host other than 127.0.0.1 to nothing, so the fonts and the counter
@@ -33,9 +34,14 @@ const LIGHT_GROUND = 'rgb(255, 255, 255)'; // --bg in src/styles.css, build/asse
 // ready(): a script that returns { ok, detail } once the route has drawn its key part; it is polled until ok or timeout
 const view = (v) => `(document.querySelector('.view[data-view="${v}"]') && !document.querySelector('.view[data-view="${v}"]').hidden)`;
 const count = (sel) => `document.querySelectorAll(${JSON.stringify(sel)}).length`;
+const shown = (sel) => `!!(document.querySelector(${JSON.stringify(sel)}) && document.querySelector(${JSON.stringify(sel)}).getClientRects().length)`; // laid out on screen
+const shownCount = (sel) => `[].filter.call(document.querySelectorAll(${JSON.stringify(sel)}), (e) => e.getClientRects().length).length`;
 const ROUTES = [
   { name: 'walk', url: '/#/', ready: `${view('walk')} && ${count('.view[data-view="walk"] .wk-step')} >= 15`, detail: `'walk view shown: ' + ${view('walk')} + ', steps: ' + ${count('.view[data-view="walk"] .wk-step')}` },
-  { name: 'chain', url: '/#/chain', ready: `${view('stack')} && ${count('.view[data-view="stack"] article.chapter')} >= 17 && ${count('.view[data-view="stack"] article.chapter .plate')} >= 15`, detail: `'chapters: ' + ${count('.view[data-view="stack"] article.chapter')} + ', cards: ' + ${count('.view[data-view="stack"] article.chapter .plate')}` },
+  // The Chain shows one chapter at a time (src/template.html, html[data-chain]): #/chain is its contents, every chapter is held
+  // in the page (print and search read them all) and none is shown; a chapter's address shows that chapter alone
+  { name: 'chain', url: '/#/chain', ready: `${view('stack')} && ${count('.view[data-view="stack"] article.chapter')} >= 17 && ${count('.view[data-view="stack"] article.chapter .plate')} >= 15 && ${shown('#contents')} && ${count('#contents a.t')} >= 17 && ${shownCount('.view[data-view="stack"] > article.chapter')} === 0`, detail: `'chapters: ' + ${count('.view[data-view="stack"] article.chapter')} + ', cards: ' + ${count('.view[data-view="stack"] article.chapter .plate')} + ', contents rows: ' + ${count('#contents a.t')} + ', chapters shown: ' + ${shownCount('.view[data-view="stack"] > article.chapter')}` },
+  { name: 'chapter', url: '/#lithography', ready: `${view('stack')} && ${shownCount('.view[data-view="stack"] > article.chapter')} === 1 && ${shown('#lithography .plate')} && ${shown('#lithography .prevnext .next')} && !${shown('#contents')}`, detail: `'chapters shown: ' + ${shownCount('.view[data-view="stack"] > article.chapter')} + ' (' + [].filter.call(document.querySelectorAll('.view[data-view="stack"] > article.chapter'), (a) => a.getClientRects().length).map((a) => a.id).join(', ') + '), card: ' + ${shown('#lithography .plate')} + ', door: ' + ${shown('#lithography .prevnext .next')} + ', contents shown: ' + ${shown('#contents')}` },
   { name: 'landscape', url: '/#/landscape', ready: `${view('landscape')} && ${count('#picker button[data-id]')} >= 20`, detail: `'chips in the picker: ' + ${count('#picker button[data-id]')}` },
   { name: 'suppliers', url: '/#/suppliers', ready: `${view('suppliers')} && /\\d/.test((document.getElementById('sup-count') || {}).textContent || '') && document.querySelector('#sup-ladder') && document.querySelector('#sup-ladder').children.length > 0`, detail: `'count: ' + ((document.getElementById('sup-count') || {}).textContent || 'none') + ', ladder parts: ' + (document.querySelector('#sup-ladder') ? document.querySelector('#sup-ladder').children.length : 0)` },
   { name: 'controls', url: '/#/controls', ready: `${view('controls')} && ${count('.cf-row')} >= (window.CP_DATA && CP_DATA.flows && CP_DATA.flows.flows ? CP_DATA.flows.flows.length : 1)`, detail: `'board rows: ' + ${count('.cf-row')}` },
