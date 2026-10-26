@@ -449,7 +449,7 @@ function readableHTML(p, ch, ctx, versions, css) {
 
   // the door to the next chapter, as The Chain ends each chapter (build.js chapterDoor), leading to the next readable page; the
   // last chapter's leads to the contents of The Chain (fixLinks sends its #/chain to the main page)
-  const prevnext = ctx.chapterDoor ? ctx.chapterDoor(ch, (c) => `href="../${esc(c.id)}/"`, 'div') : '';
+  const prevnext = ctx.chapterDoor ? ctx.chapterDoor(ch, (c) => `href="../${esc(c.id)}/"`, 'div', '../media/') : '';
 
   const sources = ch.cites.length ? `<section class="sources" aria-labelledby="sources"><h2 class="label" id="sources">Sources (${ch.cites.length})</h2><ol>${ch.cites.map((c, k) => `<li id="source-${k + 1}">${tierTag(c.url)}${sourceLine(c.url)}</li>`).join('')}</ol></section>` : '';
 

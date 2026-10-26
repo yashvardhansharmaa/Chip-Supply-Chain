@@ -361,15 +361,24 @@ html.no-stage .chapter .ch-spec-cap { grid-column: 1 / 9; }
 .chapter .chapter-sources summary::after { font-family: var(--font-ui); font-size: 26px; font-weight: 300; }
 .chapter .chapter-sources ol { font-size: 14px; }
 /* the door to the next chapter closes the chapter (the hybrid mockup's .nextx; build/build.js chapterDoor): The Chain shows one
-   chapter at a time, so the door is the way on. On an ink rule, Previous small in the first third; the next chapter in the
-   other two: where it sits in the chain, its title as large as a chapter's own, its one line, and Continue as a pill with
-   the arrow in an ink circle. The whole of it is one link. The readable page dist/<chapter>/ ends on the same door. */
+   chapter at a time, so the door is the way on. On an ink rule, Previous small in the first quarter; the next chapter in the
+   rest: where it sits in the chain, its title as large as a chapter's own, its one line and Continue as a pill with the
+   arrow in an ink circle, beside a still of its specimen. The whole of it is one link. The readable page dist/<chapter>/
+   ends on the same door. */
 .chapter > .prose > .prevnext, .ch-page .endnav .prevnext {
-  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); column-gap: var(--g); align-items: start;
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 3fr); column-gap: var(--g); align-items: start;
   max-width: none; margin: 96px 0 0; padding: 24px 0 8px; border-top: 1px solid var(--ink);
 }
 .chapter .prevnext .pn { display: block; min-width: 0; margin: 0; padding: 0; border: 0; border-radius: 0; background: none; color: var(--ink); text-decoration: none; text-align: left; }
-.chapter .prevnext .next { grid-column: 2; grid-row: 1; }
+.chapter .prevnext .next { grid-column: 2; grid-row: 1; display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); column-gap: var(--g); align-items: start; }
+.chapter .prevnext .next > * { grid-column: 1; }
+.chapter .prevnext .next > .ex { grid-column: 2; grid-row: 1 / span 4; align-self: start; display: flex; justify-content: center; padding-top: 28px; }
+.chapter .prevnext .ex img { display: block; width: auto; height: auto; max-width: 100%; max-height: 240px; }
+.chapter .prevnext .ex[data-night] img { border-radius: 2px; }
+/* the still is a light render, turned light-on-dark as the readable page turns it; its box carries the ground, so the screen
+   blend has the ground to work on inside the app's own layer (#app stacks above the page's ground) */
+:root[data-theme="dark"] .chapter .prevnext .ex:not([data-night]) { isolation: isolate; background: var(--bg); }
+:root[data-theme="dark"] .chapter .prevnext .ex:not([data-night]) img { filter: invert(1) hue-rotate(180deg); mix-blend-mode: screen; }
 .chapter .prevnext .prev { grid-column: 1; grid-row: 1; }
 .chapter .prevnext .pn .label { display: block; margin: 0 0 12px; font-family: var(--font-code); font-size: 12px; font-weight: 400; line-height: 16px; letter-spacing: 0; color: var(--muted); }
 .chapter .prevnext .prev .label { margin-bottom: 6px; }
@@ -380,7 +389,7 @@ html.no-stage .chapter .ch-spec-cap { grid-column: 1 / 9; }
 }
 .chapter .prevnext .next .ol { display: block; max-width: 30em; margin: 0 0 26px; font-family: var(--font-body); font-size: clamp(18px, 1.45vw, 21px); line-height: 1.45; color: var(--ink-2); }
 .chapter .prevnext .go {
-  display: inline-flex; align-items: center; gap: 16px; height: 48px; padding: 0 6px 0 22px; border: 1px solid var(--ink); border-radius: 999px;
+  display: inline-flex; justify-self: start; align-items: center; gap: 16px; height: 48px; padding: 0 6px 0 22px; border: 1px solid var(--ink); border-radius: 999px;
   font-family: var(--font-ui); font-size: 15px; font-weight: 500; line-height: 1; color: var(--ink); white-space: nowrap;
 }
 .chapter .prevnext .go .circ { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--ink); color: var(--bg); font-size: 17px; line-height: 1; }
@@ -471,9 +480,11 @@ html.no-stage .chapter .ch-spec-cap { grid-column: 1 / 9; }
   .chapter .fig-strip > .fs-acts { grid-column: 1; grid-row: auto; flex-wrap: wrap; }
   .chapter .fc-face { padding: 20px 18px; }
   .chapter .fc-q { font-size: 22px; }
-  /* the door: the next chapter first, Previous under it */
+  /* the door: the next chapter first, its still under the button, then Previous */
   .chapter > .prose > .prevnext, .ch-page .endnav .prevnext { grid-template-columns: minmax(0, 1fr); margin-top: 64px; padding-top: 20px; }
-  .chapter .prevnext .next { grid-column: 1; grid-row: 1; }
+  .chapter .prevnext .next { grid-column: 1; grid-row: 1; display: block; }
+  .chapter .prevnext .next > .ex { justify-content: flex-start; padding-top: 28px; }
+  .chapter .prevnext .ex img { max-width: 56%; max-height: 200px; }
   .chapter .prevnext .prev { grid-column: 1; grid-row: 2; margin-top: 36px; padding-top: 16px; border-top: 1px solid var(--line-2); }
   .chapter .prevnext .next .t { font-size: min(52px, 13vw); line-height: 0.98; }
   .chapter .prevnext .next .ol { font-size: 18px; }
@@ -565,7 +576,8 @@ article.ch-page { padding-top: 56px; border-top: 0; }
 .ch-page > .prose > .sources { margin-top: 88px; padding-top: 14px; border-top: 1px solid var(--ink); }
 .ch-page .review h2.label, .ch-page .sources h2.label { margin: 0 0 14px; font-family: var(--font-display); font-weight: 330; font-variation-settings: var(--opsz-title); font-size: clamp(32px, 3vw, 44px); line-height: 1.08; letter-spacing: -0.02em; color: var(--ink); }
 .ch-page > .prose > .endnav { margin-top: 88px; }
-/* the door, after the way to the interactive chapter and the related chapters (the shared rules above) */
+/* the door, after the way to the interactive chapter and the related chapters (the shared rules above), as wide as The Chain's */
+.ch-page > .prose > .endnav { max-width: none; }
 .ch-page .endnav .prevnext { margin-top: 64px; }
 @media (max-width: 900px) {
   article.ch-page { padding-top: 32px; }

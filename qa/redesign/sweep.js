@@ -12,7 +12,8 @@
        shadow or a border that changes).
    --set chapters (stage 2) measures every chapter instead: each of the 17 in The Chain, landed on by its anchor (the first three
    screens are then its opener, specimen and card, and Tab starts at the chapter), and each readable page dist/<chapter>/.
-   usage: node qa/redesign/sweep.js [--set chapters|glossary] [--only walk,lithography] [--widths 390,1440] [--tabs 40] [--out qa/redesign/sweep.txt] */
+   --set doors measures the end of each chapter, its door to the next one, in The Chain and on the readable page.
+   usage: node qa/redesign/sweep.js [--set chapters|glossary|doors] [--only walk,lithography] [--widths 390,1440] [--tabs 40] [--out qa/redesign/sweep.txt] */
 'use strict';
 const fs = require('fs');
 const path = require('path');
@@ -36,6 +37,9 @@ const PAGES = SET === 'chapters' ? CHAPTERS.map((id) => ['chain-' + id, '/#' + i
 // --set glossary (the Glossary as a dictionary, redesign option B): the view at rest, with a term open in the sheet, with a country's card
 // open, and /glossary/
 if (SET === 'glossary') PAGES.splice(0, PAGES.length, ...[['glossary', '/#/glossary'], ['glossary-entry', '/#gl-euv'], ['glossary-country', '/#lk-country-nl'], ['page-glossary', '/glossary/']].filter(([n]) => !ONLY.length || ONLY.includes(n)));
+// --set doors (one chapter per address): the end of each chapter, where its door to the next one stands, landed on by the
+// sources just above it in The Chain, and by the review questions above it on the readable page
+if (SET === 'doors') PAGES.splice(0, PAGES.length, ...CHAPTERS.map((id) => ['door-' + id, '/#' + id + '--sources']).concat(CHAPTERS.map((id) => ['page-door-' + id, '/' + id + '/#review-questions'])).filter(([n]) => !ONLY.length || ONLY.includes(n)));
 
 const MEASURE = `(() => {
   const st = document.createElement('style'); st.textContent = 'article.chapter{content-visibility:visible!important}'; document.head.appendChild(st); // the chain's chapters only: a closed <details> must stay closed

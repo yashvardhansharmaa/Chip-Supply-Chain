@@ -376,6 +376,11 @@ const want = (n) => !ONLY.length || ONLY.includes(String(n));
       await go(t, `the specimen strip's Top (the strip reads "${tag}")`, '.stage-top', 'memory-and-hbm', { into: false });
       if (!/10/.test(tag)) { ok = false; out.push('the strip does not show chapter 10\'s specimen (FAIL)'); }
       if (t.errors.length) { ok = false; out.push('errors: ' + t.errors.join(' | ')); }
+      // the phone's strip on the contents, which show no chapter: the first chapter's specimen, as before the change
+      await t.click('.tabs a[data-view="stack"]', false); await sleep(1500);
+      const ctag = await t.ev(`document.getElementById('stage-tag-text').textContent`), cst = await t.ev(STATE);
+      const cpass = /01/.test(ctag) && cst.contents && !cst.shown.length && /^The Chain/.test(cst.title);
+      ok = ok && cpass; out.push(`the phone's The Chain tab from chapter 10: the contents, the strip reads "${ctag}", title "${cst.title}"${cpass ? '' : ' (FAIL)'}`);
       await t.close();
       report(9, 'every other way in lands', ok, out.join('\n        '));
     }

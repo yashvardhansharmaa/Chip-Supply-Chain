@@ -551,25 +551,36 @@ function glossaryWrap(html, used) {
 // The reading spine: the numbered chapters, then the geopolitics essay, which sits on its own route.
 const chapterHref = (c) => '#' + esc(c.id); // the essay is chapter 18 inside the chain
 /* The end of a chapter is a door to the next one (the hybrid mockup's .nextx, approved in design round three): where the next
-   chapter sits in the chain, its title large, its one line and a button, with Previous as a small second link. The Chain shows
-   one chapter at a time, so the door is the way on. The last chapter's door leads back to the contents. One builder for both
-   homes of a chapter: The Chain in the app (prevNext below) and the readable page dist/<chapter>/ (build/modules/social.js),
-   each passing how a chapter is linked (attrs) and the element the door is (tag). Chapters 16 and 17 are not stages, and the
-   site groups them as "Across the chain" (the contents, the phone's sheet), so their doors say so. */
-function chapterDoor(ch, attrs, tag) {
+   chapter sits in the chain, its title large, its one line, a button and a still of its specimen, with Previous as a small
+   second link. The Chain shows one chapter at a time, so the door is the way on. The last chapter's door leads back to the
+   contents. One builder for both homes of a chapter: The Chain in the app (prevNext below) and the readable page
+   dist/<chapter>/ (build/modules/social.js), each passing how a chapter is linked (attrs), the element the door is (tag) and
+   where the media folder is (media). Chapters 16 and 17 are not stages, and the site groups them as "Across the chain" (the
+   contents, the phone's sheet), so their doors say so. */
+// the still of a chapter's specimen: Lithography's is the one its numbered parts are drawn over (data/specimen-parts.json)
+function doorStill(c) {
+  const pe = specimenParts[c.id];
+  if (pe && pe.still && pe.still.file) { const S = +pe.still.size || 772; return { file: pe.still.file, w: S, h: S }; }
+  const sz = stillSizes[c.id];
+  return sz ? { file: `spec-${c.id}.webp`, w: sz[0], h: sz[1] } : null;
+}
+function chapterDoor(ch, attrs, tag, media) {
   const seq = chapters.concat(geo ? [geo] : []);
   const i = seq.findIndex((c) => c.id === ch.id);
   if (i < 0) return '';
   const prev = seq[i - 1], next = seq[i + 1];
   const where = (c, of) => { const si = stages.findIndex((x) => x.id === c.id); return si >= 0 ? `stage ${pad(si + 1)}${of ? ` / ${pad(stages.length)}` : ''}` : 'across the chain'; };
   const go = (words) => `<span class="go">${words}<span class="circ" aria-hidden="true">→</span></span>`;
+  // the drawing is the title's picture, so it has no words of its own; chapters 16 and 17 keep their night ground
+  const st = next ? doorStill(next) : null;
+  const ex = st ? `<span class="ex"${next.number >= 16 ? ' data-night="1"' : ''}><img src="${media || ''}${esc(st.file)}" width="${Math.round(st.w / 2)}" height="${Math.round(st.h / 2)}" alt="" loading="lazy" decoding="async"></span>` : '';
   const nx = next
-    ? `<a class="pn next" ${attrs(next)}><span class="label">Next, ${where(next, true)}</span><span class="t">${esc(next.title)}</span>${next.meta.oneLiner ? `<span class="ol">${esc(next.meta.oneLiner)}</span>` : ''}${go(`Continue to chapter ${pad(next.number)}`)}</a>`
+    ? `<a class="pn next" ${attrs(next)}><span class="label">Next, ${where(next, true)}</span><span class="t">${esc(next.title)}</span>${next.meta.oneLiner ? `<span class="ol">${esc(next.meta.oneLiner)}</span>` : ''}${go(`Continue to chapter ${pad(next.number)}`)}${ex}</a>`
     : `<a class="pn next" href="#/chain"><span class="label">Contents</span><span class="t">All ${word(seq.length)} chapters</span><span class="ol">The ${word(stages.length)} stages run from chip design to the data center. The last ${word(seq.length - stages.length)} chapters cover what a chip costs and who controls the chain.</span>${go('Back to the contents')}</a>`;
   const pv = prev ? `<a class="pn prev" ${attrs(prev)}><span class="label">Previous, ${where(prev, false)}</span><span class="t">${esc(prev.title)}</span></a>` : '';
   return tag === 'div' ? `<div class="prevnext">${nx}${pv}</div>` : `<nav class="prevnext" aria-label="Next chapter">${nx}${pv}</nav>`;
 }
-const prevNext = (ch) => chapterDoor(ch, (c) => `href="${esc(c.id)}/" data-route="${chapterHref(c)}"`, 'nav');
+const prevNext = (ch) => chapterDoor(ch, (c) => `href="${esc(c.id)}/" data-route="${chapterHref(c)}"`, 'nav', 'media/');
 // End-of-chapter flashcards: four cards (question on the front, answer and reason on the back), then the four things to
 // remember (data/flashcards.json, keyed by chapter id). Start here ends with a deck of its own, "intro" in the same file,
 // built by the same deckHTML in build/modules/walk.js (ctx.deckHTML).
@@ -720,6 +731,9 @@ const LEDGER_KEY = (() => {
 // keyed by chapter id; each part has its number, its name, either its maker or the stage that covers it, and the points on the
 // specimen its balloon points at ("at", in the specimen's own units, as specimens/<name>.js draws it)
 const specimenParts = readJSON(path.join(root, 'data', 'specimen-parts.json'), {});
+// each chapter's still of its specimen (qa/redesign/stills.js; [width, height] at twice the pixels shown), for the readable pages
+// and for the door that leads to the chapter
+const stillSizes = readJSON(path.join(root, 'build', 'assets', 'specimens', 'stills.json'), {});
 const partsOf = (ch) => { const e = specimenParts[ch.id]; return e && Array.isArray(e.parts) ? e.parts : []; };
 const chapterById = (id) => chapters.find((c) => c.id === id) || (geo && geo.id === id ? geo : null);
 function partsHTML(ch) {
@@ -1129,7 +1143,7 @@ const ctx = { root, fs, path, all, chapters, geo, stages, data, esc, pad, word, 
   // the cite line under the chapter title, as the main page prints it (the readable page's own date goes in)
   citeBlock, CITE_JS, FIG_JS,
   // the chapter page's contents rail, the door at its end and the numbered parts of a specimen, for the readable chapter pages (social.js)
-  railHTML, chapterDoor, specimenParts, stillSizes: readJSON(path.join(root, 'build', 'assets', 'specimens', 'stills.json'), {}),
+  railHTML, chapterDoor, specimenParts, stillSizes,
   // for the reference pages (build/modules/reference-pages.js): the views' own words and helpers, as the main page uses them
   suppliersIntro, suppliersRevenueNote, controlsDek, exposureNote, safeUrl, COUNTRY };
 for (const f of modDir(path.join(root, 'build', 'modules')).filter((x) => x.endsWith('.js'))) {

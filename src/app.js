@@ -668,8 +668,9 @@
     items: [], walkItems: [], currentId: null, heroBottom: 0,
     init: function () {
       var self = this;
-      this.items = $$('[data-view="stack"] [data-specimen]');
-      this.walkItems = $$('[data-view="walk"] [data-specimen]');
+      // each view's own (.view: <html> carries data-view too, so a bare [data-view] would take in the whole page)
+      this.items = $$('.view[data-view="stack"] [data-specimen]');
+      this.walkItems = $$('.view[data-view="walk"] [data-specimen]');
       window.addEventListener('scroll', function () { self.update(); }, { passive: true });
       window.addEventListener('resize', function () { self.update(); });
       $('.to-top').addEventListener('click', function () { window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' }); });
@@ -731,7 +732,7 @@
     },
     // the chapter's slot that is most in view takes the drawing, and the drawing becomes that chapter's specimen
     hostSpec: function () {
-      var slots = this.slots || (this.slots = $$('[data-view="stack"] .ch-spec-draw'));
+      var slots = this.slots || (this.slots = $$('.view[data-view="stack"] .ch-spec-draw'));
       var vh = window.innerHeight, top = cssPx('--masthead'), best = null, most = 0;
       for (var i = 0; i < slots.length; i++) {
         var r = slots[i].getBoundingClientRect();
