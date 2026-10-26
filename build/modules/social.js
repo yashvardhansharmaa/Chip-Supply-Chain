@@ -417,7 +417,6 @@ function readableHTML(p, ch, ctx, versions, css) {
   const url = BASE + p.slug + '/', app = BASE + '#' + ch.id, image = cardURL(p.slug, versions);
   const seo = seoOf(p), metaDescription = seo && seo.description ? seo.description : (p.metaDescription || p.description); // the approved line (build/page-titles.js)
   const seq = ctx.chapters.concat(ctx.geo ? [ctx.geo] : []);
-  const at = seq.findIndex((c) => c.id === ch.id), prev = seq[at - 1], next = seq[at + 1];
   const si = stages.findIndex((c) => c.id === ch.id);
   const fc = flashcards[ch.id];
   const cards = fc && Array.isArray(fc.cards) ? fc.cards.filter((c) => c.q && c.a) : [];
@@ -448,8 +447,9 @@ function readableHTML(p, ch, ctx, versions, css) {
     return anchor ? ` <a href="#${esc(anchor)}">Reread: ${esc(c.section)}</a>` : '';
   }) : '';
 
-  const pn = (c, dir, label) => (c ? `<a class="pn ${dir}" href="../${esc(c.id)}/"><span class="label">${label}</span><span class="t"><span class="n">${pad(c.number)}</span>${esc(c.title)}</span></a>` : '');
-  const prevnext = prev || next ? `<div class="prevnext">${pn(prev, 'prev', 'Previous chapter')}${pn(next, 'next', 'Next chapter')}</div>` : '';
+  // the door to the next chapter, as The Chain ends each chapter (build.js chapterDoor), leading to the next readable page; the
+  // last chapter's leads to the contents of The Chain (fixLinks sends its #/chain to the main page)
+  const prevnext = ctx.chapterDoor ? ctx.chapterDoor(ch, (c) => `href="../${esc(c.id)}/"`, 'div') : '';
 
   const sources = ch.cites.length ? `<section class="sources" aria-labelledby="sources"><h2 class="label" id="sources">Sources (${ch.cites.length})</h2><ol>${ch.cites.map((c, k) => `<li id="source-${k + 1}">${tierTag(c.url)}${sourceLine(c.url)}</li>`).join('')}</ol></section>` : '';
 

@@ -550,15 +550,26 @@ function glossaryWrap(html, used) {
 
 // The reading spine: the numbered chapters, then the geopolitics essay, which sits on its own route.
 const chapterHref = (c) => '#' + esc(c.id); // the essay is chapter 18 inside the chain
-function prevNext(ch) {
+/* The end of a chapter is a door to the next one (the hybrid mockup's .nextx, approved in design round three): where the next
+   chapter sits in the chain, its title large, its one line and a button, with Previous as a small second link. The Chain shows
+   one chapter at a time, so the door is the way on. The last chapter's door leads back to the contents. One builder for both
+   homes of a chapter: The Chain in the app (prevNext below) and the readable page dist/<chapter>/ (build/modules/social.js),
+   each passing how a chapter is linked (attrs) and the element the door is (tag). Chapters 16 and 17 are not stages, and the
+   site groups them as "Across the chain" (the contents, the phone's sheet), so their doors say so. */
+function chapterDoor(ch, attrs, tag) {
   const seq = chapters.concat(geo ? [geo] : []);
   const i = seq.findIndex((c) => c.id === ch.id);
   if (i < 0) return '';
   const prev = seq[i - 1], next = seq[i + 1];
-  if (!prev && !next) return '';
-  const link = (c, dir, label) => (c ? `<a class="pn ${dir}" href="${esc(c.id)}/" data-route="${chapterHref(c)}"><span class="label">${label}</span><span class="t"><span class="n">${pad(c.number)}</span> ${esc(c.title)}</span></a>` : '');
-  return `<nav class="prevnext" aria-label="Previous and next chapter">${link(prev, 'prev', 'Previous')}${link(next, 'next', 'Next')}</nav>`;
+  const where = (c, of) => { const si = stages.findIndex((x) => x.id === c.id); return si >= 0 ? `stage ${pad(si + 1)}${of ? ` / ${pad(stages.length)}` : ''}` : 'across the chain'; };
+  const go = (words) => `<span class="go">${words}<span class="circ" aria-hidden="true">→</span></span>`;
+  const nx = next
+    ? `<a class="pn next" ${attrs(next)}><span class="label">Next, ${where(next, true)}</span><span class="t">${esc(next.title)}</span>${next.meta.oneLiner ? `<span class="ol">${esc(next.meta.oneLiner)}</span>` : ''}${go(`Continue to chapter ${pad(next.number)}`)}</a>`
+    : `<a class="pn next" href="#/chain"><span class="label">Contents</span><span class="t">All ${word(seq.length)} chapters</span><span class="ol">The ${word(stages.length)} stages run from chip design to the data center. The last ${word(seq.length - stages.length)} chapters cover what a chip costs and who controls the chain.</span>${go('Back to the contents')}</a>`;
+  const pv = prev ? `<a class="pn prev" ${attrs(prev)}><span class="label">Previous, ${where(prev, false)}</span><span class="t">${esc(prev.title)}</span></a>` : '';
+  return tag === 'div' ? `<div class="prevnext">${nx}${pv}</div>` : `<nav class="prevnext" aria-label="Next chapter">${nx}${pv}</nav>`;
 }
+const prevNext = (ch) => chapterDoor(ch, (c) => `href="${esc(c.id)}/" data-route="${chapterHref(c)}"`, 'nav');
 // End-of-chapter flashcards: four cards (question on the front, answer and reason on the back), then the four things to
 // remember (data/flashcards.json, keyed by chapter id). Start here ends with a deck of its own, "intro" in the same file,
 // built by the same deckHTML in build/modules/walk.js (ctx.deckHTML).
@@ -1090,8 +1101,22 @@ const exposureLinks = {}; Object.keys(exposureJoin.byFirm).forEach((f) => { expo
 const data = { landscape, landscapeNotes, landscapeCompare, suppliers: suppliersData, timeline, matrix, flows, exposure, exposureLinks, chapters: all.map((c) => { const card = c.meta.card || {}; return { id: c.id, number: c.number, title: c.title, specimen: c.meta.specimen, oneLiner: c.meta.oneLiner || '', plain: String(c.meta.plain || '').replace(/\s*\(\[source\]\([^)\s]*\)\)/g, ''), score: +card.chokepointScore || 0, concentration: card.concentration || '', band: card.concentration || '', bandRank: BANDS[card.concentration] || 0, substitutability: card.substitutability || null, leaders: card.leaders || [], countries: card.countries || [], substitution: card.substitution || {}, chinaStatus: card.chinaStatus || '', usStatus: card.usStatus || '' }; }) };
 let html = read(path.join(root, 'src', 'template.html'));
 const fill = (k, v) => { html = html.split(`{{${k}}}`).join(v); };
-// the route before boot, inlined in <head>: it shows the routed view while the rest of the page arrives (src/preroute.js)
-fill('PREROUTE', read(path.join(root, 'src', 'preroute.js')).replace(/<\/script/gi, '<\\/script'));
+// the route before boot, inlined in <head>: it shows the routed view while the rest of the page arrives (src/preroute.js),
+// and on The Chain the chapter the address names, from the chapters' ids
+const chainIds = chapters.concat(geo ? [geo] : []).map((c) => c.id);
+const PRE_CHAPTERS = 'var CHAPTERS = []; // the chapters of The Chain, in order: build/build.js writes their ids here';
+const preSrc = read(path.join(root, 'src', 'preroute.js'));
+if (!preSrc.includes(PRE_CHAPTERS)) warn('preroute: src/preroute.js has lost the line the build writes the chapter ids into');
+fill('PREROUTE', preSrc.replace(PRE_CHAPTERS, `var CHAPTERS = ${JSON.stringify(chainIds)};`).replace(/<\/script/gi, '<\\/script'));
+// one chapter at a time on The Chain (src/template.html, the style after the pre-boot rules): for each value of
+// html[data-chain], what of The Chain stays hidden on screen
+{
+  const S = '.view[data-view="stack"] >';
+  const off = [`html[data-chain]:not([data-chain="contents"]) ${S} .howto`, `html[data-chain]:not([data-chain="contents"]) ${S} .contents`,
+    `html[data-chain="contents"] ${S} article.chapter`, `html[data-chain="pending"] ${S} article.chapter`]
+    .concat(chainIds.map((id) => `html[data-chain="${id}"] ${S} article.chapter:not(#${id})`));
+  fill('CHAIN_ONE', `@media screen {\n${off.join(',\n')} { display: none; }\nhtml[data-chain] ${S} article.chapter { content-visibility: visible; border-top: 0; }\n}`);
+}
 const modDir = (d) => (fs.existsSync(d) ? fs.readdirSync(d).filter((f) => !f.startsWith('.')).sort() : []);
 const moduleCSS = modDir(path.join(root, 'src', 'modules')).filter((f) => f.endsWith('.css')).map((f) => `\n/* module: ${f} */\n` + read(path.join(root, 'src', 'modules', f))).join('\n');
 fill('STYLES', read(path.join(root, 'src', 'styles.css')) + moduleCSS);
@@ -1103,8 +1128,8 @@ const ctx = { root, fs, path, all, chapters, geo, stages, data, esc, pad, word, 
   deckHTML, glossary,
   // the cite line under the chapter title, as the main page prints it (the readable page's own date goes in)
   citeBlock, CITE_JS, FIG_JS,
-  // the chapter page's contents rail and the numbered parts of a specimen, for the readable chapter pages (social.js)
-  railHTML, specimenParts, stillSizes: readJSON(path.join(root, 'build', 'assets', 'specimens', 'stills.json'), {}),
+  // the chapter page's contents rail, the door at its end and the numbered parts of a specimen, for the readable chapter pages (social.js)
+  railHTML, chapterDoor, specimenParts, stillSizes: readJSON(path.join(root, 'build', 'assets', 'specimens', 'stills.json'), {}),
   // for the reference pages (build/modules/reference-pages.js): the views' own words and helpers, as the main page uses them
   suppliersIntro, suppliersRevenueNote, controlsDek, exposureNote, safeUrl, COUNTRY };
 for (const f of modDir(path.join(root, 'build', 'modules')).filter((x) => x.endsWith('.js'))) {
@@ -1195,13 +1220,23 @@ html = html.replace(/\{\{CITE_DAY:([a-z0-9-]+)\}\}/g, (m, id) => { const e = pag
 // the route before boot: an address that names an id in one view must not show another view while the page loads
 {
   const pre = require(path.join(root, 'src', 'preroute.js')), main = html.slice(html.indexOf('<main'), html.indexOf('</main>'));
-  const cuts = [...main.matchAll(/<section class="view\b[^"]*" data-view="([a-z]+)"/g)], wrong = [];
+  const cuts = [...main.matchAll(/<section class="view\b[^"]*" data-view="([a-z]+)"/g)], wrong = [], strays = [];
   cuts.forEach((c, i) => {
     const part = main.slice(c.index, i + 1 < cuts.length ? cuts[i + 1].index : main.length);
     for (const m of part.matchAll(/\sid="([^"']+)"/g)) { const got = pre.route('#' + m[1]).view; if (got !== c[1]) wrong.push(`#${m[1]} (in ${c[1]}, opens ${got})`); }
+    // on The Chain, each id must name its own chapter (an id outside the chapters, as the contents', may name none; it then
+    // waits for its element, as an unknown id does)
+    if (c[1] !== 'stack') return;
+    const arts = [...part.matchAll(/<article class="chapter[^"]*" id="([^"]+)"/g)];
+    for (const m of part.matchAll(/\sid="([^"']+)"/g)) {
+      const home = arts.filter((a) => a.index <= m.index).pop(), end = home ? part.indexOf('</article>', home.index) : -1;
+      const want = home && m.index < end ? home[1] : '', got = pre.chapterOf(m[1], chainIds);
+      if (got !== want) strays.push(`#${m[1]} (in ${want || 'the contents'}, shows ${got || 'none'})`);
+    }
   });
   if (cuts.length < 6) warn(`preroute: found ${cuts.length} views on the page, expected 6`);
   if (wrong.length) warn(`preroute: ${wrong.length} ids would show the wrong view while the page loads, so add their prefix to OWN in src/preroute.js: ${wrong.slice(0, 8).join(', ')}`);
+  if (strays.length) warn(`preroute: ${strays.length} ids in The Chain would show the wrong chapter while the page loads, so start them with their chapter's id (src/preroute.js chapterOf): ${strays.slice(0, 8).join(', ')}`);
 }
 fs.mkdirSync(path.join(root, 'dist'), { recursive: true });
 fs.writeFileSync(path.join(root, 'dist', 'index.html'), html);

@@ -72,6 +72,15 @@ html:not(.booted)[data-route="glossary"] .view[data-view="glossary"] > :not(.vie
 html:not(.booted)[data-route="landscape"] .view[data-view="landscape"] > :not(.view-head),
 html:not(.booted)[data-pick] .view[data-view="suppliers"] > :not(.view-head) { display: none !important; }
 </style>
+<style>
+/* The Chain shows one chapter at a time. html[data-chain] names what it shows: "contents" (the head of The Chain and the
+   chapter list), a chapter's id, or "pending" while src/preroute.js waits for an anchor it could not place. src/preroute.js
+   sets it before the body arrives, so a deep link paints its own chapter and never another; from boot src/app.js
+   Router.route keeps it. The rules are for the screen alone: on paper, and in build/pdf.py's layout (src/modules/print.js
+   drops the attribute), every chapter prints. The shown chapter is laid out whole, since there is no other chapter to skip,
+   and opens under the masthead with no rule of its own. */
+{{CHAIN_ONE}}
+</style>
 {{ANALYTICS}}
 </head>
 <body>

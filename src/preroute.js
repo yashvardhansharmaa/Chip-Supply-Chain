@@ -3,7 +3,10 @@
    <html data-route="walk|stack|landscape|suppliers|controls|glossary"> (and data-sub="exposure" for the China revenue
    panel, data-sub="country" for the Suppliers By country tab). The template's CSS then shows only that view while the rest of the file streams in, so the view a reader asked
    for paints as soon as its own markup has arrived. boot() takes over with the router's hidden attributes and html.booted.
-   The build runs route() over every id on the page and warns when one would open a view other than the one it sits in. */
+   On The Chain it also sets <html data-chain>: "contents" for #/chain, or the chapter that holds the anchor, read from the
+   anchor's id (every id in a chapter starts with the chapter's id, or with fig-, cite- or cite-fig- and the chapter's id),
+   so one chapter paints and no other; an id it cannot place waits as "pending" until its element has arrived.
+   The build runs route() over every id on the page and warns when one would open a view, or a chapter, other than the one it sits in. */
 (function (root) {
   'use strict';
   // the #/<name> routes, as Router.route maps them (VIEWS and ALIAS in src/app.js); an unknown name goes home
@@ -15,31 +18,48 @@
   var OWN = [[/^(gl|lk)-|^glossary$/, 'glossary'], [/^(sup-|atlas|the-route)/, 'suppliers'], [/^(cx|picker)/, 'landscape'],
     [/^(cf|tl-|ex-|exposure|controls|timeline)/, 'controls'], [/^(wk-|intro-)/, 'walk']];
   function own(id) { for (var i = 0; i < OWN.length; i++) if (OWN[i][0].test(id)) return OWN[i][1]; return 'stack'; }
-  function route(hash, search) {
+  var CHAPTERS = []; // the chapters of The Chain, in order: build/build.js writes their ids here
+  // the chapter an id in The Chain belongs to, by its prefix (the longest chapter id that fits wins), or '' if none fits
+  function chapterOf(id, list) {
+    var best = '';
+    for (var i = 0; i < list.length; i++) {
+      var c = list[i], rest = null;
+      if (id === c) return c;
+      [c + '--', 'fig-' + c + '-', 'cite-' + c, 'cite-fig-' + c + '-'].forEach(function (p) { if (rest === null && id.indexOf(p) === 0 && (p.slice(-1) === '-' || id.length === p.length)) rest = p; });
+      if (rest !== null && c.length > best.length) best = c;
+    }
+    return best;
+  }
+  function route(hash, search, list) {
+    list = list || CHAPTERS;
     var h = hash || '#/', m = h.match(/^#\/([a-z-]+)/), bare = h.replace(/^#/, ''), view, sub = '';
     if (bare === '' || bare === '/' || bare.indexOf('/?') === 0) { // home; the QA aid ?only=<chapter> with no route opens that chapter
       var only = /[?&]only=([^&#]*)/.exec(search || '');
       view = only && (bare === '' || bare === '/') && own(only[1]) === 'stack' ? 'stack' : 'walk';
+      if (view === 'stack') return { view: view, sub: sub, anchor: only[1], chapter: chapterOf(only[1], list) };
     } else if (m) {
       view = NAMED[m[1]] || 'walk';
       if (m[1] === 'exposure') sub = 'exposure';
       else if (view === 'suppliers' && /[?&]tab=country\b/.test(h)) sub = 'country'; // the By country tab (Suppliers.activate)
       if (view === 'suppliers' && /[?&]country=[A-Za-z]{2}\b/.test(h)) return { view: view, sub: sub, pick: true }; // a country on the atlas (summary-a.js)
       if (view === 'walk' && /^#\/walk\/[^?#\/]+$/.test(h)) return { view: view, sub: sub, anchor: h.slice(1) }; // a step of the walk
+      if (m[1] === 'geopolitics' && view === 'stack') return { view: view, sub: sub, anchor: 'geopolitics', chapter: chapterOf('geopolitics', list) }; // the essay's own route
+      if (view === 'stack') return { view: view, sub: sub, chapter: 'contents' }; // #/chain: the contents
     } else {
       var id = bare; try { id = decodeURIComponent(id); } catch (e) { } // "#%" is not valid escaping; take it as typed, as the router does
       view = own(id);
-      if (view === 'stack') return { view: view, sub: sub, anchor: id };
+      if (view === 'stack') return { view: view, sub: sub, anchor: id, chapter: chapterOf(id, list) };
     }
     return { view: view, sub: sub };
   }
-  if (typeof module !== 'undefined' && module.exports) { module.exports = { route: route }; return; }
+  if (typeof module !== 'undefined' && module.exports) { module.exports = { route: route, chapterOf: chapterOf }; return; }
 
   var html = document.documentElement, pre = root.CP_PRE = { view: null, touched: false }, r = null;
   try {
     r = route(location.hash, location.search);
     pre.view = r.view; html.setAttribute('data-route', r.view);
     if (r.sub) html.setAttribute('data-sub', r.sub);
+    if (r.view === 'stack') html.setAttribute('data-chain', r.chapter || 'pending');
     if (r.pick) html.setAttribute('data-pick', '1');
   } catch (e) { html.setAttribute('data-route', 'pending'); } // unsure: every view waits for boot, as before
   // a reader who scrolls or taps before boot keeps their place: boot() then leaves the scroll alone (Router.route)
@@ -48,8 +68,8 @@
   // An anchor in The Chain (#lithography, #lithography--high-na-euv) or a step of the walk (#/walk/lithography): the browser
   // does not scroll to it while the page is still arriving, so this does, in the first frame after the element has been
   // parsed, and puts it back if the page moves it before boot (each element's scroll-margin-top keeps it clear of the
-  // masthead). Back to top shows as Sections.update would show it, so the phone strip does not change at boot. boot() lands
-  // the anchor again (Router.route, the walk's activate).
+  // masthead). An anchor whose chapter its id did not tell shows that chapter now. Back to top shows as Sections.update
+  // would show it, so the phone strip does not change at boot. boot() lands the anchor again (Router.route, the walk's activate).
   if (r && r.anchor && root.requestAnimationFrame) {
     var el = null, frames = 0;
     var look = function () {
@@ -57,10 +77,7 @@
       if (!el) {
         el = document.getElementById(r.anchor);
         if (el && !el.closest('.view[data-view="stack"], .view[data-view="walk"]')) return;
-        // every chapter above the anchor takes its real height now (styles.css .cv-open; app.js Sizes lets them go after boot):
-        // left at its estimate, one would take it later, as it came near the window, and move everything the reader sees
-        var ch = el && el.closest('article.chapter'), up = ch && ch.previousElementSibling;
-        for (; up; up = up.previousElementSibling) if (up.matches && up.matches('article.chapter')) up.classList.add('cv-open');
+        if (el && r.view === 'stack' && !r.chapter) { var ch = el.closest('article.chapter'); html.setAttribute('data-chain', ch ? ch.id : 'contents'); }
       }
       if (el) {
         var off = el.getBoundingClientRect().top - (parseFloat(getComputedStyle(el).scrollMarginTop) || 0);
@@ -68,7 +85,7 @@
           var sb = html.style.scrollBehavior; html.style.scrollBehavior = 'auto'; // html scrolls smoothly; this is a jump
           root.scrollTo(0, Math.max(0, Math.round(root.pageYOffset + off))); html.style.scrollBehavior = sb;
         }
-        var top = document.querySelector('.to-top'), box = r.view === 'stack' ? document.getElementById('contents') : null;
+        var top = document.querySelector('.to-top'), box = r.view === 'stack' && html.getAttribute('data-chain') === 'contents' ? document.getElementById('contents') : null;
         if (top) top.setAttribute('data-show', (box ? box.getBoundingClientRect().bottom < 0 : root.pageYOffset > root.innerHeight * 0.8) ? '1' : '0');
       }
       root.requestAnimationFrame(look);

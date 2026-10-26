@@ -360,16 +360,34 @@ html.no-stage .chapter .ch-spec-cap { grid-column: 1 / 9; }
 }
 .chapter .chapter-sources summary::after { font-family: var(--font-ui); font-size: 26px; font-weight: 300; }
 .chapter .chapter-sources ol { font-size: 14px; }
-/* previous and next close the chapter: on The Chain the next chapter follows at once, so both are quiet lines (the readable
-   page, where Next leads to another page, sets Next large, below) */
-.chapter > .prose > .prevnext { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--g); margin: 96px 0 0; padding-top: 22px; border-top: 1px solid var(--ink); }
-.chapter .prevnext .pn { border: 0; padding: 0; }
-.chapter .prevnext .pn .label { font-family: var(--font-code); font-size: 12px; margin-bottom: 8px; }
-.chapter .prevnext .next { grid-column: 2; text-align: left; }
-.chapter .prevnext .pn .t { font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: 22px; line-height: 1.2; letter-spacing: -0.01em; color: var(--ink); }
-.chapter .prevnext .pn .n { font-family: var(--font-code); font-size: 12px; font-weight: 400; color: var(--muted); letter-spacing: 0; margin-right: 10px; }
+/* the door to the next chapter closes the chapter (the hybrid mockup's .nextx; build/build.js chapterDoor): The Chain shows one
+   chapter at a time, so the door is the way on. On an ink rule, Previous small in the first third; the next chapter in the
+   other two: where it sits in the chain, its title as large as a chapter's own, its one line, and Continue as a pill with
+   the arrow in an ink circle. The whole of it is one link. The readable page dist/<chapter>/ ends on the same door. */
+.chapter > .prose > .prevnext, .ch-page .endnav .prevnext {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); column-gap: var(--g); align-items: start;
+  max-width: none; margin: 96px 0 0; padding: 24px 0 8px; border-top: 1px solid var(--ink);
+}
+.chapter .prevnext .pn { display: block; min-width: 0; margin: 0; padding: 0; border: 0; border-radius: 0; background: none; color: var(--ink); text-decoration: none; text-align: left; }
+.chapter .prevnext .next { grid-column: 2; grid-row: 1; }
+.chapter .prevnext .prev { grid-column: 1; grid-row: 1; }
+.chapter .prevnext .pn .label { display: block; margin: 0 0 12px; font-family: var(--font-code); font-size: 12px; font-weight: 400; line-height: 16px; letter-spacing: 0; color: var(--muted); }
+.chapter .prevnext .prev .label { margin-bottom: 6px; }
+.chapter .prevnext .prev .t { display: block; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: 17px; line-height: 1.35; letter-spacing: 0; color: var(--ink-2); overflow-wrap: normal; }
+.chapter .prevnext .next .t {
+  display: block; max-width: 11em; margin: 0 0 18px -0.04em; font-family: var(--font-display); font-weight: 330; font-variation-settings: var(--opsz-title);
+  font-size: clamp(44px, 4.6vw, 68px); line-height: 0.96; letter-spacing: -0.03em; color: var(--ink); text-wrap: balance; overflow-wrap: normal;
+}
+.chapter .prevnext .next .ol { display: block; max-width: 30em; margin: 0 0 26px; font-family: var(--font-body); font-size: clamp(18px, 1.45vw, 21px); line-height: 1.45; color: var(--ink-2); }
+.chapter .prevnext .go {
+  display: inline-flex; align-items: center; gap: 16px; height: 48px; padding: 0 6px 0 22px; border: 1px solid var(--ink); border-radius: 999px;
+  font-family: var(--font-ui); font-size: 15px; font-weight: 500; line-height: 1; color: var(--ink); white-space: nowrap;
+}
+.chapter .prevnext .go .circ { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--ink); color: var(--bg); font-size: 17px; line-height: 1; }
 .chapter .prevnext .pn:hover .t { color: var(--accent-ink); }
-.chapter .prevnext .next:only-child { grid-column: 1 / -1; }
+.chapter .prevnext .next:hover .go { border-color: var(--accent); color: var(--accent-ink); }
+.chapter .prevnext .next:hover .go .circ { background: var(--accent-fill); color: #fff; }
+.chapter .prevnext .pn:focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; }
 
 /* ---------- under 1200 px: the rail becomes a line of links over the text; the drawing takes seven columns ---------- */
 @media (max-width: 1199px) {
@@ -453,8 +471,12 @@ html.no-stage .chapter .ch-spec-cap { grid-column: 1 / 9; }
   .chapter .fig-strip > .fs-acts { grid-column: 1; grid-row: auto; flex-wrap: wrap; }
   .chapter .fc-face { padding: 20px 18px; }
   .chapter .fc-q { font-size: 22px; }
-  .chapter > .prose > .prevnext { grid-template-columns: 1fr; gap: 24px; margin-top: 64px; }
-  .chapter .prevnext .next { grid-column: 1; }
+  /* the door: the next chapter first, Previous under it */
+  .chapter > .prose > .prevnext, .ch-page .endnav .prevnext { grid-template-columns: minmax(0, 1fr); margin-top: 64px; padding-top: 20px; }
+  .chapter .prevnext .next { grid-column: 1; grid-row: 1; }
+  .chapter .prevnext .prev { grid-column: 1; grid-row: 2; margin-top: 36px; padding-top: 16px; border-top: 1px solid var(--line-2); }
+  .chapter .prevnext .next .t { font-size: min(52px, 13vw); line-height: 0.98; }
+  .chapter .prevnext .next .ol { font-size: 18px; }
 }
 
 /* ---------- the stage beside the page, on The Chain and elsewhere ---------- */
@@ -539,19 +561,17 @@ article.ch-page { padding-top: 56px; border-top: 0; }
 .ch-page > .prose > h2::before { content: counter(sec, decimal-leading-zero) " · " attr(data-k); display: block; margin: 0 0 14px; font-family: var(--font-code); font-size: 12px; font-weight: 400; line-height: 16px; color: var(--muted); }
 .ch-page > .prose > h3 { counter-increment: none; margin: 40px 0 14px; padding: 0; border: 0; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 22px; line-height: 1.27; letter-spacing: -0.005em; }
 .ch-page > .prose > h3::before { content: none; }
-.ch-page > .prose > .review, .ch-page > .prose > .sources, .ch-page > .prose > .endnav { max-width: 40em; }
+.ch-page > .prose > .review, .ch-page > .prose > .sources, .ch-page > .prose > .endnav > :not(.prevnext) { max-width: 40em; }
 .ch-page > .prose > .sources { margin-top: 88px; padding-top: 14px; border-top: 1px solid var(--ink); }
 .ch-page .review h2.label, .ch-page .sources h2.label { margin: 0 0 14px; font-family: var(--font-display); font-weight: 330; font-variation-settings: var(--opsz-title); font-size: clamp(32px, 3vw, 44px); line-height: 1.08; letter-spacing: -0.02em; color: var(--ink); }
 .ch-page > .prose > .endnav { margin-top: 88px; }
-.ch-page .endnav .prevnext { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: var(--g); }
-.ch-page .endnav .pn.next .t { font-family: var(--font-display); font-weight: 330; font-size: clamp(32px, 3.4vw, 50px); line-height: 1; letter-spacing: -0.03em; }
-.ch-page .endnav .pn.next { text-align: left; }
+/* the door, after the way to the interactive chapter and the related chapters (the shared rules above) */
+.ch-page .endnav .prevnext { margin-top: 64px; }
 @media (max-width: 900px) {
   article.ch-page { padding-top: 32px; }
   .ch-page .ch-spec { display: block; }
   .ch-page .ch-spec:not(.has-still) .ch-spec-cap { margin-top: 24px; }
   .ch-page .ch-spec.has-still .ch-spec-draw { margin: 18px 0 0; }
   .ch-page .ch-spec.has-still .ch-spec-cap { margin: 14px 0 0; }
-  .ch-page .endnav .prevnext { grid-template-columns: 1fr; }
 }
 @media print { .ch-page .ch-spec-3d { display: none; } }

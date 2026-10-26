@@ -29,7 +29,6 @@
   var scrollToEl = function (el, smooth) {
     if (!el || !el.getBoundingClientRect) return;
     var glide = !!smooth && !reduced;
-    if (glide) Sizes.before(el); // the chapters a glide passes take their real heights first, so it lands on el
     var y = Math.max(0, Math.round(el.getBoundingClientRect().top + window.pageYOffset - landAt(el)));
     var root = document.documentElement, prev = root.style.scrollBehavior;
     if (!glide) root.style.scrollBehavior = 'auto'; // html has scroll-behavior: smooth; a jump must not animate 30,000 px
@@ -507,12 +506,12 @@
   var ALIAS = { chain: 'stack', home: 'walk', intro: 'walk', briefing: 'walk', geopolitics: 'stack', thresholds: 'controls', sources: 'stack', 'export-controls': 'controls', 'ai-chips': 'landscape' }; // the tab names typed as routes land on their pages // the Sources page was retired; its sources sit at the end of each chapter // the licence-thresholds tab was retired; its route lands on the board
   var MODULE_VIEWS = {}; // modules register { activate(), stage: bool } per view through window.CP.register
   var Router = {
-    current: null, from: null, places: {}, marks: 0,
+    current: null, from: null, places: {}, marks: 0, chain: null,
     init: function () {
       var self = this;
       // the reader's place in the chain, kept under the mark of the history entry it belongs to (route()). As Back or Forward leaves
-      // an entry, the browser moves the page to the other entry's place, and history.state is already the other entry's, so that
-      // scroll is not taken for the reader's
+      // an entry, the browser moves the page to the other entry's place (in the chapter still showing), and history.state is
+      // already the other entry's, so that scroll is not taken for the reader's
       window.addEventListener('scroll', function () { if (self.current === 'stack' && self.place && (history.state || {}).cpPlace === self.place) self.places[self.place] = window.pageYOffset; }, { passive: true });
       window.addEventListener('hashchange', function () { self.route(); });
       // chapter links carry their static page as the href, for search engines, and the app's route in data-route: a plain
@@ -545,21 +544,27 @@
       var em = h.match(/^#\/controls\/([^?#\/]+)/), evId = em ? dec(em[1]) : null; // #/controls/<event-id> opens the chronology on that entry
       var xm = h.match(/^#\/exposure\/([^?#\/]+)/), exId = xm ? dec(xm[1]).toLowerCase() : null; // #/exposure/<slug> opens the China revenue share panel on that firm's chart
       var changed = v !== this.current || sub !== this.currentSub;
+      // The Chain shows one chapter at a time, at the chapter's own address: an anchor opens the chapter that holds it (a
+      // section, a figure, a source, the chapter itself), and #/chain the contents. turned: The Chain now shows another one
+      var chain = v === 'stack' ? this.chainOf(anchor) : this.chain, turned = v === 'stack' && chain !== this.chain;
       // The chain's address does not follow the scroll, so Back to it from another view (a card's China line, a search result)
-      // would land on the chapter's top, or the page's at #/chain. Each history entry the chain serves takes a mark of its own
-      // (history.state.cpPlace) and keeps the reader's place under it. A link or a tab makes a new entry, which has no mark, so an
-      // arrival at a marked entry from another view is Back or Forward, and the reader goes back to that place. The walk keeps
-      // its own place (owns()).
+      // or from another chapter would land on the chapter's top. Each history entry the chain serves takes a mark of its own
+      // (history.state.cpPlace) and keeps the reader's place under it. A link or a tab makes a new entry, which has no mark, so
+      // an arrival at a marked entry from another view, or at another entry's mark within The Chain, is Back or Forward, and the
+      // reader goes back to that place. A route to the entry already showing (a search result for the address in view) keeps
+      // its mark and lands as a link would. The walk keeps its own place (owns()).
       var backY = null;
       if (v === 'stack') {
         var mark = (history.state || {}).cpPlace;
-        if (mark && changed && this.places[mark] != null) backY = this.places[mark];
+        if (mark && (changed || mark !== this.place) && this.places[mark] != null) backY = this.places[mark];
         if (!mark) { mark = 'p' + Date.now().toString(36) + (++this.marks); try { history.replaceState({ cpPlace: mark }, ''); } catch (e) { mark = null; } }
         this.place = mark;
+        this.chain = chain;
+        document.documentElement.setAttribute('data-chain', chain); // src/template.html shows that one alone
       }
       this.from = this.current; // the walk reads this to tell a return from a step within it
       this.current = v; this.currentSub = sub;
-      if (changed) Sections.currentId = null; // a new view draws its own specimen on arrival: the chain its chapter's, AI Chips its package or chip
+      if (changed || turned) Sections.currentId = null; // a new view draws its own specimen on arrival: the chain its chapter's, AI Chips its package or chip
       if (sub) {
         $$('.view[data-view="controls"] .sub').forEach(function (s) { s.hidden = s.getAttribute('data-sub') !== sub; });
         $$('#controls-subtabs a').forEach(function (a) { if (a.getAttribute('data-sub') === sub) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
@@ -580,7 +585,6 @@
       $$('.tabs a').forEach(function (a) { var dv = a.getAttribute('data-view'); var on = dv === v; if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
       if (narrow()) { var strip = $('.tabs'), onTab = $('.tabs a[aria-current="page"]'); if (strip && onTab) { var sr = strip.getBoundingClientRect(), tr = onTab.getBoundingClientRect(); if (tr.left < sr.left) strip.scrollLeft -= sr.left - tr.left; else if (tr.right > sr.right) strip.scrollLeft += tr.right - sr.right; } } // the phone tab strip scrolls; keep the current tab in view by moving the strip alone (scrollIntoView would also move the Tab starting point to the tab, so the first Tab skipped the skip link)
       // the printed cover's art is fetched only on the way to print (src/template.html), never because The Chain was read
-      if (v === 'stack') Sizes.wake();
       var mv = MODULE_VIEWS[v];
       Stage.setVisible(v === 'stack' || v === 'landscape' || v === 'walk' || !!(mv && mv.stage));
       if (mv && mv.activate) { try { mv.activate(); } catch (err) { console.warn('view module failed', v, err); } }
@@ -599,22 +603,27 @@
       this.exId = sub === 'exposure' ? exId : null;
       // no anchor to land on (or an entry address naming no entry), so start the new view at the top ("#/" included); a view that
       // places the page itself (the walk returning the reader to the step they left) says so through owns()
-      if ((changed || leftEntry || leftFirm) && !anchor && !focused && backY === null && !kept && !(mv && mv.owns && mv.owns())) window.scrollTo(0, 0);
+      var root = document.documentElement, sb = root.style.scrollBehavior;
+      var jump = function (y) { root.style.scrollBehavior = 'auto'; window.scrollTo(0, y); root.style.scrollBehavior = sb; }; // html glides (styles.css); these are jumps
+      if (turned && !anchor && backY === null && !kept) jump(0); // The Chain's contents, from a chapter: its top
+      else if ((changed || leftEntry || leftFirm) && !anchor && !focused && backY === null && !kept && !(mv && mv.owns && mv.owns())) window.scrollTo(0, 0);
       if (v === 'stack' || v === 'walk') {
         if (backY !== null) { // Back or Forward to an entry of the chain: the place the reader left, at once
-          var root = document.documentElement, sb = root.style.scrollBehavior;
-          root.style.scrollBehavior = 'auto'; window.scrollTo(0, backY); root.style.scrollBehavior = sb;
+          jump(backY);
           this.booted = true;
         } else if (anchor) {
           var el = document.getElementById(anchor);
           if (el && !kept) {
-            var jumpIt = !this.booted || changed;
-            scrollToEl(el, !jumpIt); // first load or a new view: jump, do not animate 30,000 px; within the view: glide
+            var jumpIt = !this.booted || changed || turned;
+            scrollToEl(el, !jumpIt); // first load, a new view or another chapter: jump; within the chapter: glide
             if (jumpIt) this.settle(el);
           }
           this.booted = true;
         }
         Sections.update();
+        // a link to another chapter hid the one it sat in, and with it the focus: the new chapter's title takes it (Keys.land
+        // leaves alone a focus that is still on the page)
+        if (turned && this.routed) Keys.land(location.hash);
       }
       this.routed = true;
       this.title();
@@ -626,9 +635,15 @@
        and on The Chain the chapter in view, so seventeen open chapters no longer all read "The Chain" */
     title: function () {
       if (!this.titles) { try { this.titles = JSON.parse(document.querySelector('meta[name="cp-titles"]').getAttribute('content')) || {}; } catch (e) { this.titles = {}; } }
-      var T = this.titles, v = this.current, ch = v === 'stack' && Sections.currentId ? '/' + Sections.currentId + '/' : '';
+      var T = this.titles, v = this.current, ch = v === 'stack' && this.chain !== 'contents' && Sections.currentId ? '/' + Sections.currentId + '/' : '';
       var page = { walk: '/', landscape: '/chips/', suppliers: '/suppliers/', controls: '/export-controls/', glossary: '/glossary/' }[v];
       document.title = (ch && T[ch]) || (page && T[page]) || (v === 'stack' ? 'The Chain · Chip Supply Chain' : T['/'] || 'Chip Supply Chain');
+    },
+    /* what The Chain shows for an anchor: the chapter that holds it, or the contents (#/chain, the contents' own ids, an id
+       found nowhere) */
+    chainOf: function (anchor) {
+      var el = anchor ? document.getElementById(anchor) : null, ch = el && el.closest ? el.closest('article.chapter') : null;
+      return ch && ch.closest('.view[data-view="stack"]') ? ch.id : 'contents';
     },
     /* a jump lands before the web fonts, late images and freshly built rows settle, and anything reflowing above the target
        moves it; for the next second or two, put it back whenever it has drifted, unless the reader has started to scroll or gone elsewhere */
@@ -664,7 +679,7 @@
     update: function () {
       var toTop = $('.to-top'); // Back to top (and the phone strip's Top button, which follows it) on every long page, not only the chain
       if (toTop) {
-        var contentsEl = Router.current === 'stack' ? $('#contents') : null;
+        var contentsEl = Router.current === 'stack' && Router.chain === 'contents' ? $('#contents') : null;
         toTop.setAttribute('data-show', (contentsEl ? contentsEl.getBoundingClientRect().bottom < 0 : window.scrollY > window.innerHeight * 0.8) ? '1' : '0');
       }
       if (Router.current !== 'stack' && Router.current !== 'walk') return;
@@ -674,12 +689,14 @@
       var first = null;
       for (var i = 0; i < items.length; i++) {
         var r = items[i].getBoundingClientRect();
-        if (!r.width && !r.height) continue; // not laid out (?only= hides the other chapters): its top reads 0 and would win
+        if (!r.width && !r.height) continue; // not laid out (The Chain shows one chapter; ?only= hides the others): its top reads 0 and would win
         if (!first) first = items[i];
         if (r.top <= probe && r.top > bestTop) { best = items[i]; bestTop = r.top; }
       }
       if (!best) best = first || items[0];
       if (!best) return;
+      // The Chain's contents show no chapter: the phone's strip shows the first chapter's specimen, and no chapter is in view
+      var none = !first && Router.current === 'stack';
       var r2 = best.getBoundingClientRect();
       var p = r2.height > vh ? Math.max(0, Math.min(1, (probe - r2.top) / (r2.height - vh * 0.3))) : 0;
       Stage.scrollAngle = (reduced ? 0 : p * 1.15);
@@ -687,7 +704,7 @@
       // (src/modules/chapter.css .ch-spec-draw); on a phone it stays in the strip and follows the chapter, as before
       var inSlot = Router.current === 'stack' && !narrow();
       if (inSlot) this.hostSpec(); else if (Stage.hostEl) Stage.host(null);
-      var id = best.id || best.getAttribute('data-specimen');
+      var id = none ? null : best.id || best.getAttribute('data-specimen');
       // the home hero keeps one id while the reader picks its specimen (src/modules/walk.js), so the specimen it names counts too
       var key = id + '|' + (best.getAttribute('data-specimen') || '');
       if (id !== this.currentId || key !== this.currentKey) {
@@ -774,87 +791,6 @@
       }
       $('.s', a).textContent = cur ? cur[0].textContent : '';
       html.classList.add('slim-on');
-    }
-  };
-
-  /* ---------------- chapters off screen (content-visibility, styles.css) ----------------
-     An off-screen chapter skips its layout and stands at an estimated height, which makes showing The Chain cheap. Once a
-     chapter has been laid out its real height is remembered (contain-intrinsic-size: auto). A chapter above the reader never
-     changes height under them: they either scrolled past it (so it was laid out) or arrived by a link, and then
-     src/preroute.js laid out every chapter above the anchor before landing. While the browser is idle, Sizes lays out each
-     chapter below the window once, so the page's height and every anchor come to rest on real heights. A glide before that
-     lays out the chapters it passes first, or it would land where the estimates put the target. */
-  var Sizes = {
-    list: null, busy: false, anchors: !!(window.CSS && CSS.supports && CSS.supports('overflow-anchor', 'auto')),
-    init: function () {
-      this.list = $$('[data-view="stack"] article.chapter');
-      // a chapter the reader has had on screen has been laid out, and its height is remembered
-      this.list.forEach(function (ch) { ch.addEventListener('contentvisibilityautostatechange', function (e) { if (!e.skipped) ch._sized = true; }); });
-      // one held open before boot (src/preroute.js, the chapter above a deep link) has its real height already
-      var held = this.list.filter(function (c) { return c.classList.contains('cv-open'); });
-      held.forEach(function (c) { c._sized = true; });
-      if (held.length) this.release(held);
-    },
-    // after the next frame has recorded each height, the chapters may skip again: off screen, each keeps its real height.
-    // One on screen stays laid out (let go, it would skip for a frame and blink). A browser that remembers no height would
-    // put the estimate back, so such a chapter simply stays laid out too
-    release: function (chs) {
-      requestAnimationFrame(function () {
-        setTimeout(function () {
-          var vh = window.innerHeight;
-          chs = chs.filter(function (c) { var r = c.getBoundingClientRect(); return !(r.bottom > 0 && r.top < vh); });
-          var hs = chs.map(function (c) { return c.offsetHeight; });
-          chs.forEach(function (c) { c.classList.remove('cv-open'); });
-          chs.forEach(function (c, k) { if (Math.abs(c.offsetHeight - hs[k]) > 1) c.classList.add('cv-open'); });
-        }, 0);
-      });
-    },
-    // lay out these chapters now; any above the window take their real heights without moving what is on screen
-    open: function (chs) {
-      // a chapter on screen is laid out already (it may have come on screen before boot, unseen by init), and holding it
-      // open and letting it go would skip it for a frame
-      var vh = window.innerHeight;
-      chs = chs.filter(function (c) { if (c._sized) return false; var r = c.getBoundingClientRect(); if (r.bottom > 0 && r.top < vh) { c._sized = true; return false; } return true; });
-      if (!chs.length || Router.current !== 'stack') return;
-      // A browser with scroll anchoring keeps the view still by itself, and does not count that as the page moving. Safari has
-      // none, so there the view is held still by hand: the first chapter still on screen goes back to where it was.
-      var root = document.documentElement, ref = null, top0 = 0;
-      if (!this.anchors) for (var i = 0; i < this.list.length; i++) { var r = this.list[i].getBoundingClientRect(); if (r.bottom > 0) { ref = this.list[i]; top0 = r.top; break; } }
-      chs.forEach(function (c) { c.classList.add('cv-open'); c._sized = true; });
-      var d = ref ? ref.getBoundingClientRect().top - top0 : (void document.body.offsetHeight, 0); // the layout happens here, not in the next frame
-      if (Math.abs(d) >= 1) { var sb = root.style.scrollBehavior; root.style.scrollBehavior = 'auto'; window.scrollBy(0, d); root.style.scrollBehavior = sb; }
-      this.release(chs);
-    },
-    // before a glide to el: the chapters between the window and el, which the glide would lay out on its way
-    before: function (el) {
-      if (!this.list || !el || !el.closest) return;
-      var host = el.closest('article.chapter'), at = host ? this.list.indexOf(host) : -1;
-      if (at < 0 && !(el.closest('[data-view="stack"]'))) return;
-      if (at < 0) at = this.list.length; // the footer, past every chapter
-      var here = 0;
-      for (var i = 0; i < this.list.length; i++) if (this.list[i].getBoundingClientRect().bottom > 0) { here = i; break; }
-      this.open(this.list.slice(0, Math.max(at, here) + 1));
-    },
-    // once the page has loaded, one chapter per idle moment, nearest below the window first; never one above the reader
-    wake: function () {
-      var self = this;
-      if (this.busy || !this.list) return;
-      this.busy = true;
-      var later = window.requestIdleCallback ? function (f) { requestIdleCallback(f); } : function (f) { setTimeout(f, 200); }; // Safari has no idle callback
-      var step = function (dl) {
-        self.busy = false;
-        if (Router.current !== 'stack') return; // the chain is hidden; the next visit wakes this again
-        var left = self.list.filter(function (c) { return !c._sized; });
-        if (!left.length) return;
-        self.busy = true;
-        if (dl && dl.timeRemaining && dl.timeRemaining() < 12) { later(step); return; } // too little of this idle moment left
-        var below = left.filter(function (c) { return c.getBoundingClientRect().top > window.innerHeight; });
-        if (!below.length) { self.busy = false; return; } // nothing left below the window
-        self.open([below[0]]);
-        later(step);
-      };
-      var start = function () { later(step); };
-      if (document.readyState === 'complete') start(); else window.addEventListener('load', start, { once: true });
     }
   };
 
@@ -3769,7 +3705,6 @@
     setMast(); window.addEventListener('resize', setMast); window.addEventListener('load', setMast);
     Stage.init();
     Band.init();
-    Sizes.init();
     Router.init();
     Sections.init();
     Anim.init();

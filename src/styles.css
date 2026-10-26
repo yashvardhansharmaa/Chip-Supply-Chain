@@ -765,12 +765,11 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
   display: grid; grid-template-columns: var(--gutter) minmax(0, 1fr); column-gap: var(--gutter-gap); align-items: start;
   padding: 72px 0 24px; border-top: 1px solid var(--line-2); scroll-margin-top: calc(var(--masthead) + var(--band, 0px) + 12px);
 }
-/* On screen, a chapter away from the window skips its layout and stands at an estimated height (about a median chapter at
-   this width), which makes showing The Chain cheap. Once laid out, its real height is remembered (auto), and app.js (Sizes)
-   lays each chapter out once while the browser is idle; .cv-open holds one laid out meanwhile. Print lays out everything. */
+/* The Chain shows one chapter at a time (html[data-chain], src/template.html), laid out whole. Should the script not run and
+   every chapter show, a chapter away from the window skips its layout and stands at an estimated height (about a median
+   chapter at this width); once laid out, its real height is remembered (auto). Print lays out everything. */
 @media screen {
   article.chapter { content-visibility: auto; contain-intrinsic-height: auto 12500px; } /* the chapter page of redesign stage 2: a median chapter's height at each width, measured 25 Oct 2026 */
-  article.chapter.cv-open { content-visibility: visible; }
   /* the browser keeps the view still as chapters above it take their real heights (scroll anchoring) by following an element
      on screen; the sticky ledger never moves, so it must not be the one followed */
   .ch-ledger { overflow-anchor: none; }

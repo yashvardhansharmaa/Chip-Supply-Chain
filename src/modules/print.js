@@ -349,6 +349,10 @@
     opts = opts || {};
     var out = { mode: opts.mode || 'footnotes', cites: 0, notes: 0, chapters: 0, dropped: 0 };
 
+    /* the screen shows The Chain one chapter at a time (html[data-chain], src/template.html), and Paged.js lays the page out on
+       screen: every chapter shows again, so the book holds all of them, and opts.chapter keeps its own chapter whatever the
+       address opened */
+    document.documentElement.removeAttribute('data-chain');
     /* paper is white whatever the reader was using, and set in static fonts (printFonts, above) */
     document.documentElement.setAttribute('data-theme', 'light');
     printFonts();
