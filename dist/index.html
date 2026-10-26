@@ -1362,10 +1362,10 @@ html.no-stage .chapter .ch-spec-cap { grid-column: 1 / 9; }
 .chapter .inshort p { margin: 0 0 0.7em; }
 .chapter > .prose { grid-column: 4 / 13; grid-row: 6; max-width: none; min-width: 0; margin-top: 16px; counter-reset: sec; }
 .chapter > .prose > * { max-width: 36em; }
-.chapter > .prose > .figure, .chapter > .prose > .table-wrap, .chapter > .prose > .prevnext { max-width: none; }
+.chapter > .prose > .table-wrap, .chapter > .prose > .prevnext { max-width: none; }
 /* each section opens on an ink rule, its number in mono above a large Fraunces heading */
 .chapter > .prose > h3 {
-  counter-increment: sec; margin: 72px 0 22px; padding-top: 14px; border-top: 1px solid var(--ink); max-width: 36em;
+  counter-increment: sec; margin: 72px 0 22px; padding-top: 14px; border-top: 1px solid var(--ink); max-width: 666px; /* its rule spans the text and figures under it */
   font-family: var(--font-display); font-weight: 330; font-variation-settings: var(--opsz-title);
   font-size: clamp(32px, 3vw, 44px); line-height: 1.08; letter-spacing: -0.02em;
 }
@@ -1374,8 +1374,9 @@ html.no-stage .chapter .ch-spec-cap { grid-column: 1 / 9; }
 .chapter > .prose > p, .chapter > .prose > ul, .chapter > .prose > ol { font-size: 18.5px; line-height: 1.62; }
 
 /* ---------- figures: one grammar for every chart ---------- */
-.chapter .figure { margin: 34px 0 44px; padding: 0; border: 1px solid var(--rule-ink); background: var(--bg); max-width: none; }
-.chapter .figure--anim { max-width: none; }
+/* a figure keeps to the text's measure (36em of the 18.5 px body, 666 px). Wider, the bars stretched across the page and the
+   explainers, drawn at 760 px, were blown up past their size and blurred (owner, 26 Oct) */
+.chapter .figure { margin: 34px 0 44px; padding: 0; border: 1px solid var(--rule-ink); background: var(--bg); max-width: 666px; }
 .chapter .fig-head { padding: 22px 26px 0; }
 .chapter .fig-k { display: inline-block; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--ink); text-decoration: none; }
 .chapter .fig-k:hover { color: var(--accent-ink); }
@@ -1640,7 +1641,7 @@ article.ch-page { padding-top: 56px; border-top: 0; }
 .ch-page .plain h2.label { display: block; margin: 14px 0 22px; padding: 0; font-family: var(--font-display); font-weight: 330; font-variation-settings: var(--opsz-title); font-size: clamp(34px, 3.1vw, 44px); line-height: 1.08; letter-spacing: -0.02em; color: var(--ink); }
 .ch-page .inshort h2.label { margin: 0 0 12px; font-family: var(--font-ui); font-weight: 500; font-size: 15px; line-height: 20px; color: var(--ink); }
 .ch-page > .prose > h2 {
-  counter-increment: sec; margin: 72px 0 22px; padding-top: 14px; border-top: 1px solid var(--ink); max-width: 36em;
+  counter-increment: sec; margin: 72px 0 22px; padding-top: 14px; border-top: 1px solid var(--ink); max-width: 666px; /* its rule spans the text and figures under it */
   font-family: var(--font-display); font-weight: 330; font-variation-settings: var(--opsz-title); font-size: clamp(32px, 3vw, 44px); line-height: 1.08; letter-spacing: -0.02em;
 }
 .ch-page > .prose > h2::before { content: counter(sec, decimal-leading-zero) " · " attr(data-k); display: block; margin: 0 0 14px; font-family: var(--font-code); font-size: 12px; font-weight: 400; line-height: 16px; color: var(--muted); }
