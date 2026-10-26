@@ -1261,15 +1261,19 @@ if (SITE.cname) fs.writeFileSync(path.join(root, 'dist', 'CNAME'), SITE.cname + 
 // each with the day its content last changed (page dates, above): the readable pages hash their article, a PDF its bytes
 const chapterPages = (ctx.readablePages || []).map((id) => '/' + id + '/'); // social.js lists the readable pages it wrote
 if (chapterPages.length !== all.length) warn(`sitemap: ${all.length - chapterPages.length} of ${all.length} chapters have no readable page`);
-const pdfName = 'chip-supply-chain-the-chain.pdf', pdfFile = path.join(root, 'dist', pdfName);
+const pdfName = 'pdf/how-ai-chips-are-made.pdf', pdfFile = path.join(root, 'dist', pdfName);
 if (fs.existsSync(pdfFile)) pageDate('/' + pdfName, fs.readFileSync(pdfFile)); else warn(`sitemap: dist/${pdfName} is missing`);
-const summaryPdf = 'chip-supply-chain-summary.pdf', summaryPdfFile = path.join(root, 'dist', summaryPdf);
+const summaryPdf = 'pdf/summary.pdf', summaryPdfFile = path.join(root, 'dist', summaryPdf);
 if (fs.existsSync(summaryPdfFile)) pageDate('/' + summaryPdf, fs.readFileSync(summaryPdfFile));
+// the two PDFs' first addresses (until 26 Oct 2026) keep working for links already shared: each is a copy of the renamed
+// file, and robots.txt below asks search engines to skip them, so only the new addresses are found
+const OLD_PDFS = { 'chip-supply-chain-the-chain.pdf': pdfFile, 'chip-supply-chain-summary.pdf': summaryPdfFile };
+Object.entries(OLD_PDFS).forEach(([old, now]) => { if (fs.existsSync(now)) fs.copyFileSync(now, path.join(root, 'dist', old)); });
 // each chapter's own PDF that has been printed (chapterPDF, above), dated by its bytes as the chain's is
 const chapterPdfs = all.filter((c) => chapterPDF(c.id)).map((c) => { const p = chapterPDF(c.id); pageDate('/' + p.href, p.bytes); return '/' + p.href; });
 if (chapterPdfs.length < all.length) warn(`chapter PDFs: ${all.length - chapterPdfs.length} of ${all.length} are not in dist/pdf/ yet (python3 build/chapter_pdfs.py), so their cite lines carry no PDF link: ${all.filter((c) => !chapterPDF(c.id)).map((c) => c.id).join(', ')}`);
 const lastmod = (key) => (pageDates[key] || {}).modified || today;
-fs.writeFileSync(path.join(root, 'dist', 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${SITE.url}sitemap.xml\n`);
+fs.writeFileSync(path.join(root, 'dist', 'robots.txt'), `User-agent: *\nAllow: /\n${Object.keys(OLD_PDFS).map((o) => `Disallow: /${o}\n`).join('')}\nSitemap: ${SITE.url}sitemap.xml\n`);
 fs.writeFileSync(path.join(root, 'dist', 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
   // HTML pages only (the owner, 21 Oct 2026): the PDFs stay on the site and are linked from their pages, but are not listed
   ['/', ...chapterPages, '/summary/', ...(ctx.referencePages || [])].map((k) => `  <url><loc>${SITE.url}${k.slice(1)}</loc><lastmod>${lastmod(k)}</lastmod></url>`).join('\n') + `\n</urlset>\n`);

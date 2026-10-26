@@ -4,7 +4,7 @@
    figure is cited in the chapter each card links to.
    The page carries two layouts of the same content: a screen layout in the site's own design (masthead, the chain at a
    glance, stage cards, the site footer), and a compact print layout that build/summary_pdf.py prints to
-   dist/chip-supply-chain-summary.pdf, the file the "Download a short summary" button on The Chain serves. Each layout is
+   dist/pdf/summary.pdf, the file the "Download a short summary" button on The Chain serves. Each layout is
    hidden in the other medium, so a change to the screen design never moves the PDF. build/build.js lists /summary/ in the
    sitemap. */
 const SITE = require('../site.js');
@@ -73,7 +73,7 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
 <p class="eyebrow"><b>Summary</b> · the whole chain in one read</p>
 <h1>${title}</h1>
 <p class="dek">${esc(dek)}</p>
-<p class="cta"><a class="btn" href="../chip-supply-chain-summary.pdf" download>Download the PDF <span>4 pages</span></a><a class="btn ghost" href="${SITE.url}#/chain">Read the full chain</a></p>
+<p class="cta"><a class="btn" href="../pdf/summary.pdf" download>Download the PDF <span>4 pages</span></a><a class="btn ghost" href="${SITE.url}#/chain">Read the full chain</a></p>
 <p class="meta">Updated ${DAY} · Every figure is cited in the chapter each card links to</p>
 </section>
 <section class="glance" aria-labelledby="glance-h">

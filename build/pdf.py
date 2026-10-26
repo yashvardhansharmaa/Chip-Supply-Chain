@@ -5,7 +5,7 @@ usage: python3 build/pdf.py <url> <out.pdf> [--wait 6] [--eval <js>] [--title <r
                             [--only N] [--chapter <id>] [--edition YYYY-MM-DD] [--port 9334]
                             [--timeout 420] [--no-paged]
 
-The chain:     python3 build/pdf.py "http://127.0.0.1:8765/?theme=light#/chain" dist/chip-supply-chain-the-chain.pdf --wait 8
+The chain:     python3 build/pdf.py "http://127.0.0.1:8765/?theme=light#/chain" dist/pdf/how-ai-chips-are-made.pdf --wait 8
 One chapter:   python3 build/pdf.py "http://127.0.0.1:8765/?theme=light#/chain" dist/pdf/lithography.pdf --chapter lithography
                (build/chapter_pdfs.py runs this for every chapter)
 

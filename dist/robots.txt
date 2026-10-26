@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /chip-supply-chain-the-chain.pdf
+Disallow: /chip-supply-chain-summary.pdf
 
 Sitemap: https://chipsupplychain.org/sitemap.xml

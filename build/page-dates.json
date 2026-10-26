@@ -2,7 +2,7 @@
   "/": {
     "published": "2026-10-01",
     "modified": "2026-10-26",
-    "content": "5397d39f9aa8d107"
+    "content": "5df4b7816bfb7fab"
   },
   "/advanced-packaging/": {
     "published": "2026-09-09",
@@ -13,16 +13,6 @@
     "published": "2026-09-09",
     "modified": "2026-10-25",
     "content": "c428ddb56fb15a29"
-  },
-  "/chip-supply-chain-summary.pdf": {
-    "published": "2026-10-20",
-    "modified": "2026-10-21",
-    "content": "9cf7ecafd02bc265"
-  },
-  "/chip-supply-chain-the-chain.pdf": {
-    "published": "2026-10-01",
-    "modified": "2026-10-25",
-    "content": "8c48d4bbfe16c2b8"
   },
   "/chips/": {
     "published": "2026-10-21",
@@ -124,6 +114,11 @@
     "modified": "2026-10-21",
     "content": "42a4565f42c2f53f"
   },
+  "/pdf/how-ai-chips-are-made.pdf": {
+    "published": "2026-10-26",
+    "modified": "2026-10-26",
+    "content": "8c48d4bbfe16c2b8"
+  },
   "/pdf/lithography.pdf": {
     "published": "2026-10-20",
     "modified": "2026-10-25",
@@ -153,6 +148,11 @@
     "published": "2026-10-20",
     "modified": "2026-10-21",
     "content": "e922953de7d4eb65"
+  },
+  "/pdf/summary.pdf": {
+    "published": "2026-10-26",
+    "modified": "2026-10-26",
+    "content": "9cf7ecafd02bc265"
   },
   "/pdf/systems-and-networking.pdf": {
     "published": "2026-10-20",

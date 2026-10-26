@@ -152,7 +152,7 @@
 
   /* ---------- editions and the chapter printed alone ---------- */
   var WORK = 'Chip Supply Chain: How AI Chips Are Made'; // the work the site cites itself as (CITE_WORK in build/build.js)
-  var BOOK_PDF = 'chip-supply-chain-the-chain.pdf';
+  var BOOK_PDF = 'pdf/how-ai-chips-are-made.pdf';
 
   function node(tag, cls, text) {
     var el = document.createElement(tag);
@@ -332,7 +332,7 @@
   var LEDE_END = 'Each chapter ends with questions to answer from memory. Online, every chapter also has a 3D model, and most have an animation.';
   function printLede() {
     each('.howto .howto-lede', document, function (p) {
-      var t = p.textContent.replace(/^This page covers/, 'This edition covers');
+      var t = p.textContent.replace(/^The Chain covers/, 'This edition covers');
       p.textContent = /To help readers learn[^.]*\./.test(t) ? t.replace(/To help readers learn[^.]*\./, LEDE_END) : t;
     });
   }
@@ -438,9 +438,10 @@
       each('.print-title, .howto, .contents', document, function (el) { el.remove(); });
       alone.parentNode.insertBefore(titleBlock(alone, site + alone.id + '/', edition, tile), alone);
       document.documentElement.classList.add('cp-alone'); // no sink over the chapter's title: the title block is above it
-      document.title = (alone.getAttribute('data-title') || alone.id) + ' · Chip Supply Chain'; // the PDF's own title
+      var T = {}; try { T = JSON.parse(document.querySelector('meta[name="cp-titles"]').getAttribute('content')) || {}; } catch (e) { }
+      document.title = T['/' + alone.id + '/'] || ((alone.getAttribute('data-title') || alone.id) + ' · Chip Supply Chain'); // the PDF's own title: the chapter page's approved title (build/page-titles.json), which search results show
       out.chapters = 1; out.chapter = alone.id;
-    } else printLede();
+    } else { printLede(); document.title = 'How AI chips are made · Chip Supply Chain'; } // the book's own title, which search results show, and never the chapter in view
 
     stills(); // after the other chapters go, so a chapter printed alone fetches only its own drawing
 
