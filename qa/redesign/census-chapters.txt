@@ -1,0 +1,142 @@
+Text census, one chapter per address: /private/tmp/claude-501/-Users-yashvardhansharma-Library-Application-Support-Claude-scratch-workspaces-0a31970a-fa59-4805-8c4d-4478d5acd73a-47d04afc-9f92-4fb3-9c9e-e634493ca6a4-scratch-2026-09-09-7267aa/4e8772b6-c37d-4e16-adb2-094313085ce5/scratchpad/old/dist (before) against http://127.0.0.1:8766 (after), each chapter and readable page with its door set aside.
+Lines only before: 0. Lines only after: 0.
+
+== #/chain, the head and the contents: 70 lines; only before 0; only after 0
+== #design-and-eda: 257 lines; only before 0; only after 0
+== #silicon-and-wafers: 226 lines; only before 0; only after 0
+== #chemicals-gases-and-photoresist: 235 lines; only before 0; only after 0
+== #lithography: 304 lines; only before 0; only after 0
+== #photomasks-and-pellicles: 210 lines; only before 0; only after 0
+== #deposition-and-etch: 290 lines; only before 0; only after 0
+== #metrology-and-inspection: 295 lines; only before 0; only after 0
+== #transistors-and-front-end: 226 lines; only before 0; only after 0
+== #foundries-and-fabs: 251 lines; only before 0; only after 0
+== #memory-and-hbm: 236 lines; only before 0; only after 0
+== #advanced-packaging: 270 lines; only before 0; only after 0
+== #substrates-and-pcbs: 235 lines; only before 0; only after 0
+== #test-and-assembly: 239 lines; only before 0; only after 0
+== #systems-and-networking: 222 lines; only before 0; only after 0
+== #data-centers-and-power: 259 lines; only before 0; only after 0
+== #component-costs: 232 lines; only before 0; only after 0
+== #geopolitics: 261 lines; only before 0; only after 0
+== /design-and-eda/: 323 lines; only before 0; only after 0
+== /silicon-and-wafers/: 291 lines; only before 0; only after 0
+== /chemicals-gases-and-photoresist/: 338 lines; only before 0; only after 0
+== /lithography/: 414 lines; only before 0; only after 0
+== /photomasks-and-pellicles/: 282 lines; only before 0; only after 0
+== /deposition-and-etch/: 387 lines; only before 0; only after 0
+== /metrology-and-inspection/: 370 lines; only before 0; only after 0
+== /transistors-and-front-end/: 300 lines; only before 0; only after 0
+== /foundries-and-fabs/: 324 lines; only before 0; only after 0
+== /memory-and-hbm/: 288 lines; only before 0; only after 0
+== /advanced-packaging/: 341 lines; only before 0; only after 0
+== /substrates-and-pcbs/: 334 lines; only before 0; only after 0
+== /test-and-assembly/: 320 lines; only before 0; only after 0
+== /systems-and-networking/: 315 lines; only before 0; only after 0
+== /data-centers-and-power/: 336 lines; only before 0; only after 0
+== /component-costs/: 309 lines; only before 0; only after 0
+== /geopolitics/: 414 lines; only before 0; only after 0
+
+== the doors, before and after
+#design-and-eda
+   before: Next | 02 Silicon and Wafers
+   after:  Next, stage 02 / 15 | Silicon and Wafers | Firms based in Japan, Taiwan, Germany and South Korea make most 300 mm wafers used for advanced chips. China makes most polysilicon, almost all of it for solar cells. | Continue to chapter 02 | →
+#silicon-and-wafers
+   before: Previous | 01 Chip Design, EDA and IP | Next | 03 Chemicals, Gases and Photoresist
+   after:  Next, stage 03 / 15 | Chemicals, Gases and Photoresist | Japanese companies held 78 percent of world photoresist sales in 2023. Supply of chip chemicals, gases and metals has been disrupted three times since 2019. | Continue to chapter 03 | → | Previous, stage 01 | Chip Design, EDA and IP
+#chemicals-gases-and-photoresist
+   before: Previous | 02 Silicon and Wafers | Next | 04 Lithography
+   after:  Next, stage 04 / 15 | Lithography | ASML, a Dutch firm, is the only maker of extreme ultraviolet scanners, the machines that print the finest layers of a chip. It sold 48 of them in 2025. | Continue to chapter 04 | → | Previous, stage 02 | Silicon and Wafers
+#lithography
+   before: Previous | 03 Chemicals, Gases and Photoresist | Next | 05 Photomasks and Pellicles
+   after:  Next, stage 05 / 15 | Photomasks and Pellicles | Only three firms in the world make the blank plates for the masks used to print the finest layers of leading-edge chips. Japan's AGC and Hoya are two of them. | Continue to chapter 05 | → | Previous, stage 03 | Chemicals, Gases and Photoresist
+#photomasks-and-pellicles
+   before: Previous | 04 Lithography | Next | 06 Deposition and Etch
+   after:  Next, stage 06 / 15 | Deposition and Etch | Deposition and etch tools build a chip layer by layer. China-based toolmakers' share of deposition tools rose from 2 to 7 percent between 2019 and 2024, by CSET's count. | Continue to chapter 06 | → | Previous, stage 04 | Lithography
+#deposition-and-etch
+   before: Previous | 05 Photomasks and Pellicles | Next | 07 Metrology and Inspection
+   after:  Next, stage 07 / 15 | Metrology and Inspection | KLA, an American firm, held 56.8 percent of the market for tools that measure and inspect wafers in 2025, by CSET's count. | Continue to chapter 07 | → | Previous, stage 05 | Photomasks and Pellicles
+#metrology-and-inspection
+   before: Previous | 06 Deposition and Etch | Next | 08 Transistors and the Front End
+   after:  Next, stage 08 / 15 | Transistors and the Front End | Only TSMC, Intel and Samsung make 2 nm-class transistors in volume. TSMC plans A14 for 2028, with more than 20 percent higher logic density than its 2 nm-class N2. | Continue to chapter 08 | → | Previous, stage 06 | Deposition and Etch
+#transistors-and-front-end
+   before: Previous | 07 Metrology and Inspection | Next | 09 Foundries and Fabs
+   after:  Next, stage 09 / 15 | Foundries and Fabs | TSMC's six largest plants are all in Taiwan. In 2025 they could make more than 13 million wafers a year, out of more than 17 million for the whole company. | Continue to chapter 09 | → | Previous, stage 07 | Metrology and Inspection
+#foundries-and-fabs
+   before: Previous | 08 Transistors and the Front End | Next | 10 Memory and HBM
+   after:  Next, stage 10 / 15 | Memory and HBM | SK hynix, Samsung and Micron make nearly all high bandwidth memory (HBM), the stacked memory beside AI chips. SK hynix took 63.2 percent of HBM revenue in 2025. | Continue to chapter 10 | → | Previous, stage 08 | Transistors and the Front End
+#memory-and-hbm
+   before: Previous | 09 Foundries and Fabs | Next | 11 Advanced Packaging
+   after:  Next, stage 11 / 15 | Advanced Packaging | Epoch AI estimates that in 2025 Nvidia, Google, AMD and Amazon used around 90 percent of the capacity for CoWoS, TSMC's packaging for AI chips. | Continue to chapter 11 | → | Previous, stage 09 | Foundries and Fabs
+#advanced-packaging
+   before: Previous | 10 Memory and HBM | Next | 12 Substrates and PCBs
+   after:  Next, stage 12 / 15 | Substrates and PCBs | Ajinomoto, a Japanese food company, told investors in June 2026 that it holds over 95 percent of the market for the insulating film inside high-end chip packages. | Continue to chapter 12 | → | Previous, stage 10 | Memory and HBM
+#substrates-and-pcbs
+   before: Previous | 11 Advanced Packaging | Next | 13 Test and Assembly
+   after:  Next, stage 13 / 15 | Test and Assembly | Testing finds bad chips before they go into an expensive package. Japan's Advantest took about 65 percent of 2025 spending on chip testers, by its own estimate. | Continue to chapter 13 | → | Previous, stage 11 | Advanced Packaging
+#test-and-assembly
+   before: Previous | 12 Substrates and PCBs | Next | 14 Systems and Networking
+   after:  Next, stage 14 / 15 | Systems and Networking | Nvidia's and AMD's racks wire 72 AI chips together to run as one computer. Many firms can assemble the racks, but lasers for the optical links were scarce in 2026. | Continue to chapter 14 | → | Previous, stage 12 | Substrates and PCBs
+#systems-and-networking
+   before: Previous | 13 Test and Assembly | Next | 15 Data Centers and Power
+   after:  Next, stage 15 / 15 | Data Centers and Power | By mid-2026, companies had asked to connect about 474 GW of new demand to the Texas grid, mostly for data centers. Only about 205 GW of those requests already had the grid study needed to enter the grid operator's first review. The large transformers that connect such sites to the grid commonly took three years to arrive in 2024. | Continue to chapter 15 | → | Previous, stage 13 | Test and Assembly
+#data-centers-and-power
+   before: Previous | 14 Systems and Networking | Next | 16 The Economics of AI Chips
+   after:  Next, across the chain | The Economics of AI Chips | Epoch AI estimated in December 2025 that Nvidia's B200 AI chip cost about $6,400 to build, mostly for memory and packaging. Its processor silicon cost about $900. | Continue to chapter 16 | → | Previous, stage 14 | Systems and Networking
+#component-costs
+   before: Previous | 15 Data Centers and Power | Next | 17 Who Controls the Chain
+   after:  Next, across the chain | Who Controls the Chain | Since 2018 the United States has used export controls to limit China's access to advanced chips and chipmaking tools, and China has been learning to make both. | Continue to chapter 17 | → | Previous, stage 15 | Data Centers and Power
+#geopolitics
+   before: Previous | 16 The Economics of AI Chips
+   after:  Contents | All seventeen chapters | The fifteen stages run from chip design to the data center. The last two chapters cover what a chip costs and who controls the chain. | Back to the contents | → | Previous, across the chain | The Economics of AI Chips
+/design-and-eda/
+   before: Next chapter | 02Silicon and Wafers
+   after:  Next, stage 02 / 15 | Silicon and Wafers | Firms based in Japan, Taiwan, Germany and South Korea make most 300 mm wafers used for advanced chips. China makes most polysilicon, almost all of it for solar cells. | Continue to chapter 02 | →
+/silicon-and-wafers/
+   before: Previous chapter | 01Chip Design, EDA and IP | Next chapter | 03Chemicals, Gases and Photoresist
+   after:  Next, stage 03 / 15 | Chemicals, Gases and Photoresist | Japanese companies held 78 percent of world photoresist sales in 2023. Supply of chip chemicals, gases and metals has been disrupted three times since 2019. | Continue to chapter 03 | → | Previous, stage 01 | Chip Design, EDA and IP
+/chemicals-gases-and-photoresist/
+   before: Previous chapter | 02Silicon and Wafers | Next chapter | 04Lithography
+   after:  Next, stage 04 / 15 | Lithography | ASML, a Dutch firm, is the only maker of extreme ultraviolet scanners, the machines that print the finest layers of a chip. It sold 48 of them in 2025. | Continue to chapter 04 | → | Previous, stage 02 | Silicon and Wafers
+/lithography/
+   before: Previous chapter | 03Chemicals, Gases and Photoresist | Next chapter | 05Photomasks and Pellicles
+   after:  Next, stage 05 / 15 | Photomasks and Pellicles | Only three firms in the world make the blank plates for the masks used to print the finest layers of leading-edge chips. Japan's AGC and Hoya are two of them. | Continue to chapter 05 | → | Previous, stage 03 | Chemicals, Gases and Photoresist
+/photomasks-and-pellicles/
+   before: Previous chapter | 04Lithography | Next chapter | 06Deposition and Etch
+   after:  Next, stage 06 / 15 | Deposition and Etch | Deposition and etch tools build a chip layer by layer. China-based toolmakers' share of deposition tools rose from 2 to 7 percent between 2019 and 2024, by CSET's count. | Continue to chapter 06 | → | Previous, stage 04 | Lithography
+/deposition-and-etch/
+   before: Previous chapter | 05Photomasks and Pellicles | Next chapter | 07Metrology and Inspection
+   after:  Next, stage 07 / 15 | Metrology and Inspection | KLA, an American firm, held 56.8 percent of the market for tools that measure and inspect wafers in 2025, by CSET's count. | Continue to chapter 07 | → | Previous, stage 05 | Photomasks and Pellicles
+/metrology-and-inspection/
+   before: Previous chapter | 06Deposition and Etch | Next chapter | 08Transistors and the Front End
+   after:  Next, stage 08 / 15 | Transistors and the Front End | Only TSMC, Intel and Samsung make 2 nm-class transistors in volume. TSMC plans A14 for 2028, with more than 20 percent higher logic density than its 2 nm-class N2. | Continue to chapter 08 | → | Previous, stage 06 | Deposition and Etch
+/transistors-and-front-end/
+   before: Previous chapter | 07Metrology and Inspection | Next chapter | 09Foundries and Fabs
+   after:  Next, stage 09 / 15 | Foundries and Fabs | TSMC's six largest plants are all in Taiwan. In 2025 they could make more than 13 million wafers a year, out of more than 17 million for the whole company. | Continue to chapter 09 | → | Previous, stage 07 | Metrology and Inspection
+/foundries-and-fabs/
+   before: Previous chapter | 08Transistors and the Front End | Next chapter | 10Memory and HBM
+   after:  Next, stage 10 / 15 | Memory and HBM | SK hynix, Samsung and Micron make nearly all high bandwidth memory (HBM), the stacked memory beside AI chips. SK hynix took 63.2 percent of HBM revenue in 2025. | Continue to chapter 10 | → | Previous, stage 08 | Transistors and the Front End
+/memory-and-hbm/
+   before: Previous chapter | 09Foundries and Fabs | Next chapter | 11Advanced Packaging
+   after:  Next, stage 11 / 15 | Advanced Packaging | Epoch AI estimates that in 2025 Nvidia, Google, AMD and Amazon used around 90 percent of the capacity for CoWoS, TSMC's packaging for AI chips. | Continue to chapter 11 | → | Previous, stage 09 | Foundries and Fabs
+/advanced-packaging/
+   before: Previous chapter | 10Memory and HBM | Next chapter | 12Substrates and PCBs
+   after:  Next, stage 12 / 15 | Substrates and PCBs | Ajinomoto, a Japanese food company, told investors in June 2026 that it holds over 95 percent of the market for the insulating film inside high-end chip packages. | Continue to chapter 12 | → | Previous, stage 10 | Memory and HBM
+/substrates-and-pcbs/
+   before: Previous chapter | 11Advanced Packaging | Next chapter | 13Test and Assembly
+   after:  Next, stage 13 / 15 | Test and Assembly | Testing finds bad chips before they go into an expensive package. Japan's Advantest took about 65 percent of 2025 spending on chip testers, by its own estimate. | Continue to chapter 13 | → | Previous, stage 11 | Advanced Packaging
+/test-and-assembly/
+   before: Previous chapter | 12Substrates and PCBs | Next chapter | 14Systems and Networking
+   after:  Next, stage 14 / 15 | Systems and Networking | Nvidia's and AMD's racks wire 72 AI chips together to run as one computer. Many firms can assemble the racks, but lasers for the optical links were scarce in 2026. | Continue to chapter 14 | → | Previous, stage 12 | Substrates and PCBs
+/systems-and-networking/
+   before: Previous chapter | 13Test and Assembly | Next chapter | 15Data Centers and Power
+   after:  Next, stage 15 / 15 | Data Centers and Power | By mid-2026, companies had asked to connect about 474 GW of new demand to the Texas grid, mostly for data centers. Only about 205 GW of those requests already had the grid study needed to enter the grid operator's first review. The large transformers that connect such sites to the grid commonly took three years to arrive in 2024. | Continue to chapter 15 | → | Previous, stage 13 | Test and Assembly
+/data-centers-and-power/
+   before: Previous chapter | 14Systems and Networking | Next chapter | 16The Economics of AI Chips
+   after:  Next, across the chain | The Economics of AI Chips | Epoch AI estimated in December 2025 that Nvidia's B200 AI chip cost about $6,400 to build, mostly for memory and packaging. Its processor silicon cost about $900. | Continue to chapter 16 | → | Previous, stage 14 | Systems and Networking
+/component-costs/
+   before: Previous chapter | 15Data Centers and Power | Next chapter | 17Who Controls the Chain
+   after:  Next, across the chain | Who Controls the Chain | Since 2018 the United States has used export controls to limit China's access to advanced chips and chipmaking tools, and China has been learning to make both. | Continue to chapter 17 | → | Previous, stage 15 | Data Centers and Power
+/geopolitics/
+   before: Previous chapter | 16The Economics of AI Chips
+   after:  Contents | All seventeen chapters | The fifteen stages run from chip design to the data center. The last two chapters cover what a chip costs and who controls the chain. | Back to the contents | → | Previous, across the chain | The Economics of AI Chips
