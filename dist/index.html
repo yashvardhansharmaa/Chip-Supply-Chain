@@ -1870,6 +1870,7 @@ html.no-stage .aic-spec { display: none; }
 .aic-cbx.is-off { opacity: 0.5; cursor: default; }
 .aic-cbx.is-off input { cursor: default; }
 .aic-cbx:has(input:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; }
+.aic-cbx input:focus-visible + .aic-box { outline: none; } /* the pill takes the ring, so the box inside it needs none */
 .aic-card-list { list-style: none; margin: 10px 0 0; padding: 0; border-top: 1px solid var(--line); }
 .aic-card-list li { border-bottom: 1px solid var(--line); }
 .aic-card-list button { display: flex; flex-direction: column; align-items: flex-start; width: 100%; min-height: 44px; padding: 8px 4px; background: none; border: 0; text-align: left; }
@@ -2049,7 +2050,8 @@ section[data-view="landscape"] .label, section[data-view="landscape"] .cx-note, 
   .aic-main { padding-top: 0; }
   .aic-rail { position: fixed; left: 0; right: 0; bottom: 0; z-index: 61; display: none; background: var(--bg); border-top: 2px solid var(--ink); }
   .aic-rail.is-open { display: block; }
-  .aic-rail-in { position: static; height: min(86vh, 720px); padding: 6px 16px 12px; padding-bottom: max(12px, env(safe-area-inset-bottom, 0px)); }
+  /* the sheet reaches up to the tray (or the masthead), so no sliver of the page shows between them */
+  .aic-rail-in { position: static; height: calc(100vh - var(--masthead) - var(--cx-sticky)); height: calc(100dvh - var(--masthead) - var(--cx-sticky)); padding: 6px 16px 12px; padding-bottom: max(12px, env(safe-area-inset-bottom, 0px)); }
   .aic-spec.ch-spec { display: none; }
   .aic-rl-head { align-items: center; padding-top: 6px; }
   .aic-rl-c { align-self: center; }
@@ -12232,7 +12234,12 @@ PC.register('wafer', function (p) {
       var tip = $('#cx-tip'); if (tip) tip.hidden = true;
       this.renderChart(); this.stageNow();
       var el = this.cardEl();
-      if (o.show) { scrollToEl($('.aic-atlas'), false); this.placeCard(); var r = el.getBoundingClientRect(); if (r.bottom > window.innerHeight - 8) window.scrollBy(0, Math.round(r.bottom - window.innerHeight + 24)); }
+      if (o.show) { // bring the card into view: its foot clear of the phone's strip, its head clear of the masthead
+        scrollToEl($('.aic-atlas'), false); this.placeCard();
+        var st = $('.stage'), strip = narrow() && st && st.getAttribute('data-hidden') !== '1' ? st.getBoundingClientRect().height : 0;
+        var r = el.getBoundingClientRect(), room = window.innerHeight - strip - 12, over = r.bottom - room;
+        if (over > 0) { var root = document.documentElement, sb = root.style.scrollBehavior; root.style.scrollBehavior = 'auto'; window.scrollBy(0, Math.round(Math.min(over, r.top - headerH() - 12))); root.style.scrollBehavior = sb; }
+      }
       if (o.key || o.show) { var b = $('.aic-card-act input, .aic-card-act button', el); if (b) b.focus({ preventScroll: true }); }
     },
     openCrowd: function (ids) {

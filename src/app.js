@@ -1409,7 +1409,12 @@
       var tip = $('#cx-tip'); if (tip) tip.hidden = true;
       this.renderChart(); this.stageNow();
       var el = this.cardEl();
-      if (o.show) { scrollToEl($('.aic-atlas'), false); this.placeCard(); var r = el.getBoundingClientRect(); if (r.bottom > window.innerHeight - 8) window.scrollBy(0, Math.round(r.bottom - window.innerHeight + 24)); }
+      if (o.show) { // bring the card into view: its foot clear of the phone's strip, its head clear of the masthead
+        scrollToEl($('.aic-atlas'), false); this.placeCard();
+        var st = $('.stage'), strip = narrow() && st && st.getAttribute('data-hidden') !== '1' ? st.getBoundingClientRect().height : 0;
+        var r = el.getBoundingClientRect(), room = window.innerHeight - strip - 12, over = r.bottom - room;
+        if (over > 0) { var root = document.documentElement, sb = root.style.scrollBehavior; root.style.scrollBehavior = 'auto'; window.scrollBy(0, Math.round(Math.min(over, r.top - headerH() - 12))); root.style.scrollBehavior = sb; }
+      }
       if (o.key || o.show) { var b = $('.aic-card-act input, .aic-card-act button', el); if (b) b.focus({ preventScroll: true }); }
     },
     openCrowd: function (ids) {
