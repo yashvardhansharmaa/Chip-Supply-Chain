@@ -1237,10 +1237,10 @@
     /* ---- the chart: every chip by the month it was announced, against the measure the reader picks, or ranked highest first ---- */
     when: function (c) { var a = String(c.announced || ''), y = +a.slice(0, 4), mo = a.length >= 7 ? +a.slice(5, 7) : 0; return { t: mo ? y + (mo - 0.5) / 12 : y + 0.5, yearOnly: !mo, y: y }; },
     nice: function (v) { var e = Math.pow(10, Math.floor(Math.log10(v))), f = v / e; return (f <= 1 ? 1 : f <= 2 ? 2 : f <= 2.5 ? 2.5 : f <= 5 ? 5 : 10) * e; },
-    textW: function (s, px, bold) { // a label's width in the interface face, so labels are placed where they fit
+    textW: function (s, px, bold, code) { // a label's width in the interface face (or the code face, for a chip's number), so labels are placed where they fit
       var c = this._tc || (this._tc = document.createElement('canvas').getContext('2d'));
-      c.font = (bold ? '600 ' : '400 ') + px + 'px "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif';
-      return c.measureText(String(s)).width + 3;
+      c.font = code ? '400 ' + px + 'px "Fragment Mono", ui-monospace, Menlo, monospace' : (bold ? '600 ' : '400 ') + px + 'px "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif';
+      return c.measureText(String(s)).width + (code ? 0 : 3);
     },
     // the part of the chart a dot owns: its cell among all the dots (nearer to it than to any other), cut to a circle of radius R,
     // so a tap goes to the nearest dot and no dot hides another
@@ -1299,24 +1299,66 @@
       // two dots on one pixel (the same month and figure) are set 3 px apart, so each keeps a place of its own
       P.forEach(function (q, i) { for (var j = 0; j < i; j++) { var o = P[j]; if (Math.abs(o.cx - q.cx) < 1.5 && Math.abs(o.cy - q.cy) < 1.5) { q.cx += 3; j = -1; } } });
       this.pts = P;
-      var boxes = P.map(function (q) { return [q.cx - 7, q.cy - 7, q.cx + 7, q.cy + 7]; });
-      P.forEach(function (q) { if (q.p.d.yearOnly) boxes.push([x(q.p.d.y) + 3, q.cy - 2, x(q.p.d.y + 1) - 3, q.cy + 2]); }); // a year-only chip's line across its year
-      var clash = function (b) { for (var i = 0; i < boxes.length; i++) { var o = boxes[i]; if (b[0] < o[2] && b[2] > o[0] && b[1] < o[3] && b[3] > o[1]) return true; } return b[0] < m.l - 2 || b[2] > W - 2 || b[1] < 0 || b[3] > H - m.b; };
-      var inside = function (b) { return b[0] >= m.l - 4 && b[2] <= W - 2 && b[1] >= 0; };
-      var labels = '';
+      // what a label keeps clear of: every dot (a ringed one to the ring's edge), a year-only chip's line, the arrow over the scale,
+      // the unit over the axis, and every label and leader placed so far
+      var boxes = P.map(function (q) { var e = q.no || q.look ? 12 : 7; return [q.cx - e, q.cy - e, q.cx + e, q.cy + e]; });
+      P.forEach(function (q) {
+        if (q.p.d.yearOnly) boxes.push([x(q.p.d.y) + 3, q.cy - 2, x(q.p.d.y + 1) - 3, q.cy + 2]); // a year-only chip's line across its year
+        if (q.p.v > yMax) boxes.push([q.cx - 6, q.cy - 20, q.cx + 6, q.cy - 10]);
+      });
+      boxes.push([0, m.t - 28, String(row.unit).length * 6.7 + 4, m.t - 12]);
+      var hit = function (a, b) { return a[0] < b[2] && a[2] > b[0] && a[1] < b[3] && a[3] > b[1]; };
+      var area = function (a, b) { return (Math.min(a[2], b[2]) - Math.max(a[0], b[0])) * (Math.min(a[3], b[3]) - Math.max(a[1], b[1])); };
+      // a label's spot in one of eight directions at a distance r from its dot: beside it, above or below it, or on a diagonal
+      var DIRS = [[1, 0], [-1, 0], [0, -1], [0, 1], [0.71, -0.71], [-0.71, -0.71], [0.71, 0.71], [-0.71, 0.71]];
+      var FAR = [[0, -1], [0, 1], [1, 0], [-1, 0], [0.38, -0.92], [-0.38, -0.92], [0.92, -0.38], [-0.92, -0.38], [0.71, -0.71], [-0.71, -0.71],
+        [0.38, 0.92], [-0.38, 0.92], [0.92, 0.38], [-0.92, 0.38], [0.71, 0.71], [-0.71, 0.71]]; // further out: straight up or down first, then round
+      var spot = function (q, w, h, r, d) {
+        var ax = q.cx + d[0] * r, ay = q.cy + d[1] * r, bh = h + 2, a = d[0] > 0.3 ? 'start' : d[0] < -0.3 ? 'end' : 'middle';
+        var l = a === 'start' ? ax - 1 : a === 'end' ? ax - w : ax - w / 2, top = d[1] < -0.3 ? ay - bh : d[1] > 0.3 ? ay : ay - bh / 2;
+        return { x: ax, y: top + bh - 4, a: a, b: [l, top, l + w + 1, top + bh] };
+      };
+      // a label set further out is tied to its dot by a hairline, from the dot's edge to the nearest point of the label
+      var lead = function (sp, q) {
+        var e = (q.no || q.look ? 11.5 : q.top ? 7 : 5.5) + 1.5, nx = Math.max(sp.b[0], Math.min(q.cx, sp.b[2])), ny = Math.max(sp.b[1], Math.min(q.cy, sp.b[3]));
+        var dx = nx - q.cx, dy = ny - q.cy, dl = Math.hypot(dx, dy) || 1;
+        sp.lead = [q.cx + dx / dl * e, q.cy + dy / dl * e, nx - dx / dl * 2, ny - dy / dl * 2];
+        sp.dots = [];
+        for (var t = 0, len = Math.hypot(sp.lead[2] - sp.lead[0], sp.lead[3] - sp.lead[1]); t <= len; t += 4) { var px = sp.lead[0] + (sp.lead[2] - sp.lead[0]) * t / (len || 1), py = sp.lead[1] + (sp.lead[3] - sp.lead[1]) * t / (len || 1); sp.dots.push([px - 2.5, py - 2.5, px + 2.5, py + 2.5]); }
+      };
+      // a spot's cost: what it covers of the marks, labels and leaders so far (its own dot aside), and, for a label with no leader,
+      // whether it sits as near another named dot as its own, so it could be read as that one's; off the chart, never
+      var named = P.filter(function (q) { return q.no || q.look || q.top; });
+      var gap = function (q, b) { return Math.hypot(Math.max(b[0] - q.cx, 0, q.cx - b[2]), Math.max(b[1] - q.cy, 0, q.cy - b[3])); };
+      var cost = function (sp, q, own) {
+        var b = sp.b, s = 0; if (b[0] < m.l - 2 || b[2] > W - 2 || b[1] < 0 || b[3] > H - m.b) return Infinity;
+        for (var i = 0; i < boxes.length; i++) {
+          if (i === own) continue; var o = boxes[i];
+          if (hit(b, o)) s += 1 + area(b, o);
+          if (sp.dots) for (var k = 0; k < sp.dots.length; k++) if (hit(sp.dots[k], o)) s += 25;
+        }
+        if (!sp.lead) { var mine = gap(q, b); named.forEach(function (n) { if (n !== q && gap(n, b) < mine + 6) s += 80; }); }
+        return s;
+      };
+      var labels = '', leads = '';
       // labels: the ticked chips first, then the chip whose card is open, the largest, then the rest by value, each where it clears
-      // every dot and label so far; a narrow chart names only those first three kinds
+      // every dot and label so far. Any chip's label tries the four sides of its dot. A ticked chip, an open card or the largest
+      // must keep its label, so it also tries the diagonals, then spots further out on a leader, and at worst the spot that covers
+      // least. A narrow chart names only those three kinds.
       P.slice().sort(function (a, b) { return (b.no > 0) - (a.no > 0) || b.look - a.look || b.top - a.top || b.p.v - a.p.v; }).forEach(function (q) {
         var must = q.no > 0 || q.top || q.look; if (nar && !must) return;
-        var name = self.short(q.p.c), fs = must ? 12.5 : 11.5, h = fs + 3, o = q.no || q.look ? 15 : 10;
-        var w = self.textW((q.no ? q.no + ' ' : '') + name + (q.top ? ', ' + self.nf(q.p.v) : ''), fs, must);
-        var cands = [[q.cx + o, q.cy + 4, 'start', [q.cx + o - 1, q.cy - h / 2 - 1, q.cx + o + w, q.cy + h / 2]], [q.cx - o, q.cy + 4, 'end', [q.cx - o - w, q.cy - h / 2 - 1, q.cx - o + 1, q.cy + h / 2]],
-          [q.cx, q.cy - o - 3, 'middle', [q.cx - w / 2, q.cy - o - 2 - h + 2, q.cx + w / 2, q.cy - o + 1]], [q.cx, q.cy + o + 11, 'middle', [q.cx - w / 2, q.cy + o - 1, q.cx + w / 2, q.cy + o - 1 + h]]];
-        var pick = cands.filter(function (cd) { return !clash(cd[3]); })[0];
-        if (!pick && must) pick = cands.filter(function (cd) { return inside(cd[3]); })[0] || cands[1]; // a ticked chip, an open card or the largest keeps its label
-        if (!pick) return;
-        boxes.push(pick[3]);
-        labels += '<text class="lab' + (q.no ? ' mine' : '') + (q.top ? ' top' : '') + (q.look ? ' looked' : '') + '" x="' + r1(pick[0]) + '" y="' + r1(pick[1]) + '" text-anchor="' + pick[2] + '" aria-hidden="true">' +
+        var name = self.short(q.p.c), fs = must ? 12.5 : 11.5, h = fs + 3, o = q.no || q.look ? 15 : 10, own = P.indexOf(q);
+        var w = (q.no ? self.textW(q.no + ' ', fs, false, true) : 0) + self.textW(name + (q.top ? ', ' + self.nf(q.p.v) : ''), fs, must); // the number is set in the code face
+        var radii = [o], best = null, bc = Infinity; if (must) for (var k = 1; k <= 10; k++) radii.push(o + 14 * k);
+        for (var ri = 0; ri < radii.length && bc > 0; ri++) for (var di = 0, dirs = ri ? FAR : DIRS; di < (must ? dirs.length : 4); di++) {
+          var sp = spot(q, w, h, radii[ri], dirs[di]); if (ri) lead(sp, q);
+          var c = cost(sp, q, own); if (c && sp.lead) c += radii[ri] / 10; // when nothing is clear, a nearer spot wins
+          if (c < bc) { bc = c; best = sp; if (!c) break; }
+        }
+        if (!best || (bc > 0 && !must)) return;
+        boxes.push([best.b[0] - 2, best.b[1] - 1, best.b[2] + 2, best.b[3] + 1]); if (best.dots) best.dots.forEach(function (d) { boxes.push(d); });
+        if (best.lead) leads += '<line class="lead" x1="' + r1(best.lead[0]) + '" y1="' + r1(best.lead[1]) + '" x2="' + r1(best.lead[2]) + '" y2="' + r1(best.lead[3]) + '"/>';
+        labels += '<text class="lab' + (q.no ? ' mine' : '') + (q.top ? ' top' : '') + (q.look ? ' looked' : '') + '" x="' + r1(best.x) + '" y="' + r1(best.y) + '" text-anchor="' + best.a + '" aria-hidden="true">' +
           (q.no ? '<tspan class="lno">' + q.no + '</tspan> ' : '') + esc(name) + (q.top ? '<tspan class="lv">, ' + esc(self.nf(q.p.v)) + '</tspan>' : '') + '</text>';
       });
       // one dot holds the chart's Tab stop: the one whose card is open or last focused, else the largest
@@ -1332,7 +1374,7 @@
           '<circle class="fr" cx="' + cx + '" cy="' + cy + '" r="12"/>' + (q.no ? '<circle class="ring" cx="' + cx + '" cy="' + cy + '" r="10.5"/>' : q.look ? '<circle class="look" cx="' + cx + '" cy="' + cy + '" r="10.5"/>' : '') +
           '<circle class="dot" cx="' + cx + '" cy="' + cy + '" r="' + (q.top ? 7 : 5.5) + '"/></g>';
       }).join('');
-      host.innerHTML = '<svg width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '" role="group" aria-label="' + esc(row.short + ' of ' + have.length + ' chips, by the month each was announced. Arrow keys move between the dots, and Enter opens a chip’s card.') + '">' + g + dots + labels + '</svg>';
+      host.innerHTML = '<svg width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '" role="group" aria-label="' + esc(row.short + ' of ' + have.length + ' chips, by the month each was announced. Arrow keys move between the dots, and Enter opens a chip’s card.') + '">' + g + dots + (leads ? '<g class="leads" aria-hidden="true">' + leads + '</g>' : '') + labels + '</svg>';
     },
     // highest first: one line per chip, the largest bar solid ink and the rest the tint (rule B), each figure with its source mark
     drawRank: function (host, row, have, max, second, outlier) {
