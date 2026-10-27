@@ -1,0 +1,42 @@
+16 chapters on http://127.0.0.1:8774/#/chain
+
+PASS  1. every chapter opens alone at its address
+        16 of 16: one chapter shown, at its top (y 0), under its own title; before boot 16 of them had painted, each only itself; doors run 01 to 16, then to the contents. #/chain shows the contents and no chapter ([], contents true, title "The Chain · Chip Supply Chain")
+PASS  2. a section and a figure address in another chapter open the right chapter at the right place
+        section #memory-and-hbm--how-a-stack-is-built by a link from Lithography: shows memory-and-hbm, its top 0 px from where it lands
+        figure #fig-advanced-packaging-package-build by a link from Lithography: shows advanced-packaging, its top 0 px from where it lands
+        section #memory-and-hbm--how-a-stack-is-built on a fresh load: shows memory-and-hbm, 0 px from where it lands, painted before boot ["memory-and-hbm"]
+        figure #fig-advanced-packaging-package-build on a fresh load: shows advanced-packaging, 0 px from where it lands, painted before boot ["advanced-packaging"]
+        the link "Lithography" in silicon-and-wafers's text: shows lithography at y 0 (its top -12 px from where it lands)
+PASS  3. the door goes to the next chapter's top, and Back returns to the place left
+        door from Lithography (left at y 15219): #photomasks-and-pellicles, shows photomasks-and-pellicles at y 0, focus on ch-title is-long
+        Back: #lithography, shows lithography at y 15219
+        Forward: #photomasks-and-pellicles, shows photomasks-and-pellicles at y 0
+        the rail's chain list to chapter 08 from y 3000: shows foundries-and-fabs at y 0
+        Back: shows photomasks-and-pellicles at y 3000
+        Forward: shows foundries-and-fabs at y 2200, the place left in it
+        the Glossary tab (glossary), then Back: shows foundries-and-fabs at y 2200
+        The Chain's tab from chapter 08: #/chain, contents true, chapters shown 0, y 0, title "The Chain · Chip Supply Chain"
+        a contents row to chapter 14: shows data-centers-and-power at y 0
+        chapter 16's door: #/chain, contents true, y 0
+PASS  4. a search result inside a chapter lands
+        searched "Controls and China's answer" from Chip Design (y 2500), result 1: shows lithography, the heading 0 px from where it lands, focus on it true
+PASS  5. a Glossary passage link lands
+        "EUV", its passage in chemicals-gases-and-photoresist ("Chapter 03 Chemicals, Gases and PhotoresistIn 2021 JSR of Japan agreed to buy Inpria, an O…"): shows chemicals-gases-and-photoresist, the passage 0 px from where it lands, flashed true
+PASS  6. a Suppliers or AI Chips stage link lands
+        Japan's panel, "Photoresist reported by Fuji Keizai78%2023": shows chemicals-gases-and-photoresist at y 0; Back: suppliers #/suppliers?country=JP. AI Chips: 0 links to a stage on the page, so nothing to follow there
+PASS  7. print emulation of #/chain shows all 16 chapters
+        /#/chain: 16 chapters print, the head true, the contents true, doors printed 0
+        /#lithography: 16 chapters print, the head true, the contents true, doors printed 0
+PASS  8. page height at 1440 for one chapter
+        Lithography 16,233 px (scroll thumb 50 px on a 900 px window); chapters run 12,444 (component-costs) to 20,173 px (foundries-and-fabs); the whole chain laid out as one page is 230,205 px
+PASS  9. every other way in lands
+        the home page, a stage in its chain: shows memory-and-hbm at y 0
+        a look-up card (the Netherlands, its chokepoint card lithography): shows lithography at y 0
+        Export Controls, a board row's Read the chapter (geopolitics): shows geopolitics at y 0
+        the phone's contents sheet: shows memory-and-hbm at y 0
+        the phone's slim bar (#memory-and-hbm): shows memory-and-hbm at y 0
+        the specimen strip's Top (the strip reads "Specimen 09 · Memory and HBM"): shows memory-and-hbm at y 0
+        the phone's The Chain tab from chapter 09: the contents, the strip reads "Specimen 01 · Chip Design, EDA and IP", title "The Chain · Chip Supply Chain"
+
+9 of 9 pass

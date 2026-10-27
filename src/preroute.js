@@ -7,8 +7,8 @@
    anchor's id (every id in a chapter starts with the chapter's id, or with fig-, cite- or cite-fig- and the chapter's id),
    so one chapter paints and no other; an id it cannot place waits as "pending" until its element has arrived.
    The build runs route() over every id on the page and warns when one would open a view, or a chapter, other than the one it sits in.
-   An address of a chapter merged away (build/retired-chapters.js: #transistors-and-front-end, its sections and figures, and
-   #/walk/transistors-and-front-end) is swapped for the merged chapter's nearest one before anything else reads it (moved()),
+   An address of a chapter merged away (build/retired-chapters.js: the old chapter's id, its sections and figures, and its step
+   of the walk) is swapped for the merged chapter's nearest one before anything else reads it (moved()),
    and the router swaps a link followed later the same way (src/app.js Router.route, through CP_PRE.moved). */
 (function (root) {
   'use strict';

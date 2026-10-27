@@ -1,0 +1,1152 @@
+Text census for the merge of chapters 8 and 9: a572d29's dist (git archive, in a scratch folder) (before) against dist (after). Lines and link targets only before: 1506; only after: 815.
+
+== view walk: 383 lines; text only before 43, only after 22; links only before 101, only after 37
+   - 1 / 17
+   - 8 of the 15
+   - 15
+   - 15
+   - Extreme, 8
+   - A short read through the whole chain, about 12 min
+   - The Chain, 17 chapters
+   - Extreme
+   - Extreme
+   - concentration
+   - Transistors and the Front End
+   - Transistors and the Front End
+   - Stage 1 of 15
+   - Who leads
+   - ·
+   - ·
+   - Concentration
+   - Read the chapter
+   - Stage 2 of 15
+   - Stage 3 of 15
+   - Stage 4 of 15
+   - Stage 5 of 15
+   - Stage 6 of 15
+   - Stage 7 of 15
+   - Stage 8 of 15
+   - The front end of a chip factory is the part that builds the transistors, the billions of tiny switches in every chip. Each switch works like a valve. Current runs along a narrow strip of silicon called the channel, and a small voltage on a gate above the strip opens or shuts the flow. For decades chipmakers made the strips shorter, so the transistors switched faster and more of them fit on a chip. But once the strip gets short enough, the valve stops sealing. Current leaks through even when the gate is off, and the chip burns power doing nothing. The newest kind of transistor, called gate-all-around, cuts this leak by wrapping the gate around all four sides of the strip. Building them takes a long sequence of steps that have to run in exact order. Only three companies, TSMC, Intel and Samsung, make these switches in volume. In 2024 the United States began requiring a license to share the know-how for building them, except with countries that impose matching controls. This chapter covers the know-how for building the newest switches. Chapter 9 covers the factories where advanced semiconductors and AI GPUs are actually built, how many chips they can make and where they are. A chipmaker needs both, and having one does not bring the other. China's SMIC runs factories, but without EUV machines or the know-how for the newest switches, its most advanced chips are 7 nm-class. IBM developed 2 nm technology, but it yields no chips until Rapidus finishes a factory to run it, with mass production planned for 2027.
+   - TSMC rates N2P at 18% more speed at the same power, 36% less power at the same speed, 1.2x logic density and 1.15x chip density over N3E Source
+   - TSMC TW
+   - Samsung Foundry KR
+   - Stage 9 of 15
+   - A foundry is a company that makes chips for other companies in its chip factories, or fabs. Those companies send in their designs, and the foundry runs them all through the same building on the same tools. The building costs tens of billions of dollars, and the air inside is cleaner than in an operating room. Even so, each wafer, the silicon disc the chips are built on, moves from machine to machine inside sealed boxes and never touches that air. No chip company sells enough of one product to fill such a factory on its own, so chip companies share a handful of them. TSMC runs the biggest of these shared factories, and all six of its largest plants are in Taiwan. Taiwan also held most of the world's capacity for the most advanced logic chips in 2022. So a political crisis over Taiwan would put most of the supply of those chips at risk. This chapter covers the factories where advanced semiconductors and AI GPUs are actually built, how many chips they can make and where they are. Chapter 8 covers the know-how for building the newest switches inside them. A chipmaker needs both, and having one does not bring the other. Know-how without enough factories makes too few chips, and a new leading-edge factory costs tens of billions of dollars. Today only TSMC, Intel and Samsung have both for the newest chips.
+   - 7 nm and below was 79% of TSMC's wafer revenue in 3Q26, on revenue of $46.72 billion at a 66.4% gross margin Source
+   - TSMC defines a GIGAFAB as a 300 mm fab with monthly capacity above 100,000 wafers. It operates six, whose combined capacity exceeded 13 million 12-inch equivalent wafers in 2025 Source
+   - Intel Foundry US
+   - Stage 10 of 15
+   - Stage 11 of 15
+   - Stage 12 of 15
+   - Stage 13 of 15
+   - Stage 14 of 15
+   - Stage 15 of 15
+   - 17
+   - Chapter 17
+   - The full semiconductor supply chain explained in detail, in seventeen chapters, with all sources linked.
+   + 1 / 16
+   + 7 of the 14
+   + Extreme, 7
+   + A short read through the whole chain, about 11 min
+   + The Chain, 16 chapters
+   + Stage 1 of 14
+   + Stage 2 of 14
+   + Stage 3 of 14
+   + Stage 4 of 14
+   + Stage 5 of 14
+   + Stage 6 of 14
+   + Stage 7 of 14
+   + Stage 8 of 14
+   + A chip factory, or fab, builds the transistors, the billions of tiny switches in every chip, and then wires them together. Each switch works like a valve. Current runs along a narrow strip of silicon called the channel, and a small voltage on a gate above the strip opens or shuts the flow. For decades chipmakers made the strips shorter, so the transistors switched faster and more of them fit on a chip. But once the strip gets short enough, current leaks through even when the gate is off, and the chip burns power doing nothing. The newest kind of transistor, called gate-all-around, cuts this leak by wrapping the gate around all four sides of the strip. A chipmaker needs two things to make the newest chips, and having one does not bring the other. The first is the know-how to build the newest switches, a long sequence of steps that have to run in exact order. In 2026 only TSMC, Intel and Samsung had it. The second is factories that cost tens of billions of dollars each, and in 2022 most of the world's capacity for the most advanced logic chips was in Taiwan. China's SMIC runs factories, but without EUV machines or the know-how for the newest switches, its most advanced chips are 7 nm-class. IBM developed 2 nm technology, but it yields no chips until Rapidus finishes a factory to run it, with mass production planned for 2027. No chip company sells enough of one product to fill such a factory on its own, so chip companies share a handful of them, run by foundries that make chips for other companies. TSMC runs the biggest, and all six of its largest plants are in Taiwan.
+   + The facilities TSMC and its subsidiaries manage had annual capacity of more than 17 million 12-inch equivalent wafers in 2025, and all of its GIGAFAB facilities are in Taiwan Source
+   + Stage 9 of 14
+   + Stage 10 of 14
+   + Stage 11 of 14
+   + Stage 12 of 14
+   + Stage 13 of 14
+   + Stage 14 of 14
+   + The full semiconductor supply chain explained in detail, in sixteen chapters, with all sources linked.
+   links: -#design-and-eda (1) -#silicon-and-wafers (1) -#chemicals-gases-and-photoresist (1) -#lithography (1) -#photomasks-and-pellicles (1) -#deposition-and-etch (1) -#metrology-and-inspection (1) -#transistors-and-front-end (45) -#memory-and-hbm (1) -#advanced-packaging (1) -#test-and-assembly (1) -#systems-and-networking (1) -#data-centers-and-power (1) -#component-costs (1) -#geopolitics (2) -#/walk/transistors-and-front-end (2) -transistors-and-front-end/ (1) -#transistors-and-front-end--plain (1) -#transistors-and-front-end--card (1) -#transistors-and-front-end--how-it-works (3) -#transistors-and-front-end--variants-and-trade-offs (2) -#transistors-and-front-end--the-back-end-of-line (2) -#transistors-and-front-end--who-makes-it (3) -#transistors-and-front-end--the-chokepoint (4) -#transistors-and-front-end--flashcards (1) -#transistors-and-front-end--sources (1) -#fig-transistors-and-front-end-switch-shapes (3) -#fig-transistors-and-front-end-density-by-node (3) -#fig-transistors-and-front-end-node-roadmap (3) -#transistors-and-front-end--planar-and-finfet (1) -#transistors-and-front-end--gate-all-around-nanosheets (1) -#transistors-and-front-end--backside-power-delivery (1) -#transistors-and-front-end--cfet-and-what-comes-after (1) -#foundries-and-fabs--variants-and-trade-offs (2) -#foundries-and-fabs--the-chokepoint (1) -#foundries-and-fabs--pure-play-foundries (1) -#foundries-and-fabs--integrated-device-makers-turned-foundry (1) -#foundries-and-fabs--national-champions (1) -#foundries-and-fabs--mature-node-capacity (1) +#foundries-and-fabs (17) +#substrates-and-pcbs (1) +#foundries-and-fabs--how-a-transistor-is-built (2) +#foundries-and-fabs--the-newest-designs (2) +#foundries-and-fabs--the-back-end-of-line (2) +#foundries-and-fabs--the-foundry-and-the-fab (3) +#foundries-and-fabs--capacity-and-cost (1) +#fig-foundries-and-fabs-switch-shapes (3) +#fig-foundries-and-fabs-node-roadmap (3) +#foundries-and-fabs--gate-all-around-nanosheets (1) +#foundries-and-fabs--backside-power-delivery (1) +#foundries-and-fabs--cfet-and-what-comes-after (1)
+== view chain contents: 82 lines; text only before 7, only after 4; links only before 101, only after 37
+   - The Chain covers each of the fifteen stages of making an AI chip in detail, one chapter per stage, in the order a chip is made, from design software to the data center. Two more chapters at the end look across all the stages, at what a chip costs and who controls the chain. To help readers learn, each chapter has a 3D model, most have an animation, and every one ends with flashcards.
+   - The fifteen stages of the chain
+   - Transistors and the Front End
+   - Building the newest transistors takes a long run of steps in exact order, and only TSMC, Intel and Samsung can do it in volume at the 2 nm class.
+   - A foundry builds other companies' chip designs in factories it owns, so those companies can share a factory instead of each building their own. TSMC runs the biggest, and its six largest plants are all in Taiwan.
+   - These two chapters are not stages. They look across all fifteen, at what a chip costs and at the contest over who controls each stage.
+   - 17
+   + The Chain covers each of the fourteen stages of making an AI chip in detail, one chapter per stage, in the order a chip is made, from design software to the data center. Two more chapters at the end look across all the stages, at what a chip costs and who controls the chain. To help readers learn, each chapter has a 3D model, most have an animation, and every one ends with flashcards.
+   + The fourteen stages of the chain
+   + The newest chips need the know-how to build the newest transistors and a fab that costs tens of billions of dollars. Only TSMC, Intel and Samsung have both.
+   + These two chapters are not stages. They look across all fourteen, at what a chip costs and at the contest over who controls each stage.
+   links: -#design-and-eda (1) -#silicon-and-wafers (1) -#chemicals-gases-and-photoresist (1) -#lithography (1) -#photomasks-and-pellicles (1) -#deposition-and-etch (1) -#metrology-and-inspection (1) -#transistors-and-front-end (45) -#memory-and-hbm (1) -#advanced-packaging (1) -#test-and-assembly (1) -#systems-and-networking (1) -#data-centers-and-power (1) -#component-costs (1) -#geopolitics (2) -#/walk/transistors-and-front-end (2) -transistors-and-front-end/ (1) -#transistors-and-front-end--plain (1) -#transistors-and-front-end--card (1) -#transistors-and-front-end--how-it-works (3) -#transistors-and-front-end--variants-and-trade-offs (2) -#transistors-and-front-end--the-back-end-of-line (2) -#transistors-and-front-end--who-makes-it (3) -#transistors-and-front-end--the-chokepoint (4) -#transistors-and-front-end--flashcards (1) -#transistors-and-front-end--sources (1) -#fig-transistors-and-front-end-switch-shapes (3) -#fig-transistors-and-front-end-density-by-node (3) -#fig-transistors-and-front-end-node-roadmap (3) -#transistors-and-front-end--planar-and-finfet (1) -#transistors-and-front-end--gate-all-around-nanosheets (1) -#transistors-and-front-end--backside-power-delivery (1) -#transistors-and-front-end--cfet-and-what-comes-after (1) -#foundries-and-fabs--variants-and-trade-offs (2) -#foundries-and-fabs--the-chokepoint (1) -#foundries-and-fabs--pure-play-foundries (1) -#foundries-and-fabs--integrated-device-makers-turned-foundry (1) -#foundries-and-fabs--national-champions (1) -#foundries-and-fabs--mature-node-capacity (1) +#foundries-and-fabs (17) +#substrates-and-pcbs (1) +#foundries-and-fabs--how-a-transistor-is-built (2) +#foundries-and-fabs--the-newest-designs (2) +#foundries-and-fabs--the-back-end-of-line (2) +#foundries-and-fabs--the-foundry-and-the-fab (3) +#foundries-and-fabs--capacity-and-cost (1) +#fig-foundries-and-fabs-switch-shapes (3) +#fig-foundries-and-fabs-node-roadmap (3) +#foundries-and-fabs--gate-all-around-nanosheets (1) +#foundries-and-fabs--backside-power-delivery (1) +#foundries-and-fabs--cfet-and-what-comes-after (1)
+== view ai-chips: 180 lines; text only before 0, only after 0; links only before 101, only after 37
+   links: -#design-and-eda (1) -#silicon-and-wafers (1) -#chemicals-gases-and-photoresist (1) -#lithography (1) -#photomasks-and-pellicles (1) -#deposition-and-etch (1) -#metrology-and-inspection (1) -#transistors-and-front-end (45) -#memory-and-hbm (1) -#advanced-packaging (1) -#test-and-assembly (1) -#systems-and-networking (1) -#data-centers-and-power (1) -#component-costs (1) -#geopolitics (2) -#/walk/transistors-and-front-end (2) -transistors-and-front-end/ (1) -#transistors-and-front-end--plain (1) -#transistors-and-front-end--card (1) -#transistors-and-front-end--how-it-works (3) -#transistors-and-front-end--variants-and-trade-offs (2) -#transistors-and-front-end--the-back-end-of-line (2) -#transistors-and-front-end--who-makes-it (3) -#transistors-and-front-end--the-chokepoint (4) -#transistors-and-front-end--flashcards (1) -#transistors-and-front-end--sources (1) -#fig-transistors-and-front-end-switch-shapes (3) -#fig-transistors-and-front-end-density-by-node (3) -#fig-transistors-and-front-end-node-roadmap (3) -#transistors-and-front-end--planar-and-finfet (1) -#transistors-and-front-end--gate-all-around-nanosheets (1) -#transistors-and-front-end--backside-power-delivery (1) -#transistors-and-front-end--cfet-and-what-comes-after (1) -#foundries-and-fabs--variants-and-trade-offs (2) -#foundries-and-fabs--the-chokepoint (1) -#foundries-and-fabs--pure-play-foundries (1) -#foundries-and-fabs--integrated-device-makers-turned-foundry (1) -#foundries-and-fabs--national-champions (1) -#foundries-and-fabs--mature-node-capacity (1) +#foundries-and-fabs (17) +#substrates-and-pcbs (1) +#foundries-and-fabs--how-a-transistor-is-built (2) +#foundries-and-fabs--the-newest-designs (2) +#foundries-and-fabs--the-back-end-of-line (2) +#foundries-and-fabs--the-foundry-and-the-fab (3) +#foundries-and-fabs--capacity-and-cost (1) +#fig-foundries-and-fabs-switch-shapes (3) +#fig-foundries-and-fabs-node-roadmap (3) +#foundries-and-fabs--gate-all-around-nanosheets (1) +#foundries-and-fabs--backside-power-delivery (1) +#foundries-and-fabs--cfet-and-what-comes-after (1)
+== view suppliers: 354 lines; text only before 5, only after 1; links only before 101, only after 37
+   - The 15 stages of the chain, each pinned where a leading firm is based
+   - 15
+   - 15
+   - Transistors & the Front End
+   - Tainan · TW
+   + The 14 stages of the chain, each pinned where a leading firm is based
+   links: -#design-and-eda (1) -#silicon-and-wafers (1) -#chemicals-gases-and-photoresist (1) -#lithography (1) -#photomasks-and-pellicles (1) -#deposition-and-etch (1) -#metrology-and-inspection (1) -#transistors-and-front-end (45) -#memory-and-hbm (1) -#advanced-packaging (1) -#test-and-assembly (1) -#systems-and-networking (1) -#data-centers-and-power (1) -#component-costs (1) -#geopolitics (2) -#/walk/transistors-and-front-end (2) -transistors-and-front-end/ (1) -#transistors-and-front-end--plain (1) -#transistors-and-front-end--card (1) -#transistors-and-front-end--how-it-works (3) -#transistors-and-front-end--variants-and-trade-offs (2) -#transistors-and-front-end--the-back-end-of-line (2) -#transistors-and-front-end--who-makes-it (3) -#transistors-and-front-end--the-chokepoint (4) -#transistors-and-front-end--flashcards (1) -#transistors-and-front-end--sources (1) -#fig-transistors-and-front-end-switch-shapes (3) -#fig-transistors-and-front-end-density-by-node (3) -#fig-transistors-and-front-end-node-roadmap (3) -#transistors-and-front-end--planar-and-finfet (1) -#transistors-and-front-end--gate-all-around-nanosheets (1) -#transistors-and-front-end--backside-power-delivery (1) -#transistors-and-front-end--cfet-and-what-comes-after (1) -#foundries-and-fabs--variants-and-trade-offs (2) -#foundries-and-fabs--the-chokepoint (1) -#foundries-and-fabs--pure-play-foundries (1) -#foundries-and-fabs--integrated-device-makers-turned-foundry (1) -#foundries-and-fabs--national-champions (1) -#foundries-and-fabs--mature-node-capacity (1) +#foundries-and-fabs (17) +#substrates-and-pcbs (1) +#foundries-and-fabs--how-a-transistor-is-built (2) +#foundries-and-fabs--the-newest-designs (2) +#foundries-and-fabs--the-back-end-of-line (2) +#foundries-and-fabs--the-foundry-and-the-fab (3) +#foundries-and-fabs--capacity-and-cost (1) +#fig-foundries-and-fabs-switch-shapes (3) +#fig-foundries-and-fabs-node-roadmap (3) +#foundries-and-fabs--gate-all-around-nanosheets (1) +#foundries-and-fabs--backside-power-delivery (1) +#foundries-and-fabs--cfet-and-what-comes-after (1)
+== view suppliers-by-country: 343 lines; text only before 5, only after 1; links only before 101, only after 37
+   - The 15 stages of the chain, each pinned where a leading firm is based
+   - 15
+   - 15
+   - Transistors & the Front End
+   - Tainan · TW
+   + The 14 stages of the chain, each pinned where a leading firm is based
+   links: -#design-and-eda (1) -#silicon-and-wafers (1) -#chemicals-gases-and-photoresist (1) -#lithography (1) -#photomasks-and-pellicles (1) -#deposition-and-etch (1) -#metrology-and-inspection (1) -#transistors-and-front-end (45) -#memory-and-hbm (1) -#advanced-packaging (1) -#test-and-assembly (1) -#systems-and-networking (1) -#data-centers-and-power (1) -#component-costs (1) -#geopolitics (2) -#/walk/transistors-and-front-end (2) -transistors-and-front-end/ (1) -#transistors-and-front-end--plain (1) -#transistors-and-front-end--card (1) -#transistors-and-front-end--how-it-works (3) -#transistors-and-front-end--variants-and-trade-offs (2) -#transistors-and-front-end--the-back-end-of-line (2) -#transistors-and-front-end--who-makes-it (3) -#transistors-and-front-end--the-chokepoint (4) -#transistors-and-front-end--flashcards (1) -#transistors-and-front-end--sources (1) -#fig-transistors-and-front-end-switch-shapes (3) -#fig-transistors-and-front-end-density-by-node (3) -#fig-transistors-and-front-end-node-roadmap (3) -#transistors-and-front-end--planar-and-finfet (1) -#transistors-and-front-end--gate-all-around-nanosheets (1) -#transistors-and-front-end--backside-power-delivery (1) -#transistors-and-front-end--cfet-and-what-comes-after (1) -#foundries-and-fabs--variants-and-trade-offs (2) -#foundries-and-fabs--the-chokepoint (1) -#foundries-and-fabs--pure-play-foundries (1) -#foundries-and-fabs--integrated-device-makers-turned-foundry (1) -#foundries-and-fabs--national-champions (1) -#foundries-and-fabs--mature-node-capacity (1) +#foundries-and-fabs (17) +#substrates-and-pcbs (1) +#foundries-and-fabs--how-a-transistor-is-built (2) +#foundries-and-fabs--the-newest-designs (2) +#foundries-and-fabs--the-back-end-of-line (2) +#foundries-and-fabs--the-foundry-and-the-fab (3) +#foundries-and-fabs--capacity-and-cost (1) +#fig-foundries-and-fabs-switch-shapes (3) +#fig-foundries-and-fabs-node-roadmap (3) +#foundries-and-fabs--gate-all-around-nanosheets (1) +#foundries-and-fabs--backside-power-delivery (1) +#foundries-and-fabs--cfet-and-what-comes-after (1)
+== view export-controls: 731 lines; text only before 0, only after 0; links only before 101, only after 37
+   links: -#design-and-eda (1) -#silicon-and-wafers (1) -#chemicals-gases-and-photoresist (1) -#lithography (1) -#photomasks-and-pellicles (1) -#deposition-and-etch (1) -#metrology-and-inspection (1) -#transistors-and-front-end (45) -#memory-and-hbm (1) -#advanced-packaging (1) -#test-and-assembly (1) -#systems-and-networking (1) -#data-centers-and-power (1) -#component-costs (1) -#geopolitics (2) -#/walk/transistors-and-front-end (2) -transistors-and-front-end/ (1) -#transistors-and-front-end--plain (1) -#transistors-and-front-end--card (1) -#transistors-and-front-end--how-it-works (3) -#transistors-and-front-end--variants-and-trade-offs (2) -#transistors-and-front-end--the-back-end-of-line (2) -#transistors-and-front-end--who-makes-it (3) -#transistors-and-front-end--the-chokepoint (4) -#transistors-and-front-end--flashcards (1) -#transistors-and-front-end--sources (1) -#fig-transistors-and-front-end-switch-shapes (3) -#fig-transistors-and-front-end-density-by-node (3) -#fig-transistors-and-front-end-node-roadmap (3) -#transistors-and-front-end--planar-and-finfet (1) -#transistors-and-front-end--gate-all-around-nanosheets (1) -#transistors-and-front-end--backside-power-delivery (1) -#transistors-and-front-end--cfet-and-what-comes-after (1) -#foundries-and-fabs--variants-and-trade-offs (2) -#foundries-and-fabs--the-chokepoint (1) -#foundries-and-fabs--pure-play-foundries (1) -#foundries-and-fabs--integrated-device-makers-turned-foundry (1) -#foundries-and-fabs--national-champions (1) -#foundries-and-fabs--mature-node-capacity (1) +#foundries-and-fabs (17) +#substrates-and-pcbs (1) +#foundries-and-fabs--how-a-transistor-is-built (2) +#foundries-and-fabs--the-newest-designs (2) +#foundries-and-fabs--the-back-end-of-line (2) +#foundries-and-fabs--the-foundry-and-the-fab (3) +#foundries-and-fabs--capacity-and-cost (1) +#fig-foundries-and-fabs-switch-shapes (3) +#fig-foundries-and-fabs-node-roadmap (3) +#foundries-and-fabs--gate-all-around-nanosheets (1) +#foundries-and-fabs--backside-power-delivery (1) +#foundries-and-fabs--cfet-and-what-comes-after (1)
+== view china-revenue: 258 lines; text only before 0, only after 0; links only before 101, only after 37
+   links: -#design-and-eda (1) -#silicon-and-wafers (1) -#chemicals-gases-and-photoresist (1) -#lithography (1) -#photomasks-and-pellicles (1) -#deposition-and-etch (1) -#metrology-and-inspection (1) -#transistors-and-front-end (45) -#memory-and-hbm (1) -#advanced-packaging (1) -#test-and-assembly (1) -#systems-and-networking (1) -#data-centers-and-power (1) -#component-costs (1) -#geopolitics (2) -#/walk/transistors-and-front-end (2) -transistors-and-front-end/ (1) -#transistors-and-front-end--plain (1) -#transistors-and-front-end--card (1) -#transistors-and-front-end--how-it-works (3) -#transistors-and-front-end--variants-and-trade-offs (2) -#transistors-and-front-end--the-back-end-of-line (2) -#transistors-and-front-end--who-makes-it (3) -#transistors-and-front-end--the-chokepoint (4) -#transistors-and-front-end--flashcards (1) -#transistors-and-front-end--sources (1) -#fig-transistors-and-front-end-switch-shapes (3) -#fig-transistors-and-front-end-density-by-node (3) -#fig-transistors-and-front-end-node-roadmap (3) -#transistors-and-front-end--planar-and-finfet (1) -#transistors-and-front-end--gate-all-around-nanosheets (1) -#transistors-and-front-end--backside-power-delivery (1) -#transistors-and-front-end--cfet-and-what-comes-after (1) -#foundries-and-fabs--variants-and-trade-offs (2) -#foundries-and-fabs--the-chokepoint (1) -#foundries-and-fabs--pure-play-foundries (1) -#foundries-and-fabs--integrated-device-makers-turned-foundry (1) -#foundries-and-fabs--national-champions (1) -#foundries-and-fabs--mature-node-capacity (1) +#foundries-and-fabs (17) +#substrates-and-pcbs (1) +#foundries-and-fabs--how-a-transistor-is-built (2) +#foundries-and-fabs--the-newest-designs (2) +#foundries-and-fabs--the-back-end-of-line (2) +#foundries-and-fabs--the-foundry-and-the-fab (3) +#foundries-and-fabs--capacity-and-cost (1) +#fig-foundries-and-fabs-switch-shapes (3) +#fig-foundries-and-fabs-node-roadmap (3) +#foundries-and-fabs--gate-all-around-nanosheets (1) +#foundries-and-fabs--backside-power-delivery (1) +#foundries-and-fabs--cfet-and-what-comes-after (1)
+== view glossary: 3489 lines; text only before 86, only after 86; links only before 137, only after 57
+   - Read it in Silicon and Wafers Also in Metrology and Inspection, Transistors and the Front End, Foundries and Fabs, Test and Assembly, The Economics of AI Chips
+   - Where it appears, 30 places
+   - Where it appears, 20 places
+   - Card and 10 places
+   - Card and 28 places
+   - Card and 6 places
+   - named on 2 of 15 chokepoint cards · 3 firms in the supplier list, 1 Critical
+   - Read it in Transistors and the Front End Also in Advanced Packaging, Test and Assembly
+   - Where it appears, 10 places
+   - Where it appears, 10 places
+   - Read it in Transistors and the Front End Also in Deposition and Etch
+   - Read it in Transistors and the Front End Also in Deposition and Etch
+   - Read it in Transistors and the Front End Also in Deposition and Etch
+   - Where it appears, 7 places
+   - Where it appears, 7 places
+   - Read it in Who Controls the Chain Also in Transistors and the Front End
+   - Where it appears, 2 places
+   - named on 0 of 15 chokepoint cards · 3 firms in the supplier list
+   - named on 9 of 15 chokepoint cards · 33 firms in the supplier list
+   - Card and 302 places
+   - Read it in Silicon and Wafers Also in Chip Design, EDA and IP, Chemicals, Gases and Photoresist, Lithography, Photomasks and Pellicles, Deposition and Etch, Metrology and Inspection, Transistors and the Front End, Foundries and Fabs, Memory and HBM, Advanced Packaging, Substrates and PCBs, Test and Assembly, Systems and Networking, Data Centers and Power, The Economics of AI Chips, Who Controls the Chain
+   - Where it appears, 290 places
+   - Where it appears, 16 places
+   - Read it in Transistors and the Front End
+   - Where it appears, 19 places
+   - Where it appears, 19 places
+   - Read it in Lithography Also in Chip Design, EDA and IP, Transistors and the Front End, Memory and HBM, Who Controls the Chain
+   - Read it in Deposition and Etch Also in Silicon and Wafers, Chemicals, Gases and Photoresist, Lithography, Metrology and Inspection, Transistors and the Front End, Advanced Packaging, Who Controls the Chain
+   - Read it in Silicon and Wafers Also in Chip Design, EDA and IP, Metrology and Inspection, Transistors and the Front End, Memory and HBM, Advanced Packaging, Test and Assembly, The Economics of AI Chips
+   - Read it in Lithography Also in Photomasks and Pellicles, Transistors and the Front End, Foundries and Fabs, Who Controls the Chain
+   - Read it in Silicon and Wafers Also in Deposition and Etch, Transistors and the Front End
+   - Read it in Deposition and Etch Also in Chemicals, Gases and Photoresist, Lithography, Photomasks and Pellicles, Metrology and Inspection, Transistors and the Front End, Memory and HBM, Advanced Packaging, Who Controls the Chain
+   - Read it in Lithography Also in Chemicals, Gases and Photoresist, Photomasks and Pellicles, Metrology and Inspection, Transistors and the Front End, Foundries and Fabs, Who Controls the Chain
+   - Where it appears, 113 places
+   - Read it in Foundries and Fabs Also in Silicon and Wafers, Chemicals, Gases and Photoresist, Lithography, Photomasks and Pellicles, Deposition and Etch, Metrology and Inspection, Transistors and the Front End, Advanced Packaging, Data Centers and Power, Who Controls the Chain
+   - Where it appears, 77 places
+   - Read it in Foundries and Fabs Also in Chip Design, EDA and IP, Lithography, Photomasks and Pellicles, Transistors and the Front End, Who Controls the Chain
+   - Where it appears, 47 places
+   - Where it appears, 47 places
+   - named on 1 of 15 chokepoint cards · 3 firms in the supplier list
+   - named on 1 of 15 chokepoint cards · 3 firms in the supplier list
+   - Read it in Transistors and the Front End Also in Advanced Packaging
+   - Read it in Transistors and the Front End Also in Chip Design, EDA and IP, Deposition and Etch, Who Controls the Chain
+   - Where it appears, 24 places
+   - named on 4 of 15 chokepoint cards · 10 firms in the supplier list, 2 Critical
+   - In Chip Design, EDA and IP, Silicon and Wafers, Transistors and the Front End, Foundries and Fabs, Memory and HBM, Substrates and PCBs, Systems and Networking, Data Centers and Power, The Economics of AI Chips
+   - Where it appears, 48 places
+   - Where it appears, 48 places
+   - Read it in Memory and HBM Also in Chip Design, EDA and IP, Silicon and Wafers, Deposition and Etch, Metrology and Inspection, Transistors and the Front End, Foundries and Fabs, Advanced Packaging, Test and Assembly, The Economics of AI Chips, Who Controls the Chain
+   - Foundries announce the date a process reaches it, and before then the process runs only in trials such as risk production.
+   - Read it in Foundries and Fabs Also in Lithography, Photomasks and Pellicles, Deposition and Etch, Transistors and the Front End, Memory and HBM, Advanced Packaging, Substrates and PCBs, Test and Assembly, Systems and Networking, Who Controls the Chain
+   - Read it in Lithography Also in Chemicals, Gases and Photoresist, Transistors and the Front End, Who Controls the Chain
+   - Card and 58 places
+   - named on 2 of 15 chokepoint cards · 3 firms in the supplier list
+   - leads 4 stages, 2 of them extreme · named on 14 of 15 chokepoint cards · 45 firms in the supplier list, 11 Critical
+   - Card and 115 places
+   - Read it in Transistors and the Front End Also in Chip Design, EDA and IP, Silicon and Wafers, Lithography, Photomasks and Pellicles, Foundries and Fabs, Memory and HBM, Test and Assembly, Data Centers and Power, The Economics of AI Chips, Who Controls the Chain
+   - Where it appears, 61 places
+   - Read it in Lithography Also in Silicon and Wafers, Chemicals, Gases and Photoresist, Photomasks and Pellicles, Deposition and Etch, Transistors and the Front End, Advanced Packaging, Substrates and PCBs, Test and Assembly, Who Controls the Chain
+   - Where it appears, 67 places
+   - Read it in Foundries and Fabs Also in Silicon and Wafers, Deposition and Etch, Metrology and Inspection, Transistors and the Front End, Advanced Packaging, Substrates and PCBs, Test and Assembly, The Economics of AI Chips, Who Controls the Chain
+   - Where it appears, 32 places
+   - named on 1 of 15 chokepoint cards
+   - Read it in The Economics of AI Chips Also in Chip Design, EDA and IP, Transistors and the Front End, Memory and HBM, Advanced Packaging
+   - leads 1 stage, of extreme concentration · named on 4 of 15 chokepoint cards · 4 firms in the supplier list, 1 Critical
+   - Read it in Transistors and the Front End Also in Foundries and Fabs, Who Controls the Chain
+   - Read it in Transistors and the Front End Also in Photomasks and Pellicles, Foundries and Fabs, Who Controls the Chain
+   - Read it in Transistors and the Front End Also in Deposition and Etch, Metrology and Inspection
+   - Read it in Lithography Also in Chip Design, EDA and IP, Chemicals, Gases and Photoresist, Photomasks and Pellicles, Transistors and the Front End, Foundries and Fabs, Advanced Packaging, Substrates and PCBs, Test and Assembly, The Economics of AI Chips
+   - Read it in Chip Design, EDA and IP Also in Foundries and Fabs
+   - Card and 37 places
+   - leads 1 stage, of extreme concentration · named on 7 of 15 chokepoint cards · 15 firms in the supplier list, 3 Critical
+   - Card and 53 places
+   - Read it in Transistors and the Front End Also in Chip Design, EDA and IP, Advanced Packaging
+   - named on 1 of 15 chokepoint cards · 3 firms in the supplier list, 1 Critical
+   - leads 4 stages, 3 of them extreme · named on 10 of 15 chokepoint cards · 25 firms in the supplier list, 1 Critical
+   - Card and 94 places
+   - Read it in Transistors and the Front End Also in Chip Design, EDA and IP, Photomasks and Pellicles, Who Controls the Chain
+   - Read it in Transistors and the Front End Also in Who Controls the Chain
+   - Card and 129 places
+   - named on 1 of 15 chokepoint cards · 5 firms in the supplier list, 1 Critical
+   - leads 5 stages, 1 of them extreme · named on 14 of 15 chokepoint cards · 67 firms in the supplier list, 7 Critical
+   - Card and 263 places
+   - Read it in Silicon and Wafers Also in Chemicals, Gases and Photoresist, Lithography, Photomasks and Pellicles, Deposition and Etch, Metrology and Inspection, Transistors and the Front End, Foundries and Fabs, Memory and HBM, Advanced Packaging, Test and Assembly, Data Centers and Power, The Economics of AI Chips, Who Controls the Chain
+   - Where it appears, 164 places
+   - Read it in The Economics of AI Chips Also in Chemicals, Gases and Photoresist, Deposition and Etch, Metrology and Inspection, Transistors and the Front End, Advanced Packaging, Substrates and PCBs, Who Controls the Chain
+   + Read it in Silicon and Wafers Also in Metrology and Inspection, Foundries and Fabs, Test and Assembly, The Economics of AI Chips
+   + Where it appears, 29 places
+   + Where it appears, 4 places
+   + Where it appears, 4 places
+   + Where it appears, 9 places
+   + Where it appears, 9 places
+   + Card and 3 places
+   + Card and 3 places
+   + Where it appears, 45 places
+   + Where it appears, 22 places
+   + Card and 27 places
+   + Where it appears, 17 places
+   + Where it appears, 3 places
+   + named on 2 of 14 chokepoint cards · 3 firms in the supplier list, 1 Critical
+   + Read it in Foundries and Fabs Also in Advanced Packaging, Test and Assembly
+   + Read it in Foundries and Fabs Also in Deposition and Etch
+   + Read it in Foundries and Fabs Also in Deposition and Etch
+   + Read it in Foundries and Fabs Also in Deposition and Etch
+   + Where it appears, 8 places
+   + Read it in Who Controls the Chain Also in Foundries and Fabs
+   + named on 0 of 14 chokepoint cards · 3 firms in the supplier list
+   + named on 8 of 14 chokepoint cards · 33 firms in the supplier list
+   + Card and 299 places
+   + Read it in Silicon and Wafers Also in Chip Design, EDA and IP, Chemicals, Gases and Photoresist, Lithography, Photomasks and Pellicles, Deposition and Etch, Metrology and Inspection, Foundries and Fabs, Memory and HBM, Advanced Packaging, Substrates and PCBs, Test and Assembly, Systems and Networking, Data Centers and Power, The Economics of AI Chips, Who Controls the Chain
+   + Where it appears, 284 places
+   + Read it in Chip Design, EDA and IP
+   + Read it in Foundries and Fabs
+   + Where it appears, 18 places
+   + Where it appears, 18 places
+   + Where it appears, 41 places
+   + Read it in Lithography Also in Chip Design, EDA and IP, Foundries and Fabs, Memory and HBM, Who Controls the Chain
+   + Read it in Deposition and Etch Also in Silicon and Wafers, Chemicals, Gases and Photoresist, Lithography, Metrology and Inspection, Foundries and Fabs, Advanced Packaging, Who Controls the Chain
+   + Read it in Silicon and Wafers Also in Chip Design, EDA and IP, Metrology and Inspection, Foundries and Fabs, Memory and HBM, Advanced Packaging, Test and Assembly, The Economics of AI Chips
+   + Read it in Lithography Also in Photomasks and Pellicles, Foundries and Fabs, Who Controls the Chain
+   + Read it in Silicon and Wafers Also in Deposition and Etch, Foundries and Fabs
+   + Read it in Deposition and Etch Also in Chemicals, Gases and Photoresist, Lithography, Photomasks and Pellicles, Metrology and Inspection, Foundries and Fabs, Memory and HBM, Advanced Packaging, Who Controls the Chain
+   + Where it appears, 66 places
+   + Read it in Lithography Also in Chemicals, Gases and Photoresist, Photomasks and Pellicles, Metrology and Inspection, Foundries and Fabs, Who Controls the Chain
+   + Where it appears, 109 places
+   + Read it in Foundries and Fabs Also in Silicon and Wafers, Chemicals, Gases and Photoresist, Lithography, Photomasks and Pellicles, Deposition and Etch, Metrology and Inspection, Advanced Packaging, Data Centers and Power, Who Controls the Chain
+   + Where it appears, 75 places
+   + Read it in Foundries and Fabs Also in Chip Design, EDA and IP, Lithography, Photomasks and Pellicles, Who Controls the Chain
+   + Where it appears, 40 places
+   + named on 1 of 14 chokepoint cards · 3 firms in the supplier list
+   + named on 1 of 14 chokepoint cards · 3 firms in the supplier list
+   + Read it in Foundries and Fabs Also in Advanced Packaging
+   + Read it in Foundries and Fabs Also in Chip Design, EDA and IP, Deposition and Etch, Who Controls the Chain
+   + Where it appears, 44 places
+   + named on 4 of 14 chokepoint cards · 10 firms in the supplier list, 2 Critical
+   + In Chip Design, EDA and IP, Silicon and Wafers, Foundries and Fabs, Memory and HBM, Substrates and PCBs, Systems and Networking, Data Centers and Power, The Economics of AI Chips
+   + Read it in Memory and HBM Also in Chip Design, EDA and IP, Silicon and Wafers, Deposition and Etch, Metrology and Inspection, Foundries and Fabs, Advanced Packaging, Test and Assembly, The Economics of AI Chips, Who Controls the Chain
+   + Foundries announce the date a process reaches it, and before then the process makes only prototypes, as Rapidus's 2 nm line did in 2025.
+   + Read it in Foundries and Fabs Also in Lithography, Photomasks and Pellicles, Deposition and Etch, Memory and HBM, Advanced Packaging, Substrates and PCBs, Test and Assembly, Systems and Networking, Who Controls the Chain
+   + Read it in Lithography Also in Chemicals, Gases and Photoresist, Foundries and Fabs, Who Controls the Chain
+   + Card and 48 places
+   + named on 2 of 14 chokepoint cards · 3 firms in the supplier list
+   + leads 4 stages, 2 of them extreme · named on 13 of 14 chokepoint cards · 45 firms in the supplier list, 11 Critical
+   + Card and 114 places
+   + Read it in Foundries and Fabs Also in Chip Design, EDA and IP, Silicon and Wafers, Lithography, Photomasks and Pellicles, Memory and HBM, Test and Assembly, Data Centers and Power, The Economics of AI Chips, Who Controls the Chain
+   + Where it appears, 55 places
+   + Read it in Lithography Also in Silicon and Wafers, Chemicals, Gases and Photoresist, Photomasks and Pellicles, Deposition and Etch, Foundries and Fabs, Advanced Packaging, Substrates and PCBs, Test and Assembly, Who Controls the Chain
+   + Read it in Foundries and Fabs Also in Silicon and Wafers, Deposition and Etch, Metrology and Inspection, Advanced Packaging, Substrates and PCBs, Test and Assembly, The Economics of AI Chips, Who Controls the Chain
+   + Where it appears, 28 places
+   + named on 1 of 14 chokepoint cards
+   + Card and 34 places
+   + Read it in The Economics of AI Chips Also in Chip Design, EDA and IP, Foundries and Fabs, Memory and HBM, Advanced Packaging
+   + leads 1 stage, of extreme concentration · named on 4 of 14 chokepoint cards · 4 firms in the supplier list, 1 Critical
+   + Read it in Foundries and Fabs Also in Who Controls the Chain
+   + Read it in Foundries and Fabs Also in Who Controls the Chain
+   + Read it in Foundries and Fabs Also in Photomasks and Pellicles, Who Controls the Chain
+   + Read it in Foundries and Fabs Also in Deposition and Etch, Metrology and Inspection
+   + Read it in Lithography Also in Chip Design, EDA and IP, Chemicals, Gases and Photoresist, Photomasks and Pellicles, Foundries and Fabs, Advanced Packaging, Substrates and PCBs, Test and Assembly, The Economics of AI Chips
+   + leads 1 stage, of extreme concentration · named on 6 of 14 chokepoint cards · 15 firms in the supplier list, 3 Critical
+   + Card and 52 places
+   + Read it in Foundries and Fabs Also in Chip Design, EDA and IP, Advanced Packaging
+   + named on 1 of 14 chokepoint cards · 3 firms in the supplier list, 1 Critical
+   + leads 3 stages, 2 of them extreme · named on 9 of 14 chokepoint cards · 25 firms in the supplier list, 1 Critical
+   + Card and 91 places
+   + Read it in Foundries and Fabs Also in Chip Design, EDA and IP, Photomasks and Pellicles, Who Controls the Chain
+   + Card and 116 places
+   + named on 1 of 14 chokepoint cards · 5 firms in the supplier list, 1 Critical
+   + leads 5 stages, 1 of them extreme · named on 13 of 14 chokepoint cards · 67 firms in the supplier list, 7 Critical
+   + Card and 260 places
+   + Read it in Silicon and Wafers Also in Chemicals, Gases and Photoresist, Lithography, Photomasks and Pellicles, Deposition and Etch, Metrology and Inspection, Foundries and Fabs, Memory and HBM, Advanced Packaging, Test and Assembly, Data Centers and Power, The Economics of AI Chips, Who Controls the Chain
+   + Where it appears, 160 places
+   + Read it in The Economics of AI Chips Also in Chemicals, Gases and Photoresist, Deposition and Etch, Metrology and Inspection, Foundries and Fabs, Advanced Packaging, Substrates and PCBs, Who Controls the Chain
+   links: -#design-and-eda (1) -#silicon-and-wafers (1) -#chemicals-gases-and-photoresist (1) -#lithography (1) -#photomasks-and-pellicles (1) -#deposition-and-etch (1) -#metrology-and-inspection (1) -#transistors-and-front-end (81) -#memory-and-hbm (1) -#advanced-packaging (1) -#test-and-assembly (1) -#systems-and-networking (1) -#data-centers-and-power (1) -#component-costs (1) -#geopolitics (2) -#/walk/transistors-and-front-end (2) -transistors-and-front-end/ (1) -#transistors-and-front-end--plain (1) -#transistors-and-front-end--card (1) -#transistors-and-front-end--how-it-works (3) -#transistors-and-front-end--variants-and-trade-offs (2) -#transistors-and-front-end--the-back-end-of-line (2) -#transistors-and-front-end--who-makes-it (3) -#transistors-and-front-end--the-chokepoint (4) -#transistors-and-front-end--flashcards (1) -#transistors-and-front-end--sources (1) -#fig-transistors-and-front-end-switch-shapes (3) -#fig-transistors-and-front-end-density-by-node (3) -#fig-transistors-and-front-end-node-roadmap (3) -#transistors-and-front-end--planar-and-finfet (1) -#transistors-and-front-end--gate-all-around-nanosheets (1) -#transistors-and-front-end--backside-power-delivery (1) -#transistors-and-front-end--cfet-and-what-comes-after (1) -#foundries-and-fabs--variants-and-trade-offs (2) -#foundries-and-fabs--the-chokepoint (1) -#foundries-and-fabs--pure-play-foundries (1) -#foundries-and-fabs--integrated-device-makers-turned-foundry (1) -#foundries-and-fabs--national-champions (1) -#foundries-and-fabs--mature-node-capacity (1) +#foundries-and-fabs (37) +#substrates-and-pcbs (1) +#foundries-and-fabs--how-a-transistor-is-built (2) +#foundries-and-fabs--the-newest-designs (2) +#foundries-and-fabs--the-back-end-of-line (2) +#foundries-and-fabs--the-foundry-and-the-fab (3) +#foundries-and-fabs--capacity-and-cost (1) +#fig-foundries-and-fabs-switch-shapes (3) +#fig-foundries-and-fabs-node-roadmap (3) +#foundries-and-fabs--gate-all-around-nanosheets (1) +#foundries-and-fabs--backside-power-delivery (1) +#foundries-and-fabs--cfet-and-what-comes-after (1)
+== chapter #advanced-packaging: 280 lines; text only before 19, only after 17; links only before 1, only after 0
+   - Chapter 11
+   - Stage 11 of 15
+   - Chapter 11:
+   - Specimen 11 · Advanced Packaging
+   - 11.1
+   - 11.2
+   - 11.3
+   - 11.4
+   - Transistors and the Front End
+   - 17
+   - Advanced Packaging, stage 11 of 15
+   - Figure 11.1 · Explainer, 19 seconds
+   - Note Simplified view of a two-die, eight-stack accelerator. Footprints follow the sizes given in this chapter and chapter 10. Heights are exaggerated so each layer shows.
+   - Figure 11.2
+   - Figure 11.3
+   - Figure 11.4
+   - Next, stage 12 / 15
+   - Continue to chapter 12
+   - Previous, stage 10
+   + Chapter 10
+   + Stage 10 of 14
+   + Chapter 10:
+   + Specimen 10 · Advanced Packaging
+   + 10.1
+   + 10.2
+   + 10.3
+   + 10.4
+   + Advanced Packaging, stage 10 of 14
+   + Figure 10.1 · Explainer, 19 seconds
+   + Note Simplified view of a two-die, eight-stack accelerator. Footprints follow the sizes given in this chapter and chapter 9. Heights are exaggerated so each layer shows.
+   + Figure 10.2
+   + Figure 10.3
+   + Figure 10.4
+   + Next, stage 11 / 14
+   + Continue to chapter 11
+   + Previous, stage 09
+   links: -#transistors-and-front-end (1) 
+== chapter #chemicals-gases-and-photoresist: 245 lines; text only before 5, only after 3; links only before 1, only after 0
+   - Stage 3 of 15
+   - Transistors and the Front End
+   - 17
+   - Chemicals, Gases and Photoresist, stage 3 of 15
+   - Next, stage 04 / 15
+   + Stage 3 of 14
+   + Chemicals, Gases and Photoresist, stage 3 of 14
+   + Next, stage 04 / 14
+   links: -#transistors-and-front-end (1) 
+== chapter #component-costs: 239 lines; text only before 16, only after 14; links only before 2, only after 1
+   - Chapter 16
+   - Chapter 16:
+   - 2,125 words / 9 min
+   - Updated 25 October 2026
+   - Specimen 16 · The Economics of AI Chips
+   - 16.1
+   - 16.2
+   - 16.3
+   - Transistors and the Front End
+   - 17
+   - Figure 16.1
+   - Figure 16.2
+   - Figure 16.3
+   - Leading-edge logic wafers Compressible with scale A very large die yields well only once a process matures. See Transistors and the front end.
+   - Continue to chapter 17
+   - Previous, stage 15
+   + Chapter 15
+   + Chapter 15:
+   + 2,123 words / 9 min
+   + Updated 27 October 2026
+   + Specimen 15 · The Economics of AI Chips
+   + 15.1
+   + 15.2
+   + 15.3
+   + Figure 15.1
+   + Figure 15.2
+   + Figure 15.3
+   + Leading-edge logic wafers Compressible with scale A very large die yields well only once a process matures. See Foundries and fabs.
+   + Continue to chapter 16
+   + Previous, stage 14
+   links: -#transistors-and-front-end (2) +#foundries-and-fabs (1)
+== chapter #data-centers-and-power: 269 lines; text only before 17, only after 15; links only before 1, only after 0
+   - Chapter 15
+   - Stage 15 of 15
+   - Chapter 15:
+   - Specimen 15 · Data Centers and Power
+   - 15.1
+   - 15.2
+   - 15.3
+   - 15.4
+   - Transistors and the Front End
+   - 17
+   - Data Centers and Power, stage 15 of 15
+   - Figure 15.1 · Explainer, 21 seconds
+   - Figure 15.2
+   - Figure 15.3
+   - Figure 15.4
+   - Continue to chapter 16
+   - Previous, stage 14
+   + Chapter 14
+   + Stage 14 of 14
+   + Chapter 14:
+   + Specimen 14 · Data Centers and Power
+   + 14.1
+   + 14.2
+   + 14.3
+   + 14.4
+   + Data Centers and Power, stage 14 of 14
+   + Figure 14.1 · Explainer, 21 seconds
+   + Figure 14.2
+   + Figure 14.3
+   + Figure 14.4
+   + Continue to chapter 15
+   + Previous, stage 13
+   links: -#transistors-and-front-end (1) 
+== chapter #deposition-and-etch: 300 lines; text only before 5, only after 3; links only before 1, only after 0
+   - Stage 6 of 15
+   - Transistors and the Front End
+   - 17
+   - Deposition and Etch, stage 6 of 15
+   - Next, stage 07 / 15
+   + Stage 6 of 14
+   + Deposition and Etch, stage 6 of 14
+   + Next, stage 07 / 14
+   links: -#transistors-and-front-end (1) 
+== chapter #design-and-eda: 265 lines; text only before 5, only after 3; links only before 1, only after 0
+   - Stage 1 of 15
+   - Transistors and the Front End
+   - 17
+   - Chip Design, EDA and IP, stage 1 of 15
+   - Next, stage 02 / 15
+   + Stage 1 of 14
+   + Chip Design, EDA and IP, stage 1 of 14
+   + Next, stage 02 / 14
+   links: -#transistors-and-front-end (1) 
+== chapter #geopolitics: 268 lines; text only before 14, only after 12; links only before 1, only after 0
+   - Chapter 17
+   - Chapter 17:
+   - Updated 25 October 2026
+   - Specimen 17 · Who Controls the Chain
+   - 17.1
+   - 17.2
+   - 17.3
+   - Transistors and the Front End
+   - 17
+   - Figure 17.1
+   - Figure 17.2
+   - Figure 17.3
+   - All seventeen chapters
+   - The fifteen stages run from chip design to the data center. The last two chapters cover what a chip costs and who controls the chain.
+   + Chapter 16
+   + Chapter 16:
+   + Updated 27 October 2026
+   + Specimen 16 · Who Controls the Chain
+   + 16.1
+   + 16.2
+   + 16.3
+   + Figure 16.1
+   + Figure 16.2
+   + Figure 16.3
+   + All sixteen chapters
+   + The fourteen stages run from chip design to the data center. The last two chapters cover what a chip costs and who controls the chain.
+   links: -#transistors-and-front-end (1) 
+== chapter #lithography: 324 lines; text only before 5, only after 3; links only before 1, only after 0
+   - Stage 4 of 15
+   - Transistors and the Front End
+   - 17
+   - Lithography, stage 4 of 15
+   - Next, stage 05 / 15
+   + Stage 4 of 14
+   + Lithography, stage 4 of 14
+   + Next, stage 05 / 14
+   links: -#transistors-and-front-end (1) 
+== chapter #memory-and-hbm: 246 lines; text only before 18, only after 16; links only before 1, only after 0
+   - Chapter 10
+   - Stage 10 of 15
+   - Chapter 10:
+   - Specimen 10 · Memory and HBM
+   - 10.1
+   - 10.2
+   - 10.3
+   - 10.4
+   - Transistors and the Front End
+   - 17
+   - Memory and HBM, stage 10 of 15
+   - Figure 10.1 · Explainer, 21 seconds
+   - Figure 10.2
+   - Figure 10.3
+   - Figure 10.4
+   - Next, stage 11 / 15
+   - Continue to chapter 11
+   - Previous, stage 09
+   + Chapter 09
+   + Stage 9 of 14
+   + Chapter 9:
+   + Specimen 09 · Memory and HBM
+   + 09.1
+   + 09.2
+   + 09.3
+   + 09.4
+   + Memory and HBM, stage 9 of 14
+   + Figure 09.1 · Explainer, 21 seconds
+   + Figure 09.2
+   + Figure 09.3
+   + Figure 09.4
+   + Next, stage 10 / 14
+   + Continue to chapter 10
+   + Previous, stage 08
+   links: -#transistors-and-front-end (1) 
+== chapter #metrology-and-inspection: 305 lines; text only before 7, only after 5; links only before 2, only after 1
+   - Stage 7 of 15
+   - Transistors and the Front End
+   - Transistors and the Front End
+   - 17
+   - Metrology and Inspection, stage 7 of 15
+   - Next, stage 08 / 15
+   - Building the newest transistors takes a long run of steps in exact order, and only TSMC, Intel and Samsung can do it in volume at the 2 nm class.
+   + Stage 7 of 14
+   + Foundries and Fabs
+   + Metrology and Inspection, stage 7 of 14
+   + Next, stage 08 / 14
+   + The newest chips need the know-how to build the newest transistors and a fab that costs tens of billions of dollars. Only TSMC, Intel and Samsung have both.
+   links: -#transistors-and-front-end (2) +#foundries-and-fabs (1)
+== chapter #photomasks-and-pellicles: 220 lines; text only before 5, only after 3; links only before 1, only after 0
+   - Stage 5 of 15
+   - Transistors and the Front End
+   - 17
+   - Photomasks and Pellicles, stage 5 of 15
+   - Next, stage 06 / 15
+   + Stage 5 of 14
+   + Photomasks and Pellicles, stage 5 of 14
+   + Next, stage 06 / 14
+   links: -#transistors-and-front-end (1) 
+== chapter #silicon-and-wafers: 236 lines; text only before 5, only after 3; links only before 1, only after 0
+   - Stage 2 of 15
+   - Transistors and the Front End
+   - 17
+   - Silicon and Wafers, stage 2 of 15
+   - Next, stage 03 / 15
+   + Stage 2 of 14
+   + Silicon and Wafers, stage 2 of 14
+   + Next, stage 03 / 14
+   links: -#transistors-and-front-end (1) 
+== chapter #substrates-and-pcbs: 245 lines; text only before 16, only after 14; links only before 1, only after 0
+   - Chapter 12
+   - Stage 12 of 15
+   - Chapter 12:
+   - Specimen 12 · Substrates and PCBs
+   - 12.1
+   - 12.2
+   - 12.3
+   - Transistors and the Front End
+   - 17
+   - Substrates and PCBs, stage 12 of 15
+   - Figure 12.1 · Explainer, 22 seconds
+   - Figure 12.2
+   - Figure 12.3
+   - Next, stage 13 / 15
+   - Continue to chapter 13
+   - Previous, stage 11
+   + Chapter 11
+   + Stage 11 of 14
+   + Chapter 11:
+   + Specimen 11 · Substrates and PCBs
+   + 11.1
+   + 11.2
+   + 11.3
+   + Substrates and PCBs, stage 11 of 14
+   + Figure 11.1 · Explainer, 22 seconds
+   + Figure 11.2
+   + Figure 11.3
+   + Next, stage 12 / 14
+   + Continue to chapter 12
+   + Previous, stage 10
+   links: -#transistors-and-front-end (1) 
+== chapter #systems-and-networking: 232 lines; text only before 16, only after 14; links only before 1, only after 0
+   - Chapter 14
+   - Stage 14 of 15
+   - Chapter 14:
+   - Specimen 14 · Systems and Networking
+   - 14.1
+   - 14.2
+   - 14.3
+   - Transistors and the Front End
+   - 17
+   - Systems and Networking, stage 14 of 15
+   - Figure 14.1 · Explainer, 20 seconds
+   - Figure 14.2
+   - Figure 14.3
+   - Next, stage 15 / 15
+   - Continue to chapter 15
+   - Previous, stage 13
+   + Chapter 13
+   + Stage 13 of 14
+   + Chapter 13:
+   + Specimen 13 · Systems and Networking
+   + 13.1
+   + 13.2
+   + 13.3
+   + Systems and Networking, stage 13 of 14
+   + Figure 13.1 · Explainer, 20 seconds
+   + Figure 13.2
+   + Figure 13.3
+   + Next, stage 14 / 14
+   + Continue to chapter 14
+   + Previous, stage 12
+   links: -#transistors-and-front-end (1) 
+== chapter #test-and-assembly: 249 lines; text only before 19, only after 17; links only before 1, only after 0
+   - Chapter 13
+   - Stage 13 of 15
+   - Chapter 13:
+   - Specimen 13 · Test and Assembly
+   - 13.1
+   - 13.2
+   - 13.3
+   - 13.4
+   - Transistors and the Front End
+   - 17
+   - Test and Assembly, stage 13 of 15
+   - Figure 13.1 · Explainer, 23 seconds
+   - Note Simplified. Nine needles stand for thousands. A real prober, the machine that moves the wafer under the card, holds the card still and raises the wafer to meet the needles. The failed chips are placed for illustration and do not reflect a real yield. The package follows chapter 11: two logic chips and eight memory stacks on an interposer and a package base.
+   - Figure 13.2
+   - Figure 13.3
+   - Figure 13.4
+   - Next, stage 14 / 15
+   - Continue to chapter 14
+   - Previous, stage 12
+   + Chapter 12
+   + Stage 12 of 14
+   + Chapter 12:
+   + Specimen 12 · Test and Assembly
+   + 12.1
+   + 12.2
+   + 12.3
+   + 12.4
+   + Test and Assembly, stage 12 of 14
+   + Figure 12.1 · Explainer, 23 seconds
+   + Note Simplified. Nine needles stand for thousands. A real prober, the machine that moves the wafer under the card, holds the card still and raises the wafer to meet the needles. The failed chips are placed for illustration and do not reflect a real yield. The package follows chapter 10: two logic chips and eight memory stacks on an interposer and a package base.
+   + Figure 12.2
+   + Figure 12.3
+   + Figure 12.4
+   + Next, stage 13 / 14
+   + Continue to chapter 13
+   + Previous, stage 11
+   links: -#transistors-and-front-end (1) 
+== page /advanced-packaging/: 351 lines; text only before 18, only after 16; links only before 1, only after 0
+   - Chapter 11
+   - Stage 11 of 15
+   - Specimen 11 · Advanced Packaging
+   - 11.1
+   - 11.2
+   - 11.3
+   - 11.4
+   - Transistors and the Front End
+   - 17
+   - Advanced Packaging, stage 11 of 15
+   - Figure 11.1 · Explainer, 19 seconds
+   - Note Simplified view of a two-die, eight-stack accelerator. Footprints follow the sizes given in this chapter and chapter 10. Heights are exaggerated so each layer shows.
+   - Figure 11.2
+   - Figure 11.3
+   - Figure 11.4
+   - Next, stage 12 / 15
+   - Continue to chapter 12
+   - Previous, stage 10
+   + Chapter 10
+   + Stage 10 of 14
+   + Specimen 10 · Advanced Packaging
+   + 10.1
+   + 10.2
+   + 10.3
+   + 10.4
+   + Advanced Packaging, stage 10 of 14
+   + Figure 10.1 · Explainer, 19 seconds
+   + Note Simplified view of a two-die, eight-stack accelerator. Footprints follow the sizes given in this chapter and chapter 9. Heights are exaggerated so each layer shows.
+   + Figure 10.2
+   + Figure 10.3
+   + Figure 10.4
+   + Next, stage 11 / 14
+   + Continue to chapter 11
+   + Previous, stage 09
+   links: -../transistors-and-front-end/ (1) 
+== page /chemicals-gases-and-photoresist/: 348 lines; text only before 5, only after 3; links only before 1, only after 0
+   - Stage 3 of 15
+   - Transistors and the Front End
+   - 17
+   - Chemicals, Gases and Photoresist, stage 3 of 15
+   - Next, stage 04 / 15
+   + Stage 3 of 14
+   + Chemicals, Gases and Photoresist, stage 3 of 14
+   + Next, stage 04 / 14
+   links: -../transistors-and-front-end/ (1) 
+== page /component-costs/: 316 lines; text only before 16, only after 14; links only before 2, only after 1
+   - Chapter 16
+   - 2,125 words / 9 min
+   - Updated 25 October 2026
+   - Updated 25 October 2026
+   - Specimen 16 · The Economics of AI Chips
+   - 16.1
+   - 16.2
+   - 16.3
+   - Transistors and the Front End
+   - 17
+   - Figure 16.1
+   - Figure 16.2
+   - Figure 16.3
+   - Leading-edge logic wafers Compressible with scale A very large die yields well only once a process matures. See Transistors and the front end.
+   - Continue to chapter 17
+   - Previous, stage 15
+   + Chapter 15
+   + 2,123 words / 9 min
+   + Updated 27 October 2026
+   + Updated 27 October 2026
+   + Specimen 15 · The Economics of AI Chips
+   + 15.1
+   + 15.2
+   + 15.3
+   + Figure 15.1
+   + Figure 15.2
+   + Figure 15.3
+   + Leading-edge logic wafers Compressible with scale A very large die yields well only once a process matures. See Foundries and fabs.
+   + Continue to chapter 16
+   + Previous, stage 14
+   links: -../transistors-and-front-end/ (2) +../foundries-and-fabs/ (1)
+== page /data-centers-and-power/: 346 lines; text only before 16, only after 14; links only before 1, only after 0
+   - Chapter 15
+   - Stage 15 of 15
+   - Specimen 15 · Data Centers and Power
+   - 15.1
+   - 15.2
+   - 15.3
+   - 15.4
+   - Transistors and the Front End
+   - 17
+   - Data Centers and Power, stage 15 of 15
+   - Figure 15.1 · Explainer, 21 seconds
+   - Figure 15.2
+   - Figure 15.3
+   - Figure 15.4
+   - Continue to chapter 16
+   - Previous, stage 14
+   + Chapter 14
+   + Stage 14 of 14
+   + Specimen 14 · Data Centers and Power
+   + 14.1
+   + 14.2
+   + 14.3
+   + 14.4
+   + Data Centers and Power, stage 14 of 14
+   + Figure 14.1 · Explainer, 21 seconds
+   + Figure 14.2
+   + Figure 14.3
+   + Figure 14.4
+   + Continue to chapter 15
+   + Previous, stage 13
+   links: -../transistors-and-front-end/ (1) 
+== page /deposition-and-etch/: 397 lines; text only before 6, only after 4; links only before 2, only after 1
+   - Stage 6 of 15
+   - Transistors and the Front End
+   - Transistors and the Front End
+   - 17
+   - Deposition and Etch, stage 6 of 15
+   - Next, stage 07 / 15
+   + Stage 6 of 14
+   + Foundries and Fabs
+   + Deposition and Etch, stage 6 of 14
+   + Next, stage 07 / 14
+   links: -../transistors-and-front-end/ (2) +../foundries-and-fabs/ (1)
+== page /design-and-eda/: 331 lines; text only before 6, only after 3; links only before 2, only after 0
+   - Stage 1 of 15
+   - Transistors and the Front End
+   - Transistors and the Front End
+   - 17
+   - Chip Design, EDA and IP, stage 1 of 15
+   - Next, stage 02 / 15
+   + Stage 1 of 14
+   + Chip Design, EDA and IP, stage 1 of 14
+   + Next, stage 02 / 14
+   links: -../transistors-and-front-end/ (2) 
+== page /geopolitics/: 421 lines; text only before 14, only after 12; links only before 1, only after 0
+   - Chapter 17
+   - Updated 25 October 2026
+   - Updated 25 October 2026
+   - Specimen 17 · Who Controls the Chain
+   - 17.1
+   - 17.2
+   - 17.3
+   - Transistors and the Front End
+   - 17
+   - Figure 17.1
+   - Figure 17.2
+   - Figure 17.3
+   - All seventeen chapters
+   - The fifteen stages run from chip design to the data center. The last two chapters cover what a chip costs and who controls the chain.
+   + Chapter 16
+   + Updated 27 October 2026
+   + Updated 27 October 2026
+   + Specimen 16 · Who Controls the Chain
+   + 16.1
+   + 16.2
+   + 16.3
+   + Figure 16.1
+   + Figure 16.2
+   + Figure 16.3
+   + All sixteen chapters
+   + The fourteen stages run from chip design to the data center. The last two chapters cover what a chip costs and who controls the chain.
+   links: -../transistors-and-front-end/ (1) 
+== page /lithography/: 430 lines; text only before 5, only after 3; links only before 1, only after 0
+   - Stage 4 of 15
+   - Transistors and the Front End
+   - 17
+   - Lithography, stage 4 of 15
+   - Next, stage 05 / 15
+   + Stage 4 of 14
+   + Lithography, stage 4 of 14
+   + Next, stage 05 / 14
+   links: -../transistors-and-front-end/ (1) 
+== page /memory-and-hbm/: 298 lines; text only before 17, only after 15; links only before 1, only after 0
+   - Chapter 10
+   - Stage 10 of 15
+   - Specimen 10 · Memory and HBM
+   - 10.1
+   - 10.2
+   - 10.3
+   - 10.4
+   - Transistors and the Front End
+   - 17
+   - Memory and HBM, stage 10 of 15
+   - Figure 10.1 · Explainer, 21 seconds
+   - Figure 10.2
+   - Figure 10.3
+   - Figure 10.4
+   - Next, stage 11 / 15
+   - Continue to chapter 11
+   - Previous, stage 09
+   + Chapter 09
+   + Stage 9 of 14
+   + Specimen 09 · Memory and HBM
+   + 09.1
+   + 09.2
+   + 09.3
+   + 09.4
+   + Memory and HBM, stage 9 of 14
+   + Figure 09.1 · Explainer, 21 seconds
+   + Figure 09.2
+   + Figure 09.3
+   + Figure 09.4
+   + Next, stage 10 / 14
+   + Continue to chapter 10
+   + Previous, stage 08
+   links: -../transistors-and-front-end/ (1) 
+== page /metrology-and-inspection/: 380 lines; text only before 7, only after 5; links only before 2, only after 1
+   - Stage 7 of 15
+   - Transistors and the Front End
+   - Transistors and the Front End
+   - 17
+   - Metrology and Inspection, stage 7 of 15
+   - Next, stage 08 / 15
+   - Building the newest transistors takes a long run of steps in exact order, and only TSMC, Intel and Samsung can do it in volume at the 2 nm class.
+   + Stage 7 of 14
+   + Foundries and Fabs
+   + Metrology and Inspection, stage 7 of 14
+   + Next, stage 08 / 14
+   + The newest chips need the know-how to build the newest transistors and a fab that costs tens of billions of dollars. Only TSMC, Intel and Samsung have both.
+   links: -../transistors-and-front-end/ (2) +../foundries-and-fabs/ (1)
+== page /photomasks-and-pellicles/: 292 lines; text only before 5, only after 3; links only before 1, only after 0
+   - Stage 5 of 15
+   - Transistors and the Front End
+   - 17
+   - Photomasks and Pellicles, stage 5 of 15
+   - Next, stage 06 / 15
+   + Stage 5 of 14
+   + Photomasks and Pellicles, stage 5 of 14
+   + Next, stage 06 / 14
+   links: -../transistors-and-front-end/ (1) 
+== page /silicon-and-wafers/: 301 lines; text only before 5, only after 3; links only before 1, only after 0
+   - Stage 2 of 15
+   - Transistors and the Front End
+   - 17
+   - Silicon and Wafers, stage 2 of 15
+   - Next, stage 03 / 15
+   + Stage 2 of 14
+   + Silicon and Wafers, stage 2 of 14
+   + Next, stage 03 / 14
+   links: -../transistors-and-front-end/ (1) 
+== page /substrates-and-pcbs/: 344 lines; text only before 15, only after 13; links only before 1, only after 0
+   - Chapter 12
+   - Stage 12 of 15
+   - Specimen 12 · Substrates and PCBs
+   - 12.1
+   - 12.2
+   - 12.3
+   - Transistors and the Front End
+   - 17
+   - Substrates and PCBs, stage 12 of 15
+   - Figure 12.1 · Explainer, 22 seconds
+   - Figure 12.2
+   - Figure 12.3
+   - Next, stage 13 / 15
+   - Continue to chapter 13
+   - Previous, stage 11
+   + Chapter 11
+   + Stage 11 of 14
+   + Specimen 11 · Substrates and PCBs
+   + 11.1
+   + 11.2
+   + 11.3
+   + Substrates and PCBs, stage 11 of 14
+   + Figure 11.1 · Explainer, 22 seconds
+   + Figure 11.2
+   + Figure 11.3
+   + Next, stage 12 / 14
+   + Continue to chapter 12
+   + Previous, stage 10
+   links: -../transistors-and-front-end/ (1) 
+== page /systems-and-networking/: 325 lines; text only before 15, only after 13; links only before 1, only after 0
+   - Chapter 14
+   - Stage 14 of 15
+   - Specimen 14 · Systems and Networking
+   - 14.1
+   - 14.2
+   - 14.3
+   - Transistors and the Front End
+   - 17
+   - Systems and Networking, stage 14 of 15
+   - Figure 14.1 · Explainer, 20 seconds
+   - Figure 14.2
+   - Figure 14.3
+   - Next, stage 15 / 15
+   - Continue to chapter 15
+   - Previous, stage 13
+   + Chapter 13
+   + Stage 13 of 14
+   + Specimen 13 · Systems and Networking
+   + 13.1
+   + 13.2
+   + 13.3
+   + Systems and Networking, stage 13 of 14
+   + Figure 13.1 · Explainer, 20 seconds
+   + Figure 13.2
+   + Figure 13.3
+   + Next, stage 14 / 14
+   + Continue to chapter 14
+   + Previous, stage 12
+   links: -../transistors-and-front-end/ (1) 
+== page /test-and-assembly/: 330 lines; text only before 18, only after 16; links only before 1, only after 0
+   - Chapter 13
+   - Stage 13 of 15
+   - Specimen 13 · Test and Assembly
+   - 13.1
+   - 13.2
+   - 13.3
+   - 13.4
+   - Transistors and the Front End
+   - 17
+   - Test and Assembly, stage 13 of 15
+   - Figure 13.1 · Explainer, 23 seconds
+   - Note Simplified. Nine needles stand for thousands. A real prober, the machine that moves the wafer under the card, holds the card still and raises the wafer to meet the needles. The failed chips are placed for illustration and do not reflect a real yield. The package follows chapter 11: two logic chips and eight memory stacks on an interposer and a package base.
+   - Figure 13.2
+   - Figure 13.3
+   - Figure 13.4
+   - Next, stage 14 / 15
+   - Continue to chapter 14
+   - Previous, stage 12
+   + Chapter 12
+   + Stage 12 of 14
+   + Specimen 12 · Test and Assembly
+   + 12.1
+   + 12.2
+   + 12.3
+   + 12.4
+   + Test and Assembly, stage 12 of 14
+   + Figure 12.1 · Explainer, 23 seconds
+   + Note Simplified. Nine needles stand for thousands. A real prober, the machine that moves the wafer under the card, holds the card still and raises the wafer to meet the needles. The failed chips are placed for illustration and do not reflect a real yield. The package follows chapter 10: two logic chips and eight memory stacks on an interposer and a package base.
+   + Figure 12.2
+   + Figure 12.3
+   + Figure 12.4
+   + Next, stage 13 / 14
+   + Continue to chapter 13
+   + Previous, stage 11
+   links: -../transistors-and-front-end/ (1) 
+== page /summary/: 367 lines; text only before 46, only after 24; links only before 1, only after 0
+   - The fifteen stages that turn sand and software into an AI accelerator: who leads each one, how concentrated it is, and where China and the United States stand.
+   - 8 of 15 stages are rated Extreme concentration, meaning three or fewer firms could supply each of them today, or one firm holds more than half of it.
+   - Who leads
+   - Extreme
+   - Hard
+   - Transistors and the Front End
+   - Transistors and the Front End
+   - TSMC TW, Intel Foundry US
+   - 15
+   - The fifteen stages
+   - 01Stage 1 of 15
+   - Extreme concentration
+   - Hard to substitute
+   - China
+   - United States
+   - Read the chapter, with its sources
+   - 02Stage 2 of 15
+   - 03Stage 3 of 15
+   - 04Stage 4 of 15
+   - 05Stage 5 of 15
+   - 06Stage 6 of 15
+   - 07Stage 7 of 15
+   - 08Stage 8 of 15
+   - Building the newest transistors takes a long run of steps in exact order, and only TSMC, Intel and Samsung can do it in volume at the 2 nm class.
+   - TSMC TW
+   - N2 in volume production since 4Q25, TSMC's first nanosheet node
+   - Samsung Foundry KR
+   - Started initial production of its 3 nm gate-all-around process in June 2022
+   - SMIC makes chips on its N+3 process, which SemiAnalysis measured in June 2026 at 113.4 million transistors per square millimeter, against 107.7 million for TSMC's N6. It builds its tightest layers in several patterning steps because it cannot buy an extreme-ultraviolet scanner.
+   - In August 2025 Intel called itself the only chipmaker that both develops and manufactures leading-edge logic chips in the United States. It says its 18A process brought gate-all-around transistors and backside power to market together in 2025.
+   - 09Stage 9 of 15
+   - A foundry builds other companies' chip designs in factories it owns, so those companies can share a factory instead of each building their own. TSMC runs the biggest, and its six largest plants are all in Taiwan.
+   - 79% of its wafer revenue from 7 nm and below, 3Q26
+   - Intel Foundry US
+   - $5.8bn segment revenue in 2Q26, only $293m of it from outside customers
+   - Over $37bn planned in Texas (CHIPS award, Dec 2024)
+   - Georgetown University's CSET reported in June 2024 that Huawei's Ascend 910B AI chip is believed to be made on SMIC's 7 nm-class N+2 process. But SemiAnalysis judged in April 2025 that most 910B and 910C chips were made at TSMC.
+   - The US government agreed in August 2025 to buy a passive 9.9 percent stake in Intel, with no board seat. Announcing the deal, Intel called itself the only chipmaker that both develops and manufactures leading-edge logic chips in the United States. Intel Foundry lost $2.089 billion in the second quarter of 2026.
+   - 10Stage 10 of 15
+   - 11Stage 11 of 15
+   - 12Stage 12 of 15
+   - 13Stage 13 of 15
+   - 14Stage 14 of 15
+   - 15Stage 15 of 15
+   - Two chapters that are not stages. They look across all fifteen, at what a chip costs and at the contest over who controls them.
+   - 17Across the chain
+   + The fourteen stages that turn sand and software into an AI accelerator: who leads each one, how concentrated it is, and where China and the United States stand.
+   + 7 of 14 stages are rated Extreme concentration, meaning three or fewer firms could supply each of them today, or one firm holds more than half of it.
+   + The fourteen stages
+   + 01Stage 1 of 14
+   + 02Stage 2 of 14
+   + 03Stage 3 of 14
+   + 04Stage 4 of 14
+   + 05Stage 5 of 14
+   + 06Stage 6 of 14
+   + 07Stage 7 of 14
+   + 08Stage 8 of 14
+   + The newest chips need the know-how to build the newest transistors and a fab that costs tens of billions of dollars. Only TSMC, Intel and Samsung have both.
+   + N2, its first nanosheet node, in volume production since 4Q25
+   + 3 nm gate-all-around process in initial production since June 2022
+   + China's SMIC made its most advanced chips on N+3, a 7 nm-class process built without extreme ultraviolet scanners, SemiAnalysis found in June 2026. SMIC cannot buy those scanners, so it prints its tightest layers in several passes on older deep-ultraviolet machines. China will keep the world's largest installed fab capacity in 2026 and 2027, SEMI projected in its third-quarter 2026 forecast.
+   + Intel is the only chipmaker that both develops and manufactures leading-edge logic chips in the United States, by its own account in August 2025. The United States had almost no logic capacity below 10 nm in 2022, and SIA and BCG projected in May 2024 that its share would reach 28 percent by 2032. In July 2026 TSMC raised its planned investment in Arizona to $265 billion across 12 facilities. The US government agreed in August 2025 to buy a passive 9.9 percent stake in Intel, with no board seat.
+   + 09Stage 9 of 14
+   + 10Stage 10 of 14
+   + 11Stage 11 of 14
+   + 12Stage 12 of 14
+   + 13Stage 13 of 14
+   + 14Stage 14 of 14
+   + Two chapters that are not stages. They look across all fourteen, at what a chip costs and at the contest over who controls them.
+   + 15Across the chain
+   links: -#s-transistors-and-front-end (1) 
+== page /chips/: 706 lines; text only before 0, only after 0; links only before 0, only after 0
+== page /suppliers/: 3602 lines; text only before 4, only after 4; links only before 0, only after 0
+   - 226 firms20 segmentsUpdated 25 October 2026
+   - leads four stages, three of them extreme · 25 firms in the supplier list
+   - named on nine chokepoint cards · 33 firms in the supplier list
+   - Updated 25 October 2026
+   + 226 firms20 segmentsUpdated 27 October 2026
+   + leads three stages, two of them extreme · 25 firms in the supplier list
+   + named on eight chokepoint cards · 33 firms in the supplier list
+   + Updated 27 October 2026
+== page /export-controls/: 880 lines; text only before 0, only after 0; links only before 0, only after 0
+== page /glossary/: 1966 lines; text only before 38, only after 38; links only before 36, only after 20
+   - Read it in Silicon and Wafers Also in Metrology and Inspection, Transistors and the Front End, Foundries and Fabs, Test and Assembly, The Economics of AI Chips
+   - Read it in Transistors and the Front End Also in Advanced Packaging, Test and Assembly
+   - Read it in Transistors and the Front End Also in Deposition and Etch
+   - Read it in Transistors and the Front End Also in Deposition and Etch
+   - Read it in Transistors and the Front End Also in Deposition and Etch
+   - Read it in Who Controls the Chain Also in Transistors and the Front End
+   - Read it in Silicon and Wafers Also in Chip Design, EDA and IP, Chemicals, Gases and Photoresist, Lithography, Photomasks and Pellicles, Deposition and Etch, Metrology and Inspection, Transistors and the Front End, Foundries and Fabs, Memory and HBM, Advanced Packaging, Substrates and PCBs, Test and Assembly, Systems and Networking, Data Centers and Power, The Economics of AI Chips, Who Controls the Chain
+   - Read it in Transistors and the Front End
+   - Read it in Lithography Also in Chip Design, EDA and IP, Transistors and the Front End, Memory and HBM, Who Controls the Chain
+   - Read it in Deposition and Etch Also in Silicon and Wafers, Chemicals, Gases and Photoresist, Lithography, Metrology and Inspection, Transistors and the Front End, Advanced Packaging, Who Controls the Chain
+   - Read it in Silicon and Wafers Also in Chip Design, EDA and IP, Metrology and Inspection, Transistors and the Front End, Memory and HBM, Advanced Packaging, Test and Assembly, The Economics of AI Chips
+   - Read it in Lithography Also in Photomasks and Pellicles, Transistors and the Front End, Foundries and Fabs, Who Controls the Chain
+   - Read it in Silicon and Wafers Also in Deposition and Etch, Transistors and the Front End
+   - Read it in Deposition and Etch Also in Chemicals, Gases and Photoresist, Lithography, Photomasks and Pellicles, Metrology and Inspection, Transistors and the Front End, Memory and HBM, Advanced Packaging, Who Controls the Chain
+   - Read it in Lithography Also in Chemicals, Gases and Photoresist, Photomasks and Pellicles, Metrology and Inspection, Transistors and the Front End, Foundries and Fabs, Who Controls the Chain
+   - Read it in Foundries and Fabs Also in Silicon and Wafers, Chemicals, Gases and Photoresist, Lithography, Photomasks and Pellicles, Deposition and Etch, Metrology and Inspection, Transistors and the Front End, Advanced Packaging, Data Centers and Power, Who Controls the Chain
+   - Read it in Foundries and Fabs Also in Chip Design, EDA and IP, Lithography, Photomasks and Pellicles, Transistors and the Front End, Who Controls the Chain
+   - Read it in Transistors and the Front End Also in Advanced Packaging
+   - Read it in Transistors and the Front End Also in Chip Design, EDA and IP, Deposition and Etch, Who Controls the Chain
+   - In Chip Design, EDA and IP, Silicon and Wafers, Transistors and the Front End, Foundries and Fabs, Memory and HBM, Substrates and PCBs, Systems and Networking, Data Centers and Power, The Economics of AI Chips
+   - Read it in Memory and HBM Also in Chip Design, EDA and IP, Silicon and Wafers, Deposition and Etch, Metrology and Inspection, Transistors and the Front End, Foundries and Fabs, Advanced Packaging, Test and Assembly, The Economics of AI Chips, Who Controls the Chain
+   - Foundries announce the date a process reaches it, and before then the process runs only in trials such as risk production.
+   - Read it in Foundries and Fabs Also in Lithography, Photomasks and Pellicles, Deposition and Etch, Transistors and the Front End, Memory and HBM, Advanced Packaging, Substrates and PCBs, Test and Assembly, Systems and Networking, Who Controls the Chain
+   - Read it in Lithography Also in Chemicals, Gases and Photoresist, Transistors and the Front End, Who Controls the Chain
+   - Read it in Transistors and the Front End Also in Chip Design, EDA and IP, Silicon and Wafers, Lithography, Photomasks and Pellicles, Foundries and Fabs, Memory and HBM, Test and Assembly, Data Centers and Power, The Economics of AI Chips, Who Controls the Chain
+   - Read it in Lithography Also in Silicon and Wafers, Chemicals, Gases and Photoresist, Photomasks and Pellicles, Deposition and Etch, Transistors and the Front End, Advanced Packaging, Substrates and PCBs, Test and Assembly, Who Controls the Chain
+   - Read it in Foundries and Fabs Also in Silicon and Wafers, Deposition and Etch, Metrology and Inspection, Transistors and the Front End, Advanced Packaging, Substrates and PCBs, Test and Assembly, The Economics of AI Chips, Who Controls the Chain
+   - Read it in The Economics of AI Chips Also in Chip Design, EDA and IP, Transistors and the Front End, Memory and HBM, Advanced Packaging
+   - Read it in Transistors and the Front End Also in Foundries and Fabs, Who Controls the Chain
+   - Read it in Transistors and the Front End Also in Photomasks and Pellicles, Foundries and Fabs, Who Controls the Chain
+   - Read it in Transistors and the Front End Also in Deposition and Etch, Metrology and Inspection
+   - Read it in Lithography Also in Chip Design, EDA and IP, Chemicals, Gases and Photoresist, Photomasks and Pellicles, Transistors and the Front End, Foundries and Fabs, Advanced Packaging, Substrates and PCBs, Test and Assembly, The Economics of AI Chips
+   - Read it in Chip Design, EDA and IP Also in Foundries and Fabs
+   - Read it in Transistors and the Front End Also in Chip Design, EDA and IP, Advanced Packaging
+   - Read it in Transistors and the Front End Also in Chip Design, EDA and IP, Photomasks and Pellicles, Who Controls the Chain
+   - Read it in Transistors and the Front End Also in Who Controls the Chain
+   - Read it in Silicon and Wafers Also in Chemicals, Gases and Photoresist, Lithography, Photomasks and Pellicles, Deposition and Etch, Metrology and Inspection, Transistors and the Front End, Foundries and Fabs, Memory and HBM, Advanced Packaging, Test and Assembly, Data Centers and Power, The Economics of AI Chips, Who Controls the Chain
+   - Read it in The Economics of AI Chips Also in Chemicals, Gases and Photoresist, Deposition and Etch, Metrology and Inspection, Transistors and the Front End, Advanced Packaging, Substrates and PCBs, Who Controls the Chain
+   + Read it in Silicon and Wafers Also in Metrology and Inspection, Foundries and Fabs, Test and Assembly, The Economics of AI Chips
+   + Read it in Foundries and Fabs Also in Advanced Packaging, Test and Assembly
+   + Read it in Foundries and Fabs Also in Deposition and Etch
+   + Read it in Foundries and Fabs Also in Deposition and Etch
+   + Read it in Foundries and Fabs Also in Deposition and Etch
+   + Read it in Who Controls the Chain Also in Foundries and Fabs
+   + Read it in Silicon and Wafers Also in Chip Design, EDA and IP, Chemicals, Gases and Photoresist, Lithography, Photomasks and Pellicles, Deposition and Etch, Metrology and Inspection, Foundries and Fabs, Memory and HBM, Advanced Packaging, Substrates and PCBs, Test and Assembly, Systems and Networking, Data Centers and Power, The Economics of AI Chips, Who Controls the Chain
+   + Read it in Chip Design, EDA and IP
+   + Read it in Foundries and Fabs
+   + Read it in Lithography Also in Chip Design, EDA and IP, Foundries and Fabs, Memory and HBM, Who Controls the Chain
+   + Read it in Deposition and Etch Also in Silicon and Wafers, Chemicals, Gases and Photoresist, Lithography, Metrology and Inspection, Foundries and Fabs, Advanced Packaging, Who Controls the Chain
+   + Read it in Silicon and Wafers Also in Chip Design, EDA and IP, Metrology and Inspection, Foundries and Fabs, Memory and HBM, Advanced Packaging, Test and Assembly, The Economics of AI Chips
+   + Read it in Lithography Also in Photomasks and Pellicles, Foundries and Fabs, Who Controls the Chain
+   + Read it in Silicon and Wafers Also in Deposition and Etch, Foundries and Fabs
+   + Read it in Deposition and Etch Also in Chemicals, Gases and Photoresist, Lithography, Photomasks and Pellicles, Metrology and Inspection, Foundries and Fabs, Memory and HBM, Advanced Packaging, Who Controls the Chain
+   + Read it in Lithography Also in Chemicals, Gases and Photoresist, Photomasks and Pellicles, Metrology and Inspection, Foundries and Fabs, Who Controls the Chain
+   + Read it in Foundries and Fabs Also in Silicon and Wafers, Chemicals, Gases and Photoresist, Lithography, Photomasks and Pellicles, Deposition and Etch, Metrology and Inspection, Advanced Packaging, Data Centers and Power, Who Controls the Chain
+   + Read it in Foundries and Fabs Also in Chip Design, EDA and IP, Lithography, Photomasks and Pellicles, Who Controls the Chain
+   + Read it in Foundries and Fabs Also in Advanced Packaging
+   + Read it in Foundries and Fabs Also in Chip Design, EDA and IP, Deposition and Etch, Who Controls the Chain
+   + In Chip Design, EDA and IP, Silicon and Wafers, Foundries and Fabs, Memory and HBM, Substrates and PCBs, Systems and Networking, Data Centers and Power, The Economics of AI Chips
+   + Read it in Memory and HBM Also in Chip Design, EDA and IP, Silicon and Wafers, Deposition and Etch, Metrology and Inspection, Foundries and Fabs, Advanced Packaging, Test and Assembly, The Economics of AI Chips, Who Controls the Chain
+   + Foundries announce the date a process reaches it, and before then the process makes only prototypes, as Rapidus's 2 nm line did in 2025.
+   + Read it in Foundries and Fabs Also in Lithography, Photomasks and Pellicles, Deposition and Etch, Memory and HBM, Advanced Packaging, Substrates and PCBs, Test and Assembly, Systems and Networking, Who Controls the Chain
+   + Read it in Lithography Also in Chemicals, Gases and Photoresist, Foundries and Fabs, Who Controls the Chain
+   + Read it in Foundries and Fabs Also in Chip Design, EDA and IP, Silicon and Wafers, Lithography, Photomasks and Pellicles, Memory and HBM, Test and Assembly, Data Centers and Power, The Economics of AI Chips, Who Controls the Chain
+   + Read it in Lithography Also in Silicon and Wafers, Chemicals, Gases and Photoresist, Photomasks and Pellicles, Deposition and Etch, Foundries and Fabs, Advanced Packaging, Substrates and PCBs, Test and Assembly, Who Controls the Chain
+   + Read it in Foundries and Fabs Also in Silicon and Wafers, Deposition and Etch, Metrology and Inspection, Advanced Packaging, Substrates and PCBs, Test and Assembly, The Economics of AI Chips, Who Controls the Chain
+   + Read it in The Economics of AI Chips Also in Chip Design, EDA and IP, Foundries and Fabs, Memory and HBM, Advanced Packaging
+   + Read it in Foundries and Fabs Also in Who Controls the Chain
+   + Read it in Foundries and Fabs Also in Who Controls the Chain
+   + Read it in Foundries and Fabs Also in Photomasks and Pellicles, Who Controls the Chain
+   + Read it in Foundries and Fabs Also in Deposition and Etch, Metrology and Inspection
+   + Read it in Lithography Also in Chip Design, EDA and IP, Chemicals, Gases and Photoresist, Photomasks and Pellicles, Foundries and Fabs, Advanced Packaging, Substrates and PCBs, Test and Assembly, The Economics of AI Chips
+   + Read it in Foundries and Fabs Also in Chip Design, EDA and IP, Advanced Packaging
+   + Read it in Foundries and Fabs Also in Chip Design, EDA and IP, Photomasks and Pellicles, Who Controls the Chain
+   + Read it in Silicon and Wafers Also in Chemicals, Gases and Photoresist, Lithography, Photomasks and Pellicles, Deposition and Etch, Metrology and Inspection, Foundries and Fabs, Memory and HBM, Advanced Packaging, Test and Assembly, Data Centers and Power, The Economics of AI Chips, Who Controls the Chain
+   + Read it in The Economics of AI Chips Also in Chemicals, Gases and Photoresist, Deposition and Etch, Metrology and Inspection, Foundries and Fabs, Advanced Packaging, Substrates and PCBs, Who Controls the Chain
+   links: -../transistors-and-front-end/ (36) +../foundries-and-fabs/ (20)
+== forwarding page /home/ (its text and tags): 11 lines; text only before 1, only after 1; links only before 0, only after 0
+   - <meta property="og:image:alt" content="How AI chips are made. An introduction to the entire semiconductor supply chain. Small drawings of all 15 stages run along the bottom.">
+   + <meta property="og:image:alt" content="How AI chips are made. An introduction to the entire semiconductor supply chain. Small drawings of all 14 stages run along the bottom.">
+== forwarding page /intro/ (its text and tags): 35 lines; text only before 5, only after 5; links only before 0, only after 0
+   - An introduction to the entire supply chain in 12 minutes.
+   - <meta name="description" content="An introduction to the entire supply chain in 12 minutes.">
+   - <meta property="og:description" content="An introduction to the entire supply chain in 12 minutes.">
+   - <meta property="og:image:alt" content="Start here. An introduction to the entire supply chain in 12 minutes. Small drawings of all 15 stages run along the bottom.">
+   - <meta name="twitter:description" content="An introduction to the entire supply chain in 12 minutes.">
+   + An introduction to the entire supply chain in 11 minutes.
+   + <meta name="description" content="An introduction to the entire supply chain in 11 minutes.">
+   + <meta property="og:description" content="An introduction to the entire supply chain in 11 minutes.">
+   + <meta property="og:image:alt" content="Start here. An introduction to the entire supply chain in 11 minutes. Small drawings of all 14 stages run along the bottom.">
+   + <meta name="twitter:description" content="An introduction to the entire supply chain in 11 minutes.">
+== forwarding page /chain/ (its text and tags): 11 lines; text only before 5, only after 5; links only before 0, only after 0
+   - Every stage of the supply chain, and who controls it. 17 chapters, from chip design to the data center.
+   - <meta name="description" content="Every stage of the supply chain, and who controls it. 17 chapters, from chip design to the data center.">
+   - <meta property="og:description" content="Every stage of the supply chain, and who controls it. 17 chapters, from chip design to the data center.">
+   - <meta property="og:image:alt" content="The Chain. Every stage of the supply chain, and who controls it. Small drawings of all 15 stages run along the bottom.">
+   - <meta name="twitter:description" content="Every stage of the supply chain, and who controls it. 17 chapters, from chip design to the data center.">
+   + Every stage of the supply chain, and who controls it. 16 chapters, from chip design to the data center.
+   + <meta name="description" content="Every stage of the supply chain, and who controls it. 16 chapters, from chip design to the data center.">
+   + <meta property="og:description" content="Every stage of the supply chain, and who controls it. 16 chapters, from chip design to the data center.">
+   + <meta property="og:image:alt" content="The Chain. Every stage of the supply chain, and who controls it. Small drawings of all 14 stages run along the bottom.">
+   + <meta name="twitter:description" content="Every stage of the supply chain, and who controls it. 16 chapters, from chip design to the data center.">
+== the main page's head (title, description, share tags): 6 lines; text only before 4, only after 4; links only before 0, only after 0
+   - <meta name="description" content="A free, sourced introduction to how AI chips are made and who makes each part, in seventeen chapters from chip design to the data center.">
+   - <meta property="og:description" content="A free, sourced introduction to how AI chips are made and who makes each part, in seventeen chapters from chip design to the data center.">
+   - <meta property="og:image:alt" content="How AI chips are made. An introduction to the entire semiconductor supply chain. Small drawings of all 15 stages run along the bottom.">
+   - <meta name="twitter:description" content="A free, sourced introduction to how AI chips are made and who makes each part, in seventeen chapters from chip design to the data center.">
+   + <meta name="description" content="A free, sourced introduction to how AI chips are made and who makes each part, in sixteen chapters from chip design to the data center.">
+   + <meta property="og:description" content="A free, sourced introduction to how AI chips are made and who makes each part, in sixteen chapters from chip design to the data center.">
+   + <meta property="og:image:alt" content="How AI chips are made. An introduction to the entire semiconductor supply chain. Small drawings of all 14 stages run along the bottom.">
+   + <meta name="twitter:description" content="A free, sourced introduction to how AI chips are made and who makes each part, in sixteen chapters from chip design to the data center.">

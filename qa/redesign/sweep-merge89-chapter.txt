@@ -1,0 +1,10 @@
+chain-foundries-and-fabs light 390: ok (tabbed 40)
+chain-foundries-and-fabs light 1440: ok (tabbed 40)
+chain-foundries-and-fabs dark 390: ok (tabbed 40)
+chain-foundries-and-fabs dark 1440: ok (tabbed 40)
+page-foundries-and-fabs light 390: ok (tabbed 40)
+page-foundries-and-fabs light 1440: ok (tabbed 40)
+page-foundries-and-fabs dark 390: ok (tabbed 40)
+page-foundries-and-fabs dark 1440: ok (tabbed 40)
+
+8 loads, 0 with findings
