@@ -12140,9 +12140,9 @@ PC.register('wafer', function (p) {
       var FAR = [[0, -1], [0, 1], [1, 0], [-1, 0], [0.38, -0.92], [-0.38, -0.92], [0.92, -0.38], [-0.92, -0.38], [0.71, -0.71], [-0.71, -0.71],
         [0.38, 0.92], [-0.38, 0.92], [0.92, 0.38], [-0.92, 0.38], [0.71, 0.71], [-0.71, 0.71]]; // further out: straight up or down first, then round
       var spot = function (q, w, h, r, d) {
-        var ax = q.cx + d[0] * r, ay = q.cy + d[1] * r, bh = h + 2, a = d[0] > 0.3 ? 'start' : d[0] < -0.3 ? 'end' : 'middle';
-        var l = a === 'start' ? ax - 1 : a === 'end' ? ax - w : ax - w / 2, top = d[1] < -0.3 ? ay - bh : d[1] > 0.3 ? ay : ay - bh / 2;
-        return { x: ax, y: top + bh - 4, a: a, b: [l, top, l + w + 1, top + bh] };
+        var ax = q.cx + d[0] * r, ay = q.cy + d[1] * r, a = d[0] > 0.3 ? 'start' : d[0] < -0.3 ? 'end' : 'middle', up = d[1] < -0.3, down = d[1] > 0.3;
+        var l = a === 'start' ? ax - 1 : a === 'end' ? ax - w : ax - w / 2, rt = a === 'start' ? ax + w : a === 'end' ? ax + 1 : ax + w / 2;
+        return up ? { x: ax, y: ay - 3, a: a, b: [l, ay - h, rt, ay + 1] } : down ? { x: ax, y: ay + 11, a: a, b: [l, ay - 1, rt, ay - 1 + h] } : { x: ax, y: ay + 4, a: a, b: [l, ay - h / 2 - 1, rt, ay + h / 2] };
       };
       // a label set further out is tied to its dot by a hairline, from the dot's edge to the nearest point of the label
       var lead = function (sp, q) {
@@ -12163,7 +12163,7 @@ PC.register('wafer', function (p) {
           if (hit(b, o)) s += 1 + area(b, o);
           if (sp.dots) for (var k = 0; k < sp.dots.length; k++) if (hit(sp.dots[k], o)) s += 25;
         }
-        if (!sp.lead) { var mine = gap(q, b); named.forEach(function (n) { if (n !== q && gap(n, b) < mine + 6) s += 80; }); }
+        if (!sp.lead && (q.no || q.look || q.top)) { var mine = gap(q, b); named.forEach(function (n) { if (n !== q && gap(n, b) < mine + 6) s += 80; }); }
         return s;
       };
       var labels = '', leads = '';
@@ -12182,7 +12182,7 @@ PC.register('wafer', function (p) {
           if (c < bc) { bc = c; best = sp; if (!c) break; }
         }
         if (!best || (bc > 0 && !must)) return;
-        boxes.push([best.b[0] - 2, best.b[1] - 1, best.b[2] + 2, best.b[3] + 1]); if (best.dots) best.dots.forEach(function (d) { boxes.push(d); });
+        boxes.push(must ? [best.b[0] - 2, best.b[1] - 1, best.b[2] + 2, best.b[3] + 1] : best.b); if (best.dots) best.dots.forEach(function (d) { boxes.push(d); });
         if (best.lead) leads += '<line class="lead" x1="' + r1(best.lead[0]) + '" y1="' + r1(best.lead[1]) + '" x2="' + r1(best.lead[2]) + '" y2="' + r1(best.lead[3]) + '"/>';
         labels += '<text class="lab' + (q.no ? ' mine' : '') + (q.top ? ' top' : '') + (q.look ? ' looked' : '') + '" x="' + r1(best.x) + '" y="' + r1(best.y) + '" text-anchor="' + best.a + '" aria-hidden="true">' +
           (q.no ? '<tspan class="lno">' + q.no + '</tspan> ' : '') + esc(name) + (q.top ? '<tspan class="lv">, ' + esc(self.nf(q.p.v)) + '</tspan>' : '') + '</text>';
