@@ -3,6 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const SITE = require('./site.js'); // the public address; see build/site.js
+const keepRanges = require('./keep-ranges.js'); // a figure range never breaks at its hyphen
 // the work a citation names, and the token a cite line's day goes in as (filled once every page's date is known, below);
 // up here because the figures' citations (figure()) are drawn while the chapters are read
 const CITE_WORK = 'Chip Supply Chain: How AI Chips Are Made';
@@ -524,7 +525,10 @@ const glTermOf = new Map(glVariants.map((t) => [t.v, t.term]));
 function glossaryWrap(html, used) {
   if (!glRE) return html;
   used = used || new Set();
-  const wrapText = (text) => text.split(/(&[a-zA-Z#][a-zA-Z0-9]*;)/).map((part, i) => {
+  // a term's button keeps the punctuation after it on its line: a button is a box of its own, so the browser could otherwise
+  // start a line with the comma (font check, 27 Oct)
+  const keepLine = (s) => s.replace(/(<button type="button" class="gl-term" data-term="[^"]*">[^<]*<\/button>)([,.;:!?)\]]+)/g, '<span class="nw">$1$2</span>');
+  const wrapText = (text) => keepLine(text.split(/(&[a-zA-Z#][a-zA-Z0-9]*;)/).map((part, i) => {
     if (i % 2) return part; // an HTML entity: leave it whole
     return part.replace(glRE, (match, _v, offset, str) => {
       const term = glTermOf.get(match.toLowerCase().replace(/\s+/g, ' '));
@@ -533,7 +537,7 @@ function glossaryWrap(html, used) {
       used.add(term);
       return `<button type="button" class="gl-term" data-term="${esc(term.toLowerCase())}">${match}</button>`;
     });
-  }).join('');
+  }).join(''));
   let out = '', last = 0, m, depth = 0;
   const tag = /<(\/?)([a-zA-Z][\w-]*)\b[^>]*?(\/?)>/g;
   while ((m = tag.exec(html))) {
@@ -1253,7 +1257,7 @@ html = html.replace(/\{\{CITE_DAY:([a-z0-9-]+)\}\}/g, (m, id) => { const e = pag
   if (strays.length) warn(`preroute: ${strays.length} ids in The Chain would show the wrong chapter while the page loads, so start them with their chapter's id (src/preroute.js chapterOf): ${strays.slice(0, 8).join(', ')}`);
 }
 fs.mkdirSync(path.join(root, 'dist'), { recursive: true });
-fs.writeFileSync(path.join(root, 'dist', 'index.html'), html);
+fs.writeFileSync(path.join(root, 'dist', 'index.html'), keepRanges(html));
 if (SITE.cname) fs.writeFileSync(path.join(root, 'dist', 'CNAME'), SITE.cname + '\n'); else if (fs.existsSync(path.join(root, 'dist', 'CNAME'))) fs.unlinkSync(path.join(root, 'dist', 'CNAME'));
 // for search engines: everything may be crawled, and the sitemap lists the HTML pages that carry their own content
 // (the site itself, each chapter's readable page, the summary, and the four reference pages that reference-pages.js writes;

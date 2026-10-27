@@ -27,6 +27,7 @@
    and the card's URL gains ?v=<version>. A card still on version 1 keeps its plain URL. */
 
 const SITE_CONFIG = require('../site.js');
+const keepRanges = require('../keep-ranges.js');
 const BASE = SITE_CONFIG.url;
 const SITE = 'Chip Supply Chain';
 const AUTHOR = { name: 'Yashvardhan Sharma', url: 'https://www.linkedin.com/in/yashvardhan07/' };
@@ -584,7 +585,7 @@ module.exports = function (ctx) {
       if (p.kind === 'chapter') warn(`chapter page ${p.slug}: the chapter was not rendered, so its link only forwards to the main page`);
       html = p.slug === 'intro' && introReview ? introHTML(p, versions, css, introReview) : pageHTML(p, versions);
     }
-    fs.writeFileSync(path.join(dir, 'index.html'), html);
+    fs.writeFileSync(path.join(dir, 'index.html'), keepRanges(html));
   }
   // the plain stills of the other chapters (qa/redesign/stills.js), copied as spec-<id>.webp
   for (const id of Object.keys(ctx.stillSizes || {})) {

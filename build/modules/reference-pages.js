@@ -20,6 +20,7 @@
 const vm = require('vm');
 const S = require('./social.js');
 const SITE_CONFIG = require('../site.js');
+const keepRanges = require('../keep-ranges.js');
 const EXPOSURE = require('../exposure.js');
 const PAGE_TITLES = require('../page-titles.js');
 
@@ -602,7 +603,7 @@ ${body}
     const html = make();
     const dir = path.join(root, 'dist', s);
     fs.mkdirSync(dir, { recursive: true });
-    fs.writeFileSync(path.join(dir, 'index.html'), html);
+    fs.writeFileSync(path.join(dir, 'index.html'), keepRanges(html));
     ctx.referencePages.push('/' + s + '/');
     const kb = Buffer.byteLength(html) / 1024;
     sizes.push(`${s} ${kb.toFixed(0)} KB`);

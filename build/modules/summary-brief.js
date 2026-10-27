@@ -8,6 +8,7 @@
    hidden in the other medium, so a change to the screen design never moves the PDF. build/build.js lists /summary/ in the
    sitemap. */
 const SITE = require('../site.js');
+const keepRanges = require('../keep-ranges.js');
 
 module.exports = function (ctx) {
   const { fs, path, root, stages = [], chapters = [], geo, esc, pad, word, builtStr, pageDate, dayStr } = ctx;
@@ -358,6 +359,6 @@ ${print}
   const dir = path.join(root, 'dist', 'summary');
   fs.mkdirSync(dir, { recursive: true });
   const dated = pageDate ? pageDate('/summary/', html) : null;
-  fs.writeFileSync(path.join(dir, 'index.html'), html.split(DAY).join(esc(dated && dayStr ? dayStr(dated.modified) : builtStr)));
+  fs.writeFileSync(path.join(dir, 'index.html'), keepRanges(html.split(DAY).join(esc(dated && dayStr ? dayStr(dated.modified) : builtStr))));
   return {};
 };
