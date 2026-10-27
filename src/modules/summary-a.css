@@ -229,7 +229,7 @@
 
 /* ---------- the atlas on the Suppliers page: the route of one chip (redesign stage 3) ----------
    The hybrid mockup's route (qa/design3/directions/hybrid/suppliers.html): a section head over an ink rule, the country
-   buttons as pills, the map on white with the land in a light tint, the fifteen stops as numbered discs (solid ink for a
+   buttons as pills, the map on white with the land in a light tint, the stops, one per stage, as numbered discs (solid ink for a
    stage rated Extreme, an ink ring for one rated High, as the key says), the chosen country's panel beside the map and the
    strip of stops under it. A chosen country keeps its stops as they are and names their towns; the other stops turn gray.
    No color marks a country: the accent marks only the reader's place (a stop or card under the pointer or in focus). */
@@ -337,7 +337,7 @@
 .sa-kstop { display: inline-grid; place-items: center; width: 20px; height: 20px; flex: none; border-radius: 50%; background: var(--ink); color: var(--bg); font-family: var(--font-ui); font-style: normal; font-weight: 600; font-size: 11px; line-height: 1; }
 .sa-kstop[data-band="High"] { background: var(--bg); color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--ink); }
 
-/* the strip: the fifteen stops in order, each with its band as a mark beside its number */
+/* the strip: the stops in order, each with its band as a mark beside its number */
 .atlas .sa-strip-stops { grid-column: 1 / 10; grid-row: 2; list-style: none; margin: 18px 0 0; padding: 0; display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); column-gap: 14px; row-gap: 4px; border-top: 1px solid var(--ink); }
 .atlas .sa-strip-stops li { min-width: 0; }
 .sa-stopcard { display: flex; flex-direction: column; gap: 3px; padding: 10px 6px 8px 0; text-decoration: none; color: var(--ink); min-width: 0; border: 0; }

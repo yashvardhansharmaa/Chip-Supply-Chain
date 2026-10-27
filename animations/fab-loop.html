@@ -5,11 +5,11 @@
 <script src="lib.js"></script>
 <script>
 const { PAL, clamp, ease, easeOut, mix, rng, text } = A, dark = A.theme === 'dark';
-// Facts, from chapter 9's How it works: a chip is built up in layers, and the same loop of steps repeats for each one;
+// Facts, from chapter 8's The foundry and the fab: a chip is built up in layers, and the same loop of steps repeats for each one;
 // wafers travel in a sealed pod that only a machine opens, and an overhead track carries the pod from tool to tool; at
 // each tool a robot lifts a wafer out and the tool does its one job (depositing a film, printing a pattern, etching it,
 // cleaning it or measuring it); when a layer is finished the loop starts again with the next one; the foundry runs
-// every design through the same tools. From chapter 8: the transistors are built first and the wiring above them after.
+// every design through the same tools. From chapter 8's How a transistor is built: the transistors are built first and the wiring above them after.
 // From chapter 5: lithography prints from a photomask, at least one for each layer of a chip, so every layer needs a print.
 // The one number, 1,000 to 1,500 steps to make one chip, is the Semiconductor Industry Association's 2025 estimate, cited in
 // chapters 6 and 13. The layer counter counts only the laps drawn and claims no real total.

@@ -7,7 +7,7 @@ usage: python3 build/chapter_pdfs.py [<id> ...] [--base http://127.0.0.1:8765/] 
 --logs keeps each chapter's pdf.py log as <dir>/<id>.log: the layout report print.js gives after each pass (short
 pages, stranded heads, text run into the notes or off the page), for checking the set page by page.
 
-With no ids it prints all seventeen, in order. Each chapter is laid out by build/pdf.py --chapter <id>: Paged.js,
+With no ids it prints every chapter (sixteen since the merge of 27 Oct 2026), in order. Each chapter is laid out by build/pdf.py --chapter <id>: Paged.js,
 with the notes at the foot of each page, running heads and folios, and a compact title block (the site, the chapter,
 the edition, the chapter's own page and how to cite it) in place of the book's cover and contents. One Chrome runs at
 a time, on pdf.py's port. The whole run shares one edition date (today, or --edition), so a run that crosses midnight
@@ -41,7 +41,7 @@ edition = f'Edition of {day.day} {day.strftime("%B")} {day.year}'
 wanted = [a for a in args if not a.startswith('--')]
 
 def chapters():
-    """the seventeen chapters, as the readable pages and the cards know them (build/modules/social.js manifest())"""
+    """the chapters, as the readable pages and the cards know them (build/modules/social.js manifest())"""
     js = ("process.stdout.write(JSON.stringify(require(%s).manifest().filter(function (p) { return p.kind === 'chapter'; })"
           ".map(function (p) { return { id: p.slug, n: p.number, title: p.title }; })))") % json.dumps(os.path.join(ROOT, 'build', 'modules', 'social.js'))
     r = subprocess.run(['node', '-e', js], capture_output=True, text=True)

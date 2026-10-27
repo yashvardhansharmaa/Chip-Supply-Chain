@@ -1,7 +1,7 @@
 ---json
 {
   "id": "substrates-and-pcbs",
-  "number": 12,
+  "number": 11,
   "title": "Substrates and PCBs",
   "oneLiner": "Ajinomoto, a Japanese food company, told investors in June 2026 that it holds over 95 percent of the market for the insulating film inside high-end chip packages.",
   "plain": "A package substrate is the adapter between a chip and the circuit board under it. The chip's connections are finer than a human hair, but the board is wired in millimeters. The substrate is built in layers, like plywood, around a stiff core of glass cloth and resin. Thin sheets of epoxy film are pressed onto both faces of the core. A laser burns holes through each sheet, and copper plated into the holes carries signals from one layer to the next. Every added layer is another set of holes that can fail. A handful of firms build these substrates, and two of the materials inside them come mainly from Japanese makers. Ajinomoto dominates the film, and Nitto Boseki dominates the low-expansion glass cloth in the core.",

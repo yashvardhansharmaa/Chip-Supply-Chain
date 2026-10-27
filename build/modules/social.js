@@ -34,7 +34,9 @@ const AUTHOR = { name: 'Yashvardhan Sharma', url: 'https://www.linkedin.com/in/y
 // the site's own three faces (design round five, 27 Oct 2026): Source Serif 4 for display and text, Hanken Grotesk and Fragment Mono
 const FONTS = 'https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,400&family=Hanken+Grotesk:wght@400..700&family=Fragment+Mono&display=swap';
 const SUBWORD = { 'Very hard': 'Very hard to substitute', Hard: 'Hard to substitute', Moderate: 'Moderately hard to substitute', Easy: 'Easy to substitute' };
-const TILE = { 16: 'The economics', 17: 'The contest' }; // what the chapter tile says for the two chapters that are not stages
+const TILE = { 'component-costs': 'The economics', geopolitics: 'The contest' }; // what the chapter tile says for the two chapters that are not stages
+const STAGES = require('../stages.js'); // which chapters are stages (all but the two that look across the chain)
+const RETIRED = require('../retired-chapters.js'); // a chapter merged away: its page forwards to the merged chapter's (retiredHTML)
 const PAGE_TITLES = require('../page-titles.js'); // the approved <title> and description of each static page
 const RELATED = (() => { try { return require('../related-chapters.js'); } catch (e) { return {}; } })(); // the hand-picked "Related chapters" line
 
@@ -88,20 +90,21 @@ function manifest(root) {
   const fs = require('fs'), path = require('path');
   root = root || path.resolve(__dirname, '..', '..');
   const chapters = readChapters(root, fs, path);
-  const stages = chapters.filter((c) => c.number >= 1 && c.number <= 15);
+  const stages = chapters.filter(STAGES.isStage);
   const pages = [];
 
   for (const c of chapters) {
     const si = stages.findIndex((s) => s.id === c.id);
     const eyebrow = si >= 0
       ? `${SITE} · Chapter ${pad(c.number)} · Stage ${si + 1} of ${stages.length}`
-      : `${SITE} · Chapter ${pad(c.number)}${TILE[c.number] ? ' · ' + TILE[c.number] : ''}`;
+      : `${SITE} · Chapter ${pad(c.number)}${TILE[c.id] ? ' · ' + TILE[c.id] : ''}`;
     const card = c.card || {};
     const conc = card.concentration || '';
     const sub = (card.substitutability || {}).band || '';
     const band = conc ? `${conc} concentration${sub ? ' · ' + (SUBWORD[sub] || sub) : ''}` : '';
     pages.push({
-      slug: c.id, kind: 'chapter', number: c.number, eyebrow, title: c.title,
+      // stage: the stage's place in the chain, 1 on, or null for the two chapters that are not stages (build/cards.py marks it)
+      slug: c.id, kind: 'chapter', number: c.number, stage: si >= 0 ? si + 1 : null, eyebrow, title: c.title,
       line: si >= 0 && band ? band : describe(c.plain, 140),
       // for the card: the chapter's lede and its two ratings as tags (none for the two chapters that are not stages)
       lede: c.oneLiner || c.plain, tags: si >= 0 && conc ? [`${conc} concentration`, SUBWORD[sub] || sub].filter(Boolean) : [],
@@ -111,7 +114,7 @@ function manifest(root) {
       // a share preview has room for the whole one-line summary, so it is never cut mid-sentence
       shareDescription: c.oneLiner || searchDescription(c.plain),
       // the share image's alt text says what build/cards.py draws: the title, the one-line summary, the specimen and the row of stages
-      alt: `${c.title}. ${c.oneLiner || describe(c.plain, 140)} A drawing of the chapter's specimen sits beside the text, and small drawings of all 15 stages run along the bottom${si >= 0 ? ', with this one marked' : ''}.`,
+      alt: `${c.title}. ${c.oneLiner || describe(c.plain, 140)} A drawing of the chapter's specimen sits beside the text, and small drawings of all ${stages.length} stages run along the bottom${si >= 0 ? ', with this one marked' : ''}.`,
     });
   }
 
@@ -139,7 +142,7 @@ function manifest(root) {
     suppliers: `What each of the ${suppliers.length || 226} firms makes, where it is based and how hard it would be to replace.`,
     'export-controls': 'A timeline of the main chip export rules since 2018 and what can still be sold to China.',
   };
-  for (const v of views) v.alt = `${CARD_TITLE[v.slug] || v.title}. ${CARD_LINE[v.slug] || v.line} Small drawings of all 15 stages run along the bottom.`;
+  for (const v of views) v.alt = `${CARD_TITLE[v.slug] || v.title}. ${CARD_LINE[v.slug] || v.line} Small drawings of all ${stages.length} stages run along the bottom.`;
   for (const v of views) pages.push({ kind: 'view', body: v.description || v.line, linkText: 'Open the page', ...v, description: describe(v.description || v.line) });
   return pages;
 }
@@ -242,6 +245,49 @@ a{color:#7a1f2b}
 <h1>${esc(p.title)}</h1>
 <p>${esc(p.body)}</p>
 <p><a href="${esc(target)}">${esc(p.linkText)}</a></p>
+</main>
+</body>
+</html>
+`;
+}
+
+// A chapter merged away (build/retired-chapters.js): its old address forwards to the merged chapter's readable page, with a
+// canonical link, a meta refresh and a plain link, as a view's page forwards. A script goes first and carries a section's
+// anchor along, mapped to the merged chapter's nearest (the readable page names its sources "sources" and its questions
+// "review-questions"). No share tags and no card: the page is never listed (the sitemap leaves it out) and only forwards.
+function retiredHTML(old, e, title, to) {
+  const url = BASE + e.to + '/', rel = '../' + e.to + '/';
+  const ON_PAGE = { [e.to + '--sources']: 'sources', [e.to + '--flashcards']: 'review-questions', [e.to]: '' };
+  const map = {};
+  Object.entries(RETIRED.ANCHORS || {}).forEach(([from, a]) => { map[from] = Object.prototype.hasOwnProperty.call(ON_PAGE, a) ? ON_PAGE[a] : a; });
+  const js = `(function(){var M=${JSON.stringify(map)},h=location.hash.slice(1);try{h=decodeURIComponent(h);}catch(e){}var a=Object.prototype.hasOwnProperty.call(M,h)?M[h]:'';location.replace(${JSON.stringify(rel)}+location.search+(a?'#'+a:''));})();`;
+  return `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${esc(to.title)} · ${SITE}</title>
+<meta name="description" content="${esc(title)} is now part of the chapter ${esc(to.title)}.">
+<link rel="canonical" href="${esc(url)}">
+<!-- this chapter merged into ${esc(e.to)} on 27 Oct 2026: a person is sent on to it, with the section they asked for -->
+<script>${js}</script>
+<meta http-equiv="refresh" content="0;url=${esc(rel)}">
+${ICONS}
+<style>
+body{margin:0;background:#fff;color:#171716;font:19.5px/1.55 "Source Serif 4",Georgia,serif}
+main{max-width:34em;margin:0 auto;padding:48px 16px}
+.eyebrow{font:400 12px/1.4 "Fragment Mono",ui-monospace,Menlo,monospace;color:#56554f;margin:0 0 12px}
+h1{font:400 34px/1.1 "Source Serif 4",Georgia,serif;margin:0 0 20px}
+a{color:#7a1f2b}
+[data-theme="dark"] body{background:#121211;color:#e8e7e3}[data-theme="dark"] .eyebrow{color:#a9a7a1}[data-theme="dark"] a{color:#d98a95}
+</style>
+</head>
+<body>
+<main>
+<p class="eyebrow">${SITE} · Chapter ${pad(to.number)}</p>
+<h1>${esc(to.title)}</h1>
+<p>${esc(title)} is now part of the chapter ${esc(to.title)}.</p>
+<p><a href="${esc(rel)}">Read ${esc(to.title)}</a></p>
 </main>
 </body>
 </html>
@@ -425,21 +471,21 @@ function readableHTML(p, ch, ctx, versions, css) {
   const conc = si >= 0 ? (m.card || {}).concentration || '' : '';
   // the card's verdict, as The Chain's kicker carries it (build.js bandMark): "Extreme concentration · Very hard to substitute"
   const subBand = ((m.card || {}).substitutability || {}).band || '';
-  const kick = `<p class="ch-kick"><span>Chapter ${pad(ch.number)}</span><span>${si >= 0 ? `Stage ${si + 1} of ${stages.length}` : esc(TILE[ch.number] || '')}</span>${conc ? `<span class="ch-band ch-verdict" data-band="${BANDS[conc] || 0}"><i aria-hidden="true"></i><span>${esc(conc)} concentration</span>${subBand ? `<span class="sep" aria-hidden="true">·</span><span>${esc(SUBWORD[subBand] || subBand)}</span>` : ''}</span>` : ''}</p>`;
+  const kick = `<p class="ch-kick"><span>Chapter ${pad(ch.number)}</span><span>${si >= 0 ? `Stage ${si + 1} of ${stages.length}` : esc(TILE[ch.id] || '')}</span>${conc ? `<span class="ch-band ch-verdict" data-band="${BANDS[conc] || 0}"><i aria-hidden="true"></i><span>${esc(conc)} concentration</span>${subBand ? `<span class="sep" aria-hidden="true">·</span><span>${esc(SUBWORD[subBand] || subBand)}</span>` : ''}</span>` : ''}</p>`;
   const adds = ['a 3D model', 'glossary definitions', cards.length ? 'flashcards' : ''].filter(Boolean);
   const note = `The interactive chapter adds ${adds.length > 1 ? adds.slice(0, -1).join(', ') + ' and ' + adds[adds.length - 1] : adds[0]}.`;
   const cta = (cls) => `<div class="cta${cls}"><a class="btn" href="${esc(app)}">Open the interactive chapter <span aria-hidden="true">→</span></a><p class="cta-note">${note}</p></div>`;
 
   const specimen = m.specimen || (ch.id === 'geopolitics' ? 'globe' : 'wafer');
   // the specimen: Lithography shows its annotated still (data/specimen-parts.json); every chapter its caption, flush left, and
-  // the way to the live drawing. With no drawing on the page, chapters 16 and 17 have no night ground to set it on
+  // the way to the live drawing. With no drawing on the page, the two chapters that are not stages have no night ground to set it on
   const pe = (ctx.specimenParts || {})[ch.id], parts = pe && Array.isArray(pe.parts) ? pe.parts : [];
   let still = pe && pe.still && parts.length ? stillSVG(pe.still, parts, m.specimenCaption ? m.specimenCaption.split('. ')[0] : ch.title) : '';
   // every other chapter shows a still of its own specimen, shot from the app at the angle it opens on (qa/redesign/stills.js,
   // build/assets/specimens/<id>.webp at twice the pixels it is shown at), so no readable page opens on a lone caption
   const sz = !still && (ctx.stillSizes || {})[ch.id];
   if (sz) still = `<img class="ch-still-img" src="../media/spec-${esc(ch.id)}.webp" width="${Math.round(sz[0] / 2)}" height="${Math.round(sz[1] / 2)}" alt="${esc((SPECIMEN_NAME[specimen] || specimen.replace(/-/g, ' ')))}, the chapter's specimen" decoding="async">`;
-  const specimenHTML = `<figure class="ch-spec${still ? ' has-still' : ''}"${still && ch.number >= 16 ? ' data-night="1"' : ''}>${still ? `<div class="ch-spec-draw">${still}</div>` : ''}<figcaption class="ch-spec-cap${r.parts ? ' has-parts' : ''}"><span class="label">Specimen ${pad(ch.number)} · ${esc(ch.title)}</span>${m.specimenCaption ? `<p>${esc(m.specimenCaption)}</p>` : ''}${r.parts || ''}<a class="ch-spec-3d" href="${esc(app)}">See it in 3D in the interactive chapter</a></figcaption></figure>`;
+  const specimenHTML = `<figure class="ch-spec${still ? ' has-still' : ''}"${still && !STAGES.isStage(ch) ? ' data-night="1"' : ''}>${still ? `<div class="ch-spec-draw">${still}</div>` : ''}<figcaption class="ch-spec-cap${r.parts ? ' has-parts' : ''}"><span class="label">Specimen ${pad(ch.number)} · ${esc(ch.title)}</span>${m.specimenCaption ? `<p>${esc(m.specimenCaption)}</p>` : ''}${r.parts || ''}<a class="ch-spec-3d" href="${esc(app)}">See it in 3D in the interactive chapter</a></figcaption></figure>`;
 
   // the contents rail, as the app draws it (build.js railHTML), with this page's own section anchors
   const toc = (r.plain ? [[`${ch.id}--plain`, 'In plain terms']] : []).concat(r.plate ? [[`${ch.id}--card`, 'Chokepoint card']] : []).concat((ch.headings || []).map((h) => [h.id, esc(String(h.text).replace(/\*\*/g, ''))]))
@@ -587,6 +633,14 @@ module.exports = function (ctx) {
       html = p.slug === 'intro' && introReview ? introHTML(p, versions, css, introReview) : pageHTML(p, versions);
     }
     fs.writeFileSync(path.join(dir, 'index.html'), keepRanges(html));
+  }
+  // a chapter merged away keeps its address as a page that forwards to the merged chapter's (never listed in the sitemap)
+  for (const [old, e] of Object.entries(RETIRED.chapters || {})) {
+    const to = byId.get(e.to);
+    if (!to) { warn(`retired chapter ${old}: no chapter ${e.to} to forward to`); continue; }
+    if (pages.some((p) => p.slug === old)) { warn(`retired chapter ${old} still has a page of its own`); continue; }
+    fs.mkdirSync(path.join(dist, old), { recursive: true });
+    fs.writeFileSync(path.join(dist, old, 'index.html'), retiredHTML(old, e, e.title || old, to));
   }
   // the plain stills of the other chapters (qa/redesign/stills.js), copied as spec-<id>.webp
   for (const id of Object.keys(ctx.stillSizes || {})) {

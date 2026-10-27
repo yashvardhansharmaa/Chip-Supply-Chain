@@ -3,6 +3,8 @@
 const fs = require('fs');
 const path = require('path');
 const SITE = require('./site.js'); // the public address; see build/site.js
+const STAGES = require('./stages.js'); // which chapters are stages of the chain (all but the two that look across it)
+const RETIRED = require('./retired-chapters.js'); // the addresses of a chapter merged away, and where each now lands
 const keepRanges = require('./keep-ranges.js'); // a figure range never breaks at its hyphen
 // the work a citation names, and the token a cite line's day goes in as (filled once every page's date is known, below);
 // up here because the figures' citations (figure()) are drawn while the chapters are read
@@ -416,7 +418,7 @@ const COST_LEAD = /^((?:about |roughly |up to |from |over |under |~|≈)?(?:US)?
 // gl, when given, marks glossary terms in the card's prose (the substitutability test, the reason and the China and US
 // lines), the first use of each across the card; it takes and returns escaped HTML. ctx is the chapter's citation context
 // ({ id, cites }); without it the card is drawn without marks.
-// where, when given, names the stage at the card's head ("Lithography, stage 4 of 15")
+// where, when given, names the stage at the card's head ("Lithography, stage 4 of 14")
 function nameplate(card, title, gl, ctx, where) {
   if (!card) return '';
   const g = gl || ((s) => s), plain = (s) => s;
@@ -466,7 +468,7 @@ for (const f of files) {
   const { meta, body } = parseChapter(read(path.join(contentDir, f)), f);
   const id = meta.id || f.replace(/^\d\d-/, '').replace(/\.md$/, '');
   const ctx = { id, cites: [], figures: meta.figures || [], number: meta.number || chapters.length + 1, figList: [] };
-  readingOrderCites(meta, body, ctx, id !== 'geopolitics' && meta.number >= 1 && meta.number <= 15);
+  readingOrderCites(meta, body, ctx, STAGES.isStage({ id, number: meta.number }));
   const { html, headings } = markdown(body, ctx);
   const words = wordCount(body);
   // figList: the figures in the order they are placed, numbered "04.1" on, for the contents rail (chapterHTML)
@@ -478,11 +480,11 @@ chapters.sort((a, b) => a.number - b.number);
 if (!chapters.length) warn('no chapters found; building with a placeholder');
 
 const pad = (n) => String(n).padStart(2, '0');
-const SHORT = { 'design-and-eda': 'Design', 'silicon-and-wafers': 'Silicon', 'chemicals-gases-and-photoresist': 'Chem­icals', lithography: 'Litho', 'photomasks-and-pellicles': 'Masks', 'deposition-and-etch': 'Dep / etch', 'metrology-and-inspection': 'Metro­logy', 'transistors-and-front-end': 'Front end', 'foundries-and-fabs': 'Foundry', 'memory-and-hbm': 'Memory', 'advanced-packaging': 'Pack­aging', 'substrates-and-pcbs': 'Sub­strate', 'test-and-assembly': 'Test', 'systems-and-networking': 'Systems', 'data-centers-and-power': 'Power', 'introduction-and-goals': 'Intro', 'component-costs': 'Costs', geopolitics: 'Geopolitics' };
+const SHORT = { 'design-and-eda': 'Design', 'silicon-and-wafers': 'Silicon', 'chemicals-gases-and-photoresist': 'Chem­icals', lithography: 'Litho', 'photomasks-and-pellicles': 'Masks', 'deposition-and-etch': 'Dep / etch', 'metrology-and-inspection': 'Metro­logy', 'foundries-and-fabs': 'Foundry', 'memory-and-hbm': 'Memory', 'advanced-packaging': 'Pack­aging', 'substrates-and-pcbs': 'Sub­strate', 'test-and-assembly': 'Test', 'systems-and-networking': 'Systems', 'data-centers-and-power': 'Power', 'introduction-and-goals': 'Intro', 'component-costs': 'Costs', geopolitics: 'Geopolitics' };
 const WORDS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen', 'twenty'];
 const word = (n) => WORDS[n] || String(n);
 const cap = (t) => t.charAt(0).toUpperCase() + t.slice(1);
-const isStage = (ch) => ch.number >= 1 && ch.number <= 15; // chapters 1 to 15 are the stages; 16 is costs, 17 the essay
+const isStage = (ch) => STAGES.isStage(ch); // every chapter but the economics chapter and the essay is a stage (build/stages.js)
 const stages = chapters.filter(isStage);
 function chainTrack(chs, currentId) {
   return `<ol class="chain-track">${chs.map((c) => { const cb = (c.meta.card || {}).concentration || ''; return `<li class="stage-cell" data-band="${BANDS[cb] || 0}" data-id="${esc(c.id)}"${c.id === currentId ? ' aria-current="true"' : ''}><a href="${esc(c.id)}/" data-route="#${esc(c.id)}" title="${esc(c.title)}${cb ? ' · ' + esc(cb) + ' concentration' : ''}"><span class="n">${pad(c.number)}</span><span class="bar"><i></i></span><span class="t">${esc(SHORT[c.id] || c.title)}</span></a></li>`; }).join('')}</ol>`;
@@ -560,13 +562,13 @@ function glossaryWrap(html, used) {
 }
 
 // The reading spine: the numbered chapters, then the geopolitics essay, which sits on its own route.
-const chapterHref = (c) => '#' + esc(c.id); // the essay is chapter 18 inside the chain
+const chapterHref = (c) => '#' + esc(c.id); // the essay is the last chapter inside the chain
 /* The end of a chapter is a door to the next one (the hybrid mockup's .nextx, approved in design round three): where the next
    chapter sits in the chain, its title large, its one line, a button and a still of its specimen, with Previous as a small
    second link. The Chain shows one chapter at a time, so the door is the way on. The last chapter's door leads back to the
    contents. One builder for both homes of a chapter: The Chain in the app (prevNext below) and the readable page
    dist/<chapter>/ (build/modules/social.js), each passing how a chapter is linked (attrs), the element the door is (tag) and
-   where the media folder is (media). Chapters 16 and 17 are not stages, and the site groups them as "Across the chain" (the
+   where the media folder is (media). The last two chapters are not stages, and the site groups them as "Across the chain" (the
    contents, the phone's sheet), so their doors say so. */
 // the still of a chapter's specimen: Lithography's is the one its numbered parts are drawn over (data/specimen-parts.json)
 function doorStill(c) {
@@ -582,9 +584,9 @@ function chapterDoor(ch, attrs, tag, media) {
   const prev = seq[i - 1], next = seq[i + 1];
   const where = (c, of) => { const si = stages.findIndex((x) => x.id === c.id); return si >= 0 ? `stage ${pad(si + 1)}${of ? ` / ${pad(stages.length)}` : ''}` : 'across the chain'; };
   const go = (words) => `<span class="go">${words}<span class="circ" aria-hidden="true">→</span></span>`;
-  // the drawing is the title's picture, so it has no words of its own; chapters 16 and 17 keep their night ground
+  // the drawing is the title's picture, so it has no words of its own; the two chapters that are not stages keep their night ground
   const st = next ? doorStill(next) : null;
-  const ex = st ? `<span class="ex"${next.number >= 16 ? ' data-night="1"' : ''}><img src="${media || ''}${esc(st.file)}" width="${Math.round(st.w / 2)}" height="${Math.round(st.h / 2)}" alt="" loading="lazy" decoding="async"></span>` : '';
+  const ex = st ? `<span class="ex"${!isStage(next) ? ' data-night="1"' : ''}><img src="${media || ''}${esc(st.file)}" width="${Math.round(st.w / 2)}" height="${Math.round(st.h / 2)}" alt="" loading="lazy" decoding="async"></span>` : '';
   const nx = next
     ? `<a class="pn next" ${attrs(next)}><span class="label">Next, ${where(next, true)}</span><span class="t">${esc(next.title)}</span>${next.meta.oneLiner ? `<span class="ol">${esc(next.meta.oneLiner)}</span>` : ''}${go(`Continue to chapter ${pad(next.number)}`)}${ex}</a>`
     : `<a class="pn next" href="#/chain"><span class="label">Contents</span><span class="t">All ${word(seq.length)} chapters</span><span class="ol">The ${word(stages.length)} stages run from chip design to the data center. The last ${word(seq.length - stages.length)} chapters cover what a chip costs and who controls the chain.</span>${go('Back to the contents')}</a>`;
@@ -722,7 +724,7 @@ var cite=acts.querySelector('.ch-cite-btn');acts.insertBefore(tb,cite?cite.nextS
 [].forEach.call(D.querySelectorAll('.figure .fs-acts'),add);
 })();`;
 // the cite line's date goes in once every page's date is known (after the build modules write the readable pages)
-// the key under the ledger column's fifteen rows: each band the stages hold, its bar drawn as the rows draw it
+// the key under the ledger column's rows, one per stage: each band the stages hold, its bar drawn as the rows draw it
 const LEDGER_KEY = (() => {
   const used = ['Extreme', 'High', 'Moderate', 'Low'].filter((b) => stages.some((c) => (c.meta.card || {}).concentration === b));
   return used.length ? `<p class="ledger-key" aria-hidden="true">${used.map((b) => `<span class="lgk" data-band="${BANDS[b]}"><i></i>${b}</span>`).join('')}</p>` : '';
@@ -768,8 +770,8 @@ function partsHTML(ch) {
 // the card's verdict in the kicker: the band as a mark (Extreme a solid bar, High an outline, as the home's evidence figure draws
 // them), then both ratings in the words the card's look-up heads use, "Extreme concentration · Very hard to substitute"
 const bandMark = (b, sub) => (b ? `<span class="ch-band ch-verdict" data-band="${BANDS[b] || 0}"><i aria-hidden="true"></i><span>${esc(b)} concentration</span>${sub ? `<span class="sep" aria-hidden="true">·</span><span>${esc(SUBWORD[sub] || sub)}</span>` : ''}</span>` : '');
-const TILE_WORD = { 16: 'The economics', 17: 'The contest' }; // the second item of the kicker for the two chapters that are not stages
-// the contents rail: the chapter's sections, its figures by number, and the chain (the fifteen stages with their marks, the
+const TILE_WORD = { 'component-costs': 'The economics', geopolitics: 'The contest' }; // the second item of the kicker for the two chapters that are not stages
+// the contents rail: the chapter's sections, its figures by number, and the chain (the stages with their marks, the
 // current one in wine, then the two chapters that look across them). Under 1200 px only On this page shows, as a line of links
 function railHTML(ch, stageIdx, toc) {
   const figs = ch.figList || [];
@@ -780,7 +782,7 @@ function railHTML(ch, stageIdx, toc) {
   const across = chapters.filter((c) => !isStage(c)).concat(geo ? [geo] : []);
   return `<nav class="ch-rail ch-ledger" aria-label="${esc(ch.title)}: contents">`
     // the chapter's number and stage, for paper only (src/modules/print.css sets it in the ledger column)
-    + `<div class="ch-tile print-only"><span class="k">Chapter</span><span class="v">${pad(ch.number)}</span><span class="of">${stageIdx >= 0 ? `Stage ${stageIdx + 1} of ${stages.length}` : esc(TILE_WORD[ch.number] || '')}</span></div>`
+    + `<div class="ch-tile print-only"><span class="k">Chapter</span><span class="v">${pad(ch.number)}</span><span class="of">${stageIdx >= 0 ? `Stage ${stageIdx + 1} of ${stages.length}` : esc(TILE_WORD[ch.id] || '')}</span></div>`
     + `<div class="rail-part rail-on"><p class="rail-k">On this page</p><ol class="rail-toc">${toc.map(([id, t]) => `<li><a href="#${esc(id)}">${t}</a></li>`).join('')}</ol></div>`
     + (figs.length ? `<div class="rail-part rail-figs-w"><p class="rail-k">Figures</p><ol class="rail-figs">${figs.map((f) => `<li><a href="#${esc(f.id)}"><span class="n">${esc(f.num)}</span><span class="t">${esc(f.label)}</span></a></li>`).join('')}</ol></div>` : '')
     + `<div class="rail-part rail-chain-w"><p class="rail-k">The chain <span class="rail-key" aria-hidden="true"><span><i></i>Extreme</span><span><i class="h"></i>High</span></span></p>`
@@ -807,10 +809,10 @@ function chapterHTML(ch) {
   // the main page's blocks (In plain terms, In short, the card's prose) each mark the first use of each glossary term in them
   const cardUsed = new Set();
   const plateGl = isStage(ch) ? cardId(nameplate(m.card, ch.title, (h) => glossaryWrap(h, cardUsed), cardCtx, where)) : '';
-  const kick = `<p class="ch-kick"><span>Chapter ${pad(ch.number)}</span><span>${stageIdx >= 0 ? `Stage ${stageIdx + 1} of ${stages.length}` : esc(TILE_WORD[ch.number] || '')}</span>${bandMark(conc, ((m.card || {}).substitutability || {}).band)}</p>`;
+  const kick = `<p class="ch-kick"><span>Chapter ${pad(ch.number)}</span><span>${stageIdx >= 0 ? `Stage ${stageIdx + 1} of ${stages.length}` : esc(TILE_WORD[ch.id] || '')}</span>${bandMark(conc, ((m.card || {}).substitutability || {}).band)}</p>`;
   const facts = `<p class="ch-meta"><span class="label">${ch.words.toLocaleString('en-US')} words / ${mins} min</span><span class="label">Specimen: ${esc(SPECIMEN_NAME[specimen] || specimen.replace(/-/g, ' '))}</span><span class="label">Updated ${CITE_DAY(ch.id)}</span>${ch.cites.length ? `<span class="label">${ch.cites.length} sources</span>` : ''}</p>`;
-  // the specimen's slot and its caption; chapters 16 and 17 set their drawing on the night ground (data-night)
-  const ps = partsOf(ch), night = ch.number >= 16;
+  // the specimen's slot and its caption; the two chapters that are not stages set their drawing on the night ground (data-night)
+  const ps = partsOf(ch), night = !isStage(ch);
   const spec = `<figure class="ch-spec"${night ? ' data-night="1"' : ''}${ps.length ? ` data-parts="${esc(JSON.stringify(ps.map((p) => ({ n: +p.n, name: p.name, at: p.at || [] }))))}"` : ''}>`
     + `<div class="ch-spec-draw"></div>`
     + `<figcaption class="ch-spec-cap${ch.rendered.parts ? ' has-parts' : ''}"><span class="label">Specimen ${pad(ch.number)} · ${esc(ch.title)}</span>${m.specimenCaption ? `<p>${esc(m.specimenCaption)}</p>` : ''}${ch.rendered.parts}</figcaption></figure>`;
@@ -831,7 +833,7 @@ ${railHTML(ch, stageIdx, toc)}
 }
 const chaptersHTML = chapters.length ? chapters.map(chapterHTML).join('\n') : `<article class="chapter" id="placeholder" data-specimen="wafer" data-number="01" data-title="Placeholder"><header class="chapter-head"><div class="chapter-num">01</div><h2 class="chapter-title">No chapters yet</h2></header><div class="prose"><p>No chapters found. This is a shell build.</p></div></article>`;
 
-// the fifteen stages of the chain first, then the two chapters that look across all of them under their own heading; each
+// the stages of the chain first, then the two chapters that look across all of them under their own heading; each
 // entry gives the chapter's one-line summary (decision 12; the section links stay in search and the permalinks)
 // a contents entry: the number with the stage's band as a mark (a bar for Extreme, an outline for High, as in the chapter's rail),
 // the title and the chapter's one line
@@ -962,7 +964,7 @@ function exposureViz(rows) {
 
 /* ---------------- geopolitics view ---------------- */
 let geoArticle = '', geoDek = 'Who holds each chokepoint, how the export-control campaign has unfolded since 2018, and where the chips go.';
-// chapter 17 is drawn by the same chapterHTML as the others (redesign stage 2): the opener, its specimen on the night ground and
+// the essay, the last chapter, is drawn by the same chapterHTML as the others (redesign stage 2): the opener, its specimen on the night ground and
 // the rail; it has no card, being no stage
 if (geo) { geoDek = geo.meta.oneLiner || geoDek; geoArticle = chapterHTML(geo); }
 
@@ -1129,7 +1131,7 @@ const suppliersData = suppliers.map((r) => {
 });
 // each firm's chart address, for the search entries of the China revenue rows (the rows themselves stay as filed, since the page exports them)
 const exposureLinks = {}; Object.keys(exposureJoin.byFirm).forEach((f) => { exposureLinks[f] = exposureJoin.href(f); });
-const data = { landscape, landscapeNotes, landscapeCompare, suppliers: suppliersData, timeline, matrix, flows, exposure, exposureLinks, chapters: all.map((c) => { const card = c.meta.card || {}; return { id: c.id, number: c.number, title: c.title, specimen: c.meta.specimen, oneLiner: c.meta.oneLiner || '', plain: String(c.meta.plain || '').replace(/\s*\(\[source\]\([^)\s]*\)\)/g, ''), score: +card.chokepointScore || 0, concentration: card.concentration || '', band: card.concentration || '', bandRank: BANDS[card.concentration] || 0, substitutability: card.substitutability || null, leaders: card.leaders || [], countries: card.countries || [], substitution: card.substitution || {}, chinaStatus: card.chinaStatus || '', usStatus: card.usStatus || '' }; }) };
+const data = { landscape, landscapeNotes, landscapeCompare, suppliers: suppliersData, timeline, matrix, flows, exposure, exposureLinks, chapters: all.map((c) => { const card = c.meta.card || {}; return { id: c.id, number: c.number, stage: isStage(c), title: c.title, specimen: c.meta.specimen, oneLiner: c.meta.oneLiner || '', plain: String(c.meta.plain || '').replace(/\s*\(\[source\]\([^)\s]*\)\)/g, ''), score: +card.chokepointScore || 0, concentration: card.concentration || '', band: card.concentration || '', bandRank: BANDS[card.concentration] || 0, substitutability: card.substitutability || null, leaders: card.leaders || [], countries: card.countries || [], substitution: card.substitution || {}, chinaStatus: card.chinaStatus || '', usStatus: card.usStatus || '' }; }) };
 let html = read(path.join(root, 'src', 'template.html'));
 const fill = (k, v) => { html = html.split(`{{${k}}}`).join(v); };
 // the route before boot, inlined in <head>: it shows the routed view while the rest of the page arrives (src/preroute.js),
@@ -1138,7 +1140,24 @@ const chainIds = chapters.concat(geo ? [geo] : []).map((c) => c.id);
 const PRE_CHAPTERS = 'var CHAPTERS = []; // the chapters of The Chain, in order: build/build.js writes their ids here';
 const preSrc = read(path.join(root, 'src', 'preroute.js'));
 if (!preSrc.includes(PRE_CHAPTERS)) warn('preroute: src/preroute.js has lost the line the build writes the chapter ids into');
-fill('PREROUTE', preSrc.replace(PRE_CHAPTERS, `var CHAPTERS = ${JSON.stringify(chainIds)};`).replace(/<\/script/gi, '<\\/script'));
+// ...and the addresses of a chapter merged away, each with the merged chapter's nearest anchor (build/retired-chapters.js). A
+// target must be on the page, and an old address must not be one, or the swap would hide a live anchor
+const PRE_MOVED = 'var MOVED = {}; // the addresses of a chapter merged away: build/build.js writes { chapters: { old: new }, anchors: { old: new } } here';
+if (!preSrc.includes(PRE_MOVED)) warn('preroute: src/preroute.js has lost the line the build writes the retired chapters into');
+const movedMap = { chapters: {}, anchors: RETIRED.ANCHORS || {} };
+Object.entries(RETIRED.chapters || {}).forEach(([old, e]) => {
+  if (!chapterById(e.to)) warn(`retired chapter ${old}: it forwards to ${e.to}, which is not a chapter`);
+  if (chapterById(old)) warn(`retired chapter ${old} is still a chapter in content/`);
+  movedMap.chapters[old] = e.to;
+});
+{
+  const onPage = (id) => chaptersHTML.includes(` id="${id}"`) || geoArticle.includes(` id="${id}"`);
+  Object.entries(movedMap.anchors).forEach(([from, to]) => {
+    if (!onPage(to)) warn(`retired chapters: #${from} forwards to #${to}, which is not on the page`);
+    if (onPage(from)) warn(`retired chapters: #${from} is still an anchor on the page, so it must not be forwarded`);
+  });
+}
+fill('PREROUTE', preSrc.replace(PRE_CHAPTERS, `var CHAPTERS = ${JSON.stringify(chainIds)};`).replace(PRE_MOVED, `var MOVED = ${JSON.stringify(movedMap)};`).replace(/<\/script/gi, '<\\/script'));
 // one chapter at a time on The Chain (src/template.html, the style after the pre-boot rules): for each value of
 // html[data-chain], what of The Chain stays hidden on screen
 {
@@ -1168,6 +1187,8 @@ for (const f of modDir(path.join(root, 'build', 'modules')).filter((x) => x.ends
   catch (e) { warn(`build module ${f} failed: ${e.message}`); fatal.push(`build/modules/${f} threw: ${e.message}`); }
 }
 fill('SITE_URL', SITE.url); fill('SITE_HOST', SITE.host);
+// the template's counts of the chain (the home card's alt text, the printed title page, How to read): never typed
+fill('N_STAGES', String(stages.length)); fill('STAGES_WORD', word(stages.length)); fill('CHAPTERS_WORD', word(all.length));
 // the counter: each hash route counts as its own page ("/lithography", "/suppliers"), and the query string is dropped;
 // the walk's step addresses (#/walk/<chapter>, replaced as the reader scrolls Start here) all count as the home page
 fill('ANALYTICS', SITE.analytics ? `<script>window.goatcounter={path:function(){return (location.hash||'').replace(/^#\\/?/,'/').replace(/\\?.*$/,'').replace(/^\\/walk\\/.*$/,'/')||'/';}};</script>\n<script async src="https://gc.zgo.at/count.js" data-goatcounter="${esc(SITE.analytics)}"></script>` : ''); fill('THESIS', thesisHTML); fill('SUBTITLE', subtitleHTML); fill('CHAIN', chainTrack(stages, null));
@@ -1190,7 +1211,7 @@ fill('SUPPLIERS_INTRO', suppliersIntro); fill('SUPPLIERS_FACTS', suppliersFacts)
 for (const asset of ['print-title.png']) { const from = path.join(root, 'build', 'assets', asset); if (fs.existsSync(from)) fs.copyFileSync(from, path.join(root, 'dist', asset)); }
 // the site icons (drawn by `python3 build/icons.py`) go to the root of dist/, where browsers look for /favicon.ico
 for (const icon of ['favicon.ico', 'favicon.svg', 'apple-touch-icon.png']) { const from = path.join(root, 'build', 'assets', 'icons', icon); if (fs.existsSync(from)) fs.copyFileSync(from, path.join(root, 'dist', icon)); else warn(`icon ${icon} is missing; run python3 build/icons.py`); }
-fill('GEO_ARTICLE', geoArticle); fill('CITE_JS', CITE_JS); fill('FIG_JS', FIG_JS); // chapter 17, the essay, from the same chapterHTML as the others
+fill('GEO_ARTICLE', geoArticle); fill('CITE_JS', CITE_JS); fill('FIG_JS', FIG_JS); // the essay, the last chapter, from the same chapterHTML as the others
 fill('BRIEFING', briefingHTML); fill('GLOSSARY', glossaryHTML); fill('GLOSSARY_COUNT', String(glossary.length));
 // the Look up page: one list of every term, firm and chip, alphabetical, each with the kind a reader would call it
 const lkSlug = (s) => String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -1283,8 +1304,10 @@ if (fs.existsSync(pdfFile)) pageDate('/' + pdfName, fs.readFileSync(pdfFile)); e
 const summaryPdf = 'pdf/summary.pdf', summaryPdfFile = path.join(root, 'dist', summaryPdf);
 if (fs.existsSync(summaryPdfFile)) pageDate('/' + summaryPdf, fs.readFileSync(summaryPdfFile));
 // the two PDFs' first addresses (until 26 Oct 2026) keep working for links already shared: each is a copy of the renamed
-// file, and robots.txt below asks search engines to skip them, so only the new addresses are found
+// file, and robots.txt below asks search engines to skip them, so only the new addresses are found. A chapter merged away
+// (build/retired-chapters.js) keeps its PDF address the same way, as a copy of the merged chapter's PDF
 const OLD_PDFS = { 'chip-supply-chain-the-chain.pdf': pdfFile, 'chip-supply-chain-summary.pdf': summaryPdfFile };
+Object.entries(RETIRED.chapters || {}).forEach(([old, e]) => { OLD_PDFS[`pdf/${old}.pdf`] = path.join(root, 'dist', 'pdf', e.to + '.pdf'); });
 Object.entries(OLD_PDFS).forEach(([old, now]) => { if (fs.existsSync(now)) fs.copyFileSync(now, path.join(root, 'dist', old)); });
 // each chapter's own PDF that has been printed (chapterPDF, above), dated by its bytes as the chain's is
 const chapterPdfs = all.filter((c) => chapterPDF(c.id)).map((c) => { const p = chapterPDF(c.id); pageDate('/' + p.href, p.bytes); return '/' + p.href; });

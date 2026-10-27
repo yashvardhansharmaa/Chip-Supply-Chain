@@ -49,7 +49,9 @@ const PRIMARY = ['US', 'NL', 'DE', 'JP', 'TW', 'KR', 'CN', 'MY', 'SG'];
 const SECONDARY = ['GB', 'IL', 'IN', 'FR', 'AT', 'CH', 'TH'];
 
 /* One stop per stage for the home map's route: the town that leads the stage, by the site's own
- * chapter cards (the first-named leader's headquarters or main site). Editorial, like TOWN_CC. */
+ * chapter cards (the first-named leader's headquarters or main site). Editorial, like TOWN_CC. Since the merge of
+ * 27 Oct 2026 Foundries and Fabs, led by TSMC, stands at Hsinchu, where the front end stood; Tainan, the old
+ * foundry stop, is no longer on the route. */
 const STOPS = [
   ['design-and-eda', 'San Jose', 37.34, -121.89, 'US', -14, -8],
   ['silicon-and-wafers', 'Tokyo', 35.68, 139.69, 'JP', -16, -14],
@@ -58,8 +60,7 @@ const STOPS = [
   ['photomasks-and-pellicles', 'Yokohama', 35.44, 139.64, 'JP', -4, 14],
   ['deposition-and-etch', 'Santa Clara', 37.35, -121.95, 'US', 10, -14],
   ['metrology-and-inspection', 'Milpitas', 37.43, -121.90, 'US', 0, 12],
-  ['transistors-and-front-end', 'Hsinchu', 24.80, 120.97, 'TW', -14, -8],
-  ['foundries-and-fabs', 'Tainan', 22.99, 120.21, 'TW', -16, 10],
+  ['foundries-and-fabs', 'Hsinchu', 24.80, 120.97, 'TW', -14, -8],
   ['memory-and-hbm', 'Icheon', 37.28, 127.44, 'KR', 0, 0],
   ['advanced-packaging', 'Kaohsiung', 22.63, 120.30, 'TW', 10, 12],
   ['substrates-and-pcbs', 'Ogaki', 35.36, 136.62, 'JP', -22, 6],
@@ -101,7 +102,7 @@ const SEG_CH = {
 const SHORT = {
   'design-and-eda': 'Design', 'silicon-and-wafers': 'Silicon', 'chemicals-gases-and-photoresist': 'Chemicals',
   lithography: 'Litho', 'photomasks-and-pellicles': 'Masks', 'deposition-and-etch': 'Dep / etch',
-  'metrology-and-inspection': 'Metrology', 'transistors-and-front-end': 'Front end', 'foundries-and-fabs': 'Foundry',
+  'metrology-and-inspection': 'Metrology', 'foundries-and-fabs': 'Foundry',
   'memory-and-hbm': 'Memory', 'advanced-packaging': 'Packaging', 'substrates-and-pcbs': 'Substrate',
   'test-and-assembly': 'Test', 'systems-and-networking': 'Systems', 'data-centers-and-power': 'Power'
 };
@@ -169,7 +170,7 @@ function labelSides(stops, VW, VH, warn) {
 module.exports = function (ctx) {
   const esc = ctx.esc, word = ctx.word, warn = ctx.warn, data = ctx.data;
   const chapters = data.chapters || [];
-  const stages = chapters.filter((c) => c.number >= 1 && c.number <= 15); // the fifteen stages of the chain; 16 is component costs, 17 the essay
+  const stages = chapters.filter((c) => c.stage); // the stages of the chain (build/stages.js); the economics chapter and the essay are not
   const cardCount = chapters.filter((c) => c.concentration).length; // only the stage chapters carry a chokepoint card
   const matrix = (data.matrix || []).filter((r) => r.shares);
   const suppliers = data.suppliers || [];

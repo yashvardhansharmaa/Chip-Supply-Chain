@@ -1,7 +1,7 @@
 ---json
 {
   "id": "geopolitics",
-  "number": 17,
+  "number": 16,
   "title": "Who Controls the Chain",
   "oneLiner": "Since 2018 the United States has used export controls to limit China's access to advanced chips and chipmaking tools, and China has been learning to make both.",
   "plain": "Export controls work only when a country's own firms sell something the buyer cannot get elsewhere, so few governments can use them to much effect. An export control is a rule that requires the government's permission for a sale. The government names an item and a country or a buyer. From then on its own companies must hold a license before they ship that item to that country or buyer. The American government extends some of these rules to goods made abroad with American technology. The machines, software and chemicals used to make an advanced chip come from a short list of firms in the United States, the Netherlands and Japan, so those three governments can control who gets them.",

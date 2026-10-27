@@ -15,7 +15,7 @@
   var cname = function (c) { return COUNTRY[c] || c; };
   var cssPx = function (name) { return parseFloat(getComputedStyle(document.documentElement).getPropertyValue(name)) || 0; };
   /* what covers the top of the window: the fixed masthead, and in the walk the fixed rail under it (the chain's own rail was
-     retired on 21 Oct 2026: the ledger column beside each chapter already shows the fifteen stages) */
+     retired on 21 Oct 2026: the ledger column beside each chapter already shows the stages) */
   var headerH = function () {
     var h = (cssPx('--masthead') || 56) + cssPx('--band');
     var cur = window.CP && CP.Router ? CP.Router.current : null, rail = cur === 'walk' ? $('#wk-rail') : null;
@@ -146,7 +146,7 @@
       requestAnimationFrame(function (t) { self.loop(t); });
     },
     refreshColors: function () {
-      // read where the canvas sits: a chapter's night slot (chapters 16 and 17) sets its own ink and accent (src/modules/chapter.css)
+      // read where the canvas sits: a chapter's night slot (the two chapters that are not stages) sets its own ink and accent (src/modules/chapter.css)
       var cs = getComputedStyle(this.canvas && this.canvas.isConnected ? this.canvas : document.documentElement);
       var p = function (v, d) { var m = (cs.getPropertyValue(v) || '').split(','); if (m.length < 3) return d; return [parseFloat(m[0]) / 255, parseFloat(m[1]) / 255, parseFloat(m[2]) / 255]; };
       this.ink = p('--stage-ink', this.ink); this.accent = p('--stage-accent', this.accent);
@@ -269,7 +269,7 @@
     /* The chapter's slot the drawing sits in on The Chain (src/modules/chapter.css .ch-spec-draw), or null for the stage beside
        the page (the home, AI Chips) and the phone's strip. The canvas and its pause button move; the canvas keeps its context. */
     /* Where the stage sits in the page's order (it is fixed, so only the Tab order sees it): on the home, right after the
-       evidence figure, so Tab reaches the fifteen marks that pick the specimen before the specimen itself; elsewhere, its place
+       evidence figure, so Tab reaches the marks, one per stage, that pick the specimen before the specimen itself; elsewhere, its place
        in src/template.html, before the views */
     place: function (v) {
       if (!this.fig) return;
@@ -540,6 +540,9 @@
       this.route();
     },
     route: function () {
+      // an address of a chapter merged away lands in the merged chapter (src/preroute.js moved(), build/retired-chapters.js)
+      var mv = window.CP_PRE && window.CP_PRE.moved ? window.CP_PRE.moved(location.hash) : '';
+      if (mv) { try { history.replaceState(history.state, '', location.pathname + location.search + mv); } catch (e) { } }
       var h = location.hash || '#/', m = h.match(/^#\/([a-z-]+)/), bare = h.replace(/^#/, '');
       var atHome = bare === '' || bare === '/' || bare.indexOf('/?') === 0; // '#/?country=JP' is the home page with a query
       var v = (atHome || m) ? 'walk' : 'stack'; // the site opens on the walk (trial, 11 Sept 2026); an unknown #/route goes home; a bare chapter anchor opens the chain
@@ -644,7 +647,7 @@
       if (gc && gc.path) { var pth = gc.path(); if (this.counted === undefined) this.counted = pth; else if (pth !== this.counted && gc.count) { this.counted = pth; try { gc.count(); } catch (err) { } } }
     },
     /* the tab's title: the approved title of the matching static page (build/page-titles.json, through the cp-titles meta),
-       and on The Chain the chapter in view, so seventeen open chapters no longer all read "The Chain" */
+       and on The Chain the chapter in view, so the open chapters no longer all read "The Chain" */
     title: function () {
       if (!this.titles) { try { this.titles = JSON.parse(document.querySelector('meta[name="cp-titles"]').getAttribute('content')) || {}; } catch (e) { this.titles = {}; } }
       var T = this.titles, v = this.current, ch = v === 'stack' && this.chain !== 'contents' && Sections.currentId ? '/' + Sections.currentId + '/' : '';
@@ -1682,7 +1685,7 @@
      twenty segments of the list (its categories), a ribbon's width the number of firms; the firms rated Critical ride on top
      in red wine, the one data color on the site, and every other ribbon is gray. Under them the firms are listed by segment
      (the ladder, from design to power), by country, or in a table, every name opening its own panel. "Stages" are the
-     fifteen chapters of the chain; the list's own categories are "segments". */
+     stage chapters of the chain (build/stages.js); the list's own categories are "segments". */
   var Suppliers = {
     rows: DATA.suppliers || [], built: false, stage: '', country: '', chk: '', q: '', sortKey: 'name', sortDir: 1,
     tab: 'segment', savedTab: '', follow: '', atlasCC: '', stages: [], at: 0, tipAt: -1, drawW: 0, wiped: false,

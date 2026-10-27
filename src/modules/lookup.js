@@ -495,7 +495,7 @@
        computed from DATA; the card's meta line and the dictionary's line under the name are both this */
     countryFacts: function (cc) {
       var chapters = DATA.chapters || [];
-      var stages = chapters.filter(function (ch) { return ch.number >= 1 && ch.number <= 15; });
+      var stages = chapters.filter(function (ch) { return ch.stage; }); // build/stages.js, through CP_DATA.chapters
       var cardCount = chapters.filter(function (ch) { return ch.concentration; }).length; // only the stage chapters carry a chokepoint card
       var named = chapters.filter(function (ch) { return (ch.countries || []).some(function (x) { return x.code === cc; }); })
         .sort(function (a, b) { return (b.bandRank || 0) - (a.bandRank || 0) || a.number - b.number; });

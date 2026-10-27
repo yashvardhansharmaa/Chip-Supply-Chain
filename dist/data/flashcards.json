@@ -244,8 +244,14 @@
       "Chinese makers held 0.7 percent of this tool market in 2025 on CSET's count, though one Chinese maker, Skyverse, grew its revenue 48.75 percent that year."
     ]
   },
-  "transistors-and-front-end": {
+  "foundries-and-fabs": {
     "cards": [
+      {
+        "q": "What two things does a chipmaker need to make the newest chips?",
+        "a": "The know-how to build the newest transistors, and factories that cost tens of billions of dollars.",
+        "why": "Having one does not bring the other. China's SMIC runs factories, but its most advanced chips are 7 nm-class, and in 2026 only TSMC, Intel and Samsung had both.",
+        "section": "How it works"
+      },
       {
         "q": "Why do the newest transistors wrap the gate around the channel?",
         "a": "To cut the current that leaks when the switch is off.",
@@ -253,16 +259,16 @@
         "section": "How it works"
       },
       {
-        "q": "Which three companies make gate-all-around transistors in volume?",
-        "a": "TSMC, Intel and Samsung.",
-        "why": "Samsung was first, starting initial production in June 2022. Apple's A20 Pro, made on TSMC's N2 process, uses them, SemiAnalysis reported in September 2026.",
-        "section": "Who makes it"
+        "q": "What is a foundry?",
+        "a": "A company that makes chips designed by other companies.",
+        "why": "A chip factory, or fab, costs tens of billions of dollars, and no chip company sells enough of one product to fill a fab by itself.",
+        "section": "The foundry and the fab"
       },
       {
-        "q": "Why is it hard for a new company to make leading-edge transistors?",
-        "a": "TSMC, Intel and Samsung do not sell their leading-edge process flows, the exact sequence of steps that builds the transistors.",
-        "why": "A newcomer has to develop its own flow or build on another firm's technology, as Rapidus is doing with IBM's 2 nm process.",
-        "section": "The chokepoint"
+        "q": "Where are TSMC's largest plants?",
+        "a": "All six are in Taiwan.",
+        "why": "In 2025 they could make more than 13 million wafers a year, out of more than 17 million for the whole company. Taiwan held 69 percent of the world's logic capacity below 10 nm in 2022.",
+        "section": "Capacity and cost"
       },
       {
         "q": "How does China's SMIC make advanced chips without an EUV machine?",
@@ -272,44 +278,11 @@
       }
     ],
     "takeaways": [
+      "The newest chips need both the know-how to build the newest transistors and factories that cost tens of billions of dollars, and in 2026 only TSMC, Intel and Samsung had both.",
       "The newest transistors wrap the gate around all four sides of the channel to cut the current that leaks when the switch is off.",
-      "Only TSMC, Intel and Samsung make them in volume.",
-      "TSMC, Intel and Samsung do not sell their leading-edge process flows, so a newcomer has to develop its own or build on another firm's, as Rapidus is doing with IBM's.",
-      "China's SMIC makes 7 nm-class chips without EUV by building its tightest layers in several patterning steps."
-    ]
-  },
-  "foundries-and-fabs": {
-    "cards": [
-      {
-        "q": "What is a foundry?",
-        "a": "A company that makes chips designed by other companies.",
-        "why": "A chip factory, or fab, costs tens of billions of dollars, and no chip company sells enough of one product to fill a fab by itself.",
-        "section": "How it works"
-      },
-      {
-        "q": "Where are TSMC's largest plants?",
-        "a": "All six are in Taiwan.",
-        "why": "In 2025 they could make more than 13 million wafers a year, out of more than 17 million for the whole company.",
-        "section": "How it works"
-      },
-      {
-        "q": "What is a major challenge for TSMC's plants in Arizona?",
-        "a": "Finding enough skilled workers, SemiAnalysis judged in December 2025.",
-        "why": "A foundry needs highly skilled engineers to get the most working chips from each wafer. TSMC has yet to build one of its six largest plants outside Taiwan.",
-        "section": "The chokepoint"
-      },
-      {
-        "q": "How much of China's chipmaking capacity is advanced?",
-        "a": "Little of it. China leads the world in capacity for logic chips made at 28 nm or older.",
-        "why": "SEMI projects that China will keep the world's largest installed fab capacity in 2026 and 2027. But China's SMIC cannot buy an EUV scanner, so it prints the finest layers of its 7 nm-class chips in several passes on older machines.",
-        "section": "The chokepoint"
-      }
-    ],
-    "takeaways": [
       "A foundry makes chips for other companies, because no chip company sells enough of one product to fill a fab alone.",
-      "All six of TSMC's largest plants are in Taiwan.",
-      "SemiAnalysis judged in December 2025 that finding enough skilled workers remained a major challenge for TSMC in Arizona.",
-      "SEMI projected in 2026 that China would keep the world's largest installed fab capacity in 2026 and 2027, but little of it is advanced."
+      "All six of TSMC's largest plants are in Taiwan, which held 69 percent of the world's logic capacity below 10 nm in 2022.",
+      "China's SMIC makes 7 nm-class chips without EUV by building its tightest layers in several patterning steps."
     ]
   },
   "memory-and-hbm": {

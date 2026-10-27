@@ -2,7 +2,7 @@
   {
     "path": "/",
     "title": "How AI chips are made · Chip Supply Chain",
-    "description": "A free, sourced introduction to how AI chips are made and who makes each part, in seventeen chapters from chip design to the data center."
+    "description": "A free, sourced introduction to how AI chips are made and who makes each part, in {chapters} chapters from chip design to the data center."
   },
   {
     "path": "/design-and-eda/",
@@ -40,14 +40,9 @@
     "description": "How chip factories measure wafers and find defects between steps. KLA held 56.8 percent of the market for these tools in 2025, by CSET's count."
   },
   {
-    "path": "/transistors-and-front-end/",
-    "title": "How gate-all-around transistors are made",
-    "description": "How transistors switch current and why gate-all-around designs leak less. Only TSMC, Intel and Samsung make 2 nm-class transistors in volume."
-  },
-  {
     "path": "/foundries-and-fabs/",
-    "title": "How chip foundries like TSMC work",
-    "description": "What a chip foundry is. TSMC's six largest plants are all in Taiwan, and in 2025 they could make more than 13 million wafers a year."
+    "title": "How chip foundries like TSMC make transistors",
+    "description": "How fabs build gate-all-around transistors, and why only TSMC, Intel and Samsung can make the newest chips. TSMC's six largest plants are all in Taiwan."
   },
   {
     "path": "/memory-and-hbm/",
@@ -92,7 +87,7 @@
   {
     "path": "/summary/",
     "title": "The AI chip supply chain in brief",
-    "description": "The fifteen stages of the AI chip supply chain in one read, with who leads each and how concentrated it is. A four-page PDF is included."
+    "description": "The {stages} stages of the AI chip supply chain in one read, with who leads each and how concentrated it is. A four-page PDF is included."
   },
   {
     "path": "/chips/",

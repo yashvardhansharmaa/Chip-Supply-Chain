@@ -1,7 +1,7 @@
 ---json
 {
   "id": "memory-and-hbm",
-  "number": 10,
+  "number": 9,
   "title": "Memory and HBM",
   "oneLiner": "SK hynix, Samsung and Micron make nearly all high bandwidth memory (HBM), the stacked memory beside AI chips. SK hynix took 63.2 percent of HBM revenue in 2025.",
   "plain": "High bandwidth memory, or HBM, is where an AI chip keeps the numbers it is working on, and it is built to hand them over fast. A memory maker etches tiny holes into each memory wafer, fills them with copper and grinds the wafer until the copper shows through its back. It tests each of the wafer's chips and stacks up to sixteen good ones into a cube, with every layer wired to the ones below. The cube then sits beside the processor, the chip that does the calculating. Stacking is the hard part because each chip is ground thinner than a human hair and the finished cube has to stay within a height limit of less than a millimeter. One chip that fails after stacking can scrap the whole cube. Only SK hynix, Samsung and Micron make HBM in volume. One US export rule covers HBM from all three, including the two based in South Korea.",

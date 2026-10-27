@@ -1,7 +1,7 @@
 ---json
 {
   "id": "systems-and-networking",
-  "number": 14,
+  "number": 13,
   "title": "Systems and Networking",
   "oneLiner": "Nvidia's and AMD's racks wire 72 AI chips together to run as one computer. Many firms can assemble the racks, but lasers for the optical links were scarce in 2026.",
   "plain": "One AI chip is not enough to train a model. So seventy-two of them are wired together in a rack, a cabinet the size of a wardrobe, and run as one computer. Many such racks are then linked to train a large model. Each chip sits on its own board and draws more than a thousand amps, several times the current a whole house is wired to carry. The chips have to swap results with each other all the time. A copper wire can carry those signals only a few meters before they fade, so the longer links send them as light down glass fiber. Many companies can build the rack, but in 2026 the lasers that send the light were scarce.",

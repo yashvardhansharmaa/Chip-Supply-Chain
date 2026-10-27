@@ -1,4 +1,4 @@
-/* WALK  — the view at #/walk: "How AI chips are made", the site's 18 plain-language paragraphs in order. The hero (redesign,
+/* WALK  — the view at #/walk: "How AI chips are made", the chapters' plain-language paragraphs in order. The hero (redesign,
    25 Oct 2026) is the title and subtitle, the evidence figure that picks the specimen (EVIDENCE), the search field and the
    two ways in (FIND); the chain at a glance follows (GLANCE), and the walk ends with "Other pages" (design round, 21 Oct 2026).
    START_HERE — the three-way chooser on the landing page, directly under the hero.
@@ -58,7 +58,7 @@ module.exports = function (ctx) {
   steps.forEach((c) => { if (!plainOf(c.id)) ctx.warn(`walk: chapter ${c.id} has no plain paragraph`); });
 
   /* ---------------- the chain at a glance (under the hero) ----------------
-     The fifteen stages in the order a chip is made, one line each: number, name, and the stage's concentration as the
+     The stages in the order a chip is made, one line each: number, name, and the stage's concentration as the
      summary page draws it (a four-step meter and the plain word). Each line links to its chapter. "Other pages", which
      repeats the tabs, closes the walk instead (OTHER, below). Names and bands come from the chapter cards, the count is
      computed, and the meaning of Extreme is the card's own note (ctx.BAND_NOTE), so nothing here is retyped. */
@@ -66,7 +66,7 @@ module.exports = function (ctx) {
   const meter = (band) => `<span class="wk-gl-m" aria-hidden="true">${[1, 2, 3, 4].map((k) => `<i${k <= (LEVEL[band] || 0) ? ' class="on"' : ''}></i>`).join('')}</span>`;
   const nExtreme = stages.filter((s) => (card[s.id] || {}).band === 'Extreme').length;
   // the card's note reads "Three or fewer firms could supply this stage today, or one firm holds more than half of it."; here it
-  // follows "8 of the 15 stages are rated Extreme, meaning", cut to three lines on a phone. A changed note drops the clause.
+  // follows "7 of the 14 stages are rated Extreme, meaning", cut to three lines on a phone. A changed note drops the clause.
   const xNote = String((ctx.BAND_NOTE || {}).Extreme || '');
   const xMeaning = /this stage/.test(xNote) ? xNote.replace('this stage', 'each').replace(/ of it\.$/, '.').replace(/\.$/, '').replace(/^\w/, (m) => m.toLowerCase()) : '';
   const glanceRow = (s, i) => {
@@ -79,8 +79,8 @@ module.exports = function (ctx) {
 <ol class="wk-gl-list">${stages.map(glanceRow).join('')}</ol>
 </section>` : '';
 
-  /* ---------------- the hero's evidence: "8 of the 15 stages are rated Extreme" (redesign, 25 Oct 2026) ----------------
-     A figure under the title: the count, what Extreme means (the card's own note, ctx.BAND_NOTE), and the fifteen stages as
+  /* ---------------- the hero's evidence: "7 of the 14 stages are rated Extreme" (redesign, 25 Oct 2026; computed) ----------------
+     A figure under the title: the count, what Extreme means (the card's own note, ctx.BAND_NOTE), and the stages as
      marks in chapter order, solid for Extreme and an outline for High. Each mark is a button that puts its stage's specimen on
      the stage beside the hero (src/modules/walk.js); the reader's pick is the one wine mark. Chip design shows first, where the chain starts (owner, 27 Oct). Nothing
      here is typed: the names, bands, specimens and captions are the chapters' own. */

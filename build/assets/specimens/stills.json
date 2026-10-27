@@ -24,8 +24,8 @@
   816
  ],
  "foundries-and-fabs": [
-  885,
-  797
+  847,
+  908
  ],
  "geopolitics": [
   628,
@@ -58,9 +58,5 @@
  "test-and-assembly": [
   777,
   555
- ],
- "transistors-and-front-end": [
-  847,
-  908
  ]
 }

@@ -1,7 +1,7 @@
 ---json
 {
   "id": "advanced-packaging",
-  "number": 11,
+  "number": 10,
   "title": "Advanced Packaging",
   "oneLiner": "Epoch AI estimates that in 2025 Nvidia, Google, AMD and Amazon used around 90 percent of the capacity for CoWoS, TSMC's packaging for AI chips.",
   "plain": "Packaging joins finished chips into one component and mounts them on a small circuit board, called a substrate, wired far more coarsely than the chips themselves. A lithography machine, which prints a chip's circuits, can cover only a rectangle about the size of a postage stamp in one shot. Many leading accelerators, Nvidia's Blackwell among them, need more logic than fits in that rectangle. So they are built from several chips, called dies, set side by side on an interposer, a layer of much finer wiring that links them and sits on the substrate. Stacks of memory chips sit on the same interposer, a few millimeters away. The interposer is either one piece of silicon or layers of fine copper wiring that often carry small silicon bridges where the links are densest. Silicon expands less than the resin substrate beneath it when heated, so the package can warp and its joints crack. Preventing that in high volume is hard. Nvidia, Google, AMD and Amazon all use TSMC's interposer packaging, called CoWoS, made in Taiwan.",
@@ -52,7 +52,7 @@
     {"fact": "Epoch AI estimates Nvidia used 60.3% of the world's CoWoS packaging capacity in 2025, with a 90% confidence interval of 56.5 to 64.3. It estimates that Nvidia, Google, AMD and Amazon together used around 90% of CoWoS capacity, but only about 12% of advanced logic die production", "source": "https://epoch.ai/data-insights/ai-chip-supply-chain-constraints"}
   ],
   "figures": [
-    {"id": "package-build", "type": "animation", "src": "package", "title": "The parts of an AI accelerator", "note": "Simplified view of a two-die, eight-stack accelerator. Footprints follow the sizes given in this chapter and chapter 10. Heights are exaggerated so each layer shows."},
+    {"id": "package-build", "type": "animation", "src": "package", "title": "The parts of an AI accelerator", "note": "Simplified view of a two-die, eight-stack accelerator. Footprints follow the sizes given in this chapter and chapter 9. Heights are exaggerated so each layer shows."},
     {
       "id": "cowos-reticles",
       "type": "bars",

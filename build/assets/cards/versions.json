@@ -90,9 +90,5 @@
   "test-and-assembly": {
     "v": 6,
     "sha": "4030f17045297a08"
-  },
-  "transistors-and-front-end": {
-    "v": 6,
-    "sha": "648089204d8412b5"
   }
 }

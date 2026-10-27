@@ -228,7 +228,7 @@
   /* ---------- the chapter opener, the questions and the contents page, for paper ---------- */
 
   /* The chain in the margin column beside the chapter (print.css .cp-index), as the screen's rail shows it: each of the
-     fifteen stages with its number, its whole name and its band's mark (solid for Extreme, an outline for High), then the
+     stages with its number, its whole name and its band's mark (solid for Extreme, an outline for High), then the
      two chapters that look across them; the chapter's own line in bold. Built from the rail before its screen parts go,
      and the rail moves to the head of the chapter, where it floats beside the opener. */
   function stageIndex() {

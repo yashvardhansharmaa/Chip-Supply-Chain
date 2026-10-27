@@ -1,7 +1,7 @@
 ---json
 {
   "id": "data-centers-and-power",
-  "number": 15,
+  "number": 14,
   "title": "Data Centers and Power",
   "oneLiner": "By mid-2026, companies had asked to connect about 474 GW of new demand to the Texas grid, mostly for data centers. Only about 205 GW of those requests already had the grid study needed to enter the grid operator's first review. The large transformers that connect such sites to the grid commonly took three years to arrive in 2024.",
   "plain": "A data center feeds electricity to the machines inside it and carries away the heat they give off. One rack of AI chips, a cabinet taller than a door, can draw 142 kilowatts ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)). Every watt of it comes back out as heat, and liquid piped through the rack carries the heat away ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)). A large training site already holds more than a hundred thousand chips ([source](https://epoch.ai/data/ai-data-centers/directory/colossus-1)). The newest sites are planned in gigawatts ([source](https://epoch.ai/publications/openai-stargate-where-the-us-sites-stand)). One gigawatt is the whole output of a large power station, and Epoch AI projects that OpenAI's seven Stargate sites in the United States will add up to more than nine of them by 2029 ([source](https://epoch.ai/publications/openai-stargate-where-the-us-sites-stand)). Getting that much electricity to the site is harder than putting up the building. Transformers and heavy switches connect a site to the grid, and turbines make the power. All of them come from a few suppliers and take years to arrive.",

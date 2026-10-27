@@ -1,4 +1,4 @@
-/* SUMMARY  — dist/summary/index.html, the short version of The Chain: the fifteen stages at a glance, a card per stage
+/* SUMMARY  — dist/summary/index.html, the short version of The Chain: the stages at a glance, a card per stage
    (its one-line summary, who leads, where China and the United States stand) and the two chapters that look across the chain.
    Everything is taken from the chapters' own front matter and "In short", so it never says more than a chapter does; every
    figure is cited in the chapter each card links to.

@@ -27,7 +27,7 @@
   --accent-fill: var(--accent);
   --ctx: #d2d1cc; /* chart rule B: the values that are not the largest */
   --c1: #2b63c4; --c2: #e06a1f; --c3: #1f9a6d; --c4: #c9a10c; --c5: #5a48b8; --c6: #c3302b; --c7: #2e7d1e; --c8: #8a9099;
-  /* night: the specimen ground of chapters 16 and 17 */
+  /* night: the specimen ground of the two chapters that are not stages (the economics chapter and the essay) */
   --night: #121211; --night-ink: #e8e7e3; --night-ink2: #a9a7a1; --night-rule: #34332f; --night-accent: #d98a95;
   --stage-ink: 23, 23, 22;
   --stage-accent: 122, 31, 43;
@@ -356,7 +356,7 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before {
    from "go there"; solid garnet on hover and while its popover is open; one shared popover */
 .nw { white-space: nowrap; } /* a figure range, or a glossary term with the punctuation after it (build.js glossaryWrap) */
 /* the term itself may still wrap within its own box: "National Integrated Circuit Industry Investment Fund," on one line ran
-   past a phone's width and scrolled chapter 17 sideways (453 px at 390) */
+   past a phone's width and scrolled the geopolitics essay sideways (453 px at 390) */
 .nw > .gl-term { white-space: normal; }
 .gl-term { font: inherit; color: inherit; background: none; border: 0; padding: 0; margin: 0; text-align: inherit; cursor: help; text-decoration: underline; text-decoration-style: dotted; text-decoration-color: color-mix(in srgb, var(--muted) 75%, var(--bg)); text-decoration-thickness: 1.5px; text-underline-offset: 0.24em; transition: text-decoration-color 0.15s; }
 .gl-term:hover, .gl-term[aria-describedby] { text-decoration-style: solid; text-decoration-color: var(--accent); }
@@ -769,8 +769,8 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
 .chain--compact .stage-cell[aria-current="true"] .t { visibility: visible; }
 
 /* ---------- chapter: the ledger column, then the head and the text ----------
-   A two-track grid. The first track is the ledger column: the chapter number, and under it the fifteen stages of the
-   chain as fifteen ruled rows of number plus bar, the current one ticked in garnet and named beneath. The second track
+   A two-track grid. The first track is the ledger column: the chapter number, and under it the stages of the
+   chain as ruled rows of number plus bar, one per stage, the current one ticked in garnet and named beneath. The second track
    holds the head (title, lede, meta, In plain terms, In short, the chokepoint card) and the prose. */
 .chapter {
   display: grid; grid-template-columns: var(--gutter) minmax(0, 1fr); column-gap: var(--gutter-gap); align-items: start;
@@ -798,7 +798,7 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
 .ch-tile .k { display: block; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap-s); letter-spacing: 0; color: var(--muted); }
 .ch-tile .v { display: block; font-family: var(--font-display); font-weight: 360; font-variation-settings: var(--opsz-numeral); font-size: var(--fs-num-l); line-height: 0.95; letter-spacing: -0.03em; font-variant-numeric: tabular-nums lining-nums; color: var(--ink); margin: 6px 0 4px; }
 .ch-tile .of { display: block; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap-s); letter-spacing: 0; color: var(--muted); white-space: nowrap; }
-/* the fifteen stages, turned vertical */
+/* the stages, turned vertical */
 .ch-ledger .chain--compact { margin: 22px 0 0; padding: 0; border-top: 1px solid var(--ink); }
 .ch-ledger .chain-track { display: block; }
 .ch-ledger .stage-cell a { flex-direction: row; align-items: center; gap: 7px; padding: 0; height: 15px; border-bottom: 1px solid var(--line); }

@@ -11,13 +11,14 @@ versions.json when its bytes change. The home card is drawn by build/home_card.p
 The style is "The whole chain", the home card the owner chose on 25 October 2026 (qa/design3/cards/chain/ in the main
 checkout): white ground, ink, Source Serif 4 for the titles and the line under them (Fraunces and Literata before design
 round five, 27 Oct 2026; the line is set 8 percent larger, the site's text scale), and the wine logo tile as the
-only color. Every card stands on the shelf of the fifteen stage drawings, in the order a chip is made.
+only color. Every card stands on the shelf of the stage drawings, one per stage, in the order a chip is made (14 since the
+merge of chapters 8 and 9 on 27 Oct 2026; the stages are social.js manifest()'s, by build/stages.js).
 - A chapter follows that folder's Lithography sketch: the wordmark, the chapter's title and its one-line summary at the
-  left, its own drawing large at the right, and the fifteen drawings small along the foot, pale but for the chapter's own
-  stage, which is in ink with an ink rule under it on the shelf. Chapters 16 and 17 are not stages: the fifteen are all
+  left, its own drawing large at the right, and the stage drawings small along the foot, pale but for the chapter's own
+  stage, which is in ink with an ink rule under it on the shelf. The last two chapters are not stages: their rows are all
   in ink and no stage is marked, since each covers the whole chain.
 - A view (Start here, The Chain, AI Chips, Suppliers, Export Controls, Glossary) follows the home card: the wordmark,
-  the view's short title and one line centered over the fifteen drawings at the home card's size. The row is copied from
+  the view's short title and one line centered over the stage drawings at the home card's size. The row is copied from
   build/assets/home-card/card.html, so it matches the home card to the pixel.
 
 The drawings come from build/assets/cards-art/<chapter-id>.png (made by qa/redesign/card-art.py from the redesign's
@@ -189,8 +190,14 @@ def chapters():
         if re.match(r'^\d\d-.*\.md$', f):
             m = json.loads(re.match(r'^---json\s*\n(.*?)\n---', open(os.path.join(ROOT, 'content', f), encoding='utf8').read(), re.S).group(1))
             out[m['number']] = dict(id=m['id'], title=m['title'], one=m.get('oneLiner') or '')
-    assert all(n in out for n in range(1, 16)), 'expected stages 1 to 15 in content/'
     return out
+
+
+def stage_ids(pages):
+    """The stages' chapter ids in the order a chip is made, from the manifest (each chapter's stage, 1 on, or None)."""
+    st = sorted((p for p in pages if p['kind'] == 'chapter' and p.get('stage')), key=lambda p: p['stage'])
+    assert [p['stage'] for p in st] == list(range(1, len(st) + 1)) and len(st) > 1, 'expected stages 1 to N in the manifest'
+    return [p['slug'] for p in st]
 
 
 def supplier_count():
@@ -279,9 +286,10 @@ def img(im, x, extra=''):
 
 
 class Row:
-    """The fifteen drawings at the chapter cards' size, in ink and pale, with their places on the shelf."""
-    def __init__(self, ch):
-        ims = [load(ch[n]['id']) for n in range(1, 16)]
+    """The stage drawings at the chapter cards' size, in ink and pale, with their places on the shelf."""
+    def __init__(self, ids):
+        self.n = len(ids)
+        ims = [load(i) for i in ids]
         self.sz = sizes(ims, CH_ROOT_AREA, CH_MAX_W, CH_MAX_H)
         wt = weights(ims, self.sz, lo=WEIGHT_RANGE[0], hi=WEIGHT_RANGE[1])
         self.on = [draw(im, w, h, weight=k * INK_GAIN) for im, (w, h), k in zip(ims, self.sz, wt)]
@@ -290,18 +298,18 @@ class Row:
         self.h = max(h for w, h in self.sz)
 
     def html(self, stage):
-        """stage: 1 to 15 marks that stage; None draws all fifteen in ink and marks none."""
-        items = [self.on[i] if stage is None or i == stage - 1 else self.off[i] for i in range(15)]
+        """stage: 1 to N marks that stage; None draws them all in ink and marks none."""
+        items = [self.on[i] if stage is None or i == stage - 1 else self.off[i] for i in range(self.n)]
         return '\n'.join(img(d, x) for d, x in zip(items, self.xs))
 
 
-def home_row():
-    """The home card's own row of drawings and shelf, copied from its card.html."""
+def home_row(n):
+    """The home card's own row of drawings and shelf, copied from its card.html (n drawings, one per stage)."""
     s = open(HOME_CARD, encoding='utf8').read()
     sec = s[s.index('<section class="page home">'):]
     sec = sec[:sec.index('</section>')]
     imgs = re.findall(r'<img class="s[^"]*" style="left:(\d+)px" src="(data:image/png;base64,[^"]+)" width="(\d+)" height="(\d+)" alt="">', sec)
-    assert len(imgs) == 15, 'expected 15 drawings in the home card'
+    assert len(imgs) == n, 'expected %d drawings in the home card, one per stage, found %d' % (n, len(imgs))
     fr = re.search(r'\.home \.frieze\{bottom:(\d+)px;height:(\d+)px\}', s)
     sh = re.search(r'\.home \.shelf\{left:(\d+)px;right:\d+px;top:(\d+)px\}', s)
     html = '\n'.join('<img style="left:%spx" src="%s" width="%s" height="%s" alt="">' % (x, u, w, h) for x, u, w, h in imgs)
@@ -330,9 +338,9 @@ def page_html(p, ch, row, home):
                     '{{LINE}}': esc(' '.join(ss)), '{{SENTENCES}}': esc(json.dumps(ss)),
                     '{{COL}}': str(min(COL_MAX, bx - TEXT_GAP - 64)),
                     '{{BIG}}': '<img class="big" style="left:%dpx;top:%dpx" src="%s" width="%d" height="%d" alt="">' % (bx, by, uri(soft(im, bw, bh)), bw, bh),
-                    '{{FRIEZE}}': row.html(p['number'] if p['number'] <= 15 else None),
+                    '{{FRIEZE}}': row.html(p.get('stage')),
                     '{{FRIEZE_BOTTOM}}': str(630 - CH_BASE), '{{FRIEZE_H}}': str(row.h), '{{SHELF_TOP}}': str(CH_BASE + SHELF_GAP),
-                    '{{HERE}}': ('<div class="here" style="left:%dpx;width:%dpx;top:%dpx"></div>' % (row.xs[p['number'] - 1], row.sz[p['number'] - 1][0], CH_BASE + SHELF_GAP)) if p['number'] <= 15 else '',
+                    '{{HERE}}': ('<div class="here" style="left:%dpx;width:%dpx;top:%dpx"></div>' % (row.xs[p['stage'] - 1], row.sz[p['stage'] - 1][0], CH_BASE + SHELF_GAP)) if p.get('stage') else '',
                     '{{SHELF_X}}': '64', '{{VIEW_TEXT_BOTTOM}}': '0'})
     else:
         line = VIEW_LINE.get(p['slug'], p['line']).replace('{firms}', str(supplier_count() or 226))
@@ -355,12 +363,14 @@ def shrink(path, colors=256):
 
 
 def main():
-    pages = [p for p in manifest() if p['slug'] != 'home']  # build/home_card.py draws the home card
+    every = manifest()
+    pages = [p for p in every if p['slug'] != 'home']  # build/home_card.py draws the home card
     if only:
         pages = [p for p in pages if p['slug'] in only]
     ch = chapters()
-    row = Row(ch) if any(p['kind'] == 'chapter' for p in pages) else None
-    home = home_row()
+    ids = stage_ids(every)
+    row = Row(ids) if any(p['kind'] == 'chapter' for p in pages) else None
+    home = home_row(len(ids))
     os.makedirs(OUT, exist_ok=True)
     tmp = tempfile.mkdtemp(prefix='cp-cards-')
     profile = tempfile.mkdtemp(prefix='cp-cards-profile-')

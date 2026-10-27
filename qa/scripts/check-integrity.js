@@ -98,7 +98,7 @@ if (/undefined|\bNaN\b|\[object Object\]/.test(html)) problems.push('the page te
     [...new Set(cited)].forEach((u) => pageCheck(u, 'body'));
     (fm.figures || []).forEach((fig) => { if (fig.source && fig.source.url) pageCheck(fig.source.url, `figure ${fig.id}`); });
     const c = fm.card;
-    if (!c || !(fm.number >= 1 && fm.number <= 15)) continue; // the fifteen stages carry the card
+    if (!c || !require('../../build/stages.js').isStage(fm)) continue; // the stages carry the card (build/stages.js)
     if (c.costLabel !== undefined && c.costLabel !== 'Key figure') problems.push(`${f} card: costLabel is "${c.costLabel}"; the only label allowed is "Key figure"`);
     const sb = c.substitutability || {};
     const fields = [['substitutability.test', sb.test, sb.testSources, 'testSources'], ['costSignal', c.costSignal, c.costSources, 'costSources'],

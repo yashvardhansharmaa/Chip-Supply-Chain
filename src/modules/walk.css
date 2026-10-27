@@ -1,7 +1,7 @@
 /* ==========================================================================
    The home page (#/, the Start here walk) in the redesign of 25 Oct 2026 (qa/redesign/BRIEF.md, the hybrid mockup's home).
    Tokens only; every class is prefixed wk-.
-   The hero: the title and subtitle, then the evidence figure (8 of the 15 stages are rated Extreme, with a mark per stage that
+   The hero: the title and subtitle, then the evidence figure (7 of the 14 stages are rated Extreme since the merge of 27 Oct 2026, with a mark per stage that
    picks the specimen on the stage beside it), the search field and the two ways in. Then the chain at a glance, the walk (one
    plain paragraph per chapter, each number in the ledger column), the flashcards and Other pages.
    ========================================================================== */
@@ -63,7 +63,7 @@
 .wk-way-d { font-family: var(--font-kicker); font-size: 12px; line-height: 1.5; color: var(--muted); }
 .wk-way:hover .wk-way-t { color: var(--accent-ink); }
 
-/* ---------- the chain at a glance: the fifteen stages, one line each, numbers in the ledger column ---------- */
+/* ---------- the chain at a glance: the stages, one line each, numbers in the ledger column ---------- */
 .wk-gl { margin: clamp(80px, 13vh, 128px) 0 0; }
 .wk-gl-h {
   margin: 0 0 18px; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title);

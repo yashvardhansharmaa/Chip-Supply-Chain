@@ -181,7 +181,7 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 /* the phone's expanded strip: the numbers alone, over the strip's canvas (src/app.js Stage.stripBalloons) */
 .stage .ch-balloons.is-strip { right: auto; bottom: auto; z-index: 2; }
 .ch-balloons.is-strip .nm { display: none; }
-/* chapters 16 and 17 set their drawing on the night ground (the hybrid's --night tokens): the ground fills the drawing's slot,
+/* the two chapters that are not stages set their drawing on the night ground (the hybrid's --night tokens): the ground fills the drawing's slot,
    which gives the plate its own edge, and the caption sits under it on the page's ground */
 .chapter .ch-spec[data-night] { --draw-h: 640px; --lift: 120px; --slack: 120px; margin-top: 36px; }
 .chapter .ch-spec[data-night] .ch-spec-draw {
@@ -602,7 +602,7 @@ article.ch-page { padding-top: 56px; border-top: 0; }
    the way to the live one; Lithography's still carries its numbered parts */
 .ch-page .ch-spec:not(.has-still) .ch-spec-cap { margin: 0; } /* only if a chapter has no still yet: a plain caption, flush left */
 /* a chapter's still (qa/redesign/stills.js): centered in the plate, no taller than the app's slot draws it; on the dark theme it
-   is turned light-on-dark as Lithography's is, and chapters 16 and 17 keep their night ground */
+   is turned light-on-dark as Lithography's is, and the two chapters that are not stages keep their night ground */
 .ch-page .ch-still-img { display: block; width: auto; height: auto; max-width: 100%; max-height: 380px; margin: 0 auto; }
 @media (max-width: 760px) { .ch-page .ch-still-img { max-height: min(380px, 52vh); } }
 :root[data-theme="dark"] .ch-page .ch-spec:not([data-night]) .ch-still-img { filter: invert(1) hue-rotate(180deg); mix-blend-mode: screen; }

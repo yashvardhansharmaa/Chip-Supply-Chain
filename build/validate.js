@@ -4,7 +4,7 @@
    weekly edit never reaches dist/ or the deploy. What counts as a problem:
    - a data file (data/*.json) that is empty, cut off or not valid JSON, or one of the site's datasets in the wrong shape;
    - a chapter whose front matter is missing or not valid JSON, or that lacks number, title, oneLiner or plain;
-   - one of the fifteen stages (chapters 1 to 15) with no card, a card.concentration other than Extreme, High, Moderate or
+   - a stage (every chapter but the two that look across the chain, build/stages.js) with no card, a card.concentration other than Extreme, High, Moderate or
      Low, or a card.substitutability.band other than Very hard, Hard, Moderate or Easy;
    - a {{...}} marker in a chapter's body that is not a {{figure:<id>}} line naming one of the chapter's figures;
    - a figure with no data: a bars, stack or timeline figure with no rows, an animation with no rendered steps in media/,
@@ -13,6 +13,7 @@
 'use strict';
 const fs = require('fs');
 const path = require('path');
+const STAGES = require('./stages.js');
 
 const BANDS = ['Extreme', 'High', 'Moderate', 'Low'];
 const SUB_BANDS = ['Very hard', 'Hard', 'Moderate', 'Easy'];
@@ -100,10 +101,10 @@ function checkChapters(root, problems) {
     else (numbers[meta.number] = numbers[meta.number] || []).push(f);
     (ids[id] = ids[id] || []).push(f);
     ['title', 'oneLiner', 'plain'].forEach((k) => { if (typeof meta[k] !== 'string' || !meta[k].trim()) problems.push(`${rel}: "${k}" is ${meta[k] === undefined ? 'missing' : 'empty'}`); });
-    // the fifteen stages carry a chokepoint card (build.js isStage: chapters 1 to 15; the geopolitics essay never does)
-    if (id !== 'geopolitics' && meta.number >= 1 && meta.number <= 15) {
+    // the stages carry a chokepoint card (build/stages.js: every chapter but the economics chapter and the geopolitics essay)
+    if (STAGES.isStage({ id, number: meta.number })) {
       const c = meta.card;
-      if (!c || typeof c !== 'object') problems.push(`${rel}: "card" is missing; chapters 1 to 15 are stages and need a chokepoint card`);
+      if (!c || typeof c !== 'object') problems.push(`${rel}: "card" is missing; every chapter but the economics chapter and the essay is a stage and needs a chokepoint card`);
       else {
         if (!BANDS.includes(c.concentration)) problems.push(`${rel}: card.concentration is ${show(c.concentration)}; it must be ${list(BANDS)}`);
         const band = c.substitutability && c.substitutability.band;

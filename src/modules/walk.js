@@ -118,7 +118,7 @@
     if (el && CP.Router.settle) CP.Router.settle(el);
   }
 
-  /* The hero (redesign, 25 Oct 2026). The evidence figure's fifteen marks pick the specimen: a mark copies its stage's
+  /* The hero (redesign, 25 Oct 2026). The evidence figure's marks, one per stage, pick the specimen: a mark copies its stage's
      specimen, number, title and caption onto the hero (#wk-hero, a [data-specimen] item that Sections in src/app.js tracks
      like a step), and a scroll event asks Sections to draw it. One mark is in the Tab order; the arrow keys, Home and End move
      along them, as they do on the Suppliers pipeline. The search field hands what is typed to the site's search (Tools). */

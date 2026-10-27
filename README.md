@@ -6,7 +6,7 @@
 
 ## What's on the site
 
-- **The Chain.** Seventeen chapters. Fifteen follow one accelerator through the supply chain, from design software and silicon wafers through lithography, fabrication, memory and packaging to the rack and the data center. Two more look across the whole chain, at the economics of AI chips and at who controls the chain.
+- **The Chain.** Sixteen chapters. Fourteen follow one accelerator through the supply chain, from design software and silicon wafers through lithography, fabrication, memory and packaging to the rack and the data center. Two more look across the whole chain, at the economics of AI chips and at who controls the chain.
 - **In every chapter.** A 3D specimen beside the text, a chokepoint card that rates the stage, charts and animations, flashcards, and a PDF to download. Every number links to its source.
 - **Export Controls.** The main rules since 2018 from the US, China, Japan, the Netherlands, the EU and others, what can still be sold to China on any date, and China's share of revenue at 24 firms.
 - **Suppliers.** 226 firms on a map and by stage, with the latest revenue for 170 of them, as filed and in US dollars.
@@ -19,7 +19,7 @@
 ### A chapter
 Each chapter opens with its stage in the left column, a plain summary, and the specimen at the right.
 
-![The Lithography chapter: the stage number and the fifteen stages in the left column, the title and summary, and the EUV scanner specimen](docs/readme/chapter.jpg)
+![The Lithography chapter: the stage number and the fourteen stages in the left column, the title and summary, and the EUV scanner specimen](docs/readme/chapter.jpg)
 
 ### The chokepoint card
 How concentrated the stage is, how hard it would be to replace, what it costs, who leads and where it is made.

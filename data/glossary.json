@@ -88,7 +88,7 @@
     "aka": "complementary metal-oxide-semiconductor, complementary MOS",
     "plain": "CMOS, short for complementary metal-oxide-semiconductor, is the standard way of building digital circuits from pairs of transistors. Each n-type transistor, which switches on when the voltage on its gate is high, is matched with a p-type transistor, which switches on when that voltage is low. In either logic state one side of the circuit is off, so little current flows except while it switches.",
     "why": "CMOS became the dominant technology for making chips because its circuits drew close to zero power while idle, which kept heat in check as chips packed in more transistors. FinFET and gate-all-around transistors are newer shapes for the same n-type and p-type pairs.",
-    "chapter": "transistors-and-front-end"
+    "chapter": "foundries-and-fabs"
   },
   {
     "term": "compute threshold",
@@ -256,7 +256,7 @@
     "aka": "fin field-effect transistor",
     "plain": "A transistor whose channel, the strip that current flows through, stands on edge like a shark fin. The gate, the electrode that switches the current, wraps around three sides of the fin instead of resting on one. More contact means firmer control and less leakage when the switch is meant to be off.",
     "why": "TSMC's leading-edge processes used FinFETs until N2, its first process with gate-all-around transistors, entered volume production in late 2025. The October 2022 US rules used FinFET or 16/14 nm logic as one of their thresholds for an advanced fab.",
-    "chapter": "transistors-and-front-end"
+    "chapter": "foundries-and-fabs"
   },
   {
     "term": "FLOPS",
@@ -291,7 +291,7 @@
     "aka": "GAA, nanosheet transistor, RibbonFET at Intel, nanosheet, nanosheets, RibbonFET, GAA transistor, gate-all-around transistors",
     "plain": "A transistor in which the gate, the electrode that switches the current, wraps all the way around the channel that current flows through. In a FinFET, the design it replaces, the gate touches three sides. Surrounding the channel gives the gate firmer control than a fin allows, so less current leaks when the switch is off.",
     "why": "Only TSMC, Intel and Samsung make it in volume. It needs etch that cuts sideways, which US export rules control. Customers building 2 nm gate-all-around capacity lifted ASM International, the leader in atomic layer deposition, to record revenue in 2025.",
-    "chapter": "transistors-and-front-end"
+    "chapter": "foundries-and-fabs"
   },
   {
     "term": "GPU",
@@ -452,7 +452,7 @@
     "aka": "process node, technology node, for example N2 or 18A, nodes",
     "plain": "The name a foundry gives one generation of its manufacturing process. The number in the name no longer measures anything on the chip. SMIC's N+3, a 7 nm-class process, spaces its narrowest wires closer together than Intel's Panther Lake chips on 18A do.",
     "why": "Comparing two foundries by node name says little. Each foundry also picks its own baseline for the density gains it claims.",
-    "chapter": "transistors-and-front-end"
+    "chapter": "foundries-and-fabs"
   },
   {
     "term": "NVL72",
@@ -641,7 +641,7 @@
     "aka": "transistors",
     "plain": "The switch every chip is built from. Current runs through a channel between two terminals. A voltage on a third terminal, the gate, opens or closes that path, much as a tap opens or closes a pipe. One Nvidia Blackwell part contains 208 billion of them.",
     "why": "The whole chip supply chain exists to make transistors smaller, faster and less leaky. Only three companies, TSMC, Intel and Samsung, make the newest kind in volume.",
-    "chapter": "transistors-and-front-end"
+    "chapter": "foundries-and-fabs"
   },
   {
     "term": "TSV",
@@ -690,7 +690,7 @@
     "aka": "ion implanter, ion implanters, implant, implant layers, implantation",
     "plain": "A way of changing how silicon conducts by firing atoms into it. An ion implanter shoots charged atoms of boron, phosphorus or arsenic into the wafer, where they lodge just under the surface. The patches they land in then conduct the way the design needs.",
     "why": "Every modern chip process relies on it. Implanters are export-controlled. In February 2026 Applied Materials agreed to pay a penalty of about $252 million over implanters shipped to a Chinese customer on the Entity List.",
-    "chapter": "transistors-and-front-end"
+    "chapter": "foundries-and-fabs"
   },
   {
     "term": "epitaxy",
@@ -809,7 +809,7 @@
     "aka": "backside power, backside vias, PowerVia, Super Power Rail, backside power network",
     "plain": "Backside power delivery moves a chip's power wiring to the underside of the wafer, so the wiring above the transistors carries only signals. After the transistors and signal wiring are built, the wafer is bonded face down to a second wafer and ground thin, and the power wires are built on its back. Power arrives through tiny holes etched up from below, clear of the crowded top.",
     "why": "It is one of the few remaining ways to make a chip faster without shrinking the transistor. Intel ships it on its 18A process. TSMC says A16, its first process with it, will be production-ready in the second half of 2026.",
-    "chapter": "transistors-and-front-end"
+    "chapter": "foundries-and-fabs"
   },
   {
     "term": "vias",
@@ -837,27 +837,27 @@
     "aka": "front end of line, FEOL, front-end, front-end wafers",
     "plain": "The front end of line is the first half of making a chip, the steps that build the transistors in the silicon. In the industry at large, the front end means the whole wafer fab, as against the back end where chips are packaged and tested.",
     "why": "SemiAnalysis judged in March 2026 that front-end capacity had overtaken packaging as the main bottleneck on AI chip output. But TSMC said in July 2026 that its packaging capacity still limited customers' growth.",
-    "chapter": "transistors-and-front-end"
+    "chapter": "foundries-and-fabs"
   },
   {
     "term": "back end",
     "aka": "back end of line, BEOL, back-end, back-end fabs, back-end tools",
     "plain": "Inside a fab, the back end of line is the second half of making a chip, the dozen or more layers of copper wiring stacked above the transistors. In the industry at large, the back end means everything after the wafer leaves the fab: grinding, dicing, packaging and test.",
     "why": "Wiring is now as hard to make as the transistor. Among the firms that package and test chips after they leave the fab, four of the ten largest by 2024 revenue are headquartered in China, in a TrendForce ranking cited by CSET.",
-    "chapter": "transistors-and-front-end"
+    "chapter": "foundries-and-fabs"
   },
   {
     "term": "SRAM",
     "aka": "static random-access memory, cache, on-chip memory, on-die SRAM, on-die memory, L2 cache",
     "plain": "SRAM is the fast memory built from transistors on the logic chip itself, used as a cache that holds the numbers a processor is about to need. It is far faster than the memory stacks beside the chip and holds far less.",
     "why": "The cell that holds one bit has barely shrunk since the 5 nm node, which limits how much cache a designer can afford to put on an accelerator.",
-    "chapter": "transistors-and-front-end"
+    "chapter": "foundries-and-fabs"
   },
   {
     "term": "high-volume manufacturing",
     "aka": "HVM, volume production, mass production, high volume, in volume, production ramp",
     "plain": "High-volume manufacturing is the point where a new process or product stops being a trial and is made in volume for sale. Output then climbs to full rate during the ramp.",
-    "why": "Foundries announce the date a process reaches it, and before then the process runs only in trials such as risk production.",
+    "why": "Foundries announce the date a process reaches it, and before then the process makes only prototypes, as Rapidus's 2 nm line did in 2025.",
     "chapter": "foundries-and-fabs"
   },
   {
@@ -1166,21 +1166,21 @@
     "aka": "pitches, half-pitch, gate pitch, metal pitch, wire pitch, line pitch",
     "plain": "Pitch is the distance from one line on a chip to the next, center to center, so it counts the line and the gap together. Half-pitch is half that. A 16 nm pitch means lines 16 nanometers apart. The 2022 US rules set a DRAM threshold at 18 nm half-pitch.",
     "why": "Unlike a node name, pitch measures something physical on the chip. But SemiAnalysis calls a single pitch an incomplete metric for comparing processes.",
-    "chapter": "transistors-and-front-end"
+    "chapter": "foundries-and-fabs"
   },
   {
     "term": "nm-class",
     "aka": "5 nm-class, 7 nm-class, 2 nm-class, nanometer-class, nm class",
     "plain": "Nm-class, as in 7 nm-class, means a process roughly as dense as the foundries' 7 nm generation. The label is used when a maker's own name for the node is different.",
     "why": "China's SMIC builds its 7 nm-class processes without extreme ultraviolet machines, and its most advanced, N+3, reaches the density of TSMC's 6 nm-class process.",
-    "chapter": "transistors-and-front-end"
+    "chapter": "foundries-and-fabs"
   },
   {
     "term": "transistor density",
     "aka": "logic density, chip density, transistors per square millimeter, density gain",
     "plain": "Transistor density is how many transistors fit in a square millimeter of chip. SemiAnalysis measured SMIC's N+3 at 113.4 million, against 107.7 million for TSMC's N6. TSMC says N2P gives 1.2 times the logic density and 1.15 times the chip density of N3E. A16, which adds backside power, gives up to 1.10 times the chip density of N2P. TSMC says A14, planned for 2028, will give more than 20 percent more logic density than N2.",
     "why": "Density sets how much logic fits on a die of a given size. No foundry publishes wafer prices, so cost per transistor cannot be worked out from public figures.",
-    "chapter": "transistors-and-front-end"
+    "chapter": "foundries-and-fabs"
   },
   {
     "term": "throughput",
@@ -1222,7 +1222,7 @@
     "aka": "leading-edge, at the leading edge, advanced node, advanced nodes, advanced-node",
     "plain": "The leading edge is the newest generation of chipmaking process in volume production. In 2026 that means the 3 nm and 2 nm nodes, made only by TSMC, Samsung and Intel. A leading-edge chip is one built on it.",
     "why": "Gate-all-around transistors are the design used at 2 nm, and only TSMC, Intel and Samsung make them in volume. In 2024 the United States put a worldwide license requirement on the technology for building them.",
-    "chapter": "transistors-and-front-end"
+    "chapter": "foundries-and-fabs"
   },
   {
     "term": "mature node",

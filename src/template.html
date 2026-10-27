@@ -19,7 +19,7 @@
 <meta property="og:image" content="{{HOME_CARD}}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="How AI chips are made. An introduction to the entire semiconductor supply chain. Small drawings of all 15 stages run along the bottom.">
+<meta property="og:image:alt" content="How AI chips are made. An introduction to the entire semiconductor supply chain. Small drawings of all {{N_STAGES}} stages run along the bottom.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{HOME_TITLE}}">
 <meta name="twitter:description" content="{{HOME_DESCRIPTION}}">
@@ -273,14 +273,14 @@ html:not(.booted)[data-pick] .view[data-view="suppliers"] > :not(.view-head) { d
         <div class="pt-foot">
           <div class="pt-row">
             <p class="pt-by">Yashvardhan Sharma with Claude</p>
-            <p class="pt-what">The Chain: seventeen chapters.</p>
+            <p class="pt-what">The Chain: {{CHAPTERS_WORD}} chapters.</p>
           </div>
           <p class="pt-meta">Printed from {{SITE_HOST}} · Updated {{BUILT}}</p>
         </div>
       </section>
       <div class="howto" id="howto">
         <h1 class="howto-title">The Chain</h1>
-        <p class="howto-lede">The Chain covers each of the fifteen stages of making an AI chip in detail, one chapter per stage, in the order a chip is made, from design software to the data center. Two more chapters at the end look across all the stages, at what a chip costs and who controls the chain. To help readers learn, each chapter has a 3D model, most have an animation, and every one ends with flashcards.</p>
+        <p class="howto-lede">The Chain covers each of the {{STAGES_WORD}} stages of making an AI chip in detail, one chapter per stage, in the order a chip is made, from design software to the data center. Two more chapters at the end look across all the stages, at what a chip costs and who controls the chain. To help readers learn, each chapter has a 3D model, most have an animation, and every one ends with flashcards.</p>
         <h3 class="howto-k">How to read a chapter</h3>
         <p>Each stage chapter opens with a chokepoint card. It rates the stage on two scales, gives a price or market size, and says where China and the United States stand.</p>
         <ul>

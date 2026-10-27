@@ -6,7 +6,10 @@
    On The Chain it also sets <html data-chain>: "contents" for #/chain, or the chapter that holds the anchor, read from the
    anchor's id (every id in a chapter starts with the chapter's id, or with fig-, cite- or cite-fig- and the chapter's id),
    so one chapter paints and no other; an id it cannot place waits as "pending" until its element has arrived.
-   The build runs route() over every id on the page and warns when one would open a view, or a chapter, other than the one it sits in. */
+   The build runs route() over every id on the page and warns when one would open a view, or a chapter, other than the one it sits in.
+   An address of a chapter merged away (build/retired-chapters.js: #transistors-and-front-end, its sections and figures, and
+   #/walk/transistors-and-front-end) is swapped for the merged chapter's nearest one before anything else reads it (moved()),
+   and the router swaps a link followed later the same way (src/app.js Router.route, through CP_PRE.moved). */
 (function (root) {
   'use strict';
   // the #/<name> routes, as Router.route maps them (VIEWS and ALIAS in src/app.js); an unknown name goes home
@@ -19,6 +22,7 @@
     [/^(cf|tl-|ex-|exposure|controls|timeline)/, 'controls'], [/^(wk-|intro-)/, 'walk']];
   function own(id) { for (var i = 0; i < OWN.length; i++) if (OWN[i][0].test(id)) return OWN[i][1]; return 'stack'; }
   var CHAPTERS = []; // the chapters of The Chain, in order: build/build.js writes their ids here
+  var MOVED = {}; // the addresses of a chapter merged away: build/build.js writes { chapters: { old: new }, anchors: { old: new } } here
   // the chapter an id in The Chain belongs to, by its prefix (the longest chapter id that fits wins), or '' if none fits
   function chapterOf(id, list) {
     var best = '';
@@ -29,6 +33,17 @@
       if (rest !== null && c.length > best.length) best = c;
     }
     return best;
+  }
+  // the address that replaces a merged chapter's (a step of the walk, a mapped anchor, or else the merged chapter itself), or ''
+  function moved(hash, map) {
+    map = map || MOVED;
+    var chs = map.chapters || {}, an = map.anchors || {}, h = String(hash || ''), m = /^#\/walk\/([^?#\/]+)$/.exec(h), id, old;
+    if (m) return chs[m[1]] ? '#/walk/' + chs[m[1]] : '';
+    if (h.charAt(0) !== '#' || h.charAt(1) === '/') return '';
+    id = h.slice(1); try { id = decodeURIComponent(id); } catch (e) { }
+    if (Object.prototype.hasOwnProperty.call(an, id)) return '#' + an[id];
+    for (old in chs) if (Object.prototype.hasOwnProperty.call(chs, old) && chapterOf(id, [old]) === old) return '#' + chs[old];
+    return '';
   }
   function route(hash, search, list) {
     list = list || CHAPTERS;
@@ -52,10 +67,12 @@
     }
     return { view: view, sub: sub };
   }
-  if (typeof module !== 'undefined' && module.exports) { module.exports = { route: route, chapterOf: chapterOf }; return; }
+  if (typeof module !== 'undefined' && module.exports) { module.exports = { route: route, chapterOf: chapterOf, moved: moved }; return; }
 
-  var html = document.documentElement, pre = root.CP_PRE = { view: null, touched: false }, r = null;
+  var html = document.documentElement, pre = root.CP_PRE = { view: null, touched: false, moved: moved }, r = null;
   try {
+    var mv = moved(location.hash); // a merged chapter's address: the merged chapter's own, in place, before it is read
+    if (mv && root.history && history.replaceState) history.replaceState(history.state, '', location.pathname + location.search + mv);
     r = route(location.hash, location.search);
     pre.view = r.view; html.setAttribute('data-route', r.view);
     if (r.sub) html.setAttribute('data-sub', r.sub);

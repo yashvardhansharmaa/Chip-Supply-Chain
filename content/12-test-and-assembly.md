@@ -1,7 +1,7 @@
 ---json
 {
   "id": "test-and-assembly",
-  "number": 13,
+  "number": 12,
   "title": "Test and Assembly",
   "oneLiner": "Testing finds bad chips before they go into an expensive package. Japan's Advantest took about 65 percent of 2025 spending on chip testers, by its own estimate.",
   "plain": "Before a chip can be sold, a machine called a tester has to check that it works. While the chips are still on the wafer, thousands of needles press onto small metal pads on each one. The tester sends signals through the needles and reads what comes back, and any chip that fails goes no further. A modern AI accelerator is a dozen expensive pieces bonded into one package, and if one piece is bad, all of them are thrown away. So the industry now tests chips earlier, at higher temperatures and for longer, to make weak ones fail during testing before they reach a finished product. Two firms, Advantest in Japan and Teradyne in the United States, sell most of the testers.",
@@ -48,7 +48,7 @@
     {"fact": "Malaysia held 7% of global assembly, test and packaging capacity in 2022, the largest share in Southeast Asia, which held about 20% in all. Capacity is measured as factory floor space at contractors and chipmakers' own plants", "source": "https://www.semiconductors.org/wp-content/uploads/2024/05/Report_Emerging-Resilience-in-the-Semiconductor-Supply-Chain.pdf"}
   ],
   "figures": [
-    {"id": "wafer-probe", "type": "animation", "src": "wafer-test", "title": "How a chip is tested", "note": "Simplified. Nine needles stand for thousands. A real prober, the machine that moves the wafer under the card, holds the card still and raises the wafer to meet the needles. The failed chips are placed for illustration and do not reflect a real yield. The package follows chapter 11: two logic chips and eight memory stacks on an interposer and a package base."},
+    {"id": "wafer-probe", "type": "animation", "src": "wafer-test", "title": "How a chip is tested", "note": "Simplified. Nine needles stand for thousands. A real prober, the machine that moves the wafer under the card, holds the card still and raises the wafer to meet the needles. The failed chips are placed for illustration and do not reflect a real yield. The package follows chapter 10: two logic chips and eight memory stacks on an interposer and a package base."},
     {
       "id": "ate-share",
       "type": "stack",
