@@ -135,14 +135,13 @@ html.no-stage .aic-spec { display: none; }
 .aic-chart[data-view="rank"] ~ .aic-note { display: none; } /* the note is about the dots */
 /* highest first: one line per chip, its rank, name, maker and year, the bar (rule B) and the figure with its source mark */
 .aic-rank { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
-.aic-rk { display: grid; grid-template-columns: 26px minmax(0, 190px) minmax(0, 150px) minmax(0, 1fr) 118px; align-items: center; gap: 0 12px; min-height: 30px; border-bottom: 1px solid var(--line); }
-.aic-rk-i { font-family: var(--font-code); font-size: 11.5px; color: var(--muted); text-align: right; }
+.aic-rk { display: grid; grid-template-columns: minmax(0, 190px) minmax(0, 180px) minmax(0, 1fr) 118px; align-items: center; gap: 0 12px; min-height: 30px; padding: 1px 0; border-bottom: 1px solid var(--line); }
 .aic-rk-n { display: flex; align-items: center; min-width: 0; min-height: 28px; padding: 0; background: none; border: 0; text-align: left; font-family: var(--font-ui); font-size: 14px; line-height: 1.25; color: var(--ink); }
 .aic-rk-n span { min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 .aic-rk-n:hover span { text-decoration: underline; text-decoration-color: var(--rule-ink); text-underline-offset: 3px; }
 .aic-rk.is-mine .aic-rk-n, .aic-rk.is-top .aic-rk-n { font-weight: 600; }
 .aic-rk.is-look .aic-rk-n span { text-decoration: underline; text-decoration-color: var(--ink); text-underline-offset: 3px; }
-.aic-rk-m { min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-family: var(--font-ui); font-size: 12.5px; color: var(--muted); }
+.aic-rk-m { min-width: 0; font-family: var(--font-ui); font-size: 12.5px; line-height: 1.3; color: var(--muted); }
 .aic-rk-b { display: block; height: 10px; }
 .aic-rk-b i { display: block; height: 100%; background: var(--ctx); }
 .aic-rk-b i.is-top { background: var(--ink); }
@@ -219,8 +218,12 @@ sup.cite.cx-all button::before { content: ""; position: absolute; left: 50%; top
 sup.cite.cx-all button:hover { background: var(--accent-soft); }
 /* a speed figure's note letter: it points to the chip's note under the table, in the secondary ink so it never reads as a source */
 .cx-fnl { margin-left: 2px; font-family: var(--font-code); font-size: 11px; line-height: 0; vertical-align: super; }
-.cx-fnl a { padding: 0 1px; color: var(--ink-2); text-decoration: none; }
+.cx-fnl a { position: relative; z-index: 1; padding: 0 1px; color: var(--ink-2); text-decoration: none; }
 .cx-fnl a:hover { text-decoration: underline; }
+/* the letter and the source mark sit side by side, so each takes its fingertip on its own side: the letter's box reaches left
+   over the figure, the mark's reaches right, and neither covers the other */
+.cx-fnl a::before { content: ""; position: absolute; right: -1px; top: 50%; width: 22px; height: 26px; transform: translateY(-50%); }
+.cx-vl .cx-fnl + sup.cite a::before { left: -1px; transform: translateY(-50%); }
 /* the figures: one row per chip, each figure a column of numbers read down */
 table.cx-fig, table.cx-parts, table.cx-words { border-collapse: collapse; table-layout: fixed; }
 table.cx-parts, table.cx-words { width: 100%; }
@@ -338,7 +341,7 @@ section[data-view="landscape"] .label, section[data-view="landscape"] .cx-note, 
   .aic-ws { grid-template-columns: 280px minmax(0, 1fr); gap: 0 36px; }
   .cx-parts thead th.c0, .cx-words th.at { width: 170px; }
   .cx-fns li { grid-template-columns: 170px minmax(0, 1fr); }
-  .aic-rk { grid-template-columns: 26px minmax(0, 170px) minmax(0, 120px) minmax(0, 1fr) 110px; }
+  .aic-rk { grid-template-columns: minmax(0, 170px) minmax(0, 150px) minmax(0, 1fr) 110px; }
 }
 @media (max-width: 899px) {
   /* the rail becomes a sheet from the bottom; the specimen stays in the strip at the foot of the screen */
@@ -356,11 +359,11 @@ section[data-view="landscape"] .label, section[data-view="landscape"] .cx-note, 
   .aic-rl-o { min-height: 40px; }
   .aic-rl-o input { top: 11px; }
   .aic-open-list { display: flex; align-items: center; justify-content: space-between; gap: 12px; box-sizing: border-box; width: 100%; min-height: 48px; margin-top: 22px; padding: 0 16px; border: 1px solid var(--ink); background: none; text-align: left; font-family: var(--font-ui); font-weight: 500; font-size: 15px; line-height: 1.2; color: var(--ink); }
-  .aic-rk { grid-template-columns: 22px minmax(0, 1fr) auto; grid-template-rows: auto auto; gap: 0 10px; padding: 6px 0; }
-  .aic-rk-i { grid-row: 1 / 3; align-self: start; padding-top: 6px; }
-  .aic-rk-m { display: none; }
-  .aic-rk-b { grid-column: 2 / -1; grid-row: 2; height: 6px; }
-  .aic-rk-v { grid-column: 3; grid-row: 1; }
+  .aic-rk { grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: auto auto auto; gap: 0 10px; padding: 6px 0 8px; }
+  .aic-rk-n { grid-column: 1; grid-row: 1; min-height: 24px; }
+  .aic-rk-m { grid-column: 1; grid-row: 2; }
+  .aic-rk-b { grid-column: 1 / -1; grid-row: 3; height: 6px; margin-top: 6px; }
+  .aic-rk-v { grid-column: 2; grid-row: 1 / 3; }
 }
 @media (min-width: 900px) { .aic-tray, .aic-scrim { display: none !important; } html.aic-sheet-on { overflow: visible; } }
 @media (max-width: 760px) {

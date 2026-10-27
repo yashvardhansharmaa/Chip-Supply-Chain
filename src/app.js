@@ -1082,9 +1082,12 @@
       var find = $('#cx-find');
       if (find) {
         find.addEventListener('input', function () { self.filterList(); });
-        find.addEventListener('keydown', function (e) { // Enter ticks the first chip that matches (and unticks it if it is ticked)
+        find.addEventListener('keydown', function (e) { // Enter ticks the chip that matches best (and unticks it if it is ticked)
           if (e.key !== 'Enter') return;
-          var o = $$('#cx-list .aic-rl-o').filter(function (x) { return !x.hidden && !$('input', x).disabled; })[0];
+          var q = find.value.trim().toLowerCase(), list = $$('#cx-list .aic-rl-o').filter(function (x) { return !x.hidden && !$('input', x).disabled; });
+          var name = function (x) { return $('.aic-rl-n', x).textContent.toLowerCase(); };
+          // a chip whose name is what was typed ("h20" is the H20, not the H200), then one whose name starts with it, then the first
+          var o = list.filter(function (x) { return name(x) === q; })[0] || list.filter(function (x) { return q && name(x).indexOf(q) === 0; })[0] || list[0];
           if (o) { e.preventDefault(); self.toggle(o.getAttribute('data-id')); }
         });
       }
@@ -1216,15 +1219,15 @@
     },
     leaveList: function () { // closing the sheet: with two chips ticked, to the comparison; otherwise back to the button that opened it
       this.listOpen(false);
-      if (this.picked.length >= 2) { this.toCompare(); var h = $('#cx-title'); if (h) setTimeout(function () { Keys.focus(h); }, 0); }
+      if (this.picked.length >= 2) { this.renderTray(true); this.toCompare(); /* the tray shows from here, so the comparison lands clear of it */ var h = $('#cx-title'); if (h) setTimeout(function () { Keys.focus(h); }, 0); }
       else { var ol = $('#cx-open-list'); if (ol) ol.focus({ preventScroll: true }); }
     },
     // the phone's tray: the ticked chips under the masthead, once the button that opens the list has scrolled away
-    renderTray: function () {
+    renderTray: function (force) {
       var t = $('#cx-tray'); if (!t) return;
       var here = Router.current === 'landscape', sel = this.selection(), root = document.documentElement;
       if (!here || !narrow() || !sel.length) { t.hidden = true; root.style.setProperty('--cx-sticky', '0px'); return; }
-      var ol = $('#cx-open-list'), past = this.isListOpen() || (ol && ol.getBoundingClientRect().bottom < headerH());
+      var ol = $('#cx-open-list'), past = force || this.isListOpen() || (ol && ol.getBoundingClientRect().top < headerH()); // as soon as the button starts under the masthead
       var self = this, html = sel.map(function (c) { return '<span class="aic-tc"><b class="cx-no">' + self.noOf(c.id) + '</b>' + esc(self.short(c)) + '</span>'; }).join('') + (this.isListOpen() ? '' : '<button type="button" class="aic-tlink" data-openlist>Change</button>');
       if (t.innerHTML !== html) t.innerHTML = html;
       t.hidden = !past;
@@ -1336,10 +1339,9 @@
       var self = this, scale = outlier ? second : max;
       this.pts = [];
       var list = have.slice().sort(function (a, b) { return b.v - a.v || String(a.c.announced).localeCompare(String(b.c.announced)); });
-      host.innerHTML = '<ol class="aic-rank" aria-label="' + esc(row.short + ' of ' + have.length + ' chips, highest first') + '">' + list.map(function (p, i) {
+      host.innerHTML = '<ol class="aic-rank" aria-label="' + esc(row.short + ' of ' + have.length + ' chips, highest first') + '">' + list.map(function (p) {
         var c = p.c, top = p.v === max, n = self.noOf(c.id), cut = outlier && top, w = cut ? 100 : Math.max(0.6, p.v / scale * 100);
         return '<li class="aic-rk' + (top ? ' is-top' : '') + (n ? ' is-mine' : '') + (self.open === c.id ? ' is-look' : '') + '">' +
-          '<span class="aic-rk-i">' + (i + 1) + '</span>' +
           '<button type="button" class="aic-rk-n" data-card="' + esc(c.id) + '" aria-haspopup="dialog" aria-expanded="' + (self.open === c.id) + '">' + (n ? '<b class="cx-no">' + n + '</b>' : '') + '<span>' + esc(self.short(c)) + '</span></button>' +
           '<span class="aic-rk-m">' + esc([c.vendor, self.year(c)].filter(Boolean).join(' · ')) + '</span>' +
           '<span class="aic-rk-b" aria-hidden="true"><i class="' + (top ? 'is-top' : '') + (cut ? ' is-cut' : '') + '" style="width:' + w.toFixed(1) + '%"></i></span>' +
