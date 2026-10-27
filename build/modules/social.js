@@ -423,7 +423,9 @@ function readableHTML(p, ch, ctx, versions, css) {
   const cards = fc && Array.isArray(fc.cards) ? fc.cards.filter((c) => c.q && c.a) : [];
 
   const conc = si >= 0 ? (m.card || {}).concentration || '' : '';
-  const kick = `<p class="ch-kick"><span>Chapter ${pad(ch.number)}</span><span>${si >= 0 ? `Stage ${si + 1} of ${stages.length}` : esc(TILE[ch.number] || '')}</span>${conc ? `<span class="ch-band" data-band="${BANDS[conc] || 0}"><i aria-hidden="true"></i>${esc(conc)}</span>` : ''}</p>`;
+  // the card's verdict, as The Chain's kicker carries it (build.js bandMark): "Extreme concentration · Very hard to substitute"
+  const subBand = ((m.card || {}).substitutability || {}).band || '';
+  const kick = `<p class="ch-kick"><span>Chapter ${pad(ch.number)}</span><span>${si >= 0 ? `Stage ${si + 1} of ${stages.length}` : esc(TILE[ch.number] || '')}</span>${conc ? `<span class="ch-band ch-verdict" data-band="${BANDS[conc] || 0}"><i aria-hidden="true"></i><span>${esc(conc)} concentration</span>${subBand ? `<span class="sep" aria-hidden="true">·</span><span>${esc(SUBWORD[subBand] || subBand)}</span>` : ''}</span>` : ''}</p>`;
   const adds = ['a 3D model', 'glossary definitions', cards.length ? 'flashcards' : ''].filter(Boolean);
   const note = `The interactive chapter adds ${adds.length > 1 ? adds.slice(0, -1).join(', ') + ' and ' + adds[adds.length - 1] : adds[0]}.`;
   const cta = (cls) => `<div class="cta${cls}"><a class="btn" href="${esc(app)}">Open the interactive chapter <span aria-hidden="true">→</span></a><p class="cta-note">${note}</p></div>`;
@@ -437,10 +439,10 @@ function readableHTML(p, ch, ctx, versions, css) {
   // build/assets/specimens/<id>.webp at twice the pixels it is shown at), so no readable page opens on a lone caption
   const sz = !still && (ctx.stillSizes || {})[ch.id];
   if (sz) still = `<img class="ch-still-img" src="../media/spec-${esc(ch.id)}.webp" width="${Math.round(sz[0] / 2)}" height="${Math.round(sz[1] / 2)}" alt="${esc((SPECIMEN_NAME[specimen] || specimen.replace(/-/g, ' ')))}, the chapter's specimen" decoding="async">`;
-  const specimenHTML = `<figure class="ch-spec${still ? ' has-still' : ''}"${still && ch.number >= 16 ? ' data-night="1"' : ''}>${still ? `<div class="ch-spec-draw">${still}</div>` : ''}<figcaption class="ch-spec-cap"><span class="label">Specimen ${pad(ch.number)} · ${esc(ch.title)}</span>${m.specimenCaption ? `<p>${esc(m.specimenCaption)}</p>` : ''}${r.parts || ''}<a class="ch-spec-3d" href="${esc(app)}">See it in 3D in the interactive chapter</a></figcaption></figure>`;
+  const specimenHTML = `<figure class="ch-spec${still ? ' has-still' : ''}"${still && ch.number >= 16 ? ' data-night="1"' : ''}>${still ? `<div class="ch-spec-draw">${still}</div>` : ''}<figcaption class="ch-spec-cap${r.parts ? ' has-parts' : ''}"><span class="label">Specimen ${pad(ch.number)} · ${esc(ch.title)}</span>${m.specimenCaption ? `<p>${esc(m.specimenCaption)}</p>` : ''}${r.parts || ''}<a class="ch-spec-3d" href="${esc(app)}">See it in 3D in the interactive chapter</a></figcaption></figure>`;
 
   // the contents rail, as the app draws it (build.js railHTML), with this page's own section anchors
-  const toc = (r.plain ? [[`${ch.id}--plain`, 'In plain terms']] : []).concat((ch.headings || []).map((h) => [h.id, esc(String(h.text).replace(/\*\*/g, ''))]))
+  const toc = (r.plain ? [[`${ch.id}--plain`, 'In plain terms']] : []).concat(r.plate ? [[`${ch.id}--card`, 'Chokepoint card']] : []).concat((ch.headings || []).map((h) => [h.id, esc(String(h.text).replace(/\*\*/g, ''))]))
     .concat(cards.length ? [['review-questions', 'Review questions']] : []).concat(ch.cites.length ? [['sources', 'Sources']] : []);
   const rail = ctx.railHTML ? ctx.railHTML(ch, si, toc) : '';
   const review = cards.length ? reviewSection(cards, (c) => {
@@ -461,13 +463,12 @@ ${m.oneLiner ? `<p class="ch-lede">${esc(m.oneLiner)}</p>` : ''}
 <div class="ch-omet"><p class="ch-meta"><span class="label">${ch.words.toLocaleString('en-US')} words / ${r.mins} min</span><span class="label">Specimen: ${esc(SPECIMEN_NAME[specimen] || specimen.replace(/-/g, ' '))}</span>${ch.cites.length ? `<span class="label">${ch.cites.length} sources</span>` : ''}</p>
 ${cta('')}</div></div>
 ${specimenHTML}
-${plainTerms(r.plate)}
 ${levelUp(r.plain || '')}
 ${r.inShort ? `<section class="inshort"><h2 class="label">In short</h2>${levelUp(r.inShort)}</section>` : ''}
 </header>
 ${rail}
 <div class="prose">
-${staticFigures(staticAnimations(levelUp(r.prose)))}
+${staticFigures(staticAnimations(levelUp(r.prose)))/* the lead, the card (build.js withCard), then the sections */}
 ${review}
 <nav class="endnav" aria-label="After the chapter">${cta(' cta--end')}${prevnext}</nav>
 ${sources}

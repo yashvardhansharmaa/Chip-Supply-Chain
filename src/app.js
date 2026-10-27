@@ -246,13 +246,25 @@
       }
       return (slot.extent[key] = { bottom: bottom, top: top, side: side, w: w, h: h });
     },
-    // the caption stands on the drawing's foot: the empty band under the drawing goes to the stage (or the chapter's slot) as --slack
+    // the caption stands on the drawing's foot: the empty band under the drawing goes to the stage (or the chapter's slot) as --slack.
+    // A chapter's plate (the column, src/modules/chapter.css) is fitted to its drawing, which turns inside the sphere that holds it,
+    // so a flat board and a tall rack leave different bands: the canvas takes the height (--draw-h, 380 to 640 px) at which the
+    // drawing stands about 340 px tall as it turns, the band over the drawing goes (--lift: the slot is that much shorter and the
+    // canvas rides up under the opener) and the caption rises into the band under it (--slack). The night plate of chapters 16 and
+    // 17 keeps 28 px of its ground round the drawing, and its caption stands under it
     fit: function () {
       if (!this.ok || !this.cur) return;
       var e = this.reach(this.cur), host = this.hostEl || this.fig;
       if (!e || !host) return;
-      var slack = Math.max(0, Math.round(e.h - e.bottom - 10));
-      (this.hostEl ? this.hostEl.closest('.ch-spec') : this.fig).style.setProperty('--slack', slack + 'px');
+      var spec = this.hostEl ? this.hostEl.closest('.ch-spec') : this.fig, art = this.hostEl ? this.hostEl.closest('article.chapter') : null;
+      if (!art) { spec.style.setProperty('--slack', Math.max(0, Math.round(e.h - e.bottom - 10)) + 'px'); return; }
+      if (art.getAttribute('data-specimen') !== this.cur.name) return; // the drawing has moved here, its specimen not yet (show() fits it)
+      var want = Math.round(Math.max(380, Math.min(640, 340 * e.h / Math.max(1, e.bottom - e.top))));
+      if (Math.abs(want - e.h) > 2 && this.fitting !== want) { this.fitting = want; spec.style.setProperty('--draw-h', want + 'px'); this.resize(); return; }
+      this.fitting = 0; // (a height the slot did not take is not asked for twice in a row)
+      var night = spec.hasAttribute('data-night');
+      spec.style.setProperty('--lift', Math.max(0, Math.round(e.top - (night ? 28 : 12))) + 'px');
+      spec.style.setProperty('--slack', Math.max(0, Math.round(e.h - e.bottom - (night ? 28 : 10))) + 'px');
     },
     /* The chapter's slot the drawing sits in on The Chain (src/modules/chapter.css .ch-spec-draw), or null for the stage beside
        the page (the home, AI Chips) and the phone's strip. The canvas and its pause button move; the canvas keeps its context. */

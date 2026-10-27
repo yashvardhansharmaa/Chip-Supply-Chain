@@ -509,7 +509,7 @@ ${body}
     // names, matched in the paragraphs and list items of each chapter's own text, a short name with capitals only as written
     const chapters = (ctx.all || []).filter((c) => c.rendered);
     const corpus = chapters.map((c) => {
-      const r = c.rendered, html = [r.plain, r.inShort, r.plate, r.prose].join('\n')
+      const r = c.rendered, html = [r.plain, r.inShort, r.prose].join('\n') // the prose holds the card, after the lead (build.js withCard)
         .replace(/<figure\b[\s\S]*?<\/figure>/g, ' ').replace(/<table\b[\s\S]*?<\/table>/g, ' ')
         .replace(/<sup class="cite(?:-sep)?">[\s\S]*?<\/sup>/g, '').replace(/<span class="(?:chip|lead-cn)"[^>]*>[\s\S]*?<\/span>/g, ' ');
       const paras = []; html.replace(/<(p|li)\b[^>]*>([\s\S]*?)<\/\1>/g, (m, t, inner) => { const s = textOf(inner).replace(/\s+([.,;:])/g, '$1'); if (s.length > 40) paras.push(s); return m; });
