@@ -1,8 +1,8 @@
 /* The readable chapter page (dist/<chapter>/index.html, written by build/modules/social.js).
    A static copy of one chapter for search engines, citation and readers who arrive from a shared link.
    The tokens, type and rules are the site's own (src/styles.css, redesign of 25 Oct 2026): a white ground, warm ink and
-   red wine for links and the reader's place; Fraunces for display, Literata for reading, Hanken Grotesk for interface
-   labels and Fragment Mono for kickers, codes and dates.
+   red wine for links and the reader's place; Source Serif 4 for display and reading (design round five, 27 Oct 2026; Fraunces
+   and Literata before it), Hanken Grotesk for interface labels and Fragment Mono for kickers, codes and dates.
    The page follows the reader's system theme, and ?theme= or the site's saved choice overrides it.
    Inlined into each page and lightly minified by social.js, so keep it short and free of commas inside strings. */
 :root {
@@ -13,17 +13,19 @@
   --bar-5: var(--ink); --bar-4: #8c8a84; --bar-3: #c4c3bd;
   /* the stacked bars' colors, as src/styles.css sets them (decision 4, 21 Oct 2026) */
   --stk-1: #2b63c4; --stk-2: #1f9a6d; --stk-3: #c9a10c; --stk-4: #5a48b8; --stk-5: #e06a1f; --stk-tail: #c9c6bf; --stk-edge: #a9a49b; --stk-n1: #8a9099; --stk-n2: #b4b9be;
-  --font-display: "Fraunces", "Iowan Old Style", Georgia, serif;
-  --font-body: "Literata", "Iowan Old Style", Georgia, serif;
+  --font-display: "Source Serif 4", "Iowan Old Style", Georgia, serif;
+  --font-body: "Source Serif 4", "Iowan Old Style", Georgia, serif;
   --font-label: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
   --font-code: "Fragment Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   --font-kicker: var(--font-code);
-  --opsz-title: "opsz" 48, "SOFT" 0, "WONK" 0;
-  --measure: 31em; /* about 65 characters of Literata at 18 px */
+  --opsz-title: normal; /* the optical size follows the size */
+  /* the text scale, as src/styles.css sets it: every size in the text face is its Literata size times 20 / 18.5 */
+  --text-scale: calc(20 / 18.5);
+  --measure: calc(31em / var(--text-scale)); /* the same width as before the switch, about 61 characters */
   --gutter: clamp(16px, 4vw, 40px);
   /* the site's type scale (src/styles.css :root, redesign of 25 Oct 2026): labels in sentence case, nothing under 11 px */
   --fs-cap-s: 11px; --tr-cap-s: 0.01em; --fs-cap: 12px; --tr-cap: 0.01em; --fs-ui-s: 12.5px; --fs-ui: 14px;
-  --fs-note: 13.5px; --fs-small: 15.5px; --fs-plain: 17px; --fs-body: 18px; --fs-lede: 21px;
+  --fs-note: calc(13.5px * var(--text-scale)); --fs-small: calc(15.5px * var(--text-scale)); --fs-plain: calc(17px * var(--text-scale)); --fs-body: calc(18px * var(--text-scale)); --fs-lede: calc(21px * var(--text-scale));
   --fs-d6: 16.5px; --fs-d5: 19px; --fs-d4: 21px; --fs-d3: 24px; --fs-d2: 28px; --fs-d1s: clamp(26px, 2.3vw, 32px); --fs-d1: clamp(40px, 4.6vw, 66px);
   --fs-num-s: 30px; --fs-num-m: 54px; --fs-num-l: 72px;
   /* the tokens the chapter page's own sheet reads (src/modules/chapter.css, shared with The Chain in the app) */
@@ -47,7 +49,7 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
-body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 18.5px; line-height: 1.6; font-optical-sizing: auto; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; overflow-wrap: break-word; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: calc(18.5px * var(--text-scale)); line-height: 1.6; font-optical-sizing: auto; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; overflow-wrap: break-word; }
 a { color: inherit; text-decoration-color: var(--line-2); text-decoration-thickness: 1px; text-underline-offset: 0.18em; }
 a:hover { text-decoration-color: var(--accent); }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
@@ -70,7 +72,7 @@ strong, b { font-weight: 600; }
 .wordmark .wm-tile { display: block; flex: none; width: 29px; height: 29px; }
 .wordmark .wm-tile rect { fill: #7a1f2b; }
 .wordmark .wm-tile path { fill: #ffffff; }
-.wordmark .wm-name { font-family: var(--font-display); font-size: 21px; font-weight: 540; font-variation-settings: "opsz" 28, "SOFT" 0, "WONK" 0; letter-spacing: -0.005em; line-height: 1; white-space: nowrap; }
+.wordmark .wm-name { font-family: var(--font-display); font-size: 21px; font-weight: 540; font-variation-settings: normal; letter-spacing: -0.005em; line-height: 1; white-space: nowrap; }
 .masthead nav { display: flex; gap: 4px; }
 .masthead nav a { font-family: var(--font-label); font-weight: 400; font-size: 15px; color: var(--ink); text-decoration: none; padding: 8px 8px 7px; border-bottom: 2px solid transparent; white-space: nowrap; }
 .masthead nav a:hover { color: var(--ink-2); border-bottom-color: var(--line-2); }
@@ -86,7 +88,7 @@ strong, b { font-weight: 600; }
 .ch-head { padding: clamp(40px, 8vh, 72px) 0 4px; }
 .eyebrow { margin: 0 0 14px; font-family: var(--font-kicker); font-size: var(--fs-cap); font-weight: 400; letter-spacing: 0; color: var(--muted); }
 .eyebrow b { color: var(--ink); font-weight: 400; }
-.ch-title { font-family: var(--font-display); font-weight: 350; font-variation-settings: var(--opsz-title); font-size: clamp(40px, 6.4vw, 60px); line-height: 1.02; letter-spacing: -0.015em; margin: 0 0 18px; }
+.ch-title { font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: clamp(40px, 6.4vw, 60px); line-height: 1.02; letter-spacing: -0.015em; margin: 0 0 18px; }
 .ch-lede { font-size: var(--fs-lede); line-height: 1.45; color: var(--ink-2); margin: 0 0 16px; }
 .ch-meta { margin: 0 0 26px; font-family: var(--font-kicker); font-size: var(--fs-cap); font-weight: 400; letter-spacing: 0; color: var(--muted); }
 
@@ -147,7 +149,7 @@ strong, b { font-weight: 600; }
 .plate-kpis > div + div { padding-left: 16px; }
 .plate-kpis > div:last-child { border-right: 0; }
 .k { display: block; font-weight: 500; font-size: var(--fs-cap-s); letter-spacing: 0; color: var(--muted); margin-bottom: 8px; }
-.plate-kpis .v { display: block; font-family: var(--font-display); font-weight: 400; font-variation-settings: "opsz" 72, "SOFT" 0, "WONK" 0; font-size: var(--fs-d2); line-height: 1.05; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.plate-kpis .v { display: block; font-family: var(--font-display); font-weight: 400; font-variation-settings: normal; font-size: var(--fs-d2); line-height: 1.05; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
 .plate-kpis .v.cost { font-size: var(--fs-d3); }
 .plate-kpis .v.cost.long { font-family: var(--font-body); font-weight: 500; font-size: var(--fs-small); line-height: 1.35; font-variation-settings: normal; }
 .plate-kpis .v small { font-size: 14px; color: var(--muted); margin-left: 4px; }
@@ -316,13 +318,13 @@ sup.cite .br { font-size: 0; }
 .site-footer .sources-key { margin-top: 10px; font-size: var(--fs-ui-s); }
 
 @media (max-width: 640px) {
-  body { font-size: 18px; }
+  body { font-size: calc(18px * var(--text-scale)); }
   .masthead { min-height: 52px; gap: 8px; }
   .wordmark { gap: 9px; }
   .wordmark .wm-tile { width: 25px; height: 25px; }
   .wordmark .wm-name { font-size: 18px; }
   .masthead nav a { font-size: 12.5px; padding: 6px 5px 5px; }
-  .ch-lede { font-size: 19px; }
+  .ch-lede { font-size: calc(19px * var(--text-scale)); }
   .inshort p, .inshort li { font-size: var(--fs-body); }
   .btn { width: 100%; justify-content: center; }
   .track ol { gap: 1px; }
@@ -355,7 +357,7 @@ sup.cite .br { font-size: 0; }
     color-scheme: light;
   }
   * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  body { font-size: 10.5pt; }
+  body { font-size: calc(10.5pt * var(--text-scale)); }
   p, li, dd { text-wrap: wrap; }
   .masthead nav, .skip, .cta, .endnav, .track, .specimen a, .anim-frame { display: none !important; }
   .anim-still { display: block; width: 100%; height: auto; border: 1px solid var(--line); } /* paper gets the animation's last frame */

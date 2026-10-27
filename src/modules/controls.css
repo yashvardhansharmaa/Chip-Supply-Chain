@@ -370,18 +370,18 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
 .cf-up-d, .cf-up-n { font-family: var(--font-code); font-size: 12.5px; line-height: 20px; color: var(--muted); white-space: nowrap; }
 .cf-up-d { color: var(--ink); }
 .cf-up-i.is-soon .cf-up-n { color: var(--ink); }
-.cf-up-t { min-width: 0; font-family: var(--font-body); font-size: 16.5px; line-height: 1.45; color: var(--ink); }
+.cf-up-t { min-width: 0; font-family: var(--font-body); font-size: calc(16.5px * var(--text-scale)); line-height: 1.45; color: var(--ink); }
 .cf-up-link { display: inline-block; margin-left: 12px; padding: 2px 0; font-family: var(--font-ui); font-size: 13px; line-height: 18px; color: var(--ink-2); white-space: nowrap; text-decoration-color: var(--rule-ink); }
 .cf-up-link:hover { color: var(--accent-ink); text-decoration-color: var(--accent); }
 @media (max-width: 760px) {
   .cf-up { margin: 28px 0 28px; }
   .cf-up-h { font-size: 22px; }
   .cf-up-i { grid-template-columns: auto minmax(0, 1fr); column-gap: 16px; row-gap: 4px; }
-  .cf-up-t { grid-column: 1 / -1; font-size: 16px; }
+  .cf-up-t { grid-column: 1 / -1; font-size: calc(16px * var(--text-scale)); }
 }
 
 /* the line that points down to the chronology, and the order switch */
-.cf-jump-btn { font-family: var(--font-body); font-size: 17px; color: var(--ink); text-decoration-color: var(--rule-ink); }
+.cf-jump-btn { font-family: var(--font-body); font-size: calc(17px * var(--text-scale)); color: var(--ink); text-decoration-color: var(--rule-ink); }
 .cf-modes { padding: 3px; gap: 2px; border: 1px solid var(--control-edge); border-radius: 999px; }
 .cf-mode, .cf-mode:first-child, .cf-mode:last-child { border: 0; border-radius: 999px; font-family: var(--font-ui); font-weight: 400; font-size: 13.5px; line-height: 1; padding: 8px 14px; min-height: 30px; color: var(--ink-2); }
 .cf-mode[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
@@ -392,16 +392,16 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
 .tl-chip::before { background: var(--ink); }
 .cf-hist .cat { color: var(--ink-2); }
 .tl-all.btn.ghost { font-family: var(--font-ui); font-size: 13.5px; }
-.timeline .tl-year .year-label { font-family: var(--font-display); font-weight: 350; font-variation-settings: var(--opsz-numeral); font-size: 44px; line-height: 1; letter-spacing: -0.03em; }
+.timeline .tl-year .year-label { font-family: var(--font-display); font-weight: 360; font-variation-settings: var(--opsz-numeral); font-size: 44px; line-height: 1; letter-spacing: -0.03em; }
 .timeline .tl-n { font-family: var(--font-code); font-size: 12px; vertical-align: 10px; }
 .timeline .cat, .cf-hist .cat { font-family: var(--font-ui); font-size: 12.5px; font-weight: 500; }
 .cf-inst { font-family: var(--font-ui); font-size: 12px; border-radius: 3px; padding: 1px 6px 2px; }
-.timeline .tl-gist { font-size: 16.5px; line-height: 1.5; }
+.timeline .tl-gist { font-size: calc(16.5px * var(--text-scale)); line-height: 1.5; }
 .timeline .tl-more, .cf-hist .tl-more { font-family: var(--font-ui); font-size: 13px; color: var(--ink-2); }
 
 /* the scrubber: the year shown is ink, never wine (its bar is a count, a data value) */
 .cf-asof { font-family: var(--font-ui); font-weight: 400; font-size: 13px; color: var(--muted); }
-.cf-asof b { font-weight: 350; }
+.cf-asof b { font-weight: 360; } /* a light number, as the year labels are */
 .cf-now { font-family: var(--font-ui); font-weight: 400; font-size: 13px; padding: 6px 14px; border: 1px solid var(--control-edge); border-radius: 999px; color: var(--ink); }
 .cf-now:hover, .cf-now:focus-visible { border-color: var(--ink); }
 .cf-year { border-radius: 3px; }
@@ -425,7 +425,7 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
 .cf-scale-r i::after { border-left-color: var(--ink); }
 .cf-scale-r span:last-child { color: var(--ink); }
 .cf-scale-l, .cf-scale-x { font-family: var(--font-ui); font-size: 12px; }
-.cf-legend li > span:last-child { font-size: 14px; }
+.cf-legend li > span:last-child { font-size: calc(14px * var(--text-scale)); }
 .cf-row.is-changed { animation-name: cf-glow2; }
 @keyframes cf-glow2 { 0%, 62% { background-color: var(--bg-2); } 100% { background-color: transparent; } }
 @media (min-width: 900px) {

@@ -1,0 +1,34 @@
+# the text census of the type switch: qa/redesign/census.js, A the redesign at this branch's base (git archive 6c3ffd2 dist, read as files), B this branch (127.0.0.1:8773)
+walk: 383 -> 383 lines; case only 0; only in main 0; only in redesign 0; words lost 0, added 0
+chain: 82 -> 82 lines; case only 0; only in main 0; only in redesign 0; words lost 0, added 0
+ai-chips: 160 -> 160 lines; case only 0; only in main 0; only in redesign 0; words lost 0, added 0
+suppliers: 354 -> 354 lines; case only 0; only in main 0; only in redesign 0; words lost 0, added 0
+suppliers-by-country: 343 -> 343 lines; case only 0; only in main 0; only in redesign 0; words lost 0, added 0
+export-controls: 731 -> 731 lines; case only 0; only in main 0; only in redesign 0; words lost 0, added 0
+china-revenue: 258 -> 258 lines; case only 0; only in main 0; only in redesign 0; words lost 0, added 0
+glossary: 3489 -> 3489 lines; case only 0; only in main 0; only in redesign 0; words lost 0, added 0
+/advanced-packaging/: 351 -> 351 lines; case only 0; only in main 0; only in redesign 0; words lost 0, added 0
+/chemicals-gases-and-photoresist/: 348 -> 348 lines; case only 0; only in main 0; only in redesign 0; words lost 0, added 0
+/chips/: 682 -> 682 lines; case only 0; only in main 0; only in redesign 0; words lost 0, added 0
+/component-costs/: 316 -> 316 lines; case only 0; only in main 0; only in redesign 0; words lost 0, added 0
+/data-centers-and-power/: 346 -> 346 lines; case only 0; only in main 0; only in redesign 0; words lost 0, added 0
+/deposition-and-etch/: 397 -> 397 lines; case only 0; only in main 0; only in redesign 0; words lost 0, added 0
+/design-and-eda/: 331 -> 331 lines; case only 0; only in main 0; only in redesign 0; words lost 0, added 0
+/export-controls/: 880 -> 880 lines; case only 0; only in main 0; only in redesign 0; words lost 0, added 0
+/foundries-and-fabs/: 334 -> 334 lines; case only 0; only in main 0; only in redesign 0; words lost 0, added 0
+/geopolitics/: 421 -> 421 lines; case only 0; only in main 0; only in redesign 0; words lost 0, added 0
+/glossary/: 1966 -> 1966 lines; case only 0; only in main 0; only in redesign 0; words lost 0, added 0
+/lithography/: 430 -> 430 lines; case only 0; only in main 0; only in redesign 0; words lost 0, added 0
+/memory-and-hbm/: 298 -> 298 lines; case only 0; only in main 0; only in redesign 0; words lost 0, added 0
+/metrology-and-inspection/: 380 -> 380 lines; case only 0; only in main 0; only in redesign 0; words lost 0, added 0
+/photomasks-and-pellicles/: 292 -> 292 lines; case only 0; only in main 0; only in redesign 0; words lost 0, added 0
+/silicon-and-wafers/: 301 -> 301 lines; case only 0; only in main 0; only in redesign 0; words lost 0, added 0
+/substrates-and-pcbs/: 344 -> 344 lines; case only 0; only in main 0; only in redesign 0; words lost 0, added 0
+/summary/: 367 -> 367 lines; case only 0; only in main 0; only in redesign 0; words lost 0, added 0
+/suppliers/: 3602 -> 3602 lines; case only 0; only in main 0; only in redesign 0; words lost 0, added 0
+/systems-and-networking/: 325 -> 325 lines; case only 0; only in main 0; only in redesign 0; words lost 0, added 0
+/test-and-assembly/: 330 -> 330 lines; case only 0; only in main 0; only in redesign 0; words lost 0, added 0
+/transistors-and-front-end/: 310 -> 310 lines; case only 0; only in main 0; only in redesign 0; words lost 0, added 0
+/home/: only in main 0; only in redesign 0; words lost 0
+/intro/: only in main 0; only in redesign 0; words lost 0
+/chain/: only in main 0; only in redesign 0; words lost 0

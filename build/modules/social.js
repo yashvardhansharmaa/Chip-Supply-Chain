@@ -31,8 +31,8 @@ const keepRanges = require('../keep-ranges.js');
 const BASE = SITE_CONFIG.url;
 const SITE = 'Chip Supply Chain';
 const AUTHOR = { name: 'Yashvardhan Sharma', url: 'https://www.linkedin.com/in/yashvardhan07/' };
-// the site's own four faces (redesign of 25 Oct 2026): Fraunces, Literata, Hanken Grotesk and Fragment Mono
-const FONTS = 'https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..600,0,0&family=Literata:ital,opsz,wght@0,7..72,300..700;1,7..72,400&family=Hanken+Grotesk:wght@400..700&family=Fragment+Mono&display=swap';
+// the site's own three faces (design round five, 27 Oct 2026): Source Serif 4 for display and text, Hanken Grotesk and Fragment Mono
+const FONTS = 'https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,400&family=Hanken+Grotesk:wght@400..700&family=Fragment+Mono&display=swap';
 const SUBWORD = { 'Very hard': 'Very hard to substitute', Hard: 'Hard to substitute', Moderate: 'Moderately hard to substitute', Easy: 'Easy to substitute' };
 const TILE = { 16: 'The economics', 17: 'The contest' }; // what the chapter tile says for the two chapters that are not stages
 const PAGE_TITLES = require('../page-titles.js'); // the approved <title> and description of each static page
@@ -228,10 +228,10 @@ ${shareTags(p, versions)}
 <script>location.replace(${JSON.stringify(target)});</script>
 ${ICONS}
 <style>
-body{margin:0;background:#fff;color:#171716;font:18px/1.6 Literata,Georgia,serif}
+body{margin:0;background:#fff;color:#171716;font:19.5px/1.55 "Source Serif 4",Georgia,serif}
 main{max-width:34em;margin:0 auto;padding:48px 16px}
 .eyebrow{font:400 12px/1.4 "Fragment Mono",ui-monospace,Menlo,monospace;color:#56554f;margin:0 0 12px}
-h1{font:350 34px/1.1 Fraunces,Georgia,serif;margin:0 0 20px}
+h1{font:400 34px/1.1 "Source Serif 4",Georgia,serif;margin:0 0 20px}
 a{color:#7a1f2b}
 [data-theme="dark"] body{background:#121211;color:#e8e7e3}[data-theme="dark"] .eyebrow{color:#a9a7a1}[data-theme="dark"] a{color:#d98a95}
 </style>
@@ -311,7 +311,7 @@ const EXTRA_CSS = minCSS(`
 @media (max-width: 640px) { .ch-cite-line { gap: 0 20px; } .ch-cite-line .ch-cite-sep { display: none; } }
 .ch-cite-box { display: none; margin: 6px 0 2px; padding: 12px 14px 10px; border-left: 2px solid var(--accent); background: var(--bg-2); }
 .ch-cite-box:target:not([hidden]), .ch-cite-box.is-open { display: block; }
-.ch-cite-text { margin: 0; font-size: 15px; line-height: 1.5; overflow-wrap: anywhere; }
+.ch-cite-text { margin: 0; font-size: calc(15px * var(--text-scale)); line-height: 1.5; overflow-wrap: anywhere; }
 .ch-cite-text a { color: inherit; }
 .ch-cite-copy { display: inline-block; margin-top: 6px; padding: 4px 0; font-family: var(--font-label); font-size: 13px; font-weight: 500; letter-spacing: 0; }
 @media print {

@@ -1,98 +1,98 @@
 {
   "advanced-packaging": {
-    "v": 5,
-    "sha": "b5405816736bf659"
+    "v": 6,
+    "sha": "0e1a7f65e98511f3"
   },
   "chain": {
-    "v": 3,
-    "sha": "8524f33fdc86b114"
+    "v": 4,
+    "sha": "68a633bbc8e8689a"
   },
   "chemicals-gases-and-photoresist": {
-    "v": 5,
-    "sha": "8f50631a97484026"
+    "v": 6,
+    "sha": "cb93c6ce101b60ee"
   },
   "chips": {
-    "v": 4,
-    "sha": "e1b9c964de82e512"
+    "v": 5,
+    "sha": "73cc9a4e7541aa45"
   },
   "component-costs": {
-    "v": 5,
-    "sha": "4bc2e98ba93bae67"
+    "v": 6,
+    "sha": "d95fadf79d505637"
   },
   "data-centers-and-power": {
-    "v": 8,
-    "sha": "e33d88cabdb542cc"
+    "v": 9,
+    "sha": "b3651f398441ed7f"
   },
   "deposition-and-etch": {
-    "v": 5,
-    "sha": "c83dbdc753649367"
+    "v": 6,
+    "sha": "ba312bbffddbe306"
   },
   "design-and-eda": {
-    "v": 5,
-    "sha": "55af9f6c3e743465"
+    "v": 6,
+    "sha": "468cfe7c8e985e5b"
   },
   "export-controls": {
-    "v": 4,
-    "sha": "79ba876f8331b501"
+    "v": 5,
+    "sha": "b5e3fab6dba5801b"
   },
   "foundries-and-fabs": {
-    "v": 5,
-    "sha": "e54aad0a2208a24c"
+    "v": 6,
+    "sha": "5dc118fbc1460762"
   },
   "geopolitics": {
-    "v": 6,
-    "sha": "d63cb64f0886e9b5"
+    "v": 7,
+    "sha": "42cd7f9312e338c6"
   },
   "glossary": {
-    "v": 3,
-    "sha": "0deeb0451155a981"
+    "v": 4,
+    "sha": "9d26404f75f379d9"
   },
   "home": {
-    "v": 4,
-    "sha": "22f94cd484f109f9"
+    "v": 5,
+    "sha": "f44a298f971c3d10"
   },
   "intro": {
-    "v": 3,
-    "sha": "a536105d8cde6ed1"
+    "v": 4,
+    "sha": "91308960ed1b2065"
   },
   "lithography": {
-    "v": 4,
-    "sha": "166a6ff77353b64b"
+    "v": 5,
+    "sha": "db1697266043b502"
   },
   "memory-and-hbm": {
-    "v": 5,
-    "sha": "397de91cec3b4c21"
+    "v": 6,
+    "sha": "5126b03e596058c9"
   },
   "metrology-and-inspection": {
-    "v": 5,
-    "sha": "8d12db96aa1c1e06"
+    "v": 6,
+    "sha": "d001f1b56e8d0cea"
   },
   "photomasks-and-pellicles": {
-    "v": 5,
-    "sha": "289f83d0011a2cc4"
+    "v": 6,
+    "sha": "65cd67b8812debdf"
   },
   "silicon-and-wafers": {
-    "v": 5,
-    "sha": "b089955b8cd6f771"
+    "v": 6,
+    "sha": "1f9e77c365d334f9"
   },
   "substrates-and-pcbs": {
-    "v": 5,
-    "sha": "bb0af14f61149ae0"
+    "v": 6,
+    "sha": "2e6c3bb0007e425a"
   },
   "suppliers": {
-    "v": 4,
-    "sha": "f04c8011bbf81d1c"
+    "v": 5,
+    "sha": "537cc53569ac4ea7"
   },
   "systems-and-networking": {
-    "v": 5,
-    "sha": "7d702e0944548669"
+    "v": 6,
+    "sha": "dadb73565d76aab1"
   },
   "test-and-assembly": {
-    "v": 5,
-    "sha": "3383a75105167671"
+    "v": 6,
+    "sha": "4030f17045297a08"
   },
   "transistors-and-front-end": {
-    "v": 5,
-    "sha": "93092dbf9eae5823"
+    "v": 6,
+    "sha": "648089204d8412b5"
   }
 }
