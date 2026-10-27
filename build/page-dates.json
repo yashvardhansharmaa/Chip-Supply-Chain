@@ -2,7 +2,7 @@
   "/": {
     "published": "2026-10-01",
     "modified": "2026-10-27",
-    "content": "da6d168c7018b4d7"
+    "content": "808766f88ba2ea4b"
   },
   "/advanced-packaging/": {
     "published": "2026-09-09",
@@ -47,7 +47,7 @@
   "/foundries-and-fabs/": {
     "published": "2026-09-09",
     "modified": "2026-10-27",
-    "content": "fd284179f32cf9ce"
+    "content": "90963e85fb7d9fc9"
   },
   "/geopolitics/": {
     "published": "2026-09-09",
@@ -207,6 +207,6 @@
   "/transistors-and-front-end/": {
     "published": "2026-09-09",
     "modified": "2026-10-27",
-    "content": "ca34a65d0a6934ed"
+    "content": "abe602ec2e3e794c"
   }
 }
