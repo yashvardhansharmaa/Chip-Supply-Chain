@@ -807,52 +807,256 @@
     }
   };
 
-  /* ---------------- AI chips: the timeline, and two to four chips side by side ----------------
-     The redesign's option C, "The timeline" (qa/design4/ai-chips/ in the main checkout, chosen 25 Oct 2026). A chart opens the
-     page: every chip at the month it was announced, against one measure the reader picks. Rule B: the largest value is the one
-     solid ink dot and the rest take the light tint; the reader's own picks are ringed in red wine, since they are the reader's
-     selection. The specimen stands beside the chart on a wide screen (the stage's canvas is hosted in .aic-spec-draw, as The
-     Chain hosts it in a chapter's slot) and stays in the strip on a phone. A dot, a pill, a pair, Try with, the folded list,
-     the picker or search fills the row of picks; the comparison then sets each figure as its own row of bars (rule B in each
-     row) and the descriptive rows as a table of words. No country is ever a color: a maker's country is a plain label. */
+  /* ---------------- AI chips: the timeline, the tick list, and two to four chips side by side ----------------
+     Design round five, option B "the tick list" (qa/design5/ai-chips/a/B-tick-list.html in the main checkout, chosen 27 Oct
+     2026). The timeline opens the page: every chip at the month it was announced, against one measure the reader picks, or the
+     same chips ranked highest first. Rule B: the largest value is the one solid ink mark and the rest take the light tint.
+     Beside it a rail holds all 38 chips by maker, each with a box to tick, and at its foot the live specimen. Choosing is
+     deliberate: a click, a tap, a hover or a key on the chart only opens the chip's card, and a chip joins the comparison only
+     by its box in the list or the box on its card (or a suggested pair, or Try with, which say so). Each ticked chip keeps its
+     number, 1 to 4, while it stays in. The comparison sets one row per chip: the figures as one table, read down a column,
+     then the makers and parts, the packages at one scale, and the rest in words. The ticks, the measure and the view live in
+     the address (#/landscape?pick=a,b&measure=mem&view=rank), written in place, so a reload or a shared link opens on them and
+     Back and Forward move between pages, each keeping its own ticks. On a phone the rail opens as a sheet from the bottom and
+     a tray under the masthead carries the ticked chips. The ring and the number on a ticked chip's dot, its box and its
+     row's badge are the reader's own selection, so they take red wine; no data value ever does. A maker's country is a plain
+     label. src/modules/chips.css styles it. */
   var Landscape = {
     chips: DATA.landscape || [],
     notes: DATA.landscapeNotes || {},
+    compare: DATA.landscapeCompare || { pairs: [], with: {} }, // data/landscape-compare.json: the suggested pairs, each chip's Try with partners
     max: 4,
-    picked: [],       // the selected chip ids, in the order the reader added them
-    sel: null,        // the focused chip: its render fills the stage and its notes open
-    built: false,
-    hint: '',
-    exportRows: [],   // the export bar in Tools holds this same array, so mutate it, never replace it
-    compare: DATA.landscapeCompare || { pairs: [], with: {} }, // data/landscape-compare.json: the empty page's pairs, each chip's Try with partners
-    said: '',         // the picks last read out by the live region, so each change is announced once
-    pop: null,        // the open chip picker: { slot, trigger }
+    picked: [],       // the ticked chip ids, in the order of their numbers
+    no: {},           // each ticked chip's number, 1 to 4: a chip keeps it while it stays in, and the next tick takes the lowest free one
+    sel: null,        // the chip on the stage: the last ticked, or the one the reader put there; its notes open
+    open: null,       // the chip whose card is open on the chart (looking is never choosing)
+    crowdIds: null,   // the chips a tap where dots crowd has listed
     measure: 'fp16',  // the chart's measure (MEAS)
+    view: 'year',     // the chart: 'year' (the timeline) or 'rank' (highest first)
+    built: false,
+    hint: '',         // a refusal, said in the list's foot until the next change
+    said: '',         // the ticks last read out by the live region, so each change is announced once
+    exportRows: [],   // the ticked chips, as the copy line copies them
     chartFocus: null, // the dot that holds the chart's one Tab stop (arrow keys move it)
+    pts: [],          // the dots as drawn: { id, cx, cy }, for a tap where they crowd
 
     /* ---- data ---- */
     byId: function (id) { for (var i = 0; i < this.chips.length; i++) if (this.chips[i].id === id) return this.chips[i]; return null; },
     selection: function () { var self = this, out = []; this.picked.forEach(function (id) { var c = self.byId(id); if (c) out.push(c); }); return out; },
-    initSelection: function () { // the page opens with nothing chosen
-      this.picked = []; this.sel = null; // the page opens with nothing chosen: the reader picks the chips to compare
-      this.syncExport();
+    initSelection: function () { this.picked = []; this.no = {}; this.sel = null; this.syncExport(); }, // the page opens with nothing ticked: the list is the first state
+    syncExport: function () { var rows = this.selection(); this.exportRows.length = 0; for (var i = 0; i < rows.length; i++) this.exportRows.push(rows[i]); },
+    short: function (c) { return String(c.name).replace(/\s*\(.*\)\s*$/, ''); }, // "H100 (SXM5)" reads "H100" in the list, the pairs and the rows' second mentions
+    year: function (c) { return c.announced ? String(c.announced).slice(0, 4) : ''; },
+    metaLine: function (c) { return [c.vendor, cname(c.vendorCountry), this.year(c)].filter(Boolean).join(' · '); },
+    names: function (ids) { var self = this, n = ids.map(function (id) { var c = self.byId(id); return c ? self.short(c) : id; }); return n.length < 2 ? n.join('') : n.slice(0, -1).join(', ') + ' and ' + n[n.length - 1]; },
+    WORD: ['no', 'one', 'two', 'three', 'four'],
+    // a figure as the data gives it: every digit kept, thousands grouped (2.039 stays 2.039, 43200 reads 43,200)
+    nf: function (v) { var t = String(v), neg = t.charAt(0) === '-', p = (neg ? t.slice(1) : t).split('.'); return (neg ? '-' : '') + p[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',') + (p.length > 1 ? '.' + p[1] : ''); },
+    nfAxis: function (v) { return (Math.round(v * 100) / 100).toLocaleString('en-US'); }, // an axis tick is not a figure from the data, so it may be rounded
+    // the list's order, and the order of the makers: countries as they first appear, China last; one group per maker, chips in data order
+    ordered: function () {
+      var ccs = [], by = {}, out = [];
+      this.chips.forEach(function (c) { var cc = c.vendorCountry || '??'; if (!by[cc]) { by[cc] = { vs: [], v: {} }; ccs.push(cc); } if (!by[cc].v[c.vendor]) { by[cc].v[c.vendor] = []; by[cc].vs.push(c.vendor); } by[cc].v[c.vendor].push(c); });
+      ccs.sort(function (a, b) { return (a === 'CN') - (b === 'CN'); });
+      ccs.forEach(function (cc) { by[cc].vs.forEach(function (v) { out.push({ cc: cc, vendor: v, chips: by[cc].v[v] }); }); });
+      return out;
     },
-    syncExport: function () { // Tools' copy buttons read this array at click time
-      var rows = this.selection();
-      this.exportRows.length = 0;
-      for (var i = 0; i < rows.length; i++) this.exportRows.push(rows[i]); // the quiet export line has no count to keep in step
+
+    /* ---- the comparison's rows. label and hint lead each row: build/modules/reference-pages.js reads them in that order for
+       /chips/. A part that is missing is said ("node not published", "assembler not published"), never left blank. \u0001 marks
+       where the row's source mark goes when it is not on the first line ---- */
+    rows: [
+      { label: 'Vendor', hint: ['product page', 'press release', 'corporate'], key: 'vendor', text: function (c) { return esc(c.vendor) + '<span class="cx-2">' + esc(cname(c.vendorCountry)) + '</span>'; } },
+      { label: 'Availability', hint: ['product page', 'press release', 'spec table'], key: 'status', text: function (c) { return c.status ? esc(c.status) + (c.shipping ? '<span class="cx-2">from ' + esc(c.shipping) + '</span>' : '') : null; } },
+      { label: 'Built for', hint: ['product page', 'blog', 'documentation'], key: 'target', text: function (c) { return c.target ? esc(c.target) : null; } },
+      { label: 'Foundry, process node', hint: ['architecture', 'deep dive', 'white paper', 'documentation'], key: 'process', text: function (c) { var p = c.process || {}; if (!p.foundry && !p.node) return null; return (p.foundry ? esc(p.foundry) : '<span class="cx-nil">foundry not published</span>') + '<span class="cx-2">' + (p.node ? esc(p.node) + (p.foundry ? '' : '\u0001') : 'node not published') + (p.country ? ' · ' + esc(cname(p.country)) : '') + '</span>'; } },
+      { label: 'Package', hint: ['cowos', 'packag', 'deep dive', 'architecture'], key: 'package', text: function (c) { var p = c.package || {}; if (!p.type && !p.assembler) return null; return (p.type ? esc(p.type) : '<span class="cx-nil">type not published</span>') + '<span class="cx-2">' + (p.assembler ? 'assembled by ' + esc(p.assembler) + (p.type ? '' : '\u0001') : 'assembler not published') + '</span>'; } },
+      { label: 'Memory type', hint: ['hbm', 'micron', 'memory', 'datasheet'], key: 'memtype', text: function (c) { var m = c.memory || {}; return m.type ? esc(m.type) + (m.stacks ? '<span class="cx-2">' + m.stacks + ' stacks</span>' : '') : null; } },
+      // each supplier carries the source that names it (supSources), and a supplier no source names carries no mark
+      { label: 'Memory supplier', hint: [], key: 'memsup', own: true, text: function (c) { return Landscape.supHTML(c, false); } },
+      { label: 'Speed at FP16, TFLOPS', hint: ['spec table', 'datasheet', 'product page'], key: 'fp16', short: 'Speed at FP16', unit: 'TFLOPS', num: function (c) { return (c.compute || {}).fp16TFLOPS; }, fmt: 'fp16' },
+      { label: 'Speed at FP8, TFLOPS', hint: ['spec table', 'datasheet', 'product page'], key: 'fp8', short: 'Speed at FP8', unit: 'TFLOPS', num: function (c) { return (c.compute || {}).fp8TFLOPS; }, fmt: 'fp8' },
+      { label: 'Speed at FP4, TFLOPS', hint: ['spec table', 'datasheet', 'product page'], key: 'fp4', short: 'Speed at FP4', unit: 'TFLOPS', num: function (c) { return (c.compute || {}).fp4TFLOPS; }, fmt: 'fp4' },
+      { label: 'Memory, gigabytes', hint: ['spec table', 'datasheet', 'product page'], key: 'mem', short: 'Memory', unit: 'gigabytes', num: function (c) { return (c.memory || {}).capacityGB; } },
+      { label: 'Bandwidth, terabytes/s', hint: ['spec table', 'datasheet', 'product page'], key: 'bw', short: 'Bandwidth', unit: 'terabytes a second', num: function (c) { return (c.memory || {}).bandwidthTBs; } },
+      { label: 'Power, watts', hint: ['spec table', 'datasheet', 'product page'], key: 'tdp', short: 'Power', unit: 'watts', num: function (c) { return c.tdpW; } },
+      { label: 'Transistors, billion', hint: ['architecture', 'deep dive', 'white paper'], key: 'transistors', short: 'Transistors', unit: 'billion', num: function (c) { return (c.die || {}).transistorsB; } },
+      { label: 'Logic dies', hint: ['architecture', 'deep dive', 'white paper'], key: 'dies', short: 'Logic dies', unit: 'count', num: function (c) { return (c.die || {}).count; } },
+      { label: 'Area of each die, square millimeters', hint: ['architecture', 'deep dive', 'white paper'], key: 'area', short: 'Area of each die', unit: 'square millimeters', num: function (c) { return (c.die || {}).areaMm2Each; } },
+      { label: 'Chip-to-chip links', hint: ['architecture', 'deep dive', 'white paper'], key: 'c2c', long: true, text: function (c) { return (c.interconnect || {}).chipToChip ? esc(c.interconnect.chipToChip) : null; } },
+      { label: 'Scale-up, in one rack', hint: ['nvl', 'rack', 'system', 'deep dive', 'spec table'], key: 'scale', long: true, text: function (c) { return (c.interconnect || {}).scaleUp ? esc(c.interconnect.scaleUp) : null; } },
+      { label: 'Price estimate', hint: ['price', 'semianalysis', 'rack', 'press release'], key: 'price', long: true, text: function (c) { return c.priceEstimate ? esc(c.priceEstimate) : null; } },
+      { label: 'Cost to make, estimate', hint: ['cost', 'semianalysis'], key: 'bom', long: true, text: function (c) { return c.bomEstimate ? esc(c.bomEstimate) : null; } },
+      { label: 'Export-control status', hint: ['federal register', 'entity list', 'institute for progress', 'mofcom'], key: 'export', long: true, text: function (c) { return c.exportStatus ? esc(c.exportStatus) : null; } }
+    ],
+    row: function (key) { if (!this._rk) { var m = {}; this.rows.forEach(function (r) { m[r.key] = r; }); this._rk = m; } return this._rk[key]; },
+    FIGS: ['fp16', 'fp8', 'fp4', 'mem', 'bw', 'tdp', 'transistors', 'dies', 'area'],
+    PARTS: ['process', 'package', 'memtype', 'memsup'],
+    WORDS: ['status', 'target', 'c2c', 'scale', 'price', 'bom', 'export'],
+    MEAS: [['fp16', 'Speed at FP16'], ['fp8', 'Speed at FP8'], ['fp4', 'Speed at FP4'], ['mem', 'Memory'], ['bw', 'Bandwidth'], ['tdp', 'Power']],
+    TFLOPS_SENTENCE: 'TFLOPS counts trillions of calculations a second. FP16, FP8 and FP4 are number formats that use 16, 8 and 4 bits per number. The fewer the bits, the more calculations a chip can do.',
+    DIES_SENTENCE: 'The logic dies are the pieces of silicon that do the computing, and the memory stacks feed them data. The interposer is the layer of wiring that connects the two, and the substrate is the small circuit board underneath.',
+
+    /* ---- source marks. The chip's sources are not tagged per field, so the row's subject is matched against their labels (as
+       /chips/ does): the first source whose label carries one of the row's words. A mark is the number of that source in the
+       chip's list under Notes and sources, a link to it that opens the site's source card (Cite); where nothing in the list is
+       about the row, "all" goes to the chip's whole list ---- */
+    srcIndex: function (c, row) {
+      var srcs = c.sources || [], hints = row.hint || [];
+      for (var h = 0; h < hints.length; h++) for (var i = 0; i < srcs.length; i++) if ((srcs[i].label || '').toLowerCase().indexOf(hints[h]) >= 0) return i;
+      return -1;
     },
+    markAt: function (c, i) {
+      var s = (c.sources || [])[i]; if (!s) return '';
+      var l = s.label || s.url;
+      return '<sup class="cite"><a href="' + safeUrl(s.url) + '" target="_blank" rel="noopener" data-t="' + esc(l) + '" aria-label="Source ' + (i + 1) + ', ' + esc(l) + '">' + (i + 1) + '</a></sup>';
+    },
+    // card: true on a dot's card, whose chip may not be in the comparison, so "all" opens the chip's sources on /chips/
+    cite: function (c, row, card) {
+      var srcs = c.sources || []; if (!srcs.length) return '';
+      var i = this.srcIndex(c, row);
+      if (i >= 0) return this.markAt(c, i);
+      if (card) return '<sup class="cite cx-all"><a href="/chips/#' + esc(c.id) + '-sources" target="_blank" rel="noopener" data-t="All the sources for the ' + esc(c.name) + '" aria-label="All the sources for the ' + esc(c.name) + '">all</a></sup>';
+      return '<sup class="cite cx-all"><button type="button" data-notes="' + esc(c.id) + '" aria-label="All sources for the ' + esc(c.name) + '">all</button></sup>';
+    },
+    // the sources that name a memory supplier: first the chip's notes, where a sentence that names the supplier and its memory
+    // carries a citation; then a source whose label names the supplier (not the chip's own maker, whose name heads every one of
+    // its own pages). Among them, one whose label also names the chip comes first. None found: no mark
+    supSources: function (c, sup) {
+      var srcs = c.sources || [], at = {}, low = String(sup).toLowerCase(), found = [];
+      srcs.forEach(function (x, i) { at[x.url] = i; });
+      String(this.notes[c.id] || '').split(/\.\s+/).forEach(function (sent) {
+        var plain = sent.replace(/<[^>]+>/g, '');
+        if (plain.toLowerCase().indexOf(low) < 0 || !/HBM|memory|stack/i.test(plain)) return;
+        sent.replace(/<a href="([^"]+)"/g, function (m, u) { u = u.replace(/&amp;/g, '&'); if (at[u] != null && found.indexOf(at[u]) < 0) found.push(at[u]); return m; });
+      });
+      if (!found.length && sup !== c.vendor) srcs.forEach(function (x, i) { if ((x.label || '').toLowerCase().indexOf(low) >= 0) found.push(i); });
+      var tag = this.short(c).toLowerCase(), named = found.filter(function (i) { return (srcs[i].label || '').toLowerCase().indexOf(tag) >= 0; });
+      return named.concat(found.filter(function (i) { return named.indexOf(i) < 0; }));
+    },
+    supHTML: function (c) {
+      var self = this, s = (c.memory || {}).suppliers || [];
+      return s.length ? s.map(function (x) { var k = self.supSources(c, x); return esc(x) + (k.length ? self.markAt(c, k[0]) : ''); }).join(', ') : null;
+    },
+    // what is missing: a speed format the chip does not run is "not supported", anything else "not published"
+    nilKind: function (c, row) {
+      var t = row.num ? row.num(c) : row.text(c);
+      if (t != null && t !== '') return '';
+      var sup = row.fmt ? ((c.compute || {}).support || {})[row.fmt] : null;
+      return sup === 'no' ? 'not supported' : 'not published';
+    },
+    nil: function (c, row) { var k = this.nilKind(c, row); return '<span class="cx-nil' + (k === 'not supported' ? ' cx-nil--no' : '') + '">' + k + '</span>'; },
+    // the one thing to say for a whole row when no ticked chip has it, or '' when at least one does (or the reasons differ)
+    allNil: function (row, sel) { if (!sel.length) return ''; var k = this.nilKind(sel[0], row); if (!k) return ''; for (var i = 1; i < sel.length; i++) if (this.nilKind(sel[i], row) !== k) return ''; return k; },
+    allSaid: function (k, n) { var who = n === 2 ? 'either chip' : 'any of these ' + this.WORD[n] + ' chips'; return (k === 'not supported' ? 'Not supported by ' : 'Not published for ') + who; },
+    // the rows left out of a table because no ticked chip has them, said once in a sentence under it
+    saidOnce: function (keys, sel) {
+      var self = this, n = sel.length; if (!keys.length || n < 2) return '';
+      var by = { 'not published': [], 'not supported': [] };
+      keys.forEach(function (k) { var r = self.row(k), s = r.short || r.label; by[self.allNil(r, sel)].push('the ' + (/^[A-Z][a-z]/.test(s) ? s.charAt(0).toLowerCase() + s.slice(1) : s)); });
+      var join = function (l) { return l.length < 2 ? l.join('') : l.slice(0, -1).join(', ') + ' and ' + l[l.length - 1]; }, cap = function (t) { return t.charAt(0).toUpperCase() + t.slice(1); };
+      var who = n === 2 ? 'either chip' : 'any of these ' + this.WORD[n] + ' chips', out = [];
+      if (by['not published'].length) out.push(cap(join(by['not published'])) + (by['not published'].length > 1 ? ' are' : ' is') + ' not published for ' + who + '.');
+      if (by['not supported'].length) out.push(cap(join(by['not supported'])) + (by['not supported'].length > 1 ? ' are' : ' is') + ' not supported by ' + who + '.');
+      return out.join(' ');
+    },
+    rowMax: function (row, sel) { var max = 0, n = 0; sel.forEach(function (c) { var v = row.num(c); if (typeof v === 'number') { n++; if (v > max) max = v; } }); return { max: max, n: n }; },
+    // a figure with its marks, then (two or more figures in the row) its bar in rule B: ink for the largest, the tint for the rest.
+    // As before, every figure equal to the largest is set bold, ties included
+    numCell: function (c, row, sel, after) {
+      var v = row.num(c); if (v == null) return this.nil(c, row);
+      var m = this.rowMax(row, sel), top = m.n > 1 && v === m.max && m.max > 0;
+      return '<span class="cx-vl"><span class="cx-v' + (top ? ' is-top' : '') + '">' + esc(this.nf(v)) + '</span>' + (after || '') + this.cite(c, row) + '</span>' +
+        (m.n > 1 && m.max > 0 ? '<span class="cx-bar' + (top ? ' is-top' : '') + '" aria-hidden="true"><i style="width:' + Math.max(1.5, v / m.max * 100).toFixed(1) + '%"></i></span>' : '');
+    },
+    textCell: function (c, row) {
+      var t = row.text(c); if (t == null || t === '') return this.nil(c, row);
+      var mk = row.own ? '' : this.cite(c, row);
+      if (t.indexOf('\u0001') >= 0) return '<span class="cx-t">' + t.replace('\u0001', mk) + '</span>';
+      var at = t.indexOf('<span class="cx-2">');
+      return '<span class="cx-t">' + (at >= 0 ? t.slice(0, at) + mk + t.slice(at) : t + mk) + '</span>'; // the mark sits on the value, before its second line
+    },
+    cell: function (c, row, sel, after) { return row.num ? this.numCell(c, row, sel, after) : this.textCell(c, row); },
+    // the speed notes are lettered a to d in the order of the chips, and each speed figure carries its chip's letter
+    LET: 'abcd',
+    speedNotes: function (sel) { var list = []; sel.forEach(function (c) { var n = (c.compute || {}).precisionNote; if (n) list.push({ c: c, n: n }); }); return list; },
+    letter: function (c, sel) {
+      var l = this.speedNotes(sel);
+      for (var j = 0; j < l.length; j++) if (l[j].c.id === c.id) return '<sup class="cx-fnl"><a href="#cx-sn-' + esc(c.id) + '" aria-label="Note ' + this.LET.charAt(j) + ', how the ' + esc(this.short(c)) + '’s speed figures are measured">' + this.LET.charAt(j) + '</a></sup>';
+      return '';
+    },
+
+    /* ---- the ticks ---- */
+    freeNo: function () { var used = {}, self = this; this.picked.forEach(function (id) { used[self.no[id]] = 1; }); for (var k = 1; k <= this.max; k++) if (!used[k]) return k; return 0; },
+    renumber: function () { var self = this; this.no = {}; this.picked.forEach(function (id, i) { self.no[id] = i + 1; }); },
+    noOf: function (id) { return this.no[id] || 0; },
+    add: function (id) {
+      if (!this.byId(id) || this.picked.indexOf(id) >= 0) return false;
+      if (this.picked.length >= this.max) { this.hint = 'The comparison holds four chips. Untick one to add another.'; this.render(); this.announce(this.hint); return false; }
+      var self = this;
+      this.no[id] = this.freeNo(); this.picked.push(id); this.picked.sort(function (a, b) { return self.no[a] - self.no[b]; });
+      this.sel = id; this.hint = ''; this.render(); return true;
+    },
+    remove: function (id) {
+      var at = this.picked.indexOf(id); if (at < 0) return;
+      this.picked.splice(at, 1); delete this.no[id];
+      if (this.sel === id) this.sel = this.picked[this.picked.length - 1] || null;
+      this.hint = ''; this.render();
+    },
+    toggle: function (id) { if (this.picked.indexOf(id) >= 0) this.remove(id); else this.add(id); },
+    setPair: function (ids) { var self = this; this.picked = ids.filter(function (id) { return self.byId(id); }).slice(0, this.max); this.renumber(); this.sel = this.picked[0] || null; this.hint = ''; this.render(); },
+    clear: function () { this.picked = []; this.no = {}; this.sel = null; this.hint = ''; this.render(); },
+    focus: function (id) { if (this.picked.indexOf(id) < 0 || this.sel === id) { this.stageNow(); return; } this.sel = id; this.render(); }, // a ticked chip's package or notes puts it on the stage
+    select: function (id) { this.openCard(id, { show: true }); }, // the old name, for any caller left: a chip found elsewhere opens its card and adds nothing
+    announce: function (msg) { var el = $('#cxa-live'); if (!el) return; el.textContent = ''; setTimeout(function () { el.textContent = msg; }, 50); },
+    announceChange: function () { // one message per change of the ticks, whichever control made it
+      var key = this.picked.join(','); if (key === this.said) return;
+      var was = this.said ? this.said.split(',') : [], now = this.picked;
+      this.said = key;
+      var added = now.filter(function (x) { return was.indexOf(x) < 0; }), gone = was.filter(function (x) { return now.indexOf(x) < 0; });
+      var lead = !now.length ? 'No chips ticked.' : added.length && !gone.length ? this.names(added) + ' ticked.' : gone.length && !added.length ? this.names(gone) + ' unticked.' : 'Now ' + this.names(now) + '.';
+      this.announce(lead + (now.length ? ' ' + now.length + ' of 4 ticked.' : ''));
+    },
+
+    /* ---- the address: #/landscape?pick=a,b&measure=mem&view=rank. A pick in the address sets the ticks, in the order of their
+       numbers (a shared link, a reload, Back and Forward). An address with no pick (the tab, a search result) keeps the reader's
+       ticks and writes them back in. Every change is written in place, so the history holds pages, not ticks ---- */
+    readAddress: function () {
+      var h = location.hash || '', at = h.indexOf('?'), got = {}, self = this;
+      if (at >= 0) h.slice(at + 1).split('&').forEach(function (p) { var i = p.indexOf('='); if (i > 0) got[p.slice(0, i)] = dec(p.slice(i + 1)); });
+      if (got.pick != null) {
+        var ids = got.pick.split(',').filter(function (id, i, a) { return self.byId(id) && a.indexOf(id) === i; }).slice(0, this.max);
+        if (ids.join() !== this.picked.join()) { this.picked = ids; this.renumber(); if (ids.indexOf(this.sel) < 0) this.sel = ids[0] || null; this.hint = ''; }
+      }
+      if (got.measure && this.MEAS.some(function (m) { return m[0] === got.measure; })) this.measure = got.measure;
+      if (got.view === 'rank' || got.view === 'year') this.view = got.view;
+    },
+    route: function () {
+      var q = [];
+      if (this.picked.length) q.push('pick=' + this.picked.map(encodeURIComponent).join(','));
+      if (this.measure !== 'fp16') q.push('measure=' + this.measure);
+      if (this.view === 'rank') q.push('view=rank');
+      return '#/landscape' + (q.length ? '?' + q.join('&') : '');
+    },
+    writeAddress: function () {
+      if (Router.current !== 'landscape') return;
+      var want = this.route();
+      if (location.hash !== want) { try { history.replaceState(history.state, '', location.pathname + location.search + want); } catch (e) { } }
+    },
+    shareURL: function () { var canon = $('link[rel="canonical"]'), base = canon && /^https?:/.test(canon.href) ? canon.href.replace(/#.*$/, '') : location.href.replace(/#.*$/, ''); return base + this.route(); },
 
     /* ---- lifecycle ---- */
     activate: function () {
+      this._staged = null; // the stage showed another view's specimen while the reader was away
+      this.readAddress();
       if (!this.built) this.buildUI();
-      else this.renderChart(); // the chart measures its box, which was hidden while another view showed
+      this.closeCard(false, true);
+      this.listOpen(false, true);
       this.hostStage();
-      var c = this.byId(this.sel);
-      if (c) this.showStage(c); else this.showGeneric(); // with nothing picked the stage shows the package, never the last page's specimen
+      this.render();
     },
-    // a wide screen draws the specimen beside the chart, in .aic-spec-draw; a phone keeps it in the strip at the foot of the screen.
-    // The router hands the canvas back to the stage on every route (Router.route), so this runs on each arrival and resize
+    // a wide screen draws the specimen at the foot of the list, in .aic-spec-draw; a phone keeps it in the strip at the foot of the
+    // screen. The router hands the canvas back to the stage on every route (Router.route), so this runs on each arrival and resize
     hostStage: function () {
       if (Router.current !== 'landscape' || !Stage.ok) return;
       var el = $('.aic-spec-draw');
@@ -861,521 +1065,510 @@
     },
     buildUI: function () {
       this.built = true;
-      var self = this, pk = $('#picker'), html = '', cc = null;
-      // the folded list: countries as they first appear, China last, as plain labels; one row per maker; chips in data order (newest first)
-      this.ordered().forEach(function (g) {
-        if (g.cc !== cc) { if (cc) html += '</div>'; cc = g.cc; html += '<div class="aic-lg"><p class="aic-lg-h">' + esc(cname(cc)) + '</p>'; }
-        html += '<div class="aic-lr"><span class="aic-ln">' + esc(g.vendor) + '</span><span class="aic-lc">' + g.chips.map(function (c) {
-          var sub = c.family && c.family !== c.name ? c.family : self.year(c); // the family (Blackwell, Hopper) or the year goes to the tooltip
-          return '<button type="button" class="aic-pill sm" data-id="' + esc(c.id) + '" aria-pressed="false"' + (sub ? ' title="' + esc(sub) + '"' : '') + '>' + esc(c.name) + '</button>';
-        }).join('') + '</span></div>';
-      });
-      pk.innerHTML = html + (cc ? '</div>' : '');
-      pk.addEventListener('click', function (e) { var b = e.target.closest('button[data-id]'); if (b) self.toggle(b.getAttribute('data-id')); });
-      pk.addEventListener('keydown', function (e) { self.arrows(e, $$('button', pk)); });
-      var sum = $('#cxa-browse summary');
-      if (sum) sum.textContent = 'Browse all ' + this.chips.length + ' chips by maker';
-      // the measures over the chart: one pressed at a time
+      var self = this;
+      this.buildList();
       var ms = $('#cx-measures');
       if (ms) {
-        ms.innerHTML = this.MEAS.map(function (m) { return '<button type="button" class="aic-pill" data-m="' + m[0] + '" aria-pressed="' + (m[0] === self.measure) + '">' + esc(m[1]) + '</button>'; }).join('');
-        ms.addEventListener('click', function (e) { var b = e.target.closest('button[data-m]'); if (!b) return; self.measure = b.getAttribute('data-m'); self.chartFocus = null; self.renderChart(); });
+        ms.innerHTML = this.MEAS.map(function (m) { return '<button type="button" class="aic-pill sm" data-m="' + m[0] + '" aria-pressed="false">' + esc(m[1]) + '</button>'; }).join('');
         ms.addEventListener('keydown', function (e) { self.arrows(e, $$('button', ms)); });
       }
-      // the chart: a dot adds its chip or takes it out; one dot holds the Tab stop and the arrow keys walk the dots by date
+      var vw = $('#cx-view');
+      if (vw) vw.innerHTML = '<button type="button" class="aic-pill sm" data-v="year" aria-pressed="false">By year</button><button type="button" class="aic-pill sm" data-v="rank" aria-pressed="false">Highest first</button>';
+      // the chart: a hover or a focus shows a tip; a click, a tap, Enter or Space opens the chip's card; arrows walk the dots by date
       var chart = $('#cx-chart'), tip = $('#cx-tip');
-      if (chart) {
-        chart.addEventListener('click', function (e) { var g = e.target.closest('.pt'); if (!g) return; var id = g.getAttribute('data-id'); self.chartFocus = id; self.toggle(id); });
-        chart.addEventListener('mouseover', function (e) { var g = e.target.closest('.pt'); if (g) self.showTip(g); });
-        chart.addEventListener('mouseout', function (e) { var g = e.target.closest('.pt'); if (g && !g.contains(e.relatedTarget) && tip) tip.hidden = true; });
-        chart.addEventListener('focusin', function (e) { var g = e.target.closest('.pt'); if (g) { self.chartFocus = g.getAttribute('data-id'); self.showTip(g); } });
-        chart.addEventListener('focusout', function () { if (tip) tip.hidden = true; });
-        chart.addEventListener('keydown', function (e) {
-          var g = e.target.closest('.pt'); if (!g) return;
-          var k = e.key;
-          if (k === 'Enter' || k === ' ') {
-            e.preventDefault(); var id = g.getAttribute('data-id'); self.chartFocus = id; self.toggle(id);
-            var again = $('#cx-chart .pt[data-id="' + id + '"]'); if (again) again.focus();
-            return;
-          }
-          var all = $$('#cx-chart .pt').sort(function (a, b) { return +a.getAttribute('data-x') - +b.getAttribute('data-x'); }), i = all.indexOf(g), n = null;
-          if (k === 'ArrowRight' || k === 'ArrowDown') n = (i + 1) % all.length;
-          else if (k === 'ArrowLeft' || k === 'ArrowUp') n = (i - 1 + all.length) % all.length;
-          else if (k === 'Home') n = 0; else if (k === 'End') n = all.length - 1;
-          if (n == null) return;
-          e.preventDefault(); g.setAttribute('tabindex', '-1'); all[n].setAttribute('tabindex', '0'); all[n].focus();
+      chart.addEventListener('mouseover', function (e) { var g = e.target.closest('.pt'); if (g) self.showTip(g); });
+      chart.addEventListener('mouseout', function (e) { var g = e.target.closest('.pt'); if (g && !g.contains(e.relatedTarget) && tip) tip.hidden = true; });
+      chart.addEventListener('focusin', function (e) { var g = e.target.closest('.pt'); if (g) { self.chartFocus = g.getAttribute('data-id'); self.showTip(g); } });
+      chart.addEventListener('focusout', function () { if (tip) tip.hidden = true; });
+      chart.addEventListener('keydown', function (e) {
+        var g = e.target.closest('.pt'); if (!g) return;
+        var k = e.key;
+        if (k === 'Enter' || k === ' ') { e.preventDefault(); self.openCard(g.getAttribute('data-id'), { key: true }); return; }
+        var all = $$('#cx-chart .pt').sort(function (a, b) { return +a.getAttribute('data-x') - +b.getAttribute('data-x'); }), i = all.indexOf(g), n = null;
+        if (k === 'ArrowRight' || k === 'ArrowDown') n = (i + 1) % all.length;
+        else if (k === 'ArrowLeft' || k === 'ArrowUp') n = (i - 1 + all.length) % all.length;
+        else if (k === 'Home') n = 0; else if (k === 'End') n = all.length - 1;
+        if (n == null) return;
+        e.preventDefault(); g.setAttribute('tabindex', '-1'); all[n].setAttribute('tabindex', '0'); all[n].focus();
+      });
+      var find = $('#cx-find');
+      if (find) {
+        find.addEventListener('input', function () { self.filterList(); });
+        find.addEventListener('keydown', function (e) { // Enter ticks the chip that matches best (and unticks it if it is ticked)
+          if (e.key !== 'Enter') return;
+          var q = find.value.trim().toLowerCase(), list = $$('#cx-list .aic-rl-o').filter(function (x) { return !x.hidden && !$('input', x).disabled; });
+          var name = function (x) { return $('.aic-rl-n', x).textContent.toLowerCase(); };
+          // a chip whose name is what was typed ("h20" is the H20, not the H200), then one whose name starts with it, then the first
+          var o = list.filter(function (x) { return name(x) === q; })[0] || list.filter(function (x) { return q && name(x).indexOf(q) === 0; })[0] || list[0];
+          if (o) { e.preventDefault(); self.toggle(o.getAttribute('data-id')); }
         });
       }
-      var gut = $('#cx-gutter');
-      if (gut) gut.addEventListener('click', function (e) { var b = e.target.closest('button[data-id]'); if (b) self.toggle(b.getAttribute('data-id')); });
-      // the picks: a chip's name puts it on the stage; Change and an empty pick open the picker; Remove empties it
-      var srow = $('#cxa-row');
-      if (srow) srow.addEventListener('click', function (e) {
-        var nm = e.target.closest('button.cxa-name'); if (nm) { self.focus(nm.getAttribute('data-id')); return; }
-        var b = e.target.closest('button[data-act]'); if (!b) return;
-        var i = b.hasAttribute('data-slot') ? +b.getAttribute('data-slot') : +b.closest('.cxa-slot').getAttribute('data-i'), act = b.getAttribute('data-act');
-        if (act === 'choose') { if (self.pop && self.pop.trigger === b) self.closePicker(true); else self.openPicker(i, b, 'slot'); }
-        else if (act === 'remove') { self.setSlot(i, ''); self.focusSlot(Math.min(i, self.picked.length)); }
+      // a box, in the list or on a card: the one way a chip joins the comparison
+      document.addEventListener('change', function (e) {
+        var t = e.target; if (!t.matches || !t.matches('input[data-tick]') || Router.current !== 'landscape') return;
+        var id = t.getAttribute('data-tick'), inCard = !!t.closest('.aic-card');
+        self.toggle(id);
+        var again = inCard ? $('.aic-card input[data-tick]') : $('#cx-list input[data-tick="' + id + '"]');
+        if (again) again.focus({ preventScroll: true });
       });
-      // the line under the picks: five pairs before the first pick, then Try with while one chip waits for a second
-      var pairs = $('#cxa-pairs');
-      if (pairs) pairs.addEventListener('click', function (e) {
-        var b = e.target.closest('button[data-pair]');
-        if (b) { self.setPair(self.compare.pairs[+b.getAttribute('data-pair')].ids); self.focusSlot(1); return; }
-        var t = e.target.closest('button[data-try]');
-        if (t) { self.setSlot(1, t.getAttribute('data-try')); self.focusSlot(1); }
-      });
-      var clear = $('#cx-clear');
-      if (clear) clear.addEventListener('click', function () { self.clear(); self.focusSlot(0); });
-      var plans = $('#cx-plans');
-      if (plans) {
-        plans.addEventListener('click', function (e) { var b = e.target.closest('button[data-id]'); if (b) self.focus(b.getAttribute('data-id')); });
-        plans.addEventListener('keydown', function (e) { self.arrows(e, $$('button[data-id]', plans)); });
-      }
-      // a figure whose source the chip's list does not name row by row points to the whole list ("all")
-      var strips = $('#cx-strips');
-      if (strips) strips.addEventListener('click', function (e) { var j = e.target.closest('button[data-notes]'); if (j) { var id = j.getAttribute('data-notes'); self.focus(id); self.jumpToNotes(id); } });
-      // the bar that follows the reader once the picks scroll away: each chip with its ×, + Add, Clear
-      var bar = $('#cxs-in');
-      if (bar) bar.addEventListener('click', function (e) {
-        var b = e.target.closest('button[data-bar]'); if (!b) return;
-        var act = b.getAttribute('data-bar'), i = +b.getAttribute('data-slot');
-        if (act === 'name' || act === 'add') { // back to the pick, its picker open
-          scrollToEl($('#cx-slots'), false); self.updateBar();
-          var t = $('#cxa-row .cxa-slot[data-i="' + (act === 'add' ? self.picked.length : i) + '"] [data-act="choose"]');
-          if (t) self.openPicker(act === 'add' ? self.picked.length : i, t, 'slot');
-        } else if (act === 'remove') {
-          self.setSlot(i, '');
-          var n = self.picked.length, next = n && $('#cxs-in [data-bar="name"][data-slot="' + Math.min(i, n - 1) + '"]');
-          if (next) next.focus(); else self.focusSlot(0);
-        } else if (act === 'clear') { self.clear(); self.focusSlot(0); }
+      document.addEventListener('click', function (e) { if (Router.current === 'landscape') self.onClick(e); });
+      document.addEventListener('keydown', function (e) {
+        if (e.key !== 'Escape' || Router.current !== 'landscape') return;
+        var card = $('#cx-card');
+        if ((self.open || self.crowdIds) && card && card.contains(document.activeElement)) { e.preventDefault(); self.closeCard(true); return; }
+        if (self.isListOpen()) { e.preventDefault(); self.leaveList(); }
       });
       var bt = 0;
-      window.addEventListener('scroll', function () { if (!bt) bt = requestAnimationFrame(function () { bt = 0; self.updateBar(); }); }, { passive: true });
-      window.addEventListener('hashchange', function () { setTimeout(function () { self.updateBar(); }, 0); }); // leaving AI Chips takes the bar and its scroll padding away
+      window.addEventListener('scroll', function () { if (Router.current !== 'landscape' || bt) return; bt = requestAnimationFrame(function () { bt = 0; self.renderTray(); }); }, { passive: true });
+      window.addEventListener('hashchange', function () { if (Router.current !== 'landscape') { self.listOpen(false, true); self.renderTray(); } }); // leaving AI Chips takes the sheet, the tray and its scroll padding away
       var rt = null, lastW = window.innerWidth;
       window.addEventListener('resize', function () {
         if (Router.current !== 'landscape') return;
         clearTimeout(rt); rt = setTimeout(function () {
           self.hostStage();
-          if (window.innerWidth !== lastW) { lastW = window.innerWidth; self.renderChart(); } // a phone's toolbar changes only the height
-          self.renderPlans(); self.scrollCue(); self.replacePicker(); self.updateBar();
+          if (window.innerWidth !== lastW) { lastW = window.innerWidth; if (!narrow()) self.listOpen(false, true); self.renderChart(); self.renderCmp(); self.renderList(); } // a phone's toolbar changes only the height
+          self.renderTray();
         }, 160);
       });
-      if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { self.renderChart(); }); // the labels are placed by their measured width
-      var tw = $('#cx-table-wrap');
-      if (tw) tw.addEventListener('scroll', function () { self.scrollCue(); }, { passive: true });
-      var tb = $('#cx-table');
-      if (tb) tb.addEventListener('click', function (e) {
-        var a = e.target.closest('button[data-act]'); if (a) { self.colAct(a, '#cx-table'); return; }
-        var j = e.target.closest('button[data-notes]');
-        if (j) { var id = j.getAttribute('data-notes'); self.focus(id); self.jumpToNotes(id); return; }
-        var b = e.target.closest('button[data-id]');
-        if (b) self.focus(b.getAttribute('data-id'));
-      });
-      this.render();
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { if (Router.current === 'landscape') self.renderChart(); }); // the labels are placed by their measured width
     },
     arrows: function (e, list) { // arrow keys walk the buttons; Home and End jump to the ends
       var i = list.indexOf(document.activeElement), n = null, k = e.key;
       if (i < 0 || !list.length) return;
       if (k === 'ArrowRight' || k === 'ArrowDown') n = (i + 1) % list.length;
       else if (k === 'ArrowLeft' || k === 'ArrowUp') n = (i - 1 + list.length) % list.length;
-      else if (k === 'Home') n = 0;
-      else if (k === 'End') n = list.length - 1;
+      else if (k === 'Home') n = 0; else if (k === 'End') n = list.length - 1;
       if (n == null) return;
-      e.preventDefault();
-      list[n].focus();
+      e.preventDefault(); list[n].focus();
     },
-    /* ---- selection ---- */
-    say: function (msg) { this.hint = msg; this.renderSlots(); this.announce(msg); }, // a refusal shows in the guidance line until the next change, and is read out
-    toggle: function (id) {
-      var c = this.byId(id); if (!c) return;
-      var at = this.picked.indexOf(id);
-      if (at >= 0) {
-        this.picked.splice(at, 1);
-        if (this.sel === id) this.sel = this.picked[0] || null;
-      } else {
-        if (this.picked.length >= this.max) { this.say('Compare up to four. Remove one to add another.'); return; }
-        this.picked.push(id);
-        this.sel = id;
+    onClick: function (e) {
+      var t = e.target, b, self = this;
+      if (!t.closest) return;
+      var card = $('#cx-card');
+      if ((b = t.closest('#cx-chart .pt'))) { // a click opens the card; where dots crowd, a real tap lists the chips there
+        var id = b.getAttribute('data-id'), svg = b.ownerSVGElement.getBoundingClientRect();
+        var ids = e.detail ? this.crowd(e.clientX - svg.left, e.clientY - svg.top, narrow() ? 11 : 7) : [];
+        if (ids.length > 1) { this.openCrowd(ids); return; }
+        if (this.open === id) this.closeCard(true); else this.openCard(id, { from: b });
+        return;
       }
-      this.hint = '';
-      this.render();
-      if (this.sel) this.showStage(this.byId(this.sel));
+      if ((b = t.closest('[data-card-open]'))) { this.openCard(b.getAttribute('data-card-open'), { key: e.detail === 0 }); return; }
+      if ((b = t.closest('#cx-gutter [data-card], #cx-chart [data-card]'))) { var gid = b.getAttribute('data-card'); if (this.open === gid) this.closeCard(true); else this.openCard(gid, { from: b, key: e.detail === 0 }); return; }
+      if ((b = t.closest('#cx-measures [data-m]'))) { this.measure = b.getAttribute('data-m'); this.chartFocus = null; this.closeCard(false, true); this.renderChart(); this.stageNow(); this.writeAddress(); return; }
+      if ((b = t.closest('#cx-view [data-v]'))) { this.view = b.getAttribute('data-v'); this.closeCard(false, true); this.renderChart(); this.stageNow(); this.writeAddress(); return; }
+      if ((b = t.closest('[data-card-close]'))) { this.closeCard(true); return; }
+      if ((b = t.closest('[data-go]'))) { this.closeCard(false); this.toCompare(); return; }
+      if ((this.open || this.crowdIds) && card && !card.contains(t)) this.closeCard(false); // a click anywhere else puts the card away
+      if ((b = t.closest('.cx-fnl a'))) { e.preventDefault(); var li = document.getElementById(b.getAttribute('href').slice(1)); if (li) scrollToEl(li, true); return; } // the address keeps the route
+      if ((b = t.closest('[data-untick]'))) { this.remove(b.getAttribute('data-untick')); return; }
+      if ((b = t.closest('[data-tickbtn]'))) { this.add(b.getAttribute('data-tickbtn')); return; }
+      if ((b = t.closest('[data-pair]'))) { this.setPair(this.compare.pairs[+b.getAttribute('data-pair')].ids); return; }
+      if ((b = t.closest('[data-clear]'))) { this.clear(); var f = $('#cx-find'); if (f && !narrow()) f.focus({ preventScroll: true }); return; }
+      if ((b = t.closest('[data-onstage]'))) { this.focus(b.getAttribute('data-onstage')); return; }
+      if ((b = t.closest('[data-notes]'))) { var nid = b.getAttribute('data-notes'); this.focus(nid); this.jumpToNotes(nid); return; }
+      if ((b = t.closest('[data-copy]'))) { this.copy(b); return; }
+      if ((b = t.closest('#cx-open-list, [data-openlist]'))) { this.listOpen(true); return; }
+      if ((b = t.closest('#cx-rl-close, #cx-scrim, [data-done]'))) { this.leaveList(); return; }
     },
-    focus: function (id) {
-      var c = this.byId(id); if (!c) return;
-      if (this.picked.indexOf(id) < 0) { this.select(id); return; }
-      if (this.sel !== id) { this.sel = id; this.hint = ''; this.render(); }
-      this.showStage(c);
-    },
-    select: function (id) { // the search box calls this: add the chip if it is not in yet, then focus it
-      var c = this.byId(id); if (!c) return;
-      if (this.picked.indexOf(id) < 0) {
-        if (this.picked.length >= this.max) { var out = this.picked.indexOf(this.sel); this.picked.splice(out < 0 ? 0 : out, 1); }
-        this.picked.push(id);
-      }
-      this.sel = id; this.hint = '';
-      if (!this.built) this.buildUI(); else this.render();
-      this.showStage(c);
-    },
-    clear: function () {
-      this.picked = []; this.sel = null; this.hint = '';
-      this.render();
-      this.showGeneric();
+    toCompare: function () { var c = $('#cx-compare'); if (c) scrollToEl(c, true); },
+    jumpToNotes: function (id) { var el = document.getElementById('cx-note-' + id); if (!el) return; el.open = true; scrollToEl(el, true); },
+    copy: function (btn) {
+      var kind = btn.getAttribute('data-copy'), rows = this.selection();
+      var text = kind === 'json' ? JSON.stringify(rows, null, 1) : kind === 'link' ? this.shareURL() : (function () {
+        if (!rows.length) return '';
+        var cols = []; rows.forEach(function (r) { Object.keys(r).forEach(function (k) { if (cols.indexOf(k) < 0) cols.push(k); }); });
+        var q = function (v) { if (v == null) return ''; if (typeof v === 'object') v = JSON.stringify(v); return String(v).replace(/[\t\n\r]+/g, ' '); };
+        return cols.join('\t') + '\n' + rows.map(function (r) { return cols.map(function (k) { return q(r[k]); }).join('\t'); }).join('\n'); // tab-separated, so a spreadsheet splits the columns on paste
+      })();
+      if (btn._was == null) btn._was = btn.innerHTML;
+      var done = function (ok) { btn.textContent = ok ? 'Copied' : 'Copy failed'; setTimeout(function () { btn.innerHTML = btn._was; }, 2000); };
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(false); }); else done(false);
     },
 
-    /* ---- the slots: two to four columns that ask for their chips (redesign of 21 Oct 2026, qa/design/chips-ux/) ----
-       An empty slot and a chip's Change open the picker; Remove empties a slot; the folded checklist and the search box change the
-       same `picked`, so every way in stays in step. Until two chips are in, the plans and the table keep a column for each one missing. */
-    ORD: ['first', 'second', 'third', 'fourth'],
-    short: function (c) { return String(c.name).replace(/\s*\(.*\)\s*$/, ''); }, // "H100 (SXM5)" reads "H100" in pairs, Try with and announcements
-    year: function (c) { return c.announced ? String(c.announced).slice(0, 4) : ''; },
-    metaLine: function (c) { return [c.vendor, cname(c.vendorCountry), this.year(c)].filter(Boolean).join(' · '); },
-    names: function (ids) { var self = this, n = ids.map(function (id) { var c = self.byId(id); return c ? self.short(c) : id; }); return n.length < 2 ? n.join('') : n.slice(0, -1).join(', ') + ' and ' + n[n.length - 1]; },
-    guide: function () { // the guidance line over the slots, which is also what the live region reads after each change
-      var n = this.picked.length;
-      if (!n) return 'Choose two chips to compare. Add up to four.';
-      if (n === 1) return 'Choose one more chip to compare.';
-      return 'Comparing ' + n + ' chips.' + (n < this.max ? (this.max - n === 1 ? ' Add one more.' : ' Add up to two more.') : '');
+    /* ---- the list: every chip by maker, with its year and its box. It stays in view beside the chart and the comparison, and
+       Find narrows it. On a phone it opens as a sheet from the bottom ---- */
+    buildList: function () {
+      var self = this, host = $('#cx-list'); if (!host) return;
+      host.innerHTML = this.ordered().map(function (g) {
+        return '<div class="aic-rl-g"><p class="aic-rl-gh"><b>' + esc(g.vendor) + '</b> · ' + esc(cname(g.cc)) + '</p>' + g.chips.map(function (c) {
+          return '<label class="aic-rl-o" data-id="' + esc(c.id) + '" data-q="' + esc([c.name, c.vendor, cname(c.vendorCountry), c.family || '', self.year(c)].join(' ').toLowerCase()) + '" title="' + esc(c.name) + '">' +
+            '<input type="checkbox" data-tick="' + esc(c.id) + '" aria-label="Compare the ' + esc(c.name) + '"><span class="aic-box" aria-hidden="true"></span><span class="aic-rl-n">' + esc(self.short(c)) + '</span><span class="aic-rl-y">' + esc(self.year(c)) + '</span></label>';
+        }).join('') + '</div>';
+      }).join('') + '<p class="aic-rl-none" hidden>No chip matches. Try a maker, such as Nvidia or Huawei.</p>';
     },
-    setSlot: function (i, id) { // put a chip in slot i (replacing its chip), or empty slot i when id is ''
-      var p = this.picked.slice();
-      if (!id) { if (i < p.length) p.splice(i, 1); }
-      else { var at = p.indexOf(id); if (at >= 0 && at !== i) return; if (i < p.length) p[i] = id; else p.push(id); }
-      this.picked = p.slice(0, this.max);
-      this.sel = id || (this.picked.indexOf(this.sel) >= 0 ? this.sel : this.picked[this.picked.length - 1] || null);
-      this.hint = '';
-      this.render();
-      if (this.sel) this.showStage(this.byId(this.sel)); else this.showGeneric();
-    },
-    setPair: function (ids) {
-      var self = this;
-      this.picked = ids.filter(function (id) { return self.byId(id); }).slice(0, this.max); this.sel = this.picked[0] || null; this.hint = '';
-      this.render();
-      if (this.sel) this.showStage(this.byId(this.sel));
-    },
-    focusSlot: function (i) { // a filled slot's Change, or an empty slot's own button
-      var s = $('#cxa-row .cxa-slot[data-i="' + i + '"]'), b = s && $('[data-act="choose"]', s);
-      if (b) b.focus();
-    },
-    announce: function (msg) { var el = $('#cxa-live'); if (!el) return; el.textContent = ''; setTimeout(function () { el.textContent = msg; }, 50); },
-    announceChange: function () { // one message per change of the picks, whichever control made it: a slot, Try with, a pair, a tick, search, Clear
-      var key = this.picked.join(','); if (key === this.said) return;
-      var was = this.said ? this.said.split(',') : [], now = this.picked;
-      this.said = key;
-      var added = now.filter(function (x) { return was.indexOf(x) < 0; }), gone = was.filter(function (x) { return now.indexOf(x) < 0; });
-      var lead = !now.length ? 'All chips cleared.'
-        : added.length && !gone.length ? this.names(added) + ' added.'
-        : gone.length && !added.length ? this.names(gone) + ' removed.'
-        : added.length === 1 && gone.length === 1 ? this.names(added) + ' in place of ' + this.names(gone) + '.'
-        : 'Now ' + this.names(now) + '.';
-      this.announce(lead + ' ' + this.guide());
-    },
-    renderSlots: function () {
-      var self = this, row = $('#cxa-row'); if (!row) return;
-      var n = this.picked.length, shown = n < 2 ? 2 : Math.min(this.max, n + 1), html = '';
-      for (var i = 0; i < shown; i++) html += this.slotHTML(i, n);
-      row.innerHTML = html;
-      row.setAttribute('data-n', String(shown));
-      var ask = $('#cxa-ask'); if (ask) ask.textContent = this.hint || this.guide();
-      var clr = $('#cx-clear'); if (clr) clr.hidden = !n;
-      // the line under the picks: the five pairs before any pick; Try with while one chip waits for a second; nothing after
-      var pairs = $('#cxa-pairs');
-      if (pairs) {
-        var sug = n === 1 ? (this.compare.with[this.picked[0]] || []).filter(function (s) { return self.byId(s) && self.picked.indexOf(s) < 0; }).slice(0, 3) : [];
-        pairs.innerHTML = !n && this.compare.pairs.length ? '<span class="cxa-pk">Or start from a pair</span>' + this.compare.pairs.map(function (p, k) { return '<button type="button" class="aic-pill" data-pair="' + k + '">' + esc(p.label) + '</button>'; }).join('')
-          : sug.length ? '<span class="cxa-pk">Try with</span>' + sug.map(function (s) { var t = self.short(self.byId(s)); return '<button type="button" class="aic-pill" data-try="' + esc(s) + '" aria-label="Add ' + esc(t) + ' as chip 2">' + esc(t) + '</button>'; }).join('') : '';
-        pairs.hidden = !pairs.innerHTML;
-      }
-      // at four the list's other chips say they are unavailable; they stay in the tab order, and a press on one says why
-      $$('#picker button').forEach(function (b) { if (n >= self.max && b.getAttribute('aria-pressed') !== 'true') b.setAttribute('aria-disabled', 'true'); else b.removeAttribute('aria-disabled'); });
-    },
-    badge: function (i) { return '<i class="cx-no">' + (i + 1) + '</i> '; }, // the chip's number, as the chart's labels, the bars and the table carry it
-    slotHTML: function (i, n) {
-      var id = this.picked[i], c = id ? this.byId(id) : null, k = 'cxa-k' + i;
-      var state = c ? 'filled' : (i === n && n < 2) ? 'next' : i >= 2 ? 'more' : 'empty'; // "next" is the one pick drawn in red wine, the reader's place
-      var head = '<p class="cxa-k" id="' + k + '">' + (c ? this.badge(i) : '') + 'Chip ' + (i + 1) + (state === 'more' ? ', optional' : '') + '</p>';
-      if (c) {
-        var on = c.id === this.sel;
-        return '<div class="cxa-slot" data-i="' + i + '" data-state="filled"' + (on ? ' data-on="1"' : '') + '>' + head +
-          '<button type="button" class="cxa-name" data-id="' + esc(c.id) + '" aria-pressed="' + on + '" title="Show it on the stage">' + esc(c.name) + '</button>' +
-          '<span class="cxa-meta">' + esc(this.metaLine(c)) + '</span>' +
-          '<span class="cxa-acts"><button type="button" class="cxa-act" data-act="choose" aria-haspopup="dialog" aria-expanded="false" aria-label="Change chip ' + (i + 1) + ', ' + esc(c.name) + '">Change</button>' +
-          '<button type="button" class="cxa-act" data-act="remove" aria-label="Remove ' + esc(c.name) + ' from chip ' + (i + 1) + '">Remove</button></span></div>';
-      }
-      var text = state === 'more' ? 'Add a ' + this.ORD[i] + ' chip (optional)' : 'Choose a chip, or a dot above';
-      return '<div class="cxa-slot" data-i="' + i + '" data-state="' + state + '">' + head +
-        '<button type="button" class="cxa-add" data-act="choose" aria-haspopup="dialog" aria-expanded="false" aria-describedby="' + k + '"><span class="cxa-plus" aria-hidden="true">+</span><span>' + esc(text) + '</span></button></div>';
-    },
-    // Change and × on every column head of the table of words, so the reader never has to go back up
-    colActs: function (c, i) {
-      return { change: '<button type="button" class="cx-act" data-act="change" data-slot="' + i + '" aria-haspopup="dialog" aria-expanded="false" aria-label="Change chip ' + (i + 1) + ', ' + esc(c.name) + '">Change</button>',
-        remove: '<button type="button" class="cx-x" data-act="remove" data-slot="' + i + '" aria-label="Remove ' + esc(this.short(c)) + ' from the comparison"><span aria-hidden="true">&times;</span></button>' };
-    },
-    colAct: function (b, region) { // region: '#cx-table', the column heads; focus stays there after the change
-      var i = +b.getAttribute('data-slot'), act = b.getAttribute('data-act');
-      if (act === 'change') { if (this.pop && this.pop.trigger === b) this.closePicker(true); else this.openPicker(i, b, region); return; }
-      if (act !== 'remove') return;
-      this.setSlot(i, '');
-      var n = this.picked.length, next = n && $(region + ' [data-act="change"][data-slot="' + Math.min(i, n - 1) + '"]');
-      if (next) next.focus(); else this.focusSlot(0);
-    },
-    renderBar: function () {
-      var self = this, host = $('#cxs-in'); if (!host) return;
-      var n = this.picked.length;
-      host.innerHTML = '<span class="cxs-k">Comparing</span><span class="cxs-list">' + this.picked.map(function (id, i) {
-        var c = self.byId(id), t = c ? self.short(c) : id;
-        return '<span class="cxs-chip"><button type="button" class="cxs-name" data-bar="name" data-slot="' + i + '" title="' + esc(c ? c.name : id) + '" aria-label="Change ' + esc(t) + ', chip ' + (i + 1) + '">' + esc(t) + '</button>' +
-          '<button type="button" class="cxs-x" data-bar="remove" data-slot="' + i + '" aria-label="Remove ' + esc(t) + ' from the comparison"><span aria-hidden="true">&times;</span></button></span>';
-      }).join('') + (n < this.max ? '<button type="button" class="cxs-add" data-bar="add"><span aria-hidden="true">+</span> Add</button>' : '') + '</span>' +
-        '<button type="button" class="cxs-clear" data-bar="clear">Clear</button>';
-      this.updateBar();
-    },
-    updateBar: function () { // shown under the masthead once the slots have scrolled away, while a chip is in
-      var bar = $('#cx-sticky'), row = $('#cxa-row'); if (!bar || !row) return;
-      var here = Router.current === 'landscape' && this.picked.length > 0, show = here && row.getBoundingClientRect().bottom < headerH() + 4;
-      if (!show && !bar.hidden && bar.contains(document.activeElement)) this.focusSlot(0); // the bar is going while it holds focus: hand it to the slots
-      bar.hidden = !show;
-      if (show) this.barH = bar.offsetHeight;
-      // --cx-sticky holds the bar's height whenever a chip is in, shown or not: a jump into the comparison makes the bar appear, so its
-      // target must already clear it; a little extra room near the slots costs nothing
-      document.documentElement.style.setProperty('--cx-sticky', here ? (this.barH || 48) + 'px' : '0px');
-    },
-
-    /* ---- the chip picker: a popover under the slot (a sheet from the bottom on phones) holding a filter field and the chips by maker.
-       The field is an ARIA combobox that drives a grouped listbox through aria-activedescendant: Up and Down move, Enter picks,
-       Escape closes and returns to the slot, typing filters and makes the first match active. An outside click closes it. ---- */
-    ordered: function () { // the checklist's order: countries as they first appear, China last; one group per maker, chips in data order
-      var ccs = [], by = {}, out = [];
-      this.chips.forEach(function (c) { var cc = c.vendorCountry || '??'; if (!by[cc]) { by[cc] = { vs: [], v: {} }; ccs.push(cc); } if (!by[cc].v[c.vendor]) { by[cc].v[c.vendor] = []; by[cc].vs.push(c.vendor); } by[cc].v[c.vendor].push(c); });
-      ccs.sort(function (a, b) { return (a === 'CN') - (b === 'CN'); });
-      ccs.forEach(function (cc) { by[cc].vs.forEach(function (v) { out.push({ cc: cc, vendor: v, chips: by[cc].v[v] }); }); });
-      return out;
-    },
-    buildPicker: function () {
-      var self = this, el = document.createElement('div'), scrim = document.createElement('div');
-      el.className = 'cxp'; el.id = 'cxp'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-labelledby', 'cxp-t'); el.hidden = true;
-      el.innerHTML = '<div class="cxp-head"><p class="cxp-t" id="cxp-t">Choose a chip</p><button type="button" class="cxp-x" aria-label="Close">&times;</button></div>' +
-        '<input class="cxp-in" id="cxp-in" type="text" role="combobox" aria-autocomplete="list" aria-expanded="true" aria-controls="cxp-list" aria-labelledby="cxp-t" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type a name or maker">' +
-        '<div class="cxp-list" id="cxp-list" role="listbox" aria-labelledby="cxp-t">' + this.ordered().map(function (g, gi) {
-          return '<div class="cxp-g" role="group" aria-labelledby="cxp-g' + gi + '"><div class="cxp-gh" id="cxp-g' + gi + '" role="presentation">' + esc(g.vendor) + '</div>' + g.chips.map(function (c) {
-            return '<div class="cxp-o" role="option" id="cxp-o-' + esc(c.id) + '" data-id="' + esc(c.id) + '" aria-selected="false"><span class="cxp-n">' + esc(c.name) + '</span><span class="cxp-m">' + esc(self.metaLine(c)) + '</span><span class="cxp-s"></span></div>';
-          }).join('') + '</div>';
-        }).join('') + '</div><p class="cxp-none" hidden>No chip matches. Try a maker, such as Nvidia or Huawei.</p>';
-      scrim.className = 'cxp-scrim'; scrim.hidden = true;
-      document.body.appendChild(scrim); document.body.appendChild(el); // on the body, so the phone sheet rises above the specimen strip
-      this.popEl = el; this.popScrim = scrim; this.popIn = $('#cxp-in', el); this.popList = $('#cxp-list', el); this.popActive = null;
-      this.popOpts = $$('.cxp-o', el).map(function (o) { var c = self.byId(o.getAttribute('data-id')); return { el: o, id: c.id, text: [c.name, c.vendor, cname(c.vendorCountry), c.family || '', self.year(c)].join(' ').toLowerCase() }; });
-      this.popIn.addEventListener('input', function () { self.filterPicker(); });
-      this.popIn.addEventListener('keydown', function (e) {
-        var list = self.navOpts(), i = list.indexOf(self.popActive), k = e.key;
-        if (k === 'ArrowDown' || k === 'ArrowUp') {
-          e.preventDefault(); if (!list.length) return;
-          self.setActive(list[k === 'ArrowDown' ? (i < 0 ? 0 : (i + 1) % list.length) : (i < 0 ? list.length - 1 : (i - 1 + list.length) % list.length)]);
-        } else if (k === 'Enter') { if (self.popActive) { e.preventDefault(); self.choose(self.popActive.getAttribute('data-id')); } }
+    renderList: function () {
+      var self = this, n = this.picked.length;
+      $$('#cx-list .aic-rl-o').forEach(function (o) {
+        var id = o.getAttribute('data-id'), at = self.picked.indexOf(id), inp = $('input', o), off = n >= self.max && at < 0;
+        inp.checked = at >= 0; inp.disabled = off;
+        o.classList.toggle('is-on', at >= 0); o.classList.toggle('is-off', off); o.classList.toggle('is-look', self.open === id);
+        $('.aic-box', o).textContent = at >= 0 ? self.noOf(id) : '';
       });
-      el.addEventListener('keydown', function (e) { if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); self.closePicker(true); } });
-      this.popList.addEventListener('mousedown', function (e) { e.preventDefault(); }); // a click on a chip keeps the field focused
-      this.popList.addEventListener('click', function (e) { var o = e.target.closest('.cxp-o'); if (o && o.getAttribute('aria-disabled') !== 'true') self.choose(o.getAttribute('data-id')); });
-      $('.cxp-x', el).addEventListener('click', function () { self.closePicker(true); });
-      scrim.addEventListener('click', function () { self.closePicker(true); });
-      el.addEventListener('focusout', function () { setTimeout(function () { if (self.pop && !el.contains(document.activeElement) && document.activeElement !== self.pop.trigger) self.closePicker(false); }, 0); });
-      document.addEventListener('pointerdown', function (e) { if (self.pop && !el.contains(e.target) && !scrim.contains(e.target) && !self.pop.trigger.contains(e.target)) self.closePicker(false); }, true);
-      if (window.visualViewport) window.visualViewport.addEventListener('resize', function () { if (self.pop && el.classList.contains('is-sheet')) self.fitSheet(); });
-      window.addEventListener('hashchange', function () { self.closePicker(false); }); // Back or a link must not leave the picker over another page
-      return el;
+      var cnt = $('#cx-rl-n'); if (cnt) cnt.textContent = n + ' of 4 ticked';
+      var sheet = narrow(), x = $('#cx-rl-close'); if (x) x.hidden = sheet && n >= 2; // on a phone, once two are ticked, Show the comparison is the way out
+      var foot = $('#cx-rl-foot');
+      if (foot) foot.innerHTML = (this.hint ? '<p>' + esc(this.hint) + '</p>' : n >= this.max ? '<p>Four chips are ticked, the most the comparison holds. Untick one to add another.</p>' : '') +
+        (n ? '<button type="button" class="aic-tlink" data-clear>Clear the ticks</button>' : '') + (sheet ? '<button type="button" class="aic-btn" data-done>' + (n >= 2 ? 'Show the comparison' : 'Done') + '</button>' : '');
+      var ol = $('#cx-open-list'); if (ol) ol.innerHTML = '<span>Tick chips to compare</span><span class="aic-k">' + n + ' of 4 ticked</span>';
     },
-    openPicker: function (i, trigger, origin) { // origin: 'slot', or '#cx-table' for a column head's Change, where focus returns
-      var self = this, el = this.popEl || this.buildPicker(), cur = this.picked[i] || null, sheet = narrow();
-      if (this.pop) this.closePicker(false);
-      this.pop = { slot: i, trigger: trigger, origin: origin || 'slot' };
-      $('#cxp-t', el).textContent = (cur ? 'Change chip ' : 'Choose chip ') + (i + 1);
-      this.popOpts.forEach(function (o) { // chips already in another slot are marked and cannot be picked twice
-        var at = self.picked.indexOf(o.id), other = at >= 0 && at !== i;
-        if (other) o.el.setAttribute('aria-disabled', 'true'); else o.el.removeAttribute('aria-disabled');
-        o.el.classList.toggle('is-mine', at === i);
-        $('.cxp-s', o.el).textContent = other ? 'In chip ' + (at + 1) : at === i ? 'In this slot' : '';
-      });
-      this.popIn.value = ''; this.filterPicker(); this.popList.scrollTop = 0;
-      el.classList.toggle('is-sheet', sheet);
-      el.hidden = false; this.popScrim.hidden = !sheet;
-      if (sheet) { document.documentElement.style.overflow = 'hidden'; this.fitSheet(); } else this.placePicker();
-      trigger.setAttribute('aria-expanded', 'true');
-      if (cur) this.setActive(document.getElementById('cxp-o-' + cur));
-      this.popIn.focus({ preventScroll: true });
+    filterList: function () {
+      var f = $('#cx-find'), q = f ? f.value.trim().toLowerCase() : '', toks = q ? q.split(/\s+/) : [], any = false;
+      $$('#cx-list .aic-rl-o').forEach(function (o) { var ok = toks.every(function (t) { return o.getAttribute('data-q').indexOf(t) >= 0; }); o.hidden = !ok; if (ok) any = true; });
+      $$('#cx-list .aic-rl-g').forEach(function (g) { g.hidden = !$$('.aic-rl-o', g).some(function (o) { return !o.hidden; }); });
+      var none = $('#cx-list .aic-rl-none'); if (none) none.hidden = any;
     },
-    placePicker: function () { // under its slot's card or column head, as wide as that or 340 px, kept inside the column; the page moves only if the list cannot fit
-      var el = this.popEl, p = this.pop; if (!p) return;
-      var slot = p.trigger.closest('.cxa-slot'), card = (slot && ($('.cxa-add', slot) || slot)) || p.trigger.closest('th') || p.trigger, r = card.getBoundingClientRect(), col = $('#cx-slots').getBoundingClientRect();
-      var w = Math.min(Math.max(r.width, 340), col.width), left = r.left;
-      if (left + w > col.right) left = Math.max(col.left, r.right - w);
-      el.style.bottom = ''; el.style.maxHeight = '';
-      el.style.width = Math.round(w) + 'px'; el.style.left = Math.round(left + window.pageXOffset) + 'px'; el.style.top = Math.round(r.bottom + window.pageYOffset + 6) + 'px';
-      var room = window.innerHeight - r.bottom - 6 - (el.offsetHeight - this.popList.offsetHeight) - 16;
-      this.popList.style.maxHeight = Math.max(220, Math.min(360, room)) + 'px';
-      var over = el.getBoundingClientRect().bottom - window.innerHeight + 12;
-      if (over > 0) { var root = document.documentElement, prev = root.style.scrollBehavior; root.style.scrollBehavior = 'auto'; window.scrollBy(0, over); root.style.scrollBehavior = prev; }
+    isListOpen: function () { var r = $('#cx-rail'); return !!r && r.classList.contains('is-open'); },
+    listOpen: function (on, quiet) {
+      var r = $('#cx-rail'); if (!r) return;
+      on = !!on && narrow();
+      if (on === this.isListOpen()) { if (!on) return; }
+      r.classList.toggle('is-open', on);
+      var s = $('#cx-scrim'); if (s) s.hidden = !on;
+      var ol = $('#cx-open-list'); if (ol) ol.setAttribute('aria-expanded', on ? 'true' : 'false');
+      document.documentElement.classList.toggle('aic-sheet-on', on); // the page under the sheet holds still
+      if (on) { this.renderList(); setTimeout(function () { var f = $('#cx-find'); if (f) f.focus({ preventScroll: true }); }, 30); }
+      if (!quiet) this.renderTray();
     },
-    fitSheet: function () { // the phone sheet sits on the keyboard: its foot follows the visual viewport, so the field stays in view
-      var el = this.popEl, vv = window.visualViewport, vh = vv ? vv.height : window.innerHeight, kb = vv ? Math.max(0, window.innerHeight - vv.height - vv.offsetTop) : 0;
-      el.style.left = ''; el.style.top = ''; el.style.width = '';
-      el.style.bottom = Math.round(kb) + 'px';
-      el.style.maxHeight = Math.round(Math.min(vh - 16, window.innerHeight * 0.86)) + 'px';
-      this.popList.style.maxHeight = '';
+    leaveList: function () { // closing the sheet: with two chips ticked, to the comparison; otherwise back to the button that opened it
+      this.listOpen(false);
+      if (this.picked.length >= 2) { this.renderTray(true); this.toCompare(); /* the tray shows from here, so the comparison lands clear of it */ var h = $('#cx-title'); if (h) setTimeout(function () { Keys.focus(h); }, 0); }
+      else { var ol = $('#cx-open-list'); if (ol) ol.focus({ preventScroll: true }); }
     },
-    replacePicker: function () { // after a resize: a popover that crossed the phone breakpoint closes; otherwise it follows its slot
-      if (!this.pop) return;
-      if (narrow() !== this.popEl.classList.contains('is-sheet')) this.closePicker(false);
-      else if (narrow()) this.fitSheet(); else this.placePicker();
-    },
-    closePicker: function (back) {
-      var p = this.pop; if (!p) return;
-      this.pop = null;
-      this.popEl.hidden = true; this.popScrim.hidden = true; this.setActive(null);
-      if (this.popEl.classList.contains('is-sheet')) document.documentElement.style.overflow = '';
-      if (document.contains(p.trigger)) { p.trigger.setAttribute('aria-expanded', 'false'); if (back) p.trigger.focus(); }
-    },
-    navOpts: function () { return this.popOpts.filter(function (o) { return !o.el.hidden && o.el.getAttribute('aria-disabled') !== 'true'; }).map(function (o) { return o.el; }); },
-    setActive: function (opt) {
-      if (this.popActive) { this.popActive.classList.remove('is-active'); this.popActive.setAttribute('aria-selected', 'false'); }
-      this.popActive = opt || null;
-      if (!opt) { this.popIn.removeAttribute('aria-activedescendant'); return; }
-      opt.classList.add('is-active'); opt.setAttribute('aria-selected', 'true'); this.popIn.setAttribute('aria-activedescendant', opt.id);
-      var l = this.popList, gh = 28, t = opt.offsetTop, b = t + opt.offsetHeight; // keep the active chip in the list's view, clear of the sticky maker heading
-      if (t - gh < l.scrollTop) l.scrollTop = Math.max(0, t - gh); else if (b > l.scrollTop + l.clientHeight) l.scrollTop = b - l.clientHeight;
-    },
-    filterPicker: function () {
-      var q = this.popIn.value.trim().toLowerCase(), toks = q ? q.split(/\s+/) : [], any = false;
-      this.popOpts.forEach(function (o) { var ok = toks.every(function (t) { return o.text.indexOf(t) >= 0; }); o.el.hidden = !ok; if (ok) any = true; });
-      $$('.cxp-g', this.popEl).forEach(function (g) { g.hidden = !$$('.cxp-o', g).some(function (o) { return !o.hidden; }); });
-      $('.cxp-none', this.popEl).hidden = any;
-      this.setActive(q ? this.navOpts()[0] || null : null); // typing makes the first match active, so Enter takes it; an empty field waits for an arrow key
-    },
-    choose: function (id) {
-      var p = this.pop; if (!p) return;
-      this.closePicker(false);
-      if (this.picked[p.slot] !== id) this.setSlot(p.slot, id);
-      var self = this, n = this.picked.length, to = n < 2 ? n : Math.min(p.slot, n - 1); // the next waiting slot while the comparison needs one, else the slot just filled
-      setTimeout(function () { // after the key event that picked, so the Enter cannot also press the control it lands on
-        var col = p.origin !== 'slot' && $(p.origin + ' [data-act="change"][data-slot="' + Math.min(p.slot, n - 1) + '"]'); // from a column head: that column's Change, where the reader is
-        if (col) col.focus(); else self.focusSlot(to);
-      }, 0);
+    // the phone's tray: the ticked chips under the masthead, once the button that opens the list has scrolled away
+    renderTray: function (force) {
+      var t = $('#cx-tray'); if (!t) return;
+      var here = Router.current === 'landscape', sel = this.selection(), root = document.documentElement;
+      if (!here || !narrow() || !sel.length) { t.hidden = true; root.style.setProperty('--cx-sticky', '0px'); return; }
+      var ol = $('#cx-open-list'), past = force || this.isListOpen() || (ol && ol.getBoundingClientRect().top < headerH()); // as soon as the button starts under the masthead
+      var self = this, html = sel.map(function (c) { return '<span class="aic-tc"><b class="cx-no">' + self.noOf(c.id) + '</b>' + esc(self.short(c)) + '</span>'; }).join('') + (this.isListOpen() ? '' : '<button type="button" class="aic-tlink" data-openlist>Change</button>');
+      if (t.innerHTML !== html) t.innerHTML = html;
+      t.hidden = !past;
+      root.style.setProperty('--cx-sticky', past ? t.offsetHeight + 'px' : '0px');
     },
 
-    /* ---- render ---- */
-    render: function () {
-      var self = this;
-      $$('#picker button').forEach(function (b) {
-        var id = b.getAttribute('data-id');
-        b.setAttribute('aria-pressed', self.picked.indexOf(id) >= 0 ? 'true' : 'false');
-        if (id === self.sel) b.setAttribute('data-focus', '1'); else b.removeAttribute('data-focus');
-      });
-      this.renderCount();
-      this.renderChart();
-      this.renderPlans();
-      this.renderStrips();
-      this.renderTable();
-      this.renderNotes();
-      this.syncExport();
-      this.renderSlots();
-      this.renderBar();
-      this.announceChange();
-    },
-    renderCount: function () { // the guidance line over the picks says where the reader is; these two flags let the CSS follow
-      var sec = $('section[data-view="landscape"]'); if (!sec) return;
-      sec.setAttribute('data-empty', this.picked.length ? '0' : '1');
-      sec.setAttribute('data-full', this.picked.length >= this.max ? '1' : '0');
-      var t = $('#cx-title'), sel = this.selection(), self = this;
-      if (t) t.textContent = sel.length >= 2 ? sel.slice(0, -1).map(function (c) { return self.short(c); }).join(', ') + ' and ' + this.short(sel[sel.length - 1]) + ', side by side' : 'Two chips, side by side';
-    },
-
-    /* ---- the chart: every chip by the month it was announced, against the measure the reader picks ---- */
-    MEAS: [['fp16', 'Speed at FP16'], ['fp8', 'Speed at FP8'], ['fp4', 'Speed at FP4'], ['mem', 'Memory'], ['bw', 'Bandwidth'], ['tdp', 'Power']],
-    // the month a chip was announced, as a year and a fraction: a chip dated only to a year sits in its middle
+    /* ---- the chart: every chip by the month it was announced, against the measure the reader picks, or ranked highest first ---- */
     when: function (c) { var a = String(c.announced || ''), y = +a.slice(0, 4), mo = a.length >= 7 ? +a.slice(5, 7) : 0; return { t: mo ? y + (mo - 0.5) / 12 : y + 0.5, yearOnly: !mo, y: y }; },
     nice: function (v) { var e = Math.pow(10, Math.floor(Math.log10(v))), f = v / e; return (f <= 1 ? 1 : f <= 2 ? 2 : f <= 2.5 ? 2.5 : f <= 5 ? 5 : 10) * e; },
-    textW: function (s, px, bold) { // a label's width in the interface face, so labels are placed where they fit
+    textW: function (s, px, bold, code) { // a label's width in the interface face (or the code face, for a chip's number), so labels are placed where they fit
       var c = this._tc || (this._tc = document.createElement('canvas').getContext('2d'));
-      c.font = (bold ? '600 ' : '400 ') + px + 'px "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif';
-      return c.measureText(String(s)).width + 3;
+      c.font = code ? '400 ' + px + 'px "Fragment Mono", ui-monospace, Menlo, monospace' : (bold ? '600 ' : '400 ') + px + 'px "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif';
+      return c.measureText(String(s)).width + (code ? 0 : 3);
     },
+    // the part of the chart a dot owns: its cell among all the dots (nearer to it than to any other), cut to a circle of radius R,
+    // so a tap goes to the nearest dot and no dot hides another
+    cellPath: function (q, all, R) {
+      var d = '', r1 = function (v) { return Math.round(v * 10) / 10; };
+      for (var k = 0; k < 28; k++) {
+        var a = k / 28 * Math.PI * 2, ux = Math.cos(a), uy = Math.sin(a), t = R;
+        for (var j = 0; j < all.length; j++) { var o = all[j]; if (o === q) continue; var dx = o.cx - q.cx, dy = o.cy - q.cy, pr = dx * ux + dy * uy; if (pr > 0) t = Math.min(t, (dx * dx + dy * dy) / (2 * pr)); }
+        d += (k ? 'L' : 'M') + r1(q.cx + ux * t) + ' ' + r1(q.cy + uy * t);
+      }
+      return d + 'Z';
+    },
+    crowd: function (px, py, near) { return this.pts.map(function (q) { return { id: q.id, d: Math.hypot(q.cx - px, q.cy - py) }; }).filter(function (o) { return o.d <= near; }).sort(function (a, b) { return a.d - b.d; }).map(function (o) { return o.id; }); },
     renderChart: function () {
       var host = $('#cx-chart'); if (!host) return;
-      var self = this, row = this.row(this.measure);
+      var self = this, row = this.row(this.measure), rank = this.view === 'rank';
       $$('#cx-measures [data-m]').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-m') === self.measure ? 'true' : 'false'); });
+      $$('#cx-view [data-v]').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-v') === self.view ? 'true' : 'false'); });
       var W = Math.round(host.clientWidth); if (!W) return; // hidden: activate() draws it on arrival
-      var nar = W < 560, H = nar ? 320 : 440, m = { l: nar ? 42 : 56, r: nar ? 10 : 18, t: 34, b: 30 };
       var pts = this.chips.map(function (c) { return { c: c, v: row.num(c), d: self.when(c) }; }), have = pts.filter(function (p) { return typeof p.v === 'number' && p.d.y > 0; });
       var none = pts.filter(function (p) { return have.indexOf(p) < 0; });
       if (!have.length) { host.innerHTML = ''; return; }
-      var years = have.map(function (p) { return p.d.y; }), X0 = Math.min.apply(null, years), X1 = Math.max.apply(null, years) + 1;
       var vals = have.map(function (p) { return p.v; }).sort(function (a, b) { return b - a; }), max = vals[0], second = vals[1] || max;
-      // one chip far above the rest (the wafer-scale WSE-3 Turbo's bandwidth): the scale follows the others, and its dot sits over the top
-      var outlier = max > 4 * second, top = outlier ? second : max, step = this.nice(top / 4), yMax = Math.ceil(top / step) * step;
-      var x = function (t) { return m.l + (t - X0) / (X1 - X0) * (W - m.l - m.r); }, y = function (v) { return H - m.b - Math.min(v, yMax) / yMax * (H - m.t - m.b); };
-      var r1 = function (v) { return String(Math.round(v * 10) / 10); };
-      var g = '';
-      for (var yr = X0; yr <= X1; yr++) g += '<line class="gx" x1="' + r1(x(yr)) + '" x2="' + r1(x(yr)) + '" y1="' + m.t + '" y2="' + (H - m.b) + '"/>' + (yr < X1 ? '<text class="ax" x="' + r1(x(yr + 0.5)) + '" y="' + (H - m.b + 19) + '" text-anchor="middle">' + (nar ? '’' + String(yr).slice(2) : yr) + '</text>' : '');
-      for (var v = 0; v <= yMax + 1e-9; v += step) g += '<line class="gy' + (v === 0 ? ' base' : '') + '" x1="' + m.l + '" x2="' + (W - m.r) + '" y1="' + r1(y(v)) + '" y2="' + r1(y(v)) + '"/><text class="ax" x="' + (m.l - 8) + '" y="' + r1(y(v) + 4) + '" text-anchor="end">' + this.nf(v) + '</text>';
-      g += '<text class="ax" x="0" y="' + (m.t - 16) + '">' + esc(row.unit) + '</text>';
-      // dots: the largest in ink, the rest in the tint (rule B); the reader's picks ringed in red wine
-      var P = have.map(function (p) { return { p: p, cx: x(p.d.t), cy: p.v > yMax ? m.t - 6 : y(p.v), top: p.v === max, at: self.picked.indexOf(p.c.id) }; });
-      var boxes = P.map(function (q) { return [q.cx - 7, q.cy - 7, q.cx + 7, q.cy + 7]; });
-      P.forEach(function (q) { if (q.p.d.yearOnly) boxes.push([x(q.p.d.y) + 3, q.cy - 2, x(q.p.d.y + 1) - 3, q.cy + 2]); }); // a year-only chip's line across its year
-      var clash = function (b) { for (var i = 0; i < boxes.length; i++) { var o = boxes[i]; if (b[0] < o[2] && b[2] > o[0] && b[1] < o[3] && b[3] > o[1]) return true; } return b[0] < m.l - 2 || b[2] > W - 2 || b[1] < 0 || b[3] > H - m.b; };
-      var inside = function (b) { return b[0] >= m.l - 4 && b[2] <= W - 2 && b[1] >= 0; };
-      var labels = '';
-      // labels: the picks first, then the largest, then the rest by value, each where it clears every dot and label so far; a
-      // narrow chart names only the picks and the largest
-      P.slice().sort(function (a, b) { return (b.at >= 0) - (a.at >= 0) || b.top - a.top || b.p.v - a.p.v; }).forEach(function (q) {
-        var must = q.at >= 0 || q.top; if (nar && !must) return;
-        var name = self.short(q.p.c), fs = must ? 12.5 : 11.5, h = fs + 3, o = q.at >= 0 ? 15 : 10;
-        var w = self.textW((q.at >= 0 ? (q.at + 1) + ' ' : '') + name + (q.top ? ', ' + self.nf(q.p.v) : ''), fs, must);
-        var cands = [[q.cx + o, q.cy + 4, 'start', [q.cx + o - 1, q.cy - h / 2 - 1, q.cx + o + w, q.cy + h / 2]], [q.cx - o, q.cy + 4, 'end', [q.cx - o - w, q.cy - h / 2 - 1, q.cx - o + 1, q.cy + h / 2]],
-          [q.cx, q.cy - o - 3, 'middle', [q.cx - w / 2, q.cy - o - 2 - h + 2, q.cx + w / 2, q.cy - o + 1]], [q.cx, q.cy + o + 11, 'middle', [q.cx - w / 2, q.cy + o - 1, q.cx + w / 2, q.cy + o - 1 + h]]];
-        var pick = cands.filter(function (cd) { return !clash(cd[3]); })[0];
-        if (!pick && must) pick = cands.filter(function (cd) { return inside(cd[3]); })[0] || cands[1]; // a pick or the largest keeps its label
-        if (!pick) return;
-        boxes.push(pick[3]);
-        labels += '<text class="lab' + (q.at >= 0 ? ' mine' : '') + (q.top ? ' top' : '') + '" x="' + r1(pick[0]) + '" y="' + r1(pick[1]) + '" text-anchor="' + pick[2] + '" aria-hidden="true">' +
-          (q.at >= 0 ? '<tspan class="lno">' + (q.at + 1) + '</tspan> ' : '') + esc(name) + (q.top ? '<tspan class="lv">, ' + esc(self.nf(q.p.v)) + '</tspan>' : '') + '</text>';
-      });
-      // one dot holds the chart's Tab stop: the one last chosen or focused, else the largest
-      var fid = this.chartFocus && P.some(function (q) { return q.p.c.id === self.chartFocus; }) ? this.chartFocus : (P.filter(function (q) { return q.top; })[0] || P[0]).p.c.id;
-      var dots = P.slice().sort(function (a, b) { return (a.at >= 0) - (b.at >= 0) || a.top - b.top; }).map(function (q) {
-        var c = q.p.c, d = q.p.d, mine = q.at >= 0, cx = r1(q.cx), cy = r1(q.cy);
-        return '<g class="pt' + (q.top ? ' top' : '') + (mine ? ' mine' : '') + '" data-id="' + esc(c.id) + '" data-x="' + cx + '" tabindex="' + (c.id === fid ? '0' : '-1') + '" role="button" aria-pressed="' + mine + '" aria-label="' +
-          esc(c.name + ', ' + [c.vendor, cname(c.vendorCountry), self.year(c)].filter(Boolean).join(', ') + ', ' + self.nf(q.p.v) + ' ' + row.unit + (mine ? '. Chip ' + (q.at + 1) + ' in the comparison' : '. Add it to the comparison')) + '">' +
-          (d.yearOnly ? '<line class="yr" x1="' + r1(x(d.y) + 3) + '" x2="' + r1(x(d.y + 1) - 3) + '" y1="' + cy + '" y2="' + cy + '"/>' : '') +
-          (q.p.v > yMax ? '<path class="arr" d="M' + cx + ' ' + r1(q.cy - 19) + 'l-5 8h10z"/>' : '') +
-          '<circle class="hit" cx="' + cx + '" cy="' + cy + '" r="12"/>' + (mine ? '<circle class="ring" cx="' + cx + '" cy="' + cy + '" r="10.5"/>' : '') +
-          '<circle class="dot" cx="' + cx + '" cy="' + cy + '" r="' + (q.top ? 7 : 5.5) + '"/></g>';
-      }).join('');
-      host.innerHTML = '<svg width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '" role="group" aria-label="' + esc(row.short + ' of ' + have.length + ' chips, by the month each was announced') + '">' + g + dots + labels + '</svg>';
+      // one chip far above the rest (the wafer-scale WSE-3 Turbo's bandwidth): the scale follows the others
+      var outlier = max > 4 * second;
+      host.setAttribute('data-chart', rank ? 'rank' : 'year'); // not data-view, which names the router's views
+      if (rank) this.drawRank(host, row, have, max, second, outlier); else this.drawTimeline(host, row, have, max, second, outlier, W);
       // the words over the chart, and the chips with no figure for this measure under it
       var hi = have.filter(function (p) { return p.v === max; })[0];
       var k = $('#cx-atlas-k'), t = $('#cx-atlas-t'), s = $('#cx-atlas-s'), gut = $('#cx-gutter');
       if (k) k.textContent = have.length + ' of ' + this.chips.length + ' chips have a published figure';
-      if (t) t.textContent = row.short + ', by the year each chip was announced';
-      if (s) s.textContent = 'The ' + this.short(hi.c) + ' is the highest, at ' + this.nf(hi.v) + ' ' + row.unit + '.' + (outlier ? ' Its dot sits above the top of the scale, which follows the other ' + (have.length - 1) + ' chips.' : '') + ' Choose a dot to add its chip to the comparison.';
+      if (t) t.textContent = row.short + (rank ? ', highest first' : ', by the year each chip was announced');
+      if (s) s.textContent = 'The ' + this.short(hi.c) + ' is the highest, at ' + this.nf(hi.v) + ' ' + row.unit + '.' +
+        (outlier ? (rank ? ' Its bar is cut, and the scale follows the other ' : ' Its dot sits above the top of the scale, which follows the other ') + (have.length - 1) + ' chips.' : '') +
+        (rank ? ' Select a name to open its chip’s card, or tick chips in the list to compare them.' : ' Select a dot to open its chip’s card, or tick chips in the list to compare them.');
       var no = none.filter(function (p) { return row.fmt && ((p.c.compute || {}).support || {})[row.fmt] === 'no'; }), np = none.filter(function (p) { return no.indexOf(p) < 0; });
-      var pills = function (list) { return list.map(function (p) { var at = self.picked.indexOf(p.c.id); return '<button type="button" class="aic-pill sm" data-id="' + esc(p.c.id) + '" aria-pressed="' + (at >= 0) + '">' + (at >= 0 ? self.badge(at) : '') + esc(self.short(p.c)) + '</button>'; }).join(''); };
-      var at = row.fmt ? ' at ' + row.fmt.toUpperCase() : '';
+      var pills = function (list) { return list.map(function (p) { var n = self.noOf(p.c.id); return '<button type="button" class="aic-pill sm" data-card="' + esc(p.c.id) + '" aria-haspopup="dialog" aria-expanded="' + (self.open === p.c.id) + '">' + (n ? '<b class="cx-no">' + n + '</b>' : '') + esc(self.short(p.c)) + '</button>'; }).join(''); };
+      var at = row.fmt ? ' at ' + row.fmt.toUpperCase() : ' for this measure';
       if (gut) gut.innerHTML = (np.length ? '<p class="aic-gut"><span class="aic-gut-k">Not published' + at + '</span>' + pills(np) + '</p>' : '') + (no.length ? '<p class="aic-gut"><span class="aic-gut-k">Not supported' + at + '</span>' + pills(no) + '</p>' : '');
       var tip = $('#cx-tip'); if (tip) tip.hidden = true;
+      if (this.open || this.crowdIds) this.placeCard();
+      this.renderList();
     },
-    showTip: function (g) { // a dot's card: the chip, its maker, country and year, the figure, and what a press does
-      var tip = $('#cx-tip'), fig = $('.aic-fig'), c = this.byId(g.getAttribute('data-id')), dot = $('.dot', g); if (!tip || !fig || !c || !dot) return;
-      var row = this.row(this.measure), at = this.picked.indexOf(c.id), r = dot.getBoundingClientRect(), f = fig.getBoundingClientRect();
-      tip.innerHTML = '<b>' + esc(c.name) + '</b><span>' + esc(this.metaLine(c)) + '</span><span class="tv">' + esc(this.nf(row.num(c))) + ' ' + esc(row.unit) + '</span><span class="ta">' +
-        (at >= 0 ? 'Chip ' + (at + 1) + ' in the comparison' : this.picked.length >= this.max ? 'The comparison holds four' : 'Choose it to compare') + '</span>';
+    drawTimeline: function (host, row, have, max, second, outlier, W) {
+      var self = this, nar = W < 560, H = narrow() ? 320 : 440, m = { l: nar ? 42 : 56, r: nar ? 10 : 18, t: 34, b: 30 };
+      var years = have.map(function (p) { return p.d.y; }), X0 = Math.min.apply(null, years), X1 = Math.max.apply(null, years) + 1;
+      var top = outlier ? second : max, step = this.nice(top / 4), yMax = Math.ceil(top / step) * step;
+      var x = function (t) { return m.l + (t - X0) / (X1 - X0) * (W - m.l - m.r); }, y = function (v) { return H - m.b - Math.min(v, yMax) / yMax * (H - m.t - m.b); };
+      var r1 = function (v) { return String(Math.round(v * 10) / 10); };
+      var g = '';
+      for (var yr = X0; yr <= X1; yr++) g += '<line class="gx" x1="' + r1(x(yr)) + '" x2="' + r1(x(yr)) + '" y1="' + m.t + '" y2="' + (H - m.b) + '"/>' + (yr < X1 ? '<text class="ax" x="' + r1(x(yr + 0.5)) + '" y="' + (H - m.b + 19) + '" text-anchor="middle">' + (nar ? '’' + String(yr).slice(2) : yr) + '</text>' : '');
+      for (var k = 0; k * step <= yMax + 1e-9; k++) { var v = k * step; g += '<line class="gy' + (v === 0 ? ' base' : '') + '" x1="' + m.l + '" x2="' + (W - m.r) + '" y1="' + r1(y(v)) + '" y2="' + r1(y(v)) + '"/><text class="ax" x="' + (m.l - 8) + '" y="' + r1(y(v) + 4) + '" text-anchor="end">' + this.nfAxis(v) + '</text>'; }
+      g += '<text class="ax" x="0" y="' + (m.t - 16) + '">' + esc(row.unit) + '</text>';
+      // dots: the largest in ink, the rest in the tint (rule B); the reader's ticks ringed in red wine with their numbers
+      var P = have.map(function (p) { return { p: p, id: p.c.id, cx: x(p.d.t), cy: p.v > yMax ? m.t - 6 : y(p.v), top: p.v === max, no: self.noOf(p.c.id), look: self.open === p.c.id }; });
+      // two dots on one pixel (the same month and figure) are set 3 px apart, so each keeps a place of its own
+      P.forEach(function (q, i) { for (var j = 0; j < i; j++) { var o = P[j]; if (Math.abs(o.cx - q.cx) < 1.5 && Math.abs(o.cy - q.cy) < 1.5) { q.cx += 3; j = -1; } } });
+      this.pts = P;
+      // what a label keeps clear of: every dot (a ringed one to the ring's edge), a year-only chip's line, the arrow over the scale,
+      // the unit over the axis, and every label and leader placed so far
+      var boxes = P.map(function (q) { var e = q.no || q.look ? 12 : 7; return [q.cx - e, q.cy - e, q.cx + e, q.cy + e]; });
+      P.forEach(function (q) {
+        if (q.p.d.yearOnly) boxes.push([x(q.p.d.y) + 3, q.cy - 2, x(q.p.d.y + 1) - 3, q.cy + 2]); // a year-only chip's line across its year
+        if (q.p.v > yMax) boxes.push([q.cx - 6, q.cy - 20, q.cx + 6, q.cy - 10]);
+      });
+      boxes.push([0, m.t - 28, String(row.unit).length * 6.7 + 4, m.t - 12]);
+      var hit = function (a, b) { return a[0] < b[2] && a[2] > b[0] && a[1] < b[3] && a[3] > b[1]; };
+      var area = function (a, b) { return (Math.min(a[2], b[2]) - Math.max(a[0], b[0])) * (Math.min(a[3], b[3]) - Math.max(a[1], b[1])); };
+      // a label's spot in one of eight directions at a distance r from its dot: beside it, above or below it, or on a diagonal
+      var DIRS = [[1, 0], [-1, 0], [0, -1], [0, 1], [0.71, -0.71], [-0.71, -0.71], [0.71, 0.71], [-0.71, 0.71]];
+      var FAR = [[0, -1], [0, 1], [1, 0], [-1, 0], [0.38, -0.92], [-0.38, -0.92], [0.92, -0.38], [-0.92, -0.38], [0.71, -0.71], [-0.71, -0.71],
+        [0.38, 0.92], [-0.38, 0.92], [0.92, 0.38], [-0.92, 0.38], [0.71, 0.71], [-0.71, 0.71]]; // further out: straight up or down first, then round
+      var spot = function (q, w, h, r, d) {
+        var ax = q.cx + d[0] * r, ay = q.cy + d[1] * r, a = d[0] > 0.3 ? 'start' : d[0] < -0.3 ? 'end' : 'middle', up = d[1] < -0.3, down = d[1] > 0.3;
+        var l = a === 'start' ? ax - 1 : a === 'end' ? ax - w : ax - w / 2, rt = a === 'start' ? ax + w : a === 'end' ? ax + 1 : ax + w / 2;
+        return up ? { x: ax, y: ay - 3, a: a, b: [l, ay - h, rt, ay + 1] } : down ? { x: ax, y: ay + 11, a: a, b: [l, ay - 1, rt, ay - 1 + h] } : { x: ax, y: ay + 4, a: a, b: [l, ay - h / 2 - 1, rt, ay + h / 2] };
+      };
+      // a label set further out is tied to its dot by a hairline, from the dot's edge to the nearest point of the label
+      var lead = function (sp, q) {
+        var e = (q.no || q.look ? 11.5 : q.top ? 7 : 5.5) + 1.5, nx = Math.max(sp.b[0], Math.min(q.cx, sp.b[2])), ny = Math.max(sp.b[1], Math.min(q.cy, sp.b[3]));
+        var dx = nx - q.cx, dy = ny - q.cy, dl = Math.hypot(dx, dy) || 1;
+        sp.lead = [q.cx + dx / dl * e, q.cy + dy / dl * e, nx - dx / dl * 2, ny - dy / dl * 2];
+        sp.dots = [];
+        for (var t = 0, len = Math.hypot(sp.lead[2] - sp.lead[0], sp.lead[3] - sp.lead[1]); t <= len; t += 4) { var px = sp.lead[0] + (sp.lead[2] - sp.lead[0]) * t / (len || 1), py = sp.lead[1] + (sp.lead[3] - sp.lead[1]) * t / (len || 1); sp.dots.push([px - 2.5, py - 2.5, px + 2.5, py + 2.5]); }
+      };
+      // a spot's cost: what it covers of the marks, labels and leaders so far (its own dot aside), and, for a label with no leader,
+      // whether it sits as near another named dot as its own, so it could be read as that one's; off the chart, never
+      var named = P.filter(function (q) { return q.no || q.look || q.top; });
+      var gap = function (q, b) { return Math.hypot(Math.max(b[0] - q.cx, 0, q.cx - b[2]), Math.max(b[1] - q.cy, 0, q.cy - b[3])); };
+      var cost = function (sp, q, own) {
+        var b = sp.b, s = 0; if (b[0] < m.l - 2 || b[2] > W - 2 || b[1] < 0 || b[3] > H - m.b) return Infinity;
+        for (var i = 0; i < boxes.length; i++) {
+          if (i === own) continue; var o = boxes[i];
+          if (hit(b, o)) s += 1 + area(b, o);
+          if (sp.dots) for (var k = 0; k < sp.dots.length; k++) if (hit(sp.dots[k], o)) s += 25;
+        }
+        if (!sp.lead && (q.no || q.look || q.top)) { var mine = gap(q, b); named.forEach(function (n) { if (n !== q && gap(n, b) < mine + 6) s += 80; }); }
+        return s;
+      };
+      var labels = '', leads = '';
+      // labels: the ticked chips first, then the chip whose card is open, the largest, then the rest by value, each where it clears
+      // every dot and label so far. Any chip's label tries the four sides of its dot. A ticked chip, an open card or the largest
+      // must keep its label, so it also tries the diagonals, then spots further out on a leader, and at worst the spot that covers
+      // least. A narrow chart names only those three kinds.
+      P.slice().sort(function (a, b) { return (b.no > 0) - (a.no > 0) || b.look - a.look || b.top - a.top || b.p.v - a.p.v; }).forEach(function (q) {
+        var must = q.no > 0 || q.top || q.look; if (nar && !must) return;
+        var name = self.short(q.p.c), fs = must ? 12.5 : 11.5, h = fs + 3, o = q.no || q.look ? 15 : 10, own = P.indexOf(q);
+        var w = (q.no ? self.textW(q.no + ' ', fs, false, true) : 0) + self.textW(name + (q.top ? ', ' + self.nf(q.p.v) : ''), fs, must); // the number is set in the code face
+        var radii = [o], best = null, bc = Infinity; if (must) for (var k = 1; k <= 10; k++) radii.push(o + 14 * k);
+        for (var ri = 0; ri < radii.length && bc > 0; ri++) for (var di = 0, dirs = ri ? FAR : DIRS; di < (must ? dirs.length : 4); di++) {
+          var sp = spot(q, w, h, radii[ri], dirs[di]); if (ri) lead(sp, q);
+          var c = cost(sp, q, own); if (c && sp.lead) c += radii[ri] / 10; // when nothing is clear, a nearer spot wins
+          if (c < bc) { bc = c; best = sp; if (!c) break; }
+        }
+        if (!best || (bc > 0 && !must)) return;
+        boxes.push(must ? [best.b[0] - 2, best.b[1] - 1, best.b[2] + 2, best.b[3] + 1] : best.b); if (best.dots) best.dots.forEach(function (d) { boxes.push(d); });
+        if (best.lead) leads += '<line class="lead" x1="' + r1(best.lead[0]) + '" y1="' + r1(best.lead[1]) + '" x2="' + r1(best.lead[2]) + '" y2="' + r1(best.lead[3]) + '"/>';
+        labels += '<text class="lab' + (q.no ? ' mine' : '') + (q.top ? ' top' : '') + (q.look ? ' looked' : '') + '" x="' + r1(best.x) + '" y="' + r1(best.y) + '" text-anchor="' + best.a + '" aria-hidden="true">' +
+          (q.no ? '<tspan class="lno">' + q.no + '</tspan> ' : '') + esc(name) + (q.top ? '<tspan class="lv">, ' + esc(self.nf(q.p.v)) + '</tspan>' : '') + '</text>';
+      });
+      // one dot holds the chart's Tab stop: the one whose card is open or last focused, else the largest
+      var fid = [this.open, this.chartFocus].filter(function (id) { return id && P.some(function (q) { return q.id === id; }); })[0] || (P.filter(function (q) { return q.top; })[0] || P[0]).id;
+      var RH = narrow() ? 16 : 13;
+      var dots = P.map(function (q) {
+        var c = q.p.c, d = q.p.d, cx = r1(q.cx), cy = r1(q.cy);
+        return '<g class="pt' + (q.top ? ' top' : '') + (q.no ? ' mine' : '') + '" data-id="' + esc(c.id) + '" data-x="' + cx + '" tabindex="' + (c.id === fid ? '0' : '-1') + '" role="button" aria-haspopup="dialog" aria-expanded="' + q.look + '" aria-label="' +
+          esc(c.name + ', ' + [c.vendor, cname(c.vendorCountry), self.year(c)].filter(Boolean).join(', ') + ', ' + self.nf(q.p.v) + ' ' + row.unit + (q.no ? '. Chip ' + q.no + ' in the comparison' : '') + '. Opens its card') + '">' +
+          '<path class="hit" d="' + self.cellPath(q, P, RH) + '"/>' +
+          (d.yearOnly ? '<line class="yr" x1="' + r1(x(d.y) + 3) + '" x2="' + r1(x(d.y + 1) - 3) + '" y1="' + cy + '" y2="' + cy + '"/>' : '') +
+          (q.p.v > yMax ? '<path class="arr" d="M' + cx + ' ' + r1(q.cy - 19) + 'l-5 8h10z"/>' : '') +
+          '<circle class="fr" cx="' + cx + '" cy="' + cy + '" r="12"/>' + (q.no ? '<circle class="ring" cx="' + cx + '" cy="' + cy + '" r="10.5"/>' : q.look ? '<circle class="look" cx="' + cx + '" cy="' + cy + '" r="10.5"/>' : '') +
+          '<circle class="dot" cx="' + cx + '" cy="' + cy + '" r="' + (q.top ? 7 : 5.5) + '"/></g>';
+      }).join('');
+      host.innerHTML = '<svg width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '" role="group" aria-label="' + esc(row.short + ' of ' + have.length + ' chips, by the month each was announced. Arrow keys move between the dots, and Enter opens a chip’s card.') + '">' + g + dots + (leads ? '<g class="leads" aria-hidden="true">' + leads + '</g>' : '') + labels + '</svg>';
+    },
+    // highest first: one line per chip, the largest bar solid ink and the rest the tint (rule B), each figure with its source mark
+    drawRank: function (host, row, have, max, second, outlier) {
+      var self = this, scale = outlier ? second : max;
+      this.pts = [];
+      var list = have.slice().sort(function (a, b) { return b.v - a.v || String(a.c.announced).localeCompare(String(b.c.announced)); });
+      host.innerHTML = '<ol class="aic-rank" aria-label="' + esc(row.short + ' of ' + have.length + ' chips, highest first') + '">' + list.map(function (p) {
+        var c = p.c, top = p.v === max, n = self.noOf(c.id), cut = outlier && top, w = cut ? 100 : Math.max(0.6, p.v / scale * 100);
+        return '<li class="aic-rk' + (top ? ' is-top' : '') + (n ? ' is-mine' : '') + (self.open === c.id ? ' is-look' : '') + '">' +
+          '<button type="button" class="aic-rk-n" data-card="' + esc(c.id) + '" aria-haspopup="dialog" aria-expanded="' + (self.open === c.id) + '">' + (n ? '<b class="cx-no">' + n + '</b>' : '') + '<span>' + esc(self.short(c)) + '</span></button>' +
+          '<span class="aic-rk-m">' + esc([c.vendor, self.year(c)].filter(Boolean).join(' · ')) + '</span>' +
+          '<span class="aic-rk-b" aria-hidden="true"><i class="' + (top ? 'is-top' : '') + (cut ? ' is-cut' : '') + '" style="width:' + w.toFixed(1) + '%"></i></span>' +
+          '<span class="aic-rk-v"><span class="cx-v' + (top ? ' is-top' : '') + '">' + esc(self.nf(p.v)) + '</span>' + self.cite(c, row, true) + '</span></li>';
+      }).join('') + '</ol>';
+    },
+    showTip: function (g) { // the chip, its maker, country and year, the figure, and what a press does
+      var tip = $('#cx-tip'), fig = $('.aic-fig'), c = this.byId(g.getAttribute('data-id')), dot = $('.dot', g); if (!tip || !fig || !c || !dot || this.open === c.id) return;
+      var row = this.row(this.measure), n = this.noOf(c.id), r = dot.getBoundingClientRect(), f = fig.getBoundingClientRect();
+      tip.innerHTML = '<b>' + esc(c.name) + '</b><span>' + esc(this.metaLine(c)) + '</span><span class="tv">' + esc(this.nf(row.num(c))) + ' ' + esc(row.unit) + '</span><span class="ta">' + (n ? 'Chip ' + n + ' in the comparison. ' : '') + 'Select it for its card</span>';
       tip.hidden = false;
       var w = tip.offsetWidth, left = r.right - f.left + 12; if (left + w > f.width) left = r.left - f.left - w - 12;
       tip.style.left = Math.round(Math.max(0, left)) + 'px'; tip.style.top = Math.round(Math.max(0, r.top - f.top - 10)) + 'px';
     },
 
-    /* ---- package plans, all at one millimetres-per-pixel scale ---- */
+    /* ---- a chip's card: the figure, the foundry and node, the memory supplier, the package and who assembled it, each with its
+       source mark or "not published", and the one control that ticks the chip. It stays until closed ---- */
+    cardHTML: function (c) {
+      var row = this.row(this.measure), v = row.num(c), p = c.process || {}, mem = c.memory || {}, pk = c.package || {}, n = this.noOf(c.id), full = this.picked.length >= this.max && !n;
+      var NP = '<span class="cx-nil">not published</span>', line = function (dt, dd) { return '<dt>' + dt + '</dt><dd>' + dd + '</dd>'; };
+      return '<div class="aic-card-h"><div><p class="aic-card-n" id="cx-card-n">' + esc(c.name) + '</p><p class="aic-card-m">' + esc(this.metaLine(c)) + '</p></div><button type="button" class="aic-x" data-card-close aria-label="Close the card">&times;</button></div>' +
+        '<dl>' + line(esc(row.short), v != null ? '<span class="aic-card-v">' + esc(this.nf(v)) + ' ' + esc(row.unit) + '</span>' + this.cite(c, row, true) : this.nil(c, row)) +
+        line('Foundry, node', p.foundry || p.node ? (p.foundry ? esc(p.foundry) : 'foundry not published') + ', ' + (p.node ? esc(p.node) : 'node not published') + this.cite(c, this.row('process'), true) : NP) +
+        line('Memory supplier', this.supHTML(c) || NP) +
+        line('Package', pk.type ? esc(pk.type) + this.cite(c, this.row('package'), true) : NP) +
+        line('Assembled by', pk.assembler ? esc(pk.assembler) + this.cite(c, this.row('package'), true) : NP) + '</dl>' +
+        '<div class="aic-card-act"><label class="aic-cbx' + (full ? ' is-off' : '') + '"><input type="checkbox" data-tick="' + esc(c.id) + '"' + (n ? ' checked' : '') + (full ? ' disabled' : '') + '><span class="aic-box" aria-hidden="true">' + (n || '') + '</span><span>Compare the ' + esc(this.short(c)) + '</span></label>' +
+        (full ? '<p class="aic-card-note">Four chips are ticked, the most the comparison holds. Untick one to add this one.</p>' : n ? '<button type="button" class="aic-tlink" data-go>Go to the comparison</button>' : '') + '</div>';
+    },
+    // a tap where dots crowd together: the chips there, each opening its own card
+    crowdHTML: function (ids) {
+      var self = this, row = this.row(this.measure);
+      return '<div class="aic-card-h"><p class="aic-card-n" id="cx-card-n">' + ['', 'One chip', 'Two chips', 'Three chips', 'Four chips', 'Five chips', 'Six chips'][Math.min(ids.length, 6)] + ' here</p><button type="button" class="aic-x" data-card-close aria-label="Close the list">&times;</button></div>' +
+        '<ul class="aic-card-list">' + ids.map(function (id) { var c = self.byId(id), n = self.noOf(id); return '<li><button type="button" data-card-open="' + esc(id) + '"><span class="aic-cl-n">' + (n ? '<b class="cx-no">' + n + '</b>' : '') + esc(c.name) + '</span><span class="aic-cl-v">' + esc(self.nf(row.num(c))) + ' ' + esc(row.unit) + ' · ' + esc(self.year(c)) + '</span></button></li>'; }).join('') + '</ul>';
+    },
+    cardEl: function () {
+      var el = $('#cx-card');
+      if (!el) { el = document.createElement('div'); el.className = 'aic-card'; el.id = 'cx-card'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-labelledby', 'cx-card-n'); el.hidden = true; $('.aic-fig').appendChild(el); }
+      return el;
+    },
+    placeCard: function () {
+      var el = this.cardEl(), c = this.open ? this.byId(this.open) : null;
+      if (!c && !this.crowdIds) { el.hidden = true; return; }
+      var had = el.contains(document.activeElement) ? (document.activeElement.matches('input[data-tick]') ? 'input' : 'button') : '';
+      el.innerHTML = c ? this.cardHTML(c) : this.crowdHTML(this.crowdIds);
+      el.hidden = false;
+      if (had) { var fo = $('.aic-card-act ' + had, el) || $('.aic-card-act input, .aic-card-act button, [data-card-open]', el); if (fo) fo.focus({ preventScroll: true }); }
+      var fig = $('.aic-fig'), f = fig.getBoundingClientRect(), id = c ? c.id : this.crowdIds[0];
+      var anchor = (this.view === 'rank' ? $('#cx-chart [data-card="' + id + '"]') : $('#cx-chart .pt[data-id="' + id + '"] .dot')) || $('#cx-gutter [data-card="' + id + '"]');
+      if (!anchor) { this.closeCard(false, true); return; }
+      var a = anchor.getBoundingClientRect(), w = Math.min(330, f.width), left, top;
+      el.style.width = w + 'px';
+      if (f.width < 560) { left = 0; top = a.bottom - f.top + 14; }
+      else { left = a.right - f.left + 16; if (left + w > f.width) left = a.left - f.left - w - 16; if (left < 0) left = Math.max(0, Math.min(f.width - w, a.left - f.left - w / 2)); top = a.top - f.top - 24; }
+      var h = el.offsetHeight, fh = fig.offsetHeight; if (top + h > fh) top = Math.max(0, fh - h);
+      el.style.left = Math.round(left) + 'px'; el.style.top = Math.round(Math.max(0, top)) + 'px';
+    },
+    // o.key: opened from the keyboard, so focus goes into the card; o.from: the control that opened it; o.show: bring it into view
+    openCard: function (id, o) {
+      o = o || {};
+      if (!this.byId(id)) return;
+      if (!this.built) return; // the router builds the page on arrival; a caller that lands here first has nothing to open yet
+      this.listOpen(false, true);
+      this.open = id; this.crowdIds = null; this.chartFocus = this.view === 'year' ? id : this.chartFocus;
+      var tip = $('#cx-tip'); if (tip) tip.hidden = true;
+      this.renderChart(); this.stageNow();
+      var el = this.cardEl();
+      if (o.show) { // bring the card into view: its foot clear of the phone's strip, its head clear of the masthead
+        scrollToEl($('.aic-atlas'), false); this.placeCard();
+        var self = this, fit = function () {
+          if (self.open !== id || el.hidden) return;
+          var st = $('.stage'), strip = narrow() && st ? st.getBoundingClientRect().height : 0; // a phone's strip, or its bar while the stage stands down
+          var r = el.getBoundingClientRect(), room = window.innerHeight - strip - 12, over = r.bottom - room;
+          if (over > 0) { var root = document.documentElement, sb = root.style.scrollBehavior; root.style.scrollBehavior = 'auto'; window.scrollBy(0, Math.round(Math.min(over, r.top - headerH() - 12))); root.style.scrollBehavior = sb; }
+        };
+        fit(); if (narrow()) setTimeout(fit, 400); // arriving from search, the strip is still growing to its full height: look again once it rests
+      }
+      if (o.key || o.show) { var b = $('.aic-card-act input, .aic-card-act button', el); if (b) b.focus({ preventScroll: true }); }
+    },
+    openCrowd: function (ids) {
+      this.open = null; this.crowdIds = ids;
+      var tip = $('#cx-tip'); if (tip) tip.hidden = true;
+      this.renderChart(); this.stageNow();
+    },
+    // back: return focus to the dot or the name that opened it. quiet: no redraw (the caller draws)
+    closeCard: function (back, quiet) {
+      if (!this.open && !this.crowdIds) return;
+      var id = this.open || this.crowdIds[0];
+      this.open = null; this.crowdIds = null;
+      var el = $('#cx-card'); if (el) el.hidden = true;
+      if (quiet) return;
+      this.renderChart(); this.stageNow();
+      if (back) { var b = $('#cx-chart .pt[data-id="' + id + '"]') || $('#cx-chart [data-card="' + id + '"]') || $('#cx-gutter [data-card="' + id + '"]'); if (b) b.focus({ preventScroll: true }); }
+    },
+
+    /* ---- render ---- */
+    render: function () {
+      this.syncExport();
+      this.renderChart();
+      this.renderList();
+      this.renderCmp();
+      this.renderTray();
+      this.writeAddress();
+      this.announceChange();
+      this.stageNow();
+    },
+    // a chip at the head of its row: its number, name, then maker, country and year. In the parts table the maker carries its
+    // source mark and the line ends with a link to the chip's notes
+    who: function (c, full) {
+      var on = c.id === this.sel, meta = full ? esc(c.vendor) + this.cite(c, this.row('vendor')) + ' · ' + esc(cname(c.vendorCountry)) + (this.year(c) ? ' · ' + esc(this.year(c)) : '') : esc(this.metaLine(c));
+      return '<div class="cx-who' + (on ? ' is-on' : '') + '"><b class="cx-no">' + this.noOf(c.id) + '</b><span class="cx-wn">' + esc(c.name) + '</span><span class="cx-wm">' + meta + '</span>' +
+        (full ? '<span class="cx-wm"><button type="button" class="aic-tlink" data-notes="' + esc(c.id) + '">Notes</button></span>' : '') + '</div>';
+    },
+    whoShort: function (c) { return '<div class="cx-who"><b class="cx-no">' + this.noOf(c.id) + '</b><span class="cx-wn">' + esc(this.short(c)) + '</span></div>'; },
+    // one table of figures for the given columns, the speeds first under one head
+    figPart: function (sel, keys, w) {
+      var self = this, speed = keys.filter(function (k) { return self.row(k).fmt; }), rest = keys.filter(function (k) { return !self.row(k).fmt; });
+      var h1 = '<th class="c0" rowspan="2" scope="col"><span class="sr-only">Chip</span></th>' + (speed.length ? '<th class="grp" colspan="' + speed.length + '" scope="colgroup">Speed, in TFLOPS</th>' : ''), h2 = speed.map(function (k) { return '<th scope="col">' + self.row(k).fmt.toUpperCase() + '</th>'; }).join('');
+      rest.forEach(function (k) { var r = self.row(k); h1 += '<th scope="col">' + esc(r.short) + '</th>'; h2 += '<th aria-hidden="true">' + esc(r.unit) + '</th>'; });
+      var body = sel.map(function (c) { return '<tr><th scope="row">' + self.who(c, false) + '</th>' + keys.map(function (k) { var r = self.row(k); return '<td>' + self.cell(c, r, sel, r.fmt ? self.letter(c, sel) : '') + '</td>'; }).join('') + '</tr>'; }).join('');
+      var c0 = this.C0, cw = Math.min(118, Math.floor((w - c0) / Math.max(keys.length, 6)));
+      return '<table class="cx-fig" style="width:' + (c0 + cw * keys.length) + 'px"><colgroup><col style="width:' + c0 + 'px">' + keys.map(function () { return '<col style="width:' + cw + 'px">'; }).join('') + '</colgroup><thead><tr>' + h1 + '</tr><tr class="u">' + h2 + '</tr></thead><tbody>' + body + '</tbody></table>';
+    },
+    C0: 180,
+    // the figures: one table, or on a narrower column two (the speeds, then the rest), so no number loses its room
+    figTable: function (sel, w) {
+      var self = this, n = sel.length, span = {}, keep = this.FIGS.filter(function (k) { span[k] = n > 1 ? self.allNil(self.row(k), sel) : ''; return !span[k]; });
+      var gone = this.FIGS.filter(function (k) { return span[k]; });
+      var html = (w - this.C0) / Math.max(1, keep.length) >= 96 ? this.figPart(sel, keep, w) :
+        this.figPart(sel, keep.filter(function (k) { return self.row(k).fmt; }), w) + '<div class="cx-fig-gap"></div>' + this.figPart(sel, keep.filter(function (k) { return !self.row(k).fmt; }), w);
+      var said = this.saidOnce(gone, sel);
+      return html + (said ? '<p class="cx-said">' + said + '</p>' : '');
+    },
+    // a phone, or a column too narrow for the tables: each figure a short list, the chip then its value
+    figPhone: function (sel) {
+      var self = this, n = sel.length;
+      return this.FIGS.map(function (k) {
+        var r = self.row(k), all = self.allNil(r, sel);
+        return '<div class="cx-fb"><p class="cx-fb-h">' + esc(r.short) + '<span>' + esc(r.unit) + '</span></p>' + (all && n > 1 ? '<span class="cx-fb-all cx-nil">' + self.allSaid(all, n) + '</span>' :
+          sel.map(function (c) { var h = self.cell(c, r, sel, r.fmt ? self.letter(c, sel) : ''), at = h.indexOf('<span class="cx-bar'); return '<div class="cx-fl">' + self.whoShort(c) + '<span class="cx-vv">' + (at >= 0 ? h.slice(0, at) : h) + '</span>' + (at >= 0 ? h.slice(at) : '') + '</div>'; }).join('')) + '</div>';
+      }).join('');
+    },
+    listPhone: function (sel, keys, label) {
+      var self = this, n = sel.length;
+      return keys.map(function (k) {
+        var r = self.row(k), all = self.allNil(r, sel);
+        return '<div class="cx-fb"><p class="cx-fb-h">' + esc(r.label) + '</p>' + (all && n > 1 ? '<span class="cx-fb-all cx-nil">' + self.allSaid(all, n) + '</span>' :
+          sel.map(function (c) { return '<div class="cx-fl cx-fl--tx">' + self.whoShort(c) + '<span class="cx-vv">' + self.cell(c, r, sel) + '</span></div>'; }).join('')) + '</div>';
+      }).join('');
+    },
+    partsTable: function (sel) {
+      var self = this;
+      return '<table class="cx-parts"><thead><tr><th class="c0" scope="col"><span class="sr-only">Chip</span></th>' + this.PARTS.map(function (k) { return '<th scope="col">' + esc(self.row(k).label) + '</th>'; }).join('') + '</tr></thead><tbody>' +
+        sel.map(function (c) { return '<tr><th scope="row">' + self.who(c, true) + '</th>' + self.PARTS.map(function (k) { return '<td>' + self.cell(c, self.row(k), sel) + '</td>'; }).join('') + '</tr>'; }).join('') + '</tbody></table>';
+    },
+    wordsTable: function (sel) {
+      var self = this, n = sel.length;
+      return '<table class="cx-words">' + this.WORDS.map(function (k) {
+        var r = self.row(k), all = self.allNil(r, sel);
+        if (all && n > 1) return '<tbody><tr class="first"><th class="at" scope="row">' + esc(r.label) + '</th><td class="span" colspan="2"><span class="cx-nil">' + self.allSaid(all, n) + '</span></td></tr></tbody>';
+        return '<tbody>' + sel.map(function (c, i) {
+          return '<tr class="' + (i === 0 ? 'first' : '') + (r.long ? ' long' : '') + '">' + (i === 0 ? '<th class="at" scope="rowgroup" rowspan="' + n + '">' + esc(r.label) + '</th>' : '') + '<td class="wc">' + self.whoShort(c) + '</td><td class="wt">' + self.cell(c, r, sel) + '</td></tr>';
+        }).join('') + '</tbody>';
+      }).join('') + '</table>';
+    },
+    pairsHTML: function () {
+      var self = this, n = this.picked.length, out = '';
+      var tw = n === 1 ? (this.compare.with[this.picked[0]] || []).filter(function (s) { return self.byId(s) && self.picked.indexOf(s) < 0; }).slice(0, 3) : [];
+      if (tw.length) out += '<div class="aic-pairs"><span class="aic-k">Try with the ' + esc(this.short(this.byId(this.picked[0]))) + '</span>' + tw.map(function (id) { var t = self.short(self.byId(id)); return '<button type="button" class="aic-pill sm" data-tickbtn="' + esc(id) + '" aria-label="Tick the ' + esc(t) + ' as chip 2"><span aria-hidden="true">+</span> ' + esc(t) + '</button>'; }).join('') + '</div>';
+      if (!n && this.compare.pairs.length) out += '<div class="aic-pairs"><span class="aic-k">Or tick a suggested pair</span>' + this.compare.pairs.map(function (p, j) { return '<button type="button" class="aic-pill sm" data-pair="' + j + '">' + esc(p.label) + '</button>'; }).join('') + '</div>';
+      return out;
+    },
+    // the packages, all at one millimeters-per-pixel scale: the largest drawing's long side fits the span
     mm: function (v) { return Math.round(v * 100) / 100; },
     planBounds: function (L) {
       if (!L) return null;
@@ -1383,57 +1576,26 @@
       if (L.substrate) return [L.substrate[0], L.substrate[1]];
       if (L.interposer) return [L.interposer[0], L.interposer[1]];
       var w = 0, h = 0;
-      ['interposers', 'base', 'dies', 'hbm'].forEach(function (k) {
-        (L[k] || []).forEach(function (r) { w = Math.max(w, Math.abs(r.x) * 2 + r.w); h = Math.max(h, Math.abs(r.y) * 2 + r.h); });
-      });
+      ['interposers', 'base', 'dies', 'hbm'].forEach(function (k) { (L[k] || []).forEach(function (r) { w = Math.max(w, Math.abs(r.x) * 2 + r.w); h = Math.max(h, Math.abs(r.y) * 2 + r.h); }); });
       return (w && h) ? [w, h] : null;
     },
-    PLAN_MIN: 128, PLAN_GAP: 48, // a card is never narrower than its name needs; the gap between cards
-    scaleFor: function (sel, room) { // one scale for every plan on screen: the widest part sets it, and the row fits the column when it can
-      var self = this, span = 0, total = 0;
-      sel.forEach(function (c) { var b = self.planBounds(c.layout); if (b) { span = Math.max(span, b[0], b[1]); total += b[0]; } });
-      if (!span) return 1;
-      var k = Math.min((narrow() ? 150 : 210) / span, 2.6);
-      var avail = (room || 0) - (sel.length - 1) * this.PLAN_GAP - 4;
-      // where even the narrowest cards cannot share one row (a phone), the row wraps and keeps this scale; the cards are never cut
-      if (!narrow() && total > 0 && avail >= sel.length * this.PLAN_MIN) {
-        for (var it = 0; it < 3; it++) {
-          var fixed = 0, flex = 0;
-          sel.forEach(function (c) { var b = self.planBounds(c.layout); if (!b || b[0] * k < self.PLAN_MIN) fixed += self.PLAN_MIN; else flex += b[0]; });
-          if (flex > 0 && fixed + flex * k > avail) k = Math.max(0.05, (avail - fixed) / flex); else break;
-        }
-      }
-      return k;
-    },
-    rects: function (list, cls) {
-      var self = this;
-      return (list || []).map(function (r) {
-        return '<rect class="' + cls + '" x="' + self.mm(r.x - r.w / 2) + '" y="' + self.mm(-r.y - r.h / 2) + '" width="' + self.mm(r.w) + '" height="' + self.mm(r.h) + '" vector-effect="non-scaling-stroke"/>';
-      }).join('');
-    },
-    box: function (dims, cls, rx) {
-      return '<rect class="' + cls + '" x="' + this.mm(-dims[0] / 2) + '" y="' + this.mm(-dims[1] / 2) + '" width="' + this.mm(dims[0]) + '" height="' + this.mm(dims[1]) + '"' + (rx ? ' rx="' + rx + '"' : '') + ' vector-effect="non-scaling-stroke"/>';
-    },
+    planK: function (sel, span) { var self = this, big = 0; sel.forEach(function (c) { var b = self.planBounds(c.layout); if (b) big = Math.max(big, b[0], b[1]); }); return big ? Math.min(span / big, 2.6) : 1; },
+    rects: function (list, cls) { var self = this; return (list || []).map(function (r) { return '<rect class="' + cls + '" x="' + self.mm(r.x - r.w / 2) + '" y="' + self.mm(-r.y - r.h / 2) + '" width="' + self.mm(r.w) + '" height="' + self.mm(r.h) + '" vector-effect="non-scaling-stroke"/>'; }).join(''); },
+    box: function (d, cls, rx) { return '<rect class="' + cls + '" x="' + this.mm(-d[0] / 2) + '" y="' + this.mm(-d[1] / 2) + '" width="' + this.mm(d[0]) + '" height="' + this.mm(d[1]) + '"' + (rx ? ' rx="' + rx + '"' : '') + ' vector-effect="non-scaling-stroke"/>'; },
     planSVG: function (c, k) {
-      var L = c.layout, b = this.planBounds(L);
-      if (!b) return '';
+      var L = c.layout, b = this.planBounds(L); if (!b) return '';
       var W = b[0], H = b[1], g = '';
       if (L.waferScale) { // one square cut from a 300 mm disc
         var d = L.diameterMm || 300, s = L.squareMm || Math.round(d / Math.SQRT2), gx = (L.dieGrid || [])[0] || 0, gy = (L.dieGrid || [])[1] || 0, i;
-        g += '<circle class="cx-wafer" cx="0" cy="0" r="' + this.mm(d / 2) + '" vector-effect="non-scaling-stroke"/>';
-        g += this.box([s, s], 'cx-die');
+        g += '<circle class="cx-wafer" cx="0" cy="0" r="' + this.mm(d / 2) + '" vector-effect="non-scaling-stroke"/>' + this.box([s, s], 'cx-die');
         for (i = 1; i < gx; i++) g += '<line class="cx-grid" x1="' + this.mm(-s / 2 + s * i / gx) + '" y1="' + this.mm(-s / 2) + '" x2="' + this.mm(-s / 2 + s * i / gx) + '" y2="' + this.mm(s / 2) + '" vector-effect="non-scaling-stroke"/>';
         for (i = 1; i < gy; i++) g += '<line class="cx-grid" x1="' + this.mm(-s / 2) + '" y1="' + this.mm(-s / 2 + s * i / gy) + '" x2="' + this.mm(s / 2) + '" y2="' + this.mm(-s / 2 + s * i / gy) + '" vector-effect="non-scaling-stroke"/>';
       } else {
         if (L.substrate) g += this.box(L.substrate, 'cx-substrate', 1.5);
         if (L.interposer) g += this.box(L.interposer, 'cx-interposer');
-        g += this.rects(L.interposers, 'cx-interposer');
-        g += this.rects(L.base, 'cx-base');
-        g += this.rects(L.dies, 'cx-die');
-        g += this.rects(L.hbm, 'cx-hbm');
+        g += this.rects(L.interposers, 'cx-interposer') + this.rects(L.base, 'cx-base') + this.rects(L.dies, 'cx-die') + this.rects(L.hbm, 'cx-hbm');
       }
-      return '<svg class="cx-plan-svg" width="' + Math.max(16, this.mm(W * k)) + '" height="' + Math.max(16, this.mm(H * k)) +
-        '" viewBox="' + this.mm(-W / 2) + ' ' + this.mm(-H / 2) + ' ' + this.mm(W) + ' ' + this.mm(H) + '" aria-hidden="true" focusable="false">' + g + '</svg>';
+      return '<svg class="cx-plan-svg" width="' + Math.max(12, this.mm(W * k)) + '" height="' + Math.max(12, this.mm(H * k)) + '" viewBox="' + this.mm(-W / 2) + ' ' + this.mm(-H / 2) + ' ' + this.mm(W) + ' ' + this.mm(H) + '" aria-hidden="true" focusable="false">' + g + '</svg>';
     },
     planSize: function (c) {
       var L = c.layout || {}, p = c.package || {};
@@ -1442,173 +1604,51 @@
       if (p.sizeMm) return String(p.sizeMm);
       return 'size not published';
     },
-    scaleKey: function (k) {
-      var steps = [10, 20, 50, 100, 200], mm = steps[0];
-      for (var i = 0; i < steps.length; i++) if (steps[i] * k <= 130) mm = steps[i];
-      return '<span class="cx-scale"><i style="width:' + Math.round(mm * k) + 'px"></i>' + mm + ' mm</span>';
+    scaleKey: function (k) { var steps = [10, 20, 50, 100, 200], s = steps[0]; for (var i = 0; i < steps.length; i++) if (steps[i] * k <= 110) s = steps[i]; return '<span class="cx-scale"><i style="width:' + Math.round(s * k) + 'px"></i>' + s + ' mm</span>'; },
+    plansHTML: function (sel) {
+      var self = this, k = this.planK(sel, narrow() ? 120 : 170), maxH = 0, stage = Stage.ok;
+      sel.forEach(function (c) { var b = self.planBounds(c.layout); if (b) maxH = Math.max(maxH, b[1] * k); });
+      return '<div class="cx-key"><span><i class="cx-sw die"></i>Logic die</span><span><i class="cx-sw hbm"></i>Memory stack</span><span><i class="cx-sw int"></i>Interposer</span><span><i class="cx-sw sub"></i>Substrate</span>' + this.scaleKey(k) + '</div>' +
+        '<p class="cx-sub">' + this.DIES_SENTENCE + '</p><div class="cx-plans">' + sel.map(function (c) {
+          var b = self.planBounds(c.layout), on = c.id === self.sel;
+          return '<div class="cx-plan' + (on ? ' is-on' : '') + '"><button type="button" class="cx-plan-hit" data-onstage="' + esc(c.id) + '" aria-pressed="' + on + '" aria-label="Show the ' + esc(c.name) + ' on the stage"><span class="cx-plan-art" style="height:' + Math.ceil(Math.max(maxH, 40) + 10) + 'px">' + (b ? self.planSVG(c, k) : '<i class="cx-noplan">No published layout</i>') + '</span>' +
+            '<span class="cx-plan-name"><b class="cx-no">' + self.noOf(c.id) + '</b>' + esc(self.short(c)) + '</span><span class="cx-plan-size">' + esc(self.planSize(c)) + '</span></button>' +
+            (stage ? '<span class="cx-on">' + (on ? 'On the stage' : '') + '</span>' : '') + '</div>'; // the line is kept on every drawing, so they stay level
+        }).join('') + '</div>';
     },
-    renderPlans: function () {
-      var self = this, host = $('#cx-plans'); if (!host) return;
-      var sel = this.selection(), k = this.scaleFor(sel, host.clientWidth), tall = sel.length < 2 ? 84 : 40;
-      // every drawing stands on one line: the art boxes take the tallest drawing's height
-      sel.forEach(function (c) { var b = self.planBounds(c.layout); tall = Math.max(tall, b ? Math.max(16, self.mm(b[1] * k)) : 72); });
-      host.style.setProperty('--plan-h', Math.ceil(tall) + 'px');
-      host.innerHTML = sel.map(function (c, i) {
-        // a card is a button that puts the chip on the stage; the one there says so under its name
-        var L = c.layout || {}, tip = L.note || (c.package || {}).type || '', b = self.planBounds(L), on = c.id === self.sel;
-        var w = Math.max(self.PLAN_MIN, b ? Math.round(b[0] * k) : 0);
-        return '<div class="cx-plan' + (on ? ' is-on' : '') + '" style="width:' + w + 'px">' +
-          '<button type="button" class="cx-plan-hit" data-id="' + esc(c.id) + '" aria-pressed="' + (on ? 'true' : 'false') + '" title="' + esc((on ? '' : 'Show ' + c.name + ' on the stage. ') + tip) + '">' +
-          '<span class="cx-plan-art">' + (b ? self.planSVG(c, k) : '<i class="cx-noplan">No published layout</i>') + '</span>' +
-          '<span class="cx-plan-name">' + self.badge(i) + '<b>' + esc(c.name) + '</b><em>' + esc(c.vendor) + '</em></span>' +
-          '<span class="cx-plan-size">' + esc(self.planSize(c)) + '</span></button>' +
-          '<span class="cx-on">' + (on ? 'On the stage' : '') + '</span></div>'; // the line is kept on every card, so the cards stay level
-      }).join('') + this.ghostPlans(sel.length);
-      var key = $('#cx-key');
-      if (key) key.innerHTML = '<span><i class="cx-sw die"></i>Logic die</span><span><i class="cx-sw hbm"></i>Memory stack</span><span><i class="cx-sw int"></i>Interposer</span><span><i class="cx-sw sub"></i>Substrate</span>' + (sel.length ? this.scaleKey(k) : '');
+    noteHTML: function (c, open) {
+      var body = (this.notes[c.id] || (c.notes ? '<p>' + esc(c.notes) + '</p>' : '<p class="cx-nil">No note yet.</p>')).replace(/^\s*<p><code>[^<]*<\/code><\/p>\s*/, ''); // the notes file opens each block with the chip id, which is keying, not copy
+      var srcs = (c.sources || []).map(function (s) { return '<li><a href="' + safeUrl(s.url) + '" target="_blank" rel="noopener">' + esc(s.label || s.url) + '</a></li>'; }).join('');
+      return '<details class="cx-note" id="cx-note-' + esc(c.id) + '"' + (open ? ' open' : '') + '><summary><b>' + esc(c.name) + '</b><span>' + esc(c.vendor) + ' · ' + esc(cname(c.vendorCountry)) + '</span></summary>' +
+        '<div class="cx-note-body">' + body + '</div>' + (srcs ? '<ol class="cx-srcs" aria-label="Sources for the ' + esc(c.name) + '">' + srcs + '</ol>' : '') + '</details>';
     },
-    ghostPlans: function (n) { // until two chips are in, a hatched box holds the place of each one missing
-      var h = '';
-      for (var i = n + 1; i <= 2; i++) h += '<div class="cx-plan cx-plan--ghost" aria-hidden="true"><span class="cx-plan-art"><i></i></span><span class="cx-plan-name"><b>Chip ' + i + '</b><em>Not chosen yet</em></span></div>';
-      return h;
-    },
-
-    /* ---- the comparison's rows: each figure is a row of bars (FIG), the rest a table of words (WORDS) ---- */
-    nf: function (v) { return Number(v).toLocaleString('en-US', { maximumFractionDigits: 6 }); }, // as published, never rounded (2.039 stays 2.039)
-    // An empty cell says which kind of empty it is: a format the hardware cannot run reads
-    // "not supported", anything else "not published". compute.support carries yes/no/unknown.
-    nil: function (c, row) {
-      var f = row && row.fmt, sup = f ? ((c && c.compute || {}).support || {})[f] : null;
-      return sup === 'no' ? '<span class="cx-nil cx-nil--no">not supported</span>' : '<span class="cx-nil">not published</span>';
-    },
-    // label and hint lead each row: build/modules/reference-pages.js reads them in that order for the /chips/ page
-    rows: [
-      { label: 'Vendor', hint: ['product page', 'press release', 'corporate'], key: 'vendor', text: function (c) { return esc(c.vendor) + '<span class="cx-2">' + esc(cname(c.vendorCountry)) + '</span>'; } },
-      { label: 'Availability', hint: ['product page', 'press release', 'spec table'], key: 'status', text: function (c) { return c.status ? esc(c.status) + (c.shipping ? '<span class="cx-2">from ' + esc(c.shipping) + '</span>' : '') : null; } },
-      { label: 'Built for', hint: ['product page', 'blog', 'documentation'], key: 'target', text: function (c) { return c.target ? esc(c.target) : null; } },
-      { label: 'Foundry, process node', hint: ['architecture', 'deep dive', 'white paper', 'documentation'], key: 'process', text: function (c) { var p = c.process || {}; return p.foundry ? esc(p.foundry) + '<span class="cx-2">' + esc(p.node || '') + (p.country ? ' · ' + esc(cname(p.country)) : '') + '</span>' : null; } },
-      { label: 'Logic dies', hint: ['architecture', 'deep dive', 'white paper'], key: 'dies', short: 'Logic dies', unit: 'count', num: function (c) { return (c.die || {}).count; }, sub: function (c) { var a = (c.die || {}).areaMm2Each; return a != null ? a + ' mm² each' : 'area not published'; } },
-      { label: 'Transistors, billion', hint: ['architecture', 'deep dive', 'white paper'], key: 'transistors', short: 'Transistors', unit: 'billion', num: function (c) { return (c.die || {}).transistorsB; } },
-      { label: 'Package', hint: ['cowos', 'packag', 'deep dive', 'architecture'], key: 'package', text: function (c) { var p = c.package || {}; return p.type ? esc(p.type) + (p.assembler ? '<span class="cx-2">assembled by ' + esc(p.assembler) + '</span>' : '') : null; } },
-      { label: 'Memory type', hint: ['hbm', 'micron', 'memory', 'datasheet'], key: 'memtype', text: function (c) { var m = c.memory || {}; return m.type ? esc(m.type) + (m.stacks ? '<span class="cx-2">' + m.stacks + ' stacks</span>' : '') : null; } },
-      { label: 'Memory, gigabytes', hint: ['spec table', 'datasheet', 'product page'], key: 'mem', short: 'Memory', unit: 'gigabytes', num: function (c) { return (c.memory || {}).capacityGB; } },
-      { label: 'Bandwidth, terabytes/s', hint: ['spec table', 'datasheet', 'product page'], key: 'bw', short: 'Bandwidth', unit: 'terabytes a second', num: function (c) { return (c.memory || {}).bandwidthTBs; } },
-      { label: 'Speed at FP16, TFLOPS', hint: ['spec table', 'datasheet', 'product page'], key: 'fp16', short: 'Speed at FP16', unit: 'TFLOPS', num: function (c) { return (c.compute || {}).fp16TFLOPS; }, fn: true, fmt: 'fp16' },
-      { label: 'Speed at FP8, TFLOPS', hint: ['spec table', 'datasheet', 'product page'], key: 'fp8', short: 'Speed at FP8', unit: 'TFLOPS', num: function (c) { return (c.compute || {}).fp8TFLOPS; }, fn: true, fmt: 'fp8' },
-      { label: 'Speed at FP4, TFLOPS', hint: ['spec table', 'datasheet', 'product page'], key: 'fp4', short: 'Speed at FP4', unit: 'TFLOPS', num: function (c) { return (c.compute || {}).fp4TFLOPS; }, fn: true, fmt: 'fp4' },
-      { label: 'Power, watts', hint: ['spec table', 'datasheet', 'product page'], key: 'tdp', short: 'Power', unit: 'watts', num: function (c) { return c.tdpW; } },
-      { label: 'Chip-to-chip links', hint: ['architecture', 'deep dive', 'white paper'], key: 'c2c', long: true, text: function (c) { return (c.interconnect || {}).chipToChip ? esc(c.interconnect.chipToChip) : null; } },
-      { label: 'Scale-up, in one rack', hint: ['nvl', 'rack', 'system', 'deep dive', 'spec table'], key: 'scale', long: true, text: function (c) { return (c.interconnect || {}).scaleUp ? esc(c.interconnect.scaleUp) : null; } },
-      { label: 'Price estimate', hint: ['price', 'semianalysis', 'rack', 'press release'], key: 'price', long: true, text: function (c) { return c.priceEstimate ? esc(c.priceEstimate) : null; } },
-      { label: 'Cost to make, estimate', hint: ['cost', 'semianalysis'], key: 'bom', long: true, text: function (c) { return c.bomEstimate ? esc(c.bomEstimate) : null; } },
-      { label: 'Export-control status', hint: ['federal register', 'entity list', 'institute for progress', 'mofcom'], key: 'export', long: true, text: function (c) { return c.exportStatus ? esc(c.exportStatus) : null; } }
-    ],
-    row: function (key) { if (!this._rk) { var m = {}; this.rows.forEach(function (r) { m[r.key] = r; }); this._rk = m; } return this._rk[key]; },
-    FIG: ['fp16', 'fp8', 'fp4', 'mem', 'bw', 'tdp', 'transistors', 'dies'],
-    WORDS: ['vendor', 'status', 'target', 'process', 'package', 'memtype', 'c2c', 'scale', 'price', 'bom', 'export'],
-    // the chip's sources are not tagged per field, so the row's subject is matched against their labels (as /chips/ does)
-    srcIndex: function (c, row) {
-      var srcs = c.sources || [], hints = row.hint || [];
-      for (var h = 0; h < hints.length; h++) for (var i = 0; i < srcs.length; i++) if ((srcs[i].label || '').toLowerCase().indexOf(hints[h]) >= 0) return i;
-      return -1;
-    },
-    // every figure carries its source: the number of the source in the chip's list under Notes and sources, a link to it that opens
-    // the site's source card (Cite); where nothing in the list is about the row, "all" goes to the chip's whole list
-    cite: function (c, row) {
-      var srcs = c.sources || []; if (!srcs.length) return '';
-      var i = this.srcIndex(c, row);
-      if (i >= 0) { var s = srcs[i], l = s.label || s.url; return '<sup class="cite"><a href="' + safeUrl(s.url) + '" target="_blank" rel="noopener" data-t="' + esc(l) + '" aria-label="Source ' + (i + 1) + ', ' + esc(l) + '">' + (i + 1) + '</a></sup>'; }
-      return '<sup class="cite cx-all"><button type="button" data-notes="' + esc(c.id) + '" aria-label="All sources for the ' + esc(c.name) + '">all</button></sup>';
-    },
-    fnMarks: function (sel) { // the speed rows' notes: one per chip that has a note on how its figures are measured
-      var list = []; sel.forEach(function (c) { var n = (c.compute || {}).precisionNote; if (n) list.push({ c: c, n: n }); });
-      return { list: list, mark: function (c) { for (var i = 0; i < list.length; i++) if (list[i].c.id === c.id) return '<sup class="cx-fn">' + (i + 1) + '</sup>'; return ''; } };
-    },
-    cellHTML: function (c, row, i) {
-      var t = row.text(c), inner;
-      if (t == null || t === '') inner = this.nil(c, row);
-      else { var at = t.indexOf('<span class="cx-2">'), mk = this.cite(c, row); inner = at >= 0 ? t.slice(0, at) + mk + t.slice(at) : t + mk; } // the mark sits on the value, before its second line
-      return '<td class="' + (row.long ? 'cx-long' : '') + (c.id === this.sel ? ' is-focus' : '') + '" data-n="' + (i + 1) + ' · ' + esc(this.short(c)) + '">' + inner + '</td>';
-    },
-    // where the table is still wider than its box (four chips in a narrow window), the right edge fades and a line says it scrolls,
-    // since Mac and phone browsers hide the scrollbar until the reader scrolls
-    scrollCue: function () {
-      var w = $('#cx-table-wrap'), hint = $('#cx-more'); if (!w) return;
-      var over = w.scrollWidth - w.clientWidth > 4;
-      w.setAttribute('data-more', over && w.scrollWidth - w.clientWidth - w.scrollLeft > 4 ? '1' : '0');
-      if (hint) hint.hidden = !over;
-    },
-    // the figures: one row of bars per measure, rule B in each row (the largest solid ink, the rest the light tint)
-    renderStrips: function () {
-      var self = this, host = $('#cx-strips'); if (!host) return;
-      var sel = this.selection(), fm = this.fnMarks(sel), g = Math.max(0, 2 - sel.length);
-      host.innerHTML = this.FIG.map(function (key) {
-        var row = self.row(key), max = 0;
-        sel.forEach(function (c) { var v = row.num(c); if (typeof v === 'number' && v > max) max = v; });
-        var lines = sel.map(function (c, i) {
-          var v = row.num(c), on = c.id === self.sel, name = '<span class="sl-n">' + self.badge(i) + esc(self.short(c)) + '</span>';
-          if (typeof v !== 'number') return '<div class="sl' + (on ? ' is-on' : '') + '">' + name + '<span class="sl-b"></span><span class="sl-v">' + self.nil(c, row) + '</span></div>';
-          var top = max > 0 && v === max, w = max > 0 ? Math.max(1, v / max * 100) : 0;
-          return '<div class="sl' + (on ? ' is-on' : '') + '">' + name + '<span class="sl-b" aria-hidden="true"><i' + (top ? ' class="top"' : '') + ' style="width:' + w.toFixed(1) + '%"></i></span>' +
-            '<span class="sl-v"><span class="cx-v' + (top ? ' is-top' : '') + '">' + esc(self.nf(v)) + '</span>' + (row.fn ? fm.mark(c) : '') + self.cite(c, row) + (row.sub ? '<span class="cx-2">' + esc(row.sub(c)) + '</span>' : '') + '</span></div>';
-        }).join('');
-        for (var j = 0; j < g; j++) lines += '<div class="sl ghost" aria-hidden="true"><span class="sl-n">Chip ' + (sel.length + j + 1) + '</span><span class="sl-b"><i></i></span><span class="sl-v"><span class="cx-nil">not chosen yet</span></span></div>';
-        return '<div class="srow' + (row.sub ? ' has-sub' : '') + '"><h4 class="srow-h">' + esc(row.short) + ' <span>' + esc(row.unit) + '</span></h4>' + lines + '</div>';
-      }).join('');
-    },
-    // the words: a table with one column per chip, Change, × and Read the notes on each head
-    renderTable: function () {
-      var self = this, tb = $('#cx-table'); if (!tb) return;
-      var sel = this.selection();
-      var html = '<thead><tr><th class="cx-rowhead" scope="col"><span class="sr-only">Specification</span></th>';
-      sel.forEach(function (c, i) {
-        var acts = self.colActs(c, i);
-        html += '<th scope="col" class="cx-col' + (c.id === self.sel ? ' is-focus' : '') + '">' + acts.remove +
-          '<button type="button" class="cx-colhead" data-id="' + esc(c.id) + '" aria-pressed="' + (c.id === self.sel ? 'true' : 'false') + '">' + self.badge(i) + '<b>' + esc(c.name) + '</b><span>' + esc(c.vendor) + '</span></button>' +
-          '<span class="cx-colacts">' + acts.change + '<button type="button" class="cx-jump" data-notes="' + esc(c.id) + '">Read the notes</button></span></th>';
-      });
-      // until two chips are in, an empty hatched column waits for each one missing, so the reader sees what the table will hold
-      var g = Math.max(0, 2 - sel.length), gd = '';
-      for (var gi = 0; gi < g; gi++) {
-        html += '<th scope="col" class="cx-col cx-col--ghost"><span class="cx-ghost-h">Chip ' + (sel.length + gi + 1) + '</span><span class="cx-ghost-s">Not chosen yet</span></th>';
-        gd += '<td class="cx-ghost"></td>';
+    renderCmp: function () {
+      var self = this, host = $('#cx-cmp'); if (!host) return;
+      var sel = this.selection(), n = sel.length, sec = $('section[data-view="landscape"]');
+      if (sec) { sec.setAttribute('data-empty', n ? '0' : '1'); sec.setAttribute('data-full', n >= this.max ? '1' : '0'); }
+      var notes = $('#cx-notes');
+      if (!n) {
+        host.innerHTML = '<div class="aic-c-head"><h2 class="aic-c-t" id="cx-title">Tick two to four chips to compare them.</h2></div>' +
+          '<p class="aic-c-lede">' + (narrow() ? 'The list of all ' + this.chips.length + ' chips opens from Tick chips to compare, under the chart.' : 'The list beside the chart holds all ' + this.chips.length + ' chips by maker. Each box adds its chip to the comparison, which is set here with one row for each chip.') + '</p>' + this.pairsHTML();
+        if (notes) { notes.innerHTML = ''; notes.hidden = true; }
+        return;
       }
-      html += '</tr></thead><tbody>';
-      this.WORDS.forEach(function (key) {
-        var row = self.row(key);
-        html += '<tr' + (row.long ? ' class="cx-tr-long"' : '') + '><th scope="row" class="cx-rowhead">' + esc(row.label) + '</th>';
-        sel.forEach(function (c, i) { html += self.cellHTML(c, row, i); });
-        html += gd + '</tr>';
-      });
-      tb.innerHTML = html + '</tbody>';
-      tb.setAttribute('data-n', String(sel.length + g)); // three or four chips squeeze their columns to fit the page where it is wide enough
-      var tw = $('#cx-table-wrap'); // with no chip the table is a preview of its rows, so a screen reader skips it
-      if (tw) { if (sel.length) tw.removeAttribute('aria-hidden'); else tw.setAttribute('aria-hidden', 'true'); }
-      this.scrollCue();
-      var fns = this.fnMarks(sel).list, foot = $('#cx-foot');
-      if (foot) foot.innerHTML = fns.length ? '<p class="label">How the speed figures are measured</p><ol class="cx-fns">' +
-        fns.map(function (f) { return '<li><b>' + esc(f.c.name) + '</b> ' + esc(f.n) + '</li>'; }).join('') + '</ol>' : '';
-    },
-    renderNotes: function () {
-      var self = this, host = $('#cx-notes'); if (!host) return;
-      host.innerHTML = '<h3 class="cx-notes-h">Notes and sources</h3>' + this.selection().map(function (c) {
-        var body = self.notes[c.id] || (c.notes ? '<p>' + esc(c.notes) + '</p>' : '<p class="cx-nil">No note yet.</p>');
-        body = body.replace(/^\s*<p><code>[^<]*<\/code><\/p>\s*/, ''); // the notes file opens each block with the chip id, which is keying, not copy
-        // the sources numbered as the figures cite them
-        var srcs = (c.sources || []).map(function (s) { return '<li><a href="' + safeUrl(s.url) + '" target="_blank" rel="noopener">' + esc(s.label || s.url) + '</a></li>'; }).join('');
-        return '<details class="cx-note" id="cx-note-' + esc(c.id) + '"' + (c.id === self.sel ? ' open' : '') + '>' +
-          '<summary><b>' + esc(c.name) + '</b><span>' + esc(c.vendor) + ' · ' + esc(cname(c.vendorCountry)) + '</span></summary>' +
-          '<div class="cx-note-body">' + body + '</div>' + (srcs ? '<ol class="cx-srcs" aria-label="Sources for the ' + esc(c.name) + '">' + srcs + '</ol>' : '') + '</details>';
-      }).join('');
-    },
-    jumpToNotes: function (id) {
-      var el = document.getElementById('cx-note-' + id);
-      if (!el) return;
-      el.open = true;
-      scrollToEl(el, true);
+      var sn = this.speedNotes(sel), w = host.clientWidth || 900, ph = narrow() || w < 720; // a phone, or a column too narrow for the tables, takes short lists
+      host.innerHTML = '<div class="aic-c-head"><h2 class="aic-c-t" id="cx-title" tabindex="-1">' + esc(this.names(this.picked)) + '</h2><p class="aic-c-acts"><button type="button" class="aic-tlink" data-clear>Clear</button></p></div>' +
+        (n === 1 ? '<p class="aic-c-lede">One chip ticked, so its figures and parts stand alone. Tick up to three more to compare them.</p>' + this.pairsHTML() : '') +
+        '<section class="aic-c-sec" aria-labelledby="cx-h-fig"><div class="aic-c-sec-h"><h3 class="label" id="cx-h-fig">Figures</h3>' + (n > 1 ? '<p class="aic-k">The largest of each figure is bold, with the solid bar</p>' : '') + '</div>' +
+        '<p class="cx-sub">' + this.TFLOPS_SENTENCE + ' Each figure carries the number of its source in the chip’s list under Notes and sources.</p>' +
+        (ph ? this.figPhone(sel) : this.figTable(sel, w)) +
+        (sn.length ? '<div class="cx-fns"><p class="label">How the speed figures are measured</p><ol>' + sn.map(function (x, j) { return '<li id="cx-sn-' + esc(x.c.id) + '"><span class="cx-fns-who"><i class="cx-fn-l">' + self.LET.charAt(j) + '</i><b class="cx-no">' + self.noOf(x.c.id) + '</b>' + esc(self.short(x.c)) + '</span><span>' + esc(x.n) + '</span></li>'; }).join('') + '</ol></div>' : '') + '</section>' +
+        '<section class="aic-c-sec" aria-labelledby="cx-h-parts"><div class="aic-c-sec-h"><h3 class="label" id="cx-h-parts">Makers and parts</h3></div>' + (ph ? this.listPhone(sel, this.PARTS) : this.partsTable(sel)) + '</section>' +
+        '<section class="aic-c-sec" aria-labelledby="cx-h-pk"><div class="aic-c-sec-h"><h3 class="label" id="cx-h-pk">Packages at one scale</h3></div>' + this.plansHTML(sel) + '</section>' +
+        '<section class="aic-c-sec" aria-labelledby="cx-h-words"><div class="aic-c-sec-h"><h3 class="label" id="cx-h-words">In words</h3></div>' + (ph ? this.listPhone(sel, this.WORDS) : this.wordsTable(sel)) + '</section>' +
+        '<div class="export-bar xq"><span class="xq-k" aria-hidden="true">Copy the comparison</span><button type="button" class="btn ghost" data-copy="tsv"><span class="sr-only">Copy the comparison as a </span>Table</button><span class="xq-s" aria-hidden="true">·</span><button type="button" class="btn ghost" data-copy="json"><span class="sr-only">Copy the comparison as </span>JSON</button><span class="xq-s" aria-hidden="true">·</span><button type="button" class="btn ghost" data-copy="link"><span class="sr-only">Copy a </span>Link<span class="sr-only"> to this comparison</span></button></div>';
+      if (notes) { notes.innerHTML = '<h2 class="cx-notes-h" id="cx-notes-h">Notes and sources</h2>' + sel.map(function (c) { return self.noteHTML(c, c.id === self.sel); }).join(''); notes.hidden = false; }
     },
 
-    /* ---- the stage draws the focused chip's package from above, beside the chart (or in the phone's strip) ---- */
+    /* ---- the stage draws the package of the chip whose card is open, else the chip on the stage, beside the list (or in the
+       phone's strip) ---- */
     // the package type sits mid-sentence, so a phrase such as "Two silicon interposers" takes a small letter (CoWoS-L keeps its own)
     lowerFirst: function (s) { s = String(s || ''); var w = s.split(/[\s,]/)[0]; return /^[A-Z][a-z]+$/.test(w) ? s.charAt(0).toLowerCase() + s.slice(1) : s; },
     stageCaption: function (c) {
@@ -1617,6 +1657,13 @@
       return esc(c.name) + ': ' + n + ' logic die' + (n > 1 ? 's' : '') + (hb ? ' and ' + hb + ' ' + esc((c.memory && c.memory.type) || 'high-bandwidth memory') + ' stacks' : '') + ' on ' + esc(this.lowerFirst((c.package && c.package.type) || 'the package')) + '.';
     },
     specText: function (tag, cap) { var t = $('#cx-spec-tag'), p = $('#cx-spec-text'); if (t) t.innerHTML = tag; if (p) p.innerHTML = cap; },
+    stageNow: function () {
+      if (Router.current !== 'landscape') return;
+      var c = this.byId(this.open) || this.byId(this.sel), key = c ? c.id : '';
+      if (key === this._staged && this._stagedOk === Stage.ok) return;
+      this._staged = key; this._stagedOk = Stage.ok;
+      if (c) this.showStage(c); else this.showGeneric();
+    },
     showGeneric: function () {
       var cap = 'An AI accelerator package, drawn from above.', tag = 'AI chips · <b>Package</b>';
       Stage.show('package', { plan: true }, cap, tag); this.specText(tag, cap);
@@ -3327,7 +3374,7 @@
           say(res.note ? 'Nothing matches. ' + (hits.length === 1 ? '1 nearest term.' : hits.length + ' nearest terms.') : !hits.length ? 'Nothing matches.' : hits.length === 1 ? '1 result.' : hits.length + ' results.');
           list.innerHTML = (res.note ? '<li class="none">' + esc(res.note) + '</li>' : '') +
             (hits.map(function (h, k) { return '<li><a href="' + safeUrl(h.href) + '" data-k="' + k + '"><span class="k">' + esc(h.kind) + '</span><b>' + esc(h.title) + '</b><span class="t">' + esc(clip(h.text, 140)) + '</span></a></li>'; }).join('') || (res.note ? '' : '<li class="none">Nothing matches.</li>'));
-          list.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { var h = hits[+a.getAttribute('data-k')]; self.close(true); Keys.land(h.href); if (h.href === location.hash) setTimeout(function () { Router.route(); }, 0); /* the address is already this one, so no hashchange will come: go there anyway */ if (h.chip) setTimeout(function () { Landscape.select(h.chip); }, 60); if (h.q) setTimeout(function () { Suppliers.show({ q: h.q }); }, 60); /* the whole filter, so a country or stage left from an earlier visit cannot hide the firm */ if (h.el) setTimeout(function () { h.el.scrollIntoView({ block: 'center' }); }, 60); if (h.card && self.openCard) setTimeout(function () { self.openCard(h.card.id, h.card.i); }, 60); }); });
+          list.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { var h = hits[+a.getAttribute('data-k')]; self.close(true); Keys.land(h.href); if (h.href === location.hash) setTimeout(function () { Router.route(); }, 0); /* the address is already this one, so no hashchange will come: go there anyway */ if (h.chip) setTimeout(function () { Landscape.openCard(h.chip, { show: true }); }, 60); /* a chip opens its card on the chart and adds nothing */ if (h.q) setTimeout(function () { Suppliers.show({ q: h.q }); }, 60); /* the whole filter, so a country or stage left from an earlier visit cannot hide the firm */ if (h.el) setTimeout(function () { h.el.scrollIntoView({ block: 'center' }); }, 60); if (h.card && self.openCard) setTimeout(function () { self.openCard(h.card.id, h.card.i); }, 60); }); });
         });
       }
       if (box.hidden) this.from = document.activeElement; // where the reader was, so closing can put them back
@@ -3565,7 +3612,6 @@
         b[1].addEventListener('click', function () { copy(JSON.stringify(get(), null, 1), b[1], 'Copy as JSON'); });
         place(bar);
       };
-      addExport('#cx-table-wrap', 'chips compared', Landscape.exportRows, 'after', 'comparison'); // a live array: Landscape keeps it in step with the selection
       addExport('#matrix', 'country-share matrix', DATA.matrix, 'before');
       addExport('#cf-side .cf-legend', 'chokepoint board', function () { return Geo.boardRows ? Geo.boardRows() : []; }, 'after', 'board'); // under the board's key, in both modes
       addExport('.tl-bar', 'export-control timeline', function () { return Geo.visible || DATA.timeline; }, 'append', 'timeline'); // on the filter row

@@ -1,0 +1,31 @@
+labels-chips: 360 charts, 29 labels touching a mark or a label (10 by more than 2 px); by width: 1440 px 1, 1024 px 0, 390 px 15, 320 px 13
+
+1440 four bw card google-tpu-v7-ironwood: "TPU v7" into ring amd-mi355x by 0.6 px
+390 two fp4 no card: "2 Instinct MI355X" into ring amd-mi355x by 0.9 px
+390 two fp4 card nvidia-h100: "2 Instinct MI355X" into ring amd-mi355x by 0.9 px
+390 two fp4 card google-tpu-v7-ironwood: "2 Instinct MI355X" into ring amd-mi355x by 0.9 px
+390 four fp4 no card: "2 Instinct MI355X" into ring amd-mi355x by 0.9 px
+390 four fp4 card nvidia-h100: "2 Instinct MI355X" into ring amd-mi355x by 0.9 px
+390 four fp4 card google-tpu-v7-ironwood: "2 Instinct MI355X" into ring amd-mi355x by 0.9 px
+390 four bw card google-tpu-v7-ironwood: "TPU v7" into ring amd-mi455x by 0.3 px
+390 pair bw no card: "2 Ascend 910C" into dot amd-mi455x by 3.5 px
+390 pair bw card nvidia-h100: "2 Ascend 910C" into dot amd-mi455x by 3.5 px
+390 pair bw card google-tpu-v7-ironwood: "2 Ascend 910C" into dot amd-mi455x by 3.5 px
+390 mix fp16 no card: "2 H20" into dot nvidia-a800 by 0.8 px
+390 mix fp16 card nvidia-h100: "2 H20" into dot nvidia-a800 by 0.8 px
+390 mix fp16 card google-tpu-v7-ironwood: "2 H20" into dot nvidia-a800 by 0.8 px
+390 mix bw no card: "2 H20" into ring amd-mi300x by 0.3 px
+390 mix bw card google-tpu-v7-ironwood: "2 H20" into ring amd-mi300x by 0.3 px
+320 two fp4 no card: "2 Instinct MI355X" into ring amd-mi355x by 0.8 px
+320 two fp4 card nvidia-h100: "2 Instinct MI355X" into ring amd-mi355x by 0.8 px
+320 two fp4 card google-tpu-v7-ironwood: "2 Instinct MI355X" into ring amd-mi355x by 0.8 px
+320 four fp4 no card: "2 Instinct MI355X" into ring amd-mi355x by 0.8 px
+320 four fp4 card nvidia-h100: "2 Instinct MI355X" into ring amd-mi355x by 0.8 px
+320 four fp4 card google-tpu-v7-ironwood: "2 Instinct MI355X" into ring amd-mi355x by 0.8 px
+320 pair bw card google-tpu-v7-ironwood: "TPU v7" into dot amd-mi455x by 4.3 px
+320 mix fp16 no card: "2 H20" into dot aws-trainium2 by 8 px
+320 mix fp16 no card: "2 H20" into dot huawei-ascend-910c by 3.2 px
+320 mix fp16 card nvidia-h100: "2 H20" into dot aws-trainium2 by 8 px
+320 mix fp16 card nvidia-h100: "2 H20" into dot huawei-ascend-910c by 3.2 px
+320 mix fp16 card google-tpu-v7-ironwood: "2 H20" into dot aws-trainium2 by 8 px
+320 mix fp16 card google-tpu-v7-ironwood: "2 H20" into dot huawei-ascend-910c by 3.2 px

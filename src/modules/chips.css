@@ -1,41 +1,116 @@
-/* AI Chips (redesign, option C "The timeline", chosen 25 Oct 2026; qa/design4/ai-chips/ in the main checkout).
-   The page reads top to bottom: the title, the chart of every chip by the month it was announced with the specimen beside it,
-   the row of picks, then the comparison (the packages at one scale, the figures as rows of bars, the rest as a table of words,
-   the notes and sources). Rule B on every chart: the largest value is solid ink, the rest the light tint (--ctx). Red wine
-   marks only links, the reader's place (the pick waiting for a chip) and the reader's own selection (the picked dots' rings,
-   the chip on the stage). No country is ever a color: a maker's country is a plain label. src/app.js Landscape draws it. */
+/* AI Chips (design round five, option B "the tick list", chosen 27 Oct 2026; qa/design5/ai-chips/a/ in the main checkout).
+   Under the title a rail holds every chip by maker, each with a box to tick, and the specimen at its foot. The rail stays in
+   view while the page scrolls, so the reader ticks and unticks while reading. Beside it the chart of every chip by the month it
+   was announced (or ranked highest first), then the comparison, one row per chip: the figures as one table read down a column,
+   the makers and parts, the packages at one scale, the rest in words, the notes and sources. On a phone the rail opens as a
+   sheet from the bottom and a tray under the masthead carries the ticked chips. Rule B on every chart and figure: the largest
+   value is solid ink, the rest the light tint (--ctx). Red wine marks only links, the reader's place and the reader's own
+   selection (a ticked box and its number, the ring on a ticked chip's dot, the chip on the stage). No country is ever a
+   color. src/app.js Landscape draws it. */
 
 .view[data-view="landscape"] { width: 100%; padding: 0 var(--margin); --aic-hbm: #8c8a84; }
 
-/* ---------- the head: the title, and the standfirst with its counts beside it ---------- */
-/* the head is the views' shared one (.view-head.vh, suppliers.css): the title, then the standfirst and facts under it */
+/* ---------- the head: the title, then the standfirst and its counts ---------- */
+/* the head is the views' shared one (.view-head.vh, suppliers.css) */
 .view-head.vh.aic-head .aic-head-r { grid-column: 1 / 7; margin-top: 24px; }
 @media (max-width: 1199px) { .view-head.vh.aic-head .aic-head-r { grid-column: 1 / -1; } }
 .aic-head .aic-head-r .dek { margin: 0; }
 .aic-meta { display: flex; flex-wrap: wrap; gap: 4px 0; margin: 16px 0 0; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); }
 .aic-meta span:not(:last-child)::after { content: "\00b7"; margin: 0 10px; }
 
-/* ---------- pills: the measures, the pairs, Try with, the chips with no figure, the folded list ---------- */
-.aic-pill { display: inline-flex; align-items: center; min-height: 36px; padding: 0 15px; border: 1px solid var(--control-edge); border-radius: 999px; background: none; color: var(--ink); font-family: var(--font-ui); font-weight: 500; font-size: 14px; line-height: 1.15; white-space: nowrap; text-align: left; }
+/* ---------- small parts: the kicker, pills, the text link, the close button, a chip's number, the box ---------- */
+.aic-k { margin: 0; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); }
+.aic-pill { display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 15px; border: 1px solid var(--control-edge); border-radius: 999px; background: none; color: var(--ink); font-family: var(--font-ui); font-weight: 500; font-size: 14px; line-height: 1.15; white-space: nowrap; text-align: left; }
 .aic-pill.sm { min-height: 30px; padding: 0 12px; font-size: 13px; }
 .aic-pill:hover { border-color: var(--ink); }
 .aic-pill[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
-.aic-pill[aria-disabled="true"] { opacity: 0.45; }
-/* a chip's number in the comparison, as the chart's labels, the picks, the bars and the table carry it */
-.cx-no { display: inline-grid; font-style: normal; place-items: center; box-sizing: border-box; min-width: 19px; height: 19px; padding: 0 4px; margin-right: 4px; border: 1px solid var(--ink-2); border-radius: 10px; font-family: var(--font-code); font-weight: 400; font-size: 11px; line-height: 1; color: var(--ink); vertical-align: 2px; }
+.aic-tlink { display: inline-flex; align-items: center; min-height: 24px; padding: 4px 0; background: none; border: 0; font-family: var(--font-ui); font-weight: 500; font-size: 13px; line-height: 1.2; color: var(--ink); text-decoration: underline; text-decoration-color: var(--rule-ink); text-underline-offset: 4px; cursor: pointer; }
+.aic-tlink:hover { color: var(--accent-ink); text-decoration-color: var(--accent); }
+.aic-x { display: inline-grid; place-items: center; flex: none; width: 28px; height: 28px; padding: 0; border: 0; border-radius: 50%; background: none; font-family: var(--font-ui); font-size: 18px; line-height: 1; color: var(--muted); }
+.aic-x:hover { color: var(--ink); background: var(--bg-2); }
+.aic-btn { display: inline-flex; align-items: center; min-height: 40px; margin-left: auto; padding: 0 18px; border: 1px solid var(--ink); border-radius: 999px; background: var(--ink); color: var(--bg); font-family: var(--font-ui); font-weight: 500; font-size: 14px; line-height: 1; }
+.aic-btn:hover { background: var(--ink-2); border-color: var(--ink-2); }
+/* a ticked chip's number, as the chart's rings, the boxes, the rows and the tray carry it */
+.cx-no { display: inline-grid; place-items: center; box-sizing: border-box; min-width: 19px; height: 19px; padding: 0 4px; margin-right: 6px; border: 1px solid var(--ink-2); border-radius: 10px; font-family: var(--font-code); font-style: normal; font-weight: 400; font-size: 11px; line-height: 1; color: var(--ink); vertical-align: 2px; }
 .aic-pill[aria-pressed="true"] .cx-no { border-color: currentColor; color: inherit; }
+/* the box: empty, or ticked in red wine with the chip's number in it */
+.aic-box { display: inline-grid; place-items: center; box-sizing: border-box; flex: none; width: 18px; height: 18px; border: 1px solid var(--control-edge); border-radius: 2px; background: var(--bg); font-family: var(--font-code); font-size: 11px; line-height: 1; color: transparent; pointer-events: none; }
+input:checked + .aic-box { background: var(--accent-fill); border-color: var(--accent-fill); color: #fff; }
+input:focus-visible + .aic-box { outline: 2px solid var(--accent); outline-offset: 2px; }
+input:disabled + .aic-box { opacity: 0.4; }
 
-/* ---------- the chart, with the specimen beside it ---------- */
-.aic-atlas { margin-top: 64px; padding-top: 14px; border-top: 1px solid var(--ink); }
+/* ---------- the workspace: the rail beside the chart and the comparison ---------- */
+.aic-ws { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 0 48px; margin-top: 64px; border-top: 1px solid var(--ink); }
+.aic-rail { min-width: 0; }
+.aic-rail-in { position: sticky; top: var(--masthead); display: flex; flex-direction: column; height: calc(100vh - var(--masthead)); height: calc(100dvh - var(--masthead)); box-sizing: border-box; padding: 16px 0 12px; }
+.aic-main { min-width: 0; padding-top: 16px; }
+
+/* ---------- the list ---------- */
+.aic-rl-head { display: flex; align-items: baseline; gap: 10px; flex: none; }
+.aic-rl-t { margin: 0; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 19px; line-height: 1.2; color: var(--ink); }
+.aic-rl-c { margin: 0 0 0 auto; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); }
+.aic-rl-close { display: none; }
+.aic-rl-find { flex: none; margin-top: 10px; }
+.aic-rl-find input { display: block; box-sizing: border-box; width: 100%; height: 38px; padding: 0 12px; border: 1px solid var(--control-edge); border-radius: 0; background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 14px; }
+.aic-rl-find input::placeholder { color: var(--muted); }
+.aic-rl-find input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.aic-rl-cols { display: flex; justify-content: space-between; gap: 10px; flex: none; padding: 10px 0 6px; border-bottom: 1px solid var(--line-2); font-family: var(--font-code); font-size: 11px; line-height: 14px; color: var(--muted); }
+.aic-rl-cols span:nth-child(2) { width: 34px; }
+.aic-rl-list { flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding-bottom: 8px; scrollbar-width: thin; }
+.aic-rl-gh { position: sticky; top: 0; z-index: 1; margin: 0; padding: 10px 0 3px; background: var(--bg); font-family: var(--font-code); font-size: 11.5px; line-height: 16px; color: var(--muted); }
+.aic-rl-gh b { font-weight: 400; color: var(--ink-2); }
+.aic-rl-o { position: relative; display: grid; grid-template-columns: 20px minmax(0, 1fr) 34px; align-items: center; gap: 0 10px; min-height: 29px; padding: 0 4px 0 2px; cursor: pointer; }
+.aic-rl-o:hover { background: var(--bg-2); }
+.aic-rl-o input { position: absolute; left: 2px; top: 5px; width: 18px; height: 18px; margin: 0; opacity: 0; cursor: pointer; }
+.aic-rl-n { min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-family: var(--font-ui); font-size: 14px; line-height: 1.3; color: var(--ink); }
+.aic-rl-y { font-family: var(--font-code); font-size: 11.5px; line-height: 1; color: var(--muted); }
+.aic-rl-o.is-look .aic-rl-n { text-decoration: underline; text-decoration-color: var(--ink); text-underline-offset: 3px; }
+.aic-rl-o.is-on .aic-rl-n { font-weight: 600; }
+.aic-rl-o.is-off { cursor: default; }
+.aic-rl-o.is-off:hover { background: none; }
+.aic-rl-o.is-off .aic-rl-n, .aic-rl-o.is-off .aic-rl-y { opacity: 0.55; }
+.aic-rl-o.is-off input { cursor: default; }
+.aic-rl-none { margin: 12px 0; font-family: var(--font-ui); font-size: 13.5px; line-height: 1.4; color: var(--muted); }
+.aic-rl-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; flex: none; padding-top: 8px; border-top: 1px solid var(--line-2); }
+.aic-rl-foot:empty { display: none; }
+.aic-rl-foot p { flex: 1 1 100%; margin: 0; font-family: var(--font-ui); font-size: 12.5px; line-height: 1.4; color: var(--muted); }
+
+/* ---------- the specimen at the foot of the list: the stage's canvas moves here on a wide screen (Landscape.hostStage), with
+   its label, pause and caption under it; the caption stands on the drawing's foot (--slack, src/app.js Stage.fit) ---------- */
+.aic-spec.ch-spec { flex: none; min-width: 0; margin: 14px 0 0; padding-top: 12px; border-top: 1px solid var(--line-2); }
+.aic-spec-draw { position: relative; height: 104px; }
+.aic-spec-draw canvas { display: block; width: 100%; height: 100%; }
+@media (hover: hover) and (pointer: fine) {
+  .aic-spec-draw canvas { cursor: grab; touch-action: none; outline: none; }
+  .aic-spec-draw canvas.is-dragging { cursor: grabbing; }
+  .aic-spec-draw canvas:focus-visible { box-shadow: inset 0 0 0 2px var(--accent); }
+}
+.aic-spec-cap { position: relative; margin: calc(-1 * var(--slack, 0px)) 0 0; transition: margin-top 0.3s var(--ease, ease); }
+.aic-spec-cap .label { display: flex; align-items: center; gap: 10px; margin: 6px 0 4px; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); }
+.aic-spec-cap .label > span { min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.aic-spec-cap .label b { font-weight: 400; color: inherit; }
+.aic-spec-cap > p:not(.label) { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin: 0; font-family: var(--font-body); font-size: calc(13px * var(--text-scale)); line-height: 1.4; color: var(--ink-2); }
+.aic-spec-cap .stage-pause { pointer-events: auto; display: inline-grid; place-items: center; flex: none; width: 24px; height: 24px; margin: -4px 0; padding: 0; border: 1px solid var(--line-2); border-radius: 50%; background: var(--bg); color: var(--ink-2); }
+.aic-spec-cap .stage-pause svg { width: 10px; height: 10px; fill: currentColor; stroke: none; }
+.aic-spec-cap .stage-pause:hover { color: var(--ink); border-color: var(--ink); }
+@media (prefers-reduced-motion: reduce) { .aic-spec-cap { transition: none; } }
+html.no-stage .aic-spec { display: none; }
+@media (min-width: 900px) {
+  /* the stage beside the page stands down: the specimen sits at the foot of the list */
+  html[data-view="landscape"] .stage { display: none; }
+  html[data-view="landscape"] body:has(.stage[data-hidden]) .to-top { top: auto; bottom: 20px; }
+}
+
+/* ---------- the chart ---------- */
+.aic-atlas { min-width: 0; }
 .aic-bar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px 24px; }
-.aic-k { margin: 0; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); }
-.aic-measures { display: flex; flex-wrap: wrap; gap: 6px; }
-.aic-grid { display: grid; grid-template-columns: minmax(0, 8fr) minmax(0, 4fr); gap: 0 48px; margin-top: 22px; }
-.aic-fig { position: relative; margin: 0; min-width: 0; }
+.aic-measures, .aic-view { display: flex; flex-wrap: wrap; gap: 6px; }
+.aic-fig { position: relative; min-width: 0; margin: 14px 0 0; }
+.aic-hrow { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px 24px; }
 .aic-h { margin: 0; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 21px; line-height: 1.25; letter-spacing: -0.005em; color: var(--ink); }
-.aic-sub { margin: 8px 0 0; max-width: 46em; font-family: var(--font-body); font-size: 15.5px; line-height: 1.55; color: var(--ink-2); }
+.aic-sub { margin: 8px 0 0; max-width: 46em; font-family: var(--font-body); font-size: calc(15.5px * var(--text-scale)); line-height: 1.55; color: var(--ink-2); }
 .aic-chart { margin-top: 18px; min-height: 320px; }
-.aic-chart svg { display: block; overflow: visible; }
+.aic-chart svg { display: block; overflow: visible; max-width: none; }
 .aic-chart .ax { font-family: var(--font-code); font-size: 11px; fill: var(--muted); }
 .aic-chart .gx, .aic-chart .gy { stroke: var(--line); stroke-width: 1; }
 .aic-chart .gy.base { stroke: var(--rule-ink); }
@@ -45,133 +120,148 @@
 .aic-chart .pt:hover .dot { fill: var(--rule-ink); }
 .aic-chart .pt.top .dot { fill: var(--ink); }
 .aic-chart .pt .ring { fill: none; stroke: var(--accent); stroke-width: 2; }
+.aic-chart .pt .look { fill: none; stroke: var(--ink); stroke-width: 1.5; }
 .aic-chart .pt .yr { stroke: var(--line-2); stroke-width: 1.5; }
 .aic-chart .pt .arr { fill: var(--ink); }
-.aic-chart .pt:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
-.aic-chart .pt:focus-visible .hit { stroke: var(--accent); stroke-width: 2; stroke-dasharray: 3 2; }
+/* only a dot's own area takes the pointer, so the nearest dot wins */
+.aic-chart .pt .dot, .aic-chart .pt .ring, .aic-chart .pt .look, .aic-chart .pt .yr, .aic-chart .pt .arr, .aic-chart .pt .fr { pointer-events: none; }
+.aic-chart .pt .fr { fill: none; stroke: none; }
+.aic-chart .pt:focus-visible .fr { stroke: var(--accent); stroke-width: 2; stroke-dasharray: 3 2; }
 .aic-chart .lab { font-family: var(--font-ui); font-weight: 400; font-size: 11.5px; fill: var(--muted); pointer-events: none; }
-.aic-chart .lab.top, .aic-chart .lab.mine { font-size: 12.5px; font-weight: 600; fill: var(--ink); }
+.aic-chart .lab.top, .aic-chart .lab.mine, .aic-chart .lab.looked { font-size: 12.5px; font-weight: 600; fill: var(--ink); }
 .aic-chart .lab .lv { font-weight: 700; }
 .aic-chart .lab .lno { font-family: var(--font-code); font-weight: 400; fill: var(--accent-ink); }
-/* a dot's card, on hover or focus */
-.aic-tip { position: absolute; z-index: 5; display: flex; flex-direction: column; gap: 2px; max-width: 250px; padding: 10px 12px; background: var(--bg-2); border-top: 2px solid var(--ink); box-shadow: var(--shadow); pointer-events: none; font-family: var(--font-ui); font-size: 13px; line-height: 1.35; color: var(--ink-2); }
+.aic-chart .lead { stroke: var(--muted); stroke-width: 1; pointer-events: none; } /* ties a label set further out to its dot */
+.aic-chart[data-chart="rank"] { min-height: 0; }
+.aic-chart[data-chart="rank"] ~ .aic-note { display: none; } /* the note is about the dots */
+/* highest first: one line per chip, its rank, name, maker and year, the bar (rule B) and the figure with its source mark */
+.aic-rank { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.aic-rk { display: grid; grid-template-columns: minmax(0, 190px) minmax(0, 180px) minmax(0, 1fr) 118px; align-items: center; gap: 0 12px; min-height: 30px; padding: 1px 0; border-bottom: 1px solid var(--line); }
+.aic-rk-n { display: flex; align-items: center; min-width: 0; min-height: 28px; padding: 0; background: none; border: 0; text-align: left; font-family: var(--font-ui); font-size: 14px; line-height: 1.25; color: var(--ink); }
+.aic-rk-n span { min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.aic-rk-n:hover span { text-decoration: underline; text-decoration-color: var(--rule-ink); text-underline-offset: 3px; }
+.aic-rk.is-mine .aic-rk-n, .aic-rk.is-top .aic-rk-n { font-weight: 600; }
+.aic-rk.is-look .aic-rk-n span { text-decoration: underline; text-decoration-color: var(--ink); text-underline-offset: 3px; }
+.aic-rk-m { min-width: 0; font-family: var(--font-ui); font-size: 12.5px; line-height: 1.3; color: var(--muted); }
+.aic-rk-b { display: block; height: 10px; }
+.aic-rk-b i { display: block; height: 100%; background: var(--ctx); }
+.aic-rk-b i.is-top { background: var(--ink); }
+.aic-rk-b i.is-cut { background: linear-gradient(90deg, var(--ink) 0 86%, transparent 86% 88%, var(--ink) 88% 90%, transparent 90% 92%, var(--ink) 92%); }
+.aic-rk-v { font-family: var(--font-code); font-size: 13.5px; line-height: 1.3; color: var(--ink-2); text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+/* a dot's tip on hover, and a chip's card, which stays until closed */
+.aic-tip { position: absolute; z-index: 5; display: flex; flex-direction: column; gap: 2px; max-width: 250px; padding: 9px 12px; background: var(--bg-2); border-top: 2px solid var(--ink); box-shadow: var(--shadow); pointer-events: none; font-family: var(--font-ui); font-size: 13px; line-height: 1.35; color: var(--ink-2); }
 .aic-tip[hidden] { display: none; }
 .aic-tip b { font-weight: 600; font-size: 14px; color: var(--ink); }
 .aic-tip .tv { font-family: var(--font-code); font-size: 12.5px; color: var(--ink); }
 .aic-tip .ta { font-size: 12px; color: var(--muted); }
-/* the chips with no figure for the measure, as pills that pick them */
+.aic-card { position: absolute; z-index: 8; box-sizing: border-box; width: 312px; padding: 14px 16px 16px; background: var(--bg); border: 1px solid var(--ink); box-shadow: var(--shadow); font-family: var(--font-ui); }
+.aic-card[hidden] { display: none; }
+.aic-card-h { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+.aic-card-n { margin: 0; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 19px; line-height: 1.2; color: var(--ink); }
+.aic-card-m { margin: 3px 0 0; font-size: 13px; line-height: 1.35; color: var(--muted); }
+.aic-card-h .aic-x { margin: -4px -6px 0 0; }
+.aic-card dl { display: grid; grid-template-columns: 104px minmax(0, 1fr); gap: 6px 10px; margin: 12px 0 0; font-size: 13px; line-height: 1.4; }
+.aic-card dt { color: var(--muted); }
+.aic-card dd { margin: 0; color: var(--ink); overflow-wrap: anywhere; }
+.aic-card-v { font-family: var(--font-code); font-size: 13px; }
+.aic-card-act { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); }
+.aic-card-note { flex-basis: 100%; margin: 0; font-size: 12.5px; line-height: 1.4; color: var(--muted); }
+.aic-cbx { position: relative; display: inline-flex; align-items: center; gap: 10px; min-height: 36px; padding: 0 16px 0 12px; border: 1px solid var(--ink); border-radius: 999px; cursor: pointer; font-family: var(--font-ui); font-weight: 500; font-size: 14px; line-height: 1.2; color: var(--ink); }
+.aic-cbx input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+.aic-cbx.is-off { opacity: 0.5; cursor: default; }
+.aic-cbx.is-off input { cursor: default; }
+.aic-cbx:has(input:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; }
+.aic-cbx input:focus-visible + .aic-box { outline: none; } /* the pill takes the ring, so the box inside it needs none */
+.aic-card-list { list-style: none; margin: 10px 0 0; padding: 0; border-top: 1px solid var(--line); }
+.aic-card-list li { border-bottom: 1px solid var(--line); }
+.aic-card-list button { display: flex; flex-direction: column; align-items: flex-start; width: 100%; min-height: 44px; padding: 8px 4px; background: none; border: 0; text-align: left; }
+.aic-card-list button:hover { background: var(--bg-2); }
+.aic-cl-n { font-weight: 500; font-size: 14px; line-height: 1.3; color: var(--ink); }
+.aic-cl-v { margin-top: 2px; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); }
+/* the chips with no figure for the measure, as pills that open their cards */
 .aic-gutter { margin-top: 18px; }
 .aic-gut { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 0 0 8px; }
 .aic-gut-k { min-width: 180px; margin-right: 6px; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); }
 .aic-note { max-width: 60em; margin: 14px 0 0; padding-top: 12px; border-top: 1px solid var(--line); font-family: var(--font-ui); font-size: 13px; line-height: 1.5; color: var(--muted); }
-/* the specimen beside the chart: the stage's canvas moves here on a wide screen (Landscape.hostStage), with its label, pause
-   and caption under it; the caption stands on the drawing's foot (--slack, src/app.js Stage.fit) */
-.aic-spec.ch-spec { position: sticky; top: calc(var(--masthead) + 24px); align-self: start; min-width: 0; margin: 0; }
-.aic-spec-draw { position: relative; height: min(46vh, 400px); min-height: 220px; }
-.aic-spec-draw canvas { display: block; width: 100%; height: 100%; }
-@media (hover: hover) and (pointer: fine) {
-  .aic-spec-draw canvas { cursor: grab; touch-action: none; outline: none; }
-  .aic-spec-draw canvas.is-dragging { cursor: grabbing; }
-  .aic-spec-draw canvas:focus-visible { box-shadow: inset 0 0 0 2px var(--accent); }
-}
-.aic-spec-cap { position: relative; margin: calc(-1 * var(--slack, 0px)) 0 0; max-width: 34em; transition: margin-top 0.3s var(--ease, ease); }
-.aic-spec-cap .label { display: flex; align-items: center; gap: 10px; margin: 0 0 6px; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); }
-.aic-spec-cap .label b { font-weight: 400; color: inherit; }
-.aic-spec-cap > p:not(.label) { margin: 0; font-family: var(--font-body); font-size: 14px; line-height: 1.5; color: var(--ink-2); text-wrap: pretty; }
-.aic-spec-cap .stage-pause { pointer-events: auto; display: inline-grid; place-items: center; width: 24px; height: 24px; margin: -4px 0; padding: 0; border: 1px solid var(--line-2); border-radius: 50%; background: var(--bg); color: var(--ink-2); }
-.aic-spec-cap .stage-pause svg { width: 10px; height: 10px; fill: currentColor; stroke: none; }
-.aic-spec-cap .stage-pause:hover { color: var(--ink); border-color: var(--ink); }
-@media (prefers-reduced-motion: reduce) { .aic-spec-cap { transition: none; } }
-html.no-stage .aic-spec { display: none; }
-html.no-stage .aic-grid { grid-template-columns: minmax(0, 1fr); }
-@media (min-width: 900px) {
-  /* the stage beside the page stands down: the specimen sits beside the chart */
-  html[data-view="landscape"] .stage { display: none; }
-  html[data-view="landscape"] body:has(.stage[data-hidden]) .to-top { top: auto; bottom: 20px; }
-}
-
-/* ---------- the picks: a row of two to four chips, each with Change and Remove ---------- */
-.cxa { margin-top: 80px; }
-.cxa-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--ink); }
-.cxa-ask { margin: 0; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: 25px; line-height: 1.25; color: var(--ink); }
-.cxa-clear, .cxa-act, .cx-act, .cx-jump, .cxs-clear {
-  display: inline-flex; align-items: center; min-height: 24px; padding: 4px 0; background: none; border: 0;
-  font-family: var(--font-ui); font-weight: 500; font-size: 13px; line-height: 1.2; color: var(--ink);
-  text-decoration: underline; text-decoration-color: var(--rule-ink); text-underline-offset: 4px;
-}
-.cxa-clear:hover, .cxa-act:hover, .cx-act:hover, .cx-jump:hover, .cxs-clear:hover { color: var(--accent-ink); text-decoration-color: var(--accent); }
-.cxa-clear { flex: none; }
-.cxa-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-bottom: 1px solid var(--line); }
-.cxa-slot { display: flex; flex-direction: column; min-width: 0; padding: 16px 20px 18px 0; }
-.cxa-slot + .cxa-slot { padding-left: 20px; border-left: 1px solid var(--line); }
-.cxa-k { display: flex; align-items: center; margin: 0 0 8px; font-family: var(--font-code); font-size: 12px; line-height: 19px; color: var(--muted); }
-.cxa-slot[data-state="next"] .cxa-k { color: var(--accent-ink); }
-.cxa-name { align-self: flex-start; padding: 0; background: none; border: 0; text-align: left; overflow-wrap: anywhere; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: 26px; line-height: 1.12; color: var(--ink); }
-.cxa-name:hover { text-decoration: underline; text-decoration-color: var(--rule-ink); text-decoration-thickness: 1px; text-underline-offset: 6px; }
-.cxa-slot[data-on="1"] .cxa-name { text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 6px; }
-.cxa-meta { margin-top: 6px; font-family: var(--font-ui); font-size: 13px; line-height: 1.4; color: var(--muted); overflow-wrap: anywhere; }
-.cxa-acts { display: flex; flex-wrap: wrap; gap: 0 16px; margin-top: 6px; }
-.cxa-add { display: flex; align-items: center; gap: 8px; flex: 1 1 auto; width: 100%; min-height: 92px; padding: 0 16px; border: 1px dashed var(--control-edge); background: none; text-align: left; font-family: var(--font-ui); font-weight: 500; font-size: 15px; line-height: 1.3; color: var(--ink); }
-.cxa-add:hover { border-color: var(--ink); }
-.cxa-plus { font-size: 18px; font-weight: 400; line-height: 1; }
-.cxa-slot[data-state="next"] .cxa-add { border: 1.5px solid var(--accent); }
-.cxa-slot[data-state="more"] .cxa-add { font-weight: 400; color: var(--ink-2); }
-/* the line under the picks: pairs, then Try with */
-.cxa-pairs { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 18px; }
-.cxa-pk { margin-right: 6px; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); }
-/* the folded list of every chip, by country and maker */
-.cxa-browse { margin-top: 18px; border-top: 1px solid var(--line); }
-.cxa-browse summary { display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 0; cursor: pointer; list-style: none; font-family: var(--font-ui); font-weight: 500; font-size: 14px; line-height: 1.2; color: var(--ink); }
-.cxa-browse summary::-webkit-details-marker { display: none; }
-.cxa-browse summary::before { content: "+"; width: 12px; font-size: 16px; font-weight: 400; color: var(--muted); }
-.cxa-browse[open] summary::before { content: "\2212"; }
-.aic-lg { padding: 4px 0 14px; }
-.aic-lg-h { margin: 6px 0 8px; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); }
-.aic-lr { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 6px 16px; align-items: baseline; padding: 8px 0; border-top: 1px solid var(--line); }
-.aic-ln { font-family: var(--font-ui); font-weight: 500; font-size: 14px; line-height: 1.3; color: var(--ink); }
-.aic-lc { display: flex; flex-wrap: wrap; gap: 6px; }
-
-/* ---------- the chip picker: a popover under its pick, a sheet from the bottom on phones ---------- */
-.cxp { position: absolute; z-index: 39; display: flex; flex-direction: column; background: var(--bg); border: 1px solid var(--ink); box-shadow: var(--shadow); padding-top: 12px; font-family: var(--font-ui); }
-.cxp-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 0 10px 8px 16px; }
-.cxp-t { margin: 0; font-weight: 500; font-size: 15px; line-height: 1.2; color: var(--ink); }
-.cxp-x { display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; font-size: 20px; line-height: 1; color: var(--ink-2); }
-.cxp-x:hover { color: var(--ink); background: var(--bg-2); }
-.cxp-in { display: block; box-sizing: border-box; width: calc(100% - 32px); height: 40px; margin: 0 16px 10px; padding: 0 12px; border: 1px solid var(--control-edge); border-radius: 0; background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 15px; }
-.cxp-in::placeholder { color: var(--muted); }
-.cxp-in:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
-.cxp-list { position: relative; flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding-bottom: 6px; border-top: 1px solid var(--line); }
-.cxp-gh { position: sticky; top: 0; z-index: 1; padding: 10px 16px 4px; background: var(--bg); font-family: var(--font-code); font-size: 11.5px; line-height: 16px; color: var(--muted); }
-.cxp-o { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 10px; padding: 7px 16px; cursor: pointer; }
-.cxp-n { font-weight: 500; font-size: 15px; line-height: 1.3; color: var(--ink); }
-.cxp-m { grid-column: 1; font-size: 12.5px; line-height: 1.35; color: var(--muted); }
-.cxp-s { grid-column: 2; grid-row: 1 / span 2; align-self: center; font-family: var(--font-code); font-size: 11.5px; line-height: 1; color: var(--muted); }
-.cxp-o:hover, .cxp-o.is-active { background: var(--bg-2); }
-.cxp-o.is-active { box-shadow: inset 2px 0 0 var(--accent); } /* the active chip is the list's focus mark */
-.cxp-o.is-active .cxp-n { color: var(--accent-ink); }
-.cxp-o.is-mine .cxp-s { color: var(--accent-ink); }
-.cxp-o[aria-disabled="true"] { cursor: default; }
-.cxp-o[aria-disabled="true"]:hover { background: none; }
-.cxp-o[aria-disabled="true"] .cxp-n, .cxp-o[aria-disabled="true"] .cxp-m { color: var(--muted); opacity: 0.6; }
-.cxp-none { margin: 10px 16px 16px; font-size: 14px; line-height: 1.4; color: var(--muted); }
-.cxp-scrim { position: fixed; inset: 0; z-index: 59; background: var(--scrim); }
-.cxp.is-sheet { position: fixed; left: 0; right: 0; bottom: 0; z-index: 60; border: 0; border-top: 2px solid var(--ink); box-shadow: none; padding-bottom: env(safe-area-inset-bottom, 0px); }
-.cxp.is-sheet .cxp-x { width: 44px; height: 44px; font-size: 24px; }
-.cxp.is-sheet .cxp-in { font-size: 16px; } /* 16 px, or iOS zooms the page when the field takes focus */
-.cxp.is-sheet .cxp-o { padding: 9px 16px; }
+.aic-open-list { display: none; }
 
 /* ---------- the comparison ---------- */
-.aic-cmp { margin-top: 96px; }
-.aic-cmp-t { margin: 0; font-family: var(--font-display); font-weight: 350; font-variation-settings: var(--opsz-title); font-size: 46px; line-height: 1.08; letter-spacing: -0.015em; color: var(--ink); }
-.aic-cmp .aic-lede { margin: 10px 0 0; max-width: 38em; font-family: var(--font-body); font-size: 15.5px; line-height: 1.55; color: var(--ink-2); }
-.aic-sec { margin-top: 56px; padding-top: 12px; border-top: 1px solid var(--ink); }
-.aic-sec-h { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px 24px; }
-.aic-sec-h .cx-h { margin: 0; }
-.aic-sec-r { margin: 0; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); }
-.aic-pk .cx-sub { margin: 12px 0 0; max-width: 46em; font-family: var(--font-body); font-size: 14px; line-height: 1.55; color: var(--ink-2); }
-
-/* the key and the scale bar */
-.cx-key { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; font-family: var(--font-ui); font-size: 12.5px; line-height: 1; color: var(--ink-2); }
+.aic-cmp { margin-top: 88px; }
+.aic-c-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px 24px; padding-bottom: 12px; border-bottom: 1px solid var(--ink); }
+.aic-c-t { margin: 0; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: 25px; line-height: 1.25; color: var(--ink); outline: none; }
+.aic-c-acts { display: flex; gap: 18px; margin: 0; }
+.aic-c-lede { margin: 12px 0 0; max-width: 40em; font-family: var(--font-body); font-size: calc(15.5px * var(--text-scale)); line-height: 1.55; color: var(--ink-2); }
+.aic-pairs { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 18px; }
+.aic-pairs .aic-k { margin-right: 8px; }
+.aic-c-sec { margin-top: 44px; }
+.aic-c-sec-h { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 24px; padding-bottom: 8px; border-bottom: 1px solid var(--rule-ink); }
+.aic-c-sec-h .label { margin: 0; }
+.aic-cmp .cx-sub { margin: 10px 0 0; max-width: 46em; font-family: var(--font-body); font-size: calc(14px * var(--text-scale)); line-height: 1.55; color: var(--ink-2); }
+/* a chip at the head of its row */
+.cx-who { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: start; column-gap: 2px; }
+.cx-who .cx-no { margin-top: 2px; }
+.cx-wn { font-family: var(--font-ui); font-weight: 500; font-size: 15px; line-height: 1.3; color: var(--ink); overflow-wrap: anywhere; }
+.cx-wm { grid-column: 2; display: block; margin-top: 2px; font-family: var(--font-ui); font-size: 12.5px; line-height: 1.35; color: var(--muted); }
+.cx-wm .aic-tlink { min-height: 24px; padding: 2px 0; font-size: 12.5px; }
+.cx-who.is-on .cx-wn { text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+/* values: a figure with its marks, its bar in rule B; a part in words; what is missing */
+.cx-v { font-family: var(--font-code); font-size: 14.5px; line-height: 1.3; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.cx-v.is-top { font-weight: 700; color: var(--ink); } /* rule B: the largest figure bold in ink */
+.cx-bar { display: block; height: 4px; margin-top: 7px; }
+.cx-bar i { display: block; height: 100%; background: var(--ctx); }
+.cx-bar.is-top i { background: var(--ink); }
+.cx-t { font-family: var(--font-body); font-size: calc(15px * var(--text-scale)); line-height: 1.45; color: var(--ink); }
+.cx-t .cx-2 { display: block; margin-top: 3px; font-family: var(--font-ui); font-size: 12.5px; line-height: 1.4; color: var(--muted); }
+.cx-nil { font-family: var(--font-code); font-size: 12px; line-height: 1.4; color: var(--muted); }
+.cx-said { margin: 10px 0 0; font-family: var(--font-ui); font-size: 13px; line-height: 1.5; color: var(--muted); }
+/* "all": a figure whose source the chip's list does not name row by row goes to the whole list */
+sup.cite.cx-all button { position: relative; padding: 0 1px; background: none; border: 0; font-family: var(--font-mono); font-weight: 500; font-size: inherit; line-height: inherit; color: var(--accent); cursor: pointer; }
+sup.cite.cx-all button::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 24px); height: max(100%, 26px); transform: translate(-50%, -50%); }
+sup.cite.cx-all button:hover { background: var(--accent-soft); }
+/* a speed figure's note letter: it points to the chip's note under the table, in the secondary ink so it never reads as a source */
+.cx-fnl { margin-left: 2px; font-family: var(--font-code); font-size: 11px; line-height: 0; vertical-align: super; }
+.cx-fnl a { position: relative; z-index: 1; padding: 0 1px; color: var(--ink-2); text-decoration: none; }
+.cx-fnl a:hover { text-decoration: underline; }
+/* the letter and the source mark sit side by side, so each takes its fingertip on its own side: the letter's box reaches left
+   over the figure, the mark's reaches right, and neither covers the other */
+.cx-fnl a::before { content: ""; position: absolute; right: -1px; top: 50%; width: 22px; height: 26px; transform: translateY(-50%); }
+.cx-vl .cx-fnl + sup.cite a::before { left: -1px; transform: translateY(-50%); }
+/* the figures: one row per chip, each figure a column of numbers read down */
+table.cx-fig, table.cx-parts, table.cx-words { border-collapse: collapse; table-layout: fixed; }
+table.cx-parts, table.cx-words { width: 100%; }
+table.cx-fig { max-width: 100%; margin-top: 4px; }
+.cx-fig-gap { height: 18px; }
+.cx-fig thead th { padding: 14px 0 2px 10px; text-align: right; vertical-align: bottom; font-family: var(--font-ui); font-weight: 400; font-size: 13px; line-height: 1.3; color: var(--ink); }
+.cx-fig thead th.grp { padding: 14px 0 6px; text-align: center; border-bottom: 1px solid var(--line-2); }
+.cx-fig thead tr.u th { padding: 4px 0 8px 10px; font-family: var(--font-code); font-size: 11px; line-height: 14px; color: var(--muted); border-bottom: 2px solid var(--ink); }
+.cx-fig thead th.c0 { text-align: left; padding-left: 0; border-bottom: 2px solid var(--ink); }
+.cx-fig tbody th { padding: 12px 10px 12px 0; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); font-weight: 400; }
+.cx-fig td { padding: 12px 0 12px 10px; text-align: right; vertical-align: top; border-bottom: 1px solid var(--line); }
+.cx-fig td .cx-nil { font-size: 11px; white-space: nowrap; }
+.cx-fig sup.cite { display: inline-block; min-width: 20px; text-align: left; }
+.cx-fns { margin-top: 18px; }
+.cx-fns .label { margin: 0 0 8px; }
+.cx-fns ol { list-style: none; margin: 0; padding: 0; }
+.cx-fns li { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 0 10px; padding: 8px 0; border-bottom: 1px solid var(--line); font-family: var(--font-body); font-size: calc(13.5px * var(--text-scale)); line-height: 1.5; color: var(--ink-2); scroll-margin-top: calc(var(--masthead) + var(--cx-sticky) + 24px); }
+.cx-fns li:target { background: var(--accent-soft); }
+.cx-fns-who { font-family: var(--font-ui); font-weight: 500; font-size: 13.5px; line-height: 1.4; color: var(--ink); }
+.cx-fn-l { margin-right: 10px; font-family: var(--font-code); font-style: normal; font-size: 12px; color: var(--ink-2); }
+/* makers and parts, and the rest in words */
+.cx-parts thead th { padding: 14px 14px 8px 0; text-align: left; vertical-align: bottom; font-family: var(--font-ui); font-weight: 400; font-size: 13px; line-height: 1.3; color: var(--ink); border-bottom: 2px solid var(--ink); }
+.cx-parts thead th.c0 { width: 200px; }
+.cx-parts tbody th { padding: 12px 14px 12px 0; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); font-weight: 400; }
+.cx-parts td { padding: 12px 14px 12px 0; vertical-align: top; border-bottom: 1px solid var(--line); font-family: var(--font-body); font-size: calc(15px * var(--text-scale)); line-height: 1.45; color: var(--ink); overflow-wrap: anywhere; }
+.cx-parts td .cx-t { font-size: 14.5px; }
+.cx-words th.at { width: 200px; padding: 14px 14px 14px 0; text-align: left; vertical-align: top; font-family: var(--font-ui); font-weight: 400; font-size: 14px; line-height: 1.35; color: var(--ink); border-top: 1px solid var(--rule-ink); }
+.cx-words td.wc { width: 170px; padding: 13px 12px 10px 0; vertical-align: top; border-top: 1px solid var(--line); }
+.cx-words td.wc .cx-wn { font-size: 13.5px; }
+.cx-words td.wt { padding: 12px 0 10px; vertical-align: top; border-top: 1px solid var(--line); overflow-wrap: anywhere; }
+.cx-words tr.first td { border-top: 1px solid var(--rule-ink); }
+.cx-words tr.long td.wt .cx-t { font-size: 14.5px; }
+.cx-words td.span { padding: 14px 0; border-top: 1px solid var(--rule-ink); }
+.cx-words tbody:last-child tr:last-child td, .cx-words tbody:last-child tr:last-child th { border-bottom: 1px solid var(--line); }
+/* the packages at one scale: each drawing over a rule, its number and name, its size; the chip on the stage says so */
+.cx-key { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; margin-top: 12px; font-family: var(--font-ui); font-size: 12.5px; line-height: 1; color: var(--ink-2); }
 .cx-key span { display: inline-flex; align-items: center; gap: 7px; }
 .cx-sw { display: inline-block; width: 11px; height: 11px; }
 .cx-sw.die { background: var(--ink); }
@@ -180,23 +270,17 @@ html.no-stage .aic-grid { grid-template-columns: minmax(0, 1fr); }
 .cx-sw.sub { background: var(--bg-2); box-shadow: inset 0 0 0 1px var(--line-2); }
 .cx-scale { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-code); font-size: 12px; color: var(--muted); }
 .cx-scale i { display: inline-block; height: 6px; border: 1px solid var(--muted); border-top: 0; }
-
-/* the packages at one scale: each drawing over a rule, its number and name, its size; the chip on the stage says so in wine */
-.cx-plans { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 28px 48px; margin-top: 28px; }
-.cx-plan { display: flex; flex-direction: column; min-width: 0; max-width: 100%; }
-.cx-plan-hit { display: flex; flex-direction: column; width: 100%; padding: 0; background: none; border: 0; text-align: left; color: var(--ink); }
-.cx-plan-art { display: flex; align-items: flex-end; box-sizing: content-box; height: var(--plan-h, 84px); padding-bottom: 12px; border-bottom: 1px solid var(--line-2); }
-.cx-plan.is-on .cx-plan-art { padding-bottom: 11px; border-bottom: 2px solid var(--accent); }
-.cx-plan-hit:hover .cx-plan-name b { text-decoration: underline; text-decoration-color: var(--rule-ink); text-underline-offset: 3px; }
+.cx-plans { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 24px 40px; margin-top: 24px; }
+.cx-plan { display: flex; flex-direction: column; min-width: 0; }
+.cx-plan-hit { display: flex; flex-direction: column; padding: 0; background: none; border: 0; text-align: left; color: var(--ink); }
+.cx-plan-art { display: flex; align-items: flex-end; box-sizing: content-box; padding-bottom: 10px; border-bottom: 1px solid var(--line-2); }
+.cx-plan.is-on .cx-plan-art { padding-bottom: 9px; border-bottom: 2px solid var(--accent); }
+.cx-plan-hit:hover .cx-plan-name { text-decoration: underline; text-decoration-color: var(--rule-ink); text-underline-offset: 3px; }
 .cx-plan-svg { display: block; max-width: none; }
-.cx-plan-name { display: block; margin-top: 10px; font-family: var(--font-ui); font-size: 15px; line-height: 1.3; overflow-wrap: anywhere; }
-.cx-plan-name b { font-weight: 500; }
-.cx-plan-name em { display: block; margin-top: 1px; font-style: normal; font-size: 13px; color: var(--muted); }
-.cx-plan-size { display: block; margin-top: 4px; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); }
-.cx-on { display: block; min-height: 16px; margin-top: 6px; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--accent-ink); }
+.cx-plan-name { margin-top: 8px; font-family: var(--font-ui); font-weight: 500; font-size: 14px; line-height: 1.3; color: var(--ink); }
+.cx-plan-size { margin-top: 3px; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); }
+.cx-on { display: block; min-height: 16px; margin-top: 4px; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--accent-ink); }
 .cx-noplan { display: flex; align-items: center; justify-content: center; box-sizing: border-box; width: 112px; height: 72px; padding: 6px; border: 1px dashed var(--line-2); font-family: var(--font-code); font-style: normal; font-size: 11px; line-height: 1.3; text-align: center; color: var(--muted); }
-.cx-plan--ghost .cx-plan-art i { display: block; width: 128px; height: 84px; border: 1px dashed var(--line-2); background: repeating-linear-gradient(135deg, var(--line) 0 1px, transparent 1px 8px); }
-.cx-plan--ghost .cx-plan-name b { color: var(--ink-2); }
 .cx-plan-svg rect, .cx-plan-svg circle, .cx-plan-svg line { vector-effect: non-scaling-stroke; }
 .cx-substrate { fill: var(--bg-2); stroke: var(--line-2); stroke-width: 1; }
 .cx-interposer { fill: var(--bg-3); stroke: var(--line-2); stroke-width: 1; }
@@ -205,66 +289,24 @@ html.no-stage .aic-grid { grid-template-columns: minmax(0, 1fr); }
 .cx-hbm { fill: var(--aic-hbm); } /* memory is gray: red wine never marks a part */
 .cx-wafer { fill: var(--bg-2); stroke: var(--line-2); stroke-width: 1; stroke-dasharray: 4 3; }
 .cx-grid { stroke: var(--bg); stroke-width: 0.6; opacity: 0.55; }
+section[data-view="landscape"] .export-bar.xq { margin-top: 22px; }
+/* a phone, or a column too narrow for the tables: each figure and each part becomes a short list, the chip then its value */
+.cx-fb { padding: 12px 0 10px; border-bottom: 1px solid var(--line); }
+.cx-fb-h { display: flex; align-items: baseline; gap: 8px; margin: 0 0 4px; font-family: var(--font-ui); font-size: 14px; line-height: 1.35; color: var(--ink); }
+.cx-fb-h span { font-family: var(--font-code); font-size: 11.5px; line-height: 16px; color: var(--muted); }
+.cx-fb-all { display: block; padding: 4px 0; }
+.cx-fl { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; column-gap: 12px; max-width: 330px; padding: 5px 0; }
+.cx-fl .cx-wn { font-size: 14px; font-weight: 400; }
+.cx-vv { text-align: right; font-family: var(--font-body); font-size: calc(15px * var(--text-scale)); line-height: 1.45; }
+.cx-fl .cx-v { font-size: 14px; }
+.cx-fl .cx-bar { grid-column: 1 / -1; margin-top: 4px; }
+.cx-fl--tx { grid-template-columns: minmax(0, 1fr); max-width: none; }
+.cx-fl--tx .cx-vv { text-align: left; padding-left: 25px; }
+.cx-fl .cx-t { font-size: 14.5px; }
 
-/* the figures: each measure a row of bars, the largest solid ink and the rest the light tint */
-.aic-strips { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 56px; }
-.srow { min-width: 0; padding: 18px 0 16px; border-bottom: 1px solid var(--line); }
-.srow-h { margin: 0 0 10px; font-family: var(--font-ui); font-weight: 600; font-size: 15px; line-height: 1.3; color: var(--ink); }
-.srow-h span { margin-left: 4px; font-family: var(--font-code); font-weight: 400; font-size: 11.5px; color: var(--muted); }
-.sl { display: grid; grid-template-columns: 150px minmax(0, 1fr) 148px; gap: 4px 14px; align-items: center; min-height: 30px; }
-.sl-n { min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-family: var(--font-ui); font-size: 13.5px; line-height: 1.6; color: var(--ink); }
-.sl.is-on .sl-n { text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 4px; }
-.sl-b { display: block; height: 12px; }
-.srow.has-sub .sl + .sl { margin-top: 10px; } /* a figure with a second line (a die's area) keeps clear of the next chip's mark */
-.sl-b i { display: block; height: 100%; background: var(--ctx); }
-.sl-b i.top { background: var(--ink); }
-.sl.ghost .sl-n { color: var(--muted); }
-.sl.ghost .sl-b i { width: 100%; background: repeating-linear-gradient(135deg, var(--line-2) 0 1px, transparent 1px 7px); }
-.sl-v { min-width: 0; font-family: var(--font-code); font-size: 14px; line-height: 1.3; color: var(--ink-2); }
-.cx-v.is-top { font-weight: 700; color: var(--ink); } /* rule B: the largest figure bold in ink */
-.sl-v .cx-2 { display: block; margin-top: 1px; font-family: var(--font-ui); font-size: 11.5px; line-height: 1.3; color: var(--muted); }
-.cx-nil { font-family: var(--font-code); font-size: 12px; line-height: 1.4; color: var(--muted); }
-.cx-fn { margin-left: 1px; font-family: var(--font-code); font-size: 11px; line-height: 0; vertical-align: super; color: var(--muted); }
-/* "all": a figure whose source the chip's list does not name row by row goes to the whole list */
-sup.cite.cx-all button { position: relative; padding: 0 1px; background: none; border: 0; font-family: var(--font-mono); font-weight: 500; font-size: inherit; line-height: inherit; color: var(--accent); cursor: pointer; }
-sup.cite.cx-all button::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 24px); height: max(100%, 26px); transform: translate(-50%, -50%); }
-sup.cite.cx-all button:hover { background: var(--accent-soft); }
-
-/* the words: one column per chip, Change, × and Read the notes on each head */
-.cx-more { margin: 10px 0 0; text-align: right; font-family: var(--font-code); font-size: 12px; color: var(--muted); }
-.cx-more[hidden] { display: none; }
-.cx-tablewrap { max-width: 100%; margin-top: 10px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-.cx-tablewrap[data-more="1"] { -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 56px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 56px), transparent); }
-.cx-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
-.cx-table[data-n="3"], .cx-table[data-n="4"] { min-width: 720px; }
-.cx-table th.cx-rowhead { width: 150px; padding: 13px 14px 13px 0; text-align: left; vertical-align: top; font-family: var(--font-ui); font-weight: 400; font-size: 13.5px; line-height: 1.35; color: var(--ink-2); }
-.cx-table thead th { position: relative; padding: 0 14px 12px; text-align: left; vertical-align: bottom; border-bottom: 2px solid var(--ink); }
-.cx-table thead th.cx-rowhead { padding-left: 0; }
-.cx-table thead th.is-focus { box-shadow: inset 0 -2px 0 var(--accent); }
-.cx-table td { padding: 13px 14px; vertical-align: top; border-bottom: 1px solid var(--line); font-family: var(--font-body); font-size: 15px; line-height: 1.45; color: var(--ink); overflow-wrap: anywhere; }
-.cx-table tbody th { border-bottom: 1px solid var(--line); }
-.cx-table td.cx-long { font-size: 14px; line-height: 1.5; }
-.cx-table td.is-focus { background: var(--bg-2); }
-.cx-table td .cx-2 { display: block; margin-top: 3px; font-family: var(--font-ui); font-size: 12.5px; line-height: 1.4; color: var(--muted); }
-.cx-table td.cx-ghost { background: repeating-linear-gradient(135deg, var(--line) 0 1px, transparent 1px 8px); }
-.cx-colhead { display: block; padding: 0 34px 0 0; background: none; border: 0; text-align: left; color: var(--ink); }
-.cx-colhead b { font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: 23px; line-height: 1.15; overflow-wrap: anywhere; }
-.cx-colhead .cx-no { vertical-align: 4px; }
-.cx-colhead span { display: block; margin-top: 3px; font-family: var(--font-ui); font-size: 13px; line-height: 1.4; color: var(--muted); }
-.cx-colhead:hover b { text-decoration: underline; text-decoration-color: var(--rule-ink); text-decoration-thickness: 1px; text-underline-offset: 4px; }
-.cx-colacts { display: flex; flex-wrap: wrap; gap: 0 14px; margin-top: 4px; }
-.cx-x { position: absolute; top: 0; right: 10px; display: inline-grid; place-items: center; width: 28px; height: 28px; padding: 0; border: 0; border-radius: 50%; background: none; font-family: var(--font-ui); font-size: 18px; line-height: 1; color: var(--muted); }
-.cx-x:hover { color: var(--ink); background: var(--bg-2); }
-.cx-ghost-h { display: block; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: 23px; line-height: 1.15; color: var(--ink-2); }
-.cx-ghost-s { display: block; margin-top: 3px; font-family: var(--font-ui); font-size: 13px; color: var(--muted); }
-
-/* the speed notes, and the notes and sources */
-.cx-foot { margin-top: 28px; }
-.cx-foot .label { margin: 0 0 10px; }
-.cx-fns { margin: 0; padding-left: 20px; max-width: 60em; font-family: var(--font-body); font-size: 14px; line-height: 1.55; color: var(--ink-2); }
-.cx-fns li { margin-bottom: 8px; }
-.cx-fns b { margin-right: 6px; font-family: var(--font-ui); font-weight: 600; font-size: 13px; color: var(--ink); }
+/* ---------- notes and sources ---------- */
 .cx-notes { margin-top: 88px; }
+.cx-notes[hidden] { display: none; }
 .cx-notes-h { margin: 0 0 16px; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: 32px; line-height: 1.15; letter-spacing: -0.012em; color: var(--ink); }
 .cx-note { border-top: 1px solid var(--line-2); }
 .cx-note:last-child { border-bottom: 1px solid var(--line-2); }
@@ -274,7 +316,7 @@ sup.cite.cx-all button:hover { background: var(--accent-soft); }
 .cx-note[open] summary::before { content: "\2212"; }
 .cx-note summary b { font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 21px; line-height: 1.2; color: var(--ink); }
 .cx-note summary span { font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); }
-.cx-note-body { max-width: 40em; padding-left: 24px; font-family: var(--font-body); font-size: 16.5px; line-height: 1.65; color: var(--ink); }
+.cx-note-body { max-width: 40em; padding-left: 24px; font-family: var(--font-body); font-size: calc(16.5px * var(--text-scale)); line-height: 1.65; color: var(--ink); }
 .cx-note-body p { margin: 0 0 14px; }
 .cx-srcs { margin: 6px 0 22px 24px; padding: 12px 0 0; border-top: 1px solid var(--line); list-style: none; counter-reset: cxs; columns: 2; column-gap: 32px; font-family: var(--font-ui); font-size: 13px; line-height: 1.45; }
 .cx-srcs li { display: grid; grid-template-columns: 26px minmax(0, 1fr); padding: 0 0 7px; break-inside: avoid; }
@@ -282,83 +324,64 @@ sup.cite.cx-all button:hover { background: var(--accent-soft); }
 .cx-srcs a { color: var(--ink); text-decoration-color: var(--rule-ink); overflow-wrap: anywhere; }
 .cx-srcs a:hover { color: var(--accent-ink); text-decoration-color: var(--accent); }
 
-/* nothing picked: the comparison shows its empty frame; the notes, the speed notes and the copy line wait */
-section[data-view="landscape"][data-empty="1"] .cx-foot, section[data-view="landscape"][data-empty="1"] .cx-notes, section[data-view="landscape"][data-empty="1"] .export-bar, section[data-view="landscape"][data-empty="1"] .cx-more { display: none; }
-section[data-view="landscape"] .export-bar.xq { margin-top: 16px; }
-
-/* ---------- the bar that follows the reader once the picks scroll away ---------- */
-:root { --cx-sticky: 0px; } /* Landscape.updateBar sets it to the bar's height while a chip is in */
-.cxs { position: fixed; top: var(--masthead); left: 0; right: 0; z-index: 30; background: var(--bg); border-bottom: 1px solid var(--line-2); }
-.cxs-in { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; min-height: 48px; padding: 7px var(--margin); box-sizing: border-box; }
-.cxs-k { flex: none; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); }
-.cxs-list { display: flex; flex: 1 1 auto; flex-wrap: wrap; align-items: center; gap: 6px; min-width: 0; }
-.cxs-chip { display: inline-flex; align-items: center; min-height: 32px; padding: 0 2px 0 13px; border: 1px solid var(--control-edge); border-radius: 999px; }
-.cxs-name { padding: 0; background: none; border: 0; font-family: var(--font-ui); font-weight: 500; font-size: 14px; line-height: 1; color: var(--ink); }
-.cxs-name:hover { text-decoration: underline; text-decoration-color: var(--rule-ink); text-underline-offset: 3px; }
-.cxs-x { display: inline-grid; place-items: center; width: 26px; height: 26px; padding: 0; border: 0; border-radius: 50%; background: none; font-size: 16px; line-height: 1; color: var(--muted); }
-.cxs-x:hover { color: var(--ink); background: var(--bg-2); }
-.cxs-add { min-height: 32px; padding: 0 13px; border: 1px dashed var(--control-edge); border-radius: 999px; background: none; font-family: var(--font-ui); font-weight: 500; font-size: 14px; line-height: 1; color: var(--ink); }
-.cxs-add:hover { border-color: var(--ink); }
-.cxs-clear { flex: none; margin-left: auto; }
-/* nothing focused may sit under the masthead and the bar (WCAG 2.4.11) */
+/* ---------- the phone's tray: the ticked chips under the masthead ---------- */
+:root { --cx-sticky: 0px; } /* Landscape.renderTray sets it to the tray's height while it shows */
+.aic-tray { position: fixed; top: var(--masthead); left: 0; right: 0; z-index: 30; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; box-sizing: border-box; min-height: 44px; padding: 8px 16px; background: var(--bg); border-bottom: 1px solid var(--line-2); }
+.aic-tray[hidden] { display: none; }
+.aic-tc { display: inline-flex; align-items: center; white-space: nowrap; font-family: var(--font-ui); font-weight: 500; font-size: 13px; line-height: 1; color: var(--ink); }
+.aic-tray .aic-tlink { flex: none; margin-left: auto; }
+.aic-scrim { position: fixed; inset: 0; z-index: 59; background: var(--scrim); }
+.aic-scrim[hidden] { display: none; }
+html.aic-sheet-on { overflow: hidden; }
+html.aic-sheet-on .aic-tray { z-index: 62; }
+/* nothing focused may sit under the masthead and the tray (WCAG 2.4.11) */
 html.kb:has(section[data-view="landscape"]:not([hidden])) { scroll-padding-top: calc(var(--masthead) + var(--band, 0px) + var(--cx-sticky) + 12px); }
-section[data-view="landscape"] .cx-h, section[data-view="landscape"] .cx-note, section[data-view="landscape"] .cx-tablewrap { scroll-margin-top: calc(var(--masthead) + var(--band, 0px) + var(--cx-sticky) + 16px); }
+section[data-view="landscape"] .label, section[data-view="landscape"] .cx-note, section[data-view="landscape"] .aic-cmp, section[data-view="landscape"] .aic-atlas { scroll-margin-top: calc(var(--masthead) + var(--band, 0px) + var(--cx-sticky) + 16px); }
 
 /* ---------- narrower screens ---------- */
 @media (max-width: 1200px) {
-  .aic-grid { grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: 0 32px; }
-  .aic-strips { gap: 0 32px; }
-  .sl { grid-template-columns: 120px minmax(0, 1fr) 132px; }
+  .aic-ws { grid-template-columns: 280px minmax(0, 1fr); gap: 0 36px; }
+  .cx-parts thead th.c0, .cx-words th.at { width: 170px; }
+  .cx-fns li { grid-template-columns: 170px minmax(0, 1fr); }
+  .aic-rk { grid-template-columns: minmax(0, 170px) minmax(0, 150px) minmax(0, 1fr) 110px; }
 }
 @media (max-width: 899px) {
-  /* a phone keeps the specimen in the strip at the foot of the screen, so the chart takes the width */
-  .aic-grid { grid-template-columns: minmax(0, 1fr); }
-  .aic-spec { display: none; }
-  .cx-table th.cx-rowhead { width: 120px; }
+  /* the rail becomes a sheet from the bottom; the specimen stays in the strip at the foot of the screen */
+  .aic-ws { display: block; margin-top: 44px; padding-top: 14px; }
+  .aic-main { padding-top: 0; }
+  .aic-rail { position: fixed; left: 0; right: 0; bottom: 0; z-index: 61; display: none; background: var(--bg); border-top: 2px solid var(--ink); }
+  .aic-rail.is-open { display: block; }
+  /* the sheet reaches up to the tray (or the masthead), so no sliver of the page shows between them */
+  .aic-rail-in { position: static; height: calc(100vh - var(--masthead) - var(--cx-sticky)); height: calc(100dvh - var(--masthead) - var(--cx-sticky)); padding: 6px 16px 12px; padding-bottom: max(12px, env(safe-area-inset-bottom, 0px)); }
+  .aic-spec.ch-spec { display: none; }
+  .aic-rl-head { align-items: center; padding-top: 6px; }
+  .aic-rl-c { align-self: center; }
+  .aic-rl-close { display: inline-grid; width: 44px; height: 44px; margin-right: -10px; font-size: 24px; }
+  .aic-rl-close[hidden] { display: none; }
+  .aic-rl-find input { height: 42px; font-size: 16px; } /* 16 px, or iOS zooms the page when the field takes focus */
+  .aic-rl-o { min-height: 40px; }
+  .aic-rl-o input { top: 11px; }
+  .aic-open-list { display: flex; align-items: center; justify-content: space-between; gap: 12px; box-sizing: border-box; width: 100%; min-height: 48px; margin-top: 22px; padding: 0 16px; border: 1px solid var(--ink); background: none; text-align: left; font-family: var(--font-ui); font-weight: 500; font-size: 15px; line-height: 1.2; color: var(--ink); }
+  .aic-rk { grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: auto auto auto; gap: 0 10px; padding: 6px 0 8px; }
+  .aic-rk-n { grid-column: 1; grid-row: 1; min-height: 24px; }
+  .aic-rk-m { grid-column: 1; grid-row: 2; }
+  .aic-rk-b { grid-column: 1 / -1; grid-row: 3; height: 6px; margin-top: 6px; }
+  .aic-rk-v { grid-column: 2; grid-row: 1 / 3; }
 }
+@media (min-width: 900px) { .aic-tray, .aic-scrim { display: none !important; } html.aic-sheet-on { overflow: visible; } }
 @media (max-width: 760px) {
-.aic-head .aic-head-r .dek { margin: 0; }
-  .aic-atlas { margin-top: 44px; }
   .aic-gut-k { flex-basis: 100%; min-width: 0; }
   .aic-pill { white-space: normal; }
-  .cxa { margin-top: 56px; }
-  .cxa-ask { font-size: 21px; }
-  .cxa-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .cxa-slot { padding-right: 12px; }
-  .cxa-slot + .cxa-slot { padding-left: 12px; }
-  .cxa-slot:nth-child(odd) { padding-left: 0; border-left: 0; }
-  .cxa-slot:nth-child(n+3) { border-top: 1px solid var(--line); }
-  .cxa-name { font-size: 21px; }
-  .cxa-add { min-height: 76px; padding: 0 12px; font-size: 14px; }
-  .aic-lr { grid-template-columns: minmax(0, 1fr); }
-  .aic-cmp { margin-top: 72px; }
-  .aic-cmp-t { font-size: 32px; }
-  .aic-strips { grid-template-columns: minmax(0, 1fr); }
-  .sl { grid-template-columns: minmax(0, 1fr) 112px; gap: 2px 12px; margin-bottom: 6px; }
-  .sl-n { grid-column: 1 / -1; font-size: 13px; }
-  .sl-v { font-size: 13px; }
-  .cx-plans { gap: 24px 28px; }
-  .cxs-k { display: none; }
-  .cxs-in { gap: 6px 10px; }
-  /* the table of words stacks: each row's name, then the chips two to a line, so nothing scrolls sideways */
-  .cx-tablewrap { overflow: visible; }
-  .cx-table[data-n="3"], .cx-table[data-n="4"] { min-width: 0; }
-  .cx-table, .cx-table thead, .cx-table tbody, .cx-table tr, .cx-table th, .cx-table td { display: block; width: auto; }
-  .cx-table thead tr { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; border-bottom: 2px solid var(--ink); }
-  .cx-table thead th.cx-rowhead { display: none; }
-  .cx-table thead th { padding: 0 0 12px; border: 0; }
-  .cx-table thead th.is-focus { box-shadow: inset 0 -2px 0 var(--accent); }
-  .cx-table tbody tr { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 12px; border-bottom: 1px solid var(--line); }
-  .cx-table tbody th.cx-rowhead { grid-column: 1 / -1; width: auto; padding: 12px 0 2px; border: 0; font-size: 13px; color: var(--muted); }
-  .cx-table td { padding: 4px 0 12px; border: 0; font-size: 14.5px; }
-  .cx-table td.is-focus { background: none; }
-  .cx-table td.cx-ghost { min-height: 40px; }
-  .cx-table[data-n="3"] td::before, .cx-table[data-n="4"] td::before { content: attr(data-n); display: block; margin-bottom: 2px; font-family: var(--font-code); font-size: 11px; line-height: 16px; color: var(--muted); }
-  .cx-colhead { padding-right: 30px; }
-  .cx-colhead b { font-size: 20px; }
-  .cx-x { right: 0; }
-  .cx-more { display: none; }
+  .aic-cmp { margin-top: 64px; }
+  .aic-c-t { font-size: 21px; }
+  .aic-c-sec { margin-top: 36px; }
+  .cx-fns li { grid-template-columns: minmax(0, 1fr); }
+  .cx-plans { gap: 22px 26px; }
   .cx-srcs { columns: 1; margin-left: 0; }
-  .cx-note-body { padding-left: 0; font-size: 16px; }
+  .cx-note-body { padding-left: 0; font-size: calc(16px * var(--text-scale)); }
+  .cx-notes-h { font-size: 26px; }
 }
-@media print { .cxp, .cxp-scrim, .cxs { display: none !important; } }
+@media print {
+  .aic-ws { display: block; }
+  .aic-rail, .aic-tray, .aic-scrim, .aic-open-list, .aic-pairs, .aic-card, .aic-tip, .aic-view, .aic-measures { display: none !important; }
+}

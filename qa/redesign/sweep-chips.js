@@ -14,10 +14,11 @@
    screens are then its opener, specimen and card, and Tab starts at the chapter), and each readable page dist/<chapter>/.
    usage: node qa/redesign/sweep.js [--set chapters] [--only walk,lithography] [--widths 390,1440] [--tabs 40] [--out qa/redesign/sweep.txt]
 
-   sweep-chips.js is this sweep for the AI Chips redesign only: the view with nothing picked, with a pair (measured from the
-   comparison's top), with four chips (measured from the figures, then the table of words), and /chips/ (measured from its chart).
-   Each state's chips are picked by script after the load; Tab then runs from the top of the page.
-   usage: node qa/redesign/sweep-chips.js [--base http://127.0.0.1:8768] [--widths ...] [--out qa/redesign/sweep-chips.txt] */
+   sweep-chips.js is this sweep for AI Chips only (design round five, the tick list): the view as it opens; two chips (measured
+   from the comparison's top); four chips (measured from the figures, then from the words); a chip's card open on the chart;
+   the chart ranked highest first; the list open (a sheet under 900 px); and /chips/ (measured from its chart). Each state is
+   set by script after the load; Tab then runs from the top of the page.
+   usage: node qa/redesign/sweep-chips.js [--base http://127.0.0.1:8772] [--widths ...] [--tabs 80] [--out qa/redesign/sweep-chips.txt] */
 'use strict';
 const fs = require('fs');
 const path = require('path');
@@ -25,15 +26,17 @@ const { launch, sleep } = require('./cdp.js');
 
 const args = process.argv.slice(2);
 const opt = (n, d) => { const i = args.indexOf('--' + n); return i >= 0 ? args[i + 1] : d; };
-const BASE = opt('base', 'http://127.0.0.1:8768');
+const BASE = opt('base', 'http://127.0.0.1:8772');
 const WIDTHS = opt('widths', '320,390,768,1024,1280,1440').split(',').map(Number);
 const THEMES = opt('themes', 'light,dark').split(',');
 const TABS = +opt('tabs', 40);
 const ONLY = (opt('only', '') || '').split(',').filter(Boolean);
 const OUT = opt('out', path.join(__dirname, 'sweep-chips.txt'));
-const PAIR = "CP.Landscape.setPair(['nvidia-b200','huawei-ascend-910c'])", FOUR = "CP.Landscape.setPair(['nvidia-b200','huawei-ascend-910c','amd-mi355x','cerebras-wse3-turbo'])";
-const PAGES = [['ai-chips', '/#/landscape', '', ''], ['ai-chips-pair', '/#/landscape', PAIR, '#cx-compare'], ['ai-chips-four-figures', '/#/landscape', FOUR, '#cx-strips'],
-  ['ai-chips-four-words', '/#/landscape', FOUR, '#cx-table-wrap'], ['page-chips', '/chips/', '', '.ctl']].filter(([n]) => !ONLY.length || ONLY.includes(n));
+const TWO = "CP.Landscape.setPair(['nvidia-b300','amd-mi355x'])", FOUR = "CP.Landscape.setPair(['nvidia-b300','amd-mi355x','nvidia-vr200','amd-mi455x'])";
+const PAGES = [['ai-chips', '/#/landscape', '', ''], ['ai-chips-two', '/#/landscape', TWO, '#cx-compare'], ['ai-chips-four-figures', '/#/landscape', FOUR, '#cx-h-fig'],
+  ['ai-chips-four-words', '/#/landscape', FOUR, '#cx-h-words'], ['ai-chips-card', '/#/landscape', "CP.Landscape.openCard('nvidia-h100', { show: true })", ''],
+  ['ai-chips-rank', '/#/landscape?pick=nvidia-b300,amd-mi355x&measure=bw&view=rank', '', '#cx-atlas-t'], ['ai-chips-list-open', '/#/landscape?pick=nvidia-h100,nvidia-h20', 'CP.Landscape.listOpen(true)', ''],
+  ['page-chips', '/chips/', '', '.ctl']].filter(([n]) => !ONLY.length || ONLY.includes(n));
 const MEASURE = `(() => {
   const st = document.createElement('style'); st.textContent = 'article.chapter{content-visibility:visible!important}'; document.head.appendChild(st); // the chain's chapters only: a closed <details> must stay closed
   const W = innerWidth, de = document.documentElement, out = { sw: de.scrollWidth, W, small: [], clipped: [], overlap: [] };
@@ -62,7 +65,9 @@ const MEASURE = `(() => {
     texts.push(el);
   }
   // overlap: text boxes in the first three screens, element against element, not one inside the other
-  const layer = (el) => { for (let p = el; p && p !== document.body; p = p.parentElement) { const cs = getComputedStyle(p); if (cs.position === 'fixed' || cs.position === 'sticky') return p; } return null; };
+  // a layer of its own: anything fixed or sticky, and a popover (absolutely placed over the page with a z-index, as a chip's card
+  // is over the chart), which covers what is under it on purpose
+  const layer = (el) => { for (let p = el; p && p !== document.body; p = p.parentElement) { const cs = getComputedStyle(p); if (cs.position === 'fixed' || cs.position === 'sticky' || (cs.position === 'absolute' && cs.zIndex !== 'auto' && +cs.zIndex > 0)) return p; } return null; };
   const boxes = [];
   for (const el of texts) {
     const rg = document.createRange(); rg.selectNodeContents(el);
@@ -92,6 +97,8 @@ const FOCUS = `(() => {
   const a = document.activeElement; if (!a || a === document.body || a === document.documentElement) return null;
   const cs = getComputedStyle(a), ok = (cs.outlineStyle !== 'none' && parseFloat(cs.outlineWidth) > 0) || (cs.boxShadow && cs.boxShadow !== 'none');
   let mark = ok;
+  // a dot on a chart draws its own focus ring, a dashed circle (.fr) that takes a stroke on :focus-visible
+  if (!mark && a instanceof SVGElement) { const fr = a.querySelector('.fr'); if (fr && getComputedStyle(fr).stroke !== 'none' && parseFloat(getComputedStyle(fr).strokeWidth) > 0) mark = true; }
   if (!ok) { // a field shows focus on its box (:focus-within)
     for (let p = a.parentElement; p && p !== document.body && !mark; p = p.parentElement) { const c = getComputedStyle(p); if (c.outlineStyle !== 'none' && parseFloat(c.outlineWidth) > 0) mark = true; }
   }
@@ -128,7 +135,7 @@ const FOCUS = `(() => {
         // a chapter landed on by its anchor: Tab starts at the chapter (its first control is the next stop); any other page from the top
         const startAt = '';
         if (startAt) await ev(`(function(){var e=document.getElementById(${JSON.stringify(startAt)});if(!e)return 0;e.setAttribute('tabindex','-1');e.focus({preventScroll:true});e.removeAttribute('tabindex');return 1;})()`);
-        else await ev('(window.scrollTo(0,0), document.activeElement && document.activeElement.blur && document.activeElement.blur(), 1)');
+        else if (!/openCard|listOpen/.test(setup)) await ev('(window.scrollTo(0,0), document.activeElement && document.activeElement.blur && document.activeElement.blur(), 1)'); // an open card or sheet keeps the focus it took
         for (let k = 0; k < TABS; k++) {
           await s('Input.dispatchKeyEvent', { type: 'keyDown', key: 'Tab', code: 'Tab', windowsVirtualKeyCode: 9 });
           await s('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Tab', code: 'Tab', windowsVirtualKeyCode: 9 });
