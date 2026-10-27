@@ -579,7 +579,7 @@
       $$('a[data-sup]', root).forEach(function (a) { a.addEventListener('click', function () { var q = a.getAttribute('data-sup'); setTimeout(function () { var S = CP.Suppliers; if (S && S.show) S.show({ q: q }); }, 60); }); });
       $$('a[data-supcc]', root).forEach(function (a) { a.addEventListener('click', function () { var cc = a.getAttribute('data-supcc'); setTimeout(function () { var S = CP.Suppliers; if (S && S.show) S.show({ country: cc }); }, 60); }); });
       $$('button[data-go]', root).forEach(function (b) { b.addEventListener('click', function () { self.show(b.getAttribute('data-go'), { push: true, focus: true, reveal: true }); }); });
-      $$('a[data-chip]', root).forEach(function (a) { a.addEventListener('click', function () { var id = a.getAttribute('data-chip'); setTimeout(function () { if (window.CP.Landscape && CP.Landscape.select) CP.Landscape.select(id); }, 60); }); });
+      $$('a[data-chip]', root).forEach(function (a) { a.addEventListener('click', function () { var id = a.getAttribute('data-chip'); setTimeout(function () { if (window.CP.Landscape && CP.Landscape.openCard) CP.Landscape.openCard(id, { show: true }); }, 60); /* the chip's card on the chart, adding nothing */ }); });
     },
 
     /* ---------- where the site uses it ---------- */
@@ -662,7 +662,7 @@
       $$('.lk-men a', box).forEach(function (a) {
         if (a.getAttribute('data-wired')) return; a.setAttribute('data-wired', '1');
         if (a.hasAttribute('data-sup')) a.addEventListener('click', function () { var q = a.getAttribute('data-sup'); setTimeout(function () { var S = CP.Suppliers; if (S && S.show) S.show({ q: q }); }, 60); });
-        if (a.hasAttribute('data-chip')) a.addEventListener('click', function () { var id = a.getAttribute('data-chip'); setTimeout(function () { if (window.CP.Landscape && CP.Landscape.select) CP.Landscape.select(id); }, 60); });
+        if (a.hasAttribute('data-chip')) a.addEventListener('click', function () { var id = a.getAttribute('data-chip'); setTimeout(function () { if (window.CP.Landscape && CP.Landscape.openCard) CP.Landscape.openCard(id, { show: true }); }, 60); /* the chip's card on the chart, adding nothing */ });
         if (a.hasAttribute('data-para')) a.addEventListener('click', function (e) {
           e.preventDefault(); var p = self.paras[+a.getAttribute('data-para')]; if (!p) return;
           location.hash = '#' + p.chapter;

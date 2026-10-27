@@ -66,7 +66,7 @@ module.exports = function (ctx) {
   const tmpl = (re, name) => { const m = re.exec(template); if (!m) { warn(`reference pages: ${name} is missing from src/template.html`); return ''; } return m[1].trim(); };
   // each view's own <section> (the template names the views earlier too, in its pre-boot CSS and the nav)
   const chipsDek = tmpl(/<section class="view[^"]*" data-view="landscape"[^>]*>[\s\S]*?<p class="dek">([\s\S]*?)<\/p>/, 'the AI Chips dek');
-  const specsSub = tmpl(/<span class="aic-tflops">([\s\S]*?)<\/span>/, 'the AI Chips note on TFLOPS');
+  const specsSub = esc(literal('Landscape.TFLOPS_SENTENCE', /\bTFLOPS_SENTENCE: ('[^']*')/) || ''); // the comparison's note on TFLOPS (src/app.js)
   const glossaryDek = tmpl(/<section class="view[^"]*" data-view="glossary"[^>]*>[\s\S]*?<p class="dek">([\s\S]*?)<\/p>/, 'the Glossary dek');
   const ladderLabel = tmpl(/id="sup-ladder-h">([^<]*)</, 'the Suppliers ladder heading');
   const LEGEND = [];
@@ -369,19 +369,23 @@ ${body}
   function chipsPage() {
     const uid = idsFor();
     chips.forEach((c) => chipIds.set(c.id, uid(slug(c.id), 'chips')));
-    const nf = (v) => (Math.round(v * 100) / 100).toLocaleString('en-US'); // Landscape.nf
+    // a figure as the data gives it, every digit kept (Landscape.nf: 2.039 stays 2.039); an axis tick is not a figure, so it may be rounded
+    const nf = (v) => { const t = String(v), neg = t.charAt(0) === '-', p = (neg ? t.slice(1) : t).split('.'); return (neg ? '-' : '') + p[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',') + (p.length > 1 ? '.' + p[1] : ''); };
+    const nfAxis = (v) => (Math.round(v * 100) / 100).toLocaleString('en-US');
     const sub = (t) => (t ? `<span class="sub">${t}</span>` : '');
     const hint = (label, fallback) => { if (HINTS[label]) return HINTS[label]; if (Object.keys(HINTS).length) warn(`reference pages: the AI Chips row "${label}" is not in src/app.js, so its source hints are the module's own`); return fallback; };
     // the columns: the comparison's rows (Landscape.rows) for the fields the brief names, in the comparison's words
     const COLS = [
       { label: 'Vendor', hints: hint('Vendor', ['product page', 'press release', 'corporate']), html: (c) => esc(c.vendor) + sub(esc(cname(c.vendorCountry))) },
       { label: 'Announced', hints: hint('Availability', ['product page', 'press release', 'spec table']), html: (c) => (c.announced ? esc(String(c.announced).slice(0, 4)) : null) },
-      { label: 'Foundry, process node', wide: true, hints: hint('Foundry, process node', ['architecture', 'deep dive', 'white paper', 'documentation']), html: (c) => { const p = c.process || {}; return p.foundry ? esc(p.foundry) + sub(esc(p.node || '') + (p.country ? ' · ' + esc(cname(p.country)) : '')) : null; } },
+      // a part that is missing is said, as the comparison says it (Landscape.rows): "node not published", "assembler not published"
+      { label: 'Foundry, process node', wide: true, hints: hint('Foundry, process node', ['architecture', 'deep dive', 'white paper', 'documentation']), html: (c) => { const p = c.process || {}; if (!p.foundry && !p.node) return null; return (p.foundry ? esc(p.foundry) : '<span class="nil">foundry not published</span>') + sub((p.node ? esc(p.node) + (p.foundry ? '' : '\u0001') : 'node not published') + (p.country ? ' · ' + esc(cname(p.country)) : '')); } },
       { label: 'Memory type', hints: hint('Memory type', ['hbm', 'micron', 'memory', 'datasheet']), html: (c) => { const m = c.memory || {}; return m.type ? esc(m.type) + (m.stacks ? sub(m.stacks + ' stacks') : '') : null; } },
       { label: 'Memory, gigabytes', num: true, hints: hint('Memory, gigabytes', ['spec table', 'datasheet', 'product page']), val: (c) => (c.memory || {}).capacityGB },
-      // the dek names the memory supplier; the comparison has no row for it, so its source is picked by the suppliers' own names
-      { label: 'Memory suppliers', wide: true, hints: ['supplier', 'sk hynix', 'samsung', 'micron', 'cxmt', 'hbm'], html: (c) => { const s = (c.memory || {}).suppliers || []; return s.length ? esc(s.join(', ')) : null; } },
-      { label: 'Package', wide: true, hints: hint('Package', ['cowos', 'packag', 'deep dive', 'architecture']), html: (c) => { const p = c.package || {}; return p.type ? esc(p.type) + (p.assembler ? sub('assembled by ' + esc(p.assembler)) : '') : null; } },
+      // each memory supplier carries the source that names it, as the comparison marks it (Landscape.supSources), and a supplier
+      // no source names carries no mark
+      { label: 'Memory supplier', wide: true, own: true, html: (c) => { const s = (c.memory || {}).suppliers || []; return s.length ? s.map((x) => { const k = supSources(c, x); return esc(x) + (k.length ? markAt(c, k[0]) : ''); }).join(', ') : null; } },
+      { label: 'Package', wide: true, hints: hint('Package', ['cowos', 'packag', 'deep dive', 'architecture']), html: (c) => { const p = c.package || {}; if (!p.type && !p.assembler) return null; return (p.type ? esc(p.type) : '<span class="nil">type not published</span>') + sub(p.assembler ? 'assembled by ' + esc(p.assembler) + (p.type ? '' : '\u0001') : 'assembler not published'); } },
       { label: 'Bandwidth, terabytes/s', num: true, hints: hint('Bandwidth, terabytes/s', ['spec table', 'datasheet', 'product page']), val: (c) => (c.memory || {}).bandwidthTBs },
       { label: 'Speed at FP16, TFLOPS', num: true, fmt: 'fp16', hints: hint('Speed at FP16, TFLOPS', ['spec table', 'datasheet', 'product page']), val: (c) => (c.compute || {}).fp16TFLOPS },
       { label: 'Speed at FP8, TFLOPS', num: true, fmt: 'fp8', hints: hint('Speed at FP8, TFLOPS', ['spec table', 'datasheet', 'product page']), val: (c) => (c.compute || {}).fp8TFLOPS },
@@ -392,12 +396,29 @@ ${body}
     const nil = (c, col) => (col.fmt && ((c.compute || {}).support || {})[col.fmt] === 'no' ? '<span class="nil">not supported</span>' : '<span class="nil">not published</span>');
     // the cell's source, picked as the main page picks it (Landscape.sourceTitle): the first source whose label carries one of the
     // row's words; when none does, the cell points to the chip's whole list, as the main page lists them all
+    const markAt = (c, i) => { const s = (c.sources || [])[i], id = chipIds.get(c.id), l = String((s && s.label) || ''); return s ? `<sup class="cite"><a href="#${id}-s${i + 1}" title="Source: ${esc(l || s.url)}" aria-label="Source ${i + 1}: ${esc(l || s.url)}"><span class="br">[</span>${i + 1}<span class="br">]</span></a></sup>` : ''; };
+    // the sources that name a memory supplier (Landscape.supSources): first a sentence of the chip's notes that names the supplier
+    // and its memory and cites a source, then a source whose label names the supplier (not the chip's own maker); one that also
+    // names the chip comes first
+    const notes = data.landscapeNotes || {};
+    const supSources = (c, sup) => {
+      const srcs = c.sources || [], at = {}, low = String(sup).toLowerCase(), found = [];
+      srcs.forEach((x, i) => { at[x.url] = i; });
+      String(notes[c.id] || '').split(/\.\s+/).forEach((sent) => {
+        const plain = sent.replace(/<[^>]+>/g, '');
+        if (plain.toLowerCase().indexOf(low) < 0 || !/HBM|memory|stack/i.test(plain)) return;
+        sent.replace(/<a href="([^"]+)"/g, (m, u) => { u = u.replace(/&amp;/g, '&'); if (at[u] != null && found.indexOf(at[u]) < 0) found.push(at[u]); return m; });
+      });
+      if (!found.length && sup !== c.vendor) srcs.forEach((x, i) => { if (String(x.label || '').toLowerCase().indexOf(low) >= 0) found.push(i); });
+      const tag = String(c.name).replace(/\s*\(.*\)\s*$/, '').toLowerCase(), named = found.filter((i) => String(srcs[i].label || '').toLowerCase().indexOf(tag) >= 0);
+      return named.concat(found.filter((i) => named.indexOf(i) < 0));
+    };
     const mark = (c, col) => {
       const srcs = c.sources || [], id = chipIds.get(c.id);
-      if (!srcs.length) return '';
+      if (!srcs.length || col.own) return '';
       for (const h of col.hints) for (let i = 0; i < srcs.length; i++) {
         const l = String(srcs[i].label || '');
-        if (l.toLowerCase().indexOf(h) >= 0) return `<sup class="cite"><a href="#${id}-s${i + 1}" title="Source: ${esc(l || srcs[i].url)}" aria-label="Source ${i + 1}: ${esc(l || srcs[i].url)}"><span class="br">[</span>${i + 1}<span class="br">]</span></a></sup>`;
+        if (l.toLowerCase().indexOf(h) >= 0) return markAt(c, i);
       }
       return `<sup class="cite"><a href="#${id}-sources" title="Sources for the ${esc(c.name)}" aria-label="Sources for the ${esc(c.name)}"><span class="br">[</span>all<span class="br">]</span></a></sup>`;
     };
@@ -405,8 +426,8 @@ ${body}
       if (col.num) { const v = col.val(c); return `<td class="num">${v == null ? nil(c, col) : esc(nf(v)) + mark(c, col)}</td>`; }
       const t = col.html(c);
       if (t == null || t === '') return `<td${col.wide ? ' class="wide"' : ''}>${nil(c, col)}</td>`;
-      const at = t.indexOf('<span class="sub">'), m = mark(c, col); // the mark sits on the value, before its second line
-      return `<td${col.wide ? ' class="wide"' : ''}>${at >= 0 ? t.slice(0, at) + m + t.slice(at) : t + m}</td>`;
+      const at = t.indexOf('<span class="sub">'), m = mark(c, col); // the mark sits on the value, before its second line (\u0001 where the first line says the value is missing)
+      return `<td${col.wide ? ' class="wide"' : ''}>${t.indexOf('\u0001') >= 0 ? t.replace('\u0001', m) : at >= 0 ? t.slice(0, at) + m + t.slice(at) : t + m}</td>`;
     };
     const rowHTML = (c) => `<tr id="${chipIds.get(c.id)}"><th scope="row"><a href="#${chipIds.get(c.id)}-sources">${esc(c.name)}</a>${c.family && c.family !== c.name ? sub(esc(c.family)) : ''}</th>${COLS.map((col) => cell(c, col)).join('')}</tr>`;
     /* the chart the interactive page opens with, at FP16 (the redesign's option C): every chip with a published figure at the
@@ -450,7 +471,7 @@ ${body}
       for (let yr = X0; yr <= X1; yr++) { const x = fx(yr) * 1000; grid += `<line x1="${x.toFixed(1)}" x2="${x.toFixed(1)}" y1="0" y2="1000"/>`; }
       for (let v = 0; v <= yMax + 1e-9; v += step) { const y = fy(v) * 1000; grid += `<line class="${v === 0 ? 'base' : ''}" x1="0" x2="1000" y1="${y.toFixed(1)}" y2="${y.toFixed(1)}"/>`; }
       let marks = '';
-      for (let v = 0; v <= yMax + 1e-9; v += step) marks += `<span class="ctl-y" style="top:${pc(fy(v))}">${esc(nf(v))}</span>`;
+      for (let v = 0; v <= yMax + 1e-9; v += step) marks += `<span class="ctl-y" style="top:${pc(fy(v))}">${esc(nfAxis(v))}</span>`;
       for (let yr = X0; yr < X1; yr++) marks += `<span class="ctl-x" style="left:${pc(fx(yr + 0.5))}">${yr}</span>`;
       have.filter((p) => p.d.yearOnly).forEach((p) => { marks += `<span class="ctl-yr" style="left:${pc(fx(p.d.y))};width:${pc(fx(p.d.y + 1) - fx(p.d.y))};top:${pc(fy(p.v))}" aria-hidden="true"></span>`; });
       have.forEach((p) => {
