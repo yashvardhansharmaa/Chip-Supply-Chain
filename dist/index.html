@@ -12274,7 +12274,7 @@ PC.register('wafer', function (p) {
     },
 
     /* ---- the comparison's rows: each figure is a row of bars (FIG), the rest a table of words (WORDS) ---- */
-    nf: function (v) { return (Math.round(v * 100) / 100).toLocaleString('en-US'); },
+    nf: function (v) { return Number(v).toLocaleString('en-US', { maximumFractionDigits: 6 }); }, // as published, never rounded (2.039 stays 2.039)
     // An empty cell says which kind of empty it is: a format the hardware cannot run reads
     // "not supported", anything else "not published". compute.support carries yes/no/unknown.
     nil: function (c, row) {
