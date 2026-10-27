@@ -260,14 +260,15 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 
 /* ---------- 4. the rail beside the whole chapter, from its first line ---------- */
 .chapter .ch-rail {
-  grid-column: 1 / 4; grid-row: 1 / span 5; align-self: start; position: sticky; top: calc(var(--masthead) + 20px);
-  max-height: calc(100vh - var(--masthead) - 36px); overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin;
-  margin-top: 0; padding: 2px 14px 8px 0; text-align: left; font-family: var(--font-ui);
+  grid-column: 1 / 4; grid-row: 1 / span 5; align-self: start; position: sticky; top: calc(var(--masthead) + 16px);
+  max-height: calc(100vh - var(--masthead) - 28px); overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin;
+  margin-top: 0; padding: 0 14px 8px 0; text-align: left; font-family: var(--font-ui);
 }
-.chapter .ch-rail .rail-part + .rail-part { margin-top: 18px; }
+/* set a little closer than before the card joined On this page, so the whole rail still fits a 900 px window */
+.chapter .ch-rail .rail-part + .rail-part { margin-top: 14px; }
 .chapter .ch-rail .rail-k { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; margin: 0 0 6px; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--ink); }
 .chapter .ch-rail ol { list-style: none; margin: 0; padding: 0; }
-.chapter .rail-toc a { display: block; padding: 3.5px 0 3.5px 12px; border-left: 2px solid var(--line); font-size: 14.5px; line-height: 19px; color: var(--ink-2); text-decoration: none; }
+.chapter .rail-toc a { display: block; padding: 3px 0 3px 12px; border-left: 2px solid var(--line); font-size: 14.5px; line-height: 19px; color: var(--ink-2); text-decoration: none; }
 .chapter .rail-toc a:hover { color: var(--ink); }
 .chapter .rail-toc a[aria-current] { color: var(--ink); font-weight: 500; border-left-color: var(--accent); }
 .chapter .rail-figs a { display: grid; grid-template-columns: 44px minmax(0, 1fr); padding: 2px 0; font-size: 13px; line-height: 16px; color: var(--ink-2); text-decoration: none; }
