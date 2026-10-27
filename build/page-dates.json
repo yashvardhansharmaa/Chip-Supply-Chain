@@ -2,7 +2,7 @@
   "/": {
     "published": "2026-10-01",
     "modified": "2026-10-27",
-    "content": "1cea8133a150e936"
+    "content": "da6d168c7018b4d7"
   },
   "/advanced-packaging/": {
     "published": "2026-09-09",
@@ -47,7 +47,7 @@
   "/foundries-and-fabs/": {
     "published": "2026-09-09",
     "modified": "2026-10-27",
-    "content": "e68a087ff1b8056d"
+    "content": "fd284179f32cf9ce"
   },
   "/geopolitics/": {
     "published": "2026-09-09",
@@ -72,7 +72,7 @@
   "/metrology-and-inspection/": {
     "published": "2026-09-09",
     "modified": "2026-10-27",
-    "content": "cdfbb0c0b1253a8d"
+    "content": "09d36f8327db3218"
   },
   "/pdf/advanced-packaging.pdf": {
     "published": "2026-10-20",
@@ -187,7 +187,7 @@
   "/summary/": {
     "published": "2026-10-21",
     "modified": "2026-10-27",
-    "content": "727decaa7fb27163"
+    "content": "e755a379d32df29f"
   },
   "/suppliers/": {
     "published": "2026-10-21",
@@ -207,6 +207,6 @@
   "/transistors-and-front-end/": {
     "published": "2026-09-09",
     "modified": "2026-10-27",
-    "content": "c824ab3960740865"
+    "content": "ca34a65d0a6934ed"
   }
 }

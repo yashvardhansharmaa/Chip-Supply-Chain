@@ -3,7 +3,7 @@
  "id": "transistors-and-front-end",
  "number": 8,
  "title": "Transistors and the Front End",
- "oneLiner": "The front end builds the transistors, the switches inside every chip. Only TSMC, Intel and Samsung can build 2 nm-class ones in volume.",
+ "oneLiner": "Building the newest transistors takes a long run of steps in exact order, and only TSMC, Intel and Samsung can do it in volume at the 2 nm class.",
  "plain": "The front end of a chip factory is the part that builds the transistors, the billions of tiny switches in every chip. Each switch works like a valve. Current runs along a narrow strip of silicon called the channel, and a small voltage on a gate above the strip opens or shuts the flow. For decades chipmakers made the strips shorter, so the transistors switched faster and more of them fit on a chip. But once the strip gets short enough, the valve stops sealing. Current leaks through even when the gate is off, and the chip burns power doing nothing. The newest kind of transistor, called gate-all-around, cuts this leak by wrapping the gate around all four sides of the strip. Building them takes a long sequence of steps that have to run in exact order. Only three companies, TSMC, Intel and Samsung, make these switches in volume. In 2024 the United States began requiring a license to share the know-how for building them, except with countries that impose matching controls.",
  "bridge": "Measured and clean, the layers mean nothing on their own. Laid in the right order, they become switches.",
  "specimen": "gaa-transistor",
