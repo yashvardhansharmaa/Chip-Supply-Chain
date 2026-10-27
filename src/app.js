@@ -1453,9 +1453,13 @@
       var el = this.cardEl();
       if (o.show) { // bring the card into view: its foot clear of the phone's strip, its head clear of the masthead
         scrollToEl($('.aic-atlas'), false); this.placeCard();
-        var st = $('.stage'), strip = narrow() && st && st.getAttribute('data-hidden') !== '1' ? st.getBoundingClientRect().height : 0;
-        var r = el.getBoundingClientRect(), room = window.innerHeight - strip - 12, over = r.bottom - room;
-        if (over > 0) { var root = document.documentElement, sb = root.style.scrollBehavior; root.style.scrollBehavior = 'auto'; window.scrollBy(0, Math.round(Math.min(over, r.top - headerH() - 12))); root.style.scrollBehavior = sb; }
+        var self = this, fit = function () {
+          if (self.open !== id || el.hidden) return;
+          var st = $('.stage'), strip = narrow() && st ? st.getBoundingClientRect().height : 0; // a phone's strip, or its bar while the stage stands down
+          var r = el.getBoundingClientRect(), room = window.innerHeight - strip - 12, over = r.bottom - room;
+          if (over > 0) { var root = document.documentElement, sb = root.style.scrollBehavior; root.style.scrollBehavior = 'auto'; window.scrollBy(0, Math.round(Math.min(over, r.top - headerH() - 12))); root.style.scrollBehavior = sb; }
+        };
+        fit(); if (narrow()) setTimeout(fit, 400); // arriving from search, the strip is still growing to its full height: look again once it rests
       }
       if (o.key || o.show) { var b = $('.aic-card-act input, .aic-card-act button', el); if (b) b.focus({ preventScroll: true }); }
     },

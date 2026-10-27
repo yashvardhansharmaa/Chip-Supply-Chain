@@ -312,6 +312,14 @@ const box = (id) => `document.querySelector('#cx-list input[data-tick="${id}"]')
     if (s.crowd) await t.click(`document.querySelector('#cx-card [data-card-open="nvidia-b300"]')`);
     s = await t.st();
     check('phone: a tap on the crowded B300 at Memory lists the chips there, then opens the B300\'s card; nothing is ticked', crowdList && crowdList.indexOf('nvidia-b300') >= 0 && crowdList.length > 1 && s.open === 'nvidia-b300' && s.picked.length === 0, { crowdList, s });
+    // search on a phone, from another page: the card lands clear of the masthead and of the strip, which is still growing as the view arrives
+    await t.reset('#/landscape?pick=nvidia-h100,nvidia-h20');
+    await t.ev(`location.hash='#/suppliers',1`); await sleep(700); t.clicks = 0;
+    await t.click(`document.querySelector('.search-btn')`); await t.type('B300');
+    await t.click(`[].slice.call(document.querySelectorAll('#cp-search ol a')).filter(function(a){return a.querySelector('.k').textContent==='Chip';})[0]`);
+    await sleep(1200); s = await t.st();
+    const sp = await t.ev(`(function(){var c=document.getElementById('cx-card'),r=c.getBoundingClientRect(),st=document.querySelector('.stage').getBoundingClientRect(),b=c.querySelector('.aic-card-act input').getBoundingClientRect();return {card:!c.hidden&&document.getElementById('cx-card-n').textContent,top:Math.round(r.top),bottom:Math.round(r.bottom),strip:Math.round(st.top),box:Math.round(b.bottom),focus:document.activeElement&&document.activeElement.matches('#cx-card input[data-tick]')};})()`);
+    task('search "B300" and land on its card', 390, t.clicks, s.open === 'nvidia-b300' && s.picked.join() === 'nvidia-h100,nvidia-h20' && sp.top >= 60 && sp.bottom <= sp.strip && sp.focus, `the card's foot at ${sp.bottom} px, the strip's top at ${sp.strip} px; focus on its box, the ticks kept`);
     check('phone: no errors in the console', !t.errors.length, t.errors);
     await t.close();
 
