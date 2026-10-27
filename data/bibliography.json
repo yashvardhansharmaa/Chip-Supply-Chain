@@ -6826,5 +6826,19 @@
     "publisher": "Carl Zeiss",
     "type": "page",
     "accessed": "2026-09-09"
+  },
+  "https://techstatecraft.org/duv/": {
+    "title": "DUV Immersion Lithography: The Foundation of the US AI Advantage",
+    "publisher": "Center for Technology & Statecraft",
+    "date": "2026-09",
+    "type": "report",
+    "accessed": "2026-10-27"
+  },
+  "https://www.asml.com/en/careers/teams/sourcing-and-supply-chain": {
+    "title": "Sourcing & Supply Chain",
+    "publisher": "ASML",
+    "date": "",
+    "type": "web",
+    "accessed": "2026-10-27"
   }
 }
