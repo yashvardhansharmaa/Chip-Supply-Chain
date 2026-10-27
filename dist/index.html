@@ -379,6 +379,9 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before {
 /* glossary terms in the prose: a dotted rule under the word, lighter than a link's solid one, so "define this" reads apart
    from "go there"; solid garnet on hover and while its popover is open; one shared popover */
 .nw { white-space: nowrap; } /* a figure range, or a glossary term with the punctuation after it (build.js glossaryWrap) */
+/* the term itself may still wrap within its own box: "National Integrated Circuit Industry Investment Fund," on one line ran
+   past a phone's width and scrolled chapter 17 sideways (453 px at 390) */
+.nw > .gl-term { white-space: normal; }
 .gl-term { font: inherit; color: inherit; background: none; border: 0; padding: 0; margin: 0; text-align: inherit; cursor: help; text-decoration: underline; text-decoration-style: dotted; text-decoration-color: color-mix(in srgb, var(--muted) 75%, var(--bg)); text-decoration-thickness: 1.5px; text-underline-offset: 0.24em; transition: text-decoration-color 0.15s; }
 .gl-term:hover, .gl-term[aria-describedby] { text-decoration-style: solid; text-decoration-color: var(--accent); }
 .site-footer .sources-key { margin: 12px 0 0; font-family: var(--font-ui); font-size: 13px; letter-spacing: 0; line-height: 1.7; color: var(--muted); max-width: 90ch; }

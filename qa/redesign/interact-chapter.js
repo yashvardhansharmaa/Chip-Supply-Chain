@@ -48,6 +48,13 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8766';
       await t.ev("document.querySelector('#lithography .rail-toc a[href=\"#lithography--card\"]').click(),1"); await sleep(1200);
       const land = await t.ev("(function(){var c=document.getElementById('lithography--card').getBoundingClientRect();return {top:Math.round(c.top),hash:location.hash,cur:(document.querySelector('#lithography .rail-toc a[aria-current]')||{}).textContent};})()");
       check('1440: Chokepoint card in the rail lands on the card, clear of the masthead', land.top >= 64 && land.top <= 100 && land.cur === 'Chokepoint card', JSON.stringify(land));
+      // the card's look-up cards: a term in its text, and a rating (its band's sentence and this stage's test)
+      for (const [sel, what] of [['#lithography--card .gl-term:not([data-note])', 'a term'], ['#lithography--card .v-btn[data-term="substitutability"]', 'the substitutability rating']]) {
+        const lab = await t.ev(`(function(){var b=document.querySelector(${JSON.stringify(sel)});if(!b)return null;document.documentElement.style.scrollBehavior='auto';b.scrollIntoView({block:'center'});b.focus();return b.textContent;})()`); await sleep(500);
+        const tip = await t.ev("(function(){var e=document.getElementById('gl-tip');return e&&!e.hidden?e.querySelector('b').textContent:null;})()");
+        check(`1440: ${what} in the card opens its look-up card`, !!lab && !!tip, `${lab} -> ${tip}`);
+        await t.ev("(document.activeElement && document.activeElement.blur(), 1)");
+      }
       await t.ev("(document.documentElement.style.scrollBehavior='auto', window.scrollTo(0,0), 1)"); await sleep(600);
       check('1440: the parts list names the four parts', await t.ev("[].map.call(document.querySelectorAll('#lithography .ch-spec .ch-parts li > span'),function(l){return l.textContent}).join(' | ')") === 'Light source: ASML San Diego (US), laser by Trumpf (DE) | Mirrors: Zeiss SMT (DE) | Mask: see stage 05, Photomasks and Pellicles | Wafer: see stage 02, Silicon and Wafers');
       await scrollTo(t, '#lithography--how-it-works', 200);
@@ -88,6 +95,24 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8766';
       check('1440: on the home the drawing is back on the stage', await t.ev("!!document.querySelector('.stage > canvas#stage-canvas') && getComputedStyle(document.querySelector('.stage')).display!=='none'"));
       check('1440: the home shows no balloons', await t.ev("!document.querySelector('.stage .ch-balloons')"));
       t.errors.forEach((e) => check('1440: page error', false, e));
+      await t.close();
+    }
+    /* ---------- the card's own address, on a fresh load, at 1440 and 390 ---------- */
+    for (const width of [1440, 390]) {
+      const t = await open(chrome, BASE + '/#lithography--card', { width, wait: 3500 });
+      const r = await t.ev("(function(){var c=document.getElementById('lithography--card').getBoundingClientRect(),m=document.querySelector('.masthead').getBoundingClientRect();return {top:Math.round(c.top),mast:Math.round(m.bottom),shown:[].filter.call(document.querySelectorAll('article.chapter'),function(a){return a.getClientRects().length;}).map(function(a){return a.id;}).join(',')};})()");
+      check(`${width}: #lithography--card opens Lithography at its card, clear of the masthead`, r.shown === 'lithography' && r.top >= 0 && r.top <= 140, JSON.stringify(r));
+      await t.close();
+    }
+    /* ---------- a Glossary passage on a card lands on it, in the text after the lead ---------- */
+    {
+      const t = await open(chrome, BASE + '/#/glossary', { width: 1440, wait: 3000 });
+      await t.ev(`(function () { var b = [].filter.call(document.querySelectorAll('#gl-dict .gl-de[data-kind="term"] button[data-open]'), function (b) { return /^EUV|^Extreme ultraviolet/i.test(b.textContent); })[0]; b.click(); return 1; })()`); await sleep(1500);
+      const para = await t.ev(`(function () { var as = document.querySelectorAll('#gl-sheet .lk-men a[data-para]'); for (var i = 0; i < as.length; i++) { var p = CP.Lookup.paras[+as[i].getAttribute('data-para')]; if (p && p.el.closest('.prose > .plate')) { as[i].id = 'qa-card-pass'; return +as[i].getAttribute('data-para'); } } return null; })()`);
+      if (para != null) { await t.ev("(document.getElementById('qa-card-pass').click(), 1)"); await sleep(2200); }
+      const p = para == null ? null : await t.ev(`(function () { var p = CP.Lookup.paras[${para}], r = p.el.getBoundingClientRect(); return { chapter: p.chapter, text: p.text.slice(0, 50), top: Math.round(r.top), hash: location.hash, shown: !!document.getElementById(p.chapter).getClientRects().length, flash: p.el.classList.contains('lk-flash') }; })()`);
+      check('1440: a Glossary passage on a card (EUV\'s) lands on the card', !!p && p.shown && p.top > 60 && p.top < 900 && p.flash, JSON.stringify(p));
+      t.errors.forEach((e) => check('1440 glossary: page error', false, e));
       await t.close();
     }
     /* ---------- The Chain on a phone ---------- */
