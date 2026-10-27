@@ -9,7 +9,7 @@
 .sa .view-head .dek { max-width: 46em; }
 
 .sa-h { font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-size: var(--fs-d5); font-weight: 500; text-transform: none; letter-spacing: 0; color: var(--ink); }
-.sa-sub { font-size: 15px; line-height: 1.5; color: var(--muted); max-width: 92ch; margin: 6px 0 0; }
+.sa-sub { font-size: calc(15px * var(--text-scale)); line-height: 1.5; color: var(--muted); max-width: 92ch; margin: 6px 0 0; }
 .sa-map-head { margin: 0 0 14px; }
 
 .sa-mapwrap { margin-top: 26px; padding-top: 22px; border-top: 1px solid var(--line); }
@@ -160,8 +160,8 @@
 /* ---------- four numbers ---------- */
 .sa-nums { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; list-style: none; margin: 0; padding: 0; }
 .sa-num { border-top: 1px solid var(--ink); padding-top: 12px; }
-.sa-num b { display: block; font-family: var(--font-display); font-variation-settings: var(--opsz-numeral); font-size: clamp(34px, 3.6vw, 52px); font-weight: 300; line-height: 1; letter-spacing: -0.02em; text-transform: none; color: var(--accent); font-variant-numeric: tabular-nums lining-nums; }
-.sa-num p { font-size: 15.5px; line-height: 1.45; color: var(--ink-2); margin: 10px 0 8px; }
+.sa-num b { display: block; font-family: var(--font-display); font-variation-settings: var(--opsz-numeral); font-size: clamp(34px, 3.6vw, 52px); font-weight: 360; line-height: 1; letter-spacing: -0.02em; text-transform: none; color: var(--accent); font-variant-numeric: tabular-nums lining-nums; }
+.sa-num p { font-size: calc(15.5px * var(--text-scale)); line-height: 1.45; color: var(--ink-2); margin: 10px 0 8px; }
 .sa-num a { font-family: var(--font-mono); font-size: var(--fs-cap); letter-spacing: 0; color: var(--muted); }
 .sa-num a:hover { color: var(--ink); }
 
@@ -309,8 +309,8 @@
 .atlas .sa-panel-cc { order: 2; border: 0; padding: 0; font-family: var(--font-code); font-size: 12px; font-weight: 400; color: var(--muted); }
 .atlas .sa-panel-head h4 { font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 500; font-size: 24px; line-height: 1.15; letter-spacing: -0.01em; }
 .atlas .sa-panel-meta { margin: 6px 0 0; font-family: var(--font-code); font-size: 12px; line-height: 17px; color: var(--muted); }
-.atlas .sa-panel-role { margin: 6px 0 0; font-family: var(--font-body); font-size: 15px; line-height: 1.5; color: var(--ink); }
-.atlas .sa-panel-lede { margin: 10px 0 14px; font-family: var(--font-body); font-size: 15px; line-height: 1.5; color: var(--ink-2); }
+.atlas .sa-panel-role { margin: 6px 0 0; font-family: var(--font-body); font-size: calc(15px * var(--text-scale)); line-height: 1.5; color: var(--ink); }
+.atlas .sa-panel-lede { margin: 10px 0 14px; font-family: var(--font-body); font-size: calc(15px * var(--text-scale)); line-height: 1.5; color: var(--ink-2); }
 .atlas .sa-panel--none .sa-panel-lede { color: var(--ink-2); }
 .atlas .sa-facts { border-top: 1px solid var(--line); }
 .atlas .sa-fact a, .atlas .sa-fact-in { padding: 8px 2px; }
@@ -320,7 +320,7 @@
 .atlas .sa-fact-k { font-family: var(--font-ui); font-size: 14px; font-weight: 500; }
 .atlas .sa-fact-v { font-family: var(--font-code); font-size: 13px; font-weight: 400; }
 .atlas .sa-fact-v small { font-family: var(--font-code); letter-spacing: 0; }
-.atlas .sa-fact-note { font-family: var(--font-body); font-size: 13.5px; color: var(--muted); }
+.atlas .sa-fact-note { font-family: var(--font-body); font-size: calc(13.5px * var(--text-scale)); color: var(--muted); }
 .atlas .sa-est { display: block; margin: 2px 0 0; font-family: var(--font-code); font-weight: 400; font-size: 11px; color: var(--muted); }
 /* a stage's band beside its name, as the chapter's kicker marks it: a bar for Extreme, an outline for High */
 .atlas .sa-sc { display: inline-flex; align-items: center; gap: 5px; margin-left: 8px; padding: 0; background: none; color: var(--ink); font-family: var(--font-ui); font-size: 12px; font-weight: 500; vertical-align: 1px; }

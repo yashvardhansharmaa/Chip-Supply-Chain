@@ -69,7 +69,7 @@ html.kb:has(.view[data-view="glossary"]:not([hidden])) { scroll-padding-top: cal
 .gl-dict { min-height: 50vh; }
 .gl-sec { padding-top: 40px; }
 .gl-sec-h { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 24px; margin-bottom: 22px; padding-bottom: 10px; border-bottom: 1px solid var(--ink); }
-.gl-L { margin: 0; font-family: var(--font-display); font-weight: 350; font-variation-settings: var(--opsz-title); font-size: 88px; line-height: 0.8; letter-spacing: -0.02em; color: var(--ink); }
+.gl-L { margin: 0; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: 88px; line-height: 0.8; letter-spacing: -0.02em; color: var(--ink); }
 .gl-best .gl-L { font-size: 40px; line-height: 1; letter-spacing: -0.01em; }
 .gl-gw { display: flex; flex-wrap: wrap; gap: 4px 18px; margin: 0; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); }
 .gl-gw b { font-weight: 400; color: var(--ink-2); }
@@ -84,7 +84,7 @@ html.kb:has(.view[data-view="glossary"]:not([hidden])) { scroll-padding-top: cal
 .gl-hw button { font: inherit; text-align: left; color: var(--ink); overflow-wrap: anywhere; }
 .gl-hw button:hover { color: var(--accent-ink); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
 .gl-de.is-on .gl-hw button { color: var(--accent-ink); }
-.gl-pos { font-family: var(--font-body); font-style: italic; font-weight: 400; font-size: 14px; line-height: 1.3; color: var(--muted); }
+.gl-pos { font-family: var(--font-body); font-style: italic; font-weight: 400; font-size: calc(14px * var(--text-scale)); line-height: 1.3; color: var(--muted); }
 .gl-aka { margin: 3px 0 0; font-family: var(--font-ui); font-size: 12.5px; line-height: 1.45; color: var(--muted); }
 .gl-meta { display: flex; align-items: flex-start; gap: 8px; margin: 5px 0 0; font-family: var(--font-ui); font-size: 12.5px; line-height: 1.45; color: var(--ink-2); }
 .gl-meta > span { min-width: 0; }
@@ -93,7 +93,7 @@ html.kb:has(.view[data-view="glossary"]:not([hidden])) { scroll-padding-top: cal
 .gl-mk--important { height: 10px; }
 .gl-mk--contested { height: 10px; background: none; box-shadow: inset 0 0 0 1.25px var(--ink); }
 .gl-mk--diversified { height: 5px; background: var(--muted); }
-.gl-df, .gl-wy { margin: 7px 0 0; font-family: var(--font-body); font-size: 15.5px; line-height: 1.55; color: var(--ink); }
+.gl-df, .gl-wy { margin: 7px 0 0; font-family: var(--font-body); font-size: calc(15.5px * var(--text-scale)); line-height: 1.55; color: var(--ink); }
 .gl-wy { color: var(--ink-2); }
 .gl-refs { margin: 8px 0 0; font-family: var(--font-ui); font-size: 12.5px; line-height: 1.55; color: var(--muted); }
 .gl-refs a { color: var(--accent-ink); text-decoration: underline; text-decoration-color: currentColor; text-underline-offset: 3px; }
@@ -129,11 +129,11 @@ html.kb:has(.view[data-view="glossary"]:not([hidden])) { scroll-padding-top: cal
 @media (prefers-reduced-motion: reduce) { .gl-sheet, .view .gl-sheet[hidden] { transition: none; } }
 
 /* ---------- the entry in the sheet: a term as the page lays it out; a firm, a chip or a country as its card ---------- */
-.lk-card { --t: 44px; --lede: 19px; --p: 16px; color: var(--ink); }
+.lk-card { --t: 44px; --lede: calc(19px * var(--text-scale)); --p: calc(16px * var(--text-scale)); color: var(--ink); }
 .lk-kind { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 10px; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); }
-.lk-t { margin: 0; font-family: var(--font-display); font-weight: 350; font-variation-settings: var(--opsz-title); font-size: var(--t); line-height: 1.02; letter-spacing: -0.02em; color: var(--ink); overflow-wrap: anywhere; }
+.lk-t { margin: 0; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: var(--t); line-height: 1.02; letter-spacing: -0.02em; color: var(--ink); overflow-wrap: anywhere; }
 .lk-t:focus { outline: none; }
-.lk-native { margin-left: 10px; font-family: var(--font-body); font-weight: 400; font-size: 0.42em; line-height: 1; letter-spacing: 0; color: var(--muted); white-space: nowrap; }
+.lk-native { margin-left: 10px; font-family: var(--font-body); font-weight: 400; font-size: calc(0.42em * var(--text-scale)); line-height: 1; letter-spacing: 0; color: var(--muted); white-space: nowrap; }
 .lk-aka { margin: 12px 0 0; font-family: var(--font-ui); font-size: 13.5px; line-height: 1.5; color: var(--muted); }
 .lk-meta { margin: 12px 0 0; font-family: var(--font-code); font-size: 12px; line-height: 1.5; color: var(--muted); }
 .lk-lede { margin: 18px 0 0; font-family: var(--font-body); font-size: var(--lede); line-height: 1.5; }
@@ -153,10 +153,10 @@ html.kb:has(.view[data-view="glossary"]:not([hidden])) { scroll-padding-top: cal
 .lk-facts div { min-width: 0; }
 .lk-facts .lk-fact-wide { grid-column: 1 / -1; } /* revenue as filed, with its year and dollar figure, on one line where it fits */
 .lk-facts dt { margin: 0 0 4px; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); }
-.lk-facts dd { margin: 0; font-family: var(--font-body); font-size: 15.5px; line-height: 1.45; overflow-wrap: anywhere; }
+.lk-facts dd { margin: 0; font-family: var(--font-body); font-size: calc(15.5px * var(--text-scale)); line-height: 1.45; overflow-wrap: anywhere; }
 .lk-facts dd a { color: var(--ink); }
 /* the filing's note on the revenue figure: quiet, and free to break a long address or file name */
-.lk-revnote { margin: 12px 0 0; font-family: var(--font-body); font-size: 13.5px; line-height: 1.5; color: var(--muted); overflow-wrap: anywhere; }
+.lk-revnote { margin: 12px 0 0; font-family: var(--font-body); font-size: calc(13.5px * var(--text-scale)); line-height: 1.5; color: var(--muted); overflow-wrap: anywhere; }
 .lk-revnote b { font-weight: 600; color: var(--ink-2); }
 .lk-links { display: flex; flex-wrap: wrap; gap: 10px 26px; margin: 20px 0 0; }
 .lk-links a, .lk-eu a { padding: 6px 0; font-family: var(--font-ui); font-weight: 500; font-size: 14.5px; line-height: 1; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--ink); }
@@ -169,7 +169,7 @@ html.kb:has(.view[data-view="glossary"]:not([hidden])) { scroll-padding-top: cal
 .lk-n { font-family: var(--font-code); font-weight: 400; font-size: 12px; line-height: 16px; color: var(--muted); white-space: nowrap; }
 .lk-shares, .lk-cards, .lk-stages { list-style: none; margin: 0; padding: 0; }
 .lk-share { display: grid; grid-template-columns: minmax(0, 1fr) minmax(120px, 36%) 56px; column-gap: 16px; align-items: center; padding: 9px 0 10px; border-bottom: 1px solid var(--line); }
-.lk-share-k { grid-column: 1; grid-row: 1; font-family: var(--font-body); font-size: 15.5px; line-height: 1.3; }
+.lk-share-k { grid-column: 1; grid-row: 1; font-family: var(--font-body); font-size: calc(15.5px * var(--text-scale)); line-height: 1.3; }
 .lk-share-bar { grid-column: 2; grid-row: 1; height: 12px; background: linear-gradient(to right, var(--ctx) var(--w), transparent var(--w)); box-shadow: inset 0 -1px 0 var(--line-2); }
 .lk-share-v { grid-column: 3; grid-row: 1; text-align: right; font-family: var(--font-code); font-size: 13px; line-height: 1; color: var(--ink-2); font-variant-numeric: tabular-nums; }
 .lk-share-m { grid-column: 1 / -1; grid-row: 2; margin-top: 3px; font-family: var(--font-code); font-size: 12px; line-height: 1.5; color: var(--muted); }
@@ -184,18 +184,18 @@ html.kb:has(.view[data-view="glossary"]:not([hidden])) { scroll-padding-top: cal
 .lk-band { display: inline-flex; align-items: flex-end; gap: 7px; font-family: var(--font-code); font-weight: 400; font-size: 12px; line-height: 1; color: var(--ink-2); }
 .lk-band::before { content: ""; display: inline-block; width: 5px; height: 12px; background: var(--ink); }
 .lk-band--high::before { height: 6px; background: transparent; box-shadow: inset 0 0 0 1.25px var(--ink); }
-.lk-card-n { grid-column: 1 / -1; font-family: var(--font-body); font-size: 14.5px; line-height: 1.45; color: var(--ink-2); }
+.lk-card-n { grid-column: 1 / -1; font-family: var(--font-body); font-size: calc(14.5px * var(--text-scale)); line-height: 1.45; color: var(--ink-2); }
 .lk-stages li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 12px; align-items: baseline; padding: 9px 0 10px; border-bottom: 1px solid var(--line); }
-.lk-stage-k { font-family: var(--font-body); font-size: 15.5px; line-height: 1.3; }
+.lk-stage-k { font-family: var(--font-body); font-size: calc(15.5px * var(--text-scale)); line-height: 1.3; }
 .lk-stage-c { font-family: var(--font-code); font-size: 13px; line-height: 1; color: var(--ink-2); font-variant-numeric: tabular-nums; }
 .lk-stage-f { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 6px; }
 .lk-go { padding: 7px 11px; font-family: var(--font-ui); font-weight: 500; font-size: 13px; line-height: 1; color: var(--ink); border: 1px solid var(--control-edge); border-radius: 999px; }
 .lk-go:hover { border-color: var(--ink); }
 /* an EU-27 member's card: the bloc's firms counted together, linked to the Suppliers ribbons drawn that way */
-.lk-eu { margin: 14px 0 0; font-family: var(--font-body); font-size: 14.5px; line-height: 1.55; color: var(--ink-2); }
+.lk-eu { margin: 14px 0 0; font-family: var(--font-body); font-size: calc(14.5px * var(--text-scale)); line-height: 1.55; color: var(--ink-2); }
 .lk-eu a { display: inline-block; margin-top: 6px; }
 /* how the card's shares and the supplier list give each firm its country */
-.lk-note { max-width: 62em; margin: 18px 0 0; font-family: var(--font-body); font-size: 13.5px; line-height: 1.55; color: var(--muted); }
+.lk-note { max-width: 62em; margin: 18px 0 0; font-family: var(--font-body); font-size: calc(13.5px * var(--text-scale)); line-height: 1.55; color: var(--muted); }
 
 /* no entry */
 .lk-noentry { --t: 44px; }
@@ -205,13 +205,13 @@ html.kb:has(.view[data-view="glossary"]:not([hidden])) { scroll-padding-top: cal
 /* ---------- where it appears: the passages ---------- */
 .lk-pass { margin-top: 40px; }
 .lk-pass-h { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin: 0; padding-bottom: 12px; border-bottom: 1px solid var(--ink); font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 19px; line-height: 1.25; color: var(--ink); }
-.lk-none { margin: 12px 0 0; font-family: var(--font-body); font-size: 15px; line-height: 1.5; color: var(--muted); }
+.lk-none { margin: 12px 0 0; font-family: var(--font-body); font-size: calc(15px * var(--text-scale)); line-height: 1.5; color: var(--muted); }
 .lk-men { list-style: none; margin: 0; padding: 0; }
 .lk-men li { border-bottom: 1px solid var(--line); }
 .lk-men a { display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: 16px; padding: 13px 0 14px; text-decoration: none; color: inherit; }
 .lk-src { padding-top: 3px; font-family: var(--font-ui); font-size: 13px; line-height: 1.4; color: var(--ink-2); overflow-wrap: anywhere; }
 .lk-src b { display: block; margin-bottom: 2px; font-family: var(--font-code); font-weight: 400; font-size: 12px; line-height: 16px; color: var(--muted); }
-.lk-txt { font-family: var(--font-body); font-size: 15.5px; line-height: 1.55; color: var(--ink-2); }
+.lk-txt { font-family: var(--font-body); font-size: calc(15.5px * var(--text-scale)); line-height: 1.55; color: var(--ink-2); }
 .lk-men a:hover .lk-txt { color: var(--ink); }
 .lk-men a:hover .lk-src { color: var(--accent-ink); }
 .lk-txt mark { padding: 0 2px; border-radius: 2px; background: var(--accent-soft); color: var(--ink); }
@@ -240,7 +240,7 @@ html.kb:has(.view[data-view="glossary"]:not([hidden])) { scroll-padding-top: cal
   .view .gl-sheet[hidden] { transform: translateY(100%); }
   .gl-sheet-bar { padding: 12px 20px; }
   .gl-sheet-body { padding: 22px 20px 48px; }
-  .lk-card, .lk-noentry { --t: 38px; --lede: 18px; }
+  .lk-card, .lk-noentry { --t: 38px; --lede: calc(18px * var(--text-scale)); }
   .lk-facts { grid-template-columns: minmax(0, 1fr); padding: 16px; }
   .lk-share { grid-template-columns: minmax(0, 1fr) 48px; }
   .lk-share-bar { grid-column: 1 / -1; grid-row: 3; margin-top: 6px; }

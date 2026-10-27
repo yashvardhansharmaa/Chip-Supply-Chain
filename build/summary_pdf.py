@@ -64,15 +64,15 @@ EDITION_JS = r'''(function (edition, host, pdf) {
 # Static fonts for the summary's print, as src/modules/print.js does for the chapters: Chrome puts a variable font into
 # a PDF as Type 3 shapes, which copy and search as broken words, so the page's variable families give way to fixed
 # instances of the same OFL families, one Google Fonts request per instance (several weights in one request come back
-# as one variable file), each at a named weight (a weight between them prints as Type 3 again). The redesign's four:
-# Fraunces for the heads (400 and 500, at optical size 48, SOFT and WONK at 0), Literata for the text, Hanken Grotesk for
-# the labels and Fragment Mono for numbers, codes and dates; the wordmark is Fraunces 500 at the masthead's optical size,
-# 28, added under a name of its own ("Fraunces Mark", through the FontFace API, as src/modules/print.js does) so it does
-# not take the place of the 500 above. No bold or italic is made up by the browser (font-synthesis), for the same reason.
+# as one variable file), each at a named weight (a weight between them prints as Type 3 again). The site's three (design
+# round five, 27 Oct 2026; Fraunces and Literata before it): Source Serif 4 for the heads, the text and the wordmark, its
+# optical size fixed at 9, near the summary's printed text, at 400, 500 and 600 and an italic at 400; Hanken Grotesk for
+# the labels and Fragment Mono for numbers, codes and dates. No bold or italic is made up by the browser
+# (font-synthesis), for the same reason.
 FONTS_JS = r"""(function () {
   if (!document.querySelector('.prt')) return Promise.resolve('as is');
-  var fams = ['Fraunces:opsz,wght,SOFT,WONK@48,400,0,0', 'Fraunces:opsz,wght,SOFT,WONK@48,500,0,0',
-    'Literata:ital,opsz,wght@0,12,400', 'Literata:ital,opsz,wght@0,12,600', 'Literata:ital,opsz,wght@0,12,700', 'Literata:ital,opsz,wght@1,12,400',
+  var fams = ['Source+Serif+4:ital,opsz,wght@0,9,400', 'Source+Serif+4:ital,opsz,wght@0,9,500', 'Source+Serif+4:ital,opsz,wght@0,9,600',
+    'Source+Serif+4:ital,opsz,wght@1,9,400',
     'Hanken+Grotesk:wght@400', 'Hanken+Grotesk:wght@500', 'Hanken+Grotesk:wght@600', 'Hanken+Grotesk:wght@700', 'Fragment+Mono'];
   Array.prototype.forEach.call(document.querySelectorAll('link[rel="stylesheet"][href*="fonts.googleapis.com"]'), function (l) { l.remove(); });
   var loads = fams.map(function (f) {
@@ -81,22 +81,11 @@ FONTS_JS = r"""(function () {
     var p = new Promise(function (done) { l.onload = done; l.onerror = done; });
     document.head.appendChild(l); return p;
   });
-  loads.push(fetch('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@28,500,0,0&display=block').then(function (r) { return r.text(); }).then(function (css) {
-    var faces = [], re = /@font-face\s*{([^}]*)}/g, m;
-    while ((m = re.exec(css))) {
-      var src = /src:\s*([^;]+);/.exec(m[1]), u = /unicode-range:\s*([^;]+);/.exec(m[1]);
-      if (!src) continue;
-      var face = new FontFace('Fraunces Mark', src[1].trim(), { weight: '500', unicodeRange: u ? u[1].trim() : 'U+0-10FFFF', display: 'block' });
-      document.fonts.add(face); faces.push(face.load().catch(function () { return null; }));
-    }
-    return Promise.all(faces);
-  }).catch(function () { return null; }));
   var s = document.createElement('style');
   s.textContent = '@media print { *, *::before, *::after { font-variation-settings: normal !important; font-optical-sizing: none; font-synthesis: none; } }';
   document.head.appendChild(s);
-  var faces = ['400 22pt Fraunces', '500 14pt Fraunces', '400 9pt Literata', '600 9pt Literata', '700 9pt Literata', 'italic 400 9pt Literata',
-    '400 8pt "Hanken Grotesk"', '500 8pt "Hanken Grotesk"', '600 8pt "Hanken Grotesk"', '700 8pt "Hanken Grotesk"', '400 8pt "Fragment Mono"',
-    '500 12pt "Fraunces Mark"'];
+  var faces = ['400 22pt "Source Serif 4"', '500 14pt "Source Serif 4"', '400 9pt "Source Serif 4"', '600 9pt "Source Serif 4"', 'italic 400 9pt "Source Serif 4"',
+    '400 8pt "Hanken Grotesk"', '500 8pt "Hanken Grotesk"', '600 8pt "Hanken Grotesk"', '700 8pt "Hanken Grotesk"', '400 8pt "Fragment Mono"'];
   return Promise.all(loads).then(function () {
     return Promise.all(faces.map(function (f) { return document.fonts.load(f).catch(function () { return []; }); }));
   }).then(function () { return document.fonts.ready; }).then(function () { return 'static fonts'; });
