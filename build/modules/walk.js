@@ -82,9 +82,9 @@ module.exports = function (ctx) {
   /* ---------------- the hero's evidence: "8 of the 15 stages are rated Extreme" (redesign, 25 Oct 2026) ----------------
      A figure under the title: the count, what Extreme means (the card's own note, ctx.BAND_NOTE), and the fifteen stages as
      marks in chapter order, solid for Extreme and an outline for High. Each mark is a button that puts its stage's specimen on
-     the stage beside the hero (src/modules/walk.js); the reader's pick is the one wine mark. Lithography shows first. Nothing
+     the stage beside the hero (src/modules/walk.js); the reader's pick is the one wine mark. Chip design shows first, where the chain starts (owner, 27 Oct). Nothing
      here is typed: the names, bands, specimens and captions are the chapters' own. */
-  const SHOW_FIRST = Math.max(0, stages.findIndex((s) => s.id === 'lithography'));
+  const SHOW_FIRST = Math.max(0, stages.findIndex((s) => s.id === 'design-and-eda'));
   const nHigh = stages.filter((s) => (card[s.id] || {}).band === 'High').length;
   const xSentence = /this stage/.test(xNote) ? 'Extreme means ' + xNote.replace('this stage', 'the stage').replace(/^\w/, (m) => m.toLowerCase()) : '';
   const chOf = (id) => all.find((c) => c.id === id) || {};
