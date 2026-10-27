@@ -1266,7 +1266,7 @@
       var vals = have.map(function (p) { return p.v; }).sort(function (a, b) { return b - a; }), max = vals[0], second = vals[1] || max;
       // one chip far above the rest (the wafer-scale WSE-3 Turbo's bandwidth): the scale follows the others
       var outlier = max > 4 * second;
-      host.setAttribute('data-view', rank ? 'rank' : 'year');
+      host.setAttribute('data-chart', rank ? 'rank' : 'year'); // not data-view, which names the router's views
       if (rank) this.drawRank(host, row, have, max, second, outlier); else this.drawTimeline(host, row, have, max, second, outlier, W);
       // the words over the chart, and the chips with no figure for this measure under it
       var hi = have.filter(function (p) { return p.v === max; })[0];

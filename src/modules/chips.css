@@ -131,8 +131,8 @@ html.no-stage .aic-spec { display: none; }
 .aic-chart .lab.top, .aic-chart .lab.mine, .aic-chart .lab.looked { font-size: 12.5px; font-weight: 600; fill: var(--ink); }
 .aic-chart .lab .lv { font-weight: 700; }
 .aic-chart .lab .lno { font-family: var(--font-code); font-weight: 400; fill: var(--accent-ink); }
-.aic-chart[data-view="rank"] { min-height: 0; }
-.aic-chart[data-view="rank"] ~ .aic-note { display: none; } /* the note is about the dots */
+.aic-chart[data-chart="rank"] { min-height: 0; }
+.aic-chart[data-chart="rank"] ~ .aic-note { display: none; } /* the note is about the dots */
 /* highest first: one line per chip, its rank, name, maker and year, the bar (rule B) and the figure with its source mark */
 .aic-rank { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
 .aic-rk { display: grid; grid-template-columns: minmax(0, 190px) minmax(0, 180px) minmax(0, 1fr) 118px; align-items: center; gap: 0 12px; min-height: 30px; padding: 1px 0; border-bottom: 1px solid var(--line); }

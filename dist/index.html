@@ -1831,8 +1831,8 @@ html.no-stage .aic-spec { display: none; }
 .aic-chart .lab.top, .aic-chart .lab.mine, .aic-chart .lab.looked { font-size: 12.5px; font-weight: 600; fill: var(--ink); }
 .aic-chart .lab .lv { font-weight: 700; }
 .aic-chart .lab .lno { font-family: var(--font-code); font-weight: 400; fill: var(--accent-ink); }
-.aic-chart[data-view="rank"] { min-height: 0; }
-.aic-chart[data-view="rank"] ~ .aic-note { display: none; } /* the note is about the dots */
+.aic-chart[data-chart="rank"] { min-height: 0; }
+.aic-chart[data-chart="rank"] ~ .aic-note { display: none; } /* the note is about the dots */
 /* highest first: one line per chip, its rank, name, maker and year, the bar (rule B) and the figure with its source mark */
 .aic-rank { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
 .aic-rk { display: grid; grid-template-columns: minmax(0, 190px) minmax(0, 180px) minmax(0, 1fr) 118px; align-items: center; gap: 0 12px; min-height: 30px; padding: 1px 0; border-bottom: 1px solid var(--line); }
@@ -12089,7 +12089,7 @@ PC.register('wafer', function (p) {
       var vals = have.map(function (p) { return p.v; }).sort(function (a, b) { return b - a; }), max = vals[0], second = vals[1] || max;
       // one chip far above the rest (the wafer-scale WSE-3 Turbo's bandwidth): the scale follows the others
       var outlier = max > 4 * second;
-      host.setAttribute('data-view', rank ? 'rank' : 'year');
+      host.setAttribute('data-chart', rank ? 'rank' : 'year'); // not data-view, which names the router's views
       if (rank) this.drawRank(host, row, have, max, second, outlier); else this.drawTimeline(host, row, have, max, second, outlier, W);
       // the words over the chart, and the chips with no figure for this measure under it
       var hi = have.filter(function (p) { return p.v === max; })[0];
