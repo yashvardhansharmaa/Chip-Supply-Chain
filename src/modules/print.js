@@ -291,15 +291,16 @@
     stillsLoaded = Promise.all(jobs);
   }
 
-  /* The card heads the chapter's second page, as a plate. It goes to the head of the text under an id of its own, so that
-     floats() (below) can move it down past the opening paragraph when that paragraph fills the opening page, as it moves
-     figures; it never moves past a heading. */
+  /* The card stands in the text after the lead and before section 01, on paper as on screen (build/build.js withCard), so
+     its notes follow the lead's in reading order. It takes an id of its own for paper, which pdf.py's report and the layout
+     passes know it by; a card still in the chapter's head (an older page) goes to the head of the text. floats() (below)
+     moves a card only past paragraphs, never past a heading, so after the lead it keeps its place. */
   function cardsToText() {
     each('article.chapter', document, function (ch) {
-      var plate = ch.querySelector('.chapter-head .plate'), prose = ch.querySelector(':scope > .prose');
+      var plate = ch.querySelector('.plate'), prose = ch.querySelector(':scope > .prose');
       if (!plate || !prose || !ch.id) return;
       plate.id = 'card-' + ch.id;
-      prose.insertBefore(plate, prose.firstChild);
+      if (!prose.contains(plate)) prose.insertBefore(plate, prose.firstChild);
     });
   }
 
@@ -398,7 +399,7 @@
     Object.keys(opts.moves || {}).forEach(function (id) {
       var el = document.getElementById(id), at = el;
       for (var i = 0; at && i < (+opts.moves[id] || 0); i++) at = at.nextElementSibling;
-      if (el && at && at !== el) { at.parentNode.insertBefore(el, at.nextSibling); out.moved = (out.moved || 0) + 1; }
+      if (el && at && at !== el) { at.parentNode.insertBefore(el, at.nextSibling); el.setAttribute('data-cp-moved', '1'); out.moved = (out.moved || 0) + 1; }
     });
     /* the block after a figure or a table stands a little further off (print.css .cp-after; Paged.js turns an "a + b"
        selector into a rule too weak to set it) */
@@ -792,10 +793,11 @@
       if (sid && out.sources.indexOf(sid) < 0) out.sources.push(sid);
     });
     out.floats = floats(pages, fills);
-    /* a card moved down past its opening paragraph when the paragraph did not fit the page before after all: the paragraph
-       then opens the card's page above it. pdf.py lays the chapter out again with the card back at the head of its page. */
+    /* a card moved down past a paragraph when the paragraph did not fit the page before after all: the paragraph then opens
+       the card's page above it. pdf.py lays the chapter out again with the card back where it was. A card in its own place,
+       after the lead, has the lead before it by design */
     out.failed = [];
-    each('.pagedjs_page_content .plate[id^="card-"]', document, function (pl) {
+    each('.pagedjs_page_content .plate[id^="card-"][data-cp-moved]', document, function (pl) {
       var prev = pl.previousElementSibling, pg = pl.closest('.pagedjs_page');
       if (!prev || pl.hasAttribute('data-split-from') || !pg || pg.classList.contains('cp-opener')) return;
       if (!prev.hasAttribute('data-split-from') && out.failed.indexOf(pl.id) < 0) out.failed.push(pl.id);

@@ -189,8 +189,9 @@
   .chapter > .prose > h4 { margin: 4.6mm 0 1.4mm; font-family: var(--font-display); font-weight: 500; font-size: 11.2pt; line-height: 1.25; letter-spacing: 0; color: var(--ink); }
   .chapter > .prose > h5 { margin: 4mm 0 1.2mm; font-family: var(--font-ui); font-weight: 600; font-size: 8pt; color: var(--ink); }
 
-  /* 3. the chokepoint card: heads the chapter's second page (print.js cardsToText). On paper it is ruled, not tinted: an
-     ink rule over the head, the two ratings large in Fraunces with the band's mark, then label and text in rows. */
+  /* 3. the chokepoint card: in the text after the lead, before section 01, as on screen (print.js cardsToText). On paper it
+     is ruled, not tinted: an ink rule over the head, the two ratings large in Fraunces with the band's mark, then label and
+     text in rows. */
   .chapter .plate { max-width: none; margin: 6mm 0 0; padding: 0; background: none; border: 0; border-bottom: 0.6pt solid var(--ink); box-shadow: none; overflow: hidden; }
   .chapter .prose .plate li { margin-top: 0; }
   .chapter .plate-head { display: flex; justify-content: space-between; align-items: baseline; gap: 4mm; padding: 2mm 0 2mm; border-top: 0.6pt solid var(--ink); border-bottom: 0.4pt solid var(--rule-ink); }

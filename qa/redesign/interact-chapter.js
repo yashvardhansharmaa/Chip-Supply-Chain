@@ -1,10 +1,14 @@
 #!/usr/bin/env node
 /* The chapter page's controls (redesign stage 2), driven as a reader would, in The Chain and on the readable pages:
+   - the opener is the column (design round five, 27 Oct 2026): the rail beside the kicker from the top, the card's verdict in
+     the kicker, the specimen a plate at the measure fitted to its drawing (--draw-h, --lift), the card in the text after the
+     lead and before section 01, at the measure, and On this page lands on it;
    - the live drawing moves into the slot of the chapter in view, Lithography's four balloons ride on it, and the caption
      stands on the drawing's foot (--slack);
    - the contents rail marks the section the reader is in, and its links land;
    - a figure's Cite opens its citation, Table swaps the bars for the rows and back, CSV is a download, PNG saves a picture;
-   - chapters 16 and 17 draw on the night ground;
+   - chapters 16 and 17 draw on the night ground, which fills the drawing's slot, the caption on the page under it (each
+     chapter shows alone at its address, so the check goes there by its address);
    - on a phone the drawing stays in the strip, the masthead goes up on the way down and back on the way up, and the slim
      bar names the chapter and the section;
    - the readable page has the same opener, rail, card and figure strip, with Lithography's still and no app buttons.
@@ -29,6 +33,29 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8766';
       check('1440: every balloon name inside the drawing\'s box, at 11 px or more', bal && bal.every((b) => b.inside && b.fs >= 11));
       const slack = await t.ev("getComputedStyle(document.querySelector('#lithography .ch-spec')).getPropertyValue('--slack')");
       check('1440: the caption stands on the drawing\'s foot (--slack set)', /^\s*\d+px/.test(slack), slack);
+      // the column: the rail from the top, the verdict, the plate and the card at the measure, the card after the lead
+      const col = await t.ev(`(function(){var a=document.getElementById('lithography'),q=function(s){return a.querySelector(s);},r=function(s){return q(s).getBoundingClientRect();};
+        var card=q('.prose > .plate'),prev=card&&card.previousElementSibling,next=card&&card.nextElementSibling,sp=getComputedStyle(q('.ch-spec'));
+        return {railTop:Math.round(r('.ch-rail').top),kickTop:Math.round(r('.ch-kick').top),kick:q('.ch-kick').textContent,textX:Math.round(r('.ch-lede').left),specX:Math.round(r('.ch-spec').left),specW:Math.round(r('.ch-spec').width),
+          cardW:card?Math.round(card.getBoundingClientRect().width):0,cardId:card&&card.id,prev:prev&&prev.tagName,next:next&&next.id,inHead:!!q('.chapter-head .plate'),
+          drawH:sp.getPropertyValue('--draw-h').trim(),lift:sp.getPropertyValue('--lift').trim(),toc:[].map.call(a.querySelectorAll('.rail-toc a'),function(x){return x.textContent;}).slice(0,3).join(' | ')};})()`);
+      check('1440: the rail starts beside the kicker', Math.abs(col.railTop - col.kickTop) <= 4, `rail ${col.railTop}, kicker ${col.kickTop}`);
+      check('1440: the kicker carries the card\'s verdict', /Extreme concentration\s*·\s*Very hard to substitute/.test(col.kick), col.kick);
+      check('1440: the specimen is a plate at the measure, in the text column', col.specW === 666 && col.specX === col.textX, `${col.specW} px at x ${col.specX}, text at ${col.textX}`);
+      check('1440: the plate is fitted to its drawing (--draw-h, --lift)', /^\d+px$/.test(col.drawH) && /^\d+px$/.test(col.lift), `--draw-h ${col.drawH}, --lift ${col.lift}`);
+      check('1440: the card is in the text after the lead, before section 01, at the measure', !col.inHead && col.prev === 'P' && col.next === 'lithography--how-it-works' && col.cardW === 666 && col.cardId === 'lithography--card', JSON.stringify({ prev: col.prev, next: col.next, w: col.cardW }));
+      check('1440: On this page lists the card after In plain terms', col.toc === 'In plain terms | Chokepoint card | How it works', col.toc);
+      await t.ev("document.querySelector('#lithography .rail-toc a[href=\"#lithography--card\"]').click(),1"); await sleep(1200);
+      const land = await t.ev("(function(){var c=document.getElementById('lithography--card').getBoundingClientRect();return {top:Math.round(c.top),hash:location.hash,cur:(document.querySelector('#lithography .rail-toc a[aria-current]')||{}).textContent};})()");
+      check('1440: Chokepoint card in the rail lands on the card, clear of the masthead', land.top >= 64 && land.top <= 100 && land.cur === 'Chokepoint card', JSON.stringify(land));
+      // the card's look-up cards: a term in its text, and a rating (its band's sentence and this stage's test)
+      for (const [sel, what] of [['#lithography--card .gl-term:not([data-note])', 'a term'], ['#lithography--card .v-btn[data-term="substitutability"]', 'the substitutability rating']]) {
+        const lab = await t.ev(`(function(){var b=document.querySelector(${JSON.stringify(sel)});if(!b)return null;document.documentElement.style.scrollBehavior='auto';b.scrollIntoView({block:'center'});b.focus();return b.textContent;})()`); await sleep(500);
+        const tip = await t.ev("(function(){var e=document.getElementById('gl-tip');return e&&!e.hidden?e.querySelector('b').textContent:null;})()");
+        check(`1440: ${what} in the card opens its look-up card`, !!lab && !!tip, `${lab} -> ${tip}`);
+        await t.ev("(document.activeElement && document.activeElement.blur(), 1)");
+      }
+      await t.ev("(document.documentElement.style.scrollBehavior='auto', window.scrollTo(0,0), 1)"); await sleep(600);
       check('1440: the parts list names the four parts', await t.ev("[].map.call(document.querySelectorAll('#lithography .ch-spec .ch-parts li > span'),function(l){return l.textContent}).join(' | ')") === 'Light source: ASML San Diego (US), laser by Trumpf (DE) | Mirrors: Zeiss SMT (DE) | Mask: see stage 05, Photomasks and Pellicles | Wafer: see stage 02, Silicon and Wafers');
       await scrollTo(t, '#lithography--how-it-works', 200);
       check('1440: the rail marks How it works', await t.ev("(document.querySelector('#lithography .rail-toc a[aria-current]')||{}).textContent") === 'How it works', await t.ev("(document.querySelector('#lithography .rail-toc a[aria-current]')||{}).textContent"));
@@ -51,11 +78,14 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8766';
       check('1440: CSV is a download of the rows', await t.ev(`(function(){var a=document.querySelector('${F} .fs-csv');return !!a.getAttribute('download')&&decodeURIComponent(a.href).indexOf('China,33')>0;})()`));
       const png = await t.ev(`new Promise(function(res){var orig=HTMLCanvasElement.prototype.toBlob;HTMLCanvasElement.prototype.toBlob=function(cb,type){HTMLCanvasElement.prototype.toBlob=orig;res({w:this.width,h:this.height,type:type});};document.querySelector('${F} .fs-png').click();setTimeout(function(){res(null)},3000);})`);
       check('1440: PNG draws the figure at 1,600 px wide', png && png.w === 1600 && png.type === 'image/png', JSON.stringify(png));
-      // chapters 16 and 17: the night ground
-      await scrollTo(t, '#component-costs', 80); await sleep(800);
-      check('1440: the drawing moves to chapter 16\'s slot', await t.ev("!!document.querySelector('#component-costs .ch-spec-draw canvas')"));
-      check('1440: chapter 16 draws on the night ground', await t.ev("getComputedStyle(document.querySelector('#component-costs .ch-spec')).backgroundColor") === 'rgb(18, 18, 17)' && await t.ev('CP.Stage.dark') === true);
-      await scrollTo(t, '#lithography', 80); await sleep(800);
+      // chapters 16 and 17: the night ground, in the drawing's slot; the caption stands under it on the page's ground
+      for (const id of ['component-costs', 'geopolitics']) {
+        await t.ev(`location.hash='#${id}',1`); await sleep(1800);
+        check(`1440: the drawing moves to ${id}'s slot`, await t.ev(`!!document.querySelector('#${id} .ch-spec-draw canvas')`));
+        const night = await t.ev(`(function(){var d=document.querySelector('#${id} .ch-spec-draw'),c=document.querySelector('#${id} .ch-spec-cap');return {slot:getComputedStyle(d).backgroundColor,cap:getComputedStyle(c).backgroundColor,capInk:getComputedStyle(c.querySelector('p')).color,dark:CP.Stage.dark,inside:c.getBoundingClientRect().top>=d.getBoundingClientRect().bottom};})()`);
+        check(`1440: ${id} draws on the night ground, its caption under it on the page`, night.slot === 'rgb(18, 18, 17)' && night.dark === true && night.cap === 'rgba(0, 0, 0, 0)' && night.capInk === 'rgb(69, 68, 63)' && night.inside, JSON.stringify(night));
+      }
+      await t.ev("location.hash='#lithography',1"); await sleep(1800);
       check('1440: back on Lithography, the light ground again', await t.ev('CP.Stage.dark') === false && await t.ev("!!document.querySelector('#lithography .ch-spec-draw canvas')"));
       // the rail's chain link goes to the chapter
       await t.ev("document.querySelector('#lithography .rail-chain a[href=\"photomasks-and-pellicles/\"]').click(),1"); await sleep(1500);
@@ -65,6 +95,24 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8766';
       check('1440: on the home the drawing is back on the stage', await t.ev("!!document.querySelector('.stage > canvas#stage-canvas') && getComputedStyle(document.querySelector('.stage')).display!=='none'"));
       check('1440: the home shows no balloons', await t.ev("!document.querySelector('.stage .ch-balloons')"));
       t.errors.forEach((e) => check('1440: page error', false, e));
+      await t.close();
+    }
+    /* ---------- the card's own address, on a fresh load, at 1440 and 390 ---------- */
+    for (const width of [1440, 390]) {
+      const t = await open(chrome, BASE + '/#lithography--card', { width, wait: 3500 });
+      const r = await t.ev("(function(){var c=document.getElementById('lithography--card').getBoundingClientRect(),m=document.querySelector('.masthead').getBoundingClientRect();return {top:Math.round(c.top),mast:Math.round(m.bottom),shown:[].filter.call(document.querySelectorAll('article.chapter'),function(a){return a.getClientRects().length;}).map(function(a){return a.id;}).join(',')};})()");
+      check(`${width}: #lithography--card opens Lithography at its card, clear of the masthead`, r.shown === 'lithography' && r.top >= 0 && r.top <= 140, JSON.stringify(r));
+      await t.close();
+    }
+    /* ---------- a Glossary passage on a card lands on it, in the text after the lead ---------- */
+    {
+      const t = await open(chrome, BASE + '/#/glossary', { width: 1440, wait: 3000 });
+      await t.ev(`(function () { var b = [].filter.call(document.querySelectorAll('#gl-dict .gl-de[data-kind="term"] button[data-open]'), function (b) { return /^EUV|^Extreme ultraviolet/i.test(b.textContent); })[0]; b.click(); return 1; })()`); await sleep(1500);
+      const para = await t.ev(`(function () { var as = document.querySelectorAll('#gl-sheet .lk-men a[data-para]'); for (var i = 0; i < as.length; i++) { var p = CP.Lookup.paras[+as[i].getAttribute('data-para')]; if (p && p.el.closest('.prose > .plate')) { as[i].id = 'qa-card-pass'; return +as[i].getAttribute('data-para'); } } return null; })()`);
+      if (para != null) { await t.ev("(document.getElementById('qa-card-pass').click(), 1)"); await sleep(2200); }
+      const p = para == null ? null : await t.ev(`(function () { var p = CP.Lookup.paras[${para}], r = p.el.getBoundingClientRect(); return { chapter: p.chapter, text: p.text.slice(0, 50), top: Math.round(r.top), hash: location.hash, shown: !!document.getElementById(p.chapter).getClientRects().length, flash: p.el.classList.contains('lk-flash') }; })()`);
+      check('1440: a Glossary passage on a card (EUV\'s) lands on the card', !!p && p.shown && p.top > 60 && p.top < 900 && p.flash, JSON.stringify(p));
+      t.errors.forEach((e) => check('1440 glossary: page error', false, e));
       await t.close();
     }
     /* ---------- The Chain on a phone ---------- */

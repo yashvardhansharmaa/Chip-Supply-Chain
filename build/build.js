@@ -379,12 +379,12 @@ function cardCites(card, ctx) {
   if (!any) warn(`${ctx.id}: the card has no source fields (qa/round2/SCHEMA.md §1)`);
   else if (off.length) warn(`${ctx.id}: card url and sentence counts differ: ${off.join(', ')}`);
 }
-// The chapter's head comes before its body, in the order the page shows it (redesign, 25 Oct 2026): the chokepoint card, In
-// plain terms (meta.plain, the first paragraph of How it works), then In short (the body's Takeaways section, which
-// splitTakeaways moves to the head). Their sources are numbered first, in that order, before markdown() numbers the rest of
-// the body as it reads it; a source met again keeps its number, and every mark looks its number up by its url (cite).
+// The chapter is numbered in the order the page shows it (the column, design round five, 27 Oct 2026): In plain terms
+// (meta.plain, the first paragraph of How it works), In short (the body's Takeaways section, which splitTakeaways moves to the
+// head), the lead (the body's text before its first section), then the chokepoint card, which stands in the text after the
+// lead and before section 01 (chapterHTML). Their sources are numbered first, in that order, before markdown() numbers the
+// rest of the body as it reads it; a source met again keeps its number, and every mark looks its number up by its url (cite).
 function readingOrderCites(meta, body, ctx, hasCard) {
-  if (hasCard) cardCites(meta.card, ctx); // the card comes first on the page (redesign stage 2), so its marks are numbered first
   if (meta.plain) inline(String(meta.plain), ctx);
   const lines = String(body || '').replace(/\r/g, '').split('\n');
   const at = lines.findIndex((l) => /^##\s+takeaways?\s*(\{#[^}]*\})?\s*$/i.test(l.trim().replace(/\*\*/g, '')));
@@ -392,7 +392,14 @@ function readingOrderCites(meta, body, ctx, hasCard) {
     const rest = lines.slice(at + 1), end = rest.findIndex((l) => /^#{1,2}\s/.test(l.trim()));
     inline((end < 0 ? rest : rest.slice(0, end)).join('\n'), ctx);
   }
+  if (!hasCard) return;
+  // the lead: every line before the first section heading (the chapter's # title aside; a lead holds no figure)
+  const first = lines.findIndex((l) => /^##\s/.test(l.trim()));
+  inline((first < 0 ? [] : lines.slice(0, first)).filter((l) => !/^#\s/.test(l.trim())).join('\n'), ctx);
+  cardCites(meta.card, ctx);
 }
+// the card in the text: after the lead, before the first section heading (an <h3> in The Chain, an <h2> on the readable page)
+const withCard = (prose, card, tag) => { if (!card) return prose; const i = prose.search(new RegExp('<' + (tag || 'h3') + '[\\s>]')); return i < 0 ? prose + card : prose.slice(0, i) + card + '\n' + prose.slice(i); };
 // The marks for one place in the text. More urls than sentences: the extras sit with the last sentence, a comma between
 // marks so that 1 and 2 never read as 12. A sentence with no url gets no mark.
 const cardMarks = (urls, ctx) => (ctx ? urls.filter(Boolean).map((u) => cite(u, ctx)).join('<sup class="cite-sep" aria-hidden="true">,</sup>') : '');
@@ -720,15 +727,18 @@ const LEDGER_KEY = (() => {
   const used = ['Extreme', 'High', 'Moderate', 'Low'].filter((b) => stages.some((c) => (c.meta.card || {}).concentration === b));
   return used.length ? `<p class="ledger-key" aria-hidden="true">${used.map((b) => `<span class="lgk" data-band="${BANDS[b]}"><i></i>${b}</span>`).join('')}</p>` : '';
 })();
-/* ---------------- the chapter page (redesign stage 2, qa/redesign/BRIEF.md and the hybrid mockup's chapter) ----------------
-   An article in four parts:
-   1. the opener: a kicker (the chapter, the stage and its Extreme or High mark), the title, the standfirst (oneLiner), the
-      facts line and the cite line (Link to chapter, Cite this chapter, Chapter PDF);
-   2. the specimen: a slot the live 3D drawing moves into while it is on screen (src/app.js Stage.host), and its plain caption,
-      a mono label and the chapter's own specimenCaption, with the parts list under it where data/specimen-parts.json has one;
-   3. the chokepoint card;
-   4. the body: the contents rail on the left (On this page, Figures, The chain), and In plain terms, In short, the prose, the
-      flashcards, the sources and Previous and Next beside it.
+/* ---------------- the chapter page (redesign stage 2, qa/redesign/BRIEF.md; its opener is "the column" of design round five,
+   chosen 27 Oct 2026, MAIN/qa/design5/opener/b) ----------------
+   The contents rail on the left (On this page, Figures, The chain) from the article's first line, beside one column of text:
+   1. the opener: a kicker (the chapter, the stage and the card's verdict in the card's own words, "Extreme concentration ·
+      Very hard to substitute"), the title, the standfirst (oneLiner), the facts line and the cite line (Link to chapter, Cite
+      this chapter, Chapter PDF);
+   2. the specimen, the chapter's first plate: a slot the live 3D drawing moves into while it is on screen (src/app.js
+      Stage.host), and under it its plain caption (a mono label and the chapter's own specimenCaption) beside the parts list,
+      where data/specimen-parts.json has one;
+   3. In plain terms and In short;
+   4. the prose: the lead, then the chokepoint card, the chapter's first table (withCard), then the sections, the flashcards,
+      the sources and the door to the next chapter.
    The head keeps its class (.chapter-head) and the prose stays the article's own child, which the search index and the print
    path read (src/app.js Tools, src/modules/print.js). */
 // the chapters whose drawing carries numbered parts (the owner's decision of 25 Oct 2026: Lithography only for now). The file is
@@ -755,8 +765,9 @@ function partsHTML(ch) {
   };
   return `<p class="ch-parts-k">Parts, as numbered on the drawing</p><ol class="ch-parts">${ps.map((p) => `<li><b aria-hidden="true">${+p.n}</b><span>${line(p)}</span></li>`).join('')}</ol>`;
 }
-// the band as a mark and a word: Extreme a solid bar, High an outline (the home's evidence figure draws them alike)
-const bandMark = (b) => (b ? `<span class="ch-band" data-band="${BANDS[b] || 0}"><i aria-hidden="true"></i>${esc(b)}</span>` : '');
+// the card's verdict in the kicker: the band as a mark (Extreme a solid bar, High an outline, as the home's evidence figure draws
+// them), then both ratings in the words the card's look-up heads use, "Extreme concentration · Very hard to substitute"
+const bandMark = (b, sub) => (b ? `<span class="ch-band ch-verdict" data-band="${BANDS[b] || 0}"><i aria-hidden="true"></i><span>${esc(b)} concentration</span>${sub ? `<span class="sep" aria-hidden="true">·</span><span>${esc(SUBWORD[sub] || sub)}</span>` : ''}</span>` : '');
 const TILE_WORD = { 16: 'The economics', 17: 'The contest' }; // the second item of the kicker for the two chapters that are not stages
 // the contents rail: the chapter's sections, its figures by number, and the chain (the fifteen stages with their marks, the
 // current one in wine, then the two chapters that look across them). Under 1200 px only On this page shows, as a line of links
@@ -786,34 +797,36 @@ function chapterHTML(ch) {
   const stageIdx = stages.findIndex((c) => c.id === ch.id);
   const conc = stageIdx >= 0 ? (m.card || {}).concentration || '' : '';
   const where = stageIdx >= 0 ? `${ch.title}, stage ${stageIdx + 1} of ${stages.length}` : '';
-  const cardCtx = { id: ch.id, cites: ch.cites, figures: [] }; // the card's marks number with the body's (its urls were registered first)
-  const plate = isStage(ch) ? nameplate(m.card, ch.title, null, cardCtx, where) : '';
-  // the same pieces, kept for the chapter's own readable page (build/modules/social.js); the prose is the copy before glossary buttons
-  ch.rendered = { plain: pb.box, inShort: parts.inShort, plate, prose: pb.html, mins, parts: partsHTML(ch) };
-  // the main page's head: each block (In plain terms, In short, the card's prose) marks the first use of each glossary term in it
+  const cardCtx = { id: ch.id, cites: ch.cites, figures: [] }; // the card's marks number with the body's (its urls were registered in reading order)
+  // the card has an address of its own (On this page lists it), and stands in the text after the lead (withCard)
+  const cardId = (h) => h.replace('<section class="plate"', `<section class="plate" id="${esc(ch.id)}--card"`);
+  const plate = isStage(ch) ? cardId(nameplate(m.card, ch.title, null, cardCtx, where)) : '';
+  // the same pieces, kept for the chapter's own readable page (build/modules/social.js); the prose is the copy before glossary
+  // buttons, with the card in its place after the lead
+  ch.rendered = { plain: pb.box, inShort: parts.inShort, plate, prose: withCard(pb.html, plate), mins, parts: partsHTML(ch) };
+  // the main page's blocks (In plain terms, In short, the card's prose) each mark the first use of each glossary term in them
   const cardUsed = new Set();
-  const plateGl = isStage(ch) ? nameplate(m.card, ch.title, (h) => glossaryWrap(h, cardUsed), cardCtx, where) : '';
-  const kick = `<p class="ch-kick"><span>Chapter ${pad(ch.number)}</span><span>${stageIdx >= 0 ? `Stage ${stageIdx + 1} of ${stages.length}` : esc(TILE_WORD[ch.number] || '')}</span>${bandMark(conc)}</p>`;
+  const plateGl = isStage(ch) ? cardId(nameplate(m.card, ch.title, (h) => glossaryWrap(h, cardUsed), cardCtx, where)) : '';
+  const kick = `<p class="ch-kick"><span>Chapter ${pad(ch.number)}</span><span>${stageIdx >= 0 ? `Stage ${stageIdx + 1} of ${stages.length}` : esc(TILE_WORD[ch.number] || '')}</span>${bandMark(conc, ((m.card || {}).substitutability || {}).band)}</p>`;
   const facts = `<p class="ch-meta"><span class="label">${ch.words.toLocaleString('en-US')} words / ${mins} min</span><span class="label">Specimen: ${esc(SPECIMEN_NAME[specimen] || specimen.replace(/-/g, ' '))}</span><span class="label">Updated ${CITE_DAY(ch.id)}</span>${ch.cites.length ? `<span class="label">${ch.cites.length} sources</span>` : ''}</p>`;
   // the specimen's slot and its caption; chapters 16 and 17 set their drawing on the night ground (data-night)
   const ps = partsOf(ch), night = ch.number >= 16;
   const spec = `<figure class="ch-spec"${night ? ' data-night="1"' : ''}${ps.length ? ` data-parts="${esc(JSON.stringify(ps.map((p) => ({ n: +p.n, name: p.name, at: p.at || [] }))))}"` : ''}>`
     + `<div class="ch-spec-draw"></div>`
-    + `<figcaption class="ch-spec-cap"><span class="label">Specimen ${pad(ch.number)} · ${esc(ch.title)}</span>${m.specimenCaption ? `<p>${esc(m.specimenCaption)}</p>` : ''}${ch.rendered.parts}</figcaption></figure>`;
-  // On this page: In plain terms, the chapter's own sections, the flashcards and the sources
+    + `<figcaption class="ch-spec-cap${ch.rendered.parts ? ' has-parts' : ''}"><span class="label">Specimen ${pad(ch.number)} · ${esc(ch.title)}</span>${m.specimenCaption ? `<p>${esc(m.specimenCaption)}</p>` : ''}${ch.rendered.parts}</figcaption></figure>`;
+  // On this page: In plain terms, the chokepoint card, the chapter's own sections, the flashcards and the sources
   const fc = flashcards[ch.id], hasDeck = fc && Array.isArray(fc.cards) && fc.cards.length;
-  const toc = (m.plain ? [[`${ch.id}--plain`, 'In plain terms']] : []).concat((ch.headings || []).map((h) => [h.id, inline(h.text, { id: ch.id, cites: [], figures: [] }).replace(/<sup[\s\S]*?<\/sup>/g, '')]))
+  const toc = (m.plain ? [[`${ch.id}--plain`, 'In plain terms']] : []).concat(plate ? [[`${ch.id}--card`, 'Chokepoint card']] : []).concat((ch.headings || []).map((h) => [h.id, inline(h.text, { id: ch.id, cites: [], figures: [] }).replace(/<sup[\s\S]*?<\/sup>/g, '')]))
     .concat(hasDeck ? [[`${ch.id}--flashcards`, 'Flashcards']] : []).concat(ch.cites.length ? [[`${ch.id}--sources`, 'Sources']] : []);
   return `<article class="chapter" id="${esc(ch.id)}" data-specimen="${esc(specimen)}" data-number="${pad(ch.number)}" data-title="${esc(ch.title)}" data-caption="${esc(m.specimenCaption || '')}">
 <header class="chapter-head">
 <div class="ch-open">${kick}<h2 class="ch-title${ch.title.length > 16 ? ' is-long' : ''}"><span class="sr-only">Chapter ${ch.number}: </span>${esc(ch.title)}</h2>${m.oneLiner ? `<p class="ch-lede">${esc(m.oneLiner)}</p>` : ''}<div class="ch-omet">${facts}${citeBlock(ch, CITE_DAY(ch.id), false, copyLink(ch.id))}</div></div>
 ${spec}
-${plateGl}
 ${glPlain(pb.box)}
 ${parts.inShort ? `<section class="inshort"><h3 class="label">In short</h3>${glossaryWrap(parts.inShort)}</section>` : ''}
 </header>
 ${railHTML(ch, stageIdx, toc)}
-<div class="prose">${glossaryWrap(pb.html)}${reviewHTML(ch)}${sources}${prevNext(ch)}</div>
+<div class="prose">${withCard(glossaryWrap(pb.html), plateGl)}${reviewHTML(ch)}${sources}${prevNext(ch)}</div>
 </article>`;
 }
 const chaptersHTML = chapters.length ? chapters.map(chapterHTML).join('\n') : `<article class="chapter" id="placeholder" data-specimen="wafer" data-number="01" data-title="Placeholder"><header class="chapter-head"><div class="chapter-num">01</div><h2 class="chapter-title">No chapters yet</h2></header><div class="prose"><p>No chapters found. This is a shell build.</p></div></article>`;
