@@ -1,13 +1,13 @@
 #!/usr/bin/env node
-/* QA gate 4 for the AI Chips redesign (option C, "The timeline"): no visible text may be lost. It reads the visible text of the
-   view and of /chips/ on MAIN's build (127.0.0.1:8765, the live design) and on this checkout's (127.0.0.1:8768), in the states a
-   reader meets: nothing picked; the pair B200 and Ascend 910C; four chips (B200, Ascend 910C, Instinct MI355X, WSE-3 Turbo) with
-   every fold open (the list of all chips and each chip's notes). On each side the same calls pick the chips
-   (CP.Landscape.setPair), so the comparison holds the same chips. For each state it lists the lines only on one side, the lines
-   that differ only in letter case, and the words each side lacks. The marks the redesign puts on each figure are read out of its
-   side (MAIN's view kept those sources in hover titles, so the numbers would all read as added; the notes keep theirs on both); /chips/ keeps its marks on both sides.
-   Every line the redesign adds is also run through the writing rules of qa/scripts/check-speak.js.
-   usage: node qa/redesign/census-chips.js [--a http://127.0.0.1:8765] [--b http://127.0.0.1:8768] [--out qa/redesign/census-chips.txt] */
+/* The census for AI Chips: no visible text may be lost. It reads the visible text of the view and of /chips/ on the redesign as
+   it stands (127.0.0.1:8766, option C "The timeline") and on this checkout (127.0.0.1:8772, design round five's tick list), in
+   the states a reader meets: nothing chosen; the pair B200 and Ascend 910C; four chips (B200, Ascend 910C, Instinct MI355X,
+   WSE-3 Turbo) with every fold open (each chip's notes, and on the old page the list of all chips); and /chips/. On each side the
+   same call chooses the chips (CP.Landscape.setPair), so the comparison holds the same chips. Both sides carry a source mark on
+   every figure, so the marks stay in. For each state it lists the lines only on one side, the lines that differ only in letter
+   case, and the words each side lacks. Every line the new page adds is also run through the writing rules of
+   qa/scripts/check-speak.js.
+   usage: node qa/redesign/census-chips.js [--a http://127.0.0.1:8766] [--b http://127.0.0.1:8772] [--out qa/redesign/census-chips.txt] */
 'use strict';
 const fs = require('fs');
 const path = require('path');
@@ -15,7 +15,7 @@ const { launch, sleep } = require('./cdp.js');
 
 const args = process.argv.slice(2);
 const opt = (n, d) => { const i = args.indexOf('--' + n); return i >= 0 ? args[i + 1] : d; };
-const A = opt('a', 'http://127.0.0.1:8765'), B = opt('b', 'http://127.0.0.1:8768');
+const A = opt('a', 'http://127.0.0.1:8766'), B = opt('b', 'http://127.0.0.1:8772');
 const OUT = opt('out', path.join(__dirname, 'census-chips.txt'));
 const PAIR = ['nvidia-b200', 'huawei-ascend-910c'], FOUR = PAIR.concat(['amd-mi355x', 'cerebras-wse3-turbo']);
 const STATES = [
@@ -58,7 +58,7 @@ async function read(chrome, base, st) {
     await s('Page.navigate', { url: base + st.url });
     for (let t = 0; !loaded && t < 300; t++) await sleep(100);
     await sleep(2500);
-    const r = await s('Runtime.evaluate', { expression: READ(st.js, base === B && !st.page, st.page), returnByValue: true, awaitPromise: true });
+    const r = await s('Runtime.evaluate', { expression: READ(st.js, false, st.page), returnByValue: true, awaitPromise: true });
     if (r.exceptionDetails) throw new Error((r.exceptionDetails.exception || {}).description || r.exceptionDetails.text);
     return r.result.value || '';
   } finally { chrome.off(on); await chrome.send('Target.closeTarget', { targetId }).catch(() => {}); }
