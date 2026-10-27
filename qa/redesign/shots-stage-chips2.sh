@@ -1,8 +1,8 @@
 #!/bin/sh
 # The look gate's shots for AI Chips, design round five's tick list: the page as it opens, two chips, four chips and a chip's
-# card open on the chart, at 1440 light and dark and at 390, then highest first, the phone's list sheet and /chips/. One spec
-# per call of qa/redesign/shots.js. A comparison shot lands as Show the comparison lands it: clear of the masthead and, on a
-# phone, of the tray. The PNGs stay local (qa/**/*.png is ignored).
+# card open on the chart, at 1440 light and dark and at 390, then highest first, the phone's list sheet, the four chips'
+# labels on the crowded bandwidth chart and /chips/. One spec per call of qa/redesign/shots.js. A comparison shot lands as
+# Show the comparison lands it: clear of the masthead and, on a phone, of the tray. The PNGs stay local (qa/**/*.png is ignored).
 # usage: sh qa/redesign/shots-stage-chips2.sh [outdir] [base]   (defaults qa/redesign/shots/stage-chips2, http://127.0.0.1:8772)
 O=${1:-qa/redesign/shots/stage-chips2}
 B=${2:-http://127.0.0.1:8772}
@@ -31,5 +31,7 @@ shot "crowd-390|$B/#/landscape?measure=mem|390||||var d=document.querySelector('
 shot "rank-1440|$B/#/landscape?$TWO&measure=bw&view=rank|1440||.aic-atlas"
 shot "rank-390|$B/#/landscape?$TWO&measure=bw&view=rank|390||.aic-atlas"
 shot "four-390-dark|$B/#/landscape?$FOUR|390|dark|||$CMP"
+shot "four-bw-1440|$B/#/landscape?$FOUR&measure=bw|1440||#cx-chart"
+shot "four-bw-390|$B/#/landscape?$FOUR&measure=bw|390||#cx-chart"
 shot "ref-chips-1440|$B/chips/|1440||.ctl"
 shot "ref-chips-table-1440|$B/chips/|1440||#specs"
