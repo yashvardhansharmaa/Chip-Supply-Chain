@@ -1137,8 +1137,8 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
 /* ---------- the page ---------- */
 .view[data-view="stack"] { width: 100%; padding: 0 var(--margin); }
 /* ---------- the top of The Chain (stage 3): the title and its standfirst, How to read a chapter, the contents ----------
-   On the chapter's grid: the title across the row in Fraunces 350, the standfirst to column 8, then two sections, each a
-   Fraunces heading over an ink rule. The three scales of the card sit side by side; the contents list each chapter's number
+   On the chapter's grid: the title across the row in the display face at 400, the standfirst to column 8, then two
+   sections, each a display heading over an ink rule. The three scales of the card sit side by side; the contents list each chapter's number
    with its band as a mark, its title and its one line, three to a row */
 .view[data-view="stack"] > .howto {
   display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; align-items: start;
@@ -1414,14 +1414,15 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 .chapter .ch-rail .rail-across { margin-top: 8px; padding-top: 6px; border-top: 1px solid var(--line); }
 .chapter .ch-rail .rail-across .stage-cell a { grid-template-columns: 24px minmax(0, 1fr); }
 
-/* In plain terms and In short follow the specimen, then the prose; In plain terms' ink rule divides them from the opener */
-.chapter .plain { grid-column: 4 / 10; grid-row: 3; max-width: none; margin: 56px 0 0; padding: 14px 0 0; border: 0; border-top: 1px solid var(--ink); background: none; }
+/* In plain terms and In short follow the specimen, then the prose; In plain terms' ink rule divides them from the opener.
+   Both keep to the measure (666 px), as the title, the plate and the text do, so the ink rule ends where the card's tint does */
+.chapter .plain { grid-column: 4 / 13; grid-row: 3; max-width: 666px; margin: 56px 0 0; padding: 14px 0 0; border: 0; border-top: 1px solid var(--ink); background: none; }
 .chapter .plain h3.label, .chapter .plain .label {
   display: block; margin: 14px 0 22px; padding: 0; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title);
   font-size: clamp(34px, 3.1vw, 44px); line-height: 1.08; letter-spacing: -0.02em; color: var(--ink);
 }
 .chapter .plain p { margin: 0; font-family: var(--font-body); font-size: calc(21px * var(--text-scale)); line-height: 1.57; color: var(--ink); max-width: 33em; }
-.chapter .inshort { grid-column: 4 / 10; grid-row: 4; max-width: calc(36em / var(--text-scale)); margin: 36px 0 0; }
+.chapter .inshort { grid-column: 4 / 13; grid-row: 4; max-width: 666px; margin: 36px 0 0; }
 .chapter .inshort h3.label { margin: 0 0 12px; font-family: var(--font-ui); font-weight: 500; font-size: 15px; line-height: 20px; color: var(--ink); }
 .chapter .inshort p, .chapter .inshort li { font-family: var(--font-body); font-size: calc(19px * var(--text-scale)); line-height: 1.55; color: var(--ink); }
 .chapter .inshort p { margin: 0 0 0.7em; }
@@ -1430,7 +1431,7 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
    readable pages set --measure for their own narrower page (build/assets/chapter-page.css) */
 .chapter > .prose > * { max-width: calc(36em / var(--text-scale)); }
 .chapter > .prose > .table-wrap, .chapter > .prose > .prevnext { max-width: none; }
-/* each section opens on an ink rule, its number in mono above a large Fraunces heading */
+/* each section opens on an ink rule, its number in mono above a large heading in the display face */
 .chapter > .prose > h3 {
   counter-increment: sec; margin: 72px 0 22px; padding-top: 14px; border-top: 1px solid var(--ink); max-width: 666px; /* its rule spans the text and figures under it */
   font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title);
@@ -1582,8 +1583,8 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
   .chapter .rail-toc a { padding: 2px 0; border: 0; border-bottom: 1px solid var(--rule-ink); font-size: 14.5px; line-height: 24px; }
   .chapter .rail-toc a[aria-current] { font-weight: 400; border-bottom-color: var(--rule-ink); }
   .chapter .ch-spec { grid-column: 1 / -1; grid-row: 3; }
-  .chapter .plain { grid-column: 1 / 10; grid-row: 4; }
-  .chapter .inshort { grid-column: 1 / 10; grid-row: 5; }
+  .chapter .plain { grid-column: 1 / -1; grid-row: 4; }
+  .chapter .inshort { grid-column: 1 / -1; grid-row: 5; }
   .chapter > .prose { grid-column: 1 / -1; grid-row: 6; }
   /* a readable page has no other way to the other stages (The Chain in the app has its contents and its sheet), so under 1200 px
      its rail keeps The chain, compact: one numbered cell a chapter with its band's mark, the chapter's name in the link's label */

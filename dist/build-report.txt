@@ -1,4 +1,4 @@
-built 2026-10-27T21:22:04.254Z
+built 2026-10-27T21:29:22.212Z
 source tiers: A 641 · B 32 · disallowed 0 · unclassified 0
 chapters: 16 + geopolitics
 words: 38519

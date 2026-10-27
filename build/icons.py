@@ -3,8 +3,8 @@
 
 usage: python3 build/icons.py
 
-The mark is a lowercase c in Fraunces, the face of the wordmark and the chapter titles, in the site's paper (#f7f6f2) on a
-garnet (#7a1f2b) tile. C_PATH below is Fraunces's "c" at weight 800, optical size 36, SOFT 0 and WONK 0, taken once with
+The mark is a lowercase c in Fraunces (the face of the wordmark and the chapter titles until design round five, 27 Oct
+2026; the drawn c stays), in the site's paper (#f7f6f2) on a garnet (#7a1f2b) tile. C_PATH below is Fraunces's "c" at weight 800, optical size 36, SOFT 0 and WONK 0, taken once with
 fontTools (font units, 2,000 to the em, y pointing up), so the build needs no font file.
 
 A curve drawn at 16 px blurs wherever an edge falls between pixels. So at each size the c is moved by fractions of a pixel,
