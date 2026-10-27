@@ -231,7 +231,9 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 .chapter .plate-status .k { margin: 0 0 10px; font-family: var(--font-code); font-size: 12px; font-weight: 400; line-height: 16px; color: var(--muted); }
 .chapter .plate-status p { font-family: var(--font-body); font-size: 15px; line-height: 1.55; color: var(--ink-2); max-width: 36em; }
 .chapter .plate sup.cite { vertical-align: 0.5em; }
-/* the ledger at the measure (screen only: paper sets the card its own way, src/modules/print.css) */
+/* the ledger at the measure (screen only: paper sets the card its own way, src/modules/print.css). No "a + b" selector here or in
+   the phone's rules: Paged.js (build/pdf.py) lifts every rule with one out of its media query and applies it on paper too, so
+   ".plate" in the selector outweighs the older "div + div" rules instead */
 @media screen {
   .chapter > .prose > .plate { max-width: 666px; }
   .chapter .plate-head { padding: 0 0 12px; }
@@ -243,7 +245,7 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
   .chapter .plate-kpis .v.cost.long { font-size: 16px; }
   .chapter .plate-kpis .sub { font-size: 14px; line-height: 1.5; }
   .chapter .plate-rows { display: block; border: 0; }
-  .chapter .plate-rows .row, .chapter .plate-rows .row--why, .chapter .plate-status > div, .chapter .plate-status > div + div {
+  .chapter .plate-rows .row, .chapter .plate-rows .row--why, .chapter .plate .plate-status > div {
     display: grid; grid-template-columns: 186px minmax(0, 1fr); column-gap: 18px; padding: 14px 0 10px; border: 0; border-top: 1px solid var(--line-2);
   }
   .chapter .plate-rows > .row:first-child { border-top: 0; }
@@ -494,18 +496,6 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
   .chapter .ch-omet .ch-cite-line { gap: 4px 22px; }
   .view[data-view="stack"] .chapter .ch-spec { display: none; }
   .chapter .ch-spec { margin-top: 28px; }
-  /* the card in the column with padding of its own (in The Chain each chapter keeps its paint inside its box, content-visibility,
-     which would clip a bleed: stage 2 review, item 3); each label over its answer */
-  .chapter .plate { margin: 36px 0 0; padding: 18px 16px 10px; }
-  .chapter .plate-kpis { grid-template-columns: 1fr; row-gap: 0; padding: 0; }
-  .chapter .plate-kpis > div, .chapter .plate-kpis > div + div { padding: 14px 0; }
-  .chapter .plate-kpis > div + div, .chapter .plate-kpis > div:last-child { border-top: 1px solid var(--line-2); }
-  .chapter .plate-kpis > div:first-child { border-top: 0; }
-  .chapter .plate-kpis .v { margin: 8px 0; font-size: 40px; }
-  .chapter .plate-rows .row, .chapter .plate-rows .row--why, .chapter .plate-status > div, .chapter .plate-status > div + div { display: block; }
-  .chapter .plate-rows dt, .chapter .plate-status .k { display: block; padding: 0 0 8px; }
-  .chapter .plate-rows li { grid-template-columns: 28px minmax(0, 1fr); }
-  .chapter .plate-rows li .note { grid-column: 2; }
   .chapter .ch-rail { margin-top: 36px; }
   .chapter .plain { margin-top: 32px; }
   .chapter .plain p { font-size: 18.5px; line-height: 1.55; }
@@ -534,6 +524,21 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
   .chapter .prevnext .prev { grid-column: 1; grid-row: 2; margin-top: 36px; padding-top: 16px; border-top: 1px solid var(--line-2); }
   .chapter .prevnext .next .t { font-size: min(52px, 13vw); line-height: 0.98; }
   .chapter .prevnext .next .ol { font-size: 18px; }
+}
+
+/* the card on a phone, in the column with padding of its own (in The Chain each chapter keeps its paint inside its box,
+   content-visibility, which would clip a bleed: stage 2 review, item 3); each label over its answer. Screen only: a printed
+   page is narrower than 900 px too, and paper sets the card its own way (src/modules/print.css) */
+@media screen and (max-width: 900px) {
+  .chapter .plate { margin: 36px 0 0; padding: 18px 16px 10px; }
+  .chapter .plate-kpis { grid-template-columns: 1fr; row-gap: 0; padding: 0; }
+  .chapter .plate .plate-kpis > div { padding: 14px 0; border-top: 1px solid var(--line-2); }
+  .chapter .plate .plate-kpis > div:first-child { border-top: 0; }
+  .chapter .plate-kpis .v { margin: 8px 0; font-size: 40px; }
+  .chapter .plate-rows .row, .chapter .plate-rows .row--why, .chapter .plate .plate-status > div { display: block; }
+  .chapter .plate-rows dt, .chapter .plate-status .k { display: block; padding: 0 0 8px; }
+  .chapter .plate-rows li { grid-template-columns: 28px minmax(0, 1fr); }
+  .chapter .plate-rows li .note { grid-column: 2; }
 }
 
 /* ---------- the stage beside the page, on The Chain and elsewhere ---------- */

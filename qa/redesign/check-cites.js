@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 /* Stage 3: the citation marks run in reading order, and each points at its own source. For every chapter in The Chain
    (dist/index.html) and on its readable page (dist/<chapter>/), a mark's number must name the source in the chapter's list
-   whose address the mark links to, and the first sight of each number must come in order (1, then 2, then 3), the card's
-   marks first since the card now opens the chapter. usage: node qa/redesign/check-cites.js [dist] */
+   whose address the mark links to, and the first sight of each number must come in order (1, then 2, then 3): In plain terms,
+   In short and the lead first, then the card, which stands in the text before section 01 (the column, 27 Oct 2026).
+   usage: node qa/redesign/check-cites.js [dist] */
 'use strict';
 const fs = require('fs'), path = require('path');
 const dist = process.argv[2] || path.join(__dirname, '..', '..', 'dist');
