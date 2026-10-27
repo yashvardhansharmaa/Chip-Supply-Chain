@@ -10,7 +10,7 @@
        in the first three screens;
      - focus: Tab is pressed up to --tabs times and each control it reaches must draw a focus mark (an outline, a box
        shadow or a border that changes).
-   --set chapters (stage 2) measures every chapter instead: each of the 17 in The Chain, landed on by its anchor (the first three
+   --set chapters (stage 2) measures every chapter instead: each of the 16 in The Chain, landed on by its anchor (the first three
    screens are then its opener, specimen and card, and Tab starts at the chapter), and each readable page dist/<chapter>/.
    --set doors measures the end of each chapter, its door to the next one, in The Chain and on the readable page.
    usage: node qa/redesign/sweep.js [--set chapters|glossary|doors] [--only walk,lithography] [--widths 390,1440] [--tabs 40] [--out qa/redesign/sweep.txt] */

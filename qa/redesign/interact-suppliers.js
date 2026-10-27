@@ -38,7 +38,7 @@ const WINE = 'rgb(122, 31, 43)', GRAY = 'rgb(210, 209, 204)', DARK = 'rgb(140, 1
       check(`${width}: pressed again, it lets go`, (await t.ev("document.getElementById('sup-pipe').getAttribute('data-lit')")) === '0');
       // the route's chosen country presses the same button
       await t.ev("(document.querySelector('.sa-role[data-cc=\"TW\"]').click(), 1)"); await sleep(400);
-      check(`${width}: Taiwan on the route shows its panel`, await t.ev("!document.querySelector('.sa-panel[data-cc=\"TW\"]').hidden && document.querySelectorAll('.sa-stop.is-on').length === 4"));
+      check(`${width}: Taiwan on the route shows its panel`, await t.ev("!document.querySelector('.sa-panel[data-cc=\"TW\"]').hidden && document.querySelectorAll('.sa-stop.is-on').length === 3")); // Hsinchu, Kaohsiung and Taipei (4 before the merge of 27 Oct 2026 took Tainan off the route)
       check(`${width}: ...and follows Taiwan's ribbons`, (await t.ev("(document.querySelector('.sup-chip[aria-pressed=\"true\"]')||{}).textContent")) === 'Taiwan');
       await t.ev("(document.querySelector('.sa-role[data-cc=\"TW\"]').click(), 1)"); await sleep(300);
       // EU-27 together

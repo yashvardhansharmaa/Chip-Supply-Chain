@@ -11,7 +11,7 @@
      4. a search result inside another chapter lands on its section;
      5. a Glossary passage link lands on its passage;
      6. a Suppliers link to a stage lands on that chapter (AI Chips has no link to a stage);
-     7. print emulation of #/chain (and of a chapter's address) shows all 17 chapters, the head and the contents;
+     7. print emulation of #/chain (and of a chapter's address) shows all 16 chapters (17 before the merge of 27 Oct 2026), the head and the contents;
      8. the page's height at 1440 for one chapter, against the whole chain's;
    and every other way in: the home page, a look-up card, Export Controls, the phone's contents sheet and slim bar, the
    specimen strip's Top, and #/chain from a chapter.
@@ -140,7 +140,7 @@ const want = (n) => !ONLY.length || ONLY.includes(String(n));
         await t.close();
       }
       report(1, 'every chapter opens alone at its address', !bad.length,
-        bad.length ? bad.join('\n        ') : `${meta.length} of ${meta.length}: one chapter shown, at its top (y 0), under its own title; before boot ${pre} of them had painted, each only itself; doors run 01 to 17, then to the contents. #/chain shows the contents and no chapter (${JSON.stringify(contentsState.shown)}, contents ${contentsState.contents}, title "${contentsState.title}")`);
+        bad.length ? bad.join('\n        ') : `${meta.length} of ${meta.length}: one chapter shown, at its top (y 0), under its own title; before boot ${pre} of them had painted, each only itself; doors run 01 to 16, then to the contents. #/chain shows the contents and no chapter (${JSON.stringify(contentsState.shown)}, contents ${contentsState.contents}, title "${contentsState.title}")`);
       if (contentsState.shown.length || !contentsState.contents) report('1b', '#/chain is the contents page', false, JSON.stringify(contentsState));
     }
 
@@ -205,13 +205,13 @@ const want = (n) => !ONLY.length || ONLY.includes(String(n));
       await t.forward(); st = await t.ev(STATE);
       pass = st.shown.join() === 'photomasks-and-pellicles' && st.y <= 4;
       ok = ok && pass; out.push(`Forward: ${st.hash}, shows ${st.shown.join(',')} at y ${st.y}${pass ? '' : ' (FAIL)'}`);
-      // in chapter 05, part way down, the rail's chain list to chapter 09, then Back and Forward
+      // in chapter 05, part way down, the rail's chain list to chapter 08, then Back and Forward
       await t.jump(3000); await sleep(400);
       const at05 = (await t.ev(STATE)).y;
       await t.click('#photomasks-and-pellicles .rail-chain a[data-route="#foundries-and-fabs"]', false); await sleep(1500);
       st = await t.ev(STATE);
       pass = st.shown.join() === 'foundries-and-fabs' && st.y <= 4;
-      ok = ok && pass; out.push(`the rail's chain list to chapter 09 from y ${at05}: shows ${st.shown.join(',')} at y ${st.y}${pass ? '' : ' (FAIL)'}`);
+      ok = ok && pass; out.push(`the rail's chain list to chapter 08 from y ${at05}: shows ${st.shown.join(',')} at y ${st.y}${pass ? '' : ' (FAIL)'}`);
       await t.jump(2200); await sleep(400);
       await t.back(); st = await t.ev(STATE);
       pass = st.shown.join() === 'photomasks-and-pellicles' && Math.abs(st.y - at05) <= 2;
@@ -229,17 +229,17 @@ const want = (n) => !ONLY.length || ONLY.includes(String(n));
       await t.click('.tabs a[data-view="stack"]', false); await sleep(1500);
       st = await t.ev(STATE);
       pass = st.hash === '#/chain' && !st.shown.length && st.contents && st.y === 0 && /^The Chain/.test(st.title);
-      ok = ok && pass; out.push(`The Chain's tab from chapter 09: ${st.hash}, contents ${st.contents}, chapters shown ${st.shown.length}, y ${st.y}, title "${st.title}"${pass ? '' : ' (FAIL)'}`);
+      ok = ok && pass; out.push(`The Chain's tab from chapter 08: ${st.hash}, contents ${st.contents}, chapters shown ${st.shown.length}, y ${st.y}, title "${st.title}"${pass ? '' : ' (FAIL)'}`);
       await t.click(`document.querySelector('#contents a[href="#data-centers-and-power"]')`); await sleep(1500);
       st = await t.ev(STATE);
       pass = st.shown.join() === 'data-centers-and-power' && st.y <= 4;
-      ok = ok && pass; out.push(`a contents row to chapter 15: shows ${st.shown.join(',')} at y ${st.y}${pass ? '' : ' (FAIL)'}`);
+      ok = ok && pass; out.push(`a contents row to chapter 14: shows ${st.shown.join(',')} at y ${st.y}${pass ? '' : ' (FAIL)'}`);
       // the last chapter's door leads to the contents
       await t.ev(`location.hash = '#geopolitics', 1`); await sleep(1500);
       await t.click('#geopolitics .prevnext .next'); await sleep(1500);
       st = await t.ev(STATE);
       pass = st.hash === '#/chain' && st.contents && !st.shown.length && st.y === 0;
-      ok = ok && pass; out.push(`chapter 17's door: ${st.hash}, contents ${st.contents}, y ${st.y}${pass ? '' : ' (FAIL)'}`);
+      ok = ok && pass; out.push(`chapter 16's door: ${st.hash}, contents ${st.contents}, y ${st.y}${pass ? '' : ' (FAIL)'}`);
       if (t.errors.length) { ok = false; out.push('errors: ' + t.errors.join(' | ')); }
       await t.close();
       report(3, 'the door goes to the next chapter\'s top, and Back returns to the place left', ok, out.join('\n        '));
@@ -313,11 +313,11 @@ const want = (n) => !ONLY.length || ONLY.includes(String(n));
         const t = await tab(chrome, u);
         await t.s('Emulation.setEmulatedMedia', { media: 'print' }); await sleep(600);
         const st = await t.ev(`(function () { var s = ${STATE}; s.howto = !!document.querySelector('#howto').getClientRects().length; s.doors = [].filter.call(document.querySelectorAll('.prevnext'), function (d) { return d.getClientRects().length; }).length; return s; })()`);
-        const pass = st.shown.length === 17 && st.contents && st.howto && st.doors === 0;
+        const pass = st.shown.length === 16 && st.contents && st.howto && st.doors === 0;
         ok = ok && pass; out.push(`${u}: ${st.shown.length} chapters print, the head ${st.howto}, the contents ${st.contents}, doors printed ${st.doors}${pass ? '' : ' (FAIL)'}`);
         await t.close();
       }
-      report(7, 'print emulation of #/chain shows all 17 chapters', ok, out.join('\n        '));
+      report(7, 'print emulation of #/chain shows all 16 chapters', ok, out.join('\n        '));
     }
 
     // 8. the page's height at 1440: each chapter alone, against the whole chain laid out as before
@@ -374,13 +374,13 @@ const want = (n) => !ONLY.length || ONLY.includes(String(n));
       await t.jump(5000); await sleep(400);
       const tag = await t.ev(`document.getElementById('stage-tag-text').textContent`);
       await go(t, `the specimen strip's Top (the strip reads "${tag}")`, '.stage-top', 'memory-and-hbm', { into: false });
-      if (!/10/.test(tag)) { ok = false; out.push('the strip does not show chapter 10\'s specimen (FAIL)'); }
+      if (!/09/.test(tag)) { ok = false; out.push('the strip does not show chapter 09\'s specimen (FAIL)'); } // Memory and HBM, chapter 10 before the merge of 27 Oct 2026
       if (t.errors.length) { ok = false; out.push('errors: ' + t.errors.join(' | ')); }
       // the phone's strip on the contents, which show no chapter: the first chapter's specimen, as before the change
       await t.click('.tabs a[data-view="stack"]', false); await sleep(1500);
       const ctag = await t.ev(`document.getElementById('stage-tag-text').textContent`), cst = await t.ev(STATE);
       const cpass = /01/.test(ctag) && cst.contents && !cst.shown.length && /^The Chain/.test(cst.title);
-      ok = ok && cpass; out.push(`the phone's The Chain tab from chapter 10: the contents, the strip reads "${ctag}", title "${cst.title}"${cpass ? '' : ' (FAIL)'}`);
+      ok = ok && cpass; out.push(`the phone's The Chain tab from chapter 09: the contents, the strip reads "${ctag}", title "${cst.title}"${cpass ? '' : ' (FAIL)'}`);
       await t.close();
       report(9, 'every other way in lands', ok, out.join('\n        '));
     }

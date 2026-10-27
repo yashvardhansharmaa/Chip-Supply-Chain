@@ -7,7 +7,7 @@
      stands on the drawing's foot (--slack);
    - the contents rail marks the section the reader is in, and its links land;
    - a figure's Cite opens its citation, Table swaps the bars for the rows and back, CSV is a download, PNG saves a picture;
-   - chapters 16 and 17 draw on the night ground, which fills the drawing's slot, the caption on the page under it (each
+   - chapters 15 and 16 (the two that are not stages) draw on the night ground, which fills the drawing's slot, the caption on the page under it (each
      chapter shows alone at its address, so the check goes there by its address);
    - on a phone the drawing stays in the strip, the masthead goes up on the way down and back on the way up, and the slim
      bar names the chapter and the section;
@@ -78,7 +78,7 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8766';
       check('1440: CSV is a download of the rows', await t.ev(`(function(){var a=document.querySelector('${F} .fs-csv');return !!a.getAttribute('download')&&decodeURIComponent(a.href).indexOf('China,33')>0;})()`));
       const png = await t.ev(`new Promise(function(res){var orig=HTMLCanvasElement.prototype.toBlob;HTMLCanvasElement.prototype.toBlob=function(cb,type){HTMLCanvasElement.prototype.toBlob=orig;res({w:this.width,h:this.height,type:type});};document.querySelector('${F} .fs-png').click();setTimeout(function(){res(null)},3000);})`);
       check('1440: PNG draws the figure at 1,600 px wide', png && png.w === 1600 && png.type === 'image/png', JSON.stringify(png));
-      // chapters 16 and 17: the night ground, in the drawing's slot; the caption stands under it on the page's ground
+      // chapters 15 and 16: the night ground, in the drawing's slot; the caption stands under it on the page's ground
       for (const id of ['component-costs', 'geopolitics']) {
         await t.ev(`location.hash='#${id}',1`); await sleep(1800);
         check(`1440: the drawing moves to ${id}'s slot`, await t.ev(`!!document.querySelector('#${id} .ch-spec-draw canvas')`));
@@ -136,7 +136,7 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8766';
     for (const width of [1440, 390]) {
       const t = await open(chrome, BASE + '/lithography/', { width, wait: 2500 });
       check(`page ${width}: no button from the app`, await t.ev("!document.querySelector('main button:not(.fs-tab):not(.fs-png):not(.ch-cite-copy)')"));
-      check(`page ${width}: the opener's kicker`, /Chapter 04\s*Stage 4 of 15\s*Extreme/.test(await t.ev("document.querySelector('.ch-kick').textContent")), await t.ev("document.querySelector('.ch-kick').textContent"));
+      check(`page ${width}: the opener's kicker`, /Chapter 04\s*Stage 4 of 14\s*Extreme/.test(await t.ev("document.querySelector('.ch-kick').textContent")), await t.ev("document.querySelector('.ch-kick').textContent"));
       check(`page ${width}: Lithography's still, with its balloons`, await t.ev("(function(){var s=[].filter.call(document.querySelectorAll('.ch-still'),function(x){return getComputedStyle(x).display!=='none'})[0];return !!s&&s.getBoundingClientRect().width>250&&s.querySelectorAll('.bal').length===4;})()"));
       const small = await t.ev("[].map.call(document.querySelectorAll('.ch-still'),function(s){if(getComputedStyle(s).display==='none')return 99;var k=s.getBoundingClientRect().width/s.viewBox.baseVal.width;return Math.min.apply(null,[].map.call(s.querySelectorAll('text'),function(x){return parseFloat(x.style.fontSize)*k}))}).reduce(function(a,b){return Math.min(a,b)},99)");
       check(`page ${width}: the still's numbers and names at 11 px or more`, small >= 11, small.toFixed(1) + ' px');
