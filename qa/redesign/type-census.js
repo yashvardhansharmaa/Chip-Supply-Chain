@@ -5,7 +5,12 @@
      - every element A set in Literata is in Source Serif 4 on B, at A's size times the text scale (20 / 18.5 = 1.081);
      - every element A set in Fraunces is in Source Serif 4 on B, at A's size (the titles keep their sizes);
      - every element in Hanken Grotesk or Fragment Mono keeps its face and size.
-   The DOM is the same on both sides (the words are identical), so elements are paired in document order.
+   The DOM is the same on both sides (the words are identical), so elements are paired in document order. A must be the
+   redesign at this branch's base: once the redesign moves on (8766 took new chapter 8 and 9 text after 6c3ffd2), serve
+   `git archive 6c3ffd2 dist` from a scratch folder and pass it as --a, or the pairing slips.
+   Expected after the switch (27 Oct 2026, 23 kinds): AI Chips' text sizes (src/modules/chips.css, scaled after the merge);
+   the citation marks, which are 0.62 em of the text they sit in and so grow with it; and elements hidden at that width
+   (the walk's phone-only previous and next, the phone sheet's head, the print-only tile), which inherit the body's size.
    usage: node qa/redesign/type-census.js [--a url] [--b url] [--widths 1440,390] [--only walk,lithography] [--out file] */
 'use strict';
 const fs = require('fs');
