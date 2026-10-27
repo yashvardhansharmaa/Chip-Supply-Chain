@@ -401,7 +401,7 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
 
 /* the scrubber: the year shown is ink, never wine (its bar is a count, a data value) */
 .cf-asof { font-family: var(--font-ui); font-weight: 400; font-size: 13px; color: var(--muted); }
-.cf-asof b { font-weight: 350; }
+.cf-asof b { font-weight: 360; } /* a light number, as the year labels are */
 .cf-now { font-family: var(--font-ui); font-weight: 400; font-size: 13px; padding: 6px 14px; border: 1px solid var(--control-edge); border-radius: 999px; color: var(--ink); }
 .cf-now:hover, .cf-now:focus-visible { border-color: var(--ink); }
 .cf-year { border-radius: 3px; }
