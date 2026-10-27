@@ -3,7 +3,7 @@
  "id": "foundries-and-fabs",
  "number": 9,
  "title": "Foundries and Fabs",
- "oneLiner": "TSMC's six largest plants are all in Taiwan. In 2025 they could make more than 13 million wafers a year, out of more than 17 million for the whole company.",
+ "oneLiner": "A foundry makes other companies' chips in factories it owns. TSMC runs the biggest, and in 2025 its six largest plants, all in Taiwan, could make more than 13 million of its more than 17 million wafers a year.",
  "plain": "A foundry is a company that makes chips for other companies in its chip factories, or fabs. Those companies send in their designs, and the foundry runs them all through the same building on the same tools. The building costs tens of billions of dollars, and the air inside is cleaner than in an operating room. Even so, each wafer, the silicon disc the chips are built on, moves from machine to machine inside sealed boxes and never touches that air. No chip company sells enough of one product to fill such a factory on its own, so chip companies share a handful of them. TSMC runs the biggest of these shared factories, and all six of its largest plants are in Taiwan. Taiwan also held most of the world's capacity for the most advanced logic chips in 2022. So a political crisis over Taiwan would put most of the supply of those chips at risk.",
  "bridge": "The chip's designers own none of these machines. They rent time in a building that another company owns and runs as its own business.",
  "specimen": "foup",
