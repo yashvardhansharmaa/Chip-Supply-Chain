@@ -509,18 +509,6 @@
         "y": 10.5,
         "w": 9.5,
         "h": 19
-      },
-      {
-        "x": 0,
-        "y": 31,
-        "w": 46,
-        "h": 8
-      },
-      {
-        "x": 0,
-        "y": -31,
-        "w": 46,
-        "h": 8
       }
     ],
     "hbm": [
@@ -607,7 +595,7 @@
       "https://ir.amd.com/news-events/press-releases/detail/1294/aai-2026-amd-delivers-full-stack-compute-for-the-agentic-ai-era",
       "https://3dfabric.tsmc.com/english/dedicatedFoundry/technology/cowos.htm"
     ],
-    "note": "Eight N2 accelerator dies on two N3 I/O dies, two separate fabric-and-cache dies and twelve HBM4 stacks, six to a side; AMD calls it the largest chip ever built on CoWoS-L but publishes no dimensions, so every rectangle here is estimated from the part counts."
+    "note": "Eight accelerator dies on two I/O dies and twelve HBM4 stacks, six to a side, the ten dies AMD's datasheet counts (fix-a, 28 Oct 2026, dropped two fabric-and-cache dies no current AMD source names). AMD publishes no dimensions, so every rectangle here is estimated from the part counts."
   },
   "google-tpu-v7-ironwood": {
     "unit": "mm",
