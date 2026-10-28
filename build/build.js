@@ -1151,8 +1151,14 @@ const exposureNote = exposure.length ? `The charts cover ${exposureFirms} firms,
 
 const kit = read(path.join(root, 'src', 'kit.js')) || '';
 const specDir = path.join(root, 'specimens');
-// each specimen gets its own <script> so a syntax error in one cannot take the others down
-const specimens = fs.existsSync(specDir) ? fs.readdirSync(specDir).filter((f) => f.endsWith('.js')).sort().map((f) => `</script><script>/* ${f} */\ntry{(function(PC){\n${read(path.join(specDir, f)).replace(/<\/script/gi, '<\\/script')}\n})(window.PC);}catch(e){console.warn('specimen ${f} failed to load', e);}`).join('\n') : '';
+// the specimens share one file with the kit (dist/assets/kit.js, below). Each keeps its own try, so one that throws as it
+// loads leaves the others drawing; and each is parsed here first, so one with a syntax error, which a try cannot catch in a
+// shared file, is left out with a warning rather than stopping the file (each had a <script> of its own until 28 Oct 2026)
+const specimens = fs.existsSync(specDir) ? fs.readdirSync(specDir).filter((f) => f.endsWith('.js')).sort().map((f) => {
+  const code = `/* ${f} */\ntry{(function(PC){\n${read(path.join(specDir, f))}\n})(window.PC);}catch(e){console.warn('specimen ${f} failed to load', e);}`;
+  try { new (require('vm').Script)(code, { filename: f }); } catch (e) { warn(`specimen ${f} does not parse, so it is left out: ${e.message}`); return ''; }
+  return code;
+}).filter(Boolean).join('\n') : '';
 const specNames = new Set((specimens.match(/PC\.register\('([\w-]+)'/g) || []).map((s) => s.match(/'([\w-]+)'/)[1]));
 all.forEach((ch) => { const s = ch.meta.specimen; if (s && !specNames.has(s)) warn(`${ch.id}: specimen "${s}" is not built yet`); });
 ['package', 'globe'].forEach((s) => { if (!specNames.has(s)) warn(`specimen "${s}" (used by hero/geopolitics) is not built yet`); });
@@ -1255,7 +1261,7 @@ fill('PREROUTE', preSrc.replace(PRE_CHAPTERS, `var CHAPTERS = ${JSON.stringify(c
 }
 const modDir = (d) => (fs.existsSync(d) ? fs.readdirSync(d).filter((f) => !f.startsWith('.')).sort() : []);
 const moduleCSS = modDir(path.join(root, 'src', 'modules')).filter((f) => f.endsWith('.css')).map((f) => `\n/* module: ${f} */\n` + read(path.join(root, 'src', 'modules', f))).join('\n');
-fill('STYLES', read(path.join(root, 'src', 'styles.css')) + moduleCSS);
+const siteCSS = read(path.join(root, 'src', 'styles.css')) + moduleCSS; // dist/assets/site.css (the shared files, below)
 // build modules: build/modules/*.js each export a function (ctx) returning { PLACEHOLDER: html, ... }
 const ctx = { root, fs, path, all, chapters, geo, stages, data, esc, pad, word, cap, read, readJSON, markdown, inline, tierOf, wordCount, warn, glossaryWrap, BAND_NOTE, SUB_NOTE,
   // for the readable chapter pages (social.js): the source list, footer and dates exactly as the main page prints them
@@ -1297,7 +1303,7 @@ fill('SUPPLIERS_INTRO', suppliersIntro); fill('SUPPLIERS_FACTS', suppliersFacts)
 for (const asset of ['print-title.png']) { const from = path.join(root, 'build', 'assets', asset); if (fs.existsSync(from)) fs.copyFileSync(from, path.join(root, 'dist', asset)); }
 // the site icons (drawn by `python3 build/icons.py`) go to the root of dist/, where browsers look for /favicon.ico
 for (const icon of ['favicon.ico', 'favicon.svg', 'apple-touch-icon.png']) { const from = path.join(root, 'build', 'assets', 'icons', icon); if (fs.existsSync(from)) fs.copyFileSync(from, path.join(root, 'dist', icon)); else warn(`icon ${icon} is missing; run python3 build/icons.py`); }
-fill('GEO_ARTICLE', geoArticle); fill('CITE_JS', CITE_JS); fill('FIG_JS', FIG_JS); fill('RAIL_TOGGLE_JS', RAIL_TOGGLE_JS); // the essay, the last chapter, from the same chapterHTML as the others
+fill('GEO_ARTICLE', geoArticle); // the essay, the last chapter, from the same chapterHTML as the others
 fill('BRIEFING', briefingHTML); fill('GLOSSARY', glossaryHTML); fill('GLOSSARY_COUNT', String(glossary.length));
 // the Look up page: one list of every term, firm and chip, alphabetical, each with the kind a reader would call it
 const lkSlug = (s) => String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -1339,10 +1345,25 @@ fill('GLOSSARY_TALLY', [[lkKinds('term'), 'terms'], [lkKinds('firm'), 'firms'], 
 fill('CONTROLS_DEK', controlsDek);
 fill('EXPOSURE_VIZ', exposureViz(exposure));
 fill('EXPOSURE_NOTE', exposureNote);
-fill('KIT', kit); fill('SPECIMENS', specimens);
-fill('DATA', JSON.stringify(data).replace(/<\/script/gi, '<\\/script'));
-const moduleJS = modDir(path.join(root, 'src', 'modules')).filter((f) => f.endsWith('.js')).map((f) => `\n/* module: ${f} */\ntry {\n${read(path.join(root, 'src', 'modules', f)).replace(/<\/script/gi, '<\\/script')}\n} catch (e) { console.warn('module ${f} failed', e); }`).join('\n');
-fill('APP', read(path.join(root, 'src', 'app.js')) + moduleJS);
+const moduleJS = modDir(path.join(root, 'src', 'modules')).filter((f) => f.endsWith('.js')).map((f) => `\n/* module: ${f} */\ntry {\n${read(path.join(root, 'src', 'modules', f))}\n} catch (e) { console.warn('module ${f} failed', e); }`).join('\n');
+
+/* ---------------- the shared files ----------------
+   What every page shares is written once to dist/assets/, so a reader's browser fetches it once and keeps it: the styles, the
+   specimen kit with every specimen, the app with its modules, and the data the views draw from. Each is linked with ?v= and
+   a hash of its bytes, so a changed file is fetched afresh and an unchanged one stays cached. Until 28 Oct 2026 all of it was
+   inlined into index.html. The app's parts keep a try each, as their separate <script> tags kept them apart: one that throws
+   as it loads leaves the others running. A file this build did not write is removed. */
+const ASSET_DIR = path.join(root, 'dist', 'assets'), assetURL = {};
+const assetHash = (s) => require('crypto').createHash('sha256').update(s).digest('hex').slice(0, 10);
+const writeAsset = (name, text) => { fs.mkdirSync(ASSET_DIR, { recursive: true }); fs.writeFileSync(path.join(ASSET_DIR, name), text); assetURL[name] = `assets/${name}?v=${assetHash(text)}`; return assetURL[name]; };
+const tryPart = (name, code) => `/* ${name} */\ntry {\n${code}\n} catch (e) { console.warn('${name} failed', e); }\n`;
+writeAsset('site.css', siteCSS);
+writeAsset('kit.js', kit + '\n' + specimens + '\n');
+writeAsset('data.js', `window.CP_DATA = ${JSON.stringify(data)};\n`);
+writeAsset('app.js', read(path.join(root, 'src', 'app.js')) + moduleJS + '\n' + tryPart('cite line', CITE_JS) + tryPart('figure actions', FIG_JS) + tryPart('rail toggle', RAIL_TOGGLE_JS));
+const scriptTag = (name) => `<script src="${assetURL[name]}"></script>`;
+fill('STYLESHEET', `<link rel="stylesheet" href="${assetURL['site.css']}">`);
+fill('SCRIPTS', ['kit.js', 'data.js', 'app.js'].map(scriptTag).join('\n'));
 // any placeholder no module filled is removed rather than shipped as braces
 html = html.replace(/\{\{[A-Z_]+\}\}/g, () => '');
 // the main page's "Updated" day (footer and printed title page) is the day its content last changed, not the build's
@@ -1415,6 +1436,8 @@ fs.mkdirSync(path.join(root, 'dist', 'data'), { recursive: true });
 const dataFiles = fs.readdirSync(path.join(root, 'data')).filter((f) => /\.(json|md)$/.test(f));
 fs.readdirSync(path.join(root, 'dist', 'data')).forEach((f) => { if (!dataFiles.includes(f)) fs.unlinkSync(path.join(root, 'dist', 'data', f)); }); // a retired dataset must not linger in the published folder
 dataFiles.forEach((f) => fs.copyFileSync(path.join(root, 'data', f), path.join(root, 'dist', 'data', f)));
+// and a shared file this build did not write (renamed or retired) leaves dist/assets/
+fs.readdirSync(ASSET_DIR).forEach((f) => { if (!assetURL[f]) fs.unlinkSync(path.join(ASSET_DIR, f)); });
 const tierTotal = tierCounts([].concat(...all.map((c) => c.cites)));
 const report = [`built ${new Date().toISOString()}`, `source tiers: A ${tierTotal.A} · B ${tierTotal.B} · disallowed ${tierTotal.C + tierTotal.D} · unclassified ${tierTotal['?']}`, `chapters: ${chapters.length}${geo ? ' + geopolitics' : ''}`, `words: ${totalWords}`, `sources: ${all.reduce((a, c) => a + c.cites.length, 0)}`,
   `landscape: ${landscape.length} chips · suppliers: ${suppliers.length} · timeline: ${timeline.length} · matrix: ${matrix.length} · glossary: ${glossary.length} · controls: ${controls.length} · exposure: ${exposure.length}`, `specimens: ${[...specNames].join(', ')}`,
