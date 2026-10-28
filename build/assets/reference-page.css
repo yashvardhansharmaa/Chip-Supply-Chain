@@ -6,7 +6,7 @@
 .page.ref { max-width: calc(1160px + 2 * var(--gutter)); }
 .ref .ch-head { max-width: 52em; }
 /* the head as the views' (redesign stage 3): the title in the display face, 400, at display size over its standfirst */
-.ref .ch-title { font-weight: 400; font-size: clamp(46px, 5.6vw, 80px); line-height: 0.92; letter-spacing: -0.03em; margin-left: -0.04em; }
+.ref .ch-title { font-weight: 400; font-size: var(--t-title); line-height: 0.92; letter-spacing: -0.03em; margin-left: -0.04em; }
 .ref .ch-lede { max-width: 36em; }
 .ref .cta-note { max-width: 30em; }
 .ref .measure { max-width: var(--measure); }
@@ -16,10 +16,10 @@
 
 /* sections: a heavy rule over each, as the chapter card has */
 .ref-sec { margin: 3em 0 0; }
-.ref-h2 { font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 26px; line-height: 1.18; letter-spacing: -0.01em; border-bottom: 1px solid var(--ink); padding: 0 0 12px; margin: 0 0 12px; scroll-margin-top: 16px; }
+.ref-h2 { font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: var(--t-block); line-height: 1.18; letter-spacing: -0.01em; border-bottom: 1px solid var(--ink); padding: 0 0 12px; margin: 0 0 12px; scroll-margin-top: 16px; }
 .ref-h2 small { display: block; margin-top: 6px; font-family: var(--font-label); font-size: var(--fs-cap); font-weight: 500; letter-spacing: 0; color: var(--muted); }
 .ref-sub { margin: 0 0 14px; font-family: var(--font-label); font-size: var(--fs-ui-s); line-height: 1.5; color: var(--muted); max-width: 52em; }
-.ref-h3 { font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: var(--fs-d4); line-height: 1.25; margin: 1.8em 0 4px; scroll-margin-top: 16px; }
+.ref-h3 { font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: var(--t-lead); line-height: 1.25; margin: 1.8em 0 4px; scroll-margin-top: 16px; }
 .ref-h3 small { font-family: var(--font-label); font-size: var(--fs-ui-s); font-weight: 500; color: var(--muted); margin-left: 10px; }
 
 /* a jump list: the stages, the letters, the chips */
@@ -34,8 +34,8 @@
 .ledger { list-style: none; margin: 0; padding: 0; }
 .row { display: grid; grid-template-columns: minmax(0, 15em) minmax(0, 1fr); gap: 6px 32px; padding: 16px 0 18px; border-bottom: 1px solid var(--line); scroll-margin-top: 16px; }
 .row:target { box-shadow: inset 3px 0 0 var(--accent); padding-left: 14px; background: var(--accent-soft); }
-.row-h { font-family: var(--font-display); font-weight: 500; font-variation-settings: normal; font-size: var(--fs-d5); line-height: 1.22; margin: 0 0 4px; }
-.row-h .native { display: block; margin-top: 3px; font-family: var(--font-body); font-size: calc(15px * var(--text-scale)); font-weight: 400; color: var(--muted); }
+.row-h { font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: var(--t-text); line-height: 1.22; margin: 0 0 4px; }
+.row-h .native { display: block; margin-top: 3px; font-family: var(--font-body); font-variation-settings: normal; font-size: var(--t-small); font-weight: 400; color: var(--muted); }
 .row-meta { margin: 0 0 8px; font-family: var(--font-label); font-size: var(--fs-ui-s); line-height: 1.45; color: var(--muted); }
 .row-body { min-width: 0; }
 :where(.row-body) p { font-size: var(--fs-small); line-height: 1.52; margin: 0 0 8px; max-width: 40em; }
@@ -65,7 +65,7 @@
 .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(16em, 100%), 1fr)); gap: 0 32px; margin: 0; }
 .card { padding: 12px 0 14px; border-top: 1px solid var(--line); scroll-margin-top: 16px; }
 .card:target { box-shadow: inset 3px 0 0 var(--accent); padding-left: 12px; background: var(--accent-soft); }
-.card dt { font-family: var(--font-display); font-weight: 500; font-size: var(--fs-d6); line-height: 1.3; }
+.card dt { font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: var(--t-text); line-height: 1.3; }
 .card dd { margin: 4px 0 0; font-size: var(--fs-note); line-height: 1.5; color: var(--ink-2); }
 .card .row-meta { margin: 0 0 4px; }
 
@@ -78,7 +78,7 @@
 .ev .row-meta b { display: block; font-size: var(--fs-ui); font-weight: 600; color: var(--ink); }
 .ev .row-meta .eff { display: block; }
 .ev-tags { margin: 0 0 4px; font-family: var(--font-label); font-size: var(--fs-cap-s); font-weight: 500; letter-spacing: 0; color: var(--muted); }
-.ev h4 { font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: var(--fs-d6); line-height: 1.3; margin: 0 0 6px; max-width: 34em; }
+.ev h4 { font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: var(--t-text); line-height: 1.3; margin: 0 0 6px; max-width: 34em; }
 .ev .gist { font-weight: 500; color: var(--ink); }
 .ev .row-body p.sum { color: var(--ink-2); }
 .host { color: var(--muted); font-weight: 400; margin-left: 6px; }
@@ -126,7 +126,7 @@
 .srcs { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(22em, 100%), 1fr)); gap: 0 40px; }
 .srcs section { padding: 14px 0 12px; border-top: 1px solid var(--line); scroll-margin-top: 16px; min-width: 0; }
 .srcs section:target { box-shadow: inset 3px 0 0 var(--accent); padding-left: 12px; background: var(--accent-soft); }
-.srcs h3 { font-family: var(--font-display); font-weight: 500; font-size: var(--fs-d6); line-height: 1.3; margin: 0 0 6px; }
+.srcs h3 { font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: var(--t-text); line-height: 1.3; margin: 0 0 6px; }
 .srcs h3 small { font-family: var(--font-label); font-size: var(--fs-ui-s); font-weight: 500; color: var(--muted); margin-left: 8px; }
 .srcs p { font-size: var(--fs-note); line-height: 1.5; color: var(--ink-2); margin: 0 0 8px; }
 .srcs ol { margin: 0; padding-left: 2em; font-size: var(--fs-note); line-height: 1.45; color: var(--ink-2); }
@@ -154,14 +154,15 @@
 .gl-cols + .gl-cols { margin-top: 4px; padding-top: 22px; border-top: 1px solid var(--line); }
 .gl-de { break-inside: avoid; position: relative; padding: 2px 0 22px; scroll-margin-top: 64px; }
 .gl-de:target::before { content: ""; position: absolute; left: -14px; top: 4px; bottom: 22px; width: 2px; background: var(--accent); }
-.gl-de dt { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; overflow-wrap: anywhere; font-family: var(--font-display); font-weight: 600; font-variation-settings: var(--opsz-title); font-size: 18px; line-height: 1.3; }
-.gl-de dt i { font-family: var(--font-body); font-weight: 400; font-variation-settings: normal; font-size: calc(14px * var(--text-scale)); line-height: 1.3; color: var(--muted); }
+.gl-de dt { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; overflow-wrap: anywhere; font-family: var(--font-display); font-weight: 600; font-variation-settings: var(--opsz-title); font-size: var(--t-text); line-height: 1.3; }
+.gl-de dt i { font-family: var(--font-body); font-weight: 400; font-variation-settings: normal; font-size: var(--t-note); line-height: 1.3; color: var(--muted); }
 .gl-de dd { margin: 0; }
-.gl-de dd p { margin: 7px 0 0; font-size: calc(15.5px * var(--text-scale)); line-height: 1.55; }
+.gl-de dd p { margin: 7px 0 0; font-size: var(--t-small); line-height: 1.55; }
 .gl-de dd .gl-aka { margin-top: 3px; font-family: var(--font-label); font-size: 12.5px; line-height: 1.45; color: var(--muted); }
 .gl-wy { color: var(--ink-2); }
 .gl-de dd .gl-refs { margin-top: 8px; font-family: var(--font-label); font-size: 12.5px; line-height: 1.55; color: var(--muted); }
-.gl-refs a { color: var(--accent); text-underline-offset: 3px; text-decoration-color: currentColor; }
+.gl-refs a { color: var(--ink-2); text-underline-offset: 3px; text-decoration-color: var(--line-2); }
+.gl-refs a:hover { color: var(--accent-ink); text-decoration-color: var(--accent); }
 .gl-refs span { margin-left: 10px; }
 .idx { columns: 3 15em; column-gap: 32px; list-style: none; margin: 0; padding: 0; font-size: var(--fs-note); line-height: 1.4; }
 .idx li { break-inside: avoid; padding: 5px 0; border-bottom: 1px solid var(--line); scroll-margin-top: 16px; }
@@ -172,7 +173,7 @@
 /* the four reference pages, at the foot */
 .refnav { margin: 3em 0 0; padding-top: 14px; border-top: 1px solid var(--ink); }
 .refnav ul { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; list-style: none; margin: 8px 0 0; padding: 0; }
-.refnav a, .refnav [aria-current] { display: block; padding: 10px 0 12px; border-top: 1px solid var(--line-2); font-family: var(--font-display); font-weight: 500; font-size: var(--fs-d6); text-decoration: none; }
+.refnav a, .refnav [aria-current] { display: block; padding: 10px 0 12px; border-top: 1px solid var(--line-2); font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: var(--t-text); text-decoration: none; }
 .refnav a:hover { border-top-color: var(--ink); }
 .refnav [aria-current] { color: var(--muted); border-top-color: var(--accent); }
 
@@ -191,7 +192,7 @@
   .facts dd { margin-bottom: 7px; }
   .key li { grid-template-columns: minmax(0, 1fr); gap: 4px; }
   .refnav ul { grid-template-columns: 1fr 1fr; }
-  .ref-h2 { font-size: var(--fs-d3); }
+  .ref-h2 { font-size: var(--t-lead); }
 }
 
 @media print {

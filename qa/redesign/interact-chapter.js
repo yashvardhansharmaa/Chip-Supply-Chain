@@ -49,11 +49,13 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8766';
       check('1440: the plate is fitted to its drawing (--draw-h, --lift)', /^\d+px$/.test(col.drawH) && /^\d+px$/.test(col.lift), `--draw-h ${col.drawH}, --lift ${col.lift}`);
       check('1440: the card is in the text after the lead, before section 01, as wide as the flashcards (owner, 27 Oct) and wider than the text', !col.inHead && col.prev === 'P' && col.next === 'lithography--how-it-works' && col.cardW === col.revW && col.cardW > 666 && col.cardId === 'lithography--card', JSON.stringify({ prev: col.prev, next: col.next, w: col.cardW, flashcards: col.revW }));
       check('1440: On this page lists the card after In plain terms', col.toc === 'In plain terms | Chokepoint card | How it works', col.toc);
-      // the visual pass of 27 Oct 2026: Extreme is wine wherever a band shows; High keeps its ink outline
-      const marks = await t.ev(`(function(){var a=document.getElementById('lithography'),bg=function(e){return e?getComputedStyle(e).backgroundColor:null;};
-        return {kick:bg(a.querySelector('.ch-band[data-band="4"] i')),card:bg(a.querySelector('.plate-kpis .bm[data-band="4"]')),rail:bg(a.querySelector('.ch-rail .stage-cell[data-band="4"] .bm')),
-          high:bg(a.querySelector('.ch-rail .stage-cell[data-band="3"] .bm')),meta:getComputedStyle(a.querySelector('.ch-meta .label')).fontFamily,kickT:getComputedStyle(a.querySelector('.ch-kick')).textTransform};})()`);
-      check('1440: Extreme marks are wine in the kicker, the card and the rail; High stays an outline', marks.kick === 'rgb(122, 31, 43)' && marks.card === 'rgb(122, 31, 43)' && marks.rail === 'rgb(122, 31, 43)' && marks.high === 'rgba(0, 0, 0, 0)', JSON.stringify(marks));
+      // the band's meter (28 Oct 2026, in place of the single mark): Extreme lights its four bars in wine in the kicker, the card
+      // and the rail; High lights three in the mid gray, the fourth in the hairline; each meter is hidden from assistive technology
+      const marks = await t.ev(`(function(){var a=document.getElementById('lithography'),m=function(sel){var e=a.querySelector(sel);if(!e)return null;return [].map.call(e.querySelectorAll('b'),function(b){return getComputedStyle(b).backgroundColor;}).join(' ')+(e.getAttribute('aria-hidden')==='true'?'':' NOT HIDDEN');};
+        return {kick:m('.ch-band[data-band="4"] .meter'),card:m('.plate-kpis .meter[data-level="4"]'),rail:m('.ch-rail .stage-cell[data-band="4"] .meter'),
+          high:m('.ch-rail .stage-cell[data-band="3"] .meter'),meta:getComputedStyle(a.querySelector('.ch-meta .label')).fontFamily,kickT:getComputedStyle(a.querySelector('.ch-kick')).textTransform};})()`);
+      const W4 = 'rgb(122, 31, 43) rgb(122, 31, 43) rgb(122, 31, 43) rgb(122, 31, 43)', H3 = 'rgb(140, 138, 132) rgb(140, 138, 132) rgb(140, 138, 132) rgb(225, 224, 219)';
+      check('1440: Extreme lights all four bars of the meter in wine in the kicker, the card and the rail; High lights three in gray', marks.kick === W4 && marks.card === W4 && marks.rail === W4 && marks.high === H3, JSON.stringify(marks));
       check('1440: the kicker and the facts line are Hanken Grotesk capitals, not Fragment Mono', /^"?Hanken Grotesk/.test(marks.meta) && marks.kickT === 'uppercase', JSON.stringify(marks));
       await t.ev("document.querySelector('#lithography .rail-toc a[href=\"#lithography--card\"]').click(),1"); await sleep(1200);
       const land = await t.ev("(function(){var c=document.getElementById('lithography--card').getBoundingClientRect();return {top:Math.round(c.top),hash:location.hash,cur:(document.querySelector('#lithography .rail-toc a[aria-current]')||{}).textContent};})()");

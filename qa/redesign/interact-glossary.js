@@ -173,7 +173,8 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8769';
     /* ---------- dark ---------- */
     t = await open(chrome, BASE + '/#gl-euv', { width: 1440, theme: 'dark', wait: 2000 });
     check('dark: the ground and the sheet turn dark', (await t.ev("getComputedStyle(document.body).backgroundColor")) === 'rgb(18, 18, 17)' && (await t.ev("getComputedStyle(document.getElementById('gl-sheet')).backgroundColor")) === 'rgb(18, 18, 17)');
-    check('dark: a link is wine for dark', (await t.ev("getComputedStyle(document.querySelector('#gl-sheet-body .gl-refs a')).color")) === 'rgb(217, 138, 149)');
+    // design round nine, revision 2 (28 Oct 2026): the entry's chapter links are the secondary ink at rest, wine on hover
+    check('dark: a chapter link is the secondary ink for dark', (await t.ev("getComputedStyle(document.querySelector('#gl-sheet-body .gl-refs a')).color")) === 'rgb(198, 196, 190)');
     await t.close();
 
     /* ---------- the static page ---------- */
@@ -184,7 +185,7 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8769';
     check('/glossary/: the JSON-LD set of terms', (await t.ev("JSON.parse(document.querySelector('script[type=\"application/ld+json\"]').textContent).hasDefinedTerm.length")) === 208);
     check('/glossary/: the firm, chip and country lists', (await t.ev("['list-firms','list-chips','list-countries'].every(function(id){return !!document.getElementById(id);})")));
     check('/glossary/: Open the interactive page', (await t.ev("document.querySelector('.cta .btn').getAttribute('href')")) === '../#/glossary');
-    check('/glossary/: no button from the app', (await t.ev("document.querySelectorAll('button').length")) === 0);
+    check('/glossary/: no button from the app, the theme button in the masthead aside', (await t.ev("document.querySelectorAll('button:not(.theme-toggle)').length")) === 0);
     await t.close();
   } catch (e) { check('the run finished', false, e.message); }
   finally { await chrome.close(); }

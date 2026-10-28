@@ -16,6 +16,21 @@
    strip at the foot of the screen) everything is one column.
    ========================================================================== */
 
+/* ---------- the band's meter (28 Oct 2026, MAIN/qa/design9/BUILD-SYSTEM.md), one component for the chapter sidebar, the card
+   and the line above the title: the home page's four rising bars (src/modules/walk.css), at 36, 57, 79 and 100 percent of its
+   height. Extreme lights all four in wine, High three in the mid gray, Moderate and Low theirs in the light tint; unlit bars
+   take the hairline. Each place sets the height (--mh), the bar's width (--mw) and the gap (--mg). The meter is aria-hidden:
+   the link's label and the visible word carry the band. Bars are <b>, since some rules style i inside these parents ---------- */
+.meter { display: inline-flex; flex: none; align-items: flex-end; gap: var(--mg, 2px); height: var(--mh, 14px); margin: 0; padding: 0; vertical-align: baseline; }
+.meter > b { display: block; flex: none; width: var(--mw, 5px); margin: 0; padding: 0; border: 0; background: var(--line); }
+.meter > b:nth-child(1) { height: 36%; }
+.meter > b:nth-child(2) { height: 57%; }
+.meter > b:nth-child(3) { height: 79%; }
+.meter > b:nth-child(4) { height: 100%; }
+.meter > b.on { background: var(--bar-3); }
+.meter[data-level="4"] > b.on { background: var(--bar-5); }
+.meter[data-level="3"] > b.on { background: var(--bar-4); }
+
 /* ---------- the page ---------- */
 .view[data-view="stack"] { width: 100%; padding: 0 var(--margin); }
 /* The Chain's contents page (the head, the line and the list) has its own sheet, src/modules/contents.css, which only the app loads */
@@ -37,9 +52,8 @@ article.chapter > .chapter-head > * { min-width: 0; }
   display: flex; flex-wrap: wrap; align-items: center; gap: 6px 22px; margin: 0;
   font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); line-height: 16px; color: var(--muted);
 }
-.chapter .ch-band { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-ui); font-size: 13px; font-weight: 500; letter-spacing: 0; text-transform: none; color: var(--ink); } /* the verdict is the card's words, so it keeps their case beside the kicker's capitals */
-.chapter .ch-band i { display: block; width: 6px; height: 15px; background: var(--bar-5); } /* Extreme in wine; High an ink outline */
-.chapter .ch-band[data-band="3"] i { height: 8px; margin-top: 7px; background: transparent; box-shadow: inset 0 0 0 1.5px var(--ink); }
+.chapter .ch-band { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-ui); font-size: var(--ui-s); font-weight: 500; letter-spacing: 0; text-transform: none; color: var(--ink); } /* the verdict is the card's words, so it keeps their case beside the kicker's capitals */
+.chapter .ch-band .meter { --mh: 11px; --mw: 4px; --mg: 1.5px; margin: 0 -1px 0 0; } /* the band's meter, beside its word */
 /* the card's verdict, its two ratings in the card's own words, so both stand on the first screen while the card itself waits
    before section 01. The two never part mid-phrase; on the narrowest phones the second takes a line of its own, without the dot */
 .chapter .ch-verdict { flex-wrap: wrap; row-gap: 2px; }
@@ -49,13 +63,13 @@ article.chapter > .chapter-head > * { min-width: 0; }
 .chapter .ch-title {
   margin: 20px 0 0 -0.045em; max-width: 666px; /* the title keeps to the measure, so it, the standfirst and the plate share one edge */
   font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title);
-  font-size: clamp(48px, 5.8vw, 84px); line-height: 0.94; letter-spacing: -0.03em; text-wrap: balance; overflow-wrap: normal;
+  font-size: var(--t-title); line-height: 0.94; letter-spacing: -0.03em; text-wrap: balance; overflow-wrap: normal;
 }
 /* a long title ("Chemicals, Gases and Photoresist") takes two lines at a smaller size */
 .chapter .ch-title.is-long { font-size: clamp(36px, 4vw, 58px); line-height: 0.98; letter-spacing: -0.022em; }
 .chapter .ch-lede {
   margin: 22px 0 0; max-width: 666px;
-  font-family: var(--font-body); font-weight: 400; font-size: calc(22px * var(--text-scale)); line-height: 1.4; color: var(--ink-2);
+  font-family: var(--font-body); font-weight: 400; font-size: var(--t-lead); line-height: 1.4; color: var(--ink-2);
 }
 .chapter .ch-omet { margin-top: 18px; max-width: 666px; min-width: 0; }
 /* the facts: one line in the label's capitals, a dot between facts, none at the start of a wrapped line (the 18 px slot is clipped) */
@@ -97,7 +111,7 @@ article.chapter > .chapter-head > * { min-width: 0; }
 html.no-stage .chapter .ch-spec-draw { display: none; }
 html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 .chapter .ch-spec-cap .label { display: flex; align-items: center; gap: 10px; margin: 0 0 6px; font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); line-height: 16px; color: var(--muted); }
-.chapter .ch-spec-cap > p:not(.ch-parts-k) { margin: 0; max-width: 40em; font-family: var(--font-body); font-size: calc(14.5px * var(--text-scale)); line-height: 1.5; color: var(--ink-2); text-wrap: pretty; }
+.chapter .ch-spec-cap > p:not(.ch-parts-k) { margin: 0; max-width: 40em; font-family: var(--font-body); font-size: var(--t-note); line-height: 1.5; color: var(--ink-2); text-wrap: pretty; }
 /* the caption beside the parts: the label over the caption on the left, the parts' label over the list in a 252 px column on the
    right (wide enough for "Parts, as numbered on the drawing" on one line); on a phone they stack, as before */
 @media screen and (min-width: 641px) {
@@ -148,7 +162,7 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 /* On this page lands the card clear of the masthead (and of the phone's slim bar) */
 .chapter .plate[id] { scroll-margin-top: calc(var(--masthead) + var(--band, 0px) + 16px); }
 .chapter .plate-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 20px; padding: 0 0 16px; border-bottom: 1px solid var(--ink); }
-.chapter .plate-head .label { font-family: var(--font-ui); font-size: 15px; font-weight: 500; line-height: 20px; color: var(--ink); letter-spacing: 0; text-transform: none; }
+.chapter .plate-head .label { font-family: var(--font-ui); font-size: var(--ui); font-weight: 500; line-height: 20px; color: var(--ink); letter-spacing: 0; text-transform: none; }
 .chapter .plate-where { font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); line-height: 16px; color: var(--muted); }
 .chapter .plate-kpis { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 44px; padding: 26px 0 30px; border-bottom: 1px solid var(--rule-ink); }
 .chapter .plate-kpis > div, .chapter .plate-kpis > div + div { padding: 0; border: 0; min-width: 0; }
@@ -156,30 +170,29 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 .chapter .plate-kpis .v {
   display: flex; align-items: flex-end; gap: 10px; margin: 12px 0 8px;
   font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title);
-  font-size: 26px; line-height: 1.15; letter-spacing: -0.01em; white-space: nowrap; overflow-wrap: normal; color: var(--ink); /* the ratings at the size of the price beside them (owner, 27 Oct) */
+  font-size: var(--t-block); line-height: 1.15; letter-spacing: -0.01em; white-space: nowrap; overflow-wrap: normal; color: var(--ink); /* the ratings at the size of the price beside them (owner, 27 Oct) */
 }
-.chapter .plate-kpis .v .bm { display: block; flex: none; width: 6px; height: 0.72em; margin-bottom: 0.2em; background: var(--bar-5); } /* Extreme in wine */
-.chapter .plate-kpis .v .bm[data-band="3"] { height: 0.36em; background: transparent; box-shadow: inset 0 0 0 1.5px var(--ink); }
+.chapter .plate-kpis .v .meter { --mh: 20px; --mw: 6px; --mg: 2px; margin: 0 1px 0.22em 0; } /* the band's meter, standing on the word's baseline */
 .chapter .plate-kpis .v .v-btn { text-underline-offset: 0.12em; text-decoration-thickness: 1.5px; }
-.chapter .plate-kpis .v.cost { display: block; margin: 12px 0 8px; font-weight: 400; font-size: 26px; line-height: 1.15; letter-spacing: -0.01em; white-space: normal; }
-.chapter .plate-kpis .v.cost.long { font-family: var(--font-body); font-weight: 500; font-size: calc(17px * var(--text-scale)); line-height: 1.4; letter-spacing: 0; font-variation-settings: normal; }
-.chapter .plate-kpis .sub { margin: 0; max-width: 28em; font-family: var(--font-body); font-size: calc(14.5px * var(--text-scale)); line-height: 1.5; color: var(--ink-2); }
+.chapter .plate-kpis .v.cost { display: block; margin: 12px 0 8px; font-weight: 400; font-size: var(--t-block); line-height: 1.15; letter-spacing: -0.01em; white-space: normal; }
+.chapter .plate-kpis .v.cost.long { font-family: var(--font-body); font-weight: 500; font-size: var(--t-small); line-height: 1.4; letter-spacing: 0; font-variation-settings: normal; }
+.chapter .plate-kpis .sub { margin: 0; max-width: 28em; font-family: var(--font-body); font-size: var(--t-note); line-height: 1.5; color: var(--ink-2); }
 /* Who leads beside Where it is made, the reason under them, then China beside the US */
 .chapter .plate-rows { display: grid; grid-template-columns: 1fr 1fr; column-gap: 44px; border-bottom: 1px solid var(--line-2); }
 .chapter .plate-rows .row { display: block; padding: 18px 0 20px; border-bottom: 0; }
 .chapter .plate-rows .row--why { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 3fr); column-gap: 44px; border-top: 1px solid var(--line-2); }
 .chapter .plate-rows .row--why:only-child, .chapter .plate-rows .row--why:first-child { border-top: 0; }
 .chapter .plate-rows dt { padding: 0 0 10px; font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); line-height: 16px; color: var(--muted); }
-.chapter .plate-rows dd { font-family: var(--font-body); font-size: calc(15px * var(--text-scale)); line-height: 1.5; }
+.chapter .plate-rows dd { font-family: var(--font-body); font-size: var(--t-small); line-height: 1.5; }
 .chapter .plate-rows .row--why dd { max-width: 40em; color: var(--ink-2); }
 .chapter .plate-rows li { display: grid; grid-template-columns: 32px minmax(0, 7.5em) minmax(0, 1fr); column-gap: 12px; align-items: baseline; padding: 0; text-indent: 0; margin: 0 0 9px; }
 .chapter .plate-rows .chip { width: auto; margin: 0; padding: 0; border: 0; text-align: left; font-family: var(--font-ui); font-size: 11px; font-weight: 500; letter-spacing: 0.06em; color: var(--muted); }
 .chapter .plate-rows .who { font-family: var(--font-ui); font-size: 15px; font-weight: 600; }
-.chapter .plate-rows .note { font-family: var(--font-body); font-size: calc(14.5px * var(--text-scale)); line-height: 1.45; color: var(--ink-2); }
+.chapter .plate-rows .note { font-family: var(--font-body); font-size: var(--t-note); line-height: 1.45; color: var(--ink-2); }
 .chapter .plate-status { grid-template-columns: 1fr 1fr; column-gap: 44px; border: 0; }
 .chapter .plate-status > div, .chapter .plate-status > div + div { padding: 18px 0 2px; border: 0; }
 .chapter .plate-status .k { margin: 0 0 10px; font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); line-height: 16px; color: var(--muted); }
-.chapter .plate-status p { font-family: var(--font-body); font-size: calc(15px * var(--text-scale)); line-height: 1.55; color: var(--ink-2); max-width: calc(36em / var(--text-scale)); }
+.chapter .plate-status p { font-family: var(--font-body); font-size: var(--t-small); line-height: 1.55; color: var(--ink-2); max-width: calc(36em / var(--text-scale)); }
 .chapter .plate sup.cite { vertical-align: 0.5em; }
 /* the ledger at the measure (screen only: paper sets the card its own way, src/modules/print.css). No "a + b" selector here or in
    the phone's rules: Paged.js (build/pdf.py) lifts every rule with one out of its media query and applies it on paper too, so
@@ -189,24 +202,23 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
   .chapter .plate-head { padding: 0 0 12px; }
   .chapter .plate-kpis { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 22px; padding: 16px 0 18px; }
   .chapter .plate-kpis > div:last-child { grid-column: auto; padding-left: 0; border-top: 0; } /* the price stays in the row at every width */
-  .chapter .plate-kpis .v { margin: 10px 0 6px; gap: 8px; font-size: 24px; }
-  .chapter .plate-kpis .v .bm { width: 5px; }
-  .chapter .plate-kpis .v.cost { margin: 10px 0 6px; font-size: 22px; }
-  .chapter .plate-kpis .v.cost.long { font-size: calc(16px * var(--text-scale)); }
-  .chapter .plate-kpis .sub { font-size: calc(14px * var(--text-scale)); line-height: 1.5; }
+  .chapter .plate-kpis .v { margin: 10px 0 6px; gap: 8px; font-size: var(--t-block); }
+  .chapter .plate-kpis .v.cost { margin: 10px 0 6px; font-size: var(--t-block); }
+  .chapter .plate-kpis .v.cost.long { font-size: var(--t-small); }
+  .chapter .plate-kpis .sub { font-size: var(--t-note); line-height: 1.5; }
   .chapter .plate-rows { display: block; border: 0; }
   .chapter .plate-rows .row, .chapter .plate-rows .row--why, .chapter .plate .plate-status > div {
     display: grid; grid-template-columns: 186px minmax(0, 1fr); column-gap: 18px; padding: 14px 0 10px; border: 0; border-top: 1px solid var(--line-2);
   }
   .chapter .plate-rows > .row:first-child { border-top: 0; }
   .chapter .plate-rows dt, .chapter .plate-status .k { margin: 0; padding: 3px 0 0; }
-  .chapter .plate-rows dd { font-size: calc(14.5px * var(--text-scale)); }
+  .chapter .plate-rows dd { font-size: var(--t-small); }
   .chapter .plate-rows .row--why dd { max-width: none; }
   .chapter .plate-rows li { grid-template-columns: 28px minmax(0, 6.6em) minmax(0, 1fr); column-gap: 10px; margin: 0 0 7px; }
   .chapter .plate-rows .who { font-size: 14px; }
-  .chapter .plate-rows .note { font-size: calc(14px * var(--text-scale)); }
+  .chapter .plate-rows .note { font-size: var(--t-note); }
   .chapter .plate-status { display: block; }
-  .chapter .plate-status p { font-size: calc(14.5px * var(--text-scale)); line-height: 1.5; max-width: none; }
+  .chapter .plate-status p { font-size: var(--t-small); line-height: 1.5; max-width: none; }
 }
 
 /* ---------- 4. the rail beside the whole chapter, from its first line ---------- */
@@ -219,23 +231,22 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 .chapter .ch-rail .rail-part + .rail-part { margin-top: 14px; }
 .chapter .ch-rail .rail-k { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; margin: 0 0 6px; font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); line-height: 16px; color: var(--ink); }
 .chapter .ch-rail ol { list-style: none; margin: 0; padding: 0; }
-.chapter .rail-toc a { display: block; padding: 3px 0 3px 12px; border-left: 2px solid var(--line); font-size: 14.5px; line-height: 19px; color: var(--ink-2); text-decoration: none; }
+.chapter .rail-toc a { display: block; padding: 3px 0 3px 12px; border-left: 2px solid var(--line); font-size: var(--ui); line-height: 19px; color: var(--ink-2); text-decoration: none; }
 .chapter .rail-toc a:hover { color: var(--ink); }
 .chapter .rail-toc a[aria-current] { color: var(--ink); font-weight: 500; border-left-color: var(--accent); }
-.chapter .rail-figs a { display: grid; grid-template-columns: 44px minmax(0, 1fr); padding: 2px 0; font-size: 13px; line-height: 16px; color: var(--ink-2); text-decoration: none; }
+.chapter .rail-figs a { display: grid; grid-template-columns: 44px minmax(0, 1fr); padding: 2px 0; font-size: var(--ui-s); line-height: 16px; color: var(--ink-2); text-decoration: none; }
 .chapter .rail-figs a:hover { color: var(--ink); }
 .chapter .rail-figs .n { font-family: var(--font-code); font-size: 11.5px; color: var(--muted); }
 /* the rail's Extreme and High key was removed at the owner's request (28 Oct 2026): each stage's mark and its link's label carry the band */
-/* the chain: number, name, the band's mark at the line's end (Extreme solid wine, High an ink outline); the current stage's
-   number in wine and its name bold, its mark keeping its band's look */
+/* the chain: number, name, the band's meter at the line's end, right-aligned; the current stage's number in wine and its
+   name bold, its meter keeping its band's look */
 .chapter .ch-rail .chain-track { display: block; gap: 0; }
 .chapter .ch-rail .stage-cell { position: static; }
 .chapter .ch-rail .stage-cell::after { content: none; }
-.chapter .ch-rail .stage-cell a { display: grid; grid-template-columns: 24px minmax(0, 1fr) 10px; column-gap: 6px; align-items: center; height: auto; padding: 1.5px 0; border: 0; font-size: 13px; line-height: 16px; color: var(--ink-2); text-decoration: none; }
+.chapter .ch-rail .stage-cell a { display: grid; grid-template-columns: 24px minmax(0, 1fr) 17px; column-gap: 6px; align-items: center; height: auto; padding: 1.5px 0; border: 0; font-size: 13px; line-height: 16px; color: var(--ink-2); text-decoration: none; }
 .chapter .ch-rail .stage-cell .n { width: auto; font-family: var(--font-ui); font-size: 11.5px; line-height: 16px; color: var(--muted); font-variant-numeric: tabular-nums; }
 .chapter .ch-rail .stage-cell .t { display: block; visibility: visible; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: var(--font-ui); font-size: 13px; font-weight: 400; color: inherit; }
-.chapter .ch-rail .stage-cell .bm { justify-self: end; width: 6px; height: 13px; background: var(--bar-5); }
-.chapter .ch-rail .stage-cell[data-band="3"] .bm { height: 7px; align-self: end; margin-bottom: 3px; background: transparent; box-shadow: inset 0 0 0 1.25px var(--ink); }
+.chapter .ch-rail .stage-cell .meter { --mh: 10px; --mw: 3px; --mg: 1.5px; justify-self: end; }
 .chapter .ch-rail .stage-cell a:hover { color: var(--ink); }
 .chapter .ch-rail .stage-cell[aria-current="true"] a { color: var(--ink); font-weight: 600; }
 .chapter .ch-rail .stage-cell[aria-current="true"] .t { font-weight: 600; }
@@ -279,27 +290,28 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 .chapter .plain { grid-column: 4 / 13; grid-row: 3; max-width: 666px; margin: 56px 0 0; padding: 14px 0 0; border: 0; border-top: 1px solid var(--ink); background: none; }
 .chapter .plain h3.label, .chapter .plain .label {
   display: block; margin: 14px 0 22px; padding: 0; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title);
-  font-size: clamp(28px, 2.4vw, 34px); line-height: 1.08; letter-spacing: -0.02em; text-transform: none; color: var(--ink);
+  font-size: var(--t-section); line-height: 1.08; letter-spacing: -0.02em; text-transform: none; color: var(--ink);
 }
-.chapter .plain p { margin: 0; font-family: var(--font-body); font-size: calc(21px * var(--text-scale)); line-height: 1.57; color: var(--ink); max-width: 33em; }
+.chapter .plain p { margin: 0; font-family: var(--font-body); font-size: var(--t-lead); line-height: 1.57; color: var(--ink); max-width: 33em; }
 .chapter .inshort { grid-column: 4 / 13; grid-row: 4; max-width: 666px; margin: 36px 0 0; }
-.chapter .inshort h3.label { margin: 0 0 12px; font-family: var(--font-ui); font-weight: 500; font-size: 15px; line-height: 20px; color: var(--ink); letter-spacing: 0; text-transform: none; }
-.chapter .inshort p, .chapter .inshort li { font-family: var(--font-body); font-size: calc(19px * var(--text-scale)); line-height: 1.55; color: var(--ink); }
+.chapter .inshort h3.label { margin: 0 0 12px; font-family: var(--font-ui); font-weight: 500; font-size: var(--ui); line-height: 20px; color: var(--ink); letter-spacing: 0; text-transform: none; }
+.chapter .inshort p, .chapter .inshort li { font-family: var(--font-body); font-size: var(--t-text); line-height: 1.55; color: var(--ink); }
 .chapter .inshort p { margin: 0 0 0.7em; }
 .chapter > .prose { grid-column: 4 / 13; grid-row: 5; max-width: none; min-width: 0; margin-top: 16px; counter-reset: sec; }
 /* the measure: 33.3 em of the 20 px text, 666 px, the width of the figures. Written out rather than var(--measure), since the
    readable pages set --measure for their own narrower page (build/assets/chapter-page.css) */
 .chapter > .prose > * { max-width: calc(36em / var(--text-scale)); }
 .chapter > .prose > .table-wrap, .chapter > .prose > .prevnext { max-width: none; }
-/* each section opens on an ink rule, its number in mono above a large heading in the display face */
+/* each section opens on an ink rule, its number alone above a large heading in the display face (design round nine,
+   revision 4: the kicker no longer repeats the heading) */
 .chapter > .prose > h3 {
   counter-increment: sec; margin: 72px 0 22px; padding-top: 14px; border-top: 1px solid var(--ink); max-width: 666px; /* its rule spans the text and figures under it */
   font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title);
-  font-size: clamp(28px, 2.4vw, 34px); line-height: 1.12; letter-spacing: -0.015em; /* was 32 to 44 px (owner, 27 Oct: too large) */
+  font-size: var(--t-section); line-height: 1.12; letter-spacing: -0.015em; /* was 32 to 44 px (owner, 27 Oct: too large) */
 }
-.chapter > .prose > h3::before { content: counter(sec, decimal-leading-zero) " · " attr(data-k); display: block; margin: 0 0 14px; font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); line-height: 16px; color: var(--muted); }
-.chapter > .prose > h4 { margin: 40px 0 14px; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 22px; line-height: 1.27; letter-spacing: -0.005em; }
-.chapter > .prose > p, .chapter > .prose > ul, .chapter > .prose > ol { font-size: calc(18.5px * var(--text-scale)); line-height: 1.55; } /* 20 px, the text size of Source Serif 4 */
+.chapter > .prose > h3::before { content: counter(sec, decimal-leading-zero); display: block; margin: 0 0 14px; font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); line-height: 16px; color: var(--muted); }
+.chapter > .prose > h4 { margin: 40px 0 14px; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: var(--t-lead); line-height: 1.27; letter-spacing: -0.005em; }
+.chapter > .prose > p, .chapter > .prose > ul, .chapter > .prose > ol { font-size: var(--t-text); line-height: 1.55; }
 
 /* ---------- figures: one grammar for every chart ---------- */
 /* a figure keeps to the text's measure (666 px, --measure of the 20 px text). Wider, the bars stretched across the page and the
@@ -309,9 +321,9 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 .chapter .fig-head { padding: 18px 24px 0; }
 .chapter .fig-k { display: inline-block; font-family: var(--font-code); font-size: 11.5px; line-height: 16px; color: var(--muted); text-decoration: none; }
 .chapter .fig-k:hover { color: var(--accent-ink); }
-.chapter .figure .fig-title { margin: 6px 0 4px; max-width: calc(36em / var(--text-scale)); font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 21px; line-height: 1.27; letter-spacing: -0.008em; text-wrap: balance; }
+.chapter .figure .fig-title { margin: 6px 0 4px; max-width: calc(36em / var(--text-scale)); font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: var(--t-lead); line-height: 1.27; letter-spacing: -0.008em; text-wrap: balance; }
 .chapter .figure .fig-title .unit, .chapter .figure .fig-sub .unit { font-family: var(--font-ui); font-weight: 400; font-size: 12.5px; color: var(--muted); margin-left: 8px; letter-spacing: 0; }
-.chapter .fig-sub { margin: 0; max-width: 44em; font-family: var(--font-body); font-size: calc(15px * var(--text-scale)); line-height: 1.45; color: var(--ink-2); text-wrap: pretty; }
+.chapter .fig-sub { margin: 0; max-width: 44em; font-family: var(--font-body); font-size: var(--t-small); line-height: 1.45; color: var(--ink-2); text-wrap: pretty; }
 .chapter .fig-body { padding: 16px 24px 14px; }
 /* bars, the chart rule (the owner's of 21 Oct, "garnet on the largest only"): the largest wine with its value bold in wine,
    the rest the light tint, a remainder hatched; every value in Hanken Grotesk on tabular figures */
@@ -339,7 +351,7 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 .chapter .fig-strip {
   display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; column-gap: 24px; row-gap: 2px;
   margin: 0 24px; padding: 2px 0 16px; background: none; border: 0;
-  font-family: var(--font-ui); font-size: 12.5px; line-height: 18px; color: var(--muted);
+  font-family: var(--font-ui); font-size: var(--ui-s); line-height: 18px; color: var(--muted);
 }
 .chapter .fig-strip > * { flex: 0 0 auto; max-width: 100%; min-width: 0; }
 .chapter .fig-strip > .fs-acts { display: flex; flex-wrap: nowrap; white-space: nowrap; }
@@ -347,7 +359,7 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 .chapter .fig-strip .fs-src a { color: var(--ink-2); text-underline-offset: 3px; text-decoration-color: var(--line-2); }
 .chapter .fig-strip .fs-src a:hover { color: var(--ink); text-decoration-color: var(--accent); }
 /* the source's footnote number, in brackets on the line (it opens the same card as the marks in the text) */
-.chapter .fig-strip sup.cite { font-size: 12.5px; vertical-align: baseline; line-height: inherit; margin-left: 2px; }
+.chapter .fig-strip sup.cite { font-size: var(--ui-s); vertical-align: baseline; line-height: inherit; margin-left: 2px; }
 .chapter .fig-strip sup.cite a { font-family: var(--font-ui); font-weight: 400; color: var(--muted); font-variant-numeric: tabular-nums; }
 .chapter .fig-strip sup.cite a::after { content: "]"; }
 .chapter .fig-strip sup.cite a::before { content: "["; position: static; width: auto; height: auto; transform: none; }
@@ -361,14 +373,14 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 .chapter .fig-strip .fs-acts > a:hover, .chapter .fig-strip .fs-acts > button:hover { color: var(--accent-ink); text-decoration-color: var(--accent); }
 .chapter .fig-strip .fs-acts > [aria-pressed="true"] { color: var(--accent-ink); text-decoration-color: var(--accent); }
 .chapter .fig-strip .ch-cite-box { margin: 6px 0 0; padding: 10px 14px; border-left: 2px solid var(--accent); background: var(--bg-2); }
-.chapter .fig-strip .ch-cite-text { font-family: var(--font-body); font-size: calc(14px * var(--text-scale)); line-height: 1.5; color: var(--ink); }
+.chapter .fig-strip .ch-cite-text { font-family: var(--font-body); font-size: var(--t-note); line-height: 1.5; color: var(--ink); }
 .chapter .fig-strip .ch-cite-text a { font-family: var(--font-code); font-size: 12.5px; overflow-wrap: anywhere; } /* the figure's address, a code */
 .chapter .fig-strip .ch-cite-copy { font-family: var(--font-ui); font-size: 13px; font-weight: 500; color: var(--accent-ink); background: none; border: 0; padding: 4px 0; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
 /* an explainer animation: its steps above, the video, the caption under it */
 .chapter .figure--anim .anim-steps { margin: 0 0 12px; }
-.chapter .figure--anim .anim-cap { margin: 12px 0 0; font-family: var(--font-body); font-size: calc(16px * var(--text-scale)); }
+.chapter .figure--anim .anim-cap { margin: 12px 0 0; font-family: var(--font-body); font-size: var(--t-small); }
 /* a timeline: dates in mono on a hairline */
-.chapter .figure .tl li { font-family: var(--font-body); font-size: calc(15px * var(--text-scale)); }
+.chapter .figure .tl li { font-family: var(--font-body); font-size: var(--t-small); }
 .chapter .figure .tl li::before { background: var(--ink); }
 
 /* ---------- flashcards, sources, previous and next ---------- */
@@ -376,7 +388,7 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 .chapter .review .rv-head { display: block; }
 .chapter .review .rv-title, .chapter .prose .review .rv-title {
   margin: 0 0 8px; padding: 0; border: 0; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title);
-  font-size: 26px; line-height: 1.2; letter-spacing: -0.01em; /* the end matter reads as end matter, smaller than the numbered sections (owner, 27 Oct) */
+  font-size: var(--t-block); line-height: 1.2; letter-spacing: -0.01em; /* the end matter reads as end matter, smaller than the numbered sections (owner, 27 Oct) */
 }
 .chapter .review .rv-title::before { content: none; }
 .chapter .review .rv-sub { font-family: var(--font-ui); font-size: 14px; color: var(--muted); }
@@ -386,18 +398,18 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 .chapter .fc-behind--2 { background: color-mix(in srgb, var(--bg-2) 45%, var(--line)); }
 .chapter .fc-row .label { font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); color: var(--muted); }
 .chapter .fc-back .fc-row .label:last-child { color: var(--accent-ink); }
-.chapter .fc-q { margin: 18px 0 22px; font-family: var(--font-body); font-weight: 400; font-size: calc(26px * var(--text-scale)); line-height: 1.32; letter-spacing: -0.005em; }
-.chapter .fc-a { font-family: var(--font-body); font-weight: 600; font-size: calc(20px * var(--text-scale)); line-height: 1.4; }
-.chapter .fc-why { font-family: var(--font-body); font-size: calc(16px * var(--text-scale)); line-height: 1.55; }
+.chapter .fc-q { margin: 18px 0 22px; font-family: var(--font-body); font-weight: 400; font-size: var(--t-block); line-height: 1.32; letter-spacing: -0.005em; }
+.chapter .fc-a { font-family: var(--font-body); font-weight: 600; font-size: var(--t-text); line-height: 1.4; }
+.chapter .fc-why { font-family: var(--font-body); font-size: var(--t-small); line-height: 1.55; }
 .chapter .fc-more { font-family: var(--font-ui); font-size: 13.5px; font-weight: 500; }
 /* the sources fold under an ink rule, their summary a section heading */
 .chapter > .prose > .chapter-sources { max-width: 40em; margin: 88px 0 0; border-top: 1px solid var(--ink); }
 .chapter .chapter-sources summary {
   padding: 16px 0 12px; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title);
-  font-size: 26px; line-height: 1.2; letter-spacing: -0.01em; color: var(--ink);
+  font-size: var(--t-block); line-height: 1.2; letter-spacing: -0.01em; color: var(--ink);
 }
 .chapter .chapter-sources summary::after { font-family: var(--font-ui); font-size: 22px; font-weight: 300; }
-.chapter .chapter-sources ol { font-size: calc(14px * var(--text-scale)); }
+.chapter .chapter-sources ol { font-size: var(--t-note); }
 /* the door to the next chapter closes the chapter (the hybrid mockup's .nextx; build/build.js chapterDoor): The Chain shows one
    chapter at a time, so the door is the way on. On an ink rule, Previous small in the first quarter; the next chapter in the
    rest: where it sits in the chain, its title as large as a chapter's own, its one line and Continue as a pill with the
@@ -420,12 +432,12 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 .chapter .prevnext .prev { grid-column: 1; grid-row: 1; }
 .chapter .prevnext .pn .label { display: block; margin: 0 0 12px; font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); line-height: 16px; color: var(--muted); }
 .chapter .prevnext .prev .label { margin-bottom: 6px; }
-.chapter .prevnext .prev .t { display: block; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: 17px; line-height: 1.35; letter-spacing: 0; color: var(--ink-2); overflow-wrap: normal; }
+.chapter .prevnext .prev .t { display: block; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: var(--t-text); line-height: 1.35; letter-spacing: 0; color: var(--ink-2); overflow-wrap: normal; }
 .chapter .prevnext .next .t {
   display: block; max-width: 16em; margin: 0 0 12px -0.02em; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title);
-  font-size: clamp(28px, 2.4vw, 34px); line-height: 1.1; letter-spacing: -0.015em; color: var(--ink); text-wrap: balance; overflow-wrap: normal; /* was 44 to 68 px: too loud for a way on (owner, 27 Oct) */
+  font-size: var(--t-section); line-height: 1.1; letter-spacing: -0.015em; color: var(--ink); text-wrap: balance; overflow-wrap: normal; /* was 44 to 68 px: too loud for a way on (owner, 27 Oct) */
 }
-.chapter .prevnext .next .ol { display: block; max-width: 34em; margin: 0 0 22px; font-family: var(--font-body); font-size: calc(16px * var(--text-scale)); line-height: 1.5; color: var(--ink-2); }
+.chapter .prevnext .next .ol { display: block; max-width: 34em; margin: 0 0 22px; font-family: var(--font-body); font-size: var(--t-small); line-height: 1.5; color: var(--ink-2); }
 .chapter .prevnext .go {
   display: inline-flex; justify-self: start; align-items: center; gap: 16px; height: 48px; padding: 0 6px 0 22px; border: 1px solid var(--ink); border-radius: 999px;
   font-family: var(--font-ui); font-size: 15px; font-weight: 500; line-height: 1; color: var(--ink); white-space: nowrap;
@@ -457,8 +469,7 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
   .page--chapter .chapter .ch-rail .rail-across .stage-cell a { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-width: 44px; height: 36px; padding: 0 8px; border: 1px solid var(--line-2); border-radius: 3px; }
   .page--chapter .chapter .ch-rail .stage-cell .t { display: none; }
   .page--chapter .chapter .ch-rail .stage-cell .n { font-size: 12px; color: var(--ink-2); }
-  .page--chapter .chapter .ch-rail .stage-cell .bm { justify-self: auto; width: 4px; height: 12px; margin: 0; }
-  .page--chapter .chapter .ch-rail .stage-cell[data-band="3"] .bm { height: 6px; align-self: center; margin: 6px 0 0; }
+  .page--chapter .chapter .ch-rail .stage-cell .meter { justify-self: auto; }
   .page--chapter .chapter .ch-rail .stage-cell a:hover { border-color: var(--ink); }
   .page--chapter .chapter .ch-rail .stage-cell[aria-current="true"] a { border-color: var(--accent); }
   .page--chapter .chapter .ch-rail .rail-across::before { content: ""; display: block; flex: 0 0 100%; height: 0; }
@@ -474,39 +485,39 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
   .chapter .ch-open { order: 1; } .chapter .ch-spec { order: 2; } .chapter .ch-rail { order: 3; }
   .chapter .plain { order: 4; } .chapter .inshort { order: 5; } article.chapter > .prose { order: 6; }
   .chapter .ch-kick { gap: 4px 14px; }
-  .chapter .ch-title, .chapter .ch-title.is-long { margin: 16px 0 0 -0.04em; font-size: min(68px, 15vw); line-height: 0.98; }
+  .chapter .ch-title, .chapter .ch-title.is-long { margin: 16px 0 0 -0.04em; font-size: var(--t-title); line-height: 0.98; }
   .chapter .ch-title.is-long { font-size: min(46px, 11vw); line-height: 1.02; }
-  .chapter .ch-lede { margin-top: 16px; font-size: calc(20px * var(--text-scale)); line-height: 1.38; }
+  .chapter .ch-lede { margin-top: 16px; font-size: var(--t-lead); line-height: 1.38; }
   .chapter .ch-omet { margin-top: 14px; }
   .chapter .ch-omet .ch-cite-line { gap: 4px 22px; }
   .view[data-view="stack"] .chapter .ch-spec { display: none; }
   .chapter .ch-spec { margin-top: 28px; }
   .chapter .ch-rail { margin-top: 36px; }
   .chapter .plain { margin-top: 32px; }
-  .chapter .plain p { font-size: calc(18.5px * var(--text-scale)); line-height: 1.55; }
-  .chapter .inshort p, .chapter .inshort li { font-size: calc(18px * var(--text-scale)); }
-  .chapter > .prose > h3 { margin-top: 56px; font-size: 32px; }
-  .chapter > .prose > p, .chapter > .prose > ul, .chapter > .prose > ol { font-size: calc(17.5px * var(--text-scale)); }
+  .chapter .plain p { font-size: var(--t-text); line-height: 1.55; }
+  .chapter .inshort p, .chapter .inshort li { font-size: var(--t-text); }
+  .chapter > .prose > h3 { margin-top: 56px; font-size: var(--t-section); }
+  .chapter > .prose > p, .chapter > .prose > ul, .chapter > .prose > ol { font-size: var(--t-text); }
   .chapter .figure { margin: 28px calc(-1 * var(--margin)) 36px; border-left: 0; border-right: 0; }
   .chapter .fig-head { padding: 16px var(--margin) 0; }
   .chapter .fig-body { padding: 14px var(--margin) 12px; }
   .chapter .fig-strip { margin: 0 var(--margin); }
-  .chapter .figure .fig-title { font-size: 19px; line-height: 1.3; }
+  .chapter .figure .fig-title { font-size: var(--t-text); line-height: 1.3; }
   /* as the card: in The Chain a figure stays in the column, since the chapter's paint containment would clip a bleed */
   .view[data-view="stack"] .chapter .figure { margin: 28px 0 36px; }
   .view[data-view="stack"] .chapter .fig-head, .view[data-view="stack"] .chapter .fig-body { padding-left: 0; padding-right: 0; }
   .view[data-view="stack"] .chapter .fig-strip { margin: 0; }
   .chapter .fig-strip > .fs-acts { flex-wrap: wrap; }
   .chapter .fc-face { padding: 20px 18px; }
-  .chapter .fc-q { font-size: calc(22px * var(--text-scale)); }
+  .chapter .fc-q { font-size: var(--t-lead); }
   /* the door: the next chapter first, its still under the button, then Previous */
   .chapter > .prose > .prevnext, .ch-page .endnav .prevnext { grid-template-columns: minmax(0, 1fr); margin-top: 64px; padding-top: 20px; }
   .chapter .prevnext .next { grid-column: 1; grid-row: 1; display: block; }
   .chapter .prevnext .next > .ex { justify-content: flex-start; padding-top: 28px; }
   .chapter .prevnext .ex img { max-width: 48%; max-height: 160px; }
   .chapter .prevnext .prev { grid-column: 1; grid-row: 2; margin-top: 36px; padding-top: 16px; border-top: 1px solid var(--line-2); }
-  .chapter .prevnext .next .t { font-size: min(28px, 8vw); line-height: 1.1; }
-  .chapter .prevnext .next .ol { font-size: calc(16px * var(--text-scale)); }
+  .chapter .prevnext .next .t { font-size: var(--t-section); line-height: 1.1; }
+  .chapter .prevnext .next .ol { font-size: var(--t-small); }
 }
 
 /* the card on a phone, in the column with padding of its own (in The Chain each chapter keeps its paint inside its box,
@@ -517,7 +528,7 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
   .chapter .plate-kpis { grid-template-columns: 1fr; row-gap: 0; padding: 0; }
   .chapter .plate .plate-kpis > div { padding: 14px 0; border-top: 1px solid var(--line-2); }
   .chapter .plate .plate-kpis > div:first-child { border-top: 0; }
-  .chapter .plate-kpis .v { margin: 8px 0 6px; font-size: 24px; }
+  .chapter .plate-kpis .v { margin: 8px 0 6px; font-size: var(--t-block); }
   .chapter .plate-rows .row, .chapter .plate-rows .row--why, .chapter .plate .plate-status > div { display: block; }
   .chapter .plate-rows dt, .chapter .plate-status .k { display: block; padding: 0 0 8px; }
   .chapter .plate-rows li { grid-template-columns: 28px minmax(0, 1fr); }
@@ -598,18 +609,18 @@ article.ch-page { padding-top: 56px; border-top: 0; }
 .ch-still .nm { font-family: var(--font-ui); font-weight: 600; fill: var(--ink); }
 /* the still is a light render: on the dark theme it is turned to light-on-dark, its blue kept blue */
 :root[data-theme="dark"] .ch-still image { filter: invert(1) hue-rotate(180deg); mix-blend-mode: screen; } /* screen: the inverted white ground, now black, takes the page's own dark */
-.ch-page .plain h2.label { display: block; margin: 14px 0 22px; padding: 0; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: clamp(28px, 2.4vw, 34px); line-height: 1.08; letter-spacing: -0.02em; text-transform: none; color: var(--ink); }
-.ch-page .inshort h2.label { margin: 0 0 12px; font-family: var(--font-ui); font-weight: 500; font-size: 15px; line-height: 20px; color: var(--ink); letter-spacing: 0; text-transform: none; }
+.ch-page .plain h2.label { display: block; margin: 14px 0 22px; padding: 0; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: var(--t-section); line-height: 1.08; letter-spacing: -0.02em; text-transform: none; color: var(--ink); }
+.ch-page .inshort h2.label { margin: 0 0 12px; font-family: var(--font-ui); font-weight: 500; font-size: var(--ui); line-height: 20px; color: var(--ink); letter-spacing: 0; text-transform: none; }
 .ch-page > .prose > h2 {
   counter-increment: sec; margin: 72px 0 22px; padding-top: 14px; border-top: 1px solid var(--ink); max-width: 666px; /* its rule spans the text and figures under it */
-  font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: clamp(28px, 2.4vw, 34px); line-height: 1.12; letter-spacing: -0.015em;
+  font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: var(--t-section); line-height: 1.12; letter-spacing: -0.015em;
 }
-.ch-page > .prose > h2::before { content: counter(sec, decimal-leading-zero) " · " attr(data-k); display: block; margin: 0 0 14px; font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); line-height: 16px; color: var(--muted); }
-.ch-page > .prose > h3 { counter-increment: none; margin: 40px 0 14px; padding: 0; border: 0; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 22px; line-height: 1.27; letter-spacing: -0.005em; }
+.ch-page > .prose > h2::before { content: counter(sec, decimal-leading-zero); display: block; margin: 0 0 14px; font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); line-height: 16px; color: var(--muted); }
+.ch-page > .prose > h3 { counter-increment: none; margin: 40px 0 14px; padding: 0; border: 0; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: var(--t-lead); line-height: 1.27; letter-spacing: -0.005em; }
 .ch-page > .prose > h3::before { content: none; }
 .ch-page > .prose > .review, .ch-page > .prose > .sources, .ch-page > .prose > .endnav > :not(.prevnext) { max-width: 40em; }
 .ch-page > .prose > .sources { margin-top: 88px; padding-top: 14px; border-top: 1px solid var(--ink); }
-.ch-page .review h2.label, .ch-page .sources h2.label { margin: 0 0 14px; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: 26px; line-height: 1.2; letter-spacing: -0.01em; text-transform: none; color: var(--ink); }
+.ch-page .review h2.label, .ch-page .sources h2.label { margin: 0 0 14px; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: var(--t-block); line-height: 1.2; letter-spacing: -0.01em; text-transform: none; color: var(--ink); }
 .ch-page > .prose > .endnav { margin-top: 88px; }
 /* the door, after the way to the interactive chapter and the related chapters (the shared rules above), as wide as The Chain's */
 .ch-page > .prose > .endnav { max-width: none; }

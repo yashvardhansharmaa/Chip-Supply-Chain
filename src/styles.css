@@ -6,13 +6,15 @@
    live site has them): Extreme, wherever a stage's band is shown (its mark, and its word on the home list), and the
    largest value on every chart, its bar and its value ("garnet on the largest only", the owner's chart rule of 21 Oct).
    Suppliers' Critical rating is wine too. High stays ink or gray, and the other bars the light tint.
-   Type (design round five, 27 Oct 2026, qa/design5/fonts/notes.md): Source Serif 4 for both the display and the text, its
-   optical size following the size (font-optical-sizing: auto), so one face draws the name, headings, titles and large
-   numbers (400 for titles and section heads, 360 for the light numbers, 500 for small headings) and the standfirsts, text,
-   review questions and captions of more than one line. Hanken Grotesk for menus, buttons, tabs, fields and every label, and
-   since the visual pass of 27 Oct 2026 for the kickers too, in the live site's small spaced capitals (--font-kicker,
-   --fs-label, --tr-label, --tt-label), and for dates, counts, bar values and axis numbers on tabular figures. Fragment Mono
-   only for figure numbers ("Figure 11.2"), codes and the address inside Cite. Before round five the display face was
+   Type (the hybrid, chosen 28 Oct 2026, MAIN/qa/design9/BUILD-SYSTEM.md): Fraunces for the display, at optical size 48 with
+   SOFT and WONK at 0 (the name at 28), and Source Serif 4 for the text, its optical size following the size. Fraunces draws
+   the name, page and chapter titles, section heads, card ratings and large numbers (400 for titles and section heads, 500
+   for small headings); Source Serif 4 the standfirsts, text, review questions, captions, lists and notes. The serif keeps
+   to seven steps (--t-title to --t-note, below; design round nine, revision 1). Hanken Grotesk for menus, buttons, tabs,
+   fields and every label, and since the visual pass of 27 Oct 2026 for the kickers too, in the live site's small spaced
+   capitals (--font-kicker, --fs-label, --tr-label, --tt-label), and for dates, counts, bar values and axis numbers on
+   tabular figures, in four steps (--ui to --mark). Fragment Mono only for figure numbers ("Figure 11.2"), codes and the
+   address inside Cite. Source Serif 4 set both display and text from 27 to 28 Oct 2026; before that the display face was
    Fraunces and the text face Literata. No text under 11 px. */
 :root {
   --bg: #fcfcfa; /* a barely off-white, to take the glare off long reading (owner, 27 Oct); print stays white */
@@ -20,7 +22,8 @@
   --bg-3: #e4e3df;
   --ink: #171716;
   --ink-2: #45443f;
-  --muted: #56554f;  /* 7.5:1 on white, 6.8:1 on paper */
+  --muted: #6b6a64;  /* the label gray, 5.3:1 on the ground, 4.9:1 on paper: ink, secondary ink and label in three even steps
+                        (design round nine, revision 5, 28 Oct 2026; #56554f before) */
   --line: #e1e0db;
   --line-2: #c4c3bd;
   --rule-ink: #8c8a84; /* a rule that must be seen: the foot of a field row, the footer's top */
@@ -36,7 +39,7 @@
   --stage-ink: 23, 23, 22;
   --stage-accent: 122, 31, 43;
   --shadow: 0 0 0 1px rgba(23, 23, 22, 0.06), 0 18px 30px -18px rgba(23, 23, 22, 0.35); /* floating popovers only */
-  --font-display: "Source Serif 4", "Iowan Old Style", Georgia, serif;
+  --font-display: "Fraunces", "Iowan Old Style", Georgia, serif; /* the hybrid (28 Oct 2026): Fraunces for display only */
   --font-body: "Source Serif 4", "Iowan Old Style", Georgia, serif;
   --font-ui: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
   --font-mono: var(--font-ui); /* the interface-label slot, kept under its old name so every module reads it */
@@ -44,10 +47,10 @@
   --font-kicker: var(--font-ui); /* kickers and labels, in small spaced capitals (the visual pass of 27 Oct 2026; Fragment Mono before) */
   --fs-label: 11.5px; --tr-label: 0.08em; --tt-label: uppercase; /* the live site's label: 11 to 12 px capitals, tracked, in the muted ink */
   --font-caption: var(--font-body);
-  /* the optical size follows the size; the three tokens stay so the rules that read them need not change */
-  --opsz-title: normal;
-  --opsz-numeral: normal;
-  --opsz-name: normal; /* the name in the masthead */
+  /* Fraunces at a fixed optical size, SOFT and WONK at 0, as before 27 Oct 2026 */
+  --opsz-title: "opsz" 48, "SOFT" 0, "WONK" 0;
+  --opsz-numeral: "opsz" 48, "SOFT" 0, "WONK" 0;
+  --opsz-name: "opsz" 28, "SOFT" 0, "WONK" 0; /* the name in the masthead */
   /* the text scale: Source Serif 4 reads at 20 px where Literata read at 18.5 px (the same x-height, about 9.5 px), so every
      size set in the text face is its old size times this ratio, here and in each module. One edit here moves them all;
      --measure follows it, so the text column stays 666 px, the width of the figures */
@@ -71,8 +74,22 @@
   --fs-cap: 12px;    --tr-cap: 0.01em;   /* the label: meta lines, buttons, sub-tabs, summaries */
   --fs-ui-s: 12.5px;                     /* footer, sources, hints, counts */
   --fs-ui: 14px;                         /* tabs, named chips, Read the chapter */
-  /* reading: the text face, each times the text scale */
-  --fs-note: calc(13.5px * var(--text-scale)); --fs-small: calc(15.5px * var(--text-scale)); --fs-plain: calc(17px * var(--text-scale)); --fs-body: calc(18px * var(--text-scale)); --fs-lede: calc(21px * var(--text-scale));
+  /* the type scale (design round nine, revision 1, 28 Oct 2026): seven steps of the serif in place of twenty sizes, each
+     about 15 percent or more from its neighbor, and four of Hanken Grotesk (--ui, --ui-s, --fs-label, --fs-cap-s). Every
+     serif rule names a step. Fraunces sets the display steps (title, section, block) and, at 500, the small heads at the
+     lead step; Source Serif 4 the text steps (lead, text, small, note). --text-scale stays the one knob: --tk is 1 at its
+     value today (18 / 18.5), and the text steps move with it. The large numbers keep their own sizes (--fs-num-*) */
+  --tk: calc(var(--text-scale) * 18.5 / 18);
+  --t-title: clamp(48px, 5.8vw, 84px);   /* every page title but the home's one-line title */
+  --t-section: clamp(28px, 2.4vw, 34px); /* section heads, In plain terms, the next chapter's title */
+  --t-block: 26px;                       /* Flashcards, Sources, the flashcard question, the card's ratings and price */
+  --t-lead: calc(21px * var(--tk));      /* standfirsts, In plain terms' text; figure titles and h4 in Fraunces at 500 */
+  --t-text: calc(18px * var(--tk));      /* body, In short, the flashcard answer, animation steps, Previous */
+  --t-small: calc(15.5px * var(--tk));   /* captions, figure subtitles, card rows, tables, the flashcard reason */
+  --t-note: calc(13.5px * var(--tk));    /* card explanations, the specimen caption, source lists */
+  --ui: 15px; --ui-s: 13px;              /* Hanken: menus, buttons and the rail's contents / the rail's chain, chips, strips */
+  /* the reading tokens before the scale, kept as names of its steps; --fs-plain only for The Chain's contents page */
+  --fs-note: var(--t-note); --fs-small: var(--t-small); --fs-plain: calc(17px * var(--text-scale)); --fs-body: var(--t-text); --fs-lede: var(--t-lead);
   /* display */
   --fs-d6: 16.5px; --fs-d5: 19px; --fs-d4: 21px; --fs-d3: 24px; --fs-d2: 28px;
   --fs-d1s: clamp(26px, 2.3vw, 32px);    /* walk step titles */
@@ -84,7 +101,7 @@
 }
 :root[data-theme="dark"] {
   --bg: #121211; --bg-2: #1c1c1a; --bg-3: #272725;
-  --ink: #e8e7e3; --ink-2: #c6c4be; --muted: #a9a7a1; /* muted 7.7:1 on the ground, 7.0:1 on the tint */
+  --ink: #e8e7e3; --ink-2: #c6c4be; --muted: #8f8d87; /* muted 5.7:1 on the ground, 5.1:1 on the tint (#a9a7a1 before revision 5) */
   --line: #2c2b28; --line-2: #45443f; --rule-ink: #75736d; --control-edge: #75736d; /* 3.9:1 on the dark ground */
   --accent: #d98a95; --accent-ink: #d98a95; --accent-soft: rgba(217, 138, 149, 0.16); /* wine for text on dark, 7.2:1 */
   --accent-fill: #a8414b;
@@ -110,6 +127,8 @@ html.kb:has(.view[data-view="walk"]:not([hidden]) .wk-rail[data-show="1"]:not([h
   html.kb:has(.stage[data-hidden="1"]) { scroll-padding-bottom: 60px; }
 }
 @media (prefers-reduced-motion: reduce) { .stage { transition: none; } html { scroll-behavior: auto; } }
+/* a phone's page titles: one size for the chapters and the views, as large as the width allows */
+@media (max-width: 900px) { :root { --t-title: min(68px, 15vw); } }
 body {
   margin: 0;
   background: var(--bg);
@@ -224,7 +243,7 @@ small { font-size: 0.85em; }
 .stage .stage-tag b { color: inherit; font-weight: inherit; }
 .stage figcaption {
   order: 3; position: relative; z-index: 1; flex: none; margin: 0 var(--margin) 32px clamp(16px, 2.2vw, 32px); max-width: 34em; text-align: left;
-  font-family: var(--font-caption); font-size: calc(14px * var(--text-scale)); line-height: 1.5; letter-spacing: 0; color: var(--ink-2);
+  font-family: var(--font-caption); font-size: var(--t-note); line-height: 1.5; letter-spacing: 0; color: var(--ink-2);
   padding: 0;
 }
 .stage figcaption b { color: var(--ink); font-weight: 500; }
@@ -266,8 +285,8 @@ small { font-size: 0.85em; }
 /* ---------- prose ---------- */
 .prose { max-width: var(--measure); }
 .view[data-view="geopolitics"] { --measure: calc(40em / var(--text-scale)); } /* the essay reads a little wider than the chapters */
-.prose h3 { font-size: var(--fs-d2); line-height: 1.15; margin: 2em 0 0.65em; max-width: var(--measure); scroll-margin-top: calc(var(--masthead) + var(--band, 0px) + 16px); }
-.prose h4 { font-size: var(--fs-d4); line-height: 1.25; margin: 1.7em 0 0.5em; max-width: var(--measure); scroll-margin-top: calc(var(--masthead) + var(--band, 0px) + 16px); }
+.prose h3 { font-size: var(--t-section); line-height: 1.15; margin: 2em 0 0.65em; max-width: var(--measure); scroll-margin-top: calc(var(--masthead) + var(--band, 0px) + 16px); }
+.prose h4 { font-size: var(--t-lead); line-height: 1.25; margin: 1.7em 0 0.5em; max-width: var(--measure); scroll-margin-top: calc(var(--masthead) + var(--band, 0px) + 16px); }
 .prose > p, .prose > ul, .prose > ol, .prose blockquote { max-width: var(--measure); }
 .prose h5 { font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: 0; color: var(--muted); margin: 1.6em 0 0.5em; }
 .prose ul, .prose ol { padding-left: 1.3em; margin: 0 0 1.15em; }
@@ -278,10 +297,11 @@ small { font-size: 0.85em; }
 .prose hr { border: 0; border-top: 1px solid var(--line); margin: 2.2em 0; }
 .prose .takeaways { margin: 2.4em 0 1em; padding: 16px 0 8px; border: 0; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--line-2); background: none; border-radius: 0; }
 .prose .takeaways h3 { margin: 0 0 0.6em; font-size: var(--fs-cap); font-family: var(--font-mono); font-weight: 500; letter-spacing: 0; color: var(--muted); }
-.prose .takeaways p { font-size: calc(18px * var(--text-scale)); }
+.prose .takeaways p { font-size: var(--t-text); }
 sup.cite { font-size: max(11px, 0.62em); line-height: 0; vertical-align: 0.55em; margin-left: 1px; } /* no space before it (inline() in build.js): the mark sits on its word */
-sup.cite a { position: relative; font-family: var(--font-mono); font-weight: 500; color: var(--accent); text-decoration: none; padding: 0 1px; border-radius: 0; } /* the ::before box below keeps the 24 px target */
-sup.cite a:hover, sup.cite a:focus-visible { background: var(--accent-soft); text-decoration: none; }
+sup.cite a { position: relative; font-family: var(--font-mono); font-weight: 500; color: var(--muted); text-decoration: none; padding: 0 1px; border-radius: 0; } /* the ::before box below keeps the 24 px target */
+/* the footnote number in the label gray, wine on hover and focus: wine is kept for the signal (design round nine, revision 2) */
+sup.cite a:hover, sup.cite a:focus-visible { color: var(--accent-ink); background: var(--accent-soft); text-decoration: none; }
 /* small controls keep their look but take a fingertip: an invisible box at least 24 px square, centered on the control */
 sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before {
   content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 24px); height: max(100%, 26px); transform: translate(-50%, -50%);
@@ -291,7 +311,7 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before {
 .figure[id], h2[id], h3[id], h4[id], h5[id], .timeline li[id], .lk-entry { scroll-margin-top: calc(var(--masthead) + var(--band, 0px) + 16px); }
 .ct-tip { position: fixed; z-index: 50; width: max-content; max-width: min(360px, calc(100vw - 16px)); background: var(--bg); border: 1px solid var(--line-2); border-radius: 0; box-shadow: var(--shadow); padding: 12px 15px 13px; }
 .ct-tip .tier { float: right; margin: 1px 0 0 10px; }
-.ct-tip b { display: block; font-size: var(--fs-d6); line-height: 1.25; margin-bottom: 5px; }
+.ct-tip b { display: block; font-size: var(--t-text); line-height: 1.25; margin-bottom: 5px; }
 .ct-tip p { font-family: var(--font-mono); font-size: var(--fs-ui-s); letter-spacing: 0.01em; line-height: 1.45; color: var(--muted); margin: 0 0 9px; }
 .ct-tip a { font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: 0; color: var(--accent); text-decoration: none; }
 .ct-tip a:hover { text-decoration: underline; }
@@ -312,7 +332,7 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before {
 
 /* figures */
 .figure { margin: 1.6em 0 2em; padding: 16px 0 12px; border: 0; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--line-2); border-radius: 0; background: none; }
-.figure .fig-title { font-size: var(--fs-d6); margin: 0 0 12px; line-height: 1.3; }
+.figure .fig-title { font-size: var(--t-text); margin: 0 0 12px; line-height: 1.3; }
 .figure .fig-title .unit { font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap-s); color: var(--muted); letter-spacing: 0; margin-left: 8px; }
 .figure svg { display: block; width: 100%; height: auto; overflow: visible; }
 .figure .fig-source { margin: 10px 0 0; font-family: var(--font-mono); font-size: var(--fs-ui-s); color: var(--muted); letter-spacing: 0.01em; }
@@ -377,7 +397,7 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before {
 .site-footer .sources-key { margin: 12px 0 0; font-family: var(--font-ui); font-size: 13px; letter-spacing: 0; line-height: 1.7; color: var(--muted); max-width: 90ch; }
 .site-footer .updated { display: block; margin-top: 10px; font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); color: var(--muted); }
 .gl-tip { position: fixed; z-index: 50; width: max-content; max-width: min(340px, calc(100vw - 16px)); background: var(--bg); border: 1px solid var(--line-2); border-top: 2px solid var(--ink); border-radius: 0; box-shadow: var(--shadow); padding: 12px 16px 13px; }
-.gl-tip b { display: block; font-size: var(--fs-d6); line-height: 1.2; margin-bottom: 6px; }
+.gl-tip b { display: block; font-size: var(--t-text); line-height: 1.2; margin-bottom: 6px; }
 .gl-tip p { font-family: var(--font-body); font-size: var(--fs-small); line-height: 1.45; color: var(--ink-2); margin: 0 0 10px; }
 .gl-tip a { font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: 0; color: var(--accent); text-decoration: none; }
 .gl-tip a:hover { text-decoration: underline; }
@@ -416,7 +436,7 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before {
 
 /* ---------- landscape ---------- */
 .view-head { padding: clamp(36px, 7vh, 72px) 0 18px; }
-.view-head h1, .view-head h2 { font-weight: 400; font-size: var(--fs-d1); line-height: 1; text-transform: none; letter-spacing: -0.015em; margin-bottom: 14px; }
+.view-head h1, .view-head h2 { font-weight: 400; font-size: var(--t-title); line-height: 1; text-transform: none; letter-spacing: -0.015em; margin-bottom: 14px; }
 .view-head .dek { font-size: var(--fs-lede); line-height: 1.45; color: var(--ink-2); max-width: 30em; }
 .picker { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 26px; }
 /* the picker: hairline chips, the maker's country as a code at the right edge, no tints */
@@ -496,7 +516,7 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before {
 .timeline li { display: grid; grid-template-columns: 110px 1fr; gap: 16px; padding: 14px 0; border-top: 1px solid var(--line); }
 .timeline .d { font-family: var(--font-ui); font-size: 12px; color: var(--muted); letter-spacing: 0.01em; padding-top: 3px; font-variant-numeric: tabular-nums; }
 .timeline .d b { display: block; color: var(--ink); font-weight: 500; }
-.timeline h4 { font-size: var(--fs-d5); margin-bottom: 4px; }
+.timeline h4 { font-size: var(--t-text); margin-bottom: 4px; }
 .timeline p { font-size: var(--fs-small); line-height: 1.5; color: var(--ink-2); margin: 0 0 6px; }
 .timeline .cat { font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: 0; color: var(--ink-2); } /* the US category in ink, as on Suppliers; garnet stays for what must be seen */
 /* the five kinds of move are words, never colors: no hue marks a country (redesign, rule B) */
@@ -518,16 +538,16 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before {
 .brief-meta .pips i.on { background: var(--ink); border-color: var(--ink); }
 .brief-meta .conc { font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: 0; color: var(--ink-2); }
 .brief-meta .conc.Extreme { color: var(--ink); }
-.brief-lede { font-family: var(--font-body); font-size: var(--fs-plain); line-height: 1.45; color: var(--ink); margin: 0 0 4px; }
-.brief-short p { font-size: calc(15.5px * var(--text-scale)); line-height: 1.5; color: var(--ink-2); margin: 0 0 0.6em; }
-.brief-leaders { font-size: calc(13.5px * var(--text-scale)); color: var(--ink-2); margin: 0; padding-top: 8px; border-top: 1px solid var(--line); }
+.brief-lede { font-family: var(--font-body); font-size: var(--t-text); line-height: 1.45; color: var(--ink); margin: 0 0 4px; }
+.brief-short p { font-size: var(--t-small); line-height: 1.5; color: var(--ink-2); margin: 0 0 0.6em; }
+.brief-leaders { font-size: var(--t-note); color: var(--ink-2); margin: 0; padding-top: 8px; border-top: 1px solid var(--line); }
 .brief-leaders .label { margin-right: 6px; }
 .brief-leaders .chip { margin-left: 2px; }
 
 /* ---------- glossary ---------- */
 .glossary { margin: 10px 0 50px; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(340px, 100%), 1fr)); gap: 0 40px; } /* min() keeps the column inside the page on a 320 px phone */
 .gl-entry { display: grid; grid-template-columns: 1fr; padding: 14px 0; border-top: 1px solid var(--line); break-inside: avoid; scroll-margin-top: calc(var(--masthead) + var(--band, 0px) + 14px); } /* #gl-<term> links land clear of the masthead */
-.gl-entry dt { font-size: var(--fs-d5); margin-bottom: 4px; }
+.gl-entry dt { font-size: var(--t-text); margin-bottom: 4px; }
 .gl-entry dt .aka { display: block; font-family: var(--font-mono); font-size: var(--fs-ui-s); letter-spacing: 0.01em; color: var(--muted); font-weight: 400; margin-top: 2px; }
 .gl-entry dd { margin: 0; }
 .gl-entry dd p { font-size: var(--fs-small); line-height: 1.5; margin: 0 0 4px; }
@@ -546,7 +566,7 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before {
 /* ---------- controls view ---------- */
 .matrix td .cell { text-decoration: none; }
 .matrix td a.cell:hover { outline: 1px solid var(--accent); }
-.controls-intro { max-width: 66ch; color: var(--ink-2); font-size: calc(17px * var(--text-scale)); }
+.controls-intro { max-width: 66ch; color: var(--ink-2); font-size: var(--t-text); }
 
 /* ---------- research tools ---------- */
 .search-btn { width: 34px; height: 34px; flex: 0 0 auto; border: 1px solid var(--line-2); border-radius: 50%; display: inline-grid; place-items: center; margin-left: 8px; color: var(--ink); transition: border-color 0.15s, color 0.15s; }
@@ -561,7 +581,7 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before {
 .cp-search-results li a { display: grid; grid-template-columns: 110px 1fr; gap: 2px 12px; padding: 10px 16px; border-bottom: 1px solid var(--line); text-decoration: none; }
 .cp-search-results li a:hover, .cp-search-results li a:focus { background: var(--bg-2); }
 .cp-search-results .k { font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: 0; color: var(--muted); grid-row: span 2; padding-top: 3px; }
-.cp-search-results b { font-size: var(--fs-d6); }
+.cp-search-results b { font-size: var(--t-text); }
 .cp-search-results .t { font-size: var(--fs-note); color: var(--ink-2); line-height: 1.4; }
 .cp-search-results .none { padding: 14px 16px; color: var(--muted); }
 .cp-search-hint { margin: 0; padding: 8px 16px; font-family: var(--font-mono); font-size: 11px; color: var(--muted); letter-spacing: 0.02em; }
@@ -609,7 +629,7 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
 
 /* ---------- sources view ---------- */
 .sources-list h3 { font-size: 21px; margin: 28px 0 10px; }
-.sources-list ol { padding-left: 2.2em; font-size: calc(14px * var(--text-scale)); line-height: 1.5; color: var(--ink-2); }
+.sources-list ol { padding-left: 2.2em; font-size: var(--t-note); line-height: 1.5; color: var(--ink-2); }
 .sources-list li { margin-bottom: 6px; overflow-wrap: anywhere; }
 /* publisher and date, after the title of a reference */
 .src-meta { display: block; font-family: var(--font-mono); font-size: 11px; line-height: 1.4; color: var(--muted); }
@@ -651,7 +671,7 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
 .hero .eyebrow .sep { color: var(--line-2); }
 .thesis { font-weight: 400; font-size: clamp(34px, 3.55vw, 50px); line-height: 1.05; letter-spacing: -0.01em; text-wrap: balance; max-width: 13.4em; margin: 0 0 clamp(16px, 2.4vh, 26px); }
 .thesis .q { color: var(--ink); font-variant-numeric: tabular-nums; }
-.hero .dek { font-size: calc(clamp(17px, 1.35vw, 19.5px) * var(--text-scale)); line-height: 1.55; color: var(--ink-2); max-width: 24em; margin: 0 0 clamp(20px, 3vh, 30px); }
+.hero .dek { font-size: var(--t-text); line-height: 1.55; color: var(--ink-2); max-width: 24em; margin: 0 0 clamp(20px, 3vh, 30px); }
 .claims { display: flex; border-top: 1px solid var(--line-2); border-bottom: 1px solid var(--line-2); }
 .claims div { flex: 1; padding: 12px 16px 13px; border-right: 1px solid var(--line); min-width: 0; }
 .claims div:first-child { padding-left: 0; }
@@ -842,7 +862,7 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
 /* "In plain terms" opens the head: a rule above and below, a garnet label */
 .plain { border: 0; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--line-2); background: none; border-radius: 0; padding: 14px 0 16px; margin: 26px 0 26px; max-width: var(--measure); }
 .plain .label { color: var(--muted); display: block; margin-bottom: 7px; }
-.plain p { font-size: var(--fs-plain); line-height: 1.55; color: var(--ink); max-width: var(--measure); margin: 0; }
+.plain p { font-size: var(--t-lead); line-height: 1.55; color: var(--ink); max-width: var(--measure); margin: 0; }
 .prose .takeaways { display: none; }
 
 /* ---------- the chokepoint card: a ruled statement, no box, no shadow ---------- */
@@ -867,8 +887,8 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
   .plate-kpis > div:last-child { grid-column: 1 / -1; padding-left: 0; border-top: 1px solid var(--line); }
 }
 .plate-kpis .k { display: block; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap-s); letter-spacing: 0; color: var(--muted); margin-bottom: 8px; }
-.plate-kpis .v { display: block; font-family: var(--font-display); font-weight: 400; font-variation-settings: normal; font-size: var(--fs-num-s); line-height: 1.05; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
-.plate-kpis .v.cost { font-size: var(--fs-d3); }
+.plate-kpis .v { display: block; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: var(--t-block); line-height: 1.05; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.plate-kpis .v.cost { font-size: var(--t-block); }
 .plate-kpis .v.cost.long { font-family: var(--font-body); font-weight: 500; font-size: var(--fs-small); line-height: 1.35; letter-spacing: 0; font-variation-settings: normal; }
 .plate-kpis .v small { font-size: 14px; font-weight: 500; color: var(--muted); margin-left: 4px; }
 .plate-kpis .v.Extreme { color: var(--ink); }
@@ -904,10 +924,10 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
 .dbg-only .hero, .dbg-only .contents, .dbg-only #chain, .dbg-only .chapter:not(.only) { display: none; }
 
 /* ---------- responsive ---------- */
-@media (max-width: 1100px) { :root { --col: 62%; --gutter: 64px; --gutter-gap: 20px; } body { font-size: calc(18px * var(--text-scale)); } .ch-tile .v { font-size: var(--fs-num-m); } }
+@media (max-width: 1100px) { :root { --col: 62%; --gutter: 64px; --gutter-gap: 20px; } body { font-size: var(--t-text); } .ch-tile .v { font-size: var(--fs-num-m); } }
 @media (max-width: 900px) {
   :root { --col: 100%; --masthead: 81px; --gutter: 34px; --gutter-gap: 12px; } /* the two-row phone masthead; measured at runtime too, but the first paint must not shift */
-  body { font-size: calc(17px * var(--text-scale)); }
+  body { font-size: var(--t-text); }
   .masthead { padding: 8px 16px 0; height: auto; min-height: 52px; flex-wrap: wrap; gap: 0 8px; align-items: center; }
   .masthead .search-btn, .masthead .theme-toggle { position: absolute; top: 7px; width: 32px; height: 32px; margin: 0; } /* the buttons live inside the tab strip; on phones they pin to the first row, clear of the tabs below so each tab keeps a full 24 px to tap */
   .masthead .theme-toggle { right: 16px; }
@@ -945,14 +965,14 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
   .sheet { display: block; position: fixed; inset: 0; z-index: 60; background: var(--bg); overflow-y: auto; padding: 14px 16px 90px; }
   .sheet[hidden] { display: none; }
   .sheet-head { display: flex; justify-content: space-between; align-items: center; margin: 0 0 14px; }
-  .sheet-head b { font-size: var(--fs-d4); }
-  .sheet-close { font-size: calc(22px * var(--text-scale)); line-height: 1; background: none; border: 1px solid var(--rule-ink); border-radius: 50%; width: 36px; height: 36px; color: var(--ink); }
+  .sheet-head b { font-size: var(--t-lead); }
+  .sheet-close { font-size: 22px; line-height: 1; background: none; border: 1px solid var(--rule-ink); border-radius: 50%; width: 36px; height: 36px; color: var(--ink); }
   .sheet-pages { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 18px; }
   .sheet-pages a { font-family: var(--font-ui); font-weight: 500; font-size: var(--fs-ui); padding: 7px 14px; border: 1px solid var(--rule-ink); border-radius: 999px; color: var(--ink); text-decoration: none; }
   .sheet-chapters { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
   .sheet-chapters a { display: grid; grid-template-columns: 34px 1fr; align-items: baseline; gap: 10px; padding: 11px 0; border-bottom: 1px solid var(--line); color: var(--ink); text-decoration: none; }
   .sheet-chapters .n { font-family: var(--font-mono); font-size: var(--fs-cap); color: var(--muted); font-variant-numeric: tabular-nums; }
-  .sheet-chapters .t { font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: var(--fs-d6); }
+  .sheet-chapters .t { font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: var(--t-text); }
   .sheet-chapters .sheet-k { font-family: var(--font-mono); font-size: var(--fs-cap); font-weight: 500; letter-spacing: 0; color: var(--muted); padding: 18px 0 8px; border-bottom: 1px solid var(--line); }
   .hero { padding-top: 22px; }
   .to-top { display: none; } /* on phones the Top button sits in the bottom strip, so the pill never floats over the text */
@@ -986,7 +1006,7 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
   .plate-rows .row { grid-template-columns: 1fr; gap: 6px; }
   .plate-status { grid-template-columns: 1fr; }
   .plate-status > div, .plate-status > div + div { border-right: 0; border-bottom: 1px solid var(--line); padding-left: 0; }
-  .inshort p { font-size: calc(19px * var(--text-scale)); }
+  .inshort p { font-size: var(--t-text); }
   .prevnext { grid-template-columns: 1fr; }
   .prevnext .next { grid-column: 1; text-align: left; }
   /* the popover becomes a sheet across the foot of the screen, above the specimen strip */
@@ -1033,9 +1053,9 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
 .fc-link.fc-prev:disabled, .fc-link.fc-next:disabled { visibility: hidden; } /* a step the reader cannot take yet is not drawn; its space stays, so nothing moves */
 .fc-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .fc-steps { display: flex; gap: 18px; margin-left: auto; }
-.fc-q { margin: 6px 0 22px; font-family: var(--font-body); font-weight: 400; font-size: calc(24px * var(--text-scale)); line-height: 1.3; color: var(--ink); text-wrap: balance; }
-.fc-a { margin: 4px 0 0; font-family: var(--font-body); font-weight: 600; font-size: calc(var(--fs-d4) * var(--text-scale)); line-height: 1.35; color: var(--ink); text-wrap: balance; }
-.fc-why { margin: 0 0 6px; font-size: calc(16.5px * var(--text-scale)); line-height: 1.5; color: var(--ink-2); }
+.fc-q { margin: 6px 0 22px; font-family: var(--font-body); font-weight: 400; font-size: var(--t-block); line-height: 1.3; color: var(--ink); text-wrap: balance; }
+.fc-a { margin: 4px 0 0; font-family: var(--font-body); font-weight: 600; font-size: var(--t-text); line-height: 1.35; color: var(--ink); text-wrap: balance; }
+.fc-why { margin: 0 0 6px; font-size: var(--t-small); line-height: 1.5; color: var(--ink-2); }
 .fc-more { font-family: var(--font-mono); font-size: var(--fs-cap); letter-spacing: 0; color: var(--accent); white-space: normal; margin-left: 4px; } /* it wraps: a long section name would widen the card past a 320 px screen */
 .fc-btn { font-family: var(--font-ui); font-size: 14px; font-weight: 500; letter-spacing: 0; color: var(--ink); background: var(--bg); border: 1px solid var(--rule-ink); border-radius: 999px; padding: 8px 16px; min-height: 36px; cursor: pointer; }
 .fc-btn:hover { border-color: var(--ink); color: var(--ink); }
@@ -1051,17 +1071,17 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
 .fc-end { margin-top: 10px; }
 .fc-score { display: flex; align-items: baseline; gap: 14px; margin: 8px 0 6px; }
 .fc-big { font-family: var(--font-display); font-weight: 360; font-size: 64px; line-height: 1; font-variation-settings: var(--opsz-numeral); color: var(--ink); }
-.fc-score-t { font-size: var(--fs-plain); color: var(--ink-2); }
+.fc-score-t { font-size: var(--t-small); color: var(--ink-2); }
 .review .rv-keep { margin: 8px 0 14px; padding: 14px 0 4px; border-top: 1px solid var(--line-2); }
 .review .rv-keep h4.label { margin: 0 0 12px; font-family: var(--font-mono); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); line-height: 1.4; color: var(--muted); }
 .review .rv-keep ul { list-style: none; margin: 0; padding: 0; }
-.review .rv-keep li { position: relative; padding: 0 0 10px 30px; font-size: var(--fs-plain); line-height: 1.5; color: var(--ink); }
+.review .rv-keep li { position: relative; padding: 0 0 10px 30px; font-size: var(--t-text); line-height: 1.5; color: var(--ink); }
 .review .rv-keep li::before { content: ""; position: absolute; left: 4px; top: 0.72em; width: 12px; border-top: 2px solid var(--accent); }
 .review .rv-keep li.miss { color: var(--ink-2); }
 .review .rv-keep li.miss::before { border-top-style: dashed; border-color: var(--line-2); }
 .review .rv-keep .fc-more { margin-left: 0; } /* the space before it is the gap, so a link that wraps starts flush with the text */
 @media (prefers-reduced-motion: reduce) { .fc-card { transition: none; } }
-@media (max-width: 700px) { .fc-face { padding: 18px 18px 16px; } .fc-q { font-size: calc(var(--fs-d3) * var(--text-scale)); } .fc-a { font-size: calc(var(--fs-d4) * var(--text-scale)); } .fc-deck { margin-right: 12px; } }
+@media (max-width: 700px) { .fc-face { padding: 18px 18px 16px; } .fc-q { font-size: var(--t-lead); } .fc-a { font-size: var(--t-text); } .fc-deck { margin-right: 12px; } }
 @media print { .review .rv-head, .fc-deck, .fc-nav, .fc-score, .fc-end .fc-row { display: none !important; } .fc-end[hidden] { display: block !important; } .review { border-top-width: 1px; } }
 /* a returning reader's last score takes the place of the deck's instruction (app.js); the same quiet line */
 .review .rv-sub.fc-last { color: var(--ink-2); }
@@ -1081,7 +1101,7 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
 .anim-print { display: none; }
 .anim-state { position: absolute; top: 8px; right: 8px; font-family: var(--font-mono); font-size: var(--fs-cap-s); font-weight: 500; letter-spacing: 0; color: var(--ink-2); background: var(--bg); border: 1px solid var(--line-2); padding: 4px 8px; opacity: 0; transition: opacity 0.2s; pointer-events: none; }
 .figure--anim.is-paused .anim-state { opacity: 1; }
-.anim-cap { margin: 12px 0 6px; min-height: 3em; font-size: var(--fs-plain); line-height: 1.5; color: var(--ink); }
+.anim-cap { margin: 12px 0 6px; min-height: 3em; font-size: var(--t-small); line-height: 1.5; color: var(--ink); }
 .anim-transcript { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 @media (max-width: 700px) { .figure--anim .anim-steps { gap: 0 12px; } .anim-cap { min-height: 4.5em; font-size: var(--fs-small); } }
 @media (prefers-reduced-motion: reduce) { .anim-state { transition: none; } }

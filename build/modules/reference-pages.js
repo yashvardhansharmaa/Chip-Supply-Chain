@@ -79,7 +79,7 @@ module.exports = function (ctx) {
   const manifest = new Map(S.manifest(root).map((p) => [p.slug, p]));
   const versions = S.cardVersions(root, fs, path);
   let css = '';
-  for (const f of ['chapter-page.css', 'reference-page.css']) {
+  for (const f of ['chapter-page.css', 'masthead.css', 'reference-page.css']) { // the masthead's sheet: build/masthead.js
     try { css += S.minCSS(fs.readFileSync(path.join(root, 'build', 'assets', f), 'utf8')); } catch (e) { warn(`reference pages: build/assets/${f} is missing, so they ship part-styled`); }
   }
   const builtStr = ctx.builtStr, today = ctx.builtOn ? `${ctx.builtOn.getFullYear()}-${String(ctx.builtOn.getMonth() + 1).padStart(2, '0')}-${String(ctx.builtOn.getDate()).padStart(2, '0')}` : new Date().toISOString().slice(0, 10);
@@ -629,7 +629,7 @@ ${body}
     const kb = Buffer.byteLength(html) / 1024;
     sizes.push(`${s} ${kb.toFixed(0)} KB`);
     if (kb > 400) warn(`reference page /${s}/ weighs ${kb.toFixed(0)} KB, over the 400 KB budget`);
-    if (/<button\b/.test(html)) warn(`reference page /${s}/ carries a button from the app`);
+    if (/<button\b(?![^>]*\bclass="theme-toggle")/.test(html)) warn(`reference page /${s}/ carries a button from the app`); // the masthead's theme button is the page's own (build/masthead.js)
     if (/\{\{REF:/.test(html)) warn(`reference page /${s}/ kept a placeholder`);
   }
   console.log('reference pages: ' + sizes.join(' · '));

@@ -31,8 +31,8 @@ const keepRanges = require('../keep-ranges.js');
 const BASE = SITE_CONFIG.url;
 const SITE = 'Chip Supply Chain';
 const AUTHOR = { name: 'Yashvardhan Sharma', url: 'https://www.linkedin.com/in/yashvardhan07/' };
-// the site's own three faces (design round five, 27 Oct 2026): Source Serif 4 for display and text, Hanken Grotesk and Fragment Mono
-const FONTS = 'https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,400&family=Hanken+Grotesk:wght@400..700&family=Fragment+Mono&display=swap';
+// the site's own four faces (the hybrid, 28 Oct 2026): Fraunces for display, Source Serif 4 for text, Hanken Grotesk and Fragment Mono
+const FONTS = 'https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..600,0,0&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,400&family=Hanken+Grotesk:wght@400..700&family=Fragment+Mono&display=swap';
 const SUBWORD = { 'Very hard': 'Very hard to substitute', Hard: 'Hard to substitute', Moderate: 'Moderately hard to substitute', Easy: 'Easy to substitute' };
 const TILE = { 'component-costs': 'The economics', geopolitics: 'The contest' }; // what the chapter tile says for the two chapters that are not stages
 const STAGES = require('../stages.js'); // which chapters are stages (all but the two that look across the chain)
@@ -199,11 +199,11 @@ function shareTags(p, versions) {
 const ICONS = `<link rel="icon" href="../favicon.ico" sizes="16x16 32x32 48x48">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="../apple-touch-icon.png">`;
-// the static pages' masthead (the readable chapters, Start here's page and the reference pages in reference-pages.js): the wordmark
-// home, The Chain on the main page, and the four reference pages by their real paths, so a crawler follows them (SEO review P1-1);
-// current is the link of the page it heads, marked as the current page
-const NAV = [['../#/chain', 'The Chain'], ['../chips/', 'AI Chips'], ['../suppliers/', 'Suppliers'], ['../export-controls/', 'Export Controls'], ['../glossary/', 'Glossary']];
-const masthead = (current) => `<header class="masthead"><a class="wordmark" href="../" aria-label="Chip Supply Chain"><svg class="wm-tile" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect width="16" height="16" rx="3.2"/><path transform="translate(3.3324 11.8693) scale(0.009179 -0.009179)" d="M1011 683 Q1011 612 960 564 Q909 515 823 515 Q739 515 696 561 Q653 607 653 680 L653 720 Q653 786 623 823 Q594 861 544 861 Q502 861 468 831 Q433 801 412 741 Q391 682 391 594 Q391 474 431 393 Q470 312 540 270 Q609 229 697 229 Q769 229 825 251 Q880 273 924 326 Q946 348 959 356 Q971 363 983 363 Q1000 363 1007 347 Q1015 330 1015 307 Q1012 216 954 140 Q896 64 796 19 Q695 -26 563 -26 Q417 -26 301 33 Q185 91 118 198 Q51 305 51 450 Q51 602 118 721 Q184 840 305 909 Q425 978 588 978 Q720 978 815 938 Q909 898 960 832 Q1011 765 1011 683 Z"/></svg><span class="wm-name">Chip Supply Chain</span></a><nav aria-label="Site">${NAV.map(([href, text]) => `<a href="${href}"${href === current ? ' aria-current="page"' : ''}>${text}</a>`).join('')}</nav></header>`;
+// the static pages' masthead (the readable chapters, Start here's page and the reference pages in reference-pages.js): the app's
+// own bar (build/masthead.js, design round nine, revision 6): Home, The Chain on the main page and the four reference pages by
+// their real paths, so a crawler follows them (SEO review P1-1), then search and the theme; current is the link of the section
+// the page belongs to, marked as the current page
+const { masthead, mastheadCSS, NAV } = require('../masthead.js');
 const MASTHEAD = masthead('');
 // the static pages open light; ?theme= or the site's saved choice sets the theme before the first paint, and a contents rail the
 // reader hid stays hidden (build/build.js RAIL_TOGGLE_JS)
@@ -341,6 +341,8 @@ ${review}
 
 /* ---------------- the readable chapter page ---------------- */
 const BANDS = { Extreme: 4, High: 3, Moderate: 2, Low: 1 }; // as build.js ranks them for the chain's bars
+// the band's meter, as build.js draws it (meterHTML): four rising bars, as many lit as the band's rank (src/modules/chapter.css .meter)
+const meterHTML = (b) => { const l = BANDS[b] || 0; return `<span class="meter" data-level="${l}" aria-hidden="true">${[1, 2, 3, 4].map((k) => `<b${k <= l ? ' class="on"' : ''}></b>`).join('')}</span>`; };
 const minCSS = (s) => s.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\s+/g, ' ').replace(/\s*([{};])\s*/g, '$1').replace(/;}/g, '}').trim();
 const textOf = (html) => String(html || '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
 // the readable page's own additions to build/assets/chapter-page.css: the head's facts (words / minutes · Updated <day>) and,
@@ -475,7 +477,7 @@ function readableHTML(p, ch, ctx, versions, css) {
   const conc = si >= 0 ? (m.card || {}).concentration || '' : '';
   // the card's verdict, as The Chain's kicker carries it (build.js bandMark): "Extreme concentration · Very hard to substitute"
   const subBand = ((m.card || {}).substitutability || {}).band || '';
-  const kick = `<p class="ch-kick"><span>Chapter ${pad(ch.number)}</span><span>${si >= 0 ? `Stage ${si + 1} of ${stages.length}` : esc(TILE[ch.id] || '')}</span>${conc ? `<span class="ch-band ch-verdict" data-band="${BANDS[conc] || 0}"><i aria-hidden="true"></i><span>${esc(conc)} concentration</span>${subBand ? `<span class="sep" aria-hidden="true">·</span><span>${esc(SUBWORD[subBand] || subBand)}</span>` : ''}</span>` : ''}</p>`;
+  const kick = `<p class="ch-kick"><span>Chapter ${pad(ch.number)}</span><span>${si >= 0 ? `Stage ${si + 1} of ${stages.length}` : esc(TILE[ch.id] || '')}</span>${conc ? `<span class="ch-band ch-verdict" data-band="${BANDS[conc] || 0}">${meterHTML(conc)}<span>${esc(conc)} concentration</span>${subBand ? `<span class="sep" aria-hidden="true">·</span><span>${esc(SUBWORD[subBand] || subBand)}</span>` : ''}</span>` : ''}</p>`;
   const adds = ['a 3D model', 'glossary definitions', cards.length ? 'flashcards' : ''].filter(Boolean);
   const note = `The interactive chapter adds ${adds.length > 1 ? adds.slice(0, -1).join(', ') + ' and ' + adds[adds.length - 1] : adds[0]}.`;
   const cta = (cls) => `<div class="cta${cls}"><a class="btn" href="${esc(app)}">Open the interactive chapter <span aria-hidden="true">→</span></a><p class="cta-note">${note}</p></div>`;
@@ -615,7 +617,7 @@ ${SITE_CONFIG.analytics ? `<script async src="https://gc.zgo.at/count.js" data-g
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-${MASTHEAD}
+${masthead('../#/chain')}
 <main id="main" class="page page--chapter">
 ${main}
 <footer class="site-footer">${footerKey}</footer>
@@ -638,7 +640,7 @@ module.exports = function (ctx) {
   const dist = path.join(root, 'dist');
   const versions = cardVersions(root, fs, path);
   let css = '';
-  try { css = minCSS(fs.readFileSync(path.join(root, 'build', 'assets', 'chapter-page.css'), 'utf8')); } catch (e) { warn('chapter pages: build/assets/chapter-page.css is missing, so they ship unstyled'); }
+  try { css = minCSS(fs.readFileSync(path.join(root, 'build', 'assets', 'chapter-page.css'), 'utf8') + mastheadCSS(root)); } catch (e) { warn('chapter pages: build/assets/chapter-page.css is missing, so they ship unstyled'); }
   // the chapter page's own sheet, shared with The Chain in the app (src/modules/chapter.css), after the readable pages' common one
   let chCSS = '';
   try { chCSS = minCSS(fs.readFileSync(path.join(root, 'src', 'modules', 'chapter.css'), 'utf8')); } catch (e) { warn('chapter pages: src/modules/chapter.css is missing'); }
@@ -661,7 +663,7 @@ module.exports = function (ctx) {
     let html;
     if (ch && ch.rendered) {
       html = readableHTML(p, ch, ctx, versions, css + chCSS);
-      if (/<button\b/.test(html)) warn(`chapter page ${p.slug}: a button from the app survived into the static page`);
+      if (/<button\b(?![^>]*\bclass="theme-toggle")/.test(html)) warn(`chapter page ${p.slug}: a button from the app survived into the static page`); // the masthead's theme button is the page's own
       ctx.readablePages.push(p.slug);
     } else {
       if (p.kind === 'chapter') warn(`chapter page ${p.slug}: the chapter was not rendered, so its link only forwards to the main page`);

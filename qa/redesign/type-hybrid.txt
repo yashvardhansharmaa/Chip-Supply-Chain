@@ -1,0 +1,98 @@
+home 1440 light: faces ok
+  serif sizes (F Fraunces, S Source Serif 4): F 18×19  F 20×1  F 34×17  F 54×16  F 66×1  S 15.5×161  S 18×132  S 21×1  S 26×1
+home 1440 dark: faces ok
+  serif sizes (F Fraunces, S Source Serif 4): F 18×19  F 20×1  F 34×17  F 54×16  F 66×1  S 15.5×161  S 18×132  S 21×1  S 26×1
+home 390 light: faces ok
+  serif sizes (F Fraunces, S Source Serif 4): F 13.5×31  F 15.5×19  F 18×1  F 26×32  F 28×1  F 35.1×1  S 15.5×163  S 18×131  S 21×1
+home 390 dark: faces ok
+  serif sizes (F Fraunces, S Source Serif 4): F 13.5×31  F 15.5×19  F 18×1  F 26×32  F 28×1  F 35.1×1  S 15.5×163  S 18×131  S 21×1
+chain 1440 light: faces ok
+  serif sizes (F Fraunces, S Source Serif 4): F 13.6×14  F 17.5×2  F 19.5×16  F 20×1  F 26×1  F 86.4×1  S 14.6×1  S 15.1×16  S 16.5×1
+chain 1440 dark: faces ok
+  serif sizes (F Fraunces, S Source Serif 4): F 13.6×14  F 17.5×2  F 19.5×16  F 20×1  F 26×1  F 86.4×1  S 14.6×1  S 15.1×16  S 16.5×1
+chain 390 light: faces ok
+  serif sizes (F Fraunces, S Source Serif 4): F 16.1×14  F 17.5×2  F 18×1  F 18.5×16  F 26×1  F 74.1×1  S 14.6×1  S 15.1×16  S 16.5×1
+chain 390 dark: faces ok
+  serif sizes (F Fraunces, S Source Serif 4): F 16.1×14  F 17.5×2  F 18×1  F 18.5×16  F 26×1  F 74.1×1  S 14.6×1  S 15.1×16  S 16.5×1
+lithography 1440 light: faces ok
+  serif sizes (F Fraunces, S Source Serif 4): F 18×1  F 20×1  F 21×8  F 26×5  F 34×7  F 83.5×2  S 13.5×14  S 15.5×46  S 18×116  S 21×12  S 26×1
+lithography 1440 dark: faces ok
+  serif sizes (F Fraunces, S Source Serif 4): F 18×1  F 20×1  F 21×8  F 26×5  F 34×7  F 83.5×2  S 13.5×14  S 15.5×46  S 18×116  S 21×12  S 26×1
+lithography 390 light: faces ok
+  serif sizes (F Fraunces, S Source Serif 4): F 18×7  F 21×3  F 26×5  F 28×7  F 58.5×2  S 13.5×13  S 15.5×46  S 18×127  S 21×2
+lithography 390 dark: faces ok
+  serif sizes (F Fraunces, S Source Serif 4): F 18×7  F 21×3  F 26×5  F 28×7  F 58.5×2  S 13.5×13  S 15.5×46  S 18×127  S 21×2
+ai-chips 1440 light: faces ok
+  serif sizes (F Fraunces, S Source Serif 4): F 20×1  F 86.4×1  S 14.5×1  S 15.5×1  S 17×38  S 17.5×1  S 19×1  S 21×13  S 22.4×1
+ai-chips 1440 dark: faces ok
+  serif sizes (F Fraunces, S Source Serif 4): F 20×1  F 86.4×1  S 14.5×1  S 15.5×1  S 17×38  S 17.5×1  S 19×1  S 21×13  S 22.4×1
+ai-chips 390 light: faces ok
+  serif sizes (F Fraunces, S Source Serif 4): F 18×1  F 74.1×1  S 14.5×1  S 15.5×1  S 16×38  S 17.5×1  S 18.5×1  S 19×14
+ai-chips 390 dark: faces ok
+  serif sizes (F Fraunces, S Source Serif 4): F 18×1  F 74.1×1  S 14.5×1  S 15.5×1  S 16×38  S 17.5×1  S 18.5×1  S 19×14
+suppliers 1440 light: faces ok
+  serif sizes (F Fraunces, S Source Serif 4): F 18×20  F 20×1  F 26×3  F 51.8×4  F 52×20  F 83.5×1  S 13.5×3  S 15.5×271  S 21×1
+suppliers 1440 dark: faces ok
+  serif sizes (F Fraunces, S Source Serif 4): F 18×20  F 20×1  F 26×3  F 51.8×4  F 52×20  F 83.5×1  S 13.5×3  S 15.5×271  S 21×1
+suppliers 390 light: faces ok
+  serif sizes (F Fraunces, S Source Serif 4): F 18×21  F 21×2  F 26×1  F 34×20  F 36×4  F 58.5×1  S 13.5×3  S 15.5×271  S 18×1
+suppliers 390 dark: faces ok
+  serif sizes (F Fraunces, S Source Serif 4): F 18×21  F 21×2  F 26×1  F 34×20  F 36×4  F 58.5×1  S 13.5×3  S 15.5×271  S 18×1
+export-controls 1440 light: faces ok
+  serif sizes (F Fraunces, S Source Serif 4): F 15.5×11  F 18×75  F 20×1  F 26×1  F 44×9  F 83.5×1  S 13.5×7  S 15.5×80  S 18×1  S 21×1
+export-controls 1440 dark: faces ok
+  serif sizes (F Fraunces, S Source Serif 4): F 15.5×11  F 18×75  F 20×1  F 26×1  F 44×9  F 83.5×1  S 13.5×7  S 15.5×80  S 18×1  S 21×1
+export-controls 390 light: faces ok
+  serif sizes (F Fraunces, S Source Serif 4): F 18×75  F 21×1  F 44×9  F 58.5×1  S 15.5×80  S 18×2
+export-controls 390 dark: faces ok
+  serif sizes (F Fraunces, S Source Serif 4): F 18×75  F 21×1  F 44×9  F 58.5×1  S 15.5×80  S 18×2
+glossary 1440 light: faces ok
+  serif sizes (F Fraunces, S Source Serif 4): F 18×487  F 20×1  F 83.5×1  F 88×26  S 13.5×487  S 15.5×692  S 18×1  S 21×1
+glossary 1440 dark: faces ok
+  serif sizes (F Fraunces, S Source Serif 4): F 18×487  F 20×1  F 83.5×1  F 88×26  S 13.5×487  S 15.5×692  S 18×1  S 21×1
+glossary 390 light: faces ok
+  serif sizes (F Fraunces, S Source Serif 4): F 18×488  F 58.5×1  F 64×26  S 13.5×487  S 15.5×692  S 18×2
+glossary 390 dark: faces ok
+  serif sizes (F Fraunces, S Source Serif 4): F 18×488  F 58.5×1  F 64×26  S 13.5×487  S 15.5×692  S 18×2
+static-lithography 1440 light: faces ok
+  serif sizes (F Fraunces, S Source Serif 4): F 18×1  F 20×1  F 21×8  F 26×5  F 34×7  F 83.5×1  S 13.5×63  S 15.5×39  S 18×63  S 21×2
+static-lithography 1440 dark: faces ok
+  serif sizes (F Fraunces, S Source Serif 4): F 18×1  F 20×1  F 21×8  F 26×5  F 34×7  F 83.5×1  S 13.5×63  S 15.5×39  S 18×63  S 21×2
+static-lithography 390 light: faces ok
+  serif sizes (F Fraunces, S Source Serif 4): F 18×7  F 21×3  F 26×5  F 28×7  F 58.5×1  S 13.5×63  S 15.5×39  S 18×64  S 21×1
+static-lithography 390 dark: faces ok
+  serif sizes (F Fraunces, S Source Serif 4): F 18×7  F 21×3  F 26×5  F 28×7  F 58.5×1  S 13.5×63  S 15.5×39  S 18×64  S 21×1
+static-suppliers 1440 light: faces ok
+  serif sizes (F Fraunces, S Source Serif 4): F 18×242  F 20×1  F 26×21  F 83.5×1  S 13.5×1190  S 15.5×347  S 21×1
+static-suppliers 1440 dark: faces ok
+  serif sizes (F Fraunces, S Source Serif 4): F 18×242  F 20×1  F 26×21  F 83.5×1  S 13.5×1190  S 15.5×347  S 21×1
+static-suppliers 390 light: faces ok
+  serif sizes (F Fraunces, S Source Serif 4): F 18×243  F 21×21  F 58.5×1  S 13.5×1190  S 15.5×347  S 18×1
+static-suppliers 390 dark: faces ok
+  serif sizes (F Fraunces, S Source Serif 4): F 18×243  F 21×21  F 58.5×1  S 13.5×1190  S 15.5×347  S 18×1
+static-glossary 1440 light: faces ok
+  serif sizes (F Fraunces, S Source Serif 4): F 18×212  F 20×1  F 26×3  F 83.5×1  F 88×25  S 13.5×484  S 15.5×416  S 21×1
+static-glossary 1440 dark: faces ok
+  serif sizes (F Fraunces, S Source Serif 4): F 18×212  F 20×1  F 26×3  F 83.5×1  F 88×25  S 13.5×484  S 15.5×416  S 21×1
+static-glossary 390 light: faces ok
+  serif sizes (F Fraunces, S Source Serif 4): F 18×213  F 21×3  F 58.5×1  F 64×25  S 13.5×484  S 15.5×416  S 18×1
+static-glossary 390 dark: faces ok
+  serif sizes (F Fraunces, S Source Serif 4): F 18×213  F 21×3  F 58.5×1  F 64×25  S 13.5×484  S 15.5×416  S 18×1
+static-export-controls 1440 light: faces ok
+  serif sizes (F Fraunces, S Source Serif 4): F 18×89  F 20×1  F 21×9  F 26×3  F 83.5×1  S 13.5×205  S 15.5×150  S 21×1
+static-export-controls 1440 dark: faces ok
+  serif sizes (F Fraunces, S Source Serif 4): F 18×89  F 20×1  F 21×9  F 26×3  F 83.5×1  S 13.5×205  S 15.5×150  S 21×1
+static-export-controls 390 light: faces ok
+  serif sizes (F Fraunces, S Source Serif 4): F 18×90  F 21×12  F 58.5×1  S 13.5×205  S 15.5×150  S 18×1
+static-export-controls 390 dark: faces ok
+  serif sizes (F Fraunces, S Source Serif 4): F 18×90  F 21×12  F 58.5×1  S 13.5×205  S 15.5×150  S 18×1
+summary 1440 light: faces ok
+  serif sizes (F Fraunces, S Source Serif 4): F 20×1  F 26×19  F 83.5×1  S 13.5×113  S 15.5×36  S 21×1
+summary 1440 dark: faces ok
+  serif sizes (F Fraunces, S Source Serif 4): F 20×1  F 26×19  F 83.5×1  S 13.5×113  S 15.5×36  S 21×1
+summary 390 light: faces ok
+  serif sizes (F Fraunces, S Source Serif 4): F 18×1  F 21×16  F 26×3  F 42.9×1  S 13.5×113  S 15.5×36  S 18×1
+summary 390 dark: faces ok
+  serif sizes (F Fraunces, S Source Serif 4): F 18×1  F 21×16  F 26×3  F 42.9×1  S 13.5×113  S 15.5×36  S 18×1
+
+0 problems

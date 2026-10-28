@@ -3331,6 +3331,12 @@
       btn.addEventListener('click', function () { self.open(); });
       if (nav) nav.insertBefore(btn, $('.theme-toggle'));
       Keys.init();
+      // the readable pages' masthead has a search button too, a link here with ?search=1 (build/masthead.js): the
+      // dialog opens as the page comes up, and the address drops the flag, so a reload or Back does not open it again
+      if (/[?&]search=1(&|$)/.test(location.search)) {
+        try { history.replaceState(history.state, '', location.pathname + location.search.replace(/([?&])search=1(&|$)/, '$1').replace(/[?&]$/, '') + location.hash); } catch (e) { }
+        setTimeout(function () { self.open(); }, 0);
+      }
       // Escape closes the dialog wherever focus is (the panel, a result, or nowhere after a click on its text). It is heard first
       // and goes no further, so the Contents sheet under it stays open
       document.addEventListener('keydown', function (e) { if (e.key !== 'Escape') return; var b = $('#cp-search'); if (!b || b.hidden) return; e.preventDefault(); e.stopImmediatePropagation(); self.close(); }, true);

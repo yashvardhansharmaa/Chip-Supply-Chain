@@ -70,7 +70,8 @@ module.exports = function (ctx) {
      (src/app.js Sections) follows the hero as one item. Nothing here is typed: the names, bands, specimens and captions are
      the chapters' own, and every count is computed. */
   const LEVEL = { Extreme: 4, High: 3, Moderate: 2, Low: 1 };
-  const meter = (band) => `<span class="wk-gl-m" aria-hidden="true">${[1, 2, 3, 4].map((k) => `<i${k <= (LEVEL[band] || 0) ? ' class="on"' : ''}></i>`).join('')}</span>`;
+  // the band's meter, the site's one component (src/modules/chapter.css .meter): four rising bars, as many lit as the band's rank
+  const meter = (band) => `<span class="meter wk-gl-m" data-level="${LEVEL[band] || 0}" aria-hidden="true">${[1, 2, 3, 4].map((k) => `<b${k <= (LEVEL[band] || 0) ? ' class="on"' : ''}></b>`).join('')}</span>`;
   const nExtreme = stages.filter((s) => (card[s.id] || {}).band === 'Extreme').length;
   // the card's note reads "Three or fewer firms could supply this stage today, or one firm holds more than half of it."; here it
   // follows "7 of the 14 stages are rated Extreme, meaning". A changed note drops the clause.

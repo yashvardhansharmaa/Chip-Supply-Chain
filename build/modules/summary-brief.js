@@ -9,6 +9,7 @@
    sitemap. */
 const SITE = require('../site.js');
 const keepRanges = require('../keep-ranges.js');
+const MH = require('../masthead.js'); // the app's masthead, as every readable page carries it (design round nine, revision 6)
 
 module.exports = function (ctx) {
   const { fs, path, root, stages = [], chapters = [], geo, esc, pad, word, builtStr, pageDate, dayStr } = ctx;
@@ -40,7 +41,7 @@ module.exports = function (ctx) {
   const dek = `The ${word(stages.length)} stages that turn sand and software into an AI accelerator: who leads each one, how concentrated it is, and where China and the United States stand.`;
 
   /* ---------- screen layout ---------- */
-  const meter = (band) => `<span class="meter" aria-hidden="true">${[1, 2, 3, 4].map((k) => `<i${k <= (LEVEL[band] || 0) ? ' class="on"' : ''}></i>`).join('')}</span>`;
+  const meter = (band) => `<span class="meter" aria-hidden="true">${[1, 2, 3, 4].map((k) => `<b${k <= (LEVEL[band] || 0) ? ' class="on"' : ''}></b>`).join('')}</span>`;
   const ladder = stages.map((ch, i) => {
     const who = leaders(card(ch), 2).map((l) => `${esc(l.name)}${l.country ? ` <span class="cc">${esc(l.country)}</span>` : ''}`).join('<span class="sep">, </span>');
     return `<li class="lv-${LEVEL[conc(ch)] || 0}"><a href="#s-${esc(ch.id)}"><span class="n">${pad(i + 1)}</span><span class="t">${esc(ch.title)}</span><span class="c">${meter(conc(ch))}<span class="w">${esc(conc(ch))}</span></span><span class="s">${esc(sub(ch))}</span><span class="who">${who}</span></a></li>`;
@@ -68,7 +69,7 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
 <p class="more"><a href="${url(ch.id)}">Read the chapter, with its sources</a></p>
 </article>`).join('');
 
-  const screen = `<header class="masthead"><a class="wordmark" href="${SITE.url}" aria-label="Chip Supply Chain">${TILE}<span class="wm-name">Chip Supply Chain</span></a><nav aria-label="Site"><a href="${SITE.url}#/chain">The Chain</a><a href="../chips/">AI Chips</a><a href="../suppliers/">Suppliers</a><a href="../export-controls/">Export Controls</a><a href="../glossary/">Glossary</a></nav></header>
+  const screen = `${MH.masthead('')}
 <main class="scr">
 <section class="hero">
 <p class="eyebrow"><b>Summary</b> · the whole chain in one read</p>
@@ -145,34 +146,29 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
 </div>`;
 
   const SCREEN_CSS = `
-:root { --bg: #fcfcfa; --bg-2: #f4f4f2; --card: #f4f4f2; --ink: #171716; --ink-2: #45443f; --muted: #56554f; --line: #e1e0db; --line-2: #c4c3bd;
+:root { --bg: #fcfcfa; --bg-2: #f4f4f2; --card: #f4f4f2; --ink: #171716; --ink-2: #45443f; --muted: #6b6a64; --line: #e1e0db; --line-2: #c4c3bd;
   --accent: #7a1f2b; --accent-fill: #7a1f2b; --accent-soft: #f3e3e5; --on-accent: #ffffff; --bar-4: #8c8a84; --bar-3: #b4b3ad; --bar-2: #d2d1cc;
-  --display: "Source Serif 4", "Iowan Old Style", Georgia, serif; --body: "Source Serif 4", "Iowan Old Style", Georgia, serif;
+  --display: "Fraunces", "Iowan Old Style", Georgia, serif; --body: "Source Serif 4", "Iowan Old Style", Georgia, serif; /* the hybrid, 28 Oct 2026 */
+  --opsz: "opsz" 48, "SOFT" 0, "WONK" 0; --opsz-name: "opsz" 28, "SOFT" 0, "WONK" 0;
   --text-scale: calc(18 / 18.5); /* as src/styles.css sets it (28 Oct: the text at 18 px); the printed brief sets its own sizes in pt */
+  /* the serif's seven steps, as src/styles.css sets them (design round nine, revision 1) */
+  --tk: calc(var(--text-scale) * 18.5 / 18);
+  --t-title: clamp(48px, 5.8vw, 84px); --t-section: clamp(28px, 2.4vw, 34px); --t-block: 26px;
+  --t-lead: calc(21px * var(--tk)); --t-text: calc(18px * var(--tk)); --t-small: calc(15.5px * var(--tk)); --t-note: calc(13.5px * var(--tk));
+  /* the masthead's tokens (build/assets/masthead.css) */
+  --font-ui: var(--label); --font-display: var(--display); --margin: clamp(16px, 4.45vw, 64px); --accent-ink: var(--accent);
   --label: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif; --kicker: "Fragment Mono", ui-monospace, Menlo, monospace;
   --gutter: clamp(16px, 4vw, 40px); color-scheme: light; }
+@media (max-width: 900px) { :root { --t-title: min(68px, 15vw); } } /* a phone's page titles, as src/styles.css sets them */
 /* dark: the site's own bar inks (src/styles.css), High in --bar-4 above Moderate in --bar-3 */
-:root[data-theme="dark"] { --bg: #121211; --bg-2: #1c1c1a; --card: #1c1c1a; --ink: #e8e7e3; --ink-2: #c6c4be; --muted: #a9a7a1; --line: #2c2b28; --line-2: #45443f;
+:root[data-theme="dark"] { --bg: #121211; --bg-2: #1c1c1a; --card: #1c1c1a; --ink: #e8e7e3; --ink-2: #c6c4be; --muted: #8f8d87; --line: #2c2b28; --line-2: #45443f;
   --accent: #d98a95; --accent-fill: #a8414b; --accent-soft: rgba(217, 138, 149, 0.16); --on-accent: #fff; --bar-4: #8c8a84; --bar-3: #5a5953; --bar-2: #45443f; color-scheme: dark; }
 @media screen {
   .prt { display: none; }
   *, *::before, *::after { box-sizing: border-box; }
-  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); font-size: calc(17px * var(--text-scale)); line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); font-size: var(--t-text); line-height: 1.55; -webkit-font-smoothing: antialiased; }
   a { color: inherit; }
   :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-  .masthead { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 64px; padding: 0 var(--gutter); border-bottom: 1px solid var(--line); }
-  .wordmark { display: flex; align-items: center; gap: 12px; min-height: 44px; text-decoration: none; }
-  .wordmark .wm-tile { display: block; flex: none; width: 29px; height: 29px; }
-  .wordmark .wm-tile rect { fill: #7a1f2b; }
-  .wordmark .wm-tile path { fill: #ffffff; }
-  .wordmark .wm-name { font-family: var(--display); font-size: 21px; font-weight: 540; font-variation-settings: normal; letter-spacing: -0.005em; line-height: 1; white-space: nowrap; }
-  .masthead nav { display: flex; gap: 2px; }
-  .masthead nav a { font-family: var(--label); font-weight: 400; font-size: 15px; color: var(--ink); text-decoration: none; padding: 10px 8px 9px; border-bottom: 1px solid transparent; white-space: nowrap; }
-  .masthead nav a:hover { color: var(--ink); border-bottom-color: var(--accent); }
-  @media (max-width: 800px) { /* the five links take a row of their own under the wordmark */
-    .masthead { flex-wrap: wrap; row-gap: 0; padding-top: 4px; padding-bottom: 6px; }
-    .masthead nav { flex-wrap: wrap; gap: 0 2px; width: 100%; margin-left: -8px; }
-  }
   .scr { max-width: 1080px; margin: 0 auto; padding: 0 var(--gutter); }
   .eyebrow, .meta, .lbl, .card-k, .pill, .ladder, .ladder-head, .key, .more, .cc, .site-footer { font-family: var(--label); }
   .hero { padding: clamp(40px, 7vh, 72px) 0 36px; max-width: 760px; }
@@ -180,8 +176,8 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
      over an ink rule, pill buttons in ink; Extreme is wine, its meter, word, pill and card rule (the visual pass of 27 Oct 2026), High a mid gray */
   .eyebrow { margin: 0 0 22px; font-family: var(--label); font-size: 11.5px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); } /* the site's label: small spaced capitals (the visual pass of 27 Oct 2026) */
   .eyebrow b { color: var(--ink); font-weight: 500; }
-  h1 { font-family: var(--display); font-weight: 400; font-variation-settings: normal; font-size: clamp(48px, 7vw, 96px); line-height: 0.95; letter-spacing: -0.03em; margin: 0 0 0 -0.04em; text-wrap: balance; }
-  .dek { font-size: calc(clamp(19px, 1.6vw, 22px) * var(--text-scale)); line-height: 1.42; color: var(--ink-2); margin: 24px 0 28px; max-width: 34em; text-wrap: pretty; }
+  h1 { font-family: var(--display); font-weight: 400; font-variation-settings: var(--opsz); font-size: var(--t-title); line-height: 0.95; letter-spacing: -0.03em; margin: 0 0 0 -0.04em; text-wrap: balance; }
+  .dek { font-size: var(--t-lead); line-height: 1.42; color: var(--ink-2); margin: 24px 0 28px; max-width: 34em; text-wrap: pretty; }
   .cta { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 18px; }
   .btn { display: inline-flex; align-items: baseline; gap: 9px; padding: 12px 20px 11px; border-radius: 999px; background: var(--ink); color: var(--bg); border: 1px solid var(--ink); font-family: var(--label); font-weight: 500; font-size: 15px; text-decoration: none; }
   .btn span { font-weight: 400; opacity: 0.8; }
@@ -191,8 +187,8 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
   .meta { margin: 0; font-family: var(--label); font-size: 11.5px; font-weight: 500; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
   section + section { margin-top: 72px; }
   .sec-head { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; margin-bottom: 20px; }
-  h2 { font-family: var(--display); font-weight: 500; font-variation-settings: normal; font-size: 24px; line-height: 1.2; letter-spacing: -0.01em; margin: 0; padding-bottom: 12px; border-bottom: 1px solid var(--ink); }
-  .sec-head p { margin: 0; color: var(--ink-2); max-width: 46em; font-size: calc(16.5px * var(--text-scale)); text-wrap: pretty; }
+  h2 { font-family: var(--display); font-weight: 500; font-variation-settings: var(--opsz); font-size: var(--t-block); line-height: 1.2; letter-spacing: -0.01em; margin: 0; padding-bottom: 12px; border-bottom: 1px solid var(--ink); }
+  .sec-head p { margin: 0; color: var(--ink-2); max-width: 46em; font-size: var(--t-small); text-wrap: pretty; }
   .sec-head p b { color: var(--ink); font-weight: 700; }
   /* the chain at a glance: one row per stage, a four-step meter for concentration */
   .ladder-head, .ladder a { display: grid; grid-template-columns: 34px minmax(170px, 1.35fr) 150px 120px minmax(0, 1.4fr); gap: 0 16px; align-items: baseline; }
@@ -203,15 +199,15 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
   .ladder a { text-decoration: none; padding: 10px 6px; color: var(--ink-2); }
   .ladder a:hover { background: var(--bg-2); }
   .ladder .n { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
-  .ladder .t { font-family: var(--body); font-size: calc(16.5px * var(--text-scale)); color: var(--ink); font-weight: 600; }
+  .ladder .t { font-family: var(--body); font-size: var(--t-small); color: var(--ink); font-weight: 600; }
   .ladder .c { display: inline-flex; align-items: center; gap: 9px; }
   .ladder .lv-4 .w { color: var(--accent); font-weight: 600; }
   .meter { display: inline-flex; gap: 2px; align-items: flex-end; height: 14px; }
-  .meter i { display: block; width: 6px; background: var(--line); }
-  .meter i:nth-child(1) { height: 5px; } .meter i:nth-child(2) { height: 8px; } .meter i:nth-child(3) { height: 11px; } .meter i:nth-child(4) { height: 14px; }
-  .meter i.on { background: var(--bar-3); }
-  .lv-3 .meter i.on { background: var(--bar-4); }
-  .lv-4 .meter i.on { background: var(--accent); }
+  .meter b { display: block; width: 6px; background: var(--line); }
+  .meter b:nth-child(1) { height: 5px; } .meter b:nth-child(2) { height: 8px; } .meter b:nth-child(3) { height: 11px; } .meter b:nth-child(4) { height: 14px; }
+  .meter b.on { background: var(--bar-3); }
+  .lv-3 .meter b.on { background: var(--bar-4); }
+  .lv-4 .meter b.on { background: var(--accent); }
   .cc { font-size: 11px; letter-spacing: 0.06em; color: var(--muted); }
   .ladder .who .sep { color: var(--muted); }
   .key { font-size: 12.5px; color: var(--muted); margin: 12px 0 0; max-width: 60em; }
@@ -223,24 +219,24 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
   .card.lv-3 { border-top-color: var(--bar-4); }
   .card-k { margin: 0 0 8px; font-family: var(--label); font-size: 11.5px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
   .card-k .n { color: var(--muted); font-weight: 500; margin-right: 10px; }
-  h3 { font-family: var(--display); font-weight: 500; font-variation-settings: normal; font-size: 24px; line-height: 1.15; margin: 0 0 12px; text-wrap: balance; }
+  h3 { font-family: var(--display); font-weight: 500; font-variation-settings: var(--opsz); font-size: var(--t-block); line-height: 1.15; margin: 0 0 12px; text-wrap: balance; }
   h3 a { text-decoration: none; }
   h3 a:hover { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
   .pills { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 12px; }
   .pill { font-size: 12px; font-weight: 500; letter-spacing: 0; padding: 3px 9px 4px; border: 1px solid var(--line-2); border-radius: 3px; color: var(--ink-2); }
   .pill.x { border: 1.5px solid var(--accent); padding: 2.5px 8.5px 3.5px; color: var(--accent); }
-  .lede { margin: 0 0 14px; font-size: calc(16.5px * var(--text-scale)); line-height: 1.5; color: var(--ink); }
+  .lede { margin: 0 0 14px; font-size: var(--t-small); line-height: 1.5; color: var(--ink); }
   .lbl { margin: 0 0 4px; font-size: 11.5px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
   .who-block { margin: 0 0 14px; }
   .who-block ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 5px; }
-  .who-block li { font-size: calc(14.5px * var(--text-scale)); line-height: 1.4; color: var(--ink-2); }
+  .who-block li { font-size: var(--t-note); line-height: 1.4; color: var(--ink-2); }
   .who-block li b { color: var(--ink); font-weight: 600; }
   .who-block .cc { margin-left: 4px; }
-  .who-block .share { display: block; font-size: calc(13.5px * var(--text-scale)); color: var(--muted); }
+  .who-block .share { display: block; font-size: var(--t-note); color: var(--muted); }
   .sides { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; border-top: 1px solid var(--line); padding-top: 12px; margin: 0 0 12px; }
-  .sides p { margin: 0; font-size: calc(14px * var(--text-scale)); line-height: 1.45; color: var(--ink-2); }
+  .sides p { margin: 0; font-size: var(--t-note); line-height: 1.45; color: var(--ink-2); }
   .sides p.lbl { margin-bottom: 4px; font-size: 11.5px; color: var(--muted); }
-  .short p { margin: 0 0 12px; font-size: calc(15.5px * var(--text-scale)); color: var(--ink-2); }
+  .short p { margin: 0 0 12px; font-size: var(--t-small); color: var(--ink-2); }
   .more { margin: auto 0 0; padding-top: 10px; font-size: 13px; font-weight: 600; }
   .more a { color: var(--accent); text-decoration: none; }
   .more a::after { content: " \\2192"; }
@@ -256,20 +252,16 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
     .grid { grid-template-columns: minmax(0, 1fr); }
     .ladder-head { display: none; }
     .ladder a { grid-template-columns: 30px minmax(0, 1fr) auto; grid-template-areas: "n t c" "n who s"; gap: 3px 10px; }
-    .ladder .n { grid-area: n; } .ladder .t { grid-area: t; font-size: calc(16px * var(--text-scale)); } .ladder .c { grid-area: c; justify-self: end; } .ladder .who { grid-area: who; font-size: 13px; } .ladder .s { grid-area: s; justify-self: end; font-size: 12px; color: var(--muted); }
+    .ladder .n { grid-area: n; } .ladder .t { grid-area: t; font-size: var(--t-small); } .ladder .c { grid-area: c; justify-self: end; } .ladder .who { grid-area: who; font-size: 13px; } .ladder .s { grid-area: s; justify-self: end; font-size: 12px; color: var(--muted); }
   }
   @media (max-width: 560px) {
-    body { font-size: calc(16.5px * var(--text-scale)); }
-    .masthead { min-height: 52px; }
-    .wordmark { gap: 9px; }
-    .wordmark .wm-tile { width: 25px; height: 25px; }
-    .wordmark .wm-name { font-size: 18px; }
-    .masthead nav a { font-size: 12.5px; padding: 6px 5px 5px; }
+    body { font-size: var(--t-text); }
     .scr, .site-footer { overflow-wrap: break-word; }
-    .dek { font-size: calc(18.5px * var(--text-scale)); }
+    .dek { font-size: var(--t-text); }
+    h1 { font-size: min(46px, 11vw); line-height: 1.02; } /* a long title, as a long chapter title is set on a phone: two lines, not three */
     .sides { grid-template-columns: minmax(0, 1fr); }
     .card { padding: 16px 16px 14px; }
-    h3 { font-size: 21px; }
+    h3 { font-size: var(--t-lead); }
   }
 }
 @media print { .scr, .masthead, .site-footer { display: none !important; } }
@@ -277,11 +269,11 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
 
   const PRINT_CSS = `
 @page { size: A4; margin: 14mm 15mm 14mm; } /* room to hold and write on; 15 or 16 mm at the sides tips the stages onto six pages */
-/* the redesign's print (stage 4): Source Serif 4 heads and text (Fraunces and Literata before design round five), Hanken Grotesk labels, Fragment Mono for numbers, codes and
+/* the redesign's print (stage 4): Fraunces heads and Source Serif 4 text (the hybrid, 28 Oct 2026), Hanken Grotesk labels, Fragment Mono for numbers, codes and
    dates; ink on white, the wine only on the logo and the source links; a band is a mark and a word, as on the site */
 @media print {
 :root, :root:not([data-theme="light"]), :root[data-theme="dark"] { --ink: #171716; --ink-2: #45443f; --muted: #56554f; --line: #e1e0db; --line-2: #c4c3bd; --rule-ink: #8c8a84; --wine: #7a1f2b; --bg: #fff;
-  --display: "Source Serif 4", Georgia, serif; --body: "Source Serif 4", Georgia, serif; --label: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif; --kicker: "Fragment Mono", ui-monospace, Menlo, monospace; color-scheme: light; }
+  --display: "Fraunces", Georgia, serif; --body: "Source Serif 4", Georgia, serif; --label: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif; --kicker: "Fragment Mono", ui-monospace, Menlo, monospace; color-scheme: light; }
 * { box-sizing: border-box; }
 html { background: var(--bg); color: var(--ink); }
 body { margin: 0; max-width: none; padding: 0; font: 9.2pt/1.45 var(--body); background: var(--bg); color: var(--ink); }
@@ -291,7 +283,7 @@ p, li, td { text-wrap: wrap; }
 .kicker.wm .wm-tile { display: block; width: 6mm; height: 6mm; flex: none; }
 .kicker.wm .wm-tile rect { fill: #7a1f2b; }
 .kicker.wm .wm-tile path { fill: #fff; }
-.kicker.wm .wm-name { font: 500 12pt var(--display); line-height: 1; }
+.kicker.wm .wm-name { font: 500 12pt "Fraunces Mark", var(--display); line-height: 1; }
 .kicker.wm .wm-sub { padding-left: 2.6mm; margin-left: 0.4mm; border-left: 0.5pt solid var(--line-2); font: 400 7.4pt var(--kicker); line-height: 1.2; color: var(--muted); }
 h1 { margin: 0 0 2.4mm; font: 400 23pt/1.06 var(--display); letter-spacing: -0.02em; text-wrap: balance; }
 .dek { margin: 0 0 2.6mm; max-width: 150mm; font-size: 11pt; line-height: 1.4; color: var(--ink-2); }
@@ -349,8 +341,9 @@ h2 { margin: 16pt 0 1mm; padding-top: 2mm; border-top: 0.6pt solid var(--ink); f
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <script>(function(){try{var q=/[?&]theme=(light|dark)/.exec(location.search);var t=q?q[1]:localStorage.getItem('cp-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,400&family=Hanken+Grotesk:wght@400..700&family=Fragment+Mono&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..600,0,0&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,400&family=Hanken+Grotesk:wght@400..700&family=Fragment+Mono&display=swap">
 <style>${SCREEN_CSS}
+${MH.mastheadCSS(root)}
 ${PRINT_CSS}
 </style>
 </head>

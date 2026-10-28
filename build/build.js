@@ -347,6 +347,9 @@ function wordCount(body) {
 
 /* ---------------- nameplate ---------------- */
 const BANDS = { Extreme: 4, High: 3, Moderate: 2, Low: 1 };
+// the band's meter (28 Oct 2026): four rising bars, as many lit as the band's rank, Extreme's in wine (src/modules/chapter.css .meter).
+// Hidden from assistive technology: the link's label or the visible word beside it carries the band
+const meterHTML = (b) => { const l = BANDS[b] || 0; return `<span class="meter" data-level="${l}" aria-hidden="true">${[1, 2, 3, 4].map((k) => `<b${k <= l ? ' class="on"' : ''}></b>`).join('')}</span>`; };
 const SUBS = { 'Very hard': 4, Hard: 3, Moderate: 2, Easy: 1 };
 const SUBWORD = { 'Very hard': 'Very hard to substitute', Hard: 'Hard to substitute', Moderate: 'Moderately hard to substitute', Easy: 'Easy to substitute' };
 // one sentence per band, shown when a reader hovers the tag on the card (the full definitions stay in the Index)
@@ -448,7 +451,7 @@ function nameplate(card, title, gl, ctx, where) {
   return `<section class="plate" aria-label="Chokepoint card${title ? ' for ' + esc(title) : ''}">
 <header class="plate-head"><span class="label">Chokepoint card</span>${where ? `<span class="plate-where">${esc(where)}</span>` : ''}</header>
 <div class="plate-kpis">
-<div><span class="k">Concentration</span><b class="v ${esc(conc)}">${conc ? `<i class="bm" data-band="${BANDS[conc] || 0}" aria-hidden="true"></i><button type="button" class="gl-term v-btn" data-band="${BANDS[conc] || 0}" data-term="concentration" data-head="${esc(conc)} concentration" data-note="${esc(BAND_NOTE[conc] || '')}">${esc(conc)}</button>` : '—'}</b>${BAND_NOTE[conc] ? `<span class="sub">${esc(BAND_NOTE[conc])}</span>` : ''}</div>
+<div><span class="k">Concentration</span><b class="v ${esc(conc)}">${conc ? `${meterHTML(conc)}<button type="button" class="gl-term v-btn" data-band="${BANDS[conc] || 0}" data-term="concentration" data-head="${esc(conc)} concentration" data-note="${esc(BAND_NOTE[conc] || '')}">${esc(conc)}</button>` : '—'}</b>${BAND_NOTE[conc] ? `<span class="sub">${esc(BAND_NOTE[conc])}</span>` : ''}</div>
 ${sb ? `<div><span class="k">Substitutability</span><b class="v sub-${SUBS[sb.band] || 0}"><button type="button" class="gl-term v-btn" data-band="${SUBS[sb.band] || 0}" data-term="substitutability" data-head="${esc(SUBWORD[sb.band] || sb.band)}" data-note="${esc(SUB_NOTE[sb.band] || '')}" data-test="${esc(sb.test || '')}">${esc(sb.band)}</button></b>${sb.test ? `<span class="sub">${cardText(sb.test, F['substitutability test'], ctx, g)}</span>` : ''}</div>` : `<div><span class="k">Substitution time</span><b class="v">${esc(sub.years || '—')}${sub.years && !/year/i.test(sub.years) ? '<small>years</small>' : ''}</b></div>`}
 <div><span class="k">${costLabel}</span><b class="v cost${costLong ? ' long' : ''}">${costHeadHTML}</b>${costSubHTML ? `<span class="sub">${costSubHTML}</span>` : ''}</div>
 </div>
@@ -695,7 +698,7 @@ var k=txt(fig.querySelector('.fig-k')),t1=txt(fig.querySelector('.fig-title')),t
 var src=fig.querySelector('.fs-src'),sc=src?src.cloneNode(true):null;if(sc)[].forEach.call(sc.querySelectorAll('.fs-k'),function(x){x.remove();});
 var srcT=sc?txt(sc).replace(/\\s*(\\d+)$/,' [$1]'):'',addr=txt(fig.querySelector('.fig-cite-box a')).replace(/^https?:\\/\\//,'');
 var W=800,P=40,S=2,cv=el('canvas'),g=cv.getContext('2d');
-var FD='"Source Serif 4",Georgia,serif',FB=FD,FU='"Hanken Grotesk","Helvetica Neue",Arial,sans-serif',FM='"Fragment Mono",Menlo,monospace';
+var FD='"Fraunces",Georgia,serif',FB='"Source Serif 4",Georgia,serif',FU='"Hanken Grotesk","Helvetica Neue",Arial,sans-serif',FM='"Fragment Mono",Menlo,monospace';
 g.font='500 24px '+FD;var L1=wrap(g,t1,W-2*P);g.font='400 16px '+FB;var L2=t2?wrap(g,t2,W-2*P):[];
 g.font='400 14px '+FU;var lw=Math.min(W*0.42,Math.max.apply(null,rows.map(function(r){return g.measureText(r.l).width;}))+8);
 var H=P+18+L1.length*31+(L2.length?6+L2.length*21:0)+24+rows.length*34+20+56;
@@ -789,17 +792,17 @@ function partsHTML(ch) {
   };
   return `<p class="ch-parts-k">Parts, as numbered on the drawing</p><ol class="ch-parts">${ps.map((p) => `<li><b aria-hidden="true">${+p.n}</b><span>${line(p)}</span></li>`).join('')}</ol>`;
 }
-// the card's verdict in the kicker: the band as a mark (Extreme a solid bar, High an outline, as the home's evidence figure draws
-// them), then both ratings in the words the card's look-up heads use, "Extreme concentration · Very hard to substitute"
-const bandMark = (b, sub) => (b ? `<span class="ch-band ch-verdict" data-band="${BANDS[b] || 0}"><i aria-hidden="true"></i><span>${esc(b)} concentration</span>${sub ? `<span class="sep" aria-hidden="true">·</span><span>${esc(SUBWORD[sub] || sub)}</span>` : ''}</span>` : '');
+// the card's verdict in the kicker: the band's meter (four bars, as the home's list draws it), then both ratings in the words
+// the card's look-up heads use, "Extreme concentration · Very hard to substitute"
+const bandMark = (b, sub) => (b ? `<span class="ch-band ch-verdict" data-band="${BANDS[b] || 0}">${meterHTML(b)}<span>${esc(b)} concentration</span>${sub ? `<span class="sep" aria-hidden="true">·</span><span>${esc(SUBWORD[sub] || sub)}</span>` : ''}</span>` : '');
 const TILE_WORD = { 'component-costs': 'The economics', geopolitics: 'The contest' }; // the second item of the kicker for the two chapters that are not stages
-// the contents rail: the chapter's sections, its figures by number, and the chain (the stages with their marks, the
+// the contents rail: the chapter's sections, its figures by number, and the chain (the stages with their meters, the
 // current one in wine, then the two chapters that look across them). Under 1200 px only On this page shows, as a line of links
 function railHTML(ch, stageIdx, toc) {
   const figs = ch.figList || [];
   const item = (c, i) => {
     const b = (c.meta.card || {}).concentration || '', cur = c.id === ch.id;
-    return `<li class="stage-cell"${i != null ? ` data-band="${BANDS[b] || 0}"` : ''}${cur ? ' aria-current="true"' : ''}><a href="${esc(c.id)}/" data-route="#${esc(c.id)}" aria-label="${pad(c.number)} ${esc(c.title)}${b && i != null ? ', ' + esc(b) : ''}"${cur ? ' aria-current="page"' : ''}><span class="n">${pad(c.number)}</span><span class="t">${esc(c.title)}</span>${i != null ? '<i class="bm" aria-hidden="true"></i>' : ''}</a></li>`;
+    return `<li class="stage-cell"${i != null ? ` data-band="${BANDS[b] || 0}"` : ''}${cur ? ' aria-current="true"' : ''}><a href="${esc(c.id)}/" data-route="#${esc(c.id)}" aria-label="${pad(c.number)} ${esc(c.title)}${b && i != null ? ', ' + esc(b) : ''}"${cur ? ' aria-current="page"' : ''}><span class="n">${pad(c.number)}</span><span class="t">${esc(c.title)}</span>${i != null ? meterHTML(b) : ''}</a></li>`;
   };
   const across = chapters.filter((c) => !isStage(c)).concat(geo ? [geo] : []);
   return `<nav class="ch-rail ch-ledger" aria-label="${esc(ch.title)}: contents">`
