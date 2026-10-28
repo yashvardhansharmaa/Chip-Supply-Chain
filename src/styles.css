@@ -2,14 +2,18 @@
    Ground: white. Ink: a warm near-black, with two secondary inks. Paper (#f4f4f2) is a tint only, for the chokepoint card,
    figure frames, source strips and flashcards.
    Accent: red wine, #7a1f2b on white and #d98a95 on dark. It marks links, the reader's place (the current menu item, the
-   current item in a contents list), the reader's own selection and the logo tile. It never marks a data value; the one
-   exception is the Critical rating on Suppliers.
+   current item in a contents list), the logo tile, and two signals in the data (the visual pass of 27 Oct 2026, as the
+   live site has them): Extreme, wherever a stage's band is shown (its mark, and its word on the home list), and the
+   largest value on every chart, its bar and its value ("garnet on the largest only", the owner's chart rule of 21 Oct).
+   Suppliers' Critical rating is wine too. High stays ink or gray, and the other bars the light tint.
    Type (design round five, 27 Oct 2026, qa/design5/fonts/notes.md): Source Serif 4 for both the display and the text, its
    optical size following the size (font-optical-sizing: auto), so one face draws the name, headings, titles and large
    numbers (400 for titles and section heads, 360 for the light numbers, 500 for small headings) and the standfirsts, text,
-   review questions and captions of more than one line. Hanken Grotesk only for menus, buttons, tabs, fields and small
-   interface labels; Fragment Mono for kickers, codes, dates in meta lines and table numbers. Before round five the display
-   face was Fraunces and the text face Literata. No text under 11 px. */
+   review questions and captions of more than one line. Hanken Grotesk for menus, buttons, tabs, fields and every label, and
+   since the visual pass of 27 Oct 2026 for the kickers too, in the live site's small spaced capitals (--font-kicker,
+   --fs-label, --tr-label, --tt-label), and for dates, counts, bar values and axis numbers on tabular figures. Fragment Mono
+   only for figure numbers ("Figure 11.2"), codes and the address inside Cite. Before round five the display face was
+   Fraunces and the text face Literata. No text under 11 px. */
 :root {
   --bg: #fcfcfa; /* a barely off-white, to take the glare off long reading (owner, 27 Oct); print stays white */
   --bg-2: #f4f4f2;   /* paper: a tint, never the ground */
@@ -25,7 +29,7 @@
   --accent-ink: #7a1f2b; /* 10.2:1 on white */
   --accent-soft: #f3e3e5;
   --accent-fill: var(--accent);
-  --ctx: #d2d1cc; /* chart rule B: the values that are not the largest */
+  --ctx: #d2d1cc; /* the chart rule: the values that are not the largest (the largest is wine) */
   --c1: #2b63c4; --c2: #e06a1f; --c3: #1f9a6d; --c4: #c9a10c; --c5: #5a48b8; --c6: #c3302b; --c7: #2e7d1e; --c8: #8a9099;
   /* night: the specimen ground of the two chapters that are not stages (the economics chapter and the essay) */
   --night: #121211; --night-ink: #e8e7e3; --night-ink2: #a9a7a1; --night-rule: #34332f; --night-accent: #d98a95;
@@ -36,8 +40,9 @@
   --font-body: "Source Serif 4", "Iowan Old Style", Georgia, serif;
   --font-ui: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
   --font-mono: var(--font-ui); /* the interface-label slot, kept under its old name so every module reads it */
-  --font-code: "Fragment Mono", ui-monospace, SFMono-Regular, Menlo, monospace; /* kickers, codes, dates, table numbers */
-  --font-kicker: var(--font-code);
+  --font-code: "Fragment Mono", ui-monospace, SFMono-Regular, Menlo, monospace; /* figure numbers, codes, the address in Cite */
+  --font-kicker: var(--font-ui); /* kickers and labels, in small spaced capitals (the visual pass of 27 Oct 2026; Fragment Mono before) */
+  --fs-label: 11.5px; --tr-label: 0.08em; --tt-label: uppercase; /* the live site's label: 11 to 12 px capitals, tracked, in the muted ink */
   --font-caption: var(--font-body);
   /* the optical size follows the size; the three tokens stay so the rules that read them need not change */
   --opsz-title: normal;
@@ -50,7 +55,7 @@
   --band: 0px; /* height of the sticky specimen band on phones; anchors add it to their offset */
   --measure: calc(36em / var(--text-scale)); /* 33.3 em: 666 px of the 20 px chapter text, about 71 characters */
   --frame: 650px;   /* chapter header and chokepoint card keep their earlier width */
-  --bar-5: var(--ink); --bar-4: #8c8a84; --bar-3: #c4c3bd; /* bands as marks: Extreme ink, High mid gray, below that a tint */
+  --bar-5: var(--accent); --bar-4: #8c8a84; --bar-3: #c4c3bd; /* bands as marks: Extreme wine, High mid gray, below that a tint */
   --col: 63%;
   --margin: clamp(16px, 4.45vw, 64px); /* the page's outer margin, the masthead's and the column's */
   --gutter: 88px;     /* the ledger column */
@@ -87,7 +92,7 @@
   --c1: #5b8ee6; --c2: #ef8140; --c3: #34b585; --c4: #d9b21e; --c5: #8676d8; --c6: #e0504a; --c7: #4f9c3a; --c8: #8a9099;
   --stage-ink: 232, 231, 227; --stage-accent: 217, 138, 149;
   --shadow: 0 0 0 1px rgba(0, 0, 0, 0.5), 0 18px 30px -18px rgba(0, 0, 0, 0.6);
-  --bar-5: var(--ink); --bar-4: #8c8a84; --bar-3: #45443f;
+  --bar-5: var(--accent); --bar-4: #8c8a84; --bar-3: #45443f; /* Extreme the wine for dark, 7.2:1 on the ground; High mid gray */
   --scrim: rgba(6, 6, 5, 0.72);
   color-scheme: dark;
 }
@@ -101,7 +106,7 @@ html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 html.kb { scroll-padding-top: calc(var(--masthead) + var(--cx-sticky, 0px) + 12px); }
 html.kb:has(.view[data-view="walk"]:not([hidden]) .wk-rail[data-show="1"]:not([hidden])) { scroll-padding-top: calc(var(--masthead) + 58px); }
 @media (max-width: 900px) {
-  html.kb { scroll-padding-bottom: 140px; }
+  html.kb { scroll-padding-bottom: calc(var(--strip-h, 128px) + 12px); } /* the strip's own height (src/app.js Band) */
   html.kb:has(.stage[data-collapsed="0"]) { scroll-padding-bottom: calc(min(58vh, 480px) + 12px); }
   html.kb:has(.stage[data-hidden="1"]) { scroll-padding-bottom: 60px; }
 }
@@ -135,8 +140,11 @@ small { font-size: 0.85em; }
 .skip:focus { left: 8px; }
 #main:focus { outline: none; } /* the skip link lands on the whole column, which draws no ring: the next Tab shows where focus is */
 
-/* ---------- labels: a kicker in Fragment Mono, sentence case ---------- */
-.label { font-family: var(--font-kicker); font-size: var(--fs-cap); line-height: 1.4; font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--muted); }
+/* ---------- labels: a kicker in Hanken Grotesk, small spaced capitals in the muted ink (the live site's, 27 Oct 2026) ---------- */
+.label { font-family: var(--font-kicker); font-size: var(--fs-label); line-height: 1.4; font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); color: var(--muted); }
+/* AI Chips keeps its own labels until its builder moves them (src/modules/chips.css sets several in Fragment Mono, which the
+   capitals would turn into tracked mono capitals) */
+section[data-view="landscape"] .label { font-family: var(--font-code); font-size: var(--fs-cap); font-weight: 400; letter-spacing: 0; text-transform: none; }
 .num, .tabular { font-variant-numeric: tabular-nums; }
 
 /* ---------- display type: Source Serif 4, its optical size following the size, never bold ---------- */
@@ -215,9 +223,9 @@ small { font-size: 0.85em; }
 @media (hover: hover) and (pointer: fine) { .stage canvas { pointer-events: auto; cursor: grab; touch-action: none; outline: none; } /* the figure itself lets clicks through to the page; the canvas takes them so it can be turned */ .stage canvas.is-dragging { cursor: grabbing; } .stage canvas:focus-visible { box-shadow: inset 0 0 0 2px var(--accent); } }
 .stage .stage-tag {
   order: 2; position: relative; z-index: 1; margin: 0 var(--margin) 6px clamp(16px, 2.2vw, 32px); padding: 14px 0 0; text-align: left;
-  font-family: var(--font-kicker); font-size: 12px; line-height: 16px; font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--muted);
+  font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); line-height: 16px; color: var(--muted);
 }
-.stage .stage-tag b { color: inherit; font-weight: 400; }
+.stage .stage-tag b { color: inherit; font-weight: inherit; }
 .stage figcaption {
   order: 3; position: relative; z-index: 1; flex: none; margin: 0 var(--margin) 32px clamp(16px, 2.2vw, 32px); max-width: 34em; text-align: left;
   font-family: var(--font-caption); font-size: calc(14px * var(--text-scale)); line-height: 1.5; letter-spacing: 0; color: var(--ink-2);
@@ -315,15 +323,15 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before {
 .figure .fig-source a { color: var(--muted); }
 /* bar charts (figure() in build.js): HTML rows, each label whole. From 641 px the label sits beside its bar in a column as wide as
    the longest label (--lw, at most 45 percent); below that it takes its own line above the bar. A chart is one series, so its
-   bars are ink and the largest garnet (.hb.top), its value in garnet ink. --vw keeps room past the longest bar for its value. */
+   bars are the light tint and the largest wine (.hb.top), its value in wine. --vw keeps room past the longest bar for its value. */
 .hbars { display: grid; gap: 9px; margin: 2px 0 4px; font-family: var(--font-mono); font-size: 12.5px; }
 .hb { display: grid; gap: 4px; }
 .hb-l { line-height: 1.3; color: var(--ink-2); }
 .hb-r { display: flex; align-items: center; gap: 8px; padding-right: var(--vw, 3.6em); }
 .hb-r i { display: block; flex: none; height: 12px; background: var(--ctx); }
 .hb-r b { flex: none; font-weight: 500; font-variant-numeric: tabular-nums; color: var(--ink); white-space: nowrap; margin-right: calc(-1 * var(--vw, 3.6em)); }
-.hb.top .hb-r i { background: var(--ink); } /* rule B: the largest value in ink with a bold label, the rest in the light tint */
-.hb.top .hb-r b { color: var(--ink); font-weight: 700; }
+.hb.top .hb-r i { background: var(--accent); } /* the chart rule: the largest value in wine with a bold wine value, the rest in the light tint */
+.hb.top .hb-r b { color: var(--accent-ink); font-weight: 700; }
 @media (min-width: 641px) { .hbars { gap: 7px; } .hb { grid-template-columns: min(var(--lw, 14em), 45%) minmax(0, 1fr); align-items: center; column-gap: 12px; } .hb-l { text-align: right; } }
 .stack-bar { display: flex; height: 26px; gap: 2px; border-radius: 0; overflow: hidden; }
 .stack-bar i { display: block; height: 100%; min-width: 2px; }
@@ -358,7 +366,7 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before {
 .tl { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--line-2); }
 .tl li { position: relative; padding: 0 0 12px 18px; font-size: var(--fs-small); line-height: 1.4; }
 .tl li::before { content: ""; position: absolute; left: -4px; top: 8px; width: 7px; height: 7px; border-radius: 0; background: var(--ink); }
-.tl li .d { font-family: var(--font-code); font-size: 11px; color: var(--muted); letter-spacing: 0.02em; display: block; }
+.tl li .d { font-family: var(--font-ui); font-size: 12px; color: var(--muted); letter-spacing: 0.02em; display: block; font-variant-numeric: tabular-nums; }
 .prose .tl { padding-left: 0; margin-left: 4px; } /* .prose ol would indent the list 1.3em and leave the marks off the rule */
 .prose .tl li { margin-bottom: 0; }
 
@@ -371,7 +379,7 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before {
 .gl-term { font: inherit; color: inherit; background: none; border: 0; padding: 0; margin: 0; text-align: inherit; cursor: help; text-decoration: underline; text-decoration-style: dotted; text-decoration-color: color-mix(in srgb, var(--muted) 75%, var(--bg)); text-decoration-thickness: 1.5px; text-underline-offset: 0.24em; transition: text-decoration-color 0.15s; }
 .gl-term:hover, .gl-term[aria-describedby] { text-decoration-style: solid; text-decoration-color: var(--accent); }
 .site-footer .sources-key { margin: 12px 0 0; font-family: var(--font-ui); font-size: 13px; letter-spacing: 0; line-height: 1.7; color: var(--muted); max-width: 90ch; }
-.site-footer .updated { display: block; margin-top: 10px; font-family: var(--font-kicker); font-weight: 400; font-size: 12px; letter-spacing: 0; text-transform: none; color: var(--muted); }
+.site-footer .updated { display: block; margin-top: 10px; font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); color: var(--muted); }
 .gl-tip { position: fixed; z-index: 50; width: max-content; max-width: min(340px, calc(100vw - 16px)); background: var(--bg); border: 1px solid var(--line-2); border-top: 2px solid var(--ink); border-radius: 0; box-shadow: var(--shadow); padding: 12px 16px 13px; }
 .gl-tip b { display: block; font-size: var(--fs-d6); line-height: 1.2; margin-bottom: 6px; }
 .gl-tip p { font-family: var(--font-body); font-size: var(--fs-small); line-height: 1.45; color: var(--ink-2); margin: 0 0 10px; }
@@ -444,7 +452,7 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before {
 .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 16px; }
 .chips button { font-family: var(--font-ui); font-weight: 400; font-size: 13.5px; line-height: 1; letter-spacing: 0; padding: 8px 12px; min-height: 32px; border: 1px solid var(--control-edge); border-radius: 999px; background: none; color: var(--ink); }
 .chips button:hover { border-color: var(--ink); }
-.chips button b { font-family: var(--font-code); font-weight: 400; font-size: 11.5px; color: var(--muted); margin-left: 6px; }
+.chips button b { font-family: var(--font-ui); font-weight: 400; font-size: 11.5px; color: var(--muted); margin-left: 6px; font-variant-numeric: tabular-nums; }
 .chips button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
 .chips button[aria-pressed="true"] b { color: var(--bg); opacity: 0.7; }
 .sup-toolbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; }
@@ -490,7 +498,7 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before {
 .matrix-note { font-family: var(--font-mono); font-size: var(--fs-ui-s); color: var(--muted); margin: 8px 0 30px; line-height: 1.5; }
 .timeline { list-style: none; margin: 18px 0 40px; padding: 0; }
 .timeline li { display: grid; grid-template-columns: 110px 1fr; gap: 16px; padding: 14px 0; border-top: 1px solid var(--line); }
-.timeline .d { font-family: var(--font-code); font-size: 12px; color: var(--muted); letter-spacing: 0.01em; padding-top: 3px; }
+.timeline .d { font-family: var(--font-ui); font-size: 12px; color: var(--muted); letter-spacing: 0.01em; padding-top: 3px; font-variant-numeric: tabular-nums; }
 .timeline .d b { display: block; color: var(--ink); font-weight: 500; }
 .timeline h4 { font-size: var(--fs-d5); margin-bottom: 4px; }
 .timeline p { font-size: var(--fs-small); line-height: 1.5; color: var(--ink-2); margin: 0 0 6px; }
@@ -701,20 +709,20 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
 .ex-legend i { display: inline-block; vertical-align: middle; margin-right: 7px; width: 10px; height: 10px; border-radius: 50%; box-sizing: border-box; }
 /* the context bars recede to a mid gray, so the peak year differs from them in lightness as well as hue (3.0:1 against the
    garnet in light; dark already separates, 3.5:1 against the wine) */
-.ex-legend, .ex-panel { --ex-bar: var(--ctx); } /* rule B: each firm's peak year in ink, the other years in the light tint */
+.ex-legend, .ex-panel { --ex-bar: var(--ctx); } /* the chart rule: each firm's peak year in wine, the other years in the light tint */
 .ex-legend .lg-bar { width: 10px; height: 12px; border-radius: 0; background: var(--ex-bar); }
-.ex-legend .lg-top { width: 10px; height: 12px; border-radius: 0; background: var(--ink); }
+.ex-legend .lg-top { width: 10px; height: 12px; border-radius: 0; background: var(--accent); }
 .ex-legend .lg-rule { width: 1px; height: 12px; border-radius: 0; border-left: 1px solid var(--ink); background: none; opacity: 0.4; }
 .ex-cat { grid-column: 1 / -1; margin: 18px 0 0; padding-bottom: 6px; border-bottom: 1px solid var(--ink); font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: 0; color: var(--ink-2); }
 .ex-cat:first-child { margin-top: 4px; }
 .ex-panel .tick { font-family: var(--font-mono); font-size: 11px; fill: var(--muted); }
 .ex-panel .bar { fill: var(--ex-bar); }
-.ex-panel .bar.top { fill: var(--ink); }
-/* a hovered bar darkens; it never turns garnet, which marks only the peak */
+.ex-panel .bar.top { fill: var(--accent); }
+/* a hovered bar darkens; the peak keeps its wine */
 .ex-panel a:hover rect, .ex-panel a:hover circle { fill: var(--ink-2); stroke: none; }
-.ex-panel a:hover rect.top { fill: var(--ink); }
+.ex-panel a:hover rect.top { fill: var(--accent); }
 .ex-panel .share { font-family: var(--font-mono); font-size: 11px; fill: var(--muted); }
-.ex-panel .share.top { fill: var(--ink); font-weight: 700; }
+.ex-panel .share.top { fill: var(--accent-ink); font-weight: 700; }
 .ex-panel .val { font-family: var(--font-mono); font-size: 11px; font-weight: 500; fill: var(--ink); }
 .ex-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px 22px; margin: 6px 0 12px; }
 /* each category is a group (exposureViz in build/build.js). Where subgrid works, a group spans as many columns as it has panels,
@@ -921,19 +929,30 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
   .chapter .chain--compact { display: none; }
   .column { padding: 0 18px; }
   :root { --band: 0px; }
-  /* the specimen becomes a bottom strip, like a dashboard bar: a live thumbnail, where you are, Contents and Show; tap Show to expand */
-  .stage { position: fixed; top: auto; bottom: 0; left: 0; right: 0; width: 100%; height: 128px; min-height: 0; margin: 0; z-index: 35; background: var(--bg); border-top: 1px solid var(--line-2); border-bottom: 0; box-shadow: none; pointer-events: auto; display: grid; grid-template-columns: 116px minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr) auto; align-items: start; column-gap: 12px; row-gap: 4px; padding: 6px 10px 8px 6px; overflow: hidden; transition: height 0.25s var(--ease); }
+  /* the specimen becomes a bottom strip, like a dashboard bar: a live thumbnail, where you are, the whole caption, Contents and
+     Expand; tap Expand to expand. The strip is as tall as its caption needs and no taller (at least the thumbnail's 128 px): the
+     caption shows whole, as the live site's does, never cut off with an ellipsis (the visual pass of 27 Oct 2026) */
+  .stage { position: fixed; top: auto; bottom: 0; left: 0; right: 0; width: 100%; height: auto; min-height: 128px; interpolate-size: allow-keywords; margin: 0; z-index: 35; background: var(--bg); border-top: 1px solid var(--line-2); border-bottom: 0; box-shadow: none; pointer-events: auto; display: grid; grid-template-columns: 116px minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr) auto; align-items: start; column-gap: 12px; row-gap: 4px; padding: 6px 10px 8px 6px; overflow: hidden; transition: height 0.25s var(--ease); }
   .stage canvas { order: 0; grid-column: 1; grid-row: 1 / -1; width: 116px; height: 116px; margin: 0; align-self: center; }
-  .stage .stage-tag { order: 0; position: static; grid-column: 2; grid-row: 1; margin: 0; padding: 4px 0 0; text-align: left; font-size: 11.5px; letter-spacing: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .stage .stage-tag { order: 0; position: static; grid-column: 2; grid-row: 1; margin: 0; padding: 4px 0 0; text-align: left; font-size: 11px; letter-spacing: 0.06em; line-height: 15px; }
   .stage .stage-actions { display: flex; gap: 6px; grid-column: 2; grid-row: 3; justify-self: end; }
   .stage .stage-actions button { font-family: var(--font-ui); font-weight: 500; font-size: 13px; letter-spacing: 0; text-transform: none; color: var(--ink); background: none; border: 1px solid var(--rule-ink); border-radius: 999px; padding: 4px 12px; min-height: 28px; cursor: pointer; }
-  .stage figcaption { order: 0; display: -webkit-box; grid-column: 2; grid-row: 2; margin: 0; padding: 0; max-width: none; text-align: left; font-size: calc(12px * var(--text-scale)); line-height: 1.35; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .stage figcaption { order: 0; display: block; grid-column: 2; grid-row: 2; margin: 0; padding: 0; max-width: none; text-align: left; font-family: var(--font-ui); font-size: 11.5px; line-height: 1.38; color: var(--ink-2); }
+  /* collapsed, the caption flows beside the thumbnail and then under it at the strip's full width, and the buttons sit at the
+     strip's foot on the right, in a space the caption keeps free at its end (a float as wide as the buttons), so they share
+     the caption's last line when it is short. The strip is a formatting context of its own, so it grows to hold both floats */
+  .stage[data-collapsed="1"]:not([data-hidden="1"]) { display: block; padding: 8px 12px 9px 16px; } /* the caption under the thumbnail starts on the page's 16 px margin */
+  .stage[data-collapsed="1"]:not([data-hidden="1"]) canvas { float: left; margin: 0 12px 2px -10px; } /* the thumbnail where it was: its drawing has room round it */
+  .stage[data-collapsed="1"]:not([data-hidden="1"]) .stage-tag { padding: 2px 0 3px; }
+  .stage[data-collapsed="1"]:not([data-hidden="1"]) .stage-actions { position: absolute; right: 10px; bottom: 9px; z-index: 3; } /* over the caption, which stands at z-index 1 */
+  .stage[data-collapsed="1"]:not([data-hidden="1"]) figcaption::after { content: ""; float: right; width: 212px; height: 30px; margin-top: 3px; }
+  .stage[data-collapsed="1"]:not([data-hidden="1"]) .stage-pause { top: 92px; bottom: auto; left: 10px; } /* on the thumbnail's corner, clear of the caption under it */
   .stage[data-collapsed="0"] { height: min(58vh, 480px); grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: 44px minmax(0, 1fr) auto; padding: 0 12px 8px; }
   .stage[data-collapsed="0"] canvas { grid-column: 1 / -1; grid-row: 2; width: 100%; height: 100%; }
   .stage[data-collapsed="0"] .stage-tag { grid-column: 1; grid-row: 1; padding-top: 14px; }
   .stage[data-collapsed="0"] .stage-actions { grid-column: 2; grid-row: 1; align-self: center; }
   .stage[data-collapsed="0"] figcaption { grid-column: 1 / -1; grid-row: 3; margin: 6px 0 0; -webkit-line-clamp: 6; }
-  body { padding-bottom: 140px; }
+  body { padding-bottom: calc(var(--strip-h, 128px) + 12px); }
   /* the contents sheet */
   .sheet { display: block; position: fixed; inset: 0; z-index: 60; background: var(--bg); overflow-y: auto; padding: 14px 16px 90px; }
   .sheet[hidden] { display: none; }
@@ -1046,7 +1065,7 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
 .fc-big { font-family: var(--font-display); font-weight: 360; font-size: 64px; line-height: 1; font-variation-settings: var(--opsz-numeral); color: var(--ink); }
 .fc-score-t { font-size: var(--fs-plain); color: var(--ink-2); }
 .review .rv-keep { margin: 8px 0 14px; padding: 14px 0 4px; border-top: 1px solid var(--line-2); }
-.review .rv-keep h4.label { margin: 0 0 12px; font-family: var(--font-mono); font-size: var(--fs-cap); font-weight: 500; letter-spacing: var(--tr-cap); line-height: 1.4; color: var(--muted); }
+.review .rv-keep h4.label { margin: 0 0 12px; font-family: var(--font-mono); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); line-height: 1.4; color: var(--muted); }
 .review .rv-keep ul { list-style: none; margin: 0; padding: 0; }
 .review .rv-keep li { position: relative; padding: 0 0 10px 30px; font-size: var(--fs-plain); line-height: 1.5; color: var(--ink); }
 .review .rv-keep li::before { content: ""; position: absolute; left: 4px; top: 0.72em; width: 12px; border-top: 2px solid var(--accent); }

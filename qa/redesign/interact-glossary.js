@@ -73,7 +73,7 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8769';
     // no entry, and Did you mean
     await typeIn(t, 'zzqxv');
     check('no entry: the count says so', (await t.ev("document.getElementById('lk-count').textContent")) === 'No entry matches.');
-    check('no entry: the box says No entry and the words', (await t.ev("!document.getElementById('gl-none').hidden && document.getElementById('gl-none').innerText")).includes('No entry'));
+    check('no entry: the box says No entry and the words', (await t.ev("!document.getElementById('gl-none').hidden && document.getElementById('gl-none').innerText")).toLowerCase().includes('no entry')); // innerText gives the label's capitals
     await typeIn(t, 'nvidai');
     check('Did you mean offers a name a typo away', (await t.ev("[...document.querySelectorAll('#gl-none .lk-near [data-go]')].map(function(b){return b.textContent;}).join(',')")).includes('Nvidia'), await t.ev("[...document.querySelectorAll('#gl-none .lk-near [data-go]')].map(function(b){return b.textContent;}).join(',')"));
     await t.ev("(([...document.querySelectorAll('#gl-none .lk-near [data-go]')].filter(function(b){return b.textContent==='Nvidia';})[0]).click(),1)"); await sleep(500);
@@ -90,7 +90,7 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8769';
     // a headword click
     await t.ev("(document.querySelector('.gl-de[data-id=\"lk-firm-asml\"] .gl-hw button').click(),1)"); await sleep(500);
     check('a headword opens its card', (await t.ev(title)) === 'ASML' && (await t.ev("!!document.querySelector('#gl-sheet-body .lk-card--firm .lk-facts')")));
-    check('the card keeps its revenue and filing link', /Revenue/.test(await t.ev("document.querySelector('#gl-sheet-body .lk-facts').innerText")));
+    check('the card keeps its revenue and filing link', /Revenue/i.test(await t.ev("document.querySelector('#gl-sheet-body .lk-facts').innerText")));
     check('the opened entry stays in view beside the sheet', await t.ev("(function(){var r=document.querySelector('.gl-de.is-on').getBoundingClientRect();return r.top>=document.getElementById('gl-bar').getBoundingClientRect().bottom-1&&r.top<innerHeight;})()"));
     check('no script errors on the page', !t.errors.length, t.errors.join(' | '));
     await t.close();
@@ -117,13 +117,13 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8769';
     await t.close();
     t = await open(chrome, BASE + '/#lk-country-nl', { width: 1440, wait: 2500 });
     check('#lk-country-nl opens the Netherlands card', (await t.ev(title)) === 'Netherlands' && /Share of each segment/.test(await t.ev("document.getElementById('gl-sheet-body').innerText")));
-    check('the shares follow rule B: the largest ink, the rest the tint', (await t.ev("getComputedStyle(document.querySelector('.lk-shares li:first-child .lk-share-bar')).backgroundImage")).includes('rgb(23, 23, 22)') && (await t.ev("getComputedStyle(document.querySelector('.lk-shares li:nth-child(2) .lk-share-bar')).backgroundImage")).includes('rgb(210, 209, 204)'));
+    check('the shares follow the chart rule: the largest wine, the rest the tint', (await t.ev("getComputedStyle(document.querySelector('.lk-shares li:first-child .lk-share-bar')).backgroundImage")).includes('rgb(122, 31, 43)') && (await t.ev("getComputedStyle(document.querySelector('.lk-shares li:nth-child(2) .lk-share-bar')).backgroundImage")).includes('rgb(210, 209, 204)') && !(await t.ev("getComputedStyle(document.querySelector('.lk-shares li:nth-child(2) .lk-share-bar')).backgroundImage")).includes('rgb(122, 31, 43)'));
     check('the EU-27 line and its link', /Across the EU-27/.test(await t.ev("document.getElementById('gl-sheet-body').innerText")) && (await t.ev("document.querySelector('#gl-sheet-body .lk-eu a').getAttribute('href')")) === '#/suppliers?group=eu');
     await t.ev("(document.querySelector('#gl-sheet-body .lk-go').click(),1)"); await sleep(500);
     check("a Critical firm's button opens its card", (await t.ev("!!document.querySelector('#gl-sheet-body .lk-card--firm')")) && /^#lk-firm-/.test(await t.ev('location.hash')), await t.ev(title));
     await t.close();
     t = await open(chrome, BASE + '/#lk-chip-nvidia-b200', { width: 1440, wait: 2500 });
-    check('#lk-chip- opens the chip card', (await t.ev(title)) === 'Nvidia B200' && /Dense TFLOPS/.test(await t.ev("document.getElementById('gl-sheet-body').innerText")));
+    check('#lk-chip- opens the chip card', (await t.ev(title)) === 'Nvidia B200' && /Dense TFLOPS/i.test(await t.ev("document.getElementById('gl-sheet-body').innerText")));
     await t.close();
 
     /* ---------- the look-up popovers in a chapter ---------- */

@@ -124,8 +124,9 @@ function withUnit(v, unit) {
   if (sign) return sign[0] + n + esc(u.slice(1));
   return n + '\u00a0' + esc(u); // a no-break space: the figure and its unit never part
 }
-/* Chart rule B (the owner's choice of 25 Oct 2026, qa/redesign/BRIEF.md): the largest value is solid ink with a bold label, every
-   other value the light tint --ctx, and no accent color marks a value. A remainder ("Other", "All others", "… and all others")
+/* The chart rule (the owner's of 21 Oct 2026, "garnet on the largest only", brought back in the visual pass of 27 Oct over the
+   redesign's rule B of 25 Oct, which drew it in ink): the largest value is solid wine with its value bold in wine, every
+   other value the light tint --ctx. A remainder ("Other", "All others", "… and all others")
    is hatched, and is never the one marked largest. A stack (shares of one whole) is drawn as bars, one per share in the
    data's order, as the hybrid mockup draws them, so each share keeps its label and no legend is needed. */
 const STACK_REST = /^(other|others|all others|everyone else|rest of world|.* and all others|.*other companies)$/i;
@@ -133,8 +134,6 @@ const STACK_REST = /^(other|others|all others|everyone else|rest of world|.* and
 const figTitle = (f) => (unitOnValue(f.unit) ? String(f.title || '').split(` (${f.unit})`).join('') : String(f.title || ''));
 // the figure's short name in the chapter's contents rail: its title's first sentence
 const figShort = (f) => figTitle(f).split(/(?<=[a-z0-9)%])\.\s+(?=[A-Z])/)[0].replace(/\.$/, '');
-// a figure's own address, as the reader would paste it: the chapter's readable page and the figure's anchor
-const figAddr = (ctx, f) => `${SITE.host}/${ctx.id}/#fig-${ctx.id}-${f.id}`;
 // the figure's data as a CSV file, a data: link the browser saves without any script (the readable pages carry it too)
 function figCSV(f, data) {
   const q = (v) => { const s = String(v == null ? '' : v); return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; };
@@ -142,11 +141,13 @@ function figCSV(f, data) {
   const rows = [head].concat(data.map((d) => [d[0], d[1]]));
   return 'data:text/csv;charset=utf-8,' + encodeURIComponent('﻿' + rows.map((r) => r.map(q).join(',')).join('\r\n') + '\r\n');
 }
-/* One grammar for every figure (the hybrid's): a head with the figure's number ("Figure 04.5"), a large line and, when the
-   figure has a finding, the title under it; then the chart; then a source strip on the paper tint with the source and its
-   footnote number, any note, the figure's address and its actions: Cite (a citation that opens in place, as the chapter's
-   does), Table and PNG (added by the runtime, src/app.js Figs, and by the readable pages' script) and CSV (a plain download).
-   A figure without a finding shows its title as the large line and nothing under it. */
+/* One grammar for every figure (the hybrid's): a head with the figure's number ("Figure 04.5"), a link to the figure's own
+   address, a large line and, when the figure has a finding, the title under it; then the chart; then one quiet source line,
+   as the live site sets it (the visual pass of 27 Oct 2026): "Source:", the linked title and its footnote number, and the
+   actions as small text links, Cite (a citation that opens in place, as the chapter's does, with the figure's full address),
+   Table and PNG (added by the runtime, src/app.js Figs, and by the readable pages' script) and CSV (a plain download); any
+   note is one more quiet line. The typed address line under the source was dropped in that pass: the number links to the
+   address and Cite gives it in full. A figure without a finding shows its title as the large line and nothing under it. */
 function figure(f, ctx) {
   if (!f) return '';
   ctx.figNo = (ctx.figNo || 0) + 1;
@@ -163,7 +164,7 @@ function figure(f, ctx) {
   if (f.type === 'bars' || f.type === 'stack') {
     // HTML rows, so a label is never cut and wraps at a readable size on a phone: the label beside its bar from 641 px up
     // (its column as wide as the longest label, at most 45 percent), above it below that. --lw and --vw size the label column
-    // and the room for the value. The largest value that is not a remainder is ink (.top; ties mark each), a remainder is hatched.
+    // and the room for the value. The largest value that is not a remainder is wine (.top; ties mark each), a remainder is hatched.
     const rest = data.map((d) => STACK_REST.test(String(d[0]).trim()));
     const max = Math.max(...data.map((d) => +d[1] || 0), 1e-9);
     const top = Math.max(...data.filter((d, i) => !rest[i]).map((d) => +d[1] || 0), -Infinity);
@@ -202,16 +203,16 @@ function figure(f, ctx) {
   const [big, small] = finding ? [finding, tt] : rest ? [first, /[.!?)]$/.test(rest) ? rest : rest + '.'] : [tt, ''];
   const head = `<div class="fig-head"><a class="fig-k" href="#${fid}">${esc(kick)}</a>`
     + `<p class="fig-title${finding ? ' fig-find' : ''}">${esc(big)}${small ? '' : unitTag}</p>${small ? `<p class="fig-sub">${esc(small)}${unitTag}</p>` : ''}</div>`;
-  // the strip: Source (or a note) first, then the address and the actions
-  const src = f.source && f.source.url ? `<span class="fs-src"><span class="fs-k">Source</span> <a href="${safeUrl(f.source.url)}" target="_blank" rel="noopener">${esc(f.source.label || host(f.source.url))}</a> ${srcMark}</span>`
-    : (f.source && f.source.label ? `<span class="fs-src"><span class="fs-k">Source</span> ${esc(f.source.label)}</span>` : '');
-  const note = f.note ? `<span class="fs-note fig-source"><span class="fs-k">Note</span> ${esc(f.note)}</span>` : '';
+  // the source line: Source (or a note) first, then the actions
+  const src = f.source && f.source.url ? `<span class="fs-src"><span class="fs-k">Source:</span> <a href="${safeUrl(f.source.url)}" target="_blank" rel="noopener">${esc(f.source.label || host(f.source.url))}</a> ${srcMark}</span>`
+    : (f.source && f.source.label ? `<span class="fs-src"><span class="fs-k">Source:</span> ${esc(f.source.label)}</span>` : '');
+  const note = f.note ? `<span class="fs-note fig-source"><span class="fs-k">Note:</span> ${esc(f.note)}</span>` : '';
   const box = `cite-${fid}`;
   const csv = data.length && !isAnim ? `<a class="fs-csv" href="${figCSV(f, data)}" download="chip-supply-chain-figure-${num.replace('.', '-')}-${esc(f.id)}.csv">CSV</a>` : '';
   // an explainer animation has no Cite (owner, 27 Oct): it explains a process and holds no figures of its own to cite
   const acts = isAnim ? '' : `<span class="fs-acts" data-kind="${esc(f.type)}"><button type="button" class="ch-cite-btn" aria-expanded="false" aria-controls="${box}">Cite</button>${csv}</span>`;
   const citeText = isAnim ? '' : `<div class="ch-cite-box fig-cite-box" id="${box}" role="region" aria-label="Citation for figure ${num}" hidden><p class="ch-cite-text">Sharma, Yashvardhan. “Figure ${num}: ${esc(figTitle(f))}.” <i>${CITE_WORK}</i>. Updated ${CITE_DAY(ctx.id)}. <a href="${esc(SITE.url + ctx.id + '/#' + fid)}">${esc(SITE.url + ctx.id + '/#' + fid)}</a></p></div>`;
-  const strip = `<div class="fig-strip">${src}${note}<a class="fs-addr" href="#${fid}">${esc(figAddr(ctx, f))}</a>${acts}${citeText}</div>`;
+  const strip = `<div class="fig-strip">${src}${acts}${note}${citeText}</div>`;
   return `<figure class="figure${isAnim ? ' figure--anim' : ''}" id="${fid}" data-num="${num}">${head}<div class="fig-body">${body}</div>${strip}</figure>`;
 }
 // A date in a figure: { key, the day it sorts as; iso, for <time datetime>; label, what the reader sees }. A full day keeps the
@@ -692,7 +693,7 @@ var rows=[].map.call(fig.querySelectorAll('.hb'),function(r){var c=r.cloneNode(t
 if(!rows.length)return;
 var k=txt(fig.querySelector('.fig-k')),t1=txt(fig.querySelector('.fig-title')),t2=txt(fig.querySelector('.fig-sub'));
 var src=fig.querySelector('.fs-src'),sc=src?src.cloneNode(true):null;if(sc)[].forEach.call(sc.querySelectorAll('.fs-k'),function(x){x.remove();});
-var srcT=sc?txt(sc).replace(/\\s*(\\d+)$/,' [$1]'):'',addr=txt(fig.querySelector('.fs-addr'));
+var srcT=sc?txt(sc).replace(/\\s*(\\d+)$/,' [$1]'):'',addr=txt(fig.querySelector('.fig-cite-box a')).replace(/^https?:\\/\\//,'');
 var W=800,P=40,S=2,cv=el('canvas'),g=cv.getContext('2d');
 var FD='"Source Serif 4",Georgia,serif',FB=FD,FU='"Hanken Grotesk","Helvetica Neue",Arial,sans-serif',FM='"Fragment Mono",Menlo,monospace';
 g.font='500 24px '+FD;var L1=wrap(g,t1,W-2*P);g.font='400 16px '+FB;var L2=t2?wrap(g,t2,W-2*P):[];
@@ -706,11 +707,11 @@ y+=24;var max=Math.max.apply(null,rows.map(function(r){return r.n;}))||1,x0=P+lw
 rows.forEach(function(r){var w=Math.max(1,r.n/max*bw);
 g.textAlign='right';g.fillStyle=r.top?'#171716':'#45443f';g.font=(r.top?'600':'400')+' 14px '+FU;g.fillText(r.l,P+lw,y+16);g.textAlign='left';
 if(r.rest){g.save();g.beginPath();g.rect(x0,y,w,22);g.clip();g.strokeStyle='#8c8a84';g.lineWidth=1;for(var i=-22;i<w+22;i+=5){g.beginPath();g.moveTo(x0+i,y+22);g.lineTo(x0+i+22,y);g.stroke();}g.restore();g.strokeRect(x0+0.5,y+0.5,w-1,21);}
-else{g.fillStyle=r.top?'#171716':'#d2d1cc';g.fillRect(x0,y,w,22);}
-g.fillStyle=r.top?'#171716':'#45443f';g.font=r.top?'700 15px '+FU:'400 13px '+FM;g.fillText(r.v,x0+w+10,y+16);y+=34;});
+else{g.fillStyle=r.top?'#7a1f2b':'#d2d1cc';g.fillRect(x0,y,w,22);}
+g.fillStyle=r.top?'#7a1f2b':'#45443f';g.font=r.top?'700 15px '+FU:'400 13.5px '+FU;g.fillText(r.v,x0+w+10,y+16);y+=34;});
 y+=14;g.fillStyle='#e1e0db';g.fillRect(P,y,W-2*P,1);y+=22;
-g.fillStyle='#45443f';g.font='400 12px '+FM;var sl=wrap(g,(srcT?'Source  '+srcT:''),W-2*P);sl.slice(0,1).forEach(function(s){g.fillText(s,P,y);});
-g.fillStyle='#56554f';g.fillText(addr,P,y+20);
+g.fillStyle='#45443f';g.font='400 12.5px '+FU;var sl=wrap(g,(srcT?'Source: '+srcT:''),W-2*P);sl.slice(0,1).forEach(function(s){g.fillText(s,P,y);});
+g.fillStyle='#56554f';g.font='400 12px '+FM;g.fillText(addr,P,y+20);
 cv.toBlob(function(b){if(!b)return;var a=el('a');a.href=URL.createObjectURL(b);a.download='chip-supply-chain-'+(k.replace(/^Figure\\s*/,'figure-').replace(/[^0-9a-z]+/gi,'-').toLowerCase())+'-'+(fig.id.split('-').slice(2).join('-')||'chart')+'.png';D.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},2000);},'image/png');
 }
 function add(acts){

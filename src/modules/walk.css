@@ -16,16 +16,17 @@
   text-transform: none; margin: 0 0 0 -0.04em; color: var(--ink);
 }
 .wk-dek { font-family: var(--font-body); font-weight: 400; font-size: calc(clamp(18px, 1.45vw, 21px) * var(--text-scale)); line-height: 1.4; color: var(--ink-2); max-width: 30em; margin: 14px 0 0; text-wrap: balance; }
-/* the read's counts, as a chapter's facts line is set: Fragment Mono, a dot between, the first on each line without one */
+/* the read's counts, as a chapter's facts line is set: the label's capitals in the muted ink, a dot between, the first on each line without one */
 .wk-meta { display: flex; flex-wrap: wrap; align-items: baseline; margin: 14px 0 0 -18px; clip-path: inset(0 0 0 18px); }
-.wk-meta .label { font-family: var(--font-code); font-size: 12px; line-height: 20px; color: var(--ink-2); white-space: nowrap; }
+.wk-meta .label { font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); line-height: 20px; color: var(--muted); white-space: nowrap; }
 .wk-meta .label::before { content: "\00b7"; display: inline-block; width: 18px; text-align: center; color: var(--muted); }
 
 /* ---------- the chain at a glance ----------
    An ink rule, the kicker, the sentence, then a row per stage between hairlines: the name (a link) and, at the row's end,
    the band's meter and word (a button that picks the specimen). The number hangs in the ledger column, right-set where
-   the walk's numbers are; it belongs to the link, so it takes the reader to the chapter too. Extreme is ink, High the
-   lighter tint; the row whose specimen is showing (.is-shown) is the one in wine: its number, meter and word. */
+   the walk's numbers are; it belongs to the link, so it takes the reader to the chapter too. Extreme is wine, its meter and
+   its word, as on the live site (the visual pass of 27 Oct 2026); High the lighter tint. The row whose specimen is showing
+   (.is-shown) is the reader's selection: a paper tint across the row, its hanging number included, the number in wine. */
 .wk-gl { margin: 32px 0 0; }
 .wk-gl-h { display: block; margin: 0; padding: 12px 0 0; border-top: 1px solid var(--ink); }
 .wk-gl-p { margin: 6px 0 16px; font-family: var(--font-body); font-size: var(--fs-body); line-height: 1.5; color: var(--ink-2); max-width: 34em; }
@@ -38,7 +39,7 @@
   margin-left: calc(-1 * (var(--gutter) + var(--gutter-gap))); min-height: 32px; padding: 5px 16px 4px 0;
   color: var(--ink); text-decoration: none;
 }
-.wk-gl-n { padding-right: 14px; text-align: right; font-family: var(--font-code); font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.wk-gl-n { padding-right: 14px; text-align: right; font-family: var(--font-ui); font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
 .wk-gl-t { font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 18px; line-height: 1.3; text-wrap: balance; }
 .wk-gl-a:hover .wk-gl-t, .wk-gl-a:focus-visible .wk-gl-t { color: var(--accent-ink); }
 .wk-gl-a:focus-visible { outline-offset: -2px; }
@@ -52,13 +53,14 @@
 .wk-gl-m i:nth-child(3) { height: 11px; }
 .wk-gl-m i:nth-child(4) { height: 14px; }
 .wk-gl-m i.on { background: var(--bar-3); }
-.wk-gl-list li[data-level="4"] .wk-gl-m i.on { background: var(--ink); }
+.wk-gl-list li[data-level="4"] .wk-gl-m i.on { background: var(--bar-5); }
 .wk-gl-list li[data-level="3"] .wk-gl-m i.on { background: var(--bar-4); }
 .wk-gl-w { min-width: 4.6em; }
-.wk-gl-list li[data-level="4"] .wk-gl-w { color: var(--ink); font-weight: 500; }
-.wk-gl-list li.is-shown .wk-gl-n { color: var(--accent-ink); }
-.wk-gl-list li.is-shown .wk-gl-m i.on { background: var(--accent); } /* the wine of text, so on dark the pick is as bright as its word */
-.wk-gl-list li.is-shown .wk-gl-w { color: var(--accent-ink); font-weight: 600; }
+.wk-gl-list li[data-level="4"] .wk-gl-w { color: var(--accent-ink); font-weight: 600; }
+.wk-gl-list li.is-shown { background: var(--bg-2); }
+@media (min-width: 901px) { .wk-gl-list li.is-shown { box-shadow: calc(-1 * (var(--gutter) + var(--gutter-gap))) 0 0 var(--bg-2); } } /* the tint reaches the number in the ledger column */
+.wk-gl-list li.is-shown .wk-gl-n { color: var(--accent-ink); font-weight: 600; }
+.wk-gl-list li.is-shown .wk-gl-t { font-weight: 600; }
 
 /* ---------- the walk: the ledger column ---------- */
 .wk-list { list-style: none; margin: clamp(80px, 13vh, 120px) 0 0; padding: 0; }
@@ -100,7 +102,7 @@
 }
 .wk-leaders .label { flex: 0 0 auto; }
 .wk-lead { font-weight: 500; color: var(--ink); }
-.wk-lead .chip { width: auto; margin: 0 0 0 3px; padding: 0; border: 0; font-family: var(--font-code); font-size: 11px; font-weight: 400; letter-spacing: 0; color: var(--muted); vertical-align: baseline; } /* the country code as plain mono text, no box; the markup already carries a literal space */
+.wk-lead .chip { width: auto; margin: 0 0 0 3px; padding: 0; border: 0; font-family: var(--font-ui); font-size: 11px; font-weight: 500; letter-spacing: 0.06em; color: var(--muted); vertical-align: baseline; } /* the country code as plain tracked capitals, no box; the markup already carries a literal space */
 .wk-sep { font-style: normal; color: var(--line-2); }
 
 .wk-foot {
@@ -113,7 +115,7 @@
 }
 .wk-sc { display: inline-flex; align-items: center; gap: 8px; }
 .wk-sc::before { content: ""; display: inline-block; flex: none; width: 6px; height: 4px; background: var(--ctx); }
-.wk-score[data-rank="5"] .wk-sc::before { height: 15px; background: var(--ink); }
+.wk-score[data-rank="5"] .wk-sc::before { height: 15px; background: var(--bar-5); } /* Extreme in wine */
 .wk-score[data-rank="4"] .wk-sc::before { height: 8px; background: transparent; box-shadow: inset 0 0 0 1.5px var(--ink); }
 .wk-sc b { color: var(--ink); font-weight: 500; font-size: 14px; }
 .wk-read {
@@ -171,7 +173,7 @@
 .wk-rail-bar { height: 2px; background: var(--line); border-radius: 0; overflow: hidden; }
 .wk-rail-bar i { display: block; height: 100%; width: 0; background: var(--accent); transition: width 0.15s linear; }
 .wk-rail-line { display: flex; gap: 12px; align-items: baseline; margin: 6px 0 0; font-family: var(--font-ui); font-size: 13px; letter-spacing: 0; color: var(--muted); }
-.wk-rail-n { flex: 0 0 auto; font-family: var(--font-kicker); font-size: 12px; color: var(--ink); font-variant-numeric: tabular-nums; }
+.wk-rail-n { flex: 0 0 auto; font-family: var(--font-ui); font-size: 12px; color: var(--ink); font-variant-numeric: tabular-nums; }
 .wk-rail-t { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
 /* ---------- start here: the landing-page chooser (START_HERE, not placed on the page today) ---------- */

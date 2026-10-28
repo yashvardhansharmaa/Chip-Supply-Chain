@@ -49,6 +49,12 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8766';
       check('1440: the plate is fitted to its drawing (--draw-h, --lift)', /^\d+px$/.test(col.drawH) && /^\d+px$/.test(col.lift), `--draw-h ${col.drawH}, --lift ${col.lift}`);
       check('1440: the card is in the text after the lead, before section 01, as wide as the flashcards (720 px since 27 Oct)', !col.inHead && col.prev === 'P' && col.next === 'lithography--how-it-works' && col.cardW === 720 && col.cardId === 'lithography--card', JSON.stringify({ prev: col.prev, next: col.next, w: col.cardW }));
       check('1440: On this page lists the card after In plain terms', col.toc === 'In plain terms | Chokepoint card | How it works', col.toc);
+      // the visual pass of 27 Oct 2026: Extreme is wine wherever a band shows; High keeps its ink outline
+      const marks = await t.ev(`(function(){var a=document.getElementById('lithography'),bg=function(e){return e?getComputedStyle(e).backgroundColor:null;};
+        return {kick:bg(a.querySelector('.ch-band[data-band="4"] i')),card:bg(a.querySelector('.plate-kpis .bm[data-band="4"]')),rail:bg(a.querySelector('.ch-rail .stage-cell[data-band="4"] .bm')),
+          high:bg(a.querySelector('.ch-rail .stage-cell[data-band="3"] .bm')),meta:getComputedStyle(a.querySelector('.ch-meta .label')).fontFamily,kickT:getComputedStyle(a.querySelector('.ch-kick')).textTransform};})()`);
+      check('1440: Extreme marks are wine in the kicker, the card and the rail; High stays an outline', marks.kick === 'rgb(122, 31, 43)' && marks.card === 'rgb(122, 31, 43)' && marks.rail === 'rgb(122, 31, 43)' && marks.high === 'rgba(0, 0, 0, 0)', JSON.stringify(marks));
+      check('1440: the kicker and the facts line are Hanken Grotesk capitals, not Fragment Mono', /^"?Hanken Grotesk/.test(marks.meta) && marks.kickT === 'uppercase', JSON.stringify(marks));
       await t.ev("document.querySelector('#lithography .rail-toc a[href=\"#lithography--card\"]').click(),1"); await sleep(1200);
       const land = await t.ev("(function(){var c=document.getElementById('lithography--card').getBoundingClientRect();return {top:Math.round(c.top),hash:location.hash,cur:(document.querySelector('#lithography .rail-toc a[aria-current]')||{}).textContent};})()");
       check('1440: Chokepoint card in the rail lands on the card, clear of the masthead', land.top >= 64 && land.top <= 100 && land.cur === 'Chokepoint card', JSON.stringify(land));
@@ -69,9 +75,9 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8766';
       const F = '#fig-lithography-asml-region';
       await scrollTo(t, F, 140);
       check('1440: the figure is numbered 04.5', await t.ev(`document.querySelector('${F} .fig-k').textContent`) === 'Figure 04.5');
-      check('1440: rule B, the largest bar ink, the rest the tint', await t.ev(`(function(){var b=[].map.call(document.querySelectorAll('${F} .hb-r i'),function(i){return getComputedStyle(i).backgroundColor});return b[0]==='rgb(23, 23, 22)'&&b.slice(1).every(function(c){return c==='rgb(210, 209, 204)'});})()`),
+      check('1440: the chart rule, the largest bar wine, the rest the tint', await t.ev(`(function(){var b=[].map.call(document.querySelectorAll('${F} .hb-r i'),function(i){return getComputedStyle(i).backgroundColor});return b[0]==='rgb(122, 31, 43)'&&b.slice(1).every(function(c){return c==='rgb(210, 209, 204)'});})()`),
         await t.ev(`[].map.call(document.querySelectorAll('${F} .hb-r i'),function(i){return getComputedStyle(i).backgroundColor}).join(' ')`));
-      check('1440: no wine on any bar in any chapter', await t.ev("[].every.call(document.querySelectorAll('.chapter .hb-r i'),function(i){var c=getComputedStyle(i).backgroundColor;return c!=='rgb(122, 31, 43)'&&c!=='rgb(168, 65, 75)';})"));
+      check('1440: in every chapter, wine on the largest bar only (and on every largest)', await t.ev("[].every.call(document.querySelectorAll('.chapter .hb'),function(r){var c=getComputedStyle(r.querySelector('.hb-r i')).backgroundColor,w=c==='rgb(122, 31, 43)';return r.classList.contains('top')?w:!w&&c!=='rgb(168, 65, 75)';})"));
       check('1440: the strip has Cite, Table, CSV and PNG', await t.ev(`[].map.call(document.querySelectorAll('${F} .fs-acts > *'),function(a){return a.textContent}).join(' ')`) === 'Cite Table CSV PNG', await t.ev(`[].map.call(document.querySelectorAll('${F} .fs-acts > *'),function(a){return a.textContent}).join(' ')`));
       await t.ev(`document.querySelector('${F} .fs-acts .ch-cite-btn').click(),1`); await sleep(200);
       check('1440: Cite opens the figure\'s citation', await t.ev(`(function(){var b=document.getElementById('cite-fig-lithography-asml-region');return !b.hidden && /Figure 04.5: ASML net system sales/.test(b.textContent) && /Updated \\d+ [A-Z][a-z]+ 2026/.test(b.textContent);})()`), await t.ev("document.getElementById('cite-fig-lithography-asml-region').textContent.slice(0,140)"));
@@ -123,6 +129,12 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8766';
     {
       const t = await open(chrome, BASE + '/#lithography', { width: 390, wait: 3000 });
       check('390: the drawing stays in the strip', await t.ev("!!document.querySelector('.stage > canvas#stage-canvas') && getComputedStyle(document.querySelector('.stage')).display!=='none'"));
+      // the strip shows the whole caption (the visual pass of 27 Oct 2026): nothing clipped or cut short, its buttons on top and in reach
+      const strip = await t.ev(`(function(){var s=document.querySelector('.stage'),c=s.querySelector('figcaption'),cs=getComputedStyle(c),m=s.querySelector('.stage-menu').getBoundingClientRect(),hit=document.elementFromPoint(m.left+m.width/2,m.top+m.height/2);
+        return {clamp:cs.webkitLineClamp,over:s.scrollHeight-s.clientHeight,h:Math.round(s.getBoundingClientRect().height),bottom:Math.round(s.getBoundingClientRect().bottom),vh:innerHeight,hit:hit&&hit.className,full:c.textContent.indexOf('drawn about twice their true size.')>0};})()`);
+      check('390: the strip shows the whole caption, no clamp and nothing cut off', (strip.clamp === 'none' || !strip.clamp) && strip.over <= 1 && strip.full && strip.bottom === strip.vh, JSON.stringify(strip));
+      check('390: the strip is no taller than its caption needs (under 260 px for Lithography)', strip.h >= 128 && strip.h < 260, strip.h + ' px');
+      check('390: the strip\'s Contents takes a tap', /stage-menu/.test(strip.hit || ''), strip.hit);
       check('390: the masthead is down after the landing', await t.ev("!document.documentElement.classList.contains('mast-up')"));
       await t.ev("(document.documentElement.style.scrollBehavior='auto', window.scrollBy(0, 900), 1)"); await sleep(250);
       await t.ev("(window.scrollBy(0, 200), 1)"); await sleep(500);

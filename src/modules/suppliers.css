@@ -44,7 +44,7 @@
 /* ---------- a section head: the heading over an ink rule, a mono line or a control at its right ---------- */
 .sup-sec-h { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px 24px; padding-bottom: 12px; border-bottom: 1px solid var(--ink); }
 .sup-sec-h h2 { margin: 0; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 24px; line-height: 1.2; letter-spacing: -0.01em; color: var(--ink); }
-.sup-sec-sub { margin: 0; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); }
+.sup-sec-sub { margin: 0; font-family: var(--font-ui); font-size: 12.5px; line-height: 16px; color: var(--muted); font-variant-numeric: tabular-nums; }
 @media (max-width: 760px) { .sup-sec-h { display: block; } .sup-sec-sub { margin-top: 6px; } .sup-sec-h h2 { font-size: 22px; } }
 
 /* ---------- the ribbons ---------- */
@@ -78,14 +78,14 @@
 .sup-hit { fill: transparent; cursor: pointer; outline: none; }
 .sup-hit:focus-visible { stroke: var(--accent); stroke-width: 1.5px; } /* the keyboard's segment: a frame round its label (the rect takes no outline) */
 .sup-clab { font-family: var(--font-ui); font-weight: 500; fill: var(--ink); text-anchor: end; }
-.sup-clab .sup-cn { font-family: var(--font-code); font-weight: 400; font-size: 11px; fill: var(--muted); }
+.sup-clab .sup-cn { font-family: var(--font-ui); font-weight: 400; font-size: 11px; fill: var(--muted); font-variant-numeric: tabular-nums; }
 .sup-lab-t { font-family: var(--font-ui); font-weight: 400; fill: var(--ink); text-anchor: start; }
-.sup-lab .sup-lab-n { font-family: var(--font-code); font-size: 11px; fill: var(--muted); font-variant-numeric: tabular-nums; }
+.sup-lab .sup-lab-n { font-family: var(--font-ui); font-size: 11px; fill: var(--muted); font-variant-numeric: tabular-nums; }
 .sup-lab[data-hot="1"] .sup-lab-t { font-weight: 600; }
 .sup-lab[data-lit="1"] .sup-lab-t { fill: var(--accent-ink); font-weight: 600; } /* the segment the list is filtered to: the reader's own choice */
 .sup-lab[data-lit="1"] .sup-lab-n { fill: var(--accent-ink); }
 .sup-flow text { pointer-events: none; }
-@media (max-width: 599px) { .sup-clab { font-family: var(--font-code); font-weight: 400; } } /* a phone draws country codes, set like the codes after every name */
+@media (max-width: 599px) { .sup-clab { font-family: var(--font-ui); font-weight: 400; } font-variant-numeric: tabular-nums; } /* a phone draws country codes, set like the codes after every name */
 
 /* the entrance: the ribbons are wiped in from the left, once, on the first draw */
 .sup-wipe { transform-box: view-box; transform-origin: 0 0; }
@@ -99,7 +99,7 @@
 .sup-all-sw { background: var(--rib); }
 .sup-crit-sw { background: var(--rib-crit); }
 .sup-follow { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line); }
-.sup-follow-k { margin: 0 0 10px; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); }
+.sup-follow-k { margin: 0 0 10px; font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); line-height: 16px; color: var(--muted); }
 .sup-chips { display: flex; flex-wrap: wrap; gap: 6px; }
 .sup-chip { font-family: var(--font-ui); font-size: 13.5px; line-height: 1; padding: 8px 12px; min-height: 32px; border: 1px solid var(--control-edge); border-radius: 999px; color: var(--ink); background: none; }
 .sup-chip:hover { border-color: var(--ink); }
@@ -127,10 +127,10 @@
 .sup-tip[hidden] { display: none; }
 @media (hover: hover) { .sup-tip { pointer-events: auto; } } /* a mouse can move onto the tip and it stays (WCAG 1.4.13); a tap still reaches the drawing under it */
 .sup-tip b { display: block; font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 500; font-size: 15px; line-height: 1.2; color: var(--ink); }
-.sup-tip .sup-tip-n { display: block; margin: 3px 0 7px; font-family: var(--font-code); font-size: 11px; color: var(--muted); }
+.sup-tip .sup-tip-n { display: block; margin: 3px 0 7px; font-family: var(--font-ui); font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
 .sup-tip .sup-tip-co { display: flex; flex-wrap: wrap; gap: 3px 10px; }
-.sup-tip-c { display: inline-flex; align-items: center; gap: 4px; font-family: var(--font-code); font-size: 11px; color: var(--muted); }
-.sup-tip-c b { display: inline; font-family: var(--font-code); font-weight: 400; font-size: 11px; color: var(--ink); }
+.sup-tip-c { display: inline-flex; align-items: center; gap: 4px; font-family: var(--font-ui); font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.sup-tip-c b { display: inline; font-family: var(--font-ui); font-weight: 400; font-size: 11px; color: var(--ink); font-variant-numeric: tabular-nums; }
 .sup-tip .sup-sw { display: none; } /* countries carry no color */
 .sup-tip .sup-tip-crit { display: block; margin-top: 8px; padding-top: 7px; border-top: 1px solid var(--line); font-family: var(--font-ui); font-size: 13px; line-height: 1.4; color: var(--accent-ink); }
 .sup-tip .sup-tip-crit .sup-crit-sw { display: inline-block; width: 4px; height: 11px; margin-right: 6px; vertical-align: -1px; }
@@ -151,9 +151,9 @@
 .sup-reg .filters select { padding-right: 32px; }
 .sup-reg .filters input { width: 270px; min-width: 0; }
 .sup-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; margin: 14px 0 0; scroll-margin-top: calc(var(--masthead) + 14px); }
-.sup-toolbar .count { margin-right: auto; font-family: var(--font-code); font-size: 12px; color: var(--muted); }
+.sup-toolbar .count { margin-right: auto; font-family: var(--font-ui); font-size: 12.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
 .sup-lv { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 22px; margin: 18px 0 0; }
-.sup-ladder-h { display: block; margin: 0; font-family: var(--font-code); font-size: 12px; color: var(--muted); }
+.sup-ladder-h { display: block; margin: 0; font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); color: var(--muted); }
 .sup-key { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px; margin: 0; font-family: var(--font-body); font-size: calc(14px * var(--text-scale)); }
 .sup-key b { font-weight: 500; color: var(--ink); }
 .sup-key .k-crit { color: var(--accent-ink); font-weight: 600; }
@@ -184,7 +184,7 @@
 .sup-rung[data-lit="1"] .sup-rank { color: var(--accent-ink); }
 .sup-rung-head { grid-column: 2; grid-row: 1 / span 2; margin: 0; }
 .sup-rung-name { margin: 0; font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 500; font-size: 19px; line-height: 1.2; color: var(--ink); }
-.sup-rung-n { margin: 8px 0 0; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.sup-rung-n { margin: 8px 0 0; font-family: var(--font-ui); font-size: 12px; line-height: 16px; color: var(--muted); font-variant-numeric: tabular-nums; }
 /* the Critical firms of a segment or country: one red wine mark each */
 .sup-crit-n { display: inline-flex; align-items: flex-end; gap: 8px; color: var(--accent-ink); }
 .sup-crit-sq { display: inline-flex; align-items: flex-end; gap: 3px; }
@@ -199,7 +199,7 @@
 .sup-name.lv-Diversified { color: var(--muted); }
 .sup-name:hover { background: var(--bg-2); }
 .sup-name[aria-expanded="true"] { box-shadow: inset 0 -1.5px 0 var(--accent); }
-.sup-cc { font-style: normal; font-family: var(--font-code); font-weight: 400; font-size: 11px; color: var(--muted); margin-left: 4px; }
+.sup-cc { font-style: normal; font-family: var(--font-ui); font-weight: 400; font-size: 11px; color: var(--muted); margin-left: 4px; font-variant-numeric: tabular-nums; }
 .sup-ladder-cc .sup-cc { font-family: var(--font-ui); } /* by country, the tag is the firm's segment, a word */
 .sup-rung[data-empty="1"] .sup-names, .sup-rung[data-empty="1"] .sup-panel { display: none; }
 .sup-rung[data-empty="1"] { padding: 10px 0 11px; } /* nothing matches here: collapse to the header */
@@ -229,7 +229,7 @@
 .sup-detail-body { padding: 14px 0 4px; margin-top: 10px; border-top: 1px solid var(--line); }
 .sup-detail-h { margin: 0 0 8px; font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 500; font-size: 19px; color: var(--ink); }
 .sup-detail-h .chk { margin-left: 8px; vertical-align: 2px; }
-.sup-detail-h em { font-style: normal; font-family: var(--font-code); font-weight: 400; font-size: 11.5px; color: var(--muted); margin-left: 8px; }
+.sup-detail-h em { font-style: normal; font-family: var(--font-ui); font-weight: 400; font-size: 11.5px; color: var(--muted); margin-left: 8px; font-variant-numeric: tabular-nums; }
 .sup-role { margin: 0 0 12px; max-width: 62ch; font-family: var(--font-body); font-size: calc(15.5px * var(--text-scale)); line-height: 1.55; color: var(--ink-2); }
 .sup-facts { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 5px 14px; margin: 0; max-width: 82ch; }
 .sup-facts dt { padding-top: 2px; font-family: var(--font-ui); font-size: 12.5px; font-weight: 500; color: var(--muted); }
@@ -253,7 +253,7 @@
 .rev-usd { white-space: nowrap; } /* "about $122 billion" stays on one line */
 
 /* ---------- a firm's China revenue share (the Export Controls panel, joined by build/exposure.js) ---------- */
-.sup-ex { font-style: normal; font-family: var(--font-code); font-weight: 400; font-size: 11px; color: var(--muted); margin-left: 6px; padding-left: 6px; border-left: 1px solid var(--line-2); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.sup-ex { font-style: normal; font-family: var(--font-ui); font-weight: 400; font-size: 11px; color: var(--muted); margin-left: 6px; padding-left: 6px; border-left: 1px solid var(--line-2); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .sup-china { margin: 10px 0 0; font-size: calc(13.5px * var(--text-scale)); line-height: 1.45; }
 .sup-china a { display: inline-block; padding: 3px 0; color: var(--ink); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 3px; }
 .sup-china a:hover { color: var(--accent-ink); text-decoration-color: currentColor; }
