@@ -11922,7 +11922,7 @@ PC.register('wafer', function (p) {
     var standfirst = function (c) {
       var t = 'The ' + esc(c.name) + ' was announced in ' + esc(when(c.announced)) + (c.shipping ? ', with shipping from ' + esc(when(c.shipping)) : '') + '.';
       var tg = c.target ? String(c.target).replace(/\.$/, '') : '';
-      if (tg) t += ' It is ' + (/^built for /i.test(tg) ? esc(low1(tg)) : 'built for ' + esc(low1(tg))) + '.';
+      if (tg) t += ' It is ' + (/^built for /i.test(tg) ? esc(low1(tg)) : /^mainly /i.test(tg) ? 'built mainly for ' + esc(tg.replace(/^mainly /i, '')) : 'built for ' + esc(low1(tg))) + '.'; // "Mainly inference, …" reads "built mainly for inference, …"
       return t;
     };
     // speeds are named together ("the FP8 and FP4 speeds"); the verb follows the number of things named
@@ -11965,11 +11965,11 @@ PC.register('wafer', function (p) {
       if (m.type) smk.push(sourceFor(c, H.memtype));
       if (!sups.length && st !== 0 && !/no HBM/i.test(m.type || '')) np.push({ t: 'the memory maker' });
       out.push({ key: 'hbm', k: 'Memory', who: sups.length ? join(sups.map(esc)) : '', det: m.type ? esc(m.type) : '', l2: st ? cap1(WORD[st] || String(st)) + ' stacks' : '', mk: smk });
-      if (!k.assembler) np.push(k.type ? { t: 'who assembles the package' } : { t: 'the package type and its assembler', pl: true });
+      if (!k.assembler) { if (k.type) np.push({ t: 'who assembles the package' }); else np.push({ t: 'the package type' }, { t: 'its assembler' }); } // three things named read "the memory maker, the package type and its assembler"
       out.push({ key: 'pkg', k: 'Package', who: k.assembler ? esc(k.assembler) : '', det: k.type ? esc(k.type) : '', l2: planSize(c) ? esc(cap1(planSize(c))) : '', mk: k.type || k.assembler ? [sourceFor(c, H.package)] : [] });
       return { rows: out, np: np };
     };
-    var npSentence = function (np, lead) { if (!np.length) return ''; var pl = np.length > 1 || np.some(function (x) { return x.pl; }), t = join(np.map(function (x) { return x.t; })); return (lead ? lead + t : cap1(t)) + (pl ? ' are' : ' is') + ' not published.'; };
+    var npSentence = function (np, lead) { if (!np.length) return ''; var t = join(np.map(function (x) { return x.t; })); return (lead ? lead + t : cap1(t)) + (np.length > 1 ? ' are' : ' is') + ' not published.'; };
     var partLine = function (c, r) {
       var det = r.det, l1;
       if (r.who && det && det.indexOf(r.who + ' ') === 0) l1 = '<b>' + r.who + '</b>' + det.slice(r.who.length); // "TSMC 3 nm (8 XCDs)": the node already names the foundry
