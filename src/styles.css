@@ -332,6 +332,7 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before {
 .prose td.n, .prose th.n { text-align: right; white-space: nowrap; padding-left: 18px; padding-right: 0; font-variant-numeric: tabular-nums lining-nums; }
 .prose th:not(.n):last-child, .prose td:not(.n):last-child { padding-right: 0; }
 @media (max-width: 480px) { .prose td.n, .prose th.n { white-space: normal; } } /* a phone lets a long range wrap at its dash so the table fits its box */
+.prose td.n + td:not(.n), .prose th.n + th:not(.n) { padding-left: 18px; } /* a text column after a figure column keeps a gap: the figure is flush right, so "100.0%" ran into "revenue, 2025" (final QA B9) */
 
 /* figures */
 .figure { margin: 1.6em 0 2em; padding: 16px 0 12px; border: 0; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--line-2); border-radius: 0; background: none; }
@@ -727,6 +728,7 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
 .ex-cat { grid-column: 1 / -1; margin: 18px 0 0; padding-bottom: 6px; border-bottom: 1px solid var(--ink); font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: 0; color: var(--ink-2); }
 .ex-cat:first-child { margin-top: 4px; }
 .ex-panel .tick { font-family: var(--font-mono); font-size: 11px; fill: var(--muted); }
+.ex-pnote { margin: 4px 0 0; font-family: var(--font-ui); font-size: 12px; line-height: 1.4; color: var(--muted); } /* what the share measures, where it differs from the firm's other published share (final QA B10) */
 .ex-panel .bar { fill: var(--ex-bar); }
 .ex-panel .bar.top { fill: var(--accent); }
 /* a hovered bar darkens; the peak keeps its wine */

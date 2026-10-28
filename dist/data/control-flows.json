@@ -1,4 +1,5 @@
 {
+  "checked": "2026-10-28",
   "flows": [
     {
       "id": "ai-chips",
@@ -178,7 +179,7 @@
       "id": "us-tools",
       "name": "Chipmaking tools",
       "route": "US → China",
-      "what": "Semiconductor manufacturing equipment and the software that runs it. A license is needed. Applications for advanced fabs meet a presumption of denial, and the rest are reviewed case by case.",
+      "what": "Semiconductor manufacturing equipment and the software that runs it. A license is needed. Applications for tools bound for advanced fabs in China meet a presumption of denial, unless the fab's owner is headquartered in the United States or an allied country, which brings a presumption of approval. Applications for other fabs are reviewed case by case.",
       "order": 3,
       "chapter": "deposition-and-etch",
       "initial": "open",
@@ -186,7 +187,12 @@
         {
           "date": "2022-10-07",
           "announced": "2022-10-07",
-          "status": "case",
+          "status": "denial",
+          "for": "most fabs in China",
+          "also": {
+            "status": "case",
+            "for": "fabs of US and allied firms"
+          },
           "label": "License required for tools that make advanced logic, DRAM and NAND chips",
           "event": "2022-10-07-october-rules",
           "cite": {
@@ -198,7 +204,12 @@
         {
           "date": "2023-11-17",
           "announced": "2023-10-17",
-          "status": "case",
+          "status": "denial",
+          "for": "advanced fabs",
+          "also": {
+            "status": "case",
+            "for": "other fabs"
+          },
           "label": "License required, with tighter equipment thresholds",
           "event": "2023-10-17-density-test",
           "cite": {
@@ -209,7 +220,12 @@
         },
         {
           "date": "2024-09-06",
-          "status": "case",
+          "status": "denial",
+          "for": "advanced fabs",
+          "also": {
+            "status": "case",
+            "for": "other fabs"
+          },
           "label": "Gate-all-around transistor technology and quantum computing items controlled worldwide",
           "event": "2024-09-06-gaafet-quantum",
           "cite": {
@@ -221,7 +237,12 @@
         {
           "date": "2024-12-31",
           "announced": "2024-12-02",
-          "status": "case",
+          "status": "denial",
+          "for": "advanced fabs",
+          "also": {
+            "status": "case",
+            "for": "other fabs"
+          },
           "label": "License required for more deposition, etch and inspection tools",
           "event": "2024-12-02-hbm-package",
           "cite": {
@@ -233,7 +254,12 @@
         {
           "date": "2025-12-31",
           "announced": "2025-08-29",
-          "status": "case",
+          "status": "denial",
+          "for": "advanced fabs",
+          "also": {
+            "status": "case",
+            "for": "other fabs"
+          },
           "label": "Foreign-owned fabs in China lose their blanket approval for US tools (VEU)",
           "event": "2025-08-29-veu-revoked",
           "cite": {
@@ -248,7 +274,7 @@
     {
       "id": "allies",
       "name": "Dutch and Japanese controls",
-      "route": "Netherlands and Japan → China",
+      "route": "Netherlands and Japan → all destinations, China included",
       "what": "Advanced immersion DUV scanners (machines that print chip patterns) and some measuring and inspection tools from the Netherlands, and the chipmaking equipment Japan added to its license list in 2023 and 2025. The Dutch controls cover exports to every destination outside the EU, and the Japanese controls cover every destination.",
       "order": 4,
       "chapter": "lithography",
@@ -347,7 +373,7 @@
       "states": [
         {
           "date": "2018-04-15",
-          "announced": "2018-04-23",
+          "published": "2018-04-23",
           "status": "prohibited",
           "label": "Denial order bars all US exports to ZTE",
           "event": "2018-04-15-zte-denial",
@@ -359,7 +385,7 @@
         },
         {
           "date": "2018-07-13",
-          "announced": "2018-07-23",
+          "published": "2018-07-23",
           "status": "open",
           "label": "After a settlement, the order ends and ZTE comes off the Denied Persons List",
           "event": "2018-07-13-zte-order-terminated",
@@ -382,7 +408,7 @@
         },
         {
           "date": "2019-05-16",
-          "announced": "2019-05-21",
+          "published": "2019-05-21",
           "status": "denial",
           "label": "Huawei and 68 affiliates listed",
           "event": "2019-05-16-huawei-listed",
@@ -394,7 +420,7 @@
         },
         {
           "date": "2020-05-15",
-          "announced": "2020-05-19",
+          "published": "2020-05-19",
           "status": "denial",
           "label": "US extends the foreign direct product rule to foreign fabs making Huawei's designs",
           "event": "2020-05-15-huawei-fdpr",
@@ -406,7 +432,7 @@
         },
         {
           "date": "2020-08-17",
-          "announced": "2020-08-20",
+          "published": "2020-08-20",
           "status": "denial",
           "label": "Rule widened to any chip made with US tools, whoever designed it",
           "event": "2020-08-17-fdpr-broadened",
@@ -418,7 +444,7 @@
         },
         {
           "date": "2020-12-18",
-          "announced": "2020-12-22",
+          "published": "2020-12-22",
           "status": "denial",
           "label": "SMIC listed, with denial at 10 nanometers and below",
           "event": "2020-12-18-smic-listed",
@@ -430,7 +456,7 @@
         },
         {
           "date": "2023-10-17",
-          "announced": "2023-10-19",
+          "published": "2023-10-19",
           "status": "denial",
           "label": "Biren and Moore Threads listed",
           "event": "2023-10-17-entity-additions",
@@ -442,7 +468,7 @@
         },
         {
           "date": "2025-03-25",
-          "announced": "2025-03-28",
+          "published": "2025-03-28",
           "status": "denial",
           "label": "Twelve more entities listed for AI and supercomputer work",
           "event": "2025-03-25-entity-additions",
@@ -454,7 +480,7 @@
         },
         {
           "date": "2025-09-29",
-          "announced": "2025-09-30",
+          "published": "2025-09-30",
           "status": "denial",
           "label": "Affiliates rule covers subsidiaries of listed firms worldwide",
           "event": "2025-09-29-affiliates-rule",
@@ -466,10 +492,11 @@
         },
         {
           "date": "2025-11-10",
-          "announced": "2025-11-12",
+          "published": "2025-11-12",
           "status": "denial",
           "suspendedUntil": "2026-11-09",
-          "label": "Affiliates rule suspended until 9 November 2026",
+          "suspends": "Affiliates rule",
+          "label": "Unlisted subsidiaries of listed firms are again outside the Entity List's license requirements",
           "event": "2025-11-10-one-year-truce",
           "cite": {
             "fr": "90 FR 50857",
@@ -534,9 +561,11 @@
         },
         {
           "date": "2025-11-09",
-          "status": "prohibited",
+          "status": "case",
           "suspendedUntil": "2026-11-27",
-          "label": "Ban on exports to America suspended",
+          "suspends": "Ban",
+          "resumes": "prohibited",
+          "label": "Licensing continues, and the stricter checks on graphite for American buyers are suspended too",
           "event": "2025-11-09-us-ban-suspended",
           "cite": {
             "fr": "MOFCOM Announcement 2025 No. 72",
@@ -622,7 +651,8 @@
           "date": "2025-11-07",
           "status": "case",
           "suspendedUntil": "2026-11-10",
-          "label": "0.1 percent rule suspended on 7 November, before it took effect",
+          "suspends": "October 2025 rules",
+          "label": "Licensing from 2023 to April 2025 stays in force, and the 0.1 percent rule has not taken effect",
           "event": "2025-11-07-october-controls-suspended",
           "cite": {
             "fr": "MOFCOM and GAC Announcement 2025 No. 70",
@@ -667,15 +697,15 @@
     {
       "id": "diffusion",
       "name": "AI chips to the rest of the world",
-      "route": "US → every other destination",
-      "what": "The top band of accelerators, ECCNs 3A090.a and 4A090.a, which need a license to or within any destination worldwide under the AI Diffusion Rule of January 2025. BIS stopped enforcing the rule in May 2025 and said it would issue a replacement. In the rule, License Exception AIA lets exporters ship them without a license to nineteen destinations, the United States and eighteen allies, listed in supplement no. 5 to part 740. License Exception LPP allows up to 26,900,000 TPP a year per recipient elsewhere. License applications for the nineteen are reviewed with a presumption of approval. The rest count against a cap of 790,000,000 TPP per country through 2027.",
+      "route": "US → D:1, D:4 and D:5, the UAE, and D:5 or Macau firms",
+      "what": "The top band of accelerators, ECCNs 3A090.a and 4A090.a. The regulations still require a license for them to or within any destination, under 15 CFR 742.6(a)(6)(iii)(A). BIS said in July 2026 that it enforces that requirement only for destinations in Country Groups D:1, D:4 and D:5 that are not also in A:5 or A:6, for the United Arab Emirates, and for entities headquartered in Country Group D:5 or Macau, or whose ultimate parent is, wherever they are located. Shipments to UAE government agencies, and to the companies approved in supplement no. 8 to part 740, need no license. The requirement came from the AI Diffusion Rule of January 2025, which the Commerce Department said on 13 May 2025 it would rescind. That rule let exporters ship without a license to nineteen destinations, the United States and eighteen allies listed in supplement no. 5 to part 740, under License Exception AIA. License Exception LPP allowed up to 26,900,000 TPP a year per recipient elsewhere. The rule reviewed license applications for the nineteen with a presumption of approval, and counted the rest against a cap of 790,000,000 TPP per country through 2027.",
       "order": 10,
       "chapter": "geopolitics",
       "initial": "open",
       "states": [
         {
           "date": "2025-01-13",
-          "announced": "2025-01-15",
+          "published": "2025-01-15",
           "status": "case",
           "label": "License required worldwide, with AIA for nineteen destinations and LPP elsewhere",
           "event": "2025-01-13-diffusion-rule",
@@ -708,7 +738,7 @@
         },
         {
           "date": "2026-07-10",
-          "announced": "2026-07-14",
+          "published": "2026-07-14",
           "status": "case",
           "label": "UAE joins Country Group A:5, and shipments to named recipients need no license",
           "event": "2026-07-10-uae-group-a5",
@@ -811,13 +841,13 @@
     },
     {
       "date": "2026-11-10",
-      "label": "China's suspension of its October 2025 export controls, including the 0.1 percent rare earth rule, ends",
+      "label": "China's suspension of six October 2025 export control announcements, including the 0.1 percent rare earth rule, ends unless extended",
       "event": "2025-11-07-october-controls-suspended",
       "source": "https://www.mofcom.gov.cn/zwgk/zcfb/art/2025/art_b1ec77dd3f0d4762952904df7cdaadec.html"
     },
     {
       "date": "2026-11-27",
-      "label": "China's suspension of its ban on gallium, germanium, antimony and superhard material exports to the US ends",
+      "label": "China's suspension of its ban on gallium, germanium, antimony and superhard material exports to the US ends unless extended",
       "event": "2025-11-09-us-ban-suspended",
       "source": "https://www.mofcom.gov.cn/zwgk/zcfb/art/2025/art_5c68985a6b1a46778e2e8dbff1bb1601.html"
     },

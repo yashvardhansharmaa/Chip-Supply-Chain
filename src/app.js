@@ -2399,6 +2399,11 @@
       var today = localISO(), lastDay = tl.length ? String(tl[tl.length - 1].date || '') : '';
       this.now = lastDay > today ? lastDay : today;
       this.asOf = this.now;
+      // the day the board's data was last checked against its sources (control-flows.json "checked"; else the newest entry).
+      // Past it the board takes nothing on its date alone: a stay whose end has come reads "extension not confirmed", and a
+      // state dated after it reads as due, until the data confirms either (final QA B3, 28 Oct 2026)
+      var ck = DATA.flows && DATA.flows.checked;
+      this.checked = /^\d{4}-\d{2}-\d{2}$/.test(String(ck || '')) ? String(ck) : (lastDay || today);
       var y0 = 2018, y1 = parseInt(this.now.slice(0, 4), 10);
       for (var y = y0; y <= y1; y++) { this.years.push(y); this.yearN[y] = 0; }
       tl.forEach(function (e) { var yy = parseInt(String(e.date).slice(0, 4), 10); if (self.yearN[yy] != null) self.yearN[yy]++; });
@@ -2439,31 +2444,64 @@
       return (st || []).slice().sort(function (a, b) { return String(a.date) < String(b.date) ? -1 : String(a.date) > String(b.date) ? 1 : 0; });
     },
     /* the state of a flow as of a date: the last state that took effect on or before it, else the flow's
-       initial state. A stay that has not yet lapsed marks the state suspended; once it lapses the
-       outcome underneath returns on its own. */
+       initial state. Only what the data has confirmed counts: past the day the data was checked (this.checked), a
+       state dated later is shown as due and not applied, and a stay whose end date has come is shown as due to end,
+       "extension not confirmed", never as ended. A stay names what it suspends ("suspends"); the pill keeps the policy
+       in force meanwhile, and "resumes" is the outcome that returns once the data confirms the stay is over. A stay
+       with no "suspends" holds up the state's own outcome, and its pill is drawn back. */
     stateAt: function (f, date) {
-      var st = f.states || [], out = null, s, k;
-      for (var i = 0; i < st.length; i++) if (st[i] && st[i].date && st[i].date <= date) out = st[i];
+      var st = f.states || [], out = null, due = null, s, k, ck = this.checkedOn() || date;
+      var upTo = String(date) > String(ck) ? ck : date; // the data speaks for each day up to its check, and no further
+      for (var i = 0; i < st.length; i++) {
+        if (!st[i] || !st[i].date) continue;
+        if (st[i].date <= upTo) out = st[i];
+        else if (st[i].date <= date && !due) due = st[i];
+      }
       s = out || (f.initial && typeof f.initial === 'object' ? f.initial : null);
+      var pending = due ? { date: due.date, label: due.label || '' } : null;
       if (!s) {
         k = this.norm(typeof f.initial === 'string' ? f.initial : 'open');
-        return { status: k, label: this.STATE[k], date: null, announced: null, suspendedUntil: null, suspended: false, cite: null, event: null };
+        return { status: k, label: this.STATE[k], date: null, announced: null, published: null, suspendedUntil: null, suspends: '', suspended: false, unconfirmed: false, also: null, scope: '', pending: pending, cite: null, event: null };
       }
-      k = this.norm(s.status);
+      var until = s.suspendedUntil ? String(s.suspendedUntil) : null;
+      var holds = !!until && until >= String(date); // the stay runs to the end of its last day
+      var unconfirmed = !!until && !holds && until >= String(ck); // ended after the data was checked: not taken as ended
+      var lapsed = !!until && !holds && !unconfirmed;
+      k = this.norm(lapsed && s.resumes ? s.resumes : s.status);
       return {
         status: k,
         label: s.label || this.STATE[k],
         date: out ? out.date : (s.date || null),
         announced: s.announced || null, // missing: the effective date stands for both
-        suspendedUntil: s.suspendedUntil || null,
-        suspended: !!(s.suspendedUntil && String(s.suspendedUntil) >= String(date)),
+        published: s.published || null, // the Federal Register's publication day, when that is the second date
+        suspendedUntil: until,
+        suspends: s.suspends || '',
+        suspended: holds || unconfirmed,
+        unconfirmed: unconfirmed,
+        also: s.also && s.also.status ? { status: this.norm(s.also.status), scope: s.also.for || '' } : null, // a second review policy, with whom it covers
+        scope: s.for || '',
+        pending: pending,
         cite: s.cite || null, // missing: nothing is printed
         event: s.event || null
       };
     },
     keyOf: function (s) {
-      return s.status + '|' + s.label + '|' + (s.date || '') + '|' + (s.announced || '') +
-        '|' + (s.suspended ? s.suspendedUntil : '') + '|' + this.citeText(s.cite) + '|' + ((s.cite && s.cite.url) || '');
+      return s.status + '|' + s.label + '|' + (s.date || '') + '|' + (s.announced || '') + '|' + (s.published || '') +
+        '|' + (s.suspended ? s.suspendedUntil + (s.unconfirmed ? '?' : '') : '') + '|' + (s.also ? s.also.status + s.also.scope : '') +
+        '|' + (s.pending ? s.pending.date : '') + '|' + this.citeText(s.cite) + '|' + ((s.cite && s.cite.url) || '');
+    },
+    checkedOn: function () { // works before the board is built, for the export bar at boot
+      if (this.checked) return this.checked;
+      var ck = DATA.flows && DATA.flows.checked;
+      return /^\d{4}-\d{2}-\d{2}$/.test(String(ck || '')) ? String(ck) : '';
+    },
+    /* the tag beside a stayed state: the measure on hold and until when, or, once that day has passed without the data
+       confirming the end, that it was due to end and no extension is confirmed */
+    stayText: function (s) {
+      if (!s || !s.suspended || !s.suspendedUntil) return '';
+      var d = this.fmtDate(s.suspendedUntil), what = s.suspends || '';
+      if (s.unconfirmed) return (what ? what + ' due' : 'Due') + ' to end ' + d + ', extension not confirmed';
+      return (what ? what + ' suspended' : 'Suspended') + ' until ' + d;
     },
     /* the moves that touched a flow: the events that name it, or the events its own states name */
     eventsFor: function (f) {
@@ -2475,9 +2513,12 @@
       return out;
     },
     nMoves: function (f) { var n = (this.evs[f.id] || []).length; return n || (f.states || []).length; },
-    fmtDate: function (iso) {
-      var d = new Date(String(iso) + 'T00:00:00');
-      return isNaN(d) ? String(iso || '') : d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+    /* "29 Sep 2025": day first, with one set of month abbreviations (the browser's en-GB "Sept" and en-US "Sep" disagreed),
+       as the static /export-controls/ page prints them (build/modules/reference-pages.js shortDate) */
+    MON: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    fmtDate: function (iso, noYear) {
+      var m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(iso || ''));
+      return m && +m[2] >= 1 && +m[2] <= 12 ? +m[3] + ' ' + this.MON[+m[2] - 1] + (noYear ? '' : ' ' + m[1]) : String(iso || '');
     },
     readMode: function () { try { var v = localStorage.getItem(this.MODE_KEY); return v === 'date' || v === 'subject' ? v : null; } catch (e) { return null; } },
     saveMode: function (m) { try { localStorage.setItem(this.MODE_KEY, m); } catch (e) { } },
@@ -2518,8 +2559,7 @@
           year = y;
           html += '<li class="tl-year"><div class="year-label">' + esc(y) + '</div><span class="tl-n">' + counts[y] + (counts[y] === 1 ? ' move' : ' moves') + '</span>' + self.yearSum(y) + '</li>';
         }
-        var d = new Date(e.date + 'T00:00:00');
-        var ds = isNaN(d) ? esc(e.date) : d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        var ds = esc(self.fmtDate(e.date, true)); // "15 Apr": day first, as the board and the static page print dates
         var host = e.source ? e.source.replace(/^https?:\/\//, '').split('/')[0] : '';
         var eff = e.effectiveDate && e.effectiveDate !== e.date ? e.effectiveDate : null; // a rule takes force after it is announced
         var inst = self.instWord(e.instrument), cite = self.citeText({ fr: e.frCitation, cfr: e.cfr });
@@ -2528,7 +2568,7 @@
           '<div class="tl-body"><span class="cf-ev-tags"><span class="cat ' + self.CATS[self.lane(e.category)].cls + '">' + esc(e.category || '') + '</span>' +
           (inst ? '<span class="cf-inst">' + esc(inst) + '</span>' : '') + '</span>' +
           '<h4>' + esc(e.title) + '</h4><p class="tl-gist">' + esc(self.gistOf(e)) + '</p>' +
-          (cite ? self.citeHTML({ fr: e.frCitation, cfr: e.cfr, url: e.source }, 'cf-ev-cite') : '') +
+          (cite ? self.citeHTML({ fr: e.frCitation, cfr: e.cfr, url: (e.cite && e.cite.url) || e.source }, 'cf-ev-cite') : '') +
           '<button type="button" class="tl-more" aria-expanded="false" aria-controls="tl-p' + i + '">More</button>' +
           // the entry's own address (#/controls/<event-id>, stable as entries are added); a click copies it
           (e.id ? '<a class="tl-more tl-link" href="' + esc('#/controls/' + encodeURIComponent(e.id)) + '" style="margin-left:14px;text-decoration:none" aria-label="Copy a link to this entry" title="Copy a link to this entry">Link</a>' : '') +
@@ -2553,7 +2593,7 @@
       this.flows.forEach(function (f) {
         var s = self.stateAt(f, end);
         if (s.status !== 'open') counts[s.status] = (counts[s.status] || 0) + 1;
-        if (s.suspendedUntil && String(s.suspendedUntil) >= String(end)) susp++;
+        if (s.suspended) susp++;
       });
       order.forEach(function (k) { if (counts[k]) parts.push(counts[k] + ' ' + esc(String(self.STATE[k]).toLowerCase())); });
       if (susp) parts.push(susp + ' suspended');
@@ -2610,9 +2650,10 @@
       var raw = DATA.flows && DATA.flows.upcoming, host = $('#cf-upcoming');
       var today = new Date(); today = new Date(today.getFullYear(), today.getMonth(), today.getDate());
       var day = function (iso) { var p = String(iso || '').split('-').map(Number); return p.length === 3 && p[0] ? new Date(p[0], p[1] - 1, p[2]) : null; };
+      var ck = this.checkedOn();
       var list = (Object.prototype.toString.call(raw) === '[object Array]' ? raw : []).map(function (u) {
         var d = u && day(u.date); return d ? { u: u, n: Math.round((d - today) / 86400000) } : null;
-      }).filter(function (x) { return x && x.n >= 0; }).sort(function (a, b) { return a.n - b.n; });
+      }).filter(function (x) { return x && (x.n >= 0 || (ck && String(x.u.date) >= ck)); }).sort(function (a, b) { return a.n - b.n; }); // passed, but after the data was checked: kept, not confirmed
       if (!list.length) { if (host) host.hidden = true; return; }
       if (!host) {
         var sub = $('.view[data-view="controls"] .sub[data-sub="timeline"]'); if (!sub) return;
@@ -2631,10 +2672,10 @@
       // the deadlines first (the page's own order): the date, how far off it is, what happens, and the entry or source behind it.
       // A deadline within a month is ink, the others muted; the accent never marks a data value (src/modules/controls.css .cf-up)
       host.innerHTML = '<h2 class="cf-up-h" id="cf-up-h">Coming up</h2><ol class="cf-up-list">' + list.map(function (x) {
-        var u = x.u, when = x.n === 0 ? 'Today' : x.n === 1 ? 'Tomorrow' : 'In ' + x.n + ' days'; // sentence case as written: CSS sets no capitals
+        var u = x.u, when = x.n < 0 ? 'Passed, outcome not confirmed' : x.n === 0 ? 'Today' : x.n === 1 ? 'Tomorrow' : 'In ' + x.n + ' days'; // sentence case as written: CSS sets no capitals
         var link = u.event ? '<a class="cf-up-link" href="' + esc('#/controls/' + encodeURIComponent(u.event)) + '" aria-label="Entry in the timeline">Entry <span aria-hidden="true">→</span></a>'
           : (u.source && safeUrl(u.source) !== '#' ? '<a class="cf-up-link" href="' + safeUrl(u.source) + '" target="_blank" rel="noopener">Source</a>' : '');
-        return '<li class="cf-up-i' + (x.n <= 30 ? ' is-soon' : '') + '"><span class="cf-up-d">' + esc(self.fmtDate(u.date)) + '</span>' +
+        return '<li class="cf-up-i' + (x.n < 0 ? ' is-passed' : x.n <= 30 ? ' is-soon' : '') + '"><span class="cf-up-d">' + esc(self.fmtDate(u.date)) + '</span>' +
           '<span class="cf-up-n">' + esc(when) + '</span>' +
           '<span class="cf-up-t">' + esc(u.label || '') + link + '</span></li>';
       }).join('') + '</ol>';
@@ -2681,11 +2722,13 @@
     RAMP: ['open', 'restricted', 'case', 'denial', 'prohibited'],
     rampAt: function (st) { return Math.max(0, this.RAMP.indexOf(st.status)); },
     rampClass: function (st) {
-      return 'cf-ramp' + (st.status === 'policy' ? ' is-policy' : '') + (this.rampAt(st) >= 3 ? ' is-closed' : '') + (st.suspended ? ' is-susp' : '');
+      return 'cf-ramp' + (st.status === 'policy' ? ' is-policy' : '') + (this.rampAt(st) >= 3 ? ' is-closed' : '') + (st.suspended && !st.suspends ? ' is-susp' : '');
     },
     /* the row read aloud: the button carries no text of its own, so it says what the row says */
     rowLabel: function (f, st, n) {
-      return [f.name || f.id, f.route, this.STATE[st.status] + (st.suspended ? ', suspended until ' + this.fmtDate(st.suspendedUntil) : ''),
+      return [f.name || f.id, f.route, this.STATE[st.status] + (st.scope ? ' for ' + st.scope : ''),
+      st.also ? this.STATE[st.also.status] + (st.also.scope ? ' for ' + st.also.scope : '') : '', this.stayText(st),
+      st.pending ? 'change due ' + this.fmtDate(st.pending.date) + ', not confirmed' : '',
       st.date ? 'from ' + this.fmtDate(st.date) : 'open since 2018', n + (n === 1 ? ' event' : ' events')].filter(function (x) { return x; }).join(', ');
     },
     /* the glossary's own terms inside a state label become popover buttons, so TPP and the Entity List are defined in place */
@@ -2700,10 +2743,15 @@
     pillHTML: function (st) {
       var word = this.STATE[st.status];
       var dates = st.date ? 'from ' + this.fmtDate(st.date) : 'open since 2018';
-      if (st.announced && st.date && st.announced !== st.date) dates += ' · announced ' + this.fmtDate(st.announced);
+      if (st.published && st.date && st.published !== st.date) dates += ' · published ' + this.fmtDate(st.published); // the Federal Register's day
+      else if (st.announced && st.date && st.announced !== st.date) dates += ' · announced ' + this.fmtDate(st.announced);
+      var stay = this.stayText(st);
       return '<span class="cf-pills">' +
-        '<span class="cf-pill is-' + esc(st.status) + (st.suspended ? ' is-suspended' : '') + '">' + esc(word) + '</span>' +
-        (st.suspended ? '<span class="cf-susp">Suspended until ' + esc(this.fmtDate(st.suspendedUntil)) + '</span>' : '') +
+        '<span class="cf-pill is-' + esc(st.status) + (st.suspended && !st.suspends ? ' is-suspended' : '') + '">' + esc(word) + '</span>' +
+        (st.scope ? '<span class="cf-for">' + esc(st.scope) + '</span>' : '') +
+        (st.also ? '<span class="cf-pill is-' + esc(st.also.status) + '">' + esc(this.STATE[st.also.status]) + '</span>' + (st.also.scope ? '<span class="cf-for">' + esc(st.also.scope) + '</span>' : '') : '') +
+        (stay ? '<span class="cf-susp' + (st.unconfirmed ? ' is-unconfirmed' : '') + '">' + esc(stay) + '</span>' : '') +
+        (st.pending ? '<span class="cf-susp is-unconfirmed">Change due ' + esc(this.fmtDate(st.pending.date)) + ', not confirmed</span>' : '') +
         '</span>' +
         (st.label && st.label !== word ? '<span class="cf-lab">' + this.gloss(st.label) + '</span>' : '') +
         '<span class="cf-when">' + esc(dates) + '</span>' +
@@ -2786,7 +2834,8 @@
         var moves = tl.filter(function (e) { return (e.flows || []).indexOf(f.id) >= 0; }).length;
         return {
           flow: f.name, route: f.route, asOf: asOf, state: self.STATE[st.status], label: st.label || '',
-          since: st.date || '', announced: st.announced || '', suspendedUntil: st.suspendedUntil || '',
+          since: st.date || '', announced: st.announced || '', published: st.published || '', suspendedUntil: st.suspended ? st.suspendedUntil || '' : '', suspends: st.suspended ? st.suspends : '',
+          stay: self.stayText(st), alsoState: st.also ? self.STATE[st.also.status] : '', dataChecked: self.checkedOn(),
           setBy: ev ? ev.title : '', fr: c.fr || '', cfr: c.cfr || '', url: c.url || '', source: ev ? ev.source : '', moves: moves
         };
       });
@@ -2804,8 +2853,10 @@
         return '<li class="cf-ev' + (s ? ' is-move' : '') + '">' +
           '<div class="cf-ev-p">' + (s
             ? '<span class="cf-pill is-' + esc(self.norm(s.status)) + '">' + esc(word) + '</span>' +
+            (s.for ? '<span class="cf-for">' + esc(s.for) + '</span>' : '') +
+            (s.also && s.also.status ? '<span class="cf-pill is-' + esc(self.norm(s.also.status)) + '">' + esc(self.word(s.also.status)) + '</span>' + (s.also.for ? '<span class="cf-for">' + esc(s.also.for) + '</span>' : '') : '') +
             (s.label ? '<span class="cf-ev-lab">' + self.gloss(s.label) + '</span>' : '') +
-            (s.suspendedUntil ? '<span class="cf-susp">Suspended until ' + esc(self.fmtDate(s.suspendedUntil)) + '</span>' : '') +
+            (s.suspendedUntil ? '<span class="cf-susp">' + esc((s.suspends ? s.suspends + ' suspended' : 'Suspended') + ' until ' + self.fmtDate(s.suspendedUntil)) + '</span>' : '') +
             (s.date && s.date !== (eff || e.date) ? '<span class="cf-ev-from">from ' + esc(self.fmtDate(s.date)) + '</span>' : '') +
             (sCite && sCite !== eCite ? self.citeHTML(s.cite, 'cf-ev-cite') : '')
             : '<span class="cf-ev-none">no change</span>') + '</div>' +
@@ -2816,7 +2867,7 @@
           '<div class="cf-ev-b"><span class="cf-ev-tags"><span class="cat ' + self.CATS[self.lane(e.category)].cls + '">' + esc(e.category || '') + '</span>' +
           (inst ? '<span class="cf-inst">' + esc(inst) + '</span>' : '') + '</span>' +
           '<h5 class="cf-ev-t">' + esc(e.title) + '</h5><p class="cf-ev-g">' + esc(self.gistOf(e)) + '</p>' +
-          (eCite ? self.citeHTML({ fr: e.frCitation, cfr: e.cfr, url: e.source }, 'cf-ev-cite') : '') +
+          (eCite ? self.citeHTML({ fr: e.frCitation, cfr: e.cfr, url: (e.cite && e.cite.url) || e.source }, 'cf-ev-cite') : '') +
           '<button type="button" class="tl-more" aria-expanded="false" aria-controls="' + id + '">More</button>' +
           '<div class="tl-panel" id="' + id + '" hidden><p>' + esc(e.summary || '') + '</p>' +
           (host ? '<a class="src" href="' + safeUrl(e.source) + '" target="_blank" rel="noopener">' + esc(host) + '</a>' : '') +
@@ -2835,7 +2886,8 @@
     renderScrub: function () {
       var self = this, host = $('#cf-scrub');
       if (!host || !this.flows) return;
-      host.innerHTML = '<div class="cf-scrub-h"><p class="cf-asof">Board as of <b id="cf-asof">' + esc(this.fmtDate(this.asOf)) + '</b></p>' +
+      host.innerHTML = '<div class="cf-scrub-h"><p class="cf-asof">Board as of <b id="cf-asof">' + esc(this.fmtDate(this.asOf)) + '</b>' +
+        '<span class="cf-checked" id="cf-checked"' + (this.asOf > this.checked ? '' : ' hidden') + '>· data checked ' + esc(this.fmtDate(this.checked)) + '</span></p>' +
         '<button type="button" class="cf-now" id="cf-now">Now</button></div>' +
         '<div class="cf-track"><div class="cf-years" id="cf-years" role="group" aria-label="Set the date by year">' +
         this.years.map(function (y) {
@@ -2872,6 +2924,7 @@
       var prev = this.asOf;
       this.asOf = date;
       var lab = $('#cf-asof'); if (lab) lab.textContent = this.fmtDate(date);
+      var chk = $('#cf-checked'); if (chk) chk.hidden = !(String(date) > String(this.checked)); // the board is the data's as of its check
       if (!span && prev && prev !== date) span = prev < date ? [prev, date] : [date, prev];
       var changed = this.paintBoard(prev === date ? null : span);
       this.markYears(); this.placeHead();

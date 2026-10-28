@@ -6847,5 +6847,19 @@
     "date": "2026-10-19",
     "type": "article",
     "accessed": "2026-10-28"
+  },
+  "https://zoek.officielebekendmakingen.nl/stcrt-2023-18212.html": {
+    "title": "Regeling geavanceerde productieapparatuur voor halfgeleiders (Staatscourant 2023, 18212)",
+    "publisher": "Ministry of Foreign Affairs of the Netherlands (Staatscourant)",
+    "date": "2023-06-30",
+    "type": "regulation",
+    "accessed": "2026-10-28"
+  },
+  "https://www.government.nl/site/binaries/site-content/collections/documents/2025/11/19/letter-to-the-parliament-on-the-latest-developments-concerning-nexperia/102176837+Developments+concerning+Nexperia.pdf": {
+    "title": "Developments concerning Nexperia, letter to the House of Representatives",
+    "publisher": "Government of the Netherlands (Ministry of Economic Affairs)",
+    "date": "2025-11-19",
+    "type": "pdf",
+    "accessed": "2026-10-28"
   }
 }

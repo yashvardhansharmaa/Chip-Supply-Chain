@@ -80,7 +80,8 @@
  "finding": "China took 33 percent of ASML's 2025 system sales, the largest share",
  "unit": "%",
  "data": [["China", 33], ["South Korea", 25], ["Taiwan", 22], ["United States", 12], ["Japan", 5], ["Rest of Asia", 2], ["EMEA", 1]],
- "source": {"label": "ASML Q4 2025 investor presentation", "url": "https://ourbrand.asml.com/m/3136300aa4999bc1/original/2026_01_28_Presentation-Investor-Relations-Q4-2025.pdf#page=9"}
+ "source": {"label": "ASML Q4 2025 investor presentation", "url": "https://ourbrand.asml.com/m/3136300aa4999bc1/original/2026_01_28_Presentation-Investor-Relations-Q4-2025.pdf#page=9"},
+ "note": "Net system sales leave out service and field option sales, which ASML counts in its total net sales. The Export Controls page measures China's share against total net sales."
  }
  ]
 }

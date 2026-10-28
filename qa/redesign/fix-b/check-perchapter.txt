@@ -1,0 +1,360 @@
+ok   design-and-eda: no other page carries its prose (32 paragraphs and items)
+ok   silicon-and-wafers: no other page carries its prose (29 paragraphs and items)
+ok   chemicals-gases-and-photoresist: no other page carries its prose (32 paragraphs and items)
+ok   lithography: no other page carries its prose (44 paragraphs and items)
+ok   photomasks-and-pellicles: no other page carries its prose (30 paragraphs and items)
+ok   deposition-and-etch: no other page carries its prose (38 paragraphs and items)
+ok   metrology-and-inspection: no other page carries its prose (32 paragraphs and items)
+ok   foundries-and-fabs: no other page carries its prose (52 paragraphs and items)
+ok   memory-and-hbm: no other page carries its prose (23 paragraphs and items)
+ok   advanced-packaging: no other page carries its prose (31 paragraphs and items)
+ok   substrates-and-pcbs: no other page carries its prose (28 paragraphs and items)
+ok   test-and-assembly: no other page carries its prose (27 paragraphs and items)
+ok   systems-and-networking: no other page carries its prose (27 paragraphs and items)
+ok   data-centers-and-power: no other page carries its prose (33 paragraphs and items)
+ok   component-costs: no other page carries its prose (21 paragraphs and items)
+ok   geopolitics: no other page carries its prose (52 paragraphs and items)
+ok   the home page holds no chapter article
+     531 paragraphs and list items of chapter prose looked for in 27 pages (the book, which holds them all for print, aside)
+     weights (bytes on disk, before compression; fonts, media and the search index, fetched when the search opens, aside):
+     the home page of 28 Oct, every chapter inlined: 4552 KB
+     the home page now: 302 KB of HTML, 2322 KB with site.css, kit.js, data.js, terms.js, app.js
+     the shared files a chapter page loads: site.css 393 KB, kit.js 229 KB, terms.js 68 KB, app.js 457 KB
+     /design-and-eda/: 138 KB of HTML, 1285 KB with the shared files (28% of the old home page)
+ok   design-and-eda: the page is small (under 300 KB of HTML, under half the old home page with its files): 138 KB, 1285 KB
+     /silicon-and-wafers/: 134 KB of HTML, 1281 KB with the shared files (28% of the old home page)
+ok   silicon-and-wafers: the page is small (under 300 KB of HTML, under half the old home page with its files): 134 KB, 1281 KB
+     /chemicals-gases-and-photoresist/: 159 KB of HTML, 1306 KB with the shared files (29% of the old home page)
+ok   chemicals-gases-and-photoresist: the page is small (under 300 KB of HTML, under half the old home page with its files): 159 KB, 1306 KB
+     /lithography/: 168 KB of HTML, 1314 KB with the shared files (29% of the old home page)
+ok   lithography: the page is small (under 300 KB of HTML, under half the old home page with its files): 168 KB, 1314 KB
+     /photomasks-and-pellicles/: 133 KB of HTML, 1280 KB with the shared files (28% of the old home page)
+ok   photomasks-and-pellicles: the page is small (under 300 KB of HTML, under half the old home page with its files): 133 KB, 1280 KB
+     /deposition-and-etch/: 160 KB of HTML, 1307 KB with the shared files (29% of the old home page)
+ok   deposition-and-etch: the page is small (under 300 KB of HTML, under half the old home page with its files): 160 KB, 1307 KB
+     /metrology-and-inspection/: 145 KB of HTML, 1291 KB with the shared files (28% of the old home page)
+ok   metrology-and-inspection: the page is small (under 300 KB of HTML, under half the old home page with its files): 145 KB, 1291 KB
+     /foundries-and-fabs/: 178 KB of HTML, 1324 KB with the shared files (29% of the old home page)
+ok   foundries-and-fabs: the page is small (under 300 KB of HTML, under half the old home page with its files): 178 KB, 1324 KB
+     /memory-and-hbm/: 131 KB of HTML, 1277 KB with the shared files (28% of the old home page)
+ok   memory-and-hbm: the page is small (under 300 KB of HTML, under half the old home page with its files): 131 KB, 1277 KB
+     /advanced-packaging/: 145 KB of HTML, 1292 KB with the shared files (28% of the old home page)
+ok   advanced-packaging: the page is small (under 300 KB of HTML, under half the old home page with its files): 145 KB, 1292 KB
+     /substrates-and-pcbs/: 142 KB of HTML, 1289 KB with the shared files (28% of the old home page)
+ok   substrates-and-pcbs: the page is small (under 300 KB of HTML, under half the old home page with its files): 142 KB, 1289 KB
+     /test-and-assembly/: 137 KB of HTML, 1284 KB with the shared files (28% of the old home page)
+ok   test-and-assembly: the page is small (under 300 KB of HTML, under half the old home page with its files): 137 KB, 1284 KB
+     /systems-and-networking/: 142 KB of HTML, 1289 KB with the shared files (28% of the old home page)
+ok   systems-and-networking: the page is small (under 300 KB of HTML, under half the old home page with its files): 142 KB, 1289 KB
+     /data-centers-and-power/: 141 KB of HTML, 1287 KB with the shared files (28% of the old home page)
+ok   data-centers-and-power: the page is small (under 300 KB of HTML, under half the old home page with its files): 141 KB, 1287 KB
+     /component-costs/: 128 KB of HTML, 1275 KB with the shared files (28% of the old home page)
+ok   component-costs: the page is small (under 300 KB of HTML, under half the old home page with its files): 128 KB, 1275 KB
+     /geopolitics/: 196 KB of HTML, 1343 KB with the shared files (30% of the old home page)
+ok   geopolitics: the page is small (under 300 KB of HTML, under half the old home page with its files): 196 KB, 1343 KB
+ok   design-and-eda 1440: the page is its chapter alone: /design-and-eda/ design-and-eda
+ok   design-and-eda 1440: the masthead with search and theme
+ok   design-and-eda 1440: the rail with Hide contents, the chain's 14 four-bar meters and the chapters across it, and the figures list: {"hide":true,"meters":14,"across":2,"figs":4,"listed":4}
+ok   design-and-eda 1440: the live specimen in its slot: die-floorplan (wants die-floorplan)
+ok   design-and-eda 1440: a drag turns the specimen: 0.00 to 0.96
+ok   design-and-eda 1440: the chokepoint card with its meter
+ok   design-and-eda 1440: a look-up pop-up opens: eda: The software that turns a description of what a ch
+ok   design-and-eda 1440: a figure has Cite, Table, CSV and PNG, and Table opens its rows: Cite Table CSV PNG; {"rows":3,"h":105,"bars":"none"}
+ok   design-and-eda 1440: the cite line's Cite this chapter and Chapter PDF (served): ../pdf/design-and-eda.pdf 200 application/pdf
+ok   design-and-eda 1440: an animation step seeks the video: step at 10.4s: {"cur":"step","t":10.5698,"src":true}
+ok   design-and-eda 1440: a flashcard turns
+ok   design-and-eda 1440: the sources (30): 30 listed
+ok   design-and-eda 1440: Next goes to silicon-and-wafers's page: ../silicon-and-wafers/ -> /silicon-and-wafers/
+ok   design-and-eda 390 dark: dark, the live drawing in the strip, no sideways scroll: {"theme":"dark","ground":"rgb(18, 18, 17)","strip":true,"wide":0}
+ok   silicon-and-wafers 1440: the page is its chapter alone: /silicon-and-wafers/ silicon-and-wafers
+ok   silicon-and-wafers 1440: the masthead with search and theme
+ok   silicon-and-wafers 1440: the rail with Hide contents, the chain's 14 four-bar meters and the chapters across it, and the figures list: {"hide":true,"meters":14,"across":2,"figs":3,"listed":3}
+ok   silicon-and-wafers 1440: the live specimen in its slot: boule-and-wafer (wants boule-and-wafer)
+ok   silicon-and-wafers 1440: a drag turns the specimen: 0.00 to 0.96
+ok   silicon-and-wafers 1440: the chokepoint card with its meter
+ok   silicon-and-wafers 1440: a look-up pop-up opens: wafer: The polished disc of ultrapure silicon that chips 
+ok   silicon-and-wafers 1440: a figure has Cite, Table, CSV and PNG, and Table opens its rows: Cite Table CSV PNG; {"rows":5,"h":175,"bars":"none"}
+ok   silicon-and-wafers 1440: the cite line's Cite this chapter and Chapter PDF (served): ../pdf/silicon-and-wafers.pdf 200 application/pdf
+ok   silicon-and-wafers 1440: an animation step seeks the video: step at 11.4s: {"cur":"step","t":11.6285,"src":true}
+ok   silicon-and-wafers 1440: a flashcard turns
+ok   silicon-and-wafers 1440: the sources (30): 30 listed
+ok   silicon-and-wafers 1440: Next goes to chemicals-gases-and-photoresist's page: ../chemicals-gases-and-photoresist/ -> /chemicals-gases-and-photoresist/
+ok   silicon-and-wafers 390 dark: dark, the live drawing in the strip, no sideways scroll: {"theme":"dark","ground":"rgb(18, 18, 17)","strip":true,"wide":0}
+ok   chemicals-gases-and-photoresist 1440: the page is its chapter alone: /chemicals-gases-and-photoresist/ chemicals-gases-and-photoresist
+ok   chemicals-gases-and-photoresist 1440: the masthead with search and theme
+ok   chemicals-gases-and-photoresist 1440: the rail with Hide contents, the chain's 14 four-bar meters and the chapters across it, and the figures list: {"hide":true,"meters":14,"across":2,"figs":3,"listed":3}
+ok   chemicals-gases-and-photoresist 1440: the live specimen in its slot: gas-cabinet (wants gas-cabinet)
+ok   chemicals-gases-and-photoresist 1440: a drag turns the specimen: 0.00 to 0.96
+ok   chemicals-gases-and-photoresist 1440: the chokepoint card with its meter
+ok   chemicals-gases-and-photoresist 1440: a look-up pop-up opens: chip: A chip is a small rectangle of silicon, usually sm
+ok   chemicals-gases-and-photoresist 1440: a figure has Cite, Table, CSV and PNG, and Table opens its rows: Cite Table CSV PNG; {"rows":2,"h":70,"bars":"none"}
+ok   chemicals-gases-and-photoresist 1440: the cite line's Cite this chapter and Chapter PDF (served): ../pdf/chemicals-gases-and-photoresist.pdf 200 application/pdf
+ok   chemicals-gases-and-photoresist 1440: an animation step seeks the video: step at 11.1s: {"cur":"step","t":11.337,"src":true}
+ok   chemicals-gases-and-photoresist 1440: a flashcard turns
+ok   chemicals-gases-and-photoresist 1440: the sources (49): 49 listed
+ok   chemicals-gases-and-photoresist 1440: Next goes to lithography's page: ../lithography/ -> /lithography/
+ok   chemicals-gases-and-photoresist 390 dark: dark, the live drawing in the strip, no sideways scroll: {"theme":"dark","ground":"rgb(18, 18, 17)","strip":true,"wide":0}
+ok   lithography 1440: the page is its chapter alone: /lithography/ lithography
+ok   lithography 1440: the masthead with search and theme
+ok   lithography 1440: the rail with Hide contents, the chain's 14 four-bar meters and the chapters across it, and the figures list: {"hide":true,"meters":14,"across":2,"figs":5,"listed":5}
+ok   lithography 1440: the live specimen in its slot: euv-scanner (wants euv-scanner)
+ok   lithography 1440: a drag turns the specimen: 0.00 to 0.96
+ok   lithography 1440: the chokepoint card with its meter
+ok   lithography 1440: a look-up pop-up opens: scanner: The light that prints the finest layers of every l
+ok   lithography 1440: a figure has Cite, Table, CSV and PNG, and Table opens its rows: Cite Table CSV PNG; {"rows":3,"h":105,"bars":"none"}
+ok   lithography 1440: the cite line's Cite this chapter and Chapter PDF (served): ../pdf/lithography.pdf 200 application/pdf
+ok   lithography 1440: an animation step seeks the video: step at 6.2s: {"cur":"step","t":6.3914,"src":true}
+ok   lithography 1440: a flashcard turns
+ok   lithography 1440: the sources (51): 51 listed
+ok   lithography 1440: Next goes to photomasks-and-pellicles's page: ../photomasks-and-pellicles/ -> /photomasks-and-pellicles/
+ok   lithography 390 dark: dark, the live drawing in the strip, no sideways scroll: {"theme":"dark","ground":"rgb(18, 18, 17)","strip":true,"wide":0}
+ok   photomasks-and-pellicles 1440: the page is its chapter alone: /photomasks-and-pellicles/ photomasks-and-pellicles
+ok   photomasks-and-pellicles 1440: the masthead with search and theme
+ok   photomasks-and-pellicles 1440: the rail with Hide contents, the chain's 14 four-bar meters and the chapters across it, and the figures list: {"hide":true,"meters":14,"across":2,"figs":2,"listed":2}
+ok   photomasks-and-pellicles 1440: the live specimen in its slot: photomask (wants photomask)
+ok   photomasks-and-pellicles 1440: a drag turns the specimen: 0.00 to 0.96
+ok   photomasks-and-pellicles 1440: the chokepoint card with its meter
+ok   photomasks-and-pellicles 1440: a look-up pop-up opens: euv: The master template for one layer of a chip: a qua
+ok   photomasks-and-pellicles 1440: a figure has Cite, Table, CSV and PNG, and Table opens its rows: Cite Table CSV PNG; {"rows":3,"h":105,"bars":"none"}
+ok   photomasks-and-pellicles 1440: the cite line's Cite this chapter and Chapter PDF (served): ../pdf/photomasks-and-pellicles.pdf 200 application/pdf
+ok   photomasks-and-pellicles 1440: an animation step seeks the video: step at 9.6s: {"cur":"step","t":9.65,"src":true}
+ok   photomasks-and-pellicles 1440: a flashcard turns
+ok   photomasks-and-pellicles 1440: the sources (34): 34 listed
+ok   photomasks-and-pellicles 1440: Next goes to deposition-and-etch's page: ../deposition-and-etch/ -> /deposition-and-etch/
+ok   photomasks-and-pellicles 390 dark: dark, the live drawing in the strip, no sideways scroll: {"theme":"dark","ground":"rgb(18, 18, 17)","strip":true,"wide":0}
+ok   deposition-and-etch 1440: the page is its chapter alone: /deposition-and-etch/ deposition-and-etch
+ok   deposition-and-etch 1440: the masthead with search and theme
+ok   deposition-and-etch 1440: the rail with Hide contents, the chain's 14 four-bar meters and the chapters across it, and the figures list: {"hide":true,"meters":14,"across":2,"figs":4,"listed":4}
+ok   deposition-and-etch 1440: the live specimen in its slot: process-chamber (wants process-chamber)
+ok   deposition-and-etch 1440: a drag turns the specimen: 0.00 to 0.96
+ok   deposition-and-etch 1440: the chokepoint card with its meter
+ok   deposition-and-etch 1440: a look-up pop-up opens: deposition: Adding a layer of material to a wafer. Machines kn
+ok   deposition-and-etch 1440: a figure has Cite, Table, CSV and PNG, and Table opens its rows: Cite Table CSV PNG; {"rows":7,"h":245,"bars":"none"}
+ok   deposition-and-etch 1440: the cite line's Cite this chapter and Chapter PDF (served): ../pdf/deposition-and-etch.pdf 200 application/pdf
+ok   deposition-and-etch 1440: an animation step seeks the video: step at 5.4s: {"cur":"step","t":5.5562,"src":true}
+ok   deposition-and-etch 1440: a flashcard turns
+ok   deposition-and-etch 1440: the sources (48): 48 listed
+ok   deposition-and-etch 1440: Next goes to metrology-and-inspection's page: ../metrology-and-inspection/ -> /metrology-and-inspection/
+ok   deposition-and-etch 390 dark: dark, the live drawing in the strip, no sideways scroll: {"theme":"dark","ground":"rgb(18, 18, 17)","strip":true,"wide":0}
+ok   metrology-and-inspection 1440: the page is its chapter alone: /metrology-and-inspection/ metrology-and-inspection
+ok   metrology-and-inspection 1440: the masthead with search and theme
+ok   metrology-and-inspection 1440: the rail with Hide contents, the chain's 14 four-bar meters and the chapters across it, and the figures list: {"hide":true,"meters":14,"across":2,"figs":4,"listed":4}
+ok   metrology-and-inspection 1440: the live specimen in its slot: sem-column (wants sem-column)
+ok   metrology-and-inspection 1440: a drag turns the specimen: 0.00 to 0.96
+ok   metrology-and-inspection 1440: the chokepoint card with its meter
+ok   metrology-and-inspection 1440: a look-up pop-up opens: metrology: Measuring what a factory actually built: how wide 
+ok   metrology-and-inspection 1440: a figure has Cite, Table, CSV and PNG, and Table opens its rows: Cite Table CSV PNG; {"rows":7,"h":245,"bars":"none"}
+ok   metrology-and-inspection 1440: the cite line's Cite this chapter and Chapter PDF (served): ../pdf/metrology-and-inspection.pdf 200 application/pdf
+ok   metrology-and-inspection 1440: an animation step seeks the video: step at 7.2s: {"cur":"step","t":7.3638,"src":true}
+ok   metrology-and-inspection 1440: a flashcard turns
+ok   metrology-and-inspection 1440: the sources (35): 35 listed
+ok   metrology-and-inspection 1440: Next goes to foundries-and-fabs's page: ../foundries-and-fabs/ -> /foundries-and-fabs/
+ok   metrology-and-inspection 390 dark: dark, the live drawing in the strip, no sideways scroll: {"theme":"dark","ground":"rgb(18, 18, 17)","strip":true,"wide":0}
+ok   foundries-and-fabs 1440: the page is its chapter alone: /foundries-and-fabs/ foundries-and-fabs
+ok   foundries-and-fabs 1440: the masthead with search and theme
+ok   foundries-and-fabs 1440: the rail with Hide contents, the chain's 14 four-bar meters and the chapters across it, and the figures list: {"hide":true,"meters":14,"across":2,"figs":5,"listed":5}
+ok   foundries-and-fabs 1440: the live specimen in its slot: gaa-transistor (wants gaa-transistor)
+ok   foundries-and-fabs 1440: a drag turns the specimen: 0.00 to 0.96
+ok   foundries-and-fabs 1440: the chokepoint card with its meter
+ok   foundries-and-fabs 1440: a look-up pop-up opens: gpu: A processor originally built to draw video game im
+ok   foundries-and-fabs 1440: a figure has Cite, Table, CSV and PNG, and Table opens its rows: Cite Table CSV PNG; {"rows":5,"h":175,"bars":"none"}
+ok   foundries-and-fabs 1440: the cite line's Cite this chapter and Chapter PDF (served): ../pdf/foundries-and-fabs.pdf 200 application/pdf
+ok   foundries-and-fabs 1440: an animation step seeks the video: step at 8.8s: {"cur":"step","t":8.973,"src":true}
+ok   foundries-and-fabs 1440: a flashcard turns
+ok   foundries-and-fabs 1440: the sources (61): 61 listed
+ok   foundries-and-fabs 1440: Next goes to memory-and-hbm's page: ../memory-and-hbm/ -> /memory-and-hbm/
+ok   foundries-and-fabs 390 dark: dark, the live drawing in the strip, no sideways scroll: {"theme":"dark","ground":"rgb(18, 18, 17)","strip":true,"wide":0}
+ok   memory-and-hbm 1440: the page is its chapter alone: /memory-and-hbm/ memory-and-hbm
+ok   memory-and-hbm 1440: the masthead with search and theme
+ok   memory-and-hbm 1440: the rail with Hide contents, the chain's 14 four-bar meters and the chapters across it, and the figures list: {"hide":true,"meters":14,"across":2,"figs":4,"listed":4}
+ok   memory-and-hbm 1440: the live specimen in its slot: hbm-stack (wants hbm-stack)
+ok   memory-and-hbm 1440: a drag turns the specimen: 0.00 to 0.96
+ok   memory-and-hbm 1440: the chokepoint card with its meter
+ok   memory-and-hbm 1440: a look-up pop-up opens: accelerator: A chip built to do the one kind of arithmetic mach
+ok   memory-and-hbm 1440: a figure has Cite, Table, CSV and PNG, and Table opens its rows: Cite Table CSV PNG; {"rows":3,"h":105,"bars":"none"}
+ok   memory-and-hbm 1440: the cite line's Cite this chapter and Chapter PDF (served): ../pdf/memory-and-hbm.pdf 200 application/pdf
+ok   memory-and-hbm 1440: an animation step seeks the video: step at 6.2s: {"cur":"step","t":6.395,"src":true}
+ok   memory-and-hbm 1440: a flashcard turns
+ok   memory-and-hbm 1440: the sources (24): 24 listed
+ok   memory-and-hbm 1440: Next goes to advanced-packaging's page: ../advanced-packaging/ -> /advanced-packaging/
+ok   memory-and-hbm 390 dark: dark, the live drawing in the strip, no sideways scroll: {"theme":"dark","ground":"rgb(18, 18, 17)","strip":true,"wide":0}
+ok   advanced-packaging 1440: the page is its chapter alone: /advanced-packaging/ advanced-packaging
+ok   advanced-packaging 1440: the masthead with search and theme
+ok   advanced-packaging 1440: the rail with Hide contents, the chain's 14 four-bar meters and the chapters across it, and the figures list: {"hide":true,"meters":14,"across":2,"figs":4,"listed":4}
+ok   advanced-packaging 1440: the live specimen in its slot: cowos-exploded (wants cowos-exploded)
+ok   advanced-packaging 1440: a drag turns the specimen: 0.00 to 0.96
+ok   advanced-packaging 1440: the chokepoint card with its meter
+ok   advanced-packaging 1440: a look-up pop-up opens: scanner: A scanner is the lithography machine itself. It ho
+ok   advanced-packaging 1440: a figure has Cite, Table, CSV and PNG, and Table opens its rows: Cite Table CSV PNG; {"rows":5,"h":175,"bars":"none"}
+ok   advanced-packaging 1440: the cite line's Cite this chapter and Chapter PDF (served): ../pdf/advanced-packaging.pdf 200 application/pdf
+ok   advanced-packaging 1440: an animation step seeks the video: step at 6.8s: {"cur":"step","t":7.015,"src":true}
+ok   advanced-packaging 1440: a flashcard turns
+ok   advanced-packaging 1440: the sources (33): 33 listed
+ok   advanced-packaging 1440: Next goes to substrates-and-pcbs's page: ../substrates-and-pcbs/ -> /substrates-and-pcbs/
+ok   advanced-packaging 390 dark: dark, the live drawing in the strip, no sideways scroll: {"theme":"dark","ground":"rgb(18, 18, 17)","strip":true,"wide":0}
+ok   substrates-and-pcbs 1440: the page is its chapter alone: /substrates-and-pcbs/ substrates-and-pcbs
+ok   substrates-and-pcbs 1440: the masthead with search and theme
+ok   substrates-and-pcbs 1440: the rail with Hide contents, the chain's 14 four-bar meters and the chapters across it, and the figures list: {"hide":true,"meters":14,"across":2,"figs":3,"listed":3}
+ok   substrates-and-pcbs 1440: the live specimen in its slot: substrate-layers (wants substrate-layers)
+ok   substrates-and-pcbs 1440: a drag turns the specimen: 0.00 to 0.96
+ok   substrates-and-pcbs 1440: the chokepoint card with its meter
+ok   substrates-and-pcbs 1440: a look-up pop-up opens: interposer: A layer of wiring with no transistors, used as a m
+ok   substrates-and-pcbs 1440: a figure has Cite, Table, CSV and PNG, and Table opens its rows: Cite Table CSV PNG; {"rows":6,"h":210,"bars":"none"}
+ok   substrates-and-pcbs 1440: the cite line's Cite this chapter and Chapter PDF (served): ../pdf/substrates-and-pcbs.pdf 200 application/pdf
+ok   substrates-and-pcbs 1440: an animation step seeks the video: step at 9s: {"cur":"step","t":9.1672,"src":true}
+ok   substrates-and-pcbs 1440: a flashcard turns
+ok   substrates-and-pcbs 1440: the sources (47): 47 listed
+ok   substrates-and-pcbs 1440: Next goes to test-and-assembly's page: ../test-and-assembly/ -> /test-and-assembly/
+ok   substrates-and-pcbs 390 dark: dark, the live drawing in the strip, no sideways scroll: {"theme":"dark","ground":"rgb(18, 18, 17)","strip":true,"wide":0}
+ok   test-and-assembly 1440: the page is its chapter alone: /test-and-assembly/ test-and-assembly
+ok   test-and-assembly 1440: the masthead with search and theme
+ok   test-and-assembly 1440: the rail with Hide contents, the chain's 14 four-bar meters and the chapters across it, and the figures list: {"hide":true,"meters":14,"across":2,"figs":4,"listed":4}
+ok   test-and-assembly 1440: the live specimen in its slot: probe-card (wants probe-card)
+ok   test-and-assembly 1440: a drag turns the specimen: 0.00 to 0.96
+ok   test-and-assembly 1440: the chokepoint card with its meter
+ok   test-and-assembly 1440: a look-up pop-up opens: chip: A chip is a small rectangle of silicon, usually sm
+ok   test-and-assembly 1440: a figure has Cite, Table, CSV and PNG, and Table opens its rows: Cite Table CSV PNG; {"rows":2,"h":70,"bars":"none"}
+ok   test-and-assembly 1440: the cite line's Cite this chapter and Chapter PDF (served): ../pdf/test-and-assembly.pdf 200 application/pdf
+ok   test-and-assembly 1440: an animation step seeks the video: step at 8.8s: {"cur":"step","t":8.945,"src":true}
+ok   test-and-assembly 1440: a flashcard turns
+ok   test-and-assembly 1440: the sources (39): 39 listed
+ok   test-and-assembly 1440: Next goes to systems-and-networking's page: ../systems-and-networking/ -> /systems-and-networking/
+ok   test-and-assembly 390 dark: dark, the live drawing in the strip, no sideways scroll: {"theme":"dark","ground":"rgb(18, 18, 17)","strip":true,"wide":0}
+ok   systems-and-networking 1440: the page is its chapter alone: /systems-and-networking/ systems-and-networking
+ok   systems-and-networking 1440: the masthead with search and theme
+ok   systems-and-networking 1440: the rail with Hide contents, the chain's 14 four-bar meters and the chapters across it, and the figures list: {"hide":true,"meters":14,"across":2,"figs":3,"listed":3}
+ok   systems-and-networking 1440: the live specimen in its slot: gpu-baseboard (wants gpu-baseboard)
+ok   systems-and-networking 1440: a drag turns the specimen: 0.00 to 0.96
+ok   systems-and-networking 1440: the chokepoint card with its meter
+ok   systems-and-networking 1440: a look-up pop-up opens: chip: A chip is a small rectangle of silicon, usually sm
+     systems-and-networking 1440: no bar figure
+ok   systems-and-networking 1440: the cite line's Cite this chapter and Chapter PDF (served): ../pdf/systems-and-networking.pdf 200 application/pdf
+ok   systems-and-networking 1440: an animation step seeks the video: step at 9s: {"cur":"step","t":9.1725,"src":true}
+ok   systems-and-networking 1440: a flashcard turns
+ok   systems-and-networking 1440: the sources (44): 44 listed
+ok   systems-and-networking 1440: Next goes to data-centers-and-power's page: ../data-centers-and-power/ -> /data-centers-and-power/
+ok   systems-and-networking 390 dark: dark, the live drawing in the strip, no sideways scroll: {"theme":"dark","ground":"rgb(18, 18, 17)","strip":true,"wide":0}
+ok   data-centers-and-power 1440: the page is its chapter alone: /data-centers-and-power/ data-centers-and-power
+ok   data-centers-and-power 1440: the masthead with search and theme
+ok   data-centers-and-power 1440: the rail with Hide contents, the chain's 14 four-bar meters and the chapters across it, and the figures list: {"hide":true,"meters":14,"across":2,"figs":4,"listed":4}
+ok   data-centers-and-power 1440: the live specimen in its slot: rack (wants rack)
+ok   data-centers-and-power 1440: a drag turns the specimen: 0.00 to 0.96
+ok   data-centers-and-power 1440: the chokepoint card with its meter
+ok   data-centers-and-power 1440: a look-up pop-up opens: wafer: The polished disc of ultrapure silicon that chips 
+ok   data-centers-and-power 1440: a figure has Cite, Table, CSV and PNG, and Table opens its rows: Cite Table CSV PNG; {"rows":5,"h":175,"bars":"none"}
+ok   data-centers-and-power 1440: the cite line's Cite this chapter and Chapter PDF (served): ../pdf/data-centers-and-power.pdf 200 application/pdf
+ok   data-centers-and-power 1440: an animation step seeks the video: step at 9.6s: {"cur":"step","t":9.6741,"src":true}
+ok   data-centers-and-power 1440: a flashcard turns
+ok   data-centers-and-power 1440: the sources (37): 37 listed
+ok   data-centers-and-power 1440: Next goes to component-costs's page: ../component-costs/ -> /component-costs/
+ok   data-centers-and-power 390 dark: dark, the live drawing in the strip, no sideways scroll: {"theme":"dark","ground":"rgb(18, 18, 17)","strip":true,"wide":0}
+ok   component-costs 1440: the page is its chapter alone: /component-costs/ component-costs
+ok   component-costs 1440: the masthead with search and theme
+ok   component-costs 1440: the rail with Hide contents, the chain's 14 four-bar meters and the chapters across it, and the figures list: {"hide":true,"meters":14,"across":2,"figs":3,"listed":3}
+ok   component-costs 1440: the live specimen in its slot: wafer-cost (wants wafer-cost)
+ok   component-costs 1440: a drag turns the specimen: 0.00 to 0.96
+ok   component-costs 1440: a look-up pop-up opens: chip: A chip is a small rectangle of silicon, usually sm
+ok   component-costs 1440: a figure has Cite, Table, CSV and PNG, and Table opens its rows: Cite Table CSV PNG; {"rows":5,"h":175,"bars":"none"}
+ok   component-costs 1440: the cite line's Cite this chapter and Chapter PDF (served): ../pdf/component-costs.pdf 200 application/pdf
+ok   component-costs 1440: a flashcard turns
+ok   component-costs 1440: the sources (33): 33 listed
+ok   component-costs 1440: Next goes to geopolitics's page: ../geopolitics/ -> /geopolitics/
+ok   component-costs 390 dark: dark, the live drawing in the strip, no sideways scroll: {"theme":"dark","ground":"rgb(18, 18, 17)","strip":true,"wide":0}
+ok   geopolitics 1440: the page is its chapter alone: /geopolitics/ geopolitics
+ok   geopolitics 1440: the masthead with search and theme
+ok   geopolitics 1440: the rail with Hide contents, the chain's 14 four-bar meters and the chapters across it, and the figures list: {"hide":true,"meters":14,"across":2,"figs":3,"listed":3}
+ok   geopolitics 1440: the live specimen in its slot: globe (wants globe)
+ok   geopolitics 1440: a drag turns the specimen: 0.00 to 0.96
+ok   geopolitics 1440: a look-up pop-up opens: lithography: Printing a circuit pattern onto a wafer by shining
+ok   geopolitics 1440: a figure has Cite, Table, CSV and PNG, and Table opens its rows: Cite Table CSV PNG; {"rows":10,"h":350,"bars":"none"}
+ok   geopolitics 1440: the cite line's Cite this chapter and Chapter PDF (served): ../pdf/geopolitics.pdf 200 application/pdf
+ok   geopolitics 1440: a flashcard turns
+ok   geopolitics 1440: the sources (70): 70 listed
+ok   geopolitics 1440: Next goes to the contents page: ../supply-chain/ -> /supply-chain/
+ok   geopolitics 390 dark: dark, the live drawing in the strip, no sideways scroll: {"theme":"dark","ground":"rgb(18, 18, 17)","strip":true,"wide":0}
+ok   old link /#design-and-eda lands on /design-and-eda/: {"at":"/design-and-eda/","len":2,"off":null,"y":0,"open":null}
+ok   old link /#design-and-eda--who-makes-it lands on /design-and-eda/#design-and-eda--who-makes-it (a section): {"at":"/design-and-eda/#design-and-eda--who-makes-it","len":2,"off":0,"y":7788,"open":null}
+ok   old link /#fig-design-and-eda-design-timing lands on /design-and-eda/#fig-design-and-eda-design-timing (a figure): {"at":"/design-and-eda/#fig-design-and-eda-design-timing","len":2,"off":0,"y":3432,"open":null}
+ok   old link /#cite-design-and-eda lands on /design-and-eda/#cite-design-and-eda (its citation, open): {"at":"/design-and-eda/#cite-design-and-eda","len":2,"off":0,"y":351,"open":true}
+ok   old link /#silicon-and-wafers lands on /silicon-and-wafers/: {"at":"/silicon-and-wafers/","len":2,"off":null,"y":0,"open":null}
+ok   old link /#silicon-and-wafers--who-makes-it lands on /silicon-and-wafers/#silicon-and-wafers--who-makes-it (a section): {"at":"/silicon-and-wafers/#silicon-and-wafers--who-makes-it","len":2,"off":0,"y":5547,"open":null}
+ok   old link /#fig-silicon-and-wafers-sand-to-wafer lands on /silicon-and-wafers/#fig-silicon-and-wafers-sand-to-wafer (a figure): {"at":"/silicon-and-wafers/#fig-silicon-and-wafers-sand-to-wafer","len":2,"off":0,"y":3282,"open":null}
+ok   old link /#cite-silicon-and-wafers lands on /silicon-and-wafers/#cite-silicon-and-wafers (its citation, open): {"at":"/silicon-and-wafers/#cite-silicon-and-wafers","len":2,"off":0,"y":351,"open":true}
+ok   old link /#chemicals-gases-and-photoresist lands on /chemicals-gases-and-photoresist/: {"at":"/chemicals-gases-and-photoresist/","len":2,"off":null,"y":0,"open":null}
+ok   old link /#chemicals-gases-and-photoresist--who-makes-it lands on /chemicals-gases-and-photoresist/#chemicals-gases-and-photoresist--who-makes-it (a section): {"at":"/chemicals-gases-and-photoresist/#chemicals-gases-and-photoresist--who-makes-it","len":2,"off":0,"y":5937,"open":null}
+ok   old link /#fig-chemicals-gases-and-photoresist-materials-loop lands on /chemicals-gases-and-photoresist/#fig-chemicals-gases-and-photoresist-materials-loop (a figure): {"at":"/chemicals-gases-and-photoresist/#fig-chemicals-gases-and-photoresist-materials-loop","len":2,"off":0,"y":3593,"open":null}
+ok   old link /#cite-chemicals-gases-and-photoresist lands on /chemicals-gases-and-photoresist/#cite-chemicals-gases-and-photoresist (its citation, open): {"at":"/chemicals-gases-and-photoresist/#cite-chemicals-gases-and-photoresist","len":2,"off":0,"y":407,"open":true}
+ok   old link /#lithography lands on /lithography/: {"at":"/lithography/","len":2,"off":null,"y":0,"open":null}
+ok   old link /#lithography--who-makes-it lands on /lithography/#lithography--who-makes-it (a section): {"at":"/lithography/#lithography--who-makes-it","len":2,"off":0,"y":8357,"open":null}
+ok   old link /#fig-lithography-litho-print lands on /lithography/#fig-lithography-litho-print (a figure): {"at":"/lithography/#fig-lithography-litho-print","len":2,"off":0,"y":4021,"open":null}
+ok   old link /#cite-lithography lands on /lithography/#cite-lithography (its citation, open): {"at":"/lithography/#cite-lithography","len":2,"off":0,"y":373,"open":true}
+ok   old link /#photomasks-and-pellicles lands on /photomasks-and-pellicles/: {"at":"/photomasks-and-pellicles/","len":2,"off":null,"y":0,"open":null}
+ok   old link /#photomasks-and-pellicles--cost-and-design-economics lands on /photomasks-and-pellicles/#photomasks-and-pellicles--cost-and-design-economics (a section): {"at":"/photomasks-and-pellicles/#photomasks-and-pellicles--cost-and-design-economics","len":2,"off":0,"y":8080,"open":null}
+ok   old link /#fig-photomasks-and-pellicles-mask-mirror lands on /photomasks-and-pellicles/#fig-photomasks-and-pellicles-mask-mirror (a figure): {"at":"/photomasks-and-pellicles/#fig-photomasks-and-pellicles-mask-mirror","len":2,"off":0,"y":3405,"open":null}
+ok   old link /#cite-photomasks-and-pellicles lands on /photomasks-and-pellicles/#cite-photomasks-and-pellicles (its citation, open): {"at":"/photomasks-and-pellicles/#cite-photomasks-and-pellicles","len":2,"off":0,"y":351,"open":true}
+ok   old link /#deposition-and-etch lands on /deposition-and-etch/: {"at":"/deposition-and-etch/","len":2,"off":null,"y":0,"open":null}
+ok   old link /#deposition-and-etch--who-makes-it lands on /deposition-and-etch/#deposition-and-etch--who-makes-it (a section): {"at":"/deposition-and-etch/#deposition-and-etch--who-makes-it","len":2,"off":0,"y":7064,"open":null}
+ok   old link /#fig-deposition-and-etch-dep-etch-cycle lands on /deposition-and-etch/#fig-deposition-and-etch-dep-etch-cycle (a figure): {"at":"/deposition-and-etch/#fig-deposition-and-etch-dep-etch-cycle","len":2,"off":0,"y":3265,"open":null}
+ok   old link /#cite-deposition-and-etch lands on /deposition-and-etch/#cite-deposition-and-etch (its citation, open): {"at":"/deposition-and-etch/#cite-deposition-and-etch","len":2,"off":0,"y":351,"open":true}
+ok   old link /#metrology-and-inspection lands on /metrology-and-inspection/: {"at":"/metrology-and-inspection/","len":2,"off":null,"y":0,"open":null}
+ok   old link /#metrology-and-inspection--who-makes-it lands on /metrology-and-inspection/#metrology-and-inspection--who-makes-it (a section): {"at":"/metrology-and-inspection/#metrology-and-inspection--who-makes-it","len":2,"off":0,"y":6775,"open":null}
+ok   old link /#fig-metrology-and-inspection-defect-yield lands on /metrology-and-inspection/#fig-metrology-and-inspection-defect-yield (a figure): {"at":"/metrology-and-inspection/#fig-metrology-and-inspection-defect-yield","len":2,"off":0,"y":4594,"open":null}
+ok   old link /#cite-metrology-and-inspection lands on /metrology-and-inspection/#cite-metrology-and-inspection (its citation, open): {"at":"/metrology-and-inspection/#cite-metrology-and-inspection","len":2,"off":0,"y":342,"open":true}
+ok   old link /#foundries-and-fabs lands on /foundries-and-fabs/: {"at":"/foundries-and-fabs/","len":2,"off":null,"y":0,"open":null}
+ok   old link /#foundries-and-fabs--the-newest-designs lands on /foundries-and-fabs/#foundries-and-fabs--the-newest-designs (a section): {"at":"/foundries-and-fabs/#foundries-and-fabs--the-newest-designs","len":2,"off":0,"y":6232,"open":null}
+ok   old link /#fig-foundries-and-fabs-switch-shapes lands on /foundries-and-fabs/#fig-foundries-and-fabs-switch-shapes (a figure): {"at":"/foundries-and-fabs/#fig-foundries-and-fabs-switch-shapes","len":2,"off":0,"y":4161,"open":null}
+ok   old link /#cite-foundries-and-fabs lands on /foundries-and-fabs/#cite-foundries-and-fabs (its citation, open): {"at":"/foundries-and-fabs/#cite-foundries-and-fabs","len":2,"off":0,"y":371,"open":true}
+ok   old link /#memory-and-hbm lands on /memory-and-hbm/: {"at":"/memory-and-hbm/","len":2,"off":null,"y":0,"open":null}
+ok   old link /#memory-and-hbm--how-a-stack-is-built lands on /memory-and-hbm/#memory-and-hbm--how-a-stack-is-built (a section): {"at":"/memory-and-hbm/#memory-and-hbm--how-a-stack-is-built","len":2,"off":0,"y":5828,"open":null}
+ok   old link /#fig-memory-and-hbm-hbm-inside lands on /memory-and-hbm/#fig-memory-and-hbm-hbm-inside (a figure): {"at":"/memory-and-hbm/#fig-memory-and-hbm-hbm-inside","len":2,"off":0,"y":3666,"open":null}
+ok   old link /#cite-memory-and-hbm lands on /memory-and-hbm/#cite-memory-and-hbm (its citation, open): {"at":"/memory-and-hbm/#cite-memory-and-hbm","len":2,"off":0,"y":373,"open":true}
+ok   old link /#advanced-packaging lands on /advanced-packaging/: {"at":"/advanced-packaging/","len":2,"off":null,"y":0,"open":null}
+ok   old link /#advanced-packaging--capacity lands on /advanced-packaging/#advanced-packaging--capacity (a section): {"at":"/advanced-packaging/#advanced-packaging--capacity","len":2,"off":0,"y":6944,"open":null}
+ok   old link /#fig-advanced-packaging-package-build lands on /advanced-packaging/#fig-advanced-packaging-package-build (a figure): {"at":"/advanced-packaging/#fig-advanced-packaging-package-build","len":2,"off":0,"y":3819,"open":null}
+ok   old link /#cite-advanced-packaging lands on /advanced-packaging/#cite-advanced-packaging (its citation, open): {"at":"/advanced-packaging/#cite-advanced-packaging","len":2,"off":0,"y":371,"open":true}
+ok   old link /#substrates-and-pcbs lands on /substrates-and-pcbs/: {"at":"/substrates-and-pcbs/","len":2,"off":null,"y":0,"open":null}
+ok   old link /#substrates-and-pcbs--the-materials-underneath lands on /substrates-and-pcbs/#substrates-and-pcbs--the-materials-underneath (a section): {"at":"/substrates-and-pcbs/#substrates-and-pcbs--the-materials-underneath","len":2,"off":0,"y":6374,"open":null}
+ok   old link /#fig-substrates-and-pcbs-substrate-fanout lands on /substrates-and-pcbs/#fig-substrates-and-pcbs-substrate-fanout (a figure): {"at":"/substrates-and-pcbs/#fig-substrates-and-pcbs-substrate-fanout","len":2,"off":0,"y":3389,"open":null}
+ok   old link /#cite-substrates-and-pcbs lands on /substrates-and-pcbs/#cite-substrates-and-pcbs (its citation, open): {"at":"/substrates-and-pcbs/#cite-substrates-and-pcbs","len":2,"off":0,"y":351,"open":true}
+ok   old link /#test-and-assembly lands on /test-and-assembly/: {"at":"/test-and-assembly/","len":2,"off":null,"y":0,"open":null}
+ok   old link /#test-and-assembly--who-makes-it lands on /test-and-assembly/#test-and-assembly--who-makes-it (a section): {"at":"/test-and-assembly/#test-and-assembly--who-makes-it","len":2,"off":0,"y":5814,"open":null}
+ok   old link /#fig-test-and-assembly-wafer-probe lands on /test-and-assembly/#fig-test-and-assembly-wafer-probe (a figure): {"at":"/test-and-assembly/#fig-test-and-assembly-wafer-probe","len":2,"off":0,"y":3492,"open":null}
+ok   old link /#cite-test-and-assembly lands on /test-and-assembly/#cite-test-and-assembly (its citation, open): {"at":"/test-and-assembly/#cite-test-and-assembly","len":2,"off":0,"y":351,"open":true}
+ok   old link /#systems-and-networking lands on /systems-and-networking/: {"at":"/systems-and-networking/","len":2,"off":null,"y":0,"open":null}
+ok   old link /#systems-and-networking--who-makes-it lands on /systems-and-networking/#systems-and-networking--who-makes-it (a section): {"at":"/systems-and-networking/#systems-and-networking--who-makes-it","len":2,"off":0,"y":7855,"open":null}
+ok   old link /#fig-systems-and-networking-racks-wired lands on /systems-and-networking/#fig-systems-and-networking-racks-wired (a figure): {"at":"/systems-and-networking/#fig-systems-and-networking-racks-wired","len":2,"off":0,"y":3385,"open":null}
+ok   old link /#cite-systems-and-networking lands on /systems-and-networking/#cite-systems-and-networking (its citation, open): {"at":"/systems-and-networking/#cite-systems-and-networking","len":2,"off":0,"y":351,"open":true}
+ok   old link /#data-centers-and-power lands on /data-centers-and-power/: {"at":"/data-centers-and-power/","len":2,"off":null,"y":0,"open":null}
+ok   old link /#data-centers-and-power--who-makes-it lands on /data-centers-and-power/#data-centers-and-power--who-makes-it (a section): {"at":"/data-centers-and-power/#data-centers-and-power--who-makes-it","len":2,"off":0,"y":6290,"open":null}
+ok   old link /#fig-data-centers-and-power-power-in-heat-out lands on /data-centers-and-power/#fig-data-centers-and-power-power-in-heat-out (a figure): {"at":"/data-centers-and-power/#fig-data-centers-and-power-power-in-heat-out","len":2,"off":0,"y":3395,"open":null}
+ok   old link /#cite-data-centers-and-power lands on /data-centers-and-power/#cite-data-centers-and-power (its citation, open): {"at":"/data-centers-and-power/#cite-data-centers-and-power","len":2,"off":0,"y":380,"open":true}
+ok   old link /#component-costs lands on /component-costs/: {"at":"/component-costs/","len":2,"off":null,"y":0,"open":null}
+ok   old link /#component-costs--who-captures-the-value lands on /component-costs/#component-costs--who-captures-the-value (a section): {"at":"/component-costs/#component-costs--who-captures-the-value","len":2,"off":0,"y":5574,"open":null}
+ok   old link /#fig-component-costs-b200-bom lands on /component-costs/#fig-component-costs-b200-bom (a figure): {"at":"/component-costs/#fig-component-costs-b200-bom","len":2,"off":0,"y":4454,"open":null}
+ok   old link /#cite-component-costs lands on /component-costs/#cite-component-costs (its citation, open): {"at":"/component-costs/#cite-component-costs","len":2,"off":0,"y":407,"open":true}
+ok   old link /#geopolitics lands on /geopolitics/: {"at":"/geopolitics/","len":2,"off":null,"y":0,"open":null}
+ok   old link /#geopolitics--us-export-controls-2018-to-today lands on /geopolitics/#geopolitics--us-export-controls-2018-to-today (a section): {"at":"/geopolitics/#geopolitics--us-export-controls-2018-to-today","len":2,"off":0,"y":4029,"open":null}
+ok   old link /#fig-geopolitics-control-timeline lands on /geopolitics/#fig-geopolitics-control-timeline (a figure): {"at":"/geopolitics/#fig-geopolitics-control-timeline","len":2,"off":0,"y":4683,"open":null}
+ok   old link /#cite-geopolitics lands on /geopolitics/#cite-geopolitics (its citation, open): {"at":"/geopolitics/#cite-geopolitics","len":2,"off":0,"y":351,"open":true}
+ok   old link /#lithography--flashcards lands on /lithography/#lithography--flashcards (its flashcards): {"at":"/lithography/#lithography--flashcards","len":2,"off":0,"y":12890,"open":null}
+ok   old link /#/geopolitics lands on /geopolitics/ (the essay's route): {"at":"/geopolitics/","len":2,"off":null,"y":0,"open":null}
+ok   old link /?only=lithography lands on /lithography/#lithography (the QA aid ?only=): {"at":"/lithography/#lithography","len":2,"off":-12,"y":0,"open":null}
+ok   old link /#transistors-and-front-end lands on /foundries-and-fabs/ (a merged chapter): {"at":"/foundries-and-fabs/","len":2,"off":null,"y":0,"open":null}
+ok   old link /#transistors-and-front-end--plain lands on /foundries-and-fabs/#foundries-and-fabs--plain (a merged chapter's section): {"at":"/foundries-and-fabs/#foundries-and-fabs--plain","len":2,"off":0,"y":962,"open":null}
+ok   the sitemap lists /supply-chain/ and each chapter page once, and not the book or /chain/: 23 entries
+ok   /supply-chain/ 1440: the whole contents page: {"h1":"Supply Chain","title":"The AI chip supply chain, stage by stage · Chip Supply Chain","canon":"https://chipsupplychain.org/supply-chain/","downloads":"../pdf/how-ai-chips-are-made.pdf,../pdf/summary.pdf,../summary/","standfirst":true,"rows":16,"tab":"Supply Chain","tabHref":"../supply-chain/","chapters":0,"wide":0}
+ok   /supply-chain/ 1440: a row opens its chapter's page
+ok   /supply-chain/ 390: the whole contents page: {"h1":"Supply Chain","title":"The AI chip supply chain, stage by stage · Chip Supply Chain","canon":"https://chipsupplychain.org/supply-chain/","downloads":"../pdf/how-ai-chips-are-made.pdf,../pdf/summary.pdf,../summary/","standfirst":true,"rows":16,"tab":"Supply Chain","tabHref":"../supply-chain/","chapters":0,"wide":0}
+ok   /supply-chain/ 390: a row opens its chapter's page
+ok   old address /#/chain forwards to /supply-chain/: {"at":"/supply-chain/","len":2,"contents":true}
+ok   old address /#/stack forwards to /supply-chain/: {"at":"/supply-chain/","len":2,"contents":true}
+ok   old address /#/sources forwards to /supply-chain/: {"at":"/supply-chain/","len":2,"contents":true}
+ok   old address /#contents forwards to /supply-chain/#contents: {"at":"/supply-chain/#contents","len":2,"contents":true}
+ok   old address /lithography/#/chain forwards to /supply-chain/: {"at":"/supply-chain/","len":2,"contents":true}
+ok   /chain/ forwards to /supply-chain/
+ok   the home page links the contents page from its tab and holds no contents
+ok   search "Memory and HBM" on /#/: the chapter's result opens its page: {"href":"memory-and-hbm/","title":"Memory and HBM","k":0} -> /memory-and-hbm/
+ok   search "Advanced Packaging" on /lithography/: the chapter's result opens its page: {"href":"../advanced-packaging/","title":"Advanced Packaging","k":1} -> /advanced-packaging/
+ok   search "Who Controls the Chain" on /#/glossary: the chapter's result opens its page: {"href":"geopolitics/","title":"Who Controls the Chain","k":0} -> /geopolitics/
+
+all 336 checks pass

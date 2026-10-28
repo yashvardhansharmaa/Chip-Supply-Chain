@@ -247,30 +247,42 @@ ${body}
     const raw = data.flows && (Array.isArray(data.flows) ? data.flows : data.flows.flows);
     const flows = (raw || []).filter((f) => f && f.id).slice().sort((a, b) => (a.order == null ? 99 : a.order) - (b.order == null ? 99 : b.order));
     const norm = (s) => { let k = String(s || 'open'); if (OLD_STATE[k]) k = OLD_STATE[k]; if (!STATE[k]) { warn(`reference pages: a board state "${k}" has no word, so it reads as open`); k = 'open'; } return k; };
+    // the day the board's data was last checked (control-flows.json "checked"): past it nothing moves on its date alone, as on
+    // the interactive board (Geo.stateAt in src/app.js, final QA B3)
+    const lastEv = timeline.length ? String(timeline[timeline.length - 1].date) : today;
+    const checked = data.flows && !Array.isArray(data.flows) && /^\d{4}-\d{2}-\d{2}$/.test(String(data.flows.checked || '')) ? String(data.flows.checked) : lastEv;
     const stateAt = (f, date) => {
       const st = (f.states || []).slice().sort((a, b) => (String(a.date) < String(b.date) ? -1 : String(a.date) > String(b.date) ? 1 : 0));
-      let out = null; st.forEach((s) => { if (s && s.date && s.date <= date) out = s; });
+      const upTo = String(date) > checked ? checked : date;
+      let out = null, due = null; st.forEach((s) => { if (!s || !s.date) return; if (s.date <= upTo) out = s; else if (s.date <= date && !due) due = s; });
       const s = out || (f.initial && typeof f.initial === 'object' ? f.initial : null);
-      if (!s) { const k = norm(typeof f.initial === 'string' ? f.initial : 'open'); return { status: k, label: STATE[k], date: null, announced: null, suspendedUntil: null, suspended: false, cite: null, event: null }; }
-      const k = norm(s.status);
-      return { status: k, label: s.label || STATE[k], date: out ? out.date : (s.date || null), announced: s.announced || null, suspendedUntil: s.suspendedUntil || null, suspended: !!(s.suspendedUntil && String(s.suspendedUntil) >= String(date)), cite: s.cite || null, event: s.event || null };
+      const pending = due ? { date: due.date } : null;
+      if (!s) { const k = norm(typeof f.initial === 'string' ? f.initial : 'open'); return { status: k, label: STATE[k], date: null, announced: null, published: null, suspendedUntil: null, suspends: '', suspended: false, unconfirmed: false, also: null, scope: '', pending, cite: null, event: null }; }
+      const until = s.suspendedUntil ? String(s.suspendedUntil) : null, holds = !!until && until >= String(date), unconfirmed = !!until && !holds && until >= checked;
+      const k = norm(until && !holds && !unconfirmed && s.resumes ? s.resumes : s.status);
+      return { status: k, label: s.label || STATE[k], date: out ? out.date : (s.date || null), announced: s.announced || null, published: s.published || null, suspendedUntil: until, suspends: s.suspends || '', suspended: holds || unconfirmed, unconfirmed, also: s.also && s.also.status ? { status: norm(s.also.status), scope: s.also.for || '' } : null, scope: s.for || '', pending, cite: s.cite || null, event: s.event || null };
     };
+    const stayText = (st) => { if (!st.suspended || !st.suspendedUntil) return ''; const d = shortDate(st.suspendedUntil), w = st.suspends || ''; return st.unconfirmed ? `${w ? w + ' due' : 'Due'} to end ${d}, extension not confirmed` : `${w ? w + ' suspended' : 'Suspended'} until ${d}`; };
     const citeText = (c) => (c ? [c.fr, c.cfr].filter(Boolean).join(' · ') : '');
     const cite = (c) => { const t = citeText(c) || (c && c.url ? hostOf(c.url) : ''); return t ? (c && c.url ? ext(c.url, esc(t)) : esc(t)) : ''; };
     const first = timeline.length ? String(timeline[0].date).slice(0, 4) : '2018';
     const flowHTML = (f) => {
       const st = stateAt(f, today), word = STATE[st.status];
       let when = st.date ? 'from ' + shortDate(st.date) : `open since ${first}`;
-      if (st.announced && st.date && st.announced !== st.date) when += ' · announced ' + shortDate(st.announced);
+      if (st.published && st.date && st.published !== st.date) when += ' · published ' + shortDate(st.published); // the Federal Register's day
+      else if (st.announced && st.date && st.announced !== st.date) when += ' · announced ' + shortDate(st.announced);
+      const stay = stayText(st);
       const ev = st.event && evById.get(st.event);
       return `<li class="row" id="${uid('flow-' + slug(f.id), 'board rows')}"><div><h3 class="row-h">${esc(f.name || f.id)}</h3>${f.route ? `<p class="row-meta">${esc(f.route)}</p>` : ''}</div>`
-        + `<div class="row-body"><p><span class="pill is-${esc(st.status)}${st.suspended ? ' is-suspended' : ''}">${esc(word)}</span>${st.suspended ? `<span class="susp">Suspended until ${esc(shortDate(st.suspendedUntil))}</span>` : ''}</p>`
+        + `<div class="row-body"><p><span class="pill is-${esc(st.status)}${st.suspended && !st.suspends ? ' is-suspended' : ''}">${esc(word)}</span>${st.scope ? `<span class="susp">${esc(st.scope)}</span>` : ''}`
+        + (st.also ? ` <span class="pill is-${esc(st.also.status)}">${esc(STATE[st.also.status])}</span>${st.also.scope ? `<span class="susp">${esc(st.also.scope)}</span>` : ''}` : '')
+        + `${stay ? `<span class="susp">${esc(stay)}</span>` : ''}${st.pending ? `<span class="susp">Change due ${esc(shortDate(st.pending.date))}, not confirmed</span>` : ''}</p>`
         + (st.label && st.label !== word ? `<p class="row-lead">${esc(st.label)}</p>` : '')
         + `<p class="row-meta">${esc(when)}${citeText(st.cite) || (st.cite && st.cite.url) ? ` · ${cite(st.cite)}` : ''}${ev ? ` · <a class="src-a" href="#${evIds.get(ev)}">Entry in the timeline</a>` : ''}</p>`
         + (f.what ? `<p class="row-fine">${esc(f.what)}</p>` : '') + '</div></li>';
     };
     const key = LEGEND.length ? `<ul class="key" aria-label="What each state means">${LEGEND.map((l) => `<li>${l.status === 'suspended' ? `<span class="susp">${esc(l.word)}</span>` : `<span class="pill is-${esc(l.status)}">${esc(l.word)}</span>`}<span>${esc(l.text)}</span></li>`).join('')}</ul>` : '';
-    const board = flows.length ? `<section class="ref-sec" aria-labelledby="board"><h2 class="ref-h2" id="board">What can be sold<small>On ${ASOF}</small></h2><ol class="ledger">${flows.map(flowHTML).join('')}</ol>${key}</section>` : '';
+    const board = flows.length ? `<section class="ref-sec" aria-labelledby="board"><h2 class="ref-h2" id="board">What can be sold<small>On ${ASOF}${today > checked ? ` · data checked ${esc(ctx.dayStr ? ctx.dayStr(checked) : checked)}` : ''}</small></h2><ol class="ledger">${flows.map(flowHTML).join('')}</ol>${key}</section>` : '';
 
     // the timeline, oldest first, by year (Geo.renderTimeline): each entry with its date, actor, kind, title, summary and source
     const instWord = (v) => { const k = String(v || ''); if (!k) return ''; if (INSTRUMENT[k]) return INSTRUMENT[k]; const w = k.replace(/-/g, ' '); return w.charAt(0).toUpperCase() + w.slice(1); };
@@ -279,7 +291,8 @@ ${body}
     const entry = (e) => {
       const eff = e.effectiveDate && e.effectiveDate !== e.date ? e.effectiveDate : null;
       const ct = citeText({ fr: e.frCitation, cfr: e.cfr }), host = e.source ? hostOf(e.source) : '';
-      const src = e.source ? (ct ? `${ext(e.source, esc(ct))}<span class="host">${esc(host)}</span>` : ext(e.source, esc(host))) : esc(ct);
+      const cu = (e.cite && e.cite.url) || e.source; // the legal citation's own text when the data gives it (cite.url)
+      const src = e.source ? (ct ? `${ext(cu, esc(ct))}${cu !== e.source ? ` · ${ext(e.source, esc(host))}` : `<span class="host">${esc(host)}</span>`}` : ext(e.source, esc(host))) : esc(ct);
       return `<li class="row ev" id="${evIds.get(e)}"><p class="row-meta"><b>${esc(shortDate(e.date))}</b>${eff ? `<span class="eff">in force ${esc(shortDate(eff))}</span>` : ''}${esc(e.actor || '')}</p>`
         + `<div class="row-body"><p class="ev-tags">${[e.category, instWord(e.instrument)].filter(Boolean).map(esc).join(' · ')}</p><h4>${esc(e.title)}</h4>`
         + (e.gist ? `<p class="gist">${esc(e.gist)}</p>` : '') + (e.summary ? `<p class="sum">${esc(e.summary)}</p>` : '')
@@ -305,7 +318,8 @@ ${body}
       const label = segs.length > 1 ? segs.map((sg, i) => { const w = i ? sg.k.replace(/^counted /, '') : sg.k; return i === segs.length - 1 ? w + ' from ' + sg.from : (i ? w + ' ' + sg.from + ' to ' + sg.to : w + ' to ' + sg.to); }).join(', ') : (m.basis ? basisShort(m.basis) : '');
       const rowTitle = segs.length > 1 ? segs.map((sg) => sg.from + (sg.to !== sg.from ? ' to ' + sg.to : '') + ': ' + sg.text).join(' ') : (m.basis || '');
       let peak = 0; ys.forEach((y) => { const r = firms[f][y]; if (r && r.chinaShare != null) peak = Math.max(peak, r.chinaShare); });
-      return `<tr id="${uid('ex-' + EXPOSURE.slug(f), 'China revenue rows')}"><th scope="row" title="${esc(rowTitle)}">${esc(f)}<span class="sub">${esc([m.category, cname(m.country), label].filter(Boolean).join(' · '))}</span></th>` + ys.map((y) => {
+      const pnote = ys.map((y) => firms[f][y]).filter((r) => r && r.panelNote).map((r) => r.panelNote).pop() || ''; // what the share measures (final QA B10)
+      return `<tr id="${uid('ex-' + EXPOSURE.slug(f), 'China revenue rows')}"><th scope="row" title="${esc(rowTitle)}">${esc(f)}<span class="sub">${esc([m.category, cname(m.country), label].filter(Boolean).join(' · '))}</span>${pnote ? `<span class="sub">${esc(pnote)}</span>` : ''}</th>` + ys.map((y) => {
         const r = firms[f][y];
         if (!r || r.chinaShare == null) return '<td><span class="sh none" aria-hidden="true">·</span><span class="sr-only">Not filed for this year</span></td>';
         const brk = starts[y], basis = r.basis ? 'Counted: ' + firstLine(r.basis) : '';
