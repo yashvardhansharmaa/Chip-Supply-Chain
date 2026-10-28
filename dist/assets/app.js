@@ -3653,7 +3653,8 @@
             if (v.readyState >= 1) go(); else v.addEventListener('loadedmetadata', go, { once: true });
           });
         });
-        if (reduced) { stage.setAttribute('aria-label', 'Play the animation'); fig.classList.add('is-paused'); }
+        // under reduced motion the poster is the last frame (the whole picture), so the last step is the one marked and captioned
+        if (reduced) { stage.setAttribute('aria-label', 'Play the animation'); fig.classList.add('is-paused'); show(btns.length - 1); }
       });
       var allPosters = function () { figs.forEach(function (fig) { if (!fig._poster && fig._setPoster) fig._setPoster(); }); };
       // theme: swap to the matching video, keeping the place (a poster not yet fetched stays unfetched)

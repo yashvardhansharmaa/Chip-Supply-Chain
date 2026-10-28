@@ -281,10 +281,11 @@ function figure(f, ctx) {
     USED_MEDIA.add(f.src);
     const m = `media/${esc(f.src)}`, steps = meta.steps;
     if (meta.duration) kick += ` · Explainer, ${Math.round(meta.duration)} seconds`;
-    body = `<ol class="anim-steps">${steps.map((st, i) => `<li><button type="button" data-t="${+st.t0}"${i ? '' : ' aria-current="step"'}><span class="n">${String(i + 1).padStart(2, "0")}</span>${esc(st.k)}</button></li>`).join('')}</ol>`
+    // the Paused mark sits at the end of the step row, outside the frame, so it never covers a label drawn in the video (28 Oct 2026)
+    body = `<div class="anim-bar"><ol class="anim-steps">${steps.map((st, i) => `<li><button type="button" data-t="${+st.t0}"${i ? '' : ' aria-current="step"'}><span class="n">${String(i + 1).padStart(2, "0")}</span>${esc(st.k)}</button></li>`).join('')}</ol><span class="anim-state" aria-hidden="true">Paused</span></div>`
       + `<div class="anim-stage" role="button" tabindex="0" aria-label="Pause the animation" style="aspect-ratio:${meta.width}/${meta.height}">`
       + `<video muted loop playsinline preload="none" aria-hidden="true" data-src="${m}"></video>` // no poster attribute: app.js sets it (theme-matched) once the figure nears the screen, and for print
-      + `<img class="anim-print" src="${m}-print-end.jpg" alt="" loading="lazy"><span class="anim-state" aria-hidden="true">Paused</span></div>`
+      + `<img class="anim-print" src="${m}-print-end.jpg" alt="" loading="lazy"></div>`
       + `<p class="anim-cap" aria-hidden="true">${esc(steps[0].cap)}</p>`
       + `<ol class="anim-transcript">${steps.map((st) => `<li><b>${esc(st.k)}.</b> ${esc(st.cap)}</li>`).join('')}</ol>`;
   } else if (f.type === 'timeline') {

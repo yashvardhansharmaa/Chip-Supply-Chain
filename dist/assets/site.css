@@ -1104,7 +1104,9 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
 
 /* ---------- explainer animations: step names above, the video, the caption below ---------- */
 .figure--anim { max-width: var(--measure); }
-.figure--anim .anim-steps { display: flex; flex-wrap: wrap; gap: 2px 13px; list-style: none; margin: 10px 0 12px; padding: 0; }
+/* the step row: the step names, and at its end the Paused mark, kept outside the frame so it never covers a label drawn in the video */
+.anim-bar { display: flex; align-items: baseline; gap: 0 16px; margin: 10px 0 12px; }
+.figure--anim .anim-steps { display: flex; flex-wrap: wrap; flex: 1 1 auto; min-width: 0; gap: 2px 13px; list-style: none; margin: 0; padding: 0; }
 .figure--anim .anim-steps li { margin: 0; }
 .anim-steps button { font-family: var(--font-mono); font-size: var(--fs-cap); font-weight: 500; letter-spacing: 0; color: var(--muted); background: none; border: 0; border-bottom: 2px solid transparent; border-radius: 0; padding: 5px 0 4px; cursor: pointer; }
 .anim-steps button .n { margin-right: 6px; font-variant-numeric: tabular-nums; } /* full strength: at 0.7 opacity the numbers fell to 3.0:1 */
@@ -1115,7 +1117,7 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
 /* a hairline frame: browsers decode video colors a shade differently from the page, and a line hides that */
 .anim-stage video { display: block; width: 100%; height: 100%; }
 .anim-print { display: none; }
-.anim-state { position: absolute; top: 8px; right: 8px; font-family: var(--font-mono); font-size: var(--fs-cap-s); font-weight: 500; letter-spacing: 0; color: var(--ink-2); background: var(--bg); border: 1px solid var(--line-2); padding: 4px 8px; opacity: 0; transition: opacity 0.2s; pointer-events: none; }
+.anim-state { flex: none; font-family: var(--font-mono); font-size: var(--fs-cap-s); font-weight: 500; line-height: 1.4; letter-spacing: 0; color: var(--ink-2); background: var(--bg); border: 1px solid var(--line-2); padding: 2px 7px; opacity: 0; transition: opacity 0.2s; pointer-events: none; }
 .figure--anim.is-paused .anim-state { opacity: 1; }
 .anim-cap { margin: 12px 0 6px; min-height: 3em; font-size: var(--t-small); line-height: 1.5; color: var(--ink); }
 .anim-transcript { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
@@ -1123,7 +1125,7 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
 @media (prefers-reduced-motion: reduce) { .anim-state { transition: none; } }
 @media print {
   /* an animation prints as its last frame (.anim-print, the light still) above the list of its steps (.anim-transcript) */
-  .anim-steps, .anim-cap, .anim-stage video, .anim-state { display: none !important; }
+  .anim-bar, .anim-steps, .anim-cap, .anim-stage video, .anim-state { display: none !important; }
   .anim-print { display: block; width: 100%; }
   .anim-stage { aspect-ratio: auto !important; background: none; }
   .anim-transcript { position: static; width: auto; height: auto; overflow: visible; clip: auto; white-space: normal; margin: 8px 0 0; padding-left: 1.4em; font-size: 10pt; }
@@ -1588,7 +1590,7 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 .chapter .fig-strip .ch-cite-text a { font-family: var(--font-code); font-size: 12.5px; overflow-wrap: anywhere; } /* the figure's address, a code */
 .chapter .fig-strip .ch-cite-copy { font-family: var(--font-ui); font-size: 13px; font-weight: 500; color: var(--accent-ink); background: none; border: 0; padding: 4px 0; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
 /* an explainer animation: its steps above, the video, the caption under it */
-.chapter .figure--anim .anim-steps { margin: 0 0 12px; }
+.chapter .figure--anim .anim-bar { margin: 0 0 12px; }
 .chapter .figure--anim .anim-cap { margin: 12px 0 0; font-family: var(--font-body); font-size: var(--t-small); }
 /* a timeline: dates in mono on a hairline */
 .chapter .figure .tl li { font-family: var(--font-body); font-size: var(--t-small); }
