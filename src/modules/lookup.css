@@ -1,5 +1,5 @@
 /* The Glossary as a printed dictionary (redesign option B, chosen 25 Oct 2026; src/modules/lookup.js).
-   The head (the title, its counts, six things to try), a sticky bar (the search, the kinds, the thumb index of letters), then
+   The head (the title and six things to try; its counts went to the kinds' buttons on 28 Oct 2026), a sticky bar (the search, the kinds, the thumb index of letters), then
    every entry in columns under its large letter and guide words. An entry opens in a sheet: beside the columns from 1,000 px,
    over them below that, the whole screen on a phone. The sheet holds the site's own cards and the passages.
    Color: red wine marks links, the reader's place (the letter in view, the open entry) and the reader's own choice, and two
@@ -10,22 +10,17 @@
 
 .view[data-view="glossary"] { width: 100%; padding: 0 var(--margin); }
 
-/* ---------- the head: the title, its standfirst and counts, and six things to try beside them ---------- */
-.gl-head h1 { grid-column: 1 / 8; }
+/* ---------- the head: the title, its standfirst, and six things to try beside them ---------- */
+.gl-head .vt { grid-column: 1 / 8; }
 .gl-head .dek { grid-column: 1 / 7; }
-.gl-tally { grid-column: 1 / 7; display: flex; flex-wrap: wrap; margin: 16px 0 0; font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); line-height: 16px; color: var(--muted); }
-.gl-tally span { white-space: nowrap; }
-.gl-tally span + span::before { content: "\00b7"; margin: 0 8px; }
 .gl-try { grid-column: 8 / 13; grid-row: 2 / 4; align-self: end; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0; padding-top: 14px; border-top: 1px solid var(--ink); }
 .gl-try-k { margin-right: 8px; font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); line-height: 1; color: var(--muted); }
 html:not(.booted) .gl-try { visibility: hidden; } /* its six names arrive at boot */
 @media (max-width: 1199px) {
-  .gl-head h1, .gl-head .dek, .gl-tally { grid-column: 1 / -1; }
+  .gl-head .vt, .gl-head .dek { grid-column: 1 / -1; }
   .gl-try { grid-column: 1 / -1; grid-row: auto; margin-top: 28px; }
 }
 @media (max-width: 760px) {
-  .gl-tally { gap: 0 16px; }
-  .gl-tally span + span::before { content: none; }
   .gl-try { margin-top: 24px; }
 }
 

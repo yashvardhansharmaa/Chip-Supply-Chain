@@ -147,7 +147,7 @@ a:hover { text-decoration-color: var(--accent); }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
 img, svg, canvas { max-width: 100%; }
 button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
-h1, h2, h3, h4 { margin: 0; text-wrap: balance; }
+h1, h2, h3, h4, .vt { margin: 0; text-wrap: balance; } /* .vt: a view's title on the home page, a level-one heading that is not a second h1 (src/template.html) */
 p, li, dd { text-wrap: pretty; }
 p { margin: 0 0 1.15em; }
 strong { font-weight: 600; }
@@ -163,7 +163,7 @@ small { font-size: 0.85em; }
 .num, .tabular { font-variant-numeric: tabular-nums; }
 
 /* ---------- display type: Source Serif 4, its optical size following the size, never bold ---------- */
-.wk-title, .ch-title, .view-head h1, .view-head h2, .thesis, .contents h2, .prose h3, .prose h4, .wk-t, .wk-end-t,
+.wk-title, .ch-title, .view-head h1, .view-head h2, .view-head .vt, .aic .vt, .thesis, .contents h2, .prose h3, .prose h4, .wk-t, .wk-end-t,
 .brief-head .t, .gl-entry dt, .timeline h4, .sources-list h3, .prevnext .pn .t, .fig-title,
 .ct-tip b, .gl-tip b, .cp-search-results b, .sheet-head b, .wk-pn-t, .ex-rank .name, .ex-panel figcaption b, .ex-tip b {
   font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); letter-spacing: 0;
@@ -234,6 +234,7 @@ small { font-size: 0.85em; }
 }
 /* the canvas is as tall as it is wide, so the drawing fills it and the caption sits right under the drawing; on a short window
    it gives up height first (flex-shrink), and the caption keeps its place under it */
+.stage .stage-thumb { display: none; } /* the phone's collapsed strip only (below) */
 .stage canvas { order: 1; position: relative; flex: 0 1 auto; aspect-ratio: 1 / 1; min-height: 120px; width: 100%; align-self: stretch; display: block; margin-top: 0; }
 @media (hover: hover) and (pointer: fine) { .stage canvas { pointer-events: auto; cursor: grab; touch-action: none; outline: none; } /* the figure itself lets clicks through to the page; the canvas takes them so it can be turned */ .stage canvas.is-dragging { cursor: grabbing; } .stage canvas:focus-visible { box-shadow: inset 0 0 0 2px var(--accent); } }
 .stage .stage-tag {
@@ -268,6 +269,7 @@ small { font-size: 0.85em; }
 .stage .stage-pause:hover { color: var(--ink); border-color: var(--ink); }
 @media (max-width: 900px) {
   .stage .stage-pause { position: absolute; left: 9px; bottom: 9px; z-index: 2; margin: 0; width: 28px; height: 28px; }
+  .stage .stage-pause::before { content: ""; position: absolute; inset: -8px; } /* a 44 px target round the 28 px button */
   .stage[data-collapsed="0"] .stage-pause { bottom: auto; top: 50px; left: 12px; }
 }
 
@@ -306,10 +308,12 @@ sup.cite a { position: relative; font-family: var(--font-mono); font-weight: 500
 /* the footnote number in the label gray, wine on hover and focus: wine is kept for the signal (design round nine, revision 2) */
 sup.cite a:hover, sup.cite a:focus-visible { color: var(--accent-ink); background: var(--accent-soft); text-decoration: none; }
 /* small controls keep their look but take a fingertip: an invisible box at least 24 px square, centered on the control */
-sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before {
+sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before, .gl-tip a::before {
   content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 24px); height: max(100%, 26px); transform: translate(-50%, -50%);
 }
-.ch-copy, .permalink, .fc-more { position: relative; }
+.ch-copy, .permalink, .fc-more, .gl-tip a { position: relative; }
+/* on a touch screen the boxes grow to a fingertip's 32 by 36 px, the footnote numbers most of all (28 Oct 2026) */
+@media (pointer: coarse) { sup.cite a::before, .gl-tip a::before { width: max(100%, 32px); height: max(100%, 36px); } }
 /* link targets land clear of the fixed masthead, whose real height app.js measures into --masthead */
 .figure[id], h2[id], h3[id], h4[id], h5[id], .timeline li[id], .lk-entry { scroll-margin-top: calc(var(--masthead) + var(--band, 0px) + 16px); }
 .ct-tip { position: fixed; z-index: 50; width: max-content; max-width: min(360px, calc(100vw - 16px)); background: var(--bg); border: 1px solid var(--line-2); border-radius: 0; box-shadow: var(--shadow); padding: 12px 15px 13px; }
@@ -333,6 +337,19 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before {
 .prose th:not(.n):last-child, .prose td:not(.n):last-child { padding-right: 0; }
 @media (max-width: 480px) { .prose td.n, .prose th.n { white-space: normal; } } /* a phone lets a long range wrap at its dash so the table fits its box */
 .prose td.n + td:not(.n), .prose th.n + th:not(.n) { padding-left: 18px; } /* a text column after a figure column keeps a gap: the figure is flush right, so "100.0%" ran into "revenue, 2025" (final QA B9) */
+/* a phone (28 Oct 2026): a table in the note step, so a long name ("Blackwell") fits its column, and a soft shadow at an edge
+   while more of the table lies past it, so a table wider than the screen says it scrolls */
+@media screen and (max-width: 480px) {
+  .prose table { font-size: var(--t-note); }
+  .prose th, .prose td, .prose td.n:not(:last-child), .prose th.n:not(:last-child) { padding-right: 10px; }
+  .table-wrap {
+    --sh: color-mix(in srgb, var(--ink) 16%, transparent);
+    background: linear-gradient(to right, var(--bg) 40%, transparent) left / 28px 100% no-repeat local,
+      linear-gradient(to left, var(--bg) 40%, transparent) right / 28px 100% no-repeat local,
+      linear-gradient(to right, var(--sh), transparent) left / 12px 100% no-repeat scroll,
+      linear-gradient(to left, var(--sh), transparent) right / 12px 100% no-repeat scroll;
+  }
+}
 
 /* figures */
 .figure { margin: 1.6em 0 2em; padding: 16px 0 12px; border: 0; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--line-2); border-radius: 0; background: none; }
@@ -424,6 +441,11 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before {
 .chapter-sources[open] summary::after { content: "\2212"; }
 .chapter-sources ol { margin: 12px 0 0; padding-left: 2.2em; font-size: var(--fs-note); line-height: 1.5; color: var(--ink-2); columns: 1; }
 .chapter-sources summary:hover::after { color: var(--accent); }
+/* the key to the tier marks, at the head of the list (build/build.js SOURCE_KEY) */
+.chapter-sources .src-key { margin: 4px 0 14px; font-family: var(--font-ui); font-size: 13px; line-height: 1.6; color: var(--ink-2); max-width: none; }
+.chapter-sources .src-key-k { margin-right: 8px; font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); color: var(--muted); }
+.chapter-sources .src-key .tier { margin: 0 5px 0 6px; }
+.chapter-sources li:target { background: var(--accent-soft); } /* a source the address names */
 .chapter-sources li { margin-bottom: 7px; overflow-wrap: anywhere; padding-left: 27px; text-indent: -27px; } /* a title that wraps hangs clear of its tier mark */
 .chapter-sources li .tier { text-indent: 0; margin-right: 9px; }
 .chapter-sources li .src-meta { text-indent: 0; }
@@ -440,7 +462,7 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before {
 
 /* ---------- landscape ---------- */
 .view-head { padding: clamp(36px, 7vh, 72px) 0 18px; }
-.view-head h1, .view-head h2 { font-weight: 400; font-size: var(--t-title); line-height: 1; text-transform: none; letter-spacing: -0.015em; margin-bottom: 14px; }
+.view-head h1, .view-head h2, .view-head .vt { font-weight: 400; font-size: var(--t-title); line-height: 1; text-transform: none; letter-spacing: -0.015em; margin-bottom: 14px; }
 .view-head .dek { font-size: var(--fs-lede); line-height: 1.45; color: var(--ink-2); max-width: 30em; }
 .picker { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 26px; }
 /* the picker: hairline chips, the maker's country as a code at the right edge, no tints */
@@ -960,6 +982,11 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
   .stage[data-collapsed="1"]:not([data-hidden="1"]) .stage-tag { position: absolute; left: 76px; right: 116px; top: 50%; transform: translateY(-50%); margin: 0; padding: 0; font-family: var(--font-ui); font-size: 13px; font-weight: 500; letter-spacing: 0; text-transform: none; line-height: 18px; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .stage[data-collapsed="1"] .stage-tag .tag-tap { display: block; overflow: hidden; text-overflow: ellipsis; font-weight: 400; color: var(--ink-2); }
   .stage[data-collapsed="1"] figcaption, .stage[data-collapsed="1"] .stage-pause { display: none; }
+  /* the specimen's line drawing in the collapsed strip, in place of the live one (src/app.js Stage.show); the canvas keeps its
+     box, so the drawing is the right size the moment the strip opens */
+  .stage[data-collapsed="1"][data-thumb="1"]:not([data-hidden="1"]) .stage-thumb { display: block; position: absolute; left: 12px; top: 6px; width: 52px; height: 52px; object-fit: contain; mix-blend-mode: multiply; pointer-events: none; }
+  :root[data-theme="dark"] .stage[data-collapsed="1"][data-thumb="1"] .stage-thumb { filter: invert(1) hue-rotate(180deg); mix-blend-mode: screen; }
+  .stage[data-collapsed="1"][data-thumb="1"]:not([data-hidden="1"]) canvas { visibility: hidden; }
   .stage[data-collapsed="1"]:not([data-hidden="1"]) .stage-actions { position: static; }
   .stage[data-collapsed="1"]:not([data-hidden="1"]) .stage-menu { position: absolute; right: 12px; top: 18px; z-index: 3; }
   .stage[data-collapsed="1"]:not([data-hidden="1"]) .stage-actions .stage-toggle { position: absolute; left: 0; top: 0; bottom: 0; right: 108px; z-index: 2; margin: 0; padding: 0; border: 0; border-radius: 0; min-height: 0; background: none; color: transparent; font-size: 0; cursor: pointer; }
@@ -986,6 +1013,12 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
   .sheet-chapters { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
   .sheet-chapters a { display: grid; grid-template-columns: 34px 1fr; align-items: baseline; gap: 10px; padding: 11px 0; border-bottom: 1px solid var(--line); color: var(--ink); text-decoration: none; }
   .sheet-chapters .n { font-family: var(--font-mono); font-size: var(--fs-cap); color: var(--muted); font-variant-numeric: tabular-nums; }
+  /* the chapter being read, in wine, with its sections under it (src/app.js Band) */
+  .sheet-chapters a[aria-current="page"] .t, .sheet-chapters a[aria-current="page"] .n { color: var(--accent-ink); }
+  .sheet-chapters a[aria-current="page"] { box-shadow: inset 2px 0 0 var(--accent); padding-left: 10px; }
+  .sheet-secs { list-style: none; margin: 0; padding: 4px 0 10px 54px; border-bottom: 1px solid var(--line); }
+  .sheet-secs a { display: block; padding: 7px 0; border-bottom: 0; font-family: var(--font-ui); font-size: 14px; line-height: 1.35; color: var(--ink-2); text-decoration: none; }
+  .sheet-secs a:hover { color: var(--accent-ink); }
   .sheet-chapters .t { font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: var(--t-text); }
   .sheet-chapters .sheet-k { font-family: var(--font-mono); font-size: var(--fs-cap); font-weight: 500; letter-spacing: 0; color: var(--muted); padding: 18px 0 8px; border-bottom: 1px solid var(--line); }
   .hero { padding-top: 22px; }
@@ -1081,6 +1114,7 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
 .fc-btn--solid:hover { color: var(--bg); background: var(--ink-2); border-color: var(--ink-2); }
 .fc-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .fc-nav { display: flex; align-items: center; gap: 16px; margin: 24px 0 0; }
+.fc-n { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; } /* the card's place, for a screen reader (build/build.js deckHTML) */
 .fc-dots { display: flex; gap: 6px; }
 .fc-dots i { width: 9px; height: 9px; border: 1px solid var(--ink-2); }
 .fc-dots i.on { background: var(--ink); }
@@ -1106,7 +1140,9 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
 
 /* ---------- explainer animations: step names above, the video, the caption below ---------- */
 .figure--anim { max-width: var(--measure); }
-.figure--anim .anim-steps { display: flex; flex-wrap: wrap; gap: 2px 13px; list-style: none; margin: 10px 0 12px; padding: 0; }
+/* the step row: the step names, and at its end the Paused mark, kept outside the frame so it never covers a label drawn in the video */
+.anim-bar { display: flex; align-items: baseline; gap: 0 16px; margin: 10px 0 12px; }
+.figure--anim .anim-steps { display: flex; flex-wrap: wrap; flex: 1 1 auto; min-width: 0; gap: 2px 13px; list-style: none; margin: 0; padding: 0; }
 .figure--anim .anim-steps li { margin: 0; }
 .anim-steps button { font-family: var(--font-mono); font-size: var(--fs-cap); font-weight: 500; letter-spacing: 0; color: var(--muted); background: none; border: 0; border-bottom: 2px solid transparent; border-radius: 0; padding: 5px 0 4px; cursor: pointer; }
 .anim-steps button .n { margin-right: 6px; font-variant-numeric: tabular-nums; } /* full strength: at 0.7 opacity the numbers fell to 3.0:1 */
@@ -1117,7 +1153,7 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
 /* a hairline frame: browsers decode video colors a shade differently from the page, and a line hides that */
 .anim-stage video { display: block; width: 100%; height: 100%; }
 .anim-print { display: none; }
-.anim-state { position: absolute; top: 8px; right: 8px; font-family: var(--font-mono); font-size: var(--fs-cap-s); font-weight: 500; letter-spacing: 0; color: var(--ink-2); background: var(--bg); border: 1px solid var(--line-2); padding: 4px 8px; opacity: 0; transition: opacity 0.2s; pointer-events: none; }
+.anim-state { flex: none; font-family: var(--font-mono); font-size: var(--fs-cap-s); font-weight: 500; line-height: 1.4; letter-spacing: 0; color: var(--ink-2); background: var(--bg); border: 1px solid var(--line-2); padding: 2px 7px; opacity: 0; transition: opacity 0.2s; pointer-events: none; }
 .figure--anim.is-paused .anim-state { opacity: 1; }
 .anim-cap { margin: 12px 0 6px; min-height: 3em; font-size: var(--t-small); line-height: 1.5; color: var(--ink); }
 .anim-transcript { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
@@ -1125,7 +1161,7 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
 @media (prefers-reduced-motion: reduce) { .anim-state { transition: none; } }
 @media print {
   /* an animation prints as its last frame (.anim-print, the light still) above the list of its steps (.anim-transcript) */
-  .anim-steps, .anim-cap, .anim-stage video, .anim-state { display: none !important; }
+  .anim-bar, .anim-steps, .anim-cap, .anim-stage video, .anim-state { display: none !important; }
   .anim-print { display: block; width: 100%; }
   .anim-stage { aspect-ratio: auto !important; background: none; }
   .anim-transcript { position: static; width: auto; height: auto; overflow: visible; clip: auto; white-space: normal; margin: 8px 0 0; padding-left: 1.4em; font-size: 10pt; }
@@ -1590,7 +1626,7 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 .chapter .fig-strip .ch-cite-text a { font-family: var(--font-code); font-size: 12.5px; overflow-wrap: anywhere; } /* the figure's address, a code */
 .chapter .fig-strip .ch-cite-copy { font-family: var(--font-ui); font-size: 13px; font-weight: 500; color: var(--accent-ink); background: none; border: 0; padding: 4px 0; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
 /* an explainer animation: its steps above, the video, the caption under it */
-.chapter .figure--anim .anim-steps { margin: 0 0 12px; }
+.chapter .figure--anim .anim-bar { margin: 0 0 12px; }
 .chapter .figure--anim .anim-cap { margin: 12px 0 0; font-family: var(--font-body); font-size: var(--t-small); }
 /* a timeline: dates in mono on a hairline */
 .chapter .figure .tl li { font-family: var(--font-body); font-size: var(--t-small); }
@@ -1763,7 +1799,8 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 @media (max-width: 900px) {
   .stage[data-collapsed="0"] figcaption { display: block; -webkit-line-clamp: unset; max-height: 9.5em; overflow-y: auto; }
   .stage[data-collapsed="0"] .stage-parts { display: block; }
-  .stage .stage-parts .ch-parts-k { margin-top: 8px; }
+  .stage .stage-parts .ch-parts-k { margin-top: 0; }
+  .stage[data-collapsed="0"] .stage-parts + .stage-cap-t { display: block; margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--line); }
   .stage .stage-parts .ch-parts { font-size: 12.5px; }
 }
 
@@ -1872,7 +1909,7 @@ article.ch-page { padding-top: 56px; border-top: 0; }
 }
 .aic { position: relative; font-variant-numeric: lining-nums; line-height: 1.55; }
 .aic p { margin: 0; }
-.aic h1, .aic h2, .aic h3, .aic h4, .aic h5 { font-weight: 400; margin: 0; }
+.aic h1, .aic .vt, .aic h2, .aic h3, .aic h4, .aic h5 { font-weight: 400; margin: 0; }
 .aic svg.plan, .aic svg.chart { display: block; max-width: none; }
 .aic .cap { font: 500 12.5px/16px var(--font-ui); letter-spacing: .085em; text-transform: uppercase; color: var(--muted); margin: 0; }
 
@@ -1880,12 +1917,12 @@ article.ch-page { padding-top: 56px; border-top: 0; }
 .aic .head { padding-top: clamp(40px, 7vh, 64px); }
 .aic .head-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 600px); gap: 24px 64px; align-items: stretch; }
 .aic .head-l { display: flex; flex-direction: column; min-width: 0; }
-.aic .head h1 { margin: 0 0 0 -0.045em; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: clamp(48px, 6vw, 88px); line-height: 0.92; letter-spacing: -0.03em; }
-.aic .head .dek { margin: 24px 0 0; max-width: 24em; font-family: var(--font-body); font-size: calc(clamp(19px, 1.62vw, 23px) * var(--text-scale)); line-height: 1.38; color: var(--ink-2); }
+.aic .head .vt { margin: 0 0 0 -0.045em; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: var(--t-title); line-height: 0.92; letter-spacing: -0.03em; } /* the seven steps (28 Oct 2026) */
+.aic .head .dek { margin: 24px 0 0; max-width: 24em; font-family: var(--font-body); font-size: var(--t-lead); line-height: 1.38; color: var(--ink-2); }
 .aic .hfig { margin: 0; min-width: 0; }
-.aic .hfig .fig-h { font: 400 19px/1.35 var(--font-body); margin: 0 0 12px; }
-.aic .head .finding { margin: 28px 0 0; max-width: 31.5em; padding-top: 14px; border-top: 1px solid var(--line-2); font: 400 17.5px/1.5 var(--font-body); color: var(--ink); }
-.aic .hfig .fcap { font: 400 14.5px/1.5 var(--font-body); color: var(--muted); margin-top: 6px; max-width: 666px; }
+.aic .hfig .fig-h { font: 400 var(--t-lead)/1.35 var(--font-body); margin: 0 0 12px; }
+.aic .head .finding { margin: 28px 0 0; max-width: 31.5em; padding-top: 14px; border-top: 1px solid var(--line-2); font: 400 var(--t-text)/1.5 var(--font-body); color: var(--ink); }
+.aic .hfig .fcap { font: 400 var(--t-small)/1.5 var(--font-body); color: var(--muted); margin-top: 6px; max-width: 666px; }
 .aic .chart-host { min-height: 250px; }
 /* the key to the drawings: the marks a shelf uses, and the shelves' scale */
 .aic .key { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; margin-top: auto; padding-top: 28px; font: 400 13px/1.3 var(--font-ui); color: var(--muted); }
@@ -1904,7 +1941,7 @@ article.ch-page { padding-top: 56px; border-top: 0; }
 .aic .own-scale { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; font: 400 13px/1.4 var(--font-ui); color: var(--muted); margin-top: 8px; max-width: 15em; }
 .aic .it-b { display: flex; flex-direction: column; align-items: flex-start; gap: 0; text-align: left; padding: 0; border-radius: 3px; }
 .aic .it-b .pic { display: flex; align-items: flex-end; margin-bottom: 9px; }
-.aic .it-b .nm { font: 400 17px/1.25 var(--font-body); text-decoration: underline; text-decoration-color: transparent; text-decoration-thickness: 1px; text-underline-offset: .22em; }
+.aic .it-b .nm { font: 400 var(--t-text)/1.25 var(--font-body); text-decoration: underline; text-decoration-color: transparent; text-decoration-thickness: 1px; text-underline-offset: .22em; }
 .aic .it-b .yr { font: 400 12.5px/1.4 var(--font-ui); color: var(--muted); }
 .aic .it-b:hover .nm { color: var(--accent-ink); text-decoration-color: var(--accent); }
 .aic .it-b:hover .plan .p-sub { stroke: var(--accent); }
@@ -2050,7 +2087,7 @@ article.ch-page { padding-top: 56px; border-top: 0; }
 .aic .cr > dd { margin: 0; min-width: 0; font: 400 17px/1.55 var(--font-body); max-width: 46em; }
 .aic .cr .said { margin-top: 10px; }
 .aic .cr .note-s + .note-s { margin-top: 10px; }
-.aic .stand-r .fig-h, .aic .card-stand .fig-h { font: 400 17px/1.4 var(--font-body); margin: 0 0 12px; }
+.aic .stand-r .fig-h, .aic .card-stand .fig-h { font: 400 var(--t-text)/1.4 var(--font-body); margin: 0 0 12px; }
 .aic .stand-r .note-s { margin-top: 8px; max-width: 40em; }
 .aic .stand-r .chart-host { max-width: 760px; min-height: 0; }
 .aic .card-more { display: grid; grid-template-columns: minmax(0, 760px); margin-top: 48px; padding-top: 28px; border-top: 1px solid var(--line-2); }
@@ -2148,24 +2185,25 @@ article.ch-page { padding-top: 56px; border-top: 0; }
 @media (max-width: 980px) {
   .aic .head-grid { display: flex; flex-direction: column; gap: 0; }
   .aic .head-l { display: contents; }
-  .aic .head-l h1 { order: 1; } .aic .head-l .dek { order: 2; } .aic .head .finding { order: 3; } .aic .hfig { order: 4; max-width: 666px; margin-top: 32px; } .aic .key { order: 5; margin-top: 0; }
+  .aic .head-l .vt { order: 1; } .aic .head-l .dek { order: 2; } .aic .head .finding { order: 3; } .aic .hfig { order: 4; max-width: 666px; margin-top: 32px; } .aic .key { order: 5; margin-top: 0; }
 }
 @media (max-width: 760px) {
   .aic .head { padding-top: 32px; }
-  .aic .head h1 { font-size: min(76px, 19vw); }
-  .aic .head .dek { margin-top: 16px; font-size: calc(19px * var(--text-scale)); line-height: 1.35; }
+  .aic .head .vt { font-size: var(--t-title); }
+  .aic .head .dek { margin-top: 16px; font-size: var(--t-text); line-height: 1.35; }
   .aic .chart-host { min-height: 260px; }
   .aic .shelves { margin-top: 36px; }
   .aic .shelf { grid-template-columns: 1fr; gap: 12px; padding: 16px 0 18px; }
   .aic .sh-mk { display: flex; align-items: baseline; gap: 10px; }
-  .aic .sh-mk h2 { font-size: 19px; }
+  .aic .sh-mk h2 { font-size: var(--t-text); }
+  .aic .hfig .fig-h { font-size: var(--t-text); } /* a figure's title on a phone, as the chapters set it */
   .aic .sh-row { gap: 14px 20px; }
   .aic .it-b .pic { margin-bottom: 7px; }
-  .aic .it-b .nm { font-size: 16px; }
+  .aic .it-b .nm { font-size: var(--t-small); }
   .aic .card-li { margin: 0 calc(-1 * var(--margin)); padding-bottom: 20px; }
   .aic .card { padding: 18px 16px 28px; }
   .aic .ci-text h2 { font-size: 44px; }
-  .aic .ci-text .dek { font-size: 17.5px; margin-bottom: 20px; }
+  .aic .ci-text .dek { font-size: var(--t-text); margin-bottom: 20px; }
   .aic .card-intro { padding: 22px 0 24px; }
   .aic .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 16px; }
   .aic .st dd { font-size: 38px; }
@@ -2211,14 +2249,14 @@ article.ch-page { padding-top: 56px; border-top: 0; }
   .howto .howto-l { grid-column: 1 / 7; min-width: 0; }
   .howto h1.howto-title {
     margin: 0 0 0 -0.045em; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title);
-    font-size: clamp(48px, 5.6vw, 80px); line-height: 0.92; letter-spacing: -0.03em;
+    font-size: var(--t-title); line-height: 0.92; letter-spacing: -0.03em; /* the seven steps (28 Oct 2026; 80 px before) */
   }
   /* the downloads, within reach and quiet: one line of small links under the title */
   .howto .howto-dl { display: flex; flex-wrap: wrap; gap: 4px 20px; margin: 16px 0 0; font-family: var(--font-ui); font-size: 13px; line-height: 20px; }
   .howto .howto-dl a { color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 3px; }
   .howto .howto-dl a:hover { color: var(--accent-ink); text-decoration-color: var(--accent); }
   .howto .howto-r { grid-column: 7 / 13; min-width: 0; padding-bottom: 22px; }
-  .howto .howto-std { max-width: 38em; margin: 0; font-family: var(--font-body); font-size: calc(17.5px * var(--text-scale)); line-height: 1.5; color: var(--ink-2); }
+  .howto .howto-std { max-width: 38em; margin: 0; font-family: var(--font-body); font-size: var(--t-lead); line-height: 1.45; color: var(--ink-2); } /* a standfirst's step */
   .howto-std .ct-bmk { margin: 0 5px 0 1px; vertical-align: -1px; }
   .howto-std .ct-bmk.h { vertical-align: 0; }
   .view[data-view="stack"] > .contents { margin: 0; padding: 0 0 24px; border: 0; }
@@ -2242,11 +2280,11 @@ article.ch-page { padding-top: 56px; border-top: 0; }
   }
   .contents .ct-col .t {
     grid-column: 3; grid-row: 1; align-self: baseline; display: block; margin: 0; font-family: var(--font-display); font-weight: 500;
-    font-variation-settings: var(--opsz-title); font-size: calc(20px * var(--text-scale)); line-height: 1.3; letter-spacing: -0.005em;
+    font-variation-settings: var(--opsz-title); font-size: var(--t-lead); line-height: 1.3; letter-spacing: -0.005em;
     color: var(--ink); text-decoration: none;
   }
   .contents .ct-col .t::after { content: ""; position: absolute; inset: 0 0 18px; } /* the whole row opens the chapter */
-  .contents .ct-col .ol { grid-column: 3; grid-row: 2; margin: 5px 0 0; max-width: 33em; font-family: var(--font-body); font-size: calc(15px * var(--text-scale)); line-height: 1.55; color: var(--muted); }
+  .contents .ct-col .ol { grid-column: 3; grid-row: 2; margin: 5px 0 0; max-width: 33em; font-family: var(--font-body); font-size: var(--t-small); line-height: 1.55; color: var(--muted); }
   /* the reader's selection: the chapter pointed at or focused (src/app.js) */
   .contents .ct-col > .item:hover .t, .contents .ct-col > .item.is-hot .t, .contents .ct-col > .item:hover .n, .contents .ct-col > .item.is-hot .n { color: var(--accent-ink); }
 
@@ -2278,26 +2316,26 @@ article.ch-page { padding-top: 56px; border-top: 0; }
   .contents .ct-col > .item { --tw: 96px; --th: 72px; }
   .contents .ct-col .ol { max-width: 36em; }
 }
-/* a phone: the title, the downloads, the rows, then the sentence at the foot under a hairline. The stack view is a column
-   here, so the sentence can follow the contents. Each row sets its drawing, number and title on one line, the one line
-   under all three */
+/* a phone: the title, the downloads, the sentence (it is the key to the marks, so it comes before the sixteen rows: 28 Oct
+   2026; it sat at the foot until then), then the rows. Each row sets its drawing, number and title on one line, the one
+   line under all three */
 @media screen and (max-width: 759px) {
   .view[data-view="stack"] > .howto { display: block; padding-top: 0; }
   html[data-chain="contents"] .view[data-view="stack"]:not([hidden]) { display: flex; flex-direction: column; }
   html[data-chain="contents"] .view[data-view="stack"] > .howto, html[data-chain="contents"] .howto .howto-l, html[data-chain="contents"] .howto .howto-r { display: contents; }
-  .howto h1.howto-title { order: 0; margin-top: 26px; font-size: min(76px, 19vw); }
+  .howto h1.howto-title { order: 0; margin-top: 26px; font-size: var(--t-title); }
   .howto .howto-dl { order: 1; margin-top: 12px; }
-  .view[data-view="stack"] > .contents { order: 2; padding-bottom: 0; }
-  .howto .howto-std { order: 3; margin: 30px 0 24px; padding-top: 16px; border-top: 1px solid var(--line); font-size: calc(16.5px * var(--text-scale)); }
+  .howto .howto-std { order: 2; margin: 22px 0 0; font-size: var(--t-text); }
+  .view[data-view="stack"] > .contents { order: 3; padding-bottom: 24px; }
   .view[data-view="stack"] > .site-footer { order: 4; }
   .contents .ct-st { margin-top: 36px; }
   .contents .ct-x { margin-top: 18px; }
   .contents .ct-col > .item { --tw: 64px; --th: 48px; grid-template-columns: calc(var(--tw) + 14px) 36px minmax(0, 1fr); padding: 0 0 30px; }
   .ct-tile { grid-row: 1; padding: 6px; }
   .contents .ct-col .n, .contents .ct-col .t { align-self: center; }
-  .contents .ct-col .t { font-size: calc(18.5px * var(--text-scale)); line-height: 24px; }
+  .contents .ct-col .t { font-size: var(--t-text); line-height: 24px; }
   .contents .ct-col .t::after { inset: 0 0 14px; }
-  .contents .ct-col .ol { grid-column: 1 / -1; grid-row: 2; margin: 10px 0 0; font-size: calc(15px * var(--text-scale)); }
+  .contents .ct-col .ol { grid-column: 1 / -1; grid-row: 2; margin: 10px 0 0; font-size: var(--t-small); }
 }
 /* on paper the rows are the book's contents: no drawing, no label, and the book's own standfirst in place of the sentence */
 @media print {
@@ -2782,7 +2820,7 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
 
 /* module: lookup.css */
 /* The Glossary as a printed dictionary (redesign option B, chosen 25 Oct 2026; src/modules/lookup.js).
-   The head (the title, its counts, six things to try), a sticky bar (the search, the kinds, the thumb index of letters), then
+   The head (the title and six things to try; its counts went to the kinds' buttons on 28 Oct 2026), a sticky bar (the search, the kinds, the thumb index of letters), then
    every entry in columns under its large letter and guide words. An entry opens in a sheet: beside the columns from 1,000 px,
    over them below that, the whole screen on a phone. The sheet holds the site's own cards and the passages.
    Color: red wine marks links, the reader's place (the letter in view, the open entry) and the reader's own choice, and two
@@ -2793,22 +2831,17 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
 
 .view[data-view="glossary"] { width: 100%; padding: 0 var(--margin); }
 
-/* ---------- the head: the title, its standfirst and counts, and six things to try beside them ---------- */
-.gl-head h1 { grid-column: 1 / 8; }
+/* ---------- the head: the title, its standfirst, and six things to try beside them ---------- */
+.gl-head .vt { grid-column: 1 / 8; }
 .gl-head .dek { grid-column: 1 / 7; }
-.gl-tally { grid-column: 1 / 7; display: flex; flex-wrap: wrap; margin: 16px 0 0; font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); line-height: 16px; color: var(--muted); }
-.gl-tally span { white-space: nowrap; }
-.gl-tally span + span::before { content: "\00b7"; margin: 0 8px; }
 .gl-try { grid-column: 8 / 13; grid-row: 2 / 4; align-self: end; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0; padding-top: 14px; border-top: 1px solid var(--ink); }
 .gl-try-k { margin-right: 8px; font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); line-height: 1; color: var(--muted); }
 html:not(.booted) .gl-try { visibility: hidden; } /* its six names arrive at boot */
 @media (max-width: 1199px) {
-  .gl-head h1, .gl-head .dek, .gl-tally { grid-column: 1 / -1; }
+  .gl-head .vt, .gl-head .dek { grid-column: 1 / -1; }
   .gl-try { grid-column: 1 / -1; grid-row: auto; margin-top: 28px; }
 }
 @media (max-width: 760px) {
-  .gl-tally { gap: 0 16px; }
-  .gl-tally span + span::before { content: none; }
   .gl-try { margin-top: 24px; }
 }
 
@@ -3948,8 +3981,7 @@ html.kb:has(.view[data-view="glossary"]:not([hidden])) { scroll-padding-top: cal
 .atlas .sa-est { display: block; margin: 2px 0 0; font-family: var(--font-ui); font-weight: 400; font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
 /* a stage's band beside its name, as the chapter's kicker marks it: a bar for Extreme, an outline for High */
 .atlas .sa-sc { display: inline-flex; align-items: center; gap: 5px; margin-left: 8px; padding: 0; background: none; color: var(--ink); font-family: var(--font-ui); font-size: 12px; font-weight: 500; vertical-align: 1px; }
-.atlas .sa-sc::before { content: ""; display: block; width: 4px; height: 11px; background: var(--bar-5); }
-.atlas .sa-sc[data-band="3"]::before { height: 6px; margin-top: 5px; background: transparent; box-shadow: inset 0 0 0 1.25px var(--ink); }
+.atlas .sa-sc .meter { --mh: 10px; --mw: 3px; --mg: 1.5px; } /* the band's meter, as the strip below draws it (28 Oct 2026; a single mark before) */
 :root[data-theme="dark"] .atlas .sa-sc { color: var(--ink); }
 .atlas .sa-china { margin: 14px 0 0; padding: 10px 0 2px; border-left: 0; border-top: 1px solid var(--line); }
 .atlas .sa-china a { color: var(--ink); text-decoration-color: var(--rule-ink); }
@@ -3966,8 +3998,7 @@ html.kb:has(.view[data-view="glossary"]:not([hidden])) { scroll-padding-top: cal
 .atlas .sa-strip-stops li { min-width: 0; }
 .sa-stopcard { display: flex; flex-direction: column; gap: 3px; padding: 10px 6px 8px 0; text-decoration: none; color: var(--ink); min-width: 0; border: 0; }
 .sa-stopcard-n { display: flex; align-items: flex-end; gap: 6px; font-family: var(--font-ui); font-size: 11.5px; line-height: 16px; color: var(--muted); font-variant-numeric: tabular-nums; }
-.sa-bmk { display: inline-block; width: 5px; height: 12px; margin-bottom: 2px; background: var(--bar-5); }
-.sa-stopcard[data-band="High"] .sa-bmk { height: 6px; background: transparent; box-shadow: inset 0 0 0 1.25px var(--ink); }
+.sa-stopcard-n .sa-bmk { --mh: 11px; --mw: 3px; --mg: 1.5px; margin-bottom: 3px; } /* the band's meter (src/modules/chapter.css .meter), at the rail's size */
 .sa-stopcard-t { display: block; font-family: var(--font-ui); font-weight: 500; font-size: 13.5px; line-height: 1.25; margin: 0; overflow-wrap: break-word; hyphens: auto; }
 .sa-stopcard-w { display: block; font-family: var(--font-ui); font-size: 11px; line-height: 15px; color: var(--muted); font-variant-numeric: tabular-nums; }
 .sa-stopcard:hover .sa-stopcard-t, .sa-stopcard.is-hot .sa-stopcard-t, .sa-stopcard:focus-visible .sa-stopcard-t { color: var(--accent-ink); }
@@ -4026,7 +4057,7 @@ html.kb:has(.view[data-view="glossary"]:not([hidden])) { scroll-padding-top: cal
   display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; align-items: end;
   padding: clamp(40px, 7vh, 64px) 0 0;
 }
-.view-head.vh h1 {
+.view-head.vh h1, .view-head.vh .vt {
   grid-column: 1 / -1; margin: 0 0 0 -0.045em;
   font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title);
   font-size: var(--t-title); line-height: 0.92; letter-spacing: -0.03em;
@@ -4035,11 +4066,11 @@ html.kb:has(.view[data-view="glossary"]:not([hidden])) { scroll-padding-top: cal
   grid-column: 1 / 7; margin: 24px 0 0; max-width: 31em;
   font-family: var(--font-body); font-size: var(--t-lead); line-height: 1.38; color: var(--ink-2);
 }
-.view-head.sup-head h1 { grid-column: 1 / 8; } /* beside its four counts */
-@media (max-width: 1199px) { .view-head.vh .dek { grid-column: 1 / -1; } .view-head.sup-head h1 { grid-column: 1 / -1; } }
+.view-head.sup-head .vt { grid-column: 1 / 8; } /* beside its four counts */
+@media (max-width: 1199px) { .view-head.vh .dek { grid-column: 1 / -1; } .view-head.sup-head .vt { grid-column: 1 / -1; } }
 @media (max-width: 760px) {
   .view-head.vh { display: block; padding-top: 32px; }
-  .view-head.vh h1 { font-size: var(--t-title); }
+  .view-head.vh h1, .view-head.vh .vt { font-size: var(--t-title); }
   .view-head.vh .dek { margin-top: 16px; font-size: var(--t-text); line-height: 1.35; }
 }
 
@@ -4201,6 +4232,7 @@ html.kb:has(.view[data-view="glossary"]:not([hidden])) { scroll-padding-top: cal
 .sup-crit-sq { display: inline-flex; align-items: flex-end; gap: 3px; }
 .sup-crit-sq i { display: block; width: 4px; height: 14px; background: var(--rib-crit); }
 .sup-names { grid-column: 3; grid-row: 1; margin: 0; line-height: 1.75; }
+.sup-panel { grid-column: 3; } /* here, ahead of the narrow layouts below: set after them, it put an opened firm in a third column over the segment's name on tablets and phones (28 Oct 2026) */
 .sup-nw { display: inline; white-space: nowrap; } /* a name and its comma stay together; the list breaks at the spaces between names */
 .sup-nw[hidden] { display: none; }
 .sup-nw::after { content: ","; color: var(--muted); }
@@ -4233,7 +4265,7 @@ html.kb:has(.view[data-view="glossary"]:not([hidden])) { scroll-padding-top: cal
 }
 
 /* ---------- the firm panel under a rung ---------- */
-.sup-panel { grid-column: 3; display: grid; grid-template-rows: 0fr; transition: grid-template-rows 220ms var(--ease); }
+.sup-panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 220ms var(--ease); }
 .sup-panel[data-open="1"] { grid-template-rows: 1fr; }
 .sup-panel-in { min-height: 0; overflow: hidden; visibility: hidden; transition: visibility 0s linear 220ms; }
 .sup-panel[data-open="1"] .sup-panel-in { visibility: visible; transition-delay: 0s; }
@@ -4303,6 +4335,8 @@ html.kb:has(.view[data-view="glossary"]:not([hidden])) { scroll-padding-top: cal
   font-size: var(--fs-d1); line-height: 1.02; letter-spacing: -0.02em;
   text-transform: none; margin: 0 0 0 -0.04em; color: var(--ink);
 }
+/* between a phone and a wide screen the text column is about 45 percent of the window: the title takes one line there too */
+@media (min-width: 901px) and (max-width: 1199px) { .wk-title { font-size: min(var(--fs-d1), 4.2vw); } }
 .wk-dek { font-family: var(--font-body); font-weight: 400; font-size: var(--t-lead); line-height: 1.4; color: var(--ink-2); max-width: 30em; margin: 14px 0 0; text-wrap: balance; }
 /* the read's counts, as a chapter's facts line is set: the label's capitals in the muted ink, a dot between, the first on each line without one */
 .wk-meta { display: flex; flex-wrap: wrap; align-items: baseline; margin: 14px 0 0 -18px; clip-path: inset(0 0 0 18px); }
@@ -4394,10 +4428,8 @@ html.kb:has(.view[data-view="glossary"]:not([hidden])) { scroll-padding-top: cal
   font-family: var(--font-ui); font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums;
 }
 .wk-sc { display: inline-flex; align-items: center; gap: 8px; }
-.wk-sc::before { content: ""; display: inline-block; flex: none; width: 6px; height: 4px; background: var(--ctx); }
-.wk-score[data-rank="5"] .wk-sc::before { height: 15px; background: var(--bar-5); } /* Extreme in wine */
-.wk-score[data-rank="4"] .wk-sc::before { height: 8px; background: transparent; box-shadow: inset 0 0 0 1.5px var(--ink); }
-.wk-sc b { color: var(--ink); font-weight: 500; font-size: 14px; }
+.wk-sc .meter { --mh: 13px; --mw: 4px; --mg: 1.5px; } /* the band's meter, beside its word (src/modules/chapter.css .meter) */
+.wk-sc > b { color: var(--ink); font-weight: 500; font-size: 14px; }
 .wk-read {
   margin-left: auto; font-family: var(--font-ui); font-weight: 500;
   font-size: 15px; letter-spacing: 0; white-space: nowrap; color: var(--ink);
@@ -4410,7 +4442,7 @@ html.kb:has(.view[data-view="glossary"]:not([hidden])) { scroll-padding-top: cal
 .wk-read::before, .wk-score-term::before, .wk-facts .wk-src::before {
   content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 24px); height: max(100%, 26px); transform: translate(-50%, -50%);
 }
-.wk-facts .wk-src::before { width: calc(100% + 8px); }
+.wk-facts .wk-src::before { width: calc(100% + 12px); height: 32px; } /* a fingertip's target round a short link */
 .wk-read:hover { color: var(--accent-ink); border-bottom-color: var(--accent); }
 
 .wk-pn { display: none; }

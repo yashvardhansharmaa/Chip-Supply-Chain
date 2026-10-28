@@ -18,6 +18,18 @@ import base64, datetime, json, os, re, subprocess, sys, time, urllib.request
 import websocket  # websocket-client
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+def set_author(path, author='Yashvardhan Sharma'):
+    """Chrome writes the PDF's title from the page but no author: add the site's author to the document's metadata, keeping
+    everything else (28 Oct 2026). Without pypdf the file is left as Chrome wrote it."""
+    try:
+        from pypdf import PdfReader, PdfWriter
+    except Exception:
+        print('pypdf is missing, so the PDF carries no Author', file=sys.stderr); return
+    r = PdfReader(path); w = PdfWriter(clone_from=r)
+    md = {k: v for k, v in (r.metadata or {}).items()}
+    md['/Author'] = author
+    w.add_metadata(md)
+    with open(path, 'wb') as f: w.write(f)
 args = [a for a in sys.argv[1:]]
 def opt(name, default):
     if name in args:
@@ -137,6 +149,7 @@ try:
     if len(data) < 30000: sys.exit(f'refusing to write: only {len(data)} bytes, so the page probably failed to load ({url})')
     if not force and not 2 <= pages <= 5: sys.exit(f'refusing to write: {pages} pages, the summary must run 2 to 5')
     open(out, 'wb').write(data)
+    set_author(out)
     print(f'wrote {out}: {pages} pages, {len(data) / 1e6:.2f} MB' + (f', {edition}' if dated == 'dated' else ', as the browser prints it') + (' (dark mode)' if dark else ''))
 finally:
     proc.terminate()

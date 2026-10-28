@@ -24,11 +24,13 @@ module.exports = function (ctx) {
   const stepId = (id) => '/walk/' + id;
   const stageIndex = (id) => stages.findIndex((s) => s.id === id);
 
-  /* the concentration band, shown the way the chain strip shows it: wine at Extreme, an ink outline at High, gray below */
+  /* the concentration band in the site's four-bar meter (src/modules/chapter.css .meter), as the chapters show it (28 Oct 2026) */
   const RANK = { Extreme: '5', High: '4', Moderate: '3', Low: '3' };
+  const BAR = { Extreme: 4, High: 3, Moderate: 2, Low: 1 };
   function bandHTML(c) {
     if (!c.band) return '';
-    return `<span class="wk-score" data-rank="${RANK[c.band] || '3'}"><button type="button" class="gl-term label wk-score-term" data-term="concentration" data-note="${esc((ctx.BAND_NOTE || {})[c.band] || '')}" data-head="${esc(c.band)} concentration">Concentration</button><span class="wk-sc"><b>${esc(c.band)}</b></span></span>`;
+    const l = BAR[c.band] || 0;
+    return `<span class="wk-score" data-rank="${RANK[c.band] || '3'}"><button type="button" class="gl-term label wk-score-term" data-term="concentration" data-note="${esc((ctx.BAND_NOTE || {})[c.band] || '')}" data-head="${esc(c.band)} concentration">Concentration</button><span class="wk-sc"><span class="meter" data-level="${l}" aria-hidden="true">${[1, 2, 3, 4].map((k) => `<b${k <= l ? ' class="on"' : ''}></b>`).join('')}</span><b>${esc(c.band)}</b></span></span>`;
   }
 
   /* who leads: at most three, name then country code, in the site's chip */
@@ -44,11 +46,16 @@ module.exports = function (ctx) {
   const plainOf = (id) => String((card[id] || {}).plain || '');
   const bib = ctx.readJSON(ctx.path.join(ctx.root, 'data', 'bibliography.json'), {}) || {};
   const okUrl = (u) => /^(https?:|#|\/)/i.test(String(u || '').trim());
+  // a bibliography date, day first as the footnotes give it ("28 January 2026", "January 2026")
+  const MON = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  const dayOf = (d) => { const p = String(d || '').split('-'); return p.length === 3 ? `${+p[2]} ${MON[+p[1] - 1] || p[1]} ${p[0]}` : p.length === 2 ? `${MON[+p[1] - 1] || p[1]} ${p[0]}` : p[0] || ''; };
   // two of the chapter's sourced key facts, so a hurried reader can lift a cited line without opening the chapter
   const factsHTML = (ch) => {
     const facts = ((ch.meta && ch.meta.keyFacts) || []).filter((k) => k && k.fact && okUrl(k.source)).slice(0, 2);
     if (!facts.length) return '';
-    return `<ul class="wk-facts" aria-label="Two facts from the chapter">${facts.map((k) => { const e = bib[k.source] || {}; const t = e.title ? `${e.title}${e.publisher ? ', ' + e.publisher : ''}${e.date ? ', ' + e.date : ''}` : k.source; return `<li>${esc(k.fact)} <a class="wk-src" href="${esc(k.source)}" target="_blank" rel="noopener" title="${esc(t)}">Source</a></li>`; }).join('')}</ul>`;
+    // each Source opens the chapters' footnote card (src/app.js Cite): the title, publisher and date on hover or focus, and on a
+    // touch screen a tap opens the card, whose link goes to the source (28 Oct 2026; the date was only in a hover title)
+    return `<ul class="wk-facts" aria-label="Two facts from the chapter">${facts.map((k) => { const e = bib[k.source] || {}; const when = e.date ? dayOf(e.date) : e.accessed ? 'Accessed ' + dayOf(e.accessed) : ''; const label = [e.title || k.source, e.publisher, when].filter(Boolean).join(' · '); return `<li>${esc(k.fact)} <a class="wk-src" href="${esc(k.source)}" target="_blank" rel="noopener" data-t="${esc(e.title || '')}" data-p="${esc(e.publisher || '')}" data-d="${esc(when)}"${ctx.tierOf ? ` data-tier="${esc(ctx.tierOf(k.source))}"` : ''} aria-label="Source: ${esc(label)}">Source</a></li>`; }).join('')}</ul>`;
   };
   const walkWords = steps.reduce((a, c) => a + wordCount(plainOf(c.id)), 0);
   const mins = Math.max(1, Math.round(walkWords / 230));
@@ -106,7 +113,7 @@ ${nExtreme ? `<p class="wk-gl-p"><b>${nExtreme} of the ${stages.length} stages</
     return `<li class="wk-step" id="${esc(stepId(ch.id))}" data-title="${esc(ch.title)}" data-number="${pad(ch.number)}" data-specimen="${esc((ch.meta && ch.meta.specimen) || '')}" data-caption="${esc((ch.meta && ch.meta.specimenCaption) || '')}">
 <div class="wk-mark" aria-hidden="true"><span class="wk-n">${pad(ch.number)}</span></div>
 <div class="wk-block">
-<p class="wk-where"><span class="label">Chapter ${pad(ch.number)}</span>${stage ? `<span class="label wk-stage">${esc(stage)}</span>` : ''}</p>
+<p class="wk-where">${stage ? `<span class="label wk-stage">${esc(stage)}</span>` : `<span class="label">Chapter ${pad(ch.number)}</span>`}</p>
 <h2 class="wk-t">${esc(ch.title)}</h2>
 ${ctx.glossaryWrap ? ctx.glossaryWrap(`<p class="wk-p">${esc(plainOf(ch.id))}</p>`) : `<p class="wk-p">${esc(plainOf(ch.id))}</p>`}
 ${ctx.glossaryWrap ? ctx.glossaryWrap(factsHTML(ch)) : factsHTML(ch)}
@@ -156,7 +163,7 @@ ${leadersHTML(c)}
 <header class="wk-head" id="wk-hero" data-specimen="${esc(firstSpec.spec)}" data-number="${first.id ? pad(SHOW_FIRST + 1) : ''}" data-title="${esc(first.title || '')}" data-caption="${esc(firstSpec.cap)}">
 <h1 class="wk-title">How AI chips are made</h1>
 <p class="wk-dek">An introduction to the entire semiconductor supply chain.</p>
-<p class="wk-meta"><span class="label">${steps.length} paragraphs</span><span class="label">${walkWords.toLocaleString('en-US')} words</span><span class="label">about ${mins} min</span></p>
+<p class="wk-meta"><span class="label">${walkWords.toLocaleString('en-US')} words</span><span class="label">about ${mins} min</span></p>
 ${GLANCE}
 </header>
 <ol class="wk-list">

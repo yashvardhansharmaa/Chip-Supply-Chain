@@ -203,6 +203,10 @@
       if (!slot) return;
       var cap = $('#stage-caption'), tg = $('#stage-tag-text');
       if (cap) cap.innerHTML = caption ? caption : (slot.caption ? esc(slot.caption) : '');
+      // the phone's collapsed strip shows the specimen's line drawing (the still /supply-chain/ shows), where the live drawing
+      // at 52 px was a dark blob; a specimen with no still keeps the live one (src/styles.css .stage-thumb)
+      var th = $('.stage-thumb', this.fig), cid = ((window.CP_TERMS || {}).specimenChapter || {})[name];
+      if (th) { if (cid) { var u = (PAGE.root || '') + 'media/line-' + cid + '.webp'; if (th.getAttribute('src') !== u) th.setAttribute('src', u); th.hidden = false; this.fig.setAttribute('data-thumb', '1'); } else { th.hidden = true; this.fig.removeAttribute('data-thumb'); } }
       if (tg && tag) tg.innerHTML = tag;
       if (this.cur && this.cur.key === slot.key) return;
       this.prev = this.cur; this.cur = slot; this.transStart = performance.now();
@@ -482,7 +486,27 @@
         if (href) Keys.land(href);
         else if (back && back.focus && document.contains(back)) { try { back.focus({ preventScroll: true }); } catch (e) { } }
       };
-      if (menu) menu.addEventListener('click', function () { open(true); });
+      // the sheet marks the chapter being read and lists its sections under it, as the rail does on a wide screen (28 Oct 2026)
+      var markSheet = function () {
+        if (!sheet) return;
+        var id = PAGE.chapter || (Router.current === 'stack' && Router.chain && Router.chain !== 'contents' ? Router.chain : '');
+        $$('.sheet-chapters a[aria-current]', sheet).forEach(function (a) { a.removeAttribute('aria-current'); });
+        $$('.sheet-secs', sheet).forEach(function (o) { o.remove(); });
+        if (!id) return;
+        var cur = $$('.sheet-chapters > li > a', sheet).filter(function (a) { var h = a.getAttribute('href') || ''; return h === '#' + id || new RegExp('(^|/)' + id + '/$').test(h); })[0];
+        if (!cur) return;
+        cur.setAttribute('aria-current', 'page');
+        var toc = $$('.ch-rail .rail-toc', document).filter(function (o) { var r = o.closest('.ch-rail'), art = o.closest('article.chapter'); return !art || art.id === id; })[0];
+        if (!toc) return;
+        var ol = document.createElement('ol'); ol.className = 'sheet-secs'; ol.setAttribute('aria-label', 'In this chapter');
+        $$('a', toc).forEach(function (a) { var li = document.createElement('li'), b = document.createElement('a'); b.href = a.getAttribute('href'); b.textContent = a.textContent; li.appendChild(b); ol.appendChild(li); });
+        cur.parentNode.appendChild(ol);
+      };
+      if (menu) menu.addEventListener('click', function () {
+        markSheet(); open(true);
+        var cur = $('.sheet-chapters a[aria-current]', sheet); // the chapter being read in view, under the head
+        if (cur) sheet.scrollTop = Math.max(0, cur.getBoundingClientRect().top - sheet.getBoundingClientRect().top + sheet.scrollTop - 160);
+      });
       if (sheet) {
         sheet.addEventListener('click', function (e) { var a = e.target.closest('a'); if (a || e.target.closest('.sheet-close')) { open(false, a ? a.getAttribute('href') : null); self.set(true); } });
         document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !sheet.hidden) open(false); });
@@ -693,6 +717,9 @@
           this.booted = true;
         } else if (anchor) {
           var el = document.getElementById(anchor);
+          // an address that names a folded list (a chapter's Sources) or a place inside one opens it (28 Oct 2026)
+          var fold = el ? (el.tagName === 'DETAILS' ? el : el.closest && el.closest('details')) : null;
+          if (fold && !fold.open) fold.open = true;
           if (el && !kept) {
             var jumpIt = !this.booted || changed || turned;
             scrollToEl(el, !jumpIt); // first load, a new view or another chapter: jump; within the chapter: glide
@@ -765,7 +792,16 @@
       var toTop = $('.to-top'); // Back to top on every long page, not only the chain (on a phone too: Top left the strip, page revision 2)
       if (toTop) {
         var contentsEl = Router.current === 'stack' && Router.chain === 'contents' ? $('#contents') : null;
-        toTop.setAttribute('data-show', (contentsEl ? contentsEl.getBoundingClientRect().bottom < 0 : window.scrollY > window.innerHeight * 0.8) ? '1' : '0');
+        var far = contentsEl ? contentsEl.getBoundingClientRect().bottom < 0 : window.scrollY > window.innerHeight * 0.8;
+        // on a phone the pill sat over the text: there it shows only while the reader heads back up, and goes after 3 s at rest
+        // or on the next move down (28 Oct 2026); a wide screen keeps it in its empty corner
+        if (narrow()) {
+          var y = window.scrollY, dy = y - (this.lastY == null ? y : this.lastY), self2 = this; this.lastY = y;
+          if (!far || dy > 6) this.upShow = false;
+          else if (dy < -6) { this.upShow = true; clearTimeout(this.upT); this.upT = setTimeout(function () { self2.upShow = false; var b = $('.to-top'); if (b && document.activeElement !== b) b.setAttribute('data-show', '0'); }, 3000); }
+          far = far && !!this.upShow;
+        }
+        toTop.setAttribute('data-show', far ? '1' : '0');
       }
       if (Router.current !== 'stack' && Router.current !== 'walk') return;
       var items = Router.current === 'walk' ? this.walkItems : this.items;
@@ -831,7 +867,8 @@
     caption: function (item) {
       var c = item.getAttribute('data-caption') ? esc(item.getAttribute('data-caption')) : null;
       var parts = Router.current === 'stack' ? $('.ch-spec .ch-parts', item) : null, k = parts ? $('.ch-spec .ch-parts-k', item) : null;
-      return c && parts ? c + '<span class="stage-parts">' + (k ? k.outerHTML : '') + parts.outerHTML + '</span>' : c;
+      // the parts first, so the opened strip names the drawing's numbers before its scroll (28 Oct 2026; they sat under the caption)
+      return c && parts ? '<span class="stage-parts">' + (k ? k.outerHTML : '') + parts.outerHTML + '</span><span class="stage-cap-t">' + c + '</span>' : c;
     },
     // the chapter's slot that is most in view takes the drawing, and the drawing becomes that chapter's specimen
     hostSpec: function () {
@@ -1406,10 +1443,14 @@
     /* ---- the selection and the address: #/landscape?pick=a,b&measure=mem ---- */
     var S = { picked: [], measure: '' };
     var selection = function () { return S.picked.map(byId).filter(Boolean); };
-    var readAddress = function () {
+    // keep: Back or Forward within AI Chips. The chart's figure is the reader's setting, not part of a step back, so an earlier
+    // entry that names none keeps the figure chosen since, and its address is written with it (28 Oct 2026: Back from four
+    // chips on Memory went back to FP16)
+    var readAddress = function (keep) {
       var q = /[?&]pick=([^&#]+)/.exec(location.hash), ids = q ? dec(q[1]).split(',').filter(byId) : [];
       S.picked = ids.filter(function (id, i) { return ids.indexOf(id) === i; }).slice(0, 4);
-      var m = /[?&]measure=(fp16|fp8|fp4|mem|bw|tdp)\b/.exec(location.hash); S.measure = m ? m[1] : '';
+      var m = /[?&]measure=(fp16|fp8|fp4|mem|bw|tdp)\b/.exec(location.hash), was = S.measure; S.measure = m ? m[1] : keep ? was : '';
+      if (!m && keep && was) writeAddress(false);
     };
     var route = function () { var q = []; if (S.picked.length) q.push('pick=' + S.picked.join(',')); if (S.measure) q.push('measure=' + S.measure); return '#/landscape' + (q.length ? '?' + q.join('&') : ''); };
     // a choice of chips is a history entry, so Back returns to the one before; a change of the chart's figure is written in place
@@ -1512,7 +1553,7 @@
     };
     var headHTML = function () {
       var mk = S.measure || 'fp16', cap = chartSaid(mk);
-      return '<header class="head"><div class="head-grid"><div class="head-l"><h1>AI Chips</h1><p class="dek">' + DEK + '</p><p class="finding">' + chartFinding(mk) + '</p>' + keyHTML(shelfK()) + '</div>' +
+      return '<header class="head"><div class="head-grid"><div class="head-l"><p class="vt" role="heading" aria-level="1">AI Chips</p><p class="dek">' + DEK + '</p><p class="finding">' + chartFinding(mk) + '</p>' + keyHTML(shelfK()) + '</div>' +
         '<figure class="hfig"><p class="fig-h">' + measureSelect(mk, 'aic-m-head') + ' <span>of each chip, by the month it was announced</span></p><div class="chart-host" id="aic-c-head"></div>' +
         (cap.length ? '<figcaption class="fcap">' + cap.join(' ') + '</figcaption>' : '') + '</figure></div></header>';
     };
@@ -1642,7 +1683,7 @@
 
     L.activate = function () { // each route to AI Chips: the address decides what is open
       var arriving = !wired || Router.from !== 'landscape';
-      wire(); closePicker(false); readAddress();
+      wire(); closePicker(false); readAddress(!arriving);
       render(arriving ? { boot: true } : { pop: true });
     };
     // a chip found elsewhere (search, the Glossary) opens on its own, in place of the address it landed on
@@ -2051,6 +2092,23 @@
       $$('.sup-rung[data-lit], .sup-lab[data-lit]').forEach(function (el) { el.removeAttribute('data-lit'); });
       this.country = f.country || '';
       this.sync(); this.render();
+      if (q) this.reveal(q);
+    },
+    /* a filter that names one firm (a search result, a Glossary firm card) opens that firm on the list and brings it to the
+       middle of the screen, with focus on its name: the filtered list alone left it 2,000 px down and shut (28 Oct 2026) */
+    reveal: function (name) {
+      var n = String(name).trim().toLowerCase(), r = this.rows.filter(function (x) { return String(x.name).toLowerCase() === n; })[0];
+      if (!r) return;
+      if (this.tab === 'table') return; // the table, filtered to the firm, has it at its head
+      var w = $((this.tab === 'country' ? '#sup-ladder-cc' : '#sup-ladder') + ' .sup-nw[data-r="' + r._ix + '"]');
+      if (!w || w.hidden) return;
+      var btn = $('.sup-name', w);
+      if (btn.getAttribute('aria-expanded') !== 'true') this.openName(btn);
+      try { btn.focus({ preventScroll: true }); } catch (e) { }
+      // the firm's segment (or country) at the top, under the masthead: its heading, the names and the opened firm below them
+      var rung = w.closest('.sup-rung');
+      var go = function () { var top = (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--masthead')) || 64) + 12; document.documentElement.style.scrollBehavior = 'auto'; window.scrollTo(0, Math.max(0, rung.getBoundingClientRect().top + window.pageYOffset - top)); document.documentElement.style.scrollBehavior = ''; };
+      go(); setTimeout(go, 200); // again once the route has settled the page (Keys.land, the masthead)
     },
     sortBy: function (k) {
       if (this.sortKey === k) this.sortDir = -this.sortDir; else { this.sortKey = k; this.sortDir = 1; }
@@ -3036,7 +3094,7 @@
     },
     later: function () { var self = this; clearTimeout(this.timer); this.timer = setTimeout(function () { self.hide(); }, 260); },
     init: function () {
-      var self = this, mark = function (e) { return e.target && e.target.closest ? e.target.closest('sup.cite a') : null; };
+      var self = this, mark = function (e) { return e.target && e.target.closest ? e.target.closest('sup.cite a, a.wk-src[data-d]') : null; }; // home's Source links take the same card (build/modules/walk.js)
       document.addEventListener('mouseover', function (e) { var a = mark(e); if (a) self.show(a); });
       document.addEventListener('mouseout', function (e) { if (mark(e)) self.later(); });
       document.addEventListener('focusin', function (e) { var a = mark(e); if (a) self.show(a); else if (self.el && !self.el.contains(e.target)) self.hide(); });
@@ -3089,7 +3147,7 @@
       var t = this.panel();
       var ds = btn.dataset || {}, slug = String(d.term).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
       if (ds.note) { // a rating tag: the band's own sentence, then this stage's test, then the full entry
-        t.innerHTML = '<b>' + esc(ds.head || btn.textContent.trim()) + '</b><p>' + esc(ds.note) + '</p>' + (ds.test ? '<p class="gl-tip-test"><span class="label">This stage</span>' + esc(ds.test) + '.</p>' : '') + '<a href="' + esc(addr('#gl-' + slug)) + '">How ' + esc(String(d.term).toLowerCase()) + ' is rated →</a>';
+        t.innerHTML = '<b>' + esc(ds.head || btn.textContent.trim()) + '</b><p>' + esc(ds.note) + '</p>' + (ds.test ? '<p class="gl-tip-test"><span class="label">This stage</span>' + esc(ds.test) + (/[.!?]$/.test(ds.test) ? '' : '.') + '</p>' : '') + '<a href="' + esc(addr('#gl-' + slug)) + '">How ' + esc(String(d.term).toLowerCase()) + ' is rated →</a>';
       } else {
         t.innerHTML = '<b>' + esc(d.term) + '</b><p>' + esc(d.plain) + '</p><a href="' + esc(addr('#gl-' + slug)) + '">Look it up →</a>';
       }
@@ -3269,7 +3327,9 @@
       });
     },
     shown: function (el) { return !!el && !el.closest('[hidden]') && el.getClientRects().length > 0; },
-    title: function (view) { return view ? $$('h1', view).filter(this.shown)[0] || null : null; }, // the view's own h1 (the chain also holds the printed cover's)
+    // the view's own title: an h1, or for the views that share the home page a level-one heading in a paragraph (.vt), so the page
+    // carries one h1 (28 Oct 2026; the chain also holds the printed cover's)
+    title: function (view) { return view ? $$('h1, .vt[aria-level="1"]', view).filter(this.shown)[0] || null : null; },
     focus: function (el) {
       if (!el) return;
       if (!el.matches('a[href], button, input, select, textarea, [tabindex]')) el.setAttribute('tabindex', '-1');
@@ -3634,12 +3694,22 @@
       addExport('[data-sub="exposure"] .matrix-wrap', 'China revenue share by firm and year', DATA.exposure, 'after', 'figures'); // under the table it copies
       // the line above the board that takes a reader down to the chronology
       document.addEventListener('click', function (e) { var j = e.target.closest ? e.target.closest('.cf-jump-btn') : null; if (!j) return; var t = $('#timeline'); if (t) scrollToEl(t, true); });
-      // cite-this block in the footer
-      // the edition is the site's last update, read from the footer's "Updated 3 October 2026"; the access date is the reader's own day
-      var d0 = localISO(), canon = (document.querySelector('link[rel=canonical]') || {}).href || (location.origin + location.pathname);
-      var upd = ($('.site-footer .updated') || {}).textContent || '', um = upd.match(/(\d{1,2})\s+([A-Z][a-z]+)\s+(\d{4})/);
-      var year = um ? um[3] : String(new Date().getFullYear()), edition = um ? um[2] + ' ' + year : year; // no stamp: the year alone, never a guessed month
-      $$('.site-footer').forEach(function (foot) { var d = d0; foot.insertAdjacentHTML('beforeend', '<details class="cite"><summary>How to cite</summary><pre>Sharma, Y. Chip Supply Chain: How AI Chips Are Made. ' + esc(edition) + '. ' + canon + ' (accessed ' + d + ').</pre><pre>@misc{chipsupplychain' + esc(year) + ',\n  title  = {Chip Supply Chain: How AI Chips Are Made},\n  author = {Sharma, Yashvardhan},\n  year   = {' + esc(year) + '},\n' + (um ? '  month  = {' + esc(um[2]) + '},\n' : '') + '  url    = {' + canon + '},\n  note   = {Accessed ' + d + '}\n}</pre></details>'); });
+      // cite-this block in the footer, in the form "Cite this chapter" and the PDFs use (build/build.js citeBlock, src/modules/print.js):
+      // on a chapter's page the chapter, its title and its own "Updated" day; elsewhere the site, with the footer's "Updated" day.
+      // The access date is the reader's own day, written day first as every date on the site is (28 Oct 2026; it was ISO)
+      var MON = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+      var now = new Date(), d0 = now.getDate() + ' ' + MON[now.getMonth()] + ' ' + now.getFullYear();
+      var canon = (document.querySelector('link[rel=canonical]') || {}).href || (location.origin + location.pathname);
+      var chText = PAGE.kind === 'chapter' && PAGE.chapter ? $('#cite-' + PAGE.chapter + ' .ch-cite-text') : null, ct = chText ? chText.textContent : '';
+      var chTitle = (/“(.+?)\.”/.exec(ct) || [])[1] || '', chDay = (/Updated (\d{1,2} [A-Z][a-z]+ \d{4})/.exec(ct) || [])[1] || '';
+      var upd = ($('.site-footer .updated') || {}).textContent || '', um = (chTitle && chDay ? chDay : upd).match(/(\d{1,2})\s+([A-Z][a-z]+)\s+(\d{4})/);
+      var year = um ? um[3] : String(now.getFullYear()), dayUp = um ? um[1] + ' ' + um[2] + ' ' + um[3] : ''; // no stamp: the year alone, never a guessed day
+      var WORK = 'Chip Supply Chain: How AI Chips Are Made';
+      var plain = 'Sharma, Yashvardhan. ' + (chTitle ? '“' + chTitle + '.” ' : '') + WORK + '. ' + (dayUp ? 'Updated ' + dayUp : year) + '. ' + canon + ' (accessed ' + d0 + ').';
+      var rows = [['title', chTitle || WORK], ['author', 'Sharma, Yashvardhan']].concat(chTitle ? [['howpublished', WORK]] : [], [['year', year]], um ? [['month', um[2]]] : [],
+        [['url', canon], ['note', (dayUp ? 'Updated ' + dayUp + '. ' : '') + 'Accessed ' + d0]]);
+      var bib = '@misc{chipsupplychain' + (chTitle ? '-' + PAGE.chapter + '-' : '') + year + ',\n' + rows.map(function (r) { return '  ' + (r[0] + '            ').slice(0, 12) + ' = {' + r[1] + '}'; }).join(',\n') + '\n}';
+      $$('.site-footer').forEach(function (foot) { foot.insertAdjacentHTML('beforeend', '<details class="cite"><summary>' + (chTitle ? 'How to cite this chapter' : 'How to cite') + '</summary><pre>' + esc(plain) + '</pre><pre>' + esc(bib) + '</pre></details>'); });
     }
   };
 
@@ -3696,7 +3766,8 @@
             if (v.readyState >= 1) go(); else v.addEventListener('loadedmetadata', go, { once: true });
           });
         });
-        if (reduced) { stage.setAttribute('aria-label', 'Play the animation'); fig.classList.add('is-paused'); }
+        // under reduced motion the poster is the last frame (the whole picture), so the last step is the one marked and captioned
+        if (reduced) { stage.setAttribute('aria-label', 'Play the animation'); fig.classList.add('is-paused'); show(btns.length - 1); }
       });
       var allPosters = function () { figs.forEach(function (fig) { if (!fig._poster && fig._setPoster) fig._setPoster(); }); };
       // theme: swap to the matching video, keeping the place (a poster not yet fetched stays unfetched)

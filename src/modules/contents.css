@@ -27,14 +27,14 @@
   .howto .howto-l { grid-column: 1 / 7; min-width: 0; }
   .howto h1.howto-title {
     margin: 0 0 0 -0.045em; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title);
-    font-size: clamp(48px, 5.6vw, 80px); line-height: 0.92; letter-spacing: -0.03em;
+    font-size: var(--t-title); line-height: 0.92; letter-spacing: -0.03em; /* the seven steps (28 Oct 2026; 80 px before) */
   }
   /* the downloads, within reach and quiet: one line of small links under the title */
   .howto .howto-dl { display: flex; flex-wrap: wrap; gap: 4px 20px; margin: 16px 0 0; font-family: var(--font-ui); font-size: 13px; line-height: 20px; }
   .howto .howto-dl a { color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 3px; }
   .howto .howto-dl a:hover { color: var(--accent-ink); text-decoration-color: var(--accent); }
   .howto .howto-r { grid-column: 7 / 13; min-width: 0; padding-bottom: 22px; }
-  .howto .howto-std { max-width: 38em; margin: 0; font-family: var(--font-body); font-size: calc(17.5px * var(--text-scale)); line-height: 1.5; color: var(--ink-2); }
+  .howto .howto-std { max-width: 38em; margin: 0; font-family: var(--font-body); font-size: var(--t-lead); line-height: 1.45; color: var(--ink-2); } /* a standfirst's step */
   .howto-std .ct-bmk { margin: 0 5px 0 1px; vertical-align: -1px; }
   .howto-std .ct-bmk.h { vertical-align: 0; }
   .view[data-view="stack"] > .contents { margin: 0; padding: 0 0 24px; border: 0; }
@@ -58,11 +58,11 @@
   }
   .contents .ct-col .t {
     grid-column: 3; grid-row: 1; align-self: baseline; display: block; margin: 0; font-family: var(--font-display); font-weight: 500;
-    font-variation-settings: var(--opsz-title); font-size: calc(20px * var(--text-scale)); line-height: 1.3; letter-spacing: -0.005em;
+    font-variation-settings: var(--opsz-title); font-size: var(--t-lead); line-height: 1.3; letter-spacing: -0.005em;
     color: var(--ink); text-decoration: none;
   }
   .contents .ct-col .t::after { content: ""; position: absolute; inset: 0 0 18px; } /* the whole row opens the chapter */
-  .contents .ct-col .ol { grid-column: 3; grid-row: 2; margin: 5px 0 0; max-width: 33em; font-family: var(--font-body); font-size: calc(15px * var(--text-scale)); line-height: 1.55; color: var(--muted); }
+  .contents .ct-col .ol { grid-column: 3; grid-row: 2; margin: 5px 0 0; max-width: 33em; font-family: var(--font-body); font-size: var(--t-small); line-height: 1.55; color: var(--muted); }
   /* the reader's selection: the chapter pointed at or focused (src/app.js) */
   .contents .ct-col > .item:hover .t, .contents .ct-col > .item.is-hot .t, .contents .ct-col > .item:hover .n, .contents .ct-col > .item.is-hot .n { color: var(--accent-ink); }
 
@@ -94,26 +94,26 @@
   .contents .ct-col > .item { --tw: 96px; --th: 72px; }
   .contents .ct-col .ol { max-width: 36em; }
 }
-/* a phone: the title, the downloads, the rows, then the sentence at the foot under a hairline. The stack view is a column
-   here, so the sentence can follow the contents. Each row sets its drawing, number and title on one line, the one line
-   under all three */
+/* a phone: the title, the downloads, the sentence (it is the key to the marks, so it comes before the sixteen rows: 28 Oct
+   2026; it sat at the foot until then), then the rows. Each row sets its drawing, number and title on one line, the one
+   line under all three */
 @media screen and (max-width: 759px) {
   .view[data-view="stack"] > .howto { display: block; padding-top: 0; }
   html[data-chain="contents"] .view[data-view="stack"]:not([hidden]) { display: flex; flex-direction: column; }
   html[data-chain="contents"] .view[data-view="stack"] > .howto, html[data-chain="contents"] .howto .howto-l, html[data-chain="contents"] .howto .howto-r { display: contents; }
-  .howto h1.howto-title { order: 0; margin-top: 26px; font-size: min(76px, 19vw); }
+  .howto h1.howto-title { order: 0; margin-top: 26px; font-size: var(--t-title); }
   .howto .howto-dl { order: 1; margin-top: 12px; }
-  .view[data-view="stack"] > .contents { order: 2; padding-bottom: 0; }
-  .howto .howto-std { order: 3; margin: 30px 0 24px; padding-top: 16px; border-top: 1px solid var(--line); font-size: calc(16.5px * var(--text-scale)); }
+  .howto .howto-std { order: 2; margin: 22px 0 0; font-size: var(--t-text); }
+  .view[data-view="stack"] > .contents { order: 3; padding-bottom: 24px; }
   .view[data-view="stack"] > .site-footer { order: 4; }
   .contents .ct-st { margin-top: 36px; }
   .contents .ct-x { margin-top: 18px; }
   .contents .ct-col > .item { --tw: 64px; --th: 48px; grid-template-columns: calc(var(--tw) + 14px) 36px minmax(0, 1fr); padding: 0 0 30px; }
   .ct-tile { grid-row: 1; padding: 6px; }
   .contents .ct-col .n, .contents .ct-col .t { align-self: center; }
-  .contents .ct-col .t { font-size: calc(18.5px * var(--text-scale)); line-height: 24px; }
+  .contents .ct-col .t { font-size: var(--t-text); line-height: 24px; }
   .contents .ct-col .t::after { inset: 0 0 14px; }
-  .contents .ct-col .ol { grid-column: 1 / -1; grid-row: 2; margin: 10px 0 0; font-size: calc(15px * var(--text-scale)); }
+  .contents .ct-col .ol { grid-column: 1 / -1; grid-row: 2; margin: 10px 0 0; font-size: var(--t-small); }
 }
 /* on paper the rows are the book's contents: no drawing, no label, and the book's own standfirst in place of the sentence */
 @media print {

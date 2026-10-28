@@ -32,6 +32,9 @@ module.exports = function (ctx) {
   // the band in the words the chapter cards and the share cards use (SUBWORD in build/build.js and build/modules/social.js)
   const SUBWORD = { 'Very hard': 'Very hard to substitute', Hard: 'Hard to substitute', Moderate: 'Moderately hard to substitute', Easy: 'Easy to substitute' };
   const subWords = (ch) => SUBWORD[sub(ch)] || `${sub(ch)} to substitute`;
+  // the band in a table's column under "Substitutability": the card's words without "to substitute", so Moderate reads
+  // "Moderately hard" as the key and the cards say it (28 Oct 2026)
+  const subShort = (ch) => subWords(ch).replace(/ to substitute$/, '');
   // the favicon's tile, as the masthead draws it beside the name
   const TILE = '<svg class="wm-tile" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect width="16" height="16" rx="3.2"/><path transform="translate(3.3324 11.8693) scale(0.009179 -0.009179)" d="M1011 683 Q1011 612 960 564 Q909 515 823 515 Q739 515 696 561 Q653 607 653 680 L653 720 Q653 786 623 823 Q594 861 544 861 Q502 861 468 831 Q433 801 412 741 Q391 682 391 594 Q391 474 431 393 Q470 312 540 270 Q609 229 697 229 Q769 229 825 251 Q880 273 924 326 Q946 348 959 356 Q971 363 983 363 Q1000 363 1007 347 Q1015 330 1015 307 Q1012 216 954 140 Q896 64 796 19 Q695 -26 563 -26 Q417 -26 301 33 Q185 91 118 198 Q51 305 51 450 Q51 602 118 721 Q184 840 305 909 Q425 978 588 978 Q720 978 815 938 Q909 898 960 832 Q1011 765 1011 683 Z"/></svg>';
   const conc = (ch) => card(ch).concentration || '';
@@ -44,7 +47,7 @@ module.exports = function (ctx) {
   const meter = (band) => `<span class="meter" aria-hidden="true">${[1, 2, 3, 4].map((k) => `<b${k <= (LEVEL[band] || 0) ? ' class="on"' : ''}></b>`).join('')}</span>`;
   const ladder = stages.map((ch, i) => {
     const who = leaders(card(ch), 2).map((l) => `${esc(l.name)}${l.country ? ` <span class="cc">${esc(l.country)}</span>` : ''}`).join('<span class="sep">, </span>');
-    return `<li class="lv-${LEVEL[conc(ch)] || 0}"><a href="#s-${esc(ch.id)}"><span class="n">${pad(i + 1)}</span><span class="t">${esc(ch.title)}</span><span class="c">${meter(conc(ch))}<span class="w">${esc(conc(ch))}</span></span><span class="s">${esc(sub(ch))}</span><span class="who">${who}</span></a></li>`;
+    return `<li class="lv-${LEVEL[conc(ch)] || 0}"><a href="#s-${esc(ch.id)}"><span class="n">${pad(i + 1)}</span><span class="t">${esc(ch.title)}</span><span class="c">${meter(conc(ch))}<span class="w">${esc(conc(ch))}</span></span><span class="s">${esc(subShort(ch))}<span class="s-x"> to substitute</span></span><span class="who">${who}</span></a></li>`;
   }).join('');
   const nExtreme = stages.filter((ch) => conc(ch) === 'Extreme').length;
   // a sourced figure on a card links its source, as a chapter's marks do (final QA C13): a leader's share its own url, and the
@@ -56,17 +59,19 @@ module.exports = function (ctx) {
     const k = re ? (ch.meta.keyFacts || []).find((f) => re.test(String(f.fact || ''))) : null;
     return k ? k.source : '';
   };
+  // the cards mark each glossary term's first use, as the chapters do, and a term opens its definition (the script below; 28 Oct 2026)
+  const gw = (h, used) => (ctx.glossaryWrap ? ctx.glossaryWrap(h, used) : h);
   const stageCards = stages.map((ch, i) => {
-    const c = card(ch);
+    const c = card(ch), used = new Set();
     const who = leaders(c, 3).map((l) => `<li><b>${esc(l.name)}</b>${l.country ? ` <span class="cc" title="${esc(COUNTRY[l.country] || l.country)}">${esc(l.country)}</span>` : ''}${l.share ? `<span class="share">${esc(l.share)}${srcLink(l.source)}</span>` : ''}</li>`).join('');
     const sides = [['China', c.chinaStatus], ['United States', c.usStatus]].filter((x) => x[1]);
     return `<article class="card lv-${LEVEL[conc(ch)] || 0}" id="s-${esc(ch.id)}">
 <p class="card-k"><span class="n">${pad(i + 1)}</span>Stage ${i + 1} of ${stages.length}</p>
 <h3><a href="${url(ch.id)}">${esc(ch.title)}</a></h3>
-<p class="pills"><span class="pill pill-c${LEVEL[conc(ch)] === 4 ? ' x' : ''}">${esc(conc(ch))} concentration</span>${sub(ch) ? `<span class="pill">${esc(subWords(ch))}</span>` : ''}</p>
-${ch.meta.oneLiner ? `<p class="lede">${esc(ch.meta.oneLiner)}${srcLink(ledeSrc(ch))}</p>` : ''}
+<p class="pills"><span class="pill pill-c${LEVEL[conc(ch)] === 4 ? ' x' : ''}">${meter(conc(ch))}${esc(conc(ch))} concentration</span>${sub(ch) ? `<span class="pill">${esc(subWords(ch))}</span>` : ''}</p>
+${ch.meta.oneLiner ? `<p class="lede">${gw(esc(ch.meta.oneLiner), used)}${srcLink(ledeSrc(ch))}</p>` : ''}
 ${who ? `<div class="who-block"><p class="lbl">Who leads</p><ul>${who}</ul></div>` : ''}
-${sides.length ? `<div class="sides">${sides.map(([k, v]) => `<div><p class="lbl">${k}</p><p>${esc(v)}</p></div>`).join('')}</div>` : ''}
+${sides.length ? `<div class="sides">${sides.map(([k, v]) => `<div><p class="lbl">${k}</p><p>${gw(esc(v), used)}</p></div>`).join('')}</div>` : ''}
 <p class="more"><a href="${url(ch.id)}">Read the chapter, with its sources</a></p>
 </article>`;
   }).join('');
@@ -84,14 +89,14 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
 <p class="eyebrow"><b>Summary</b> · the whole chain in one read</p>
 <h1>${title}</h1>
 <p class="dek">${esc(dek)}</p>
-<p class="cta"><a class="btn" href="../pdf/summary.pdf" download>Download the PDF <span>4 pages</span></a><a class="btn ghost" href="${SITE.url}supply-chain/">Read the full chain</a></p>
+<p class="cta"><a class="btn" href="../pdf/summary.pdf" download="chip-supply-chain-summary.pdf">Download the PDF <span>4 pages</span></a><a class="btn ghost" href="${SITE.url}supply-chain/">Read the full chain</a></p>
 <p class="meta">Updated ${DAY} · Every figure is cited in the chapter each card links to</p>
 </section>
 <section class="glance" aria-labelledby="glance-h">
 <div class="sec-head"><h2 id="glance-h">The chain at a glance</h2><p><b>${nExtreme} of ${stages.length}</b> stages are rated Extreme concentration, meaning three or fewer firms could supply each of them today, or one firm holds more than half of it.</p></div>
+<p class="key"><b>Concentration</b> counts the firms that credibly supply a stage. Every stage rates Extreme or High. <b>Substitutability</b> rates how hard it would be for a well-funded state or firm to build an alternative: Very hard, Hard or Moderately hard.</p>
 <div class="ladder-head" aria-hidden="true"><span>Stage</span><span>Concentration</span><span>Substitutability</span><span>Who leads</span></div>
 <ol class="ladder">${ladder}</ol>
-<p class="key"><b>Concentration</b> counts the firms that credibly supply a stage. Every stage rates Extreme or High. <b>Substitutability</b> rates how hard it would be for a well-funded state or firm to build an alternative: Very hard, Hard or Moderately hard.</p>
 </section>
 <section class="stages-s" aria-labelledby="stages-h">
 <div class="sec-head"><h2 id="stages-h">The ${word(stages.length)} stages</h2><p>In the order a chip is made.</p></div>
@@ -102,21 +107,43 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
 <div class="grid two">${acrossCards}</div>
 </section>
 </main>
-<footer class="site-footer scr">${footerKey}</footer>`;
+<footer class="site-footer scr">${footerKey}</footer>
+<button class="to-top" type="button" data-show="0">Back to top</button>
+<script src="../assets/terms.js"></script>
+<script>/* the glossary pop-up, as on the chapters (src/app.js Tip): a term's definition on hover, focus or tap, a sheet on a phone */
+(function(){var T=(window.CP_TERMS||{}).defs||{},tip=null,cur=null,hT=0;
+function E(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function panel(){if(tip)return tip;tip=document.createElement('div');tip.className='gl-tip';tip.id='gl-tip';tip.setAttribute('role','tooltip');tip.hidden=true;document.body.appendChild(tip);tip.addEventListener('mouseenter',function(){clearTimeout(hT);});tip.addEventListener('mouseleave',later);return tip;}
+function place(b){var t=panel();if(innerWidth<700){t.classList.add('is-sheet');t.style.left='';t.style.top='';return;}t.classList.remove('is-sheet');var r=b.getBoundingClientRect(),w=t.offsetWidth,h=t.offsetHeight,l=Math.max(8,Math.min(r.left+r.width/2-w/2,innerWidth-w-8)),y=r.top-h-10;if(y<8)y=r.bottom+10;t.style.left=Math.round(l)+'px';t.style.top=Math.round(y)+'px';}
+function show(b){var d=T[b.getAttribute('data-term')];if(!d)return;clearTimeout(hT);var t=panel(),slug=String(d[0]).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');t.innerHTML='<b>'+E(d[0])+'</b><p>'+E(d[1])+'</p><a href="../#gl-'+slug+'">Look it up \u2192</a>';t.hidden=false;if(cur&&cur!==b)cur.removeAttribute('aria-describedby');cur=b;b.setAttribute('aria-describedby','gl-tip');place(b);}
+function hide(){clearTimeout(hT);if(tip)tip.hidden=true;if(cur){cur.removeAttribute('aria-describedby');cur=null;}}
+function later(){clearTimeout(hT);hT=setTimeout(hide,220);}
+function term(e){return e.target.closest?e.target.closest('.gl-term'):null;}
+document.addEventListener('mouseover',function(e){var b=term(e);if(b)show(b);});
+document.addEventListener('mouseout',function(e){if(term(e))later();});
+document.addEventListener('focusin',function(e){var b=term(e);if(b)show(b);else if(tip&&!tip.contains(e.target))hide();});
+document.addEventListener('click',function(e){var b=term(e);if(b){show(b);return;}if(tip&&!tip.contains(e.target))hide();});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&tip&&!tip.hidden){var b=cur;hide();if(b)b.focus();}});
+window.addEventListener('scroll',function(){if(cur&&tip&&!tip.hidden&&!tip.classList.contains('is-sheet'))place(cur);},{passive:true});})();</script>
+<script>/* Back to top, as the app shows it (src/app.js): past most of a screen, and on a phone only while the reader heads back up */
+(function(){var b=document.querySelector('.to-top');if(!b)return;var last=window.scrollY,up=false,t=0,mq=window.matchMedia&&matchMedia('(max-width: 899px)');
+b.addEventListener('click',function(){window.scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});});
+function upd(){var y=window.scrollY,dy=y-last;last=y;var far=y>window.innerHeight*0.8;if(mq&&mq.matches){if(!far||dy>6)up=false;else if(dy<-6){up=true;clearTimeout(t);t=setTimeout(function(){up=false;if(document.activeElement!==b)b.setAttribute('data-show','0');},3000);}far=far&&up;}b.setAttribute('data-show',far?'1':'0');}
+window.addEventListener('scroll',upd,{passive:true});upd();})();</script>`;
 
   /* ---------- print layout (the PDF) ----------
      It opens on the wordmark (the tile and the name, as on every page of the site), then "Summary" as a label. */
   const rows = stages.map((ch, i) => {
     const c = card(ch);
     const who = leaders(c, 2).map((l) => `${esc(l.name)}${l.country ? ` <span class="cc">${esc(l.country)}</span>` : ''}`).join(', ');
-    return `<tr><td class="n">${pad(i + 1)}</td><td class="t"><a href="${url(ch.id)}">${esc(ch.title)}</a></td><td>${who}</td><td class="band b-${esc(c.concentration || '')}">${esc(c.concentration || '')}</td><td class="band">${esc(sub(ch))}</td></tr>`;
+    return `<tr><td class="n">${pad(i + 1)}</td><td class="t"><a href="${url(ch.id)}">${esc(ch.title)}</a></td><td>${who}</td><td class="band b-${esc(c.concentration || '')}">${meter(c.concentration)}${esc(c.concentration || '')}</td><td class="band">${esc(subShort(ch))}</td></tr>`;
   }).join('');
   const blocks = stages.map((ch, i) => {
     const c = card(ch);
     const who = leaders(c, 2).map((l) => `<li><b>${esc(l.name)}</b>${l.country ? ` <span class="cc">${esc(COUNTRY[l.country] || l.country)}</span>` : ''}${l.share ? `. ${esc(l.share)}` : ''}</li>`).join('');
     return `<section class="stage">
 <h3><span class="n">${pad(i + 1)}</span> ${esc(ch.title)}</h3>
-<p class="tags"><span class="b-${esc(c.concentration || '')}">${esc(c.concentration || '')} concentration</span>${sub(ch) ? ` · ${esc(subWords(ch))}` : ''}</p>
+<p class="tags"><span class="b-${esc(c.concentration || '')}">${meter(c.concentration)}${esc(c.concentration || '')} concentration</span>${sub(ch) ? ` · ${esc(subWords(ch))}` : ''}</p>
 ${ch.meta.oneLiner ? `<p class="lede">${esc(ch.meta.oneLiner)}</p>` : ''}
 ${who ? `<ul class="who">${who}</ul>` : ''}
 ${c.chinaStatus ? `<p><span class="k">China</span> ${esc(c.chinaStatus)}</p>` : ''}
@@ -133,7 +160,7 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
   const print = `<div class="prt">
 <header>
 <p class="kicker wm">${TILE}<span class="wm-name">Chip Supply Chain</span><span class="wm-sub">Summary</span></p>
-<h1>${title}</h1>
+<p class="prt-title">${title}</p>
 <p class="dek">${esc(dek)}</p>
 <p class="meta">Updated ${DAY} · <a href="${SITE.url}">${SITE.host}</a> · Every figure is cited in the chapter each section links to.</p>
 </header>
@@ -211,15 +238,16 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
   .ladder .t { font-family: var(--body); font-size: var(--t-small); color: var(--ink); font-weight: 600; }
   .ladder .c { display: inline-flex; align-items: center; gap: 9px; }
   .ladder .lv-4 .w { color: var(--accent); font-weight: 600; }
-  .meter { display: inline-flex; gap: 2px; align-items: flex-end; height: 14px; }
-  .meter b { display: block; width: 6px; background: var(--line); }
-  .meter b:nth-child(1) { height: 5px; } .meter b:nth-child(2) { height: 8px; } .meter b:nth-child(3) { height: 11px; } .meter b:nth-child(4) { height: 14px; }
+  .meter { display: inline-flex; flex: none; gap: var(--mg, 2px); align-items: flex-end; height: var(--mh, 14px); }
+  .meter b { display: block; width: var(--mw, 6px); background: var(--line); }
+  .meter b:nth-child(1) { height: 36%; } .meter b:nth-child(2) { height: 57%; } .meter b:nth-child(3) { height: 79%; } .meter b:nth-child(4) { height: 100%; }
   .meter b.on { background: var(--bar-3); }
   .lv-3 .meter b.on { background: var(--bar-4); }
   .lv-4 .meter b.on { background: var(--accent); }
   .cc { font-size: 11px; letter-spacing: 0.06em; color: var(--muted); }
   .ladder .who .sep { color: var(--muted); }
-  .key { font-size: 12.5px; color: var(--muted); margin: 12px 0 0; max-width: 60em; }
+  .key { font-size: 12.5px; color: var(--muted); margin: 0 0 18px; max-width: 60em; } /* above the table, so a phone reads it before the fourteen rows (28 Oct 2026) */
+  .ladder .s-x { display: none; } /* "to substitute": the column head says it on a wide screen */
   .key b { color: var(--ink-2); font-weight: 600; }
   /* stage cards */
   .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
@@ -231,14 +259,12 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
   h3 { font-family: var(--display); font-weight: 500; font-variation-settings: var(--opsz); font-size: var(--t-block); line-height: 1.15; margin: 0 0 12px; text-wrap: balance; }
   h3 a { text-decoration: none; }
   h3 a:hover { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
-  /* the card's band and substitutability in the site's marks, not boxed tags (page revision 7, 28 Oct 2026): Extreme a 4 by 13 px
-     wine bar before its word, High a 6 px hollow ink square, as the chapter kicker and the rail draw them; substitutability
-     plain ink-2 text */
+  /* the card's band and substitutability as plain words, the band led by the site's four-bar meter, as on the chapters'
+     cards (28 Oct 2026; a single mark before it); substitutability plain ink-2 text */
   .pills { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px; margin: 0 0 12px; }
   .pill { font-size: 13px; font-weight: 400; letter-spacing: 0; padding: 0; border: 0; color: var(--ink-2); }
   .pill-c { font-weight: 500; color: var(--ink); }
-  .lv-4 .pill-c::before { content: ""; display: inline-block; width: 4px; height: 13px; margin: 0 7px -2px 0; background: var(--accent); }
-  .lv-3 .pill-c::before { content: ""; display: inline-block; width: 6px; height: 6px; margin: 0 7px 1px 0; border: 1.5px solid var(--ink); }
+  .pill-c .meter { --mh: 11px; --mw: 4px; --mg: 1.5px; margin: 0 7px 0 0; vertical-align: -1px; }
   .lede { margin: 0 0 14px; font-size: var(--t-small); line-height: 1.5; color: var(--ink); }
   .lbl { margin: 0 0 4px; font-size: 11.5px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
   .who-block { margin: 0 0 14px; }
@@ -251,11 +277,11 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
   /* China and the United States at the card's full width, one under the other (page revision 7): about 60 characters a line */
   .sides { display: block; border-top: 1px solid var(--line); padding-top: 12px; margin: 0 0 12px; }
   .sides > div + div { margin-top: 14px; }
-  .sides p { margin: 0; font-size: 15px; line-height: 22.5px; color: var(--ink-2); }
+  .sides p { margin: 0; font-size: var(--t-small); line-height: 1.5; color: var(--ink-2); } /* the small step (28 Oct 2026; 15 px before) */
   .sides p.lbl { margin-bottom: 4px; font-size: 11.5px; color: var(--muted); }
   .short p { margin: 0 0 12px; font-size: var(--t-small); color: var(--ink-2); }
   .more { margin: auto 0 0; padding-top: 10px; font-size: 13px; font-weight: 600; }
-  .more a { color: var(--accent); text-decoration: none; }
+  .more a { display: inline-block; padding: 8px 0; margin: -8px 0; color: var(--accent); text-decoration: none; } /* a 33 px tall target, the line's look unchanged (28 Oct 2026) */
   .more a::after { content: " \\2192"; }
   .more a:hover { text-decoration: underline; text-underline-offset: 3px; }
   .site-footer { max-width: 1080px; border-top: 1px solid var(--line-2); margin-top: 64px; padding-top: 26px; padding-bottom: 56px; font-size: 12.5px; line-height: 1.7; color: var(--muted); }
@@ -268,8 +294,10 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
   @media (max-width: 860px) {
     .grid { grid-template-columns: minmax(0, 1fr); }
     .ladder-head { display: none; }
-    .ladder a { grid-template-columns: 30px minmax(0, 1fr) auto; grid-template-areas: "n t c" "n who s"; gap: 3px 10px; }
-    .ladder .n { grid-area: n; } .ladder .t { grid-area: t; font-size: var(--t-small); } .ladder .c { grid-area: c; justify-self: end; } .ladder .who { grid-area: who; font-size: 13px; } .ladder .s { grid-area: s; justify-self: end; font-size: 12px; color: var(--muted); }
+    /* a phone: the stage, then its two ratings on one line as the cards give them, then who leads it */
+    .ladder a { grid-template-columns: 30px auto minmax(0, 1fr); grid-template-areas: "n t t" "n c s" "n who who"; gap: 4px 14px; }
+    .ladder .n { grid-area: n; } .ladder .t { grid-area: t; font-size: var(--t-small); } .ladder .c { grid-area: c; } .ladder .who { grid-area: who; font-size: 13px; } .ladder .s { grid-area: s; font-size: 13px; color: var(--muted); }
+    .ladder .s-x { display: inline; } /* no column heads here, so the cell says what it rates */
   }
   @media (max-width: 560px) {
     body { font-size: var(--t-text); }
@@ -280,7 +308,23 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
     h3 { font-size: var(--t-lead); }
   }
 }
-@media print { .scr, .masthead, .site-footer { display: none !important; } }
+@media print { .scr, .masthead, .site-footer, .to-top { display: none !important; } }
+@media screen {
+  .to-top { position: fixed; right: 24px; bottom: 20px; z-index: 35; font-family: var(--label); font-weight: 500; font-size: 13px; color: var(--ink-2); border: 1px solid var(--line-2); background: var(--bg); padding: 7px 14px; border-radius: 999px; cursor: pointer; opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0s 0.3s; }
+  .to-top[data-show="1"] { opacity: 1; visibility: visible; transition: opacity 0.3s; }
+  .to-top:hover { color: var(--ink); border-color: var(--ink); }
+  /* glossary terms and their pop-up, as src/styles.css sets them on the chapters */
+  .gl-term { font: inherit; color: inherit; background: none; border: 0; padding: 0; margin: 0; text-align: inherit; cursor: help; text-decoration: underline dotted; text-decoration-color: color-mix(in srgb, var(--muted) 75%, var(--bg)); text-decoration-thickness: 1.5px; text-underline-offset: 0.24em; }
+  .gl-term:hover, .gl-term[aria-describedby] { text-decoration-style: solid; text-decoration-color: var(--accent); }
+  .nw { white-space: nowrap; } .nw > .gl-term { white-space: normal; }
+  .gl-tip { position: fixed; z-index: 50; width: max-content; max-width: min(340px, calc(100vw - 16px)); background: var(--bg); border: 1px solid var(--line-2); border-top: 2px solid var(--ink); padding: 12px 16px 13px; box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12); }
+  .gl-tip[hidden] { display: none; }
+  .gl-tip b { display: block; font-family: var(--display); font-weight: 500; font-size: var(--t-text); line-height: 1.2; margin-bottom: 6px; }
+  .gl-tip p { margin: 0 0 10px; font-size: var(--t-small); line-height: 1.45; color: var(--ink-2); }
+  .gl-tip a { font-family: var(--label); font-weight: 500; font-size: 12.5px; color: var(--accent); text-decoration: none; }
+  .gl-tip.is-sheet { left: 8px; right: 8px; bottom: 8px; top: auto; width: auto; max-width: none; }
+  @media (max-width: 899px) { .to-top { right: 12px; bottom: 16px; } }
+}
 @media screen and (prefers-reduced-motion: reduce) { * { transition: none !important; } }`;
 
   const PRINT_CSS = `
@@ -301,7 +345,7 @@ p, li, td { text-wrap: wrap; }
 .kicker.wm .wm-tile path { fill: #fff; }
 .kicker.wm .wm-name { font: 500 12pt "Fraunces Mark", var(--display); line-height: 1; }
 .kicker.wm .wm-sub { padding-left: 2.6mm; margin-left: 0.4mm; border-left: 0.5pt solid var(--line-2); font: 400 7.4pt var(--kicker); line-height: 1.2; color: var(--muted); }
-h1 { margin: 0 0 2.4mm; font: 400 23pt/1.06 var(--display); letter-spacing: -0.02em; text-wrap: balance; }
+.prt-title { margin: 0 0 2.4mm; font: 400 23pt/1.06 var(--display); letter-spacing: -0.02em; text-wrap: balance; } /* a paragraph: the page's one h1 is the screen layout's (28 Oct 2026) */
 .dek { margin: 0 0 2.6mm; max-width: 150mm; font-size: 11pt; line-height: 1.4; color: var(--ink-2); }
 .meta { margin: 0 0 4.4mm; font: 400 7.4pt/1.4 var(--kicker); color: var(--muted); }
 .key { display: grid; gap: 1mm; margin: 0 0 3.6mm; padding: 2.2mm 0; border-top: 0.6pt solid var(--ink); border-bottom: 0.3pt solid var(--line-2); font: 8pt/1.4 var(--label); color: var(--ink-2); }
@@ -313,11 +357,13 @@ td.n { width: 7mm; font: 400 7.4pt var(--kicker); color: var(--muted); }
 td.t { padding-right: 4mm; white-space: nowrap; } /* the stage on one line, clear of who leads it; a wrapped row tips the page */
 td.t a { font-family: var(--display); font-weight: 500; font-size: 9.2pt; }
 td.band { font: 400 8pt var(--label); white-space: nowrap; color: var(--ink-2); }
-/* the band as the site draws it: Extreme a solid bar and the word in ink, High an outline */
-.b-Extreme::before, .b-High::before { content: ""; display: inline-block; width: 1.2mm; height: 2.5mm; margin-right: 1.4mm; vertical-align: baseline; }
+/* the band as the site draws it (28 Oct 2026): the four-bar meter before the word, as many bars in ink as the band's rank, the
+   word of an Extreme stage in ink at 600 */
+.meter { display: inline-flex; align-items: flex-end; gap: 0.3mm; height: 2.4mm; margin-right: 1.4mm; vertical-align: -0.1mm; }
+.meter b { display: block; width: 0.7mm; background: var(--line-2); }
+.meter b:nth-child(1) { height: 36%; } .meter b:nth-child(2) { height: 57%; } .meter b:nth-child(3) { height: 79%; } .meter b:nth-child(4) { height: 100%; }
+.meter b.on { background: var(--ink); }
 .b-Extreme { font-weight: 600; color: var(--ink); }
-.b-Extreme::before { background: var(--ink); }
-.b-High::before { height: 1.3mm; box-shadow: inset 0 0 0 0.6pt var(--ink); }
 .cc { font: 400 6.8pt var(--kicker); color: var(--muted); }
 h2 { margin: 16pt 0 1mm; padding-top: 2mm; border-top: 0.6pt solid var(--ink); font: 400 14pt/1.15 var(--display); letter-spacing: -0.012em; break-after: avoid; }
 .h2-note { margin: 0 0 3mm; font-size: 8.6pt; color: var(--ink-2); }
@@ -327,8 +373,7 @@ h2 { margin: 16pt 0 1mm; padding-top: 2mm; border-top: 0.6pt solid var(--ink); f
 .stage h3 { margin: 0 0 1mm; font: 500 10pt/1.25 var(--display); }
 .stage h3 .n { margin-right: 1.2mm; font: 400 7.2pt var(--kicker); color: var(--muted); }
 .tags { margin: 0 0 1.2mm; font: 400 7.4pt/1.35 var(--label); color: var(--ink-2); }
-.tags .b-Extreme::before, .tags .b-High::before { height: 2.2mm; }
-.tags .b-High::before { height: 1.1mm; }
+.tags .meter { height: 2.2mm; }
 .stage p, .stage li, .short p { margin: 0 0 2.2pt; font-size: 8.1pt; line-height: 1.32; } /* 1.36 until 27 Oct: the longer China and US lines ran the brief onto a fifth page */
 .lede { color: var(--ink); }
 .who { margin: 0 0 2.5pt; padding-left: 4mm; }
@@ -340,6 +385,10 @@ h2 { margin: 16pt 0 1mm; padding-top: 2mm; border-top: 0.6pt solid var(--ink); f
 .foot { margin-top: 8mm; padding-top: 2mm; border-top: 0.6pt solid var(--ink); font: 400 8pt/1.45 var(--label); color: var(--ink-2); }
 }`;
 
+  // the share card (build/cards.py renders cards/summary.png from social.js manifest()) and its alt text, as the other views' read
+  const SOC = require('./social.js');
+  const cardImg = SOC.cardURLFor('summary', root);
+  const cardAlt = `Summary. The ${stages.length} stages of the AI chip supply chain in one read, with who leads each and how concentrated it is. Small drawings of all ${stages.length} stages run along the bottom.`;
   const html = `<!doctype html>
 <html lang="en">
 <head>
@@ -354,6 +403,16 @@ h2 { margin: 16pt 0 1mm; padding-top: 2mm; border-top: 0.6pt solid var(--ink); f
 <meta name="twitter:description" content="${esc(seo.description)}">
 <meta property="og:url" content="${SITE.url}summary/">
 <meta property="og:type" content="article">
+<meta property="og:site_name" content="Chip Supply Chain">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="${esc(cardImg)}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="${esc(cardAlt)}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="${esc(cardImg)}">
+<meta name="twitter:image:alt" content="${esc(cardAlt)}">
+<script type="application/ld+json">{{LD:SUMMARY}}</script>
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <script>(function(){try{var q=/[?&]theme=(light|dark)/.exec(location.search);var t=q?q[1]:localStorage.getItem('cp-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -371,6 +430,18 @@ ${print}
   const dir = path.join(root, 'dist', 'summary');
   fs.mkdirSync(dir, { recursive: true });
   const dated = pageDate ? pageDate('/summary/', html) : null;
-  fs.writeFileSync(path.join(dir, 'index.html'), keepRanges(html.split(DAY).join(esc(dated && dayStr ? dayStr(dated.modified) : builtStr))));
+  // the structured data: the summary as an Article (its headline the h1, its description the meta description, its dates the
+  // page's own "Updated" day and the day it first appeared, its image the share card)
+  const u = `${SITE.url}summary/`;
+  const ld = { '@context': 'https://schema.org', '@type': 'Article', '@id': u + '#article', headline: title, description: seo.description, url: u,
+    mainEntityOfPage: { '@type': 'WebPage', '@id': u, url: u, name: `${seo.title} · Chip Supply Chain` },
+    image: { '@type': 'ImageObject', url: cardImg, width: 1200, height: 630 }, inLanguage: 'en',
+    ...(dated ? { datePublished: dated.published, dateModified: dated.modified } : {}),
+    author: { '@type': 'Person', name: SOC.AUTHOR.name, url: SOC.AUTHOR.url },
+    publisher: { '@type': 'Organization', '@id': SITE.url + '#publisher', name: 'Chip Supply Chain', url: SITE.url, logo: { '@type': 'ImageObject', url: SITE.url + 'apple-touch-icon.png', width: 180, height: 180 } },
+    isPartOf: { '@type': 'WebSite', '@id': SITE.url + '#website', name: 'Chip Supply Chain', url: SITE.url },
+    hasPart: stages.map((ch) => ({ '@type': 'WebPage', name: ch.title, url: url(ch.id) })) };
+  const out = html.split(DAY).join(esc(dated && dayStr ? dayStr(dated.modified) : builtStr)).split('{{LD:SUMMARY}}').join(JSON.stringify(ld).replace(/</g, '\\u003c'));
+  fs.writeFileSync(path.join(dir, 'index.html'), keepRanges(out));
   return {};
 };

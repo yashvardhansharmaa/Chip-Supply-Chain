@@ -118,6 +118,7 @@ html:not(.booted)[data-pick] .view[data-view="suppliers"] > :not(.view-head) { d
 
   <figure class="stage" aria-label="3D specimen of the current stage">
     <canvas id="stage-canvas"></canvas>
+    <img class="stage-thumb" alt="" decoding="async" hidden>
     <div class="stage-tag"><span id="stage-tag-text">Specimen <b>00</b> · the whole chip</span></div>
     <div class="stage-actions"><button type="button" class="stage-menu" aria-haspopup="dialog" aria-controls="sheet">Contents</button><button type="button" class="stage-toggle" aria-expanded="false">Expand</button></div>
     <figcaption id="stage-caption"></figcaption>
@@ -138,7 +139,7 @@ html:not(.booted)[data-pick] .view[data-view="suppliers"] > :not(.view-head) { d
            src/app.js Landscape draws it into #aic-view (the title and the standfirst are here for the first paint, and the
            standfirst is read from here, by the app and by /chips/), src/modules/chips.css styles it -->
       <div class="aic" id="aic">
-        <div id="aic-view"><header class="head"><div class="head-grid"><div class="head-l"><h1>AI Chips</h1><p class="dek">The chips that train and run AI models, from 2020 to 2026, and who makes each of their parts.</p></div></div></header></div>
+        <div id="aic-view"><header class="head"><div class="head-grid"><div class="head-l"><p class="vt" role="heading" aria-level="1">AI Chips</p><p class="dek">The chips that train and run AI models, from 2020 to 2026, and who makes each of their parts.</p></div></div></header></div>
       </div>
       <p class="sr-only" id="aic-live" aria-live="polite"></p>
       <footer class="site-footer">{{FOOTER}}</footer>
@@ -148,7 +149,7 @@ html:not(.booted)[data-pick] .view[data-view="suppliers"] > :not(.view-head) { d
       <!-- Suppliers (redesign stage 3): the title and its four counts, the route of one chip, the ribbons open on the page,
            then every firm under three tabs: by segment (the ladder), by country, and as a table -->
       <div class="view-head vh sup-head">
-        <h1>Suppliers</h1>
+        <p class="vt" role="heading" aria-level="1">Suppliers</p>
         <p class="dek">{{SUPPLIERS_INTRO}}</p>
         {{SUPPLIERS_FACTS}}
       </div>
@@ -192,7 +193,7 @@ html:not(.booted)[data-pick] .view[data-view="suppliers"] > :not(.view-head) { d
 
     <section class="view column wide" data-view="controls">
       <div class="view-head vh">
-        <h1>Export Controls</h1>
+        <p class="vt" role="heading" aria-level="1">Export Controls</p>
         <p class="dek">{{CONTROLS_DEK}}</p>
       </div>
       <nav class="subtabs" id="controls-subtabs" aria-label="Controls sections"><a href="#/controls" data-sub="timeline" aria-current="true">What the rules did</a><a href="#/exposure" data-sub="exposure">China revenue share</a></nav>
@@ -263,11 +264,11 @@ html:not(.booted)[data-pick] .view[data-view="suppliers"] > :not(.view-head) { d
       <div class="howto" id="howto">
         <div class="howto-l">
           <h1 class="howto-title">Supply Chain</h1>
-          <p class="howto-dl"><a href="pdf/how-ai-chips-are-made.pdf" download>Download all chapters as a PDF</a><a href="pdf/summary.pdf" download>Download a short summary</a><a href="summary/">Read the summary online</a></p>
+          <p class="howto-dl"><a href="pdf/how-ai-chips-are-made.pdf" download="chip-supply-chain-how-ai-chips-are-made.pdf">Download all chapters as a PDF</a><a href="pdf/summary.pdf" download="chip-supply-chain-summary.pdf">Download a short summary</a><a href="summary/">Read the summary online</a></p>
         </div>
         <div class="howto-r">
           <p class="howto-std">{{CHAIN_STANDFIRST}}</p>
-          <p class="howto-lede print-only">The Chain covers each of the {{STAGES_WORD}} stages of making an AI chip in detail, one chapter per stage, in the order a chip is made, from design software to the data center. Two more chapters at the end look across all the stages, at what a chip costs and who controls the chain. To help readers learn, each chapter has a 3D model, most have an animation, and every one ends with flashcards.</p>
+          <p class="howto-lede print-only">This edition covers each of the {{STAGES_WORD}} stages of making an AI chip in detail, one chapter per stage, in the order a chip is made, from design software to the data center. Two more chapters at the end look across all the stages, at what a chip costs and who controls the chain. To help readers learn, each chapter has a 3D model, most have an animation, and every one ends with flashcards.</p>
         </div>
       </div>
       <div class="contents" id="contents">
@@ -287,9 +288,8 @@ html:not(.booted)[data-pick] .view[data-view="suppliers"] > :not(.view-head) { d
            bar with the search, the kinds and the letters; an entry opens in the sheet. #lk-items and #glossary are the entries as
            data, read by the dictionary, the look-up popovers and the site search, and their ids are the entries' addresses -->
       <div class="view-head vh gl-head">
-        <h1>Glossary</h1>
+        <p class="vt" role="heading" aria-level="1">Glossary</p>
         <p class="dek">Every term, firm, chip and country, with the passages that mention them.</p>
-        <p class="gl-tally">{{GLOSSARY_TALLY}}</p>
         <p class="gl-try" id="gl-try"><span class="gl-try-k">Try</span></p>
       </div>
       <div class="gl-bar-at" id="gl-bar-at" aria-hidden="true"></div>

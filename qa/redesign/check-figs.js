@@ -96,7 +96,8 @@ const num = (s) => (s == null || s === '' ? null : +s);
       // the Table and the CSV hold the data's own rows
       const tOK = got.table.length === rows.length && rows.every((d, i) => got.table[i][0] === String(d[0]) && got.table[i][1].replace(/[^0-9.]/g, '').startsWith(String(d[1]).replace(/[^0-9.]/g, '')));
       check(`${tag}: Table rows match the data (${rows.length})`, tOK, JSON.stringify(got.table));
-      const lines = got.csv.trim().split(/\r?\n/).slice(1);
+      // fix-d D11: the CSV's table comes first, then a blank row and what the file is (figure, title, source, date, note, address)
+      const lines = got.csv.trim().split(/\r?\n\r?\n/)[0].split(/\r?\n/).slice(1);
       const cOK = lines.length === rows.length && rows.every((d, i) => { const cells = []; let s = lines[i], m; while (s.length) { if (s[0] === '"') { m = s.match(/^"((?:[^"]|"")*)"(,|$)/); cells.push(m[1].replace(/""/g, '"')); s = s.slice(m[0].length); } else { m = s.match(/^([^,]*)(,|$)/); cells.push(m[1]); s = s.slice(m[0].length); } if (!m[2]) break; } return cells[0] === String(d[0]) && near(cells[1], d[1]) && (typeof d[2] !== 'number' || near(cells[2], d[2])); });
       check(`${tag}: CSV rows match the data`, cOK, got.csv.slice(0, 300));
       // the PNG export draws the figure (its new form) at 1,600 px wide; saved for a look

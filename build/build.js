@@ -11,6 +11,8 @@ const keepRanges = require('./keep-ranges.js'); // a figure range never breaks a
 // up here because the figures' citations (figure()) are drawn while the chapters are read
 const CITE_WORK = 'Chip Supply Chain: How AI Chips Are Made';
 const CITE_DAY = (id) => `{{CITE_DAY:${id}}}`;
+// the key at the head of a chapter's Sources: what the A and B beside each source mean, led by its own label
+const SOURCE_KEY = `<p class="src-key"><span class="src-key-k">Source tiers</span> <span class="tier tier-A">A</span> company filings, governments, standards bodies, universities and research institutions. <span class="tier tier-B">B</span> SemiAnalysis, Reuters, the Financial Times and Nikkei Asia.</p>`;
 
 const root = path.resolve(__dirname, '..');
 const read = (p) => fs.existsSync(p) ? fs.readFileSync(p, 'utf8') : null;
@@ -142,14 +144,21 @@ const figTitle = (f) => (unitOnValue(f.unit) ? String(f.title || '').split(` (${
 // the figure's short name in the chapter's contents rail: its title's first sentence
 const figShort = (f) => figTitle(f).split(/(?<=[a-z0-9)%])\.\s+(?=[A-Z])/)[0].replace(/\.$/, '');
 // the figure's data as a CSV file, a data: link the browser saves without any script (the readable pages carry it too)
-function figCSV(f, data) {
+// The table comes first, so a spreadsheet reads its header row as one; under it, after a blank row, what the file is: the
+// figure, its title, its source and the source's date, any note (an estimate says so there) and the figure's address
+// (28 Oct 2026). A first column of years is headed Year.
+function figCSV(f, data, meta) {
   const q = (v) => { const s = String(v == null ? '' : v); return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; };
-  const head = f.type === 'timeline' ? ['Date', 'Event'] : ['Item', f.unit ? `Value (${f.unit})` : 'Value'];
+  const years = data.length && data.every((d) => /^(FY ?)?\d{4}$/.test(String(d[0]).trim()));
+  const head = f.type === 'timeline' ? ['Date', 'Event'] : [years ? 'Year' : 'Item', f.unit ? `Value (${f.unit})` : 'Value'];
   // a row with its own range (["High-NA EUV", 350, 400]) gives its high end in a third column
   const hasHi = f.type !== 'timeline' && data.some((d) => typeof d[2] === 'number');
   if (hasHi) head.push(f.unit ? `High end of range (${f.unit})` : 'High end of range');
   const rows = [head].concat(data.map((d) => (hasHi ? [d[0], d[1], typeof d[2] === 'number' ? d[2] : ''] : [d[0], d[1]])));
-  return 'data:text/csv;charset=utf-8,' + encodeURIComponent('﻿' + rows.map((r) => r.map(q).join(',')).join('\r\n') + '\r\n');
+  const m = meta || {};
+  const about = [['Figure', m.num ? `Figure ${m.num}` : ''], ['Title', figShort(f)], ['Source', m.source || ''], ['Source date', m.when || ''], ['Source address', m.url || ''], ['Note', f.note || ''], ['Figure address', m.page || '']].filter((r) => r[1]);
+  const all = about.length ? rows.concat([[]], about) : rows;
+  return 'data:text/csv;charset=utf-8,' + encodeURIComponent('﻿' + all.map((r) => r.map(q).join(',')).join('\r\n') + '\r\n');
 }
 /* The marks a bars or columns figure draws, in the data's order (the owner's chart rule as amended on 28 Oct 2026, above).
    A row is ["label", value], or ["label", low, high] for a value known only as a range (04.2's "$350–400M"). A figure's
@@ -281,10 +290,11 @@ function figure(f, ctx) {
     USED_MEDIA.add(f.src);
     const m = `media/${esc(f.src)}`, steps = meta.steps;
     if (meta.duration) kick += ` · Explainer, ${Math.round(meta.duration)} seconds`;
-    body = `<ol class="anim-steps">${steps.map((st, i) => `<li><button type="button" data-t="${+st.t0}"${i ? '' : ' aria-current="step"'}><span class="n">${String(i + 1).padStart(2, "0")}</span>${esc(st.k)}</button></li>`).join('')}</ol>`
+    // the Paused mark sits at the end of the step row, outside the frame, so it never covers a label drawn in the video (28 Oct 2026)
+    body = `<div class="anim-bar"><ol class="anim-steps">${steps.map((st, i) => `<li><button type="button" data-t="${+st.t0}"${i ? '' : ' aria-current="step"'}><span class="n">${String(i + 1).padStart(2, "0")}</span>${esc(st.k)}</button></li>`).join('')}</ol><span class="anim-state" aria-hidden="true">Paused</span></div>`
       + `<div class="anim-stage" role="button" tabindex="0" aria-label="Pause the animation" style="aspect-ratio:${meta.width}/${meta.height}">`
       + `<video muted loop playsinline preload="none" aria-hidden="true" data-src="${m}"></video>` // no poster attribute: app.js sets it (theme-matched) once the figure nears the screen, and for print
-      + `<img class="anim-print" src="${m}-print-end.jpg" alt="" loading="lazy"><span class="anim-state" aria-hidden="true">Paused</span></div>`
+      + `<img class="anim-print" src="${m}-print-end.jpg" alt="" loading="lazy"></div>`
       + `<p class="anim-cap" aria-hidden="true">${esc(steps[0].cap)}</p>`
       + `<ol class="anim-transcript">${steps.map((st) => `<li><b>${esc(st.k)}.</b> ${esc(st.cap)}</li>`).join('')}</ol>`;
   } else if (f.type === 'timeline') {
@@ -308,10 +318,19 @@ function figure(f, ctx) {
     : (f.source && f.source.label ? `<span class="fs-src"><span class="fs-k">Source:</span> ${esc(f.source.label)}</span>` : '');
   const note = f.note ? `<span class="fs-note fig-source"><span class="fs-k">Note:</span> ${esc(f.note)}</span>` : '';
   const box = `cite-${fid}`;
-  const csv = data.length && !isAnim ? `<a class="fs-csv" href="${figCSV(f, data)}" download="chip-supply-chain-figure-${num.replace('.', '-')}-${esc(f.id)}.csv">CSV</a>` : '';
+  // the figure's source by name and date, for the citation's Data line and the CSV (28 Oct 2026): the bibliography's date, or none
+  const srcB = f.source && f.source.url ? bibOf(f.source.url) : null;
+  const srcName = f.source ? String(f.source.label || (f.source.url ? host(f.source.url) : '')) : '';
+  // (a label that already gives a day, or names more than one source, keeps its own words: one date would be wrong for it)
+  const srcWhen = srcB && srcB.date && !/\b(January|February|March|April|May|June|July|August|September|October|November|December) \d{4}|;/.test(srcName) ? bibDate(srcB.date) : '';
+  const figURL = SITE.url + ctx.id + '/#' + fid;
+  const csv = data.length && !isAnim ? `<a class="fs-csv" href="${figCSV(f, data, { num, source: srcName, when: srcWhen, url: f.source && f.source.url ? String(f.source.url) : '', page: figURL })}" download="chip-supply-chain-figure-${num.replace('.', '-')}-${esc(f.id)}.csv">CSV</a>` : '';
   // an explainer animation has no Cite (owner, 27 Oct): it explains a process and holds no figures of its own to cite
   const acts = isAnim ? '' : `<span class="fs-acts" data-kind="${esc(f.type)}"><button type="button" class="ch-cite-btn" aria-expanded="false" aria-controls="${box}">Cite</button>${csv}</span>`;
-  const citeText = isAnim ? '' : `<div class="ch-cite-box fig-cite-box" id="${box}" role="region" aria-label="Citation for figure ${num}" hidden><p class="ch-cite-text">Sharma, Yashvardhan. “Figure ${num}: ${esc(figTitle(f))}.” <i>${CITE_WORK}</i>. Updated ${CITE_DAY(ctx.id)}. <a href="${esc(SITE.url + ctx.id + '/#' + fid)}">${esc(SITE.url + ctx.id + '/#' + fid)}</a></p></div>`;
+  // the citation names the figure by its title's first sentence (the sentences after it, and the note, are not its title) and
+  // ends on the data it shows: "Data: <source>, <date>." (28 Oct 2026)
+  const dataLine = srcName ? ` Data: ${esc(srcName)}${srcWhen ? ', ' + esc(srcWhen) : ''}.` : '';
+  const citeText = isAnim ? '' : `<div class="ch-cite-box fig-cite-box" id="${box}" role="region" aria-label="Citation for figure ${num}" hidden><p class="ch-cite-text">Sharma, Yashvardhan. “Figure ${num}: ${esc(figShort(f))}.” <i>${CITE_WORK}</i>. Updated ${CITE_DAY(ctx.id)}. <a href="${esc(figURL)}">${esc(figURL)}</a>.${dataLine}</p></div>`;
   const strip = `<div class="fig-strip">${src}${acts}${note}${citeText}</div>`;
   return `<figure class="figure${isAnim ? ' figure--anim' : ''}" id="${fid}" data-num="${num}">${head}<div class="fig-body">${body}</div>${strip}</figure>`;
 }
@@ -395,7 +414,9 @@ function markdown(src, ctx) {
       });
       const dashRanges = (h) => h.split(/(<[^>]+>)/).map((part, k) => (k % 2 ? part : part.replace(/(\d)-(?=[$€£¥]?\d)/g, '$1\u2013'))).join('');
       let html = `<div class="table-wrap" tabindex="0"><table><thead><tr>${head.map((h, c) => `<th${numCol[c] ? ' class="n"' : ''}>${h}</th>`).join('')}</tr></thead><tbody>`;
-      body.forEach((cs) => { html += `<tr>${cs.map((h, c) => (numCol[c] ? `<td class="n">${dashRanges(h)}</td>` : `<td>${h}</td>`)).join('')}</tr>`; });
+      // a short name with a hyphen ("CoWoS-S") stays whole on a narrow screen: it broke at its hyphen (28 Oct 2026)
+      const keepNames = (h) => h.split(/(<[^>]+>)/).map((part, k) => (k % 2 ? part : part.replace(/(^|[\s(])([A-Za-z0-9]+-[A-Za-z0-9]{1,3})(?=$|[\s,.;:)])/g, '$1<span class="nw">$2</span>'))).join('');
+      body.forEach((cs) => { html += `<tr>${cs.map((h, c) => (numCol[c] ? `<td class="n">${dashRanges(h)}</td>` : `<td>${keepNames(h)}</td>`)).join('')}</tr>`; });
       out.push(html + '</tbody></table></div>');
       continue;
     }
@@ -524,7 +545,7 @@ const COST_LEAD = /^((?:about |roughly |up to |from |over |under |~|≈)?(?:US)?
 // gl, when given, marks glossary terms in the card's prose (the substitutability test, the reason and the China and US
 // lines), the first use of each across the card; it takes and returns escaped HTML. ctx is the chapter's citation context
 // ({ id, cites }); without it the card is drawn without marks.
-// where, when given, names the stage at the card's head ("Lithography, stage 4 of 14")
+// where, when given, names the stage at the card's head ("Lithography")
 function nameplate(card, title, gl, ctx, where) {
   if (!card) return '';
   const g = gl || ((s) => s), plain = (s) => s;
@@ -687,15 +708,16 @@ function chapterDoor(ch, attrs, tag, media) {
   const i = seq.findIndex((c) => c.id === ch.id);
   if (i < 0) return '';
   const prev = seq[i - 1], next = seq[i + 1];
-  const where = (c, of) => { const si = stages.findIndex((x) => x.id === c.id); return si >= 0 ? `stage ${pad(si + 1)}${of ? ` / ${pad(stages.length)}` : ''}` : 'across the chain'; };
+  // the door numbers a chapter as the kicker does: "Stage 5 of 14", or "Across the chain" (28 Oct 2026)
+  const where = (c) => { const si = stages.findIndex((x) => x.id === c.id); return si >= 0 ? `Stage ${si + 1} of ${stages.length}` : 'Across the chain'; };
   const go = (words) => `<span class="go">${words}<span class="circ" aria-hidden="true">→</span></span>`;
   // the drawing is the title's picture, so it has no words of its own; the two chapters that are not stages keep their night ground
   const st = next ? doorStill(next) : null;
   const ex = st ? `<span class="ex"${!isStage(next) ? ' data-night="1"' : ''}><img src="${media || ''}${esc(st.file)}" width="${Math.round(st.w / 2)}" height="${Math.round(st.h / 2)}" alt="" loading="lazy" decoding="async"></span>` : '';
   const nx = next
-    ? `<a class="pn next" ${attrs(next)}><span class="label">Next, ${where(next, true)}</span><span class="t">${esc(next.title)}</span>${next.meta.oneLiner ? `<span class="ol">${esc(next.meta.oneLiner)}</span>` : ''}${go(`Continue to chapter ${pad(next.number)}`)}${ex}</a>`
+    ? `<a class="pn next" ${attrs(next)}><span class="label">Next · ${where(next)}</span><span class="t">${esc(next.title)}</span>${next.meta.oneLiner ? `<span class="ol">${esc(next.meta.oneLiner)}</span>` : ''}${go('Continue reading')}${ex}</a>`
     : `<a class="pn next" href="#/chain"><span class="label">Contents</span><span class="t">All ${word(seq.length)} chapters</span><span class="ol">The ${word(stages.length)} stages run from chip design to the data center. The last ${word(seq.length - stages.length)} chapters cover what a chip costs and who controls the chain.</span>${go('Back to the contents')}</a>`;
-  const pv = prev ? `<a class="pn prev" ${attrs(prev)}><span class="label">Previous, ${where(prev, false)}</span><span class="t">${esc(prev.title)}</span></a>` : '';
+  const pv = prev ? `<a class="pn prev" ${attrs(prev)}><span class="label">Previous · ${where(prev)}</span><span class="t">${esc(prev.title)}</span></a>` : '';
   return tag === 'div' ? `<div class="prevnext">${nx}${pv}</div>` : `<nav class="prevnext" aria-label="Next chapter">${nx}${pv}</nav>`;
 }
 const prevNext = (ch) => chapterDoor(ch, (c) => `href="${esc(c.id)}/" data-route="${chapterHref(c)}"`, 'nav', 'media/');
@@ -723,7 +745,9 @@ function deckHTML(fc, o) {
     if (!c.q || !c.a) warn(`flashcards ${o.id} #${i + 1}: needs q and a`);
     const link = o.more(c, i);
     const more = link ? ` <a class="fc-more" href="${esc(link.href)}">${esc(link.text)}</a>` : '';
-    const count = `<span class="label">Card ${i + 1} of ${n}</span>`;
+    // the squares under the deck show the place; a screen reader hears it here. Clipped in place, not moved off to the left as
+    // .sr-only is: on the turned card's back a left offset becomes a right one and widened the page by 10,000 px
+    const count = `<span class="fc-n">Card ${i + 1} of ${n}. </span>`;
     return `<div class="fc-card" data-i="${i}"${i ? ' hidden' : ''}>`
       + `<div class="fc-face fc-front"><div class="fc-row">${count}<span class="label">Question</span></div><p class="fc-q">${esc(c.q)}</p><div class="fc-row fc-row--end"><button type="button" class="fc-btn fc-btn--solid fc-show">Show answer</button></div></div>`
       + `<div class="fc-face fc-back" inert><div class="fc-row">${count}<span class="label">Answer</span></div><p class="fc-a">${esc(c.a)}</p>${c.why || more ? `<p class="fc-why">${esc(c.why || '')}${more}</p>` : ''}<div class="fc-row fc-row--foot"><button type="button" class="fc-link fc-flipback">Show question</button><span class="fc-marks"><button type="button" class="fc-btn fc-mark" data-known="0">Didn’t know</button><button type="button" class="fc-btn fc-btn--solid fc-mark" data-known="1">Knew it</button></span></div></div>`
@@ -789,7 +813,31 @@ var D=document;
 function el(t,c,x){var e=D.createElement(t);if(c)e.className=c;if(x)e.textContent=x;return e;}
 function wrap(g,s,w){var out=[],line='';String(s).split(/\\s+/).forEach(function(word){var t=line?line+' '+word:word;if(g.measureText(t).width>w&&line){out.push(line);line=word;}else line=t;});if(line)out.push(line);return out;}
 function txt(n){return n?n.textContent.replace(/\\s+/g,' ').trim():'';}
+function save(cv,fig,k){cv.toBlob(function(b){if(!b)return;var a=el('a');a.href=URL.createObjectURL(b);a.download='chip-supply-chain-'+(k.replace(/^Figure\\s*/,'figure-').replace(/[^0-9a-z]+/gi,'-').toLowerCase())+'-'+(fig.id.replace(/^fig-/,'').replace(((fig.closest('article.chapter')||{}).id||'x')+'-','')||'chart')+'.png';D.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},2000);},'image/png');}
+/* a timeline (08.2, 16.1; 28 Oct 2026): its dates in the code face down the left, each event beside its date, on hairlines */
+function pngTl(fig){
+var items=[].slice.call(fig.querySelectorAll('.fig-body .tl li'));if(!items.length)return;
+var k=txt(fig.querySelector('.fig-k')),t1=txt(fig.querySelector('.fig-title')),t2=txt(fig.querySelector('.fig-sub'));
+var dl=(/Data: (.+)\\.$/.exec(txt(fig.querySelector('.fig-cite-box .ch-cite-text')))||[])[1],src=fig.querySelector('.fs-src'),sc=src?src.cloneNode(true):null;if(sc)[].forEach.call(sc.querySelectorAll('.fs-k'),function(x){x.remove();});
+var srcT=dl||(sc?txt(sc).replace(/\\s*\\d+$/,''):''),addr=txt(fig.querySelector('.fig-cite-box a')).replace(/^https?:\\/\\//,'');
+var W=800,P=40,S=2,DW=150,cv=el('canvas'),g=cv.getContext('2d');
+var FD='"Fraunces",Georgia,serif',FB='"Source Serif 4",Georgia,serif',FU='"Hanken Grotesk","Helvetica Neue",Arial,sans-serif',FM='"Fragment Mono",Menlo,monospace',INK='#171716',INK2='#45443f',LINE='#e1e0db';
+g.font='500 24px '+FD;var L1=wrap(g,t1,W-2*P);g.font='400 16px '+FB;var L2=t2?wrap(g,t2,W-2*P):[];
+var rows=items.map(function(li){var d=txt(li.querySelector('.d')),c=li.cloneNode(true),x=c.querySelector('.d');if(x)x.remove();g.font='400 15px '+FB;return{d:d,L:wrap(g,txt(c),W-2*P-DW)};});
+var chartH=rows.reduce(function(a,r){return a+r.L.length*21+16;},0);
+var H=P+18+L1.length*31+(L2.length?6+L2.length*21:0)+24+chartH+20+56;
+cv.width=W*S;cv.height=H*S;g.scale(S,S);g.fillStyle='#ffffff';g.fillRect(0,0,W,H);
+var y=P;g.textBaseline='alphabetic';g.fillStyle='#56554f';g.font='400 13px '+FM;g.fillText(k,P,y+12);y+=22;
+g.fillStyle=INK;g.font='500 24px '+FD;L1.forEach(function(s){y+=28;g.fillText(s,P,y);y+=3;});
+if(L2.length){y+=6;g.fillStyle=INK2;g.font='400 16px '+FB;L2.forEach(function(s){y+=19;g.fillText(s,P,y);y+=2;});}
+y+=24;g.fillStyle=INK;g.fillRect(P,y,W-2*P,1);
+rows.forEach(function(r){y+=8;g.fillStyle='#56554f';g.font='400 13px '+FM;g.fillText(r.d,P,y+15);g.fillStyle=INK;g.font='400 15px '+FB;r.L.forEach(function(s,j){g.fillText(s,P+DW,y+15+j*21);});y+=r.L.length*21+8;g.fillStyle=LINE;g.fillRect(P,y,W-2*P,1);});
+y+=20;g.fillStyle='#45443f';g.font='400 12.5px '+FU;var sl=wrap(g,(srcT?'Source: '+srcT:''),W-2*P);sl.slice(0,1).forEach(function(s){g.fillText(s,P,y);});
+g.fillStyle='#56554f';g.font='400 12px '+FM;g.fillText(addr,P,y+20);
+save(cv,fig,k);
+}
 function png(fig){
+if(fig.querySelector('.fig-body .tl'))return pngTl(fig);
 var hb=[].slice.call(fig.querySelectorAll('.hbars .hb')),cl=[].slice.call(fig.querySelectorAll('.cols-plot .col')),cg=[].slice.call(fig.querySelectorAll('.cg-row:not(.cg-axis)'));
 var kind=hb.length?'hb':cl.length?'cols':'cg',labs=fig.querySelectorAll('.cols-lab span');
 var num=function(r,a){var v=r.getAttribute(a);return v==null||v===''?null:+v;};
@@ -797,7 +845,8 @@ var rows=(hb.length?hb:cl.length?cl:cg).map(function(r,i){return{l:kind==='hb'?t
 if(!rows.length)return;
 var k=txt(fig.querySelector('.fig-k')),t1=txt(fig.querySelector('.fig-title')),t2=txt(fig.querySelector('.fig-sub'));
 var src=fig.querySelector('.fs-src'),sc=src?src.cloneNode(true):null;if(sc)[].forEach.call(sc.querySelectorAll('.fs-k'),function(x){x.remove();});
-var srcT=sc?txt(sc).replace(/\\s*(\\d+)$/,' [$1]'):'',addr=txt(fig.querySelector('.fig-cite-box a')).replace(/^https?:\\/\\//,'');
+var dl=(/Data: (.+)\\.$/.exec(txt(fig.querySelector('.fig-cite-box .ch-cite-text')))||[])[1];
+var srcT=dl||(sc?txt(sc).replace(/\\s*\\d+$/,''):''),addr=txt(fig.querySelector('.fig-cite-box a')).replace(/^https?:\\/\\//,'');
 var W=800,P=40,S=2,cv=el('canvas'),g=cv.getContext('2d');
 var FD='"Fraunces",Georgia,serif',FB='"Source Serif 4",Georgia,serif',FU='"Hanken Grotesk","Helvetica Neue",Arial,sans-serif',FM='"Fragment Mono",Menlo,monospace';
 var WINE='#7a1f2b',TINT='#d2d1cc',INK='#171716',INK2='#45443f',RULE='#8c8a84',LINE='#e1e0db';
@@ -844,16 +893,17 @@ g.fillStyle=c;g.font=r.top?'700 15px '+FU:'400 13.5px '+FU;g.fillText(r.v,x1+16,
 y+=14;g.fillStyle=LINE;g.fillRect(P,y,W-2*P,1);y+=22;
 g.fillStyle='#45443f';g.font='400 12.5px '+FU;var sl=wrap(g,(srcT?'Source: '+srcT:''),W-2*P);sl.slice(0,1).forEach(function(s){g.fillText(s,P,y);});
 g.fillStyle='#56554f';g.font='400 12px '+FM;g.fillText(addr,P,y+20);
-cv.toBlob(function(b){if(!b)return;var a=el('a');a.href=URL.createObjectURL(b);a.download='chip-supply-chain-'+(k.replace(/^Figure\\s*/,'figure-').replace(/[^0-9a-z]+/gi,'-').toLowerCase())+'-'+(fig.id.split('-').slice(2).join('-')||'chart')+'.png';D.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},2000);},'image/png');
+save(cv,fig,k);
 }
 function add(acts){
 if(acts.getAttribute('data-ready'))return;acts.setAttribute('data-ready','1');
-var kind=acts.getAttribute('data-kind'),fig=acts.closest('.figure');if(!fig||['bars','stack','columns','change'].indexOf(kind)<0)return;
-var tb=el('button','fs-tab','Table');tb.type='button';tb.setAttribute('aria-pressed','false');
-tb.addEventListener('click',function(){var on=!fig.classList.contains('is-table'),t=fig.querySelector('table.fig-table');fig.classList.toggle('is-table',on);if(t)t.classList.toggle('sr-only',!on);tb.setAttribute('aria-pressed',on?'true':'false');});
+var kind=acts.getAttribute('data-kind'),fig=acts.closest('.figure');if(!fig||['bars','stack','columns','change','timeline'].indexOf(kind)<0)return;
+var tl=kind==='timeline'; /* a timeline takes a PNG but no Table: it is already its rows, each date beside its event (28 Oct 2026) */
+var tb=tl?null:el('button','fs-tab','Table');if(tb){tb.type='button';tb.setAttribute('aria-pressed','false');
+tb.addEventListener('click',function(){var on=!fig.classList.contains('is-table'),t=fig.querySelector('table.fig-table');fig.classList.toggle('is-table',on);if(t)t.classList.toggle('sr-only',!on);tb.setAttribute('aria-pressed',on?'true':'false');});}
 var pb=el('button','fs-png','PNG');pb.type='button';pb.setAttribute('aria-label','Save the figure as a PNG picture');
 pb.addEventListener('click',function(){var go=function(){png(fig);};if(D.fonts&&D.fonts.ready)D.fonts.ready.then(go);else go();});
-var cite=acts.querySelector('.ch-cite-btn');acts.insertBefore(tb,cite?cite.nextSibling:acts.firstChild);acts.appendChild(pb);
+var cite=acts.querySelector('.ch-cite-btn');if(tb)acts.insertBefore(tb,cite?cite.nextSibling:acts.firstChild);acts.appendChild(pb);
 }
 [].forEach.call(D.querySelectorAll('.figure .fs-acts'),add);
 })();`;
@@ -961,10 +1011,12 @@ function chapterHTML(ch) {
   const parts = splitTakeaways(ch.html);
   const pb = plainBox(parts.body, m.plain, { id: ch.id, cites: ch.cites, figures: [] });
   ch.inShort = parts.inShort;
-  const sources = ch.cites.length ? `<details class="chapter-sources" id="${esc(ch.id)}--sources"><summary>Sources (${ch.cites.length})</summary><ol>${ch.cites.map((c) => `<li>${tierTag(c.url)}${sourceLine(c.url)}</li>`).join('')}</ol></details>` : '';
+  // each source has an address of its own (<chapter>--source-<n>, n its footnote number), and the list opens with the key to
+  // its tier marks (28 Oct 2026)
+  const sources = ch.cites.length ? `<details class="chapter-sources" id="${esc(ch.id)}--sources"><summary>Sources (${ch.cites.length})</summary>${SOURCE_KEY}<ol>${ch.cites.map((c, i) => `<li id="${esc(ch.id)}--source-${i + 1}">${tierTag(c.url)}${sourceLine(c.url)}</li>`).join('')}</ol></details>` : '';
   const stageIdx = stages.findIndex((c) => c.id === ch.id);
   const conc = stageIdx >= 0 ? (m.card || {}).concentration || '' : '';
-  const where = stageIdx >= 0 ? `${ch.title}, stage ${stageIdx + 1} of ${stages.length}` : '';
+  const where = stageIdx >= 0 ? ch.title : ''; // the card names its stage; the kicker above gives its number (28 Oct 2026)
   const cardCtx = { id: ch.id, cites: ch.cites, figures: [] }; // the card's marks number with the body's (its urls were registered in reading order)
   // the card has an address of its own (On this page lists it), and stands in the text after the lead (withCard)
   const cardId = (h) => h.replace('<section class="plate"', `<section class="plate" id="${esc(ch.id)}--card"`);
@@ -975,7 +1027,9 @@ function chapterHTML(ch) {
   // the main page's blocks (In plain terms, In short, the card's prose) each mark the first use of each glossary term in them
   const cardUsed = new Set();
   const plateGl = isStage(ch) ? cardId(nameplate(m.card, ch.title, (h) => glossaryWrap(h, cardUsed), cardCtx, where)) : '';
-  const kick = `<p class="ch-kick"><span>Chapter ${pad(ch.number)}</span><span>${stageIdx >= 0 ? `Stage ${stageIdx + 1} of ${stages.length}` : esc(TILE_WORD[ch.id] || '')}</span>${bandMark(conc, ((m.card || {}).substitutability || {}).band)}</p>`;
+  // one numbering (28 Oct 2026): a stage is "Stage 4 of 14" (its chapter number is the same, so "Chapter 04" went); the two
+  // chapters across the chain keep their chapter number and their word
+  const kick = `<p class="ch-kick">${stageIdx >= 0 ? `<span>Stage ${stageIdx + 1} of ${stages.length}</span>` : `<span>Chapter ${pad(ch.number)}</span><span>${esc(TILE_WORD[ch.id] || '')}</span>`}${bandMark(conc, ((m.card || {}).substitutability || {}).band)}</p>`;
   const facts = `<p class="ch-meta"><span class="label">${ch.words.toLocaleString('en-US')} words / ${mins} min</span><span class="label">Specimen: ${esc(SPECIMEN_NAME[specimen] || specimen.replace(/-/g, ' '))}</span><span class="label">Updated ${CITE_DAY(ch.id)}</span>${ch.cites.length ? `<span class="label">${ch.cites.length} sources</span>` : ''}</p>`;
   // the specimen's slot and its caption; the two chapters that are not stages set their drawing on the night ground (data-night)
   const ps = partsOf(ch), night = !isStage(ch);
@@ -1284,7 +1338,8 @@ const suppliersIntro = suppliers.length ? `What each of the ${suppliers.length} 
 // the four counts beside the Suppliers title, from the list itself: firms, the countries they are based in, the segments (the
 // list's 20 categories) and the firms rated Critical, whose mark is the page's one red wine
 const suppliersFacts = suppliers.length ? `<dl class="sup-facts-row">${[
-  [suppliers.length, 'firms'], [new Set(suppliers.map((r) => r.country)).size, 'countries'], [new Set(suppliers.map((r) => r.category)).size, 'segments'],
+  // "home countries": where the firms are based (the Glossary counts its country entries, a different number; 28 Oct 2026)
+  [suppliers.length, 'firms'], [new Set(suppliers.map((r) => r.country)).size, 'home countries'], [new Set(suppliers.map((r) => r.category)).size, 'segments'],
   [suppliers.filter((r) => r.chokepoint === 'Critical').length, 'Critical']
 ].map(([n, k], i) => `<div><dt>${i === 3 ? '<i class="sup-mk" aria-hidden="true"></i>' : ''}${k}</dt><dd>${n}</dd></div>`).join('')}</dl>` : '';
 // the Export Controls dek and the note under the China revenue charts, printed by the main page and by /export-controls/ (build/modules/reference-pages.js)
@@ -1485,7 +1540,7 @@ lkItems.sort((a, b) => a.name.localeCompare(b.name, 'en', { sensitivity: 'base' 
 const lookupListHTML = lkItems.map((i) => `<li id="${esc(i.id)}" data-kind="${i.kind}" data-key="${esc(i.key || i.name)}"${i.alias && i.alias.length ? ` data-alias="${esc(i.alias.join('|'))}"` : ''} data-text="${esc(i.text.toLowerCase().replace(/\s+/g, ' '))}"><button type="button"><span class="lk-name">${esc(i.name)}</span><span class="lk-lab">${esc(i.label)}</span></button></li>`).join('');
 // the Glossary's head: how many entries of each kind the list holds (src/template.html, the Glossary view)
 const lkKinds = (k) => lkItems.filter((i) => i.kind === k).length;
-fill('GLOSSARY_TALLY', [[lkKinds('term'), 'terms'], [lkKinds('firm'), 'firms'], [lkKinds('chip'), 'AI chips'], [lkKinds('country'), 'countries']].map(([n, w]) => `<span>${n} ${w}</span>`).join(''));
+// the Glossary's head no longer tallies its kinds: each kind's button carries its count (28 Oct 2026; the counts showed three times)
 fill('CONTROLS_DEK', controlsDek);
 fill('EXPOSURE_VIZ', exposureViz(exposure));
 fill('EXPOSURE_NOTE', exposureNote);
@@ -1511,8 +1566,9 @@ const glEntries = PT.all(glossaryDoc).filter((n) => PT.hasClass(n, 'gl-entry')).
 });
 const searchData = (() => {
   const idx = [];
-  idx.push({ kind: 'Start here', title: 'How AI chips are made', text: 'One plain paragraph per stage, in order, with the specimens', href: '#/intro' });
-  data.chapters.forEach((c) => { if (c.plain && c.id !== 'introduction-and-goals') idx.push({ kind: 'Start here', title: c.title + ', in plain terms', text: c.plain, href: '#/walk/' + c.id }); });
+  // the home page is "Home" in the results, as the masthead names it (28 Oct 2026; it said "Start here", a page the home replaced)
+  idx.push({ kind: 'Home', title: 'How AI chips are made', text: 'One plain paragraph per stage, in order, with the specimens', href: '#/intro' });
+  data.chapters.forEach((c) => { if (c.plain && c.id !== 'introduction-and-goals') idx.push({ kind: 'Home', title: c.title + ', in plain terms', text: c.plain, href: '#/walk/' + c.id }); });
   const arts = all.map((c) => chArticle(c.id)).filter(Boolean);
   arts.forEach((art) => {
     const title = chTitle(art), lede = ptFind(art, (n) => PT.hasClass(n, 'ch-lede'));
@@ -1550,7 +1606,10 @@ const termsData = (() => {
   const chipName = {}; landscape.forEach((c) => { chipName[c.id] = c.name; });
   const of = (k) => lkItems.filter((i) => i.kind === k);
   // ...and each specimen's own name, which the phone's strip shows ("EUV scanner"), since a chapter's page loads no data.js
-  return { defs, specimenNames: SPECIMEN_NAME, try: { term: of('term').map((i) => i.name.trim()).filter((n) => n.length <= 22), firm: of('firm').filter((i) => big.has(i.key)).map((i) => i.name.trim()),
+  // ...and the chapter whose line drawing stands for each specimen in the phone's collapsed strip (media/line-<id>.webp), a
+  // still at 52 px where the live drawing was a dark blob (28 Oct 2026)
+  const specimenChapter = {}; all.forEach((c) => { if (c.meta.specimen && lineStills[c.id] && !specimenChapter[c.meta.specimen]) specimenChapter[c.meta.specimen] = c.id; });
+  return { defs, specimenNames: SPECIMEN_NAME, specimenChapter, try: { term: of('term').map((i) => i.name.trim()).filter((n) => n.length <= 22), firm: of('firm').filter((i) => big.has(i.key)).map((i) => i.name.trim()),
     chip: of('chip').map((i) => chipName[i.key] || i.name.trim()), country: of('country').map((i) => i.name.trim()) } };
 })();
 // every chapter's paragraphs and list items, as the Glossary's "Where it appears" reads them (src/modules/lookup.js corpus):
@@ -1682,7 +1741,16 @@ let homeHTML;
   const { h, page } = makePage('home', { root: '', chapters: '', ids: [], scripts: ['kit.js', 'data.js', 'terms.js', 'app.js'] });
   let x = h.split(`Updated ${builtStr}`).join(`Updated ${DAY_TOKEN}`);
   const homeDates = pageDate('/', x + JSON.stringify(data));
-  homeHTML = relink(citeDays(x.split(DAY_TOKEN).join(dayStr(homeDates.modified))), page);
+  // a view with a page of its own (build/modules/reference-pages.js, which runs first) gives its footer that page's day, so
+  // #/controls and /export-controls/ say the same "Updated" day for the same data (28 Oct 2026; the views all said the home
+  // page's); the rest say the home page's
+  const VIEW_PAGE = { landscape: '/chips/', suppliers: '/suppliers/', controls: '/export-controls/', glossary: '/glossary/' };
+  const homeDay = dayStr(homeDates.modified);
+  x = x.split(/(?=<section class="view\b)/).map((part) => {
+    const v = (/^<section class="view\b[^"]*" data-view="([a-z-]+)"/.exec(part) || [])[1], e = v && VIEW_PAGE[v] ? pageDates[VIEW_PAGE[v]] : null;
+    return e && e.modified ? part.split(DAY_TOKEN).join(dayStr(e.modified)) : part;
+  }).join('');
+  homeHTML = relink(citeDays(x.split(DAY_TOKEN).join(homeDay)), page);
   writePage('index.html', homeHTML);
 }
 // each chapter's page: dated by its article (the chapter's own text, figures and sources, as the readable page was), headed

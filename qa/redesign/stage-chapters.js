@@ -398,7 +398,8 @@ const want = (n) => !ONLY.length || ONLY.includes(String(n));
       await t.jump(4000); await sleep(300); await t.jump(4300); await sleep(500);
       const slim = await t.ev(`document.documentElement.classList.contains('slim-on') && document.querySelector('.ch-slim').getAttribute('href')`);
       await go(t, `the phone's slim bar (${slim})`, '.ch-slim', 'memory-and-hbm', { into: false });
-      await t.jump(5000); await sleep(400);
+      // fix-d D4: on a phone Back to top shows only while the reader heads back up, so the reader scrolls up a little first
+      await t.jump(5000); await sleep(400); await t.jump(4800); await sleep(400);
       const tag = await t.ev(`document.getElementById('stage-tag-text').textContent`);
       await go(t, `Back to top over the specimen strip (the strip reads "${tag}")`, '.to-top', 'memory-and-hbm', { into: false }); // Top left the strip (page revision 2, 28 Oct 2026)
       if (!/09/.test(tag)) { ok = false; out.push('the strip does not show chapter 09\'s specimen (FAIL)'); } // Memory and HBM, chapter 10 before the merge of 27 Oct 2026
