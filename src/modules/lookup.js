@@ -20,6 +20,11 @@
   var letterOf = function (name) { var c = String(name).charAt(0).toUpperCase(); return /[A-Z]/.test(c) ? c : '0-9'; };
   var showL = function (L) { return L === '0-9' ? '0–9' : L; };
   var idL = function (L) { return L === '0-9' ? '0-9' : L.toLowerCase(); };
+  // an AI chip's facts in words, as AI Chips sets them: "2024-04" reads April 2024, "2024-Q4" Q4 2024; the node alone where it
+  // already names the foundry ("TSMC 5 nm", not "TSMC TSMC 5 nm")
+  var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  var when = function (s) { s = String(s || ''); var m = /^(\d{4})-(\d{2})$/.exec(s); if (m) return MONTHS[+m[2] - 1] + ' ' + m[1]; m = /^(\d{4})-Q(\d)$/.exec(s); return m ? 'Q' + m[2] + ' ' + m[1] : s; };
+  var madeBy = function (p) { return p.foundry && p.node && p.node.indexOf(p.foundry + ' ') === 0 ? [p.node] : [p.foundry, p.node]; };
   var full = function () { return window.innerWidth <= 760; };   // the sheet takes the whole screen
   var beside = function () { return window.innerWidth >= 1000; }; // the columns make room for the sheet beside them
   var idle = window.requestIdleCallback ? function (fn) { window.requestIdleCallback(fn, { timeout: 500 }); }
@@ -115,7 +120,7 @@
       } else if (it.kind === 'chip') {
         var p = d.process || {}, m = d.memory || {};
         pos = 'AI chip' + (d.vendorCountry ? ', ' + cname(d.vendorCountry) : '');
-        var line = [d.announced ? 'Announced ' + d.announced : '', [p.foundry, p.node].filter(Boolean).join(' '), [m.type, m.capacityGB ? m.capacityGB + ' GB' : ''].filter(Boolean).join(' '), d.tdpW ? d.tdpW + ' W' : ''].filter(Boolean).join(' · ');
+        var line = [d.announced ? 'Announced ' + when(d.announced) : '', madeBy(p).filter(Boolean).join(' '), m.type || '', m.capacityGB ? m.capacityGB + ' GB' : '', d.tdpW ? d.tdpW + ' W' : ''].filter(Boolean).join(' · ');
         body = (line ? '<p class="gl-meta"><span>' + esc(line) + '</span></p>' : '') + (d.status ? '<p class="gl-df">' + esc(d.status) + '</p>' : '');
       } else {
         pos = it.label.toLowerCase();
@@ -468,8 +473,8 @@
     chipCard: function (c) {
       var p = c.process || {}, m = c.memory || {}, comp = c.compute || {};
       var facts = [];
-      if (c.announced || c.shipping) facts.push(['Announced / shipping', [c.announced, c.shipping].filter(Boolean).join(' / ')]);
-      if (p.node || p.foundry) facts.push(['Made by', [p.foundry, p.node, p.country ? cname(p.country) : ''].filter(Boolean).join(', ')]);
+      if (c.announced || c.shipping) facts.push(['Announced / shipping', [c.announced, c.shipping].filter(Boolean).map(when).join(' / ')]);
+      if (p.node || p.foundry) facts.push(['Made by', madeBy(p).concat(p.country ? cname(p.country) : '').filter(Boolean).join(', ')]);
       if (m.type) facts.push(['Memory', [m.type, m.stacks ? m.stacks + ' stacks' : '', m.capacityGB ? m.capacityGB + ' GB' : '', m.bandwidthTBs ? m.bandwidthTBs + ' TB/s' : ''].filter(Boolean).join(', ')]);
       var fp = []; if (comp.fp16TFLOPS) fp.push('FP16 ' + comp.fp16TFLOPS.toLocaleString('en-US')); if (comp.fp8TFLOPS) fp.push('FP8 ' + comp.fp8TFLOPS.toLocaleString('en-US')); if (comp.fp4TFLOPS) fp.push('FP4 ' + comp.fp4TFLOPS.toLocaleString('en-US'));
       if (fp.length) facts.push(['Dense TFLOPS', fp.join(' · ')]);

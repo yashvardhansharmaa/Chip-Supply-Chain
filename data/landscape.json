@@ -44,7 +44,7 @@
         "fp8": "yes",
         "fp4": "yes"
       },
-      "precisionNote": "Dense, per GPU in the GB200 NVL72 rack. Nvidia’s Blackwell Ultra post gives the Blackwell GPU 10 PFLOPS of dense NVFP4 and 5 PFLOPS of dense FP8. FP16 is Epoch AI’s GB200 figure of 2,500 TFLOPS. Nvidia’s GB200 NVL72 table gives 360 PFLOPS FP16/BF16 with sparsity across the rack’s 72 GPUs and states that dense is half the sparse figure. The eight-GPU HGX B200 board is rated lower: Nvidia’s HGX table gives it 36 PFLOPS FP16/BF16 and 72 PFLOPS FP8 with sparsity, and 72 PFLOPS FP4 dense, across eight GPUs. All three formats are supported and published."
+      "precisionNote": "Dense, per GPU in the GB200 NVL72 rack. Nvidia’s Blackwell Ultra post gives the Blackwell GPU 10 PFLOPS of dense NVFP4 and 5 PFLOPS of dense FP8. FP16 is Epoch AI’s GB200 figure of 2,500 TFLOPS. Nvidia’s GB200 NVL72 table gives 360 PFLOPS FP16/BF16 with sparsity across the rack’s 72 GPUs and states that dense is half the sparse figure. The eight-GPU HGX B200 board is rated lower. Nvidia’s HGX table gives it 36 PFLOPS FP16/BF16 and 72 PFLOPS FP8 with sparsity, and 72 PFLOPS FP4 dense, across eight GPUs. All three formats are supported and published."
     },
     "tdpW": 1200,
     "interconnect": {
@@ -3712,7 +3712,7 @@
     },
     "tdpW": null,
     "interconnect": {
-      "chipToChip": "NeuronLink-v3, 1.28 TB/s per chip: 1,024 GB/s per chip inside an instance and 256 GB/s between instances in an UltraServer",
+      "chipToChip": "NeuronLink-v3, 1.28 TB/s per chip, with 1,024 GB/s per chip inside an instance and 256 GB/s between instances in an UltraServer",
       "scaleUp": "Trn2 instance of 16 chips, 1,536 GiB of device memory, 46.4 TB/s and 20.8 PFLOPS FP8, and the Trn2 UltraServer of 64 chips",
       "scaleOut": "Elastic Fabric Adapter, 3,200 Gbps per instance"
     },
