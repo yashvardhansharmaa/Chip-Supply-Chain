@@ -805,7 +805,31 @@ var D=document;
 function el(t,c,x){var e=D.createElement(t);if(c)e.className=c;if(x)e.textContent=x;return e;}
 function wrap(g,s,w){var out=[],line='';String(s).split(/\\s+/).forEach(function(word){var t=line?line+' '+word:word;if(g.measureText(t).width>w&&line){out.push(line);line=word;}else line=t;});if(line)out.push(line);return out;}
 function txt(n){return n?n.textContent.replace(/\\s+/g,' ').trim():'';}
+function save(cv,fig,k){cv.toBlob(function(b){if(!b)return;var a=el('a');a.href=URL.createObjectURL(b);a.download='chip-supply-chain-'+(k.replace(/^Figure\\s*/,'figure-').replace(/[^0-9a-z]+/gi,'-').toLowerCase())+'-'+(fig.id.replace(/^fig-/,'').replace(((fig.closest('article.chapter')||{}).id||'x')+'-','')||'chart')+'.png';D.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},2000);},'image/png');}
+/* a timeline (08.2, 16.1; 28 Oct 2026): its dates in the code face down the left, each event beside its date, on hairlines */
+function pngTl(fig){
+var items=[].slice.call(fig.querySelectorAll('.fig-body .tl li'));if(!items.length)return;
+var k=txt(fig.querySelector('.fig-k')),t1=txt(fig.querySelector('.fig-title')),t2=txt(fig.querySelector('.fig-sub'));
+var dl=(/Data: (.+)\\.$/.exec(txt(fig.querySelector('.fig-cite-box .ch-cite-text')))||[])[1],src=fig.querySelector('.fs-src'),sc=src?src.cloneNode(true):null;if(sc)[].forEach.call(sc.querySelectorAll('.fs-k'),function(x){x.remove();});
+var srcT=dl||(sc?txt(sc).replace(/\\s*\\d+$/,''):''),addr=txt(fig.querySelector('.fig-cite-box a')).replace(/^https?:\\/\\//,'');
+var W=800,P=40,S=2,DW=150,cv=el('canvas'),g=cv.getContext('2d');
+var FD='"Fraunces",Georgia,serif',FB='"Source Serif 4",Georgia,serif',FU='"Hanken Grotesk","Helvetica Neue",Arial,sans-serif',FM='"Fragment Mono",Menlo,monospace',INK='#171716',INK2='#45443f',LINE='#e1e0db';
+g.font='500 24px '+FD;var L1=wrap(g,t1,W-2*P);g.font='400 16px '+FB;var L2=t2?wrap(g,t2,W-2*P):[];
+var rows=items.map(function(li){var d=txt(li.querySelector('.d')),c=li.cloneNode(true),x=c.querySelector('.d');if(x)x.remove();g.font='400 15px '+FB;return{d:d,L:wrap(g,txt(c),W-2*P-DW)};});
+var chartH=rows.reduce(function(a,r){return a+r.L.length*21+16;},0);
+var H=P+18+L1.length*31+(L2.length?6+L2.length*21:0)+24+chartH+20+56;
+cv.width=W*S;cv.height=H*S;g.scale(S,S);g.fillStyle='#ffffff';g.fillRect(0,0,W,H);
+var y=P;g.textBaseline='alphabetic';g.fillStyle='#56554f';g.font='400 13px '+FM;g.fillText(k,P,y+12);y+=22;
+g.fillStyle=INK;g.font='500 24px '+FD;L1.forEach(function(s){y+=28;g.fillText(s,P,y);y+=3;});
+if(L2.length){y+=6;g.fillStyle=INK2;g.font='400 16px '+FB;L2.forEach(function(s){y+=19;g.fillText(s,P,y);y+=2;});}
+y+=24;g.fillStyle=INK;g.fillRect(P,y,W-2*P,1);
+rows.forEach(function(r){y+=8;g.fillStyle='#56554f';g.font='400 13px '+FM;g.fillText(r.d,P,y+15);g.fillStyle=INK;g.font='400 15px '+FB;r.L.forEach(function(s,j){g.fillText(s,P+DW,y+15+j*21);});y+=r.L.length*21+8;g.fillStyle=LINE;g.fillRect(P,y,W-2*P,1);});
+y+=20;g.fillStyle='#45443f';g.font='400 12.5px '+FU;var sl=wrap(g,(srcT?'Source: '+srcT:''),W-2*P);sl.slice(0,1).forEach(function(s){g.fillText(s,P,y);});
+g.fillStyle='#56554f';g.font='400 12px '+FM;g.fillText(addr,P,y+20);
+save(cv,fig,k);
+}
 function png(fig){
+if(fig.querySelector('.fig-body .tl'))return pngTl(fig);
 var hb=[].slice.call(fig.querySelectorAll('.hbars .hb')),cl=[].slice.call(fig.querySelectorAll('.cols-plot .col')),cg=[].slice.call(fig.querySelectorAll('.cg-row:not(.cg-axis)'));
 var kind=hb.length?'hb':cl.length?'cols':'cg',labs=fig.querySelectorAll('.cols-lab span');
 var num=function(r,a){var v=r.getAttribute(a);return v==null||v===''?null:+v;};
@@ -861,16 +885,17 @@ g.fillStyle=c;g.font=r.top?'700 15px '+FU:'400 13.5px '+FU;g.fillText(r.v,x1+16,
 y+=14;g.fillStyle=LINE;g.fillRect(P,y,W-2*P,1);y+=22;
 g.fillStyle='#45443f';g.font='400 12.5px '+FU;var sl=wrap(g,(srcT?'Source: '+srcT:''),W-2*P);sl.slice(0,1).forEach(function(s){g.fillText(s,P,y);});
 g.fillStyle='#56554f';g.font='400 12px '+FM;g.fillText(addr,P,y+20);
-cv.toBlob(function(b){if(!b)return;var a=el('a');a.href=URL.createObjectURL(b);a.download='chip-supply-chain-'+(k.replace(/^Figure\\s*/,'figure-').replace(/[^0-9a-z]+/gi,'-').toLowerCase())+'-'+(fig.id.split('-').slice(2).join('-')||'chart')+'.png';D.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},2000);},'image/png');
+save(cv,fig,k);
 }
 function add(acts){
 if(acts.getAttribute('data-ready'))return;acts.setAttribute('data-ready','1');
-var kind=acts.getAttribute('data-kind'),fig=acts.closest('.figure');if(!fig||['bars','stack','columns','change'].indexOf(kind)<0)return;
-var tb=el('button','fs-tab','Table');tb.type='button';tb.setAttribute('aria-pressed','false');
-tb.addEventListener('click',function(){var on=!fig.classList.contains('is-table'),t=fig.querySelector('table.fig-table');fig.classList.toggle('is-table',on);if(t)t.classList.toggle('sr-only',!on);tb.setAttribute('aria-pressed',on?'true':'false');});
+var kind=acts.getAttribute('data-kind'),fig=acts.closest('.figure');if(!fig||['bars','stack','columns','change','timeline'].indexOf(kind)<0)return;
+var tl=kind==='timeline'; /* a timeline takes a PNG but no Table: it is already its rows, each date beside its event (28 Oct 2026) */
+var tb=tl?null:el('button','fs-tab','Table');if(tb){tb.type='button';tb.setAttribute('aria-pressed','false');
+tb.addEventListener('click',function(){var on=!fig.classList.contains('is-table'),t=fig.querySelector('table.fig-table');fig.classList.toggle('is-table',on);if(t)t.classList.toggle('sr-only',!on);tb.setAttribute('aria-pressed',on?'true':'false');});}
 var pb=el('button','fs-png','PNG');pb.type='button';pb.setAttribute('aria-label','Save the figure as a PNG picture');
 pb.addEventListener('click',function(){var go=function(){png(fig);};if(D.fonts&&D.fonts.ready)D.fonts.ready.then(go);else go();});
-var cite=acts.querySelector('.ch-cite-btn');acts.insertBefore(tb,cite?cite.nextSibling:acts.firstChild);acts.appendChild(pb);
+var cite=acts.querySelector('.ch-cite-btn');if(tb)acts.insertBefore(tb,cite?cite.nextSibling:acts.firstChild);acts.appendChild(pb);
 }
 [].forEach.call(D.querySelectorAll('.figure .fs-acts'),add);
 })();`;
