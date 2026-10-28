@@ -393,7 +393,8 @@ ${body}
     const markAt = (c, i) => { const s = (c.sources || [])[i], id = chipIds.get(c.id), l = String((s && s.label) || ''); return s ? `<sup class="cite"><a href="#${id}-s${i + 1}" title="Source: ${esc(l || s.url)}" aria-label="Source ${i + 1}: ${esc(l || s.url)}"><span class="br">[</span>${i + 1}<span class="br">]</span></a></sup>` : ''; };
     const citeOf = (c, key, sup) => { const C = c.cite || {}, v = sup != null ? (C.suppliers || {})[sup] : C[key], n = (c.sources || []).length; if (v == null || v === '') return null; const out = String(v).split(/\s*,\s*/).map((x) => +x - 1).filter((i) => i >= 0 && i < n); return out.length ? out : null; };
     const allMark = (c) => { const id = chipIds.get(c.id); return `<sup class="cite"><a href="#${id}-sources" title="Sources for the ${esc(c.name)}" aria-label="Sources for the ${esc(c.name)}"><span class="br">[</span>all<span class="br">]</span></a></sup>`; };
-    const marksOf = (c, idx) => (idx ? idx.map((i) => markAt(c, i)).join('') : allMark(c));
+    // several sources share one mark, their numbers apart by commas, as the main page sets them
+    const marksOf = (c, idx) => (idx ? (idx.length > 1 ? '<sup class="cite">' + idx.map((i) => markAt(c, i).replace(/^<sup class="cite">|<\/sup>$/g, '')).join('<span aria-hidden="true">,</span>') + '</sup>' : markAt(c, idx[0])) : allMark(c));
     const mark = (c, col) => ((c.sources || []).length && !col.own ? marksOf(c, citeOf(c, col.key)) : '');
     const cell = (c, col) => {
       if (col.num) { const v = col.val(c); return `<td class="num">${v == null ? nil(c, col) : esc(nf(v)) + mark(c, col)}</td>`; }
