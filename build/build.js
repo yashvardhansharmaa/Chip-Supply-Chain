@@ -1329,7 +1329,8 @@ const suppliersIntro = suppliers.length ? `What each of the ${suppliers.length} 
 // the four counts beside the Suppliers title, from the list itself: firms, the countries they are based in, the segments (the
 // list's 20 categories) and the firms rated Critical, whose mark is the page's one red wine
 const suppliersFacts = suppliers.length ? `<dl class="sup-facts-row">${[
-  [suppliers.length, 'firms'], [new Set(suppliers.map((r) => r.country)).size, 'home countries'], // where the firms are based: the Glossary counts its country entries, a different number (28 Oct 2026) [new Set(suppliers.map((r) => r.category)).size, 'segments'],
+  // "home countries": where the firms are based (the Glossary counts its country entries, a different number; 28 Oct 2026)
+  [suppliers.length, 'firms'], [new Set(suppliers.map((r) => r.country)).size, 'home countries'], [new Set(suppliers.map((r) => r.category)).size, 'segments'],
   [suppliers.filter((r) => r.chokepoint === 'Critical').length, 'Critical']
 ].map(([n, k], i) => `<div><dt>${i === 3 ? '<i class="sup-mk" aria-hidden="true"></i>' : ''}${k}</dt><dd>${n}</dd></div>`).join('')}</dl>` : '';
 // the Export Controls dek and the note under the China revenue charts, printed by the main page and by /export-controls/ (build/modules/reference-pages.js)
