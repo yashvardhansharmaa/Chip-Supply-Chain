@@ -733,8 +733,11 @@
       // each settle takes a number, and a newer one retires the older: a Glossary passage link settles the passage after the
       // router has settled its chapter, and the chapter must not pull the page back to its top (correctness P1-1)
       var self = this, gen = this.settleGen = (this.settleGen || 0) + 1;
-      var moved = false, h0 = location.hash, mark = function () { moved = true; };
+      var moved = false, h0 = location.hash, mark = function () { moved = true; self.settling = 0; };
       ['wheel', 'touchstart', 'keydown', 'mousedown'].forEach(function (t) { window.addEventListener(t, mark, { passive: true, once: true }); });
+      // until the page has settled, or the reader moves it, a shift of the page is not the reader's scroll (Rail.update):
+      // the browser keeps the anchor in place as late faces and pictures reflow the text above it
+      this.settling = Date.now() + 2000;
       var again = function () {
         if (gen !== self.settleGen || moved || location.hash !== h0 || !document.contains(el) || el.closest('[hidden]')) return;
         if (Math.abs(el.getBoundingClientRect().top - landAt(el)) > 2) scrollToEl(el, false);
@@ -868,7 +871,9 @@
       this.set(past ? ch : null, cur);
       // the masthead: up while the reader scrolls down past the top of the page, back as soon as they scroll up
       var dy = y - this.lastY;
-      // a jump (a link, a search result, the page landing on an anchor) moves hundreds of pixels at once: the masthead stays
+      // a jump (a link, a search result, the page landing on an anchor) moves hundreds of pixels at once: the masthead stays; so
+      // does the page settling after a landing, before the reader has moved it (Router.settle)
+      if (Router.settling && Date.now() < Router.settling) { this.lastY = y; return; }
       if (y < 200 || $('#sheet:not([hidden])') || Math.abs(dy) > 320) html.classList.remove('mast-up');
       else if (dy > 6) html.classList.add('mast-up');
       else if (dy < -6) html.classList.remove('mast-up');
