@@ -3019,7 +3019,7 @@
     },
     later: function () { var self = this; clearTimeout(this.timer); this.timer = setTimeout(function () { self.hide(); }, 260); },
     init: function () {
-      var self = this, mark = function (e) { return e.target && e.target.closest ? e.target.closest('sup.cite a') : null; };
+      var self = this, mark = function (e) { return e.target && e.target.closest ? e.target.closest('sup.cite a, a.wk-src[data-d]') : null; }; // home's Source links take the same card (build/modules/walk.js)
       document.addEventListener('mouseover', function (e) { var a = mark(e); if (a) self.show(a); });
       document.addEventListener('mouseout', function (e) { if (mark(e)) self.later(); });
       document.addEventListener('focusin', function (e) { var a = mark(e); if (a) self.show(a); else if (self.el && !self.el.contains(e.target)) self.hide(); });

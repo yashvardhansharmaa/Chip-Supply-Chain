@@ -46,11 +46,16 @@ module.exports = function (ctx) {
   const plainOf = (id) => String((card[id] || {}).plain || '');
   const bib = ctx.readJSON(ctx.path.join(ctx.root, 'data', 'bibliography.json'), {}) || {};
   const okUrl = (u) => /^(https?:|#|\/)/i.test(String(u || '').trim());
+  // a bibliography date, day first as the footnotes give it ("28 January 2026", "January 2026")
+  const MON = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  const dayOf = (d) => { const p = String(d || '').split('-'); return p.length === 3 ? `${+p[2]} ${MON[+p[1] - 1] || p[1]} ${p[0]}` : p.length === 2 ? `${MON[+p[1] - 1] || p[1]} ${p[0]}` : p[0] || ''; };
   // two of the chapter's sourced key facts, so a hurried reader can lift a cited line without opening the chapter
   const factsHTML = (ch) => {
     const facts = ((ch.meta && ch.meta.keyFacts) || []).filter((k) => k && k.fact && okUrl(k.source)).slice(0, 2);
     if (!facts.length) return '';
-    return `<ul class="wk-facts" aria-label="Two facts from the chapter">${facts.map((k) => { const e = bib[k.source] || {}; const t = e.title ? `${e.title}${e.publisher ? ', ' + e.publisher : ''}${e.date ? ', ' + e.date : ''}` : k.source; return `<li>${esc(k.fact)} <a class="wk-src" href="${esc(k.source)}" target="_blank" rel="noopener" title="${esc(t)}">Source</a></li>`; }).join('')}</ul>`;
+    // each Source opens the chapters' footnote card (src/app.js Cite): the title, publisher and date on hover or focus, and on a
+    // touch screen a tap opens the card, whose link goes to the source (28 Oct 2026; the date was only in a hover title)
+    return `<ul class="wk-facts" aria-label="Two facts from the chapter">${facts.map((k) => { const e = bib[k.source] || {}; const when = e.date ? dayOf(e.date) : e.accessed ? 'Accessed ' + dayOf(e.accessed) : ''; const label = [e.title || k.source, e.publisher, when].filter(Boolean).join(' · '); return `<li>${esc(k.fact)} <a class="wk-src" href="${esc(k.source)}" target="_blank" rel="noopener" data-t="${esc(e.title || '')}" data-p="${esc(e.publisher || '')}" data-d="${esc(when)}"${ctx.tierOf ? ` data-tier="${esc(ctx.tierOf(k.source))}"` : ''} aria-label="Source: ${esc(label)}">Source</a></li>`; }).join('')}</ul>`;
   };
   const walkWords = steps.reduce((a, c) => a + wordCount(plainOf(c.id)), 0);
   const mins = Math.max(1, Math.round(walkWords / 230));

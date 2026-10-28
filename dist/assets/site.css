@@ -4385,7 +4385,7 @@ html.kb:has(.view[data-view="glossary"]:not([hidden])) { scroll-padding-top: cal
 .wk-read::before, .wk-score-term::before, .wk-facts .wk-src::before {
   content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 24px); height: max(100%, 26px); transform: translate(-50%, -50%);
 }
-.wk-facts .wk-src::before { width: calc(100% + 8px); }
+.wk-facts .wk-src::before { width: calc(100% + 12px); height: 32px; } /* a fingertip's target round a short link */
 .wk-read:hover { color: var(--accent-ink); border-bottom-color: var(--accent); }
 
 .wk-pn { display: none; }
