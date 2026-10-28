@@ -55,7 +55,7 @@
     {"id": "package-build", "type": "animation", "src": "package", "title": "The parts of an AI accelerator", "note": "Simplified view of a two-die, eight-stack accelerator. Footprints follow the sizes given in this chapter and chapter 9. Heights are exaggerated so each layer shows."},
     {
       "id": "cowos-reticles",
-      "type": "bars",
+      "type": "columns",
       "title": "CoWoS interposer size on TSMC's roadmap",
       "finding": "TSMC plans 14-reticle CoWoS interposers for 2028, up from 3.5 in 2024",
       "unit": "reticles",

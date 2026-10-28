@@ -183,7 +183,7 @@
     },
     {
       "id": "turbine-output",
-      "type": "bars",
+      "type": "columns",
       "title": "GE Vernova's planned annual gas turbine output",
       "finding": "GE Vernova plans 30 GW of annual gas turbine output in 2030",
       "unit": "GW/yr",
@@ -208,7 +208,9 @@
     },
     {
       "id": "us-dc-electricity",
-      "type": "bars",
+      "type": "columns",
+      "mark": "2030, projected",
+      "range": {"label": "2030, projected", "low": "2030 low case", "high": "2030 high case", "ref": "2030 reference case", "refLabel": "reference case"},
       "title": "US data center electricity use, 2024 and 2030 projection range",
       "finding": "US data centers' projected 2030 use ranges from 521 to 843 TWh",
       "unit": "TWh",

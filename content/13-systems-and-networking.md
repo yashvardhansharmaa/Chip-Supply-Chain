@@ -47,7 +47,7 @@
     {"id": "racks-wired", "type": "animation", "src": "racks", "title": "How AI chips are wired together", "note": "Simplified. The trays follow the layout of an Nvidia NVL72 rack. Racks and fibers are not drawn to scale."},
     {
       "id": "nvlink-bandwidth",
-      "type": "bars",
+      "type": "columns",
       "title": "NVLink bandwidth per GPU by generation",
       "finding": "NVLink per GPU rose from 900 to 3,600 GB/s, Hopper to Rubin",
       "unit": "GB/s",
@@ -56,7 +56,7 @@
     },
     {
       "id": "switch-bandwidth",
-      "type": "bars",
+      "type": "columns",
       "title": "Broadcom Tomahawk switching capacity on one chip",
       "finding": "Tomahawk switch chip capacity rose from 25.6 Tbps to 102.4 Tbps",
       "unit": "Tbps",

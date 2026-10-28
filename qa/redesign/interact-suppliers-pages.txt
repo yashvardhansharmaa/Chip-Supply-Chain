@@ -1,0 +1,67 @@
+ok   768: no two route stops overlap
+ok   1024: no two route stops overlap
+ok   1200: no two route stops overlap
+ok   1280: no two route stops overlap
+ok   1440: no two route stops overlap
+ok   1440: the page reads route, ribbons, then the firms
+ok   1440: the four counts: firms 226 countries 18 segments 20 Critical 28
+ok   1440: the ribbons are drawn open on the page
+ok   1440: Critical ribbons are red wine: rgb(122, 31, 43)
+ok   1440: every other ribbon is gray: rgb(210, 209, 204)
+ok   1440: today's full ribbon note
+ok   1440: the pressed button fills black
+ok   1440: Japan's other ribbons turn dark gray: rgb(140, 138, 132)
+ok   1440: Japan's Critical ribbons stay wine
+ok   1440: the other countries' ribbons fade
+ok   1440: pressed again, it lets go
+ok   1440: Taiwan on the route shows its panel
+ok   1440: ...and follows Taiwan's ribbons
+ok   1440: EU-27 together draws one column
+ok   1440: ...lights it and presses its button
+ok   1440: ...and the address says so: #/suppliers?group=eu
+ok   1440: Each country draws them apart again: #/suppliers
+ok   1440: By segment opens first, twenty segments
+ok   1440: the ladder's heading says segments
+ok   1440: By country lists every country: 18 countries; #/suppliers?tab=country
+ok   1440: ...the most firms first
+ok   1440: ...a name opens its panel
+ok   1440: Table shows every firm
+ok   1440: a search narrows the table: 1 of 226 suppliers · matching “gigaphoton”
+ok   1440: ...and the ladder
+ok   1440: a segment on the ribbons filters the list: 6 of 226 suppliers · Lithography
+ok   1440: ...with All segments to clear it
+ok   390: the page reads route, ribbons, then the firms
+ok   390: the four counts: firms 226 countries 18 segments 20 Critical 28
+ok   390: the ribbons are drawn open on the page
+ok   390: Critical ribbons are red wine: rgb(122, 31, 43)
+ok   390: every other ribbon is gray: rgb(210, 209, 204)
+ok   390: today's full ribbon note
+ok   390: the pressed button fills black
+ok   390: Japan's other ribbons turn dark gray: rgb(140, 138, 132)
+ok   390: Japan's Critical ribbons stay wine
+ok   390: the other countries' ribbons fade
+ok   390: pressed again, it lets go
+ok   390: Taiwan on the route shows its panel
+ok   390: ...and follows Taiwan's ribbons
+ok   390: EU-27 together draws one column
+ok   390: ...lights it and presses its button
+ok   390: ...and the address says so: #/suppliers?group=eu
+ok   390: Each country draws them apart again: #/suppliers
+ok   390: By segment opens first, twenty segments
+ok   390: the ladder's heading says segments
+ok   390: By country lists every country: 18 countries; #/suppliers?tab=country
+ok   390: ...the most firms first
+ok   390: ...a name opens its panel
+ok   390: Table shows every firm
+ok   390: a search narrows the table: 1 of 226 suppliers · matching “gigaphoton”
+ok   390: ...and the ladder
+ok   390: a segment on the ribbons filters the list: 6 of 226 suppliers · Lithography
+ok   390: ...with All segments to clear it
+ok   #/suppliers?tab=country opens By country
+ok   the Glossary's old EU-27 address still draws the EU as one
+ok   ...and lands on the ribbons: 80
+ok   #/suppliers?country=JP chooses Japan on the route
+ok   ...with its role line in the panel
+ok   ...its town names showing
+
+65 checks, 0 failed

@@ -125,10 +125,16 @@ function withUnit(v, unit) {
   return n + '\u00a0' + esc(u); // a no-break space: the figure and its unit never part
 }
 /* The chart rule (the owner's of 21 Oct 2026, "garnet on the largest only", brought back in the visual pass of 27 Oct over the
-   redesign's rule B of 25 Oct, which drew it in ink): the largest value is solid wine with its value bold in wine, every
-   other value the light tint --ctx. A remainder ("Other", "All others", "… and all others")
-   is hatched, and is never the one marked largest. A stack (shares of one whole) is drawn as bars, one per share in the
-   data's order, as the hybrid mockup draws them, so each share keeps its label and no legend is needed. */
+   redesign's rule B of 25 Oct, which drew it in ink), as the owner amended it on 28 Oct 2026 (design round nine's page review,
+   revisions 4 and 5). Wine marks the one value that matters:
+   - the largest value, by default;
+   - the value the chart's title names, where the title names one (the figure's "mark": a row's label, or a range's);
+   - the largest change, for change charts.
+   The rest take the site's tint, --ctx, with their values in ink-2. A remainder ("Other", "All others", "… and all others")
+   is hatched, and is never marked. Ranges are drawn as ranges: a solid bar to the low end and a hatched span to the high end
+   inside a 1.5 px outline (figMarks below). A stack (shares of one whole) is drawn as bars, one per share in the data's order,
+   as the hybrid mockup draws them, so each share keeps its label and no legend is needed. figure() applies the rule; app.js
+   Figs and the PNG (FIG_JS) read the marks it drew. */
 const STACK_REST = /^(other|others|all others|everyone else|rest of world|.* and all others|.*other companies)$/i;
 // a unit that moves onto the values leaves the title, and so does any copy of it the title spells out ("2022 ($M)", "price in Europe ($/kg)", decision 11)
 const figTitle = (f) => (unitOnValue(f.unit) ? String(f.title || '').split(` (${f.unit})`).join('') : String(f.title || ''));
@@ -138,9 +144,50 @@ const figShort = (f) => figTitle(f).split(/(?<=[a-z0-9)%])\.\s+(?=[A-Z])/)[0].re
 function figCSV(f, data) {
   const q = (v) => { const s = String(v == null ? '' : v); return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; };
   const head = f.type === 'timeline' ? ['Date', 'Event'] : ['Item', f.unit ? `Value (${f.unit})` : 'Value'];
-  const rows = [head].concat(data.map((d) => [d[0], d[1]]));
+  // a row with its own range (["High-NA EUV", 350, 400]) gives its high end in a third column
+  const hasHi = f.type !== 'timeline' && data.some((d) => typeof d[2] === 'number');
+  if (hasHi) head.push(f.unit ? `High end of range (${f.unit})` : 'High end of range');
+  const rows = [head].concat(data.map((d) => (hasHi ? [d[0], d[1], typeof d[2] === 'number' ? d[2] : ''] : [d[0], d[1]])));
   return 'data:text/csv;charset=utf-8,' + encodeURIComponent('﻿' + rows.map((r) => r.map(q).join(',')).join('\r\n') + '\r\n');
 }
+/* The marks a bars or columns figure draws, in the data's order (the owner's chart rule as amended on 28 Oct 2026, above).
+   A row is ["label", value], or ["label", low, high] for a value known only as a range (04.2's "$350–400M"). A figure's
+   "range" joins rows that are the cases of one estimate into one mark ({ label, low, high, ref, refLabel }, each naming a
+   row: 14.4's 2030 low, reference and high cases), drawn where its first row stood; the rows stay as they are in the Table
+   and the CSV. Each mark is { label, v (its value or low end), hi (high end or null), ref (a reference value inside the
+   range, or null), span (true for a joined range: the span, not the bar under it, is what the title names), rest, top }.
+   top is the figure's "mark" when it names a mark, else the largest (by its high end) that is not a remainder (ties mark each). */
+function figMarks(f, data) {
+  const rg = f.range && typeof f.range === 'object' ? f.range : null;
+  const row = (lab) => data.find((d) => String(d[0]) === String(lab));
+  const joined = rg ? [rg.low, rg.high, rg.ref].filter(Boolean).map(String) : [];
+  if (rg && (!row(rg.low) || !row(rg.high) || (rg.ref && !row(rg.ref)))) { warn(`figure ${f.id}: its range names a row it does not have`); return figMarks({ ...f, range: null }, data); }
+  const marks = []; let placed = false;
+  data.forEach((d) => {
+    if (joined.includes(String(d[0]))) {
+      if (placed) return; placed = true;
+      marks.push({ label: rg.label, v: +row(rg.low)[1], hi: +row(rg.high)[1], ref: rg.ref ? +row(rg.ref)[1] : null, refLabel: rg.refLabel || '', span: true, rest: false });
+      return;
+    }
+    marks.push({ label: String(d[0]), v: +d[1] || 0, hi: typeof d[2] === 'number' ? d[2] : null, ref: null, refLabel: '', span: false, rest: STACK_REST.test(String(d[0]).trim()) });
+  });
+  const named = f.mark != null ? marks.findIndex((m) => m.label === String(f.mark)) : -1;
+  if (f.mark != null && named < 0) warn(`figure ${f.id}: its mark "${f.mark}" names no row`);
+  const top = Math.max(...marks.filter((m) => !m.rest).map((m) => (m.hi != null ? m.hi : m.v)), -Infinity);
+  marks.forEach((m, i) => { m.top = named >= 0 ? i === named : !m.rest && (m.hi != null ? m.hi : m.v) === top; });
+  return marks;
+}
+// a value known as a range, or a change from one value to another: "$350–400M" with a currency unit, otherwise "521 to 843 TWh"
+// and "44.4 to 34.1%" (the unit once, at the end, as decision 11 writes a single value)
+function spanText(a, b, unit, dash) {
+  const u = String(unit || '');
+  if (!unitOnValue(u)) return `${fmtNum(a)} to ${fmtNum(b)}`;
+  const sign = u.match(/^[$€£¥]/);
+  if (sign && dash) return sign[0] + fmtNum(a) + '\u2013' + fmtNum(b) + esc(u.slice(1));
+  if (sign) return withUnit(a, u) + ' to ' + withUnit(b, u);
+  return fmtNum(a) + ' to ' + withUnit(b, u);
+}
+const markText = (m, unit) => (m.hi != null ? spanText(m.v, m.hi, unit, !m.span) : withUnit(m.v, unit));
 /* One grammar for every figure (the hybrid's): a head with the figure's number ("Figure 04.5"), a link to the figure's own
    address, a large line and, when the figure has a finding, the title under it; then the chart; then one quiet source line,
    as the live site sets it (the visual pass of 27 Oct 2026): "Source:", the linked title and its footnote number, and the
@@ -164,14 +211,66 @@ function figure(f, ctx) {
   if (f.type === 'bars' || f.type === 'stack') {
     // HTML rows, so a label is never cut and wraps at a readable size on a phone: the label beside its bar from 641 px up
     // (its column as wide as the longest label, at most 45 percent), above it below that. --lw and --vw size the label column
-    // and the room for the value. The largest value that is not a remainder is wine (.top; ties mark each), a remainder is hatched.
-    const rest = data.map((d) => STACK_REST.test(String(d[0]).trim()));
-    const max = Math.max(...data.map((d) => +d[1] || 0), 1e-9);
-    const top = Math.max(...data.filter((d, i) => !rest[i]).map((d) => +d[1] || 0), -Infinity);
-    const vals = data.map((d) => withUnit(d[1], f.unit));
-    const lw = Math.max(...data.map((d) => String(d[0]).length)), vw = Math.max(...vals.map((v) => v.replace(/&[a-z]+;/g, '&').length));
+    // and the room for the value. The marked value is wine (.top, the chart rule above), a remainder is hatched, and a range
+    // (.range) is solid to its low end (--lo, a share of the bar) and hatched to its high end.
+    const marks = figMarks(f, data);
+    const max = Math.max(...marks.map((m) => (m.hi != null ? m.hi : m.v)), 1e-9);
+    const vals = marks.map((m) => markText(m, f.unit));
+    const lw = Math.max(...marks.map((m) => m.label.length)), vw = Math.max(...vals.map((v) => v.replace(/&[a-z]+;/g, '&').length));
     body = `<div class="hbars" aria-hidden="true" style="--lw:${(lw * 0.56 + 0.4).toFixed(1)}em;--vw:${(vw * 0.62 + 0.9).toFixed(1)}em">`
-      + data.map((d, i) => `<div class="hb${rest[i] ? ' rest' : (+d[1] || 0) === top ? ' top' : ''}" data-v="${+d[1] || 0}"><span class="hb-l">${esc(d[0])}</span><span class="hb-r"><i style="width:${Math.max(0.6, (+d[1] || 0) / max * 100).toFixed(1)}%"></i><b>${vals[i]}</b></span></div>`).join('')
+      + marks.map((m, i) => {
+        const hi = m.hi != null ? m.hi : m.v, cls = (m.rest ? ' rest' : m.top ? ' top' : '') + (m.hi != null ? ' range' : '') + (m.span ? ' span' : '');
+        const lo = m.hi != null ? `;--lo:${(m.v / hi * 100).toFixed(1)}%` : '';
+        const ref = m.ref != null ? `<span class="hb-ref" style="left:${(m.ref / hi * 100).toFixed(1)}%"><span>${esc(m.refLabel)} ${fmtNum(m.ref)}</span></span>` : '';
+        return `<div class="hb${cls}" data-v="${m.v}"${m.hi != null ? ` data-hi="${m.hi}"` : ''}${m.ref != null ? ` data-ref="${m.ref}"` : ''}><span class="hb-l">${esc(m.label)}</span><span class="hb-r"><i style="width:${Math.max(0.6, hi / max * 100).toFixed(1)}%${lo}">${ref}</i><b>${vals[i]}</b></span></div>`;
+      }).join('')
+      + `</div>` + tableFallback(data, f);
+  } else if (f.type === 'columns') {
+    // a series over time or generations (revision 5, 28 Oct 2026): columns in the data's order, years left to right, on an ink
+    // baseline, each value over its column and each label under it; the marked column wine (the chart rule above). A range is
+    // a column solid to its low end and hatched to its high end, its reference value an ink tick named beside it.
+    const marks = figMarks(f, data);
+    const max = Math.max(...marks.map((m) => (m.hi != null ? m.hi : m.v)), 1e-9);
+    body = `<div class="cols" aria-hidden="true" style="--n:${marks.length}"><div class="cols-plot">`
+      + marks.map((m) => {
+        const hi = m.hi != null ? m.hi : m.v, cls = (m.rest ? ' rest' : m.top ? ' top' : '') + (m.hi != null ? ' range' : '') + (m.span ? ' span' : '');
+        const lo = m.hi != null ? `;--lo:${(m.v / hi * 100).toFixed(1)}%` : '';
+        const ref = m.ref != null ? `<span class="col-ref" style="bottom:${(m.ref / hi * 100).toFixed(1)}%"><span>${esc(m.refLabel)} ${fmtNum(m.ref)}</span></span>` : '';
+        return `<div class="col${cls}" data-v="${m.v}"${m.hi != null ? ` data-hi="${m.hi}"` : ''}${m.ref != null ? ` data-ref="${m.ref}"` : ''}><b>${markText(m, f.unit)}</b><i style="--h:${Math.max(0.004, hi / max).toFixed(3)}${lo}">${ref}</i></div>`;
+      }).join('')
+      + `</div><div class="cols-lab">` + marks.map((m) => `<span${m.top ? ' class="top"' : ''}>${esc(m.label)}</span>`).join('') + `</div></div>` + tableFallback(data, f);
+  } else if (f.type === 'change') {
+    // a change, before and after (revision 5, 28 Oct 2026): one row per subject, the data's rows taken in pairs ("ASML,
+    // FY2024" then "ASML, FY2025"). An open circle marks the earlier value and an arrow runs to the later one, on one axis
+    // with hairline ticks; the figure's "ends" ("peak", "latest") name the two marks once, on the first row; the change is
+    // written at the right. Wine goes on the largest change (the chart rule above), or on the figure's "mark".
+    const pairs = [];
+    for (let i = 0; i + 1 < data.length; i += 2) {
+      const a = String(data[i][0]).match(/^(.*?),\s*(.+)$/) || [null, String(data[i][0]), ''], b = String(data[i + 1][0]).match(/^(.*?),\s*(.+)$/) || [null, String(data[i + 1][0]), ''];
+      if (a[1] !== b[1]) warn(`figure ${f.id}: rows "${data[i][0]}" and "${data[i + 1][0]}" are not one subject's pair`);
+      pairs.push({ name: a[1], when: a[2] && b[2] ? `${a[2]} to ${b[2]}` : '', a: +data[i][1], b: +data[i + 1][1] });
+    }
+    if (data.length % 2) warn(`figure ${f.id}: a change figure needs its rows in pairs`);
+    const named = f.mark != null ? pairs.findIndex((p) => p.name === String(f.mark)) : -1;
+    const most = Math.max(...pairs.map((p) => Math.abs(p.b - p.a)));
+    pairs.forEach((p, i) => { p.top = named >= 0 ? i === named : Math.abs(p.b - p.a) === most; });
+    const vs = pairs.flatMap((p) => [p.a, p.b]), step = f.step || 10;
+    const lo = Math.floor(Math.min(...vs) / step) * step, hi = Math.ceil(Math.max(...vs) / step) * step;
+    const x = (v) => ((v - lo) / (hi - lo || 1) * 100).toFixed(2) + '%';
+    const ticks = []; for (let t = lo; t <= hi + 1e-9; t += step) ticks.push(t);
+    const tickHTML = ticks.map((t) => `<i class="cg-tick" style="left:${x(t)}"></i>`).join('');
+    const ends = Array.isArray(f.ends) ? f.ends : [];
+    const vals = pairs.map((p) => spanText(p.a, p.b, f.unit));
+    const lw = Math.max(...pairs.map((p) => Math.max(p.name.length, p.when.length * 0.86))), vw = Math.max(...vals.map((v) => v.replace(/&[a-z]+;/g, '&').length));
+    body = `<div class="cg" aria-hidden="true" style="--lw:${(lw * 0.58 + 0.6).toFixed(1)}em;--vw:${(vw * 0.62 + 1).toFixed(1)}em">`
+      + `<div class="cg-row cg-axis"><span class="cg-l"></span><span class="cg-t">${ticks.map((t) => `<span style="left:${x(t)}">${withUnit(t, f.unit)}</span>`).join('')}</span><span class="cg-v"></span></div>`
+      + pairs.map((p, i) => {
+        const l = Math.min(p.a, p.b), dir = p.b < p.a ? 'down' : 'up';
+        const endsHTML = i === 0 && ends.length === 2 ? `<span class="cg-end" style="left:${x(p.a)}">${esc(ends[0])}</span><span class="cg-end" style="left:${x(p.b)}">${esc(ends[1])}</span>` : '';
+        return `<div class="cg-row${p.top ? ' top' : ''}${endsHTML ? ' has-ends' : ''}" data-a="${p.a}" data-b="${p.b}" data-lo="${lo}" data-hi="${hi}"><span class="cg-l"><b>${esc(p.name)}</b>${p.when ? `<small>${esc(p.when)}</small>` : ''}</span>`
+          + `<span class="cg-t">${tickHTML}${endsHTML}<span class="cg-arrow" data-dir="${dir}" style="left:${x(l)};width:${(Math.abs(p.b - p.a) / (hi - lo || 1) * 100).toFixed(2)}%"></span><span class="cg-from" style="left:${x(p.a)}"></span></span>`
+          + `<b class="cg-v">${vals[i]}</b></div>`;
+      }).join('')
       + `</div>` + tableFallback(data, f);
   } else if (isAnim) {
     // an explainer animation rendered by build/animate.py: the step names and captions are page text, kept in time
@@ -224,7 +323,7 @@ function figDate(s) {
   return { key: `${m[1]}-${m[2] || '01'}-${m[3] || '01'}`, iso: v, label: m[3] ? v : m[2] ? `${MONTHS[+m[2] - 1]} ${m[1]}` : m[1] };
 }
 function tableFallback(data, f) {
-  return `<table class="sr-only fig-table"><caption>${esc(figTitle(f))}</caption><tbody>${data.map((d) => `<tr><th scope="row">${esc(d[0])}</th><td>${unitOnValue(f.unit) ? withUnit(d[1], f.unit) : fmtNum(d[1]) + (f.unit ? ' ' + esc(f.unit) : '')}</td></tr>`).join('')}</tbody></table>`;
+  return `<table class="sr-only fig-table"><caption>${esc(figTitle(f))}</caption><tbody>${data.map((d) => `<tr><th scope="row">${esc(d[0])}</th><td>${typeof d[2] === 'number' ? spanText(d[1], d[2], f.unit, true) + (unitOnValue(f.unit) || !f.unit ? '' : ' ' + esc(f.unit)) : unitOnValue(f.unit) ? withUnit(d[1], f.unit) : fmtNum(d[1]) + (f.unit ? ' ' + esc(f.unit) : '')}</td></tr>`).join('')}</tbody></table>`;
 }
 
 /* ---------------- block markdown ---------------- */
@@ -685,41 +784,73 @@ try{var o=location.hash.length>1?document.getElementById(location.hash.slice(1))
 })();`;
 // A figure's Table and PNG actions (figure() above draws Cite and CSV, which need no script). Shared by the main page
 // (src/template.html) and the readable pages (social.js), as CITE_JS is. Table shows the figure's own rows in place of its
-// bars, and back; PNG draws the figure, always on the light ground, to a 1,600 px wide picture and saves it.
+// chart, and back; PNG draws the figure, always on the light ground, to a 1,600 px wide picture and saves it: bars (with their
+// ranges), columns and change rows, read back from the marks figure() drew, with the chart rule's wine where the page has it.
 const FIG_JS = `(function(){
 var D=document;
 function el(t,c,x){var e=D.createElement(t);if(c)e.className=c;if(x)e.textContent=x;return e;}
 function wrap(g,s,w){var out=[],line='';String(s).split(/\\s+/).forEach(function(word){var t=line?line+' '+word:word;if(g.measureText(t).width>w&&line){out.push(line);line=word;}else line=t;});if(line)out.push(line);return out;}
 function txt(n){return n?n.textContent.replace(/\\s+/g,' ').trim():'';}
 function png(fig){
-var rows=[].map.call(fig.querySelectorAll('.hb'),function(r){var c=r.cloneNode(true);return{l:txt(r.querySelector('.hb-l')),v:txt(r.querySelector('.hb-r b')),n:+r.getAttribute('data-v')||0,top:r.classList.contains('top'),rest:r.classList.contains('rest')};});
+var hb=[].slice.call(fig.querySelectorAll('.hbars .hb')),cl=[].slice.call(fig.querySelectorAll('.cols-plot .col')),cg=[].slice.call(fig.querySelectorAll('.cg-row:not(.cg-axis)'));
+var kind=hb.length?'hb':cl.length?'cols':'cg',labs=fig.querySelectorAll('.cols-lab span');
+var num=function(r,a){var v=r.getAttribute(a);return v==null||v===''?null:+v;};
+var rows=(hb.length?hb:cl.length?cl:cg).map(function(r,i){return{l:kind==='hb'?txt(r.querySelector('.hb-l')):kind==='cols'?txt(labs[i]):txt(r.querySelector('.cg-l b')),s:kind==='cg'?txt(r.querySelector('.cg-l small')):'',v:txt(r.querySelector(kind==='hb'?'.hb-r > b':kind==='cols'?'b':'.cg-v')),n:num(r,'data-v')||0,hi:num(r,'data-hi'),ref:num(r,'data-ref'),rl:txt(r.querySelector('.hb-ref span,.col-ref span')),a:num(r,'data-a'),b:num(r,'data-b'),lo:num(r,'data-lo'),top:r.classList.contains('top'),rest:r.classList.contains('rest'),span:r.classList.contains('span')};});
 if(!rows.length)return;
 var k=txt(fig.querySelector('.fig-k')),t1=txt(fig.querySelector('.fig-title')),t2=txt(fig.querySelector('.fig-sub'));
 var src=fig.querySelector('.fs-src'),sc=src?src.cloneNode(true):null;if(sc)[].forEach.call(sc.querySelectorAll('.fs-k'),function(x){x.remove();});
 var srcT=sc?txt(sc).replace(/\\s*(\\d+)$/,' [$1]'):'',addr=txt(fig.querySelector('.fig-cite-box a')).replace(/^https?:\\/\\//,'');
 var W=800,P=40,S=2,cv=el('canvas'),g=cv.getContext('2d');
 var FD='"Fraunces",Georgia,serif',FB='"Source Serif 4",Georgia,serif',FU='"Hanken Grotesk","Helvetica Neue",Arial,sans-serif',FM='"Fragment Mono",Menlo,monospace';
+var WINE='#7a1f2b',TINT='#d2d1cc',INK='#171716',INK2='#45443f',RULE='#8c8a84',LINE='#e1e0db';
+var hi=function(r){return r.hi!=null?r.hi:r.n;},max=Math.max.apply(null,rows.map(hi))||1;
+var vwid=function(){return Math.max.apply(null,rows.map(function(r){g.font=r.top?'700 15px '+FU:'400 13.5px '+FU;return g.measureText(r.v).width;}));};
+function hatch(x,y,w,h,c){if(w<=0||h<=0)return;g.save();g.beginPath();g.rect(x,y,w,h);g.clip();g.strokeStyle=c;g.lineWidth=1.5;for(var i=-h;i<w+h;i+=6){g.beginPath();g.moveTo(x+i,y+h);g.lineTo(x+i+h,y);g.stroke();}g.restore();}
+function range(r,x,y,w,h,lo,vert){var c=r.top?WINE:RULE;g.fillStyle=r.top&&!r.span?WINE:TINT;if(vert){g.fillRect(x,y+h-lo,w,lo);hatch(x,y,w,h-lo,c);}else{g.fillRect(x,y,lo,h);hatch(x+lo,y,w-lo,h,c);}g.strokeStyle=c;g.lineWidth=1.5;g.strokeRect(x+0.75,y+0.75,w-1.5,h-1.5);}
 g.font='500 24px '+FD;var L1=wrap(g,t1,W-2*P);g.font='400 16px '+FB;var L2=t2?wrap(g,t2,W-2*P):[];
-g.font='400 14px '+FU;var lw=Math.min(W*0.42,Math.max.apply(null,rows.map(function(r){return g.measureText(r.l).width;}))+8);
-var H=P+18+L1.length*31+(L2.length?6+L2.length*21:0)+24+rows.length*34+20+56;
+var lw=0,cw=0,sp=0,LL=[],hasRef=rows.some(function(r){return r.ref!=null;}),chartH;
+if(kind==='hb'){g.font='400 14px '+FU;lw=Math.min(W*0.42,Math.max.apply(null,rows.map(function(r){return g.measureText(r.l).width;}))+8);chartH=rows.length*34+(hasRef?20:0);}
+else if(kind==='cols'){var n=rows.length;cw=Math.min(140,(W-2*P-(n-1)*18)/n);sp=(W-2*P-n*cw)/(n+1);g.font='600 13.5px '+FU;LL=rows.map(function(r){return wrap(g,r.l,cw+sp-6);});chartH=26+190+10+Math.max.apply(null,LL.map(function(l){return l.length;}))*18;}
+else{g.font='600 14.5px '+FU;lw=Math.max.apply(null,rows.map(function(r){g.font='600 14.5px '+FU;var a=g.measureText(r.l).width;g.font='400 12.5px '+FU;return Math.max(a,g.measureText(r.s).width);}))+20;chartH=30+rows.length*50;}
+var H=P+18+L1.length*31+(L2.length?6+L2.length*21:0)+24+chartH+20+56;
 cv.width=W*S;cv.height=H*S;g.scale(S,S);g.fillStyle='#ffffff';g.fillRect(0,0,W,H);
 var y=P;g.textBaseline='alphabetic';g.fillStyle='#56554f';g.font='400 13px '+FM;g.fillText(k,P,y+12);y+=22;
-g.fillStyle='#171716';g.font='500 24px '+FD;L1.forEach(function(s){y+=28;g.fillText(s,P,y);y+=3;});
-if(L2.length){y+=6;g.fillStyle='#45443f';g.font='400 16px '+FB;L2.forEach(function(s){y+=19;g.fillText(s,P,y);y+=2;});}
-y+=24;var max=Math.max.apply(null,rows.map(function(r){return r.n;}))||1,x0=P+lw+12,bw=W-P-x0-90;
-rows.forEach(function(r){var w=Math.max(1,r.n/max*bw);
-g.textAlign='right';g.fillStyle=r.top?'#171716':'#45443f';g.font=(r.top?'600':'400')+' 14px '+FU;g.fillText(r.l,P+lw,y+16);g.textAlign='left';
-if(r.rest){g.save();g.beginPath();g.rect(x0,y,w,22);g.clip();g.strokeStyle='#8c8a84';g.lineWidth=1;for(var i=-22;i<w+22;i+=5){g.beginPath();g.moveTo(x0+i,y+22);g.lineTo(x0+i+22,y);g.stroke();}g.restore();g.strokeRect(x0+0.5,y+0.5,w-1,21);}
-else{g.fillStyle=r.top?'#7a1f2b':'#d2d1cc';g.fillRect(x0,y,w,22);}
-g.fillStyle=r.top?'#7a1f2b':'#45443f';g.font=r.top?'700 15px '+FU:'400 13.5px '+FU;g.fillText(r.v,x0+w+10,y+16);y+=34;});
-y+=14;g.fillStyle='#e1e0db';g.fillRect(P,y,W-2*P,1);y+=22;
+g.fillStyle=INK;g.font='500 24px '+FD;L1.forEach(function(s){y+=28;g.fillText(s,P,y);y+=3;});
+if(L2.length){y+=6;g.fillStyle=INK2;g.font='400 16px '+FB;L2.forEach(function(s){y+=19;g.fillText(s,P,y);y+=2;});}
+y+=24;
+if(kind==='hb'){var x0=P+lw+12,bw=W-P-x0-Math.max(90,vwid()+14);
+rows.forEach(function(r){var w=Math.max(1,hi(r)/max*bw);
+g.textAlign='right';g.fillStyle=r.top?INK:INK2;g.font=(r.top?'600':'400')+' 14px '+FU;g.fillText(r.l,P+lw,y+16);g.textAlign='left';
+if(r.rest){g.save();g.beginPath();g.rect(x0,y,w,22);g.clip();g.strokeStyle=RULE;g.lineWidth=1;for(var i=-22;i<w+22;i+=5){g.beginPath();g.moveTo(x0+i,y+22);g.lineTo(x0+i+22,y);g.stroke();}g.restore();g.strokeRect(x0+0.5,y+0.5,w-1,21);}
+else if(r.hi!=null){range(r,x0,y,w,22,r.n/r.hi*w,false);if(r.ref!=null){var rx=x0+r.ref/r.hi*w;g.fillStyle=INK;g.fillRect(rx-1,y-5,2,32);g.fillStyle=INK2;g.font='400 12.5px '+FU;g.textAlign='center';g.fillText(r.rl,rx,y+44);g.textAlign='left';}}
+else{g.fillStyle=r.top?WINE:TINT;g.fillRect(x0,y,w,22);}
+g.fillStyle=r.top?WINE:INK2;g.font=r.top?'700 15px '+FU:'400 13.5px '+FU;g.fillText(r.v,x0+w+10,y+16);y+=34+(r.ref!=null?20:0);});}
+else if(kind==='cols'){var yb=y+26+190;
+rows.forEach(function(r,i){var x=P+sp*(i+1)+cw*i,cx=x+cw/2,h=Math.max(1,hi(r)/max*190);
+if(r.rest){g.save();g.beginPath();g.rect(x,yb-h,cw,h);g.clip();g.strokeStyle=RULE;g.lineWidth=1;for(var j=-h;j<cw+h;j+=5){g.beginPath();g.moveTo(x+j,yb);g.lineTo(x+j+h,yb-h);g.stroke();}g.restore();g.strokeRect(x+0.5,yb-h+0.5,cw-1,h-1);}
+else if(r.hi!=null){range(r,x,yb-h,cw,h,r.n/r.hi*h,true);if(r.ref!=null){var ry=yb-r.ref/r.hi*h;g.fillStyle=INK;g.fillRect(x-5,ry-1,cw+10,2);g.fillStyle=INK2;g.font='400 12.5px '+FU;g.fillText(r.rl,x+cw+10,ry+4);}}
+else{g.fillStyle=r.top?WINE:TINT;g.fillRect(x,yb-h,cw,h);}
+g.textAlign='center';g.fillStyle=r.top?WINE:INK2;g.font=r.top?'700 15px '+FU:'400 13.5px '+FU;g.fillText(r.v,cx,yb-h-8);
+g.fillStyle=r.top?INK:INK2;g.font=(r.top?'600':'400')+' 13.5px '+FU;LL[i].forEach(function(s,j){g.fillText(s,cx,yb+20+j*18);});g.textAlign='left';});
+g.fillStyle=INK;g.fillRect(P,yb,W-2*P,1);y+=chartH;}
+else{var vw=vwid()+16,x0=P+lw,x1=W-P-vw,lo=rows[0].lo,top=num(cg[0],'data-hi'),X=function(v){return x0+(x1-x0)*(v-lo)/((top-lo)||1);};
+g.textAlign='center';g.fillStyle='#56554f';g.font='400 12px '+FU;[].forEach.call(fig.querySelectorAll('.cg-axis .cg-t span'),function(s){var p=parseFloat(s.style.left)/100;g.fillText(txt(s),x0+(x1-x0)*p,y+12);g.fillStyle=LINE;g.fillRect(Math.round(x0+(x1-x0)*p),y+22,1,rows.length*50);g.fillStyle='#56554f';});g.textAlign='left';y+=30;
+var ends=[].map.call(fig.querySelectorAll('.cg-end'),txt);
+rows.forEach(function(r,i){var cy=y+20,c=r.top?WINE:INK,xa=X(r.a),xb=X(r.b),d=xb<xa?-1:1,hl=r.top?11:8,hw=r.top?6:4.5;
+g.fillStyle=INK;g.font=(r.top?'600':'500')+' 14.5px '+FU;g.fillText(r.l,P,cy-2);g.fillStyle='#56554f';g.font='400 12.5px '+FU;g.fillText(r.s,P,cy+15);
+if(i===0&&ends.length===2){g.textAlign='center';g.fillStyle=INK2;g.font='400 12px '+FU;g.fillText(ends[0],xa,cy-12);g.fillText(ends[1],xb,cy-12);g.textAlign='left';}
+g.strokeStyle=c;g.lineWidth=r.top?2.6:1.6;g.beginPath();g.moveTo(xa+d*5,cy);g.lineTo(xb-d*hl,cy);g.stroke();
+g.fillStyle=c;g.beginPath();g.moveTo(xb,cy);g.lineTo(xb-d*hl,cy-hw);g.lineTo(xb-d*hl,cy+hw);g.closePath();g.fill();
+g.fillStyle='#ffffff';g.strokeStyle=c;g.lineWidth=1.6;g.beginPath();g.arc(xa,cy,5,0,Math.PI*2);g.fill();g.stroke();
+g.fillStyle=c;g.font=r.top?'700 15px '+FU:'400 13.5px '+FU;g.fillText(r.v,x1+16,cy+5);y+=50;});}
+y+=14;g.fillStyle=LINE;g.fillRect(P,y,W-2*P,1);y+=22;
 g.fillStyle='#45443f';g.font='400 12.5px '+FU;var sl=wrap(g,(srcT?'Source: '+srcT:''),W-2*P);sl.slice(0,1).forEach(function(s){g.fillText(s,P,y);});
 g.fillStyle='#56554f';g.font='400 12px '+FM;g.fillText(addr,P,y+20);
 cv.toBlob(function(b){if(!b)return;var a=el('a');a.href=URL.createObjectURL(b);a.download='chip-supply-chain-'+(k.replace(/^Figure\\s*/,'figure-').replace(/[^0-9a-z]+/gi,'-').toLowerCase())+'-'+(fig.id.split('-').slice(2).join('-')||'chart')+'.png';D.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},2000);},'image/png');
 }
 function add(acts){
 if(acts.getAttribute('data-ready'))return;acts.setAttribute('data-ready','1');
-var kind=acts.getAttribute('data-kind'),fig=acts.closest('.figure');if(!fig||(kind!=='bars'&&kind!=='stack'))return;
+var kind=acts.getAttribute('data-kind'),fig=acts.closest('.figure');if(!fig||['bars','stack','columns','change'].indexOf(kind)<0)return;
 var tb=el('button','fs-tab','Table');tb.type='button';tb.setAttribute('aria-pressed','false');
 tb.addEventListener('click',function(){var on=!fig.classList.contains('is-table'),t=fig.querySelector('table.fig-table');fig.classList.toggle('is-table',on);if(t)t.classList.toggle('sr-only',!on);tb.setAttribute('aria-pressed',on?'true':'false');});
 var pb=el('button','fs-png','PNG');pb.type='button';pb.setAttribute('aria-label','Save the figure as a PNG picture');
@@ -1217,7 +1348,7 @@ const suppliersData = suppliers.map((r) => {
 });
 // each firm's chart address, for the search entries of the China revenue rows (the rows themselves stay as filed, since the page exports them)
 const exposureLinks = {}; Object.keys(exposureJoin.byFirm).forEach((f) => { exposureLinks[f] = exposureJoin.href(f); });
-const data = { landscape, landscapeNotes, landscapeCompare, suppliers: suppliersData, timeline, matrix, flows, exposure, exposureLinks, chapters: all.map((c) => { const card = c.meta.card || {}; return { id: c.id, number: c.number, stage: isStage(c), title: c.title, specimen: c.meta.specimen, oneLiner: c.meta.oneLiner || '', plain: String(c.meta.plain || '').replace(/\s*\(\[source\]\([^)\s]*\)\)/g, ''), score: +card.chokepointScore || 0, concentration: card.concentration || '', band: card.concentration || '', bandRank: BANDS[card.concentration] || 0, substitutability: card.substitutability || null, leaders: card.leaders || [], countries: card.countries || [], substitution: card.substitution || {}, chinaStatus: card.chinaStatus || '', usStatus: card.usStatus || '' }; }) };
+const data = { specimenNames: SPECIMEN_NAME, landscape, landscapeNotes, landscapeCompare, suppliers: suppliersData, timeline, matrix, flows, exposure, exposureLinks, chapters: all.map((c) => { const card = c.meta.card || {}; return { id: c.id, number: c.number, stage: isStage(c), title: c.title, specimen: c.meta.specimen, oneLiner: c.meta.oneLiner || '', plain: String(c.meta.plain || '').replace(/\s*\(\[source\]\([^)\s]*\)\)/g, ''), score: +card.chokepointScore || 0, concentration: card.concentration || '', band: card.concentration || '', bandRank: BANDS[card.concentration] || 0, substitutability: card.substitutability || null, leaders: card.leaders || [], countries: card.countries || [], substitution: card.substitution || {}, chinaStatus: card.chinaStatus || '', usStatus: card.usStatus || '' }; }) };
 let html = read(path.join(root, 'src', 'template.html'));
 const fill = (k, v) => { html = html.split(`{{${k}}}`).join(v); };
 // the route before boot, inlined in <head>: it shows the routed view while the rest of the page arrives (src/preroute.js),

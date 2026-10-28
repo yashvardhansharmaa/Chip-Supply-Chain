@@ -79,7 +79,9 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8766';
       check('1440: the figure is numbered 04.5', await t.ev(`document.querySelector('${F} .fig-k').textContent`) === 'Figure 04.5');
       check('1440: the chart rule, the largest bar wine, the rest the tint', await t.ev(`(function(){var b=[].map.call(document.querySelectorAll('${F} .hb-r i'),function(i){return getComputedStyle(i).backgroundColor});return b[0]==='rgb(122, 31, 43)'&&b.slice(1).every(function(c){return c==='rgb(210, 209, 204)'});})()`),
         await t.ev(`[].map.call(document.querySelectorAll('${F} .hb-r i'),function(i){return getComputedStyle(i).backgroundColor}).join(' ')`));
-      check('1440: in every chapter, wine on the largest bar only (and on every largest)', await t.ev("[].every.call(document.querySelectorAll('.chapter .hb'),function(r){var c=getComputedStyle(r.querySelector('.hb-r i')).backgroundColor,w=c==='rgb(122, 31, 43)';return r.classList.contains('top')?w:!w&&c!=='rgb(168, 65, 75)';})"));
+      // the chart rule as amended on 28 Oct 2026 (page revisions 4 and 5): wine on the marked value only (the value the title
+      // names, else the largest), in the bar's fill or, for a range, its solid part and hatch; columns and change rows likewise
+      check('1440: in every chapter, wine on the marked bar, column or change only', await t.ev("(function(){var W='rgb(122, 31, 43)',wine=function(e){var c=getComputedStyle(e);return c.backgroundColor===W||c.backgroundImage.indexOf(W)>=0;};return [].every.call(document.querySelectorAll('.chapter .hb'),function(r){var i=r.querySelector('.hb-r i'),c=getComputedStyle(i).backgroundColor;return r.classList.contains('top')?wine(i):!wine(i)&&c!=='rgb(168, 65, 75)';})&&[].every.call(document.querySelectorAll('.chapter .cols-plot .col'),function(r){return r.classList.contains('top')===wine(r.querySelector('i'));})&&[].every.call(document.querySelectorAll('.chapter .cg-row:not(.cg-axis)'),function(r){return r.classList.contains('top')===(getComputedStyle(r.querySelector('.cg-arrow')).backgroundColor===W);});})()"));
       check('1440: the strip has Cite, Table, CSV and PNG', await t.ev(`[].map.call(document.querySelectorAll('${F} .fs-acts > *'),function(a){return a.textContent}).join(' ')`) === 'Cite Table CSV PNG', await t.ev(`[].map.call(document.querySelectorAll('${F} .fs-acts > *'),function(a){return a.textContent}).join(' ')`));
       await t.ev(`document.querySelector('${F} .fs-acts .ch-cite-btn').click(),1`); await sleep(200);
       check('1440: Cite opens the figure\'s citation', await t.ev(`(function(){var b=document.getElementById('cite-fig-lithography-asml-region');return !b.hidden && /Figure 04.5: ASML net system sales/.test(b.textContent) && /Updated \\d+ [A-Z][a-z]+ 2026/.test(b.textContent);})()`), await t.ev("document.getElementById('cite-fig-lithography-asml-region').textContent.slice(0,140)"));
@@ -131,11 +133,14 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8766';
     {
       const t = await open(chrome, BASE + '/#lithography', { width: 390, wait: 3000 });
       check('390: the drawing stays in the strip', await t.ev("!!document.querySelector('.stage > canvas#stage-canvas') && getComputedStyle(document.querySelector('.stage')).display!=='none'"));
-      // the strip shows the whole caption (the visual pass of 27 Oct 2026): nothing clipped or cut short, its buttons on top and in reach
-      const strip = await t.ev(`(function(){var s=document.querySelector('.stage'),c=s.querySelector('figcaption'),cs=getComputedStyle(c),m=s.querySelector('.stage-menu').getBoundingClientRect(),hit=document.elementFromPoint(m.left+m.width/2,m.top+m.height/2);
-        return {clamp:cs.webkitLineClamp,over:s.scrollHeight-s.clientHeight,h:Math.round(s.getBoundingClientRect().height),bottom:Math.round(s.getBoundingClientRect().bottom),vh:innerHeight,hit:hit&&hit.className,full:c.textContent.indexOf('drawn about twice their true size.')>0};})()`);
-      check('390: the strip shows the whole caption, no clamp and nothing cut off', (strip.clamp === 'none' || !strip.clamp) && strip.over <= 1 && strip.full && strip.bottom === strip.vh, JSON.stringify(strip));
-      check('390: the strip is no taller than its caption needs (under 260 px for Lithography)', strip.h >= 128 && strip.h < 260, strip.h + ' px');
+      // the strip (page revision 2, 28 Oct 2026): 64 px at the foot, a 52 px thumbnail, the specimen's name over what a tap
+      // opens, Contents at the right; the caption, Top and Expand are gone from it, and a tap anywhere else opens it
+      const strip = await t.ev(`(function(){var s=document.querySelector('.stage'),r=s.getBoundingClientRect(),c=s.querySelector('canvas').getBoundingClientRect(),tag=s.querySelector('.stage-tag'),m=s.querySelector('.stage-menu').getBoundingClientRect(),hit=document.elementFromPoint(m.left+m.width/2,m.top+m.height/2),vis=function(sel){var e=s.querySelector(sel);return !!e&&getComputedStyle(e).display!=='none'&&e.getBoundingClientRect().height>0;};
+        return {h:Math.round(r.height),bottom:Math.round(r.bottom),vh:innerHeight,thumb:Math.round(c.width)+'x'+Math.round(c.height),text:tag.innerText.replace(/\\s+/g,' ').trim(),font:getComputedStyle(tag).fontFamily.split(',')[0]+' '+getComputedStyle(tag).fontSize,cap:vis('figcaption'),top:vis('.stage-top'),hit:hit&&hit.className};})()`);
+      check('390: the strip is 64 px at the foot of the screen', strip.h === 64 && strip.bottom === strip.vh, JSON.stringify(strip));
+      check('390: a 52 px live thumbnail', strip.thumb === '52x52', strip.thumb);
+      check('390: the strip reads "Specimen 04 · EUV scanner" over "Tap for the drawing and its parts", in Hanken Grotesk 13 px', strip.text === 'Specimen 04 · EUV scanner Tap for the drawing and its parts' && /Hanken/.test(strip.font) && /13px/.test(strip.font), strip.text + ' / ' + strip.font);
+      check('390: the caption and Top are not in the strip', !strip.cap && !strip.top);
       check('390: the strip\'s Contents takes a tap', /stage-menu/.test(strip.hit || ''), strip.hit);
       check('390: the masthead is down after the landing', await t.ev("!document.documentElement.classList.contains('mast-up')"));
       await t.ev("(document.documentElement.style.scrollBehavior='auto', window.scrollBy(0, 900), 1)"); await sleep(250);
@@ -144,9 +149,17 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8766';
       check('390: the slim bar names the chapter and the section', await t.ev("document.documentElement.classList.contains('slim-on') && /04\\s*Lithography/.test(document.querySelector('.ch-slim').textContent)"), await t.ev("(document.querySelector('.ch-slim')||{}).textContent"));
       await t.ev("(window.scrollBy(0, -60), 1)"); await sleep(500);
       check('390: scrolling up brings the masthead back, the slim bar under it', await t.ev("!document.documentElement.classList.contains('mast-up') && Math.abs(document.querySelector('.ch-slim').getBoundingClientRect().top - document.querySelector('.masthead').getBoundingClientRect().bottom) < 2"));
-      await t.ev("document.querySelector('.stage-toggle').click(),1"); await sleep(600);
+      // a tap on the strip's words opens it (the clear Expand button over the strip takes it)
+      const tap = await t.ev("(function(){var r=document.querySelector('.stage .stage-tag').getBoundingClientRect(),e=document.elementFromPoint(r.left+20,r.top+r.height/2);if(e)e.click();return e&&e.className;})()"); await sleep(600);
+      check('390: a tap on the strip opens it', await t.ev("document.querySelector('.stage').getAttribute('data-collapsed')==='0'"), tap);
       check('390: the expanded strip lists the parts', await t.ev("(function(){var p=document.querySelector('.stage figcaption .stage-parts');return !!p&&getComputedStyle(p).display!=='none'&&/Light source/.test(p.textContent);})()"));
       await t.ev("document.querySelector('.stage-toggle').click(),1"); await sleep(300);
+      check('390: Collapse closes it again', await t.ev("document.querySelector('.stage').getAttribute('data-collapsed')==='1'"));
+      // the wine rule on the strip's top edge fills as the chapter is read
+      const r0 = await t.ev("+getComputedStyle(document.querySelector('.stage')).getPropertyValue('--read')");
+      await t.ev("(window.scrollBy(0, 3000), 1)"); await sleep(600);
+      const r1 = await t.ev("+getComputedStyle(document.querySelector('.stage')).getPropertyValue('--read')");
+      check('390: the strip\'s wine rule fills with the share of the chapter read', r1 > r0 && r1 > 0 && r1 < 1, `${r0} -> ${r1}`);
       t.errors.forEach((e) => check('390: page error', false, e));
       await t.close();
     }

@@ -7,7 +7,7 @@
  "plain": "Lithography prints the pattern of a circuit onto the wafer. A machine holds a stencil of one layer of the circuit up to a light source and projects the image, four times smaller, onto the silicon. The shorter the wavelength of the light, the finer the lines a machine can print. Even so, a machine can print lines narrower than its light's wavelength. Immersion scanners, for example, shine the light through a layer of water between lens and wafer, which lets them print smaller features with the same light ([source](https://www.asml.com/en/technology/lithography-principles/lenses-and-mirrors)). ASML rates its NXT:2150i immersion scanner at features of 38 nanometers or less with 193-nanometer argon fluoride laser light ([source](https://www.asml.com/en/products/duv-lithography-systems/twinscan-nxt-2150i)). Air soaks up extreme ultraviolet light, the shortest in use, so machines that print with it work in a vacuum. Only ASML, a Dutch company, makes them. Export controls are government rules on who a company may sell to. Every advanced chip passes through ASML's machines, so export controls on ASML affect all advanced chipmaking.",
  "bridge": "Coated and still blank, the wafer goes to the machine that sets how small the circuit can be.",
  "specimen": "euv-scanner",
- "specimenCaption": "An extreme ultraviolet scanner cut open along its light path. The machine is the size of a bus and weighs about 180 metric tons. The blue-violet thread is the 13.5 nm light, bouncing mirror to mirror from the violet-white tin plasma at bottom left to the wafer. The mask at the top and the wafer at bottom right are drawn about twice their true size.",
+ "specimenCaption": "An extreme ultraviolet scanner cut open along its light path. The machine is the size of a bus and weighs about 180 metric tons. The blue-violet thread is the 13.5 nm light. The mask and the wafer are drawn about twice their true size.",
  "card": {
  "concentration": "Extreme",
  "chokepointScore": 5,
@@ -47,7 +47,8 @@
     {"id": "litho-print", "type": "animation", "src": "litho", "title": "How lithography prints a chip", "note": "Simplified. The newest machines, which use extreme ultraviolet light, carry the image with mirrors in place of a lens."},
  {
  "id": "euv-shipments",
- "type": "bars",
+ "type": "columns",
+ "mark": "2025",
  "title": "EUV systems ASML sold each year",
  "finding": "ASML sold 48 EUV systems in 2025, up from 44 in 2024",
  "unit": "tools",
@@ -57,10 +58,10 @@
  {
  "id": "tool-price",
  "type": "bars",
- "title": "What one lithography system costs. The DUV bar is one figure for the whole segment, and the High-NA bar shows the low end of an estimated $350-400M range",
+ "title": "What one lithography system costs. The DUV bar is one figure for the whole segment",
  "finding": "High-NA EUV scanners cost an estimated $350 million to $400 million in 2026",
  "unit": "$M",
- "data": [["DUV tool", 60], ["EUV, 0.33 NA", 200], ["High-NA EUV", 350]],
+ "data": [["DUV tool", 60], ["EUV, 0.33 NA", 200], ["High-NA EUV", 350, 400]],
  "source": {"label": "Reuters explainer on ASML's lithography machines, first published 28 January 2026 and updated 28 July 2026", "url": "https://www.reuters.com/world/asia-pacific/250-million-asml-printer-behind-nvidias-chips-2026-07-28/"}
  },
  {

@@ -147,7 +147,7 @@
 @media (max-width: 900px) { .gl-thumb li > * { min-width: 22px; padding: 0 1px; } }
 .gl-sec { padding-top: 40px; }
 .gl-sec-h { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 24px; border-bottom: 1px solid var(--ink); padding-bottom: 10px; margin-bottom: 22px; }
-.gl-L { font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: 88px; line-height: 0.8; letter-spacing: -0.02em; scroll-margin-top: 72px; }
+.gl-L { font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: 40px; line-height: 44px; letter-spacing: -0.01em; scroll-margin-top: 72px; } /* below the page title, as in the app (page revision 10, 28 Oct 2026) */
 .gl-gw { display: flex; flex-wrap: wrap; gap: 4px 18px; margin: 0; font-family: var(--font-label); font-size: 12px; line-height: 16px; color: var(--muted); font-variant-numeric: tabular-nums; }
 .gl-gw b { font-weight: 400; color: var(--ink-2); }
 .gl-cols { columns: 300px 3; column-gap: 48px; column-rule: 1px solid var(--line); margin: 0; }
@@ -186,7 +186,7 @@
   .gl-cols { columns: 1; }
   .gl-cols + .gl-cols { margin-top: 0; padding-top: 0; border-top: 0; }
   .gl-sec { padding-top: 28px; }
-  .gl-L { font-size: 64px; }
+  .gl-L { font-size: 30px; line-height: 34px; }
   .gl-de:target::before { left: -10px; }
   .facts { grid-template-columns: minmax(0, 1fr); gap: 0; }
   .facts dd { margin-bottom: 7px; }

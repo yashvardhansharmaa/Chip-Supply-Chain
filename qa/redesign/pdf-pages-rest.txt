@@ -1,0 +1,13 @@
+9 chapters from http://127.0.0.1:8778/?theme=light#/chain, Edition of 28 October 2026
+01 design-and-eda: 11 pages, 0.54 MB (36 s)
+02 silicon-and-wafers: 10 pages, 0.50 MB (35 s)
+03 chemicals-gases-and-photoresist: 12 pages, 0.66 MB (25 s)
+06 deposition-and-etch: 13 pages, 0.58 MB (38 s)
+09 memory-and-hbm: 10 pages, 0.51 MB (36 s)
+10 advanced-packaging: 11 pages, 0.57 MB (37 s)
+11 substrates-and-pcbs: 12 pages, 0.57 MB (26 s)
+12 test-and-assembly: 11 pages, 0.55 MB (29 s)
+13 systems-and-networking: 11 pages, 0.64 MB (37 s)
+wrote 9 to dist/pdf/: 101 pages, 5.1 MB in all
+next: node build/build.js, so the cite lines link them and the sitemap lists them
+exit 0

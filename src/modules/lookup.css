@@ -70,7 +70,8 @@ html.kb:has(.view[data-view="glossary"]:not([hidden])) { scroll-padding-top: cal
 .gl-dict { min-height: 50vh; }
 .gl-sec { padding-top: 40px; }
 .gl-sec-h { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 24px; margin-bottom: 22px; padding-bottom: 10px; border-bottom: 1px solid var(--ink); }
-.gl-L { margin: 0; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: 88px; line-height: 0.8; letter-spacing: -0.02em; color: var(--ink); }
+/* the letter head steps below the page title (page revision 10, 28 Oct 2026): 40/44 px, where it was 88 px over a 66 px title */
+.gl-L { margin: 0; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: 40px; line-height: 44px; letter-spacing: -0.01em; color: var(--ink); }
 .gl-best .gl-L { font-size: 40px; line-height: 1; letter-spacing: -0.01em; }
 .gl-gw { display: flex; flex-wrap: wrap; gap: 4px 18px; margin: 0; font-family: var(--font-ui); font-size: 12.5px; line-height: 16px; color: var(--muted); font-variant-numeric: tabular-nums; }
 .gl-gw b { font-weight: 400; color: var(--ink-2); }
@@ -234,7 +235,7 @@ html.kb:has(.view[data-view="glossary"]:not([hidden])) { scroll-padding-top: cal
   .gl-letters button, .gl-letters span { min-width: 32px; height: 36px; padding: 0 3px; }
   .gl-cols { columns: 1; }
   .gl-sec { padding-top: 28px; }
-  .gl-L { font-size: 64px; }
+  .gl-L { font-size: 30px; line-height: 34px; } /* under the phone's 35 px title */
   .gl-best .gl-sec-h { flex-direction: column; align-items: flex-start; }
   .gl-best .gl-L { font-size: 30px; }
   .gl-de.is-on::before { left: -10px; }

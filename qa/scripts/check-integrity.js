@@ -57,7 +57,7 @@ if (/undefined|\bNaN\b|\[object Object\]/.test(html)) problems.push('the page te
     const src = fs.readFileSync('content/' + f, 'utf8'); const a = src.indexOf('---json\n'); const b = src.indexOf('\n---', a + 8);
     let fm; try { fm = JSON.parse(src.slice(a + 8, b)); } catch (e) { continue; }
     for (const fig of fm.figures || []) {
-      if (fig.type === 'bars' && /China'?s share of revenue/i.test(fig.title || '')) {
+      if ((fig.type === 'bars' || fig.type === 'change') && /China'?s share of revenue/i.test(fig.title || '')) {
         for (const [label, v] of fig.data || []) {
           const m = String(label).match(/^(.+?),\s*(?:FY)?(\d{4})$/); if (!m) continue;
           const row = exposure.find((r) => r.firm === m[1] && r.fiscalYear === 'FY' + m[2]);

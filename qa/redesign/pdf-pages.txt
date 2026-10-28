@@ -1,0 +1,4 @@
+1 chapter from http://127.0.0.1:8778/?theme=light#/chain, Edition of 28 October 2026
+04 lithography: 13 pages, 1.14 MB (61 s)
+wrote 1 to dist/pdf/: 13 pages, 1.1 MB in all
+next: node build/build.js, so the cite lines link them and the sitemap lists them

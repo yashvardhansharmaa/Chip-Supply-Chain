@@ -50,7 +50,7 @@
     {"id": "substrate-fanout", "type": "animation", "src": "substrate", "title": "How a substrate fans out", "note": "Simplified. Three layers of film are drawn on each side of the core, and every thickness is exaggerated."},
     {
       "id": "abf-layers",
-      "type": "bars",
+      "type": "columns",
       "title": "Layers of build-up film on each side of a package substrate's core",
       "finding": "Substrate film layers rose from 3 in 1999 to 11 in 2026",
       "unit": "layers",
