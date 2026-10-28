@@ -1,19 +1,15 @@
 {
- "base": "http://127.0.0.1:8772",
- "checked": 4976,
- "counts": {
-  "list": 76,
-  "speednotes": 86,
-  "figures": 1144,
-  "figures said once": 90,
-  "numbers": 38,
-  "parts": 290,
-  "packages": 38,
-  "words": 534,
-  "chart": 182,
-  "card": 1069,
-  "rank": 638,
-  "/chips/": 791
+ "base": "http://127.0.0.1:8775",
+ "widths": {
+  "390": {
+   "checked": 661,
+   "mismatches": []
+  },
+  "1440": {
+   "checked": 661,
+   "mismatches": []
+  }
  },
- "problems": []
+ "checked": 1322,
+ "mismatches": 0
 }
