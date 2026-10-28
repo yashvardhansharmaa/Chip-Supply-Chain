@@ -2,12 +2,12 @@
 <title>Chip Supply Chain share card: the whole chain</title>
 <!-- built by build.py from card.tpl.html (frieze redrawn for the 14 stages on 27 Oct 2026, merge of chapters 8 and 9); ?face=sans|serif, ?page=home|lithography -->
 <script>(function(){var q=new URLSearchParams(location.search);var r=document.documentElement;r.classList.add(q.get('face')==='sans'?'sans':'serif');r.classList.add(q.get('page')==='lithography'?'chapter':'home');if(q.get('dek')==='0')r.classList.add('nodek');})();</script>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,400&family=Hanken+Grotesk:wght@100..900&family=Fragment+Mono&display=block">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..600,0,0&family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,400&family=Hanken+Grotesk:wght@100..900&family=Fragment+Mono&display=block">
 <style>
 :root{
   --wall:#ffffff;--ink:#171716;--ink2:#45443f;--ink3:#56554f;--rule:#dcdbd6;--rule-ink:#8c8a84;--wine:#7a1f2b;
   /* every face in one place: the supporting faces may change after the pairing study */
-  --f-serif:"Source Serif 4",Georgia,serif; /* design round five, 27 Oct 2026: Source Serif 4 for display and text (Fraunces and Literata before) */
+  --f-serif:"Fraunces",Georgia,serif; /* the hybrid, 28 Oct 2026: Fraunces for display, Source Serif 4 for text (Source Serif 4 for both from 27 Oct) */
   --f-sans:"Hanken Grotesk","Helvetica Neue",Arial,sans-serif;
   --f-read:"Source Serif 4",Georgia,serif;
   --f-mono:"Fragment Mono",ui-monospace,Menlo,monospace;
@@ -24,12 +24,12 @@ html,body{margin:0;width:1200px;height:630px;overflow:hidden;background:var(--wa
 .wm{display:flex;align-items:center;gap:14px;margin:0}
 .wm .tile{display:block;flex:none;width:38px;height:38px}
 .wm span{font-family:var(--f-display);font-size:28px;line-height:1;white-space:nowrap;color:var(--ink)}
-.serif .wm span{font-weight:540;letter-spacing:-.005em}
+.serif .wm span{font-weight:540;font-variation-settings:"opsz" 28,"SOFT" 0,"WONK" 0;letter-spacing:-.005em}
 .sans .wm span{font-weight:500;letter-spacing:-.012em}
 
 /* titles */
 h1{margin:0;color:var(--ink);font-family:var(--f-display)}
-.serif h1{font-weight:400}
+.serif h1{font-weight:400;font-variation-settings:"opsz" 48,"SOFT" 0,"WONK" 0}
 .sans h1{font-weight:330}
 
 /* frieze: build.py places each drawing at a whole pixel, standing on the shelf */

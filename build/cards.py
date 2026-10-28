@@ -9,8 +9,9 @@ another folder, for a trial); `node build/build.js` copies the folder to dist/ca
 versions.json when its bytes change. The home card is drawn by build/home_card.py and is skipped here.
 
 The style is "The whole chain", the home card the owner chose on 25 October 2026 (qa/design3/cards/chain/ in the main
-checkout): white ground, ink, Source Serif 4 for the titles and the line under them (Fraunces and Literata before design
-round five, 27 Oct 2026; the line is set 8 percent larger, the site's text scale), and the wine logo tile as the
+checkout): white ground, ink, Fraunces for the titles and the wordmark and Source Serif 4 for the line under them (the hybrid
+of 28 Oct 2026; Source Serif 4 for both from 27 Oct, Fraunces and Literata before; the line is set 8 percent larger than it was
+in Literata, the site's text scale), and the wine logo tile as the
 only color. Every card stands on the shelf of the stage drawings, one per stage, in the order a chip is made (14 since the
 merge of chapters 8 and 9 on 27 Oct 2026; the stages are social.js manifest()'s, by build/stages.js).
 - A chapter follows that folder's Lithography sketch: the wordmark, the chapter's title and its one-line summary at the
@@ -87,17 +88,17 @@ TILE = ('<svg class="tile" viewBox="0 0 16 16" aria-hidden="true"><rect width="1
         '1011 683 Z"/></svg>')
 
 TEMPLATE = """<!doctype html><html lang="en"><head><meta charset="utf-8">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,400&display=block">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..600,0,0&family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,400&display=block">
 <style>
 :root{--wall:#ffffff;--ink:#171716;--ink2:#45443f;--rule:#dcdbd6;
-  --f-serif:"Source Serif 4",Georgia,serif;--f-read:"Source Serif 4",Georgia,serif}
+  --f-serif:"Fraunces",Georgia,serif;--f-read:"Source Serif 4",Georgia,serif}
 *{box-sizing:border-box}
 html,body{margin:0;width:1200px;height:630px;overflow:hidden;background:var(--wall)}
 .card{position:relative;width:1200px;height:630px;overflow:hidden;background:var(--wall);color:var(--ink);-webkit-font-smoothing:antialiased}
 .wm{display:flex;align-items:center;gap:14px;margin:0}
 .wm .tile{display:block;flex:none;width:38px;height:38px}
-.wm span{font-family:var(--f-serif);font-size:28px;line-height:1;white-space:nowrap;color:var(--ink);font-weight:540;letter-spacing:-.005em}
-h1{margin:0;color:var(--ink);font-family:var(--f-serif);font-weight:400;line-height:1;text-wrap:balance}
+.wm span{font-family:var(--f-serif);font-size:28px;line-height:1;white-space:nowrap;color:var(--ink);font-weight:540;font-variation-settings:"opsz" 28,"SOFT" 0,"WONK" 0;letter-spacing:-.005em}
+h1{margin:0;color:var(--ink);font-family:var(--f-serif);font-weight:400;font-variation-settings:"opsz" 48,"SOFT" 0,"WONK" 0;line-height:1;text-wrap:balance}
 .line{margin:0;font-family:var(--f-read);font-weight:400;color:var(--ink2)}
 .frieze{position:absolute;left:0;right:0}
 .frieze img{position:absolute;bottom:0;display:block}
@@ -137,7 +138,7 @@ h1{margin:0;color:var(--ink);font-family:var(--f-serif);font-weight:400;line-hei
 FIT_JS = r"""
 (async () => {
   await document.fonts.ready;
-  for (const s of ['400 40px "Source Serif 4"', '540 28px "Source Serif 4"', '400 20px "Source Serif 4"']) { try { await document.fonts.load(s); } catch (e) {} }
+  for (const s of ['400 40px "Fraunces"', '540 28px "Fraunces"', '400 20px "Source Serif 4"']) { try { await document.fonts.load(s); } catch (e) {} }
   await document.fonts.ready;
   const t = document.getElementById('title'), l = document.getElementById('line'), box = document.querySelector('.text');
   let px = parseFloat(getComputedStyle(t).fontSize);
@@ -157,7 +158,7 @@ FIT_JS = r"""
   while (over() && two && px > 80) setT(px - 2);
   while (over() && n > 1) { n -= 1; l.textContent = ss.slice(0, n).join(' '); }
   while (over() && lpx > 23) setL(lpx - 1);
-  const fonts = [document.fonts.check('400 40px "Source Serif 4"'), document.fonts.check('400 20px "Source Serif 4"')];
+  const fonts = [document.fonts.check('400 40px "Fraunces"'), document.fonts.check('400 20px "Source Serif 4"')];
   // the smallest text on the card, in px, and how close the text comes to the large drawing
   const sizes = [...document.querySelectorAll('h1, .line, .wm span')].map((e) => parseFloat(getComputedStyle(e).fontSize));
   const big = document.querySelector('.big'), tr = Math.max(...[...document.querySelectorAll('h1, .line')].map((e) => {
