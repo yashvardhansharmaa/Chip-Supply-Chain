@@ -2887,7 +2887,7 @@
       var self = this, host = $('#cf-scrub');
       if (!host || !this.flows) return;
       host.innerHTML = '<div class="cf-scrub-h"><p class="cf-asof">Board as of <b id="cf-asof">' + esc(this.fmtDate(this.asOf)) + '</b>' +
-        '<span class="cf-checked" id="cf-checked"' + (this.asOf > this.checked ? '' : ' hidden') + '>Data checked ' + esc(this.fmtDate(this.checked)) + '</span></p>' +
+        '<span class="cf-checked" id="cf-checked"' + (this.asOf > this.checked ? '' : ' hidden') + '>· data checked ' + esc(this.fmtDate(this.checked)) + '</span></p>' +
         '<button type="button" class="cf-now" id="cf-now">Now</button></div>' +
         '<div class="cf-track"><div class="cf-years" id="cf-years" role="group" aria-label="Set the date by year">' +
         this.years.map(function (y) {

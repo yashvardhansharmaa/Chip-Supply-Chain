@@ -454,3 +454,11 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
 .cf-checked { margin-left: 10px; font-size: 12px; color: var(--muted); }
 .cf-checked[hidden] { display: none; }
 .cf-up-i.is-passed .cf-up-n { white-space: normal; color: var(--ink); }
+/* the compact board (By date, desktop): two policies and a named stay wrap within the state's column, flush right, so the
+   row's name keeps its width */
+@media (min-width: 900px) {
+  .cf[data-mode="date"] .cf-rowh { grid-template-columns: minmax(9em, 1fr) minmax(0, auto); }
+  .cf[data-mode="date"] .cf-pills { justify-content: flex-end; max-width: 17em; }
+  .cf[data-mode="date"] .cf-for { margin-right: 0; }
+  .cf[data-mode="date"] .cf-susp { white-space: normal; text-align: right; }
+}
