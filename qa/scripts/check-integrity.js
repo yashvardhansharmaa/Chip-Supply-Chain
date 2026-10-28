@@ -6,22 +6,48 @@ process.chdir(require('path').resolve(__dirname, '..', '..')); // reads dist/, d
 const ALLOWED = {
   'exposure row for Veeco Instruments has no supplier entry': 'Veeco files a China share, so it has a China revenue panel, but it is not in the supplier list. data/exposure-notes.md classes it as Deposition & Etch.',
 };
-const raw = fs.readFileSync('dist/index.html', 'utf8');
-const html = raw.replace(/<script[\s\S]*?<\/script>/g, ''); // markup only; the bundle's own strings are not links
-const ids = new Set((html.match(/\sid="([^"]+)"/g) || []).map((m) => m.slice(5, -1)));
+/* The pages: the home page (with the Glossary's two lists, which dist/assets/glossary.js puts into it when the Glossary opens)
+   and each chapter's own page, dist/<id>/index.html (since 28 Oct 2026, when the chapters left the home page). Each is read
+   as markup only: the scripts' own strings are not links */
+const markup = (f) => fs.readFileSync(f, 'utf8').replace(/<script[\s\S]*?<\/script>/g, '');
+const glData = (() => { try { const w = {}; new Function('window', fs.readFileSync('dist/assets/glossary.js', 'utf8'))(w); return w.CP_GLOSSARY || {}; } catch (e) { return {}; } })();
+const pages = [{ path: '/', html: markup('dist/index.html').replace(/(<ul\b[^>]*\bid="lk-items"[^>]*>)/, (m) => m + (glData.items || '')).replace(/(<dl\b[^>]*\bid="glossary"[^>]*>)/, (m) => m + (glData.terms || '')) }];
+fs.readdirSync('dist').filter((d) => fs.existsSync(`dist/${d}/index.html`) && /<article class="chapter[^"]*" id="/.test(fs.readFileSync(`dist/${d}/index.html`, 'utf8')) && d !== 'book')
+  .forEach((d) => pages.push({ path: `/${d}/`, html: markup(`dist/${d}/index.html`) }));
+pages.forEach((p) => { p.ids = new Set((p.html.match(/\sid="([^"]+)"/g) || []).map((m) => m.slice(5, -1))); });
+const byPath = new Map(pages.map((p) => [p.path, p]));
+const html = pages.map((p) => p.html).join('\n'); // every page's markup, for the checks that look across them
+const ids = new Set([].concat(...pages.map((p) => [...p.ids])));
 const views = new Set((html.match(/data-view="([^"]+)"/g) || []).map((m) => m.slice(11, -1)));
 const problems = [];
-// 1. internal hrefs
-const hrefs = (html.match(/href="#[^"]*"/g) || []).map((m) => m.slice(6, -1));
+// 1. internal hrefs: a fragment on its own page, a route on the home page, and a link to another page (a chapter's, at an
+//    anchor) to a page in dist/ that holds the anchor
 const routes = new Set(['/', '/home', '/stack', '/chain', '/intro', '/walk', '/briefing', '/landscape', '/ai-chips', '/suppliers', '/geopolitics', '/controls', '/export-controls', '/thresholds', '/exposure', '/glossary', '/sources']); // Router VIEWS in src/app.js
 const badHref = {};
-hrefs.forEach((h) => { if (h === '#' || h === '') return; const b = h.slice(1); if (b.startsWith('/')) { const top = '/' + b.split('?')[0].split('/')[1]; if (!routes.has(top)) badHref[h] = (badHref[h] || 0) + 1; } else if (!ids.has(b)) badHref[h] = (badHref[h] || 0) + 1; });
+const bad = (p, h) => { const k = `${h} on ${p.path}`; badHref[k] = (badHref[k] || 0) + 1; };
+const routeOk = (b) => routes.has('/' + b.split('?')[0].split('/')[1]);
+pages.forEach((p) => {
+  (p.html.match(/href="[^"]*"/g) || []).map((m) => m.slice(6, -1).replace(/&amp;/g, '&')).forEach((h) => {
+    if (h === '#' || h === '' || /^([a-z][a-z0-9+.-]*:)/i.test(h)) return; // a web link, mail or a data: file
+    const at = h.indexOf('#'), where = at < 0 ? h : h.slice(0, at), frag = at < 0 ? '' : h.slice(at + 1);
+    let target = p;
+    if (where) {
+      const u = new URL(where, 'http://x' + p.path).pathname; // the path from the root
+      if (/\/$/.test(u)) { if (!fs.existsSync('dist' + u + 'index.html')) { bad(p, h); return; } target = byPath.get(u) || null; }
+      else { if (!fs.existsSync('dist' + decodeURIComponent(u))) bad(p, h); return; }
+    }
+    if (!frag || !target) return;
+    if (frag.startsWith('/')) { if (target.path !== '/' || !routeOk(frag)) bad(p, h); return; }
+    let id = frag; try { id = decodeURIComponent(frag); } catch (e) { }
+    if (!target.ids.has(id)) bad(p, h);
+  });
+});
 Object.keys(badHref).forEach((h) => problems.push(`internal link to nothing: ${h} (${badHref[h]}x)`));
 // 2. data cross-references
 const J = (f) => JSON.parse(fs.readFileSync('data/' + f, 'utf8'));
 const flows = J('control-flows.json').flows, events = J('export-controls-timeline.json'), glossary = J('glossary.json'), suppliers = J('suppliers.json'), landscape = J('landscape.json'), matrix = J('chokepoint-matrix.json'), exposure = J('exposure.json');
 const evIds = new Set((events.events || events).map((e) => e.id));
-const chapterIds = new Set((html.match(/<article class="chapter" id="([^"]+)"/g) || []).map((m) => m.match(/id="([^"]+)"/)[1]).concat(ids.has('geopolitics') ? ['geopolitics'] : []));
+const chapterIds = new Set((html.match(/<article class="chapter" id="([^"]+)"/g) || []).map((m) => m.match(/id="([^"]+)"/)[1]));
 flows.forEach((f) => { if (f.chapter && !chapterIds.has(f.chapter)) problems.push(`flow ${f.id}: chapter ${f.chapter} does not exist`); f.states.forEach((s) => { if (s.event && !evIds.has(s.event)) problems.push(`flow ${f.id}: state ${s.date} cites event ${s.event}, not in the timeline`); if (!['open', 'restricted', 'case', 'denial', 'prohibited', 'policy'].includes(s.status)) problems.push(`flow ${f.id}: status ${s.status}`); if (!/^\d{4}-\d{2}-\d{2}$/.test(s.date)) problems.push(`flow ${f.id}: date ${s.date}`); if (s.suspendedUntil && !/^\d{4}-\d{2}-\d{2}$/.test(s.suspendedUntil)) problems.push(`flow ${f.id}: suspendedUntil ${s.suspendedUntil}`); }); });
 (J('control-flows.json').upcoming || []).forEach((u) => { if (u.event && !evIds.has(u.event)) problems.push(`upcoming ${u.date}: event ${u.event}, not in the timeline`); if (!/^\d{4}-\d{2}-\d{2}$/.test(u.date)) problems.push(`upcoming: date ${u.date}`); });
 (events.events || events).forEach((e) => { (e.flows || []).forEach((fid) => { if (!flows.some((f) => f.id === fid)) problems.push(`event ${e.id}: flow ${fid} does not exist`); }); if (!/^\d{4}-\d{2}-\d{2}$/.test(e.date)) problems.push(`event ${e.id}: date ${e.date}`); });
@@ -41,8 +67,8 @@ const supNames = new Set(suppliers.map((s) => s.name).concat(suppliers.map((s) =
 exposure.forEach((r) => { if (r.chinaShare != null && (r.chinaShare < 0 || r.chinaShare > 100)) problems.push(`exposure ${r.firm} ${r.fiscalYear}: share ${r.chinaShare}`); if (r.chinaRevenue != null && r.totalRevenue && Math.abs(r.chinaRevenue / r.totalRevenue * 100 - r.chinaShare) > 0.15) problems.push(`exposure ${r.firm} ${r.fiscalYear}: share ${r.chinaShare} vs computed ${(r.chinaRevenue / r.totalRevenue * 100).toFixed(1)}`); });
 matrix.forEach((m) => { if (m.shares) { const sum = Object.values(m.shares).filter((v) => typeof v === 'number').reduce((a, b) => a + b, 0); if (Math.abs(sum - 100) > 1.5) problems.push(`matrix ${m.segment}: shares sum to ${sum}`); if (!m.basis) problems.push(`matrix ${m.segment}: no basis`); if (!m.sources || !m.sources.length) problems.push(`matrix ${m.segment}: no sources`); } });
 landscape.forEach((c) => { const k = c.compute || {}; const tpp = Math.max(8 * (k.fp8TFLOPS || 0), 16 * (k.fp16TFLOPS || 0), 4 * (k.fp4TFLOPS || 0)); if (c.tpp != null && Math.abs(c.tpp - tpp) > 1) problems.push(`chip ${c.id}: tpp ${c.tpp} vs computed ${tpp}`); if (!c.sources || !c.sources.length) problems.push(`chip ${c.id}: no sources`); });
-// duplicate ids in the page
-const all = (html.match(/\sid="([^"]+)"/g) || []).map((m) => m.slice(5, -1)); const seen = {}; all.forEach((i) => { seen[i] = (seen[i] || 0) + 1; }); Object.keys(seen).filter((i) => seen[i] > 1).forEach((i) => problems.push(`duplicate id ${i} (${seen[i]}x)`));
+// duplicate ids in a page
+pages.forEach((p) => { const all = (p.html.match(/\sid="([^"]+)"/g) || []).map((m) => m.slice(5, -1)); const seen = {}; all.forEach((i) => { seen[i] = (seen[i] || 0) + 1; }); Object.keys(seen).filter((i) => seen[i] > 1).forEach((i) => problems.push(`duplicate id ${i} on ${p.path} (${seen[i]}x)`)); });
 // placeholders left in the build
 (html.match(/\{\{[A-Z_]+\}\}/g) || []).forEach((p) => problems.push(`unfilled placeholder ${p}`));
 if (/undefined|\bNaN\b|\[object Object\]/.test(html)) problems.push('the page text contains "undefined", "NaN" or "[object Object]"');
@@ -128,5 +154,5 @@ if (/undefined|\bNaN\b|\[object Object\]/.test(html)) problems.push('the page te
 const allowed = problems.filter((p) => ALLOWED[p]), errors = problems.filter((p) => !ALLOWED[p]);
 allowed.forEach((p) => console.log(`allowed: ${p}. Reason: ${ALLOWED[p]}`));
 Object.keys(ALLOWED).filter((p) => !problems.includes(p)).forEach((p) => console.log(`note: the allowed problem "${p}" no longer occurs; remove it from ALLOWED`));
-console.log(errors.length ? errors.join('\n') : 'integrity: no problems'); console.log(`views: ${[...views].join(', ')} · ids: ${ids.size} · chapters: ${chapterIds.size}`);
+console.log(errors.length ? errors.join('\n') : 'integrity: no problems'); console.log(`pages: ${pages.length} · views: ${[...views].join(', ')} · ids: ${ids.size} · chapters: ${chapterIds.size}`);
 if (errors.length) { console.error(`check-integrity: ${errors.length} problem${errors.length === 1 ? '' : 's'}`); process.exit(1); }

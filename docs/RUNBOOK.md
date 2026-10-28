@@ -34,7 +34,7 @@ The PDF tools need Google Chrome in `/Applications`, Python 3 with `websocket-cl
 ```sh
 python3 build/chapter_pdfs.py <id> ... --logs /tmp/pdf-logs           # the chapters whose words, card or figures changed (ids such as lithography)
 python3 build/summary_pdf.py                                           # when a stage's card or one-line summary changed
-python3 build/pdf.py "http://127.0.0.1:8765/?theme=light#/chain" dist/chip-supply-chain-the-chain.pdf --wait 8   # the book, once per edition
+python3 build/pdf.py "http://127.0.0.1:8765/book/?theme=light#/chain" dist/chip-supply-chain-the-chain.pdf --wait 8   # the book, once per edition
 node build/build.js                                                    # again, so the cite lines link the new PDFs
 ```
 

@@ -571,9 +571,8 @@ const chapterHref = (c) => '#' + esc(c.id); // the essay is the last chapter ins
 /* The end of a chapter is a door to the next one (the hybrid mockup's .nextx, approved in design round three): where the next
    chapter sits in the chain, its title large, its one line, a button and a still of its specimen, with Previous as a small
    second link. The Chain shows one chapter at a time, so the door is the way on. The last chapter's door leads back to the
-   contents. One builder for both homes of a chapter: The Chain in the app (prevNext below) and the readable page
-   dist/<chapter>/ (build/modules/social.js), each passing how a chapter is linked (attrs), the element the door is (tag) and
-   where the media folder is (media). The last two chapters are not stages, and the site groups them as "Across the chain" (the
+   contents. prevNext passes how a chapter is linked (attrs), the element the door is (tag) and where the media folder is
+   (media); the readable pages, which drew it too until 28 Oct 2026, passed their own. The last two chapters are not stages, and the site groups them as "Across the chain" (the
    contents, the phone's sheet), so their doors say so. */
 // the still of a chapter's specimen: Lithography's is the one its numbered parts are drawn over (data/specimen-parts.json)
 function doorStill(c) {
@@ -637,15 +636,14 @@ function deckHTML(fc, o) {
     + `<div class="fc-nav">${dots}<span class="fc-steps"><button type="button" class="fc-link fc-prev" disabled>Previous card</button><button type="button" class="fc-link fc-next" disabled>Next card</button></span></div>`
     + `<div class="fc-end" hidden><p class="fc-score"><span class="fc-big"></span><span class="fc-score-t"></span></p>${keep}<p class="fc-row fc-row--gap"><button type="button" class="fc-btn fc-back-to-cards">Previous card</button><button type="button" class="fc-btn fc-reset">Start over</button></p></div></section>`;
 }
-// the chapter's share link: a plain link to its own readable page (so crawlers reach it from the main page); a click copies the address
+// the chapter's share link: a plain link to its own page; a click copies the address
 // (src/app.js). It leads the cite line's actions (citeBlock).
 const copyLink = (id) => `<a class="ch-copy ch-cite-copylink" href="${esc(id)}/" data-copy="${SITE.url}${esc(id)}/" aria-label="Copy a link to this chapter">Link to chapter</a>`;
 /* ---------------- the cite line under each chapter title ----------------
    The chapter head is one line of facts (.ch-meta: words / minutes, the specimen, "Updated <day>") and one line of actions,
-   this one: "Link to chapter · Cite this chapter · Chapter PDF" on the main page (lead, the copy link), "Cite this chapter ·
-   Chapter PDF" on the chapter's readable page. The day is the chapter's own (page dates, below). The citation names the chapter and its readable page; Chapter PDF downloads the
-   chapter's own PDF. On the main page the toggle is a button. On the readable page it is a link to the citation, which
-   then opens without scripts (:target), and CITE_JS turns it into a toggle there too. */
+   this one: "Link to chapter · Cite this chapter · Chapter PDF" (lead, the copy link). The day is the chapter's own (page
+   dates, below). The citation names the chapter and its page; Chapter PDF downloads the chapter's own PDF. The toggle is a
+   button (CITE_JS). Until 28 Oct 2026 the readable pages drew it as a link to the citation too. */
 // each chapter's PDF, dist/pdf/<id>.pdf (written by build/chapter_pdfs.py, not by the build): the cite line links it and the
 // sitemap lists it once the file exists, so a chapter not yet printed never shows a broken link
 const chapterPDFs = new Map();
@@ -660,18 +658,16 @@ function chapterPDF(id) {
   }
   return chapterPDFs.get(id);
 }
-function citeBlock(ch, day, page, lead) {
-  const url = SITE.url + ch.id + '/', box = page ? 'cite' : 'cite-' + ch.id;
-  const toggle = page
-    ? `<a class="ch-cite-btn" href="#${box}" aria-controls="${box}">Cite this chapter</a>`
-    : `<button type="button" class="ch-cite-btn" aria-expanded="false" aria-controls="${box}">Cite this chapter</button>`;
+function citeBlock(ch, day, lead) {
+  const url = SITE.url + ch.id + '/', box = 'cite-' + ch.id;
+  const toggle = `<button type="button" class="ch-cite-btn" aria-expanded="false" aria-controls="${box}">Cite this chapter</button>`;
   // saved under a name that says what it is: chip-supply-chain-lithography.pdf, not lithography.pdf
   const pdf = chapterPDF(ch.id);
-  const pdfLink = pdf ? `<span class="ch-cite-sep" aria-hidden="true">·</span><a class="ch-cite-pdf" href="${page ? '../' : ''}${pdf.href}" download="chip-supply-chain-${esc(ch.id)}.pdf" type="application/pdf" title="${esc(ch.title)} as a PDF${pdf.pages ? `, ${pdf.pages} pages` : ''}">Chapter PDF</a>` : '';
+  const pdfLink = pdf ? `<span class="ch-cite-sep" aria-hidden="true">·</span><a class="ch-cite-pdf" href="${pdf.href}" download="chip-supply-chain-${esc(ch.id)}.pdf" type="application/pdf" title="${esc(ch.title)} as a PDF${pdf.pages ? `, ${pdf.pages} pages` : ''}">Chapter PDF</a>` : '';
   return `<div class="ch-cite"><p class="ch-cite-line">${lead ? lead + '<span class="ch-cite-sep" aria-hidden="true">·</span>' : ''}${toggle}${pdfLink}</p>`
-    + `<div class="ch-cite-box" id="${box}" role="region" aria-label="Citation for this chapter"${page ? '' : ' hidden'}><p class="ch-cite-text">Sharma, Yashvardhan. “${esc(ch.title)}.” <i>${CITE_WORK}</i>. Updated ${esc(day)}. <a href="${esc(url)}">${esc(url)}</a></p></div></div>`;
+    + `<div class="ch-cite-box" id="${box}" role="region" aria-label="Citation for this chapter" hidden><p class="ch-cite-text">Sharma, Yashvardhan. “${esc(ch.title)}.” <i>${CITE_WORK}</i>. Updated ${esc(day)}. <a href="${esc(url)}">${esc(url)}</a></p></div></div>`;
 }
-// the toggle and the copy control, shared by the main page (src/template.html) and the readable pages (social.js)
+// the toggle and the copy control, part of the shared app (dist/assets/app.js; the readable pages carried it too until 28 Oct 2026)
 const CITE_JS = `(function(){
 function copyBtn(b){if(b.querySelector('.ch-cite-copy')||!(navigator.clipboard&&navigator.clipboard.writeText))return;var c=document.createElement('button');c.type='button';c.className='ch-cite-copy';c.textContent='Copy citation';b.appendChild(c);}
 function set(t,open){var b=document.getElementById(t.getAttribute('aria-controls'));if(!b)return;t.setAttribute('aria-expanded',open?'true':'false');b.hidden=!open;b.classList.toggle('is-open',open);if(open)copyBtn(b);}
@@ -683,8 +679,8 @@ document.addEventListener('keydown',function(e){if(e.key!==' ')return;var t=e.ta
 Array.prototype.forEach.call(document.querySelectorAll('a.ch-cite-btn'),function(a){a.setAttribute('role','button');a.setAttribute('aria-expanded','false');});
 try{var o=location.hash.length>1?document.getElementById(location.hash.slice(1)):null;if(o&&o.classList.contains('ch-cite-box')){var t=document.querySelector('.ch-cite-btn[aria-controls="'+o.id+'"]');if(t)set(t,true);}}catch(e){}
 })();`;
-// A figure's Table and PNG actions (figure() above draws Cite and CSV, which need no script). Shared by the main page
-// (src/template.html) and the readable pages (social.js), as CITE_JS is. Table shows the figure's own rows in place of its
+// A figure's Table and PNG actions (figure() above draws Cite and CSV, which need no script). Part of the shared app, as
+// CITE_JS is. Table shows the figure's own rows in place of its
 // bars, and back; PNG draws the figure, always on the light ground, to a 1,600 px wide picture and saves it.
 const FIG_JS = `(function(){
 var D=document;
@@ -733,10 +729,10 @@ var cite=acts.querySelector('.ch-cite-btn');acts.insertBefore(tb,cite?cite.nextS
    margin, stays in view while the rail is hidden and brings it back. Focus goes from the button pressed to the one that takes
    its place, so a keyboard reader stays on the control. Both name the rail's parts (aria-controls) and say whether they show
    (aria-expanded). The choice is the reader's on this device (localStorage "cp-rail"), the same for every chapter, in the app
-   and on the readable pages; the head of each page sets html.rail-off before the first paint. Wide screens only (1200 px and
+   on every chapter's page; the head of each page sets html.rail-off before the first paint. Wide screens only (1200 px and
    up): narrower, the rail is a line of links and neither button shows. The script adds the buttons, so a page read without
-   scripts has none, and their words stay out of the text the page dates are taken from. Shared by the main page
-   (src/template.html) and the readable pages (social.js), as CITE_JS is. */
+   scripts has none, and their words stay out of the text the page dates are taken from. Part of the shared app, as CITE_JS
+   is. */
 const RAIL_TOGGLE_JS = `(function(){
 var D=document,H=D.documentElement,K='cp-rail';
 var IC='<svg class="rt-ic" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5"/><path d="M6 2.5v11"/></svg>';
@@ -748,7 +744,6 @@ var off=b.classList.contains('rail-hide');H.classList.toggle('rail-off',off);try
 var n=b.closest('.ch-rail'),to=n&&n.querySelector(off?'.rail-show':'.rail-hide');if(to)try{to.focus({preventScroll:true});}catch(x){to.focus();}
 try{window.dispatchEvent(new Event('resize'));}catch(x){}});
 })();`;
-// the cite line's date goes in once every page's date is known (after the build modules write the readable pages)
 // the key under the ledger column's rows, one per stage: each band the stages hold, its bar drawn as the rows draw it
 const LEDGER_KEY = (() => {
   const used = ['Extreme', 'High', 'Moderate', 'Low'].filter((b) => stages.some((c) => (c.meta.card || {}).concentration === b));
@@ -767,13 +762,15 @@ const LEDGER_KEY = (() => {
    4. the prose: the lead, then the chokepoint card, the chapter's first table (withCard), then the sections, the flashcards,
       the sources and the door to the next chapter.
    The head keeps its class (.chapter-head) and the prose stays the article's own child, which the search index and the print
-   path read (src/app.js Tools, src/modules/print.js). */
+   path read (src/app.js Tools, src/modules/print.js). The title is the page's h1 since each chapter has a page of its own (28
+   Oct 2026; it was an h2 under the home page's views), and its styles go by its class, so it looks as it did; the sections
+   keep their levels (h3, h4), which the styles and the print path read. */
 // the chapters whose drawing carries numbered parts (the owner's decision of 25 Oct 2026: Lithography only for now). The file is
 // keyed by chapter id; each part has its number, its name, either its maker or the stage that covers it, and the points on the
 // specimen its balloon points at ("at", in the specimen's own units, as specimens/<name>.js draws it)
 const specimenParts = readJSON(path.join(root, 'data', 'specimen-parts.json'), {});
-// each chapter's still of its specimen (qa/redesign/stills.js; [width, height] at twice the pixels shown), for the readable pages
-// and for the door that leads to the chapter
+// each chapter's still of its specimen (qa/redesign/stills.js; [width, height] at twice the pixels shown), for the door that
+// leads to the chapter
 const stillSizes = readJSON(path.join(root, 'build', 'assets', 'specimens', 'stills.json'), {});
 const partsOf = (ch) => { const e = specimenParts[ch.id]; return e && Array.isArray(e.parts) ? e.parts : []; };
 const chapterById = (id) => chapters.find((c) => c.id === id) || (geo && geo.id === id ? geo : null);
@@ -816,6 +813,15 @@ function railHTML(ch, stageIdx, toc) {
     + `<ol class="chain-track rail-chain">${stages.map((c, i) => item(c, i)).join('')}</ol>`
     + (across.length ? `<ol class="rail-chain rail-across">${across.map((c) => item(c, null)).join('')}</ol>` : '') + `</div></div></nav>`;
 }
+// The annotated still a chapter whose drawing carries numbered parts prints in place of the live drawing (src/modules/print.js
+// stills): the picture with its balloons, drawn by build/modules/social.js stillSVG as the readable page drew it. It waits in a
+// <template>, which the screen never shows or fetches, since 28 Oct 2026, when the readable page it was fetched from went
+const stillSVG = require('./modules/social.js').stillSVG;
+function printStill(ch) {
+  const pe = specimenParts[ch.id], ps = partsOf(ch), m = ch.meta;
+  if (!pe || !pe.still || !ps.length) return '';
+  return `<template class="cp-still-src">${stillSVG(pe.still, ps, m.specimenCaption ? m.specimenCaption.split('. ')[0] : ch.title)}</template>`;
+}
 function chapterHTML(ch) {
   const m = ch.meta, mins = Math.max(1, Math.round(ch.words / 230));
   const specimen = m.specimen || (ch.id === 'geopolitics' ? 'globe' : 'wafer');
@@ -830,8 +836,8 @@ function chapterHTML(ch) {
   // the card has an address of its own (On this page lists it), and stands in the text after the lead (withCard)
   const cardId = (h) => h.replace('<section class="plate"', `<section class="plate" id="${esc(ch.id)}--card"`);
   const plate = isStage(ch) ? cardId(nameplate(m.card, ch.title, null, cardCtx, where)) : '';
-  // the same pieces, kept for the chapter's own readable page (build/modules/social.js); the prose is the copy before glossary
-  // buttons, with the card in its place after the lead
+  // the same pieces, kept on the chapter (its minutes for the chapter page's JSON-LD, build/modules/social.js); the prose is the
+  // copy before glossary buttons, with the card in its place after the lead
   ch.rendered = { plain: pb.box, inShort: parts.inShort, plate, prose: withCard(pb.html, plate), mins, parts: partsHTML(ch) };
   // the main page's blocks (In plain terms, In short, the card's prose) each mark the first use of each glossary term in them
   const cardUsed = new Set();
@@ -842,14 +848,14 @@ function chapterHTML(ch) {
   const ps = partsOf(ch), night = !isStage(ch);
   const spec = `<figure class="ch-spec"${night ? ' data-night="1"' : ''}${ps.length ? ` data-parts="${esc(JSON.stringify(ps.map((p) => ({ n: +p.n, name: p.name, at: p.at || [] }))))}"` : ''}>`
     + `<div class="ch-spec-draw"></div>`
-    + `<figcaption class="ch-spec-cap${ch.rendered.parts ? ' has-parts' : ''}"><span class="label">Specimen ${pad(ch.number)} · ${esc(ch.title)}</span>${m.specimenCaption ? `<p>${esc(m.specimenCaption)}</p>` : ''}${ch.rendered.parts}</figcaption></figure>`;
+    + `<figcaption class="ch-spec-cap${ch.rendered.parts ? ' has-parts' : ''}"><span class="label">Specimen ${pad(ch.number)} · ${esc(ch.title)}</span>${m.specimenCaption ? `<p>${esc(m.specimenCaption)}</p>` : ''}${ch.rendered.parts}</figcaption>${printStill(ch)}</figure>`;
   // On this page: In plain terms, the chokepoint card, the chapter's own sections, the flashcards and the sources
   const fc = flashcards[ch.id], hasDeck = fc && Array.isArray(fc.cards) && fc.cards.length;
   const toc = (m.plain ? [[`${ch.id}--plain`, 'In plain terms']] : []).concat(plate ? [[`${ch.id}--card`, 'Chokepoint card']] : []).concat((ch.headings || []).map((h) => [h.id, inline(h.text, { id: ch.id, cites: [], figures: [] }).replace(/<sup[\s\S]*?<\/sup>/g, '')]))
     .concat(hasDeck ? [[`${ch.id}--flashcards`, 'Flashcards']] : []).concat(ch.cites.length ? [[`${ch.id}--sources`, 'Sources']] : []);
   return `<article class="chapter" id="${esc(ch.id)}" data-specimen="${esc(specimen)}" data-number="${pad(ch.number)}" data-title="${esc(ch.title)}" data-caption="${esc(m.specimenCaption || '')}">
 <header class="chapter-head">
-<div class="ch-open">${kick}<h2 class="ch-title${ch.title.length > 16 ? ' is-long' : ''}"><span class="sr-only">Chapter ${ch.number}: </span>${esc(ch.title)}</h2>${m.oneLiner ? `<p class="ch-lede">${esc(m.oneLiner)}</p>` : ''}<div class="ch-omet">${facts}${citeBlock(ch, CITE_DAY(ch.id), false, copyLink(ch.id))}</div></div>
+<div class="ch-open">${kick}<h1 class="ch-title${ch.title.length > 16 ? ' is-long' : ''}"><span class="sr-only">Chapter ${ch.number}: </span>${esc(ch.title)}</h1>${m.oneLiner ? `<p class="ch-lede">${esc(m.oneLiner)}</p>` : ''}<div class="ch-omet">${facts}${citeBlock(ch, CITE_DAY(ch.id), copyLink(ch.id))}</div></div>
 ${spec}
 ${glPlain(pb.box)}
 ${parts.inShort ? `<section class="inshort"><h3 class="label">In short</h3>${glossaryWrap(parts.inShort)}</section>` : ''}
@@ -1269,14 +1275,12 @@ const moduleCSS = modDir(path.join(root, 'src', 'modules')).filter((f) => f.ends
 const siteCSS = read(path.join(root, 'src', 'styles.css')) + moduleCSS; // dist/assets/site.css (the shared files, below)
 // build modules: build/modules/*.js each export a function (ctx) returning { PLACEHOLDER: html, ... }
 const ctx = { root, fs, path, all, chapters, geo, stages, data, esc, pad, word, cap, read, readJSON, markdown, inline, tierOf, wordCount, warn, glossaryWrap, BAND_NOTE, SUB_NOTE,
-  // for the readable chapter pages (social.js): the source list, footer and dates exactly as the main page prints them
-  tierTag, sourceLine, bibOf, slug, footerKey, builtOn, builtStr, flashcards, SPECIMEN_NAME, pageDate, dayStr,
+  // the footer and the dates as the main page prints them, for the reference pages and the summary
+  slug, footerKey, builtOn, builtStr, flashcards, pageDate, dayStr,
   // the flashcard deck, for the one that ends Start here (build/modules/walk.js), and the glossary (the home search field that showed its count went on 27 Oct 2026)
   deckHTML, glossary,
-  // the cite line under the chapter title, as the main page prints it (the readable page's own date goes in)
-  citeBlock, CITE_JS, FIG_JS, RAIL_TOGGLE_JS,
-  // the chapter page's contents rail, the door at its end and the numbered parts of a specimen, for the readable chapter pages (social.js)
-  railHTML, chapterDoor, specimenParts, stillSizes,
+  // the numbered parts of a specimen and the stills of the others, which social.js copies to dist/media
+  specimenParts, stillSizes,
   // for the reference pages (build/modules/reference-pages.js): the views' own words and helpers, as the main page uses them
   suppliersIntro, suppliersRevenueNote, controlsDek, exposureNote, safeUrl, COUNTRY };
 for (const f of modDir(path.join(root, 'build', 'modules')).filter((x) => x.endsWith('.js'))) {
@@ -1572,9 +1576,10 @@ for (const ch of all) {
 }
 if (SITE.cname) fs.writeFileSync(path.join(root, 'dist', 'CNAME'), SITE.cname + '\n'); else if (fs.existsSync(path.join(root, 'dist', 'CNAME'))) fs.unlinkSync(path.join(root, 'dist', 'CNAME'));
 // for search engines: everything may be crawled, and the sitemap lists the HTML pages that carry their own content
-// (the site itself, each chapter's readable page, the summary, and the four reference pages that reference-pages.js writes;
-// the other view share pages only forward to the site, so they are left out). The PDFs are still dated here, by their bytes.
-// each with the day its content last changed (page dates, above): the readable pages hash their article, a PDF its bytes
+// (the site itself, each chapter's page, the summary, and the four reference pages that reference-pages.js writes; the
+// other view share pages only forward to the site, and the book is for print, so they are left out). The PDFs are still dated
+// here, by their bytes. Each with the day its content last changed (page dates, above): a chapter's page hashes its article,
+// a PDF its bytes
 const chapterPages = (ctx.chapterPages || []).map((id) => '/' + id + '/'); // social.js lists the chapters that have a page
 if (chapterPages.length !== all.length) warn(`sitemap: ${all.length - chapterPages.length} of ${all.length} chapters have no page`);
 const pdfName = 'pdf/how-ai-chips-are-made.pdf', pdfFile = path.join(root, 'dist', pdfName);

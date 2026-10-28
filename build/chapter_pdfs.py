@@ -81,7 +81,9 @@ todo = [known[w] for w in wanted] if wanted else all_chapters
 if not shutil.which('pdftotext') and not mupdf():
     sys.exit('the text check needs pdftotext (poppler) or PyMuPDF, and neither is installed')
 
-url = base.rstrip('/') + '/?theme=light#/chain'
+# each chapter prints from its own page, <base><id>/ (28 Oct 2026; until then from The Chain on the home page)
+url_of = lambda cid: base.rstrip('/') + '/' + cid + '/?theme=light'
+url = url_of('<id>')
 out_dir = os.path.join(ROOT, 'dist', 'pdf')
 os.makedirs(out_dir, exist_ok=True)
 tmp = tempfile.mkdtemp(prefix='cp-chapter-pdfs-')
@@ -92,7 +94,7 @@ try:
         cid, title = ch['id'], ch['title']
         part = os.path.join(tmp, cid + '.pdf')
         t0 = time.time()
-        r = subprocess.run([sys.executable, os.path.join(ROOT, 'build', 'pdf.py'), url, part, '--chapter', cid,
+        r = subprocess.run([sys.executable, os.path.join(ROOT, 'build', 'pdf.py'), url_of(cid), part, '--chapter', cid,
                             '--edition', day.isoformat(), '--wait', wait] + (['--port', port] if port else []), capture_output=True, text=True)
         log = (r.stdout + r.stderr).strip().splitlines()
         if logs: open(os.path.join(logs, cid + '.log'), 'w').write('\n'.join(log) + '\n')

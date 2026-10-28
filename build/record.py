@@ -111,7 +111,7 @@ SCENARIOS = {
     ("__scrollTo(document.querySelector('#cx-table, .cx-table, table').getBoundingClientRect().top + window.scrollY - 100, 900)", 2.4),
   ]),
   # The Chain: read down a chapter while the specimen turns beside it (software WebGL)
-  'chain': dict(url='/?only=lithography&theme=light#/chain', gl=True, settle=7, steps=[
+  'chain': dict(url='/lithography/?only=lithography&theme=light', gl=True, settle=7, steps=[
     ("location.hash = '#lithography'; new Promise(function(r){ setTimeout(r, 1500); })", 1.5),
     ("__scrollTo(window.scrollY + 900, 3000)", 0.3),
     ("__scrollTo(window.scrollY + 900, 3000)", 0.3),

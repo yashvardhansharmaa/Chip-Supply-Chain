@@ -1,18 +1,23 @@
 #!/usr/bin/env node
-/* Search check for the chapter pages (27 Oct 2026). Reads the built dist/ and fails (exit 1) when a chapter's readable page,
- * dist/<chapter>/index.html, is missing what a search engine reads, or says something its page does not:
- *   - one <h1>, which is the chapter's title, and headings that never skip a level going down (h2 to h4);
+/* Search check for the chapter pages (27 Oct 2026). Reads the built dist/ and fails (exit 1) when a chapter's page,
+ * dist/<chapter>/index.html (the full chapter since 28 Oct 2026; a static readable copy before), is missing what a search
+ * engine reads, or says something its page does not:
+ *   - the chapter itself: its article, once, and no other chapter's;
+ *   - one <h1>, which is the chapter's title, and headings that never skip a level going down. The interactive chapter's
+ *     sections are h3 and h4, as they were under The Chain's h2 title (the styles and the print path go by those levels), so
+ *     the h1 counts as the level above them;
  *   - one <title>, one meta description and one canonical link, the canonical being the page's own address;
  *   - the Open Graph and Twitter tags, og:url the canonical;
  *   - rel=prev and rel=next to the chapters before and after it in reading order;
  *   - JSON-LD that parses, with an Article whose headline is the h1, whose url, @id and page are the canonical, whose description
  *     is the meta description, whose image is og:image, whose dateModified is the page's "Updated" day and its sitemap lastmod,
  *     and a BreadcrumbList Home > The Chain > the chapter, numbered from 1 and ending on the canonical;
- *   - the specimen still with its alt text, width and height;
+ *   - the specimen's figure and its caption (the drawing is live, so the still the readable page showed is gone);
  *   - its sitemap entry, whose lastmod is the page's date in build/page-dates.json.
  * And for the site: the sitemap lists each address once, leaves out the forwarding pages (a merged chapter's old address and the
- * view pages /home/, /intro/, /chain/) and the PDFs; robots.txt names the sitemap and blocks no chapter; the home page's JSON-LD
- * parses, and its HTML, before any script runs, links every chapter's page by href.
+ * view pages /home/, /intro/, /chain/), the book (/book/, for print) and the PDFs; robots.txt names the sitemap, blocks no
+ * chapter and blocks the book, which is also noindex; the home page's JSON-LD parses, its HTML, before any script runs, links
+ * every chapter's page by href, and it holds no chapter.
  * The length of each <title> (with " · Chip Supply Chain") and description is checked against a hard range (30 to 70 and 70 to
  * 170 characters, a failure outside it) and the range search results show whole (50 to 60 and 120 to 160, a note outside it;
  * --strict makes a note a failure). The words are the owner's (build/page-titles.json), so a note is a question for the owner.
@@ -58,14 +63,14 @@ entries.forEach((e) => {
   if (!ISO_DAY.test(e.lastmod)) fail('sitemap.xml', `${e.loc} has no lastmod day (${e.lastmod || 'none'})`);
   if (/\.pdf$/i.test(e.loc)) fail('sitemap.xml', `lists a PDF, ${e.loc}`);
 });
-const forwarding = Object.keys(RETIRED.chapters || {}).concat(['home', 'intro', 'chain']);
+const forwarding = Object.keys(RETIRED.chapters || {}).concat(['home', 'intro', 'chain', 'book']);
 forwarding.forEach((id) => { if (byLoc.has(BASE + id + '/')) fail('sitemap.xml', `lists ${BASE + id}/, which only forwards`); });
 const robots = read(path.join(dist, 'robots.txt')) || '';
 if (!robots) fail('robots.txt', 'missing');
 if (!new RegExp(`^Sitemap: ${BASE.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}sitemap\\.xml$`, 'm').test(robots)) fail('robots.txt', 'does not name the sitemap');
 const disallow = [...robots.matchAll(/^Disallow:\s*(\S*)\s*$/gm)].map((m) => m[1]).filter(Boolean);
 
-// each chapter's readable page
+// each chapter's page
 const ranges = (page, kind, s, hard, soft) => {
   const n = [...s].length;
   if (n < hard[0] || n > hard[1]) fail(page, `${kind} is ${n} characters, outside ${hard[0]} to ${hard[1]}: "${s}"`);
@@ -74,17 +79,23 @@ const ranges = (page, kind, s, hard, soft) => {
 chapters.forEach((c, i) => {
   const page = `/${c.id}/`, url = BASE + c.id + '/';
   const html = read(path.join(dist, c.id, 'index.html'));
-  if (!html) { fail(page, 'no readable page in dist/'); return; }
+  if (!html) { fail(page, 'no page in dist/'); return; }
   const head = (html.match(/<head>([\s\S]*?)<\/head>/i) || [])[1] || '';
   const body = (html.match(/<body\b[^>]*>([\s\S]*)<\/body>/i) || [])[1] || '';
 
-  // headings
-  const hs = [...body.matchAll(/<h([1-6])\b[^>]*>([\s\S]*?)<\/h\1>/gi)].map((m) => ({ n: +m[1], t: text(m[2]) }));
+  // the chapter, alone
+  const arts = [...body.matchAll(/<article class="chapter[^"]*" id="([^"]+)"/g)].map((m) => m[1]);
+  if (arts.join() !== c.id) fail(page, `holds the articles ${JSON.stringify(arts)}, not its own alone`);
+
+  // headings (the title's words for screen readers, "Chapter 4: ", are not its headline)
+  const hs = [...body.matchAll(/<h([1-6])\b[^>]*>([\s\S]*?)<\/h\1>/gi)].map((m) => ({ n: +m[1], t: text(m[2].replace(/<span class="sr-only">[\s\S]*?<\/span>/g, '')) }));
   const h1s = hs.filter((h) => h.n === 1);
   if (h1s.length !== 1) fail(page, `has ${h1s.length} h1 headings`);
   const h1 = h1s[0] ? h1s[0].t : '';
   if (hs.length && hs[0].n !== 1) fail(page, `its first heading is an h${hs[0].n}, not the h1`);
-  for (let k = 1; k < hs.length; k++) if (hs[k].n > hs[k - 1].n + 1) fail(page, `heading "${hs[k].t}" is an h${hs[k].n} under an h${hs[k - 1].n}`);
+  const level = (n) => (n === 1 ? 2 : n); // the h1 stands where The Chain's h2 title stood, over the h3 sections
+  for (let k = 1; k < hs.length; k++) if (level(hs[k].n) > level(hs[k - 1].n) + 1) fail(page, `heading "${hs[k].t}" is an h${hs[k].n} under an h${hs[k - 1].n}`);
+  if (hs.some((h) => h.n === 2)) fail(page, 'has an h2, a level the chapter does not use');
 
   // title, description, canonical, sequence
   const titles = [...head.matchAll(/<title>([\s\S]*?)<\/title>/gi)].map((m) => text(m[1]));
@@ -155,17 +166,22 @@ chapters.forEach((c, i) => {
     if (items[0] && items[0].item !== BASE) fail(page, 'breadcrumb does not start at the home page');
   }
 
-  // the specimen still: an <img> with alt, width and height, or the annotated SVG with its label
-  const img = (body.match(/<img class="ch-still-img"[^>]*>/) || [])[0];
-  const svg = (body.match(/<svg class="ch-still ch-still--wide"[^>]*>/) || [])[0];
-  if (img) {
-    if (!(attr(img, 'alt') || '').trim()) fail(page, 'the specimen still has no alt text');
-    if (!attr(img, 'width') || !attr(img, 'height')) fail(page, 'the specimen still has no width and height');
-    if (attr(img, 'loading') === 'lazy') fail(page, 'the specimen still loads lazily, though it is near the top');
-  } else if (svg) {
-    if (!(attr(svg, 'aria-label') || '').trim()) fail(page, 'the annotated still has no aria-label');
-  } else note(page, 'has no specimen still');
+  // the specimen: its figure, where the live drawing goes, and its caption in the page's text
+  if (!/<figure class="ch-spec\b[^>]*>[\s\S]*?<figcaption class="ch-spec-cap[^"]*"><span class="label">Specimen \d\d/.test(body)) fail(page, 'has no specimen figure with its caption');
 });
+
+// the book: every chapter, for print only, kept from search engines
+{
+  const html = read(path.join(dist, 'book', 'index.html')) || '';
+  if (!html) fail('/book/', 'missing; run node build/build.js');
+  else {
+    if (!/<meta name="robots" content="noindex">/.test(html)) fail('/book/', 'is not noindex');
+    if (!disallow.includes('/book/')) fail('/book/', 'is not disallowed in robots.txt');
+    const n = (html.match(/<article class="chapter[^"]*" id="/g) || []).length;
+    if (n !== chapters.length) fail('/book/', `holds ${n} chapters, not ${chapters.length}`);
+  }
+  if (byLoc.has(BASE + 'book/')) fail('sitemap.xml', 'lists the book');
+}
 
 // the home page: its JSON-LD, and a link to every chapter's page in the HTML a crawler reads before scripts run
 {
@@ -179,6 +195,8 @@ chapters.forEach((c, i) => {
   else if ((dates['/'] || {}).modified && sm.lastmod !== dates['/'].modified) fail('/', `sitemap lastmod is ${sm.lastmod}, but its date is ${dates['/'].modified}`);
   const missing = chapters.filter((c) => !html.includes(`href="${c.id}/"`)).map((c) => c.id);
   if (missing.length) fail('/', `its HTML has no href to ${missing.join(', ')}`);
+  const held = (html.match(/<article class="chapter[^"]*" id="[^"]+"/g) || []).length;
+  if (held) fail('/', `holds ${held} chapters; each belongs on its own page`);
 }
 
 // a merged chapter's old address forwards, with a canonical to the merged chapter

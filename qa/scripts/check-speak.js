@@ -1,5 +1,5 @@
 // Release check: no Claude-speak in the reader-facing text. node qa/scripts/check-speak.js
-// Scans the built page (dist/index.html with scripts, styles and tags stripped; the bibliography titles are verbatim and are excluded)
+// Scans the built pages (dist/index.html and each chapter's dist/<id>/index.html, with scripts, styles and tags stripped; the bibliography titles are verbatim and are excluded)
 // and the prose fields of the data files. Prints every match with its location and exits 1 if any remain.
 const fs = require('fs');
 const path = require('path');
@@ -45,7 +45,10 @@ const decode = (s) => s.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&g
 const distPath = path.join(root, 'dist', 'index.html');
 if (!fs.existsSync(distPath)) { console.log('check-speak: dist/index.html is missing, run node build/build.js first'); process.exit(1); }
 const H0 = '«H»', H1 = '«/H»'; // heading markers, so h1-h4 may carry a question and every match can say where it sits
-let html = fs.readFileSync(distPath, 'utf8')
+// the home page and each chapter's own page (the chapters left the home page on 28 Oct 2026)
+const chapterPages = fs.readdirSync(path.join(root, 'dist')).filter((d) => d !== 'book' && fs.existsSync(path.join(root, 'dist', d, 'index.html')))
+  .map((d) => fs.readFileSync(path.join(root, 'dist', d, 'index.html'), 'utf8')).filter((h) => /<article class="chapter[^"]*" id="/.test(h));
+let html = [fs.readFileSync(distPath, 'utf8')].concat(chapterPages).join('\n')
   .replace(/<script[\s\S]*?<\/script>/g, '\n').replace(/<style[\s\S]*?<\/style>/g, '\n')
   .replace(/<details class="chapter-sources"[\s\S]*?<\/details>/g, '\n') // each chapter's source list: verbatim titles
   .replace(/(<p class="fc-q"[^>]*>[\s\S]*?)\?(<\/p>)/g, '$1.$2') // flashcard questions are real questions; every other rule still reads them

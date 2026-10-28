@@ -4764,29 +4764,23 @@ try {
     });
   }
 
-  /* A chapter whose drawing carries numbered parts (data/specimen-parts.json: Lithography) prints the annotated still its
-     readable page shows, balloons and all, above its caption: the live drawing does not print. It is taken from that page
-     (build/modules/social.js stillSVG draws it), so the two never differ. fontsReady() waits for it and its picture. */
+  /* A chapter whose drawing carries numbered parts (data/specimen-parts.json: Lithography) prints its annotated still,
+     balloons and all, above its caption: the live drawing does not print. The build draws it (build/modules/social.js
+     stillSVG, as the readable page showed it until 28 Oct 2026) into a <template> in the specimen's figure, which the screen
+     never shows; its picture's path is already this page's. fontsReady() waits for it and its picture. */
   var stillsLoaded = null;
   function stills() {
     var jobs = [];
     each('article.chapter .ch-spec[data-parts]', document, function (fig) {
-      var ch = fig.closest('article.chapter');
-      if (!ch || !ch.id || fig.querySelector('.cp-still') || typeof fetch !== 'function') return;
-      jobs.push(fetch(ch.id + '/').then(function (r) { return r.ok ? r.text() : ''; }).then(function (html) {
-        var svg = html && new DOMParser().parseFromString(html, 'text/html').querySelector('svg.ch-still--wide');
-        if (!svg) return null;
-        svg = document.importNode(svg, true);
-        var src = '';
-        each('image', svg, function (im) {
-          src = (im.getAttribute('href') || '').replace(/^\.\.\//, ''); // the readable page is a folder down
-          im.setAttribute('href', src);
-        });
-        var box = node('div', 'cp-still');
-        box.appendChild(svg);
-        fig.insertBefore(box, fig.querySelector('.ch-spec-cap'));
-        return src ? new Promise(function (done) { var im = new Image(); im.onload = done; im.onerror = done; im.src = src; }) : null;
-      }).catch(function () { return null; }));
+      var tpl = fig.querySelector('template.cp-still-src'), svg = tpl && tpl.content ? tpl.content.querySelector('svg.ch-still--wide') : null;
+      if (!svg || fig.querySelector('.cp-still')) return;
+      svg = document.importNode(svg, true);
+      var src = '';
+      each('image', svg, function (im) { src = im.getAttribute('href') || ''; });
+      var box = node('div', 'cp-still');
+      box.appendChild(svg);
+      fig.insertBefore(box, fig.querySelector('.ch-spec-cap'));
+      if (src) jobs.push(new Promise(function (done) { var im = new Image(); im.onload = done; im.onerror = done; im.src = src; }));
     });
     stillsLoaded = Promise.all(jobs);
   }
@@ -4878,6 +4872,17 @@ try {
        counter (chapter.css: "counter-reset: sec", and "counter-increment: none" on the readable page) put a counter
        named "none" there, which voided the rule, and every folio printed as "n / 0". On paper the numbers are written on
        the headings (sectionNumbers), so those declarations leave the sheets before Paged.js reads them. */
+    /* The site's styles are a shared sheet since 28 Oct 2026 (dist/assets/site.css): each of the site's own linked sheets becomes a
+       <style> with its text, in its place, so the rule below can reach it, as it did when the styles were inlined. The sheet
+       is in the browser's cache, and prepare() answers pdf.py at once, so it is read synchronously */
+    each('link[rel="stylesheet"]', document, function (l) {
+      var u = l.href; if (!u || u.indexOf(location.origin + '/') !== 0) return;
+      try {
+        var x = new XMLHttpRequest(); x.open('GET', u, false); x.send();
+        if (x.status !== 200) return;
+        var st = document.createElement('style'); st.textContent = x.responseText; l.parentNode.replaceChild(st, l);
+      } catch (e) { }
+    });
     each('style', document, function (st) {
       var t = st.textContent, u = t.replace(/counter-(?:reset|increment):\s*(?:sec|none)\s*;?/g, '');
       if (u !== t) st.textContent = u;
