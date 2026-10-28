@@ -243,15 +243,15 @@ a{color:#7a1f2b}
 `;
 }
 
-// A chapter merged away (build/retired-chapters.js): its old address forwards to the merged chapter's readable page, with a
-// canonical link, a meta refresh and a plain link, as a view's page forwards. A script goes first and carries a section's
-// anchor along, mapped to the merged chapter's nearest (the readable page names its sources "sources" and its questions
-// "review-questions"). No share tags and no card: the page is never listed (the sitemap leaves it out) and only forwards.
+// A chapter merged away (build/retired-chapters.js): its old address forwards to the merged chapter's page, with a canonical
+// link, a meta refresh and a plain link, as a view's page forwards. A script goes first and carries a section's anchor along,
+// mapped to the merged chapter's nearest (the chapter's page has the same anchors as The Chain had since 28 Oct 2026; the
+// readable page before it named its sources and questions otherwise). No share tags and no card: the page is never listed
+// (the sitemap leaves it out) and only forwards.
 function retiredHTML(old, e, title, to) {
   const url = BASE + e.to + '/', rel = '../' + e.to + '/';
-  const ON_PAGE = { [e.to + '--sources']: 'sources', [e.to + '--flashcards']: 'review-questions', [e.to]: '' };
   const map = {};
-  Object.entries(RETIRED.ANCHORS || {}).forEach(([from, a]) => { map[from] = Object.prototype.hasOwnProperty.call(ON_PAGE, a) ? ON_PAGE[a] : a; });
+  Object.entries(RETIRED.ANCHORS || {}).forEach(([from, a]) => { map[from] = a === e.to ? '' : a; });
   const js = `(function(){var M=${JSON.stringify(map)},h=location.hash.slice(1);try{h=decodeURIComponent(h);}catch(e){}var a=Object.prototype.hasOwnProperty.call(M,h)?M[h]:'';location.replace(${JSON.stringify(rel)}+location.search+(a?'#'+a:''));})();`;
   return `<!doctype html>
 <html lang="en">

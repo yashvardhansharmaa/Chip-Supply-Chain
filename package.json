@@ -1,7 +1,7 @@
 {
   "name": "compute-chokepoints",
   "version": "1.0.0",
-  "description": "A deep dive on the AI chip supply chain, compiled to one self-contained HTML file",
+  "description": "A deep dive on the AI chip supply chain, compiled to a static site: a home page, one page per chapter and shared files",
   "private": true,
   "scripts": {
     "build": "node build/build.js",

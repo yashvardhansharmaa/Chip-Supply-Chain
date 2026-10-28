@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-/* CHOKEPOINTS build: content/*.md + data/*.json + specimens/*.js + src/* -> dist/index.html (one self-contained file) */
+/* CHOKEPOINTS build: content/*.md + data/*.json + specimens/*.js + src/* -> dist/index.html (the home page and the views), each
+   chapter's own page dist/<id>/index.html, the print-only book dist/book/, and the shared files in dist/assets/ (the pages, below) */
 const fs = require('fs');
 const path = require('path');
 const SITE = require('./site.js'); // the public address; see build/site.js
