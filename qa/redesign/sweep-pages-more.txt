@@ -1,0 +1,14 @@
+summary 390: ok (900 boxes)
+summary 1440: ok (800 boxes)
+summary-dark 390: ok (900 boxes)
+summary-dark 1440: ok (800 boxes)
+glossary-1440 390: ok (10126 boxes)
+glossary-1440 1440: ok (9606 boxes)
+glossary-page 390: ok (7168 boxes)
+glossary-page 1440: ok (7223 boxes)
+design-and-eda 390: ok (1166 boxes)
+design-and-eda 1440: ok (1046 boxes)
+silicon-and-wafers 390: ok (997 boxes)
+silicon-and-wafers 1440: ok (898 boxes)
+
+12 loads, 0 with findings
