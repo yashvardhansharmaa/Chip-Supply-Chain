@@ -1434,10 +1434,14 @@
     /* ---- the selection and the address: #/landscape?pick=a,b&measure=mem ---- */
     var S = { picked: [], measure: '' };
     var selection = function () { return S.picked.map(byId).filter(Boolean); };
-    var readAddress = function () {
+    // keep: Back or Forward within AI Chips. The chart's figure is the reader's setting, not part of a step back, so an earlier
+    // entry that names none keeps the figure chosen since, and its address is written with it (28 Oct 2026: Back from four
+    // chips on Memory went back to FP16)
+    var readAddress = function (keep) {
       var q = /[?&]pick=([^&#]+)/.exec(location.hash), ids = q ? dec(q[1]).split(',').filter(byId) : [];
       S.picked = ids.filter(function (id, i) { return ids.indexOf(id) === i; }).slice(0, 4);
-      var m = /[?&]measure=(fp16|fp8|fp4|mem|bw|tdp)\b/.exec(location.hash); S.measure = m ? m[1] : '';
+      var m = /[?&]measure=(fp16|fp8|fp4|mem|bw|tdp)\b/.exec(location.hash), was = S.measure; S.measure = m ? m[1] : keep ? was : '';
+      if (!m && keep && was) writeAddress(false);
     };
     var route = function () { var q = []; if (S.picked.length) q.push('pick=' + S.picked.join(',')); if (S.measure) q.push('measure=' + S.measure); return '#/landscape' + (q.length ? '?' + q.join('&') : ''); };
     // a choice of chips is a history entry, so Back returns to the one before; a change of the chart's figure is written in place
@@ -1665,7 +1669,7 @@
 
     L.activate = function () { // each route to AI Chips: the address decides what is open
       var arriving = !wired || Router.from !== 'landscape';
-      wire(); closePicker(false); readAddress();
+      wire(); closePicker(false); readAddress(!arriving);
       render(arriving ? { boot: true } : { pop: true });
     };
     // a chip found elsewhere (search, the Glossary) opens on its own, in place of the address it landed on
