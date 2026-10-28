@@ -255,8 +255,13 @@ small { font-size: 0.85em; }
   padding: 0;
 }
 .stage figcaption b { color: var(--ink); font-weight: 500; }
-/* on the home page the specimen's description is set as the rail's links are, in Hanken Grotesk (owner, 27 Oct) */
-html[data-view="walk"] .stage figcaption { font-family: var(--font-ui); font-size: 15px; line-height: 1.6; color: var(--ink-2); }
+/* on the home page, beside the hero, the specimen's label and description are centered under the drawing, the description
+   set as the rail's links are, in Hanken Grotesk (owner, 27 Oct). The phone's strip keeps its own small, left-set caption. */
+@media (min-width: 901px) {
+  html[data-view="walk"] .stage .stage-tag { text-align: center; margin-left: var(--margin); }
+  html[data-view="walk"] .stage figcaption { margin-left: var(--margin); margin-right: var(--margin); max-width: none; align-self: center; text-align: center; text-wrap: balance;
+    font-family: var(--font-ui); font-size: 15px; line-height: 1.6; color: var(--ink-2); }
+}
 .stage[data-hidden="1"] { display: none; }
 /* the turn's pause (WCAG 2.2.2, src/app.js Band.init): a small round button at the end of the specimen label on a laptop,
    over the thumbnail's corner on a phone. Reduced motion never turns the specimen, so it has no button */
