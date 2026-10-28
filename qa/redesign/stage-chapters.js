@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /* One chapter per address (design round three, recommendation 1): the checks, on the redesign's preview (127.0.0.1:8766).
-   Since 28 Oct 2026 each chapter is a page of its own, /<id>/, the home page keeps The Chain's contents (#/chain), and the
-   print-only book (/book/) holds every chapter: a chapter's address is its page, an old /#<id> link lands there, and a link
-   from one chapter to another loads that page. The checks below follow that.
+   Since 28 Oct 2026 each chapter is a page of its own, /<id>/, The Chain's contents too (/supply-chain/, where /#/chain now
+   forwards), and the print-only book (/book/) holds the contents and every chapter: a chapter's address is its page, an old
+   /#<id> link lands there, and a link from one chapter to another loads that page. The checks below follow that.
    Each check drives the app as a reader would, by its links, buttons and the browser's Back and Forward (DevTools mouse
    events, not script clicks), and prints PASS or FAIL with what it measured:
      1. every chapter opens alone at its address, at its top, under its own tab title, and before boot no other chapter
@@ -17,7 +17,7 @@
      7. print emulation of the book shows all 16 chapters (17 before the merge of 27 Oct 2026), the head and the contents, and
         a chapter's page prints its own chapter;
      8. the page's height at 1440 for one chapter, against the whole chain's (the book's);
-    10. the contents page (design round eight, "clean", 28 Oct 2026) at 1440, 1024 and 390: a row for every chapter, the
+    10. the contents page (design round eight, "clean", 28 Oct 2026; at /supply-chain/ since) at 1440, 1024 and 390: a row for every chapter, the
         stages first and the chapters across the chain under their label; every row opens its chapter by its title and by its
         drawing; every drawing is served; the three downloads show on the first screen and are served;
    and every other way in: the home page, a look-up card, Export Controls, the phone's contents sheet and slim bar, the
@@ -250,9 +250,9 @@ const want = (n) => !ONLY.length || ONLY.includes(String(n));
       // The Chain's tab from a chapter: the contents on the home page, at the top; a row to chapter 14
       await t.click('.tabs a[data-view="stack"]', false); await sleep(nav);
       st = await t.ev(STATE);
-      pass = st.path === '/' && st.hash === '#/chain' && !st.shown.length && st.contents && st.y === 0 && /^Supply Chain/.test(st.title);
+      pass = st.path === '/supply-chain/' && st.hash === '' && !st.shown.length && st.contents && st.y === 0 && /stage by stage/.test(st.title);
       ok = ok && pass; out.push(`The Chain's tab from chapter 08: ${st.path}${st.hash}, contents ${st.contents}, chapters shown ${st.shown.length}, y ${st.y}, title "${st.title}"${pass ? '' : ' (FAIL)'}`);
-      await t.click(`document.querySelector('#contents a[href="data-centers-and-power/"]')`); await sleep(nav);
+      await t.click(`document.querySelector('#contents a[href="../data-centers-and-power/"]')`); await sleep(nav);
       st = await t.ev(STATE);
       pass = st.path === '/data-centers-and-power/' && st.shown.join() === 'data-centers-and-power' && st.y <= 4;
       ok = ok && pass; out.push(`a contents row to chapter 14: ${st.path}, shows ${st.shown.join(',')} at y ${st.y}${pass ? '' : ' (FAIL)'}`);
@@ -260,7 +260,7 @@ const want = (n) => !ONLY.length || ONLY.includes(String(n));
       await t.ev(`location.href = '/geopolitics/', 1`); await sleep(nav);
       await t.click('#geopolitics .prevnext .next'); await sleep(nav);
       st = await t.ev(STATE);
-      pass = st.path === '/' && st.hash === '#/chain' && st.contents && !st.shown.length && st.y === 0;
+      pass = st.path === '/supply-chain/' && st.contents && !st.shown.length && st.y === 0;
       ok = ok && pass; out.push(`chapter 16's door: ${st.path}${st.hash}, contents ${st.contents}, y ${st.y}${pass ? '' : ' (FAIL)'}`);
       if (t.errors.length) { ok = false; out.push('errors: ' + t.errors.join(' | ')); }
       await t.close();
@@ -408,7 +408,7 @@ const want = (n) => !ONLY.length || ONLY.includes(String(n));
       await t.click('.tabs a[data-view="stack"]', false); await sleep(2600);
       const strip = `getComputedStyle(document.querySelector('.stage')).display`;
       const cstrip = await t.ev(strip), cst = await t.ev(STATE);
-      const cpass = cstrip === 'none' && cst.contents && !cst.shown.length && /^Supply Chain/.test(cst.title);
+      const cpass = cstrip === 'none' && cst.contents && !cst.shown.length && cst.path === '/supply-chain/' && /stage by stage/.test(cst.title);
       ok = ok && cpass; out.push(`the phone's The Chain tab from chapter 09: the contents, the strip ${cstrip === 'none' ? 'stands down' : 'shows (' + cstrip + ')'}, title "${cst.title}"${cpass ? '' : ' (FAIL)'}`);
       await t.back(); await sleep(1400); const bstrip = await t.ev(strip), bst = await t.ev(STATE);
       const bpass = bstrip !== 'none' && bst.shown.join() === 'memory-and-hbm';
@@ -424,14 +424,14 @@ const want = (n) => !ONLY.length || ONLY.includes(String(n));
     //     show on the first screen and each is served
     if (want(10)) {
       const out = []; let ok = true;
-      const D = await (async () => { const t = await tab(chrome, '/#/chain'); const d = await t.ev('CP_DATA.chapters.map(function (c) { return { id: c.id, stage: c.stage, title: c.title }; })'); await t.close(); return d; })();
+      const D = await (async () => { const t = await tab(chrome, '/#/'); const d = await t.ev('CP_DATA.chapters.map(function (c) { return { id: c.id, stage: c.stage, title: c.title }; })'); await t.close(); return d; })(); // the home page holds the data
       const stagesD = D.filter((c) => c.stage), acrossD = D.filter((c) => !c.stage);
       // one request at a time, and a dropped connection (the preview's python http.server resets some under a burst) is tried
       // again up to twice; any answer the server gives, a 404 included, stands. Status 0 means it never answered
       const HEAD = `(async function (u) { for (var k = 0; k < 3; k++) { try { var r = await fetch(u, { method: 'HEAD', cache: 'no-store' }); return { status: r.status, type: (r.headers.get('content-type') || '').split(';')[0] }; } catch (e) { await new Promise(function (f) { setTimeout(f, 300); }); } } return { status: 0, type: '' }; })`;
       // a row is a link to the chapter's page: each click loads it, and the contents load again for the next
       const opens = async (t, sel, id) => {
-        if (await t.ev(`location.pathname + location.hash`) !== '/#/chain') { await t.ev(`location.href = '/#/chain', 1`); await sleep(2200); }
+        if (await t.ev(`location.pathname + location.hash`) !== '/supply-chain/') { await t.ev(`location.href = '/supply-chain/', 1`); await sleep(2200); }
         const clicked = await t.click(sel); await sleep(2400);
         const st = await t.ev(STATE);
         return { pass: clicked && st.view === 'stack' && st.shown.join() === id && st.path === '/' + id + '/' && st.y <= 4 && !st.contents, st, clicked };
@@ -455,16 +455,16 @@ const want = (n) => !ONLY.length || ONLY.includes(String(n));
         ok = ok && !bad.length;
         out.push(`${width}: ${bad.length ? 'rows that fail: ' + bad.join('; ') + ' (FAIL)' : `each of the ${D.length} rows opens its chapter alone at its top, by its title and by its drawing`}`);
         // the downloads: on the first screen, each served
-        await t.ev(`location.href = '/#/chain', 1`); await sleep(2200); await t.jump(0);
+        await t.ev(`location.href = '/supply-chain/', 1`); await sleep(2200); await t.jump(0);
         const dl = await t.ev(`(async function () { var out = [];
           for (var a of document.querySelectorAll('#howto .howto-dl a')) { var b = a.getBoundingClientRect(), r = await ${HEAD}(a.href);
             out.push({ href: a.getAttribute('href'), text: a.textContent, dl: a.hasAttribute('download'), y: Math.round(b.bottom), status: r.status, type: r.type }); }
           return out; })()`);
         const vh = width < 768 ? 844 : 900;
         const dpass = dl.length === 3 && dl.every((d) => d.status === 200 && d.y > 0 && d.y < vh)
-          && dl[0].href === 'pdf/how-ai-chips-are-made.pdf' && dl[0].dl && dl[0].type === 'application/pdf'
-          && dl[1].href === 'pdf/summary.pdf' && dl[1].dl && dl[1].type === 'application/pdf'
-          && dl[2].href === 'summary/' && !dl[2].dl && dl[2].type === 'text/html';
+          && dl[0].href === '../pdf/how-ai-chips-are-made.pdf' && dl[0].dl && dl[0].type === 'application/pdf'
+          && dl[1].href === '../pdf/summary.pdf' && dl[1].dl && dl[1].type === 'application/pdf'
+          && dl[2].href === '../summary/' && !dl[2].dl && dl[2].type === 'text/html';
         ok = ok && dpass; out.push(`${width}: downloads ${dl.map((d) => `"${d.text}" ${d.href} ${d.status} ${d.type} at y ${d.y}`).join('; ')}${dpass ? '' : ' (FAIL)'}`);
         if (width === 1440) { // each row's drawing, served as a picture
           const pics = await t.ev(`(async function () { var out = []; for (var i of document.querySelectorAll('#contents .item .ct-tile img')) { var r = await ${HEAD}(i.src); out.push(i.getAttribute('src') + ' ' + r.status + ' ' + r.type); } return out; })()`);

@@ -38,17 +38,20 @@ const count = (sel) => `document.querySelectorAll(${JSON.stringify(sel)}).length
 const shown = (sel) => `!!(document.querySelector(${JSON.stringify(sel)}) && document.querySelector(${JSON.stringify(sel)}).getClientRects().length)`; // laid out on screen
 const shownCount = (sel) => `[].filter.call(document.querySelectorAll(${JSON.stringify(sel)}), (e) => e.getClientRects().length).length`;
 // The Chain's contents, measured against CP_DATA.chapters (design round eight, "clean", 28 Oct 2026): a row for every chapter
-// in order (shown, with its drawing and its link to the chapter's own page, <id>/; the book's copy keeps #<id>, which its PDF reads), every drawing fetched and decoded (they
+// in order (shown, with its drawing and its link to the chapter's own page, ../<id>/; the book's copy keeps #<id>, which its PDF
+// reads), on the contents page's own address, /supply-chain/, to which /#/chain forwards, every drawing fetched and decoded (they
 // load lazily, so the check asks for them all at once), each stage with its band's single mark (Extreme a wine bar, High an
 // outline) and the chapters across the chain with none, under their label, the drawing's box on the page's ground (no tint),
 // two columns from 1300 px and one below, the standfirst holding both counts and both marks, the downloads, and How to read a
 // chapter gone
+// the chapters, as the build's data file holds them (the contents page, /supply-chain/ since 28 Oct 2026, loads no data)
+const CHAPTERS = (() => { try { const w = {}; new Function('window', fs.readFileSync(path.join(DIST, 'assets', 'data.js'), 'utf8'))(w); return w.CP_DATA.chapters.map((c) => ({ id: c.id, stage: c.stage, concentration: c.concentration })); } catch (e) { return []; } })();
 const CHAIN_STATE = `(function () {
-  var D = (window.CP_DATA && CP_DATA.chapters) || [], st = D.filter(function (c) { return c.stage; }), x = D.filter(function (c) { return !c.stage; });
+  var D = ${JSON.stringify(CHAPTERS)}, st = D.filter(function (c) { return c.stage; }), x = D.filter(function (c) { return !c.stage; });
   var vis = function (el) { return !!(el && el.getClientRects().length); }, ids = function (l) { return l.map(function (r) { return r.getAttribute('data-ch'); }).join(); };
   var rows = [].slice.call(document.querySelectorAll('#contents .ct-col > li.item'));
   rows.forEach(function (r) { var i = r.querySelector('.ct-tile img'); if (i && i.loading === 'lazy') i.loading = 'eager'; });
-  var row = function (r) { var a = r.querySelector('a.t'), i = r.querySelector('.ct-tile img'); return a && vis(a) && vis(i) && i.getAttribute('src') === 'media/line-' + r.getAttribute('data-ch') + '.webp' ? a.getAttribute('href') : 'none'; };
+  var row = function (r) { var a = r.querySelector('a.t'), i = r.querySelector('.ct-tile img'); return a && vis(a) && vis(i) && i.getAttribute('src') === '../media/line-' + r.getAttribute('data-ch') + '.webp' ? a.getAttribute('href') : 'none'; };
   var shownRows = rows.map(row);
   var drawn = rows.filter(function (r) { var i = r.querySelector('.ct-tile img'); return i && i.complete && i.naturalWidth > 0; }).length;
   var stRows = [].slice.call(document.querySelectorAll('#contents > .ct-st .item')), xRows = [].slice.call(document.querySelectorAll('#contents .ct-x .item'));
@@ -63,15 +66,15 @@ const CHAIN_STATE = `(function () {
     && sf.querySelectorAll('.ct-bmk:not(.h)').length === 1 && sf.querySelectorAll('.ct-bmk.h').length === 1;
   var list = [].map.call(document.querySelectorAll('#contents .contents-grid .item a.t'), function (a) { return a.getAttribute('href'); });
   var dl = [].filter.call(document.querySelectorAll('#howto .howto-dl a'), vis).map(function (a) { return a.getAttribute('href'); });
-  return { rows: shownRows.join() === D.map(function (c) { return c.id + '/'; }).join(), chapters: D.length, rowsShown: shownRows.filter(function (v) { return v !== 'none'; }).length, drawn: drawn,
+  return { at: location.pathname, rows: shownRows.join() === D.map(function (c) { return '../' + c.id + '/'; }).join(), chapters: D.length, rowsShown: shownRows.filter(function (v) { return v !== 'none'; }).length, drawn: drawn,
     groups: ids(stRows) === st.map(function (c) { return c.id; }).join() && ids(xRows) === x.map(function (c) { return c.id; }).join(), stages: st.length, across: xRows.length,
     marks: stRows.map(mark).join() === st.map(function (c) { return c.concentration; }).join() && xRows.every(function (r) { return mark(r) === ''; }),
     wine: wine.join() === wantWine.join(), extreme: wantWine.length, flat: flat === rows.length, cols: lefts === (innerWidth >= 1300 ? 2 : 1), columns: lefts,
     label: !x.length || vis(document.querySelector('#contents .ct-xk')), standfirst: standfirst,
-    list: list.join() === D.map(function (c) { return c.id + '/'; }).join(), listed: list.length,
-    downloads: dl.join() === 'pdf/how-ai-chips-are-made.pdf,pdf/summary.pdf,summary/', howToRead: !!document.querySelector('.howto-read, #howto-read') };
+    list: list.join() === D.map(function (c) { return '../' + c.id + '/'; }).join(), listed: list.length,
+    downloads: dl.join() === '../pdf/how-ai-chips-are-made.pdf,../pdf/summary.pdf,../summary/', howToRead: !!document.querySelector('.howto-read, #howto-read') };
 })()`;
-const CHAIN_OK = `(function (s) { return s.stages >= 14 && s.rows && s.drawn === s.chapters && s.groups && s.across >= 2 && s.marks && s.wine && s.extreme > 0 && s.flat && s.cols && s.label && s.standfirst && s.list && s.downloads && !s.howToRead; })(${CHAIN_STATE})`;
+const CHAIN_OK = `(function (s) { return s.at === '/supply-chain/' && s.stages >= 14 && s.rows && s.drawn === s.chapters && s.groups && s.across >= 2 && s.marks && s.wine && s.extreme > 0 && s.flat && s.cols && s.label && s.standfirst && s.list && s.downloads && !s.howToRead; })(${CHAIN_STATE})`;
 // the counts below follow the chain since the merge of chapters 8 and 9 (27 Oct 2026): 14 stages, 16 chapters
 const ROUTES = [
   { name: 'walk', url: '/#/', ready: `${view('walk')} && ${count('.view[data-view="walk"] .wk-step')} >= 14`, detail: `'walk view shown: ' + ${view('walk')} + ', steps: ' + ${count('.view[data-view="walk"] .wk-step')}` },
@@ -82,6 +85,7 @@ const ROUTES = [
   // the chain under their label; the standfirst that is also the key; the three downloads; and no How to read a chapter.
   // The counts come from the page's own data (CP_DATA.chapters), never typed here
   { name: 'chain', url: '/#/chain', ready: `${view('stack')} && ${count('article.chapter')} === 0 && ${shown('#contents')} && ${CHAIN_OK}`, detail: `'chapters held: ' + ${count('article.chapter')} + ', contents: ' + JSON.stringify(${CHAIN_STATE})` },
+  { name: 'chain-stub', url: '/chain/', ready: `location.pathname === '/supply-chain/' && ${shown('#contents')} && /Supply Chain/.test((document.querySelector('.tabs a[aria-current="page"]') || {}).textContent || '')`, detail: `'at ' + location.pathname + ', current tab ' + ((document.querySelector('.tabs a[aria-current="page"]') || {}).textContent || 'none')` },
   { name: 'chapter', url: '/#lithography--who-makes-it', ready: `location.pathname === '/lithography/' && location.hash === '#lithography--who-makes-it' && ${view('stack')} && ${count('article.chapter')} === 1 && ${shown('#lithography .plate')} && ${shown('#lithography .prevnext .next')} && !document.getElementById('contents')`, detail: `'at ' + location.pathname + location.hash + ', chapters: ' + [].map.call(document.querySelectorAll('article.chapter'), (a) => a.id).join(', ') + ', card: ' + ${shown('#lithography .plate')} + ', door: ' + ${shown('#lithography .prevnext .next')}` },
   // the shelves (design round seven): a chip on a shelf for every chip in CP_DATA, a drawing for every chip with a layout, and
   // a dot on the field chart for every chip with a published FP16 figure
@@ -97,7 +101,7 @@ const ROUTES = [
   { name: 'summary', url: '/summary/', ready: `${count('.ladder li')} === 14 && ${count('.grid .card')} >= 14`, detail: `'ladder rows: ' + ${count('.ladder li')} + ', cards: ' + ${count('.grid .card')}` },
 ];
 // the theme default: these three page types, with the device set to dark
-const THEMED = [['main page', '/#/', '/?theme=dark#/'], ['chapter page', '/lithography/', '/lithography/?theme=dark'], ['summary', '/summary/', '/summary/?theme=dark']];
+const THEMED = [['main page', '/#/', '/?theme=dark#/'], ['contents page', '/supply-chain/', '/supply-chain/?theme=dark'], ['chapter page', '/lithography/', '/lithography/?theme=dark'], ['summary', '/summary/', '/summary/?theme=dark']];
 
 /* ---------- a static server for dist/ ---------- */
 const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png', '.jpg': 'image/jpeg', '.ico': 'image/x-icon', '.mp4': 'video/mp4', '.pdf': 'application/pdf', '.txt': 'text/plain', '.xml': 'application/xml', '.webmanifest': 'application/manifest+json' };

@@ -14,6 +14,9 @@
  *     and a BreadcrumbList Home > The Chain > the chapter, numbered from 1 and ending on the canonical;
  *   - the specimen's figure and its caption (the drawing is live, so the still the readable page showed is gone);
  *   - its sitemap entry, whose lastmod is the page's date in build/page-dates.json.
+ * The contents page, /supply-chain/ (28 Oct 2026): one h1, Supply Chain; its title, description and canonical; the share tags
+ * with the chain's card; a CollectionPage whose ItemList is the chapter pages in reading order; its sitemap entry and date.
+ * /chain/ forwards to it, with its canonical.
  * And for the site: the sitemap lists each address once, leaves out the forwarding pages (a merged chapter's old address and the
  * view pages /home/, /intro/, /chain/), the book (/book/, for print) and the PDFs; robots.txt names the sitemap, blocks no
  * chapter and blocks the book, which is also noindex; the home page's JSON-LD parses, its HTML, before any script runs, links
@@ -162,6 +165,7 @@ chapters.forEach((c, i) => {
     const names = items.map((x) => x.name), pos = items.map((x) => x.position);
     if (JSON.stringify(pos) !== JSON.stringify(items.map((x, k) => k + 1))) fail(page, `breadcrumb positions are ${JSON.stringify(pos)}`);
     if (JSON.stringify(names) !== JSON.stringify(['Home', 'Supply Chain', h1])) fail(page, `breadcrumb is ${JSON.stringify(names)}`);
+    if (items[1] && items[1].item !== BASE + 'supply-chain/') fail(page, `breadcrumb's Supply Chain is ${items[1].item}, not the contents page`);
     if (items.length && items[items.length - 1].item !== url) fail(page, 'breadcrumb does not end on the canonical');
     if (items[0] && items[0].item !== BASE) fail(page, 'breadcrumb does not start at the home page');
   }
@@ -169,6 +173,38 @@ chapters.forEach((c, i) => {
   // the specimen: its figure, where the live drawing goes, and its caption in the page's text
   if (!/<figure class="ch-spec\b[^>]*>[\s\S]*?<figcaption class="ch-spec-cap[^"]*"><span class="label">Specimen \d\d/.test(body)) fail(page, 'has no specimen figure with its caption');
 });
+
+// the contents page
+{
+  const page = '/supply-chain/', url = BASE + 'supply-chain/';
+  const html = read(path.join(dist, 'supply-chain', 'index.html')) || '';
+  if (!html) fail(page, 'missing; run node build/build.js');
+  else {
+    const head = (html.match(/<head>([\s\S]*?)<\/head>/i) || [])[1] || '', body = (html.match(/<body\b[^>]*>([\s\S]*)<\/body>/i) || [])[1] || '';
+    const h1s = [...body.matchAll(/<h1\b[^>]*>([\s\S]*?)<\/h1>/gi)].map((m) => text(m[1]));
+    if (h1s.join() !== 'Supply Chain') fail(page, `its h1 headings are ${JSON.stringify(h1s)}`);
+    const titles = [...head.matchAll(/<title>([\s\S]*?)<\/title>/gi)].map((m) => text(m[1])), descs = metas(head, 'name', 'description');
+    if (titles.length !== 1 || descs.length !== 1) fail(page, `has ${titles.length} titles and ${descs.length} descriptions`);
+    else { ranges(page, 'title', titles[0], [30, 70], [50, 60]); ranges(page, 'description', descs[0], [70, 170], [150, 160]); }
+    const canon = links(head, 'canonical');
+    if (canon.join() !== url) fail(page, `canonical is ${JSON.stringify(canon)}`);
+    const og = (k) => metas(head, 'property', 'og:' + k)[0] || '';
+    if (og('url') !== url) fail(page, `og:url is ${og('url')}`);
+    if (!/\/cards\/chain\.png(\?v=\d+)?$/.test(og('image'))) fail(page, `og:image is ${og('image')}, not the chain's card`);
+    ['title', 'description', 'image:alt'].forEach((k) => { if (!og(k)) fail(page, `has no og:${k}`); });
+    if (/<meta\b[^>]*name="robots"[^>]*content="[^"]*noindex/i.test(head)) fail(page, 'is marked noindex');
+    const nodes = []; [...head.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/gi)].forEach((m) => { try { const j = JSON.parse(m[1]); (j['@graph'] || [j]).forEach((x) => nodes.push(x)); } catch (e) { fail(page, 'JSON-LD does not parse'); } });
+    const cp = nodes.find((x) => x['@type'] === 'CollectionPage'), list = nodes.find((x) => x['@type'] === 'ItemList');
+    if (!cp || cp.url !== url || (cp.mainEntity || {})['@id'] !== (list || {})['@id']) fail(page, 'JSON-LD has no CollectionPage of the list at its address');
+    const urls = list ? (list.itemListElement || []).map((x) => x.url) : [];
+    if (JSON.stringify(urls) !== JSON.stringify(chapters.map((c) => BASE + c.id + '/'))) fail(page, `the ItemList is ${urls.length} addresses, not the ${chapters.length} chapter pages in order`);
+    const d = dates[page] || {}, sm = byLoc.get(url);
+    if (!sm) fail(page, 'is not in the sitemap');
+    else if (sm.lastmod !== d.modified) fail(page, `sitemap lastmod is ${sm.lastmod}, but its date is ${d.modified}`);
+  }
+  const stub = read(path.join(dist, 'chain', 'index.html')) || '';
+  if (links(stub, 'canonical').join() !== url || !/location\.replace\("\.\.\/supply-chain\/"/.test(stub)) fail('/chain/', 'does not forward to /supply-chain/ with its canonical');
+}
 
 // the book: every chapter, for print only, kept from search engines
 {

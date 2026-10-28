@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 /* Before and after for each chapter at its own address (28 Oct 2026): every page the reader sees, shot on the current site
-   (before, where a chapter is /#<id>) and on this branch's preview (after, where it is /<id>/), at 390, 1024 and 1440, light
+   (before, where a chapter is /#<id> and the contents #/chain) and on this branch's preview (after, where they are /<id>/ and
+   /supply-chain/), at 390, 1024 and 1440, light
    and dark, the first screen and two screens down, then compared pixel by pixel (pair-perchapter.py). The same view at both
    addresses must look the same.
    usage: node qa/redesign/shots-perchapter.js <before base> <after base> <out dir>
@@ -13,7 +14,7 @@ const [BEFORE, AFTER, OUT] = process.argv.slice(2);
 if (!BEFORE || !AFTER || !OUT) { console.error('usage: node qa/redesign/shots-perchapter.js <before base> <after base> <out dir>'); process.exit(1); }
 fs.mkdirSync(OUT, { recursive: true });
 // [name, the address before, the address after]
-const PAGES = [['home', '/#/', '/#/'], ['contents', '/#/chain', '/#/chain'], ['chips', '/#/landscape', '/#/landscape'], ['suppliers', '/#/suppliers', '/#/suppliers'],
+const PAGES = [['home', '/#/', '/#/'], ['contents', '/#/chain', '/supply-chain/'], ['chips', '/#/landscape', '/#/landscape'], ['suppliers', '/#/suppliers', '/#/suppliers'],
   ['controls', '/#/controls', '/#/controls'], ['glossary', '/#/glossary', '/#/glossary'],
   ['lithography', '/#lithography', '/lithography/'], ['memory-and-hbm', '/#memory-and-hbm', '/memory-and-hbm/'], ['foundries-and-fabs', '/#foundries-and-fabs', '/foundries-and-fabs/'],
   ['geopolitics', '/#geopolitics', '/geopolitics/'], ['lithography-section', '/#lithography--who-makes-it', '/lithography/#lithography--who-makes-it']];

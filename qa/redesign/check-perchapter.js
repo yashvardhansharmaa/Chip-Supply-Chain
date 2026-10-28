@@ -15,7 +15,11 @@
       chapter's address) lands on the right page at the right place, in place of the old entry (no history entry added);
    4. search, from the home page and from a chapter's page, returns a chapter's result that opens its page;
    5. each chapter page's weight: its HTML, and with the shared files it loads, against the home page of 28 Oct that held
-      every chapter (4,661,341 bytes).
+      every chapter (4,661,341 bytes);
+   6. the contents page at its own address, /supply-chain/ (the owner, 28 Oct): the whole page (its title, the downloads, the
+      standfirst, a row per chapter linking its page, the Supply Chain tab current), each row opening its chapter's page; the
+      old addresses forwarding to it (/#/chain, #/stack, #/sources, #contents, /chain/) without a history entry; its head; and
+      the sitemap listing it, and each chapter page, once.
    usage: node qa/redesign/check-perchapter.js [base] (default http://127.0.0.1:8779) > qa/redesign/check-perchapter.txt
    Nothing leaves this machine but the font requests (qa/redesign/cdp.js resolves every other host to nothing). */
 'use strict';
@@ -148,7 +152,7 @@ const kb = (b) => (b / 1024).toFixed(0) + ' KB';
       await t.ev(`(function () { var d = document.querySelector('#${id} .prevnext .next'); document.documentElement.style.scrollBehavior = 'auto'; d.scrollIntoView({ block: 'center' }); d.click(); return 1; })()`);
       await sleep(2600);
       const at = await t.ev('location.pathname + location.hash');
-      check(`${W}: Next goes to ${next ? next.id + "'s page" : 'the contents'}`, at === (next ? '/' + next.id + '/' : '/#/chain'), `${S.door} -> ${at}`);
+      check(`${W}: Next goes to ${next ? next.id + "'s page" : 'the contents page'}`, at === (next ? '/' + next.id + '/' : '/supply-chain/'), `${S.door} -> ${at}`);
       await t.close();
       // the phone, dark
       const p = await open(chrome, BASE + '/' + id + '/?theme=dark', { width: 390, wait: 2200 });
@@ -185,6 +189,39 @@ const kb = (b) => (b / 1024).toFixed(0) + ' KB';
     for (const [old, e] of Object.entries(RETIRED.chapters || {})) await land('/#' + old, '/' + e.to + '/', '', 'a merged chapter');
     const ra = Object.entries(RETIRED.ANCHORS || {}).find(([from, to]) => to.indexOf('--') > 0);
     if (ra) await land('/#' + ra[0], '/' + ra[1].split('--')[0] + '/', '#' + ra[1], "a merged chapter's section");
+
+    /* ---------- 6. the contents page ---------- */
+    {
+      const sitemap = read(path.join(dist, 'sitemap.xml')), locs = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
+      const once = (u) => locs.filter((x) => x === u).length === 1;
+      check('the sitemap lists /supply-chain/ and each chapter page once, and not the book or /chain/', once('https://chipsupplychain.org/supply-chain/') && chapters.every((c) => once(`https://chipsupplychain.org/${c.id}/`)) && !locs.some((x) => /\/(book|chain)\/$/.test(x)), `${locs.length} entries`);
+      for (const width of [1440, 390]) {
+        const t = await open(chrome, BASE + '/supply-chain/', { width, wait: 2200 });
+        const C = await t.ev(`(function () { var vis = function (e) { return !!e && e.getClientRects().length > 0; };
+          return { h1: [].map.call(document.querySelectorAll('h1'), function (h) { return vis(h) ? h.textContent : ''; }).filter(Boolean).join(), title: document.title, canon: (document.querySelector('link[rel="canonical"]') || {}).href,
+            downloads: [].map.call(document.querySelectorAll('#howto .howto-dl a'), function (a) { return vis(a) ? a.getAttribute('href') : ''; }).join(), standfirst: vis(document.querySelector('#howto .howto-std')),
+            rows: [].map.call(document.querySelectorAll('#contents .item a.t'), function (a) { return vis(a) ? a.getAttribute('href') : ''; }), tab: (document.querySelector('.tabs a[aria-current="page"]') || {}).textContent, tabHref: (document.querySelector('.tabs a[aria-current="page"]') || { getAttribute: function () { return ''; } }).getAttribute('href'),
+            chapters: document.querySelectorAll('article.chapter').length, wide: document.documentElement.scrollWidth - document.documentElement.clientWidth }; })()`);
+        check(`/supply-chain/ ${width}: the whole contents page`, C.h1 === 'Supply Chain' && /stage by stage/.test(C.title) && C.canon === 'https://chipsupplychain.org/supply-chain/' && C.downloads === '../pdf/how-ai-chips-are-made.pdf,../pdf/summary.pdf,../summary/' && C.standfirst && C.rows.join() === chapters.map((c) => `../${c.id}/`).join() && C.tab === 'Supply Chain' && C.tabHref === '../supply-chain/' && C.chapters === 0 && C.wide <= 1, JSON.stringify(Object.assign({}, C, { rows: C.rows.length })));
+        t.errors.forEach((e) => check(`/supply-chain/ ${width}: page error`, false, e));
+        // a row opens its chapter's page
+        await t.ev(`(document.querySelector('#contents .item[data-ch="advanced-packaging"] a.t').click(), 1)`); await sleep(2600);
+        check(`/supply-chain/ ${width}: a row opens its chapter's page`, await t.ev('location.pathname') === '/advanced-packaging/');
+        await t.close();
+      }
+      for (const [u, hash] of [['/#/chain', ''], ['/#/stack', ''], ['/#/sources', ''], ['/#contents', '#contents'], ['/lithography/#/chain', '']]) {
+        const t = await open(chrome, BASE + u, { width: 1440, wait: 2000 });
+        const r = await t.ev("({ at: location.pathname + location.hash, len: history.length, contents: !!document.getElementById('contents') && document.getElementById('contents').getClientRects().length > 0 })");
+        check(`old address ${u} forwards to /supply-chain/${hash}`, r.at === '/supply-chain/' + hash && r.len === 2 && r.contents, JSON.stringify(r));
+        await t.close();
+      }
+      const stub = await open(chrome, BASE + '/chain/', { width: 1440, wait: 2000 });
+      check('/chain/ forwards to /supply-chain/', await stub.ev('location.pathname') === '/supply-chain/');
+      await stub.close();
+      const home = await open(chrome, BASE + '/#/', { width: 1440, wait: 2000 });
+      check('the home page links the contents page from its tab and holds no contents', await home.ev("document.querySelector('.tabs a[data-view=\"stack\"]').getAttribute('href') === 'supply-chain/' && !document.getElementById('contents')"));
+      await home.close();
+    }
 
     /* ---------- 4. search finds a chapter, from any page, and opens its page ---------- */
     for (const [from, q, to] of [['/#/', 'Memory and HBM', 'memory-and-hbm'], ['/lithography/', 'Advanced Packaging', 'advanced-packaging'], ['/#/glossary', 'Who Controls the Chain', 'geopolitics']]) {

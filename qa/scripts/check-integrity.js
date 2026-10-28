@@ -6,13 +6,14 @@ process.chdir(require('path').resolve(__dirname, '..', '..')); // reads dist/, d
 const ALLOWED = {
   'exposure row for Veeco Instruments has no supplier entry': 'Veeco files a China share, so it has a China revenue panel, but it is not in the supplier list. data/exposure-notes.md classes it as Deposition & Etch.',
 };
-/* The pages: the home page (with the Glossary's two lists, which dist/assets/glossary.js puts into it when the Glossary opens)
-   and each chapter's own page, dist/<id>/index.html (since 28 Oct 2026, when the chapters left the home page). Each is read
+/* The pages: the home page (with the Glossary's two lists, which dist/assets/glossary.js puts into it when the Glossary opens),
+   the contents page, dist/supply-chain/, and each chapter's own page, dist/<id>/index.html (since 28 Oct 2026, when the
+   chapters and the contents left the home page). Each is read
    as markup only: the scripts' own strings are not links */
 const markup = (f) => fs.readFileSync(f, 'utf8').replace(/<script[\s\S]*?<\/script>/g, '');
 const glData = (() => { try { const w = {}; new Function('window', fs.readFileSync('dist/assets/glossary.js', 'utf8'))(w); return w.CP_GLOSSARY || {}; } catch (e) { return {}; } })();
 const pages = [{ path: '/', html: markup('dist/index.html').replace(/(<ul\b[^>]*\bid="lk-items"[^>]*>)/, (m) => m + (glData.items || '')).replace(/(<dl\b[^>]*\bid="glossary"[^>]*>)/, (m) => m + (glData.terms || '')) }];
-fs.readdirSync('dist').filter((d) => fs.existsSync(`dist/${d}/index.html`) && /<article class="chapter[^"]*" id="/.test(fs.readFileSync(`dist/${d}/index.html`, 'utf8')) && d !== 'book')
+fs.readdirSync('dist').filter((d) => fs.existsSync(`dist/${d}/index.html`) && /<article class="chapter[^"]*" id="|<div class="contents" id="contents"/.test(fs.readFileSync(`dist/${d}/index.html`, 'utf8')) && d !== 'book')
   .forEach((d) => pages.push({ path: `/${d}/`, html: markup(`dist/${d}/index.html`) }));
 pages.forEach((p) => { p.ids = new Set((p.html.match(/\sid="([^"]+)"/g) || []).map((m) => m.slice(5, -1))); });
 const byPath = new Map(pages.map((p) => [p.path, p]));
