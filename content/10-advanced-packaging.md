@@ -109,7 +109,7 @@ One cracked joint can scrap a package holding eight tested HBM stacks and two la
 |---|---|---|---|
 | CoWoS-S | Full silicon interposer | Up to 3.3× reticle | H100-class parts |
 | CoWoS-R | Resin interposer with fine redistribution wiring | Above 3.3× reticle | Cost-sensitive, fewer HBM stacks |
-| CoWoS-L | Redistribution wiring with local silicon bridges | 5.5× reticle in production, 9.5× in development | Blackwell, Rubin |
+| CoWoS-L | Redistribution wiring with local silicon bridges | 5.5× reticle in production, 9.5× in development | Blackwell |
 
 ### 2.5D: silicon, RDL and bridges
 

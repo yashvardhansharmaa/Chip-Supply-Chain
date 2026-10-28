@@ -114,7 +114,7 @@
   {
     "term": "CoWoS",
     "aka": "chip on wafer on substrate",
-    "plain": "TSMC's method for mounting logic chips and memory stacks side by side on a shared interposer, a layer of fine wiring, then mounting that interposer on a rigid base board. In CoWoS-S the interposer is one piece of silicon. In CoWoS-L, used for Nvidia's Blackwell and Rubin, it is layers of fine copper wiring with small embedded silicon bridges. Nearly every high-end AI accelerator is built this way.",
+    "plain": "TSMC's method for mounting logic chips and memory stacks side by side on a shared interposer, a layer of fine wiring, then mounting that interposer on a rigid base board. In CoWoS-S the interposer is one piece of silicon. In CoWoS-L, used for Nvidia's Blackwell, it is layers of fine copper wiring with small embedded silicon bridges. Nearly every high-end AI accelerator is built this way.",
     "why": "Epoch AI found that TSMC's CoWoS packaging and memory were the main limits on AI chip production in 2025. It estimates that Nvidia used 60.3 percent of all CoWoS that year. SemiAnalysis judged in March 2026 that CoWoS supply was easing, but in July 2026 TSMC said its packaging capacity was so tight that it limited customers' growth.",
     "chapter": "advanced-packaging"
   },
@@ -997,7 +997,7 @@
     "term": "silicon bridge",
     "aka": "silicon bridges, EMIB, silicon-bridge, local silicon bridges, embedded bridge",
     "plain": "A silicon bridge is a small sliver of silicon carrying dense wiring. It is set into the package only where two dies need thousands of connections between them, so the rest of the package can use cheaper wiring. Intel calls its version EMIB, and TSMC's CoWoS-L uses the same idea.",
-    "why": "Bridges let a package grow past a single interposer's size limit, and CoWoS-L uses them to package Nvidia's Blackwell and Rubin chips. The bridges in Blackwell needed very high placement accuracy, and packaging issues limited its supply.",
+    "why": "Bridges let a package grow past a single interposer's size limit, and CoWoS-L uses them to package Nvidia's Blackwell chips. The bridges in Blackwell needed very high placement accuracy, and packaging issues limited its supply.",
     "chapter": "advanced-packaging"
   },
   {
