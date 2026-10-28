@@ -424,6 +424,11 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before {
 .chapter-sources[open] summary::after { content: "\2212"; }
 .chapter-sources ol { margin: 12px 0 0; padding-left: 2.2em; font-size: var(--fs-note); line-height: 1.5; color: var(--ink-2); columns: 1; }
 .chapter-sources summary:hover::after { color: var(--accent); }
+/* the key to the tier marks, at the head of the list (build/build.js SOURCE_KEY) */
+.chapter-sources .src-key { margin: 4px 0 14px; font-family: var(--font-ui); font-size: 13px; line-height: 1.6; color: var(--ink-2); max-width: none; }
+.chapter-sources .src-key-k { margin-right: 8px; font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); color: var(--muted); }
+.chapter-sources .src-key .tier { margin: 0 5px 0 6px; }
+.chapter-sources li:target { background: var(--accent-soft); } /* a source the address names */
 .chapter-sources li { margin-bottom: 7px; overflow-wrap: anywhere; padding-left: 27px; text-indent: -27px; } /* a title that wraps hangs clear of its tier mark */
 .chapter-sources li .tier { text-indent: 0; margin-right: 9px; }
 .chapter-sources li .src-meta { text-indent: 0; }

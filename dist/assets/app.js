@@ -697,6 +697,9 @@
           this.booted = true;
         } else if (anchor) {
           var el = document.getElementById(anchor);
+          // an address that names a folded list (a chapter's Sources) or a place inside one opens it (28 Oct 2026)
+          var fold = el ? (el.tagName === 'DETAILS' ? el : el.closest && el.closest('details')) : null;
+          if (fold && !fold.open) fold.open = true;
           if (el && !kept) {
             var jumpIt = !this.booted || changed || turned;
             scrollToEl(el, !jumpIt); // first load, a new view or another chapter: jump; within the chapter: glide

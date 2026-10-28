@@ -11,6 +11,8 @@ const keepRanges = require('./keep-ranges.js'); // a figure range never breaks a
 // up here because the figures' citations (figure()) are drawn while the chapters are read
 const CITE_WORK = 'Chip Supply Chain: How AI Chips Are Made';
 const CITE_DAY = (id) => `{{CITE_DAY:${id}}}`;
+// the key at the head of a chapter's Sources: what the A and B beside each source mean, led by its own label
+const SOURCE_KEY = `<p class="src-key"><span class="src-key-k">Source tiers</span> <span class="tier tier-A">A</span> company filings, governments, standards bodies, universities and research institutions. <span class="tier tier-B">B</span> SemiAnalysis, Reuters, the Financial Times and Nikkei Asia.</p>`;
 
 const root = path.resolve(__dirname, '..');
 const read = (p) => fs.existsSync(p) ? fs.readFileSync(p, 'utf8') : null;
@@ -1006,7 +1008,9 @@ function chapterHTML(ch) {
   const parts = splitTakeaways(ch.html);
   const pb = plainBox(parts.body, m.plain, { id: ch.id, cites: ch.cites, figures: [] });
   ch.inShort = parts.inShort;
-  const sources = ch.cites.length ? `<details class="chapter-sources" id="${esc(ch.id)}--sources"><summary>Sources (${ch.cites.length})</summary><ol>${ch.cites.map((c) => `<li>${tierTag(c.url)}${sourceLine(c.url)}</li>`).join('')}</ol></details>` : '';
+  // each source has an address of its own (<chapter>--source-<n>, n its footnote number), and the list opens with the key to
+  // its tier marks (28 Oct 2026)
+  const sources = ch.cites.length ? `<details class="chapter-sources" id="${esc(ch.id)}--sources"><summary>Sources (${ch.cites.length})</summary>${SOURCE_KEY}<ol>${ch.cites.map((c, i) => `<li id="${esc(ch.id)}--source-${i + 1}">${tierTag(c.url)}${sourceLine(c.url)}</li>`).join('')}</ol></details>` : '';
   const stageIdx = stages.findIndex((c) => c.id === ch.id);
   const conc = stageIdx >= 0 ? (m.card || {}).concentration || '' : '';
   const where = stageIdx >= 0 ? ch.title : ''; // the card names its stage; the kicker above gives its number (28 Oct 2026)
