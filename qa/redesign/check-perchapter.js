@@ -8,7 +8,9 @@
       Cite this chapter and Chapter PDF (served); an animation's step seeking the video; a flashcard turning; the sources; and
       Next going to the next chapter's address. At 390 in dark mode: the theme, the strip's live drawing, no sideways scroll;
    2. the home page, and every page but a chapter's own and the print-only book, carries none of that chapter's prose: no
-      paragraph or list item of its text (40 characters or more) appears in their HTML;
+      paragraph or list item of its text (40 characters or more) appears in their HTML. The prose is the body's text: the
+      card's lines (which /summary/ sets beside each other), the flashcards (whose lines the Glossary's entries share), the
+      figures and the source list are other parts, and each is looked at by the checks of its own page;
    3. each old hash link (the chapter, a section, a figure, its citation, its flashcards, #/geopolitics, ?only=, a merged
       chapter's address) lands on the right page at the right place, in place of the old entry (no history entry added);
    4. search, from the home page and from a chapter's page, returns a chapter's result that opens its page;
@@ -44,7 +46,8 @@ const kb = (b) => (b / 1024).toFixed(0) + ' KB';
     for (const c of chapters) {
       const art = PT.all(PT.parse(read(path.join(dist, c.id, 'index.html')))).find((x) => x.tag === 'article');
       const prose = art && PT.all(art).find((x) => PT.hasClass(x, 'prose'));
-      const own = prose ? PT.all(prose).filter((x) => x.tag === 'p' || x.tag === 'li').map((x) => norm(PT.textContent(PT.without(x, (k) => k.tag === 'sup')))).filter((t) => t.length >= 40) : [];
+      const other = (x) => x.tag === 'figure' || x.tag === 'nav' || ['plate', 'review', 'chapter-sources'].some((k) => PT.hasClass(x, k));
+      const own = prose ? PT.all(prose).filter((x) => (x.tag === 'p' || x.tag === 'li') && !PT.closest(x, other)).map((x) => norm(PT.textContent(PT.without(x, (k) => k.tag === 'sup')))).filter((t) => t.length >= 40) : [];
       paras += own.length;
       const found = [];
       for (const [p, t] of texts) {
@@ -85,7 +88,7 @@ const kb = (b) => (b / 1024).toFixed(0) + ' KB';
       const t = await open(chrome, BASE + '/' + id + '/', { width: 1440, wait: 2500 });
       const S = await t.ev(`(function () {
         var a = document.getElementById(${JSON.stringify(id)}), q = function (s) { return a ? a.querySelector(s) : null; }, vis = function (e) { return !!e && e.getClientRects().length > 0; };
-        var figs = a ? a.querySelectorAll('.prose .figure').length : -1, meta = (q('.ch-meta') || {}).textContent || '';
+        var figs = a ? a.querySelectorAll('.prose .figure').length : -1, meta = a ? [].map.call(a.querySelectorAll('.ch-meta .label'), function (l) { return l.textContent; }).join('|') : '';
         return { path: location.pathname, articles: [].map.call(document.querySelectorAll('article.chapter'), function (x) { return x.id; }).join(),
           search: vis(document.querySelector('.masthead .search-btn')), theme: vis(document.querySelector('.masthead .theme-toggle')),
           hide: vis(q('.ch-rail .rail-hide')), meters: a ? a.querySelectorAll('.ch-rail .rail-chain.chain-track .meter').length : 0, across: a ? a.querySelectorAll('.ch-rail .rail-across li').length : 0,
@@ -93,7 +96,7 @@ const kb = (b) => (b / 1024).toFixed(0) + ' KB';
           canvas: !!q('.ch-spec-draw canvas#stage-canvas'), specimen: CP.Stage.cur && CP.Stage.cur.name, wants: a && a.getAttribute('data-specimen'),
           card: vis(q('.prose > .plate')), cardMeter: !!q('.prose > .plate .meter'),
           cite: !!q('.ch-cite-line .ch-cite-btn'), pdf: (q('.ch-cite-line .ch-cite-pdf') || { getAttribute: function () { return ''; } }).getAttribute('href'),
-          sources: a ? a.querySelectorAll('#' + a.id + '--sources li').length : 0, said: +((/(\\d+) sources/.exec(meta) || [])[1] || 0),
+          sources: a ? a.querySelectorAll('#' + a.id + '--sources li').length : 0, said: +((/(?:^|\\|)(\\d+) sources(?:\\||$)/.exec(meta) || [])[1] || 0),
           deck: !!q('.fc .fc-show'), anim: !!q('.figure--anim .anim-steps button'), door: (q('.prevnext .next') || { getAttribute: function () { return ''; } }).getAttribute('href') };
       })()`);
       check(`${W}: the page is its chapter alone`, S.path === '/' + id + '/' && S.articles === id, `${S.path} ${S.articles}`);
@@ -162,7 +165,9 @@ const kb = (b) => (b / 1024).toFixed(0) + ' KB';
     const land = async (url, wantPath, wantHash, label) => {
       const t = await open(chrome, BASE + url, { width: 1440, wait: 2200 });
       const r = await t.ev(`(function () { var h = decodeURIComponent(location.hash.slice(1)), e = h && document.getElementById(h); return { at: location.pathname + location.hash, len: history.length, off: e && e.getClientRects().length ? Math.round(e.getBoundingClientRect().top - CP.landAt(e)) : null, y: Math.round(scrollY), open: e && e.classList.contains('ch-cite-box') ? !e.hidden : null }; })()`);
-      const ok = r.at === wantPath + wantHash && r.len === 2 && (wantHash && !/^#\//.test(wantHash) ? r.off !== null && Math.abs(r.off) <= 3 : r.y <= 4) && r.open !== false;
+      // a section lands under the masthead; a chapter's own top (no anchor, or the chapter's id) is the page's top
+      const top = !wantHash || /^#\//.test(wantHash) || wantHash === '#' + wantPath.replace(/\//g, '');
+      const ok = r.at === wantPath + wantHash && r.len === 2 && (top ? r.y <= 4 : r.off !== null && Math.abs(r.off) <= 3) && r.open !== false;
       check(`old link ${url} lands on ${wantPath}${wantHash}${label ? ' (' + label + ')' : ''}`, ok, JSON.stringify(r));
       t.errors.forEach((e) => check(`${url}: page error`, false, e));
       await t.close();

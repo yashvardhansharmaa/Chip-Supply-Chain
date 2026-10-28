@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/* One masthead on every page (design round nine, revision 6, 28 Oct 2026): on a readable chapter page, a reference page and
+/* One masthead on every page (design round nine, revision 6, 28 Oct 2026): on a chapter's page (the app itself since 28 Oct), a reference page and
    /summary/, the bar is the app's: the wordmark at the page's margin (64 px at 1440, as the app's), Home first, the section the
    page belongs to on the wine rule, search and the theme as two 34 px round buttons; the theme button turns the page dark
    and back and keeps the choice; search lands in the app with its dialog open and the flag gone from the address.
@@ -33,8 +33,14 @@ const BAR = `(function(){var m=document.querySelector('.masthead'),w=m.querySele
     const p = await open(chrome, BASE + '/lithography/', { width: 390 });
     const ph = await p.ev("(function(){var m=document.querySelector('.masthead'),r=function(e){var b=e.getBoundingClientRect();return [Math.round(b.left),Math.round(b.top),Math.round(b.width)]};return {home:getComputedStyle(m.querySelector('.tabs a')).display,s:r(m.querySelector('.search-btn')),t:r(m.querySelector('.theme-toggle')),sw:document.documentElement.scrollWidth};})()");
     check('390: Home gives way to the wordmark, the two buttons pin to the first row, no sideways scroll', ph.home === 'none' && ph.s[1] < 20 && ph.t[1] < 20 && ph.sw <= 390, JSON.stringify(ph));
-    const href = await p.ev("document.querySelector('.masthead .search-btn').getAttribute('href')"); await p.close();
-    const s = await open(chrome, new URL(href, BASE + '/lithography/').href, { width: 1440, wait: 2500 });
+    // the chapter page is the app since 28 Oct 2026: its search button opens the dialog in place
+    await p.ev("document.querySelector('.masthead .search-btn').click(),1"); await sleep(400);
+    check('chapter page: search opens its dialog in place', await p.ev("!!document.querySelector('#cp-search') && !document.querySelector('#cp-search').hidden && location.pathname === '/lithography/'"));
+    await p.close();
+    // a static page's search is a link to the app with ?search=1
+    const r = await open(chrome, BASE + '/suppliers/', { width: 1440 });
+    const href = await r.ev("document.querySelector('.masthead .search-btn').getAttribute('href')"); await r.close();
+    const s = await open(chrome, new URL(href, BASE + '/suppliers/').href, { width: 1440, wait: 2500 });
     const st = await s.ev("[!!document.querySelector('#cp-search') && !document.querySelector('#cp-search').hidden, location.search, document.activeElement && document.activeElement.tagName]");
     check('search: the link opens the app with its search dialog open, and drops ?search=1 from the address', st[0] === true && !/search=1/.test(st[1]), JSON.stringify(st));
     await s.close();
