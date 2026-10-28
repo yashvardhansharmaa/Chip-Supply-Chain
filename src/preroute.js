@@ -18,7 +18,7 @@
     exposure: 'controls', glossary: 'glossary' };
   // a bare anchor (#lithography, #gl-euv) opens the view that holds the element; these are the ids of the views other than
   // The Chain, and anything else opens The Chain, as the router does for a chapter, a section or an id it cannot find
-  var OWN = [[/^(gl|lk)-|^glossary$/, 'glossary'], [/^(sup-|atlas|the-route)/, 'suppliers'], [/^(cx|picker)/, 'landscape'],
+  var OWN = [[/^(gl|lk)-|^glossary$/, 'glossary'], [/^(sup-|atlas|the-route)/, 'suppliers'], [/^(aic|cx|picker)/, 'landscape'],
     [/^(cf|tl-|ex-|exposure|controls|timeline)/, 'controls'], [/^(wk-|intro-)/, 'walk']];
   function own(id) { for (var i = 0; i < OWN.length; i++) if (OWN[i][0].test(id)) return OWN[i][1]; return 'stack'; }
   var CHAPTERS = []; // the chapters of The Chain, in order: build/build.js writes their ids here

@@ -101,9 +101,8 @@
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 /* a control reached by Tab scrolls clear of the fixed masthead, the walk's rail under it and the phone strip (WCAG 2.4.11).
    The padding holds while the reader moves by Tab (html.kb, set in src/app.js Keys): links and jumps already land clear of
-   the masthead through scroll-margin-top, and the two would add up. AI Chips' Comparing bar adds --cx-sticky (0 elsewhere), as
-   the view's own rule in chips.css does */
-html.kb { scroll-padding-top: calc(var(--masthead) + var(--cx-sticky, 0px) + 12px); }
+   the masthead through scroll-margin-top, and the two would add up */
+html.kb { scroll-padding-top: calc(var(--masthead) + 12px); }
 html.kb:has(.view[data-view="walk"]:not([hidden]) .wk-rail[data-show="1"]:not([hidden])) { scroll-padding-top: calc(var(--masthead) + 58px); }
 @media (max-width: 900px) {
   html.kb { scroll-padding-bottom: calc(var(--strip-h, 128px) + 12px); } /* the strip's own height (src/app.js Band) */
@@ -142,9 +141,6 @@ small { font-size: 0.85em; }
 
 /* ---------- labels: a kicker in Hanken Grotesk, small spaced capitals in the muted ink (the live site's, 27 Oct 2026) ---------- */
 .label { font-family: var(--font-kicker); font-size: var(--fs-label); line-height: 1.4; font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); color: var(--muted); }
-/* AI Chips keeps its own labels until its builder moves them (src/modules/chips.css sets several in Fragment Mono, which the
-   capitals would turn into tracked mono capitals) */
-section[data-view="landscape"] .label { font-family: var(--font-code); font-size: var(--fs-cap); font-weight: 400; letter-spacing: 0; text-transform: none; }
 .num, .tabular { font-variant-numeric: tabular-nums; }
 
 /* ---------- display type: Source Serif 4, its optical size following the size, never bold ---------- */

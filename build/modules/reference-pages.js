@@ -347,7 +347,7 @@ ${body}
 .ctl-dot { position: absolute; z-index: 1; display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; transform: translate(-50%, -50%); }
 .ctl-dot i { display: block; width: 11px; height: 11px; border-radius: 50%; background: var(--ctx); }
 .ctl-dot:hover i { background: var(--rule-ink); }
-.ctl-dot.top i, .ctl-dot.top:hover i { width: 14px; height: 14px; background: var(--ink); }
+.ctl-dot.top i, .ctl-dot.top:hover i { width: 14px; height: 14px; background: var(--accent); } /* the largest value in wine, as the main page sets it */
 .ctl-dot:focus-visible { outline: 2px solid var(--accent); outline-offset: 0; }
 .ctl-lab { position: absolute; display: none; white-space: nowrap; pointer-events: none; font-family: var(--font-label); font-weight: 400; font-size: 11.5px; line-height: 16px; color: var(--muted); }
 .ctl-lab.top { font-size: 12.5px; font-weight: 600; color: var(--ink); }
@@ -431,7 +431,7 @@ ${body}
     };
     const rowHTML = (c) => `<tr id="${chipIds.get(c.id)}"><th scope="row"><a href="#${chipIds.get(c.id)}-sources">${esc(c.name)}</a>${c.family && c.family !== c.name ? sub(esc(c.family)) : ''}</th>${COLS.map((col) => cell(c, col)).join('')}</tr>`;
     /* the chart the interactive page opens with, at FP16 (the redesign's option C): every chip with a published figure at the
-       month its maker announced it, the highest the one solid dot (rule B), the rest the light tint. The marks are HTML set by
+       month its maker announced it, the highest the one wine dot (rule B, wine since 28 Oct 2026), the rest the light tint. The marks are HTML set by
        percent over a grid drawn to fit, so the labels keep their size at every width; each width shows the labels that were placed
        clear of every dot and label at its narrowest (wide, medium; a phone names only the highest). Each dot links to its row. */
     const timeline = (() => {
@@ -488,16 +488,16 @@ ${body}
       const links = (list) => list.map((p) => `<a href="#${chipIds.get(p.c.id)}">${esc(short(p.c))}</a>`).join(', ');
       const no = none.filter((p) => ((p.c.compute || {}).support || {}).fp16 === 'no'), np = none.filter((p) => !no.includes(p));
       const tid = uid('fp16-timeline', 'sections');
-      return `<section class="ref-sec" aria-labelledby="${tid}"><h2 class="ref-h2" id="${tid}">Speed at FP16, by the year each chip was announced<small>${have.length} of ${chips.length} chips have a published figure</small></h2>`
-        + `<p class="ref-sub">The ${esc(short(hi.c))} is the highest, at ${esc(nf(hi.v))} ${unit}. Each dot links to its chip's row in the table.</p>`
+      return `<section class="ref-sec" aria-labelledby="${tid}"><h2 class="ref-h2" id="${tid}">Speed at FP16, by the month each chip was announced<small>${have.length} of ${chips.length} chips have a published figure</small></h2>`
+        + `<p class="ref-sub">The ${esc(short(hi.c))} is the highest, at ${esc(nf(hi.v))} ${unit}.</p>`
         + `<figure class="ctl" role="group" aria-label="Speed at FP16 of ${have.length} chips, by the month each was announced"><p class="ctl-unit" aria-hidden="true">${unit}</p><div class="ctl-plot">`
         + `<svg class="ctl-grid" viewBox="0 0 1000 1000" preserveAspectRatio="none" aria-hidden="true" focusable="false">${grid}</svg>${marks}</div></figure>`
         + (np.length ? `<p class="ctl-none"><span>Not published at FP16</span> ${links(np)}</p>` : '') + (no.length ? `<p class="ctl-none"><span>Not supported at FP16</span> ${links(no)}</p>` : '')
-        + `<p class="ref-sub ctl-note">Each dot is a chip, placed at the month its maker announced it. A chip dated only to a year sits in that year's middle, on a line across the year. The highest value is the one solid dot.</p></section>`;
+        + `<p class="ref-sub ctl-note">A chip dated only to a year sits in that year's middle, on a line across the year. The highest value is the one colored dot.</p></section>`;
     })();
     const table = `<section class="ref-sec" aria-labelledby="specs"><h2 class="ref-h2" id="specs">Specs side by side<small>${chips.length} chips</small></h2>${specsSub ? `<p class="ref-sub">${specsSub}</p>` : ''}`
       + `<p class="ref-sub">Each figure carries the number of its source in the chip's list below.</p>`
-      + `<p class="tbl-cue always" aria-hidden="true">Scroll the table sideways to see every column.</p><div class="tbl chips-t" role="region" aria-labelledby="specs" tabindex="0"><table><thead><tr><th scope="col">Chip</th>${COLS.map((col) => `<th scope="col"${col.num ? ' class="num"' : ''}>${esc(col.label)}</th>`).join('')}</tr></thead><tbody>${chips.map(rowHTML).join('')}</tbody></table></div></section>`;
+      + `<div class="tbl chips-t" role="region" aria-labelledby="specs" tabindex="0"><table><thead><tr><th scope="col">Chip</th>${COLS.map((col) => `<th scope="col"${col.num ? ' class="num"' : ''}>${esc(col.label)}</th>`).join('')}</tr></thead><tbody>${chips.map(rowHTML).join('')}</tbody></table></div></section>`;
     // each chip's sources, numbered as the cells cite them, after its note on how the speed figures are measured
     const srcBlock = (c) => {
       const id = chipIds.get(c.id), srcs = c.sources || [];
@@ -633,6 +633,5 @@ ${body}
     if (/\{\{REF:/.test(html)) warn(`reference page /${s}/ kept a placeholder`);
   }
   console.log('reference pages: ' + sizes.join(' · '));
-  // the AI Chips view's counts under its standfirst (src/template.html {{AIC_FACTS}}), counted from the data as /chips/ counts them
-  return { AIC_FACTS: `<span>${chips.length} chips</span><span>${new Set(chips.map((c) => c.vendor)).size} makers</span>` };
+  return {};
 };
