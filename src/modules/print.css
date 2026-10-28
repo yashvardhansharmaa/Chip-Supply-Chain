@@ -297,6 +297,7 @@
   .chapter .cols-lab span.top { font-weight: 700; }
   /* change rows: the name and its years at the left, the axis with hairline ticks, an open circle at the earlier value and an
      arrow to the later one, the change at the right */
+  .chapter .cg { font-size: 7.6pt; } /* the em of its --lw and --vw, as the bars' */
   .chapter .cg-row { grid-template-columns: min(var(--lw, 12em), 34%) minmax(0, 1fr) var(--vw, 7em); column-gap: 3mm; }
   .chapter .cg-l { padding: 1mm 0; }
   .chapter .cg-l b { font-size: 7.8pt; }
@@ -538,6 +539,9 @@
      .cp-nudge, build/pdf.py), so its page ends fall elsewhere */
   .chapter.cp-nudge .plain p, .chapter.cp-nudge .inshort p, .chapter.cp-nudge > .prose > p, .chapter.cp-nudge > .prose > ul,
   .chapter.cp-nudge > .prose > ol { line-height: 1.45; }
+  /* and when that still loses lines, a little looser (.cp-loose), so the page ends fall the other way */
+  .chapter.cp-loose .plain p, .chapter.cp-loose .inshort p, .chapter.cp-loose > .prose > p, .chapter.cp-loose > .prose > ul,
+  .chapter.cp-loose > .prose > ol { line-height: 1.55; }
   /* a chapter whose last few sources ran onto a page of their own is laid out again with its list set closer
      (print.js finish() names it, build/pdf.py lays it out, prepare() marks it .cp-sources-tight) */
   .cp-sources-tight .cp-sources li { margin-top: 0.55mm; }

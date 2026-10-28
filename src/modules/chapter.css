@@ -369,7 +369,7 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 .chapter .hb-ref span { position: absolute; top: calc(100% + 3px); left: 50%; transform: translateX(-50%); white-space: nowrap; font-size: 12.5px; line-height: 1.2; color: var(--ink-2); }
 /* a change, before and after (revision 5): one row per subject, its name and years at the left, then the axis, an open circle
    at the earlier value and an arrow to the later one, hairline ticks running through every row, and the change at the right */
-.chapter .cg { margin: 0; font-family: var(--font-ui); font-variant-numeric: tabular-nums; }
+.chapter .cg { margin: 0; font-family: var(--font-ui); font-size: 14px; font-variant-numeric: tabular-nums; } /* 14 px, so --lw and --vw (em) size its columns as the bars' do */
 .chapter .cg-row { display: grid; grid-template-columns: min(var(--lw, 12em), 36%) minmax(0, 1fr) var(--vw, 7em); column-gap: 18px; align-items: center; }
 .chapter .cg-l { min-width: 0; padding: 7px 0; line-height: 1.25; }
 .chapter .cg-l b { display: block; font-size: 14.5px; font-weight: 500; color: var(--ink); }
@@ -394,7 +394,9 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
   .chapter .cols { --ch: 150px; --cw: 96px; --cg: 10px; }
   .chapter .col > b, .chapter .cols-lab span { font-size: 12.5px; }
   .chapter .col.top > b { font-size: 13.5px; }
-  .chapter .cg-row { grid-template-columns: minmax(0, 1fr) auto; column-gap: 12px; }
+  .chapter .cg-row { grid-template-columns: minmax(0, 1fr) var(--vw, 7em); column-gap: 12px; } /* one width for every row's change, so the axes line up */
+  .chapter .cg-axis .cg-t span:first-child { transform: none; } /* the axis's end labels stay inside the column */
+  .chapter .cg-axis .cg-t span:last-child { transform: translateX(-100%); }
   .chapter .cg-l { grid-column: 1 / -1; padding: 12px 0 0; }
   .chapter .cg-l b, .chapter .cg-l small { display: inline; }
   .chapter .cg-l small { margin: 0 0 0 8px; }
