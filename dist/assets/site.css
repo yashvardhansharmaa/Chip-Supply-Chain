@@ -3926,8 +3926,7 @@ html.kb:has(.view[data-view="glossary"]:not([hidden])) { scroll-padding-top: cal
 .atlas .sa-est { display: block; margin: 2px 0 0; font-family: var(--font-ui); font-weight: 400; font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
 /* a stage's band beside its name, as the chapter's kicker marks it: a bar for Extreme, an outline for High */
 .atlas .sa-sc { display: inline-flex; align-items: center; gap: 5px; margin-left: 8px; padding: 0; background: none; color: var(--ink); font-family: var(--font-ui); font-size: 12px; font-weight: 500; vertical-align: 1px; }
-.atlas .sa-sc::before { content: ""; display: block; width: 4px; height: 11px; background: var(--bar-5); }
-.atlas .sa-sc[data-band="3"]::before { height: 6px; margin-top: 5px; background: transparent; box-shadow: inset 0 0 0 1.25px var(--ink); }
+.atlas .sa-sc .meter { --mh: 10px; --mw: 3px; --mg: 1.5px; } /* the band's meter, as the strip below draws it (28 Oct 2026; a single mark before) */
 :root[data-theme="dark"] .atlas .sa-sc { color: var(--ink); }
 .atlas .sa-china { margin: 14px 0 0; padding: 10px 0 2px; border-left: 0; border-top: 1px solid var(--line); }
 .atlas .sa-china a { color: var(--ink); text-decoration-color: var(--rule-ink); }

@@ -48,10 +48,13 @@ const COUNTRY = {
 const PRIMARY = ['US', 'NL', 'DE', 'JP', 'TW', 'KR', 'CN', 'MY', 'SG'];
 const SECONDARY = ['GB', 'IL', 'IN', 'FR', 'AT', 'CH', 'TH'];
 
-/* One stop per stage for the home map's route: the town that leads the stage, by the site's own
- * chapter cards (the first-named leader's headquarters or main site). Editorial, like TOWN_CC. Since the merge of
+/* One stop per stage for the home map's route: a main site of the stage in the country that leads it, the first named on
+ * the stage's chapter card (a leader's headquarters or main site). Editorial, like TOWN_CC. Since the merge of
  * 27 Oct 2026 Foundries and Fabs, led by TSMC, stands at Hsinchu, where the front end stood; Tainan, the old
- * foundry stop, is no longer on the route. */
+ * foundry stop, is no longer on the route. Since 28 Oct 2026 each stop stands in its stage's leading country, so one list
+ * drives a country's count, its cards and the stops it lights: Test and Assembly (led by Taiwan) at Kaohsiung, home of
+ * ASE, in place of Penang, and Systems and Networking (led by the United States) at Santa Clara, home of Nvidia, in place
+ * of Taipei (the cities as data/suppliers.json gives them). The build warns when a stop leaves its leading country. */
 const STOPS = [
   ['design-and-eda', 'San Jose', 37.34, -121.89, 'US', -14, -8],
   ['silicon-and-wafers', 'Tokyo', 35.68, 139.69, 'JP', -16, -14],
@@ -64,15 +67,15 @@ const STOPS = [
   ['memory-and-hbm', 'Icheon', 37.28, 127.44, 'KR', 0, 0],
   ['advanced-packaging', 'Kaohsiung', 22.63, 120.30, 'TW', 10, 12],
   ['substrates-and-pcbs', 'Ogaki', 35.36, 136.62, 'JP', -22, 6],
-  ['test-and-assembly', 'Penang', 5.41, 100.34, 'MY', 0, 0],
-  ['systems-and-networking', 'Taipei', 25.03, 121.56, 'TW', 14, -10],
+  ['test-and-assembly', 'Kaohsiung', 22.63, 120.30, 'TW', -10, 14],
+  ['systems-and-networking', 'Santa Clara', 37.35, -121.95, 'US', -10, 14],
   ['data-centers-and-power', 'Ashburn', 39.04, -77.49, 'US', 0, 0]
 ];
 /* One line on what each country makes, in the words the chapters use. Editorial. */
 const ROLE = {
   US: 'Designs the chips, makes most of the tools and is the biggest buyer',
   NL: 'The only maker of EUV scanners, the machines that print the finest layers',
-  JP: 'Wafers, photoresist, masks and etch tools, which every fab needs',
+  JP: 'Wafers, photoresist, masks and the substrates that chips are packaged on',
   TW: 'Makes nearly every leading-edge chip and packages most of them',
   KR: 'Memory, including the high-bandwidth stacks every accelerator needs',
   DE: 'The optics inside every EUV scanner, and specialty chemicals',
@@ -279,6 +282,15 @@ module.exports = function (ctx) {
   }).join('');
 
   /* ---------------- per-country figures ---------------- */
+  // a source's short name, for a share row's basis line: the bibliography's publisher, cut to the name readers know
+  const SHORT_PUB = [[/CSET|Center for Security and Emerging Technology/, 'CSET'], [/Boston Consulting Group and Semiconductor Industry Association/, 'SIA and BCG'],
+    [/Semiconductor Industry Association/, 'SIA'], [/Ministry of Economy, Trade and Industry/, 'METI'], [/filing by ([^)]+)\)/, '$1']];
+  let BIB = {}; try { BIB = JSON.parse(require('fs').readFileSync(require('path').join(ctx.root || require('path').resolve(__dirname, '..', '..'), 'data', 'bibliography.json'), 'utf8')); } catch (e) { warn('summary-a: data/bibliography.json could not be read, so share rows name their source by its address'); }
+  const whoOf = (u) => {
+    const pub = String((BIB[u] || {}).publisher || '');
+    for (const [re, to] of SHORT_PUB) { const m = re.exec(pub); if (m) return to.replace('$1', m[1] || ''); }
+    return pub || String(u || '').replace(/^https?:\/\/(www\.)?/, '').split('/')[0];
+  };
   const totalFirms = suppliers.length;
   function country(cc) {
     const name = COUNTRY[cc] || cc;
@@ -286,7 +298,11 @@ module.exports = function (ctx) {
     const segs = matrix.filter((r) => r.shares[cc] != null).map((r) => {
       const rank = Object.keys(r.shares).sort((a, b) => r.shares[b] - r.shares[a]).indexOf(cc) + 1;
       const basis = r.basis || (/estimate/i.test((r.metric || '') + ' ' + (r.note || '').slice(0, 40)) ? 'estimate' : '');
-      const flag = basis === 'estimate' ? 'Estimate' : basis === 'relayed' ? 'reported by ' + (r.relayedVia || 'a third party') : basis === 'derived' ? 'computed' : '';
+      // a measured row names who measured it, so every row says where its figure comes from on a phone too, where the
+      // method in the hover title cannot be read (28 Oct 2026): the publisher the row cites, or the original its method names
+      const taken = /\btaken from ([A-Z][A-Za-z&]+)/.exec(r.method || '');
+      const flag = basis === 'estimate' ? 'Estimate' : basis === 'relayed' ? 'reported by ' + (r.relayedVia || 'a third party') : basis === 'derived' ? 'computed'
+        : taken ? taken[1] + ', via ' + whoOf(r.source) : whoOf(r.source);
       return { seg: r.segment, v: r.shares[cc], year: r.asOf || r.year, rank: rank, ch: SEG_CH[r.segment] || null, estimate: basis === 'estimate', flag: flag, method: r.method || '' };
     }).sort((a, b) => b.v - a.v);
     const firms = suppliers.filter((s) => s.country === cc);
@@ -321,14 +337,20 @@ module.exports = function (ctx) {
     // up to three segment shares: anything it leads, or holds a tenth of
     const shares = d.segs.filter((s) => s.rank === 1 || s.v >= 10).slice(0, 3).map((s) => {
       const ch = s.ch ? byId(s.ch) : null;
-      const inner = `<span class="sa-fact-k"${s.method ? ` title="${esc(s.method)}"` : ''}>${esc(s.seg)}${s.flag ? ` <em class="sa-est${s.estimate ? '' : ' sa-est--basis'}">${esc(s.flag)}</em>` : ''}</span><span class="sa-fact-v">${num(s.v)}%<small>${esc(String(s.year || ''))}</small></span>`;
+      // the basis and the year on one line under the segment ("CSET · 2019"), inside the row; the year sat under the share and
+      // dropped onto the divider where a row had no basis line
+      const basisLine = [s.flag, s.year ? String(s.year) : ''].filter(Boolean).join(' · ');
+      const inner = `<span class="sa-fact-k"${s.method ? ` title="${esc(s.method)}"` : ''}>${esc(s.seg)}${basisLine ? ` <em class="sa-est${s.estimate ? '' : ' sa-est--basis'}">${esc(basisLine)}</em>` : ''}</span><span class="sa-fact-v">${num(s.v)}%</span>`;
       return `<li class="sa-fact sa-fact--share"><span class="sa-fact-bar" style="--w:${Math.min(100, s.v)}%"></span>${ch ? `<a href="${href(ch)}">${inner}</a>` : `<span class="sa-fact-in">${inner}</span>`}</li>`;
     });
 
-    // up to three chapter cards that name it, hardest stage first
-    const cards = d.named.slice().sort((a, b) => (b.bandRank || 0) - (a.bandRank || 0) || a.number - b.number).slice(0, 3).map((c) => {
+    // the stages it leads, every one, in the order a chip is made (the count above and the stops it lights are the same list:
+    // 28 Oct 2026, when three cards hid Japan's fourth); a country that leads none, up to three cards that name it, hardest first
+    const led = ledBy[cc] || [];
+    const cards = (led.length ? led.slice().sort((a, b) => a.number - b.number) : d.named.slice().sort((a, b) => (b.bandRank || 0) - (a.bandRank || 0) || a.number - b.number).slice(0, 3)).map((c) => {
       const note = (c.countries.find((x) => x.code === cc) || {}).note || '';
-      return `<li class="sa-fact sa-fact--card"><a href="${href(c)}"><span class="sa-fact-k">${esc(c.title)}<b class="sa-sc" data-band="${c.bandRank || 0}">${esc(c.band || '')}</b></span>${note ? `<span class="sa-fact-note">${esc(note)}</span>` : ''}</a></li>`;
+      const l = { Extreme: 4, High: 3, Moderate: 2, Low: 1 }[c.band] || 0; // the band's four-bar meter (src/modules/chapter.css .meter)
+      return `<li class="sa-fact sa-fact--card"><a href="${href(c)}"><span class="sa-fact-k">${esc(c.title)}<b class="sa-sc" data-band="${c.bandRank || 0}"><span class="meter" data-level="${l}" aria-hidden="true">${[1, 2, 3, 4].map((k) => `<b${k <= l ? ' class="on"' : ''}></b>`).join('')}</span>${esc(c.band || '')}</b></span>${note ? `<span class="sa-fact-note">${esc(note)}</span>` : ''}</a></li>`;
     });
 
     let china = '';
@@ -473,6 +495,7 @@ ${svg}
   // the atlas on the Suppliers page: the route of one chip, its strip of stops, and what each country makes, with its panel
   const stopOf = {}; STOPS.forEach((st) => { stopOf[st[0]] = st; });
   const routeStops = stages.map((c) => ({ c, st: stopOf[c.id] })).filter((x) => { if (!x.st) warn('summary-a: no stop for ' + x.c.id); return !!x.st; });
+  routeStops.forEach((x) => { const first = ((x.c.countries || [])[0] || {}).code; if (first && first !== x.st[4]) warn(`summary-a: stop ${x.c.number} (${x.st[1]}) stands in ${x.st[4]}, but its card names ${first} first, so ${first}'s count and its lit stops disagree`); });
   // Each stop starts at its town plus the editorial nudge (STOPS), then the stops are pushed apart until no two touch on
   // the narrowest map that numbers them: 690 px wide (a 768 px window; under 761 px the stops are small dots, suppliers.css).
   // Their boxes are what must not meet (the layout sweep measures boxes), so two stops are clear once they are a stop's
@@ -526,7 +549,7 @@ ${svg}
   const key = `<p class="atlas-key">${ex ? `<span><i class="sa-kstop" data-band="Extreme" aria-hidden="true">${ex.c.number}</i>Stage rated Extreme</span>` : ''}${hi ? `<span><i class="sa-kstop" data-band="High" aria-hidden="true">${hi.c.number}</i>Stage rated High</span>` : ''}</p>`;
   const homeMap = `<div class="sa sa--home sa--atlas">
 <section class="atlas" id="the-route" aria-labelledby="atlas-h">
-<div class="sup-sec-h atlas-h"><h2 id="atlas-h">The route of one chip</h2><p class="sup-sec-sub">The ${routeStops.length} stages of the chain, each pinned where a leading firm is based</p></div>
+<div class="sup-sec-h atlas-h"><h2 id="atlas-h">The route of one chip</h2><p class="sup-sec-sub">The ${routeStops.length} stages of the chain, each pinned at a main site in the country that leads it</p></div>
 <ul class="sa-roles" aria-label="Countries">${roles}</ul>
 <div class="atlas-body">
 <div class="sa-map sa-map--route"${DEFAULT_CC ? ` data-cc="${DEFAULT_CC}"` : ''}>${routeSvg}<div class="sa-overlay">${stopBtns}</div></div>
