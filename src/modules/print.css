@@ -275,6 +275,11 @@
   .chapter .figure--anim .anim-print { display: block; width: 100%; height: auto; }
   .chapter .figure--anim .anim-transcript { margin: 2.4mm 0 0; padding-left: 5mm; font-family: var(--font-body); font-size: calc(8.4pt * var(--text-scale)); line-height: 1.38; }
   .chapter .figure--anim .anim-transcript li { margin: 0 0 0.9mm; }
+  /* an explainer's drawing stays whole, but its numbered steps may run on to the next page: in the larger type a drawing and
+     five steps could be taller than a page (chapter 3, 27 Oct) */
+  .chapter .figure.figure--anim { break-inside: auto; }
+  .chapter .figure--anim .anim-stage { break-inside: avoid; break-after: avoid; }
+  .chapter .figure--anim .anim-transcript li { break-inside: avoid; }
   /* the source line: "Source", the source's name and its note number, any note */
   .chapter .fig-strip { display: block; padding: 1.6mm 0 1.8mm; background: none; border-top: 0.3pt solid var(--line-2); font-family: var(--font-code); font-size: 6.8pt; line-height: 1.4; color: var(--ink-2); }
   .chapter .fig-strip .fs-src, .chapter .fig-strip .fs-note { display: block; }

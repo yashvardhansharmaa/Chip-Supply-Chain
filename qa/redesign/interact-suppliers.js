@@ -50,7 +50,7 @@ const WINE = 'rgb(122, 31, 43)', GRAY = 'rgb(210, 209, 204)', DARK = 'rgb(140, 1
       check(`${width}: Each country draws them apart again`, await t.ev("!!document.querySelector('.sup-rib.c-NL') && location.hash === '#/suppliers'"), await t.ev('location.hash'));
       // the tabs
       check(`${width}: By segment opens first, twenty segments`, await t.ev("!document.getElementById('sup-ladder').hidden && document.getElementById('sup-ladder-cc').hidden && document.querySelectorAll('#sup-ladder .sup-rung').length === 20"));
-      check(`${width}: the ladder's heading says segments`, (await t.ev("document.getElementById('sup-ladder-h').textContent")) === 'Segments by number of firms, fewest first');
+      check(`${width}: the ladder's heading says segments`, (await t.ev("document.getElementById('sup-ladder-h').textContent")) === 'Segments from chip design to power'); // the ladder runs in chain order since 24b10b8 (owner, 25 Oct)
       await t.ev("(document.querySelector('.sup-tabs a[data-tab=\"country\"]').click(), 1)"); await sleep(400);
       check(`${width}: By country lists every country`, await t.ev("!document.getElementById('sup-ladder-cc').hidden && document.getElementById('sup-ladder').hidden && document.querySelectorAll('#sup-ladder-cc .sup-rung').length >= 18"),
         (await t.ev("document.querySelectorAll('#sup-ladder-cc .sup-rung').length")) + ' countries; ' + await t.ev('location.hash'));
