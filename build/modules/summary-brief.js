@@ -258,6 +258,7 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
     body { font-size: var(--t-text); }
     .scr, .site-footer { overflow-wrap: break-word; }
     .dek { font-size: var(--t-text); }
+    h1 { font-size: min(46px, 11vw); line-height: 1.02; } /* a long title, as a long chapter title is set on a phone: two lines, not three */
     .sides { grid-template-columns: minmax(0, 1fr); }
     .card { padding: 16px 16px 14px; }
     h3 { font-size: var(--t-lead); }
