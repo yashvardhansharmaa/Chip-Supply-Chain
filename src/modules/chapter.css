@@ -29,7 +29,7 @@
 .view[data-view="stack"] > .howto > * { grid-column: 1 / -1; min-width: 0; }
 .howto h1.howto-title {
   margin: 0 0 0 -0.045em; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title);
-  font-size: clamp(60px, 8vw, 120px); line-height: 0.9; letter-spacing: -0.03em;
+  font-size: clamp(48px, 6vw, 88px); line-height: 0.92; letter-spacing: -0.03em;
 }
 .view[data-view="stack"] > .howto > .howto-lede { grid-column: 1 / 9; margin: 24px 0 0; max-width: calc(36em / var(--text-scale)); font-family: var(--font-body); font-size: calc(clamp(19px, 1.5vw, 22px) * var(--text-scale)); line-height: 1.42; color: var(--ink-2); }
 .howto h3.howto-k, .contents > h2 {
@@ -99,10 +99,10 @@ article.chapter > .chapter-head > * { min-width: 0; }
 .chapter .ch-title {
   margin: 20px 0 0 -0.045em; max-width: 666px; /* the title keeps to the measure, so it, the standfirst and the plate share one edge */
   font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title);
-  font-size: clamp(60px, 7.7vw, 116px); line-height: 0.9; letter-spacing: -0.03em; text-wrap: balance; overflow-wrap: normal;
+  font-size: clamp(48px, 5.8vw, 84px); line-height: 0.94; letter-spacing: -0.03em; text-wrap: balance; overflow-wrap: normal;
 }
 /* a long title ("Chemicals, Gases and Photoresist") takes two lines at a smaller size */
-.chapter .ch-title.is-long { font-size: clamp(44px, 5vw, 74px); line-height: 0.98; letter-spacing: -0.022em; }
+.chapter .ch-title.is-long { font-size: clamp(36px, 4vw, 58px); line-height: 0.98; letter-spacing: -0.022em; }
 .chapter .ch-lede {
   margin: 22px 0 0; max-width: 666px;
   font-family: var(--font-body); font-weight: 400; font-size: calc(22px * var(--text-scale)); line-height: 1.4; color: var(--ink-2);
@@ -206,7 +206,7 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 .chapter .plate-kpis .v {
   display: flex; align-items: flex-end; gap: 14px; margin: 12px 0 14px;
   font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title);
-  font-size: clamp(48px, 5vw, 76px); line-height: 0.92; letter-spacing: -0.03em; white-space: nowrap; overflow-wrap: normal; color: var(--ink);
+  font-size: clamp(36px, 3.6vw, 54px); line-height: 0.95; letter-spacing: -0.03em; white-space: nowrap; overflow-wrap: normal; color: var(--ink);
 }
 .chapter .plate-kpis .v .bm { display: block; flex: none; width: 12px; height: 0.74em; margin-bottom: 0.08em; background: var(--ink); }
 .chapter .plate-kpis .v .bm[data-band="3"] { height: 0.36em; background: transparent; box-shadow: inset 0 0 0 2px var(--ink); }

@@ -6,7 +6,7 @@
 .page.ref { max-width: calc(1160px + 2 * var(--gutter)); }
 .ref .ch-head { max-width: 52em; }
 /* the head as the views' (redesign stage 3): the title in the display face, 400, at display size over its standfirst */
-.ref .ch-title { font-weight: 400; font-size: clamp(56px, 7.4vw, 108px); line-height: 0.92; letter-spacing: -0.03em; margin-left: -0.04em; }
+.ref .ch-title { font-weight: 400; font-size: clamp(46px, 5.6vw, 80px); line-height: 0.92; letter-spacing: -0.03em; margin-left: -0.04em; }
 .ref .ch-lede { max-width: 36em; }
 .ref .cta-note { max-width: 30em; }
 .ref .measure { max-width: var(--measure); }

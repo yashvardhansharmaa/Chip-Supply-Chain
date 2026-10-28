@@ -20,7 +20,7 @@
   --font-kicker: var(--font-code);
   --opsz-title: normal; /* the optical size follows the size */
   /* the text scale, as src/styles.css sets it: every size in the text face is its Literata size times 20 / 18.5 */
-  --text-scale: calc(20 / 18.5);
+  --text-scale: 1;
   --measure: calc(31em / var(--text-scale)); /* the same width as before the switch, about 61 characters */
   --gutter: clamp(16px, 4vw, 40px);
   /* the site's type scale (src/styles.css :root, redesign of 25 Oct 2026): labels in sentence case, nothing under 11 px */
@@ -88,7 +88,7 @@ strong, b { font-weight: 600; }
 .ch-head { padding: clamp(40px, 8vh, 72px) 0 4px; }
 .eyebrow { margin: 0 0 14px; font-family: var(--font-kicker); font-size: var(--fs-cap); font-weight: 400; letter-spacing: 0; color: var(--muted); }
 .eyebrow b { color: var(--ink); font-weight: 400; }
-.ch-title { font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: clamp(40px, 6.4vw, 60px); line-height: 1.02; letter-spacing: -0.015em; margin: 0 0 18px; }
+.ch-title { font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: clamp(36px, 5.4vw, 52px); line-height: 1.02; letter-spacing: -0.015em; margin: 0 0 18px; }
 .ch-lede { font-size: var(--fs-lede); line-height: 1.45; color: var(--ink-2); margin: 0 0 16px; }
 .ch-meta { margin: 0 0 26px; font-family: var(--font-kicker); font-size: var(--fs-cap); font-weight: 400; letter-spacing: 0; color: var(--muted); }
 
