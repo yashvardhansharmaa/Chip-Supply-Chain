@@ -47,7 +47,7 @@
     {"id": "dep-etch-cycle", "type": "animation", "src": "dep-etch", "title": "One round of deposition and etch", "note": "Simplified cross-section. The layers are drawn much thicker than they are."},
  {
  "id": "equipment-billings",
- "type": "bars",
+ "type": "columns",
  "title": "What the world spent on chipmaking equipment",
  "finding": "Chipmaking equipment sales rose to $135.1 billion in 2025, from $117.1 billion",
  "unit": "$B",

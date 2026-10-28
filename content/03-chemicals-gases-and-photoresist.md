@@ -59,7 +59,7 @@
  },
  {
  "id": "germanium-price",
- "type": "bars",
+ "type": "columns",
  "title": "Germanium metal, annual average price in Europe ($/kg). China required export licenses from August 2023, banned shipments to the US in December 2024 and suspended the ban from November 2025 to 27 November 2026",
  "finding": "Germanium in Europe rose to an estimated $4,100 a kilogram in 2025",
  "unit": "$/kg",

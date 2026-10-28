@@ -9,8 +9,8 @@
    face at 400 and the wordmark in Fraunces at its own optical size (print.js: a weight between the named ones prints as
    Type 3 shapes, which do not copy or search), Hanken Grotesk for labels, Fragment Mono
    for kickers, codes and dates; ink on white, with the wine on links (the citation marks, the parts list's links), the logo
-   tile, the Extreme marks and the largest value on each chart (its bar and its bold value; the rest the light tint), as on
-   screen since the visual pass of 27 Oct 2026.
+   tile, the Extreme marks and the one value that matters on each chart (its bar and its bold value; the rest the light tint),
+   as on screen since the visual pass of 27 Oct 2026 and the chart rule as amended on 28 Oct 2026.
    The chapter on screen is a 12-column grid (src/modules/chapter.css). On paper it is one column of text with the chain
    in a margin column at its left, so the rules below undo the grid; they carry the screen's selector weight (.chapter
    ...) and come after chapter.css, so they win.
@@ -270,6 +270,50 @@
   .chapter .hb.top .hb-r i { background: var(--accent-fill); }
   .chapter .hb.top .hb-r b { font-family: var(--font-ui); font-size: 7.8pt; font-weight: 700; color: var(--accent-ink); }
   .chapter .hb.rest .hb-r i { background: repeating-linear-gradient(135deg, var(--rule-ink) 0 0.5pt, transparent 0.5pt 1.4mm); box-shadow: inset 0 0 0 0.5pt var(--rule-ink); }
+  /* the new forms of 28 Oct 2026 (revisions 4 and 5, figure() in build/build.js), with the chart rule as on screen: wine on the
+     value the title names, the largest by default, the largest change on a change chart; the rest the tint.
+     A range: solid to its low end (the mark's wine, or the tint where the span alone is named), hatched to its high end inside
+     a wine outline, a reference value an ink tick named beside it */
+  .chapter .hb.range .hb-r i, .chapter .col.range > i { --fill: var(--ctx); --edge: var(--rule-ink); box-shadow: inset 0 0 0 0.8pt var(--edge); border-radius: 0; }
+  .chapter .hb.range.top .hb-r i, .chapter .col.range.top > i { --fill: var(--accent-fill); --edge: var(--accent-fill); }
+  .chapter .hb.range.top.span .hb-r i, .chapter .col.range.top.span > i { --fill: var(--ctx); }
+  .chapter .hb.range .hb-r i { background: linear-gradient(90deg, var(--fill) 0 var(--lo), transparent var(--lo)), repeating-linear-gradient(135deg, var(--edge) 0 0.6pt, transparent 0.6pt 1.5mm); }
+  .chapter .hb-ref { top: -0.8mm; bottom: -0.8mm; width: 0.9pt; margin-left: -0.45pt; }
+  .chapter .hb-ref span { top: calc(100% + 0.6mm); font-size: 6.8pt; }
+  .chapter .hb:has(.hb-ref) { margin-bottom: 3.6mm; }
+  /* columns: years left to right on an ink baseline, at most 24 mm a column, 32 mm at the tallest */
+  .chapter .cols { --ch: 32mm; --cw: 24mm; --cg: 3mm; margin: 0; }
+  .chapter .cols-plot { padding-top: 0.6mm; border-bottom: 0.6pt solid var(--ink); }
+  .chapter .col > b { margin: 0 -1.5mm 1mm; font-family: var(--font-code); font-size: 7pt; font-weight: 400; color: var(--ink-2); }
+  .chapter .col > i { border-radius: 0; }
+  .chapter .col.top > b { font-family: var(--font-ui); font-size: 7.8pt; font-weight: 700; color: var(--accent-ink); }
+  .chapter .col.top > i { background: var(--accent-fill); }
+  .chapter .col.range > i { background: linear-gradient(0deg, var(--fill) 0 var(--lo), transparent var(--lo)), repeating-linear-gradient(135deg, var(--edge) 0 0.6pt, transparent 0.6pt 1.5mm); }
+  .chapter .col.rest > i { background: repeating-linear-gradient(135deg, var(--rule-ink) 0 0.5pt, transparent 0.5pt 1.4mm); box-shadow: inset 0 0 0 0.5pt var(--rule-ink); }
+  .chapter .col-ref { left: -1mm; right: -1mm; height: 0.9pt; margin-bottom: -0.45pt; }
+  .chapter .col-ref span { left: calc(100% + 1.2mm); font-size: 6.8pt; }
+  .chapter .cols-lab { padding-top: 1.2mm; }
+  .chapter .cols-lab span { font-size: 7.2pt; line-height: 1.25; }
+  .chapter .cols-lab span.top { font-weight: 700; }
+  /* change rows: the name and its years at the left, the axis with hairline ticks, an open circle at the earlier value and an
+     arrow to the later one, the change at the right */
+  .chapter .cg-row { grid-template-columns: min(var(--lw, 12em), 34%) minmax(0, 1fr) var(--vw, 7em); column-gap: 3mm; }
+  .chapter .cg-l { padding: 1mm 0; }
+  .chapter .cg-l b { font-size: 7.8pt; }
+  .chapter .cg-l small { margin-top: 0.3mm; font-size: 6.8pt; }
+  .chapter .cg-t { min-height: 8.4mm; }
+  .chapter .cg-axis .cg-t { min-height: 4mm; }
+  .chapter .cg-axis .cg-t span, .chapter .cg-end { font-size: 6.6pt; }
+  .chapter .cg-axis .cg-t span { bottom: 1mm; }
+  .chapter .cg-end { top: 0.4mm; }
+  .chapter .cg-tick { width: 0.3pt; margin-left: -0.15pt; background: var(--line-2); }
+  .chapter .cg-from { width: 2mm; height: 2mm; margin: -1mm 0 0 -1mm; border-width: 0.8pt; background: #fff; }
+  .chapter .cg-arrow { --hl: 1.6mm; --hw: 0.9mm; height: 0.8pt; margin-top: -0.4pt; }
+  .chapter .cg-row.top .cg-arrow { --c: var(--accent-fill); --hl: 2.2mm; --hw: 1.2mm; height: 1.3pt; margin-top: -0.65pt; }
+  .chapter .cg-row.top .cg-from { border-color: var(--accent-fill); }
+  .chapter .cg-v { font-family: var(--font-code); font-size: 7pt; }
+  .chapter .cg-row.top .cg-v { font-family: var(--font-ui); font-size: 7.8pt; font-weight: 700; color: var(--accent-ink); }
+  .chapter .figure .cols, .chapter .figure .cg { break-inside: avoid; }
   .chapter .figure .tl li { font-family: var(--font-body); font-size: calc(8.4pt * var(--text-scale)); line-height: 1.36; }
   .chapter .figure .tl li .d { font-family: var(--font-code); font-size: 6.8pt; }
   /* an animation on paper: its last frame, then its steps in the figures' small type (styles.css prints the list) */

@@ -2,17 +2,17 @@
   "/": {
     "published": "2026-10-01",
     "modified": "2026-10-28",
-    "content": "6fbde9c6fe8557b0"
+    "content": "cb1e38e333fdd827"
   },
   "/advanced-packaging/": {
     "published": "2026-09-09",
     "modified": "2026-10-28",
-    "content": "6087524be605f9a7"
+    "content": "026571c1dcfe6f8b"
   },
   "/chemicals-gases-and-photoresist/": {
     "published": "2026-09-09",
     "modified": "2026-10-28",
-    "content": "893fc6fa0d9b9a7e"
+    "content": "dbe2931a45ab913d"
   },
   "/chips/": {
     "published": "2026-10-21",
@@ -27,12 +27,12 @@
   "/data-centers-and-power/": {
     "published": "2026-09-09",
     "modified": "2026-10-28",
-    "content": "71978b18faeb927d"
+    "content": "9f69b59bbc7e481f"
   },
   "/deposition-and-etch/": {
     "published": "2026-09-09",
     "modified": "2026-10-28",
-    "content": "b8990b0fd2689231"
+    "content": "26169d886fa9531e"
   },
   "/design-and-eda/": {
     "published": "2026-09-09",
@@ -52,7 +52,7 @@
   "/geopolitics/": {
     "published": "2026-09-09",
     "modified": "2026-10-28",
-    "content": "70cb4e695d53ca0f"
+    "content": "e74903879e006d40"
   },
   "/glossary/": {
     "published": "2026-10-21",
@@ -62,12 +62,12 @@
   "/lithography/": {
     "published": "2026-09-09",
     "modified": "2026-10-28",
-    "content": "c8d28398917e9cf9"
+    "content": "376998d117ffd7a5"
   },
   "/memory-and-hbm/": {
     "published": "2026-09-09",
     "modified": "2026-10-28",
-    "content": "50fbc9e6c2017193"
+    "content": "d899e8cc4ff6afd6"
   },
   "/metrology-and-inspection/": {
     "published": "2026-09-09",
@@ -177,7 +177,7 @@
   "/substrates-and-pcbs/": {
     "published": "2026-09-09",
     "modified": "2026-10-28",
-    "content": "1125d4f01bf86964"
+    "content": "84ddab0734f841fd"
   },
   "/summary/": {
     "published": "2026-10-21",
@@ -192,11 +192,11 @@
   "/systems-and-networking/": {
     "published": "2026-09-09",
     "modified": "2026-10-28",
-    "content": "7a9caea40a56914f"
+    "content": "966b570d9f007229"
   },
   "/test-and-assembly/": {
     "published": "2026-09-09",
     "modified": "2026-10-28",
-    "content": "330a070244fabd10"
+    "content": "2d73194492211f17"
   }
 }

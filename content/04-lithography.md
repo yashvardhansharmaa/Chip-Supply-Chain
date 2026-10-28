@@ -47,7 +47,8 @@
     {"id": "litho-print", "type": "animation", "src": "litho", "title": "How lithography prints a chip", "note": "Simplified. The newest machines, which use extreme ultraviolet light, carry the image with mirrors in place of a lens."},
  {
  "id": "euv-shipments",
- "type": "bars",
+ "type": "columns",
+ "mark": "2025",
  "title": "EUV systems ASML sold each year",
  "finding": "ASML sold 48 EUV systems in 2025, up from 44 in 2024",
  "unit": "tools",
@@ -57,10 +58,10 @@
  {
  "id": "tool-price",
  "type": "bars",
- "title": "What one lithography system costs. The DUV bar is one figure for the whole segment, and the High-NA bar shows the low end of an estimated $350-400M range",
+ "title": "What one lithography system costs. The DUV bar is one figure for the whole segment",
  "finding": "High-NA EUV scanners cost an estimated $350 million to $400 million in 2026",
  "unit": "$M",
- "data": [["DUV tool", 60], ["EUV, 0.33 NA", 200], ["High-NA EUV", 350]],
+ "data": [["DUV tool", 60], ["EUV, 0.33 NA", 200], ["High-NA EUV", 350, 400]],
  "source": {"label": "Reuters explainer on ASML's lithography machines, first published 28 January 2026 and updated 28 July 2026", "url": "https://www.reuters.com/world/asia-pacific/250-million-asml-printer-behind-nvidias-chips-2026-07-28/"}
  },
  {
