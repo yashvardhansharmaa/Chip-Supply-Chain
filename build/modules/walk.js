@@ -163,7 +163,7 @@ ${leadersHTML(c)}
 <header class="wk-head" id="wk-hero" data-specimen="${esc(firstSpec.spec)}" data-number="${first.id ? pad(SHOW_FIRST + 1) : ''}" data-title="${esc(first.title || '')}" data-caption="${esc(firstSpec.cap)}">
 <h1 class="wk-title">How AI chips are made</h1>
 <p class="wk-dek">An introduction to the entire semiconductor supply chain.</p>
-<p class="wk-meta"><span class="label">${steps.length} paragraphs</span><span class="label">${walkWords.toLocaleString('en-US')} words</span><span class="label">about ${mins} min</span></p>
+<p class="wk-meta"><span class="label">${walkWords.toLocaleString('en-US')} words</span><span class="label">about ${mins} min</span></p>
 ${GLANCE}
 </header>
 <ol class="wk-list">

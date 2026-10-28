@@ -1557,8 +1557,9 @@ const glEntries = PT.all(glossaryDoc).filter((n) => PT.hasClass(n, 'gl-entry')).
 });
 const searchData = (() => {
   const idx = [];
-  idx.push({ kind: 'Start here', title: 'How AI chips are made', text: 'One plain paragraph per stage, in order, with the specimens', href: '#/intro' });
-  data.chapters.forEach((c) => { if (c.plain && c.id !== 'introduction-and-goals') idx.push({ kind: 'Start here', title: c.title + ', in plain terms', text: c.plain, href: '#/walk/' + c.id }); });
+  // the home page is "Home" in the results, as the masthead names it (28 Oct 2026; it said "Start here", a page the home replaced)
+  idx.push({ kind: 'Home', title: 'How AI chips are made', text: 'One plain paragraph per stage, in order, with the specimens', href: '#/intro' });
+  data.chapters.forEach((c) => { if (c.plain && c.id !== 'introduction-and-goals') idx.push({ kind: 'Home', title: c.title + ', in plain terms', text: c.plain, href: '#/walk/' + c.id }); });
   const arts = all.map((c) => chArticle(c.id)).filter(Boolean);
   arts.forEach((art) => {
     const title = chTitle(art), lede = ptFind(art, (n) => PT.hasClass(n, 'ch-lede'));
