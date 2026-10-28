@@ -24,7 +24,7 @@ module.exports = function (ctx) {
   const stepId = (id) => '/walk/' + id;
   const stageIndex = (id) => stages.findIndex((s) => s.id === id);
 
-  /* the concentration band, shown the way the chain strip shows it: amber at Extreme, ink at High, gray below */
+  /* the concentration band, shown the way the chain strip shows it: wine at Extreme, an ink outline at High, gray below */
   const RANK = { Extreme: '5', High: '4', Moderate: '3', Low: '3' };
   function bandHTML(c) {
     if (!c.band) return '';
@@ -64,8 +64,8 @@ module.exports = function (ctx) {
      own note, ctx.BAND_NOTE); the stages follow in the order a chip is made, one row each: the number, the name (a link to
      the chapter), and the stage's band from its card, a four-step meter and the plain word. The meter and the word are one
      button, which puts the stage's specimen on the stage beside the hero (src/modules/walk.js): hovering, focusing or
-     clicking it picks it. The row whose specimen is showing is the reader's selection, the one row in wine; Extreme is set
-     in ink and High in the lighter tint, since wine never marks a data value. Chip design shows first, where the chain
+     clicking it picks it. The row whose specimen is showing is the reader's selection, on a paper tint with its number in
+     wine; Extreme is wine, its meter and its word (the visual pass of 27 Oct 2026), High the lighter tint. Chip design shows first, where the chain
      starts (owner, 27 Oct). The rows carry the specimen as data-spec, not data-specimen, so the page's scroll tracking
      (src/app.js Sections) follows the hero as one item. Nothing here is typed: the names, bands, specimens and captions are
      the chapters' own, and every count is computed. */

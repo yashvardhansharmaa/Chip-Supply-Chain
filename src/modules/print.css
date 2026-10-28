@@ -7,9 +7,9 @@
    The type and colors are the redesign's (qa/redesign/BRIEF.md, stage 4; the faces since design round five, 27 Oct 2026):
    Source Serif 4 for headings and text, as fixed instances at 400, 500 and 600 and an italic at 400 (print.js: a weight
    between the named ones prints as Type 3 shapes, which do not copy or search), Hanken Grotesk for labels, Fragment Mono
-   for kickers, codes and dates; ink on white, with the wine only on links (the
-   citation marks, the parts list's links) and the logo tile, and rule B on the charts (the largest value solid ink with a
-   bold label, the rest the light tint).
+   for kickers, codes and dates; ink on white, with the wine on links (the citation marks, the parts list's links), the logo
+   tile, the Extreme marks and the largest value on each chart (its bar and its bold value; the rest the light tint), as on
+   screen since the visual pass of 27 Oct 2026.
    The chapter on screen is a 12-column grid (src/modules/chapter.css). On paper it is one column of text with the chain
    in a margin column at its left, so the rules below undo the grid; they carry the screen's selector weight (.chapter
    ...) and come after chapter.css, so they win.
@@ -51,10 +51,10 @@
     --ink: #171716; --ink-2: #45443f; --muted: #56554f;
     --line: #e1e0db; --line-2: #c4c3bd; --rule-ink: #8c8a84; --control-edge: #8c8a84;
     --accent: #7a1f2b; --accent-ink: #7a1f2b; --accent-soft: #f3e3e5; --accent-fill: #7a1f2b;
-    --ctx: #d2d1cc; /* rule B: the values that are not the largest */
+    --ctx: #d2d1cc; /* the chart rule: the values that are not the largest (the largest is wine) */
     --c1: #2b63c4; --c2: #e06a1f; --c3: #1f9a6d; --c4: #c9a10c; --c5: #5a48b8; --c6: #c3302b; --c7: #2e7d1e; --c8: #8a9099;
     --stage-ink: 23, 23, 22; --stage-accent: 122, 31, 43;
-    --bar-5: #171716; --bar-4: #8c8a84; --bar-3: #c4c3bd;
+    --bar-5: #7a1f2b; --bar-4: #8c8a84; --bar-3: #c4c3bd; /* Extreme in wine, as on screen */
     --shadow: none; --masthead: 0px; --band: 0px; --col: 100%; --measure: 128mm;
     /* the static print fonts (print.js printFonts), with Noto for Chinese and Japanese titles, so nothing falls back to a
        system font (those print as Type 3 shapes, which do not copy or search) */
@@ -126,7 +126,7 @@
   .chapter .cp-index .n { font-family: var(--font-code); font-size: 6pt; color: var(--muted); font-variant-numeric: tabular-nums; }
   .chapter .cp-index .t { min-width: 0; text-wrap: balance; }
   .chapter .cp-index .bm { display: block; align-self: start; width: 1.2mm; height: 2.4mm; margin-top: 0.3mm; }
-  .chapter .cp-index li[data-band="4"] .bm { background: var(--ink); }
+  .chapter .cp-index li[data-band="4"] .bm { background: var(--bar-5); }
   .chapter .cp-index li[data-band="3"] .bm { height: 1.3mm; margin-top: 1.4mm; box-shadow: inset 0 0 0 0.5pt var(--ink); }
   .chapter .cp-index li.is-here { color: var(--ink); font-weight: 600; }
   .chapter .cp-index li.is-here .n { color: var(--ink); }
@@ -246,8 +246,8 @@
   .chapter .plate[data-split-to] { border-bottom: 0; } /* the card's closing rule on its last part only */
 
   /* ---------- figures: the number in mono, the finding in the display face, the title under it, the chart, the source ----------
-     On paper the frame is an ink rule above and a hairline below; the strip's address and its buttons are the screen's
-     (chapter.css hides them). */
+     On paper the frame is an ink rule above and a hairline below; the source line's buttons are the screen's (chapter.css
+     hides them). */
   .chapter .figure { max-width: none; margin: 5.5mm 0 0; padding: 0; border: 0; border-top: 0.6pt solid var(--ink); border-bottom: 0.3pt solid var(--line-2); background: none; }
   .chapter .fig-head { padding: 2.2mm 0 0; }
   .chapter .fig-k { font-family: var(--font-code); font-size: 7pt; line-height: 1.3; color: var(--ink); }
@@ -255,7 +255,7 @@
   .chapter .figure .fig-title .unit, .chapter .figure .fig-sub .unit { margin-left: 1.6mm; font-family: var(--font-code); font-weight: 400; font-size: 6.8pt; color: var(--muted); }
   .chapter .fig-sub { margin: 0; max-width: 128mm; font-family: var(--font-body); font-size: calc(8.2pt * var(--text-scale)); line-height: 1.4; color: var(--ink-2); }
   .chapter .fig-body { padding: 3mm 0 2.6mm; }
-  /* bars as HTML rows (figure() in build/build.js), rule B: the largest solid ink with a bold label, the rest the tint; on
+  /* bars as HTML rows (figure() in build/build.js), the chart rule: the largest wine with its value bold in wine, the rest the tint; on
      paper the label stands beside its bar, right-aligned (the screen sets it above the bar below 641 px, a width Paged.js's
      pages never report) */
   .chapter .hbars { gap: 0.9mm; margin: 0; font-family: var(--font-ui); font-size: 7.6pt; }
@@ -265,8 +265,8 @@
   .chapter .hb-r i { height: 2.8mm; background: var(--ctx); border-radius: 0; }
   .chapter .hb-r b { font-family: var(--font-code); font-size: 7pt; font-weight: 400; color: var(--ink-2); }
   .chapter .hb.top .hb-l { color: var(--ink); font-weight: 700; }
-  .chapter .hb.top .hb-r i { background: var(--ink); }
-  .chapter .hb.top .hb-r b { font-family: var(--font-ui); font-size: 7.8pt; font-weight: 700; color: var(--ink); }
+  .chapter .hb.top .hb-r i { background: var(--accent-fill); }
+  .chapter .hb.top .hb-r b { font-family: var(--font-ui); font-size: 7.8pt; font-weight: 700; color: var(--accent-ink); }
   .chapter .hb.rest .hb-r i { background: repeating-linear-gradient(135deg, var(--rule-ink) 0 0.5pt, transparent 0.5pt 1.4mm); box-shadow: inset 0 0 0 0.5pt var(--rule-ink); }
   .chapter .figure .tl li { font-family: var(--font-body); font-size: calc(8.4pt * var(--text-scale)); line-height: 1.36; }
   .chapter .figure .tl li .d { font-family: var(--font-code); font-size: 6.8pt; }
@@ -281,7 +281,7 @@
   .chapter .figure--anim .anim-stage { break-inside: avoid; break-after: avoid; }
   .chapter .figure--anim .anim-transcript li { break-inside: avoid; }
   /* the source line: "Source", the source's name and its note number, any note */
-  .chapter .fig-strip { display: block; padding: 1.6mm 0 1.8mm; background: none; border-top: 0.3pt solid var(--line-2); font-family: var(--font-code); font-size: 6.8pt; line-height: 1.4; color: var(--ink-2); }
+  .chapter .fig-strip { display: block; margin: 0; padding: 1.6mm 0 1.8mm; background: none; border-top: 0.3pt solid var(--line-2); font-family: var(--font-code); font-size: 6.8pt; line-height: 1.4; color: var(--ink-2); }
   .chapter .fig-strip .fs-src, .chapter .fig-strip .fs-note { display: block; }
   .chapter .fig-strip .fs-note { margin-top: 0.6mm; font-family: var(--font-body); font-size: calc(7.6pt * var(--text-scale)); line-height: 1.38; max-width: 128mm; color: var(--ink-2); }
   .chapter .fig-strip .fs-k, .chapter .fig-strip .fs-note .fs-k { margin-right: 1.4mm; font-family: var(--font-code); font-size: 6.8pt; color: var(--muted); }

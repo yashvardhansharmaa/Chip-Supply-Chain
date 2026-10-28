@@ -2,8 +2,10 @@
    Ground: white. Ink: a warm near-black, with two secondary inks. Paper (#f4f4f2) is a tint only, for the chokepoint card,
    figure frames, source strips and flashcards.
    Accent: red wine, #7a1f2b on white and #d98a95 on dark. It marks links, the reader's place (the current menu item, the
-   current item in a contents list), the reader's own selection and the logo tile. It never marks a data value; the one
-   exception is the Critical rating on Suppliers.
+   current item in a contents list), the logo tile, and two signals in the data (the visual pass of 27 Oct 2026, as the
+   live site has them): Extreme, wherever a stage's band is shown (its mark, and its word on the home list), and the
+   largest value on every chart, its bar and its value ("garnet on the largest only", the owner's chart rule of 21 Oct).
+   Suppliers' Critical rating is wine too. High stays ink or gray, and the other bars the light tint.
    Type (design round five, 27 Oct 2026, qa/design5/fonts/notes.md): Source Serif 4 for both the display and the text, its
    optical size following the size (font-optical-sizing: auto), so one face draws the name, headings, titles and large
    numbers (400 for titles and section heads, 360 for the light numbers, 500 for small headings) and the standfirsts, text,
@@ -25,7 +27,7 @@
   --accent-ink: #7a1f2b; /* 10.2:1 on white */
   --accent-soft: #f3e3e5;
   --accent-fill: var(--accent);
-  --ctx: #d2d1cc; /* chart rule B: the values that are not the largest */
+  --ctx: #d2d1cc; /* the chart rule: the values that are not the largest (the largest is wine) */
   --c1: #2b63c4; --c2: #e06a1f; --c3: #1f9a6d; --c4: #c9a10c; --c5: #5a48b8; --c6: #c3302b; --c7: #2e7d1e; --c8: #8a9099;
   /* night: the specimen ground of the two chapters that are not stages (the economics chapter and the essay) */
   --night: #121211; --night-ink: #e8e7e3; --night-ink2: #a9a7a1; --night-rule: #34332f; --night-accent: #d98a95;
@@ -50,7 +52,7 @@
   --band: 0px; /* height of the sticky specimen band on phones; anchors add it to their offset */
   --measure: calc(36em / var(--text-scale)); /* 33.3 em: 666 px of the 20 px chapter text, about 71 characters */
   --frame: 650px;   /* chapter header and chokepoint card keep their earlier width */
-  --bar-5: var(--ink); --bar-4: #8c8a84; --bar-3: #c4c3bd; /* bands as marks: Extreme ink, High mid gray, below that a tint */
+  --bar-5: var(--accent); --bar-4: #8c8a84; --bar-3: #c4c3bd; /* bands as marks: Extreme wine, High mid gray, below that a tint */
   --col: 63%;
   --margin: clamp(16px, 4.45vw, 64px); /* the page's outer margin, the masthead's and the column's */
   --gutter: 88px;     /* the ledger column */
@@ -87,7 +89,7 @@
   --c1: #5b8ee6; --c2: #ef8140; --c3: #34b585; --c4: #d9b21e; --c5: #8676d8; --c6: #e0504a; --c7: #4f9c3a; --c8: #8a9099;
   --stage-ink: 232, 231, 227; --stage-accent: 217, 138, 149;
   --shadow: 0 0 0 1px rgba(0, 0, 0, 0.5), 0 18px 30px -18px rgba(0, 0, 0, 0.6);
-  --bar-5: var(--ink); --bar-4: #8c8a84; --bar-3: #45443f;
+  --bar-5: var(--accent); --bar-4: #8c8a84; --bar-3: #45443f; /* Extreme the wine for dark, 7.2:1 on the ground; High mid gray */
   --scrim: rgba(6, 6, 5, 0.72);
   color-scheme: dark;
 }
@@ -315,15 +317,15 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before {
 .figure .fig-source a { color: var(--muted); }
 /* bar charts (figure() in build.js): HTML rows, each label whole. From 641 px the label sits beside its bar in a column as wide as
    the longest label (--lw, at most 45 percent); below that it takes its own line above the bar. A chart is one series, so its
-   bars are ink and the largest garnet (.hb.top), its value in garnet ink. --vw keeps room past the longest bar for its value. */
+   bars are the light tint and the largest wine (.hb.top), its value in wine. --vw keeps room past the longest bar for its value. */
 .hbars { display: grid; gap: 9px; margin: 2px 0 4px; font-family: var(--font-mono); font-size: 12.5px; }
 .hb { display: grid; gap: 4px; }
 .hb-l { line-height: 1.3; color: var(--ink-2); }
 .hb-r { display: flex; align-items: center; gap: 8px; padding-right: var(--vw, 3.6em); }
 .hb-r i { display: block; flex: none; height: 12px; background: var(--ctx); }
 .hb-r b { flex: none; font-weight: 500; font-variant-numeric: tabular-nums; color: var(--ink); white-space: nowrap; margin-right: calc(-1 * var(--vw, 3.6em)); }
-.hb.top .hb-r i { background: var(--ink); } /* rule B: the largest value in ink with a bold label, the rest in the light tint */
-.hb.top .hb-r b { color: var(--ink); font-weight: 700; }
+.hb.top .hb-r i { background: var(--accent); } /* the chart rule: the largest value in wine with a bold wine value, the rest in the light tint */
+.hb.top .hb-r b { color: var(--accent-ink); font-weight: 700; }
 @media (min-width: 641px) { .hbars { gap: 7px; } .hb { grid-template-columns: min(var(--lw, 14em), 45%) minmax(0, 1fr); align-items: center; column-gap: 12px; } .hb-l { text-align: right; } }
 .stack-bar { display: flex; height: 26px; gap: 2px; border-radius: 0; overflow: hidden; }
 .stack-bar i { display: block; height: 100%; min-width: 2px; }
@@ -701,20 +703,20 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
 .ex-legend i { display: inline-block; vertical-align: middle; margin-right: 7px; width: 10px; height: 10px; border-radius: 50%; box-sizing: border-box; }
 /* the context bars recede to a mid gray, so the peak year differs from them in lightness as well as hue (3.0:1 against the
    garnet in light; dark already separates, 3.5:1 against the wine) */
-.ex-legend, .ex-panel { --ex-bar: var(--ctx); } /* rule B: each firm's peak year in ink, the other years in the light tint */
+.ex-legend, .ex-panel { --ex-bar: var(--ctx); } /* the chart rule: each firm's peak year in wine, the other years in the light tint */
 .ex-legend .lg-bar { width: 10px; height: 12px; border-radius: 0; background: var(--ex-bar); }
-.ex-legend .lg-top { width: 10px; height: 12px; border-radius: 0; background: var(--ink); }
+.ex-legend .lg-top { width: 10px; height: 12px; border-radius: 0; background: var(--accent); }
 .ex-legend .lg-rule { width: 1px; height: 12px; border-radius: 0; border-left: 1px solid var(--ink); background: none; opacity: 0.4; }
 .ex-cat { grid-column: 1 / -1; margin: 18px 0 0; padding-bottom: 6px; border-bottom: 1px solid var(--ink); font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: 0; color: var(--ink-2); }
 .ex-cat:first-child { margin-top: 4px; }
 .ex-panel .tick { font-family: var(--font-mono); font-size: 11px; fill: var(--muted); }
 .ex-panel .bar { fill: var(--ex-bar); }
-.ex-panel .bar.top { fill: var(--ink); }
-/* a hovered bar darkens; it never turns garnet, which marks only the peak */
+.ex-panel .bar.top { fill: var(--accent); }
+/* a hovered bar darkens; the peak keeps its wine */
 .ex-panel a:hover rect, .ex-panel a:hover circle { fill: var(--ink-2); stroke: none; }
-.ex-panel a:hover rect.top { fill: var(--ink); }
+.ex-panel a:hover rect.top { fill: var(--accent); }
 .ex-panel .share { font-family: var(--font-mono); font-size: 11px; fill: var(--muted); }
-.ex-panel .share.top { fill: var(--ink); font-weight: 700; }
+.ex-panel .share.top { fill: var(--accent-ink); font-weight: 700; }
 .ex-panel .val { font-family: var(--font-mono); font-size: 11px; font-weight: 500; fill: var(--ink); }
 .ex-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px 22px; margin: 6px 0 12px; }
 /* each category is a group (exposureViz in build/build.js). Where subgrid works, a group spans as many columns as it has panels,

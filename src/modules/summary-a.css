@@ -259,10 +259,10 @@
 .atlas .sa-route { fill: none; stroke: var(--ink); stroke-width: 1; opacity: 0.32; vector-effect: non-scaling-stroke; }
 .atlas .sa-tail { stroke: var(--ink-2); stroke-width: 0.8; opacity: 0.8; vector-effect: non-scaling-stroke; }
 
-/* the stops: Extreme solid, High a ring, both on a white halo so they read over the routes */
+/* the stops: Extreme solid wine (the visual pass of 27 Oct 2026), High an ink ring, both on a white halo so they read over the routes */
 .sa-stop {
   position: absolute; width: 22px; height: 22px; margin: -11px 0 0 -11px; border-radius: 50%; z-index: 3;
-  display: grid; place-items: center; background: var(--ink); color: var(--bg); border: 0; box-shadow: 0 0 0 2px var(--bg);
+  display: grid; place-items: center; background: var(--bar-5); color: var(--bg); border: 0; box-shadow: 0 0 0 2px var(--bg);
   font-family: var(--font-ui); font-weight: 600; font-size: 11.5px; line-height: 1; text-decoration: none; transition: background 0.15s, color 0.15s;
 }
 .sa-stop[data-band="High"] { background: var(--bg); color: var(--ink); box-shadow: 0 0 0 2px var(--bg), inset 0 0 0 1.5px var(--ink); }
@@ -324,7 +324,7 @@
 .atlas .sa-est { display: block; margin: 2px 0 0; font-family: var(--font-code); font-weight: 400; font-size: 11px; color: var(--muted); }
 /* a stage's band beside its name, as the chapter's kicker marks it: a bar for Extreme, an outline for High */
 .atlas .sa-sc { display: inline-flex; align-items: center; gap: 5px; margin-left: 8px; padding: 0; background: none; color: var(--ink); font-family: var(--font-ui); font-size: 12px; font-weight: 500; vertical-align: 1px; }
-.atlas .sa-sc::before { content: ""; display: block; width: 4px; height: 11px; background: var(--ink); }
+.atlas .sa-sc::before { content: ""; display: block; width: 4px; height: 11px; background: var(--bar-5); }
 .atlas .sa-sc[data-band="3"]::before { height: 6px; margin-top: 5px; background: transparent; box-shadow: inset 0 0 0 1.25px var(--ink); }
 :root[data-theme="dark"] .atlas .sa-sc { color: var(--ink); }
 .atlas .sa-china { margin: 14px 0 0; padding: 10px 0 2px; border-left: 0; border-top: 1px solid var(--line); }
@@ -334,7 +334,7 @@
 .atlas .sa-panel-foot a { color: var(--ink-2); }
 .atlas-key { display: grid; gap: 8px; margin: 0 0 14px; padding-bottom: 14px; border-bottom: 1px solid var(--line); font-family: var(--font-ui); font-size: 13.5px; line-height: 20px; color: var(--ink-2); }
 .atlas-key span { display: inline-flex; align-items: center; gap: 9px; }
-.sa-kstop { display: inline-grid; place-items: center; width: 20px; height: 20px; flex: none; border-radius: 50%; background: var(--ink); color: var(--bg); font-family: var(--font-ui); font-style: normal; font-weight: 600; font-size: 11px; line-height: 1; }
+.sa-kstop { display: inline-grid; place-items: center; width: 20px; height: 20px; flex: none; border-radius: 50%; background: var(--bar-5); color: var(--bg); font-family: var(--font-ui); font-style: normal; font-weight: 600; font-size: 11px; line-height: 1; }
 .sa-kstop[data-band="High"] { background: var(--bg); color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--ink); }
 
 /* the strip: the stops in order, each with its band as a mark beside its number */
@@ -342,7 +342,7 @@
 .atlas .sa-strip-stops li { min-width: 0; }
 .sa-stopcard { display: flex; flex-direction: column; gap: 3px; padding: 10px 6px 8px 0; text-decoration: none; color: var(--ink); min-width: 0; border: 0; }
 .sa-stopcard-n { display: flex; align-items: flex-end; gap: 6px; font-family: var(--font-code); font-size: 11.5px; line-height: 16px; color: var(--muted); font-variant-numeric: tabular-nums; }
-.sa-bmk { display: inline-block; width: 5px; height: 12px; margin-bottom: 2px; background: var(--ink); }
+.sa-bmk { display: inline-block; width: 5px; height: 12px; margin-bottom: 2px; background: var(--bar-5); }
 .sa-stopcard[data-band="High"] .sa-bmk { height: 6px; background: transparent; box-shadow: inset 0 0 0 1.25px var(--ink); }
 .sa-stopcard-t { display: block; font-family: var(--font-ui); font-weight: 500; font-size: 13.5px; line-height: 1.25; margin: 0; overflow-wrap: break-word; hyphens: auto; }
 .sa-stopcard-w { display: block; font-family: var(--font-code); font-size: 11px; line-height: 15px; color: var(--muted); }

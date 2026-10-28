@@ -2,8 +2,9 @@
    The head (the title, its counts, six things to try), a sticky bar (the search, the kinds, the thumb index of letters), then
    every entry in columns under its large letter and guide words. An entry opens in a sheet: beside the columns from 1,000 px,
    over them below that, the whole screen on a phone. The sheet holds the site's own cards and the passages.
-   Color: red wine marks only links, the reader's place (the letter in view, the open entry) and the reader's own choice; the
-   chokepoint marks and the country card's shares are ink and the light tint (rule B). */
+   Color: red wine marks links, the reader's place (the letter in view, the open entry) and the reader's own choice, and two
+   signals in the data (the visual pass of 27 Oct 2026): an Extreme stage's mark, and the largest of the country card's shares
+   (the chart rule: the largest wine, the rest the light tint). */
 :root { --gl-off: #6e6d67; } /* a letter with no entries: quiet, and still 5.2:1 on white */
 :root[data-theme="dark"] { --gl-off: #8a8883; }
 
@@ -162,7 +163,7 @@ html.kb:has(.view[data-view="glossary"]:not([hidden])) { scroll-padding-top: cal
 .lk-links a, .lk-eu a { padding: 6px 0; font-family: var(--font-ui); font-weight: 500; font-size: 14.5px; line-height: 1; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--ink); }
 .lk-links a:hover, .lk-eu a:hover { color: var(--accent-ink); border-color: var(--accent); }
 
-/* the country card: its shares in rule B (the largest solid ink with a bold label, the rest the light tint), the cards that
+/* the country card: its shares by the chart rule (the largest solid wine with its value bold in wine, the rest the light tint), the cards that
    name it with each stage's band as the chain's mark, its firms by category */
 .lk-h { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; margin: 0; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 17px; line-height: 1.3; color: var(--ink); }
 .lk-h--in { margin: 26px 0 6px; padding-top: 12px; border-top: 1px solid var(--ink); }
@@ -173,16 +174,16 @@ html.kb:has(.view[data-view="glossary"]:not([hidden])) { scroll-padding-top: cal
 .lk-share-bar { grid-column: 2; grid-row: 1; height: 12px; background: linear-gradient(to right, var(--ctx) var(--w), transparent var(--w)); box-shadow: inset 0 -1px 0 var(--line-2); }
 .lk-share-v { grid-column: 3; grid-row: 1; text-align: right; font-family: var(--font-code); font-size: 13px; line-height: 1; color: var(--ink-2); font-variant-numeric: tabular-nums; }
 .lk-share-m { grid-column: 1 / -1; grid-row: 2; margin-top: 3px; font-family: var(--font-code); font-size: 12px; line-height: 1.5; color: var(--muted); }
-.lk-shares li:first-child .lk-share-bar { background: linear-gradient(to right, var(--ink) var(--w), transparent var(--w)); }
+.lk-shares li:first-child .lk-share-bar { background: linear-gradient(to right, var(--accent) var(--w), transparent var(--w)); }
 .lk-shares li:first-child .lk-share-k { font-weight: 600; }
-.lk-shares li:first-child .lk-share-v { font-family: var(--font-ui); font-weight: 700; font-size: 14px; color: var(--ink); }
+.lk-shares li:first-child .lk-share-v { font-family: var(--font-ui); font-weight: 700; font-size: 14px; color: var(--accent-ink); }
 .lk-small { margin: 10px 0 0; font-family: var(--font-code); font-size: 12px; line-height: 1.5; color: var(--muted); }
 .lk-cards li { border-bottom: 1px solid var(--line); }
 .lk-cards a { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 3px 14px; align-items: baseline; padding: 10px 0 11px; text-decoration: none; color: inherit; }
 .lk-card-t { font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 16.5px; line-height: 1.3; }
 .lk-cards a:hover .lk-card-t { color: var(--accent-ink); }
 .lk-band { display: inline-flex; align-items: flex-end; gap: 7px; font-family: var(--font-code); font-weight: 400; font-size: 12px; line-height: 1; color: var(--ink-2); }
-.lk-band::before { content: ""; display: inline-block; width: 5px; height: 12px; background: var(--ink); }
+.lk-band::before { content: ""; display: inline-block; width: 5px; height: 12px; background: var(--bar-5); } /* Extreme in wine */
 .lk-band--high::before { height: 6px; background: transparent; box-shadow: inset 0 0 0 1.25px var(--ink); }
 .lk-card-n { grid-column: 1 / -1; font-family: var(--font-body); font-size: calc(14.5px * var(--text-scale)); line-height: 1.45; color: var(--ink-2); }
 .lk-stages li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 12px; align-items: baseline; padding: 9px 0 10px; border-bottom: 1px solid var(--line); }

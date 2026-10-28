@@ -24,8 +24,9 @@
 /* ---------- the chain at a glance ----------
    An ink rule, the kicker, the sentence, then a row per stage between hairlines: the name (a link) and, at the row's end,
    the band's meter and word (a button that picks the specimen). The number hangs in the ledger column, right-set where
-   the walk's numbers are; it belongs to the link, so it takes the reader to the chapter too. Extreme is ink, High the
-   lighter tint; the row whose specimen is showing (.is-shown) is the one in wine: its number, meter and word. */
+   the walk's numbers are; it belongs to the link, so it takes the reader to the chapter too. Extreme is wine, its meter and
+   its word, as on the live site (the visual pass of 27 Oct 2026); High the lighter tint. The row whose specimen is showing
+   (.is-shown) is the reader's selection: a paper tint across the row, its hanging number included, the number in wine. */
 .wk-gl { margin: 32px 0 0; }
 .wk-gl-h { display: block; margin: 0; padding: 12px 0 0; border-top: 1px solid var(--ink); }
 .wk-gl-p { margin: 6px 0 16px; font-family: var(--font-body); font-size: var(--fs-body); line-height: 1.5; color: var(--ink-2); max-width: 34em; }
@@ -52,13 +53,14 @@
 .wk-gl-m i:nth-child(3) { height: 11px; }
 .wk-gl-m i:nth-child(4) { height: 14px; }
 .wk-gl-m i.on { background: var(--bar-3); }
-.wk-gl-list li[data-level="4"] .wk-gl-m i.on { background: var(--ink); }
+.wk-gl-list li[data-level="4"] .wk-gl-m i.on { background: var(--bar-5); }
 .wk-gl-list li[data-level="3"] .wk-gl-m i.on { background: var(--bar-4); }
 .wk-gl-w { min-width: 4.6em; }
-.wk-gl-list li[data-level="4"] .wk-gl-w { color: var(--ink); font-weight: 500; }
-.wk-gl-list li.is-shown .wk-gl-n { color: var(--accent-ink); }
-.wk-gl-list li.is-shown .wk-gl-m i.on { background: var(--accent); } /* the wine of text, so on dark the pick is as bright as its word */
-.wk-gl-list li.is-shown .wk-gl-w { color: var(--accent-ink); font-weight: 600; }
+.wk-gl-list li[data-level="4"] .wk-gl-w { color: var(--accent-ink); font-weight: 600; }
+.wk-gl-list li.is-shown { background: var(--bg-2); }
+@media (min-width: 901px) { .wk-gl-list li.is-shown { box-shadow: calc(-1 * (var(--gutter) + var(--gutter-gap))) 0 0 var(--bg-2); } } /* the tint reaches the number in the ledger column */
+.wk-gl-list li.is-shown .wk-gl-n { color: var(--accent-ink); font-weight: 600; }
+.wk-gl-list li.is-shown .wk-gl-t { font-weight: 600; }
 
 /* ---------- the walk: the ledger column ---------- */
 .wk-list { list-style: none; margin: clamp(80px, 13vh, 120px) 0 0; padding: 0; }
@@ -113,7 +115,7 @@
 }
 .wk-sc { display: inline-flex; align-items: center; gap: 8px; }
 .wk-sc::before { content: ""; display: inline-block; flex: none; width: 6px; height: 4px; background: var(--ctx); }
-.wk-score[data-rank="5"] .wk-sc::before { height: 15px; background: var(--ink); }
+.wk-score[data-rank="5"] .wk-sc::before { height: 15px; background: var(--bar-5); } /* Extreme in wine */
 .wk-score[data-rank="4"] .wk-sc::before { height: 8px; background: transparent; box-shadow: inset 0 0 0 1.5px var(--ink); }
 .wk-sc b { color: var(--ink); font-weight: 500; font-size: 14px; }
 .wk-read {

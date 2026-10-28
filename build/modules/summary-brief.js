@@ -177,7 +177,7 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
   .eyebrow, .meta, .lbl, .card-k, .pill, .ladder, .ladder-head, .key, .more, .cc, .site-footer { font-family: var(--label); }
   .hero { padding: clamp(40px, 7vh, 72px) 0 36px; max-width: 760px; }
   /* the redesign (stage 3): the head as the views' (the display face at 400 over a standfirst in the text face), each section a display heading
-     over an ink rule, pill buttons in ink, and no accent on a data value: Extreme is ink, High a mid gray */
+     over an ink rule, pill buttons in ink; Extreme is wine, its meter, word, pill and card rule (the visual pass of 27 Oct 2026), High a mid gray */
   .eyebrow { margin: 0 0 22px; font-family: var(--kicker); font-size: 12px; font-weight: 400; letter-spacing: 0; color: var(--muted); }
   .eyebrow b { color: var(--ink); font-weight: 400; }
   h1 { font-family: var(--display); font-weight: 400; font-variation-settings: normal; font-size: clamp(48px, 7vw, 96px); line-height: 0.95; letter-spacing: -0.03em; margin: 0 0 0 -0.04em; text-wrap: balance; }
@@ -205,13 +205,13 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
   .ladder .n { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
   .ladder .t { font-family: var(--body); font-size: calc(16.5px * var(--text-scale)); color: var(--ink); font-weight: 600; }
   .ladder .c { display: inline-flex; align-items: center; gap: 9px; }
-  .ladder .lv-4 .w { color: var(--ink); font-weight: 600; }
+  .ladder .lv-4 .w { color: var(--accent); font-weight: 600; }
   .meter { display: inline-flex; gap: 2px; align-items: flex-end; height: 14px; }
   .meter i { display: block; width: 6px; background: var(--line); }
   .meter i:nth-child(1) { height: 5px; } .meter i:nth-child(2) { height: 8px; } .meter i:nth-child(3) { height: 11px; } .meter i:nth-child(4) { height: 14px; }
   .meter i.on { background: var(--bar-3); }
   .lv-3 .meter i.on { background: var(--bar-4); }
-  .lv-4 .meter i.on { background: var(--ink); }
+  .lv-4 .meter i.on { background: var(--accent); }
   .cc { font-size: 11px; letter-spacing: 0.06em; color: var(--muted); }
   .ladder .who .sep { color: var(--muted); }
   .key { font-size: 12.5px; color: var(--muted); margin: 12px 0 0; max-width: 60em; }
@@ -219,7 +219,7 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
   /* stage cards */
   .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
   .card { background: var(--card); border: 0; border-top: 2px solid var(--line-2); padding: 20px 22px 18px; display: flex; flex-direction: column; scroll-margin-top: 16px; }
-  .card.lv-4 { border-top-color: var(--ink); }
+  .card.lv-4 { border-top-color: var(--accent); }
   .card.lv-3 { border-top-color: var(--bar-4); }
   .card-k { margin: 0 0 8px; font-family: var(--kicker); font-size: 12px; font-weight: 400; letter-spacing: 0; color: var(--muted); }
   .card-k .n { color: var(--muted); font-weight: 400; margin-right: 10px; }
@@ -228,7 +228,7 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
   h3 a:hover { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
   .pills { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 12px; }
   .pill { font-size: 12px; font-weight: 500; letter-spacing: 0; padding: 3px 9px 4px; border: 1px solid var(--line-2); border-radius: 3px; color: var(--ink-2); }
-  .pill.x { border: 1.5px solid var(--ink); padding: 2.5px 8.5px 3.5px; color: var(--ink); }
+  .pill.x { border: 1.5px solid var(--accent); padding: 2.5px 8.5px 3.5px; color: var(--accent); }
   .lede { margin: 0 0 14px; font-size: calc(16.5px * var(--text-scale)); line-height: 1.5; color: var(--ink); }
   .lbl { margin: 0 0 4px; font-size: 11px; font-weight: 600; letter-spacing: 0; color: var(--muted); }
   .who-block { margin: 0 0 14px; }
