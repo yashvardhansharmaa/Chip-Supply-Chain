@@ -36,35 +36,49 @@ const view = (v) => `(document.querySelector('.view[data-view="${v}"]') && !docu
 const count = (sel) => `document.querySelectorAll(${JSON.stringify(sel)}).length`;
 const shown = (sel) => `!!(document.querySelector(${JSON.stringify(sel)}) && document.querySelector(${JSON.stringify(sel)}).getClientRects().length)`; // laid out on screen
 const shownCount = (sel) => `[].filter.call(document.querySelectorAll(${JSON.stringify(sel)}), (e) => e.getClientRects().length).length`;
-// The Chain's contents, measured against CP_DATA.chapters: the stages on the line (shown, each linked to its own chapter
-// and with its drawing fetched and decoded), the Extreme ones on the wine route, the chapters across the chain on the bracket, every chapter in
-// the list with its #<id> link, the downloads, and How to read a chapter gone
+// The Chain's contents, measured against CP_DATA.chapters (design round eight, "clean", 28 Oct 2026): a row for every chapter
+// in order (shown, with its drawing and its #<id> link, the list the book PDF reads), every drawing fetched and decoded (they
+// load lazily, so the check asks for them all at once), each stage with its band's single mark (Extreme a wine bar, High an
+// outline) and the chapters across the chain with none, under their label, the drawing's box on the page's ground (no tint),
+// two columns from 1300 px and one below, the standfirst holding both counts and both marks, the downloads, and How to read a
+// chapter gone
 const CHAIN_STATE = `(function () {
   var D = (window.CP_DATA && CP_DATA.chapters) || [], st = D.filter(function (c) { return c.stage; }), x = D.filter(function (c) { return !c.stage; });
-  var vis = function (el) { return !!(el && el.getClientRects().length); };
-  var li = [].slice.call(document.querySelectorAll('#contents .ln-st > li'));
-  var line = li.map(function (l) { var a = l.querySelector('a'); return a && vis(a) && l.querySelector('.ln-sp img') ? a.getAttribute('data-route') + ' ' + a.getAttribute('href') : 'none'; });
-  var drawn = li.filter(function (l) { var i = l.querySelector('.ln-sp img'); return i && i.complete && i.naturalWidth > 0; }).length; // each drawing fetched and decoded
-  var wantLine = st.map(function (c) { return '#' + c.id + ' ' + c.id + '/'; });
-  var wine = li.filter(function (l) { return l.getAttribute('data-band') === 'x' && getComputedStyle(l.querySelector('.ln-rt')).backgroundColor !== 'rgba(0, 0, 0, 0)'; }).map(function (l) { return l.getAttribute('data-ch'); });
+  var vis = function (el) { return !!(el && el.getClientRects().length); }, ids = function (l) { return l.map(function (r) { return r.getAttribute('data-ch'); }).join(); };
+  var rows = [].slice.call(document.querySelectorAll('#contents .ct-col > li.item'));
+  rows.forEach(function (r) { var i = r.querySelector('.ct-tile img'); if (i && i.loading === 'lazy') i.loading = 'eager'; });
+  var row = function (r) { var a = r.querySelector('a.t'), i = r.querySelector('.ct-tile img'); return a && vis(a) && vis(i) && i.getAttribute('src') === 'media/line-' + r.getAttribute('data-ch') + '.webp' ? a.getAttribute('href') : 'none'; };
+  var shownRows = rows.map(row);
+  var drawn = rows.filter(function (r) { var i = r.querySelector('.ct-tile img'); return i && i.complete && i.naturalWidth > 0; }).length;
+  var stRows = [].slice.call(document.querySelectorAll('#contents > .ct-st .item')), xRows = [].slice.call(document.querySelectorAll('#contents .ct-x .item'));
+  var mark = function (r) { var m = r.querySelectorAll('.n .ct-bmk'); return m.length > 1 ? 'two' : !m.length ? '' : m[0].classList.contains('h') ? 'High' : 'Extreme'; };
+  var wine = stRows.filter(function (r) { var m = r.querySelector('.n .ct-bmk:not(.h)'); return m && getComputedStyle(m).backgroundColor !== 'rgba(0, 0, 0, 0)'; }).map(function (r) { return r.getAttribute('data-ch'); });
   var wantWine = st.filter(function (c) { return c.concentration === 'Extreme'; }).map(function (c) { return c.id; });
-  var brk = [].filter.call(document.querySelectorAll('#contents .ln-brk a.ln-bx'), vis).map(function (a) { return a.getAttribute('data-route'); });
+  var ground = getComputedStyle(document.body).backgroundColor;
+  var flat = rows.filter(function (r) { return getComputedStyle(r.querySelector('.ct-tile')).backgroundColor === ground; }).length;
+  var lefts = stRows.filter(vis).map(function (r) { return Math.round(r.getBoundingClientRect().left); }).filter(function (v, i, a) { return a.indexOf(v) === i; }).length;
+  var sf = document.querySelector('#howto .howto-std'), sfText = sf ? sf.textContent.replace(/\\s+/g, ' ') : '', nH = st.filter(function (c) { return c.concentration === 'High'; }).length;
+  var standfirst = vis(sf) && sfText.indexOf(wantWine.length + ' of the ' + st.length + ' stages are rated Extreme') === 0 && (wantWine.length + nH !== st.length || sfText.indexOf('the other ' + nH + ' High') > 0)
+    && sf.querySelectorAll('.ct-bmk:not(.h)').length === 1 && sf.querySelectorAll('.ct-bmk.h').length === 1;
   var list = [].map.call(document.querySelectorAll('#contents .contents-grid .item a.t'), function (a) { return a.getAttribute('href'); });
   var dl = [].filter.call(document.querySelectorAll('#howto .howto-dl a'), vis).map(function (a) { return a.getAttribute('href'); });
-  return { line: line.join() === wantLine.join(), stages: st.length, lineShown: line.filter(function (v) { return v !== 'none'; }).length, drawn: drawn,
-    wine: wine.join() === wantWine.join(), extreme: wantWine.length, bracket: brk.join() === x.map(function (c) { return '#' + c.id; }).join(), across: brk.length,
+  return { rows: shownRows.join() === D.map(function (c) { return '#' + c.id; }).join(), chapters: D.length, rowsShown: shownRows.filter(function (v) { return v !== 'none'; }).length, drawn: drawn,
+    groups: ids(stRows) === st.map(function (c) { return c.id; }).join() && ids(xRows) === x.map(function (c) { return c.id; }).join(), stages: st.length, across: xRows.length,
+    marks: stRows.map(mark).join() === st.map(function (c) { return c.concentration; }).join() && xRows.every(function (r) { return mark(r) === ''; }),
+    wine: wine.join() === wantWine.join(), extreme: wantWine.length, flat: flat === rows.length, cols: lefts === (innerWidth >= 1300 ? 2 : 1), columns: lefts,
+    label: !x.length || vis(document.querySelector('#contents .ct-xk')), standfirst: standfirst,
     list: list.join() === D.map(function (c) { return '#' + c.id; }).join(), listed: list.length,
     downloads: dl.join() === 'pdf/how-ai-chips-are-made.pdf,pdf/summary.pdf,summary/', howToRead: !!document.querySelector('.howto-read, #howto-read') };
 })()`;
-const CHAIN_OK = `(function (s) { return s.stages >= 14 && s.line && s.drawn === s.stages && s.wine && s.extreme > 0 && s.bracket && s.across >= 2 && s.list && s.downloads && !s.howToRead; })(${CHAIN_STATE})`;
+const CHAIN_OK = `(function (s) { return s.stages >= 14 && s.rows && s.drawn === s.chapters && s.groups && s.across >= 2 && s.marks && s.wine && s.extreme > 0 && s.flat && s.cols && s.label && s.standfirst && s.list && s.downloads && !s.howToRead; })(${CHAIN_STATE})`;
 // the counts below follow the chain since the merge of chapters 8 and 9 (27 Oct 2026): 14 stages, 16 chapters
 const ROUTES = [
   { name: 'walk', url: '/#/', ready: `${view('walk')} && ${count('.view[data-view="walk"] .wk-step')} >= 14`, detail: `'walk view shown: ' + ${view('walk')} + ', steps: ' + ${count('.view[data-view="walk"] .wk-step')}` },
   // The Chain shows one chapter at a time (src/template.html, html[data-chain]): #/chain is its contents, every chapter is held
   // in the page (print and search read them all) and none is shown; a chapter's address shows that chapter alone
-  // The contents page is The line (design round six, 28 Oct 2026): every stage drawn on the route and linked (its static page
-  // in href, the app's route in data-route), wine under each Extreme stage, the chapters across the chain on the bracket, each
-  // chapter's one line (the list the book PDF reads, href="#<id>"), the three downloads, and no How to read a chapter.
+  // The contents page is option 3 "clean" (design round eight, 28 Oct 2026): a row per chapter with its drawing, its number with
+  // the band's single mark, its title (href="#<id>", the list the book PDF reads) and its one line; the two chapters across
+  // the chain under their label; the standfirst that is also the key; the three downloads; and no How to read a chapter.
   // The counts come from the page's own data (CP_DATA.chapters), never typed here
   { name: 'chain', url: '/#/chain', ready: `${view('stack')} && ${count('.view[data-view="stack"] article.chapter')} >= 16 && ${count('.view[data-view="stack"] article.chapter .plate')} >= 14 && ${shown('#contents')} && ${shownCount('.view[data-view="stack"] > article.chapter')} === 0 && ${CHAIN_OK}`, detail: `'chapters: ' + ${count('.view[data-view="stack"] article.chapter')} + ', cards: ' + ${count('.view[data-view="stack"] article.chapter .plate')} + ', chapters shown: ' + ${shownCount('.view[data-view="stack"] > article.chapter')} + ', contents: ' + JSON.stringify(${CHAIN_STATE})` },
   { name: 'chapter', url: '/#lithography', ready: `${view('stack')} && ${shownCount('.view[data-view="stack"] > article.chapter')} === 1 && ${shown('#lithography .plate')} && ${shown('#lithography .prevnext .next')} && !${shown('#contents')}`, detail: `'chapters shown: ' + ${shownCount('.view[data-view="stack"] > article.chapter')} + ' (' + [].filter.call(document.querySelectorAll('.view[data-view="stack"] > article.chapter'), (a) => a.getClientRects().length).map((a) => a.id).join(', ') + '), card: ' + ${shown('#lithography .plate')} + ', door: ' + ${shown('#lithography .prevnext .next')} + ', contents shown: ' + ${shown('#contents')}` },

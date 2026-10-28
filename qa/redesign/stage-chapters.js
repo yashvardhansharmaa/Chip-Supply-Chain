@@ -13,9 +13,9 @@
      6. a Suppliers link to a stage lands on that chapter (AI Chips has no link to a stage);
      7. print emulation of #/chain (and of a chapter's address) shows all 16 chapters (17 before the merge of 27 Oct 2026), the head and the contents;
      8. the page's height at 1440 for one chapter, against the whole chain's;
-    10. the contents page (The line, 28 Oct 2026) at 1440, 1024 and 390: every title on the line opens its chapter, the
-        bracket carries the chapters across the chain and each opens, the three downloads show on the first screen and are
-        served;
+    10. the contents page (design round eight, "clean", 28 Oct 2026) at 1440, 1024 and 390: a row for every chapter, the
+        stages first and the chapters across the chain under their label; every row opens its chapter by its title and by its
+        drawing; every drawing is served; the three downloads show on the first screen and are served;
    and every other way in: the home page, a look-up card, Export Controls, the phone's contents sheet and slim bar, the
    specimen strip's Top, and #/chain from a chapter.
    usage: node qa/redesign/stage-chapters.js [--base http://127.0.0.1:8766] [--only 1,3] > qa/redesign/stage-chapters.txt
@@ -393,10 +393,11 @@ const want = (n) => !ONLY.length || ONLY.includes(String(n));
       report(9, 'every other way in lands', ok, out.join('\n        '));
     }
 
-    // 10. The Chain's contents page (design round six, The line, 28 Oct 2026), driven by real clicks at the three layouts (one
-    //     row of stages at 1440, two rows at 1024, the route down the page at 390): every title on the line opens its chapter
-    //     alone at its top, and its static page (the href a new tab opens) exists; the bracket carries the chapters across the
-    //     chain, in order, and each opens; the three downloads show on the first screen and each is served
+    // 10. The Chain's contents page (design round eight, "clean", 28 Oct 2026), driven by real clicks at the three layouts (two
+    //     columns at 1440, one column with each one line beside its title at 1024, the phone's rows at 390): the stages' rows
+    //     hold the stages in order and the rows under Across the chain the other chapters; every row opens its chapter alone at
+    //     its top, by its title and (the whole row is the link) by its drawing; each drawing is served; the three downloads
+    //     show on the first screen and each is served
     if (want(10)) {
       const out = []; let ok = true;
       const D = await (async () => { const t = await tab(chrome, '/#/chain'); const d = await t.ev('CP_DATA.chapters.map(function (c) { return { id: c.id, stage: c.stage, title: c.title }; })'); await t.close(); return d; })();
@@ -410,24 +411,24 @@ const want = (n) => !ONLY.length || ONLY.includes(String(n));
         const st = await t.ev(STATE);
         return { pass: clicked && st.view === 'stack' && st.shown.join() === id && st.hash === '#' + id && st.y <= 4 && !st.contents, st, clicked };
       };
+      const rowsOf = (sel) => `[].map.call(document.querySelectorAll(${JSON.stringify(sel)}), function (r) { return r.getAttribute('data-ch') + '|' + r.querySelector('.t').textContent; })`;
       for (const width of [1440, 1024, 390]) {
         try {
         const t = await tab(chrome, '/#/chain', { width });
-        const line = await t.ev(`[].map.call(document.querySelectorAll('#contents .ln-st > li'), function (l) { return l.getAttribute('data-ch'); })`);
-        if (line.join() !== stagesD.map((c) => c.id).join()) { ok = false; out.push(`${width}: the line holds ${line.length} stages, not the ${stagesD.length} in order (FAIL)`); }
+        const st = await t.ev(rowsOf('#contents > .ct-st .item')), xs = await t.ev(rowsOf('#contents .ct-x .item'));
+        const label = await t.ev(`(function () { var k = document.querySelector('#contents .ct-x .ct-xk'); return k && k.getClientRects().length ? k.textContent : ''; })()`);
+        const gpass = st.join() === stagesD.map((c) => c.id + '|' + c.title).join() && xs.join() === acrossD.map((c) => c.id + '|' + c.title).join() && label === 'Across the chain';
+        ok = ok && gpass;
+        out.push(`${width}: ${st.length} stage rows, then "${label}" over ${xs.map((x) => x.split('|')[1]).join(' and ')}${gpass ? '' : ' (FAIL: not the stages, then the chapters across the chain, in order)'}`);
         const bad = [];
-        for (const c of stagesD) {
-          const r = await opens(t, `#contents .ln-st li[data-ch="${c.id}"] .ln-t`, c.id);
-          if (!r.pass) bad.push(`${c.id}: ${r.clicked ? `shows ${r.st.shown.join(',') || 'nothing'} at y ${r.st.y}, ${r.st.hash}` : 'no title to click'}`);
+        for (const c of D) {
+          const r = await opens(t, `#contents .item[data-ch="${c.id}"] .t`, c.id);
+          if (!r.pass) bad.push(`${c.id} by its title: ${r.clicked ? `shows ${r.st.shown.join(',') || 'nothing'} at y ${r.st.y}, ${r.st.hash}` : 'no title to click'}`);
+          const d = await opens(t, `#contents .item[data-ch="${c.id}"] .ct-tile`, c.id);
+          if (!d.pass) bad.push(`${c.id} by its drawing: ${d.clicked ? `shows ${d.st.shown.join(',') || 'nothing'} at y ${d.st.y}, ${d.st.hash}` : 'no drawing to click'}`);
         }
         ok = ok && !bad.length;
-        out.push(`${width}: ${bad.length ? 'titles that fail: ' + bad.join('; ') + ' (FAIL)' : `each of the ${stagesD.length} titles on the line opens its chapter alone at its top`}`);
-        const xs = await t.ev(`[].map.call(document.querySelectorAll('#contents .ln-brk a.ln-bx'), function (a) { return a.getAttribute('data-ch') + '|' + a.querySelector('.ln-t').textContent; })`);
-        const xpass = xs.join() === acrossD.map((c) => c.id + '|' + c.title).join();
-        const xbad = [];
-        for (const c of acrossD) { const r = await opens(t, `#contents .ln-brk a.ln-bx[data-ch="${c.id}"]`, c.id); if (!r.pass) xbad.push(`${c.id}: shows ${r.st.shown.join(',') || 'nothing'} at y ${r.st.y}`); }
-        ok = ok && xpass && !xbad.length;
-        out.push(`${width}: the bracket carries ${xs.map((x) => x.split('|')[1]).join(' and ')}${xpass ? '' : ' (FAIL: not the chapters across the chain, in order)'}${xbad.length ? '; ' + xbad.join('; ') + ' (FAIL)' : ', and each opens alone at its top'}`);
+        out.push(`${width}: ${bad.length ? 'rows that fail: ' + bad.join('; ') + ' (FAIL)' : `each of the ${D.length} rows opens its chapter alone at its top, by its title and by its drawing`}`);
         // the downloads: on the first screen, each served
         await t.ev(`location.hash = '#/chain', 1`); await sleep(900); await t.jump(0);
         const dl = await t.ev(`(async function () { var out = [];
@@ -440,16 +441,16 @@ const want = (n) => !ONLY.length || ONLY.includes(String(n));
           && dl[1].href === 'pdf/summary.pdf' && dl[1].dl && dl[1].type === 'application/pdf'
           && dl[2].href === 'summary/' && !dl[2].dl && dl[2].type === 'text/html';
         ok = ok && dpass; out.push(`${width}: downloads ${dl.map((d) => `"${d.text}" ${d.href} ${d.status} ${d.type} at y ${d.y}`).join('; ')}${dpass ? '' : ' (FAIL)'}`);
-        if (width === 1440) { // each title's static page, which a new tab or a crawler follows
-          const pages = await t.ev(`(async function () { var out = []; for (var a of document.querySelectorAll('#contents .ln-st a, #contents .ln-brk a')) out.push(a.getAttribute('href') + ' ' + (await ${HEAD}(a.href)).status); return out; })()`);
-          const pbad = pages.filter((p) => !/ 200$/.test(p));
-          ok = ok && !pbad.length && pages.length === D.length; out.push(`${width}: the ${pages.length} links' static pages: ${pbad.length ? pbad.join(', ') + ' (FAIL)' : 'all served'}`);
+        if (width === 1440) { // each row's drawing, served as a picture
+          const pics = await t.ev(`(async function () { var out = []; for (var i of document.querySelectorAll('#contents .item .ct-tile img')) { var r = await ${HEAD}(i.src); out.push(i.getAttribute('src') + ' ' + r.status + ' ' + r.type); } return out; })()`);
+          const pbad = pics.filter((p) => !/ 200 image\/webp$/.test(p));
+          ok = ok && !pbad.length && pics.length === D.length; out.push(`${width}: the ${pics.length} drawings: ${pbad.length ? pbad.join(', ') + ' (FAIL)' : 'all served as webp'}`);
         }
         if (t.errors.length) { ok = false; out.push(`${width}: errors: ` + t.errors.join(' | ')); }
         await t.close();
         } catch (e) { ok = false; out.push(`${width}: ${e.message} (FAIL)`); }
       }
-      report(10, 'the contents page: every title on the line opens its chapter, the bracket\'s two chapters, the downloads', ok, out.join('\n        '));
+      report(10, 'the contents page: every row opens its chapter, by its title and its drawing; the drawings and the downloads', ok, out.join('\n        '));
     }
   } finally { await chrome.close(); }
   const fails = results.filter((r) => !r.pass);
