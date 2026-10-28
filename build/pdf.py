@@ -252,6 +252,14 @@ try:
                 load(); prepare('footnotes', nudged); again2 = run_paged()
                 if score(again2) < score(again): trial, again = nudged, again2
                 seen.append(trial)
+                # still lost: once more with those lines a little looser (nudge 2, print.js .cp-loose), which moves the page
+                # end the other way (28 Oct 2026: a shorter caption put Lithography's first footnote call at page 1's foot)
+                if again.get('lost') and any(trial['nudge'].get(t) != 2 for t in again.get('lostIn') or []):
+                    loose = dict(trial, nudge=dict(trial['nudge'], **{t: 2 for t in again['lostIn']}))
+                    say('laying out again: ' + ', '.join(f'{t} lines looser' for t in again['lostIn'] if trial['nudge'].get(t) != 2))
+                    load(); prepare('footnotes', loose); again3 = run_paged()
+                    if score(again3) < score(again): trial, again = loose, again3
+                    seen.append(trial)
             pinned.update(again.get('failed') or [])  # a card move that failed is not tried again, whichever layout is kept
             if score(again) < score(best):
                 fit, best, current = trial, again, True

@@ -57,7 +57,8 @@
   "figures": [
     {
       "id": "china-tool-revenue",
-      "type": "bars",
+      "type": "change",
+      "ends": ["peak", "latest"],
       "title": "China's share of revenue at the four largest chip-tool makers, peak fiscal year and latest",
       "finding": "China's revenue share fell at all four largest toolmakers after fiscal 2024",
       "unit": "%",

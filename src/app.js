@@ -391,7 +391,7 @@
       });
     },
     // with no WebGL there is nothing to draw, so the figure stays hidden rather than framing an empty canvas under a stale tag
-    setVisible: function (v) { var self = this; this.active = v; if (!this.fig) return; var show = v && this.ok; this.fig.setAttribute('data-hidden', show ? '0' : '1'); if (show) { this.resize(); requestAnimationFrame(function () { self.resize(); }); this.idle(); } },
+    setVisible: function (v) { var self = this; this.active = v; if (!this.fig) return; var show = v && this.ok; this.fig.setAttribute('data-hidden', show ? '0' : '1'); this.fig.setAttribute('data-route', v ? 'spec' : 'none'); /* a page with no specimen has no strip on a phone (page revision 2, src/styles.css) */ if (show) { this.resize(); requestAnimationFrame(function () { self.resize(); }); this.idle(); } },
     draw: function (slot, op, extraRot, sc) {
       var gl = this.gl, aspect = this.w / this.h;
       // proj(): the perspective, and the camera pulled back on narrow (portrait) stages so the bounding sphere fits the width too
@@ -457,14 +457,14 @@
   };
 
 
-  /* ---------------- phone specimen strip: a bottom bar with a live thumbnail; Show expands it; Contents opens the sheet ---------------- */
+  /* ---------------- phone specimen strip: a 64 px bar with a live thumbnail; a tap on it opens it; Contents opens the sheet ---------------- */
   var Band = {
     el: null, collapsed: true,
     init: function () {
       var self = this; this.el = $('.stage'); if (!this.el) return;
       var toggle = $('.stage-toggle'), menu = $('.stage-menu'), sheet = $('#sheet');
       this.set(true);
-      // the collapsed strip is as tall as its whole caption (src/styles.css): the page keeps that much room at its foot (--strip-h)
+      // the collapsed strip's height (64 px, src/styles.css): the page keeps that much room at its foot (--strip-h)
       if (window.ResizeObserver) new ResizeObserver(function () { if (self.collapsed && narrow()) document.documentElement.style.setProperty('--strip-h', Math.round(self.el.getBoundingClientRect().height) + 'px'); }).observe(this.el);
       if (toggle) toggle.addEventListener('click', function () { self.set(!self.collapsed); });
       // the sheet is a modal (aria-modal in src/template.html): while it stands, the page behind and the skip link are inert, so
@@ -510,7 +510,9 @@
     set: function (collapsed) {
       this.collapsed = collapsed;
       this.el.setAttribute('data-collapsed', collapsed ? '1' : '0');
-      var t = $('.stage-toggle'); if (t) { t.textContent = collapsed ? 'Expand' : 'Collapse'; t.setAttribute('aria-expanded', collapsed ? 'false' : 'true'); }
+      // collapsed on a phone, Expand is the strip itself (a clear button over all of it but Contents, src/styles.css), so its
+      // name says what a tap opens; opened, it is the Collapse pill
+      var t = $('.stage-toggle'); if (t) { t.textContent = collapsed ? 'Expand' : 'Collapse'; t.setAttribute('aria-expanded', collapsed ? 'false' : 'true'); if (collapsed) t.setAttribute('aria-label', 'Open the drawing'); else t.removeAttribute('aria-label'); }
       if (Stage.stripBalloons) Stage.stripBalloons(); // expanded, the strip numbers the parts of a drawing that has them
     }
   };
@@ -754,11 +756,10 @@
       window.addEventListener('scroll', function () { self.update(); }, { passive: true });
       window.addEventListener('resize', function () { self.update(); });
       $('.to-top').addEventListener('click', function () { window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' }); });
-      var stageTop = $('.stage-top'); if (stageTop) stageTop.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' }); }); // on phones Top lives in the bottom strip, clear of the text
       this.update();
     },
     update: function () {
-      var toTop = $('.to-top'); // Back to top (and the phone strip's Top button, which follows it) on every long page, not only the chain
+      var toTop = $('.to-top'); // Back to top on every long page, not only the chain (on a phone too: Top left the strip, page revision 2)
       if (toTop) {
         var contentsEl = Router.current === 'stack' && Router.chain === 'contents' ? $('#contents') : null;
         toTop.setAttribute('data-show', (contentsEl ? contentsEl.getBoundingClientRect().bottom < 0 : window.scrollY > window.innerHeight * 0.8) ? '1' : '0');
@@ -794,9 +795,7 @@
       if (id !== this.currentId || key !== this.currentKey) {
         this.currentId = id; this.currentKey = key;
         if (Router.current === 'stack') Router.title();
-        var num = best.getAttribute('data-number');
-        if (!inSlot) Stage.show(best.getAttribute('data-specimen'), null, this.caption(best),
-          num ? 'Specimen <b>' + num + '</b> · ' + esc(best.getAttribute('data-title') || '') : 'Specimen <b>00</b> · the whole chip');
+        if (!inSlot) Stage.show(best.getAttribute('data-specimen'), null, this.caption(best), this.specTag(best));
         // a phone builds only the next two specimens ahead of the reader (a wide screen queues them all at boot)
         if (narrow()) {
           var ahead = [];
@@ -804,7 +803,24 @@
           Stage.soon(ahead);
         }
       }
+      // the strip's wine rule (page revision 2): the share of the chapter read on The Chain, of the page on home
+      if (narrow() && Band.el) {
+        var cur = Router.current === 'stack' && this.currentId ? document.getElementById(this.currentId) : null, read = 0;
+        if (cur) { var cr = cur.getBoundingClientRect(); read = cr.height ? (vh - cr.top) / cr.height : 0; }
+        else { var de = document.documentElement; read = de.scrollHeight ? (window.pageYOffset + vh) / de.scrollHeight : 0; }
+        Band.el.style.setProperty('--read', Math.max(0, Math.min(1, read)).toFixed(3));
+      }
       Rail.update();
+    },
+    // the stage's tag for an item: "Specimen 04 · Lithography" beside the page on a laptop; on the phone's strip (page revision 2,
+    // src/styles.css) "Specimen 04 · EUV scanner", the specimen's own name, over "Tap for the drawing and its parts" ("Tap for
+    // the full drawing" for a drawing with no numbered parts)
+    specTag: function (item) {
+      var num = item.getAttribute('data-number'), sp = item.getAttribute('data-specimen') || '';
+      var ch = num ? esc(item.getAttribute('data-title') || '') : 'the whole chip', name = (DATA.specimenNames || {})[sp];
+      var parts = Router.current === 'stack' && $('.ch-spec .ch-parts', item);
+      return 'Specimen <b>' + (num || '00') + '</b> · <span class="tag-ch">' + ch + '</span><span class="tag-sp">' + (name ? esc(name) : ch) + '</span>'
+        + '<span class="tag-tap">' + (parts ? 'Tap for the drawing and its parts' : 'Tap for the full drawing') + '</span>';
     },
     // the caption the stage shows for an item: its own words, and on The Chain the parts list under them (the phone's strip
     // shows it once expanded)
@@ -827,8 +843,7 @@
       var ch = best.closest('article.chapter');
       if (!ch) return;
       Stage.host(best);
-      var num = ch.getAttribute('data-number');
-      Stage.show(ch.getAttribute('data-specimen'), null, this.caption(ch), 'Specimen <b>' + num + '</b> · ' + esc(ch.getAttribute('data-title') || ''));
+      Stage.show(ch.getAttribute('data-specimen'), null, this.caption(ch), this.specTag(ch));
       Stage.balloonsSnap = true;
     }
   };

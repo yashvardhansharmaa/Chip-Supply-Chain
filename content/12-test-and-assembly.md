@@ -69,7 +69,7 @@
     },
     {
       "id": "ase-testers",
-      "type": "bars",
+      "type": "columns",
       "title": "Testers installed at ASE, a Taiwanese assembly and test contractor",
       "finding": "ASE ran 8,348 testers in mid-2026, up from 6,797 a year earlier",
       "unit": "testers",

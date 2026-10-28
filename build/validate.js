@@ -17,7 +17,7 @@ const STAGES = require('./stages.js');
 
 const BANDS = ['Extreme', 'High', 'Moderate', 'Low'];
 const SUB_BANDS = ['Very hard', 'Hard', 'Moderate', 'Easy'];
-const FIGURE_TYPES = ['bars', 'stack', 'timeline', 'animation'];
+const FIGURE_TYPES = ['bars', 'stack', 'columns', 'change', 'timeline', 'animation']; // columns and change: revision 5, 28 Oct 2026
 // the datasets the site cannot do without, and the shape each must have; every other data/*.json must still parse
 const DATASETS = {
   'bibliography.json': { kind: 'object', what: 'source titles' },
@@ -139,6 +139,12 @@ function checkChapters(root, problems) {
       const rows = Array.isArray(fig.data) ? fig.data.filter((d) => Array.isArray(d) && d.length >= 2) : [];
       if (!rows.length) problems.push(`${rel}: ${name} has no data; "data" needs rows like ["label", value]`);
       else if (rows.length < fig.data.length) problems.push(`${rel}: ${name} has ${fig.data.length - rows.length} row(s) in "data" that are not ["label", value]`);
+      // a figure's mark and range name its rows; a change figure takes its rows in pairs (figure() in build/build.js)
+      const labels = new Set(rows.map((d) => String(d[0])));
+      if (fig.range) ['low', 'high', 'ref'].forEach((k) => { if (fig.range[k] != null && !labels.has(String(fig.range[k]))) problems.push(`${rel}: ${name}'s range ${k} "${fig.range[k]}" names no row`); });
+      if (fig.mark != null && fig.type !== 'change' && !labels.has(String(fig.mark)) && !(fig.range && fig.range.label === fig.mark)) problems.push(`${rel}: ${name}'s mark "${fig.mark}" names no row`);
+      if (fig.type === 'change' && rows.length % 2) problems.push(`${rel}: ${name} is a change figure with ${rows.length} rows; it needs them in pairs, earlier then later`);
+      rows.forEach((d) => { if (d.length > 2 && typeof d[2] === 'number' && !(d[2] > d[1])) problems.push(`${rel}: ${name} row "${d[0]}" has a range whose high end ${d[2]} is not above its low end ${d[1]}`); });
     });
   }
   Object.keys(numbers).filter((n) => numbers[n].length > 1).forEach((n) => problems.push(`content/: chapter number ${n} is used by ${numbers[n].join(' and ')}`));

@@ -485,7 +485,7 @@
        page ends fall elsewhere */
     Object.keys(opts.nudge || {}).forEach(function (id) {
       var ch = document.getElementById(id);
-      if (ch && opts.nudge[id]) ch.classList.add('cp-nudge');
+      if (ch && opts.nudge[id]) ch.classList.add(opts.nudge[id] === 2 ? 'cp-loose' : 'cp-nudge'); // 2: a little looser (build/pdf.py)
     });
     /* and chapters whose last few sources ran onto a page of their own: the list is set closer (.cp-sources-tight) */
     Object.keys(opts.sources || {}).forEach(function (id) {

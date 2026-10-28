@@ -375,7 +375,7 @@ ${china}
   // the panel shown when the reader clears the chosen country (click it again); src/modules/summary-a.js shows and hides it
   const nonePanel = `<article class="sa-panel sa-panel--none" data-cc="none"${DEFAULT_CC ? ' hidden' : ''}>
 <header class="sa-panel-head"><h4>All countries</h4></header>
-<p class="sa-panel-lede">Each numbered stop is one stage of the chain, pinned where a leading firm is based. Choose a country to see what it makes and which stages it leads.</p>
+<p class="sa-panel-lede">Choose a country to see what it makes and which stages it leads.</p>
 </article>`;
   const panels = nonePanel + PRIMARY.concat(SECONDARY).map((cc) => panel(cc, cc === DEFAULT_CC)).join('');
 

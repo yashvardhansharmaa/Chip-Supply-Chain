@@ -173,7 +173,7 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
   .eyebrow, .meta, .lbl, .card-k, .pill, .ladder, .ladder-head, .key, .more, .cc, .site-footer { font-family: var(--label); }
   .hero { padding: clamp(40px, 7vh, 72px) 0 36px; max-width: 760px; }
   /* the redesign (stage 3): the head as the views' (the display face at 400 over a standfirst in the text face), each section a display heading
-     over an ink rule, pill buttons in ink; Extreme is wine, its meter, word, pill and card rule (the visual pass of 27 Oct 2026), High a mid gray */
+     over an ink rule, pill buttons in ink; Extreme is wine, its meter, mark and card rule (the visual pass of 27 Oct 2026; the mark since page revision 7), High a mid gray */
   .eyebrow { margin: 0 0 22px; font-family: var(--label); font-size: 11.5px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); } /* the site's label: small spaced capitals (the visual pass of 27 Oct 2026) */
   .eyebrow b { color: var(--ink); font-weight: 500; }
   h1 { font-family: var(--display); font-weight: 400; font-variation-settings: var(--opsz); font-size: var(--t-title); line-height: 0.95; letter-spacing: -0.03em; margin: 0 0 0 -0.04em; text-wrap: balance; }
@@ -222,9 +222,14 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
   h3 { font-family: var(--display); font-weight: 500; font-variation-settings: var(--opsz); font-size: var(--t-block); line-height: 1.15; margin: 0 0 12px; text-wrap: balance; }
   h3 a { text-decoration: none; }
   h3 a:hover { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
-  .pills { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 12px; }
-  .pill { font-size: 12px; font-weight: 500; letter-spacing: 0; padding: 3px 9px 4px; border: 1px solid var(--line-2); border-radius: 3px; color: var(--ink-2); }
-  .pill.x { border: 1.5px solid var(--accent); padding: 2.5px 8.5px 3.5px; color: var(--accent); }
+  /* the card's band and substitutability in the site's marks, not boxed tags (page revision 7, 28 Oct 2026): Extreme a 4 by 13 px
+     wine bar before its word, High a 6 px hollow ink square, as the chapter kicker and the rail draw them; substitutability
+     plain ink-2 text */
+  .pills { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px; margin: 0 0 12px; }
+  .pill { font-size: 13px; font-weight: 400; letter-spacing: 0; padding: 0; border: 0; color: var(--ink-2); }
+  .pill-c { font-weight: 500; color: var(--ink); }
+  .lv-4 .pill-c::before { content: ""; display: inline-block; width: 4px; height: 13px; margin: 0 7px -2px 0; background: var(--accent); }
+  .lv-3 .pill-c::before { content: ""; display: inline-block; width: 6px; height: 6px; margin: 0 7px 1px 0; border: 1.5px solid var(--ink); }
   .lede { margin: 0 0 14px; font-size: var(--t-small); line-height: 1.5; color: var(--ink); }
   .lbl { margin: 0 0 4px; font-size: 11.5px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
   .who-block { margin: 0 0 14px; }
@@ -233,8 +238,10 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
   .who-block li b { color: var(--ink); font-weight: 600; }
   .who-block .cc { margin-left: 4px; }
   .who-block .share { display: block; font-size: var(--t-note); color: var(--muted); }
-  .sides { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; border-top: 1px solid var(--line); padding-top: 12px; margin: 0 0 12px; }
-  .sides p { margin: 0; font-size: var(--t-note); line-height: 1.45; color: var(--ink-2); }
+  /* China and the United States at the card's full width, one under the other (page revision 7): about 60 characters a line */
+  .sides { display: block; border-top: 1px solid var(--line); padding-top: 12px; margin: 0 0 12px; }
+  .sides > div + div { margin-top: 14px; }
+  .sides p { margin: 0; font-size: 15px; line-height: 22.5px; color: var(--ink-2); }
   .sides p.lbl { margin-bottom: 4px; font-size: 11.5px; color: var(--muted); }
   .short p { margin: 0 0 12px; font-size: var(--t-small); color: var(--ink-2); }
   .more { margin: auto 0 0; padding-top: 10px; font-size: 13px; font-weight: 600; }
@@ -259,7 +266,6 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
     .scr, .site-footer { overflow-wrap: break-word; }
     .dek { font-size: var(--t-text); }
     h1 { font-size: min(46px, 11vw); line-height: 1.02; } /* a long title, as a long chapter title is set on a phone: two lines, not three */
-    .sides { grid-template-columns: minmax(0, 1fr); }
     .card { padding: 16px 16px 14px; }
     h3 { font-size: var(--t-lead); }
   }

@@ -49,6 +49,7 @@
     {
       "id": "hbm-bandwidth",
       "type": "bars",
+      "mark": "HBM4, 2,048-bit",
       "title": "Bandwidth per HBM stack",
       "finding": "As of April 2026, HBM4 moves 2,000 GB/s per stack, HBM3E 1,200",
       "unit": "GB/s",
@@ -57,7 +58,7 @@
     },
     {
       "id": "hbm-revenue",
-      "type": "bars",
+      "type": "columns",
       "title": "HBM market, Micron's estimate for 2025 and forecast for 2028",
       "finding": "Micron sees HBM reaching $100 billion in 2028, from an estimated $35 billion",
       "unit": "$B",

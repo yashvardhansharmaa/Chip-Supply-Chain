@@ -391,7 +391,7 @@
       });
     },
     // with no WebGL there is nothing to draw, so the figure stays hidden rather than framing an empty canvas under a stale tag
-    setVisible: function (v) { var self = this; this.active = v; if (!this.fig) return; var show = v && this.ok; this.fig.setAttribute('data-hidden', show ? '0' : '1'); if (show) { this.resize(); requestAnimationFrame(function () { self.resize(); }); this.idle(); } },
+    setVisible: function (v) { var self = this; this.active = v; if (!this.fig) return; var show = v && this.ok; this.fig.setAttribute('data-hidden', show ? '0' : '1'); this.fig.setAttribute('data-route', v ? 'spec' : 'none'); /* a page with no specimen has no strip on a phone (page revision 2, src/styles.css) */ if (show) { this.resize(); requestAnimationFrame(function () { self.resize(); }); this.idle(); } },
     draw: function (slot, op, extraRot, sc) {
       var gl = this.gl, aspect = this.w / this.h;
       // proj(): the perspective, and the camera pulled back on narrow (portrait) stages so the bounding sphere fits the width too
@@ -457,14 +457,14 @@
   };
 
 
-  /* ---------------- phone specimen strip: a bottom bar with a live thumbnail; Show expands it; Contents opens the sheet ---------------- */
+  /* ---------------- phone specimen strip: a 64 px bar with a live thumbnail; a tap on it opens it; Contents opens the sheet ---------------- */
   var Band = {
     el: null, collapsed: true,
     init: function () {
       var self = this; this.el = $('.stage'); if (!this.el) return;
       var toggle = $('.stage-toggle'), menu = $('.stage-menu'), sheet = $('#sheet');
       this.set(true);
-      // the collapsed strip is as tall as its whole caption (src/styles.css): the page keeps that much room at its foot (--strip-h)
+      // the collapsed strip's height (64 px, src/styles.css): the page keeps that much room at its foot (--strip-h)
       if (window.ResizeObserver) new ResizeObserver(function () { if (self.collapsed && narrow()) document.documentElement.style.setProperty('--strip-h', Math.round(self.el.getBoundingClientRect().height) + 'px'); }).observe(this.el);
       if (toggle) toggle.addEventListener('click', function () { self.set(!self.collapsed); });
       // the sheet is a modal (aria-modal in src/template.html): while it stands, the page behind and the skip link are inert, so
@@ -510,7 +510,9 @@
     set: function (collapsed) {
       this.collapsed = collapsed;
       this.el.setAttribute('data-collapsed', collapsed ? '1' : '0');
-      var t = $('.stage-toggle'); if (t) { t.textContent = collapsed ? 'Expand' : 'Collapse'; t.setAttribute('aria-expanded', collapsed ? 'false' : 'true'); }
+      // collapsed on a phone, Expand is the strip itself (a clear button over all of it but Contents, src/styles.css), so its
+      // name says what a tap opens; opened, it is the Collapse pill
+      var t = $('.stage-toggle'); if (t) { t.textContent = collapsed ? 'Expand' : 'Collapse'; t.setAttribute('aria-expanded', collapsed ? 'false' : 'true'); if (collapsed) t.setAttribute('aria-label', 'Open the drawing'); else t.removeAttribute('aria-label'); }
       if (Stage.stripBalloons) Stage.stripBalloons(); // expanded, the strip numbers the parts of a drawing that has them
     }
   };
@@ -754,11 +756,10 @@
       window.addEventListener('scroll', function () { self.update(); }, { passive: true });
       window.addEventListener('resize', function () { self.update(); });
       $('.to-top').addEventListener('click', function () { window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' }); });
-      var stageTop = $('.stage-top'); if (stageTop) stageTop.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' }); }); // on phones Top lives in the bottom strip, clear of the text
       this.update();
     },
     update: function () {
-      var toTop = $('.to-top'); // Back to top (and the phone strip's Top button, which follows it) on every long page, not only the chain
+      var toTop = $('.to-top'); // Back to top on every long page, not only the chain (on a phone too: Top left the strip, page revision 2)
       if (toTop) {
         var contentsEl = Router.current === 'stack' && Router.chain === 'contents' ? $('#contents') : null;
         toTop.setAttribute('data-show', (contentsEl ? contentsEl.getBoundingClientRect().bottom < 0 : window.scrollY > window.innerHeight * 0.8) ? '1' : '0');
@@ -794,9 +795,7 @@
       if (id !== this.currentId || key !== this.currentKey) {
         this.currentId = id; this.currentKey = key;
         if (Router.current === 'stack') Router.title();
-        var num = best.getAttribute('data-number');
-        if (!inSlot) Stage.show(best.getAttribute('data-specimen'), null, this.caption(best),
-          num ? 'Specimen <b>' + num + '</b> · ' + esc(best.getAttribute('data-title') || '') : 'Specimen <b>00</b> · the whole chip');
+        if (!inSlot) Stage.show(best.getAttribute('data-specimen'), null, this.caption(best), this.specTag(best));
         // a phone builds only the next two specimens ahead of the reader (a wide screen queues them all at boot)
         if (narrow()) {
           var ahead = [];
@@ -804,7 +803,24 @@
           Stage.soon(ahead);
         }
       }
+      // the strip's wine rule (page revision 2): the share of the chapter read on The Chain, of the page on home
+      if (narrow() && Band.el) {
+        var cur = Router.current === 'stack' && this.currentId ? document.getElementById(this.currentId) : null, read = 0;
+        if (cur) { var cr = cur.getBoundingClientRect(); read = cr.height ? (vh - cr.top) / cr.height : 0; }
+        else { var de = document.documentElement; read = de.scrollHeight ? (window.pageYOffset + vh) / de.scrollHeight : 0; }
+        Band.el.style.setProperty('--read', Math.max(0, Math.min(1, read)).toFixed(3));
+      }
       Rail.update();
+    },
+    // the stage's tag for an item: "Specimen 04 · Lithography" beside the page on a laptop; on the phone's strip (page revision 2,
+    // src/styles.css) "Specimen 04 · EUV scanner", the specimen's own name, over "Tap for the drawing and its parts" ("Tap for
+    // the full drawing" for a drawing with no numbered parts)
+    specTag: function (item) {
+      var num = item.getAttribute('data-number'), sp = item.getAttribute('data-specimen') || '';
+      var ch = num ? esc(item.getAttribute('data-title') || '') : 'the whole chip', name = (DATA.specimenNames || {})[sp];
+      var parts = Router.current === 'stack' && $('.ch-spec .ch-parts', item);
+      return 'Specimen <b>' + (num || '00') + '</b> · <span class="tag-ch">' + ch + '</span><span class="tag-sp">' + (name ? esc(name) : ch) + '</span>'
+        + '<span class="tag-tap">' + (parts ? 'Tap for the drawing and its parts' : 'Tap for the full drawing') + '</span>';
     },
     // the caption the stage shows for an item: its own words, and on The Chain the parts list under them (the phone's strip
     // shows it once expanded)
@@ -827,8 +843,7 @@
       var ch = best.closest('article.chapter');
       if (!ch) return;
       Stage.host(best);
-      var num = ch.getAttribute('data-number');
-      Stage.show(ch.getAttribute('data-specimen'), null, this.caption(ch), 'Specimen <b>' + num + '</b> · ' + esc(ch.getAttribute('data-title') || ''));
+      Stage.show(ch.getAttribute('data-specimen'), null, this.caption(ch), this.specTag(ch));
       Stage.balloonsSnap = true;
     }
   };
@@ -4985,7 +5000,7 @@ try {
        page ends fall elsewhere */
     Object.keys(opts.nudge || {}).forEach(function (id) {
       var ch = document.getElementById(id);
-      if (ch && opts.nudge[id]) ch.classList.add('cp-nudge');
+      if (ch && opts.nudge[id]) ch.classList.add(opts.nudge[id] === 2 ? 'cp-loose' : 'cp-nudge'); // 2: a little looser (build/pdf.py)
     });
     /* and chapters whose last few sources ran onto a page of their own: the list is set closer (.cp-sources-tight) */
     Object.keys(opts.sources || {}).forEach(function (id) {
@@ -5737,34 +5752,65 @@ function el(t,c,x){var e=D.createElement(t);if(c)e.className=c;if(x)e.textConten
 function wrap(g,s,w){var out=[],line='';String(s).split(/\s+/).forEach(function(word){var t=line?line+' '+word:word;if(g.measureText(t).width>w&&line){out.push(line);line=word;}else line=t;});if(line)out.push(line);return out;}
 function txt(n){return n?n.textContent.replace(/\s+/g,' ').trim():'';}
 function png(fig){
-var rows=[].map.call(fig.querySelectorAll('.hb'),function(r){var c=r.cloneNode(true);return{l:txt(r.querySelector('.hb-l')),v:txt(r.querySelector('.hb-r b')),n:+r.getAttribute('data-v')||0,top:r.classList.contains('top'),rest:r.classList.contains('rest')};});
+var hb=[].slice.call(fig.querySelectorAll('.hbars .hb')),cl=[].slice.call(fig.querySelectorAll('.cols-plot .col')),cg=[].slice.call(fig.querySelectorAll('.cg-row:not(.cg-axis)'));
+var kind=hb.length?'hb':cl.length?'cols':'cg',labs=fig.querySelectorAll('.cols-lab span');
+var num=function(r,a){var v=r.getAttribute(a);return v==null||v===''?null:+v;};
+var rows=(hb.length?hb:cl.length?cl:cg).map(function(r,i){return{l:kind==='hb'?txt(r.querySelector('.hb-l')):kind==='cols'?txt(labs[i]):txt(r.querySelector('.cg-l b')),s:kind==='cg'?txt(r.querySelector('.cg-l small')):'',v:txt(r.querySelector(kind==='hb'?'.hb-r > b':kind==='cols'?'b':'.cg-v')),n:num(r,'data-v')||0,hi:num(r,'data-hi'),ref:num(r,'data-ref'),rl:txt(r.querySelector('.hb-ref span,.col-ref span')),a:num(r,'data-a'),b:num(r,'data-b'),lo:num(r,'data-lo'),top:r.classList.contains('top'),rest:r.classList.contains('rest'),span:r.classList.contains('span')};});
 if(!rows.length)return;
 var k=txt(fig.querySelector('.fig-k')),t1=txt(fig.querySelector('.fig-title')),t2=txt(fig.querySelector('.fig-sub'));
 var src=fig.querySelector('.fs-src'),sc=src?src.cloneNode(true):null;if(sc)[].forEach.call(sc.querySelectorAll('.fs-k'),function(x){x.remove();});
 var srcT=sc?txt(sc).replace(/\s*(\d+)$/,' [$1]'):'',addr=txt(fig.querySelector('.fig-cite-box a')).replace(/^https?:\/\//,'');
 var W=800,P=40,S=2,cv=el('canvas'),g=cv.getContext('2d');
 var FD='"Fraunces",Georgia,serif',FB='"Source Serif 4",Georgia,serif',FU='"Hanken Grotesk","Helvetica Neue",Arial,sans-serif',FM='"Fragment Mono",Menlo,monospace';
+var WINE='#7a1f2b',TINT='#d2d1cc',INK='#171716',INK2='#45443f',RULE='#8c8a84',LINE='#e1e0db';
+var hi=function(r){return r.hi!=null?r.hi:r.n;},max=Math.max.apply(null,rows.map(hi))||1;
+var vwid=function(){return Math.max.apply(null,rows.map(function(r){g.font=r.top?'700 15px '+FU:'400 13.5px '+FU;return g.measureText(r.v).width;}));};
+function hatch(x,y,w,h,c){if(w<=0||h<=0)return;g.save();g.beginPath();g.rect(x,y,w,h);g.clip();g.strokeStyle=c;g.lineWidth=1.5;for(var i=-h;i<w+h;i+=6){g.beginPath();g.moveTo(x+i,y+h);g.lineTo(x+i+h,y);g.stroke();}g.restore();}
+function range(r,x,y,w,h,lo,vert){var c=r.top?WINE:RULE;g.fillStyle=r.top&&!r.span?WINE:TINT;if(vert){g.fillRect(x,y+h-lo,w,lo);hatch(x,y,w,h-lo,c);}else{g.fillRect(x,y,lo,h);hatch(x+lo,y,w-lo,h,c);}g.strokeStyle=c;g.lineWidth=1.5;g.strokeRect(x+0.75,y+0.75,w-1.5,h-1.5);}
 g.font='500 24px '+FD;var L1=wrap(g,t1,W-2*P);g.font='400 16px '+FB;var L2=t2?wrap(g,t2,W-2*P):[];
-g.font='400 14px '+FU;var lw=Math.min(W*0.42,Math.max.apply(null,rows.map(function(r){return g.measureText(r.l).width;}))+8);
-var H=P+18+L1.length*31+(L2.length?6+L2.length*21:0)+24+rows.length*34+20+56;
+var lw=0,cw=0,sp=0,LL=[],hasRef=rows.some(function(r){return r.ref!=null;}),chartH;
+if(kind==='hb'){g.font='400 14px '+FU;lw=Math.min(W*0.42,Math.max.apply(null,rows.map(function(r){return g.measureText(r.l).width;}))+8);chartH=rows.length*34+(hasRef?20:0);}
+else if(kind==='cols'){var n=rows.length;cw=Math.min(140,(W-2*P-(n-1)*18)/n);sp=(W-2*P-n*cw)/(n+1);g.font='600 13.5px '+FU;LL=rows.map(function(r){return wrap(g,r.l,cw+sp-6);});chartH=26+190+10+Math.max.apply(null,LL.map(function(l){return l.length;}))*18;}
+else{g.font='600 14.5px '+FU;lw=Math.max.apply(null,rows.map(function(r){g.font='600 14.5px '+FU;var a=g.measureText(r.l).width;g.font='400 12.5px '+FU;return Math.max(a,g.measureText(r.s).width);}))+20;chartH=30+rows.length*50;}
+var H=P+18+L1.length*31+(L2.length?6+L2.length*21:0)+24+chartH+20+56;
 cv.width=W*S;cv.height=H*S;g.scale(S,S);g.fillStyle='#ffffff';g.fillRect(0,0,W,H);
 var y=P;g.textBaseline='alphabetic';g.fillStyle='#56554f';g.font='400 13px '+FM;g.fillText(k,P,y+12);y+=22;
-g.fillStyle='#171716';g.font='500 24px '+FD;L1.forEach(function(s){y+=28;g.fillText(s,P,y);y+=3;});
-if(L2.length){y+=6;g.fillStyle='#45443f';g.font='400 16px '+FB;L2.forEach(function(s){y+=19;g.fillText(s,P,y);y+=2;});}
-y+=24;var max=Math.max.apply(null,rows.map(function(r){return r.n;}))||1,x0=P+lw+12,bw=W-P-x0-90;
-rows.forEach(function(r){var w=Math.max(1,r.n/max*bw);
-g.textAlign='right';g.fillStyle=r.top?'#171716':'#45443f';g.font=(r.top?'600':'400')+' 14px '+FU;g.fillText(r.l,P+lw,y+16);g.textAlign='left';
-if(r.rest){g.save();g.beginPath();g.rect(x0,y,w,22);g.clip();g.strokeStyle='#8c8a84';g.lineWidth=1;for(var i=-22;i<w+22;i+=5){g.beginPath();g.moveTo(x0+i,y+22);g.lineTo(x0+i+22,y);g.stroke();}g.restore();g.strokeRect(x0+0.5,y+0.5,w-1,21);}
-else{g.fillStyle=r.top?'#7a1f2b':'#d2d1cc';g.fillRect(x0,y,w,22);}
-g.fillStyle=r.top?'#7a1f2b':'#45443f';g.font=r.top?'700 15px '+FU:'400 13.5px '+FU;g.fillText(r.v,x0+w+10,y+16);y+=34;});
-y+=14;g.fillStyle='#e1e0db';g.fillRect(P,y,W-2*P,1);y+=22;
+g.fillStyle=INK;g.font='500 24px '+FD;L1.forEach(function(s){y+=28;g.fillText(s,P,y);y+=3;});
+if(L2.length){y+=6;g.fillStyle=INK2;g.font='400 16px '+FB;L2.forEach(function(s){y+=19;g.fillText(s,P,y);y+=2;});}
+y+=24;
+if(kind==='hb'){var x0=P+lw+12,bw=W-P-x0-Math.max(90,vwid()+14);
+rows.forEach(function(r){var w=Math.max(1,hi(r)/max*bw);
+g.textAlign='right';g.fillStyle=r.top?INK:INK2;g.font=(r.top?'600':'400')+' 14px '+FU;g.fillText(r.l,P+lw,y+16);g.textAlign='left';
+if(r.rest){g.save();g.beginPath();g.rect(x0,y,w,22);g.clip();g.strokeStyle=RULE;g.lineWidth=1;for(var i=-22;i<w+22;i+=5){g.beginPath();g.moveTo(x0+i,y+22);g.lineTo(x0+i+22,y);g.stroke();}g.restore();g.strokeRect(x0+0.5,y+0.5,w-1,21);}
+else if(r.hi!=null){range(r,x0,y,w,22,r.n/r.hi*w,false);if(r.ref!=null){var rx=x0+r.ref/r.hi*w;g.fillStyle=INK;g.fillRect(rx-1,y-5,2,32);g.fillStyle=INK2;g.font='400 12.5px '+FU;g.textAlign='center';g.fillText(r.rl,rx,y+44);g.textAlign='left';}}
+else{g.fillStyle=r.top?WINE:TINT;g.fillRect(x0,y,w,22);}
+g.fillStyle=r.top?WINE:INK2;g.font=r.top?'700 15px '+FU:'400 13.5px '+FU;g.fillText(r.v,x0+w+10,y+16);y+=34+(r.ref!=null?20:0);});}
+else if(kind==='cols'){var yb=y+26+190;
+rows.forEach(function(r,i){var x=P+sp*(i+1)+cw*i,cx=x+cw/2,h=Math.max(1,hi(r)/max*190);
+if(r.rest){g.save();g.beginPath();g.rect(x,yb-h,cw,h);g.clip();g.strokeStyle=RULE;g.lineWidth=1;for(var j=-h;j<cw+h;j+=5){g.beginPath();g.moveTo(x+j,yb);g.lineTo(x+j+h,yb-h);g.stroke();}g.restore();g.strokeRect(x+0.5,yb-h+0.5,cw-1,h-1);}
+else if(r.hi!=null){range(r,x,yb-h,cw,h,r.n/r.hi*h,true);if(r.ref!=null){var ry=yb-r.ref/r.hi*h;g.fillStyle=INK;g.fillRect(x-5,ry-1,cw+10,2);g.fillStyle=INK2;g.font='400 12.5px '+FU;g.fillText(r.rl,x+cw+10,ry+4);}}
+else{g.fillStyle=r.top?WINE:TINT;g.fillRect(x,yb-h,cw,h);}
+g.textAlign='center';g.fillStyle=r.top?WINE:INK2;g.font=r.top?'700 15px '+FU:'400 13.5px '+FU;g.fillText(r.v,cx,yb-h-8);
+g.fillStyle=r.top?INK:INK2;g.font=(r.top?'600':'400')+' 13.5px '+FU;LL[i].forEach(function(s,j){g.fillText(s,cx,yb+20+j*18);});g.textAlign='left';});
+g.fillStyle=INK;g.fillRect(P,yb,W-2*P,1);y+=chartH;}
+else{var vw=vwid()+16,x0=P+lw,x1=W-P-vw,lo=rows[0].lo,top=num(cg[0],'data-hi'),X=function(v){return x0+(x1-x0)*(v-lo)/((top-lo)||1);};
+g.textAlign='center';g.fillStyle='#56554f';g.font='400 12px '+FU;[].forEach.call(fig.querySelectorAll('.cg-axis .cg-t span'),function(s){var p=parseFloat(s.style.left)/100;g.fillText(txt(s),x0+(x1-x0)*p,y+12);g.fillStyle=LINE;g.fillRect(Math.round(x0+(x1-x0)*p),y+22,1,rows.length*50);g.fillStyle='#56554f';});g.textAlign='left';y+=30;
+var ends=[].map.call(fig.querySelectorAll('.cg-end'),txt);
+rows.forEach(function(r,i){var cy=y+20,c=r.top?WINE:INK,xa=X(r.a),xb=X(r.b),d=xb<xa?-1:1,hl=r.top?11:8,hw=r.top?6:4.5;
+g.fillStyle=INK;g.font=(r.top?'600':'500')+' 14.5px '+FU;g.fillText(r.l,P,cy-2);g.fillStyle='#56554f';g.font='400 12.5px '+FU;g.fillText(r.s,P,cy+15);
+if(i===0&&ends.length===2){g.textAlign='center';g.fillStyle=INK2;g.font='400 12px '+FU;g.fillText(ends[0],xa,cy-12);g.fillText(ends[1],xb,cy-12);g.textAlign='left';}
+g.strokeStyle=c;g.lineWidth=r.top?2.6:1.6;g.beginPath();g.moveTo(xa+d*5,cy);g.lineTo(xb-d*hl,cy);g.stroke();
+g.fillStyle=c;g.beginPath();g.moveTo(xb,cy);g.lineTo(xb-d*hl,cy-hw);g.lineTo(xb-d*hl,cy+hw);g.closePath();g.fill();
+g.fillStyle='#ffffff';g.strokeStyle=c;g.lineWidth=1.6;g.beginPath();g.arc(xa,cy,5,0,Math.PI*2);g.fill();g.stroke();
+g.fillStyle=c;g.font=r.top?'700 15px '+FU:'400 13.5px '+FU;g.fillText(r.v,x1+16,cy+5);y+=50;});}
+y+=14;g.fillStyle=LINE;g.fillRect(P,y,W-2*P,1);y+=22;
 g.fillStyle='#45443f';g.font='400 12.5px '+FU;var sl=wrap(g,(srcT?'Source: '+srcT:''),W-2*P);sl.slice(0,1).forEach(function(s){g.fillText(s,P,y);});
 g.fillStyle='#56554f';g.font='400 12px '+FM;g.fillText(addr,P,y+20);
 cv.toBlob(function(b){if(!b)return;var a=el('a');a.href=URL.createObjectURL(b);a.download='chip-supply-chain-'+(k.replace(/^Figure\s*/,'figure-').replace(/[^0-9a-z]+/gi,'-').toLowerCase())+'-'+(fig.id.split('-').slice(2).join('-')||'chart')+'.png';D.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},2000);},'image/png');
 }
 function add(acts){
 if(acts.getAttribute('data-ready'))return;acts.setAttribute('data-ready','1');
-var kind=acts.getAttribute('data-kind'),fig=acts.closest('.figure');if(!fig||(kind!=='bars'&&kind!=='stack'))return;
+var kind=acts.getAttribute('data-kind'),fig=acts.closest('.figure');if(!fig||['bars','stack','columns','change'].indexOf(kind)<0)return;
 var tb=el('button','fs-tab','Table');tb.type='button';tb.setAttribute('aria-pressed','false');
 tb.addEventListener('click',function(){var on=!fig.classList.contains('is-table'),t=fig.querySelector('table.fig-table');fig.classList.toggle('is-table',on);if(t)t.classList.toggle('sr-only',!on);tb.setAttribute('aria-pressed',on?'true':'false');});
 var pb=el('button','fs-png','PNG');pb.type='button';pb.setAttribute('aria-label','Save the figure as a PNG picture');

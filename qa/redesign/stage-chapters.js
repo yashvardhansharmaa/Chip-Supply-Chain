@@ -389,7 +389,7 @@ const want = (n) => !ONLY.length || ONLY.includes(String(n));
         await go(t, `Export Controls, a board row's Read the chapter (${cf.chapter})`, `.cf-row[data-f="${cf.id}"] .cf-chapter a`, cf.chapter);
       } else { ok = false; out.push('Export Controls: no board row names a chapter (FAIL)'); }
       await t.close();
-      // the phone: the contents sheet, the slim bar, the strip's Top
+      // the phone: the contents sheet, the slim bar, Back to top
       t = await tab(chrome, '/lithography/', { width: 390 });
       await t.click('.stage-menu', false); await sleep(500);
       await go(t, 'the phone\'s contents sheet', '#sheet .sheet-chapters a[href="../memory-and-hbm/"]', 'memory-and-hbm');
@@ -400,7 +400,7 @@ const want = (n) => !ONLY.length || ONLY.includes(String(n));
       await go(t, `the phone's slim bar (${slim})`, '.ch-slim', 'memory-and-hbm', { into: false });
       await t.jump(5000); await sleep(400);
       const tag = await t.ev(`document.getElementById('stage-tag-text').textContent`);
-      await go(t, `the specimen strip's Top (the strip reads "${tag}")`, '.stage-top', 'memory-and-hbm', { into: false });
+      await go(t, `Back to top over the specimen strip (the strip reads "${tag}")`, '.to-top', 'memory-and-hbm', { into: false }); // Top left the strip (page revision 2, 28 Oct 2026)
       if (!/09/.test(tag)) { ok = false; out.push('the strip does not show chapter 09\'s specimen (FAIL)'); } // Memory and HBM, chapter 10 before the merge of 27 Oct 2026
       if (t.errors.length) { ok = false; out.push('errors: ' + t.errors.join(' | ')); }
       // the phone's strip on the contents, which draw every stage themselves (design round six, 28 Oct 2026): the strip stands
