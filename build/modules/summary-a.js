@@ -109,8 +109,9 @@ const SHORT = {
 
 const EQUIPMENT = ['Lithography', 'Deposition & Etch', 'Metrology & Inspection', 'Test', 'Advanced Packaging & OSAT', 'Equipment Subsystems & Components'];
 
-/* Where a stop's town label sits when the country is chosen. The label is 11 px Fragment Mono on a 16 px line with 1 px of
- * padding above and below and 4 px at the sides (18 px tall, 6.6 px a character plus 8). The map is drawn 1000 units wide
+/* Where a stop's town label sits when the country is chosen. The label is 11 px Hanken Grotesk on a 16 px line with 1 px of
+ * padding above and below and 4 px at the sides (18 px tall, 6.6 px a character plus 8: Fragment Mono's width, which the
+ * label had until the visual pass of 27 Oct 2026, so the room kept for it is a little more than it needs). The map is drawn 1000 units wide
  * but shown at its column's width, so a label covers more of the map on a narrow screen: the sides are solved for the map as
  * a 1280 px laptop shows it (about 830 px wide), and anything wider has more room. The offsets match summary-a.css: 16 px
  * from the stop's center to a side label, 13 px to a label above or below, 11 px from center to center for the corner

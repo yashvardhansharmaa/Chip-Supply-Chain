@@ -1,8 +1,9 @@
 /* The readable chapter page (dist/<chapter>/index.html, written by build/modules/social.js).
    A static copy of one chapter for search engines, citation and readers who arrive from a shared link.
    The tokens, type and rules are the site's own (src/styles.css, redesign of 25 Oct 2026): a white ground, warm ink and
-   red wine for links and the reader's place; Source Serif 4 for display and reading (design round five, 27 Oct 2026; Fraunces
-   and Literata before it), Hanken Grotesk for interface labels and Fragment Mono for kickers, codes and dates.
+   red wine for links, the reader's place, Extreme and the largest value on a chart; Source Serif 4 for display and reading
+   (design round five, 27 Oct 2026; Fraunces and Literata before it), Hanken Grotesk for labels, and for kickers in small
+   spaced capitals (the visual pass of 27 Oct 2026), and Fragment Mono for figure numbers and codes.
    The page follows the reader's system theme, and ?theme= or the site's saved choice overrides it.
    Inlined into each page and lightly minified by social.js, so keep it short and free of commas inside strings. */
 :root {
@@ -17,7 +18,8 @@
   --font-body: "Source Serif 4", "Iowan Old Style", Georgia, serif;
   --font-label: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
   --font-code: "Fragment Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-  --font-kicker: var(--font-code);
+  --font-kicker: var(--font-label); /* kickers in small spaced capitals, as src/styles.css sets them */
+  --fs-label: 11.5px; --tr-label: 0.08em; --tt-label: uppercase;
   --opsz-title: normal; /* the optical size follows the size */
   /* the text scale, as src/styles.css sets it: every size in the text face is its Literata size times 20 / 18.5 */
   --text-scale: 1;
@@ -63,7 +65,7 @@ strong, b { font-weight: 600; }
 .label, .eyebrow, .ch-meta, .fig-source, .src-meta, .track .n, .track-foot, .site-footer .updated, .tier, .ptag, .chip, .k, dt, th, .anim-steps b {
   font-family: var(--font-label);
 }
-.label { font-family: var(--font-kicker); font-size: var(--fs-cap); font-weight: 400; letter-spacing: 0; color: var(--muted); }
+.label { font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); color: var(--muted); }
 
 /* masthead: the wordmark home, then The Chain and the four reference pages (social.js NAV) */
 .masthead { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 64px; padding: 0 var(--gutter); border-bottom: 1px solid var(--line); }
@@ -86,11 +88,11 @@ strong, b { font-weight: 600; }
 /* the reading column */
 .page { max-width: calc(var(--measure) + 2 * var(--gutter)); margin: 0 auto; padding: 0 var(--gutter); }
 .ch-head { padding: clamp(40px, 8vh, 72px) 0 4px; }
-.eyebrow { margin: 0 0 14px; font-family: var(--font-kicker); font-size: var(--fs-cap); font-weight: 400; letter-spacing: 0; color: var(--muted); }
-.eyebrow b { color: var(--ink); font-weight: 400; }
+.eyebrow { margin: 0 0 14px; font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); color: var(--muted); }
+.eyebrow b { color: var(--ink); font-weight: 500; }
 .ch-title { font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: clamp(36px, 5.4vw, 52px); line-height: 1.02; letter-spacing: -0.015em; margin: 0 0 18px; }
 .ch-lede { font-size: var(--fs-lede); line-height: 1.45; color: var(--ink-2); margin: 0 0 16px; }
-.ch-meta { margin: 0 0 26px; font-family: var(--font-kicker); font-size: var(--fs-cap); font-weight: 400; letter-spacing: 0; color: var(--muted); }
+.ch-meta { margin: 0 0 26px; font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); color: var(--muted); }
 
 /* the way into the interactive chapter: one solid button, near the top and again at the end */
 .cta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; margin: 0 0 34px; }
@@ -314,7 +316,7 @@ sup.cite .br { font-size: 0; }
 .site-footer p { margin: 0; }
 .site-footer a { color: var(--ink); }
 .site-footer .credits { font-size: 15px; line-height: 1.5; color: var(--ink); }
-.site-footer .updated { display: block; margin-top: 10px; font-family: var(--font-kicker); font-weight: 400; font-size: 12px; letter-spacing: 0; }
+.site-footer .updated { display: block; margin-top: 10px; font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); }
 .site-footer .sources-key { margin-top: 10px; font-size: var(--fs-ui-s); }
 
 @media (max-width: 640px) {
@@ -353,6 +355,7 @@ sup.cite .br { font-size: 0; }
     --accent: #7a1f2b; --accent-ink: #7a1f2b; --accent-soft: #f3e3e5; --accent-fill: #7a1f2b; --on-accent: #fff; --ctx: #d2d1cc;
     --c1: #2b63c4; --c2: #e06a1f; --c3: #1f9a6d; --c4: #c9a10c; --c5: #5a48b8; --c6: #c3302b; --c7: #2e7d1e;
     --bar-5: #7a1f2b; --bar-4: #8c8a84; --bar-3: #c4c3bd;
+    --tr-label: 0.04em; /* paper keeps the capitals, a little closer */
     --stk-1: #2b63c4; --stk-2: #1f9a6d; --stk-3: #c9a10c; --stk-4: #5a48b8; --stk-5: #e06a1f; --stk-tail: #c9c6bf; --stk-edge: #a9a49b;
     color-scheme: light;
   }

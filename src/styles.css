@@ -9,9 +9,11 @@
    Type (design round five, 27 Oct 2026, qa/design5/fonts/notes.md): Source Serif 4 for both the display and the text, its
    optical size following the size (font-optical-sizing: auto), so one face draws the name, headings, titles and large
    numbers (400 for titles and section heads, 360 for the light numbers, 500 for small headings) and the standfirsts, text,
-   review questions and captions of more than one line. Hanken Grotesk only for menus, buttons, tabs, fields and small
-   interface labels; Fragment Mono for kickers, codes, dates in meta lines and table numbers. Before round five the display
-   face was Fraunces and the text face Literata. No text under 11 px. */
+   review questions and captions of more than one line. Hanken Grotesk for menus, buttons, tabs, fields and every label, and
+   since the visual pass of 27 Oct 2026 for the kickers too, in the live site's small spaced capitals (--font-kicker,
+   --fs-label, --tr-label, --tt-label), and for dates, counts, bar values and axis numbers on tabular figures. Fragment Mono
+   only for figure numbers ("Figure 11.2"), codes and the address inside Cite. Before round five the display face was
+   Fraunces and the text face Literata. No text under 11 px. */
 :root {
   --bg: #fcfcfa; /* a barely off-white, to take the glare off long reading (owner, 27 Oct); print stays white */
   --bg-2: #f4f4f2;   /* paper: a tint, never the ground */
@@ -38,8 +40,9 @@
   --font-body: "Source Serif 4", "Iowan Old Style", Georgia, serif;
   --font-ui: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
   --font-mono: var(--font-ui); /* the interface-label slot, kept under its old name so every module reads it */
-  --font-code: "Fragment Mono", ui-monospace, SFMono-Regular, Menlo, monospace; /* kickers, codes, dates, table numbers */
-  --font-kicker: var(--font-code);
+  --font-code: "Fragment Mono", ui-monospace, SFMono-Regular, Menlo, monospace; /* figure numbers, codes, the address in Cite */
+  --font-kicker: var(--font-ui); /* kickers and labels, in small spaced capitals (the visual pass of 27 Oct 2026; Fragment Mono before) */
+  --fs-label: 11.5px; --tr-label: 0.08em; --tt-label: uppercase; /* the live site's label: 11 to 12 px capitals, tracked, in the muted ink */
   --font-caption: var(--font-body);
   /* the optical size follows the size; the three tokens stay so the rules that read them need not change */
   --opsz-title: normal;
@@ -137,8 +140,11 @@ small { font-size: 0.85em; }
 .skip:focus { left: 8px; }
 #main:focus { outline: none; } /* the skip link lands on the whole column, which draws no ring: the next Tab shows where focus is */
 
-/* ---------- labels: a kicker in Fragment Mono, sentence case ---------- */
-.label { font-family: var(--font-kicker); font-size: var(--fs-cap); line-height: 1.4; font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--muted); }
+/* ---------- labels: a kicker in Hanken Grotesk, small spaced capitals in the muted ink (the live site's, 27 Oct 2026) ---------- */
+.label { font-family: var(--font-kicker); font-size: var(--fs-label); line-height: 1.4; font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); color: var(--muted); }
+/* AI Chips keeps its own labels until its builder moves them (src/modules/chips.css sets several in Fragment Mono, which the
+   capitals would turn into tracked mono capitals) */
+section[data-view="landscape"] .label { font-family: var(--font-code); font-size: var(--fs-cap); font-weight: 400; letter-spacing: 0; text-transform: none; }
 .num, .tabular { font-variant-numeric: tabular-nums; }
 
 /* ---------- display type: Source Serif 4, its optical size following the size, never bold ---------- */
@@ -217,9 +223,9 @@ small { font-size: 0.85em; }
 @media (hover: hover) and (pointer: fine) { .stage canvas { pointer-events: auto; cursor: grab; touch-action: none; outline: none; } /* the figure itself lets clicks through to the page; the canvas takes them so it can be turned */ .stage canvas.is-dragging { cursor: grabbing; } .stage canvas:focus-visible { box-shadow: inset 0 0 0 2px var(--accent); } }
 .stage .stage-tag {
   order: 2; position: relative; z-index: 1; margin: 0 var(--margin) 6px clamp(16px, 2.2vw, 32px); padding: 14px 0 0; text-align: left;
-  font-family: var(--font-kicker); font-size: 12px; line-height: 16px; font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--muted);
+  font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); line-height: 16px; color: var(--muted);
 }
-.stage .stage-tag b { color: inherit; font-weight: 400; }
+.stage .stage-tag b { color: inherit; font-weight: inherit; }
 .stage figcaption {
   order: 3; position: relative; z-index: 1; flex: none; margin: 0 var(--margin) 32px clamp(16px, 2.2vw, 32px); max-width: 34em; text-align: left;
   font-family: var(--font-caption); font-size: calc(14px * var(--text-scale)); line-height: 1.5; letter-spacing: 0; color: var(--ink-2);
@@ -360,7 +366,7 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before {
 .tl { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--line-2); }
 .tl li { position: relative; padding: 0 0 12px 18px; font-size: var(--fs-small); line-height: 1.4; }
 .tl li::before { content: ""; position: absolute; left: -4px; top: 8px; width: 7px; height: 7px; border-radius: 0; background: var(--ink); }
-.tl li .d { font-family: var(--font-code); font-size: 11px; color: var(--muted); letter-spacing: 0.02em; display: block; }
+.tl li .d { font-family: var(--font-ui); font-size: 12px; color: var(--muted); letter-spacing: 0.02em; display: block; font-variant-numeric: tabular-nums; }
 .prose .tl { padding-left: 0; margin-left: 4px; } /* .prose ol would indent the list 1.3em and leave the marks off the rule */
 .prose .tl li { margin-bottom: 0; }
 
@@ -373,7 +379,7 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before {
 .gl-term { font: inherit; color: inherit; background: none; border: 0; padding: 0; margin: 0; text-align: inherit; cursor: help; text-decoration: underline; text-decoration-style: dotted; text-decoration-color: color-mix(in srgb, var(--muted) 75%, var(--bg)); text-decoration-thickness: 1.5px; text-underline-offset: 0.24em; transition: text-decoration-color 0.15s; }
 .gl-term:hover, .gl-term[aria-describedby] { text-decoration-style: solid; text-decoration-color: var(--accent); }
 .site-footer .sources-key { margin: 12px 0 0; font-family: var(--font-ui); font-size: 13px; letter-spacing: 0; line-height: 1.7; color: var(--muted); max-width: 90ch; }
-.site-footer .updated { display: block; margin-top: 10px; font-family: var(--font-kicker); font-weight: 400; font-size: 12px; letter-spacing: 0; text-transform: none; color: var(--muted); }
+.site-footer .updated { display: block; margin-top: 10px; font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); color: var(--muted); }
 .gl-tip { position: fixed; z-index: 50; width: max-content; max-width: min(340px, calc(100vw - 16px)); background: var(--bg); border: 1px solid var(--line-2); border-top: 2px solid var(--ink); border-radius: 0; box-shadow: var(--shadow); padding: 12px 16px 13px; }
 .gl-tip b { display: block; font-size: var(--fs-d6); line-height: 1.2; margin-bottom: 6px; }
 .gl-tip p { font-family: var(--font-body); font-size: var(--fs-small); line-height: 1.45; color: var(--ink-2); margin: 0 0 10px; }
@@ -446,7 +452,7 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before {
 .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 16px; }
 .chips button { font-family: var(--font-ui); font-weight: 400; font-size: 13.5px; line-height: 1; letter-spacing: 0; padding: 8px 12px; min-height: 32px; border: 1px solid var(--control-edge); border-radius: 999px; background: none; color: var(--ink); }
 .chips button:hover { border-color: var(--ink); }
-.chips button b { font-family: var(--font-code); font-weight: 400; font-size: 11.5px; color: var(--muted); margin-left: 6px; }
+.chips button b { font-family: var(--font-ui); font-weight: 400; font-size: 11.5px; color: var(--muted); margin-left: 6px; font-variant-numeric: tabular-nums; }
 .chips button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
 .chips button[aria-pressed="true"] b { color: var(--bg); opacity: 0.7; }
 .sup-toolbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; }
@@ -492,7 +498,7 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before {
 .matrix-note { font-family: var(--font-mono); font-size: var(--fs-ui-s); color: var(--muted); margin: 8px 0 30px; line-height: 1.5; }
 .timeline { list-style: none; margin: 18px 0 40px; padding: 0; }
 .timeline li { display: grid; grid-template-columns: 110px 1fr; gap: 16px; padding: 14px 0; border-top: 1px solid var(--line); }
-.timeline .d { font-family: var(--font-code); font-size: 12px; color: var(--muted); letter-spacing: 0.01em; padding-top: 3px; }
+.timeline .d { font-family: var(--font-ui); font-size: 12px; color: var(--muted); letter-spacing: 0.01em; padding-top: 3px; font-variant-numeric: tabular-nums; }
 .timeline .d b { display: block; color: var(--ink); font-weight: 500; }
 .timeline h4 { font-size: var(--fs-d5); margin-bottom: 4px; }
 .timeline p { font-size: var(--fs-small); line-height: 1.5; color: var(--ink-2); margin: 0 0 6px; }
@@ -1048,7 +1054,7 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
 .fc-big { font-family: var(--font-display); font-weight: 360; font-size: 64px; line-height: 1; font-variation-settings: var(--opsz-numeral); color: var(--ink); }
 .fc-score-t { font-size: var(--fs-plain); color: var(--ink-2); }
 .review .rv-keep { margin: 8px 0 14px; padding: 14px 0 4px; border-top: 1px solid var(--line-2); }
-.review .rv-keep h4.label { margin: 0 0 12px; font-family: var(--font-mono); font-size: var(--fs-cap); font-weight: 500; letter-spacing: var(--tr-cap); line-height: 1.4; color: var(--muted); }
+.review .rv-keep h4.label { margin: 0 0 12px; font-family: var(--font-mono); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); line-height: 1.4; color: var(--muted); }
 .review .rv-keep ul { list-style: none; margin: 0; padding: 0; }
 .review .rv-keep li { position: relative; padding: 0 0 10px 30px; font-size: var(--fs-plain); line-height: 1.5; color: var(--ink); }
 .review .rv-keep li::before { content: ""; position: absolute; left: 4px; top: 0.72em; width: 12px; border-top: 2px solid var(--accent); }

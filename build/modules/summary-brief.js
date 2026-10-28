@@ -178,8 +178,8 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
   .hero { padding: clamp(40px, 7vh, 72px) 0 36px; max-width: 760px; }
   /* the redesign (stage 3): the head as the views' (the display face at 400 over a standfirst in the text face), each section a display heading
      over an ink rule, pill buttons in ink; Extreme is wine, its meter, word, pill and card rule (the visual pass of 27 Oct 2026), High a mid gray */
-  .eyebrow { margin: 0 0 22px; font-family: var(--kicker); font-size: 12px; font-weight: 400; letter-spacing: 0; color: var(--muted); }
-  .eyebrow b { color: var(--ink); font-weight: 400; }
+  .eyebrow { margin: 0 0 22px; font-family: var(--label); font-size: 11.5px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); } /* the site's label: small spaced capitals (the visual pass of 27 Oct 2026) */
+  .eyebrow b { color: var(--ink); font-weight: 500; }
   h1 { font-family: var(--display); font-weight: 400; font-variation-settings: normal; font-size: clamp(48px, 7vw, 96px); line-height: 0.95; letter-spacing: -0.03em; margin: 0 0 0 -0.04em; text-wrap: balance; }
   .dek { font-size: calc(clamp(19px, 1.6vw, 22px) * var(--text-scale)); line-height: 1.42; color: var(--ink-2); margin: 24px 0 28px; max-width: 34em; text-wrap: pretty; }
   .cta { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 18px; }
@@ -188,7 +188,7 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
   .btn:hover { background: var(--ink-2); border-color: var(--ink-2); }
   .btn.ghost { background: transparent; color: var(--ink); border-color: var(--line-2); }
   .btn.ghost:hover { border-color: var(--ink); background: transparent; }
-  .meta { margin: 0; font-family: var(--kicker); font-size: 12px; color: var(--muted); letter-spacing: 0; }
+  .meta { margin: 0; font-family: var(--label); font-size: 11.5px; font-weight: 500; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
   section + section { margin-top: 72px; }
   .sec-head { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; margin-bottom: 20px; }
   h2 { font-family: var(--display); font-weight: 500; font-variation-settings: normal; font-size: 24px; line-height: 1.2; letter-spacing: -0.01em; margin: 0; padding-bottom: 12px; border-bottom: 1px solid var(--ink); }
@@ -196,7 +196,7 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
   .sec-head p b { color: var(--ink); font-weight: 700; }
   /* the chain at a glance: one row per stage, a four-step meter for concentration */
   .ladder-head, .ladder a { display: grid; grid-template-columns: 34px minmax(170px, 1.35fr) 150px 120px minmax(0, 1.4fr); gap: 0 16px; align-items: baseline; }
-  .ladder-head { font-size: 11px; font-weight: 600; letter-spacing: 0; color: var(--muted); padding: 0 6px 8px; border-bottom: 1px solid var(--line-2); }
+  .ladder-head { font-size: 11.5px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); padding: 0 6px 8px; border-bottom: 1px solid var(--line-2); }
   .ladder-head span:first-child { grid-column: 1 / span 2; }
   .ladder { list-style: none; margin: 0; padding: 0; font-size: 14px; }
   .ladder li { border-bottom: 1px solid var(--line); }
@@ -221,8 +221,8 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
   .card { background: var(--card); border: 0; border-top: 2px solid var(--line-2); padding: 20px 22px 18px; display: flex; flex-direction: column; scroll-margin-top: 16px; }
   .card.lv-4 { border-top-color: var(--accent); }
   .card.lv-3 { border-top-color: var(--bar-4); }
-  .card-k { margin: 0 0 8px; font-family: var(--kicker); font-size: 12px; font-weight: 400; letter-spacing: 0; color: var(--muted); }
-  .card-k .n { color: var(--muted); font-weight: 400; margin-right: 10px; }
+  .card-k { margin: 0 0 8px; font-family: var(--label); font-size: 11.5px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  .card-k .n { color: var(--muted); font-weight: 500; margin-right: 10px; }
   h3 { font-family: var(--display); font-weight: 500; font-variation-settings: normal; font-size: 24px; line-height: 1.15; margin: 0 0 12px; text-wrap: balance; }
   h3 a { text-decoration: none; }
   h3 a:hover { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
@@ -230,7 +230,7 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
   .pill { font-size: 12px; font-weight: 500; letter-spacing: 0; padding: 3px 9px 4px; border: 1px solid var(--line-2); border-radius: 3px; color: var(--ink-2); }
   .pill.x { border: 1.5px solid var(--accent); padding: 2.5px 8.5px 3.5px; color: var(--accent); }
   .lede { margin: 0 0 14px; font-size: calc(16.5px * var(--text-scale)); line-height: 1.5; color: var(--ink); }
-  .lbl { margin: 0 0 4px; font-size: 11px; font-weight: 600; letter-spacing: 0; color: var(--muted); }
+  .lbl { margin: 0 0 4px; font-size: 11.5px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
   .who-block { margin: 0 0 14px; }
   .who-block ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 5px; }
   .who-block li { font-size: calc(14.5px * var(--text-scale)); line-height: 1.4; color: var(--ink-2); }
@@ -239,7 +239,7 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
   .who-block .share { display: block; font-size: calc(13.5px * var(--text-scale)); color: var(--muted); }
   .sides { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; border-top: 1px solid var(--line); padding-top: 12px; margin: 0 0 12px; }
   .sides p { margin: 0; font-size: calc(14px * var(--text-scale)); line-height: 1.45; color: var(--ink-2); }
-  .sides p.lbl { margin-bottom: 4px; font-size: 11px; color: var(--muted); }
+  .sides p.lbl { margin-bottom: 4px; font-size: 11.5px; color: var(--muted); }
   .short p { margin: 0 0 12px; font-size: calc(15.5px * var(--text-scale)); color: var(--ink-2); }
   .more { margin: auto 0 0; padding-top: 10px; font-size: 13px; font-weight: 600; }
   .more a { color: var(--accent); text-decoration: none; }

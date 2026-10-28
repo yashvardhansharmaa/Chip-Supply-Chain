@@ -64,6 +64,7 @@
     --font-mono: var(--font-ui);
     --font-code: "Fragment Mono", "Noto Sans SC", "Noto Sans JP", ui-monospace, monospace;
     --font-kicker: var(--font-code); --font-caption: var(--font-body);
+    --tt-label: none; --tr-label: 0; /* paper keeps its kickers in Fragment Mono, sentence case; the screen's capitals stop here */
     --opsz-title: normal; --opsz-numeral: normal; --opsz-name: normal;
     color-scheme: light;
   }
