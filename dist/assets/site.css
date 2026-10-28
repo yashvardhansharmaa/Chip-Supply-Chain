@@ -3406,7 +3406,6 @@ html.kb:has(.view[data-view="glossary"]:not([hidden])) { scroll-padding-top: cal
   .print-title .pt-foot { margin-top: auto; padding-top: 4mm; }
   .print-title .pt-row { display: flex; justify-content: space-between; align-items: baseline; gap: 8mm; border-top: 0.5pt solid var(--ink); padding-top: 3.5mm; }
   .print-title .pt-by { margin: 0; font-family: var(--font-display); font-weight: 500; font-size: 11pt; }
-  .print-title .pt-what { margin: 0; font-family: var(--font-ui); font-size: 8pt; color: var(--muted); }
   .print-title .pt-meta { margin: 2.6mm 0 0; font-family: var(--font-code); font-size: 7.4pt; color: var(--muted); }
 
   /* The Chain's title and standfirst, then the contents as a report's contents: one line a chapter, with its page. On screen
