@@ -4,8 +4,9 @@
  *   - any console error, uncaught exception, "module ... failed" or "specimen ... failed" warning, or a request to the
  *     local server that finds nothing (404), on every route;
  *   - a page that scrolls sideways at 320 or 390 (document wider than the screen);
- *   - a route that is missing its key part (The Chain's contents with its 16 chapters held in the page and none shown, a
- *     chapter's address showing that chapter alone with its card and its door, a row per flow on the board, and so on);
+ *   - a route that is missing its key part (The Chain's contents with a row per chapter and no chapter held in the home page, a
+ *     chapter's own page, /<id>/, showing that chapter alone with its card, its live drawing and its door, an old /#<chapter>
+ *     link landing there, the print-only book holding every chapter, a row per flow on the board, and so on);
  *   - a page that follows the device's dark setting: with prefers-color-scheme: dark and no saved choice, the main page,
  *     a chapter page and the summary must keep the light ground; with ?theme=dark they must turn dark.
  * Nothing leaves this machine: Chrome resolves every host other than 127.0.0.1 to nothing, so the fonts and the counter
@@ -37,7 +38,7 @@ const count = (sel) => `document.querySelectorAll(${JSON.stringify(sel)}).length
 const shown = (sel) => `!!(document.querySelector(${JSON.stringify(sel)}) && document.querySelector(${JSON.stringify(sel)}).getClientRects().length)`; // laid out on screen
 const shownCount = (sel) => `[].filter.call(document.querySelectorAll(${JSON.stringify(sel)}), (e) => e.getClientRects().length).length`;
 // The Chain's contents, measured against CP_DATA.chapters (design round eight, "clean", 28 Oct 2026): a row for every chapter
-// in order (shown, with its drawing and its #<id> link, the list the book PDF reads), every drawing fetched and decoded (they
+// in order (shown, with its drawing and its link to the chapter's own page, <id>/; the book's copy keeps #<id>, which its PDF reads), every drawing fetched and decoded (they
 // load lazily, so the check asks for them all at once), each stage with its band's single mark (Extreme a wine bar, High an
 // outline) and the chapters across the chain with none, under their label, the drawing's box on the page's ground (no tint),
 // two columns from 1300 px and one below, the standfirst holding both counts and both marks, the downloads, and How to read a
@@ -62,26 +63,26 @@ const CHAIN_STATE = `(function () {
     && sf.querySelectorAll('.ct-bmk:not(.h)').length === 1 && sf.querySelectorAll('.ct-bmk.h').length === 1;
   var list = [].map.call(document.querySelectorAll('#contents .contents-grid .item a.t'), function (a) { return a.getAttribute('href'); });
   var dl = [].filter.call(document.querySelectorAll('#howto .howto-dl a'), vis).map(function (a) { return a.getAttribute('href'); });
-  return { rows: shownRows.join() === D.map(function (c) { return '#' + c.id; }).join(), chapters: D.length, rowsShown: shownRows.filter(function (v) { return v !== 'none'; }).length, drawn: drawn,
+  return { rows: shownRows.join() === D.map(function (c) { return c.id + '/'; }).join(), chapters: D.length, rowsShown: shownRows.filter(function (v) { return v !== 'none'; }).length, drawn: drawn,
     groups: ids(stRows) === st.map(function (c) { return c.id; }).join() && ids(xRows) === x.map(function (c) { return c.id; }).join(), stages: st.length, across: xRows.length,
     marks: stRows.map(mark).join() === st.map(function (c) { return c.concentration; }).join() && xRows.every(function (r) { return mark(r) === ''; }),
     wine: wine.join() === wantWine.join(), extreme: wantWine.length, flat: flat === rows.length, cols: lefts === (innerWidth >= 1300 ? 2 : 1), columns: lefts,
     label: !x.length || vis(document.querySelector('#contents .ct-xk')), standfirst: standfirst,
-    list: list.join() === D.map(function (c) { return '#' + c.id; }).join(), listed: list.length,
+    list: list.join() === D.map(function (c) { return c.id + '/'; }).join(), listed: list.length,
     downloads: dl.join() === 'pdf/how-ai-chips-are-made.pdf,pdf/summary.pdf,summary/', howToRead: !!document.querySelector('.howto-read, #howto-read') };
 })()`;
 const CHAIN_OK = `(function (s) { return s.stages >= 14 && s.rows && s.drawn === s.chapters && s.groups && s.across >= 2 && s.marks && s.wine && s.extreme > 0 && s.flat && s.cols && s.label && s.standfirst && s.list && s.downloads && !s.howToRead; })(${CHAIN_STATE})`;
 // the counts below follow the chain since the merge of chapters 8 and 9 (27 Oct 2026): 14 stages, 16 chapters
 const ROUTES = [
   { name: 'walk', url: '/#/', ready: `${view('walk')} && ${count('.view[data-view="walk"] .wk-step')} >= 14`, detail: `'walk view shown: ' + ${view('walk')} + ', steps: ' + ${count('.view[data-view="walk"] .wk-step')}` },
-  // The Chain shows one chapter at a time (src/template.html, html[data-chain]): #/chain is its contents, every chapter is held
-  // in the page (print and search read them all) and none is shown; a chapter's address shows that chapter alone
+  // The Chain's contents are on the home page (#/chain) and each chapter on a page of its own (28 Oct 2026): the home page holds
+  // no chapter; a chapter's page shows that chapter alone, and an old link to a chapter on the home page lands there
   // The contents page is option 3 "clean" (design round eight, 28 Oct 2026): a row per chapter with its drawing, its number with
   // the band's single mark, its title (href="#<id>", the list the book PDF reads) and its one line; the two chapters across
   // the chain under their label; the standfirst that is also the key; the three downloads; and no How to read a chapter.
   // The counts come from the page's own data (CP_DATA.chapters), never typed here
-  { name: 'chain', url: '/#/chain', ready: `${view('stack')} && ${count('.view[data-view="stack"] article.chapter')} >= 16 && ${count('.view[data-view="stack"] article.chapter .plate')} >= 14 && ${shown('#contents')} && ${shownCount('.view[data-view="stack"] > article.chapter')} === 0 && ${CHAIN_OK}`, detail: `'chapters: ' + ${count('.view[data-view="stack"] article.chapter')} + ', cards: ' + ${count('.view[data-view="stack"] article.chapter .plate')} + ', chapters shown: ' + ${shownCount('.view[data-view="stack"] > article.chapter')} + ', contents: ' + JSON.stringify(${CHAIN_STATE})` },
-  { name: 'chapter', url: '/#lithography', ready: `${view('stack')} && ${shownCount('.view[data-view="stack"] > article.chapter')} === 1 && ${shown('#lithography .plate')} && ${shown('#lithography .prevnext .next')} && !${shown('#contents')}`, detail: `'chapters shown: ' + ${shownCount('.view[data-view="stack"] > article.chapter')} + ' (' + [].filter.call(document.querySelectorAll('.view[data-view="stack"] > article.chapter'), (a) => a.getClientRects().length).map((a) => a.id).join(', ') + '), card: ' + ${shown('#lithography .plate')} + ', door: ' + ${shown('#lithography .prevnext .next')} + ', contents shown: ' + ${shown('#contents')}` },
+  { name: 'chain', url: '/#/chain', ready: `${view('stack')} && ${count('article.chapter')} === 0 && ${shown('#contents')} && ${CHAIN_OK}`, detail: `'chapters held: ' + ${count('article.chapter')} + ', contents: ' + JSON.stringify(${CHAIN_STATE})` },
+  { name: 'chapter', url: '/#lithography--who-makes-it', ready: `location.pathname === '/lithography/' && location.hash === '#lithography--who-makes-it' && ${view('stack')} && ${count('article.chapter')} === 1 && ${shown('#lithography .plate')} && ${shown('#lithography .prevnext .next')} && !document.getElementById('contents')`, detail: `'at ' + location.pathname + location.hash + ', chapters: ' + [].map.call(document.querySelectorAll('article.chapter'), (a) => a.id).join(', ') + ', card: ' + ${shown('#lithography .plate')} + ', door: ' + ${shown('#lithography .prevnext .next')}` },
   // the shelves (design round seven): a chip on a shelf for every chip in CP_DATA, a drawing for every chip with a layout, and
   // a dot on the field chart for every chip with a published FP16 figure
   { name: 'landscape', url: '/#/landscape', ready: `${view('landscape')} && ${count('#aic .shelf .it-b')} === CP_DATA.landscape.length && ${count('#aic .shelf svg.plan')} === CP_DATA.landscape.filter((c) => c.layout).length && ${count('#aic-c-head svg.chart circle.dot, #aic-c-head svg.chart path.off')} === CP_DATA.landscape.filter((c) => (c.compute || {}).fp16TFLOPS != null).length`, detail: `'chips on the shelves: ' + ${count('#aic .shelf .it-b')} + ', drawings: ' + ${count('#aic .shelf svg.plan')} + ', dots on the chart: ' + ${count('#aic-c-head svg.chart circle.dot, #aic-c-head svg.chart path.off')}` },
@@ -89,7 +90,10 @@ const ROUTES = [
   { name: 'controls', url: '/#/controls', ready: `${view('controls')} && ${count('.cf-row')} >= (window.CP_DATA && CP_DATA.flows && CP_DATA.flows.flows ? CP_DATA.flows.flows.length : 1)`, detail: `'board rows: ' + ${count('.cf-row')}` },
   { name: 'exposure-asml', url: '/#/exposure/asml', ready: `${view('controls')} && !!document.getElementById('ex-asml') && document.getElementById('ex-asml').getBoundingClientRect().height > 0 && Math.abs(document.getElementById('ex-asml').getBoundingClientRect().top) < innerHeight`, detail: `'ASML chart: ' + (document.getElementById('ex-asml') ? 'top ' + Math.round(document.getElementById('ex-asml').getBoundingClientRect().top) + ', height ' + Math.round(document.getElementById('ex-asml').getBoundingClientRect().height) : 'missing')` },
   { name: 'glossary', url: '/#/glossary', ready: `${view('glossary')} && ${count('#lk-items li')} >= 300`, detail: `'entries: ' + ${count('#lk-items li')}` },
-  { name: 'chapter-page', url: '/lithography/', ready: `/Lithography/.test((document.querySelector('h1.ch-title') || {}).textContent || '') && !!document.querySelector('.plate') && ${count('.sources li')} >= 10`, detail: `'title: ' + ((document.querySelector('h1.ch-title') || {}).textContent || 'none') + ', card: ' + !!document.querySelector('.plate') + ', sources: ' + ${count('.sources li')}` },
+  { name: 'chapter-page', url: '/lithography/', ready: `/Lithography/.test((document.querySelector('h1.ch-title') || {}).textContent || '') && ${shownCount('article.chapter')} === 1 && ${shown('#lithography .plate')} && ${count('#lithography--sources li')} >= 10 && (innerWidth < 900 || !!document.querySelector('#lithography .ch-spec-draw canvas'))`, detail: `'title: ' + ((document.querySelector('h1.ch-title') || {}).textContent || 'none') + ', card: ' + !!document.querySelector('.plate') + ', sources: ' + ${count('#lithography--sources li')} + ', drawing in its slot: ' + !!document.querySelector('#lithography .ch-spec-draw canvas')` },
+  { name: 'essay-page', url: '/#/geopolitics', ready: `location.pathname === '/geopolitics/' && ${shownCount('article.chapter')} === 1 && ${shown('#geopolitics .prevnext .next')}`, detail: `'at ' + location.pathname + ', chapters shown: ' + ${shownCount('article.chapter')}` },
+  // the book, for print only: the cover, the contents (each row's link #<id>, which its PDF numbers) and every chapter
+  { name: 'book', url: '/book/#/chain', ready: `${count('article.chapter')} === 16 && ${count('#contents .item a.t[href^="#"]')} === 16 && ${shown('#contents')} && ${shownCount('article.chapter')} === 0`, detail: `'chapters: ' + ${count('article.chapter')} + ', contents rows: ' + ${count('#contents .item a.t[href^="#"]')}` },
   { name: 'summary', url: '/summary/', ready: `${count('.ladder li')} === 14 && ${count('.grid .card')} >= 14`, detail: `'ladder rows: ' + ${count('.ladder li')} + ', cards: ' + ${count('.grid .card')}` },
 ];
 // the theme default: these three page types, with the device set to dark
