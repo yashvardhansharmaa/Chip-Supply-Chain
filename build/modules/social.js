@@ -132,6 +132,8 @@ function manifest(root) {
     { slug: 'suppliers', route: '#/suppliers', eyebrow: `${SITE} · Suppliers`, title: 'Suppliers', line: `What each of the ${suppliers.length || 220} firms makes, where it sits, and how hard it would be to replace.` },
     { slug: 'export-controls', route: '#/controls', eyebrow: `${SITE} · Export Controls`, title: 'Export Controls', line: `The main rules since 2018, what can still be sold to China, and China's share of revenue at ${exposureFirms} firms, from their filings.` },
     { slug: 'glossary', route: '#/glossary', eyebrow: `${SITE} · Glossary`, title: 'Glossary', line: 'Every term, firm, chip and country, with the passages that use them.' },
+    // /summary/ is written by build/modules/summary-brief.js (own: no page here); it is listed for its share card (28 Oct 2026)
+    { slug: 'summary', route: 'summary/', own: true, eyebrow: `${SITE} · Summary`, title: 'Summary', line: `The ${stages.length} stages of the AI chip supply chain in one read, with who leads each and how concentrated it is.` },
   ];
   // the share image's alt text, from the words build/cards.py and build/home_card.py put on each card
   const CARD_TITLE = { intro: 'Start here' };
@@ -518,7 +520,7 @@ module.exports = function (ctx) {
       else warn(`chapter page ${p.slug}: the chapter was not rendered, so it has no page`);
       continue;
     }
-    if (written.has(p.slug)) continue;
+    if (written.has(p.slug) || p.own) continue;
     const dir = path.join(dist, p.slug);
     fs.mkdirSync(dir, { recursive: true });
     const html = p.slug === 'intro' && introReview ? introHTML(p, versions, css, introReview) : pageHTML(p, versions);
@@ -564,6 +566,8 @@ module.exports = function (ctx) {
 module.exports.manifest = manifest;
 module.exports.pageHTML = pageHTML;
 module.exports.BASE = BASE;
+module.exports.cardURL = (slug, root) => { const fs = require('fs'), path = require('path'); return cardURL(slug, cardVersions(root || path.resolve(__dirname, '..', '..'), fs, path)); }; // for the pages written elsewhere (summary-brief.js)
+module.exports.AUTHOR = AUTHOR;
 module.exports.stillSVG = stillSVG; // for the print still in each chapter with numbered parts (build.js)
 // for the reference pages (build/modules/reference-pages.js): the same head, tags, card and masthead as the chapter pages
 Object.assign(module.exports, { SITE, AUTHOR, FONTS, ICONS, MASTHEAD, masthead, THEME_JS, minCSS, pageTitle, shareTags, cardVersions, cardURL, describe });

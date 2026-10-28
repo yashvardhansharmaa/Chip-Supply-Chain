@@ -32,6 +32,9 @@ module.exports = function (ctx) {
   // the band in the words the chapter cards and the share cards use (SUBWORD in build/build.js and build/modules/social.js)
   const SUBWORD = { 'Very hard': 'Very hard to substitute', Hard: 'Hard to substitute', Moderate: 'Moderately hard to substitute', Easy: 'Easy to substitute' };
   const subWords = (ch) => SUBWORD[sub(ch)] || `${sub(ch)} to substitute`;
+  // the band in a table's column under "Substitutability": the card's words without "to substitute", so Moderate reads
+  // "Moderately hard" as the key and the cards say it (28 Oct 2026)
+  const subShort = (ch) => subWords(ch).replace(/ to substitute$/, '');
   // the favicon's tile, as the masthead draws it beside the name
   const TILE = '<svg class="wm-tile" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect width="16" height="16" rx="3.2"/><path transform="translate(3.3324 11.8693) scale(0.009179 -0.009179)" d="M1011 683 Q1011 612 960 564 Q909 515 823 515 Q739 515 696 561 Q653 607 653 680 L653 720 Q653 786 623 823 Q594 861 544 861 Q502 861 468 831 Q433 801 412 741 Q391 682 391 594 Q391 474 431 393 Q470 312 540 270 Q609 229 697 229 Q769 229 825 251 Q880 273 924 326 Q946 348 959 356 Q971 363 983 363 Q1000 363 1007 347 Q1015 330 1015 307 Q1012 216 954 140 Q896 64 796 19 Q695 -26 563 -26 Q417 -26 301 33 Q185 91 118 198 Q51 305 51 450 Q51 602 118 721 Q184 840 305 909 Q425 978 588 978 Q720 978 815 938 Q909 898 960 832 Q1011 765 1011 683 Z"/></svg>';
   const conc = (ch) => card(ch).concentration || '';
@@ -44,7 +47,7 @@ module.exports = function (ctx) {
   const meter = (band) => `<span class="meter" aria-hidden="true">${[1, 2, 3, 4].map((k) => `<b${k <= (LEVEL[band] || 0) ? ' class="on"' : ''}></b>`).join('')}</span>`;
   const ladder = stages.map((ch, i) => {
     const who = leaders(card(ch), 2).map((l) => `${esc(l.name)}${l.country ? ` <span class="cc">${esc(l.country)}</span>` : ''}`).join('<span class="sep">, </span>');
-    return `<li class="lv-${LEVEL[conc(ch)] || 0}"><a href="#s-${esc(ch.id)}"><span class="n">${pad(i + 1)}</span><span class="t">${esc(ch.title)}</span><span class="c">${meter(conc(ch))}<span class="w">${esc(conc(ch))}</span></span><span class="s">${esc(sub(ch))}</span><span class="who">${who}</span></a></li>`;
+    return `<li class="lv-${LEVEL[conc(ch)] || 0}"><a href="#s-${esc(ch.id)}"><span class="n">${pad(i + 1)}</span><span class="t">${esc(ch.title)}</span><span class="c">${meter(conc(ch))}<span class="w">${esc(conc(ch))}</span></span><span class="s">${esc(subShort(ch))}<span class="s-x"> to substitute</span></span><span class="who">${who}</span></a></li>`;
   }).join('');
   const nExtreme = stages.filter((ch) => conc(ch) === 'Extreme').length;
   const stageCards = stages.map((ch, i) => {
@@ -80,9 +83,9 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
 </section>
 <section class="glance" aria-labelledby="glance-h">
 <div class="sec-head"><h2 id="glance-h">The chain at a glance</h2><p><b>${nExtreme} of ${stages.length}</b> stages are rated Extreme concentration, meaning three or fewer firms could supply each of them today, or one firm holds more than half of it.</p></div>
+<p class="key"><b>Concentration</b> counts the firms that credibly supply a stage. Every stage rates Extreme or High. <b>Substitutability</b> rates how hard it would be for a well-funded state or firm to build an alternative: Very hard, Hard or Moderately hard.</p>
 <div class="ladder-head" aria-hidden="true"><span>Stage</span><span>Concentration</span><span>Substitutability</span><span>Who leads</span></div>
 <ol class="ladder">${ladder}</ol>
-<p class="key"><b>Concentration</b> counts the firms that credibly supply a stage. Every stage rates Extreme or High. <b>Substitutability</b> rates how hard it would be for a well-funded state or firm to build an alternative: Very hard, Hard or Moderately hard.</p>
 </section>
 <section class="stages-s" aria-labelledby="stages-h">
 <div class="sec-head"><h2 id="stages-h">The ${word(stages.length)} stages</h2><p>In the order a chip is made.</p></div>
@@ -100,7 +103,7 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
   const rows = stages.map((ch, i) => {
     const c = card(ch);
     const who = leaders(c, 2).map((l) => `${esc(l.name)}${l.country ? ` <span class="cc">${esc(l.country)}</span>` : ''}`).join(', ');
-    return `<tr><td class="n">${pad(i + 1)}</td><td class="t"><a href="${url(ch.id)}">${esc(ch.title)}</a></td><td>${who}</td><td class="band b-${esc(c.concentration || '')}">${esc(c.concentration || '')}</td><td class="band">${esc(sub(ch))}</td></tr>`;
+    return `<tr><td class="n">${pad(i + 1)}</td><td class="t"><a href="${url(ch.id)}">${esc(ch.title)}</a></td><td>${who}</td><td class="band b-${esc(c.concentration || '')}">${esc(c.concentration || '')}</td><td class="band">${esc(subShort(ch))}</td></tr>`;
   }).join('');
   const blocks = stages.map((ch, i) => {
     const c = card(ch);
@@ -124,7 +127,7 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
   const print = `<div class="prt">
 <header>
 <p class="kicker wm">${TILE}<span class="wm-name">Chip Supply Chain</span><span class="wm-sub">Summary</span></p>
-<h1>${title}</h1>
+<p class="prt-title">${title}</p>
 <p class="dek">${esc(dek)}</p>
 <p class="meta">Updated ${DAY} · <a href="${SITE.url}">${SITE.host}</a> · Every figure is cited in the chapter each section links to.</p>
 </header>
@@ -210,7 +213,8 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
   .lv-4 .meter b.on { background: var(--accent); }
   .cc { font-size: 11px; letter-spacing: 0.06em; color: var(--muted); }
   .ladder .who .sep { color: var(--muted); }
-  .key { font-size: 12.5px; color: var(--muted); margin: 12px 0 0; max-width: 60em; }
+  .key { font-size: 12.5px; color: var(--muted); margin: 0 0 18px; max-width: 60em; } /* above the table, so a phone reads it before the fourteen rows (28 Oct 2026) */
+  .ladder .s-x { display: none; } /* "to substitute": the column head says it on a wide screen */
   .key b { color: var(--ink-2); font-weight: 600; }
   /* stage cards */
   .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
@@ -256,8 +260,10 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
   @media (max-width: 860px) {
     .grid { grid-template-columns: minmax(0, 1fr); }
     .ladder-head { display: none; }
-    .ladder a { grid-template-columns: 30px minmax(0, 1fr) auto; grid-template-areas: "n t c" "n who s"; gap: 3px 10px; }
-    .ladder .n { grid-area: n; } .ladder .t { grid-area: t; font-size: var(--t-small); } .ladder .c { grid-area: c; justify-self: end; } .ladder .who { grid-area: who; font-size: 13px; } .ladder .s { grid-area: s; justify-self: end; font-size: 12px; color: var(--muted); }
+    /* a phone: the stage, then its two ratings on one line as the cards give them, then who leads it */
+    .ladder a { grid-template-columns: 30px auto minmax(0, 1fr); grid-template-areas: "n t t" "n c s" "n who who"; gap: 4px 14px; }
+    .ladder .n { grid-area: n; } .ladder .t { grid-area: t; font-size: var(--t-small); } .ladder .c { grid-area: c; } .ladder .who { grid-area: who; font-size: 13px; } .ladder .s { grid-area: s; font-size: 13px; color: var(--muted); }
+    .ladder .s-x { display: inline; } /* no column heads here, so the cell says what it rates */
   }
   @media (max-width: 560px) {
     body { font-size: var(--t-text); }
@@ -289,7 +295,7 @@ p, li, td { text-wrap: wrap; }
 .kicker.wm .wm-tile path { fill: #fff; }
 .kicker.wm .wm-name { font: 500 12pt "Fraunces Mark", var(--display); line-height: 1; }
 .kicker.wm .wm-sub { padding-left: 2.6mm; margin-left: 0.4mm; border-left: 0.5pt solid var(--line-2); font: 400 7.4pt var(--kicker); line-height: 1.2; color: var(--muted); }
-h1 { margin: 0 0 2.4mm; font: 400 23pt/1.06 var(--display); letter-spacing: -0.02em; text-wrap: balance; }
+.prt-title { margin: 0 0 2.4mm; font: 400 23pt/1.06 var(--display); letter-spacing: -0.02em; text-wrap: balance; } /* a paragraph: the page's one h1 is the screen layout's (28 Oct 2026) */
 .dek { margin: 0 0 2.6mm; max-width: 150mm; font-size: 11pt; line-height: 1.4; color: var(--ink-2); }
 .meta { margin: 0 0 4.4mm; font: 400 7.4pt/1.4 var(--kicker); color: var(--muted); }
 .key { display: grid; gap: 1mm; margin: 0 0 3.6mm; padding: 2.2mm 0; border-top: 0.6pt solid var(--ink); border-bottom: 0.3pt solid var(--line-2); font: 8pt/1.4 var(--label); color: var(--ink-2); }
@@ -328,6 +334,10 @@ h2 { margin: 16pt 0 1mm; padding-top: 2mm; border-top: 0.6pt solid var(--ink); f
 .foot { margin-top: 8mm; padding-top: 2mm; border-top: 0.6pt solid var(--ink); font: 400 8pt/1.45 var(--label); color: var(--ink-2); }
 }`;
 
+  // the share card (build/cards.py renders cards/summary.png from social.js manifest()) and its alt text, as the other views' read
+  const SOC = require('./social.js');
+  const cardImg = SOC.cardURL('summary', root);
+  const cardAlt = `Summary. The ${stages.length} stages of the AI chip supply chain in one read, with who leads each and how concentrated it is. Small drawings of all ${stages.length} stages run along the bottom.`;
   const html = `<!doctype html>
 <html lang="en">
 <head>
@@ -342,6 +352,16 @@ h2 { margin: 16pt 0 1mm; padding-top: 2mm; border-top: 0.6pt solid var(--ink); f
 <meta name="twitter:description" content="${esc(seo.description)}">
 <meta property="og:url" content="${SITE.url}summary/">
 <meta property="og:type" content="article">
+<meta property="og:site_name" content="Chip Supply Chain">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="${esc(cardImg)}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="${esc(cardAlt)}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="${esc(cardImg)}">
+<meta name="twitter:image:alt" content="${esc(cardAlt)}">
+<script type="application/ld+json">{{LD:SUMMARY}}</script>
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <script>(function(){try{var q=/[?&]theme=(light|dark)/.exec(location.search);var t=q?q[1]:localStorage.getItem('cp-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -359,6 +379,18 @@ ${print}
   const dir = path.join(root, 'dist', 'summary');
   fs.mkdirSync(dir, { recursive: true });
   const dated = pageDate ? pageDate('/summary/', html) : null;
-  fs.writeFileSync(path.join(dir, 'index.html'), keepRanges(html.split(DAY).join(esc(dated && dayStr ? dayStr(dated.modified) : builtStr))));
+  // the structured data: the summary as an Article (its headline the h1, its description the meta description, its dates the
+  // page's own "Updated" day and the day it first appeared, its image the share card)
+  const u = `${SITE.url}summary/`;
+  const ld = { '@context': 'https://schema.org', '@type': 'Article', '@id': u + '#article', headline: title, description: seo.description, url: u,
+    mainEntityOfPage: { '@type': 'WebPage', '@id': u, url: u, name: `${seo.title} · Chip Supply Chain` },
+    image: { '@type': 'ImageObject', url: cardImg, width: 1200, height: 630 }, inLanguage: 'en',
+    ...(dated ? { datePublished: dated.published, dateModified: dated.modified } : {}),
+    author: { '@type': 'Person', name: SOC.AUTHOR.name, url: SOC.AUTHOR.url },
+    publisher: { '@type': 'Organization', '@id': SITE.url + '#publisher', name: 'Chip Supply Chain', url: SITE.url, logo: { '@type': 'ImageObject', url: SITE.url + 'apple-touch-icon.png', width: 180, height: 180 } },
+    isPartOf: { '@type': 'WebSite', '@id': SITE.url + '#website', name: 'Chip Supply Chain', url: SITE.url },
+    hasPart: stages.map((ch) => ({ '@type': 'WebPage', name: ch.title, url: url(ch.id) })) };
+  const out = html.split(DAY).join(esc(dated && dayStr ? dayStr(dated.modified) : builtStr)).split('{{LD:SUMMARY}}').join(JSON.stringify(ld).replace(/</g, '\\u003c'));
+  fs.writeFileSync(path.join(dir, 'index.html'), keepRanges(out));
   return {};
 };
