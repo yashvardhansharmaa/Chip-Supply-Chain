@@ -318,7 +318,7 @@
   .review .rv-keep li, .review .cp-quiz li { break-inside: avoid; }
   .review .rv-keep[data-split-from], .review .cp-quiz[data-split-from] { border-top: 0; margin-top: 0; padding-top: 0; }
 
-  /* ---------- the book's cover, how to read, and the contents ---------- */
+  /* ---------- the book's cover, The Chain's title, and the contents ---------- */
   .print-only { display: block !important; }
   /* A4 portrait, the wafer cover (qa/cover-wafer.md). The 300 mm wafer in plan view, drawn in ink by build/cover-art.py,
      sits centred as one object on the white sheet: 164mm across, 23mm in from either side, 14mm from the head, notch at
@@ -343,25 +343,33 @@
   .print-title .pt-what { margin: 0; font-family: var(--font-ui); font-size: 8pt; color: var(--muted); }
   .print-title .pt-meta { margin: 2.6mm 0 0; font-family: var(--font-code); font-size: 7.4pt; color: var(--muted); }
 
-  /* how to read, and the contents as a report's contents: one line a chapter, with its page */
+  /* The Chain's title and standfirst, then the contents as a report's contents: one line a chapter, with its page. On screen
+     the head sets the title beside the standfirst and the contents draw the chain as a picture (src/modules/chapter.css, design
+     round six); on paper the title stands over the standfirst, the picture and the downloads go, and the list is the
+     contents, under the group heads only the book prints (.print-only, build/build.js CONTENTS). How to read a chapter went
+     on 28 Oct 2026 (owner), so the title, the standfirst and the contents share the page after the cover. */
+  .view[data-view="stack"] > .howto, .howto .howto-r { display: block; }
   .howto { margin: 0 0 4mm; padding: 3.4mm 0 1mm; border-top: 0.6pt solid var(--ink); break-inside: avoid; }
-  .howto ul { padding-left: 0; }
-  .howto h2 { margin-bottom: 2.4mm; font-family: var(--font-ui); font-size: 8pt; font-weight: 600; }
   .howto h1.howto-title, .howto h2.howto-title { margin: 0 0 2mm; font-family: var(--font-display); font-weight: 400; font-size: 24pt; line-height: 1.04; letter-spacing: -0.02em; }
   .howto .howto-lede { max-width: 140mm; margin-bottom: 2.6mm; font-family: var(--font-body); font-size: calc(9.8pt * var(--text-scale)); line-height: 1.42; color: var(--ink-2); }
-  .howto h3.howto-k { margin-bottom: 1.6mm; padding-top: 2.4mm; font-family: var(--font-ui); font-size: 8pt; font-weight: 600; letter-spacing: 0; text-transform: none; color: var(--ink); }
-  .howto p, .howto li { font-family: var(--font-body); font-size: calc(8.6pt * var(--text-scale)); line-height: 1.4; }
+  .contents .ln { display: none !important; }
   .contents { break-after: page; padding: 2.6mm 0 0; margin-top: 2mm; border-top: 0.6pt solid var(--ink); }
   /* the two group heads ("The fourteen stages", "Across the chain") and the note under the second: the screen's 40 px
      above the second ran the contents' last line onto a page of its own */
   .contents .contents-k { margin: 3.5mm 0 2mm; padding-top: 0; border-top: 0; font-family: var(--font-code); font-size: 7.2pt; font-weight: 400; color: var(--muted); }
   .contents .contents-note { margin: 0 0 2mm; font-family: var(--font-body); font-size: calc(8.8pt * var(--text-scale)); line-height: 1.4; color: var(--ink-2); }
   .contents h2 { margin-bottom: 3mm; font-family: var(--font-display); font-weight: 400; font-size: 16pt; letter-spacing: -0.012em; }
+  /* the first group head with the key at its right: the band's mark beside each word, as beside each number below */
+  .contents .contents-kr.print-only { display: flex !important; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 20px; margin: 26px 0 0; }
+  .contents .ct-key { display: flex; gap: 16px; margin: 0; font-family: var(--font-ui); font-size: 13px; line-height: 16px; color: var(--ink-2); }
+  .contents .ct-key span { display: inline-flex; align-items: flex-end; gap: 6px; }
+  .contents .ct-bmk { width: 5px; height: 12px; margin-bottom: 2px; }
+  .contents .ct-bmk.h { height: 6px; }
   .contents-grid { display: block; }
-  .contents-grid .item { break-inside: avoid; display: flex; align-items: baseline; gap: 0; border-top: 0; border-bottom: 0.3pt solid var(--line-2); padding: 0.6mm 0; } /* close enough that the sixteen lines share the page with How to read */
+  .contents-grid .item { break-inside: avoid; display: flex; align-items: baseline; gap: 0; border-top: 0; border-bottom: 0.3pt solid var(--line-2); padding: 0.6mm 0; } /* close enough that the sixteen lines share the page with the title and standfirst */
   /* the number in a column of its own, so every title starts on one edge; the page number set in the text's figures, on
      the title's baseline */
-  .contents-grid .n { flex: none; width: 9mm; padding: 0; font-family: var(--font-code); font-size: 7.2pt; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .contents-grid .n { flex: none; display: flex; align-items: flex-end; gap: 7px; width: 9mm; padding: 0; font-family: var(--font-code); font-size: 7.2pt; line-height: 16px; color: var(--muted); font-variant-numeric: tabular-nums; }
   .contents-grid .t { flex: 1; display: flex; justify-content: space-between; align-items: baseline; gap: 6mm; margin: 0; font-family: var(--font-display); font-weight: 500; font-size: 9.6pt; line-height: 1.4; letter-spacing: 0; }
   .contents-grid .item ul, .contents-grid .ol { display: none; } /* the section list and the one-liners are the site's; the page wants the spine */
   .contents-grid .t::after { content: target-counter(attr(href url), page); font-family: var(--font-code); font-weight: 400; font-size: 7.6pt; color: var(--ink-2); }

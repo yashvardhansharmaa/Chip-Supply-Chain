@@ -1,0 +1,128 @@
+{
+ "design-and-eda": {
+  "w": 283,
+  "h": 300,
+  "w1": 77.3,
+  "w2": 64.0,
+  "w3": 57.1,
+  "gamma": 2.13,
+  "src": "94f8aa5facd584f3"
+ },
+ "silicon-and-wafers": {
+  "w": 98,
+  "h": 300,
+  "w1": 41.4,
+  "w2": 28.4,
+  "w3": 22.6,
+  "gamma": 3.09,
+  "src": "346c9df50c555acf"
+ },
+ "chemicals-gases-and-photoresist": {
+  "w": 252,
+  "h": 300,
+  "w1": 73.0,
+  "w2": 60.4,
+  "w3": 53.9,
+  "gamma": 2.1,
+  "src": "b954beac4a7c1600"
+ },
+ "lithography": {
+  "w": 245,
+  "h": 300,
+  "w1": 72.0,
+  "w2": 59.6,
+  "w3": 53.2,
+  "gamma": 1.89,
+  "src": "8fb1a56450a15e20"
+ },
+ "photomasks-and-pellicles": {
+  "w": 300,
+  "h": 249,
+  "w1": 87.4,
+  "w2": 72.4,
+  "w3": 64.6,
+  "gamma": 1.91,
+  "src": "ef5bdb2298161ed2"
+ },
+ "deposition-and-etch": {
+  "w": 232,
+  "h": 300,
+  "w1": 70.0,
+  "w2": 58.0,
+  "w3": 51.7,
+  "gamma": 2.61,
+  "src": "efc9f55e5cb63b23"
+ },
+ "metrology-and-inspection": {
+  "w": 157,
+  "h": 300,
+  "w1": 57.6,
+  "w2": 45.5,
+  "w3": 36.2,
+  "gamma": 1.58,
+  "src": "394902ec5a09733a"
+ },
+ "foundries-and-fabs": {
+  "w": 278,
+  "h": 300,
+  "w1": 76.7,
+  "w2": 63.5,
+  "w3": 56.6,
+  "gamma": 2.38,
+  "src": "0655c6ba2888affe"
+ },
+ "memory-and-hbm": {
+  "w": 300,
+  "h": 253,
+  "w1": 86.7,
+  "w2": 71.8,
+  "w3": 64.1,
+  "gamma": 3.38,
+  "src": "5ddcacbdb24d3482"
+ },
+ "advanced-packaging": {
+  "w": 300,
+  "h": 198,
+  "w1": 98.0,
+  "w2": 81.2,
+  "w3": 72.4,
+  "gamma": 2.79,
+  "src": "3bad49274bda1eb8"
+ },
+ "substrates-and-pcbs": {
+  "w": 300,
+  "h": 153,
+  "w1": 100.0,
+  "w2": 92.3,
+  "w3": 82.4,
+  "gamma": 3.36,
+  "src": "a1ba3f65ebc050a7"
+ },
+ "test-and-assembly": {
+  "w": 300,
+  "h": 205,
+  "w1": 96.3,
+  "w2": 79.8,
+  "w3": 71.2,
+  "gamma": 1.69,
+  "src": "b22d49c074cec506"
+ },
+ "systems-and-networking": {
+  "w": 300,
+  "h": 125,
+  "w1": 100.0,
+  "w2": 100.0,
+  "w3": 91.1,
+  "gamma": 1.5,
+  "src": "2b1dfb8efd06f7e3"
+ },
+ "data-centers-and-power": {
+  "w": 153,
+  "h": 300,
+  "w1": 56.9,
+  "w2": 44.3,
+  "w3": 35.3,
+  "gamma": 2.25,
+  "src": "00c902bd3d09acd1"
+ }
+}

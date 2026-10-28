@@ -18,58 +18,139 @@
 
 /* ---------- the page ---------- */
 .view[data-view="stack"] { width: 100%; padding: 0 var(--margin); }
-/* ---------- the top of The Chain (stage 3): the title and its standfirst, How to read a chapter, the contents ----------
-   On the chapter's grid: the title across the row in the display face at 400, the standfirst to column 8, then two
-   sections, each a display heading over an ink rule. The three scales of the card sit side by side; the contents list each chapter's number
-   with its band as a mark, its title and its one line, three to a row */
-.view[data-view="stack"] > .howto {
-  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; align-items: start;
-  padding: clamp(40px, 7vh, 64px) 0 0;
+/* ---------- The Chain's contents page (design round six, "The line", chosen 28 Oct 2026; MAIN/qa/design6/a) ----------
+   The head: the title on the left, the standfirst and the three downloads as small links on the right. Then the chain drawn
+   as one route (build/build.js CONTENTS): each stage's specimen drawing standing on it, its number with the band's mark and
+   its title under it; the route turns into a wine bar under each Extreme stage and ends in an arrow. One bracket under all
+   the stages carries the two chapters across the chain, the note under it. Then each chapter's one line, the first half of
+   the stages under the picture's left half and the rest under its right, the two chapters across the chain under a plain rule.
+   Every title stays readable at every width: from 1360 px one row of stages; from 760 px two rows, the route wrapping with an
+   arrow at the end of each; under 760 px the route runs down the page, one row per stage, and the standfirst moves to the foot.
+   Screen only: on paper the head and the list are the book's title and contents (src/modules/print.css), with no picture. */
+.ct-bmk { display: inline-block; flex: none; width: 6px; height: 13px; background: var(--bar-5); } /* Extreme in wine */
+.ct-bmk.h { height: 7px; background: transparent; box-shadow: inset 0 0 0 1.25px var(--ink); } /* High, an ink outline */
+@media screen {
+  /* the head */
+  .view[data-view="stack"] > .howto {
+    display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; align-items: last baseline;
+    padding: clamp(36px, 6vh, 56px) 0 0;
+  }
+  .howto h1.howto-title {
+    grid-column: 1 / 7; margin: 0 0 0 -0.045em; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title);
+    font-size: clamp(48px, 6vw, 88px); line-height: 0.92; letter-spacing: -0.03em;
+  }
+  .howto .howto-r { grid-column: 7 / 13; min-width: 0; padding-bottom: 4px; }
+  .howto .howto-lede { max-width: 34em; margin: 0; font-family: var(--font-body); font-size: calc(17px * var(--text-scale)); line-height: 1.5; color: var(--ink-2); }
+  /* the downloads, within reach and quiet: one line of small links under the standfirst */
+  .howto .howto-dl { display: flex; flex-wrap: wrap; gap: 4px 20px; margin: 12px 0 0; font-family: var(--font-ui); font-size: 13px; line-height: 20px; }
+  .howto .howto-dl a { color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 3px; }
+  .howto .howto-dl a:hover { color: var(--accent-ink); text-decoration-color: var(--accent); }
+  .view[data-view="stack"] > .contents { margin: 0; padding: 0 0 24px; border: 0; }
+  .contents > .contents-h { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; } /* for screen readers; the book prints it */
+
+  /* the picture */
+  .ln { margin: 44px 0 0; padding: 12px 0 0; border-top: 1px solid var(--ink); }
+  .ln-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px 24px; }
+  .ln-k { font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); line-height: 16px; color: var(--muted); }
+  .ln-key { display: flex; flex-direction: column; gap: 5px; font-family: var(--font-ui); font-size: 12.5px; line-height: 16px; color: var(--muted); }
+  .ln-key > span { display: flex; align-items: baseline; gap: 6px; }
+  .ln-key b { font-weight: 600; color: var(--ink); }
+  .ln-st { list-style: none; margin: 24px 0 0; padding: 0; display: grid; grid-template-columns: repeat(var(--ln-n, 14), minmax(0, 1fr)); }
+  .ln-st li { position: relative; min-width: 0; }
+  .ln-st a { display: block; height: 100%; padding: 0 8px 0 0; color: var(--ink); text-decoration: none; }
+  /* every drawing covers the same share of the same box, set on its foot at the left, so none outweighs its neighbors
+     (build/line-stills.py). The stills are rendered on white: on the light ground they multiply into it, on dark they turn
+     light on dark, as the chapter's own stills do */
+  .ln-sp { display: flex; align-items: flex-end; width: 100%; aspect-ratio: 82 / 104; isolation: isolate; background: var(--bg); }
+  .ln-sp img { display: block; width: var(--w1); height: auto; max-width: none; mix-blend-mode: multiply; }
+  :root[data-theme="dark"] .ln-sp img { filter: invert(1) hue-rotate(180deg); mix-blend-mode: screen; }
+  .ln-rt { position: relative; display: block; height: 4px; margin: 12px -8px 0 0; background: linear-gradient(var(--ink), var(--ink)) 0 50% / 100% 1px no-repeat; }
+  .ln-st li[data-band="x"] .ln-rt { background: var(--accent-fill); }
+  .ln-st li:last-child .ln-rt::after { content: ""; position: absolute; right: 0; top: -2.5px; width: 9px; height: 9px; border-top: 1px solid var(--ink); border-right: 1px solid var(--ink); transform: rotate(45deg); transform-origin: 100% 0; }
+  .ln-n { display: flex; align-items: flex-end; gap: 6px; font-family: var(--font-code); font-size: 12px; line-height: 13px; color: var(--muted); }
+  .ln-st .ln-n { margin-top: 12px; }
+  .ln-t { display: block; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); line-height: 1.25; letter-spacing: -0.005em; overflow-wrap: break-word; }
+  .ln-st .ln-t { margin-top: 7px; font-size: calc(var(--ln-ts, 14px) * var(--text-scale)); text-wrap: balance; }
+  /* the reader's selection: the chapter pointed at, in the picture or the list, is marked in wine in both (src/app.js) */
+  .ln-st a:hover .ln-t, .ln-st li.is-hot .ln-t, .ln-st li.is-hot .ln-n { color: var(--accent-ink); }
+
+  /* the chapters across the chain: one bracket under all the stages, its ends turned up to the route, both titles on it */
+  .ln-x { margin: 30px 0 0; }
+  .ln-brk { position: relative; display: flex; flex-wrap: wrap; align-items: center; min-height: 32px; margin: 0; padding: 0 0 0 22px; }
+  .ln-brk::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 16px; border: 1px solid var(--ink); border-top: 0; }
+  .ln-brk > * { position: relative; padding: 0 12px; margin-right: 18px; background: var(--bg); line-height: 32px; }
+  .ln-brk > .ln-k { color: var(--ink-2); }
+  .ln-bx { display: inline-flex; align-items: baseline; gap: 9px; color: var(--ink); text-decoration: none; }
+  .ln-bx .ln-n { display: inline; }
+  .ln-bx .ln-t { display: inline; font-size: calc(18px * var(--text-scale)); }
+  .ln-bx:hover .ln-t, .ln-bx.is-hot .ln-t { color: var(--accent-ink); }
+  .ln-note { margin: 6px 0 0 22px; max-width: 46em; font-family: var(--font-body); font-size: calc(15px * var(--text-scale)); line-height: 1.5; color: var(--muted); }
+
+  /* each chapter's one line, in two columns, then the two chapters across the chain under a plain rule */
+  .ln-list { margin: 52px 0 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 24px; }
+  .ln-list .contents-grid { display: block; margin: 0; }
+  .ln-list .item { display: grid; grid-template-columns: 54px minmax(0, 1fr); column-gap: 0; padding: 14px 24px 18px 0; border-top: 1px solid var(--line-2); }
+  .ln-list .n { grid-row: 1; display: flex; align-items: flex-end; gap: 6px; align-self: start; padding: 6px 0 0; font-family: var(--font-code); font-size: 12px; font-weight: 400; line-height: 13px; letter-spacing: 0; text-transform: none; color: var(--muted); }
+  .ln-list .t { grid-column: 2; margin: 0; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: calc(20px * var(--text-scale)); line-height: 1.25; color: var(--ink); text-decoration: none; }
+  .ln-list .t:hover, .ln-list .item.is-hot .t { color: var(--accent-ink); }
+  .ln-list .item.is-hot .n { color: var(--accent-ink); }
+  .ln-list .ol { grid-column: 2; margin: 5px 0 0; max-width: 34em; font-family: var(--font-body); font-size: calc(15.5px * var(--text-scale)); line-height: 1.5; color: var(--ink-2); }
+  .ln-list-x { margin-top: 36px; border-top: 1px solid var(--ink); }
+  .ln-list-x .item { border-top: 0; }
 }
-.view[data-view="stack"] > .howto > * { grid-column: 1 / -1; min-width: 0; }
-.howto h1.howto-title {
-  margin: 0 0 0 -0.045em; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title);
-  font-size: clamp(48px, 6vw, 88px); line-height: 0.92; letter-spacing: -0.03em;
+/* two rows: the route wraps with an arrow at the end of the first */
+@media screen and (max-width: 1359px) {
+  .ln-st { --ln-ts: 15px; grid-template-columns: repeat(var(--ln-half, 7), minmax(0, 1fr)); row-gap: 30px; }
+  .ln-st a { padding-right: 12px; }
+  .ln-rt { margin-right: -12px; }
+  .ln-sp { aspect-ratio: 1.15; }
+  .ln-sp img { width: var(--w2); }
+  .ln-st li.ln-wrap .ln-rt::after { content: ""; position: absolute; right: 0; top: -2.5px; width: 9px; height: 9px; border-top: 1px solid var(--ink); border-right: 1px solid var(--ink); transform: rotate(45deg); transform-origin: 100% 0; }
 }
-.view[data-view="stack"] > .howto > .howto-lede { grid-column: 1 / 9; margin: 24px 0 0; max-width: calc(36em / var(--text-scale)); font-family: var(--font-body); font-size: calc(clamp(17.5px, 1.3vw, 19px) * var(--text-scale)); line-height: 1.5; color: var(--ink-2); }
-.howto h3.howto-k, .contents > h2 {
-  margin: 72px 0 0; padding: 0 0 12px; border: 0; border-bottom: 1px solid var(--ink);
-  font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 24px; line-height: 1.2; letter-spacing: -0.01em; color: var(--ink);
+@media screen and (max-width: 1199px) {
+  .howto h1.howto-title { grid-column: 1 / 6; }
+  .howto .howto-r { grid-column: 6 / 13; }
 }
-.view[data-view="stack"] > .howto > h3.howto-k + p { grid-column: 1 / 9; margin: 18px 0 0; max-width: 40em; font-family: var(--font-body); font-size: calc(17.5px * var(--text-scale)); line-height: 1.55; color: var(--ink); }
-.view[data-view="stack"] > .howto > ul { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 24px; margin: 24px 0 0; padding: 0; list-style: none; }
-.howto ul li { margin: 0; padding: 14px 24px 0 0; border-top: 1px solid var(--line-2); font-family: var(--font-body); font-size: calc(16px * var(--text-scale)); line-height: 1.55; color: var(--ink-2); }
-.howto ul li b { display: block; margin: 0 0 6px; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 19px; line-height: 1.2; color: var(--ink); }
-.view[data-view="stack"] > .howto > .howto-dl { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 28px 0 0; }
-.howto .howto-dl .howto-alt { margin-left: 8px; font-family: var(--font-ui); font-size: 15px; font-weight: 500; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--ink); padding-bottom: 3px; }
-.howto .howto-dl .howto-alt:hover { color: var(--accent-ink); border-bottom-color: var(--accent); }
-.view[data-view="stack"] > .contents { margin: 0; padding: 0; border: 0; }
-.view[data-view="stack"] > .contents > h2 { margin-top: 44px; } /* the list comes right under the title, and How to read follows it (owner, 27 Oct: the chapters were out of sight) */
-.view[data-view="stack"] > .howto.howto-read { padding: 0 0 72px; }
-.contents-kr { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 20px; margin: 26px 0 0; }
-.contents-kr .contents-k { margin: 0; }
-.ct-key { display: flex; gap: 16px; margin: 0; font-family: var(--font-ui); font-size: 13px; line-height: 16px; color: var(--ink-2); }
-.ct-key span { display: inline-flex; align-items: flex-end; gap: 6px; }
-.contents-k { margin: 26px 0 0; font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); line-height: 16px; color: var(--muted); }
-.contents-grid + .contents-k { margin-top: 44px; padding-top: 0; border-top: 0; }
-.contents-note { margin: 8px 0 0; max-width: 46em; font-family: var(--font-body); font-size: calc(16px * var(--text-scale)); line-height: 1.5; color: var(--ink-2); }
-.contents-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 24px; margin-top: 12px; }
-.contents-grid .item { grid-template-columns: 1fr; padding: 14px 8px 18px 0; border-top: 1px solid var(--line-2); }
-.contents-grid .n { grid-row: auto; display: flex; align-items: flex-end; gap: 7px; padding: 0; font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); line-height: 16px; color: var(--muted); }
-.ct-bmk { display: inline-block; width: 5px; height: 12px; margin-bottom: 2px; background: var(--bar-5); } /* Extreme in wine (the visual pass of 27 Oct) */
-.ct-bmk.h { height: 6px; background: transparent; box-shadow: inset 0 0 0 1.25px var(--ink); }
-.contents-grid .t { margin: 8px 0 6px; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 21px; line-height: 1.18; color: var(--ink); text-decoration: none; }
-.contents-grid .t:hover { color: var(--accent-ink); }
-.contents-grid .ol { grid-column: 1; margin: 0; max-width: 34em; font-family: var(--font-body); font-size: calc(15px * var(--text-scale)); line-height: 1.5; color: var(--ink-2); }
-@media (max-width: 1199px) { .contents-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .view[data-view="stack"] > .howto > .howto-lede, .view[data-view="stack"] > .howto > h3.howto-k + p { grid-column: 1 / -1; } }
-@media (max-width: 760px) {
-  .view[data-view="stack"] > .howto { display: block; padding-top: 32px; }
-  .howto h1.howto-title { font-size: min(76px, 19vw); }
-  .view[data-view="stack"] > .howto > .howto-lede { margin-top: 16px; font-size: calc(18px * var(--text-scale)); }
-  .howto h3.howto-k, .contents > h2 { margin-top: 48px; font-size: 22px; }
-  .view[data-view="stack"] > .howto > ul { grid-template-columns: 1fr; row-gap: 16px; }
-  .contents-grid { grid-template-columns: 1fr; }
-  .view[data-view="stack"] > .contents { padding-bottom: 48px; }
+@media screen and (max-width: 900px) {
+  .ln-st a { padding-right: 10px; }
+  .ln-rt { margin-right: -10px; }
+}
+/* a phone: the title, the downloads, the route down the page with its key and the bracket, the list, then the standfirst at
+   the foot under a hairline. The stack view is a column here, so the standfirst can follow the contents */
+@media screen and (max-width: 759px) {
+  .view[data-view="stack"] > .howto { display: block; padding-top: 0; }
+  html[data-chain="contents"] .view[data-view="stack"]:not([hidden]) { display: flex; flex-direction: column; }
+  html[data-chain="contents"] .view[data-view="stack"] > .howto, html[data-chain="contents"] .howto .howto-r { display: contents; }
+  .howto h1.howto-title { order: 0; margin-top: 28px; font-size: min(76px, 19vw); }
+  .howto .howto-dl { order: 1; }
+  .view[data-view="stack"] > .contents { order: 2; }
+  .howto .howto-lede { order: 3; margin-top: 12px; padding-top: 14px; border-top: 1px solid var(--line-2); }
+  .view[data-view="stack"] > .site-footer { order: 4; }
+  .ln { display: flex; flex-direction: column; margin-top: 24px; }
+  .ln-head { display: contents; }
+  .ln-head > .ln-k { order: 0; }
+  .ln-st { order: 1; }
+  .ln-key { order: 2; margin-top: 16px; gap: 6px; }
+  .ln-x { order: 3; margin-top: 22px; }
+  .ln-st { grid-template-columns: 1fr; row-gap: 0; margin-top: 14px; }
+  .ln-st a { display: grid; grid-template-columns: 22px 54px 40px minmax(0, 1fr); align-items: center; min-height: 38px; padding: 0; }
+  .ln-rt, .ln-st li[data-band="x"] .ln-rt { grid-column: 1; grid-row: 1; align-self: stretch; width: 4px; height: auto; margin: 0 0 0 4.5px; background: linear-gradient(var(--ink), var(--ink)) 50% 0 / 1px 100% no-repeat; }
+  .ln-st li[data-band="x"] .ln-rt { background: var(--accent-fill); }
+  .ln-st li.ln-wrap .ln-rt::after { content: none; }
+  .ln-st li:last-child .ln-rt::after { right: auto; left: 50%; top: auto; bottom: 0; width: 9px; height: 9px; transform: translateX(-50%) rotate(135deg); transform-origin: 50% 50%; }
+  .ln-st li:last-child { padding-bottom: 6px; }
+  .ln-sp { grid-column: 2; grid-row: 1; width: 54px; height: 36px; aspect-ratio: auto; align-items: center; }
+  .ln-sp img { width: var(--w3); }
+  .ln-st .ln-n { grid-column: 3; grid-row: 1; margin: 0 0 0 8px; }
+  .ln-st .ln-t { grid-column: 4; grid-row: 1; margin: 0; font-size: calc(16.5px * var(--text-scale)); line-height: 1.2; }
+  .ln-brk { padding-left: 16px; }
+  .ln-brk > * { padding: 0 8px; margin-right: 0; }
+  .ln-brk .ln-bx { flex: 0 0 100%; margin-top: 8px; padding: 0; background: none; line-height: 1.3; }
+  .ln-note { margin: 8px 0 0 16px; }
+  .ln-list { grid-template-columns: 1fr; margin-top: 36px; }
+  .ln-list .contents-grid + .contents-grid .item:first-child { border-top: 1px solid var(--line-2); }
+  .ln-list .item { grid-template-columns: 40px minmax(0, 1fr); padding-right: 0; }
+  .ln-list .t { font-size: calc(19px * var(--text-scale)); }
 }
 
 article.chapter {
@@ -589,6 +670,13 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
   .stage .stage-tag { margin-top: calc(-1 * var(--slack, 0px)); transition: margin-top 0.3s var(--ease, ease); }
 }
 @media (min-width: 901px) and (prefers-reduced-motion: reduce) { .stage .stage-tag, .chapter .ch-spec-cap { transition: none; } }
+/* The Chain's contents draw every stage themselves, so on a phone the specimen strip stands down there too, before boot
+   (data-route) as after (data-view), and Back to top floats at the window's foot as it does on a wide screen */
+@media screen and (max-width: 900px) {
+  html.booted[data-view="stack"][data-chain="contents"] .stage, html:not(.booted)[data-route="stack"][data-chain="contents"] .stage { display: none !important; }
+  html.booted[data-view="stack"][data-chain="contents"] body, html:not(.booted)[data-route="stack"][data-chain="contents"] body { padding-bottom: 0; }
+  html.booted[data-view="stack"][data-chain="contents"] .to-top { display: block; }
+}
 /* the parts list rides in the phone strip's caption on The Chain, shown once the strip is expanded */
 .stage .stage-parts { display: none; }
 @media (max-width: 900px) {

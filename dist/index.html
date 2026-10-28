@@ -721,21 +721,13 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
 .column.wide[data-view="home"] { width: 100%; }
 
 .print-only { display: none; }
-.howto ul { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px 26px; margin: 4px 0 8px; padding-left: 0; list-style: none; }
-.howto ul li { padding-left: 0; text-indent: 0; }
 .howto > p { max-width: none; }
-@media (max-width: 899px) { .howto ul { grid-template-columns: 1fr; } }
 .howto .howto-dl { display: flex; gap: 8px; flex-wrap: wrap; margin: 6px 0 12px; }
-.howto .howto-dl .btn { text-decoration: none; }
-.howto .howto-dl .howto-alt { align-self: center; margin-left: 6px; font-family: var(--font-mono); font-size: var(--fs-cap); letter-spacing: 0; color: var(--ink-2); }
 .howto { max-width: none; margin: 0; padding: clamp(36px, 7vh, 72px) 0 6px; border: 0; border-radius: 0; background: none; } /* opens as AI Chips and Suppliers do: room under the masthead, no second rule; the contents block draws the rule below */
 .howto h1.howto-title, .howto h2.howto-title { font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: var(--fs-d1); line-height: 1; letter-spacing: -0.015em; text-transform: none; color: var(--ink); margin: 0 0 14px; }
 .howto .howto-lede { font-size: var(--fs-lede); line-height: 1.45; color: var(--ink-2); max-width: 30em; margin: 0 0 26px; }
 @media (max-width: 640px) { .howto .howto-lede { font-size: var(--fs-plain); } }
-.howto h3.howto-k { font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: 0; color: var(--muted); margin: 0 0 6px; padding-top: 14px; border-top: 1px solid var(--line); }
-.howto p, .howto li { font-size: var(--fs-plain); line-height: 1.5; }
-.howto ul { padding-left: 0; margin: 0 0 12px; } /* the criteria carry no bullets, so no indent */
-.howto li { margin: 0 0 6px; }
+.howto p { font-size: var(--fs-plain); line-height: 1.5; }
 
 /* ---------- China exposure charts ---------- */
 .ex-legend { display: flex; flex-wrap: wrap; gap: 6px 20px; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap-s); letter-spacing: 0; color: var(--muted); margin: 14px 0 6px; }
@@ -1170,58 +1162,139 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
 
 /* ---------- the page ---------- */
 .view[data-view="stack"] { width: 100%; padding: 0 var(--margin); }
-/* ---------- the top of The Chain (stage 3): the title and its standfirst, How to read a chapter, the contents ----------
-   On the chapter's grid: the title across the row in the display face at 400, the standfirst to column 8, then two
-   sections, each a display heading over an ink rule. The three scales of the card sit side by side; the contents list each chapter's number
-   with its band as a mark, its title and its one line, three to a row */
-.view[data-view="stack"] > .howto {
-  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; align-items: start;
-  padding: clamp(40px, 7vh, 64px) 0 0;
+/* ---------- The Chain's contents page (design round six, "The line", chosen 28 Oct 2026; MAIN/qa/design6/a) ----------
+   The head: the title on the left, the standfirst and the three downloads as small links on the right. Then the chain drawn
+   as one route (build/build.js CONTENTS): each stage's specimen drawing standing on it, its number with the band's mark and
+   its title under it; the route turns into a wine bar under each Extreme stage and ends in an arrow. One bracket under all
+   the stages carries the two chapters across the chain, the note under it. Then each chapter's one line, the first half of
+   the stages under the picture's left half and the rest under its right, the two chapters across the chain under a plain rule.
+   Every title stays readable at every width: from 1360 px one row of stages; from 760 px two rows, the route wrapping with an
+   arrow at the end of each; under 760 px the route runs down the page, one row per stage, and the standfirst moves to the foot.
+   Screen only: on paper the head and the list are the book's title and contents (src/modules/print.css), with no picture. */
+.ct-bmk { display: inline-block; flex: none; width: 6px; height: 13px; background: var(--bar-5); } /* Extreme in wine */
+.ct-bmk.h { height: 7px; background: transparent; box-shadow: inset 0 0 0 1.25px var(--ink); } /* High, an ink outline */
+@media screen {
+  /* the head */
+  .view[data-view="stack"] > .howto {
+    display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; align-items: last baseline;
+    padding: clamp(36px, 6vh, 56px) 0 0;
+  }
+  .howto h1.howto-title {
+    grid-column: 1 / 7; margin: 0 0 0 -0.045em; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title);
+    font-size: clamp(48px, 6vw, 88px); line-height: 0.92; letter-spacing: -0.03em;
+  }
+  .howto .howto-r { grid-column: 7 / 13; min-width: 0; padding-bottom: 4px; }
+  .howto .howto-lede { max-width: 34em; margin: 0; font-family: var(--font-body); font-size: calc(17px * var(--text-scale)); line-height: 1.5; color: var(--ink-2); }
+  /* the downloads, within reach and quiet: one line of small links under the standfirst */
+  .howto .howto-dl { display: flex; flex-wrap: wrap; gap: 4px 20px; margin: 12px 0 0; font-family: var(--font-ui); font-size: 13px; line-height: 20px; }
+  .howto .howto-dl a { color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 3px; }
+  .howto .howto-dl a:hover { color: var(--accent-ink); text-decoration-color: var(--accent); }
+  .view[data-view="stack"] > .contents { margin: 0; padding: 0 0 24px; border: 0; }
+  .contents > .contents-h { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; } /* for screen readers; the book prints it */
+
+  /* the picture */
+  .ln { margin: 44px 0 0; padding: 12px 0 0; border-top: 1px solid var(--ink); }
+  .ln-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px 24px; }
+  .ln-k { font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); line-height: 16px; color: var(--muted); }
+  .ln-key { display: flex; flex-direction: column; gap: 5px; font-family: var(--font-ui); font-size: 12.5px; line-height: 16px; color: var(--muted); }
+  .ln-key > span { display: flex; align-items: baseline; gap: 6px; }
+  .ln-key b { font-weight: 600; color: var(--ink); }
+  .ln-st { list-style: none; margin: 24px 0 0; padding: 0; display: grid; grid-template-columns: repeat(var(--ln-n, 14), minmax(0, 1fr)); }
+  .ln-st li { position: relative; min-width: 0; }
+  .ln-st a { display: block; height: 100%; padding: 0 8px 0 0; color: var(--ink); text-decoration: none; }
+  /* every drawing covers the same share of the same box, set on its foot at the left, so none outweighs its neighbors
+     (build/line-stills.py). The stills are rendered on white: on the light ground they multiply into it, on dark they turn
+     light on dark, as the chapter's own stills do */
+  .ln-sp { display: flex; align-items: flex-end; width: 100%; aspect-ratio: 82 / 104; isolation: isolate; background: var(--bg); }
+  .ln-sp img { display: block; width: var(--w1); height: auto; max-width: none; mix-blend-mode: multiply; }
+  :root[data-theme="dark"] .ln-sp img { filter: invert(1) hue-rotate(180deg); mix-blend-mode: screen; }
+  .ln-rt { position: relative; display: block; height: 4px; margin: 12px -8px 0 0; background: linear-gradient(var(--ink), var(--ink)) 0 50% / 100% 1px no-repeat; }
+  .ln-st li[data-band="x"] .ln-rt { background: var(--accent-fill); }
+  .ln-st li:last-child .ln-rt::after { content: ""; position: absolute; right: 0; top: -2.5px; width: 9px; height: 9px; border-top: 1px solid var(--ink); border-right: 1px solid var(--ink); transform: rotate(45deg); transform-origin: 100% 0; }
+  .ln-n { display: flex; align-items: flex-end; gap: 6px; font-family: var(--font-code); font-size: 12px; line-height: 13px; color: var(--muted); }
+  .ln-st .ln-n { margin-top: 12px; }
+  .ln-t { display: block; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); line-height: 1.25; letter-spacing: -0.005em; overflow-wrap: break-word; }
+  .ln-st .ln-t { margin-top: 7px; font-size: calc(var(--ln-ts, 14px) * var(--text-scale)); text-wrap: balance; }
+  /* the reader's selection: the chapter pointed at, in the picture or the list, is marked in wine in both (src/app.js) */
+  .ln-st a:hover .ln-t, .ln-st li.is-hot .ln-t, .ln-st li.is-hot .ln-n { color: var(--accent-ink); }
+
+  /* the chapters across the chain: one bracket under all the stages, its ends turned up to the route, both titles on it */
+  .ln-x { margin: 30px 0 0; }
+  .ln-brk { position: relative; display: flex; flex-wrap: wrap; align-items: center; min-height: 32px; margin: 0; padding: 0 0 0 22px; }
+  .ln-brk::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 16px; border: 1px solid var(--ink); border-top: 0; }
+  .ln-brk > * { position: relative; padding: 0 12px; margin-right: 18px; background: var(--bg); line-height: 32px; }
+  .ln-brk > .ln-k { color: var(--ink-2); }
+  .ln-bx { display: inline-flex; align-items: baseline; gap: 9px; color: var(--ink); text-decoration: none; }
+  .ln-bx .ln-n { display: inline; }
+  .ln-bx .ln-t { display: inline; font-size: calc(18px * var(--text-scale)); }
+  .ln-bx:hover .ln-t, .ln-bx.is-hot .ln-t { color: var(--accent-ink); }
+  .ln-note { margin: 6px 0 0 22px; max-width: 46em; font-family: var(--font-body); font-size: calc(15px * var(--text-scale)); line-height: 1.5; color: var(--muted); }
+
+  /* each chapter's one line, in two columns, then the two chapters across the chain under a plain rule */
+  .ln-list { margin: 52px 0 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 24px; }
+  .ln-list .contents-grid { display: block; margin: 0; }
+  .ln-list .item { display: grid; grid-template-columns: 54px minmax(0, 1fr); column-gap: 0; padding: 14px 24px 18px 0; border-top: 1px solid var(--line-2); }
+  .ln-list .n { grid-row: 1; display: flex; align-items: flex-end; gap: 6px; align-self: start; padding: 6px 0 0; font-family: var(--font-code); font-size: 12px; font-weight: 400; line-height: 13px; letter-spacing: 0; text-transform: none; color: var(--muted); }
+  .ln-list .t { grid-column: 2; margin: 0; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: calc(20px * var(--text-scale)); line-height: 1.25; color: var(--ink); text-decoration: none; }
+  .ln-list .t:hover, .ln-list .item.is-hot .t { color: var(--accent-ink); }
+  .ln-list .item.is-hot .n { color: var(--accent-ink); }
+  .ln-list .ol { grid-column: 2; margin: 5px 0 0; max-width: 34em; font-family: var(--font-body); font-size: calc(15.5px * var(--text-scale)); line-height: 1.5; color: var(--ink-2); }
+  .ln-list-x { margin-top: 36px; border-top: 1px solid var(--ink); }
+  .ln-list-x .item { border-top: 0; }
 }
-.view[data-view="stack"] > .howto > * { grid-column: 1 / -1; min-width: 0; }
-.howto h1.howto-title {
-  margin: 0 0 0 -0.045em; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title);
-  font-size: clamp(48px, 6vw, 88px); line-height: 0.92; letter-spacing: -0.03em;
+/* two rows: the route wraps with an arrow at the end of the first */
+@media screen and (max-width: 1359px) {
+  .ln-st { --ln-ts: 15px; grid-template-columns: repeat(var(--ln-half, 7), minmax(0, 1fr)); row-gap: 30px; }
+  .ln-st a { padding-right: 12px; }
+  .ln-rt { margin-right: -12px; }
+  .ln-sp { aspect-ratio: 1.15; }
+  .ln-sp img { width: var(--w2); }
+  .ln-st li.ln-wrap .ln-rt::after { content: ""; position: absolute; right: 0; top: -2.5px; width: 9px; height: 9px; border-top: 1px solid var(--ink); border-right: 1px solid var(--ink); transform: rotate(45deg); transform-origin: 100% 0; }
 }
-.view[data-view="stack"] > .howto > .howto-lede { grid-column: 1 / 9; margin: 24px 0 0; max-width: calc(36em / var(--text-scale)); font-family: var(--font-body); font-size: calc(clamp(17.5px, 1.3vw, 19px) * var(--text-scale)); line-height: 1.5; color: var(--ink-2); }
-.howto h3.howto-k, .contents > h2 {
-  margin: 72px 0 0; padding: 0 0 12px; border: 0; border-bottom: 1px solid var(--ink);
-  font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 24px; line-height: 1.2; letter-spacing: -0.01em; color: var(--ink);
+@media screen and (max-width: 1199px) {
+  .howto h1.howto-title { grid-column: 1 / 6; }
+  .howto .howto-r { grid-column: 6 / 13; }
 }
-.view[data-view="stack"] > .howto > h3.howto-k + p { grid-column: 1 / 9; margin: 18px 0 0; max-width: 40em; font-family: var(--font-body); font-size: calc(17.5px * var(--text-scale)); line-height: 1.55; color: var(--ink); }
-.view[data-view="stack"] > .howto > ul { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 24px; margin: 24px 0 0; padding: 0; list-style: none; }
-.howto ul li { margin: 0; padding: 14px 24px 0 0; border-top: 1px solid var(--line-2); font-family: var(--font-body); font-size: calc(16px * var(--text-scale)); line-height: 1.55; color: var(--ink-2); }
-.howto ul li b { display: block; margin: 0 0 6px; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 19px; line-height: 1.2; color: var(--ink); }
-.view[data-view="stack"] > .howto > .howto-dl { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 28px 0 0; }
-.howto .howto-dl .howto-alt { margin-left: 8px; font-family: var(--font-ui); font-size: 15px; font-weight: 500; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--ink); padding-bottom: 3px; }
-.howto .howto-dl .howto-alt:hover { color: var(--accent-ink); border-bottom-color: var(--accent); }
-.view[data-view="stack"] > .contents { margin: 0; padding: 0; border: 0; }
-.view[data-view="stack"] > .contents > h2 { margin-top: 44px; } /* the list comes right under the title, and How to read follows it (owner, 27 Oct: the chapters were out of sight) */
-.view[data-view="stack"] > .howto.howto-read { padding: 0 0 72px; }
-.contents-kr { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 20px; margin: 26px 0 0; }
-.contents-kr .contents-k { margin: 0; }
-.ct-key { display: flex; gap: 16px; margin: 0; font-family: var(--font-ui); font-size: 13px; line-height: 16px; color: var(--ink-2); }
-.ct-key span { display: inline-flex; align-items: flex-end; gap: 6px; }
-.contents-k { margin: 26px 0 0; font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); line-height: 16px; color: var(--muted); }
-.contents-grid + .contents-k { margin-top: 44px; padding-top: 0; border-top: 0; }
-.contents-note { margin: 8px 0 0; max-width: 46em; font-family: var(--font-body); font-size: calc(16px * var(--text-scale)); line-height: 1.5; color: var(--ink-2); }
-.contents-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 24px; margin-top: 12px; }
-.contents-grid .item { grid-template-columns: 1fr; padding: 14px 8px 18px 0; border-top: 1px solid var(--line-2); }
-.contents-grid .n { grid-row: auto; display: flex; align-items: flex-end; gap: 7px; padding: 0; font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); line-height: 16px; color: var(--muted); }
-.ct-bmk { display: inline-block; width: 5px; height: 12px; margin-bottom: 2px; background: var(--bar-5); } /* Extreme in wine (the visual pass of 27 Oct) */
-.ct-bmk.h { height: 6px; background: transparent; box-shadow: inset 0 0 0 1.25px var(--ink); }
-.contents-grid .t { margin: 8px 0 6px; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 21px; line-height: 1.18; color: var(--ink); text-decoration: none; }
-.contents-grid .t:hover { color: var(--accent-ink); }
-.contents-grid .ol { grid-column: 1; margin: 0; max-width: 34em; font-family: var(--font-body); font-size: calc(15px * var(--text-scale)); line-height: 1.5; color: var(--ink-2); }
-@media (max-width: 1199px) { .contents-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .view[data-view="stack"] > .howto > .howto-lede, .view[data-view="stack"] > .howto > h3.howto-k + p { grid-column: 1 / -1; } }
-@media (max-width: 760px) {
-  .view[data-view="stack"] > .howto { display: block; padding-top: 32px; }
-  .howto h1.howto-title { font-size: min(76px, 19vw); }
-  .view[data-view="stack"] > .howto > .howto-lede { margin-top: 16px; font-size: calc(18px * var(--text-scale)); }
-  .howto h3.howto-k, .contents > h2 { margin-top: 48px; font-size: 22px; }
-  .view[data-view="stack"] > .howto > ul { grid-template-columns: 1fr; row-gap: 16px; }
-  .contents-grid { grid-template-columns: 1fr; }
-  .view[data-view="stack"] > .contents { padding-bottom: 48px; }
+@media screen and (max-width: 900px) {
+  .ln-st a { padding-right: 10px; }
+  .ln-rt { margin-right: -10px; }
+}
+/* a phone: the title, the downloads, the route down the page with its key and the bracket, the list, then the standfirst at
+   the foot under a hairline. The stack view is a column here, so the standfirst can follow the contents */
+@media screen and (max-width: 759px) {
+  .view[data-view="stack"] > .howto { display: block; padding-top: 0; }
+  html[data-chain="contents"] .view[data-view="stack"]:not([hidden]) { display: flex; flex-direction: column; }
+  html[data-chain="contents"] .view[data-view="stack"] > .howto, html[data-chain="contents"] .howto .howto-r { display: contents; }
+  .howto h1.howto-title { order: 0; margin-top: 28px; font-size: min(76px, 19vw); }
+  .howto .howto-dl { order: 1; }
+  .view[data-view="stack"] > .contents { order: 2; }
+  .howto .howto-lede { order: 3; margin-top: 12px; padding-top: 14px; border-top: 1px solid var(--line-2); }
+  .view[data-view="stack"] > .site-footer { order: 4; }
+  .ln { display: flex; flex-direction: column; margin-top: 24px; }
+  .ln-head { display: contents; }
+  .ln-head > .ln-k { order: 0; }
+  .ln-st { order: 1; }
+  .ln-key { order: 2; margin-top: 16px; gap: 6px; }
+  .ln-x { order: 3; margin-top: 22px; }
+  .ln-st { grid-template-columns: 1fr; row-gap: 0; margin-top: 14px; }
+  .ln-st a { display: grid; grid-template-columns: 22px 54px 40px minmax(0, 1fr); align-items: center; min-height: 38px; padding: 0; }
+  .ln-rt, .ln-st li[data-band="x"] .ln-rt { grid-column: 1; grid-row: 1; align-self: stretch; width: 4px; height: auto; margin: 0 0 0 4.5px; background: linear-gradient(var(--ink), var(--ink)) 50% 0 / 1px 100% no-repeat; }
+  .ln-st li[data-band="x"] .ln-rt { background: var(--accent-fill); }
+  .ln-st li.ln-wrap .ln-rt::after { content: none; }
+  .ln-st li:last-child .ln-rt::after { right: auto; left: 50%; top: auto; bottom: 0; width: 9px; height: 9px; transform: translateX(-50%) rotate(135deg); transform-origin: 50% 50%; }
+  .ln-st li:last-child { padding-bottom: 6px; }
+  .ln-sp { grid-column: 2; grid-row: 1; width: 54px; height: 36px; aspect-ratio: auto; align-items: center; }
+  .ln-sp img { width: var(--w3); }
+  .ln-st .ln-n { grid-column: 3; grid-row: 1; margin: 0 0 0 8px; }
+  .ln-st .ln-t { grid-column: 4; grid-row: 1; margin: 0; font-size: calc(16.5px * var(--text-scale)); line-height: 1.2; }
+  .ln-brk { padding-left: 16px; }
+  .ln-brk > * { padding: 0 8px; margin-right: 0; }
+  .ln-brk .ln-bx { flex: 0 0 100%; margin-top: 8px; padding: 0; background: none; line-height: 1.3; }
+  .ln-note { margin: 8px 0 0 16px; }
+  .ln-list { grid-template-columns: 1fr; margin-top: 36px; }
+  .ln-list .contents-grid + .contents-grid .item:first-child { border-top: 1px solid var(--line-2); }
+  .ln-list .item { grid-template-columns: 40px minmax(0, 1fr); padding-right: 0; }
+  .ln-list .t { font-size: calc(19px * var(--text-scale)); }
 }
 
 article.chapter {
@@ -1741,6 +1814,13 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
   .stage .stage-tag { margin-top: calc(-1 * var(--slack, 0px)); transition: margin-top 0.3s var(--ease, ease); }
 }
 @media (min-width: 901px) and (prefers-reduced-motion: reduce) { .stage .stage-tag, .chapter .ch-spec-cap { transition: none; } }
+/* The Chain's contents draw every stage themselves, so on a phone the specimen strip stands down there too, before boot
+   (data-route) as after (data-view), and Back to top floats at the window's foot as it does on a wide screen */
+@media screen and (max-width: 900px) {
+  html.booted[data-view="stack"][data-chain="contents"] .stage, html:not(.booted)[data-route="stack"][data-chain="contents"] .stage { display: none !important; }
+  html.booted[data-view="stack"][data-chain="contents"] body, html:not(.booted)[data-route="stack"][data-chain="contents"] body { padding-bottom: 0; }
+  html.booted[data-view="stack"][data-chain="contents"] .to-top { display: block; }
+}
 /* the parts list rides in the phone strip's caption on The Chain, shown once the strip is expanded */
 .stage .stage-parts { display: none; }
 @media (max-width: 900px) {
@@ -3252,7 +3332,7 @@ html.kb:has(.view[data-view="glossary"]:not([hidden])) { scroll-padding-top: cal
   .review .rv-keep li, .review .cp-quiz li { break-inside: avoid; }
   .review .rv-keep[data-split-from], .review .cp-quiz[data-split-from] { border-top: 0; margin-top: 0; padding-top: 0; }
 
-  /* ---------- the book's cover, how to read, and the contents ---------- */
+  /* ---------- the book's cover, The Chain's title, and the contents ---------- */
   .print-only { display: block !important; }
   /* A4 portrait, the wafer cover (qa/cover-wafer.md). The 300 mm wafer in plan view, drawn in ink by build/cover-art.py,
      sits centred as one object on the white sheet: 164mm across, 23mm in from either side, 14mm from the head, notch at
@@ -3277,25 +3357,33 @@ html.kb:has(.view[data-view="glossary"]:not([hidden])) { scroll-padding-top: cal
   .print-title .pt-what { margin: 0; font-family: var(--font-ui); font-size: 8pt; color: var(--muted); }
   .print-title .pt-meta { margin: 2.6mm 0 0; font-family: var(--font-code); font-size: 7.4pt; color: var(--muted); }
 
-  /* how to read, and the contents as a report's contents: one line a chapter, with its page */
+  /* The Chain's title and standfirst, then the contents as a report's contents: one line a chapter, with its page. On screen
+     the head sets the title beside the standfirst and the contents draw the chain as a picture (src/modules/chapter.css, design
+     round six); on paper the title stands over the standfirst, the picture and the downloads go, and the list is the
+     contents, under the group heads only the book prints (.print-only, build/build.js CONTENTS). How to read a chapter went
+     on 28 Oct 2026 (owner), so the title, the standfirst and the contents share the page after the cover. */
+  .view[data-view="stack"] > .howto, .howto .howto-r { display: block; }
   .howto { margin: 0 0 4mm; padding: 3.4mm 0 1mm; border-top: 0.6pt solid var(--ink); break-inside: avoid; }
-  .howto ul { padding-left: 0; }
-  .howto h2 { margin-bottom: 2.4mm; font-family: var(--font-ui); font-size: 8pt; font-weight: 600; }
   .howto h1.howto-title, .howto h2.howto-title { margin: 0 0 2mm; font-family: var(--font-display); font-weight: 400; font-size: 24pt; line-height: 1.04; letter-spacing: -0.02em; }
   .howto .howto-lede { max-width: 140mm; margin-bottom: 2.6mm; font-family: var(--font-body); font-size: calc(9.8pt * var(--text-scale)); line-height: 1.42; color: var(--ink-2); }
-  .howto h3.howto-k { margin-bottom: 1.6mm; padding-top: 2.4mm; font-family: var(--font-ui); font-size: 8pt; font-weight: 600; letter-spacing: 0; text-transform: none; color: var(--ink); }
-  .howto p, .howto li { font-family: var(--font-body); font-size: calc(8.6pt * var(--text-scale)); line-height: 1.4; }
+  .contents .ln { display: none !important; }
   .contents { break-after: page; padding: 2.6mm 0 0; margin-top: 2mm; border-top: 0.6pt solid var(--ink); }
   /* the two group heads ("The fourteen stages", "Across the chain") and the note under the second: the screen's 40 px
      above the second ran the contents' last line onto a page of its own */
   .contents .contents-k { margin: 3.5mm 0 2mm; padding-top: 0; border-top: 0; font-family: var(--font-code); font-size: 7.2pt; font-weight: 400; color: var(--muted); }
   .contents .contents-note { margin: 0 0 2mm; font-family: var(--font-body); font-size: calc(8.8pt * var(--text-scale)); line-height: 1.4; color: var(--ink-2); }
   .contents h2 { margin-bottom: 3mm; font-family: var(--font-display); font-weight: 400; font-size: 16pt; letter-spacing: -0.012em; }
+  /* the first group head with the key at its right: the band's mark beside each word, as beside each number below */
+  .contents .contents-kr.print-only { display: flex !important; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 20px; margin: 26px 0 0; }
+  .contents .ct-key { display: flex; gap: 16px; margin: 0; font-family: var(--font-ui); font-size: 13px; line-height: 16px; color: var(--ink-2); }
+  .contents .ct-key span { display: inline-flex; align-items: flex-end; gap: 6px; }
+  .contents .ct-bmk { width: 5px; height: 12px; margin-bottom: 2px; }
+  .contents .ct-bmk.h { height: 6px; }
   .contents-grid { display: block; }
-  .contents-grid .item { break-inside: avoid; display: flex; align-items: baseline; gap: 0; border-top: 0; border-bottom: 0.3pt solid var(--line-2); padding: 0.6mm 0; } /* close enough that the sixteen lines share the page with How to read */
+  .contents-grid .item { break-inside: avoid; display: flex; align-items: baseline; gap: 0; border-top: 0; border-bottom: 0.3pt solid var(--line-2); padding: 0.6mm 0; } /* close enough that the sixteen lines share the page with the title and standfirst */
   /* the number in a column of its own, so every title starts on one edge; the page number set in the text's figures, on
      the title's baseline */
-  .contents-grid .n { flex: none; width: 9mm; padding: 0; font-family: var(--font-code); font-size: 7.2pt; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .contents-grid .n { flex: none; display: flex; align-items: flex-end; gap: 7px; width: 9mm; padding: 0; font-family: var(--font-code); font-size: 7.2pt; line-height: 16px; color: var(--muted); font-variant-numeric: tabular-nums; }
   .contents-grid .t { flex: 1; display: flex; justify-content: space-between; align-items: baseline; gap: 6mm; margin: 0; font-family: var(--font-display); font-weight: 500; font-size: 9.6pt; line-height: 1.4; letter-spacing: 0; }
   .contents-grid .item ul, .contents-grid .ol { display: none; } /* the section list and the one-liners are the site's; the page wants the spine */
   .contents-grid .t::after { content: target-counter(attr(href url), page); font-family: var(--font-code); font-weight: 400; font-size: 7.6pt; color: var(--ink-2); }
@@ -5108,23 +5196,20 @@ html[data-chain] .view[data-view="stack"] > article.chapter { content-visibility
           <p class="pt-meta">Printed from chipsupplychain.org · Updated 27 October 2026</p>
         </div>
       </section>
+      <!-- The Chain's contents page (design round six, "The line", chosen 28 Oct 2026): the title, the standfirst and the
+           downloads as small links, then the chain drawn as a route and each chapter's one line (build/build.js CONTENTS).
+           How to read a chapter went on 28 Oct 2026 (owner); its Extreme and High survive as the key over the route. Both
+           blocks show only on the contents (html[data-chain], CHAIN_ONE); on paper they are the book's title and contents -->
       <div class="howto" id="howto">
         <h1 class="howto-title">The Chain</h1>
-        <p class="howto-lede">The Chain covers each of the fourteen stages of making an AI chip in detail, one chapter per stage, in the order a chip is made, from design software to the data center. Two more chapters at the end look across all the stages, at what a chip costs and who controls the chain. To help readers learn, each chapter has a 3D model, most have an animation, and every one ends with flashcards.</p>
+        <div class="howto-r">
+          <p class="howto-lede">The Chain covers each of the fourteen stages of making an AI chip in detail, one chapter per stage, in the order a chip is made, from design software to the data center. Two more chapters at the end look across all the stages, at what a chip costs and who controls the chain. To help readers learn, each chapter has a 3D model, most have an animation, and every one ends with flashcards.</p>
+          <p class="howto-dl"><a href="pdf/how-ai-chips-are-made.pdf" download>Download the chain as a PDF</a><a href="pdf/summary.pdf" download>Download a short summary</a><a href="summary/">Read the summary online</a></p>
+        </div>
       </div>
       <div class="contents" id="contents">
-        <h2>Contents</h2>
-        <div class="contents-kr"><h3 class="contents-k">The fourteen stages of the chain</h3><p class="ct-key" aria-hidden="true"><span><i class="ct-bmk"></i>Extreme</span><span><i class="ct-bmk h"></i>High</span></p></div><div class="contents-grid"><div class="item"><span class="n">01<i class="ct-bmk" aria-hidden="true"></i></span><a class="t" href="#design-and-eda">Chip Design, EDA and IP</a><p class="ol">Synopsys, Cadence and Siemens EDA make the software used to design every advanced chip. In 2025 they took over 85 percent of its $18 billion market, licensed blocks included.</p></div><div class="item"><span class="n">02<i class="ct-bmk h" aria-hidden="true"></i></span><a class="t" href="#silicon-and-wafers">Silicon and Wafers</a><p class="ol">Firms based in Japan, Taiwan, Germany and South Korea make most 300 mm wafers used for advanced chips. China makes most polysilicon, almost all of it for solar cells.</p></div><div class="item"><span class="n">03<i class="ct-bmk h" aria-hidden="true"></i></span><a class="t" href="#chemicals-gases-and-photoresist">Chemicals, Gases and Photoresist</a><p class="ol">Japanese companies held 78 percent of world photoresist sales in 2023. Supply of chip chemicals, gases and metals has been disrupted three times since 2019.</p></div><div class="item"><span class="n">04<i class="ct-bmk" aria-hidden="true"></i></span><a class="t" href="#lithography">Lithography</a><p class="ol">ASML, a Dutch firm, is the only maker of extreme ultraviolet scanners, the machines that print the finest layers of a chip. It sold 48 of them in 2025.</p></div><div class="item"><span class="n">05<i class="ct-bmk" aria-hidden="true"></i></span><a class="t" href="#photomasks-and-pellicles">Photomasks and Pellicles</a><p class="ol">Only three firms in the world make the blank plates for the masks used to print the finest layers of leading-edge chips. Japan's AGC and Hoya are two of them.</p></div><div class="item"><span class="n">06<i class="ct-bmk h" aria-hidden="true"></i></span><a class="t" href="#deposition-and-etch">Deposition and Etch</a><p class="ol">Deposition and etch tools build a chip layer by layer. China-based toolmakers' share of deposition tools rose from 2 to 7 percent between 2019 and 2024, by CSET's count.</p></div><div class="item"><span class="n">07<i class="ct-bmk h" aria-hidden="true"></i></span><a class="t" href="#metrology-and-inspection">Metrology and Inspection</a><p class="ol">KLA, an American firm, held 56.8 percent of the market for tools that measure and inspect wafers in 2025, by CSET's count.</p></div><div class="item"><span class="n">08<i class="ct-bmk" aria-hidden="true"></i></span><a class="t" href="#foundries-and-fabs">Foundries and Fabs</a><p class="ol">The newest chips need the know-how to build the newest transistors and a fab that costs tens of billions of dollars. Only TSMC, Intel and Samsung have both.</p></div><div class="item"><span class="n">09<i class="ct-bmk" aria-hidden="true"></i></span><a class="t" href="#memory-and-hbm">Memory and HBM</a><p class="ol">SK hynix, Samsung and Micron make nearly all high bandwidth memory (HBM), the stacked memory beside AI chips. SK hynix took 63.2 percent of HBM revenue in 2025.</p></div><div class="item"><span class="n">10<i class="ct-bmk" aria-hidden="true"></i></span><a class="t" href="#advanced-packaging">Advanced Packaging</a><p class="ol">Epoch AI estimates that in 2025 Nvidia, Google, AMD and Amazon used around 90 percent of the capacity for CoWoS, TSMC's packaging for AI chips.</p></div><div class="item"><span class="n">11<i class="ct-bmk" aria-hidden="true"></i></span><a class="t" href="#substrates-and-pcbs">Substrates and PCBs</a><p class="ol">Ajinomoto, a Japanese food company, told investors in June 2026 that it holds over 95 percent of the market for the insulating film inside high-end chip packages.</p></div><div class="item"><span class="n">12<i class="ct-bmk h" aria-hidden="true"></i></span><a class="t" href="#test-and-assembly">Test and Assembly</a><p class="ol">Testing finds bad chips before they go into an expensive package. Japan's Advantest took about 65 percent of 2025 spending on chip testers, by its own estimate.</p></div><div class="item"><span class="n">13<i class="ct-bmk h" aria-hidden="true"></i></span><a class="t" href="#systems-and-networking">Systems and Networking</a><p class="ol">Nvidia's and AMD's racks wire 72 AI chips together to run as one computer. Many firms can assemble the racks, but lasers for the optical links were scarce in 2026.</p></div><div class="item"><span class="n">14<i class="ct-bmk h" aria-hidden="true"></i></span><a class="t" href="#data-centers-and-power">Data Centers and Power</a><p class="ol">By mid-2026, companies had asked to connect about 474 GW of new demand to the Texas grid, mostly for data centers. Only about 205 GW of those requests already had the grid study needed to enter the grid operator's first review. The large transformers that connect such sites to the grid commonly took three years to arrive in 2024.</p></div></div><h3 class="contents-k">Across the chain</h3><p class="contents-note">These two chapters are not stages. They look across all fourteen, at what a chip costs and at the contest over who controls each stage.</p><div class="contents-grid"><div class="item"><span class="n">15</span><a class="t" href="#component-costs">The Economics of AI Chips</a><p class="ol">Epoch AI estimated in December 2025 that Nvidia's B200 AI chip cost about $6,400 to build, mostly for memory and packaging. Its processor silicon cost about $900.</p></div><div class="item"><span class="n">16</span><a class="t" href="#geopolitics">Who Controls the Chain</a><p class="ol">Since 2018 the United States has used export controls to limit China's access to advanced chips and chipmaking tools, and China has been learning to make both.</p></div></div>
-      </div>
-      <div class="howto howto-read" id="howto-read">
-        <h3 class="howto-k">How to read a chapter</h3>
-        <p>Each stage chapter opens with a chokepoint card. It rates the stage on two scales, gives a price or market size, and says where China and the United States stand.</p>
-        <ul>
-          <li><b>Concentration.</b> How many firms could supply the stage today. Every stage rates Extreme (three or fewer firms, or one with more than half) or High (four to six).</li>
-          <li><b>Substitutability.</b> How hard it would be for a well-funded state or firm to build an alternative, rated Very hard, Hard or Moderately hard.</li>
-          <li><b>Price or market size.</b> What one unit costs, or what the stage earns in a year.</li>
-        </ul>
-        <p class="howto-dl"><a class="btn ghost" href="pdf/how-ai-chips-are-made.pdf" download>Download the chain as a PDF</a> <a class="btn ghost" href="pdf/summary.pdf" download>Download a short summary</a> <a class="howto-alt" href="summary/">Read the summary online</a></p>
+        <h2 class="contents-h">Contents</h2>
+        <figure class="ln" aria-labelledby="ln-k"><figcaption class="ln-head"><span class="ln-k" id="ln-k">The fourteen stages, in the order a chip is made</span><span class="ln-key"><span><i class="ct-bmk" aria-hidden="true"></i><b>Extreme</b> three or fewer firms could supply the stage, or one holds more than half</span><span><i class="ct-bmk h" aria-hidden="true"></i><b>High</b> four to six firms could supply it</span></span></figcaption><ol class="ln-st" style="--ln-n:14;--ln-half:7"><li data-ch="design-and-eda" data-band="x" style="--w1:77.3%;--w2:64%;--w3:57.1%"><a href="design-and-eda/" data-route="#design-and-eda" aria-label="01 Chip Design, EDA and IP, Extreme concentration"><span class="ln-sp"><img src="media/line-design-and-eda.webp" width="283" height="300" alt="" loading="lazy" decoding="async"></span><i class="ln-rt" aria-hidden="true"></i><span class="ln-n">01<i class="ct-bmk" aria-hidden="true"></i></span><span class="ln-t">Chip Design, EDA and IP</span></a></li><li data-ch="silicon-and-wafers" data-band="h" style="--w1:41.4%;--w2:28.4%;--w3:22.6%"><a href="silicon-and-wafers/" data-route="#silicon-and-wafers" aria-label="02 Silicon and Wafers, High concentration"><span class="ln-sp"><img src="media/line-silicon-and-wafers.webp" width="98" height="300" alt="" loading="lazy" decoding="async"></span><i class="ln-rt" aria-hidden="true"></i><span class="ln-n">02<i class="ct-bmk h" aria-hidden="true"></i></span><span class="ln-t">Silicon and Wafers</span></a></li><li data-ch="chemicals-gases-and-photoresist" data-band="h" style="--w1:73%;--w2:60.4%;--w3:53.9%"><a href="chemicals-gases-and-photoresist/" data-route="#chemicals-gases-and-photoresist" aria-label="03 Chemicals, Gases and Photoresist, High concentration"><span class="ln-sp"><img src="media/line-chemicals-gases-and-photoresist.webp" width="252" height="300" alt="" loading="lazy" decoding="async"></span><i class="ln-rt" aria-hidden="true"></i><span class="ln-n">03<i class="ct-bmk h" aria-hidden="true"></i></span><span class="ln-t">Chemicals, Gases and Photoresist</span></a></li><li data-ch="lithography" data-band="x" style="--w1:72%;--w2:59.6%;--w3:53.2%"><a href="lithography/" data-route="#lithography" aria-label="04 Lithography, Extreme concentration"><span class="ln-sp"><img src="media/line-lithography.webp" width="245" height="300" alt="" loading="lazy" decoding="async"></span><i class="ln-rt" aria-hidden="true"></i><span class="ln-n">04<i class="ct-bmk" aria-hidden="true"></i></span><span class="ln-t">Lithography</span></a></li><li data-ch="photomasks-and-pellicles" data-band="x" style="--w1:87.4%;--w2:72.4%;--w3:64.6%"><a href="photomasks-and-pellicles/" data-route="#photomasks-and-pellicles" aria-label="05 Photomasks and Pellicles, Extreme concentration"><span class="ln-sp"><img src="media/line-photomasks-and-pellicles.webp" width="300" height="249" alt="" loading="lazy" decoding="async"></span><i class="ln-rt" aria-hidden="true"></i><span class="ln-n">05<i class="ct-bmk" aria-hidden="true"></i></span><span class="ln-t">Photomasks and Pellicles</span></a></li><li data-ch="deposition-and-etch" data-band="h" style="--w1:70%;--w2:58%;--w3:51.7%"><a href="deposition-and-etch/" data-route="#deposition-and-etch" aria-label="06 Deposition and Etch, High concentration"><span class="ln-sp"><img src="media/line-deposition-and-etch.webp" width="232" height="300" alt="" loading="lazy" decoding="async"></span><i class="ln-rt" aria-hidden="true"></i><span class="ln-n">06<i class="ct-bmk h" aria-hidden="true"></i></span><span class="ln-t">Deposition and Etch</span></a></li><li data-ch="metrology-and-inspection" data-band="h" class="ln-wrap" style="--w1:57.6%;--w2:45.5%;--w3:36.2%"><a href="metrology-and-inspection/" data-route="#metrology-and-inspection" aria-label="07 Metrology and Inspection, High concentration"><span class="ln-sp"><img src="media/line-metrology-and-inspection.webp" width="157" height="300" alt="" loading="lazy" decoding="async"></span><i class="ln-rt" aria-hidden="true"></i><span class="ln-n">07<i class="ct-bmk h" aria-hidden="true"></i></span><span class="ln-t">Metrology and Inspection</span></a></li><li data-ch="foundries-and-fabs" data-band="x" style="--w1:76.7%;--w2:63.5%;--w3:56.6%"><a href="foundries-and-fabs/" data-route="#foundries-and-fabs" aria-label="08 Foundries and Fabs, Extreme concentration"><span class="ln-sp"><img src="media/line-foundries-and-fabs.webp" width="278" height="300" alt="" loading="lazy" decoding="async"></span><i class="ln-rt" aria-hidden="true"></i><span class="ln-n">08<i class="ct-bmk" aria-hidden="true"></i></span><span class="ln-t">Foundries and Fabs</span></a></li><li data-ch="memory-and-hbm" data-band="x" style="--w1:86.7%;--w2:71.8%;--w3:64.1%"><a href="memory-and-hbm/" data-route="#memory-and-hbm" aria-label="09 Memory and HBM, Extreme concentration"><span class="ln-sp"><img src="media/line-memory-and-hbm.webp" width="300" height="253" alt="" loading="lazy" decoding="async"></span><i class="ln-rt" aria-hidden="true"></i><span class="ln-n">09<i class="ct-bmk" aria-hidden="true"></i></span><span class="ln-t">Memory and HBM</span></a></li><li data-ch="advanced-packaging" data-band="x" style="--w1:98%;--w2:81.2%;--w3:72.4%"><a href="advanced-packaging/" data-route="#advanced-packaging" aria-label="10 Advanced Packaging, Extreme concentration"><span class="ln-sp"><img src="media/line-advanced-packaging.webp" width="300" height="198" alt="" loading="lazy" decoding="async"></span><i class="ln-rt" aria-hidden="true"></i><span class="ln-n">10<i class="ct-bmk" aria-hidden="true"></i></span><span class="ln-t">Advanced Packaging</span></a></li><li data-ch="substrates-and-pcbs" data-band="x" style="--w1:100%;--w2:92.3%;--w3:82.4%"><a href="substrates-and-pcbs/" data-route="#substrates-and-pcbs" aria-label="11 Substrates and PCBs, Extreme concentration"><span class="ln-sp"><img src="media/line-substrates-and-pcbs.webp" width="300" height="153" alt="" loading="lazy" decoding="async"></span><i class="ln-rt" aria-hidden="true"></i><span class="ln-n">11<i class="ct-bmk" aria-hidden="true"></i></span><span class="ln-t">Substrates and PCBs</span></a></li><li data-ch="test-and-assembly" data-band="h" style="--w1:96.3%;--w2:79.8%;--w3:71.2%"><a href="test-and-assembly/" data-route="#test-and-assembly" aria-label="12 Test and Assembly, High concentration"><span class="ln-sp"><img src="media/line-test-and-assembly.webp" width="300" height="205" alt="" loading="lazy" decoding="async"></span><i class="ln-rt" aria-hidden="true"></i><span class="ln-n">12<i class="ct-bmk h" aria-hidden="true"></i></span><span class="ln-t">Test and Assembly</span></a></li><li data-ch="systems-and-networking" data-band="h" style="--w1:100%;--w2:100%;--w3:91.1%"><a href="systems-and-networking/" data-route="#systems-and-networking" aria-label="13 Systems and Networking, High concentration"><span class="ln-sp"><img src="media/line-systems-and-networking.webp" width="300" height="125" alt="" loading="lazy" decoding="async"></span><i class="ln-rt" aria-hidden="true"></i><span class="ln-n">13<i class="ct-bmk h" aria-hidden="true"></i></span><span class="ln-t">Systems and Networking</span></a></li><li data-ch="data-centers-and-power" data-band="h" style="--w1:56.9%;--w2:44.3%;--w3:35.3%"><a href="data-centers-and-power/" data-route="#data-centers-and-power" aria-label="14 Data Centers and Power, High concentration"><span class="ln-sp"><img src="media/line-data-centers-and-power.webp" width="153" height="300" alt="" loading="lazy" decoding="async"></span><i class="ln-rt" aria-hidden="true"></i><span class="ln-n">14<i class="ct-bmk h" aria-hidden="true"></i></span><span class="ln-t">Data Centers and Power</span></a></li></ol><div class="ln-x"><p class="ln-brk"><span class="ln-k">Across the chain</span><a class="ln-bx" data-ch="component-costs" href="component-costs/" data-route="#component-costs"><span class="ln-n">15</span><span class="ln-t">The Economics of AI Chips</span></a><a class="ln-bx" data-ch="geopolitics" href="geopolitics/" data-route="#geopolitics"><span class="ln-n">16</span><span class="ln-t">Who Controls the Chain</span></a></p><p class="ln-note">These two chapters are not stages. They look across all fourteen, at what a chip costs and at the contest over who controls each stage.</p></div></figure><div class="contents-kr print-only"><h3 class="contents-k">The fourteen stages of the chain</h3><p class="ct-key"><span><i class="ct-bmk"></i>Extreme</span><span><i class="ct-bmk h"></i>High</span></p></div><div class="ln-list" role="group" aria-label="Each stage in one line"><div class="contents-grid"><div class="item" data-ch="design-and-eda"><span class="n">01<i class="ct-bmk" aria-hidden="true"></i></span><a class="t" href="#design-and-eda">Chip Design, EDA and IP</a><p class="ol">Synopsys, Cadence and Siemens EDA make the software used to design every advanced chip. In 2025 they took over 85 percent of its $18 billion market, licensed blocks included.</p></div><div class="item" data-ch="silicon-and-wafers"><span class="n">02<i class="ct-bmk h" aria-hidden="true"></i></span><a class="t" href="#silicon-and-wafers">Silicon and Wafers</a><p class="ol">Firms based in Japan, Taiwan, Germany and South Korea make most 300 mm wafers used for advanced chips. China makes most polysilicon, almost all of it for solar cells.</p></div><div class="item" data-ch="chemicals-gases-and-photoresist"><span class="n">03<i class="ct-bmk h" aria-hidden="true"></i></span><a class="t" href="#chemicals-gases-and-photoresist">Chemicals, Gases and Photoresist</a><p class="ol">Japanese companies held 78 percent of world photoresist sales in 2023. Supply of chip chemicals, gases and metals has been disrupted three times since 2019.</p></div><div class="item" data-ch="lithography"><span class="n">04<i class="ct-bmk" aria-hidden="true"></i></span><a class="t" href="#lithography">Lithography</a><p class="ol">ASML, a Dutch firm, is the only maker of extreme ultraviolet scanners, the machines that print the finest layers of a chip. It sold 48 of them in 2025.</p></div><div class="item" data-ch="photomasks-and-pellicles"><span class="n">05<i class="ct-bmk" aria-hidden="true"></i></span><a class="t" href="#photomasks-and-pellicles">Photomasks and Pellicles</a><p class="ol">Only three firms in the world make the blank plates for the masks used to print the finest layers of leading-edge chips. Japan's AGC and Hoya are two of them.</p></div><div class="item" data-ch="deposition-and-etch"><span class="n">06<i class="ct-bmk h" aria-hidden="true"></i></span><a class="t" href="#deposition-and-etch">Deposition and Etch</a><p class="ol">Deposition and etch tools build a chip layer by layer. China-based toolmakers' share of deposition tools rose from 2 to 7 percent between 2019 and 2024, by CSET's count.</p></div><div class="item" data-ch="metrology-and-inspection"><span class="n">07<i class="ct-bmk h" aria-hidden="true"></i></span><a class="t" href="#metrology-and-inspection">Metrology and Inspection</a><p class="ol">KLA, an American firm, held 56.8 percent of the market for tools that measure and inspect wafers in 2025, by CSET's count.</p></div></div><div class="contents-grid"><div class="item" data-ch="foundries-and-fabs"><span class="n">08<i class="ct-bmk" aria-hidden="true"></i></span><a class="t" href="#foundries-and-fabs">Foundries and Fabs</a><p class="ol">The newest chips need the know-how to build the newest transistors and a fab that costs tens of billions of dollars. Only TSMC, Intel and Samsung have both.</p></div><div class="item" data-ch="memory-and-hbm"><span class="n">09<i class="ct-bmk" aria-hidden="true"></i></span><a class="t" href="#memory-and-hbm">Memory and HBM</a><p class="ol">SK hynix, Samsung and Micron make nearly all high bandwidth memory (HBM), the stacked memory beside AI chips. SK hynix took 63.2 percent of HBM revenue in 2025.</p></div><div class="item" data-ch="advanced-packaging"><span class="n">10<i class="ct-bmk" aria-hidden="true"></i></span><a class="t" href="#advanced-packaging">Advanced Packaging</a><p class="ol">Epoch AI estimates that in 2025 Nvidia, Google, AMD and Amazon used around 90 percent of the capacity for CoWoS, TSMC's packaging for AI chips.</p></div><div class="item" data-ch="substrates-and-pcbs"><span class="n">11<i class="ct-bmk" aria-hidden="true"></i></span><a class="t" href="#substrates-and-pcbs">Substrates and PCBs</a><p class="ol">Ajinomoto, a Japanese food company, told investors in June 2026 that it holds over 95 percent of the market for the insulating film inside high-end chip packages.</p></div><div class="item" data-ch="test-and-assembly"><span class="n">12<i class="ct-bmk h" aria-hidden="true"></i></span><a class="t" href="#test-and-assembly">Test and Assembly</a><p class="ol">Testing finds bad chips before they go into an expensive package. Japan's Advantest took about 65 percent of 2025 spending on chip testers, by its own estimate.</p></div><div class="item" data-ch="systems-and-networking"><span class="n">13<i class="ct-bmk h" aria-hidden="true"></i></span><a class="t" href="#systems-and-networking">Systems and Networking</a><p class="ol">Nvidia's and AMD's racks wire 72 AI chips together to run as one computer. Many firms can assemble the racks, but lasers for the optical links were scarce in 2026.</p></div><div class="item" data-ch="data-centers-and-power"><span class="n">14<i class="ct-bmk h" aria-hidden="true"></i></span><a class="t" href="#data-centers-and-power">Data Centers and Power</a><p class="ol">By mid-2026, companies had asked to connect about 474 GW of new demand to the Texas grid, mostly for data centers. Only about 205 GW of those requests already had the grid study needed to enter the grid operator's first review. The large transformers that connect such sites to the grid commonly took three years to arrive in 2024.</p></div></div></div><div class="print-only"><h3 class="contents-k">Across the chain</h3><p class="contents-note">These two chapters are not stages. They look across all fourteen, at what a chip costs and at the contest over who controls each stage.</p></div><div class="ln-list ln-list-x" role="group" aria-label="Across the chain, each chapter in one line"><div class="contents-grid"><div class="item" data-ch="component-costs"><span class="n">15</span><a class="t" href="#component-costs">The Economics of AI Chips</a><p class="ol">Epoch AI estimated in December 2025 that Nvidia's B200 AI chip cost about $6,400 to build, mostly for memory and packaging. Its processor silicon cost about $900.</p></div></div><div class="contents-grid"><div class="item" data-ch="geopolitics"><span class="n">16</span><a class="t" href="#geopolitics">Who Controls the Chain</a><p class="ol">Since 2018 the United States has used export controls to limit China's access to advanced chips and chipmaking tools, and China has been learning to make both.</p></div></div></div>
       </div>
       <article class="chapter" id="design-and-eda" data-specimen="die-floorplan" data-number="01" data-title="Chip Design, EDA and IP" data-caption="A GPU die based on Nvidia's published H100 block diagram. It is drawn at the size of one full reticle field, 26 by 33 mm, the largest area a scanner can print in one shot. The 144 compute tiles fill the center in eight clusters. H100 is a single die. The drawing adds a copper strip on one short edge to stand for the die-to-die link that two-die designs such as Blackwell carry.">
 <header class="chapter-head">
@@ -15400,7 +15485,8 @@ try {
   /* screen furniture, and the machinery that would fight the paginator for the CPU */
   var GONE = ['.masthead', '.rail', '.to-top', '.stage', '.sheet', '#cp-search', '.ex-tip', '.ct-tip',
     '.gl-tip', '.export-bar', '.permalink', '.howto-dl', '.prevnext', '.ch-meta', '.chain--compact',
-    '.chain-foot', '.skip', '.stage-actions', '.stage-tag', 'canvas', 'iframe'];
+    '.chain-foot', '.skip', '.stage-actions', '.stage-tag', 'canvas', 'iframe',
+    '#contents .ln']; /* The Chain's contents drawn as a picture (design round six): the book's contents are the list under it */
 
   function each(sel, root, fn) { Array.prototype.forEach.call((root || document).querySelectorAll(sel), fn); }
 
@@ -15718,7 +15804,8 @@ try {
   }
 
   /* The Chain's opening sentence speaks of the page and its 3D models: the printed edition says what it holds. Its
-     length matches the screen's, since the contents page is full to within a line. */
+     length matches the screen's, since it shares its page with the contents (How to read a chapter, which stood between
+     them, went on 28 Oct 2026). */
   var LEDE_END = 'Each chapter ends with questions to answer from memory. Online, every chapter also has a 3D model, and most have an animation.';
   function printLede() {
     each('.howto .howto-lede', document, function (p) {
@@ -15818,7 +15905,7 @@ try {
     var host = readable(site).replace(/\/$/, '');
     var edition = opts.edition ? 'Edition of ' + opts.edition : '';
 
-    /* one chapter alone: the cover, the how-to box and the contents give way to the chapter's own title block, and the
+    /* one chapter alone: the cover, The Chain's title and standfirst (.howto) and the contents give way to the chapter's own title block, and the
        chapter starts beneath it on the first page (print.css, .pt-chapter) */
     var alone = null;
     if (opts.chapter) {

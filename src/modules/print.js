@@ -13,7 +13,8 @@
   /* screen furniture, and the machinery that would fight the paginator for the CPU */
   var GONE = ['.masthead', '.rail', '.to-top', '.stage', '.sheet', '#cp-search', '.ex-tip', '.ct-tip',
     '.gl-tip', '.export-bar', '.permalink', '.howto-dl', '.prevnext', '.ch-meta', '.chain--compact',
-    '.chain-foot', '.skip', '.stage-actions', '.stage-tag', 'canvas', 'iframe'];
+    '.chain-foot', '.skip', '.stage-actions', '.stage-tag', 'canvas', 'iframe',
+    '#contents .ln']; /* The Chain's contents drawn as a picture (design round six): the book's contents are the list under it */
 
   function each(sel, root, fn) { Array.prototype.forEach.call((root || document).querySelectorAll(sel), fn); }
 
@@ -331,7 +332,8 @@
   }
 
   /* The Chain's opening sentence speaks of the page and its 3D models: the printed edition says what it holds. Its
-     length matches the screen's, since the contents page is full to within a line. */
+     length matches the screen's, since it shares its page with the contents (How to read a chapter, which stood between
+     them, went on 28 Oct 2026). */
   var LEDE_END = 'Each chapter ends with questions to answer from memory. Online, every chapter also has a 3D model, and most have an animation.';
   function printLede() {
     each('.howto .howto-lede', document, function (p) {
@@ -431,7 +433,7 @@
     var host = readable(site).replace(/\/$/, '');
     var edition = opts.edition ? 'Edition of ' + opts.edition : '';
 
-    /* one chapter alone: the cover, the how-to box and the contents give way to the chapter's own title block, and the
+    /* one chapter alone: the cover, The Chain's title and standfirst (.howto) and the contents give way to the chapter's own title block, and the
        chapter starts beneath it on the first page (print.css, .pt-chapter) */
     var alone = null;
     if (opts.chapter) {
