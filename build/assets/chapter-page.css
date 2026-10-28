@@ -6,7 +6,7 @@
    The page follows the reader's system theme, and ?theme= or the site's saved choice overrides it.
    Inlined into each page and lightly minified by social.js, so keep it short and free of commas inside strings. */
 :root {
-  --bg: #ffffff; --bg-2: #f4f4f2; --ink: #171716; --ink-2: #45443f; --muted: #56554f;
+  --bg: #fcfcfa; --bg-2: #f4f4f2; --ink: #171716; --ink-2: #45443f; --muted: #56554f;
   --line: #e1e0db; --line-2: #c4c3bd; --rule-ink: #8c8a84; --accent: #7a1f2b; --accent-ink: #7a1f2b; --accent-soft: #f3e3e5; --accent-fill: #7a1f2b; --on-accent: #ffffff;
   --ctx: #d2d1cc;
   --c1: #2b63c4; --c2: #e06a1f; --c3: #1f9a6d; --c4: #c9a10c; --c5: #5a48b8; --c6: #c3302b; --c7: #2e7d1e; --c8: #8a9099;

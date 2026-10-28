@@ -643,3 +643,12 @@ article.ch-page { padding-top: 56px; border-top: 0; }
   .ch-page .ch-spec[data-night].has-still .ch-spec-draw { padding: 16px; }
 }
 @media print { .ch-page .ch-spec-3d { display: none; } }
+
+/* the specimen stills and explainer videos are rendered on white; on the barely off-white ground they multiply into it, so no
+   white box shows round them (27 Oct). Each sits in a box that carries the ground, so the blend has the ground to work on. */
+:root:not([data-theme="dark"]) .chapter .prevnext .ex:not([data-night]) { isolation: isolate; background: var(--bg); }
+:root:not([data-theme="dark"]) .chapter .prevnext .ex:not([data-night]) img,
+:root:not([data-theme="dark"]) .ch-page .ch-spec:not([data-night]) .ch-still-img,
+:root:not([data-theme="dark"]) .ch-still image,
+:root:not([data-theme="dark"]) .anim-stage video, :root:not([data-theme="dark"]) .anim-stage img { mix-blend-mode: multiply; }
+:root:not([data-theme="dark"]) .ch-page .ch-spec:not([data-night]), :root:not([data-theme="dark"]) .anim-stage { isolation: isolate; background: var(--bg); }

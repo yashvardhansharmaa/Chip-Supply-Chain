@@ -145,7 +145,7 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
 </div>`;
 
   const SCREEN_CSS = `
-:root { --bg: #ffffff; --bg-2: #f4f4f2; --card: #f4f4f2; --ink: #171716; --ink-2: #45443f; --muted: #56554f; --line: #e1e0db; --line-2: #c4c3bd;
+:root { --bg: #fcfcfa; --bg-2: #f4f4f2; --card: #f4f4f2; --ink: #171716; --ink-2: #45443f; --muted: #56554f; --line: #e1e0db; --line-2: #c4c3bd;
   --accent: #7a1f2b; --accent-fill: #7a1f2b; --accent-soft: #f3e3e5; --on-accent: #ffffff; --bar-4: #8c8a84; --bar-3: #b4b3ad; --bar-2: #d2d1cc;
   --display: "Source Serif 4", "Iowan Old Style", Georgia, serif; --body: "Source Serif 4", "Iowan Old Style", Georgia, serif;
   --text-scale: 1; /* as src/styles.css sets it (27 Oct: the text at 18.5 px); the printed brief sets its own sizes in pt */
