@@ -21,25 +21,27 @@
   /* Paper gets static fonts. Chrome cannot put a variable font into a PDF as a font: it draws each instance as Type 3
      shapes, which copy and search as broken words ("ED / A"). So for print the page's variable families give way to
      fixed instances of the same families, all under the SIL Open Font License, served by Google Fonts as the site's own
-     fonts are: the site's three (design round five, 27 Oct 2026; Fraunces and Literata before it). Source Serif 4 for
-     headings and text, its optical size fixed at 11, near the printed text (10.6 pt), in the three weights print.css sets
-     (400 for titles, section heads and text, 500 for small heads, 600 for bold: the screen's 360 and 540 are between named
-     weights, and such an instance prints as Type 3 again) and its italic at 400; Hanken Grotesk for labels; Fragment Mono
+     fonts are: the site's four (the hybrid, 28 Oct 2026). Fraunces for headings, at the screen's optical size, 48, with SOFT
+     and WONK at 0, and Source Serif 4 for text, its optical size fixed at 11, near the printed text (10 pt), each in the
+     three weights print.css sets (400 for titles, section heads and text, 500 for small heads, 600 for bold: the screen's
+     360 and 540 are between named weights, and such an instance prints as Type 3 again), and the text face's italic at 400;
+     Hanken Grotesk for labels; Fragment Mono
      for kickers, codes and dates; and Noto Serif and Sans for the Chinese and Japanese titles of some sources (the
      system's own CJK fonts print as Type 3 too).
      Chrome embeds each as TrueType, subset to the letters used. */
   /* one request per instance: asked for a single point, Google Fonts serves a fixed instance; asked for several weights
      at once, it serves one variable file that covers them, and that prints as Type 3 again */
-  var PRINT_FONTS = ['Source+Serif+4:ital,opsz,wght@0,11,400', 'Source+Serif+4:ital,opsz,wght@0,11,500', 'Source+Serif+4:ital,opsz,wght@0,11,600',
+  var PRINT_FONTS = ['Fraunces:opsz,wght,SOFT,WONK@48,400,0,0', 'Fraunces:opsz,wght,SOFT,WONK@48,500,0,0', 'Fraunces:opsz,wght,SOFT,WONK@48,600,0,0',
+    'Source+Serif+4:ital,opsz,wght@0,11,400', 'Source+Serif+4:ital,opsz,wght@0,11,500', 'Source+Serif+4:ital,opsz,wght@0,11,600',
     'Source+Serif+4:ital,opsz,wght@1,11,400',
     'Hanken+Grotesk:wght@400', 'Hanken+Grotesk:wght@500', 'Hanken+Grotesk:wght@600', 'Hanken+Grotesk:wght@700',
     'Fragment+Mono', 'Noto+Serif+SC:wght@400', 'Noto+Serif+SC:wght@600', 'Noto+Serif+JP:wght@400',
     'Noto+Serif+JP:wght@600', 'Noto+Sans+SC:wght@400', 'Noto+Sans+JP:wght@400'];
   /* A face under a name of its own, for an instance that would otherwise take the place of one above (one face to a
      weight): [name, Google Fonts family]. It comes from the same request a link would make, added through the FontFace
-     API under its new name. Fraunces needed one for the wordmark at its own optical size; Source Serif 4 sets the
-     wordmark in the 500 above, so there is none today. */
-  var PRINT_FACES = [];
+     API under its new name: the wordmark, Fraunces 500 at the masthead's optical size, 28 (the screen's 540 is between named
+     weights). Under the family's own name it would take the place of the 500 above (one face to a weight). */
+  var PRINT_FACES = [['Fraunces Mark', 'Fraunces:opsz,wght,SOFT,WONK@28,500,0,0']];
   var fontsLoaded = null;
   function fontURL(family) { return 'https://fonts.googleapis.com/css2?family=' + family + '&display=block'; }
   function namedFace(name, family) {
@@ -68,7 +70,8 @@
   }
   /* pdf.py waits on this after prepare(): the stylesheet, then each face the print uses, then any other pending load */
   function fontsReady() {
-    var faces = ['400 24pt "Source Serif 4"', '500 11pt "Source Serif 4"', '600 11pt "Source Serif 4"',
+    var faces = ['400 24pt Fraunces', '500 11pt Fraunces', '600 11pt Fraunces', '500 11pt "Fraunces Mark"',
+      '400 24pt "Source Serif 4"', '500 11pt "Source Serif 4"', '600 11pt "Source Serif 4"',
       '400 10pt "Source Serif 4"', 'italic 400 10pt "Source Serif 4"',
       '400 7pt "Hanken Grotesk"', '500 7pt "Hanken Grotesk"', '600 7pt "Hanken Grotesk"', '700 7pt "Hanken Grotesk"',
       '400 7pt "Fragment Mono"'];
@@ -229,7 +232,7 @@
   /* ---------- the chapter opener, the questions and the contents page, for paper ---------- */
 
   /* The chain in the margin column beside the chapter (print.css .cp-index), as the screen's rail shows it: each of the
-     stages with its number, its whole name and its band's mark (solid for Extreme, an outline for High), then the
+     stages with its number, its whole name and its band's meter (four bars, as the screen's rail draws them), then the
      two chapters that look across them; the chapter's own line in bold. Built from the rail before its screen parts go,
      and the rail moves to the head of the chapter, where it floats beside the opener. */
   function stageIndex() {
@@ -245,7 +248,8 @@
           item.setAttribute('data-band', li.getAttribute('data-band') || '0');
           item.appendChild(node('span', 'n', n ? n.textContent : ''));
           item.appendChild(node('span', 't', t ? t.textContent.replace(/\u00ad/g, '') : ''));
-          item.appendChild(node('i', 'bm'));
+          var m = li.querySelector('.meter');
+          if (m) item.appendChild(m.cloneNode(true));
           ol.appendChild(item);
         });
         return ol;

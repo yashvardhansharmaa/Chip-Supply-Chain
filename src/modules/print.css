@@ -4,9 +4,10 @@
    the page has loaded; src/modules/print.js writes each note from the citation's data-* fields
    and puts the class cp-print on <html>. Without Paged.js (the browser's own Print) the page
    still prints and each chapter keeps its source list at its end.
-   The type and colors are the redesign's (qa/redesign/BRIEF.md, stage 4; the faces since design round five, 27 Oct 2026):
-   Source Serif 4 for headings and text, as fixed instances at 400, 500 and 600 and an italic at 400 (print.js: a weight
-   between the named ones prints as Type 3 shapes, which do not copy or search), Hanken Grotesk for labels, Fragment Mono
+   The type and colors are the redesign's (qa/redesign/BRIEF.md, stage 4; the faces since the hybrid of 28 Oct 2026):
+   Fraunces for headings, Source Serif 4 for text, each as fixed instances at 400, 500 and 600, with an italic of the text
+   face at 400 and the wordmark in Fraunces at its own optical size (print.js: a weight between the named ones prints as
+   Type 3 shapes, which do not copy or search), Hanken Grotesk for labels, Fragment Mono
    for kickers, codes and dates; ink on white, with the wine on links (the citation marks, the parts list's links), the logo
    tile, the Extreme marks and the largest value on each chart (its bar and its bold value; the rest the light tint), as on
    screen since the visual pass of 27 Oct 2026.
@@ -58,7 +59,7 @@
     --shadow: none; --masthead: 0px; --band: 0px; --col: 100%; --measure: 128mm;
     /* the static print fonts (print.js printFonts), with Noto for Chinese and Japanese titles, so nothing falls back to a
        system font (those print as Type 3 shapes, which do not copy or search) */
-    --font-display: "Source Serif 4", "Noto Serif SC", "Noto Serif JP", Georgia, serif;
+    --font-display: "Fraunces", "Noto Serif SC", "Noto Serif JP", Georgia, serif;
     --font-body: "Source Serif 4", "Noto Serif SC", "Noto Serif JP", Georgia, serif;
     --font-ui: "Hanken Grotesk", "Noto Sans SC", "Noto Sans JP", "Helvetica Neue", Arial, sans-serif;
     --font-mono: var(--font-ui);
@@ -120,18 +121,17 @@
 
   /* the margin column: print.js moves the rail to the head of the chapter, where it floats beside the opener. Its screen
      parts go (chapter.css); what prints is the chain (print.js stageIndex): each stage's number, its whole name and its
-     band's mark, as the screen's rail shows them, the chapter's own stage in bold. Long names take two lines. */
+     band's meter, as the screen's rail shows them, the chapter's own stage in bold. Long names take two lines. */
   .chapter > .ch-ledger { float: left; width: 31mm; margin: 0.6mm 0 0 -36mm; padding: 0; position: static; max-height: none; overflow: visible; text-align: left; }
   .chapter .ch-tile { display: none !important; }
   .chapter .cp-index-k { margin: 0 0 1.4mm; font-family: var(--font-code); font-size: 6.6pt; line-height: 1.3; color: var(--muted); }
   .chapter .cp-index { list-style: none; margin: 0; padding: 0; border-top: 0.6pt solid var(--ink); }
-  .chapter .cp-index li { display: grid; grid-template-columns: 4.2mm minmax(0, 1fr) 1.4mm; column-gap: 1.2mm; align-items: baseline; margin: 0; padding: 0.75mm 0;
+  .chapter .cp-index li { display: grid; grid-template-columns: 4.2mm minmax(0, 1fr) 3.3mm; column-gap: 1.2mm; align-items: baseline; margin: 0; padding: 0.75mm 0;
     border-bottom: 0.3pt solid var(--line); font-family: var(--font-ui); font-size: 6.4pt; line-height: 1.22; color: var(--ink-2); break-inside: avoid; }
   .chapter .cp-index .n { font-family: var(--font-code); font-size: 6pt; color: var(--muted); font-variant-numeric: tabular-nums; }
   .chapter .cp-index .t { min-width: 0; text-wrap: balance; }
-  .chapter .cp-index .bm { display: block; align-self: start; width: 1.2mm; height: 2.4mm; margin-top: 0.3mm; }
-  .chapter .cp-index li[data-band="4"] .bm { background: var(--bar-5); }
-  .chapter .cp-index li[data-band="3"] .bm { height: 1.3mm; margin-top: 1.4mm; box-shadow: inset 0 0 0 0.5pt var(--ink); }
+  /* the band's meter (chapter.css .meter), sized for paper: on the name's first line */
+  .chapter .cp-index .meter { --mh: 2.2mm; --mw: 0.6mm; --mg: 0.3mm; align-self: start; justify-self: end; margin-top: 0.3mm; }
   .chapter .cp-index li.is-here { color: var(--ink); font-weight: 600; }
   .chapter .cp-index li.is-here .n { color: var(--ink); }
   .chapter .cp-index.cp-across { margin-top: 2.4mm; border-top-width: 0.3pt; border-top-color: var(--line-2); }
@@ -140,8 +140,7 @@
   .chapter .ch-open { display: block; margin: 0; padding: 0 0 4.2mm; border-bottom: 0.6pt solid var(--ink); }
   .chapter .ch-kick { display: flex; flex-wrap: wrap; align-items: center; gap: 1mm 5mm; margin: 0; font-family: var(--font-code); font-size: 7.4pt; line-height: 1.3; color: var(--muted); }
   .chapter .ch-band { gap: 1.6mm; font-family: var(--font-ui); font-size: 7.6pt; font-weight: 500; color: var(--ink); }
-  .chapter .ch-band i { width: 1.4mm; height: 3.2mm; }
-  .chapter .ch-band[data-band="3"] i { height: 1.7mm; margin-top: 1.5mm; box-shadow: inset 0 0 0 0.6pt var(--ink); }
+  .chapter .ch-band .meter { --mh: 2.6mm; --mw: 0.9mm; --mg: 0.35mm; margin: 0; }
   .chapter .ch-title, .chapter .ch-title.is-long { margin: 4.4mm 0 0 -0.04em; font-family: var(--font-display); font-weight: 400; font-size: 34pt; line-height: 0.98; letter-spacing: -0.02em; color: var(--ink); text-wrap: balance; }
   .chapter .ch-title.is-long { font-size: 27pt; line-height: 1.02; }
   .chapter .ch-lede { margin: 4mm 0 0; max-width: 118mm; font-family: var(--font-body); font-size: calc(11.6pt * var(--text-scale)); line-height: 1.4; color: var(--ink-2); }
@@ -196,7 +195,7 @@
   .chapter > .prose > h5 { margin: 4mm 0 1.2mm; font-family: var(--font-ui); font-weight: 600; font-size: 8pt; color: var(--ink); }
 
   /* 3. the chokepoint card: in the text after the lead, before section 01, as on screen (print.js cardsToText). On paper it
-     is ruled, not tinted: an ink rule over the head, the two ratings large in the display face with the band's mark, then label and
+     is ruled, not tinted: an ink rule over the head, the two ratings large in the display face with the band's meter, then label and
      text in rows. */
   .chapter .plate { max-width: var(--pcol, none); margin: 6mm 0 0; padding: 0; background: none; border: 0; border-bottom: 0.6pt solid var(--ink); box-shadow: none; overflow: hidden; }
   .chapter .prose .plate li { margin-top: 0; }
@@ -207,8 +206,7 @@
   .chapter .plate-kpis > div, .chapter .plate-kpis > div + div { padding: 0; border: 0; }
   .chapter .plate-kpis .k, .chapter .plate-status .k, .chapter .plate-rows dt { display: block; margin: 0 0 1mm; padding: 0; font-family: var(--font-code); font-size: 6.8pt; font-weight: 400; line-height: 1.3; letter-spacing: 0; color: var(--muted); }
   .chapter .plate-kpis .v { display: flex; align-items: flex-end; gap: 2mm; margin: 1.2mm 0 1.4mm; font-family: var(--font-display); font-weight: 400; font-size: 21pt; line-height: 0.95; letter-spacing: -0.02em; white-space: nowrap; color: var(--ink); }
-  .chapter .plate-kpis .v .bm { width: 1.8mm; height: 0.74em; margin-bottom: 0.06em; }
-  .chapter .plate-kpis .v .bm[data-band="3"] { height: 0.36em; box-shadow: inset 0 0 0 0.7pt var(--ink); }
+  .chapter .plate-kpis .v .meter { --mh: 0.72em; --mw: 1.5mm; --mg: 0.5mm; margin: 0 0.2mm 0.08em 0; }
   .chapter .plate-kpis .v.cost { display: block; margin: 1.2mm 0 1mm; font-size: 13pt; line-height: 1.1; white-space: normal; }
   .chapter .plate-kpis .v.cost.long { font-family: var(--font-body); font-weight: 600; font-size: calc(8.8pt * var(--text-scale)); line-height: 1.3; letter-spacing: 0; }
   .chapter .plate-kpis .v small { font-size: 8pt; }
@@ -337,7 +335,7 @@
   .print-title .pt-wm .wm-tile { display: block; width: 7mm; height: 7mm; flex: none; }
   .print-title .pt-wm .wm-tile rect { fill: #7a1f2b; }
   .print-title .pt-wm .wm-tile path { fill: #fff; }
-  .print-title .pt-wm .wm-name { font-family: var(--font-display); font-weight: 500; font-size: 14pt; letter-spacing: -0.005em; line-height: 1; }
+  .print-title .pt-wm .wm-name { font-family: "Fraunces Mark", var(--font-display); font-weight: 500; font-size: 14pt; letter-spacing: -0.005em; line-height: 1; }
   .print-title .pt-h { margin: 0 0 6mm; font-family: var(--font-display); font-weight: 400; font-size: 64pt; line-height: 0.92; letter-spacing: -0.025em; color: var(--ink); }
   .print-title .pt-sub { margin: 0; max-width: 150mm; font-family: var(--font-body); font-weight: 400; font-size: calc(14pt * var(--text-scale)); line-height: 1.32; color: var(--ink-2); }
   .print-title .pt-foot { margin-top: auto; padding-top: 4mm; }
@@ -390,7 +388,7 @@
   .pt-chapter .ptc-wm .wm-tile { display: block; width: 5.4mm; height: 5.4mm; flex: none; }
   .pt-chapter .ptc-wm .wm-tile rect { fill: #7a1f2b; }
   .pt-chapter .ptc-wm .wm-tile path { fill: #fff; }
-  .pt-chapter .ptc-wm .wm-name { font-family: var(--font-display); font-weight: 500; font-size: 11pt; line-height: 1; }
+  .pt-chapter .ptc-wm .wm-name { font-family: "Fraunces Mark", var(--font-display); font-weight: 500; font-size: 11pt; line-height: 1; }
   .pt-chapter .ptc-url { margin-top: 1.6mm; font-family: var(--font-code); font-size: 7.4pt; color: var(--muted); }
   .pt-chapter .ptc-url a { color: var(--accent-ink); }
 

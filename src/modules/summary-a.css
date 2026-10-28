@@ -8,8 +8,8 @@
 .sa .view-head { padding-bottom: 10px; }
 .sa .view-head .dek { max-width: 46em; }
 
-.sa-h { font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-size: var(--fs-d5); font-weight: 500; text-transform: none; letter-spacing: 0; color: var(--ink); }
-.sa-sub { font-size: calc(15px * var(--text-scale)); line-height: 1.5; color: var(--muted); max-width: 92ch; margin: 6px 0 0; }
+.sa-h { font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-size: var(--t-text); font-weight: 500; text-transform: none; letter-spacing: 0; color: var(--ink); }
+.sa-sub { font-size: var(--t-small); line-height: 1.5; color: var(--muted); max-width: 92ch; margin: 6px 0 0; }
 .sa-map-head { margin: 0 0 14px; }
 
 .sa-mapwrap { margin-top: 26px; padding-top: 22px; border-top: 1px solid var(--line); }
@@ -79,7 +79,7 @@
 }
 .sa-panel-head { display: flex; align-items: baseline; gap: 9px; }
 .sa-panel-cc { font-family: var(--font-mono); font-size: var(--fs-cap); font-weight: 500; letter-spacing: var(--tr-cap); color: var(--accent); border: 1px solid var(--line-2); border-radius: 0; padding: 1px 5px; }
-.sa-panel-head h4 { font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-size: var(--fs-d2); font-weight: 400; line-height: 1.05; text-transform: none; letter-spacing: 0; }
+.sa-panel-head h4 { font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-size: var(--t-section); font-weight: 400; line-height: 1.05; text-transform: none; letter-spacing: 0; }
 .sa-panel-lede { font-size: var(--fs-plain); line-height: 1.45; color: var(--ink); margin: 10px 0 14px; }
 
 .sa-facts { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
@@ -148,7 +148,7 @@
 .sa-tile:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 .sa-details { margin-top: 18px; border-top: 1px solid var(--line); padding-top: 16px; min-height: 190px; }
-.sa-stage-detail h4 { display: flex; align-items: baseline; gap: 9px; font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-size: var(--fs-d3); font-weight: 400; text-transform: none; letter-spacing: 0; }
+.sa-stage-detail h4 { display: flex; align-items: baseline; gap: 9px; font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-size: var(--t-block); font-weight: 400; text-transform: none; letter-spacing: 0; }
 .sa-stage-detail p { font-size: var(--fs-plain); line-height: 1.5; color: var(--ink-2); max-width: var(--measure); margin: 10px 0 12px; }
 .sa-stage-leaders { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px; }
 .sa-stage-leaders ul { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; margin: 0; padding: 0; }
@@ -161,7 +161,7 @@
 .sa-nums { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; list-style: none; margin: 0; padding: 0; }
 .sa-num { border-top: 1px solid var(--ink); padding-top: 12px; }
 .sa-num b { display: block; font-family: var(--font-display); font-variation-settings: var(--opsz-numeral); font-size: clamp(34px, 3.6vw, 52px); font-weight: 360; line-height: 1; letter-spacing: -0.02em; text-transform: none; color: var(--accent); font-variant-numeric: tabular-nums lining-nums; }
-.sa-num p { font-size: calc(15.5px * var(--text-scale)); line-height: 1.45; color: var(--ink-2); margin: 10px 0 8px; }
+.sa-num p { font-size: var(--t-small); line-height: 1.45; color: var(--ink-2); margin: 10px 0 8px; }
 .sa-num a { font-family: var(--font-mono); font-size: var(--fs-cap); letter-spacing: 0; color: var(--muted); }
 .sa-num a:hover { color: var(--ink); }
 
@@ -170,11 +170,11 @@
 .sa-cta-main {
   display: inline-flex; flex-direction: column; gap: 4px; padding: 16px 22px; text-decoration: none;
   background: var(--ink); color: var(--bg); border-radius: 0;
-  font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-size: var(--fs-d4); font-weight: 500; text-transform: none; letter-spacing: 0;
+  font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-size: var(--t-lead); font-weight: 500; text-transform: none; letter-spacing: 0;
 }
 .sa-cta-main span { font-family: var(--font-mono); font-size: var(--fs-ui-s); font-weight: 400; letter-spacing: 0.06em; text-transform: none; opacity: 0.72; }
 .sa-cta-main:hover { background: var(--accent-ink); }
-.sa-cta-links { margin: 16px 0 0; display: flex; flex-wrap: wrap; gap: 18px; font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-size: var(--fs-d6); font-weight: 600; }
+.sa-cta-links { margin: 16px 0 0; display: flex; flex-wrap: wrap; gap: 18px; font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-size: var(--t-text); font-weight: 600; }
 .sa-cta-links a { text-decoration-color: var(--line-2); }
 
 /* ---------- narrow ---------- */
@@ -199,7 +199,7 @@
   .sa-marker { --d: max(18px, calc(var(--d0) * 0.66)); }
   .sa-marker-cc { display: none; }
   .sa-town { --d: max(5px, calc(var(--d0) * 0.75)); }
-  .sa-panel-head h4 { font-size: var(--fs-d3); }
+  .sa-panel-head h4 { font-size: var(--t-block); }
   .sa-panel-lede { font-size: var(--fs-small); }
   .sa-nums { grid-template-columns: 1fr; gap: 14px; }
   .sa-num b { font-size: 40px; }
@@ -218,7 +218,7 @@
 .sa-exits { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 30px 0 8px; }
 .sa-exit { display: block; padding: 14px 0 16px; border: 0; border-top: 1px solid var(--line-2); border-radius: 0; background: none; text-decoration: none; color: var(--ink); transition: border-color 0.2s var(--ease); }
 .sa-exit:hover, .sa-exit:focus-visible { border-top-color: var(--ink); }
-.sa-exit b { display: block; font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 500; font-size: var(--fs-d4); letter-spacing: 0; margin-bottom: 4px; }
+.sa-exit b { display: block; font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 500; font-size: var(--t-lead); letter-spacing: 0; margin-bottom: 4px; }
 .sa-exit span { display: block; font-family: var(--font-body); font-size: var(--fs-small); line-height: 1.45; color: var(--ink-2); }
 @media (max-width: 700px) { .sa-exits { grid-template-columns: 1fr; } }
 
@@ -295,7 +295,7 @@
 .sa-stop-tip { position: absolute; z-index: 50; max-width: 300px; padding: 10px 12px 11px; background: var(--bg); color: var(--ink); border: 1px solid var(--line-2); box-shadow: var(--shadow); font-family: var(--font-ui); font-size: 13px; line-height: 1.45; pointer-events: none; }
 .sa-stop-tip[hidden] { display: none; }
 @media (hover: hover) { .sa-stop-tip { pointer-events: auto; } } /* a mouse can move onto the tip and it stays (WCAG 1.4.13) */
-.sa-stop-tip b { display: block; font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 500; font-size: 15px; margin-bottom: 3px; }
+.sa-stop-tip b { display: block; font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 500; font-size: var(--t-small); margin-bottom: 3px; }
 .sa-stop-tip span { display: block; color: var(--ink-2); }
 .sa-stop-tip .sa-stop-tip-s { margin-top: 4px; font-family: var(--font-ui); font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
 
@@ -307,10 +307,10 @@
 .atlas .sa-panels[data-more="1"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 40px; background: linear-gradient(to bottom, transparent, var(--bg)); pointer-events: none; }
 .atlas .sa-panel-head { display: flex; align-items: baseline; gap: 10px; }
 .atlas .sa-panel-cc { order: 2; border: 0; padding: 0; font-family: var(--font-ui); font-size: 12px; font-weight: 400; color: var(--muted); font-variant-numeric: tabular-nums; }
-.atlas .sa-panel-head h4 { font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 500; font-size: 24px; line-height: 1.15; letter-spacing: -0.01em; }
+.atlas .sa-panel-head h4 { font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 500; font-size: var(--t-block); line-height: 1.15; letter-spacing: -0.01em; }
 .atlas .sa-panel-meta { margin: 6px 0 0; font-family: var(--font-ui); font-size: 12.5px; line-height: 17px; color: var(--muted); font-variant-numeric: tabular-nums; }
-.atlas .sa-panel-role { margin: 6px 0 0; font-family: var(--font-body); font-size: calc(15px * var(--text-scale)); line-height: 1.5; color: var(--ink); }
-.atlas .sa-panel-lede { margin: 10px 0 14px; font-family: var(--font-body); font-size: calc(15px * var(--text-scale)); line-height: 1.5; color: var(--ink-2); }
+.atlas .sa-panel-role { margin: 6px 0 0; font-family: var(--font-body); font-size: var(--t-small); line-height: 1.5; color: var(--ink); }
+.atlas .sa-panel-lede { margin: 10px 0 14px; font-family: var(--font-body); font-size: var(--t-small); line-height: 1.5; color: var(--ink-2); }
 .atlas .sa-panel--none .sa-panel-lede { color: var(--ink-2); }
 .atlas .sa-facts { border-top: 1px solid var(--line); }
 .atlas .sa-fact a, .atlas .sa-fact-in { padding: 8px 2px; }
@@ -320,7 +320,7 @@
 .atlas .sa-fact-k { font-family: var(--font-ui); font-size: 14px; font-weight: 500; }
 .atlas .sa-fact-v { font-family: var(--font-ui); font-size: 13px; font-weight: 400; font-variant-numeric: tabular-nums; }
 .atlas .sa-fact-v small { font-family: var(--font-ui); letter-spacing: 0; font-variant-numeric: tabular-nums; }
-.atlas .sa-fact-note { font-family: var(--font-body); font-size: calc(13.5px * var(--text-scale)); color: var(--muted); }
+.atlas .sa-fact-note { font-family: var(--font-body); font-size: var(--t-note); color: var(--muted); }
 .atlas .sa-est { display: block; margin: 2px 0 0; font-family: var(--font-ui); font-weight: 400; font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
 /* a stage's band beside its name, as the chapter's kicker marks it: a bar for Extreme, an outline for High */
 .atlas .sa-sc { display: inline-flex; align-items: center; gap: 5px; margin-left: 8px; padding: 0; background: none; color: var(--ink); font-family: var(--font-ui); font-size: 12px; font-weight: 500; vertical-align: 1px; }
