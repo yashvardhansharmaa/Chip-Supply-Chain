@@ -2259,7 +2259,11 @@ section[data-view="landscape"] .label, section[data-view="landscape"] .cx-note, 
 }
 /* two rows: the route wraps with an arrow at the end of the first */
 @media screen and (max-width: 1359px) {
-  .ln-st { --ln-ts: 15px; --ln-cols: var(--ln-half, 7); --ln-pad: 12px; row-gap: 30px; }
+  .ln-st { --ln-ts: 15px; --ln-cols: var(--ln-half, 7); --ln-pad: 12px; row-gap: 24px; }
+  /* a little closer than one row, so the bracket and both its chapters still reach the first screen at 1024 x 900 under the
+     six-line standfirst */
+  .ln { margin-top: 32px; }
+  .ln-x { margin-top: 24px; }
   .ln-sp { aspect-ratio: 1.15; }
   .ln-sp img { width: var(--w2); }
   .ln-st li.ln-wrap .ln-rt::after { content: ""; position: absolute; right: 0; top: -2.5px; width: 9px; height: 9px; border-top: 1px solid var(--ink); border-right: 1px solid var(--ink); transform: rotate(45deg); transform-origin: 100% 0; }

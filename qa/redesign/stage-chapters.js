@@ -401,6 +401,9 @@ const want = (n) => !ONLY.length || ONLY.includes(String(n));
       const out = []; let ok = true;
       const D = await (async () => { const t = await tab(chrome, '/#/chain'); const d = await t.ev('CP_DATA.chapters.map(function (c) { return { id: c.id, stage: c.stage, title: c.title }; })'); await t.close(); return d; })();
       const stagesD = D.filter((c) => c.stage), acrossD = D.filter((c) => !c.stage);
+      // one request at a time, and a dropped connection (the preview's python http.server resets some under a burst) is tried
+      // again up to twice; any answer the server gives, a 404 included, stands. Status 0 means it never answered
+      const HEAD = `(async function (u) { for (var k = 0; k < 3; k++) { try { var r = await fetch(u, { method: 'HEAD', cache: 'no-store' }); return { status: r.status, type: (r.headers.get('content-type') || '').split(';')[0] }; } catch (e) { await new Promise(function (f) { setTimeout(f, 300); }); } } return { status: 0, type: '' }; })`;
       const opens = async (t, sel, id) => {
         await t.ev(`location.hash = '#/chain', 1`); await sleep(900);
         const clicked = await t.click(sel); await sleep(1100);
@@ -408,6 +411,7 @@ const want = (n) => !ONLY.length || ONLY.includes(String(n));
         return { pass: clicked && st.view === 'stack' && st.shown.join() === id && st.hash === '#' + id && st.y <= 4 && !st.contents, st, clicked };
       };
       for (const width of [1440, 1024, 390]) {
+        try {
         const t = await tab(chrome, '/#/chain', { width });
         const line = await t.ev(`[].map.call(document.querySelectorAll('#contents .ln-st > li'), function (l) { return l.getAttribute('data-ch'); })`);
         if (line.join() !== stagesD.map((c) => c.id).join()) { ok = false; out.push(`${width}: the line holds ${line.length} stages, not the ${stagesD.length} in order (FAIL)`); }
@@ -426,8 +430,10 @@ const want = (n) => !ONLY.length || ONLY.includes(String(n));
         out.push(`${width}: the bracket carries ${xs.map((x) => x.split('|')[1]).join(' and ')}${xpass ? '' : ' (FAIL: not the chapters across the chain, in order)'}${xbad.length ? '; ' + xbad.join('; ') + ' (FAIL)' : ', and each opens alone at its top'}`);
         // the downloads: on the first screen, each served
         await t.ev(`location.hash = '#/chain', 1`); await sleep(900); await t.jump(0);
-        const dl = await t.ev(`Promise.all([].map.call(document.querySelectorAll('#howto .howto-dl a'), function (a) { var b = a.getBoundingClientRect();
-          return fetch(a.href, { method: 'HEAD' }).then(function (r) { return { href: a.getAttribute('href'), text: a.textContent, dl: a.hasAttribute('download'), y: Math.round(b.bottom), status: r.status, type: (r.headers.get('content-type') || '').split(';')[0] }; }); }))`);
+        const dl = await t.ev(`(async function () { var out = [];
+          for (var a of document.querySelectorAll('#howto .howto-dl a')) { var b = a.getBoundingClientRect(), r = await ${HEAD}(a.href);
+            out.push({ href: a.getAttribute('href'), text: a.textContent, dl: a.hasAttribute('download'), y: Math.round(b.bottom), status: r.status, type: r.type }); }
+          return out; })()`);
         const vh = width < 768 ? 844 : 900;
         const dpass = dl.length === 3 && dl.every((d) => d.status === 200 && d.y > 0 && d.y < vh)
           && dl[0].href === 'pdf/how-ai-chips-are-made.pdf' && dl[0].dl && dl[0].type === 'application/pdf'
@@ -435,12 +441,13 @@ const want = (n) => !ONLY.length || ONLY.includes(String(n));
           && dl[2].href === 'summary/' && !dl[2].dl && dl[2].type === 'text/html';
         ok = ok && dpass; out.push(`${width}: downloads ${dl.map((d) => `"${d.text}" ${d.href} ${d.status} ${d.type} at y ${d.y}`).join('; ')}${dpass ? '' : ' (FAIL)'}`);
         if (width === 1440) { // each title's static page, which a new tab or a crawler follows
-          const pages = await t.ev(`Promise.all([].map.call(document.querySelectorAll('#contents .ln-st a, #contents .ln-brk a'), function (a) { return fetch(a.href, { method: 'HEAD' }).then(function (r) { return a.getAttribute('href') + ' ' + r.status; }); }))`);
+          const pages = await t.ev(`(async function () { var out = []; for (var a of document.querySelectorAll('#contents .ln-st a, #contents .ln-brk a')) out.push(a.getAttribute('href') + ' ' + (await ${HEAD}(a.href)).status); return out; })()`);
           const pbad = pages.filter((p) => !/ 200$/.test(p));
           ok = ok && !pbad.length && pages.length === D.length; out.push(`${width}: the ${pages.length} links' static pages: ${pbad.length ? pbad.join(', ') + ' (FAIL)' : 'all served'}`);
         }
         if (t.errors.length) { ok = false; out.push(`${width}: errors: ` + t.errors.join(' | ')); }
         await t.close();
+        } catch (e) { ok = false; out.push(`${width}: ${e.message} (FAIL)`); }
       }
       report(10, 'the contents page: every title on the line opens its chapter, the bracket\'s two chapters, the downloads', ok, out.join('\n        '));
     }
