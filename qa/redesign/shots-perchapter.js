@@ -30,6 +30,8 @@ const withTheme = (u, dark) => { if (!dark) return u; const i = u.indexOf('#'); 
             const t = await open(chrome, base + withTheme(url, dark), { width, wait: 2600 });
             // the masthead's search button and the rail's toggles come at boot on both; the drawing has settled in 2.6 s
             const tag = `${name}-${width}-${dark ? 'dark' : 'light'}`;
+            // the Glossary's Try row picks its names at random on each load: both sides show the same ones
+            await t.ev(`(function () { var g = document.getElementById('gl-try'); if (g) g.innerHTML = '<span class="gl-try-k">Try</span><button type="button" data-go="lk-term-euv">EUV</button><button type="button" data-go="lk-country-nl">Netherlands</button>'; return 1; })()`);
             await t.shot(path.join(OUT, `${tag}-0-${side}.png`));
             const y0 = await t.ev('Math.round(scrollY)');
             await t.scrollTo(y0 + (width < 768 ? 1600 : 1800));
