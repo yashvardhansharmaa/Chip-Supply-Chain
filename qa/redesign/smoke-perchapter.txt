@@ -1,4 +1,4 @@
-smoke: Chrome/156.0.8078.73, serving dist on http://127.0.0.1:8791
+smoke: Chrome/156.0.8078.73, serving dist on http://127.0.0.1:8792
 walk at 320: walk view shown: true, steps: 16, page 320 px wide
 walk at 390: walk view shown: true, steps: 16, page 390 px wide
 walk at 1440: walk view shown: true, steps: 16
@@ -47,4 +47,4 @@ theme, chapter page, ?theme=dark: ground rgb(18, 18, 17)
 theme, summary, device dark, nothing saved: ground rgb(252, 252, 250)
 theme, summary, ?theme=dark: ground rgb(18, 18, 17)
 
-smoke: 47 page loads, no failures (45 s)
+smoke: 47 page loads, no failures (47 s)
