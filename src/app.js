@@ -464,6 +464,8 @@
       var self = this; this.el = $('.stage'); if (!this.el) return;
       var toggle = $('.stage-toggle'), menu = $('.stage-menu'), sheet = $('#sheet');
       this.set(true);
+      // the collapsed strip is as tall as its whole caption (src/styles.css): the page keeps that much room at its foot (--strip-h)
+      if (window.ResizeObserver) new ResizeObserver(function () { if (self.collapsed && narrow()) document.documentElement.style.setProperty('--strip-h', Math.round(self.el.getBoundingClientRect().height) + 'px'); }).observe(this.el);
       if (toggle) toggle.addEventListener('click', function () { self.set(!self.collapsed); });
       // the sheet is a modal (aria-modal in src/template.html): while it stands, the page behind and the skip link are inert, so
       // Tab stays in the sheet. Closing gives focus back to the button that opened it, or after a link to the heading the link
