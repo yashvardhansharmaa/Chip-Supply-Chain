@@ -17,7 +17,7 @@ const BAR = `(function(){var m=document.querySelector('.masthead'),w=m.querySele
   try {
     const app = await open(chrome, BASE + '/#lithography', { width: 1440 });
     const a = await app.ev(BAR); await app.close();
-    for (const [name, url, cur] of [['chapter page', '/lithography/', 'The Chain'], ['reference page', '/suppliers/', 'Suppliers'], ['summary', '/summary/', '']]) {
+    for (const [name, url, cur] of [['chapter page', '/lithography/', 'Supply Chain'], ['reference page', '/suppliers/', 'Suppliers'], ['summary', '/summary/', '']]) {
       const t = await open(chrome, BASE + url, { width: 1440 });
       const b = await t.ev(BAR);
       check(`${name}: the app's bar, at the app's margin and height, Home first`, b.x === a.x && b.h === a.h && b.first === 'Home' && b.name === a.name, JSON.stringify({ app: a, page: b }));

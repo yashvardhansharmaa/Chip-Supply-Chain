@@ -231,7 +231,7 @@ const want = (n) => !ONLY.length || ONLY.includes(String(n));
       // The Chain's tab from a chapter: the contents at the top; Back to the chapter's place
       await t.click('.tabs a[data-view="stack"]', false); await sleep(1500);
       st = await t.ev(STATE);
-      pass = st.hash === '#/chain' && !st.shown.length && st.contents && st.y === 0 && /^The Chain/.test(st.title);
+      pass = st.hash === '#/chain' && !st.shown.length && st.contents && st.y === 0 && /^Supply Chain/.test(st.title);
       ok = ok && pass; out.push(`The Chain's tab from chapter 08: ${st.hash}, contents ${st.contents}, chapters shown ${st.shown.length}, y ${st.y}, title "${st.title}"${pass ? '' : ' (FAIL)'}`);
       await t.click(`document.querySelector('#contents a[href="#data-centers-and-power"]')`); await sleep(1500);
       st = await t.ev(STATE);
@@ -384,7 +384,7 @@ const want = (n) => !ONLY.length || ONLY.includes(String(n));
       await t.click('.tabs a[data-view="stack"]', false); await sleep(1500);
       const strip = `getComputedStyle(document.querySelector('.stage')).display`;
       const cstrip = await t.ev(strip), cst = await t.ev(STATE);
-      const cpass = cstrip === 'none' && cst.contents && !cst.shown.length && /^The Chain/.test(cst.title);
+      const cpass = cstrip === 'none' && cst.contents && !cst.shown.length && /^Supply Chain/.test(cst.title);
       ok = ok && cpass; out.push(`the phone's The Chain tab from chapter 09: the contents, the strip ${cstrip === 'none' ? 'stands down' : 'shows (' + cstrip + ')'}, title "${cst.title}"${cpass ? '' : ' (FAIL)'}`);
       await t.back(); const bstrip = await t.ev(strip), bst = await t.ev(STATE);
       const bpass = bstrip !== 'none' && bst.shown.join() === 'memory-and-hbm';

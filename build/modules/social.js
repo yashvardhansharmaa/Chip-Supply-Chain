@@ -126,7 +126,7 @@ function manifest(root) {
     // the home title is the site's own hero ("How AI chips are made"); the unfurl <title> and og:title still carry the site name (pageHTML)
     { slug: 'home', route: '', eyebrow: 'The AI chip supply chain', title: 'How AI chips are made', line: 'The AI chip supply chain, stage by stage: who makes each part, how concentrated each stage is, and what a substitute would cost.', description: 'How AI chips are made, and who controls each stage. The supply chain stage by stage: who makes each part, how concentrated each stage is, and what a substitute would cost.' },
     { slug: 'intro', route: '#/intro', eyebrow: `${SITE} · Start here`, title: 'How AI chips are made', line: `An introduction to the entire supply chain in ${mins} minutes.` },
-    { slug: 'chain', route: '#/chain', eyebrow: `${SITE} · The Chain`, title: 'The Chain', line: 'Every stage of the supply chain, and who controls it.', description: `Every stage of the supply chain, and who controls it. ${chapters.length} chapters, from chip design to the data center.` },
+    { slug: 'chain', route: '#/chain', eyebrow: `${SITE} · Supply Chain`, title: 'Supply Chain', line: 'Every stage of the supply chain, and who controls it.', description: `Every stage of the supply chain, and who controls it. ${chapters.length} chapters, from chip design to the data center.` },
     { slug: 'chips', route: '#/landscape', eyebrow: `${SITE} · AI Chips`, title: 'AI Chips', line: 'The chips that train and run AI models, from the A100 of 2020 to the parts shipping in 2026.', description: 'The chips that train and run AI models, from the A100 of 2020 to the parts shipping in 2026. Each entry names the foundry, process node, memory supplier and packaging plant behind the chip wherever the maker or a cited source has published them.' },
     { slug: 'suppliers', route: '#/suppliers', eyebrow: `${SITE} · Suppliers`, title: 'Suppliers', line: `What each of the ${suppliers.length || 220} firms makes, where it sits, and how hard it would be to replace.` },
     { slug: 'export-controls', route: '#/controls', eyebrow: `${SITE} · Export Controls`, title: 'Export Controls', line: `The main rules since 2018, what can still be sold to China, and China's share of revenue at ${exposureFirms} firms, from their filings.` },
@@ -349,7 +349,7 @@ function chapterHead(p, ch, ctx, versions, dates) {
 <meta name="citation_public_url" content="${esc(url)}">
 <meta name="citation_fulltext_html_url" content="${esc(url)}">`;
 
-  // the structured data (schema.org JSON-LD, one graph): the chapter as an Article, and the trail Home › The Chain › chapter.
+  // the structured data (schema.org JSON-LD, one graph): the chapter as an Article, and the trail Home › Supply Chain › chapter.
   // Every value is one the page shows: the headline is the h1, the description the meta description, the dates the "Updated"
   // day and the day the chapter first appeared, the image the share card, the firms the card's leaders
   const at = seq.findIndex((c) => c.id === ch.id), prevCh = seq[at - 1], nextCh = seq[at + 1];
@@ -364,11 +364,11 @@ function chapterHead(p, ch, ctx, versions, dates) {
       author: { '@type': 'Person', name: AUTHOR.name, url: AUTHOR.url },
       publisher: { '@type': 'Organization', '@id': BASE + '#publisher', name: SITE, url: BASE, logo: { '@type': 'ImageObject', url: BASE + 'apple-touch-icon.png', width: 180, height: 180 } },
       isPartOf: { '@type': 'WebSite', '@id': BASE + '#website', name: SITE, url: BASE },
-      articleSection: 'The Chain', about: { '@type': 'Thing', name: ch.title },
+      articleSection: 'Supply Chain', about: { '@type': 'Thing', name: ch.title },
     }, leaders.length ? { mentions: leaders.map((n) => ({ '@type': 'Organization', name: n })) } : {}, {
       wordCount: ch.words, timeRequired: `PT${r.mins}M`, isAccessibleForFree: true,
     }),
-    { '@type': 'BreadcrumbList', '@id': url + '#breadcrumb', itemListElement: [['Home', BASE], ['The Chain', BASE + 'chain/'], [ch.title, url]]
+    { '@type': 'BreadcrumbList', '@id': url + '#breadcrumb', itemListElement: [['Home', BASE], ['Supply Chain', BASE + 'chain/'], [ch.title, url]]
       .map(([name, item], k) => ({ '@type': 'ListItem', position: k + 1, name, item })) },
   ] };
   // the chapter's place in the reading order, for the engines that still read it (Google stopped in 2019; Bing has not said so)
@@ -376,7 +376,7 @@ function chapterHead(p, ch, ctx, versions, dates) {
   const articleTags = `<meta property="article:published_time" content="${esc(dates.published)}">
 <meta property="article:modified_time" content="${esc(dates.modified)}">
 <meta property="article:author" content="${esc(AUTHOR.url)}">
-<meta property="article:section" content="The Chain">`;
+<meta property="article:section" content="Supply Chain">`;
   return `<title>${esc(pageTitle(p))}</title>
 <meta name="description" content="${esc(metaDescription)}">
 <link rel="canonical" href="${esc(url)}">

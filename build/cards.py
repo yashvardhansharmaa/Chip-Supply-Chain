@@ -55,7 +55,7 @@ if '--out' in args:
 # a view's card: its own short title and one line. Start here's page title is the site's hero, which the home card
 # already carries, so its card is named for the page. Suppliers and Export Controls take the first sentence of their
 # page's own description (build/page-titles.json), Suppliers' cut to fit; the others keep the line social.js gives them.
-VIEW_TITLE = {'intro': 'Start here', 'chain': 'The Chain', 'chips': 'AI Chips', 'suppliers': 'Suppliers',
+VIEW_TITLE = {'intro': 'Start here', 'chain': 'Supply Chain', 'chips': 'AI Chips', 'suppliers': 'Suppliers',
               'export-controls': 'Export Controls', 'glossary': 'Glossary'}
 VIEW_LINE = {
     'suppliers': 'What each of the {firms} firms makes, where it is based and how hard it would be to replace.',
