@@ -138,7 +138,8 @@
     "currency": "EUR million",
     "chinaShare": 29.1,
     "basis": "Total net sales by geographic region, based on the ship-to location of the customer's fab. The filing does not say whether Hong Kong is counted in China. Share computed from the revenue amounts in the filing.",
-    "source": "https://www.sec.gov/Archives/edgar/data/937966/000162828026011378/R71.htm"
+    "source": "https://www.sec.gov/Archives/edgar/data/937966/000162828026011378/R71.htm",
+    "panelNote": "Share of total net sales, which include service and field option sales. ASML reports a separate China share of net system sales, which leave them out."
   },
   {
     "firm": "Advantest",

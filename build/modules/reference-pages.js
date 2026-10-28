@@ -318,7 +318,8 @@ ${body}
       const label = segs.length > 1 ? segs.map((sg, i) => { const w = i ? sg.k.replace(/^counted /, '') : sg.k; return i === segs.length - 1 ? w + ' from ' + sg.from : (i ? w + ' ' + sg.from + ' to ' + sg.to : w + ' to ' + sg.to); }).join(', ') : (m.basis ? basisShort(m.basis) : '');
       const rowTitle = segs.length > 1 ? segs.map((sg) => sg.from + (sg.to !== sg.from ? ' to ' + sg.to : '') + ': ' + sg.text).join(' ') : (m.basis || '');
       let peak = 0; ys.forEach((y) => { const r = firms[f][y]; if (r && r.chinaShare != null) peak = Math.max(peak, r.chinaShare); });
-      return `<tr id="${uid('ex-' + EXPOSURE.slug(f), 'China revenue rows')}"><th scope="row" title="${esc(rowTitle)}">${esc(f)}<span class="sub">${esc([m.category, cname(m.country), label].filter(Boolean).join(' · '))}</span></th>` + ys.map((y) => {
+      const pnote = ys.map((y) => firms[f][y]).filter((r) => r && r.panelNote).map((r) => r.panelNote).pop() || ''; // what the share measures (final QA B10)
+      return `<tr id="${uid('ex-' + EXPOSURE.slug(f), 'China revenue rows')}"><th scope="row" title="${esc(rowTitle)}">${esc(f)}<span class="sub">${esc([m.category, cname(m.country), label].filter(Boolean).join(' · '))}</span>${pnote ? `<span class="sub">${esc(pnote)}</span>` : ''}</th>` + ys.map((y) => {
         const r = firms[f][y];
         if (!r || r.chinaShare == null) return '<td><span class="sh none" aria-hidden="true">·</span><span class="sr-only">Not filed for this year</span></td>';
         const brk = starts[y], basis = r.basis ? 'Counted: ' + firstLine(r.basis) : '';

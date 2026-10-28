@@ -315,13 +315,14 @@ function figure(f, ctx) {
   const strip = `<div class="fig-strip">${src}${acts}${note}${citeText}</div>`;
   return `<figure class="figure${isAnim ? ' figure--anim' : ''}" id="${fid}" data-num="${num}">${head}<div class="fig-body">${body}</div>${strip}</figure>`;
 }
-// A date in a figure: { key, the day it sorts as; iso, for <time datetime>; label, what the reader sees }. A full day keeps the
-// form the data gives; a month reads "March 2028"; a bare year reads "2028" and sorts as 1 January. Anything else is not a date.
+// A date in a figure: { key, the day it sorts as; iso, for <time datetime>; label, what the reader sees }. A full day reads day
+// first, "16 May 2019" (final QA B8: never the data's ISO form); a month reads "March 2028"; a bare year reads "2028" and sorts as
+// 1 January. Anything else is not a date.
 function figDate(s) {
   const v = String(s == null ? '' : s).trim();
   const m = v.match(/^(\d{4})(?:-(\d{2})(?:-(\d{2}))?)?$/);
   if (!m || (m[2] && (+m[2] < 1 || +m[2] > 12)) || (m[3] && (+m[3] < 1 || +m[3] > 31))) return null;
-  return { key: `${m[1]}-${m[2] || '01'}-${m[3] || '01'}`, iso: v, label: m[3] ? v : m[2] ? `${MONTHS[+m[2] - 1]} ${m[1]}` : m[1] };
+  return { key: `${m[1]}-${m[2] || '01'}-${m[3] || '01'}`, iso: v, label: m[3] ? `${+m[3]} ${MONTHS[+m[2] - 1]} ${m[1]}` : m[2] ? `${MONTHS[+m[2] - 1]} ${m[1]}` : m[1] };
 }
 function tableFallback(data, f) {
   return `<table class="sr-only fig-table"><caption>${esc(figTitle(f))}</caption><tbody>${data.map((d) => `<tr><th scope="row">${esc(d[0])}</th><td>${typeof d[2] === 'number' ? spanText(d[1], d[2], f.unit, true) + (unitOnValue(f.unit) || !f.unit ? '' : ' ' + esc(f.unit)) : unitOnValue(f.unit) ? withUnit(d[1], f.unit) : fmtNum(d[1]) + (f.unit ? ' ' + esc(f.unit) : '')}</td></tr>`).join('')}</tbody></table>`;
@@ -1132,7 +1133,9 @@ function exposureViz(rows) {
     // the dashed line marks where the counting changed; the garnet bar is always the highest year shown
     const breaks = rs.map((r, i) => i).filter((i) => i && basisWord(rs[i].basis) !== basisWord(rs[i - 1].basis));
     const peak = rs.reduce((m, r) => (r.chinaShare > m.chinaShare ? r : m), rs[0]);
-    return { firm: f, rows: rs, first: rs[0], last: rs[rs.length - 1], peak, breaks, meta: rs[0], hasMoney: rs.every((r) => r.chinaRevenue != null) };
+    // a line under the chart saying what the share measures, where a firm's other published share counts differently (final QA B10: ASML)
+    const pnote = (rs.slice().reverse().find((r) => r.panelNote) || {}).panelNote || '';
+    return { firm: f, rows: rs, first: rs[0], last: rs[rs.length - 1], peak, breaks, meta: rs[0], pnote, hasMoney: rs.every((r) => r.chinaRevenue != null) };
   }).sort((a, b) => catRank(a.meta.category) - catRank(b.meta.category) || String(a.meta.category || '').localeCompare(String(b.meta.category || '')) || b.last.chinaShare - a.last.chinaShare || a.firm.localeCompare(b.firm));
   const anyBreak = firms.some((f) => f.breaks.length);
   // a bar stands for a whole fiscal year, so it is centered on the middle of that year (six months before it ends); the rule lines
@@ -1181,7 +1184,7 @@ function exposureViz(rows) {
       s += `<text x="${Math.max(2 + was.length * cw, bx - 3).toFixed(1)}" y="${py0 - 10}" class="tick" text-anchor="end">${esc(was)}</text>`;
       s += `<text x="${Math.min(PW - 2 - now.length * cw, bx + 3).toFixed(1)}" y="${py0 - 10}" class="tick">${esc(now)}</text>`;
     });
-    s += `<text x="${px0}" y="${PH - 4}" class="tick">${esc(f.first.fiscalYear)}</text><text x="${px1}" y="${PH - 4}" class="tick" text-anchor="end">${esc(f.last.fiscalYear)}</text></svg></figure>`;
+    s += `<text x="${px0}" y="${PH - 4}" class="tick">${esc(f.first.fiscalYear)}</text><text x="${px1}" y="${PH - 4}" class="tick" text-anchor="end">${esc(f.last.fiscalYear)}</text></svg>${f.pnote ? `<p class="ex-pnote">${esc(f.pnote)}</p>` : ''}</figure>`;
     d += s;
   });
   return d + (lastCat === null ? '' : '</div>') + '</div>';
