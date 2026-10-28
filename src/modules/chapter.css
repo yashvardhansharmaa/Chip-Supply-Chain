@@ -301,7 +301,7 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 .chapter .plain { grid-column: 4 / 13; grid-row: 3; max-width: 666px; margin: 56px 0 0; padding: 14px 0 0; border: 0; border-top: 1px solid var(--ink); background: none; }
 .chapter .plain h3.label, .chapter .plain .label {
   display: block; margin: 14px 0 22px; padding: 0; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title);
-  font-size: clamp(34px, 3.1vw, 44px); line-height: 1.08; letter-spacing: -0.02em; color: var(--ink);
+  font-size: clamp(28px, 2.4vw, 34px); line-height: 1.08; letter-spacing: -0.02em; color: var(--ink);
 }
 .chapter .plain p { margin: 0; font-family: var(--font-body); font-size: calc(21px * var(--text-scale)); line-height: 1.57; color: var(--ink); max-width: 33em; }
 .chapter .inshort { grid-column: 4 / 13; grid-row: 4; max-width: 666px; margin: 36px 0 0; }
@@ -317,7 +317,7 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 .chapter > .prose > h3 {
   counter-increment: sec; margin: 72px 0 22px; padding-top: 14px; border-top: 1px solid var(--ink); max-width: 666px; /* its rule spans the text and figures under it */
   font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title);
-  font-size: clamp(32px, 3vw, 44px); line-height: 1.08; letter-spacing: -0.02em;
+  font-size: clamp(28px, 2.4vw, 34px); line-height: 1.12; letter-spacing: -0.015em; /* was 32 to 44 px (owner, 27 Oct: too large) */
 }
 .chapter > .prose > h3::before { content: counter(sec, decimal-leading-zero) " · " attr(data-k); display: block; margin: 0 0 14px; font-family: var(--font-code); font-size: 12px; font-weight: 400; line-height: 16px; letter-spacing: 0; color: var(--muted); }
 .chapter > .prose > h4 { margin: 40px 0 14px; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 22px; line-height: 1.27; letter-spacing: -0.005em; }
@@ -396,7 +396,7 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 .chapter .review .rv-head { display: block; }
 .chapter .review .rv-title, .chapter .prose .review .rv-title {
   margin: 0 0 8px; padding: 0; border: 0; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title);
-  font-size: clamp(32px, 3vw, 44px); line-height: 1.08; letter-spacing: -0.02em;
+  font-size: 26px; line-height: 1.2; letter-spacing: -0.01em; /* the end matter reads as end matter, smaller than the numbered sections (owner, 27 Oct) */
 }
 .chapter .review .rv-title::before { content: none; }
 .chapter .review .rv-sub { font-family: var(--font-ui); font-size: 14px; color: var(--muted); }
@@ -414,9 +414,9 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 .chapter > .prose > .chapter-sources { max-width: 40em; margin: 88px 0 0; border-top: 1px solid var(--ink); }
 .chapter .chapter-sources summary {
   padding: 16px 0 12px; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title);
-  font-size: clamp(32px, 3vw, 44px); line-height: 1.08; letter-spacing: -0.02em; color: var(--ink);
+  font-size: 26px; line-height: 1.2; letter-spacing: -0.01em; color: var(--ink);
 }
-.chapter .chapter-sources summary::after { font-family: var(--font-ui); font-size: 26px; font-weight: 300; }
+.chapter .chapter-sources summary::after { font-family: var(--font-ui); font-size: 22px; font-weight: 300; }
 .chapter .chapter-sources ol { font-size: calc(14px * var(--text-scale)); }
 /* the door to the next chapter closes the chapter (the hybrid mockup's .nextx; build/build.js chapterDoor): The Chain shows one
    chapter at a time, so the door is the way on. On an ink rule, Previous small in the first quarter; the next chapter in the
@@ -431,7 +431,7 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 .chapter .prevnext .next { grid-column: 2; grid-row: 1; display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); column-gap: var(--g); align-items: start; }
 .chapter .prevnext .next > * { grid-column: 1; }
 .chapter .prevnext .next > .ex { grid-column: 2; grid-row: 1 / span 4; align-self: start; display: flex; justify-content: center; padding-top: 28px; }
-.chapter .prevnext .ex img { display: block; width: auto; height: auto; max-width: 100%; max-height: 240px; }
+.chapter .prevnext .ex img { display: block; width: auto; height: auto; max-width: 100%; max-height: 180px; }
 .chapter .prevnext .ex[data-night] img { border-radius: 2px; }
 /* the still is a light render, turned light-on-dark as the readable page turns it; its box carries the ground, so the screen
    blend has the ground to work on inside the app's own layer (#app stacks above the page's ground) */
@@ -442,10 +442,10 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 .chapter .prevnext .prev .label { margin-bottom: 6px; }
 .chapter .prevnext .prev .t { display: block; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: 17px; line-height: 1.35; letter-spacing: 0; color: var(--ink-2); overflow-wrap: normal; }
 .chapter .prevnext .next .t {
-  display: block; max-width: 11em; margin: 0 0 18px -0.04em; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title);
-  font-size: clamp(44px, 4.6vw, 68px); line-height: 0.96; letter-spacing: -0.03em; color: var(--ink); text-wrap: balance; overflow-wrap: normal;
+  display: block; max-width: 16em; margin: 0 0 12px -0.02em; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title);
+  font-size: clamp(28px, 2.4vw, 34px); line-height: 1.1; letter-spacing: -0.015em; color: var(--ink); text-wrap: balance; overflow-wrap: normal; /* was 44 to 68 px: too loud for a way on (owner, 27 Oct) */
 }
-.chapter .prevnext .next .ol { display: block; max-width: 30em; margin: 0 0 26px; font-family: var(--font-body); font-size: calc(clamp(18px, 1.45vw, 21px) * var(--text-scale)); line-height: 1.45; color: var(--ink-2); }
+.chapter .prevnext .next .ol { display: block; max-width: 34em; margin: 0 0 22px; font-family: var(--font-body); font-size: calc(16px * var(--text-scale)); line-height: 1.5; color: var(--ink-2); }
 .chapter .prevnext .go {
   display: inline-flex; justify-self: start; align-items: center; gap: 16px; height: 48px; padding: 0 6px 0 22px; border: 1px solid var(--ink); border-radius: 999px;
   font-family: var(--font-ui); font-size: 15px; font-weight: 500; line-height: 1; color: var(--ink); white-space: nowrap;
@@ -525,10 +525,10 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
   .chapter > .prose > .prevnext, .ch-page .endnav .prevnext { grid-template-columns: minmax(0, 1fr); margin-top: 64px; padding-top: 20px; }
   .chapter .prevnext .next { grid-column: 1; grid-row: 1; display: block; }
   .chapter .prevnext .next > .ex { justify-content: flex-start; padding-top: 28px; }
-  .chapter .prevnext .ex img { max-width: 56%; max-height: 200px; }
+  .chapter .prevnext .ex img { max-width: 48%; max-height: 160px; }
   .chapter .prevnext .prev { grid-column: 1; grid-row: 2; margin-top: 36px; padding-top: 16px; border-top: 1px solid var(--line-2); }
-  .chapter .prevnext .next .t { font-size: min(52px, 13vw); line-height: 0.98; }
-  .chapter .prevnext .next .ol { font-size: calc(18px * var(--text-scale)); }
+  .chapter .prevnext .next .t { font-size: min(28px, 8vw); line-height: 1.1; }
+  .chapter .prevnext .next .ol { font-size: calc(16px * var(--text-scale)); }
 }
 
 /* the card on a phone, in the column with padding of its own (in The Chain each chapter keeps its paint inside its box,
@@ -620,18 +620,18 @@ article.ch-page { padding-top: 56px; border-top: 0; }
 .ch-still .nm { font-family: var(--font-ui); font-weight: 600; fill: var(--ink); }
 /* the still is a light render: on the dark theme it is turned to light-on-dark, its blue kept blue */
 :root[data-theme="dark"] .ch-still image { filter: invert(1) hue-rotate(180deg); mix-blend-mode: screen; } /* screen: the inverted white ground, now black, takes the page's own dark */
-.ch-page .plain h2.label { display: block; margin: 14px 0 22px; padding: 0; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: clamp(34px, 3.1vw, 44px); line-height: 1.08; letter-spacing: -0.02em; color: var(--ink); }
+.ch-page .plain h2.label { display: block; margin: 14px 0 22px; padding: 0; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: clamp(28px, 2.4vw, 34px); line-height: 1.08; letter-spacing: -0.02em; color: var(--ink); }
 .ch-page .inshort h2.label { margin: 0 0 12px; font-family: var(--font-ui); font-weight: 500; font-size: 15px; line-height: 20px; color: var(--ink); }
 .ch-page > .prose > h2 {
   counter-increment: sec; margin: 72px 0 22px; padding-top: 14px; border-top: 1px solid var(--ink); max-width: 666px; /* its rule spans the text and figures under it */
-  font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: clamp(32px, 3vw, 44px); line-height: 1.08; letter-spacing: -0.02em;
+  font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: clamp(28px, 2.4vw, 34px); line-height: 1.12; letter-spacing: -0.015em;
 }
 .ch-page > .prose > h2::before { content: counter(sec, decimal-leading-zero) " · " attr(data-k); display: block; margin: 0 0 14px; font-family: var(--font-code); font-size: 12px; font-weight: 400; line-height: 16px; color: var(--muted); }
 .ch-page > .prose > h3 { counter-increment: none; margin: 40px 0 14px; padding: 0; border: 0; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 22px; line-height: 1.27; letter-spacing: -0.005em; }
 .ch-page > .prose > h3::before { content: none; }
 .ch-page > .prose > .review, .ch-page > .prose > .sources, .ch-page > .prose > .endnav > :not(.prevnext) { max-width: 40em; }
 .ch-page > .prose > .sources { margin-top: 88px; padding-top: 14px; border-top: 1px solid var(--ink); }
-.ch-page .review h2.label, .ch-page .sources h2.label { margin: 0 0 14px; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: clamp(32px, 3vw, 44px); line-height: 1.08; letter-spacing: -0.02em; color: var(--ink); }
+.ch-page .review h2.label, .ch-page .sources h2.label { margin: 0 0 14px; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: 26px; line-height: 1.2; letter-spacing: -0.01em; color: var(--ink); }
 .ch-page > .prose > .endnav { margin-top: 88px; }
 /* the door, after the way to the interactive chapter and the related chapters (the shared rules above), as wide as The Chain's */
 .ch-page > .prose > .endnav { max-width: none; }
