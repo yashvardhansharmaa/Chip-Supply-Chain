@@ -1,92 +1,64 @@
 /* ==========================================================================
-   The home page (#/, the Start here walk) in the redesign of 25 Oct 2026 (qa/redesign/BRIEF.md, the hybrid mockup's home).
+   The home page (#/, the Start here walk) in the redesign of 25 Oct 2026 (qa/redesign/BRIEF.md), its hero set back to the
+   home's structure before the redesign on 27 Oct 2026 (qa/redesign/stage-home.md), in the redesign's type and colors.
    Tokens only; every class is prefixed wk-.
-   The hero: the title and subtitle, then the evidence figure (7 of the 14 stages are rated Extreme since the merge of 27 Oct 2026, with a mark per stage that
-   picks the specimen on the stage beside it), the search field and the two ways in. Then the chain at a glance, the walk (one
-   plain paragraph per chapter, each number in the ledger column), the flashcards and Other pages.
+   The hero: the title and subtitle, the read's counts, then the chain at a glance (a sentence on how many stages are rated
+   Extreme and the stages one row each, whose meter picks the specimen on the stage beside it). Then the walk (one plain
+   paragraph per chapter, each number in the ledger column), the flashcards and Other pages.
    ========================================================================== */
 
-/* ---------- the hero ---------- */
+/* ---------- the hero: on the text column's edge, so the stage numbers hang in the ledger column, as the walk's do ---------- */
 .wk { padding-bottom: 30px; }
-.wk-head { padding: clamp(32px, 6.5vh, 72px) 0 0; }
+.wk-head { padding: clamp(36px, 7vh, 72px) 0 0; margin-left: calc(var(--gutter) + var(--gutter-gap)); }
 .wk-title {
   font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title);
-  font-size: clamp(44px, 5vw, 76px); line-height: 0.98; letter-spacing: -0.028em;
-  text-transform: none; margin: 0 0 0 -0.045em; max-width: 7.4em; color: var(--ink);
+  font-size: var(--fs-d1); line-height: 1.02; letter-spacing: -0.02em;
+  text-transform: none; margin: 0 0 0 -0.04em; color: var(--ink);
 }
-.wk-dek { font-family: var(--font-body); font-weight: 400; font-size: calc(clamp(19px, 1.55vw, 23px) * var(--text-scale)); line-height: 1.4; color: var(--ink-2); max-width: 24em; margin: 22px 0 0; }
+.wk-dek { font-family: var(--font-body); font-weight: 400; font-size: calc(clamp(18px, 1.45vw, 21px) * var(--text-scale)); line-height: 1.4; color: var(--ink-2); max-width: 30em; margin: 14px 0 0; text-wrap: balance; }
+/* the read's counts, as a chapter's facts line is set: Fragment Mono, a dot between, the first on each line without one */
+.wk-meta { display: flex; flex-wrap: wrap; align-items: baseline; margin: 14px 0 0 -18px; clip-path: inset(0 0 0 18px); }
+.wk-meta .label { font-family: var(--font-code); font-size: 12px; line-height: 20px; color: var(--ink-2); white-space: nowrap; }
+.wk-meta .label::before { content: "\00b7"; display: inline-block; width: 18px; text-align: center; color: var(--muted); }
 
-/* the evidence: the count, what Extreme means, a mark per stage in chapter order */
-.wk-ev { margin: clamp(32px, 5.5vh, 52px) 0 0; max-width: 780px; }
-.wk-ev-cap { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 20px; align-items: end; margin: 0 0 22px; }
-.wk-ev-n {
-  font-family: var(--font-display); font-weight: 360; font-variation-settings: var(--opsz-numeral);
-  font-size: clamp(36px, 3.3vw, 48px); line-height: 0.92; letter-spacing: -0.03em; white-space: nowrap; margin-left: -0.03em;
-  font-variant-numeric: lining-nums;
+/* ---------- the chain at a glance ----------
+   An ink rule, the kicker, the sentence, then a row per stage between hairlines: the name (a link) and, at the row's end,
+   the band's meter and word (a button that picks the specimen). The number hangs in the ledger column, right-set where
+   the walk's numbers are; it belongs to the link, so it takes the reader to the chapter too. Extreme is ink, High the
+   lighter tint; the row whose specimen is showing (.is-shown) is the one in wine: its number, meter and word. */
+.wk-gl { margin: 32px 0 0; }
+.wk-gl-h { display: block; margin: 0; padding: 12px 0 0; border-top: 1px solid var(--ink); }
+.wk-gl-p { margin: 6px 0 16px; font-family: var(--font-body); font-size: var(--fs-body); line-height: 1.5; color: var(--ink-2); max-width: 34em; }
+.wk-gl-p b { color: var(--ink); font-weight: 600; }
+.wk-gl-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line-2); border-bottom: 1px solid var(--line-2); }
+.wk-gl-list li { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: stretch; }
+.wk-gl-list li + li { border-top: 1px solid var(--line); }
+.wk-gl-a {
+  display: grid; grid-template-columns: var(--gutter) minmax(0, 1fr); column-gap: var(--gutter-gap); align-items: baseline;
+  margin-left: calc(-1 * (var(--gutter) + var(--gutter-gap))); min-height: 32px; padding: 5px 16px 4px 0;
+  color: var(--ink); text-decoration: none;
 }
-.wk-ev-t { font-family: var(--font-body); font-size: calc(19px * var(--text-scale)); line-height: 1.3; padding-bottom: 1px; color: var(--ink); }
-.wk-ev-d { grid-column: 1 / -1; margin-top: 14px; font-family: var(--font-body); font-size: calc(15px * var(--text-scale)); line-height: 1.5; color: var(--ink-2); max-width: 38em; }
-.wk-stops { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(15, minmax(0, 1fr)); position: relative; }
-.wk-stops::after { content: ""; position: absolute; left: 0; right: 0; top: 46px; height: 1px; background: var(--ink); pointer-events: none; }
-.wk-stops li { min-width: 0; }
-.wk-stop { display: grid; grid-template-rows: 46px auto; justify-items: start; width: 100%; padding: 0 2px 4px 0; text-align: left; cursor: pointer; }
-.wk-stop-bar { align-self: end; width: 9px; height: 44px; background: var(--ink); transition: background-color 0.15s; }
-.wk-stops [data-band="h"] .wk-stop-bar { height: 22px; background: transparent; box-shadow: inset 0 0 0 1.5px var(--ink); }
-.wk-stop-n { margin-top: 8px; font-family: var(--font-kicker); font-size: 12px; line-height: 16px; color: var(--muted); font-variant-numeric: tabular-nums; }
-@media (hover: hover) {
-  .wk-stop:hover .wk-stop-bar { background: var(--ink-2); }
-  .wk-stops [data-band="h"] .wk-stop:hover .wk-stop-bar { background: var(--ctx); }
-  .wk-stop:hover .wk-stop-n { color: var(--ink); }
-}
-.wk-stop[aria-pressed="true"] .wk-stop-bar, .wk-stops [data-band="h"] .wk-stop[aria-pressed="true"] .wk-stop-bar { background: var(--accent); box-shadow: none; }
-.wk-stop[aria-pressed="true"] .wk-stop-n { color: var(--accent-ink); }
-.wk-stop:focus-visible { outline-offset: 2px; }
-.wk-legend { display: flex; flex-wrap: wrap; gap: 8px 22px; margin: 14px 0 0; font-family: var(--font-ui); font-size: 13px; line-height: 1.3; color: var(--ink-2); }
-.wk-legend span { display: inline-flex; gap: 8px; align-items: baseline; } /* each mark stands on the line its words stand on */
-.wk-legend i { display: inline-block; flex: none; width: 7px; height: 15px; background: var(--ink); }
-.wk-legend i.h { height: 8px; background: transparent; box-shadow: inset 0 0 0 1.5px var(--ink); }
-.wk-legend .wk-shown { color: var(--ink); }
-
-/* the search field and the two ways in */
-.wk-find { margin: 34px 0 0; max-width: 640px; }
-.wk-qbox { display: flex; align-items: center; gap: 12px; height: 52px; padding: 0 14px 0 16px; border: 1px solid var(--ink); border-radius: 4px; background: var(--bg); color: var(--ink-2); cursor: text; }
-.wk-qbox:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
-.wk-qbox svg { flex: none; width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.5; }
-.wk-qbox input { flex: 1 1 auto; min-width: 0; height: 100%; margin: 0; padding: 0; border: 0; outline: 0; background: transparent; font-family: var(--font-ui); font-size: 17px; color: var(--ink); cursor: text; }
-.wk-qbox input::placeholder { color: var(--muted); opacity: 1; }
-.wk-qbox input::-webkit-search-cancel-button { display: none; }
-.wk-qbox kbd { flex: none; font-family: var(--font-kicker); font-size: 12px; line-height: 1; color: var(--muted); border: 1px solid var(--rule-ink); border-radius: 3px; padding: 3px 6px; }
-@media (hover: none) and (pointer: coarse) { .wk-qbox kbd { display: none; } }
-.wk-reads { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 22px 0 0; }
-.wk-way { display: flex; flex-direction: column; gap: 7px; min-width: 0; padding: 12px 0 4px; border-top: 1px solid var(--ink); color: var(--ink); text-decoration: none; }
-.wk-way-t { font-family: var(--font-ui); font-weight: 500; font-size: 19px; line-height: 1.25; letter-spacing: -0.01em; }
-.wk-way-d { font-family: var(--font-kicker); font-size: 12px; line-height: 1.5; color: var(--muted); }
-.wk-way:hover .wk-way-t { color: var(--accent-ink); }
-
-/* ---------- the chain at a glance: the stages, one line each, numbers in the ledger column ---------- */
-.wk-gl { margin: clamp(80px, 13vh, 128px) 0 0; }
-.wk-gl-h {
-  margin: 0 0 18px; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title);
-  font-size: clamp(30px, 2.8vw, 42px); line-height: 1.05; letter-spacing: -0.02em; color: var(--ink);
-}
-.wk-gl-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
-.wk-gl-list li { border-bottom: 1px solid var(--line); }
-.wk-gl-list a {
-  display: grid; grid-template-columns: var(--gutter) minmax(0, 1fr) auto; column-gap: var(--gutter-gap); align-items: baseline;
-  min-height: 40px; padding: 9px 0 8px; color: var(--ink); text-decoration: none;
-}
-.wk-gl-n { font-family: var(--font-kicker); font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
-.wk-gl-t { font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 18px; line-height: 1.25; text-wrap: balance; }
-.wk-gl-c { display: inline-flex; align-items: baseline; gap: 9px; font-family: var(--font-ui); font-size: 13px; color: var(--ink-2); }
-/* the band as the hero marks it: a solid bar for Extreme, an outline half as tall for High (the four-step meter's cells are not drawn) */
-.wk-gl-m { display: inline-block; flex: none; align-self: center; width: 6px; height: 15px; background: var(--ink); }
-.wk-gl-m i { display: none; }
-.wk-gl-list li[data-level="3"] .wk-gl-m { height: 8px; background: transparent; box-shadow: inset 0 0 0 1.5px var(--ink); align-self: center; }
-.wk-gl-list li[data-level="2"] .wk-gl-m, .wk-gl-list li[data-level="1"] .wk-gl-m { height: 4px; background: var(--ctx); }
-.wk-gl-w { min-width: 4.4em; }
-.wk-gl-list li[data-level="4"] .wk-gl-w { color: var(--ink); }
-.wk-gl-list a:hover .wk-gl-t, .wk-gl-list a:focus-visible .wk-gl-t { color: var(--accent-ink); }
-.wk-gl-list a:focus-visible { outline-offset: 2px; }
+.wk-gl-n { padding-right: 14px; text-align: right; font-family: var(--font-code); font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.wk-gl-t { font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 18px; line-height: 1.3; text-wrap: balance; }
+.wk-gl-a:hover .wk-gl-t, .wk-gl-a:focus-visible .wk-gl-t { color: var(--accent-ink); }
+.wk-gl-a:focus-visible { outline-offset: -2px; }
+/* the button fills the row's height, so the whole end of the row picks; its meter and word sit on the name's first line */
+.wk-gl-c { display: inline-flex; align-items: center; align-content: flex-start; flex-wrap: wrap; gap: 9px; padding: 9px 0 0 12px; font-family: var(--font-ui); font-size: 13px; line-height: 16px; color: var(--muted); text-align: left; cursor: pointer; }
+.wk-gl-c:focus-visible { outline-offset: -2px; }
+.wk-gl-m { display: inline-flex; flex: none; align-items: flex-end; gap: 2px; height: 14px; }
+.wk-gl-m i { display: block; width: 5px; background: var(--line); }
+.wk-gl-m i:nth-child(1) { height: 5px; }
+.wk-gl-m i:nth-child(2) { height: 8px; }
+.wk-gl-m i:nth-child(3) { height: 11px; }
+.wk-gl-m i:nth-child(4) { height: 14px; }
+.wk-gl-m i.on { background: var(--bar-3); }
+.wk-gl-list li[data-level="4"] .wk-gl-m i.on { background: var(--ink); }
+.wk-gl-list li[data-level="3"] .wk-gl-m i.on { background: var(--bar-4); }
+.wk-gl-w { min-width: 4.6em; }
+.wk-gl-list li[data-level="4"] .wk-gl-w { color: var(--ink); font-weight: 500; }
+.wk-gl-list li.is-shown .wk-gl-n { color: var(--accent-ink); }
+.wk-gl-list li.is-shown .wk-gl-m i.on { background: var(--accent); } /* the wine of text, so on dark the pick is as bright as its word */
+.wk-gl-list li.is-shown .wk-gl-w { color: var(--accent-ink); font-weight: 600; }
 
 /* ---------- the walk: the ledger column ---------- */
 .wk-list { list-style: none; margin: clamp(80px, 13vh, 120px) 0 0; padding: 0; }
@@ -224,10 +196,6 @@
 .wk-facts .wk-src::after { content: "\00a0\2197"; }
 .wk-facts .wk-src:hover { text-decoration-color: var(--accent); }
 
-/* ---------- laptops between 901 and 1199 px ---------- */
-@media (max-width: 1199px) and (min-width: 901px) {
-  .wk-title { font-size: clamp(40px, 5vw, 52px); }
-}
 @media (max-width: 1100px) {
   .wk-tabs a { grid-template-columns: 150px minmax(0, 1fr); }
 }
@@ -238,31 +206,20 @@
 
 /* ---------- phones: one column; the specimen is the strip at the foot of the screen ---------- */
 @media (max-width: 900px) {
-  .wk-head { padding-top: 26px; }
-  .wk-title { font-size: min(68px, 16vw); line-height: 0.98; max-width: none; }
-  .wk-dek { font-size: calc(19px * var(--text-scale)); margin-top: 16px; }
-  .wk-ev { margin-top: 32px; }
-  .wk-ev-cap { grid-template-columns: 1fr; row-gap: 6px; margin-bottom: 18px; }
-  .wk-ev-n { font-size: 46px; }
-  .wk-ev-d { grid-column: 1; margin-top: 6px; font-size: calc(14.5px * var(--text-scale)); }
-  .wk-stops::after { top: 36px; }
-  .wk-stop { grid-template-rows: 36px auto; padding-right: 1px; }
-  .wk-stop-bar { width: 6px; height: 34px; }
-  .wk-stops [data-band="h"] .wk-stop-bar { height: 17px; }
-  .wk-stop-n { font-size: 11px; letter-spacing: -0.04em; margin-top: 7px; }
-  .wk-legend { gap: 8px 18px; }
-  .wk-find { margin-top: 28px; }
-  .wk-qbox { gap: 9px; padding: 0 12px; height: 50px; }
-  .wk-qbox input { font-size: 16px; } /* 16 px stops iOS zooming in on focus */
-  .wk-reads { grid-template-columns: 1fr; gap: 14px; }
-  .wk-way-t { font-size: 18px; }
-
-  .wk-gl { margin-top: 64px; }
-  .wk-gl-h { font-size: 30px; }
-  .wk-gl-list a { min-height: 36px; padding: 7px 0 6px; }
+  /* the hero as the home set it on a phone before the redesign: flush with the text, the title on one line, the stage
+     numbers in the 34 px ledger column inside the rules, and a long name breaking into two even lines */
+  .wk-head { margin-left: 0; padding-top: 28px; }
+  .wk-title { font-size: min(46px, 9vw); line-height: 1.08; letter-spacing: -0.015em; } /* one line from 320 px; larger on a tablet */
+  .wk-dek { font-size: calc(17px * var(--text-scale)); margin-top: 10px; }
+  .wk-meta { margin-top: 12px; }
+  .wk-gl { margin-top: 24px; }
+  .wk-gl-h { padding-top: 10px; }
+  .wk-gl-p { margin: 5px 0 12px; font-size: var(--fs-small); line-height: 1.45; }
+  .wk-gl-a { margin-left: 0; min-height: 36px; padding: 7px 10px 6px 0; }
+  .wk-gl-n { padding-right: 8px; } /* right-set where the walk's numbers are */
   .wk-gl-t { font-size: 16px; }
-  .wk-gl-c { gap: 7px; font-size: 12.5px; }
-  .wk-gl-w { min-width: 4.1em; }
+  .wk-gl-c { gap: 7px; padding: 10px 0 0 6px; font-size: 12.5px; }
+  .wk-gl-w { min-width: 4.3em; }
 
   .wk-list { margin-top: 64px; }
   .wk-step { scroll-margin-top: calc(var(--masthead) + 60px); }
@@ -283,11 +240,10 @@
   .wk-pn .label { display: block; margin-bottom: 3px; }
   .wk-pn-t { display: block; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 14.5px; line-height: 1.25; overflow-wrap: anywhere; }
 }
-@media (max-width: 380px) {
-  .wk-qbox input::placeholder { font-size: 14px; } /* the field keeps 16 px so iOS does not zoom; the hint fits a 320 px screen */
+@media (max-width: 380px) { /* a 360 px phone: a narrower meter and word keep most names on one line */
   .wk-gl-c { gap: 5px; font-size: 12px; }
+  .wk-gl-m i { width: 4px; }
   .wk-gl-w { min-width: 0; }
-  .wk-legend { font-size: 12.5px; gap: 6px 14px; }
 }
 @media (max-width: 420px) {
   .wk-t { font-size: var(--fs-d3); }
@@ -297,6 +253,6 @@
   .wk-rail { transition: none; }
 }
 @media print {
-  .wk-rail, .wk-pn, .wk-find, .wk-stops, .wk-legend { display: none !important; }
+  .wk-rail, .wk-pn { display: none !important; }
   .wk-step { break-inside: avoid; }
 }

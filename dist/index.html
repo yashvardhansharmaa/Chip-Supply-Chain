@@ -4066,94 +4066,66 @@ html.kb:has(.view[data-view="glossary"]:not([hidden])) { scroll-padding-top: cal
 
 /* module: walk.css */
 /* ==========================================================================
-   The home page (#/, the Start here walk) in the redesign of 25 Oct 2026 (qa/redesign/BRIEF.md, the hybrid mockup's home).
+   The home page (#/, the Start here walk) in the redesign of 25 Oct 2026 (qa/redesign/BRIEF.md), its hero set back to the
+   home's structure before the redesign on 27 Oct 2026 (qa/redesign/stage-home.md), in the redesign's type and colors.
    Tokens only; every class is prefixed wk-.
-   The hero: the title and subtitle, then the evidence figure (7 of the 14 stages are rated Extreme since the merge of 27 Oct 2026, with a mark per stage that
-   picks the specimen on the stage beside it), the search field and the two ways in. Then the chain at a glance, the walk (one
-   plain paragraph per chapter, each number in the ledger column), the flashcards and Other pages.
+   The hero: the title and subtitle, the read's counts, then the chain at a glance (a sentence on how many stages are rated
+   Extreme and the stages one row each, whose meter picks the specimen on the stage beside it). Then the walk (one plain
+   paragraph per chapter, each number in the ledger column), the flashcards and Other pages.
    ========================================================================== */
 
-/* ---------- the hero ---------- */
+/* ---------- the hero: on the text column's edge, so the stage numbers hang in the ledger column, as the walk's do ---------- */
 .wk { padding-bottom: 30px; }
-.wk-head { padding: clamp(32px, 6.5vh, 72px) 0 0; }
+.wk-head { padding: clamp(36px, 7vh, 72px) 0 0; margin-left: calc(var(--gutter) + var(--gutter-gap)); }
 .wk-title {
   font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title);
-  font-size: clamp(44px, 5vw, 76px); line-height: 0.98; letter-spacing: -0.028em;
-  text-transform: none; margin: 0 0 0 -0.045em; max-width: 7.4em; color: var(--ink);
+  font-size: var(--fs-d1); line-height: 1.02; letter-spacing: -0.02em;
+  text-transform: none; margin: 0 0 0 -0.04em; color: var(--ink);
 }
-.wk-dek { font-family: var(--font-body); font-weight: 400; font-size: calc(clamp(19px, 1.55vw, 23px) * var(--text-scale)); line-height: 1.4; color: var(--ink-2); max-width: 24em; margin: 22px 0 0; }
+.wk-dek { font-family: var(--font-body); font-weight: 400; font-size: calc(clamp(18px, 1.45vw, 21px) * var(--text-scale)); line-height: 1.4; color: var(--ink-2); max-width: 30em; margin: 14px 0 0; text-wrap: balance; }
+/* the read's counts, as a chapter's facts line is set: Fragment Mono, a dot between, the first on each line without one */
+.wk-meta { display: flex; flex-wrap: wrap; align-items: baseline; margin: 14px 0 0 -18px; clip-path: inset(0 0 0 18px); }
+.wk-meta .label { font-family: var(--font-code); font-size: 12px; line-height: 20px; color: var(--ink-2); white-space: nowrap; }
+.wk-meta .label::before { content: "\00b7"; display: inline-block; width: 18px; text-align: center; color: var(--muted); }
 
-/* the evidence: the count, what Extreme means, a mark per stage in chapter order */
-.wk-ev { margin: clamp(32px, 5.5vh, 52px) 0 0; max-width: 780px; }
-.wk-ev-cap { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 20px; align-items: end; margin: 0 0 22px; }
-.wk-ev-n {
-  font-family: var(--font-display); font-weight: 360; font-variation-settings: var(--opsz-numeral);
-  font-size: clamp(36px, 3.3vw, 48px); line-height: 0.92; letter-spacing: -0.03em; white-space: nowrap; margin-left: -0.03em;
-  font-variant-numeric: lining-nums;
+/* ---------- the chain at a glance ----------
+   An ink rule, the kicker, the sentence, then a row per stage between hairlines: the name (a link) and, at the row's end,
+   the band's meter and word (a button that picks the specimen). The number hangs in the ledger column, right-set where
+   the walk's numbers are; it belongs to the link, so it takes the reader to the chapter too. Extreme is ink, High the
+   lighter tint; the row whose specimen is showing (.is-shown) is the one in wine: its number, meter and word. */
+.wk-gl { margin: 32px 0 0; }
+.wk-gl-h { display: block; margin: 0; padding: 12px 0 0; border-top: 1px solid var(--ink); }
+.wk-gl-p { margin: 6px 0 16px; font-family: var(--font-body); font-size: var(--fs-body); line-height: 1.5; color: var(--ink-2); max-width: 34em; }
+.wk-gl-p b { color: var(--ink); font-weight: 600; }
+.wk-gl-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line-2); border-bottom: 1px solid var(--line-2); }
+.wk-gl-list li { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: stretch; }
+.wk-gl-list li + li { border-top: 1px solid var(--line); }
+.wk-gl-a {
+  display: grid; grid-template-columns: var(--gutter) minmax(0, 1fr); column-gap: var(--gutter-gap); align-items: baseline;
+  margin-left: calc(-1 * (var(--gutter) + var(--gutter-gap))); min-height: 32px; padding: 5px 16px 4px 0;
+  color: var(--ink); text-decoration: none;
 }
-.wk-ev-t { font-family: var(--font-body); font-size: calc(19px * var(--text-scale)); line-height: 1.3; padding-bottom: 1px; color: var(--ink); }
-.wk-ev-d { grid-column: 1 / -1; margin-top: 14px; font-family: var(--font-body); font-size: calc(15px * var(--text-scale)); line-height: 1.5; color: var(--ink-2); max-width: 38em; }
-.wk-stops { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(15, minmax(0, 1fr)); position: relative; }
-.wk-stops::after { content: ""; position: absolute; left: 0; right: 0; top: 46px; height: 1px; background: var(--ink); pointer-events: none; }
-.wk-stops li { min-width: 0; }
-.wk-stop { display: grid; grid-template-rows: 46px auto; justify-items: start; width: 100%; padding: 0 2px 4px 0; text-align: left; cursor: pointer; }
-.wk-stop-bar { align-self: end; width: 9px; height: 44px; background: var(--ink); transition: background-color 0.15s; }
-.wk-stops [data-band="h"] .wk-stop-bar { height: 22px; background: transparent; box-shadow: inset 0 0 0 1.5px var(--ink); }
-.wk-stop-n { margin-top: 8px; font-family: var(--font-kicker); font-size: 12px; line-height: 16px; color: var(--muted); font-variant-numeric: tabular-nums; }
-@media (hover: hover) {
-  .wk-stop:hover .wk-stop-bar { background: var(--ink-2); }
-  .wk-stops [data-band="h"] .wk-stop:hover .wk-stop-bar { background: var(--ctx); }
-  .wk-stop:hover .wk-stop-n { color: var(--ink); }
-}
-.wk-stop[aria-pressed="true"] .wk-stop-bar, .wk-stops [data-band="h"] .wk-stop[aria-pressed="true"] .wk-stop-bar { background: var(--accent); box-shadow: none; }
-.wk-stop[aria-pressed="true"] .wk-stop-n { color: var(--accent-ink); }
-.wk-stop:focus-visible { outline-offset: 2px; }
-.wk-legend { display: flex; flex-wrap: wrap; gap: 8px 22px; margin: 14px 0 0; font-family: var(--font-ui); font-size: 13px; line-height: 1.3; color: var(--ink-2); }
-.wk-legend span { display: inline-flex; gap: 8px; align-items: baseline; } /* each mark stands on the line its words stand on */
-.wk-legend i { display: inline-block; flex: none; width: 7px; height: 15px; background: var(--ink); }
-.wk-legend i.h { height: 8px; background: transparent; box-shadow: inset 0 0 0 1.5px var(--ink); }
-.wk-legend .wk-shown { color: var(--ink); }
-
-/* the search field and the two ways in */
-.wk-find { margin: 34px 0 0; max-width: 640px; }
-.wk-qbox { display: flex; align-items: center; gap: 12px; height: 52px; padding: 0 14px 0 16px; border: 1px solid var(--ink); border-radius: 4px; background: var(--bg); color: var(--ink-2); cursor: text; }
-.wk-qbox:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
-.wk-qbox svg { flex: none; width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.5; }
-.wk-qbox input { flex: 1 1 auto; min-width: 0; height: 100%; margin: 0; padding: 0; border: 0; outline: 0; background: transparent; font-family: var(--font-ui); font-size: 17px; color: var(--ink); cursor: text; }
-.wk-qbox input::placeholder { color: var(--muted); opacity: 1; }
-.wk-qbox input::-webkit-search-cancel-button { display: none; }
-.wk-qbox kbd { flex: none; font-family: var(--font-kicker); font-size: 12px; line-height: 1; color: var(--muted); border: 1px solid var(--rule-ink); border-radius: 3px; padding: 3px 6px; }
-@media (hover: none) and (pointer: coarse) { .wk-qbox kbd { display: none; } }
-.wk-reads { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 22px 0 0; }
-.wk-way { display: flex; flex-direction: column; gap: 7px; min-width: 0; padding: 12px 0 4px; border-top: 1px solid var(--ink); color: var(--ink); text-decoration: none; }
-.wk-way-t { font-family: var(--font-ui); font-weight: 500; font-size: 19px; line-height: 1.25; letter-spacing: -0.01em; }
-.wk-way-d { font-family: var(--font-kicker); font-size: 12px; line-height: 1.5; color: var(--muted); }
-.wk-way:hover .wk-way-t { color: var(--accent-ink); }
-
-/* ---------- the chain at a glance: the stages, one line each, numbers in the ledger column ---------- */
-.wk-gl { margin: clamp(80px, 13vh, 128px) 0 0; }
-.wk-gl-h {
-  margin: 0 0 18px; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title);
-  font-size: clamp(30px, 2.8vw, 42px); line-height: 1.05; letter-spacing: -0.02em; color: var(--ink);
-}
-.wk-gl-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
-.wk-gl-list li { border-bottom: 1px solid var(--line); }
-.wk-gl-list a {
-  display: grid; grid-template-columns: var(--gutter) minmax(0, 1fr) auto; column-gap: var(--gutter-gap); align-items: baseline;
-  min-height: 40px; padding: 9px 0 8px; color: var(--ink); text-decoration: none;
-}
-.wk-gl-n { font-family: var(--font-kicker); font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
-.wk-gl-t { font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 18px; line-height: 1.25; text-wrap: balance; }
-.wk-gl-c { display: inline-flex; align-items: baseline; gap: 9px; font-family: var(--font-ui); font-size: 13px; color: var(--ink-2); }
-/* the band as the hero marks it: a solid bar for Extreme, an outline half as tall for High (the four-step meter's cells are not drawn) */
-.wk-gl-m { display: inline-block; flex: none; align-self: center; width: 6px; height: 15px; background: var(--ink); }
-.wk-gl-m i { display: none; }
-.wk-gl-list li[data-level="3"] .wk-gl-m { height: 8px; background: transparent; box-shadow: inset 0 0 0 1.5px var(--ink); align-self: center; }
-.wk-gl-list li[data-level="2"] .wk-gl-m, .wk-gl-list li[data-level="1"] .wk-gl-m { height: 4px; background: var(--ctx); }
-.wk-gl-w { min-width: 4.4em; }
-.wk-gl-list li[data-level="4"] .wk-gl-w { color: var(--ink); }
-.wk-gl-list a:hover .wk-gl-t, .wk-gl-list a:focus-visible .wk-gl-t { color: var(--accent-ink); }
-.wk-gl-list a:focus-visible { outline-offset: 2px; }
+.wk-gl-n { padding-right: 14px; text-align: right; font-family: var(--font-code); font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.wk-gl-t { font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 18px; line-height: 1.3; text-wrap: balance; }
+.wk-gl-a:hover .wk-gl-t, .wk-gl-a:focus-visible .wk-gl-t { color: var(--accent-ink); }
+.wk-gl-a:focus-visible { outline-offset: -2px; }
+/* the button fills the row's height, so the whole end of the row picks; its meter and word sit on the name's first line */
+.wk-gl-c { display: inline-flex; align-items: center; align-content: flex-start; flex-wrap: wrap; gap: 9px; padding: 9px 0 0 12px; font-family: var(--font-ui); font-size: 13px; line-height: 16px; color: var(--muted); text-align: left; cursor: pointer; }
+.wk-gl-c:focus-visible { outline-offset: -2px; }
+.wk-gl-m { display: inline-flex; flex: none; align-items: flex-end; gap: 2px; height: 14px; }
+.wk-gl-m i { display: block; width: 5px; background: var(--line); }
+.wk-gl-m i:nth-child(1) { height: 5px; }
+.wk-gl-m i:nth-child(2) { height: 8px; }
+.wk-gl-m i:nth-child(3) { height: 11px; }
+.wk-gl-m i:nth-child(4) { height: 14px; }
+.wk-gl-m i.on { background: var(--bar-3); }
+.wk-gl-list li[data-level="4"] .wk-gl-m i.on { background: var(--ink); }
+.wk-gl-list li[data-level="3"] .wk-gl-m i.on { background: var(--bar-4); }
+.wk-gl-w { min-width: 4.6em; }
+.wk-gl-list li[data-level="4"] .wk-gl-w { color: var(--ink); font-weight: 500; }
+.wk-gl-list li.is-shown .wk-gl-n { color: var(--accent-ink); }
+.wk-gl-list li.is-shown .wk-gl-m i.on { background: var(--accent); } /* the wine of text, so on dark the pick is as bright as its word */
+.wk-gl-list li.is-shown .wk-gl-w { color: var(--accent-ink); font-weight: 600; }
 
 /* ---------- the walk: the ledger column ---------- */
 .wk-list { list-style: none; margin: clamp(80px, 13vh, 120px) 0 0; padding: 0; }
@@ -4291,10 +4263,6 @@ html.kb:has(.view[data-view="glossary"]:not([hidden])) { scroll-padding-top: cal
 .wk-facts .wk-src::after { content: "\00a0\2197"; }
 .wk-facts .wk-src:hover { text-decoration-color: var(--accent); }
 
-/* ---------- laptops between 901 and 1199 px ---------- */
-@media (max-width: 1199px) and (min-width: 901px) {
-  .wk-title { font-size: clamp(40px, 5vw, 52px); }
-}
 @media (max-width: 1100px) {
   .wk-tabs a { grid-template-columns: 150px minmax(0, 1fr); }
 }
@@ -4305,31 +4273,20 @@ html.kb:has(.view[data-view="glossary"]:not([hidden])) { scroll-padding-top: cal
 
 /* ---------- phones: one column; the specimen is the strip at the foot of the screen ---------- */
 @media (max-width: 900px) {
-  .wk-head { padding-top: 26px; }
-  .wk-title { font-size: min(68px, 16vw); line-height: 0.98; max-width: none; }
-  .wk-dek { font-size: calc(19px * var(--text-scale)); margin-top: 16px; }
-  .wk-ev { margin-top: 32px; }
-  .wk-ev-cap { grid-template-columns: 1fr; row-gap: 6px; margin-bottom: 18px; }
-  .wk-ev-n { font-size: 46px; }
-  .wk-ev-d { grid-column: 1; margin-top: 6px; font-size: calc(14.5px * var(--text-scale)); }
-  .wk-stops::after { top: 36px; }
-  .wk-stop { grid-template-rows: 36px auto; padding-right: 1px; }
-  .wk-stop-bar { width: 6px; height: 34px; }
-  .wk-stops [data-band="h"] .wk-stop-bar { height: 17px; }
-  .wk-stop-n { font-size: 11px; letter-spacing: -0.04em; margin-top: 7px; }
-  .wk-legend { gap: 8px 18px; }
-  .wk-find { margin-top: 28px; }
-  .wk-qbox { gap: 9px; padding: 0 12px; height: 50px; }
-  .wk-qbox input { font-size: 16px; } /* 16 px stops iOS zooming in on focus */
-  .wk-reads { grid-template-columns: 1fr; gap: 14px; }
-  .wk-way-t { font-size: 18px; }
-
-  .wk-gl { margin-top: 64px; }
-  .wk-gl-h { font-size: 30px; }
-  .wk-gl-list a { min-height: 36px; padding: 7px 0 6px; }
+  /* the hero as the home set it on a phone before the redesign: flush with the text, the title on one line, the stage
+     numbers in the 34 px ledger column inside the rules, and a long name breaking into two even lines */
+  .wk-head { margin-left: 0; padding-top: 28px; }
+  .wk-title { font-size: min(46px, 9vw); line-height: 1.08; letter-spacing: -0.015em; } /* one line from 320 px; larger on a tablet */
+  .wk-dek { font-size: calc(17px * var(--text-scale)); margin-top: 10px; }
+  .wk-meta { margin-top: 12px; }
+  .wk-gl { margin-top: 24px; }
+  .wk-gl-h { padding-top: 10px; }
+  .wk-gl-p { margin: 5px 0 12px; font-size: var(--fs-small); line-height: 1.45; }
+  .wk-gl-a { margin-left: 0; min-height: 36px; padding: 7px 10px 6px 0; }
+  .wk-gl-n { padding-right: 8px; } /* right-set where the walk's numbers are */
   .wk-gl-t { font-size: 16px; }
-  .wk-gl-c { gap: 7px; font-size: 12.5px; }
-  .wk-gl-w { min-width: 4.1em; }
+  .wk-gl-c { gap: 7px; padding: 10px 0 0 6px; font-size: 12.5px; }
+  .wk-gl-w { min-width: 4.3em; }
 
   .wk-list { margin-top: 64px; }
   .wk-step { scroll-margin-top: calc(var(--masthead) + 60px); }
@@ -4350,11 +4307,10 @@ html.kb:has(.view[data-view="glossary"]:not([hidden])) { scroll-padding-top: cal
   .wk-pn .label { display: block; margin-bottom: 3px; }
   .wk-pn-t { display: block; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 14.5px; line-height: 1.25; overflow-wrap: anywhere; }
 }
-@media (max-width: 380px) {
-  .wk-qbox input::placeholder { font-size: 14px; } /* the field keeps 16 px so iOS does not zoom; the hint fits a 320 px screen */
+@media (max-width: 380px) { /* a 360 px phone: a narrower meter and word keep most names on one line */
   .wk-gl-c { gap: 5px; font-size: 12px; }
+  .wk-gl-m i { width: 4px; }
   .wk-gl-w { min-width: 0; }
-  .wk-legend { font-size: 12.5px; gap: 6px 14px; }
 }
 @media (max-width: 420px) {
   .wk-t { font-size: var(--fs-d3); }
@@ -4364,7 +4320,7 @@ html.kb:has(.view[data-view="glossary"]:not([hidden])) { scroll-padding-top: cal
   .wk-rail { transition: none; }
 }
 @media print {
-  .wk-rail, .wk-pn, .wk-find, .wk-stops, .wk-legend { display: none !important; }
+  .wk-rail, .wk-pn { display: none !important; }
   .wk-step { break-inside: avoid; }
 }
 
@@ -4592,28 +4548,15 @@ html[data-chain] .view[data-view="stack"] > article.chapter { content-visibility
     <section class="view column" data-view="walk"><div class="wk">
 <div class="wk-rail" id="wk-rail" data-show="0" aria-hidden="true" hidden><div class="wk-rail-bar"><i></i></div><p class="wk-rail-line"><span class="wk-rail-n"></span><span class="wk-rail-t"></span></p></div>
 <header class="wk-head" id="wk-hero" data-specimen="die-floorplan" data-number="01" data-title="Chip Design, EDA and IP" data-caption="A GPU die based on Nvidia's published H100 block diagram. It is drawn at the size of one full reticle field, 26 by 33 mm, the largest area a scanner can print in one shot. The 144 compute tiles fill the center in eight clusters. H100 is a single die. The drawing adds a copper strip on one short edge to stand for the die-to-die link that two-die designs such as Blackwell carry.">
-<div class="wk-htext">
 <h1 class="wk-title">How AI chips are made</h1>
 <p class="wk-dek">An introduction to the entire semiconductor supply chain.</p>
-</div>
-<figure class="wk-ev">
-<figcaption class="wk-ev-cap"><span class="wk-ev-n">7 <span class="wk-ev-of">of the 14</span></span> <span class="wk-ev-t">stages are rated Extreme</span> <span class="wk-ev-d">Extreme means three or fewer firms could supply the stage today, or one firm holds more than half of it. Each bar is a stage, in the order a chip is made.</span></figcaption>
-<ol class="wk-stops" aria-label="The fourteen stages. Choose one to show its specimen."><li data-band="x"><button type="button" class="wk-stop" aria-pressed="true" tabindex="0" data-spec="die-floorplan" data-n="01" data-t="Chip Design, EDA and IP" data-cap="A GPU die based on Nvidia's published H100 block diagram. It is drawn at the size of one full reticle field, 26 by 33 mm, the largest area a scanner can print in one shot. The 144 compute tiles fill the center in eight clusters. H100 is a single die. The drawing adds a copper strip on one short edge to stand for the die-to-die link that two-die designs such as Blackwell carry." aria-label="01 Chip Design, EDA and IP, Extreme"><span class="wk-stop-bar" aria-hidden="true"></span><span class="wk-stop-n" aria-hidden="true">01</span></button></li><li data-band="h"><button type="button" class="wk-stop" aria-pressed="false" tabindex="-1" data-spec="boule-and-wafer" data-n="02" data-t="Silicon and Wafers" data-cap="A silicon ingot, one crystal pulled whole from a melt, with two wafers sawn from it. It is 2.1 m long, 300 mm across and about 265 kg, taller than a door and about as heavy as three grown men. It hangs from a neck about 10 mm wide. Drawn to scale. The wafer standing on its rim is shown in silver." aria-label="02 Silicon and Wafers, High"><span class="wk-stop-bar" aria-hidden="true"></span><span class="wk-stop-n" aria-hidden="true">02</span></button></li><li data-band="h"><button type="button" class="wk-stop" aria-pressed="false" tabindex="-1" data-spec="gas-cabinet" data-n="03" data-t="Chemicals, Gases and Photoresist" data-cap="A specialty gas cabinet with its door off, and a bulk liquid cylinder standing behind it. The cabinet is about 1 m wide and 1.9 m tall and holds three gas cylinders. The drawing is to scale. The steel-gray panel on the back wall holds the valves, regulator and gauges that control the gas flow." aria-label="03 Chemicals, Gases and Photoresist, High"><span class="wk-stop-bar" aria-hidden="true"></span><span class="wk-stop-n" aria-hidden="true">03</span></button></li><li data-band="x"><button type="button" class="wk-stop" aria-pressed="false" tabindex="-1" data-spec="euv-scanner" data-n="04" data-t="Lithography" data-cap="An extreme ultraviolet scanner cut open along its light path. The machine is the size of a bus and weighs about 180 metric tons. The blue-violet thread is the 13.5 nm light, bouncing mirror to mirror from the violet-white tin plasma at bottom left to the wafer. The mask at the top and the wafer at bottom right are drawn about twice their true size." aria-label="04 Lithography, Extreme"><span class="wk-stop-bar" aria-hidden="true"></span><span class="wk-stop-n" aria-hidden="true">04</span></button></li><li data-band="x"><button type="button" class="wk-stop" aria-pressed="false" tabindex="-1" data-spec="photomask" data-n="05" data-t="Photomasks and Pellicles" data-cap="An EUV photomask, or reticle, with its pellicle dust cover. The glass plate is drawn to scale. It is a 152 mm square, 6.35 mm thick, about the size of a small floor tile. The dark blue band around the top edge is the mirror coating. The real coating is about forty pairs of layers, each pair 7 nm thick, far thinner than drawn." aria-label="05 Photomasks and Pellicles, Extreme"><span class="wk-stop-bar" aria-hidden="true"></span><span class="wk-stop-n" aria-hidden="true">05</span></button></li><li data-band="h"><button type="button" class="wk-stop" aria-pressed="false" tabindex="-1" data-spec="process-chamber" data-n="06" data-t="Deposition and Etch" data-cap="A plasma etch chamber cut in half. The vessel is 500 mm across inside and holds one 300 mm wafer clamped to a holder, called a chuck, at the bottom. The violet haze above the wafer is the plasma. The gap it fills is drawn about twice its real height of 30 to 40 mm. The rest is to scale." aria-label="06 Deposition and Etch, High"><span class="wk-stop-bar" aria-hidden="true"></span><span class="wk-stop-n" aria-hidden="true">06</span></button></li><li data-band="h"><button type="button" class="wk-stop" aria-pressed="false" tabindex="-1" data-spec="sem-column" data-n="07" data-t="Metrology and Inspection" data-cap="An electron-beam inspection column, cut in half down its axis, standing over a 300 mm wafer. The column is about a meter tall, drawn to scale. The green line is the electron beam, running from the emitter at the top through the lenses to the spot where it lands on the wafer." aria-label="07 Metrology and Inspection, High"><span class="wk-stop-bar" aria-hidden="true"></span><span class="wk-stop-n" aria-hidden="true">07</span></button></li><li data-band="x"><button type="button" class="wk-stop" aria-pressed="false" tabindex="-1" data-spec="gaa-transistor" data-n="08" data-t="Foundries and Fabs" data-cap="A gate-all-around transistor, the switch in a 2 nm-class chip, drawn at true proportions. The three silicon sheets are each 6 nm thick and 30 nm wide. Each sheet is a few dozen atoms from top to bottom, roughly ten thousand times thinner than a human hair. The gold cage is the gate metal wrapping all four sides of each sheet." aria-label="08 Foundries and Fabs, Extreme"><span class="wk-stop-bar" aria-hidden="true"></span><span class="wk-stop-n" aria-hidden="true">08</span></button></li><li data-band="x"><button type="button" class="wk-stop" aria-pressed="false" tabindex="-1" data-spec="hbm-stack" data-n="09" data-t="Memory and HBM" data-cap="A twelve-high HBM stack pulled apart: a logic die at the base, shown in copper, and twelve memory dies above it. The finished part is 11 by 11 mm and 0.72 mm tall. Each memory die is ground to about 30 micrometers, thinner than a human hair. The footprint is to scale, but the heights are exaggerated about fifteen times." aria-label="09 Memory and HBM, Extreme"><span class="wk-stop-bar" aria-hidden="true"></span><span class="wk-stop-n" aria-hidden="true">09</span></button></li><li data-band="x"><button type="button" class="wk-stop" aria-pressed="false" tabindex="-1" data-spec="cowos-exploded" data-n="10" data-t="Advanced Packaging" data-cap="A CoWoS-L package, pulled apart. Two logic dies and eight HBM stacks sit on the interposer, shown in silver with its copper wiring. In CoWoS-L the interposer is fine redistribution wiring with small embedded silicon bridges. It sits on a resin substrate with a grid of solder balls underneath. The chips together cover about 2,700 mm2, a little over three reticle fields. Footprints are to scale. Thicknesses and the gaps between layers are exaggerated." aria-label="10 Advanced Packaging, Extreme"><span class="wk-stop-bar" aria-hidden="true"></span><span class="wk-stop-n" aria-hidden="true">10</span></button></li><li data-band="x"><button type="button" class="wk-stop" aria-pressed="false" tabindex="-1" data-spec="substrate-layers" data-n="11" data-t="Substrates and PCBs" data-cap="A build-up substrate, the board a chip sits on, with a quarter cut away. It is about 100 by 72 mm and 1.5 mm thick, with eighteen copper layers inside. The olive-green bands are the build-up film between the copper layers. The footprint is to scale, but the thickness is exaggerated about twenty times." aria-label="11 Substrates and PCBs, Extreme"><span class="wk-stop-bar" aria-hidden="true"></span><span class="wk-stop-n" aria-hidden="true">11</span></button></li><li data-band="h"><button type="button" class="wk-stop" aria-pressed="false" tabindex="-1" data-spec="probe-card" data-n="12" data-t="Test and Assembly" data-cap="A vertical probe card over a wafer. It is called vertical because its needles point straight down at the wafer. The card is round, about 305 mm across, a little wider than the 300 mm wafer beneath it. Thousands of needles under it land on four dies at once, and those four dies are picked out in blue-violet. The gap between card and wafer is exaggerated. The real gap is a millimeter or two." aria-label="12 Test and Assembly, High"><span class="wk-stop-bar" aria-hidden="true"></span><span class="wk-stop-n" aria-hidden="true">12</span></button></li><li data-band="h"><button type="button" class="wk-stop" aria-pressed="false" tabindex="-1" data-spec="gpu-baseboard" data-n="13" data-t="Systems and Networking" data-cap="An eight-GPU baseboard, the board that carries eight accelerator modules and the switch chips joining them. It is about 510 by 400 mm and drawn to scale, with the module frames standing about 30 mm above the board. The two nickel-gray squares in the middle are the NVLink switch chips." aria-label="13 Systems and Networking, High"><span class="wk-stop-bar" aria-hidden="true"></span><span class="wk-stop-n" aria-hidden="true">13</span></button></li><li data-band="h"><button type="button" class="wk-stop" aria-pressed="false" tabindex="-1" data-spec="rack" data-n="14" data-t="Data Centers and Power" data-cap="A liquid-cooled rack of 72 GPUs, Nvidia's GB200 NVL72, drawn to scale. It is 2.24 m tall and 600 mm wide, taller than a door. It weighs about 1.36 metric tons, more than a small car, and draws about 120 kW. The newer GB300 NVL72 draws up to 142 kW. The gray steel power shelves and the copper busbar they feed are picked out." aria-label="14 Data Centers and Power, High"><span class="wk-stop-bar" aria-hidden="true"></span><span class="wk-stop-n" aria-hidden="true">14</span></button></li></ol>
-<p class="wk-legend"><span><i aria-hidden="true"></i>Extreme, 7</span><span><i class="h" aria-hidden="true"></i>High, 7</span><span class="wk-shown" aria-live="polite">Shown: 01 Chip Design, EDA and IP</span></p>
-</figure>
-<div class="wk-find">
-<label class="sr-only" for="wk-q">Search the site</label>
-<div class="wk-qbox"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="7" cy="7" r="5"/><path d="M11 11l3.5 3.5"/></svg><input id="wk-q" type="search" autocomplete="off" spellcheck="false" placeholder="Search 226 firms, 38 chips, 208 terms"><kbd aria-hidden="true">/</kbd></div>
-<div class="wk-reads">
-<a class="wk-way" href="#/walk/design-and-eda"><span class="wk-way-t">Introduction <span aria-hidden="true">→</span></span><span class="wk-way-d">A short read through the whole chain, about&nbsp;11&nbsp;min</span></a>
-<a class="wk-way" href="chain/" data-route="#/chain"><span class="wk-way-t">Each stage, in detail <span aria-hidden="true">→</span></span><span class="wk-way-d">The Chain, 16 chapters</span></a>
-</div>
-</div>
-</header>
+<p class="wk-meta"><span class="label">16 paragraphs</span><span class="label">2,468 words</span><span class="label">about 11 min</span></p>
 <section class="wk-gl" aria-labelledby="wk-gl-h">
-<h2 class="wk-gl-h" id="wk-gl-h">The chain at a glance</h2>
-<ol class="wk-gl-list"><li data-level="4"><a href="design-and-eda/" data-route="#design-and-eda"><span class="wk-gl-n">01</span><span class="wk-gl-t">Chip Design, EDA and IP</span><span class="wk-gl-c"><span class="wk-gl-m" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="wk-gl-w">Extreme<span class="sr-only"> concentration</span></span></span></a></li><li data-level="3"><a href="silicon-and-wafers/" data-route="#silicon-and-wafers"><span class="wk-gl-n">02</span><span class="wk-gl-t">Silicon and Wafers</span><span class="wk-gl-c"><span class="wk-gl-m" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span><span class="wk-gl-w">High<span class="sr-only"> concentration</span></span></span></a></li><li data-level="3"><a href="chemicals-gases-and-photoresist/" data-route="#chemicals-gases-and-photoresist"><span class="wk-gl-n">03</span><span class="wk-gl-t">Chemicals, Gases and Photoresist</span><span class="wk-gl-c"><span class="wk-gl-m" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span><span class="wk-gl-w">High<span class="sr-only"> concentration</span></span></span></a></li><li data-level="4"><a href="lithography/" data-route="#lithography"><span class="wk-gl-n">04</span><span class="wk-gl-t">Lithography</span><span class="wk-gl-c"><span class="wk-gl-m" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="wk-gl-w">Extreme<span class="sr-only"> concentration</span></span></span></a></li><li data-level="4"><a href="photomasks-and-pellicles/" data-route="#photomasks-and-pellicles"><span class="wk-gl-n">05</span><span class="wk-gl-t">Photomasks and Pellicles</span><span class="wk-gl-c"><span class="wk-gl-m" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="wk-gl-w">Extreme<span class="sr-only"> concentration</span></span></span></a></li><li data-level="3"><a href="deposition-and-etch/" data-route="#deposition-and-etch"><span class="wk-gl-n">06</span><span class="wk-gl-t">Deposition and Etch</span><span class="wk-gl-c"><span class="wk-gl-m" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span><span class="wk-gl-w">High<span class="sr-only"> concentration</span></span></span></a></li><li data-level="3"><a href="metrology-and-inspection/" data-route="#metrology-and-inspection"><span class="wk-gl-n">07</span><span class="wk-gl-t">Metrology and Inspection</span><span class="wk-gl-c"><span class="wk-gl-m" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span><span class="wk-gl-w">High<span class="sr-only"> concentration</span></span></span></a></li><li data-level="4"><a href="foundries-and-fabs/" data-route="#foundries-and-fabs"><span class="wk-gl-n">08</span><span class="wk-gl-t">Foundries and Fabs</span><span class="wk-gl-c"><span class="wk-gl-m" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="wk-gl-w">Extreme<span class="sr-only"> concentration</span></span></span></a></li><li data-level="4"><a href="memory-and-hbm/" data-route="#memory-and-hbm"><span class="wk-gl-n">09</span><span class="wk-gl-t">Memory and HBM</span><span class="wk-gl-c"><span class="wk-gl-m" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="wk-gl-w">Extreme<span class="sr-only"> concentration</span></span></span></a></li><li data-level="4"><a href="advanced-packaging/" data-route="#advanced-packaging"><span class="wk-gl-n">10</span><span class="wk-gl-t">Advanced Packaging</span><span class="wk-gl-c"><span class="wk-gl-m" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="wk-gl-w">Extreme<span class="sr-only"> concentration</span></span></span></a></li><li data-level="4"><a href="substrates-and-pcbs/" data-route="#substrates-and-pcbs"><span class="wk-gl-n">11</span><span class="wk-gl-t">Substrates and PCBs</span><span class="wk-gl-c"><span class="wk-gl-m" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="wk-gl-w">Extreme<span class="sr-only"> concentration</span></span></span></a></li><li data-level="3"><a href="test-and-assembly/" data-route="#test-and-assembly"><span class="wk-gl-n">12</span><span class="wk-gl-t">Test and Assembly</span><span class="wk-gl-c"><span class="wk-gl-m" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span><span class="wk-gl-w">High<span class="sr-only"> concentration</span></span></span></a></li><li data-level="3"><a href="systems-and-networking/" data-route="#systems-and-networking"><span class="wk-gl-n">13</span><span class="wk-gl-t">Systems and Networking</span><span class="wk-gl-c"><span class="wk-gl-m" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span><span class="wk-gl-w">High<span class="sr-only"> concentration</span></span></span></a></li><li data-level="3"><a href="data-centers-and-power/" data-route="#data-centers-and-power"><span class="wk-gl-n">14</span><span class="wk-gl-t">Data Centers and Power</span><span class="wk-gl-c"><span class="wk-gl-m" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span><span class="wk-gl-w">High<span class="sr-only"> concentration</span></span></span></a></li></ol>
+<h2 class="label wk-gl-h" id="wk-gl-h">The chain at a glance</h2>
+<p class="wk-gl-p"><b>7 of the 14 stages</b> are rated Extreme, meaning three or fewer firms could supply each today, or one firm holds more than half.</p>
+<ol class="wk-gl-list"><li data-level="4" class="is-shown"><a class="wk-gl-a" href="design-and-eda/" data-route="#design-and-eda"><span class="wk-gl-n">01</span><span class="wk-gl-t">Chip Design, EDA and IP</span></a><button type="button" class="wk-gl-c" aria-pressed="true" tabindex="0" data-spec="die-floorplan" data-n="01" data-t="Chip Design, EDA and IP" data-cap="A GPU die based on Nvidia's published H100 block diagram. It is drawn at the size of one full reticle field, 26 by 33 mm, the largest area a scanner can print in one shot. The 144 compute tiles fill the center in eight clusters. H100 is a single die. The drawing adds a copper strip on one short edge to stand for the die-to-die link that two-die designs such as Blackwell carry."><span class="wk-gl-m" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="wk-gl-w">Extreme<span class="sr-only"> concentration. Show its specimen</span></span></button></li><li data-level="3"><a class="wk-gl-a" href="silicon-and-wafers/" data-route="#silicon-and-wafers"><span class="wk-gl-n">02</span><span class="wk-gl-t">Silicon and Wafers</span></a><button type="button" class="wk-gl-c" aria-pressed="false" tabindex="-1" data-spec="boule-and-wafer" data-n="02" data-t="Silicon and Wafers" data-cap="A silicon ingot, one crystal pulled whole from a melt, with two wafers sawn from it. It is 2.1 m long, 300 mm across and about 265 kg, taller than a door and about as heavy as three grown men. It hangs from a neck about 10 mm wide. Drawn to scale. The wafer standing on its rim is shown in silver."><span class="wk-gl-m" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span><span class="wk-gl-w">High<span class="sr-only"> concentration. Show its specimen</span></span></button></li><li data-level="3"><a class="wk-gl-a" href="chemicals-gases-and-photoresist/" data-route="#chemicals-gases-and-photoresist"><span class="wk-gl-n">03</span><span class="wk-gl-t">Chemicals, Gases and Photoresist</span></a><button type="button" class="wk-gl-c" aria-pressed="false" tabindex="-1" data-spec="gas-cabinet" data-n="03" data-t="Chemicals, Gases and Photoresist" data-cap="A specialty gas cabinet with its door off, and a bulk liquid cylinder standing behind it. The cabinet is about 1 m wide and 1.9 m tall and holds three gas cylinders. The drawing is to scale. The steel-gray panel on the back wall holds the valves, regulator and gauges that control the gas flow."><span class="wk-gl-m" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span><span class="wk-gl-w">High<span class="sr-only"> concentration. Show its specimen</span></span></button></li><li data-level="4"><a class="wk-gl-a" href="lithography/" data-route="#lithography"><span class="wk-gl-n">04</span><span class="wk-gl-t">Lithography</span></a><button type="button" class="wk-gl-c" aria-pressed="false" tabindex="-1" data-spec="euv-scanner" data-n="04" data-t="Lithography" data-cap="An extreme ultraviolet scanner cut open along its light path. The machine is the size of a bus and weighs about 180 metric tons. The blue-violet thread is the 13.5 nm light, bouncing mirror to mirror from the violet-white tin plasma at bottom left to the wafer. The mask at the top and the wafer at bottom right are drawn about twice their true size."><span class="wk-gl-m" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="wk-gl-w">Extreme<span class="sr-only"> concentration. Show its specimen</span></span></button></li><li data-level="4"><a class="wk-gl-a" href="photomasks-and-pellicles/" data-route="#photomasks-and-pellicles"><span class="wk-gl-n">05</span><span class="wk-gl-t">Photomasks and Pellicles</span></a><button type="button" class="wk-gl-c" aria-pressed="false" tabindex="-1" data-spec="photomask" data-n="05" data-t="Photomasks and Pellicles" data-cap="An EUV photomask, or reticle, with its pellicle dust cover. The glass plate is drawn to scale. It is a 152 mm square, 6.35 mm thick, about the size of a small floor tile. The dark blue band around the top edge is the mirror coating. The real coating is about forty pairs of layers, each pair 7 nm thick, far thinner than drawn."><span class="wk-gl-m" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="wk-gl-w">Extreme<span class="sr-only"> concentration. Show its specimen</span></span></button></li><li data-level="3"><a class="wk-gl-a" href="deposition-and-etch/" data-route="#deposition-and-etch"><span class="wk-gl-n">06</span><span class="wk-gl-t">Deposition and Etch</span></a><button type="button" class="wk-gl-c" aria-pressed="false" tabindex="-1" data-spec="process-chamber" data-n="06" data-t="Deposition and Etch" data-cap="A plasma etch chamber cut in half. The vessel is 500 mm across inside and holds one 300 mm wafer clamped to a holder, called a chuck, at the bottom. The violet haze above the wafer is the plasma. The gap it fills is drawn about twice its real height of 30 to 40 mm. The rest is to scale."><span class="wk-gl-m" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span><span class="wk-gl-w">High<span class="sr-only"> concentration. Show its specimen</span></span></button></li><li data-level="3"><a class="wk-gl-a" href="metrology-and-inspection/" data-route="#metrology-and-inspection"><span class="wk-gl-n">07</span><span class="wk-gl-t">Metrology and Inspection</span></a><button type="button" class="wk-gl-c" aria-pressed="false" tabindex="-1" data-spec="sem-column" data-n="07" data-t="Metrology and Inspection" data-cap="An electron-beam inspection column, cut in half down its axis, standing over a 300 mm wafer. The column is about a meter tall, drawn to scale. The green line is the electron beam, running from the emitter at the top through the lenses to the spot where it lands on the wafer."><span class="wk-gl-m" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span><span class="wk-gl-w">High<span class="sr-only"> concentration. Show its specimen</span></span></button></li><li data-level="4"><a class="wk-gl-a" href="foundries-and-fabs/" data-route="#foundries-and-fabs"><span class="wk-gl-n">08</span><span class="wk-gl-t">Foundries and Fabs</span></a><button type="button" class="wk-gl-c" aria-pressed="false" tabindex="-1" data-spec="gaa-transistor" data-n="08" data-t="Foundries and Fabs" data-cap="A gate-all-around transistor, the switch in a 2 nm-class chip, drawn at true proportions. The three silicon sheets are each 6 nm thick and 30 nm wide. Each sheet is a few dozen atoms from top to bottom, roughly ten thousand times thinner than a human hair. The gold cage is the gate metal wrapping all four sides of each sheet."><span class="wk-gl-m" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="wk-gl-w">Extreme<span class="sr-only"> concentration. Show its specimen</span></span></button></li><li data-level="4"><a class="wk-gl-a" href="memory-and-hbm/" data-route="#memory-and-hbm"><span class="wk-gl-n">09</span><span class="wk-gl-t">Memory and HBM</span></a><button type="button" class="wk-gl-c" aria-pressed="false" tabindex="-1" data-spec="hbm-stack" data-n="09" data-t="Memory and HBM" data-cap="A twelve-high HBM stack pulled apart: a logic die at the base, shown in copper, and twelve memory dies above it. The finished part is 11 by 11 mm and 0.72 mm tall. Each memory die is ground to about 30 micrometers, thinner than a human hair. The footprint is to scale, but the heights are exaggerated about fifteen times."><span class="wk-gl-m" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="wk-gl-w">Extreme<span class="sr-only"> concentration. Show its specimen</span></span></button></li><li data-level="4"><a class="wk-gl-a" href="advanced-packaging/" data-route="#advanced-packaging"><span class="wk-gl-n">10</span><span class="wk-gl-t">Advanced Packaging</span></a><button type="button" class="wk-gl-c" aria-pressed="false" tabindex="-1" data-spec="cowos-exploded" data-n="10" data-t="Advanced Packaging" data-cap="A CoWoS-L package, pulled apart. Two logic dies and eight HBM stacks sit on the interposer, shown in silver with its copper wiring. In CoWoS-L the interposer is fine redistribution wiring with small embedded silicon bridges. It sits on a resin substrate with a grid of solder balls underneath. The chips together cover about 2,700 mm2, a little over three reticle fields. Footprints are to scale. Thicknesses and the gaps between layers are exaggerated."><span class="wk-gl-m" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="wk-gl-w">Extreme<span class="sr-only"> concentration. Show its specimen</span></span></button></li><li data-level="4"><a class="wk-gl-a" href="substrates-and-pcbs/" data-route="#substrates-and-pcbs"><span class="wk-gl-n">11</span><span class="wk-gl-t">Substrates and PCBs</span></a><button type="button" class="wk-gl-c" aria-pressed="false" tabindex="-1" data-spec="substrate-layers" data-n="11" data-t="Substrates and PCBs" data-cap="A build-up substrate, the board a chip sits on, with a quarter cut away. It is about 100 by 72 mm and 1.5 mm thick, with eighteen copper layers inside. The olive-green bands are the build-up film between the copper layers. The footprint is to scale, but the thickness is exaggerated about twenty times."><span class="wk-gl-m" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="wk-gl-w">Extreme<span class="sr-only"> concentration. Show its specimen</span></span></button></li><li data-level="3"><a class="wk-gl-a" href="test-and-assembly/" data-route="#test-and-assembly"><span class="wk-gl-n">12</span><span class="wk-gl-t">Test and Assembly</span></a><button type="button" class="wk-gl-c" aria-pressed="false" tabindex="-1" data-spec="probe-card" data-n="12" data-t="Test and Assembly" data-cap="A vertical probe card over a wafer. It is called vertical because its needles point straight down at the wafer. The card is round, about 305 mm across, a little wider than the 300 mm wafer beneath it. Thousands of needles under it land on four dies at once, and those four dies are picked out in blue-violet. The gap between card and wafer is exaggerated. The real gap is a millimeter or two."><span class="wk-gl-m" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span><span class="wk-gl-w">High<span class="sr-only"> concentration. Show its specimen</span></span></button></li><li data-level="3"><a class="wk-gl-a" href="systems-and-networking/" data-route="#systems-and-networking"><span class="wk-gl-n">13</span><span class="wk-gl-t">Systems and Networking</span></a><button type="button" class="wk-gl-c" aria-pressed="false" tabindex="-1" data-spec="gpu-baseboard" data-n="13" data-t="Systems and Networking" data-cap="An eight-GPU baseboard, the board that carries eight accelerator modules and the switch chips joining them. It is about 510 by 400 mm and drawn to scale, with the module frames standing about 30 mm above the board. The two nickel-gray squares in the middle are the NVLink switch chips."><span class="wk-gl-m" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span><span class="wk-gl-w">High<span class="sr-only"> concentration. Show its specimen</span></span></button></li><li data-level="3"><a class="wk-gl-a" href="data-centers-and-power/" data-route="#data-centers-and-power"><span class="wk-gl-n">14</span><span class="wk-gl-t">Data Centers and Power</span></a><button type="button" class="wk-gl-c" aria-pressed="false" tabindex="-1" data-spec="rack" data-n="14" data-t="Data Centers and Power" data-cap="A liquid-cooled rack of 72 GPUs, Nvidia's GB200 NVL72, drawn to scale. It is 2.24 m tall and 600 mm wide, taller than a door. It weighs about 1.36 metric tons, more than a small car, and draws about 120 kW. The newer GB300 NVL72 draws up to 142 kW. The gray steel power shelves and the copper busbar they feed are picked out."><span class="wk-gl-m" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span><span class="wk-gl-w">High<span class="sr-only"> concentration. Show its specimen</span></span></button></li></ol>
 </section>
+</header>
 <ol class="wk-list">
 <li class="wk-step" id="/walk/design-and-eda" data-title="Chip Design, EDA and IP" data-number="01" data-specimen="die-floorplan" data-caption="A GPU die based on Nvidia's published H100 block diagram. It is drawn at the size of one full reticle field, 26 by 33 mm, the largest area a scanner can print in one shot. The 144 compute tiles fill the center in eight clusters. H100 is a single die. The drawing adds a copper strip on one short edge to stand for the die-to-die link that two-die designs such as Blackwell carry.">
 <div class="wk-mark" aria-hidden="true"><span class="wk-n">01</span></div>
@@ -11151,12 +11094,12 @@ PC.register('wafer', function (p) {
     /* The chapter's slot the drawing sits in on The Chain (src/modules/chapter.css .ch-spec-draw), or null for the stage beside
        the page (the home, AI Chips) and the phone's strip. The canvas and its pause button move; the canvas keeps its context. */
     /* Where the stage sits in the page's order (it is fixed, so only the Tab order sees it): on the home, right after the
-       evidence figure, so Tab reaches the marks, one per stage, that pick the specimen before the specimen itself; elsewhere, its place
+       hero, so Tab reaches the chain at a glance, whose rows pick the specimen, before the specimen itself; elsewhere, its place
        in src/template.html, before the views */
     place: function (v) {
       if (!this.fig) return;
       if (!this.homeParent) { this.homeParent = this.fig.parentNode; this.homeBefore = $('#main'); }
-      var ev = v === 'walk' ? $('.view[data-view="walk"] .wk-ev') : null;
+      var ev = v === 'walk' ? $('.view[data-view="walk"] #wk-hero') : null;
       if (ev) { if (this.fig.previousElementSibling !== ev) ev.parentNode.insertBefore(this.fig, ev.nextSibling); }
       else if (this.fig.parentNode !== this.homeParent && this.homeBefore) this.homeParent.insertBefore(this.fig, this.homeBefore);
     },
@@ -11562,7 +11505,7 @@ PC.register('wafer', function (p) {
 
   /* ---------------- section tracking (stack view) ---------------- */
   var Sections = {
-    items: [], walkItems: [], currentId: null, heroBottom: 0,
+    items: [], walkItems: [], currentId: null, heroBottom: 0, hold: null,
     init: function () {
       var self = this;
       // each view's own (.view: <html> carries data-view too, so a bare [data-view] would take in the whole page)
@@ -11592,6 +11535,9 @@ PC.register('wafer', function (p) {
         if (r.top <= probe && r.top > bestTop) { best = items[i]; bestTop = r.top; }
       }
       if (!best) best = first || items[0];
+      // a pick in the home hero's list (src/modules/walk.js sets hold) keeps the hero on the stage while any of the hero is on
+      // screen, so the row marked in wine is always the specimen shown, even once the walk's first step has crossed the probe
+      if (this.hold) { var hb = this.hold.getBoundingClientRect().bottom; if (Router.current === 'walk' && hb > cssPx('--masthead') + 24) best = this.hold; else this.hold = null; }
       if (!best) return;
       // The Chain's contents show no chapter: the phone's strip shows the first chapter's specimen, and no chapter is in view
       var none = !first && Router.current === 'stack';
@@ -16491,49 +16437,54 @@ try {
     if (el && CP.Router.settle) CP.Router.settle(el);
   }
 
-  /* The hero (redesign, 25 Oct 2026). The evidence figure's marks, one per stage, pick the specimen: a mark copies its stage's
-     specimen, number, title and caption onto the hero (#wk-hero, a [data-specimen] item that Sections in src/app.js tracks
-     like a step), and a scroll event asks Sections to draw it. One mark is in the Tab order; the arrow keys, Home and End move
-     along them, as they do on the Suppliers pipeline. The search field hands what is typed to the site's search (Tools). */
+  /* The hero (27 Oct 2026: the home's structure before the redesign). Each row of the chain at a glance ends in a button, its
+     band's meter and word, that picks the stage's specimen: the button copies its stage's specimen, number, title and caption
+     onto the hero (#wk-hero, a [data-specimen] item that Sections in src/app.js tracks like a step), and a scroll event asks
+     Sections to draw it; Sections.hold keeps the hero on the stage while any of it is on screen, so the row in wine is always
+     the specimen shown. Hovering a button picks it once the pointer rests on it a moment, so a pointer crossing the list on
+     its way to the specimen does not flick through the stages, and a scroll under a still pointer picks nothing; a click or
+     focus picks it at once. The picked row is marked
+     (.is-shown, the one row in wine). One button is in the Tab order, the picked one; the arrow keys, Home and End move along
+     them and pick as they go, as they do on the Suppliers pipeline. The stage's name is a plain link to its chapter. */
   (function hero() {
     var box = document.getElementById('wk-hero');
-    var marks = box ? CP.$$('.wk-stop', box) : [];
-    var shown = box ? box.querySelector('.wk-shown') : null;
+    var picks = box ? CP.$$('.wk-gl-c', box) : [];
+    var wait = 0;
     function pick(i, focus) {
-      var b = marks[i]; if (!b) return;
-      marks.forEach(function (m, k) { m.setAttribute('aria-pressed', k === i ? 'true' : 'false'); m.tabIndex = k === i ? 0 : -1; });
-      box.setAttribute('data-specimen', b.getAttribute('data-spec') || '');
-      box.setAttribute('data-number', b.getAttribute('data-n') || '');
-      box.setAttribute('data-title', b.getAttribute('data-t') || '');
-      box.setAttribute('data-caption', b.getAttribute('data-cap') || '');
-      if (shown) shown.textContent = 'Shown: ' + (b.getAttribute('data-n') || '') + ' ' + (b.getAttribute('data-t') || '');
-      if (focus) b.focus();
+      var b = picks[i]; if (!b) return;
+      window.clearTimeout(wait);
+      if (b.getAttribute('aria-pressed') !== 'true') {
+        picks.forEach(function (m, k) {
+          m.setAttribute('aria-pressed', k === i ? 'true' : 'false'); m.tabIndex = k === i ? 0 : -1;
+          var row = m.closest('li'); if (row) row.classList.toggle('is-shown', k === i);
+        });
+        box.setAttribute('data-specimen', b.getAttribute('data-spec') || '');
+        box.setAttribute('data-number', b.getAttribute('data-n') || '');
+        box.setAttribute('data-title', b.getAttribute('data-t') || '');
+        box.setAttribute('data-caption', b.getAttribute('data-cap') || '');
+      }
+      if (CP.Sections) CP.Sections.hold = box; // the hero keeps the stage while it is on screen, though the walk has begun under it
       window.dispatchEvent(new Event('scroll'));
+      if (focus) b.focus(); // after the pick, so the focus handler finds it made
     }
-    marks.forEach(function (b, i) {
+    picks.forEach(function (b, i) {
       b.addEventListener('click', function () { pick(i, false); });
+      b.addEventListener('focus', function () { pick(i, false); });
+      // the pointer's own movement arms the pick (a scroll under a still pointer moves no mouse, though it changes what is under it)
+      b.addEventListener('mousemove', function (e) {
+        if (!e.movementX && !e.movementY) return;
+        window.clearTimeout(wait); wait = window.setTimeout(function () { pick(i, false); }, 110);
+      });
+      b.addEventListener('mouseleave', function () { window.clearTimeout(wait); });
       b.addEventListener('keydown', function (e) {
-        var k = e.key, n = marks.length, to = -1;
-        if (k === 'ArrowRight' || k === 'ArrowDown') to = Math.min(n - 1, i + 1);
-        else if (k === 'ArrowLeft' || k === 'ArrowUp') to = Math.max(0, i - 1);
+        var k = e.key, n = picks.length, to = -1;
+        if (k === 'ArrowDown' || k === 'ArrowRight') to = Math.min(n - 1, i + 1);
+        else if (k === 'ArrowUp' || k === 'ArrowLeft') to = Math.max(0, i - 1);
         else if (k === 'Home') to = 0; else if (k === 'End') to = n - 1;
         if (to < 0) return;
         e.preventDefault(); pick(to, true);
       });
     });
-    var q = document.getElementById('wk-q');
-    if (q && CP.Tools) {
-      var hand = function () { // the dialog opens with the field's words in its own box, and the field empties
-        var v = q.value; q.value = '';
-        CP.Tools.open();
-        var inp = document.querySelector('#cp-search input');
-        if (inp && v) { inp.value = v; inp.dispatchEvent(new Event('input')); }
-      };
-      q.addEventListener('input', function () { if (q.value) hand(); });
-      q.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); hand(); } });
-      q.addEventListener('mousedown', function (e) { if (e.button === 0) { e.preventDefault(); hand(); } });
-      q.addEventListener('touchend', function (e) { e.preventDefault(); hand(); });
-    }
   })();
 
   CP.register('walk', {

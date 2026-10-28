@@ -1,6 +1,7 @@
-/* WALK  — the view at #/walk: "How AI chips are made", the chapters' plain-language paragraphs in order. The hero (redesign,
-   25 Oct 2026) is the title and subtitle, the evidence figure that picks the specimen (EVIDENCE), the search field and the
-   two ways in (FIND); the chain at a glance follows (GLANCE), and the walk ends with "Other pages" (design round, 21 Oct 2026).
+/* WALK  — the view at #/walk: "How AI chips are made", the chapters' plain-language paragraphs in order. The hero is the
+   home's structure before the redesign, in the redesign's type and colors (27 Oct 2026): the title, the subtitle, the read's
+   counts and the chain at a glance (GLANCE), whose rows pick the specimen beside it. The walk follows, and ends with
+   "Other pages" (design round, 21 Oct 2026).
    START_HERE — the three-way chooser on the landing page, directly under the hero.
 
    Nothing here is written from memory. Every paragraph, name, country code, score and count is read
@@ -57,62 +58,38 @@ module.exports = function (ctx) {
 
   steps.forEach((c) => { if (!plainOf(c.id)) ctx.warn(`walk: chapter ${c.id} has no plain paragraph`); });
 
-  /* ---------------- the chain at a glance (under the hero) ----------------
-     The stages in the order a chip is made, one line each: number, name, and the stage's concentration as the
-     summary page draws it (a four-step meter and the plain word). Each line links to its chapter. "Other pages", which
-     repeats the tabs, closes the walk instead (OTHER, below). Names and bands come from the chapter cards, the count is
-     computed, and the meaning of Extreme is the card's own note (ctx.BAND_NOTE), so nothing here is retyped. */
+  /* ---------------- the chain at a glance (the hero, under the title, the subtitle and the read's counts) ----------------
+     The home's structure before the redesign, which the owner found more minimalist and straight to the point (27 Oct 2026),
+     in the redesign's type and colors. One sentence gives how many stages are rated Extreme and what that means (the card's
+     own note, ctx.BAND_NOTE); the stages follow in the order a chip is made, one row each: the number, the name (a link to
+     the chapter), and the stage's band from its card, a four-step meter and the plain word. The meter and the word are one
+     button, which puts the stage's specimen on the stage beside the hero (src/modules/walk.js): hovering, focusing or
+     clicking it picks it. The row whose specimen is showing is the reader's selection, the one row in wine; Extreme is set
+     in ink and High in the lighter tint, since wine never marks a data value. Chip design shows first, where the chain
+     starts (owner, 27 Oct). The rows carry the specimen as data-spec, not data-specimen, so the page's scroll tracking
+     (src/app.js Sections) follows the hero as one item. Nothing here is typed: the names, bands, specimens and captions are
+     the chapters' own, and every count is computed. */
   const LEVEL = { Extreme: 4, High: 3, Moderate: 2, Low: 1 };
   const meter = (band) => `<span class="wk-gl-m" aria-hidden="true">${[1, 2, 3, 4].map((k) => `<i${k <= (LEVEL[band] || 0) ? ' class="on"' : ''}></i>`).join('')}</span>`;
   const nExtreme = stages.filter((s) => (card[s.id] || {}).band === 'Extreme').length;
   // the card's note reads "Three or fewer firms could supply this stage today, or one firm holds more than half of it."; here it
-  // follows "7 of the 14 stages are rated Extreme, meaning", cut to three lines on a phone. A changed note drops the clause.
+  // follows "7 of the 14 stages are rated Extreme, meaning". A changed note drops the clause.
   const xNote = String((ctx.BAND_NOTE || {}).Extreme || '');
   const xMeaning = /this stage/.test(xNote) ? xNote.replace('this stage', 'each').replace(/ of it\.$/, '.').replace(/\.$/, '').replace(/^\w/, (m) => m.toLowerCase()) : '';
-  const glanceRow = (s, i) => {
-    const b = (card[s.id] || {}).band || '';
-    return `<li data-level="${LEVEL[b] || 0}"><a ${pageLink(s.id)}><span class="wk-gl-n">${pad(i + 1)}</span><span class="wk-gl-t">${esc(s.title)}</span>${b ? `<span class="wk-gl-c">${meter(b)}<span class="wk-gl-w">${esc(b)}<span class="sr-only"> concentration</span></span></span>` : ''}</a></li>`;
-  };
-  /* the list keeps its own heading; the count and what Extreme means now open the page, in the evidence figure (EVIDENCE) */
-  const GLANCE = stages.length ? `<section class="wk-gl" aria-labelledby="wk-gl-h">
-<h2 class="wk-gl-h" id="wk-gl-h">The chain at a glance</h2>
-<ol class="wk-gl-list">${stages.map(glanceRow).join('')}</ol>
-</section>` : '';
-
-  /* ---------------- the hero's evidence: "7 of the 14 stages are rated Extreme" (redesign, 25 Oct 2026; computed) ----------------
-     A figure under the title: the count, what Extreme means (the card's own note, ctx.BAND_NOTE), and the stages as
-     marks in chapter order, solid for Extreme and an outline for High. Each mark is a button that puts its stage's specimen on
-     the stage beside the hero (src/modules/walk.js); the reader's pick is the one wine mark. Chip design shows first, where the chain starts (owner, 27 Oct). Nothing
-     here is typed: the names, bands, specimens and captions are the chapters' own. */
   const SHOW_FIRST = Math.max(0, stages.findIndex((s) => s.id === 'design-and-eda'));
-  const nHigh = stages.filter((s) => (card[s.id] || {}).band === 'High').length;
-  const xSentence = /this stage/.test(xNote) ? 'Extreme means ' + xNote.replace('this stage', 'the stage').replace(/^\w/, (m) => m.toLowerCase()) : '';
   const chOf = (id) => all.find((c) => c.id === id) || {};
   const specOf = (s) => { const m = chOf(s.id).meta || {}; return { spec: m.specimen || '', cap: m.specimenCaption || '' }; };
-  const stop = (s, i) => {
-    const b = (card[s.id] || {}).band || '', sp = specOf(s);
-    return `<li data-band="${b === 'Extreme' ? 'x' : 'h'}"><button type="button" class="wk-stop" aria-pressed="${i === SHOW_FIRST}" tabindex="${i === SHOW_FIRST ? 0 : -1}" data-spec="${esc(sp.spec)}" data-n="${pad(i + 1)}" data-t="${esc(s.title)}" data-cap="${esc(sp.cap)}" aria-label="${pad(i + 1)} ${esc(s.title)}, ${esc(b)}"><span class="wk-stop-bar" aria-hidden="true"></span><span class="wk-stop-n" aria-hidden="true">${pad(i + 1)}</span></button></li>`;
+  const glanceRow = (s, i) => {
+    const b = (card[s.id] || {}).band || '', sp = specOf(s), on = i === SHOW_FIRST;
+    const pick = b ? `<button type="button" class="wk-gl-c" aria-pressed="${on}" tabindex="${on ? 0 : -1}" data-spec="${esc(sp.spec)}" data-n="${pad(i + 1)}" data-t="${esc(s.title)}" data-cap="${esc(sp.cap)}">${meter(b)}<span class="wk-gl-w">${esc(b)}<span class="sr-only"> concentration. Show its specimen</span></span></button>` : '';
+    return `<li data-level="${LEVEL[b] || 0}"${on ? ' class="is-shown"' : ''}><a class="wk-gl-a" ${pageLink(s.id)}><span class="wk-gl-n">${pad(i + 1)}</span><span class="wk-gl-t">${esc(s.title)}</span></a>${pick}</li>`;
   };
+  const GLANCE = stages.length ? `<section class="wk-gl" aria-labelledby="wk-gl-h">
+<h2 class="label wk-gl-h" id="wk-gl-h">The chain at a glance</h2>
+${nExtreme ? `<p class="wk-gl-p"><b>${nExtreme} of the ${stages.length} stages</b> are rated Extreme${xMeaning ? `, meaning ${esc(xMeaning)}` : ' concentration'}.</p>` : ''}
+<ol class="wk-gl-list">${stages.map(glanceRow).join('')}</ol>
+</section>` : '';
   const first = stages[SHOW_FIRST] || {}, firstSpec = first.id ? specOf(first) : { spec: '', cap: '' };
-  const EVIDENCE = stages.length && nExtreme ? `<figure class="wk-ev">
-<figcaption class="wk-ev-cap"><span class="wk-ev-n">${nExtreme} <span class="wk-ev-of">of the ${stages.length}</span></span> <span class="wk-ev-t">stages are rated Extreme</span>${xSentence ? ` <span class="wk-ev-d">${esc(xSentence)} Each bar is a stage, in the order a chip is made.</span>` : ''}</figcaption>
-<ol class="wk-stops" aria-label="The ${word(stages.length)} stages. Choose one to show its specimen.">${stages.map(stop).join('')}</ol>
-<p class="wk-legend"><span><i aria-hidden="true"></i>Extreme, ${nExtreme}</span><span><i class="h" aria-hidden="true"></i>High, ${nHigh}</span><span class="wk-shown" aria-live="polite">Shown: ${pad(SHOW_FIRST + 1)} ${esc(first.title || '')}</span></p>
-</figure>` : '';
-
-  /* ---------------- the hero's search field and the two ways in ----------------
-     The field opens the site's search (src/app.js Tools) with what is typed. Its counts are the data's own: the firms on
-     Suppliers, the chips on AI Chips and the terms in the Glossary. "Introduction" starts the walk below at its first step,
-     with a line on what it is and how long it takes; "Each stage, in detail" opens The Chain. */
-  const nTerms = (ctx.glossary || []).length, nFirms = (data.suppliers || []).length, nChips = (data.landscape || []).length;
-  const FIND = `<div class="wk-find">
-<label class="sr-only" for="wk-q">Search the site</label>
-<div class="wk-qbox"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="7" cy="7" r="5"/><path d="M11 11l3.5 3.5"/></svg><input id="wk-q" type="search" autocomplete="off" spellcheck="false" placeholder="Search ${nFirms} firms, ${nChips} chips, ${nTerms} terms"><kbd aria-hidden="true">/</kbd></div>
-<div class="wk-reads">
-<a class="wk-way" href="#${esc(stepId(steps[0] ? steps[0].id : ''))}"><span class="wk-way-t">Introduction <span aria-hidden="true">→</span></span><span class="wk-way-d">A short read through the whole chain, about&nbsp;${mins}&nbsp;min</span></a>
-<a class="wk-way" href="chain/" data-route="#/chain"><span class="wk-way-t">Each stage, in detail <span aria-hidden="true">→</span></span><span class="wk-way-d">The Chain, ${all.length} chapters</span></a>
-</div>
-</div>`;
 
   // the flashcards that end the walk (below), which the last step's Next leads on to
   const introDeck = (ctx.flashcards || {}).intro;
@@ -176,14 +153,11 @@ ${leadersHTML(c)}
   const WALK = `<div class="wk">
 <div class="wk-rail" id="wk-rail" data-show="0" aria-hidden="true" hidden><div class="wk-rail-bar"><i></i></div><p class="wk-rail-line"><span class="wk-rail-n"></span><span class="wk-rail-t"></span></p></div>
 <header class="wk-head" id="wk-hero" data-specimen="${esc(firstSpec.spec)}" data-number="${first.id ? pad(SHOW_FIRST + 1) : ''}" data-title="${esc(first.title || '')}" data-caption="${esc(firstSpec.cap)}">
-<div class="wk-htext">
 <h1 class="wk-title">How AI chips are made</h1>
 <p class="wk-dek">An introduction to the entire semiconductor supply chain.</p>
-</div>
-${EVIDENCE}
-${FIND}
-</header>
+<p class="wk-meta"><span class="label">${steps.length} paragraphs</span><span class="label">${walkWords.toLocaleString('en-US')} words</span><span class="label">about ${mins} min</span></p>
 ${GLANCE}
+</header>
 <ol class="wk-list">
 ${list}
 </ol>

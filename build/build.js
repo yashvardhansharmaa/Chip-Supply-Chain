@@ -1174,7 +1174,7 @@ fill('STYLES', read(path.join(root, 'src', 'styles.css')) + moduleCSS);
 const ctx = { root, fs, path, all, chapters, geo, stages, data, esc, pad, word, cap, read, readJSON, markdown, inline, tierOf, wordCount, warn, glossaryWrap, BAND_NOTE, SUB_NOTE,
   // for the readable chapter pages (social.js): the source list, footer and dates exactly as the main page prints them
   tierTag, sourceLine, bibOf, slug, footerKey, builtOn, builtStr, flashcards, SPECIMEN_NAME, pageDate, dayStr,
-  // the flashcard deck, for the one that ends Start here, and the glossary, whose count the home search field shows (build/modules/walk.js)
+  // the flashcard deck, for the one that ends Start here (build/modules/walk.js), and the glossary (the home search field that showed its count went on 27 Oct 2026)
   deckHTML, glossary,
   // the cite line under the chapter title, as the main page prints it (the readable page's own date goes in)
   citeBlock, CITE_JS, FIG_JS,

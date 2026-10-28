@@ -118,49 +118,54 @@
     if (el && CP.Router.settle) CP.Router.settle(el);
   }
 
-  /* The hero (redesign, 25 Oct 2026). The evidence figure's marks, one per stage, pick the specimen: a mark copies its stage's
-     specimen, number, title and caption onto the hero (#wk-hero, a [data-specimen] item that Sections in src/app.js tracks
-     like a step), and a scroll event asks Sections to draw it. One mark is in the Tab order; the arrow keys, Home and End move
-     along them, as they do on the Suppliers pipeline. The search field hands what is typed to the site's search (Tools). */
+  /* The hero (27 Oct 2026: the home's structure before the redesign). Each row of the chain at a glance ends in a button, its
+     band's meter and word, that picks the stage's specimen: the button copies its stage's specimen, number, title and caption
+     onto the hero (#wk-hero, a [data-specimen] item that Sections in src/app.js tracks like a step), and a scroll event asks
+     Sections to draw it; Sections.hold keeps the hero on the stage while any of it is on screen, so the row in wine is always
+     the specimen shown. Hovering a button picks it once the pointer rests on it a moment, so a pointer crossing the list on
+     its way to the specimen does not flick through the stages, and a scroll under a still pointer picks nothing; a click or
+     focus picks it at once. The picked row is marked
+     (.is-shown, the one row in wine). One button is in the Tab order, the picked one; the arrow keys, Home and End move along
+     them and pick as they go, as they do on the Suppliers pipeline. The stage's name is a plain link to its chapter. */
   (function hero() {
     var box = document.getElementById('wk-hero');
-    var marks = box ? CP.$$('.wk-stop', box) : [];
-    var shown = box ? box.querySelector('.wk-shown') : null;
+    var picks = box ? CP.$$('.wk-gl-c', box) : [];
+    var wait = 0;
     function pick(i, focus) {
-      var b = marks[i]; if (!b) return;
-      marks.forEach(function (m, k) { m.setAttribute('aria-pressed', k === i ? 'true' : 'false'); m.tabIndex = k === i ? 0 : -1; });
-      box.setAttribute('data-specimen', b.getAttribute('data-spec') || '');
-      box.setAttribute('data-number', b.getAttribute('data-n') || '');
-      box.setAttribute('data-title', b.getAttribute('data-t') || '');
-      box.setAttribute('data-caption', b.getAttribute('data-cap') || '');
-      if (shown) shown.textContent = 'Shown: ' + (b.getAttribute('data-n') || '') + ' ' + (b.getAttribute('data-t') || '');
-      if (focus) b.focus();
+      var b = picks[i]; if (!b) return;
+      window.clearTimeout(wait);
+      if (b.getAttribute('aria-pressed') !== 'true') {
+        picks.forEach(function (m, k) {
+          m.setAttribute('aria-pressed', k === i ? 'true' : 'false'); m.tabIndex = k === i ? 0 : -1;
+          var row = m.closest('li'); if (row) row.classList.toggle('is-shown', k === i);
+        });
+        box.setAttribute('data-specimen', b.getAttribute('data-spec') || '');
+        box.setAttribute('data-number', b.getAttribute('data-n') || '');
+        box.setAttribute('data-title', b.getAttribute('data-t') || '');
+        box.setAttribute('data-caption', b.getAttribute('data-cap') || '');
+      }
+      if (CP.Sections) CP.Sections.hold = box; // the hero keeps the stage while it is on screen, though the walk has begun under it
       window.dispatchEvent(new Event('scroll'));
+      if (focus) b.focus(); // after the pick, so the focus handler finds it made
     }
-    marks.forEach(function (b, i) {
+    picks.forEach(function (b, i) {
       b.addEventListener('click', function () { pick(i, false); });
+      b.addEventListener('focus', function () { pick(i, false); });
+      // the pointer's own movement arms the pick (a scroll under a still pointer moves no mouse, though it changes what is under it)
+      b.addEventListener('mousemove', function (e) {
+        if (!e.movementX && !e.movementY) return;
+        window.clearTimeout(wait); wait = window.setTimeout(function () { pick(i, false); }, 110);
+      });
+      b.addEventListener('mouseleave', function () { window.clearTimeout(wait); });
       b.addEventListener('keydown', function (e) {
-        var k = e.key, n = marks.length, to = -1;
-        if (k === 'ArrowRight' || k === 'ArrowDown') to = Math.min(n - 1, i + 1);
-        else if (k === 'ArrowLeft' || k === 'ArrowUp') to = Math.max(0, i - 1);
+        var k = e.key, n = picks.length, to = -1;
+        if (k === 'ArrowDown' || k === 'ArrowRight') to = Math.min(n - 1, i + 1);
+        else if (k === 'ArrowUp' || k === 'ArrowLeft') to = Math.max(0, i - 1);
         else if (k === 'Home') to = 0; else if (k === 'End') to = n - 1;
         if (to < 0) return;
         e.preventDefault(); pick(to, true);
       });
     });
-    var q = document.getElementById('wk-q');
-    if (q && CP.Tools) {
-      var hand = function () { // the dialog opens with the field's words in its own box, and the field empties
-        var v = q.value; q.value = '';
-        CP.Tools.open();
-        var inp = document.querySelector('#cp-search input');
-        if (inp && v) { inp.value = v; inp.dispatchEvent(new Event('input')); }
-      };
-      q.addEventListener('input', function () { if (q.value) hand(); });
-      q.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); hand(); } });
-      q.addEventListener('mousedown', function (e) { if (e.button === 0) { e.preventDefault(); hand(); } });
-      q.addEventListener('touchend', function (e) { e.preventDefault(); hand(); });
-    }
   })();
 
   CP.register('walk', {

@@ -269,12 +269,12 @@
     /* The chapter's slot the drawing sits in on The Chain (src/modules/chapter.css .ch-spec-draw), or null for the stage beside
        the page (the home, AI Chips) and the phone's strip. The canvas and its pause button move; the canvas keeps its context. */
     /* Where the stage sits in the page's order (it is fixed, so only the Tab order sees it): on the home, right after the
-       evidence figure, so Tab reaches the marks, one per stage, that pick the specimen before the specimen itself; elsewhere, its place
+       hero, so Tab reaches the chain at a glance, whose rows pick the specimen, before the specimen itself; elsewhere, its place
        in src/template.html, before the views */
     place: function (v) {
       if (!this.fig) return;
       if (!this.homeParent) { this.homeParent = this.fig.parentNode; this.homeBefore = $('#main'); }
-      var ev = v === 'walk' ? $('.view[data-view="walk"] .wk-ev') : null;
+      var ev = v === 'walk' ? $('.view[data-view="walk"] #wk-hero') : null;
       if (ev) { if (this.fig.previousElementSibling !== ev) ev.parentNode.insertBefore(this.fig, ev.nextSibling); }
       else if (this.fig.parentNode !== this.homeParent && this.homeBefore) this.homeParent.insertBefore(this.fig, this.homeBefore);
     },
@@ -680,7 +680,7 @@
 
   /* ---------------- section tracking (stack view) ---------------- */
   var Sections = {
-    items: [], walkItems: [], currentId: null, heroBottom: 0,
+    items: [], walkItems: [], currentId: null, heroBottom: 0, hold: null,
     init: function () {
       var self = this;
       // each view's own (.view: <html> carries data-view too, so a bare [data-view] would take in the whole page)
@@ -710,6 +710,9 @@
         if (r.top <= probe && r.top > bestTop) { best = items[i]; bestTop = r.top; }
       }
       if (!best) best = first || items[0];
+      // a pick in the home hero's list (src/modules/walk.js sets hold) keeps the hero on the stage while any of the hero is on
+      // screen, so the row marked in wine is always the specimen shown, even once the walk's first step has crossed the probe
+      if (this.hold) { var hb = this.hold.getBoundingClientRect().bottom; if (Router.current === 'walk' && hb > cssPx('--masthead') + 24) best = this.hold; else this.hold = null; }
       if (!best) return;
       // The Chain's contents show no chapter: the phone's strip shows the first chapter's specimen, and no chapter is in view
       var none = !first && Router.current === 'stack';
