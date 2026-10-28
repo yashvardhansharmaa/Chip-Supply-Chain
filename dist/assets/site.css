@@ -2278,17 +2278,17 @@ article.ch-page { padding-top: 56px; border-top: 0; }
   .contents .ct-col > .item { --tw: 96px; --th: 72px; }
   .contents .ct-col .ol { max-width: 36em; }
 }
-/* a phone: the title, the downloads, the rows, then the sentence at the foot under a hairline. The stack view is a column
-   here, so the sentence can follow the contents. Each row sets its drawing, number and title on one line, the one line
-   under all three */
+/* a phone: the title, the downloads, the sentence (it is the key to the marks, so it comes before the sixteen rows: 28 Oct
+   2026; it sat at the foot until then), then the rows. Each row sets its drawing, number and title on one line, the one
+   line under all three */
 @media screen and (max-width: 759px) {
   .view[data-view="stack"] > .howto { display: block; padding-top: 0; }
   html[data-chain="contents"] .view[data-view="stack"]:not([hidden]) { display: flex; flex-direction: column; }
   html[data-chain="contents"] .view[data-view="stack"] > .howto, html[data-chain="contents"] .howto .howto-l, html[data-chain="contents"] .howto .howto-r { display: contents; }
   .howto h1.howto-title { order: 0; margin-top: 26px; font-size: min(76px, 19vw); }
   .howto .howto-dl { order: 1; margin-top: 12px; }
-  .view[data-view="stack"] > .contents { order: 2; padding-bottom: 0; }
-  .howto .howto-std { order: 3; margin: 30px 0 24px; padding-top: 16px; border-top: 1px solid var(--line); font-size: calc(16.5px * var(--text-scale)); }
+  .howto .howto-std { order: 2; margin: 22px 0 0; font-size: calc(16.5px * var(--text-scale)); }
+  .view[data-view="stack"] > .contents { order: 3; padding-bottom: 24px; }
   .view[data-view="stack"] > .site-footer { order: 4; }
   .contents .ct-st { margin-top: 36px; }
   .contents .ct-x { margin-top: 18px; }
