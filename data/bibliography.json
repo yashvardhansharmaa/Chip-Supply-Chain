@@ -1695,6 +1695,13 @@
     "type": "page",
     "accessed": "2026-09-09"
   },
+  "https://news.samsung.com/global/samsung-electronics-announces-third-quarter-2025-results": {
+    "title": "Samsung Electronics Announces Third Quarter 2025 Results",
+    "publisher": "Samsung Electronics",
+    "date": "2025-10-30",
+    "type": "press release",
+    "accessed": "2026-10-28"
+  },
   "https://news.samsung.com/global/samsung-ships-industry-first-commercial-hbm4": {
     "title": "Samsung Ships Industry-First Commercial HBM4 With Ultimate Performance for AI Computing",
     "publisher": "Samsung Global Newsroom",
@@ -1961,6 +1968,13 @@
     "type": "press release",
     "accessed": "2026-09-09"
   },
+  "https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-first-quarter-fiscal-2026": {
+    "title": "NVIDIA Announces Financial Results for First Quarter Fiscal 2026",
+    "publisher": "NVIDIA",
+    "date": "2025-05-28",
+    "type": "press release",
+    "accessed": "2026-10-28"
+  },
   "https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-fourth-quarter-and-fiscal-2026": {
     "title": "NVIDIA Announces Financial Results for Fourth Quarter and Fiscal 2026",
     "publisher": "Nvidia",
@@ -1982,6 +1996,13 @@
     "type": "press release",
     "accessed": "2026-09-09"
   },
+  "https://nvidianews.nvidia.com/news/nvidia-hopper-in-full-production": {
+    "title": "NVIDIA Hopper in Full Production",
+    "publisher": "NVIDIA",
+    "date": "2022-09-20",
+    "type": "press release",
+    "accessed": "2026-10-28"
+  },
   "https://nvidianews.nvidia.com/news/nvidia-nvlink-fusion-semi-custom-ai-infrastructure-partner-ecosystem": {
     "title": "NVIDIA Unveils NVLink Fusion for Industry to Build Semi-Custom AI Infrastructure With NVIDIA Partner Ecosystem",
     "publisher": "Nvidia",
@@ -2002,6 +2023,13 @@
     "date": "2026-01-05",
     "type": "press release",
     "accessed": "2026-09-09"
+  },
+  "https://nvidianews.nvidia.com/news/samsung-ai-factory": {
+    "title": "NVIDIA and Samsung Build AI Factory to Transform Global Intelligent Manufacturing",
+    "publisher": "NVIDIA",
+    "date": "2025-10-30",
+    "type": "press release",
+    "accessed": "2026-10-28"
   },
   "https://ontoinnovation.com/products": {
     "title": "Onto Innovation, products page",
@@ -5070,6 +5098,12 @@
     "date": "2026-04-29",
     "type": "page",
     "accessed": "2026-09-09"
+  },
+  "https://www.nvidia.com/en-us/data-center/gb200-nvl72/": {
+    "title": "NVIDIA GB200 NVL72, specifications",
+    "publisher": "NVIDIA",
+    "type": "page",
+    "accessed": "2026-10-28"
   },
   "https://www.nvidia.com/en-us/data-center/gb300-nvl72/": {
     "title": "NVIDIA GB300 NVL72",

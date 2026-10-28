@@ -912,38 +912,28 @@
      one shared scale, the largest figure of each row in wine. Nothing on a shelf or on the chart adds to a comparison: a name
      opens that one chip, and the chart's tip offers "Open the …". The choice and the chart's figure live in the address
      (#/landscape?pick=a,b&measure=mem), each choice a history entry, so a shared link opens on it and Back returns. Every
-     figure prints the data's own digits, thousands grouped, and keeps its source by the site's rule (the first of the chip's
-     sources whose label carries one of the row's words, SRC). The specimen stage does not show on this page.
+     figure prints the data's own digits, thousands grouped, and carries the source the data names for it (the chip's "cite",
+     since 28 Oct 2026: no source is guessed from its label, and a part no listed source states carries the list mark "all").
+     The specimen stage does not show on this page.
      src/modules/chips.css styles it. */
   var Landscape = (function () {
     var chips = DATA.landscape || [], NOTES = DATA.landscapeNotes || {}, CMP = DATA.landscapeCompare || { pairs: [], with: {} };
     var L = {
       chips: chips,
-      // the source rule's rows: each label with the words that pick its source from the chip's list. build/modules/reference-pages.js
-      // reads the labels and hints in this order for /chips/, and qa/redesign/datacheck-chips.js for its expected marks
+      // the rows that carry a source, each with the key of its entry in a chip's "cite" (data/landscape.json): "4, 12" is the
+      // chip's sources 4 and 12, and a row the data leaves out of cite carries the list mark "all". The memory makers have theirs
+      // in cite.suppliers, by name. build/modules/reference-pages.js marks /chips/ by the same keys, and
+      // qa/redesign/datacheck-chips.js reads its expected marks from the data
       SRC: [
-        { label: 'Vendor', hint: ['product page', 'press release', 'corporate'], key: 'vendor' },
-        { label: 'Availability', hint: ['product page', 'press release', 'spec table'], key: 'status' },
-        { label: 'Built for', hint: ['product page', 'blog', 'documentation'], key: 'target' },
-        { label: 'Foundry, process node', hint: ['architecture', 'deep dive', 'white paper', 'documentation'], key: 'process' },
-        { label: 'Package', hint: ['cowos', 'packag', 'deep dive', 'architecture'], key: 'package' },
-        { label: 'Memory type', hint: ['hbm', 'micron', 'memory', 'datasheet'], key: 'memtype' },
-        { label: 'Speed at FP16, TFLOPS', hint: ['spec table', 'datasheet', 'product page'], key: 'fp16' },
-        { label: 'Speed at FP8, TFLOPS', hint: ['spec table', 'datasheet', 'product page'], key: 'fp8' },
-        { label: 'Speed at FP4, TFLOPS', hint: ['spec table', 'datasheet', 'product page'], key: 'fp4' },
-        { label: 'Memory, gigabytes', hint: ['spec table', 'datasheet', 'product page'], key: 'mem' },
-        { label: 'Bandwidth, terabytes/s', hint: ['spec table', 'datasheet', 'product page'], key: 'bw' },
-        { label: 'Power, watts', hint: ['spec table', 'datasheet', 'product page'], key: 'tdp' },
-        { label: 'Transistors, billion', hint: ['architecture', 'deep dive', 'white paper'], key: 'transistors' },
-        { label: 'Chip-to-chip links', hint: ['architecture', 'deep dive', 'white paper'], key: 'c2c' },
-        { label: 'Scale-up, in one rack', hint: ['nvl', 'rack', 'system', 'deep dive', 'spec table'], key: 'scale' },
-        { label: 'Price estimate', hint: ['price', 'semianalysis', 'rack', 'press release'], key: 'price' },
-        { label: 'Cost to make, estimate', hint: ['cost', 'semianalysis'], key: 'bom' },
-        { label: 'Export-control status', hint: ['federal register', 'entity list', 'institute for progress', 'mofcom'], key: 'export' }
+        { label: 'Vendor', key: 'vendor' }, { label: 'Announced', key: 'announced' }, { label: 'Availability', key: 'status' },
+        { label: 'Built for', key: 'target' }, { label: 'Foundry, process node', key: 'process' }, { label: 'Package', key: 'package' },
+        { label: 'Memory type', key: 'memtype' }, { label: 'Speed at FP16, TFLOPS', key: 'fp16' }, { label: 'Speed at FP8, TFLOPS', key: 'fp8' },
+        { label: 'Speed at FP4, TFLOPS', key: 'fp4' }, { label: 'Memory, gigabytes', key: 'mem' }, { label: 'Bandwidth, terabytes/s', key: 'bw' },
+        { label: 'Power, watts', key: 'tdp' }, { label: 'Chip-to-chip links', key: 'c2c' }, { label: 'Scale-up, in one rack', key: 'scale' },
+        { label: 'Price estimate', key: 'price' }, { label: 'Cost to make, estimate', key: 'bom' }, { label: 'Export-control status', key: 'export' }
       ],
       TFLOPS_SENTENCE: 'TFLOPS counts trillions of calculations a second. FP16, FP8 and FP4 are number formats that use 16, 8 and 4 bits per number. The fewer the bits, the more calculations a chip can do.'
     };
-    var hintOf = function (key) { for (var i = 0; i < L.SRC.length; i++) if (L.SRC[i].key === key) return L.SRC[i].hint; return []; };
     var byId = function (id) { for (var i = 0; i < chips.length; i++) if (chips[i].id === id) return chips[i]; return null; };
     var short = function (c) { return String(c.name).replace(/\s*\(.*\)\s*$/, ''); }; // "H100 (SXM5)" reads "H100"
     var maker = function (c) { return String(c.vendor).replace(/\s*\(.*\)\s*$/, ''); }; // "Huawei (HiSilicon)" reads "Huawei"
@@ -980,13 +970,13 @@
     // what is missing, in the data's own words: a format the chip does not run is "not supported", anything else "not published"
     var nilKind = function (c, m) { if (m.get(c) != null) return ''; var s = m.fmt ? ((c.compute || {}).support || {})[m.fmt] : null; return s === 'no' ? 'no' : 'np'; };
 
-    /* ---- sources, by the site's rule ---- */
-    var H = { num: hintOf('fp16'), process: hintOf('process'), package: hintOf('package'), memtype: hintOf('memtype'), status: hintOf('status'), target: hintOf('target'),
-      c2c: hintOf('c2c'), scale: hintOf('scale'), price: hintOf('price'), bom: hintOf('bom'), export: hintOf('export') };
-    var sourceFor = function (c, hints) {
-      var srcs = c.sources || [];
-      for (var h = 0; h < hints.length; h++) for (var i = 0; i < srcs.length; i++) if ((srcs[i].label || '').toLowerCase().indexOf(hints[h]) >= 0) return i;
-      return -1;
+    /* ---- sources: each figure and part line carries the source the data names for it (cite: "4, 12" is the chip's sources 4
+       and 12, by their place in its list). A part the data leaves out of cite carries "all", which leads to the chip's list ---- */
+    var citeOf = function (c, key, sup) { // the indexes into c.sources, or null where the data names none
+      var C = c.cite || {}, v = sup != null ? (C.suppliers || {})[sup] : C[key], n = (c.sources || []).length;
+      if (v == null || v === '') return null;
+      var out = String(v).split(/\s*,\s*/).map(function (x) { return +x - 1; }).filter(function (i) { return i >= 0 && i < n; });
+      return out.length ? out : null;
     };
     // the notes' citations, renumbered to the chip's own list by URL, so one numbered list serves the figures, the parts and the
     // notes; a cited URL the list lacks is added at its end
@@ -1004,32 +994,24 @@
       srcCache[c.id] = { list: list, notes: html };
       return srcCache[c.id];
     };
-    var marks = function (c, idxs, list) {
+    // the numbered marks; all adds the list mark after them, for a line whose parts the data sources only in part
+    var marks = function (c, idxs, list, all) {
       list = list || srcList(c).list; var seen = [];
       idxs.forEach(function (i) { if (i != null && i >= 0 && list[i] && seen.indexOf(i) < 0) seen.push(i); });
-      if (!seen.length) return '';
-      return '<sup class="cm">' + seen.sort(function (a, b) { return a - b; }).map(function (i) {
+      var a = seen.sort(function (x, y) { return x - y; }).map(function (i) {
         var s = list[i], lab = s.raw ? s.label : esc(s.label);
         return '<a href="' + safeUrl(s.url) + '" target="_blank" rel="noopener" title="Source ' + (i + 1) + ': ' + lab + '" aria-label="Source ' + (i + 1) + ': ' + lab + '">' + (i + 1) + '</a>';
-      }).join('<span aria-hidden="true">,</span>') + '</sup>';
-    };
-    var markFor = function (c, hints) { var i = sourceFor(c, hints); return i >= 0 ? marks(c, [i]) : ''; };
-    // the sources that name a memory maker: a sentence of the notes that names it with its memory, else a source labeled with it
-    var supSources = function (c, sup) {
-      var srcs = c.sources || [], at = {}, low = sup.toLowerCase(), found = [];
-      srcs.forEach(function (x, i) { at[x.url] = i; });
-      String(NOTES[c.id] || '').split(/\.\s+/).forEach(function (sent) {
-        var plain = sent.replace(/<[^>]+>/g, '');
-        if (plain.toLowerCase().indexOf(low) < 0 || !/HBM|memory|stack/i.test(plain)) return;
-        sent.replace(/<a href="([^"]+)"/g, function (m, u) { u = u.replace(/&amp;/g, '&'); if (at[u] != null && found.indexOf(at[u]) < 0) found.push(at[u]); return m; });
       });
-      if (!found.length && sup !== c.vendor) srcs.forEach(function (x, i) { if ((x.label || '').toLowerCase().indexOf(low) >= 0) found.push(i); });
-      return found;
+      if (all) a.push('<a href="#aic-srcs-' + esc(c.id) + '" data-srcs="' + esc(c.id) + '" title="No one source states this: the sources for the ' + esc(short(c)) + ' are listed under Sources" aria-label="The sources for the ' + esc(short(c)) + ', listed under Sources">all</a>');
+      return a.length ? '<sup class="cm">' + a.join('<span aria-hidden="true">,</span>') + '</sup>' : '';
     };
-    var figSourceLine = function (c, lead) {
-      var i = sourceFor(c, H.num), s = srcList(c).list[i];
-      if (s) return '<p class="srcline">' + (lead || 'Figures from') + ' the <a href="' + safeUrl(s.url) + '" target="_blank" rel="noopener">' + esc(s.label) + '</a>' + marks(c, [i]) + '.</p>';
-      return '<p class="srcline">' + (lead || 'Figures from') + ' the sources listed for the ' + esc(short(c)) + ' under Sources.</p>';
+    var markOf = function (c, key) { var i = citeOf(c, key); return i ? marks(c, i) : marks(c, [], null, true); };
+    // the line under the figures that names what they describe, where a chip ships in more than one setting (the Nvidia racks)
+    var basisLine = function (c, who) {
+      if (!c.basis) return '';
+      var t = esc(c.basis); if (who) t = t.replace(/^Figures are/, esc(who) + ' figures are');
+      var i = citeOf(c, 'basis');
+      return '<p class="srcline">' + (i ? t.replace(/\.$/, '') + marks(c, i) + '.' : t) + '</p>';
     };
 
     /* ---- the package plan, drawn from above at one scale (millimeters times k pixels) ---- */
@@ -1165,14 +1147,15 @@
       var l2 = [dies ? dies + (area ? ' of ' + area : '') : (area ? 'A die of ' + area : ''), d.transistorsB ? nf(d.transistorsB) + ' billion transistors' : ''].filter(Boolean);
       l2 = l2.length === 2 ? l2[0] + ', with ' + l2[1] : l2.length ? cap1(l2[0]) : '';
       if (!p.foundry) np.push({ t: 'the foundry' }); if (!p.node) np.push({ t: 'the process node' });
-      out.push({ key: 'die', k: Lt.waferScale ? 'Logic die' : (n > 1 || (!n && (Lt.dies || []).length > 1) ? 'Logic dies' : 'Logic die'), who: p.foundry ? esc(p.foundry) : '', det: [p.node, p.country ? cname(p.country) : ''].filter(Boolean).map(esc).join(', '), l2: l2, mk: [sourceFor(c, H.process)] });
-      var sups = m.suppliers || [], st = m.stacks, smk = [];
-      sups.forEach(function (x) { var f = supSources(c, x); if (f.length) smk.push(f[0]); });
-      if (m.type) smk.push(sourceFor(c, H.memtype));
+      out.push({ key: 'die', k: Lt.waferScale ? 'Logic die' : (n > 1 || (!n && (Lt.dies || []).length > 1) ? 'Logic dies' : 'Logic die'), who: p.foundry ? esc(p.foundry) : '', det: [p.node, p.country ? cname(p.country) : ''].filter(Boolean).map(esc).join(', '), l2: l2, mk: p.foundry || p.node ? markOf(c, 'process') : '' });
+      // the memory line's marks: each maker's source and the memory type's, and "all" for any of them the data sources nowhere
+      var sups = m.suppliers || [], st = m.stacks, smk = [], open = false;
+      sups.forEach(function (x) { var f = citeOf(c, null, x); if (f) smk = smk.concat(f); else open = true; });
+      if (m.type) { var tf = citeOf(c, 'memtype'); if (tf) smk = smk.concat(tf); else open = true; }
       if (!sups.length && st !== 0 && !/no HBM/i.test(m.type || '')) np.push({ t: 'the memory maker' });
-      out.push({ key: 'hbm', k: 'Memory', who: sups.length ? join(sups.map(esc)) : '', det: m.type ? esc(m.type) : '', l2: st ? cap1(WORD[st] || String(st)) + ' stacks' : '', mk: smk });
+      out.push({ key: 'hbm', k: 'Memory', who: sups.length ? join(sups.map(esc)) : '', det: m.type ? esc(m.type) : '', l2: st ? cap1(WORD[st] || String(st)) + ' stacks' : '', mk: smk.length || open ? marks(c, smk, null, open) : '' });
       if (!k.assembler) { if (k.type) np.push({ t: 'who assembles the package' }); else np.push({ t: 'the package type' }, { t: 'its assembler' }); } // three things named read "the memory maker, the package type and its assembler"
-      out.push({ key: 'pkg', k: 'Package', who: k.assembler ? esc(k.assembler) : '', det: k.type ? esc(k.type) : '', l2: planSize(c) ? esc(cap1(planSize(c))) : '', mk: k.type || k.assembler ? [sourceFor(c, H.package)] : [] });
+      out.push({ key: 'pkg', k: 'Package', who: k.assembler ? esc(k.assembler) : '', det: k.type ? esc(k.type) : '', l2: planSize(c) ? esc(cap1(planSize(c))) : '', mk: k.type || k.assembler ? markOf(c, 'package') : '' });
       return { rows: out, np: np };
     };
     var npSentence = function (np, lead) { if (!np.length) return ''; var t = join(np.map(function (x) { return x.t; })); return (lead ? lead + t : cap1(t)) + (np.length > 1 ? ' are' : ' is') + ' not published.'; };
@@ -1180,7 +1163,7 @@
       var det = r.det, l1;
       if (r.who && det && det.indexOf(r.who + ' ') === 0) l1 = '<b>' + r.who + '</b>' + det.slice(r.who.length); // "TSMC 3 nm (8 XCDs)": the node already names the foundry
       else l1 = r.who ? '<b>' + r.who + '</b>' + (det ? ', ' + (/^[A-Z][a-z]+[\s,-]/.test(det) ? det.charAt(0).toLowerCase() + det.slice(1) : det) : '') : (det ? cap1(det) : '');
-      return '<span class="l1">' + (l1 ? l1 + marks(c, r.mk) : '<span class="nil">–</span>') + '</span>' + (r.l2 ? '<span class="l2">' + r.l2 + '</span>' : '');
+      return '<span class="l1">' + (l1 ? l1 + r.mk : '<span class="nil">–</span>') + '</span>' + (r.l2 ? '<span class="l2">' + r.l2 + '</span>' : '');
     };
     var partsHTML = function (c) {
       var P = partsData(c), dp = drawnParts(c), num = { die: 1, hbm: 2, pkg: 3 };
@@ -1192,7 +1175,7 @@
     };
     // the rows a card ends on, as the chokepoint card sets its rows
     var ABOUT = [
-      { key: 'status', label: 'Availability', text: function (c) { return c.status ? esc(c.status) + (c.shipping ? '. First shipped ' + esc(when(c.shipping)) : '') : null; } },
+      { key: 'status', label: 'Availability', text: function (c) { return c.status ? esc(c.status) + (c.shipping ? '. First shipped ' + esc(when(c.shipping)) : '') + (c.shippingNote ? '. ' + esc(c.shippingNote) : '') : null; } },
       { key: 'target', label: 'Built for', text: function (c) { return c.target ? esc(c.target) : null; } },
       { key: 'c2c', label: 'Links between chips', text: function (c) { return (c.interconnect || {}).chipToChip ? esc(c.interconnect.chipToChip) : null; } },
       { key: 'scale', label: 'In one rack', text: function (c) { return (c.interconnect || {}).scaleUp ? esc(c.interconnect.scaleUp) : null; } },
@@ -1204,13 +1187,13 @@
     var endStop = function (t, mk) { t = String(t); return /[.!?]$/.test(t) ? t + mk : t + mk + '.'; };
     var aboutHTML = function (c) {
       var np = [], items = [];
-      ABOUT.forEach(function (r) { var t = r.text(c); if (t == null) { np.push(aboutWords[r.key]); return; } items.push({ label: r.label, html: endStop(t, markFor(c, H[r.key])) }); });
+      ABOUT.forEach(function (r) { var t = r.text(c); if (t == null) { np.push(aboutWords[r.key]); return; } items.push({ label: r.label, html: endStop(t, markOf(c, r.key)) }); });
       return { items: items, said: np.length ? 'No source gives ' + join(np) + '.' : '' };
     };
     var notesHTML = function (c) {
       var Sx = srcList(c), body = Sx.notes || (c.notes ? '<p>' + esc(c.notes) + '</p>' : '');
       var srcs = Sx.list.map(function (s, i) { return '<li id="aic-src-' + esc(c.id) + '-' + (i + 1) + '"><a href="' + safeUrl(s.url) + '" target="_blank" rel="noopener">' + (s.raw ? s.label : esc(s.label)) + '</a></li>'; }).join('');
-      return { notes: '<div class="notes">' + body + '</div>', sources: '<ol class="srcs" aria-label="Sources for the ' + esc(c.name) + '">' + srcs + '</ol>' };
+      return { notes: '<div class="notes">' + body + '</div>', sources: '<ol class="srcs" id="aic-srcs-' + esc(c.id) + '" tabindex="-1" aria-label="Sources for the ' + esc(c.name) + '">' + srcs + '</ol>' };
     };
     var speedNote = function (c) { var n = (c.compute || {}).precisionNote; return n ? esc(n) : ''; };
 
@@ -1242,15 +1225,17 @@
         rowsF += line(esc(m.label) + ', ' + esc(unitWords[m.unit]), cols(function (c, i) {
           var v = vals[i];
           if (v == null) { var kd = nilKind(c, m); if (kd === 'np') dashNp = true; else dashNo = true; return '<p class="cmp-v nil">' + sn(c) + '<span aria-label="' + (kd === 'no' ? 'Not supported' : 'Not published') + '">–</span></p>'; }
-          return '<p class="cmp-v' + (have.length > 1 && v === max ? ' top' : '') + '">' + sn(c) + esc(nf(v)) + '</p>';
+          return '<p class="cmp-v' + (have.length > 1 && v === max ? ' top' : '') + '">' + sn(c) + esc(nf(v)) + markOf(c, m.key) + '</p>';
         }));
       });
       var said = [];
       if (dashNp || dashNo) said.push('A dash marks a figure that is ' + (dashNp && dashNo ? 'not published or not supported.' : dashNp ? 'not published.' : 'not supported.'));
       said = said.concat(gapSentences(sel, MEAS, false));
       var both = n === 2 ? 'either chip' : 'any of these ' + WORD[n] + ' chips';
+      // under the figures, what each chip's figures describe where its data says (the Nvidia racks); each figure carries its own source
+      var bases = sel.some(function (c) { return c.basis; });
       h += '<section class="cmp-sec"><h3>Figures</h3>' + rowsF + (said.length ? line(null, '<p class="said">' + said.join(' ') + '</p>', 'bare') : '') +
-        line(null, cols(function (c) { return '<div class="cmp-src">' + figSourceLine(c, stack ? esc(short(c)) + ' figures from' : 'From') + '</div>'; }), 'bare src') + '</section>';
+        (bases ? line(null, cols(function (c) { return '<div class="cmp-src">' + basisLine(c, stack ? short(c) : '') + '</div>'; }), 'bare src') : '') + '</section>';
       // who makes it
       var P = sel.map(partsData), rowsP = '';
       [['die', 'Logic dies'], ['hbm', 'Memory'], ['pkg', 'Package']].forEach(function (pair, ri) {
@@ -1265,7 +1250,7 @@
       ABOUT.forEach(function (r) {
         var ts = sel.map(function (c) { return r.text(c); });
         if (ts.every(function (t) { return t == null; })) { npA.push(aboutWords[r.key]); return; }
-        rowsA += line(esc(r.label), cols(function (c, i) { var t = ts[i]; return '<p class="cmp-t' + (t == null ? ' nil' : '') + '">' + sn(c) + (t == null ? '–' : endStop(t, markFor(c, H[r.key]))) + '</p>'; }));
+        rowsA += line(esc(r.label), cols(function (c, i) { var t = ts[i]; return '<p class="cmp-t' + (t == null ? ' nil' : '') + '">' + sn(c) + (t == null ? '–' : endStop(t, markOf(c, r.key))) + '</p>'; }));
       });
       h += '<section class="cmp-sec"><h3>About ' + (n === 2 ? 'both' : 'all ' + WORD[n]) + '</h3>' + rowsA + (npA.length ? line(null, '<p class="said">No source gives ' + join(npA) + ' for ' + both + '.</p>', 'bare') : '') + '</section>';
       return '<div class="cmp' + (stack ? ' stack' : '') + (side ? ' side' : '') + '" style="--n:' + (stack ? 1 : n) + ';--lw:' + (side ? (o.labelW || 170) + 'px' : '0px') + ';--gap:' + gap + 'px">' + h + '</div>';
@@ -1569,7 +1554,7 @@
         var k = cardK(c), Lt = c.layout, F = figuresHTML(c), Pp = partsHTML(c), AB = aboutHTML(c), N = notesHTML(c), sn = speedNote(c);
         var svg = planSVG(c, k, { big: true, callouts: true, ref: true, words: !nar() });
         var size = planSize(c), cap = svg ? (Lt.waferScale ? 'The WSE-3 Turbo is a whole wafer, so it is drawn at a smaller scale than the other chips, beside a B200 package at the same scale. ' : '') + (size ? esc(cap1(size)) + '.' : '') : '';
-        var stats = F.items.map(function (it) { return '<div class="st"><dt>' + STAT[it.m.key] + '</dt><dd>' + esc(nf(it.v)) + '</dd></div>'; }).join('');
+        var stats = F.items.map(function (it) { return '<div class="st"><dt>' + STAT[it.m.key] + markOf(c, it.m.key) + '</dt><dd>' + esc(nf(it.v)) + '</dd></div>'; }).join('');
         var row = function (label, html, cls) { return '<div class="cr' + (cls ? ' ' + cls : '') + '"><dt>' + label + '</dt><dd>' + html + '</dd></div>'; };
         var rows = row('Who makes it', Pp.list + (Pp.said ? '<p class="said">' + Pp.said + '</p>' : ''), 'parts-r') +
           row('Where it stands', standInner(), 'stand-r') +
@@ -1579,7 +1564,7 @@
         return '<section class="card" aria-labelledby="aic-card-h" id="aic-card"><div class="card-top"><p class="card-m">' + esc(maker(c)) + (c.family ? ', ' + esc(c.family) : '') + '</p>' + close + '</div>' +
           '<div class="card-intro"><div class="ci-text"><h2 id="aic-card-h" tabindex="-1">' + sh + '</h2><p class="dek">' + standfirst(c) + '</p><button type="button" class="tact" data-compare data-title="Compare the ' + sh + ' with" aria-haspopup="dialog" aria-expanded="false">Compare with another chip</button></div>' +
           '<figure class="ci-pic">' + (svg ? svg + '<figcaption>' + scaleBar(k, 120) + (cap ? '<span class="cap-t">' + cap + '</span>' : '') + '</figcaption>' : '<p class="nopic">No drawing. ' + esc(maker(c)) + ' has not published the layout of the ' + sh + ' package.</p>') + '</figure></div>' +
-          '<div class="card-stats">' + (stats ? '<dl class="stats">' + stats + '</dl>' : '') + (F.said ? '<p class="said">' + F.said + '</p>' : '') + (F.any ? figSourceLine(c) : '') + '</div>' +
+          '<div class="card-stats">' + (stats ? '<dl class="stats">' + stats + '</dl>' : '') + (F.said ? '<p class="said">' + F.said + '</p>' : '') + (F.any ? basisLine(c) : '') + '</div>' +
           '<dl class="card-rows">' + rows + '</dl></section>';
       }
       var w = Math.min(innerW() - (nar() ? 32 : 64), 1312), stack = nar() && n > 2;
@@ -1638,6 +1623,11 @@
         if ((b = t.closest('#aic [data-home]'))) { e.preventDefault(); closeCard(); return; }
         if ((b = t.closest('#aic [data-compare]'))) { e.preventDefault(); openPicker(b, b.getAttribute('data-title') || 'Compare with'); return; }
         if ((b = t.closest('#aic [data-remove]'))) { e.preventDefault(); remove(b.getAttribute('data-remove')); return; }
+        // the list mark "all": the chip's sources, in place, so the address keeps the chips it names
+        if ((b = t.closest('#aic [data-srcs]'))) {
+          var to = document.getElementById('aic-srcs-' + b.getAttribute('data-srcs')); if (!to) return; e.preventDefault();
+          window.scrollTo(0, Math.max(0, Math.round(to.getBoundingClientRect().top + window.pageYOffset - headerH() - 16))); to.focus({ preventScroll: true }); return;
+        }
       });
       document.addEventListener('change', function (e) { var t = e.target; if (t.classList && t.classList.contains('mselect') && t.closest('#aic')) setMeasure(t.value); });
       document.addEventListener('pointerdown', function (e) { if (tipClose) tipClose(e); }, true);
@@ -3848,6 +3838,12 @@ try {
   var letterOf = function (name) { var c = String(name).charAt(0).toUpperCase(); return /[A-Z]/.test(c) ? c : '0-9'; };
   var showL = function (L) { return L === '0-9' ? '0–9' : L; };
   var idL = function (L) { return L === '0-9' ? '0-9' : L.toLowerCase(); };
+  // an AI chip's facts in words, as AI Chips sets them: "2024-04" reads April 2024, "2024-Q4" Q4 2024; the node alone where it
+  // already names the foundry ("TSMC 5 nm", not "TSMC TSMC 5 nm")
+  var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  var when = function (s) { s = String(s || ''); var m = /^(\d{4})-(\d{2})$/.exec(s); if (m) return MONTHS[+m[2] - 1] + ' ' + m[1]; m = /^(\d{4})-Q(\d)$/.exec(s); return m ? 'Q' + m[2] + ' ' + m[1] : s; };
+  var nf = function (v) { var p = String(v).split('.'); return p[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',') + (p.length > 1 ? '.' + p[1] : ''); }; // every digit kept, thousands grouped
+  var madeBy = function (p) { return p.foundry && p.node && p.node.indexOf(p.foundry + ' ') === 0 ? [p.node] : [p.foundry, p.node]; };
   var full = function () { return window.innerWidth <= 760; };   // the sheet takes the whole screen
   var beside = function () { return window.innerWidth >= 1000; }; // the columns make room for the sheet beside them
   var idle = window.requestIdleCallback ? function (fn) { window.requestIdleCallback(fn, { timeout: 500 }); }
@@ -3943,7 +3939,7 @@ try {
       } else if (it.kind === 'chip') {
         var p = d.process || {}, m = d.memory || {};
         pos = 'AI chip' + (d.vendorCountry ? ', ' + cname(d.vendorCountry) : '');
-        var line = [d.announced ? 'Announced ' + d.announced : '', [p.foundry, p.node].filter(Boolean).join(' '), [m.type, m.capacityGB ? m.capacityGB + ' GB' : ''].filter(Boolean).join(' '), d.tdpW ? d.tdpW + ' W' : ''].filter(Boolean).join(' · ');
+        var line = [d.announced ? 'Announced ' + when(d.announced) : '', madeBy(p).filter(Boolean).join(' '), m.type || '', m.capacityGB ? nf(m.capacityGB) + ' GB' : '', d.tdpW ? nf(d.tdpW) + ' W' : ''].filter(Boolean).join(' · ');
         body = (line ? '<p class="gl-meta"><span>' + esc(line) + '</span></p>' : '') + (d.status ? '<p class="gl-df">' + esc(d.status) + '</p>' : '');
       } else {
         pos = it.label.toLowerCase();
@@ -4296,12 +4292,12 @@ try {
     chipCard: function (c) {
       var p = c.process || {}, m = c.memory || {}, comp = c.compute || {};
       var facts = [];
-      if (c.announced || c.shipping) facts.push(['Announced / shipping', [c.announced, c.shipping].filter(Boolean).join(' / ')]);
-      if (p.node || p.foundry) facts.push(['Made by', [p.foundry, p.node, p.country ? cname(p.country) : ''].filter(Boolean).join(', ')]);
+      if (c.announced || c.shipping) facts.push(['Announced / shipping', [c.announced, c.shipping].filter(Boolean).map(when).join(' / ')]);
+      if (p.node || p.foundry) facts.push(['Made by', madeBy(p).concat(p.country ? cname(p.country) : '').filter(Boolean).join(', ')]);
       if (m.type) facts.push(['Memory', [m.type, m.stacks ? m.stacks + ' stacks' : '', m.capacityGB ? m.capacityGB + ' GB' : '', m.bandwidthTBs ? m.bandwidthTBs + ' TB/s' : ''].filter(Boolean).join(', ')]);
       var fp = []; if (comp.fp16TFLOPS) fp.push('FP16 ' + comp.fp16TFLOPS.toLocaleString('en-US')); if (comp.fp8TFLOPS) fp.push('FP8 ' + comp.fp8TFLOPS.toLocaleString('en-US')); if (comp.fp4TFLOPS) fp.push('FP4 ' + comp.fp4TFLOPS.toLocaleString('en-US'));
       if (fp.length) facts.push(['Dense TFLOPS', fp.join(' · ')]);
-      if (c.tdpW) facts.push(['Power', c.tdpW + ' W']);
+      if (c.tdpW) facts.push(['Power', nf(c.tdpW) + ' W']);
       if (c.target) facts.push(['Built for', c.target]);
       return '<article class="lk-card lk-card--chip">' +
         '<p class="lk-kind">AI chip · ' + esc(c.vendor) + (c.vendorCountry ? ', ' + esc(cname(c.vendorCountry)) : '') + '</p>' +

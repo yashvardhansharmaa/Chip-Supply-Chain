@@ -8,7 +8,7 @@
    every number is printed as the main page prints it, with the source link and date the main page gives it. The words
    that are the main page's own (deks, labels, the board's key, the notes) are read from where the main page keeps them:
    build.js passes its strings on ctx, the template's static text is read from src/template.html, and the few client
-   constants (country names, the stage order, the comparison's row labels and source hints) are read from src/app.js.
+   constants (country names, the stage order) are read from src/app.js.
 
    The pages share the readable chapter pages' head, masthead, footer, type and tokens (social.js exports them, and
    build/assets/chapter-page.css is inlined with build/assets/reference-page.css after it). They open light; ?theme=dark or
@@ -58,10 +58,6 @@ module.exports = function (ctx) {
   const STATE = literal('Geo.STATE', /\bSTATE: (\{[^}]*\})/) || { open: 'No license', restricted: 'Restricted', case: 'Case by case', denial: 'Presumption of denial', prohibited: 'Prohibited', policy: 'Policy' };
   const OLD_STATE = literal('Geo.OLD_STATE', /\bOLD_STATE: (\{[^}]*\})/) || {};
   const INSTRUMENT = literal('Geo.INSTRUMENT', /\bINSTRUMENT: (\{[^}]*\})/) || {};
-  // the comparison's rows: each label with the words that pick its source from the chip's list (Landscape.rows, sourceTitle)
-  const HINTS = {};
-  appSrc.replace(/\{ label: '([^']+)', hint: (\[[^\]]*\])/g, (m, label, arr) => { try { HINTS[label] = vm.runInNewContext('(' + arr + ')', Object.create(null), { timeout: 100 }); } catch (e) { } return m; });
-  if (!Object.keys(HINTS).length) warn('reference pages: could not read the AI Chips rows from src/app.js');
   // static text in src/template.html
   const tmpl = (re, name) => { const m = re.exec(template); if (!m) { warn(`reference pages: ${name} is missing from src/template.html`); return ''; } return m[1].trim(); };
   // each view's own <section> (the template names the views earlier too, in its pre-boot CSS and the nav)
@@ -387,55 +383,33 @@ ${body}
     const nf = (v) => { const t = String(v), neg = t.charAt(0) === '-', p = (neg ? t.slice(1) : t).split('.'); return (neg ? '-' : '') + p[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',') + (p.length > 1 ? '.' + p[1] : ''); };
     const nfAxis = (v) => (Math.round(v * 100) / 100).toLocaleString('en-US');
     const sub = (t) => (t ? `<span class="sub">${t}</span>` : '');
-    const hint = (label, fallback) => { if (HINTS[label]) return HINTS[label]; if (Object.keys(HINTS).length) warn(`reference pages: the AI Chips row "${label}" is not in src/app.js, so its source hints are the module's own`); return fallback; };
     // the columns: the comparison's rows (Landscape.rows) for the fields the brief names, in the comparison's words
     const COLS = [
-      { label: 'Vendor', hints: hint('Vendor', ['product page', 'press release', 'corporate']), html: (c) => esc(c.vendor) + sub(esc(cname(c.vendorCountry))) },
-      { label: 'Announced', hints: hint('Availability', ['product page', 'press release', 'spec table']), html: (c) => (c.announced ? esc(String(c.announced).slice(0, 4)) : null) },
+      { label: 'Vendor', key: 'vendor', html: (c) => esc(c.vendor) + sub(esc(cname(c.vendorCountry))) },
+      { label: 'Announced', key: 'announced', html: (c) => (c.announced ? esc(String(c.announced).slice(0, 4)) : null) },
       // a part that is missing is said, as the comparison says it (Landscape.rows): "node not published", "assembler not published"
-      { label: 'Foundry, process node', wide: true, hints: hint('Foundry, process node', ['architecture', 'deep dive', 'white paper', 'documentation']), html: (c) => { const p = c.process || {}; if (!p.foundry && !p.node) return null; return (p.foundry ? esc(p.foundry) : '<span class="nil">foundry not published</span>') + sub((p.node ? esc(p.node) + (p.foundry ? '' : '\u0001') : 'node not published') + (p.country ? ' · ' + esc(cname(p.country)) : '')); } },
-      { label: 'Memory type', hints: hint('Memory type', ['hbm', 'micron', 'memory', 'datasheet']), html: (c) => { const m = c.memory || {}; return m.type ? esc(m.type) + (m.stacks ? sub(m.stacks + ' stacks') : '') : null; } },
-      { label: 'Memory, gigabytes', num: true, hints: hint('Memory, gigabytes', ['spec table', 'datasheet', 'product page']), val: (c) => (c.memory || {}).capacityGB },
-      // each memory supplier carries the source that names it, as the comparison marks it (Landscape.supSources), and a supplier
-      // no source names carries no mark
-      { label: 'Memory supplier', wide: true, own: true, html: (c) => { const s = (c.memory || {}).suppliers || []; return s.length ? s.map((x) => { const k = supSources(c, x); return esc(x) + (k.length ? markAt(c, k[0]) : ''); }).join(', ') : null; } },
-      { label: 'Package', wide: true, hints: hint('Package', ['cowos', 'packag', 'deep dive', 'architecture']), html: (c) => { const p = c.package || {}; if (!p.type && !p.assembler) return null; return (p.type ? esc(p.type) : '<span class="nil">type not published</span>') + sub(p.assembler ? 'assembled by ' + esc(p.assembler) + (p.type ? '' : '\u0001') : 'assembler not published'); } },
-      { label: 'Bandwidth, terabytes/s', num: true, hints: hint('Bandwidth, terabytes/s', ['spec table', 'datasheet', 'product page']), val: (c) => (c.memory || {}).bandwidthTBs },
-      { label: 'Speed at FP16, TFLOPS', num: true, fmt: 'fp16', hints: hint('Speed at FP16, TFLOPS', ['spec table', 'datasheet', 'product page']), val: (c) => (c.compute || {}).fp16TFLOPS },
-      { label: 'Speed at FP8, TFLOPS', num: true, fmt: 'fp8', hints: hint('Speed at FP8, TFLOPS', ['spec table', 'datasheet', 'product page']), val: (c) => (c.compute || {}).fp8TFLOPS },
-      { label: 'Speed at FP4, TFLOPS', num: true, fmt: 'fp4', hints: hint('Speed at FP4, TFLOPS', ['spec table', 'datasheet', 'product page']), val: (c) => (c.compute || {}).fp4TFLOPS },
-      { label: 'Power, watts', num: true, hints: hint('Power, watts', ['spec table', 'datasheet', 'product page']), val: (c) => c.tdpW },
+      { label: 'Foundry, process node', wide: true, key: 'process', html: (c) => { const p = c.process || {}; if (!p.foundry && !p.node) return null; return (p.foundry ? esc(p.foundry) : '<span class="nil">foundry not published</span>') + sub((p.node ? esc(p.node) + (p.foundry ? '' : '\u0001') : 'node not published') + (p.country ? ' · ' + esc(cname(p.country)) : '')); } },
+      { label: 'Memory type', key: 'memtype', html: (c) => { const m = c.memory || {}; return m.type ? esc(m.type) + (m.stacks ? sub(m.stacks + ' stacks') : '') : null; } },
+      { label: 'Memory, gigabytes', num: true, key: 'mem', val: (c) => (c.memory || {}).capacityGB },
+      // each memory supplier carries the source the data names for it (cite.suppliers), as the main page marks it
+      { label: 'Memory supplier', wide: true, own: true, html: (c) => { const s = (c.memory || {}).suppliers || []; return s.length ? s.map((x) => esc(x) + marksOf(c, citeOf(c, null, x))).join(', ') : null; } },
+      { label: 'Package', wide: true, key: 'package', html: (c) => { const p = c.package || {}; if (!p.type && !p.assembler) return null; return (p.type ? esc(p.type) : '<span class="nil">type not published</span>') + sub(p.assembler ? 'assembled by ' + esc(p.assembler) + (p.type ? '' : '\u0001') : 'assembler not published'); } },
+      { label: 'Bandwidth, terabytes/s', num: true, key: 'bw', val: (c) => (c.memory || {}).bandwidthTBs },
+      { label: 'Speed at FP16, TFLOPS', num: true, fmt: 'fp16', key: 'fp16', val: (c) => (c.compute || {}).fp16TFLOPS },
+      { label: 'Speed at FP8, TFLOPS', num: true, fmt: 'fp8', key: 'fp8', val: (c) => (c.compute || {}).fp8TFLOPS },
+      { label: 'Speed at FP4, TFLOPS', num: true, fmt: 'fp4', key: 'fp4', val: (c) => (c.compute || {}).fp4TFLOPS },
+      { label: 'Power, watts', num: true, key: 'tdp', val: (c) => c.tdpW },
     ];
     // an empty cell says which kind of empty it is (Landscape.nil): a format the hardware cannot run, or a figure no one has published
     const nil = (c, col) => (col.fmt && ((c.compute || {}).support || {})[col.fmt] === 'no' ? '<span class="nil">not supported</span>' : '<span class="nil">not published</span>');
-    // the cell's source, picked as the main page picks it (Landscape.sourceTitle): the first source whose label carries one of the
-    // row's words; when none does, the cell points to the chip's whole list, as the main page lists them all
+    // the cell's sources, as the data names them (cite, by each source's number in the chip's list: "4, 12"), the main page's
+    // rule (Landscape.citeOf); a cell the data sources nowhere points to the chip's whole list, [all], and is never guessed
     const markAt = (c, i) => { const s = (c.sources || [])[i], id = chipIds.get(c.id), l = String((s && s.label) || ''); return s ? `<sup class="cite"><a href="#${id}-s${i + 1}" title="Source: ${esc(l || s.url)}" aria-label="Source ${i + 1}: ${esc(l || s.url)}"><span class="br">[</span>${i + 1}<span class="br">]</span></a></sup>` : ''; };
-    // the sources that name a memory supplier (Landscape.supSources): first a sentence of the chip's notes that names the supplier
-    // and its memory and cites a source, then a source whose label names the supplier (not the chip's own maker); one that also
-    // names the chip comes first
-    const notes = data.landscapeNotes || {};
-    const supSources = (c, sup) => {
-      const srcs = c.sources || [], at = {}, low = String(sup).toLowerCase(), found = [];
-      srcs.forEach((x, i) => { at[x.url] = i; });
-      String(notes[c.id] || '').split(/\.\s+/).forEach((sent) => {
-        const plain = sent.replace(/<[^>]+>/g, '');
-        if (plain.toLowerCase().indexOf(low) < 0 || !/HBM|memory|stack/i.test(plain)) return;
-        sent.replace(/<a href="([^"]+)"/g, (m, u) => { u = u.replace(/&amp;/g, '&'); if (at[u] != null && found.indexOf(at[u]) < 0) found.push(at[u]); return m; });
-      });
-      if (!found.length && sup !== c.vendor) srcs.forEach((x, i) => { if (String(x.label || '').toLowerCase().indexOf(low) >= 0) found.push(i); });
-      const tag = String(c.name).replace(/\s*\(.*\)\s*$/, '').toLowerCase(), named = found.filter((i) => String(srcs[i].label || '').toLowerCase().indexOf(tag) >= 0);
-      return named.concat(found.filter((i) => named.indexOf(i) < 0));
-    };
-    const mark = (c, col) => {
-      const srcs = c.sources || [], id = chipIds.get(c.id);
-      if (!srcs.length || col.own) return '';
-      for (const h of col.hints) for (let i = 0; i < srcs.length; i++) {
-        const l = String(srcs[i].label || '');
-        if (l.toLowerCase().indexOf(h) >= 0) return markAt(c, i);
-      }
-      return `<sup class="cite"><a href="#${id}-sources" title="Sources for the ${esc(c.name)}" aria-label="Sources for the ${esc(c.name)}"><span class="br">[</span>all<span class="br">]</span></a></sup>`;
-    };
+    const citeOf = (c, key, sup) => { const C = c.cite || {}, v = sup != null ? (C.suppliers || {})[sup] : C[key], n = (c.sources || []).length; if (v == null || v === '') return null; const out = String(v).split(/\s*,\s*/).map((x) => +x - 1).filter((i) => i >= 0 && i < n); return out.length ? out : null; };
+    const allMark = (c) => { const id = chipIds.get(c.id); return `<sup class="cite"><a href="#${id}-sources" title="Sources for the ${esc(c.name)}" aria-label="Sources for the ${esc(c.name)}"><span class="br">[</span>all<span class="br">]</span></a></sup>`; };
+    // several sources share one mark, their numbers apart by commas, as the main page sets them
+    const marksOf = (c, idx) => (idx ? (idx.length > 1 ? '<sup class="cite">' + idx.map((i) => markAt(c, i).replace(/^<sup class="cite">|<\/sup>$/g, '')).join('<span aria-hidden="true">,</span>') + '</sup>' : markAt(c, idx[0])) : allMark(c));
+    const mark = (c, col) => ((c.sources || []).length && !col.own ? marksOf(c, citeOf(c, col.key)) : '');
     const cell = (c, col) => {
       if (col.num) { const v = col.val(c); return `<td class="num">${v == null ? nil(c, col) : esc(nf(v)) + mark(c, col)}</td>`; }
       const t = col.html(c);
