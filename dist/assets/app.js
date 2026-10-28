@@ -3617,12 +3617,22 @@
       addExport('[data-sub="exposure"] .matrix-wrap', 'China revenue share by firm and year', DATA.exposure, 'after', 'figures'); // under the table it copies
       // the line above the board that takes a reader down to the chronology
       document.addEventListener('click', function (e) { var j = e.target.closest ? e.target.closest('.cf-jump-btn') : null; if (!j) return; var t = $('#timeline'); if (t) scrollToEl(t, true); });
-      // cite-this block in the footer
-      // the edition is the site's last update, read from the footer's "Updated 3 October 2026"; the access date is the reader's own day
-      var d0 = localISO(), canon = (document.querySelector('link[rel=canonical]') || {}).href || (location.origin + location.pathname);
-      var upd = ($('.site-footer .updated') || {}).textContent || '', um = upd.match(/(\d{1,2})\s+([A-Z][a-z]+)\s+(\d{4})/);
-      var year = um ? um[3] : String(new Date().getFullYear()), edition = um ? um[2] + ' ' + year : year; // no stamp: the year alone, never a guessed month
-      $$('.site-footer').forEach(function (foot) { var d = d0; foot.insertAdjacentHTML('beforeend', '<details class="cite"><summary>How to cite</summary><pre>Sharma, Y. Chip Supply Chain: How AI Chips Are Made. ' + esc(edition) + '. ' + canon + ' (accessed ' + d + ').</pre><pre>@misc{chipsupplychain' + esc(year) + ',\n  title  = {Chip Supply Chain: How AI Chips Are Made},\n  author = {Sharma, Yashvardhan},\n  year   = {' + esc(year) + '},\n' + (um ? '  month  = {' + esc(um[2]) + '},\n' : '') + '  url    = {' + canon + '},\n  note   = {Accessed ' + d + '}\n}</pre></details>'); });
+      // cite-this block in the footer, in the form "Cite this chapter" and the PDFs use (build/build.js citeBlock, src/modules/print.js):
+      // on a chapter's page the chapter, its title and its own "Updated" day; elsewhere the site, with the footer's "Updated" day.
+      // The access date is the reader's own day, written day first as every date on the site is (28 Oct 2026; it was ISO)
+      var MON = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+      var now = new Date(), d0 = now.getDate() + ' ' + MON[now.getMonth()] + ' ' + now.getFullYear();
+      var canon = (document.querySelector('link[rel=canonical]') || {}).href || (location.origin + location.pathname);
+      var chText = PAGE.kind === 'chapter' && PAGE.chapter ? $('#cite-' + PAGE.chapter + ' .ch-cite-text') : null, ct = chText ? chText.textContent : '';
+      var chTitle = (/“(.+?)\.”/.exec(ct) || [])[1] || '', chDay = (/Updated (\d{1,2} [A-Z][a-z]+ \d{4})/.exec(ct) || [])[1] || '';
+      var upd = ($('.site-footer .updated') || {}).textContent || '', um = (chTitle && chDay ? chDay : upd).match(/(\d{1,2})\s+([A-Z][a-z]+)\s+(\d{4})/);
+      var year = um ? um[3] : String(now.getFullYear()), dayUp = um ? um[1] + ' ' + um[2] + ' ' + um[3] : ''; // no stamp: the year alone, never a guessed day
+      var WORK = 'Chip Supply Chain: How AI Chips Are Made';
+      var plain = 'Sharma, Yashvardhan. ' + (chTitle ? '“' + chTitle + '.” ' : '') + WORK + '. ' + (dayUp ? 'Updated ' + dayUp : year) + '. ' + canon + ' (accessed ' + d0 + ').';
+      var rows = [['title', chTitle || WORK], ['author', 'Sharma, Yashvardhan']].concat(chTitle ? [['howpublished', WORK]] : [], [['year', year]], um ? [['month', um[2]]] : [],
+        [['url', canon], ['note', (dayUp ? 'Updated ' + dayUp + '. ' : '') + 'Accessed ' + d0]]);
+      var bib = '@misc{chipsupplychain' + (chTitle ? '-' + PAGE.chapter + '-' : '') + year + ',\n' + rows.map(function (r) { return '  ' + (r[0] + '            ').slice(0, 12) + ' = {' + r[1] + '}'; }).join(',\n') + '\n}';
+      $$('.site-footer').forEach(function (foot) { foot.insertAdjacentHTML('beforeend', '<details class="cite"><summary>' + (chTitle ? 'How to cite this chapter' : 'How to cite') + '</summary><pre>' + esc(plain) + '</pre><pre>' + esc(bib) + '</pre></details>'); });
     }
   };
 
