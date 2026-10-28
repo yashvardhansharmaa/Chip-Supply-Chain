@@ -3,8 +3,10 @@
    screens only; this looks at every text box on the whole page, element against element in the same layer (bucketed by
    64 px bands, so a long page stays quick), plus sideways scroll, text under 11 px and clipped text, as sweep.js measures
    them. Content-visibility is forced visible, so every part is laid out; the far face of a turned flashcard is skipped.
-   usage: node qa/redesign/sweep-full.js <base> <widths> <out> "<name>|<url>" ...
-   e.g.   node qa/redesign/sweep-full.js http://127.0.0.1:8773 320,390,768,1024,1280,1440 /tmp/full.txt "lithography|/#lithography" */
+   usage: node qa/redesign/sweep-full.js <base> <widths> <out> "<name>|<url>[|<js>]" ...
+   e.g.   node qa/redesign/sweep-full.js http://127.0.0.1:8773 320,390,768,1024,1280,1440 /tmp/full.txt "lithography|/#lithography"
+   A third field of script runs after the page loads and before the measure (27 Oct 2026: to hide the chapter's contents rail,
+   "litho-hidden|/#lithography|localStorage.setItem('cp-rail','off');document.documentElement.classList.add('rail-off')"). */
 'use strict';
 const fs = require('fs');
 const [BASE, widths, OUT, ...specs] = process.argv.slice(2);
@@ -72,9 +74,10 @@ const MEASURE = `(async () => {
   const chrome = launch(); const lines = []; let bad = 0, loads = 0;
   try {
     for (const spec of specs) for (const w of widths.split(',').map(Number)) {
-      const [name, url] = spec.split('|');
+      const [name, url, js] = spec.split('|');
       const t = await open(chrome, BASE + url, { width: w, wait: 1800 });
       try {
+        if (js) { await t.ev(`(function(){ ${js} ; return 1; })()`); await new Promise((r) => setTimeout(r, 600)); }
         const m = await t.ev(MEASURE); loads++;
         const probs = [];
         if (m.sw > m.W) probs.push(`scrolls sideways: ${m.sw} > ${m.W}`);

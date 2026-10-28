@@ -1,0 +1,6 @@
+note: /silicon-and-wafers/: title is 47 characters, outside 50 to 60: "How silicon wafers are made · Chip Supply Chain"
+note: /chemicals-gases-and-photoresist/: title is 68 characters, outside 50 to 60: "Photoresist and the chemicals used to make chips · Chip Supply Chain"
+note: /foundries-and-fabs/: title is 65 characters, outside 50 to 60: "How chip foundries like TSMC make transistors · Chip Supply Chain"
+note: /memory-and-hbm/: title is 48 characters, outside 50 to 60: "What HBM is and who makes it · Chip Supply Chain"
+note: /advanced-packaging/: title is 66 characters, outside 50 to 60: "How advanced packaging like TSMC's CoWoS works · Chip Supply Chain"
+check-seo: 16 chapter pages, 22 sitemap entries, no problems (5 notes)

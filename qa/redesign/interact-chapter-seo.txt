@@ -1,0 +1,82 @@
+ok   1440: the drawing sits in Lithography's slot
+ok   1440: the stage beside the page stands down
+ok   1440: the specimen shown is the EUV scanner: euv-scanner
+ok   1440: four balloons on the drawing: 1 Light source (164,300), 2 Mirrors (502,230), 3 Mask (502,109), 4 Wafer (502,328)
+ok   1440: every balloon name inside the drawing's box, at 11 px or more
+ok   1440: the caption stands on the drawing's foot (--slack set): 47px
+ok   1440: the rail starts beside the kicker (its first line, On this page): rail 120, kicker 120
+ok   1440: the kicker carries the card's verdict: Chapter 04Stage 4 of 14Extreme concentration·Very hard to substitute
+ok   1440: the specimen is a plate at the measure, in the text column: 666 px at x 398, text at 398
+ok   1440: the plate is fitted to its drawing (--draw-h, --lift): --draw-h 460px, --lift 52px
+ok   1440: the card is in the text after the lead, before section 01, as wide as the flashcards (720 px since 27 Oct): {"prev":"P","next":"lithography--how-it-works","w":720}
+ok   1440: On this page lists the card after In plain terms: In plain terms | Chokepoint card | How it works
+ok   1440: Chokepoint card in the rail lands on the card, clear of the masthead: {"top":80,"hash":"#lithography--card","cur":"Chokepoint card"}
+ok   1440: a term in the card opens its look-up card: EUV scanners -> EUV
+ok   1440: the substitutability rating in the card opens its look-up card: Very hard -> Very hard to substitute
+ok   1440: the parts list names the four parts
+ok   1440: the rail marks How it works: How it works
+ok   1440: the rail stays in view (sticky)
+ok   1440: the rail fits the window: 790 in 790
+ok   1440: the figure is numbered 04.5
+ok   1440: rule B, the largest bar ink, the rest the tint: rgb(23, 23, 22) rgb(210, 209, 204) rgb(210, 209, 204) rgb(210, 209, 204) rgb(210, 209, 204) rgb(210, 209, 204) rgb(210, 209, 204)
+ok   1440: no wine on any bar in any chapter
+ok   1440: the strip has Cite, Table, CSV and PNG: Cite Table CSV PNG
+ok   1440: Cite opens the figure's citation: Sharma, Yashvardhan. “Figure 04.5: ASML net system sales by the region tools shipped to, 2025.” Chip Supply Chain: How AI Chips Are Made. Up
+ok   1440: Table shows the rows in place of the bars
+ok   1440: and back to the bars
+ok   1440: CSV is a download of the rows
+ok   1440: PNG draws the figure at 1,600 px wide: {"w":1600,"h":970,"type":"image/png"}
+ok   1440: the drawing moves to component-costs's slot
+ok   1440: component-costs draws on the night ground, its caption under it on the page: {"slot":"rgb(18, 18, 17)","cap":"rgba(0, 0, 0, 0)","capInk":"rgb(69, 68, 63)","dark":true,"inside":true}
+ok   1440: the drawing moves to geopolitics's slot
+ok   1440: geopolitics draws on the night ground, its caption under it on the page: {"slot":"rgb(18, 18, 17)","cap":"rgba(0, 0, 0, 0)","capInk":"rgb(69, 68, 63)","dark":true,"inside":true}
+ok   1440: back on Lithography, the light ground again
+ok   1440: a stage in the rail opens its chapter: #photomasks-and-pellicles
+ok   1440: on the home the drawing is back on the stage
+ok   1440: the home shows no balloons
+ok   1440: #lithography--card opens Lithography at its card, clear of the masthead: {"top":80,"mast":64,"shown":"lithography"}
+ok   390: #lithography--card opens Lithography at its card, clear of the masthead: {"top":132,"mast":76,"shown":"lithography"}
+ok   1440: a Glossary passage on a card (EUV's) lands on the card: {"chapter":"chemicals-gases-and-photoresist","text":"In March 2026 the Chinese resist maker Hubei Dingl","top":80,"hash":"#chemicals-gases-and-photoresist","shown":true,"flash":true}
+ok   390: the drawing stays in the strip
+ok   390: the masthead is down after the landing
+ok   390: scrolling down raises the masthead
+ok   390: the slim bar names the chapter and the section: 04LithographyIn plain terms
+ok   390: scrolling up brings the masthead back, the slim bar under it
+ok   390: the expanded strip lists the parts
+ok   page 1440: no button from the app
+ok   page 1440: the opener's kicker: Chapter 04Stage 4 of 14Extreme concentration·Very hard to substitute
+ok   page 1440: Lithography's still, with its balloons
+ok   page 1440: the still's numbers and names at 11 px or more: 12.0 px
+ok   page 1440: the figure strip has Cite, Table, CSV and PNG
+ok   page 1440: Cite opens the figure's citation, with the page's day
+ok   page 1440: the rail beside the text
+ok   page 1440: a stage in the rail links to its page
+ok   page 390: no button from the app
+ok   page 390: the opener's kicker: Chapter 04Stage 4 of 14Extreme concentration·Very hard to substitute
+ok   page 390: Lithography's still, with its balloons
+ok   page 390: the still's numbers and names at 11 px or more: 14.7 px
+ok   page 390: the figure strip has Cite, Table, CSV and PNG
+ok   page 390: Cite opens the figure's citation, with the page's day
+ok   page 390: a stage in the rail links to its page
+ok   chain 1440: the rail shows by default, with Hide contents and no Show contents: {"off":false,"body":true,"hide":true,"show":false,"hideExp":"true","showExp":"false","ctl":true,"focus":"BODY","stored":null,"textX":398,"textW":666,"figX":398,"figW":666,"mid":387,"showTop":0}
+ok   chain 1440: Tab after the chapter's head reaches Hide contents: hide
+ok   chain 1440: Enter hides the rail, and focus moves to Show contents: {"off":true,"body":false,"hide":false,"show":true,"hideExp":"true","showExp":"false","ctl":true,"focus":"show","stored":"off","textX":387,"textW":666,"figX":387,"figW":666,"mid":387,"showTop":88}
+ok   chain 1440: the text column moves to the middle at 666 px, the figures with it: text at 387 (middle 387, was 398), 666 px; figure at 387, 666 px
+ok   chain 1440: the choice is kept on this device: off
+ok   chain 1440: Show contents stays in view down the page: top 88
+ok   chain 1440: after a reload the rail is still hidden: {"off":true,"body":false,"hide":false,"show":true,"hideExp":"true","showExp":"false","ctl":true,"focus":"BODY","stored":"off","textX":387,"textW":666,"figX":387,"figW":666,"mid":387,"showTop":120}
+ok   chain 1440: Enter on Show contents brings the rail back, focus on Hide contents, the column where it was: {"off":false,"body":true,"hide":true,"show":false,"hideExp":"true","showExp":"false","ctl":true,"focus":"hide","stored":null,"textX":398,"textW":666,"figX":398,"figW":666,"mid":387,"showTop":0}
+ok   chain print: neither button prints, and the hidden rail does not change the layout (no 666 px middle column): none,none | repeat(12, minmax(0px, 1fr))
+ok   chain 1024: neither button shows, and the rail's line of links stays though it was hidden at 1440: 9 links, shown; {"hide":false,"show":false,"body":true}
+ok   page 1440: the rail shows by default, with Hide contents and no Show contents: {"off":false,"body":true,"hide":true,"show":false,"hideExp":"true","showExp":"false","ctl":true,"focus":"BODY","stored":null,"textX":398,"textW":666,"figX":398,"figW":666,"mid":387,"showTop":0}
+ok   page 1440: Tab after the chapter's head reaches Hide contents: hide
+ok   page 1440: Enter hides the rail, and focus moves to Show contents: {"off":true,"body":false,"hide":false,"show":true,"hideExp":"true","showExp":"false","ctl":true,"focus":"show","stored":"off","textX":387,"textW":666,"figX":387,"figW":666,"mid":387,"showTop":24}
+ok   page 1440: the text column moves to the middle at 666 px, the figures with it: text at 387 (middle 387, was 398), 666 px; figure at 387, 666 px
+ok   page 1440: the choice is kept on this device: off
+ok   page 1440: Show contents stays in view down the page: top 24
+ok   page 1440: after a reload the rail is still hidden: {"off":true,"body":false,"hide":false,"show":true,"hideExp":"true","showExp":"false","ctl":true,"focus":"BODY","stored":"off","textX":387,"textW":666,"figX":387,"figW":666,"mid":387,"showTop":24}
+ok   page 1440: Enter on Show contents brings the rail back, focus on Hide contents, the column where it was: {"off":false,"body":true,"hide":true,"show":false,"hideExp":"true","showExp":"false","ctl":true,"focus":"hide","stored":null,"textX":398,"textW":666,"figX":398,"figW":666,"mid":387,"showTop":0}
+ok   page print: neither button prints, and the hidden rail does not change the layout (no 666 px middle column): none,none | 87.3281px 87.3281px 87.3281px 87.3281px 87.3281px 87.3281px 87.3281px 87.3281px 87.3281px 87.3281px 87.3281px 87.3281px
+ok   page 1024: neither button shows, and the rail's line of links stays though it was hidden at 1440: 9 links, shown; {"hide":false,"show":false,"body":true}
+
+all passed
