@@ -1113,9 +1113,9 @@
     "chapter": "data-centers-and-power"
   },
   {
-    "term": "mm2",
-    "aka": "square millimeters, square millimeter, mm²",
-    "plain": "mm2 means square millimeters, the unit chip areas are given in. A lithography scanner prints at most 858 mm2 in one shot, and each compute die in an Nvidia B200 is about 800 mm2. TSMC plans to start making CoWoS packages with interposers 14 times the size of one scanner shot in 2028.",
+    "term": "mm²",
+    "aka": "mm2, square millimeters, square millimeter",
+    "plain": "mm² means square millimeters, the unit chip areas are given in. A lithography scanner prints at most 858 mm² in one shot, and each compute die in an Nvidia B200 is about 800 mm². In 2028 TSMC plans to start making chip packages whose base layer, the wiring that links the chips, covers 14 scanner shots.",
     "why": "Yield, the share of dies that work, falls as die area grows, so the cost of each working chip rises faster than its area.",
     "chapter": "component-costs"
   },
@@ -1268,7 +1268,7 @@
   },
   {
     "term": "3B001",
-    "aka": "3B090, 3B001.c.1, 3B001.d.9, 3B001.d.10, 3B001.d.5, 3D991, 3E991",
+    "aka": "3B090, 3B001.c.1, 3B001.d.9, 3B001.d.10, 3B001.d.5",
     "plain": "3B001 is the main entry in the US export control list for chipmaking equipment. It is written as process specifications, such as an etch tool that cuts sideways or a deposition tool that coats holes more than 200 times deeper than they are wide. BIS created 3B090 in October 2022 and folded it into 3B001 and 3B002 in October 2023 (88 FR 73424). The related 3D and 3E entries cover the software and know-how that go with the tools.",
     "why": "It decides which chipmaking tools need an export license. It defines a tool by the process it can run, because the same chamber can add or remove material depending on its recipe.",
     "chapter": "geopolitics"
