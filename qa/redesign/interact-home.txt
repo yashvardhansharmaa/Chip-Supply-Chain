@@ -1,0 +1,51 @@
+ok   1440: the title, then the counts of the read: 16 paragraphs2,468 wordsabout 11 min
+ok   1440: the kicker and the sentence, computed: 7 of the 14 stages are rated Extreme, meaning three or fewer firms could supply each today, or one firm holds more than half.
+ok   1440: fourteen rows, seven Extreme: 14 rows, 7 Extreme
+ok   1440: the bar chart, the hero's search field and the two link blocks are gone
+ok   1440: the stage opens on 01 Chip Design: Specimen 01 · Chip Design, EDA and IP
+ok   1440: row 01 alone is marked: 01
+ok   1440: Tab reaches the list before the specimen
+ok   1440: the caption sits right under the drawing: 10 px between the drawing's lowest point and the caption
+ok   1440: every name links to its chapter (href and data-route) and is named as it
+ok   1440: every row's meter puts its own specimen on the stage and marks that row alone
+ok   1440: resting on a name does not pick: Specimen 14 · Data Centers and Power
+ok   1440: resting on a meter picks it; passing over one does not: Specimen 06 · Deposition and Etch
+ok   1440: Tab from a name goes to the next name when its row is not picked: wk-gl-a 03Chemicals, Gases and Photore
+ok   1440: one meter in the Tab order, the picked one
+ok   1440: Tab from the picked row's name reaches its meter
+ok   1440: Home picks 01 and focuses it: Specimen 01 · Chip Design, EDA and IP
+ok   1440: ArrowDown moves to 02, picks it and focuses it: Specimen 02 · Silicon and Wafers
+ok   1440: End picks 14: Specimen 14 · Data Centers and Power
+ok   1440: ArrowUp moves back to 13: Specimen 13 · Systems and Networking
+ok   1440: Tab from the meter goes on to the next name: wk-gl-a
+ok   1440: Enter on a name opens its chapter: #data-centers-and-power
+ok   1440: Back returns to the home: #/
+ok   1440: a click on a name opens its chapter: #lithography
+ok   1440: with the walk begun under it, a pick still shows: before: Specimen 01 · Chip Design, EDA and IP; after: Specimen 13 · Systems and Networking
+ok   1440: past the hero the walk has the stage again: Specimen 03 · Chemicals, Gases and Photoresist
+ok   1440: the masthead search opens
+ok   390: the title, then the counts of the read: 16 paragraphs2,468 wordsabout 11 min
+ok   390: the kicker and the sentence, computed: 7 of the 14 stages are rated Extreme, meaning three or fewer firms could supply each today, or one firm holds more than half.
+ok   390: fourteen rows, seven Extreme: 14 rows, 7 Extreme
+ok   390: the bar chart, the hero's search field and the two link blocks are gone
+ok   390: the stage opens on 01 Chip Design: Specimen 01 · Chip Design, EDA and IP
+ok   390: row 01 alone is marked: 01
+ok   390: Tab reaches the list before the specimen
+ok   390: every name links to its chapter (href and data-route) and is named as it
+ok   390: every row's meter puts its own specimen on the stage and marks that row alone
+ok   390: Tab from a name goes to the next name when its row is not picked: wk-gl-a 03Chemicals, Gases and Photore
+ok   390: one meter in the Tab order, the picked one
+ok   390: Tab from the picked row's name reaches its meter
+ok   390: Home picks 01 and focuses it: Specimen 01 · Chip Design, EDA and IP
+ok   390: ArrowDown moves to 02, picks it and focuses it: Specimen 02 · Silicon and Wafers
+ok   390: End picks 14: Specimen 14 · Data Centers and Power
+ok   390: ArrowUp moves back to 13: Specimen 13 · Systems and Networking
+ok   390: Tab from the meter goes on to the next name: wk-gl-a
+ok   390: Enter on a name opens its chapter: #data-centers-and-power
+ok   390: Back returns to the home: #/
+ok   390: a click on a name opens its chapter: #lithography
+ok   390: with the walk begun under it, a pick still shows: before: Specimen 01 · Chip Design, EDA and IP; after: Specimen 13 · Systems and Networking
+ok   390: past the hero the walk has the stage again: Specimen 03 · Chemicals, Gases and Photoresist
+ok   390: the masthead search opens
+
+all passed

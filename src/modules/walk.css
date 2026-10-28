@@ -15,7 +15,7 @@
   font-size: var(--fs-d1); line-height: 1.02; letter-spacing: -0.02em;
   text-transform: none; margin: 0 0 0 -0.04em; color: var(--ink);
 }
-.wk-dek { font-family: var(--font-body); font-weight: 400; font-size: calc(clamp(18px, 1.45vw, 21px) * var(--text-scale)); line-height: 1.4; color: var(--ink-2); max-width: 30em; margin: 14px 0 0; }
+.wk-dek { font-family: var(--font-body); font-weight: 400; font-size: calc(clamp(18px, 1.45vw, 21px) * var(--text-scale)); line-height: 1.4; color: var(--ink-2); max-width: 30em; margin: 14px 0 0; text-wrap: balance; }
 /* the read's counts, as a chapter's facts line is set: Fragment Mono, a dot between, the first on each line without one */
 .wk-meta { display: flex; flex-wrap: wrap; align-items: baseline; margin: 14px 0 0 -18px; clip-path: inset(0 0 0 18px); }
 .wk-meta .label { font-family: var(--font-code); font-size: 12px; line-height: 20px; color: var(--ink-2); white-space: nowrap; }
@@ -57,7 +57,7 @@
 .wk-gl-w { min-width: 4.6em; }
 .wk-gl-list li[data-level="4"] .wk-gl-w { color: var(--ink); font-weight: 500; }
 .wk-gl-list li.is-shown .wk-gl-n { color: var(--accent-ink); }
-.wk-gl-list li.is-shown .wk-gl-m i.on { background: var(--accent-fill); }
+.wk-gl-list li.is-shown .wk-gl-m i.on { background: var(--accent); } /* the wine of text, so on dark the pick is as bright as its word */
 .wk-gl-list li.is-shown .wk-gl-w { color: var(--accent-ink); font-weight: 600; }
 
 /* ---------- the walk: the ledger column ---------- */
@@ -209,7 +209,7 @@
   /* the hero as the home set it on a phone before the redesign: flush with the text, the title on one line, the stage
      numbers in the 34 px ledger column inside the rules, and a long name breaking into two even lines */
   .wk-head { margin-left: 0; padding-top: 28px; }
-  .wk-title { font-size: min(36px, 9.2vw); line-height: 1.08; letter-spacing: -0.015em; }
+  .wk-title { font-size: min(46px, 9vw); line-height: 1.08; letter-spacing: -0.015em; } /* one line from 320 px; larger on a tablet */
   .wk-dek { font-size: calc(17px * var(--text-scale)); margin-top: 10px; }
   .wk-meta { margin-top: 12px; }
   .wk-gl { margin-top: 24px; }
