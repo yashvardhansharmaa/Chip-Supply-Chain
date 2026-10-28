@@ -297,23 +297,31 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 .chapter .ch-rail .stage-cell[aria-current="true"] .bm { background: var(--accent); box-shadow: none; }
 .chapter .ch-rail .rail-across { margin-top: 8px; padding-top: 6px; border-top: 1px solid var(--line); }
 .chapter .ch-rail .rail-across .stage-cell a { grid-template-columns: 24px minmax(0, 1fr); }
-/* Hide contents (build/build.js RAIL_TOGGLE_JS adds the button): a small pill at the top of the rail, in a band the rail takes
-   from the article's top padding, so On this page stays level with the kicker. Pressed, the rail's parts go and the text column
-   moves to the middle of the page at its own measure (666 px), the figures with it; the button stays where it was and reads
-   Show contents. The column keeps its width, so the reader's place in the text does not move. Wide screens only: under 1200 px
-   the rail is a line of links over the specimen and the button is not shown. Print shows neither the button nor the change.
-   Its focus ring is drawn inside it, since the rail's scroll box would clip one outside */
+/* Hide contents and Show contents (build/build.js RAIL_TOGGLE_JS adds both). Hide contents ends the rail's first line, beside
+   On this page, quiet in the interface face, its target 26 px tall without making the line taller (the rail gives it 8 px of
+   room at the top, so its scroll box does not clip it). Pressed, the rail's parts go and the text column moves to the middle of
+   the page at its own measure (666 px), the figures with it; the column keeps its width, so the reader's place in the text does
+   not move. Show contents, a small pill at the top of the left margin, level with the kicker, stays in view while the rail is
+   hidden. Wide screens only: under 1200 px the rail is a line of links over the specimen and neither button shows. Print shows
+   neither the buttons nor the change. */
 .chapter .ch-rail .rail-tog { display: none; }
 @media screen and (min-width: 1200px) {
-  .chapter .ch-rail { margin-top: -38px; padding-top: 38px; }
+  .chapter .ch-rail { margin-top: -8px; padding-top: 8px; }
   .chapter .ch-rail .rail-tog {
-    position: absolute; top: 0; left: 0; display: inline-flex; align-items: center; gap: 7px; height: 28px; margin: 0; padding: 0 12px 0 10px;
-    border: 1px solid var(--line-2); border-radius: 999px; background: var(--bg); color: var(--ink-2); cursor: pointer;
-    font-family: var(--font-ui); font-size: 13px; font-weight: 500; line-height: 1; letter-spacing: 0; white-space: nowrap;
+    align-items: center; gap: 6px; margin: 0; cursor: pointer; background: none; color: var(--muted);
+    font-family: var(--font-ui); font-size: 13px; font-weight: 500; line-height: 16px; letter-spacing: 0; white-space: nowrap;
   }
-  .chapter .ch-rail .rail-tog:hover { color: var(--ink); border-color: var(--ink); }
-  .chapter .ch-rail .rail-tog:focus-visible { outline: none; border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); color: var(--ink); }
+  .chapter .ch-rail .rail-tog:hover { color: var(--ink); }
+  .chapter .ch-rail .rail-tog:focus-visible { outline: 2px solid var(--accent); outline-offset: -1px; border-radius: 3px; color: var(--ink); }
   .chapter .ch-rail .rt-ic { flex: none; width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.3; }
+  .chapter .ch-rail .rail-on > .rail-k { align-items: center; } /* the button has no text baseline of its own to share */
+  .chapter .ch-rail .rail-hide { display: inline-flex; margin: -5px 0 -5px auto; padding: 5px 2px 5px 6px; border: 0; }
+  .chapter .ch-rail .rail-show {
+    margin: -6px 0 0; padding: 0 12px 0 10px; height: 28px; border: 1px solid var(--line-2); border-radius: 999px; background: var(--bg); color: var(--ink-2);
+  }
+  .chapter .ch-rail .rail-show:hover { border-color: var(--ink); }
+  .chapter .ch-rail .rail-show:focus-visible { outline: none; border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); border-radius: 999px; }
+  html.rail-off .chapter .ch-rail .rail-show { display: inline-flex; }
   html.rail-off .chapter .ch-rail .rail-body { display: none; }
   html.rail-off article.chapter { grid-template-columns: minmax(0, 1fr) minmax(0, 666px) minmax(0, 1fr); column-gap: 0; }
   html.rail-off .chapter .ch-rail { grid-column: 1; }

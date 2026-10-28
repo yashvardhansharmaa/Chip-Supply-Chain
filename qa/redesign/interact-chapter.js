@@ -11,7 +11,11 @@
      chapter shows alone at its address, so the check goes there by its address);
    - on a phone the drawing stays in the strip, the masthead goes up on the way down and back on the way up, and the slim
      bar names the chapter and the section;
-   - the readable page has the same opener, rail, card and figure strip, with Lithography's still and no app buttons.
+   - the readable page has the same opener, rail, card and figure strip, with Lithography's still and no app buttons;
+   - Hide contents (27 Oct 2026), in the app and on the readable page: Tab reaches it after the chapter's head, Enter hides the
+     rail and moves focus to Show contents, the text column then sits in the middle of the page at 666 px with the figures, Show
+     contents stays in view down the page, a reload keeps the rail hidden, Enter on Show contents brings it back with focus on
+     Hide contents; under 1200 px neither button shows and the rail's line of links stays; print shows neither.
    usage: node qa/redesign/interact-chapter.js [base] (default http://127.0.0.1:8766) */
 'use strict';
 const { launch, open, sleep } = require('./cdp.js');
@@ -36,10 +40,10 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8766';
       // the column: the rail from the top, the verdict, the plate and the card at the measure, the card after the lead
       const col = await t.ev(`(function(){var a=document.getElementById('lithography'),q=function(s){return a.querySelector(s);},r=function(s){return q(s).getBoundingClientRect();};
         var card=q('.prose > .plate'),prev=card&&card.previousElementSibling,next=card&&card.nextElementSibling,sp=getComputedStyle(q('.ch-spec'));
-        return {railTop:Math.round(r('.ch-rail').top),kickTop:Math.round(r('.ch-kick').top),kick:q('.ch-kick').textContent,textX:Math.round(r('.ch-lede').left),specX:Math.round(r('.ch-spec').left),specW:Math.round(r('.ch-spec').width),
+        return {railTop:Math.round(r('.ch-rail .rail-on > .rail-k').top),kickTop:Math.round(r('.ch-kick').top),kick:q('.ch-kick').textContent,textX:Math.round(r('.ch-lede').left),specX:Math.round(r('.ch-spec').left),specW:Math.round(r('.ch-spec').width),
           cardW:card?Math.round(card.getBoundingClientRect().width):0,cardId:card&&card.id,prev:prev&&prev.tagName,next:next&&next.id,inHead:!!q('.chapter-head .plate'),
           drawH:sp.getPropertyValue('--draw-h').trim(),lift:sp.getPropertyValue('--lift').trim(),toc:[].map.call(a.querySelectorAll('.rail-toc a'),function(x){return x.textContent;}).slice(0,3).join(' | ')};})()`);
-      check('1440: the rail starts beside the kicker', Math.abs(col.railTop - col.kickTop) <= 4, `rail ${col.railTop}, kicker ${col.kickTop}`);
+      check('1440: the rail starts beside the kicker (its first line, On this page)', Math.abs(col.railTop - col.kickTop) <= 4, `rail ${col.railTop}, kicker ${col.kickTop}`);
       check('1440: the kicker carries the card\'s verdict', /Extreme concentration\s*·\s*Very hard to substitute/.test(col.kick), col.kick);
       check('1440: the specimen is a plate at the measure, in the text column', col.specW === 666 && col.specX === col.textX, `${col.specW} px at x ${col.specX}, text at ${col.textX}`);
       check('1440: the plate is fitted to its drawing (--draw-h, --lift)', /^\d+px$/.test(col.drawH) && /^\d+px$/.test(col.lift), `--draw-h ${col.drawH}, --lift ${col.lift}`);
@@ -135,7 +139,7 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8766';
     /* ---------- the readable page ---------- */
     for (const width of [1440, 390]) {
       const t = await open(chrome, BASE + '/lithography/', { width, wait: 2500 });
-      check(`page ${width}: no button from the app`, await t.ev("!document.querySelector('main button:not(.fs-tab):not(.fs-png):not(.ch-cite-copy)')"));
+      check(`page ${width}: no button from the app`, await t.ev("!document.querySelector('main button:not(.fs-tab):not(.fs-png):not(.ch-cite-copy):not(.rail-tog)')"));
       check(`page ${width}: the opener's kicker`, /Chapter 04\s*Stage 4 of 14\s*Extreme/.test(await t.ev("document.querySelector('.ch-kick').textContent")), await t.ev("document.querySelector('.ch-kick').textContent"));
       check(`page ${width}: Lithography's still, with its balloons`, await t.ev("(function(){var s=[].filter.call(document.querySelectorAll('.ch-still'),function(x){return getComputedStyle(x).display!=='none'})[0];return !!s&&s.getBoundingClientRect().width>250&&s.querySelectorAll('.bal').length===4;})()"));
       const small = await t.ev("[].map.call(document.querySelectorAll('.ch-still'),function(s){if(getComputedStyle(s).display==='none')return 99;var k=s.getBoundingClientRect().width/s.viewBox.baseVal.width;return Math.min.apply(null,[].map.call(s.querySelectorAll('text'),function(x){return parseFloat(x.style.fontSize)*k}))}).reduce(function(a,b){return Math.min(a,b)},99)");
@@ -146,6 +150,59 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8766';
       if (width === 1440) check('page 1440: the rail beside the text', await t.ev("(function(){var r=document.querySelector('.ch-rail').getBoundingClientRect();return r.left<200&&r.width>180;})()"));
       check(`page ${width}: a stage in the rail links to its page`, await t.ev("!!document.querySelector('.ch-rail a[href=\"../photomasks-and-pellicles/\"]')"));
       t.errors.forEach((e) => check(`page ${width}: page error`, false, e));
+      await t.close();
+    }
+    /* ---------- Hide contents, in The Chain and on the readable page ---------- */
+    const enter = async (t) => { await t.s('Input.dispatchKeyEvent', { type: 'keyDown', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13, text: '\r' }); await t.s('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13 }); await sleep(500); };
+    const tab = async (t) => { await t.s('Input.dispatchKeyEvent', { type: 'keyDown', key: 'Tab', code: 'Tab', windowsVirtualKeyCode: 9 }); await t.s('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Tab', code: 'Tab', windowsVirtualKeyCode: 9 }); await sleep(250); };
+    // the state of the rail of the chapter on screen: which button shows, where the text and a figure sit, what has focus
+    const RS = `(function(){var a=[].filter.call(document.querySelectorAll('article.chapter'),function(x){return x.getClientRects().length;})[0];if(!a)return null;
+      var n=a.querySelector('.ch-rail'),b=n.querySelector('.rail-body'),h=n.querySelector('.rail-hide'),s=n.querySelector('.rail-show'),vis=function(e){return !!e&&e.getClientRects().length>0&&getComputedStyle(e).visibility!=='hidden';};
+      var p=a.querySelector('.prose > p'),f=a.querySelector('.prose .figure'),o=a.querySelector('.ch-lede'),act=document.activeElement;
+      var st=null;try{st=localStorage.getItem('cp-rail');}catch(e){}
+      return {off:document.documentElement.classList.contains('rail-off'),body:vis(b),hide:vis(h),show:vis(s),hideExp:h&&h.getAttribute('aria-expanded'),showExp:s&&s.getAttribute('aria-expanded'),
+        ctl:h&&h.getAttribute('aria-controls')===b.id&&s.getAttribute('aria-controls')===b.id,focus:act===h?'hide':act===s?'show':(act&&act.tagName),stored:st,
+        textX:Math.round(o.getBoundingClientRect().left),textW:Math.round(p.getBoundingClientRect().width),figX:f?Math.round(f.getBoundingClientRect().left):null,figW:f?Math.round(f.getBoundingClientRect().width):null,mid:Math.round((innerWidth-666)/2),
+        showTop:s?Math.round(s.getBoundingClientRect().top):null};})()`;
+    for (const [where, url] of [['chain', '/#lithography'], ['page', '/lithography/']]) {
+      const t = await open(chrome, BASE + url, { width: 1440, wait: 2500 });
+      await t.ev("(function(){try{localStorage.removeItem('cp-rail');}catch(e){}document.documentElement.classList.remove('rail-off');return 1;})()");
+      let r = await t.ev(RS);
+      check(`${where} 1440: the rail shows by default, with Hide contents and no Show contents`, r.body && r.hide && !r.show && r.hideExp === 'true' && r.showExp === 'false' && r.ctl, JSON.stringify(r));
+      const prevX = r.textX;
+      // Tab from the last control of the chapter's head lands on Hide contents
+      await t.ev("(function(){var a=[].filter.call(document.querySelectorAll('article.chapter'),function(x){return x.getClientRects().length;})[0];var f=[].filter.call(a.querySelectorAll('.chapter-head a[href], .chapter-head button, .chapter-head [tabindex=\"0\"], .chapter-head canvas[tabindex]'),function(e){return e.getClientRects().length&&!e.closest('[hidden]');});var last=f[f.length-1];document.documentElement.style.scrollBehavior='auto';last.focus();return last.tagName+'.'+last.className;})()");
+      await tab(t);
+      r = await t.ev(RS);
+      check(`${where} 1440: Tab after the chapter's head reaches Hide contents`, r.focus === 'hide', r.focus);
+      await enter(t);
+      r = await t.ev(RS);
+      check(`${where} 1440: Enter hides the rail, and focus moves to Show contents`, r.off && !r.body && !r.hide && r.show && r.focus === 'show' && r.showExp === 'false', JSON.stringify(r));
+      check(`${where} 1440: the text column moves to the middle at 666 px, the figures with it`, Math.abs(r.textX - r.mid) <= 2 && r.textW === 666 && r.figW === 666 && r.figX === r.textX, `text at ${r.textX} (middle ${r.mid}, was ${prevX}), ${r.textW} px; figure at ${r.figX}, ${r.figW} px`);
+      check(`${where} 1440: the choice is kept on this device`, r.stored === 'off', r.stored);
+      await scrollTo(t, '#lithography--who-makes-it', 200);
+      r = await t.ev(RS);
+      check(`${where} 1440: Show contents stays in view down the page`, r.show && r.showTop >= 0 && r.showTop < 160, `top ${r.showTop}`);
+      await t.ev('(location.reload(), 1)'); await sleep(3500);
+      r = await t.ev(RS);
+      check(`${where} 1440: after a reload the rail is still hidden`, r && r.off && !r.body && r.show && Math.abs(r.textX - r.mid) <= 2, JSON.stringify(r));
+      await t.ev("(function(){var a=[].filter.call(document.querySelectorAll('article.chapter'),function(x){return x.getClientRects().length;})[0];a.querySelector('.rail-show').focus();return 1;})()");
+      await enter(t);
+      r = await t.ev(RS);
+      check(`${where} 1440: Enter on Show contents brings the rail back, focus on Hide contents, the column where it was`, !r.off && r.body && r.hide && !r.show && r.focus === 'hide' && r.stored === null && r.textX === prevX, JSON.stringify(r));
+      // a click hides it again, for the narrower and printed checks
+      await t.ev("(function(){var a=[].filter.call(document.querySelectorAll('article.chapter'),function(x){return x.getClientRects().length;})[0];a.querySelector('.rail-hide').click();return 1;})()"); await sleep(300);
+      await t.s('Emulation.setEmulatedMedia', { media: 'print' }); await sleep(300);
+      // in print The Chain lays out every chapter, so the check reads Lithography's own article
+      const pr = await t.ev("(function(){var a=document.getElementById('lithography')||document.querySelector('article.chapter');return [].map.call(a.querySelectorAll('.rail-tog'),function(b){return getComputedStyle(b).display;}).join(',')+' | '+getComputedStyle(a).gridTemplateColumns;})()");
+      check(`${where} print: neither button prints, and the hidden rail does not change the layout (no 666 px middle column)`, /^none,none \|/.test(pr) && !/666px/.test(pr), pr);
+      await t.s('Emulation.setEmulatedMedia', { media: 'screen' });
+      await t.s('Emulation.setDeviceMetricsOverride', { width: 1024, height: 900, deviceScaleFactor: 1, mobile: false }); await sleep(800);
+      r = await t.ev(RS);
+      const line = await t.ev("(function(){var a=[].filter.call(document.querySelectorAll('article.chapter'),function(x){return x.getClientRects().length;})[0];return a.querySelectorAll('.rail-toc a').length+' links, '+(a.querySelector('.rail-toc').getClientRects().length?'shown':'hidden');})()");
+      check(`${where} 1024: neither button shows, and the rail's line of links stays though it was hidden at 1440`, !r.hide && !r.show && r.body && /shown$/.test(line), `${line}; ${JSON.stringify({ hide: r.hide, show: r.show, body: r.body })}`);
+      await t.ev("(function(){try{localStorage.removeItem('cp-rail');}catch(e){}return 1;})()");
+      t.errors.forEach((e) => check(`${where} toggle: page error`, false, e));
       await t.close();
     }
   } finally { await chrome.close(); }

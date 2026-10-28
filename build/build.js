@@ -724,23 +724,25 @@ var cite=acts.querySelector('.ch-cite-btn');acts.insertBefore(tb,cite?cite.nextS
 }
 [].forEach.call(D.querySelectorAll('.figure .fs-acts'),add);
 })();`;
-/* Hide contents: a button at the top of a chapter's contents rail (railHTML) hides the rail's parts, and the text column moves to
-   the middle of the page (src/modules/chapter.css, html.rail-off). The same button, in the same place, then reads Show contents.
-   The choice is the reader's on this device (localStorage "cp-rail"), the same for every chapter, in the app and on the readable
-   pages; the head of each page sets html.rail-off before the first paint. Wide screens only (1200 px and up): narrower, the rail
-   is a line of links and the button is not shown. The script adds the button, so a page read without scripts has none, and its
-   words stay out of the text the page dates are taken from. Shared by the main page (src/template.html) and the readable pages
-   (social.js), as CITE_JS is. */
+/* Hide contents: a quiet button at the end of the rail's first line ("On this page") hides the rail's parts, and the text column
+   moves to the middle of the page (src/modules/chapter.css, html.rail-off). Show contents, a small pill at the top of the left
+   margin, stays in view while the rail is hidden and brings it back. Focus goes from the button pressed to the one that takes
+   its place, so a keyboard reader stays on the control. Both name the rail's parts (aria-controls) and say whether they show
+   (aria-expanded). The choice is the reader's on this device (localStorage "cp-rail"), the same for every chapter, in the app
+   and on the readable pages; the head of each page sets html.rail-off before the first paint. Wide screens only (1200 px and
+   up): narrower, the rail is a line of links and neither button shows. The script adds the buttons, so a page read without
+   scripts has none, and their words stay out of the text the page dates are taken from. Shared by the main page
+   (src/template.html) and the readable pages (social.js), as CITE_JS is. */
 const RAIL_TOGGLE_JS = `(function(){
 var D=document,H=D.documentElement,K='cp-rail';
 var IC='<svg class="rt-ic" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5"/><path d="M6 2.5v11"/></svg>';
-function sync(){var off=H.classList.contains('rail-off');[].forEach.call(D.querySelectorAll('.ch-rail .rail-tog'),function(b){b.setAttribute('aria-expanded',off?'false':'true');var t=b.querySelector('.rt-t');if(t)t.textContent=off?'Show contents':'Hide contents';});}
-[].forEach.call(D.querySelectorAll('nav.ch-rail'),function(n){var body=n.querySelector('.rail-body');if(!body||n.querySelector('.rail-tog'))return;
-var b=D.createElement('button');b.type='button';b.className='rail-tog';b.setAttribute('aria-controls',body.id);b.innerHTML=IC+'<span class="rt-t"></span>';n.insertBefore(b,n.firstChild);});
-D.addEventListener('click',function(e){var b=e.target.closest?e.target.closest('.rail-tog'):null;if(!b)return;
-var off=!H.classList.contains('rail-off');H.classList.toggle('rail-off',off);try{if(off)localStorage.setItem(K,'off');else localStorage.removeItem(K);}catch(x){}
-sync();try{window.dispatchEvent(new Event('resize'));}catch(x){}});
-sync();
+function mk(cls,id,words,open){var b=D.createElement('button');b.type='button';b.className='rail-tog '+cls;b.setAttribute('aria-controls',id);b.setAttribute('aria-expanded',open?'true':'false');b.innerHTML=IC+'<span class="rt-t">'+words+'</span>';return b;}
+[].forEach.call(D.querySelectorAll('nav.ch-rail'),function(n){var body=n.querySelector('.rail-body');if(!body||!body.id||n.querySelector('.rail-tog'))return;
+var k=body.querySelector('.rail-on .rail-k')||body;k.appendChild(mk('rail-hide',body.id,'Hide contents',true));n.insertBefore(mk('rail-show',body.id,'Show contents',false),body);});
+D.addEventListener('click',function(e){var b=e.target.closest?e.target.closest('.ch-rail .rail-tog'):null;if(!b)return;
+var off=b.classList.contains('rail-hide');H.classList.toggle('rail-off',off);try{if(off)localStorage.setItem(K,'off');else localStorage.removeItem(K);}catch(x){}
+var n=b.closest('.ch-rail'),to=n&&n.querySelector(off?'.rail-show':'.rail-hide');if(to)try{to.focus({preventScroll:true});}catch(x){to.focus();}
+try{window.dispatchEvent(new Event('resize'));}catch(x){}});
 })();`;
 // the cite line's date goes in once every page's date is known (after the build modules write the readable pages)
 // the key under the ledger column's rows, one per stage: each band the stages hold, its bar drawn as the rows draw it
@@ -802,7 +804,7 @@ function railHTML(ch, stageIdx, toc) {
   return `<nav class="ch-rail ch-ledger" aria-label="${esc(ch.title)}: contents">`
     // the chapter's number and stage, for paper only (src/modules/print.css sets it in the ledger column)
     + `<div class="ch-tile print-only"><span class="k">Chapter</span><span class="v">${pad(ch.number)}</span><span class="of">${stageIdx >= 0 ? `Stage ${stageIdx + 1} of ${stages.length}` : esc(TILE_WORD[ch.id] || '')}</span></div>`
-    // the three parts sit in one box, which the reader can hide (RAIL_TOGGLE_JS adds the button that does it, above them)
+    // the three parts sit in one box, which the reader can hide (RAIL_TOGGLE_JS adds Hide contents to its first line)
     + `<div class="rail-body" id="${esc(ch.id)}--rail">`
     + `<div class="rail-part rail-on"><p class="rail-k">On this page</p><ol class="rail-toc">${toc.map(([id, t]) => `<li><a href="#${esc(id)}">${t}</a></li>`).join('')}</ol></div>`
     + (figs.length ? `<div class="rail-part rail-figs-w"><p class="rail-k">Figures</p><ol class="rail-figs">${figs.map((f) => `<li><a href="#${esc(f.id)}"><span class="n">${esc(f.num)}</span><span class="t">${esc(f.label)}</span></a></li>`).join('')}</ol></div>` : '')
