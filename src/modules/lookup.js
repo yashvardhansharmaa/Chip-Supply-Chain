@@ -321,8 +321,10 @@
       if (el && (el.closest('#lk-items') || (el.classList && el.classList.contains('gl-entry')))) {
         // an address that names an entry (a popover's Look it up, a search result, a card's link, Back): the entry opens, and the
         // columns bring it into view. After a move within the site (not a first load) its title takes focus too
-        var R = CP.Router || {};
-        this.show(id, { reveal: true, land: true, focus: !!(R.routed && R.from) });
+        // (a move from another page of the site, such as Look it up on a chapter's page, counts as one)
+        var R = CP.Router || {}, came = !this.arrived && /^https?:/.test(document.referrer) && document.referrer.indexOf(location.origin + '/') === 0 && document.referrer !== location.href;
+        this.arrived = true;
+        this.show(id, { reveal: true, land: true, focus: !!(R.routed && R.from) || came });
       } else if (this.open) this.close(false);
     },
 

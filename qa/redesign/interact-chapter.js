@@ -1,5 +1,7 @@
 #!/usr/bin/env node
-/* The chapter page's controls (redesign stage 2), driven as a reader would, in The Chain and on the readable pages:
+/* The chapter page's controls (redesign stage 2), driven as a reader would. Since 28 Oct 2026 each chapter is the full
+   interactive chapter at its own address, /<id>/ (until then it lived in The Chain at /#<id>, with a static readable copy at
+   /<id>/), so the checks open the chapter's page, and an old /#<id> link to it:
    - the opener is the column (design round five, 27 Oct 2026): the rail beside the kicker from the top, the card's verdict in
      the kicker, the specimen a plate at the measure fitted to its drawing (--draw-h, --lift), the card in the text after the
      lead and before section 01, at the measure, and On this page lands on it;
@@ -11,8 +13,8 @@
      chapter shows alone at its address, so the check goes there by its address);
    - on a phone the drawing stays in the strip, the masthead goes up on the way down and back on the way up, and the slim
      bar names the chapter and the section;
-   - the readable page has the same opener, rail, card and figure strip, with Lithography's still and no app buttons;
-   - Hide contents (27 Oct 2026), in the app and on the readable page: Tab reaches it after the chapter's head, Enter hides the
+   - the chapter's page is the interactive chapter: search, the look-up buttons, the flashcards and the figure actions;
+   - Hide contents (27 Oct 2026), on the chapter's page and through an old link: Tab reaches it after the chapter's head, Enter hides the
      rail and moves focus to Show contents, the text column then sits in the middle of the page at 666 px with the figures, Show
      contents stays in view down the page, a reload keeps the rail hidden, Enter on Show contents brings it back with focus on
      Hide contents; under 1200 px neither button shows and the rail's line of links stays; print shows neither.
@@ -90,23 +92,24 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8766';
       check('1440: CSV is a download of the rows', await t.ev(`(function(){var a=document.querySelector('${F} .fs-csv');return !!a.getAttribute('download')&&decodeURIComponent(a.href).indexOf('China,33')>0;})()`));
       const png = await t.ev(`new Promise(function(res){var orig=HTMLCanvasElement.prototype.toBlob;HTMLCanvasElement.prototype.toBlob=function(cb,type){HTMLCanvasElement.prototype.toBlob=orig;res({w:this.width,h:this.height,type:type});};document.querySelector('${F} .fs-png').click();setTimeout(function(){res(null)},3000);})`);
       check('1440: PNG draws the figure at 1,600 px wide', png && png.w === 1600 && png.type === 'image/png', JSON.stringify(png));
-      // chapters 15 and 16: the night ground, in the drawing's slot; the caption stands under it on the page's ground
-      for (const id of ['component-costs', 'geopolitics']) {
-        await t.ev(`location.hash='#${id}',1`); await sleep(1800);
-        check(`1440: the drawing moves to ${id}'s slot`, await t.ev(`!!document.querySelector('#${id} .ch-spec-draw canvas')`));
-        const night = await t.ev(`(function(){var d=document.querySelector('#${id} .ch-spec-draw'),c=document.querySelector('#${id} .ch-spec-cap');return {slot:getComputedStyle(d).backgroundColor,cap:getComputedStyle(c).backgroundColor,capInk:getComputedStyle(c.querySelector('p')).color,dark:CP.Stage.dark,inside:c.getBoundingClientRect().top>=d.getBoundingClientRect().bottom};})()`);
-        check(`1440: ${id} draws on the night ground, its caption under it on the page`, night.slot === 'rgb(18, 18, 17)' && night.dark === true && night.cap === 'rgba(0, 0, 0, 0)' && night.capInk === 'rgb(69, 68, 63)' && night.inside, JSON.stringify(night));
-      }
-      await t.ev("location.hash='#lithography',1"); await sleep(1800);
-      check('1440: back on Lithography, the light ground again', await t.ev('CP.Stage.dark') === false && await t.ev("!!document.querySelector('#lithography .ch-spec-draw canvas')"));
-      // the rail's chain link goes to the chapter
-      await t.ev("document.querySelector('#lithography .rail-chain a[href=\"photomasks-and-pellicles/\"]').click(),1"); await sleep(1500);
-      check('1440: a stage in the rail opens its chapter', await t.ev("location.hash==='#photomasks-and-pellicles' && Math.abs(document.getElementById('photomasks-and-pellicles').getBoundingClientRect().top) < 140"), await t.ev("location.hash"));
-      // leaving The Chain gives the drawing back to the stage
-      await t.ev("location.hash='#/',1"); await sleep(1200);
+      check('1440: Lithography draws on the light ground', await t.ev('CP.Stage.dark') === false);
+      // the rail's chain link goes to the chapter's own page, at its top
+      await t.ev("document.querySelector('#lithography .rail-chain a[href=\"../photomasks-and-pellicles/\"]').click(),1"); await sleep(3000);
+      check('1440: a stage in the rail opens its chapter\'s page', await t.ev("location.pathname==='/photomasks-and-pellicles/' && Math.abs(document.getElementById('photomasks-and-pellicles').getBoundingClientRect().top) < 140"), await t.ev("location.pathname"));
+      // leaving The Chain gives the drawing back to the stage: a hash route on a chapter's page goes to the home page
+      await t.ev("location.hash='#/',1"); await sleep(3000);
       check('1440: on the home the drawing is back on the stage', await t.ev("!!document.querySelector('.stage > canvas#stage-canvas') && getComputedStyle(document.querySelector('.stage')).display!=='none'"));
       check('1440: the home shows no balloons', await t.ev("!document.querySelector('.stage .ch-balloons')"));
       t.errors.forEach((e) => check('1440: page error', false, e));
+      await t.close();
+    }
+    /* ---------- chapters 15 and 16, each at its page: the night ground in the drawing's slot, the caption under it on the page's ground ---------- */
+    for (const id of ['component-costs', 'geopolitics']) {
+      const t = await open(chrome, BASE + '/' + id + '/', { width: 1440, wait: 3000 });
+      check(`1440: the drawing is in ${id}'s slot`, await t.ev(`!!document.querySelector('#${id} .ch-spec-draw canvas')`));
+      const night = await t.ev(`(function(){var d=document.querySelector('#${id} .ch-spec-draw'),c=document.querySelector('#${id} .ch-spec-cap');return {slot:getComputedStyle(d).backgroundColor,cap:getComputedStyle(c).backgroundColor,capInk:getComputedStyle(c.querySelector('p')).color,dark:CP.Stage.dark,inside:c.getBoundingClientRect().top>=d.getBoundingClientRect().bottom};})()`);
+      check(`1440: ${id} draws on the night ground, its caption under it on the page`, night.slot === 'rgb(18, 18, 17)' && night.dark === true && night.cap === 'rgba(0, 0, 0, 0)' && night.capInk === 'rgb(69, 68, 63)' && night.inside, JSON.stringify(night));
+      t.errors.forEach((e) => check(`1440 ${id}: page error`, false, e));
       await t.close();
     }
     /* ---------- the card's own address, on a fresh load, at 1440 and 390 ---------- */
@@ -116,14 +119,21 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8766';
       check(`${width}: #lithography--card opens Lithography at its card, clear of the masthead`, r.shown === 'lithography' && r.top >= 0 && r.top <= 140, JSON.stringify(r));
       await t.close();
     }
-    /* ---------- a Glossary passage on a card lands on it, in the text after the lead ---------- */
+    /* ---------- a Glossary passage on a card lands on it, in the text after the lead, on the chapter's page ---------- */
     {
+      // the passages on the chapters' cards, read from the book, which holds every chapter
+      const lp = await open(chrome, BASE + '/book/#/chain', { width: 1440, wait: 2000 });
+      const onCard = await lp.ev("JSON.stringify(CP.Lookup.domCorpus().filter(function (p) { return p.el.closest('.prose > .plate'); }).map(function (p) { return p.chapter + '|' + p.text; }))");
+      await lp.close();
       const t = await open(chrome, BASE + '/#/glossary', { width: 1440, wait: 3000 });
       await t.ev(`(function () { var b = [].filter.call(document.querySelectorAll('#gl-dict .gl-de[data-kind="term"] button[data-open]'), function (b) { return /^EUV|^Extreme ultraviolet/i.test(b.textContent); })[0]; b.click(); return 1; })()`); await sleep(1500);
-      const para = await t.ev(`(function () { var as = document.querySelectorAll('#gl-sheet .lk-men a[data-para]'); for (var i = 0; i < as.length; i++) { var p = CP.Lookup.paras[+as[i].getAttribute('data-para')]; if (p && p.el.closest('.prose > .plate')) { as[i].id = 'qa-card-pass'; return +as[i].getAttribute('data-para'); } } return null; })()`);
-      if (para != null) { await t.ev("(document.getElementById('qa-card-pass').click(), 1)"); await sleep(2200); }
-      const p = para == null ? null : await t.ev(`(function () { var p = CP.Lookup.paras[${para}], r = p.el.getBoundingClientRect(); return { chapter: p.chapter, text: p.text.slice(0, 50), top: Math.round(r.top), hash: location.hash, shown: !!document.getElementById(p.chapter).getClientRects().length, flash: p.el.classList.contains('lk-flash') }; })()`);
-      check('1440: a Glossary passage on a card (EUV\'s) lands on the card', !!p && p.shown && p.top > 60 && p.top < 900 && p.flash, JSON.stringify(p));
+      const para = await t.ev(`(function () { var card = ${onCard}, as = document.querySelectorAll('#gl-sheet .lk-men a[data-para]'); for (var i = 0; i < as.length; i++) { var p = CP.Lookup.paras[+as[i].getAttribute('data-para')]; if (p && card.indexOf(p.chapter + '|' + p.text) >= 0) { as[i].id = 'qa-card-pass'; return p.chapter + '|' + p.text; } } return null; })()`);
+      let p = null;
+      if (para != null) {
+        await t.ev("(document.getElementById('qa-card-pass').click(), 1)");
+        for (let k = 0; k < 20 && !(p && p.flash); k++) { await sleep(250); try { p = await t.ev(`(function () { var e = document.querySelector('.lk-flash'); if (!e) return { at: location.pathname, flash: false }; var r = e.getBoundingClientRect(); return { at: location.pathname, onCard: !!e.closest('.prose > .plate'), same: e.textContent.replace(/\\s+/g, ' ').indexOf(${JSON.stringify(para.split('|')[1].slice(0, 30))}) >= 0, top: Math.round(r.top), flash: true }; })()`); } catch (e) { } }
+      }
+      check('1440: a Glossary passage on a card (EUV\'s) lands on the card, on its chapter\'s page', !!p && p.at === '/' + para.split('|')[0] + '/' && p.flash && p.onCard && p.top > 60 && p.top < 900, JSON.stringify(p));
       t.errors.forEach((e) => check('1440 glossary: page error', false, e));
       await t.close();
     }
@@ -150,14 +160,13 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8766';
       t.errors.forEach((e) => check('390: page error', false, e));
       await t.close();
     }
-    /* ---------- the readable page ---------- */
+    /* ---------- the chapter's page is the interactive chapter ---------- */
     for (const width of [1440, 390]) {
       const t = await open(chrome, BASE + '/lithography/', { width, wait: 2500 });
-      check(`page ${width}: no button from the app`, await t.ev("!document.querySelector('main button:not(.fs-tab):not(.fs-png):not(.ch-cite-copy):not(.rail-tog)')"));
+      check(`page ${width}: the masthead's search and theme buttons`, await t.ev("!!document.querySelector('.masthead .search-btn') && !!document.querySelector('.masthead .theme-toggle')"));
       check(`page ${width}: the opener's kicker`, /Chapter 04\s*Stage 4 of 14\s*Extreme/.test(await t.ev("document.querySelector('.ch-kick').textContent")), await t.ev("document.querySelector('.ch-kick').textContent"));
-      check(`page ${width}: Lithography's still, with its balloons`, await t.ev("(function(){var s=[].filter.call(document.querySelectorAll('.ch-still'),function(x){return getComputedStyle(x).display!=='none'})[0];return !!s&&s.getBoundingClientRect().width>250&&s.querySelectorAll('.bal').length===4;})()"));
-      const small = await t.ev("[].map.call(document.querySelectorAll('.ch-still'),function(s){if(getComputedStyle(s).display==='none')return 99;var k=s.getBoundingClientRect().width/s.viewBox.baseVal.width;return Math.min.apply(null,[].map.call(s.querySelectorAll('text'),function(x){return parseFloat(x.style.fontSize)*k}))}).reduce(function(a,b){return Math.min(a,b)},99)");
-      check(`page ${width}: the still's numbers and names at 11 px or more`, small >= 11, small.toFixed(1) + ' px');
+      check(`page ${width}: the live drawing, in the slot (1440) or the strip (390)`, await t.ev(width < 900 ? "!!document.querySelector('.stage > canvas#stage-canvas')" : "!!document.querySelector('#lithography .ch-spec-draw canvas')"));
+      check(`page ${width}: look-up buttons and the flashcards`, await t.ev("document.querySelectorAll('#lithography .prose button.gl-term').length > 5 && !!document.querySelector('#lithography--flashcards .fc-show')"));
       check(`page ${width}: the figure strip has Cite, Table, CSV and PNG`, await t.ev("[].map.call(document.querySelectorAll('#fig-lithography-asml-region .fs-acts > *'),function(a){return a.textContent}).join(' ')") === 'Cite Table CSV PNG');
       await t.ev("document.querySelector('#fig-lithography-asml-region .ch-cite-btn').click(),1"); await sleep(200);
       check(`page ${width}: Cite opens the figure's citation, with the page's day`, await t.ev("(function(){var b=document.getElementById('cite-fig-lithography-asml-region');return getComputedStyle(b).display!=='none'&&/Updated \\d+ [A-Z][a-z]+ 2026/.test(b.textContent)&&!/CITE_DAY/.test(document.body.innerHTML);})()"));
@@ -166,7 +175,7 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8766';
       t.errors.forEach((e) => check(`page ${width}: page error`, false, e));
       await t.close();
     }
-    /* ---------- Hide contents, in The Chain and on the readable page ---------- */
+    /* ---------- Hide contents, on the chapter's page and through an old link to it ---------- */
     const enter = async (t) => { await t.s('Input.dispatchKeyEvent', { type: 'keyDown', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13, text: '\r' }); await t.s('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13 }); await sleep(500); };
     const tab = async (t) => { await t.s('Input.dispatchKeyEvent', { type: 'keyDown', key: 'Tab', code: 'Tab', windowsVirtualKeyCode: 9 }); await t.s('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Tab', code: 'Tab', windowsVirtualKeyCode: 9 }); await sleep(250); };
     // the state of the rail of the chapter on screen: which button shows, where the text and a figure sit, what has focus
@@ -178,7 +187,7 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8766';
         ctl:h&&h.getAttribute('aria-controls')===b.id&&s.getAttribute('aria-controls')===b.id,focus:act===h?'hide':act===s?'show':(act&&act.tagName),stored:st,
         textX:Math.round(o.getBoundingClientRect().left),textW:Math.round(p.getBoundingClientRect().width),figX:f?Math.round(f.getBoundingClientRect().left):null,figW:f?Math.round(f.getBoundingClientRect().width):null,mid:Math.round((innerWidth-666)/2),
         showTop:s?Math.round(s.getBoundingClientRect().top):null};})()`;
-    for (const [where, url] of [['chain', '/#lithography'], ['page', '/lithography/']]) {
+    for (const [where, url] of [['old link', '/#lithography'], ['page', '/lithography/']]) {
       const t = await open(chrome, BASE + url, { width: 1440, wait: 2500 });
       await t.ev("(function(){try{localStorage.removeItem('cp-rail');}catch(e){}document.documentElement.classList.remove('rail-off');return 1;})()");
       let r = await t.ev(RS);

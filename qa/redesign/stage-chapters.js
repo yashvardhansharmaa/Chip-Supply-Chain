@@ -1,5 +1,8 @@
 #!/usr/bin/env node
 /* One chapter per address (design round three, recommendation 1): the checks, on the redesign's preview (127.0.0.1:8766).
+   Since 28 Oct 2026 each chapter is a page of its own, /<id>/, the home page keeps The Chain's contents (#/chain), and the
+   print-only book (/book/) holds every chapter: a chapter's address is its page, an old /#<id> link lands there, and a link
+   from one chapter to another loads that page. The checks below follow that.
    Each check drives the app as a reader would, by its links, buttons and the browser's Back and Forward (DevTools mouse
    events, not script clicks), and prints PASS or FAIL with what it measured:
      1. every chapter opens alone at its address, at its top, under its own tab title, and before boot no other chapter
@@ -11,8 +14,9 @@
      4. a search result inside another chapter lands on its section;
      5. a Glossary passage link lands on its passage;
      6. a Suppliers link to a stage lands on that chapter (AI Chips has no link to a stage);
-     7. print emulation of #/chain (and of a chapter's address) shows all 16 chapters (17 before the merge of 27 Oct 2026), the head and the contents;
-     8. the page's height at 1440 for one chapter, against the whole chain's;
+     7. print emulation of the book shows all 16 chapters (17 before the merge of 27 Oct 2026), the head and the contents, and
+        a chapter's page prints its own chapter;
+     8. the page's height at 1440 for one chapter, against the whole chain's (the book's);
     10. the contents page (design round eight, "clean", 28 Oct 2026) at 1440, 1024 and 390: a row for every chapter, the
         stages first and the chapters across the chain under their label; every row opens its chapter by its title and by its
         drawing; every drawing is served; the three downloads show on the first screen and are served;
@@ -98,7 +102,7 @@ const STATE = `(function () {
   var shown = [].filter.call(document.querySelectorAll('.view[data-view="stack"] > article.chapter'), function (a) { return a.getClientRects().length > 0; }).map(function (a) { return a.id; });
   var c = document.getElementById('contents');
   return { shown: shown, contents: !!(c && c.getClientRects().length), view: CP.Router.current, chain: document.documentElement.getAttribute('data-chain'),
-    hash: location.hash, y: Math.round(window.pageYOffset), title: document.title, height: document.documentElement.scrollHeight,
+    hash: location.hash, path: location.pathname, y: Math.round(window.pageYOffset), title: document.title, height: document.documentElement.scrollHeight,
     focus: (document.activeElement && (document.activeElement.id || document.activeElement.className || document.activeElement.tagName)) || '' };
 })()`;
 // where an element's top sits against where the router lands it (src/app.js landAt): 0 is exact
@@ -108,8 +112,8 @@ const want = (n) => !ONLY.length || ONLY.includes(String(n));
 (async () => {
   const chrome = launch();
   try {
-    // the chapters, their titles and their doors, as the page itself knows them
-    const t0 = await tab(chrome, '/#/chain');
+    // the chapters, their titles and their doors, as the book knows them (it holds every chapter); the contents from the home page
+    const t0 = await tab(chrome, '/book/#/chain');
     const meta = await t0.ev(`(function () {
       var T = JSON.parse(document.querySelector('meta[name="cp-titles"]').getAttribute('content'));
       return [].map.call(document.querySelectorAll('.view[data-view="stack"] > article.chapter'), function (a) {
@@ -117,17 +121,19 @@ const want = (n) => !ONLY.length || ONLY.includes(String(n));
         return { id: a.id, num: a.getAttribute('data-number'), title: T['/' + a.id + '/'] || '', next: n ? (n.getAttribute('data-route') || n.getAttribute('href')) : '', nextLabel: n ? n.querySelector('.label').textContent : '', prev: p ? p.getAttribute('data-route') : '' };
       });
     })()`);
-    const contentsState = await t0.ev(STATE);
     await t0.close();
+    const tc = await tab(chrome, '/#/chain');
+    const contentsState = await tc.ev(STATE);
+    await tc.close();
     const ids = meta.map((m) => m.id);
-    console.log(`${ids.length} chapters on ${BASE}/#/chain\n`);
+    console.log(`${ids.length} chapters in ${BASE}/book/, each at its own page\n`);
 
     // 1. every chapter alone at its address, on a fresh load over a slow line
     if (want(1)) {
       const bad = [];
       let pre = 0;
       for (const m of meta) {
-        const t = await tab(chrome, '/#' + m.id, { watch: true, slow: true });
+        const t = await tab(chrome, '/' + m.id + '/', { watch: true, slow: true });
         const st = await t.ev(STATE), seen = await t.ev('Object.keys(window.__seen || {})');
         const doorOk = m.id === 'geopolitics' ? m.next === '#/chain' : !!m.next && ids.indexOf(m.next.slice(1)) === ids.indexOf(m.id) + 1;
         const problems = [];
@@ -138,19 +144,26 @@ const want = (n) => !ONLY.length || ONLY.includes(String(n));
         if (seen.some((x) => x !== m.id)) problems.push('before boot painted ' + JSON.stringify(seen));
         if (seen.length) pre++;
         if (!doorOk) problems.push('door leads to ' + m.next);
+        if (st.path !== '/' + m.id + '/') problems.push('at ' + st.path);
         if (t.errors.length) problems.push(t.errors.join(' | '));
-        if (problems.length) bad.push(m.id + ': ' + problems.join('; '));
+        const direct = await t.ev('history.length'); // the tab's blank start and the page
         await t.close();
+        // its old address on the home page lands on its page, in place of the old entry
+        const o = await tab(chrome, '/#' + m.id);
+        const os = await o.ev(STATE), len = await o.ev('history.length');
+        if (os.path !== '/' + m.id + '/' || os.shown.join() !== m.id || os.y > 4 || len !== direct) problems.push(`/#${m.id} lands at ${os.path}${os.hash}, y ${os.y}, history ${len}`);
+        await o.close();
+        if (problems.length) bad.push(m.id + ': ' + problems.join('; '));
       }
       report(1, 'every chapter opens alone at its address', !bad.length,
-        bad.length ? bad.join('\n        ') : `${meta.length} of ${meta.length}: one chapter shown, at its top (y 0), under its own title; before boot ${pre} of them had painted, each only itself; doors run 01 to 16, then to the contents. #/chain shows the contents and no chapter (${JSON.stringify(contentsState.shown)}, contents ${contentsState.contents}, title "${contentsState.title}")`);
+        bad.length ? bad.join('\n        ') : `${meta.length} of ${meta.length}: one chapter shown at its own page, at its top (y 0), under its own title; before boot ${pre} of them had painted, each only itself; each old /#<id> lands on its page with location.replace (no extra history entry); doors run 01 to 16, then to the contents. #/chain shows the contents and no chapter (${JSON.stringify(contentsState.shown)}, contents ${contentsState.contents}, title "${contentsState.title}")`);
       if (contentsState.shown.length || !contentsState.contents) report('1b', '#/chain is the contents page', false, JSON.stringify(contentsState));
     }
 
     // 2. a section and a figure in another chapter, by a link and on a fresh load; a link in the text to another chapter
     if (want(2)) {
-      const t = await tab(chrome, '/#lithography');
-      const pick = await t.ev(`(function () {
+      const b = await tab(chrome, '/book/#/chain');
+      const pick = await b.ev(`(function () {
         var sec = document.querySelectorAll('#memory-and-hbm > .prose > h3[id]')[2], fig = document.querySelector('#advanced-packaging .figure[id]');
         var link = null; document.querySelectorAll('.view[data-view="stack"] article.chapter .prose a[href^="#"]').forEach(function (a) {
           var h = a.getAttribute('href').slice(1), ch = a.closest('article.chapter'), to = document.getElementById(h);
@@ -158,32 +171,36 @@ const want = (n) => !ONLY.length || ONLY.includes(String(n));
         });
         return { sec: sec && sec.id, fig: fig && fig.id, link: link };
       })()`);
+      await b.close();
+      const t = await tab(chrome, '/lithography/');
       const out = [];
       let ok = true;
       for (const [kind, id, chap] of [['section', pick.sec, 'memory-and-hbm'], ['figure', pick.fig, 'advanced-packaging']]) {
         // by a link on the page, as the search, the glossary and the cards make one
         await t.ev(`(function () { var a = document.createElement('a'); a.href = '#${id}'; a.id = 'qa-link'; a.textContent = 'qa'; a.style.cssText = 'position:fixed;left:200px;top:200px;z-index:99;background:#fff'; document.body.appendChild(a); return 1; })()`);
-        await t.click('#qa-link', false); await sleep(1800);
+        await t.click('#qa-link', false); await sleep(3000);
         const st = await t.ev(STATE), off = await t.ev(OFF(`document.getElementById('${id}')`));
-        await t.ev(`document.getElementById('qa-link').remove(), 1`);
-        const pass = st.shown.length === 1 && st.shown[0] === chap && off !== null && Math.abs(off) <= 3;
+        const pass = st.path === '/' + chap + '/' && st.shown.length === 1 && st.shown[0] === chap && off !== null && Math.abs(off) <= 3;
         ok = ok && pass;
-        out.push(`${kind} #${id} by a link from Lithography: shows ${st.shown.join(',')}, its top ${off} px from where it lands${pass ? '' : ' (FAIL)'}`);
+        out.push(`${kind} #${id} by a link from Lithography's page: at ${st.path}, shows ${st.shown.join(',')}, its top ${off} px from where it lands${pass ? '' : ' (FAIL)'}`);
+        await t.ev(`location.href = '/lithography/', 1`); await sleep(2500);
       }
       await t.close();
       for (const [kind, id, chap] of [['section', pick.sec, 'memory-and-hbm'], ['figure', pick.fig, 'advanced-packaging']]) {
-        const f = await tab(chrome, '/#' + id, { watch: true, slow: true, wait: 2500 });
-        const st = await f.ev(STATE), off = await f.ev(OFF(`document.getElementById('${id}')`)), seen = await f.ev('Object.keys(window.__seen || {})');
-        const pass = st.shown.length === 1 && st.shown[0] === chap && Math.abs(off) <= 3 && !seen.some((x) => x !== chap);
-        ok = ok && pass;
-        out.push(`${kind} #${id} on a fresh load: shows ${st.shown.join(',')}, ${off} px from where it lands, painted before boot ${JSON.stringify(seen)}${pass ? '' : ' (FAIL)'}`);
-        await f.close();
+        for (const u of ['/' + chap + '/#' + id, '/#' + id]) {
+          const f = await tab(chrome, u, { watch: true, slow: true, wait: 2500 });
+          const st = await f.ev(STATE), off = await f.ev(OFF(`document.getElementById('${id}')`)), seen = await f.ev('Object.keys(window.__seen || {})');
+          const pass = st.path === '/' + chap + '/' && st.hash === '#' + id && st.shown.length === 1 && st.shown[0] === chap && Math.abs(off) <= 3 && !seen.some((x) => x !== chap);
+          ok = ok && pass;
+          out.push(`${kind} ${u} on a fresh load: at ${st.path}${st.hash}, shows ${st.shown.join(',')}, ${off} px from where it lands, painted before boot ${JSON.stringify(seen)}${pass ? '' : ' (FAIL)'}`);
+          await f.close();
+        }
       }
       if (pick.link) {
-        const l = await tab(chrome, '/#' + pick.link.from);
-        await l.click(`document.querySelector('#${pick.link.from} .prose a[href="#${pick.link.to}"]')`); await sleep(1500);
+        const l = await tab(chrome, '/' + pick.link.from + '/');
+        await l.click(`document.querySelector('#${pick.link.from} .prose a[href="../${pick.link.to}/"]')`); await sleep(3000);
         const st = await l.ev(STATE), off = await l.ev(OFF(`document.getElementById('${pick.link.to}')`));
-        const pass = st.shown[0] === pick.link.to && st.shown.length === 1 && st.y <= 4;
+        const pass = st.path === '/' + pick.link.to + '/' && st.shown[0] === pick.link.to && st.shown.length === 1 && st.y <= 4;
         ok = ok && pass;
         out.push(`the link "${pick.link.text}" in ${pick.link.from}'s text: shows ${st.shown.join(',')} at y ${st.y} (its top ${off} px from where it lands)${pass ? '' : ' (FAIL)'}`);
         await l.close();
@@ -191,58 +208,60 @@ const want = (n) => !ONLY.length || ONLY.includes(String(n));
       report(2, 'a section and a figure address in another chapter open the right chapter at the right place', ok, out.join('\n        '));
     }
 
-    // 3. the door, Back and Forward; the rail; Back from another view
+    // 3. the door, Back and Forward; the rail; Back from another view (each a page of its own, so Back and Forward are the
+    //    browser's, which keeps each page's place)
     if (want(3)) {
-      const t = await tab(chrome, '/#lithography');
+      const t = await tab(chrome, '/lithography/');
       const out = []; let ok = true;
+      const nav = 2600; // a new page: load, fonts and boot
       await t.ev(`(function(){ var d = document.querySelector('#lithography .prevnext .next'), de = document.documentElement; de.style.scrollBehavior = 'auto'; d.scrollIntoView({ block: 'center' }); de.style.scrollBehavior = ''; return 1; })()`);
       await sleep(500);
       const left = (await t.ev(STATE)).y;
-      await t.click('#lithography .prevnext .next', false); await sleep(1500);
+      await t.click('#lithography .prevnext .next', false); await sleep(nav);
       let st = await t.ev(STATE);
-      let pass = st.hash === '#photomasks-and-pellicles' && st.shown.join() === 'photomasks-and-pellicles' && st.y <= 4;
-      ok = ok && pass; out.push(`door from Lithography (left at y ${left}): ${st.hash}, shows ${st.shown.join(',')} at y ${st.y}, focus on ${st.focus}${pass ? '' : ' (FAIL)'}`);
-      await t.back(); st = await t.ev(STATE);
+      let pass = st.path === '/photomasks-and-pellicles/' && st.shown.join() === 'photomasks-and-pellicles' && st.y <= 4;
+      ok = ok && pass; out.push(`door from Lithography (left at y ${left}): ${st.path}, shows ${st.shown.join(',')} at y ${st.y}${pass ? '' : ' (FAIL)'}`);
+      await t.back(); await sleep(nav - 1200); st = await t.ev(STATE);
       pass = st.shown.join() === 'lithography' && Math.abs(st.y - left) <= 2;
-      ok = ok && pass; out.push(`Back: ${st.hash}, shows ${st.shown.join(',')} at y ${st.y}${pass ? '' : ' (FAIL)'}`);
-      await t.forward(); st = await t.ev(STATE);
+      ok = ok && pass; out.push(`Back: ${st.path}, shows ${st.shown.join(',')} at y ${st.y}${pass ? '' : ' (FAIL)'}`);
+      await t.forward(); await sleep(nav - 1200); st = await t.ev(STATE);
       pass = st.shown.join() === 'photomasks-and-pellicles' && st.y <= 4;
-      ok = ok && pass; out.push(`Forward: ${st.hash}, shows ${st.shown.join(',')} at y ${st.y}${pass ? '' : ' (FAIL)'}`);
+      ok = ok && pass; out.push(`Forward: ${st.path}, shows ${st.shown.join(',')} at y ${st.y}${pass ? '' : ' (FAIL)'}`);
       // in chapter 05, part way down, the rail's chain list to chapter 08, then Back and Forward
       await t.jump(3000); await sleep(400);
       const at05 = (await t.ev(STATE)).y;
-      await t.click('#photomasks-and-pellicles .rail-chain a[data-route="#foundries-and-fabs"]', false); await sleep(1500);
+      await t.click('#photomasks-and-pellicles .rail-chain a[href="../foundries-and-fabs/"]', false); await sleep(nav);
       st = await t.ev(STATE);
-      pass = st.shown.join() === 'foundries-and-fabs' && st.y <= 4;
-      ok = ok && pass; out.push(`the rail's chain list to chapter 08 from y ${at05}: shows ${st.shown.join(',')} at y ${st.y}${pass ? '' : ' (FAIL)'}`);
+      pass = st.path === '/foundries-and-fabs/' && st.shown.join() === 'foundries-and-fabs' && st.y <= 4;
+      ok = ok && pass; out.push(`the rail's chain list to chapter 08 from y ${at05}: ${st.path}, shows ${st.shown.join(',')} at y ${st.y}${pass ? '' : ' (FAIL)'}`);
       await t.jump(2200); await sleep(400);
-      await t.back(); st = await t.ev(STATE);
+      await t.back(); await sleep(nav - 1200); st = await t.ev(STATE);
       pass = st.shown.join() === 'photomasks-and-pellicles' && Math.abs(st.y - at05) <= 2;
       ok = ok && pass; out.push(`Back: shows ${st.shown.join(',')} at y ${st.y}${pass ? '' : ' (FAIL)'}`);
-      await t.forward(); st = await t.ev(STATE);
+      await t.forward(); await sleep(nav - 1200); st = await t.ev(STATE);
       pass = st.shown.join() === 'foundries-and-fabs' && Math.abs(st.y - 2200) <= 2;
       ok = ok && pass; out.push(`Forward: shows ${st.shown.join(',')} at y ${st.y}, the place left in it${pass ? '' : ' (FAIL)'}`);
-      // Back from another view: the Glossary tab, then Back
-      await t.click('.tabs a[data-view="glossary"]', false); await sleep(1500);
+      // Back from another view: the Glossary tab (the home page's), then Back
+      await t.click('.tabs a[data-view="glossary"]', false); await sleep(nav);
       const gv = (await t.ev(STATE)).view;
-      await t.back(); st = await t.ev(STATE);
+      await t.back(); await sleep(nav - 1200); st = await t.ev(STATE);
       pass = gv === 'glossary' && st.view === 'stack' && st.shown.join() === 'foundries-and-fabs' && Math.abs(st.y - 2200) <= 2;
       ok = ok && pass; out.push(`the Glossary tab (${gv}), then Back: shows ${st.shown.join(',')} at y ${st.y}${pass ? '' : ' (FAIL)'}`);
-      // The Chain's tab from a chapter: the contents at the top; Back to the chapter's place
-      await t.click('.tabs a[data-view="stack"]', false); await sleep(1500);
+      // The Chain's tab from a chapter: the contents on the home page, at the top; a row to chapter 14
+      await t.click('.tabs a[data-view="stack"]', false); await sleep(nav);
       st = await t.ev(STATE);
-      pass = st.hash === '#/chain' && !st.shown.length && st.contents && st.y === 0 && /^Supply Chain/.test(st.title);
-      ok = ok && pass; out.push(`The Chain's tab from chapter 08: ${st.hash}, contents ${st.contents}, chapters shown ${st.shown.length}, y ${st.y}, title "${st.title}"${pass ? '' : ' (FAIL)'}`);
-      await t.click(`document.querySelector('#contents a[href="#data-centers-and-power"]')`); await sleep(1500);
+      pass = st.path === '/' && st.hash === '#/chain' && !st.shown.length && st.contents && st.y === 0 && /^Supply Chain/.test(st.title);
+      ok = ok && pass; out.push(`The Chain's tab from chapter 08: ${st.path}${st.hash}, contents ${st.contents}, chapters shown ${st.shown.length}, y ${st.y}, title "${st.title}"${pass ? '' : ' (FAIL)'}`);
+      await t.click(`document.querySelector('#contents a[href="data-centers-and-power/"]')`); await sleep(nav);
       st = await t.ev(STATE);
-      pass = st.shown.join() === 'data-centers-and-power' && st.y <= 4;
-      ok = ok && pass; out.push(`a contents row to chapter 14: shows ${st.shown.join(',')} at y ${st.y}${pass ? '' : ' (FAIL)'}`);
+      pass = st.path === '/data-centers-and-power/' && st.shown.join() === 'data-centers-and-power' && st.y <= 4;
+      ok = ok && pass; out.push(`a contents row to chapter 14: ${st.path}, shows ${st.shown.join(',')} at y ${st.y}${pass ? '' : ' (FAIL)'}`);
       // the last chapter's door leads to the contents
-      await t.ev(`location.hash = '#geopolitics', 1`); await sleep(1500);
-      await t.click('#geopolitics .prevnext .next'); await sleep(1500);
+      await t.ev(`location.href = '/geopolitics/', 1`); await sleep(nav);
+      await t.click('#geopolitics .prevnext .next'); await sleep(nav);
       st = await t.ev(STATE);
-      pass = st.hash === '#/chain' && st.contents && !st.shown.length && st.y === 0;
-      ok = ok && pass; out.push(`chapter 16's door: ${st.hash}, contents ${st.contents}, y ${st.y}${pass ? '' : ' (FAIL)'}`);
+      pass = st.path === '/' && st.hash === '#/chain' && st.contents && !st.shown.length && st.y === 0;
+      ok = ok && pass; out.push(`chapter 16's door: ${st.path}${st.hash}, contents ${st.contents}, y ${st.y}${pass ? '' : ' (FAIL)'}`);
       if (t.errors.length) { ok = false; out.push('errors: ' + t.errors.join(' | ')); }
       await t.close();
       report(3, 'the door goes to the next chapter\'s top, and Back returns to the place left', ok, out.join('\n        '));
@@ -250,18 +269,20 @@ const want = (n) => !ONLY.length || ONLY.includes(String(n));
 
     // 4. a search result inside another chapter
     if (want(4)) {
-      const t = await tab(chrome, '/#design-and-eda');
+      const lp = await tab(chrome, '/lithography/');
+      const h = await lp.ev(`(function () { var h = document.querySelectorAll('#lithography > .prose > h3[id]')[3]; return { id: h.id, text: h.textContent.replace(/#$/, '').trim() }; })()`);
+      await lp.close();
+      const t = await tab(chrome, '/design-and-eda/');
       await t.jump(2500);
-      const h = await t.ev(`(function () { var h = document.querySelectorAll('#lithography > .prose > h3[id]')[3]; return { id: h.id, text: h.textContent.replace(/#$/, '').trim() }; })()`);
       await t.click('.search-btn', false); await sleep(400);
-      await t.s('Input.insertText', { text: h.text }); await sleep(700);
-      const k = await t.ev(`(function () { var a = [].filter.call(document.querySelectorAll('#cp-search ol a'), function (a) { return a.getAttribute('href') === '#${h.id}'; })[0]; return a ? a.getAttribute('data-k') : null; })()`);
+      await t.s('Input.insertText', { text: h.text }); await sleep(1500);
+      const k = await t.ev(`(function () { var a = [].filter.call(document.querySelectorAll('#cp-search ol a'), function (a) { return a.getAttribute('href') === '../lithography/#${h.id}'; })[0]; return a ? a.getAttribute('data-k') : null; })()`);
       let pass = k !== null, detail = '';
       if (pass) {
-        await t.click(`document.querySelector('#cp-search ol a[data-k="${k}"]')`, false); await sleep(1800);
+        await t.click(`document.querySelector('#cp-search ol a[data-k="${k}"]')`, false); await sleep(3000);
         const st = await t.ev(STATE), off = await t.ev(OFF(`document.getElementById('${h.id}')`)), foc = await t.ev(`document.activeElement === document.getElementById('${h.id}')`);
-        pass = st.shown.join() === 'lithography' && Math.abs(off) <= 3 && st.hash === '#' + h.id;
-        detail = `searched "${h.text}" from Chip Design (y 2500), result ${+k + 1}: shows ${st.shown.join(',')}, the heading ${off} px from where it lands, focus on it ${foc}`;
+        pass = st.path === '/lithography/' && st.shown.join() === 'lithography' && Math.abs(off) <= 3 && st.hash === '#' + h.id && foc;
+        detail = `searched "${h.text}" from Chip Design's page (y 2500), result ${+k + 1}: at ${st.path}${st.hash}, shows ${st.shown.join(',')}, the heading ${off} px from where it lands, focus on it ${foc}`;
       } else detail = `no result for "${h.text}" leads to #${h.id}`;
       if (t.errors.length) { pass = false; detail += '; errors: ' + t.errors.join(' | '); }
       await t.close();
@@ -277,12 +298,12 @@ const want = (n) => !ONLY.length || ONLY.includes(String(n));
       const has = await t.until(`document.querySelector('#gl-sheet:not([hidden]) .lk-men a[data-para]')`, 4000);
       let pass = has, detail = '';
       if (has) {
-        const link = await t.ev(`(function () { var a = document.querySelectorAll('#gl-sheet .lk-men a[data-para]')[1] || document.querySelector('#gl-sheet .lk-men a[data-para]'); a.id = 'qa-pass'; return { href: a.getAttribute('href'), para: +a.getAttribute('data-para'), text: a.textContent.slice(0, 90) }; })()`);
-        await t.click('#qa-pass'); await sleep(2200);
+        const link = await t.ev(`(function () { var a = document.querySelectorAll('#gl-sheet .lk-men a[data-para]')[1] || document.querySelector('#gl-sheet .lk-men a[data-para]'); a.id = 'qa-pass'; var p = CP.Lookup.paras[+a.getAttribute('data-para')]; return { href: a.getAttribute('href'), chapter: p.chapter, text: a.textContent.slice(0, 90) }; })()`);
+        await t.click('#qa-pass'); await sleep(2600);
         const st = await t.ev(STATE);
-        const p = await t.ev(`(function () { var p = CP.Lookup.paras[${link.para}], r = p.el.getBoundingClientRect(); return { top: Math.round(r.top), land: Math.round(CP.landAt(p.el)), flash: p.el.classList.contains('lk-flash'), chapter: p.chapter }; })()`);
-        pass = st.view === 'stack' && st.shown.join() === p.chapter && Math.abs(p.top - p.land) <= 3;
-        detail = `"${term}", its passage in ${p.chapter} ("${link.text.replace(/\s+/g, ' ')}…"): shows ${st.shown.join(',')}, the passage ${p.top - p.land} px from where it lands, flashed ${p.flash}`;
+        const p = await t.ev(`(function () { var e = document.querySelector('.lk-flash'); if (!e) return { flash: false }; var r = e.getBoundingClientRect(); return { top: Math.round(r.top), land: Math.round(CP.landAt(e)), flash: true }; })()`);
+        pass = st.view === 'stack' && st.path === '/' + link.chapter + '/' && st.shown.join() === link.chapter && p.flash && Math.abs(p.top - p.land) <= 3;
+        detail = `"${term}", its passage in ${link.chapter} ("${link.text.replace(/\s+/g, ' ')}…"): at ${st.path}, shows ${st.shown.join(',')}, the passage ${p.top - p.land} px from where it lands, flashed ${p.flash}`;
       } else detail = `the entry "${term}" listed no passage`;
       if (t.errors.length) { pass = false; detail += '; errors: ' + t.errors.join(' | '); }
       await t.close();
@@ -292,17 +313,18 @@ const want = (n) => !ONLY.length || ONLY.includes(String(n));
     // 6. a Suppliers link to a stage (a country's panel on the atlas names the stages it supplies)
     if (want(6)) {
       const t = await tab(chrome, '/#/suppliers?country=JP', { wait: 2500 });
-      const a = await t.ev(`(function () { var a = [].filter.call(document.querySelectorAll('.sa-panel a[href^="#"]'), function (a) { return a.getClientRects().length && document.getElementById(a.getAttribute('href').slice(1)) && document.getElementById(a.getAttribute('href').slice(1)).matches('article.chapter'); })[0]; if (!a) return null; a.id = 'qa-sup'; return { href: a.getAttribute('href'), text: a.textContent.replace(/\\s+/g, ' ').slice(0, 60) }; })()`);
+      const a = await t.ev(`(function () { var ids = CP_DATA.chapters.map(function (c) { return c.id + '/'; }); var a = [].filter.call(document.querySelectorAll('.sa-panel a[href]'), function (a) { return a.getClientRects().length && ids.indexOf(a.getAttribute('href')) >= 0; })[0]; if (!a) return null; a.id = 'qa-sup'; return { href: a.getAttribute('href'), text: a.textContent.replace(/\\s+/g, ' ').slice(0, 60) }; })()`);
       let pass = !!a, detail = 'no link from the Japan panel to a chapter';
       if (a) {
-        await t.click('#qa-sup'); await sleep(1600);
+        await t.click('#qa-sup'); await sleep(2600);
         const st = await t.ev(STATE);
-        pass = st.view === 'stack' && st.shown.join() === a.href.slice(1) && st.y <= 4;
+        pass = st.view === 'stack' && st.path === '/' + a.href && st.shown.join() === a.href.replace(/\/$/, '') && st.y <= 4;
         detail = `Japan's panel, "${a.text}": shows ${st.shown.join(',')} at y ${st.y}`;
         await t.back(); const b = await t.ev(STATE);
         detail += `; Back: ${b.view} ${b.hash}`;
       }
-      const chips = await t.ev(`(function () { var ids = CP_DATA.chapters.map(function (c) { return '#' + c.id; }); return [].filter.call(document.querySelectorAll('.view[data-view="landscape"] a[href]'), function (a) { return ids.indexOf(a.getAttribute('href')) >= 0; }).length; })()`);
+      await t.ev(`location.href = '/#/landscape', 1`); await sleep(2600);
+      const chips = await t.ev(`(function () { var ids = CP_DATA.chapters.map(function (c) { return c.id + '/'; }); return [].filter.call(document.querySelectorAll('.view[data-view="landscape"] a[href]'), function (a) { return ids.indexOf(a.getAttribute('href')) >= 0; }).length; })()`);
       detail += `. AI Chips: ${chips} links to a stage on the page, so nothing to follow there`;
       if (t.errors.length) { pass = false; detail += '; errors: ' + t.errors.join(' | '); }
       await t.close();
@@ -312,25 +334,27 @@ const want = (n) => !ONLY.length || ONLY.includes(String(n));
     // 7. print emulation: every chapter, the head and the contents
     if (want(7)) {
       const out = []; let ok = true;
-      for (const u of ['/#/chain', '/#lithography']) {
+      for (const [u, n] of [['/book/#/chain', 16], ['/lithography/', 1]]) {
         const t = await tab(chrome, u);
         await t.s('Emulation.setEmulatedMedia', { media: 'print' }); await sleep(600);
-        const st = await t.ev(`(function () { var s = ${STATE}; s.howto = !!document.querySelector('#howto').getClientRects().length; s.doors = [].filter.call(document.querySelectorAll('.prevnext'), function (d) { return d.getClientRects().length; }).length; return s; })()`);
-        const pass = st.shown.length === 16 && st.contents && st.howto && st.doors === 0;
-        ok = ok && pass; out.push(`${u}: ${st.shown.length} chapters print, the head ${st.howto}, the contents ${st.contents}, doors printed ${st.doors}${pass ? '' : ' (FAIL)'}`);
+        const st = await t.ev(`(function () { var s = ${STATE}; var h = document.querySelector('#howto'); s.howto = !!(h && h.getClientRects().length); s.doors = [].filter.call(document.querySelectorAll('.prevnext'), function (d) { return d.getClientRects().length; }).length; return s; })()`);
+        const pass = st.shown.length === n && st.contents === (n > 1) && st.howto === (n > 1) && st.doors === 0;
+        ok = ok && pass; out.push(`${u}: ${st.shown.length} chapter${st.shown.length === 1 ? '' : 's'} print, the head ${st.howto}, the contents ${st.contents}, doors printed ${st.doors}${pass ? '' : ' (FAIL)'}`);
         await t.close();
       }
-      report(7, 'print emulation of #/chain shows all 16 chapters', ok, out.join('\n        '));
+      report(7, 'print emulation of the book shows all 16 chapters, and a chapter\'s page its own', ok, out.join('\n        '));
     }
 
     // 8. the page's height at 1440: each chapter alone, against the whole chain laid out as before
     if (want(8)) {
-      const t = await tab(chrome, '/#lithography');
+      const t = await tab(chrome, '/book/#/chain');
       const hs = {};
       for (const id of ids) { await t.ev(`location.hash = '#${id}', 1`); await sleep(350); hs[id] = await t.ev('document.documentElement.scrollHeight'); }
       await t.ev(`document.documentElement.removeAttribute('data-chain'), document.head.insertAdjacentHTML('beforeend', '<style>article.chapter{content-visibility:visible!important}</style>'), 1`); await sleep(800);
       const whole = await t.ev('document.documentElement.scrollHeight');
       await t.close();
+      const own = await tab(chrome, '/lithography/'); const lh = await own.ev('document.documentElement.scrollHeight'); await own.close();
+      if (Math.abs(lh - hs.lithography) > 2) hs.lithography = lh; // its own page, which is the one a reader opens
       const v = Object.values(hs), min = Math.min(...v), max = Math.max(...v);
       const minId = ids.find((i) => hs[i] === min), maxId = ids.find((i) => hs[i] === max);
       report(8, 'page height at 1440 for one chapter', hs.lithography < whole / 8,
@@ -341,19 +365,19 @@ const want = (n) => !ONLY.length || ONLY.includes(String(n));
     if (want(9)) {
       const out = []; let ok = true;
       const go = async (t, label, sel, chap, opts = {}) => {
-        const clicked = await t.click(sel, opts.into !== false); await sleep(opts.wait || 1600);
+        const clicked = await t.click(sel, opts.into !== false); await sleep(opts.wait || 2600);
         const st = await t.ev(STATE);
-        const pass = clicked && st.view === 'stack' && st.shown.join() === chap && (opts.anyY || st.y <= 4);
+        const pass = clicked && st.view === 'stack' && st.path === '/' + chap + '/' && st.shown.join() === chap && (opts.anyY || st.y <= 4);
         ok = ok && pass; out.push(`${label}: ${clicked ? `shows ${st.shown.join(',')} at y ${st.y}` : 'nothing to click'}${pass ? '' : ' (FAIL)'}`);
         return st;
       };
       let t = await tab(chrome, '/#/');
-      await go(t, 'the home page, a stage in its chain', `document.querySelector('.view[data-view="walk"] a[data-route="#memory-and-hbm"]')`, 'memory-and-hbm');
+      await go(t, 'the home page, a stage in its chain', `document.querySelector('.view[data-view="walk"] a[href="memory-and-hbm/"]')`, 'memory-and-hbm');
       await t.close();
       t = await tab(chrome, '/#lk-country-nl', { wait: 2500 });
       await t.until(`document.querySelector('#gl-sheet:not([hidden]) .lk-cards a')`, 4000);
-      const card = await t.ev(`(function () { var a = document.querySelector('#gl-sheet .lk-cards a'); return a ? a.getAttribute('href').slice(1) : null; })()`);
-      if (card) await go(t, `a look-up card (the Netherlands, its chokepoint card ${card})`, '#gl-sheet .lk-cards a', card.replace(/^\//, '') === 'geopolitics' ? 'geopolitics' : card);
+      const card = await t.ev(`(function () { var a = document.querySelector('#gl-sheet .lk-cards a'); return a ? a.getAttribute('href').replace(/\\/$/, '') : null; })()`);
+      if (card) await go(t, `a look-up card (the Netherlands, its chokepoint card ${card})`, '#gl-sheet .lk-cards a', card);
       else { ok = false; out.push('a look-up card: the Netherlands card listed no chapter (FAIL)'); }
       await t.close();
       t = await tab(chrome, '/#/controls', { wait: 2500 });
@@ -366,11 +390,11 @@ const want = (n) => !ONLY.length || ONLY.includes(String(n));
       } else { ok = false; out.push('Export Controls: no board row names a chapter (FAIL)'); }
       await t.close();
       // the phone: the contents sheet, the slim bar, the strip's Top
-      t = await tab(chrome, '/#lithography', { width: 390 });
+      t = await tab(chrome, '/lithography/', { width: 390 });
       await t.click('.stage-menu', false); await sleep(500);
-      await go(t, 'the phone\'s contents sheet', '#sheet .sheet-chapters a[href="#memory-and-hbm"]', 'memory-and-hbm');
+      await go(t, 'the phone\'s contents sheet', '#sheet .sheet-chapters a[href="../memory-and-hbm/"]', 'memory-and-hbm');
       const sheetShut = await t.ev(`document.getElementById('sheet').hidden`);
-      if (!sheetShut) { ok = false; out.push('the sheet stayed open (FAIL)'); }
+      if (!sheetShut) { ok = false; out.push('the sheet stayed open on the new page (FAIL)'); }
       await t.jump(4000); await sleep(300); await t.jump(4300); await sleep(500);
       const slim = await t.ev(`document.documentElement.classList.contains('slim-on') && document.querySelector('.ch-slim').getAttribute('href')`);
       await go(t, `the phone's slim bar (${slim})`, '.ch-slim', 'memory-and-hbm', { into: false });
@@ -381,12 +405,12 @@ const want = (n) => !ONLY.length || ONLY.includes(String(n));
       if (t.errors.length) { ok = false; out.push('errors: ' + t.errors.join(' | ')); }
       // the phone's strip on the contents, which draw every stage themselves (design round six, 28 Oct 2026): the strip stands
       // down there, and comes back on a chapter
-      await t.click('.tabs a[data-view="stack"]', false); await sleep(1500);
+      await t.click('.tabs a[data-view="stack"]', false); await sleep(2600);
       const strip = `getComputedStyle(document.querySelector('.stage')).display`;
       const cstrip = await t.ev(strip), cst = await t.ev(STATE);
       const cpass = cstrip === 'none' && cst.contents && !cst.shown.length && /^Supply Chain/.test(cst.title);
       ok = ok && cpass; out.push(`the phone's The Chain tab from chapter 09: the contents, the strip ${cstrip === 'none' ? 'stands down' : 'shows (' + cstrip + ')'}, title "${cst.title}"${cpass ? '' : ' (FAIL)'}`);
-      await t.back(); const bstrip = await t.ev(strip), bst = await t.ev(STATE);
+      await t.back(); await sleep(1400); const bstrip = await t.ev(strip), bst = await t.ev(STATE);
       const bpass = bstrip !== 'none' && bst.shown.join() === 'memory-and-hbm';
       ok = ok && bpass; out.push(`Back to chapter 09: the strip ${bstrip !== 'none' ? 'shows again' : 'is still gone'}${bpass ? '' : ' (FAIL)'}`);
       await t.close();
@@ -405,11 +429,12 @@ const want = (n) => !ONLY.length || ONLY.includes(String(n));
       // one request at a time, and a dropped connection (the preview's python http.server resets some under a burst) is tried
       // again up to twice; any answer the server gives, a 404 included, stands. Status 0 means it never answered
       const HEAD = `(async function (u) { for (var k = 0; k < 3; k++) { try { var r = await fetch(u, { method: 'HEAD', cache: 'no-store' }); return { status: r.status, type: (r.headers.get('content-type') || '').split(';')[0] }; } catch (e) { await new Promise(function (f) { setTimeout(f, 300); }); } } return { status: 0, type: '' }; })`;
+      // a row is a link to the chapter's page: each click loads it, and the contents load again for the next
       const opens = async (t, sel, id) => {
-        await t.ev(`location.hash = '#/chain', 1`); await sleep(900);
-        const clicked = await t.click(sel); await sleep(1100);
+        if (await t.ev(`location.pathname + location.hash`) !== '/#/chain') { await t.ev(`location.href = '/#/chain', 1`); await sleep(2200); }
+        const clicked = await t.click(sel); await sleep(2400);
         const st = await t.ev(STATE);
-        return { pass: clicked && st.view === 'stack' && st.shown.join() === id && st.hash === '#' + id && st.y <= 4 && !st.contents, st, clicked };
+        return { pass: clicked && st.view === 'stack' && st.shown.join() === id && st.path === '/' + id + '/' && st.y <= 4 && !st.contents, st, clicked };
       };
       const rowsOf = (sel) => `[].map.call(document.querySelectorAll(${JSON.stringify(sel)}), function (r) { return r.getAttribute('data-ch') + '|' + r.querySelector('.t').textContent; })`;
       for (const width of [1440, 1024, 390]) {
@@ -423,14 +448,14 @@ const want = (n) => !ONLY.length || ONLY.includes(String(n));
         const bad = [];
         for (const c of D) {
           const r = await opens(t, `#contents .item[data-ch="${c.id}"] .t`, c.id);
-          if (!r.pass) bad.push(`${c.id} by its title: ${r.clicked ? `shows ${r.st.shown.join(',') || 'nothing'} at y ${r.st.y}, ${r.st.hash}` : 'no title to click'}`);
+          if (!r.pass) bad.push(`${c.id} by its title: ${r.clicked ? `shows ${r.st.shown.join(',') || 'nothing'} at y ${r.st.y}, ${r.st.path}${r.st.hash}` : 'no title to click'}`);
           const d = await opens(t, `#contents .item[data-ch="${c.id}"] .ct-tile`, c.id);
-          if (!d.pass) bad.push(`${c.id} by its drawing: ${d.clicked ? `shows ${d.st.shown.join(',') || 'nothing'} at y ${d.st.y}, ${d.st.hash}` : 'no drawing to click'}`);
+          if (!d.pass) bad.push(`${c.id} by its drawing: ${d.clicked ? `shows ${d.st.shown.join(',') || 'nothing'} at y ${d.st.y}, ${d.st.path}${d.st.hash}` : 'no drawing to click'}`);
         }
         ok = ok && !bad.length;
         out.push(`${width}: ${bad.length ? 'rows that fail: ' + bad.join('; ') + ' (FAIL)' : `each of the ${D.length} rows opens its chapter alone at its top, by its title and by its drawing`}`);
         // the downloads: on the first screen, each served
-        await t.ev(`location.hash = '#/chain', 1`); await sleep(900); await t.jump(0);
+        await t.ev(`location.href = '/#/chain', 1`); await sleep(2200); await t.jump(0);
         const dl = await t.ev(`(async function () { var out = [];
           for (var a of document.querySelectorAll('#howto .howto-dl a')) { var b = a.getBoundingClientRect(), r = await ${HEAD}(a.href);
             out.push({ href: a.getAttribute('href'), text: a.textContent, dl: a.hasAttribute('download'), y: Math.round(b.bottom), status: r.status, type: r.type }); }

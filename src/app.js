@@ -651,7 +651,11 @@
       // Until the first route the template's CSS showed the view the address names (read in <head> by src/preroute.js), so it
       // could paint while the page arrived. From here the hidden attributes decide. A reader who scrolled or tapped in that
       // time keeps their place: the first route neither returns them to the top nor jumps to the anchor (kept).
-      var pre = window.CP_PRE || {}, first = !this.routed, kept = first && !!pre.touched;
+      // A page reached by Back or Forward from another page (each chapter has its own since 28 Oct 2026) is the browser's to
+      // put back where the reader left it, so the first route leaves its scroll alone too
+      var pre = window.CP_PRE || {}, first = !this.routed;
+      var nav = first && window.performance && performance.getEntriesByType ? (performance.getEntriesByType('navigation')[0] || {}).type : '';
+      var kept = first && (!!pre.touched || nav === 'back_forward');
       if (first) {
         document.documentElement.classList.add('booted');
         if (pre.view && pre.view !== v) console.warn('src/preroute.js showed "' + pre.view + '" while the page loaded, but the router opens "' + v + '" for ' + location.hash);

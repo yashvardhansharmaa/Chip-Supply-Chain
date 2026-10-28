@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /* The Glossary as a dictionary (redesign option B), driven as a reader would: the columns and their counts, search with the names
    first, Enter, the arrows and Escape, the kinds, no entry and Did you mean, the letters, the sheet with its card, passages,
-   Show all and its arrows, the addresses of an entry (#gl-euv, #lk-country-nl, #lk-firm-, #lk-chip-), a passage link out and Back,
-   the look-up popovers in a chapter and their Look it up link, the phone's full-screen sheet and the overlay at 768 px, dark mode,
+   Show all and its arrows, the addresses of an entry (#gl-euv, #lk-country-nl, #lk-firm-, #lk-chip-), a passage link out to its
+   chapter's page and Back, the look-up popovers on a chapter's page and their Look it up link to the home page's Glossary, the phone's full-screen sheet and the overlay at 768 px, dark mode,
    and the static page /glossary/.
    usage: node qa/redesign/interact-glossary.js [base] (default http://127.0.0.1:8769) */
 'use strict';
@@ -107,10 +107,12 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8769';
     await t.ev("(document.querySelector('#gl-sheet-body .lk-more button').click(),1)"); await sleep(300);
     check('Show all shows every passage', (await t.ev("document.querySelectorAll('#gl-sheet-body .lk-men li').length")) === n);
     // a passage link leaves for the chapter, and Back returns to the entry
-    await t.ev("(document.querySelector('#gl-sheet-body .lk-men a[data-para]').click(),1)"); await sleep(1500);
-    check('a passage link opens its chapter', (await t.ev("document.documentElement.getAttribute('data-view')")) === 'stack' && /^#[a-z-]+$/.test(await t.ev('location.hash')), await t.ev('location.hash'));
-    check('the passage flashes in its chapter', (await t.ev("document.querySelectorAll('.lk-flash').length")) === 1);
-    await t.ev('(history.back(),1)'); await sleep(1500);
+    // (each chapter is a page of its own since 28 Oct 2026: the passage goes with the reader and flashes there)
+    await t.ev("(document.querySelector('#gl-sheet-body .lk-men a[data-para]').click(),1)");
+    let flashed = 0; for (let k = 0; k < 20 && !flashed; k++) { await sleep(250); try { flashed = await t.ev("document.querySelectorAll('.lk-flash').length"); } catch (e) { } }
+    check('a passage link opens its chapter\'s page', (await t.ev("document.documentElement.getAttribute('data-view')")) === 'stack' && /^\/[a-z-]+\/$/.test(await t.ev('location.pathname')), await t.ev('location.pathname'));
+    check('the passage flashes in its chapter', flashed === 1);
+    await t.ev('(history.back(),1)'); await sleep(2500);
     check('Back returns to the entry', (await t.ev("document.documentElement.getAttribute('data-view')")) === 'glossary' && (await t.ev(open_)) && (await t.ev(title)) === 'EUV', await t.ev('location.hash'));
     await t.ev("(location.hash='#/glossary',1)"); await sleep(800);
     check('the Glossary tab closes the sheet', !(await t.ev(open_)));
@@ -127,22 +129,22 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8769';
     await t.close();
 
     /* ---------- the look-up popovers in a chapter ---------- */
-    t = await open(chrome, BASE + '/#lithography', { width: 1440, wait: 2500 });
+    t = await open(chrome, BASE + '/lithography/', { width: 1440, wait: 2500 });
     const term = await t.ev("(function(){var b=[...document.querySelectorAll('#lithography .prose .gl-term')].filter(function(x){return !x.dataset.note;})[0];b.scrollIntoView({block:'center'});b.focus();return b.getAttribute('data-term');})()"); await sleep(500);
     check('a look-up card opens over the chapter text', (await t.ev("!document.getElementById('gl-tip').hidden && document.getElementById('gl-tip').querySelector('p').textContent.length > 20")), term);
-    check('it reads the same definition as the Glossary', (await t.ev("document.getElementById('gl-tip').querySelector('p').textContent")) === (await t.ev(`(function(){var e=document.querySelector('#glossary .gl-entry[data-term="${term}"] dd p');return e&&e.textContent;})()`)));
+    check('it reads the same definition as the Glossary', (await t.ev("document.getElementById('gl-tip').querySelector('p').textContent")) === (await t.ev(`(window.CP_TERMS.defs[${JSON.stringify(term)}] || [])[1]`)));
     check('the card is a popover over the text', (await t.ev("getComputedStyle(document.getElementById('gl-tip')).position")) === 'fixed');
     const look = await t.ev("document.querySelector('#gl-tip a').getAttribute('href')");
-    await t.ev("(document.querySelector('#gl-tip a').click(),1)"); await sleep(1500);
-    check('Look it up opens the entry in the Glossary', (await t.ev("document.documentElement.getAttribute('data-view')")) === 'glossary' && (await t.ev(open_)) && (await t.ev("location.hash")) === look, look + ' -> ' + (await t.ev(title)));
+    await t.ev("(document.querySelector('#gl-tip a').click(),1)"); await sleep(3000);
+    check('Look it up opens the entry in the home page\'s Glossary', look.indexOf('../#gl-') === 0 && (await t.ev("document.documentElement.getAttribute('data-view')")) === 'glossary' && (await t.ev(open_)) && (await t.ev("location.pathname + location.hash")) === look.slice(2), look + ' -> ' + (await t.ev(title)));
     check('after a move within the site the title takes focus', (await t.ev("document.activeElement && document.activeElement.classList.contains('lk-t')")));
     check('no script errors in the chapter and back', !t.errors.length, t.errors.join(' | '));
     await t.close();
 
-    t = await open(chrome, BASE + '/#lithography', { width: 390, wait: 2500 });
+    t = await open(chrome, BASE + '/lithography/', { width: 390, wait: 2500 });
     await t.ev("(function(){var b=[...document.querySelectorAll('#lithography .prose .gl-term')].filter(function(x){return !x.dataset.note;})[0];b.scrollIntoView({block:'center'});b.click();return 1;})()"); await sleep(600);
     check('390: a tap opens the look-up card as a sheet over the text', (await t.ev("!document.getElementById('gl-tip').hidden && document.getElementById('gl-tip').classList.contains('is-sheet')")));
-    await t.ev("(document.querySelector('#gl-tip a').click(),1)"); await sleep(1500);
+    await t.ev("(document.querySelector('#gl-tip a').click(),1)"); await sleep(3000);
     check('390: Look it up opens the entry full screen', (await t.ev("document.documentElement.getAttribute('data-view')")) === 'glossary' && (await t.ev(open_)) && (await t.ev("document.getElementById('gl-sheet').getBoundingClientRect().top")) === 0);
     await t.close();
 

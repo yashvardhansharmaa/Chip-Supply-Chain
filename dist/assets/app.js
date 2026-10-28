@@ -651,7 +651,11 @@
       // Until the first route the template's CSS showed the view the address names (read in <head> by src/preroute.js), so it
       // could paint while the page arrived. From here the hidden attributes decide. A reader who scrolled or tapped in that
       // time keeps their place: the first route neither returns them to the top nor jumps to the anchor (kept).
-      var pre = window.CP_PRE || {}, first = !this.routed, kept = first && !!pre.touched;
+      // A page reached by Back or Forward from another page (each chapter has its own since 28 Oct 2026) is the browser's to
+      // put back where the reader left it, so the first route leaves its scroll alone too
+      var pre = window.CP_PRE || {}, first = !this.routed;
+      var nav = first && window.performance && performance.getEntriesByType ? (performance.getEntriesByType('navigation')[0] || {}).type : '';
+      var kept = first && (!!pre.touched || nav === 'back_forward');
       if (first) {
         document.documentElement.classList.add('booted');
         if (pre.view && pre.view !== v) console.warn('src/preroute.js showed "' + pre.view + '" while the page loaded, but the router opens "' + v + '" for ' + location.hash);
@@ -4070,8 +4074,10 @@ try {
       if (el && (el.closest('#lk-items') || (el.classList && el.classList.contains('gl-entry')))) {
         // an address that names an entry (a popover's Look it up, a search result, a card's link, Back): the entry opens, and the
         // columns bring it into view. After a move within the site (not a first load) its title takes focus too
-        var R = CP.Router || {};
-        this.show(id, { reveal: true, land: true, focus: !!(R.routed && R.from) });
+        // (a move from another page of the site, such as Look it up on a chapter's page, counts as one)
+        var R = CP.Router || {}, came = !this.arrived && /^https?:/.test(document.referrer) && document.referrer.indexOf(location.origin + '/') === 0 && document.referrer !== location.href;
+        this.arrived = true;
+        this.show(id, { reveal: true, land: true, focus: !!(R.routed && R.from) || came });
       } else if (this.open) this.close(false);
     },
 
