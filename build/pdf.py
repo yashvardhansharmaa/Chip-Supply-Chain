@@ -37,6 +37,18 @@ import json, subprocess, sys, time, urllib.request, os, base64, socket, datetime
 import websocket  # websocket-client
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+def set_author(path, author='Yashvardhan Sharma'):
+    """Chrome writes the PDF's title from the page but no author: add the site's author to the document's metadata, keeping
+    everything else (28 Oct 2026). Without pypdf the file is left as Chrome wrote it."""
+    try:
+        from pypdf import PdfReader, PdfWriter
+    except Exception:
+        print('pypdf is missing, so the PDF carries no Author', file=sys.stderr); return
+    r = PdfReader(path); w = PdfWriter(clone_from=r)
+    md = {k: v for k, v in (r.metadata or {}).items()}
+    md['/Author'] = author
+    w.add_metadata(md)
+    with open(path, 'wb') as f: w.write(f)
 args = sys.argv[1:]
 url, out = args[0], args[1]
 def site_info():
@@ -161,6 +173,7 @@ try:
         if 'data' not in pdf: sys.exit('print failed: ' + json.dumps(pdf)[:300])
         os.makedirs(os.path.dirname(os.path.abspath(out)), exist_ok=True)
         open(out, 'wb').write(base64.b64decode(pdf['data']))
+        set_author(out)
         say(f'wrote {out} {round(os.path.getsize(out) / 1e6, 2)} MB')
 
     def run_paged():
