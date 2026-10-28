@@ -41,13 +41,13 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8766';
       const col = await t.ev(`(function(){var a=document.getElementById('lithography'),q=function(s){return a.querySelector(s);},r=function(s){return q(s).getBoundingClientRect();};
         var card=q('.prose > .plate'),prev=card&&card.previousElementSibling,next=card&&card.nextElementSibling,sp=getComputedStyle(q('.ch-spec'));
         return {railTop:Math.round(r('.ch-rail .rail-on > .rail-k').top),kickTop:Math.round(r('.ch-kick').top),kick:q('.ch-kick').textContent,textX:Math.round(r('.ch-lede').left),specX:Math.round(r('.ch-spec').left),specW:Math.round(r('.ch-spec').width),
-          cardW:card?Math.round(card.getBoundingClientRect().width):0,cardId:card&&card.id,prev:prev&&prev.tagName,next:next&&next.id,inHead:!!q('.chapter-head .plate'),
+          cardW:card?Math.round(card.getBoundingClientRect().width):0,revW:q('.prose > .review')?Math.round(q('.prose > .review').getBoundingClientRect().width):-1,cardId:card&&card.id,prev:prev&&prev.tagName,next:next&&next.id,inHead:!!q('.chapter-head .plate'),
           drawH:sp.getPropertyValue('--draw-h').trim(),lift:sp.getPropertyValue('--lift').trim(),toc:[].map.call(a.querySelectorAll('.rail-toc a'),function(x){return x.textContent;}).slice(0,3).join(' | ')};})()`);
       check('1440: the rail starts beside the kicker (its first line, On this page)', Math.abs(col.railTop - col.kickTop) <= 4, `rail ${col.railTop}, kicker ${col.kickTop}`);
       check('1440: the kicker carries the card\'s verdict', /Extreme concentration\s*·\s*Very hard to substitute/.test(col.kick), col.kick);
       check('1440: the specimen is a plate at the measure, in the text column', col.specW === 666 && col.specX === col.textX, `${col.specW} px at x ${col.specX}, text at ${col.textX}`);
       check('1440: the plate is fitted to its drawing (--draw-h, --lift)', /^\d+px$/.test(col.drawH) && /^\d+px$/.test(col.lift), `--draw-h ${col.drawH}, --lift ${col.lift}`);
-      check('1440: the card is in the text after the lead, before section 01, as wide as the flashcards (720 px since 27 Oct)', !col.inHead && col.prev === 'P' && col.next === 'lithography--how-it-works' && col.cardW === 720 && col.cardId === 'lithography--card', JSON.stringify({ prev: col.prev, next: col.next, w: col.cardW }));
+      check('1440: the card is in the text after the lead, before section 01, as wide as the flashcards (owner, 27 Oct) and wider than the text', !col.inHead && col.prev === 'P' && col.next === 'lithography--how-it-works' && col.cardW === col.revW && col.cardW > 666 && col.cardId === 'lithography--card', JSON.stringify({ prev: col.prev, next: col.next, w: col.cardW, flashcards: col.revW }));
       check('1440: On this page lists the card after In plain terms', col.toc === 'In plain terms | Chokepoint card | How it works', col.toc);
       // the visual pass of 27 Oct 2026: Extreme is wine wherever a band shows; High keeps its ink outline
       const marks = await t.ev(`(function(){var a=document.getElementById('lithography'),bg=function(e){return e?getComputedStyle(e).backgroundColor:null;};

@@ -22,7 +22,7 @@
   --fs-label: 11.5px; --tr-label: 0.08em; --tt-label: uppercase;
   --opsz-title: normal; /* the optical size follows the size */
   /* the text scale, as src/styles.css sets it: every size in the text face is its Literata size times 20 / 18.5 */
-  --text-scale: 1;
+  --text-scale: calc(18 / 18.5); /* as src/styles.css sets it from 28 Oct 2026: an 18 px body */
   --measure: calc(31em / var(--text-scale)); /* the same width as before the switch, about 61 characters */
   --gutter: clamp(16px, 4vw, 40px);
   /* the site's type scale (src/styles.css :root, redesign of 25 Oct 2026): labels in sentence case, nothing under 11 px */

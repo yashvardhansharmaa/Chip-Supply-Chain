@@ -51,7 +51,7 @@
   /* the text scale: Source Serif 4 reads at 20 px where Literata read at 18.5 px (the same x-height, about 9.5 px), so every
      size set in the text face is its old size times this ratio, here and in each module. One edit here moves them all;
      --measure follows it, so the text column stays 666 px, the width of the figures */
-  --text-scale: 1; /* 20 / 18.5 until 27 Oct, when the owner found the text too large throughout: 18.5 px body in Source Serif 4 */
+  --text-scale: calc(18 / 18.5); /* 20 / 18.5 until 27 Oct, when the owner found the text too large throughout (18.5 px body in Source Serif 4); 18 / 18.5 from 28 Oct, the owner asking for it slightly smaller again: an 18 px body */
   --band: 0px; /* height of the sticky specimen band on phones; anchors add it to their offset */
   --measure: calc(36em / var(--text-scale)); /* 33.3 em: 666 px of the 20 px chapter text, about 71 characters */
   --frame: 650px;   /* chapter header and chokepoint card keep their earlier width */
@@ -1106,4 +1106,4 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
 .ex-panel .dot.last { fill: var(--ink); }
 
 /* print keeps the scale the PDFs were set in (20 / 18.5 of the Literata sizes) */
-@media print { :root { --text-scale: calc(20 / 18.5); } }
+@media print { :root { --text-scale: calc(10 / 9.8); } } /* the book's text at 10 pt (28 Oct 2026; 20 / 18.5, about 10.6 pt, before) */

@@ -148,7 +148,7 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
 :root { --bg: #fcfcfa; --bg-2: #f4f4f2; --card: #f4f4f2; --ink: #171716; --ink-2: #45443f; --muted: #56554f; --line: #e1e0db; --line-2: #c4c3bd;
   --accent: #7a1f2b; --accent-fill: #7a1f2b; --accent-soft: #f3e3e5; --on-accent: #ffffff; --bar-4: #8c8a84; --bar-3: #b4b3ad; --bar-2: #d2d1cc;
   --display: "Source Serif 4", "Iowan Old Style", Georgia, serif; --body: "Source Serif 4", "Iowan Old Style", Georgia, serif;
-  --text-scale: 1; /* as src/styles.css sets it (27 Oct: the text at 18.5 px); the printed brief sets its own sizes in pt */
+  --text-scale: calc(18 / 18.5); /* as src/styles.css sets it (28 Oct: the text at 18 px); the printed brief sets its own sizes in pt */
   --label: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif; --kicker: "Fragment Mono", ui-monospace, Menlo, monospace;
   --gutter: clamp(16px, 4vw, 40px); color-scheme: light; }
 /* dark: the site's own bar inks (src/styles.css), High in --bar-4 above Moderate in --bar-3 */

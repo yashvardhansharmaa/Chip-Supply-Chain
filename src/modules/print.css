@@ -110,7 +110,10 @@
      or it stood under the last line of every page. The opener sinks 20 mm on its first page (the book's later pages,
      copies with data-split-from, start at the margin); a chapter printed alone opens under its title block. */
   article.chapter { display: block; break-before: page; padding: 20mm 0 0 36mm; border-top: 0; }
-  article.chapter[data-split-from] { padding-top: 0; }
+  /* The margin column holds the chain on a chapter's first page only. From its second page the text takes the page's width,
+     its lines capped at --pcol (150 mm, about 85 characters of the 10 pt text): the book ran 203 pages with the margin
+     on every page (28 Oct 2026), against 174 for the live book. */
+  article.chapter[data-split-from] { padding-top: 0; padding-left: 0; --pcol: 150mm; }
   .cp-alone article.chapter { padding-top: 0; }
   article.chapter > .chapter-head { display: block; margin: 0; }
   .chapter .ch-open, .chapter .ch-spec, .chapter .plain, .chapter .inshort, .chapter > .prose { grid-column: auto; grid-row: auto; }
@@ -165,10 +168,10 @@
   .ch-still .num, .ch-still .nm { font-family: var(--font-ui); fill: var(--ink); }
 
   /* In plain terms opens the text as a section does: an ink rule, then the heading in the display face. In short follows it. */
-  .chapter .plain, .chapter .ch-page .plain { max-width: 128mm; margin: 6mm 0 0; padding: 2.6mm 0 0; border: 0; border-top: 0.6pt solid var(--ink); background: none; }
+  .chapter .plain, .chapter .ch-page .plain { max-width: var(--pcol, 128mm); margin: 6mm 0 0; padding: 2.6mm 0 0; border: 0; border-top: 0.6pt solid var(--ink); background: none; }
   .chapter .plain h3.label, .chapter .plain .label { display: block; margin: 0 0 2.4mm; padding: 0; font-family: var(--font-display); font-weight: 400; font-size: 16pt; line-height: 1.12; letter-spacing: -0.012em; color: var(--ink); }
-  .chapter .plain p { margin: 0; max-width: 128mm; font-family: var(--font-body); font-size: calc(10.2pt * var(--text-scale)); line-height: 1.5; color: var(--ink); }
-  .chapter .inshort { max-width: 128mm; margin: 5mm 0 0; padding: 0; border: 0; }
+  .chapter .plain p { margin: 0; max-width: var(--pcol, 128mm); font-family: var(--font-body); font-size: calc(10.2pt * var(--text-scale)); line-height: 1.5; color: var(--ink); }
+  .chapter .inshort { max-width: var(--pcol, 128mm); margin: 5mm 0 0; padding: 0; border: 0; }
   .chapter .inshort h3.label { margin: 0 0 1.2mm; font-family: var(--font-ui); font-weight: 600; font-size: 8pt; line-height: 1.3; color: var(--ink); }
   /* each paragraph stands 1.8 mm below the one before. No "a + b" or ":first-of-type" selectors in this file: Paged.js
      rewrites them as attribute rules of lower weight, and they lose. */
@@ -178,9 +181,9 @@
      them, never below: Chrome drops a block's top margin at the head of a page, but counts a bottom margin against the
      page it ends, so the last lines of a paragraph, or the card after it, went over. */
   .chapter > .prose { margin: 5mm 0 0; max-width: none; }
-  .chapter > .prose > * { max-width: none; }
+  .chapter > .prose > * { max-width: var(--pcol, none); } /* figures, tables and the deck end with the text's right edge */
   .chapter > .prose > p, .chapter > .prose > ul, .chapter > .prose > ol, .chapter > .prose > blockquote,
-  .chapter > .prose > h3, .chapter > .prose > h4, .chapter > .prose > h5 { max-width: 128mm; }
+  .chapter > .prose > h3, .chapter > .prose > h4, .chapter > .prose > h5 { max-width: var(--pcol, 128mm); }
   .chapter > .prose > p, .chapter > .prose > ul, .chapter > .prose > ol, .chapter > .prose > blockquote { margin: 2.4mm 0 0; font-size: calc(9.8pt * var(--text-scale)); line-height: 1.5; }
   .chapter .prose li { margin: 0.3em 0 0; }
   .chapter .prose blockquote { padding-left: 4mm; border-left: 0.6pt solid var(--ink); }
@@ -195,7 +198,7 @@
   /* 3. the chokepoint card: in the text after the lead, before section 01, as on screen (print.js cardsToText). On paper it
      is ruled, not tinted: an ink rule over the head, the two ratings large in the display face with the band's mark, then label and
      text in rows. */
-  .chapter .plate { max-width: none; margin: 6mm 0 0; padding: 0; background: none; border: 0; border-bottom: 0.6pt solid var(--ink); box-shadow: none; overflow: hidden; }
+  .chapter .plate { max-width: var(--pcol, none); margin: 6mm 0 0; padding: 0; background: none; border: 0; border-bottom: 0.6pt solid var(--ink); box-shadow: none; overflow: hidden; }
   .chapter .prose .plate li { margin-top: 0; }
   .chapter .plate-head { display: flex; justify-content: space-between; align-items: baseline; gap: 4mm; padding: 2mm 0 2mm; border-top: 0.6pt solid var(--ink); border-bottom: 0.4pt solid var(--rule-ink); }
   .chapter .plate-head .label { font-family: var(--font-ui); font-size: 8.4pt; font-weight: 600; line-height: 1.3; color: var(--ink); white-space: nowrap; }
@@ -249,12 +252,12 @@
   /* ---------- figures: the number in mono, the finding in the display face, the title under it, the chart, the source ----------
      On paper the frame is an ink rule above and a hairline below; the source line's buttons are the screen's (chapter.css
      hides them). */
-  .chapter .figure { max-width: none; margin: 5.5mm 0 0; padding: 0; border: 0; border-top: 0.6pt solid var(--ink); border-bottom: 0.3pt solid var(--line-2); background: none; }
+  .chapter .figure { max-width: var(--pcol, none); margin: 5.5mm 0 0; padding: 0; border: 0; border-top: 0.6pt solid var(--ink); border-bottom: 0.3pt solid var(--line-2); background: none; }
   .chapter .fig-head { padding: 2.2mm 0 0; }
   .chapter .fig-k { font-family: var(--font-code); font-size: 7pt; line-height: 1.3; color: var(--ink); }
-  .chapter .figure .fig-title { margin: 1.4mm 0 0.8mm; max-width: 128mm; font-family: var(--font-display); font-weight: 500; font-size: 11.4pt; line-height: 1.24; letter-spacing: -0.005em; color: var(--ink); text-wrap: balance; }
+  .chapter .figure .fig-title { margin: 1.4mm 0 0.8mm; max-width: var(--pcol, 128mm); font-family: var(--font-display); font-weight: 500; font-size: 11.4pt; line-height: 1.24; letter-spacing: -0.005em; color: var(--ink); text-wrap: balance; }
   .chapter .figure .fig-title .unit, .chapter .figure .fig-sub .unit { margin-left: 1.6mm; font-family: var(--font-code); font-weight: 400; font-size: 6.8pt; color: var(--muted); }
-  .chapter .fig-sub { margin: 0; max-width: 128mm; font-family: var(--font-body); font-size: calc(8.2pt * var(--text-scale)); line-height: 1.4; color: var(--ink-2); }
+  .chapter .fig-sub { margin: 0; max-width: var(--pcol, 128mm); font-family: var(--font-body); font-size: calc(8.2pt * var(--text-scale)); line-height: 1.4; color: var(--ink-2); }
   .chapter .fig-body { padding: 3mm 0 2.6mm; }
   /* bars as HTML rows (figure() in build/build.js), the chart rule: the largest wine with its value bold in wine, the rest the tint; on
      paper the label stands beside its bar, right-aligned (the screen sets it above the bar below 641 px, a width Paged.js's
@@ -273,7 +276,7 @@
   .chapter .figure .tl li .d { font-family: var(--font-code); font-size: 6.8pt; }
   /* an animation on paper: its last frame, then its steps in the figures' small type (styles.css prints the list) */
   .chapter .figure--anim .anim-stage { border: 0; }
-  .chapter .figure--anim .anim-print { display: block; width: 100%; height: auto; }
+  .chapter .figure--anim .anim-print { display: block; width: 100%; max-width: 134mm; height: auto; }
   .chapter .figure--anim .anim-transcript { margin: 2.4mm 0 0; padding-left: 5mm; font-family: var(--font-body); font-size: calc(8.4pt * var(--text-scale)); line-height: 1.38; }
   .chapter .figure--anim .anim-transcript li { margin: 0 0 0.9mm; }
   /* an explainer's drawing stays whole, but its numbered steps may run on to the next page: in the larger type a drawing and
@@ -284,7 +287,7 @@
   /* the source line: "Source", the source's name and its note number, any note */
   .chapter .fig-strip { display: block; margin: 0; padding: 1.6mm 0 1.8mm; background: none; border-top: 0.3pt solid var(--line-2); font-family: var(--font-code); font-size: 6.8pt; line-height: 1.4; color: var(--ink-2); }
   .chapter .fig-strip .fs-src, .chapter .fig-strip .fs-note { display: block; }
-  .chapter .fig-strip .fs-note { margin-top: 0.6mm; font-family: var(--font-body); font-size: calc(7.6pt * var(--text-scale)); line-height: 1.38; max-width: 128mm; color: var(--ink-2); }
+  .chapter .fig-strip .fs-note { margin-top: 0.6mm; font-family: var(--font-body); font-size: calc(7.6pt * var(--text-scale)); line-height: 1.38; max-width: var(--pcol, 128mm); color: var(--ink-2); }
   .chapter .fig-strip .fs-k, .chapter .fig-strip .fs-note .fs-k { margin-right: 1.4mm; font-family: var(--font-code); font-size: 6.8pt; color: var(--muted); }
   .chapter .fig-strip .fs-src a { color: var(--ink); text-decoration: none; }
   .chapter .fig-strip sup.cite { font-size: 6.8pt; vertical-align: baseline; }
@@ -297,10 +300,10 @@
   .prose th, .prose td { padding: 1.3mm 2.4mm; }
   .prose th { font-family: var(--font-ui); font-size: 7pt; font-weight: 600; letter-spacing: 0; text-transform: none; }
   .prose td.num, .prose td[data-num] { font-family: var(--font-code); }
-  figure svg, .figure svg, #exposure-viz svg { max-width: 100%; height: auto; }
+  figure svg, .figure svg, #exposure-viz svg { max-width: min(100%, 134mm); height: auto; } /* the first page's column, also where the text runs wider */
 
   /* ---------- the questions and the takeaways ---------- */
-  .chapter > .prose > .review { max-width: 128mm; margin: 7mm 0 0; padding: 0; border-top: 0; } /* the deck's head is screen-only, so its rule would stand alone over the list's own */
+  .chapter > .prose > .review { max-width: var(--pcol, 128mm); margin: 7mm 0 0; padding: 0; border-top: 0; } /* the deck's head is screen-only, so its rule would stand alone over the list's own */
   .review .fc-end { margin-top: 0; }
   .review .rv-keep { margin: 0; padding-top: 2.6mm; }
   .review .rv-keep h4.label, .review .cp-quiz h4.label { margin: 0 0 1mm; font-family: var(--font-ui); font-weight: 600; font-size: 8pt; line-height: 1.35; letter-spacing: 0; text-transform: none; color: var(--ink); }
@@ -406,7 +409,7 @@
   .site-footer .sources-key .tier { border: 0 !important; width: auto; font-weight: 600; padding: 0; margin: 0 1mm 0 0; }
   .site-footer .cite--edition summary { margin: 6mm 0 2mm; font-family: var(--font-ui); font-weight: 600; font-size: 8pt; letter-spacing: 0; text-transform: none; color: var(--ink); }
   .site-footer .cite--edition pre, .site-footer .cite--edition .cp-cite-text { margin: 2.4mm 0 0; padding: 0.4mm 0 0.4mm 3.5mm; background: none; border: 0; border-left: 0.6pt solid var(--line-2); }
-  .site-footer .cite--edition .cp-cite-text { max-width: 128mm; font-family: var(--font-body); font-size: calc(9pt * var(--text-scale)); line-height: 1.45; color: var(--ink); border-left-color: var(--ink); overflow-wrap: anywhere; }
+  .site-footer .cite--edition .cp-cite-text { max-width: var(--pcol, 128mm); font-family: var(--font-body); font-size: calc(9pt * var(--text-scale)); line-height: 1.45; color: var(--ink); border-left-color: var(--ink); overflow-wrap: anywhere; }
   .site-footer .cite--edition .cp-cite-text a { color: var(--accent-ink); }
   .site-footer .cite--edition pre { font-family: var(--font-code); font-size: 6.8pt; line-height: 1.45; color: var(--ink-2); overflow-wrap: anywhere; }
   /* the citation and its BibTeX on one page, under their heading; the credits and the tier key may close the page before */
