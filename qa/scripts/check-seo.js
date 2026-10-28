@@ -150,7 +150,7 @@ chapters.forEach((c, i) => {
     const items = bc.itemListElement || [];
     const names = items.map((x) => x.name), pos = items.map((x) => x.position);
     if (JSON.stringify(pos) !== JSON.stringify(items.map((x, k) => k + 1))) fail(page, `breadcrumb positions are ${JSON.stringify(pos)}`);
-    if (JSON.stringify(names) !== JSON.stringify(['Home', 'The Chain', h1])) fail(page, `breadcrumb is ${JSON.stringify(names)}`);
+    if (JSON.stringify(names) !== JSON.stringify(['Home', 'Supply Chain', h1])) fail(page, `breadcrumb is ${JSON.stringify(names)}`);
     if (items.length && items[items.length - 1].item !== url) fail(page, 'breadcrumb does not end on the canonical');
     if (items[0] && items[0].item !== BASE) fail(page, 'breadcrumb does not start at the home page');
   }

@@ -1279,7 +1279,7 @@ fill('N_STAGES', String(stages.length)); fill('STAGES_WORD', word(stages.length)
 // the walk's step addresses (#/walk/<chapter>, replaced as the reader scrolls Start here) all count as the home page
 fill('ANALYTICS', SITE.analytics ? `<script>window.goatcounter={path:function(){return (location.hash||'').replace(/^#\\/?/,'/').replace(/\\?.*$/,'').replace(/^\\/walk\\/.*$/,'/')||'/';}};</script>\n<script async src="https://gc.zgo.at/count.js" data-goatcounter="${esc(SITE.analytics)}"></script>` : ''); fill('THESIS', thesisHTML); fill('SUBTITLE', subtitleHTML); fill('CHAIN', chainTrack(stages, null));
 // Home is the Start here walk (#/ and #/intro open the same view), so it has one entry
-const sheetPages = [['#/', 'Home'], ['#/chain', 'The Chain'], ['#/landscape', 'AI Chips'], ['#/suppliers', 'Suppliers'], ['#/controls', 'Export Controls'], ['#/glossary', 'Glossary']].map((p) => `<a href="${p[0]}">${p[1]}</a>`).join('');
+const sheetPages = [['#/', 'Home'], ['#/chain', 'Supply Chain'], ['#/landscape', 'AI Chips'], ['#/suppliers', 'Suppliers'], ['#/controls', 'Export Controls'], ['#/glossary', 'Glossary']].map((p) => `<a href="${p[0]}">${p[1]}</a>`).join('');
 const sheetItem = (ch) => `<li><a href="${ch.id === 'geopolitics' ? '#geopolitics' : '#' + esc(ch.id)}"><span class="n">${pad(ch.number)}</span><span class="t">${esc(ch.title)}</span></a></li>`;
 const sheetChapters = stages.map(sheetItem).join('') + (acrossChapters.length ? `<li class="sheet-k" aria-hidden="true">Across the chain</li>` + acrossChapters.map(sheetItem).join('') : '');
 fill('SHEET_PAGES', sheetPages); fill('SHEET_CHAPTERS', sheetChapters);

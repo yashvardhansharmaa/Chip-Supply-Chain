@@ -654,7 +654,7 @@
       if (!this.titles) { try { this.titles = JSON.parse(document.querySelector('meta[name="cp-titles"]').getAttribute('content')) || {}; } catch (e) { this.titles = {}; } }
       var T = this.titles, v = this.current, ch = v === 'stack' && this.chain !== 'contents' && Sections.currentId ? '/' + Sections.currentId + '/' : '';
       var page = { walk: '/', landscape: '/chips/', suppliers: '/suppliers/', controls: '/export-controls/', glossary: '/glossary/' }[v];
-      document.title = (ch && T[ch]) || (page && T[page]) || (v === 'stack' ? 'The Chain · Chip Supply Chain' : T['/'] || 'Chip Supply Chain');
+      document.title = (ch && T[ch]) || (page && T[page]) || (v === 'stack' ? 'Supply Chain · Chip Supply Chain' : T['/'] || 'Chip Supply Chain');
     },
     /* what The Chain shows for an anchor: the chapter that holds it, or the contents (#/chain, the contents' own ids, an id
        found nowhere) */

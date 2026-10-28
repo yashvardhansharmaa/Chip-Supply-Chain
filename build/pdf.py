@@ -135,7 +135,7 @@ try:
 
     def print_pdf(css_page_size):
         # the fallback's own head and foot (Chrome's templates): the title and the edition, the site and the folio
-        title = opt('--title', js('document.title') if chapter else 'Chip Supply Chain · The Chain')
+        title = opt('--title', js('document.title') if chapter else 'Chip Supply Chain · Supply Chain')
         style = ("font-family: Menlo, 'DejaVu Sans Mono', monospace; font-size: 7.5px; letter-spacing: 0.04em;"
                  " color: #5b646d; width: 100%; padding: 0 20mm; display: flex; justify-content: space-between; align-items: center;")
         header = '<div style="' + style + ' margin-top: 6mm;"><span>' + title + '</span><span>Edition of ' + edition + '</span></div>'
