@@ -724,6 +724,24 @@ var cite=acts.querySelector('.ch-cite-btn');acts.insertBefore(tb,cite?cite.nextS
 }
 [].forEach.call(D.querySelectorAll('.figure .fs-acts'),add);
 })();`;
+/* Hide contents: a button at the top of a chapter's contents rail (railHTML) hides the rail's parts, and the text column moves to
+   the middle of the page (src/modules/chapter.css, html.rail-off). The same button, in the same place, then reads Show contents.
+   The choice is the reader's on this device (localStorage "cp-rail"), the same for every chapter, in the app and on the readable
+   pages; the head of each page sets html.rail-off before the first paint. Wide screens only (1200 px and up): narrower, the rail
+   is a line of links and the button is not shown. The script adds the button, so a page read without scripts has none, and its
+   words stay out of the text the page dates are taken from. Shared by the main page (src/template.html) and the readable pages
+   (social.js), as CITE_JS is. */
+const RAIL_TOGGLE_JS = `(function(){
+var D=document,H=D.documentElement,K='cp-rail';
+var IC='<svg class="rt-ic" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5"/><path d="M6 2.5v11"/></svg>';
+function sync(){var off=H.classList.contains('rail-off');[].forEach.call(D.querySelectorAll('.ch-rail .rail-tog'),function(b){b.setAttribute('aria-expanded',off?'false':'true');var t=b.querySelector('.rt-t');if(t)t.textContent=off?'Show contents':'Hide contents';});}
+[].forEach.call(D.querySelectorAll('nav.ch-rail'),function(n){var body=n.querySelector('.rail-body');if(!body||n.querySelector('.rail-tog'))return;
+var b=D.createElement('button');b.type='button';b.className='rail-tog';b.setAttribute('aria-controls',body.id);b.innerHTML=IC+'<span class="rt-t"></span>';n.insertBefore(b,n.firstChild);});
+D.addEventListener('click',function(e){var b=e.target.closest?e.target.closest('.rail-tog'):null;if(!b)return;
+var off=!H.classList.contains('rail-off');H.classList.toggle('rail-off',off);try{if(off)localStorage.setItem(K,'off');else localStorage.removeItem(K);}catch(x){}
+sync();try{window.dispatchEvent(new Event('resize'));}catch(x){}});
+sync();
+})();`;
 // the cite line's date goes in once every page's date is known (after the build modules write the readable pages)
 // the key under the ledger column's rows, one per stage: each band the stages hold, its bar drawn as the rows draw it
 const LEDGER_KEY = (() => {
@@ -784,11 +802,13 @@ function railHTML(ch, stageIdx, toc) {
   return `<nav class="ch-rail ch-ledger" aria-label="${esc(ch.title)}: contents">`
     // the chapter's number and stage, for paper only (src/modules/print.css sets it in the ledger column)
     + `<div class="ch-tile print-only"><span class="k">Chapter</span><span class="v">${pad(ch.number)}</span><span class="of">${stageIdx >= 0 ? `Stage ${stageIdx + 1} of ${stages.length}` : esc(TILE_WORD[ch.id] || '')}</span></div>`
+    // the three parts sit in one box, which the reader can hide (RAIL_TOGGLE_JS adds the button that does it, above them)
+    + `<div class="rail-body" id="${esc(ch.id)}--rail">`
     + `<div class="rail-part rail-on"><p class="rail-k">On this page</p><ol class="rail-toc">${toc.map(([id, t]) => `<li><a href="#${esc(id)}">${t}</a></li>`).join('')}</ol></div>`
     + (figs.length ? `<div class="rail-part rail-figs-w"><p class="rail-k">Figures</p><ol class="rail-figs">${figs.map((f) => `<li><a href="#${esc(f.id)}"><span class="n">${esc(f.num)}</span><span class="t">${esc(f.label)}</span></a></li>`).join('')}</ol></div>` : '')
     + `<div class="rail-part rail-chain-w"><p class="rail-k">The chain <span class="rail-key" aria-hidden="true"><span><i></i>Extreme</span><span><i class="h"></i>High</span></span></p>`
     + `<ol class="chain-track rail-chain">${stages.map((c, i) => item(c, i)).join('')}</ol>`
-    + (across.length ? `<ol class="rail-chain rail-across">${across.map((c) => item(c, null)).join('')}</ol>` : '') + `</div></nav>`;
+    + (across.length ? `<ol class="rail-chain rail-across">${across.map((c) => item(c, null)).join('')}</ol>` : '') + `</div></div></nav>`;
 }
 function chapterHTML(ch) {
   const m = ch.meta, mins = Math.max(1, Math.round(ch.words / 230));
@@ -1178,7 +1198,7 @@ const ctx = { root, fs, path, all, chapters, geo, stages, data, esc, pad, word, 
   // the flashcard deck, for the one that ends Start here (build/modules/walk.js), and the glossary (the home search field that showed its count went on 27 Oct 2026)
   deckHTML, glossary,
   // the cite line under the chapter title, as the main page prints it (the readable page's own date goes in)
-  citeBlock, CITE_JS, FIG_JS,
+  citeBlock, CITE_JS, FIG_JS, RAIL_TOGGLE_JS,
   // the chapter page's contents rail, the door at its end and the numbered parts of a specimen, for the readable chapter pages (social.js)
   railHTML, chapterDoor, specimenParts, stillSizes,
   // for the reference pages (build/modules/reference-pages.js): the views' own words and helpers, as the main page uses them
@@ -1212,7 +1232,7 @@ fill('SUPPLIERS_INTRO', suppliersIntro); fill('SUPPLIERS_FACTS', suppliersFacts)
 for (const asset of ['print-title.png']) { const from = path.join(root, 'build', 'assets', asset); if (fs.existsSync(from)) fs.copyFileSync(from, path.join(root, 'dist', asset)); }
 // the site icons (drawn by `python3 build/icons.py`) go to the root of dist/, where browsers look for /favicon.ico
 for (const icon of ['favicon.ico', 'favicon.svg', 'apple-touch-icon.png']) { const from = path.join(root, 'build', 'assets', 'icons', icon); if (fs.existsSync(from)) fs.copyFileSync(from, path.join(root, 'dist', icon)); else warn(`icon ${icon} is missing; run python3 build/icons.py`); }
-fill('GEO_ARTICLE', geoArticle); fill('CITE_JS', CITE_JS); fill('FIG_JS', FIG_JS); // the essay, the last chapter, from the same chapterHTML as the others
+fill('GEO_ARTICLE', geoArticle); fill('CITE_JS', CITE_JS); fill('FIG_JS', FIG_JS); fill('RAIL_TOGGLE_JS', RAIL_TOGGLE_JS); // the essay, the last chapter, from the same chapterHTML as the others
 fill('BRIEFING', briefingHTML); fill('GLOSSARY', glossaryHTML); fill('GLOSSARY_COUNT', String(glossary.length));
 // the Look up page: one list of every term, firm and chip, alphabetical, each with the kind a reader would call it
 const lkSlug = (s) => String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');

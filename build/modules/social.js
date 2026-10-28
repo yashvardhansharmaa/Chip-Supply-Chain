@@ -179,19 +179,22 @@ function shareTags(p, versions) {
   const seo = seoOf(p), title = seo ? seo.title : p.kind === 'chapter' ? p.title : pageTitle(p);
   // a chapter's preview leads with its one-line summary (the fact a reader would share), whole; the meta description cuts it to search length
   const description = seo && seo.description ? seo.description : p.kind === 'chapter' && (p.shareDescription || p.metaDescription) ? (p.shareDescription || p.metaDescription) : p.description;
+  const alt = p.alt || p.eyebrow + '. ' + p.title + '. ' + p.line;
   return `<meta property="og:site_name" content="${SITE}">
 <meta property="og:type" content="${p.kind === 'chapter' ? 'article' : 'website'}">
+<meta property="og:locale" content="en_US">
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(description)}">
 <meta property="og:url" content="${esc(url)}">
 <meta property="og:image" content="${esc(image)}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="${esc(p.alt || p.eyebrow + '. ' + p.title + '. ' + p.line)}">
+<meta property="og:image:alt" content="${esc(alt)}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${esc(title)}">
 <meta name="twitter:description" content="${esc(description)}">
-<meta name="twitter:image" content="${esc(image)}">`;
+<meta name="twitter:image" content="${esc(image)}">
+<meta name="twitter:image:alt" content="${esc(alt)}">`;
 }
 const ICONS = `<link rel="icon" href="../favicon.ico" sizes="16x16 32x32 48x48">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
@@ -202,7 +205,8 @@ const ICONS = `<link rel="icon" href="../favicon.ico" sizes="16x16 32x32 48x48">
 const NAV = [['../#/chain', 'The Chain'], ['../chips/', 'AI Chips'], ['../suppliers/', 'Suppliers'], ['../export-controls/', 'Export Controls'], ['../glossary/', 'Glossary']];
 const masthead = (current) => `<header class="masthead"><a class="wordmark" href="../" aria-label="Chip Supply Chain"><svg class="wm-tile" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect width="16" height="16" rx="3.2"/><path transform="translate(3.3324 11.8693) scale(0.009179 -0.009179)" d="M1011 683 Q1011 612 960 564 Q909 515 823 515 Q739 515 696 561 Q653 607 653 680 L653 720 Q653 786 623 823 Q594 861 544 861 Q502 861 468 831 Q433 801 412 741 Q391 682 391 594 Q391 474 431 393 Q470 312 540 270 Q609 229 697 229 Q769 229 825 251 Q880 273 924 326 Q946 348 959 356 Q971 363 983 363 Q1000 363 1007 347 Q1015 330 1015 307 Q1012 216 954 140 Q896 64 796 19 Q695 -26 563 -26 Q417 -26 301 33 Q185 91 118 198 Q51 305 51 450 Q51 602 118 721 Q184 840 305 909 Q425 978 588 978 Q720 978 815 938 Q909 898 960 832 Q1011 765 1011 683 Z"/></svg><span class="wm-name">Chip Supply Chain</span></a><nav aria-label="Site">${NAV.map(([href, text]) => `<a href="${href}"${href === current ? ' aria-current="page"' : ''}>${text}</a>`).join('')}</nav></header>`;
 const MASTHEAD = masthead('');
-// the static pages open light; ?theme= or the site's saved choice sets the theme before the first paint
+// the static pages open light; ?theme= or the site's saved choice sets the theme before the first paint, and a contents rail the
+// reader hid stays hidden (build/build.js RAIL_TOGGLE_JS)
 // the rail's On this page marks the section the reader is in, as the app's does (src/app.js Rail.update): the last section
 // whose top has passed 30 percent of the window takes aria-current, which src/modules/chapter.css draws as a wine rule. Then the
 // names beside the still's balloons are set at 14 px on screen, as the app sets them, whatever the still's scale (stage 2
@@ -212,7 +216,7 @@ var xs=[].slice.call(r.querySelectorAll('a[href^="#"]')).map(function(a){return 
 function up(){q=0;var line=Math.max(innerHeight*0.3,80),on=null;xs.forEach(function(x){if(x[1].getBoundingClientRect().top<line)on=x;});if(on!==cur){if(cur)cur[0].removeAttribute('aria-current');if(on)on[0].setAttribute('aria-current','location');cur=on;}}
 addEventListener('scroll',function(){if(!q)q=requestAnimationFrame(up);},{passive:true});addEventListener('resize',up);up();})();
 (function(){var nm=function(){[].forEach.call(document.querySelectorAll('svg.ch-still--wide'),function(s){var m=s.getScreenCTM&&s.getScreenCTM();if(!m||!m.a)return;[].forEach.call(s.querySelectorAll('text.nm'),function(t){t.style.fontSize=(14/m.a).toFixed(1)+'px';});});};nm();addEventListener('resize',nm);addEventListener('load',nm);})();`;
-const THEME_JS = `<script>(function(){try{var q=/[?&]theme=(light|dark)/.exec(location.search);var t=q?q[1]:localStorage.getItem('cp-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>`;
+const THEME_JS = `<script>(function(){try{var q=/[?&]theme=(light|dark)/.exec(location.search);var t=q?q[1]:localStorage.getItem('cp-theme');if(t)document.documentElement.setAttribute('data-theme',t);if(localStorage.getItem('cp-rail')==='off')document.documentElement.classList.add('rail-off');}catch(e){}})();</script>`;
 
 // a view's page: the tags, one paragraph, and straight on to the view on the main page
 function pageHTML(p, versions) {
@@ -483,8 +487,13 @@ function readableHTML(p, ch, ctx, versions, css) {
   let still = pe && pe.still && parts.length ? stillSVG(pe.still, parts, m.specimenCaption ? m.specimenCaption.split('. ')[0] : ch.title) : '';
   // every other chapter shows a still of its own specimen, shot from the app at the angle it opens on (qa/redesign/stills.js,
   // build/assets/specimens/<id>.webp at twice the pixels it is shown at), so no readable page opens on a lone caption
+  // its alt text is what the drawing shows, the caption's first sentence ("A silicon ingot, one crystal pulled whole from a melt,
+  // with two wafers sawn from it."); it is the first picture on the page, so it is fetched first (fetchpriority)
   const sz = !still && (ctx.stillSizes || {})[ch.id];
-  if (sz) still = `<img class="ch-still-img" src="../media/spec-${esc(ch.id)}.webp" width="${Math.round(sz[0] / 2)}" height="${Math.round(sz[1] / 2)}" alt="${esc((SPECIMEN_NAME[specimen] || specimen.replace(/-/g, ' ')))}, the chapter's specimen" decoding="async">`;
+  const stillAlt = m.specimenCaption ? m.specimenCaption.split('. ')[0].replace(/\.$/, '') + '.' : `${SPECIMEN_NAME[specimen] || specimen.replace(/-/g, ' ')}, the chapter's specimen`;
+  if (sz) still = `<img class="ch-still-img" src="../media/spec-${esc(ch.id)}.webp" width="${Math.round(sz[0] / 2)}" height="${Math.round(sz[1] / 2)}" alt="${esc(stillAlt)}" fetchpriority="high" decoding="async">`;
+  // the annotated still is drawn inside an SVG, which the browser's preload scanner does not read: the head preloads its picture
+  const preloadStill = pe && pe.still && pe.still.file && parts.length ? `<link rel="preload" as="image" href="../media/${esc(pe.still.file)}" fetchpriority="high">` : '';
   const specimenHTML = `<figure class="ch-spec${still ? ' has-still' : ''}"${still && !STAGES.isStage(ch) ? ' data-night="1"' : ''}>${still ? `<div class="ch-spec-draw">${still}</div>` : ''}<figcaption class="ch-spec-cap${r.parts ? ' has-parts' : ''}"><span class="label">Specimen ${pad(ch.number)} · ${esc(ch.title)}</span>${m.specimenCaption ? `<p>${esc(m.specimenCaption)}</p>` : ''}${r.parts || ''}<a class="ch-spec-3d" href="${esc(app)}">See it in 3D in the interactive chapter</a></figcaption></figure>`;
 
   // the contents rail, as the app draws it (build.js railHTML), with this page's own section anchors
@@ -550,13 +559,34 @@ ${sources}
 <meta name="citation_public_url" content="${esc(url)}">
 <meta name="citation_fulltext_html_url" content="${esc(url)}">`;
 
-  const ld = {
-    '@context': 'https://schema.org', '@type': 'Article', headline: ch.title, description: metaDescription,
-    url, mainEntityOfPage: url, image, inLanguage: 'en', datePublished: dates.published, dateModified: dates.modified,
-    author: { '@type': 'Person', name: AUTHOR.name, url: AUTHOR.url },
-    publisher: { '@type': 'Organization', name: SITE, url: BASE },
-    isPartOf: { '@type': 'WebSite', name: SITE, url: BASE },
-  };
+  // the structured data (schema.org JSON-LD, one graph): the chapter as an Article, and the trail Home › The Chain › chapter.
+  // Every value is one the page shows: the headline is the h1, the description the meta description, the dates the "Updated"
+  // day and the day the chapter first appeared, the image the share card, the firms the card's leaders
+  const at = seq.findIndex((c) => c.id === ch.id), prevCh = seq[at - 1], nextCh = seq[at + 1];
+  const seoTitle = seo ? seo.title : ch.title;
+  const leaders = si >= 0 ? ((m.card || {}).leaders || []).map((l) => (l && typeof l === 'object' ? l.name : l)).filter(Boolean) : [];
+  const ld = { '@context': 'https://schema.org', '@graph': [
+    Object.assign({
+      '@type': 'Article', '@id': url + '#article', headline: ch.title }, seoTitle !== ch.title ? { alternativeHeadline: seoTitle } : {}, {
+      description: metaDescription, url, mainEntityOfPage: { '@type': 'WebPage', '@id': url, url, name: pageTitle(p), breadcrumb: { '@id': url + '#breadcrumb' } },
+      image: { '@type': 'ImageObject', url: image, width: 1200, height: 630 },
+      inLanguage: 'en', datePublished: dates.published, dateModified: dates.modified,
+      author: { '@type': 'Person', name: AUTHOR.name, url: AUTHOR.url },
+      publisher: { '@type': 'Organization', '@id': BASE + '#publisher', name: SITE, url: BASE, logo: { '@type': 'ImageObject', url: BASE + 'apple-touch-icon.png', width: 180, height: 180 } },
+      isPartOf: { '@type': 'WebSite', '@id': BASE + '#website', name: SITE, url: BASE },
+      articleSection: 'The Chain', about: { '@type': 'Thing', name: ch.title },
+    }, leaders.length ? { mentions: leaders.map((n) => ({ '@type': 'Organization', name: n })) } : {}, {
+      wordCount: ch.words, timeRequired: `PT${r.mins}M`, isAccessibleForFree: true,
+    }),
+    { '@type': 'BreadcrumbList', '@id': url + '#breadcrumb', itemListElement: [['Home', BASE], ['The Chain', BASE + 'chain/'], [ch.title, url]]
+      .map(([name, item], k) => ({ '@type': 'ListItem', position: k + 1, name, item })) },
+  ] };
+  // the chapter's place in the reading order, for the engines that still read it (Google stopped in 2019; Bing has not said so)
+  const seqLinks = [prevCh ? `<link rel="prev" href="${esc(BASE + prevCh.id + '/')}">` : '', nextCh ? `<link rel="next" href="${esc(BASE + nextCh.id + '/')}">` : ''].filter(Boolean).join('\n');
+  const articleTags = `<meta property="article:published_time" content="${esc(dates.published)}">
+<meta property="article:modified_time" content="${esc(dates.modified)}">
+<meta property="article:author" content="${esc(AUTHOR.url)}">
+<meta property="article:section" content="The Chain">`;
   const hasVideo = /<video /.test(main);
   return `<!doctype html>
 <html lang="en">
@@ -566,15 +596,19 @@ ${sources}
 <title>${esc(pageTitle(p))}</title>
 <meta name="description" content="${esc(metaDescription)}">
 <link rel="canonical" href="${esc(url)}">
+${seqLinks}
+<meta name="robots" content="max-image-preview:large">
 <meta name="author" content="${AUTHOR.name}">
 ${scholar}
 ${shareTags(p, versions)}
+${articleTags}
 ${ICONS}
 <meta name="color-scheme" content="light dark">
 <script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="${FONTS}">
+${preloadStill}
 ${THEME_JS}
 <style>${css}${EXTRA_CSS}</style>
 ${SITE_CONFIG.analytics ? `<script async src="https://gc.zgo.at/count.js" data-goatcounter="${esc(SITE_CONFIG.analytics)}"></script>` : ''}
@@ -589,6 +623,7 @@ ${main}
 ${ctx.CITE_JS ? `<script>${ctx.CITE_JS}</script>` : ''}
 ${ctx.FIG_JS ? `<script>${ctx.FIG_JS}</script>` : ''}
 <script>${RAIL_JS}</script>
+${ctx.RAIL_TOGGLE_JS ? `<script>${ctx.RAIL_TOGGLE_JS}</script>` : ''}
 ${hasVideo ? `<script>(function(){var t=document.documentElement.getAttribute('data-theme');if(t!=='dark')return;[].forEach.call(document.querySelectorAll('video[data-media]'),function(v){var b=v.getAttribute('data-media');v.poster=b+'-dark-end.jpg';v.src=b+'-dark.mp4';});})();
 /* the print still loads lazily; a browser that does not fetch lazy images for print is told to now */
 window.addEventListener('beforeprint',function(){[].forEach.call(document.querySelectorAll('img.anim-still[loading="lazy"]'),function(i){i.loading='eager';});});</script>` : ''}
