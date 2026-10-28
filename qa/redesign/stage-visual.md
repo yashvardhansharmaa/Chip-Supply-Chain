@@ -70,7 +70,7 @@ The changes are in `build/build.js` (`figure()` and `FIG_JS`) and `src/modules/c
 | `check-size` | nothing over 5 MB |
 | `smoke.js --port 9421` | 36 loads, no failures |
 | `stage-chapters.js --base http://127.0.0.1:8774` | 9 of 9 |
-| `interact-chapter.js http://127.0.0.1:8774` | 65 of 65 on a quiet machine (see the notes) |
+| `interact-chapter.js http://127.0.0.1:8774` | 65 of 65 on the final build (see the notes) |
 | `interact-glossary.js http://127.0.0.1:8774` | 90 of 90 |
 | `interact-suppliers.js http://127.0.0.1:8774` | 65 of 65 |
 | `interact.js` (home, not required) | all pass |
@@ -111,7 +111,7 @@ The shots are in `qa/redesign/shots/visual/`, which git ignores. All are from 87
 
 ## Notes for the lead
 
-- **Interact checks under load.** In the last runs the machine's load average was 40 to 150, from builders working in parallel. Under that load, `interact-chapter.js` fails up to four scroll-timing checks: the masthead rising and returning, the rail marking How it works, and the glossary passage landing. They fail the same way against 8766. The full run passed 65 of 65 earlier, on a quieter machine.
+- **Interact checks under load.** In the last runs the machine's load average was 40 to 150, from builders working in parallel. Under that load, `interact-chapter.js` fails up to four scroll-timing checks: the masthead rising and returning, the rail marking How it works, and the glossary passage landing. They fail the same way against 8766. The final build passed 65 of 65 once the load fell.
 - **AI Chips.** The app view's charts still draw the largest value in ink (rule B), and its labels are still Fragment Mono. That code is the AI Chips builder's: the Landscape module in `src/app.js`, `chips.css`, and `/chips/` in `reference-pages.js`. The static `/chips/` page picks up the new capitals from the shared sheet, but its FP16 chart keeps ink and mono.
 - **The summary PDF is unchanged.** Its print layout still sets Extreme in ink. The brief named the summary page, and changing the PDF means printing it again.
 - **The redirect pages are unchanged.** Their small `.eyebrow` in `build/modules/social.js` stays Fragment Mono, because it sits in a page `<head>` there and another builder is working on that file's head.
