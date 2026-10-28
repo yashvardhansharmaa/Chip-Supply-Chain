@@ -24,11 +24,13 @@ module.exports = function (ctx) {
   const stepId = (id) => '/walk/' + id;
   const stageIndex = (id) => stages.findIndex((s) => s.id === id);
 
-  /* the concentration band, shown the way the chain strip shows it: wine at Extreme, an ink outline at High, gray below */
+  /* the concentration band in the site's four-bar meter (src/modules/chapter.css .meter), as the chapters show it (28 Oct 2026) */
   const RANK = { Extreme: '5', High: '4', Moderate: '3', Low: '3' };
+  const BAR = { Extreme: 4, High: 3, Moderate: 2, Low: 1 };
   function bandHTML(c) {
     if (!c.band) return '';
-    return `<span class="wk-score" data-rank="${RANK[c.band] || '3'}"><button type="button" class="gl-term label wk-score-term" data-term="concentration" data-note="${esc((ctx.BAND_NOTE || {})[c.band] || '')}" data-head="${esc(c.band)} concentration">Concentration</button><span class="wk-sc"><b>${esc(c.band)}</b></span></span>`;
+    const l = BAR[c.band] || 0;
+    return `<span class="wk-score" data-rank="${RANK[c.band] || '3'}"><button type="button" class="gl-term label wk-score-term" data-term="concentration" data-note="${esc((ctx.BAND_NOTE || {})[c.band] || '')}" data-head="${esc(c.band)} concentration">Concentration</button><span class="wk-sc"><span class="meter" data-level="${l}" aria-hidden="true">${[1, 2, 3, 4].map((k) => `<b${k <= l ? ' class="on"' : ''}></b>`).join('')}</span><b>${esc(c.band)}</b></span></span>`;
   }
 
   /* who leads: at most three, name then country code, in the site's chip */

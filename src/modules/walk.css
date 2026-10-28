@@ -106,10 +106,8 @@
   font-family: var(--font-ui); font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums;
 }
 .wk-sc { display: inline-flex; align-items: center; gap: 8px; }
-.wk-sc::before { content: ""; display: inline-block; flex: none; width: 6px; height: 4px; background: var(--ctx); }
-.wk-score[data-rank="5"] .wk-sc::before { height: 15px; background: var(--bar-5); } /* Extreme in wine */
-.wk-score[data-rank="4"] .wk-sc::before { height: 8px; background: transparent; box-shadow: inset 0 0 0 1.5px var(--ink); }
-.wk-sc b { color: var(--ink); font-weight: 500; font-size: 14px; }
+.wk-sc .meter { --mh: 13px; --mw: 4px; --mg: 1.5px; } /* the band's meter, beside its word (src/modules/chapter.css .meter) */
+.wk-sc > b { color: var(--ink); font-weight: 500; font-size: 14px; }
 .wk-read {
   margin-left: auto; font-family: var(--font-ui); font-weight: 500;
   font-size: 15px; letter-spacing: 0; white-space: nowrap; color: var(--ink);

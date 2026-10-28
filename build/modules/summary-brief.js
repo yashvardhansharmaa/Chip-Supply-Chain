@@ -54,7 +54,7 @@ module.exports = function (ctx) {
     return `<article class="card lv-${LEVEL[conc(ch)] || 0}" id="s-${esc(ch.id)}">
 <p class="card-k"><span class="n">${pad(i + 1)}</span>Stage ${i + 1} of ${stages.length}</p>
 <h3><a href="${url(ch.id)}">${esc(ch.title)}</a></h3>
-<p class="pills"><span class="pill pill-c${LEVEL[conc(ch)] === 4 ? ' x' : ''}">${esc(conc(ch))} concentration</span>${sub(ch) ? `<span class="pill">${esc(subWords(ch))}</span>` : ''}</p>
+<p class="pills"><span class="pill pill-c${LEVEL[conc(ch)] === 4 ? ' x' : ''}">${meter(conc(ch))}${esc(conc(ch))} concentration</span>${sub(ch) ? `<span class="pill">${esc(subWords(ch))}</span>` : ''}</p>
 ${ch.meta.oneLiner ? `<p class="lede">${esc(ch.meta.oneLiner)}</p>` : ''}
 ${who ? `<div class="who-block"><p class="lbl">Who leads</p><ul>${who}</ul></div>` : ''}
 ${sides.length ? `<div class="sides">${sides.map(([k, v]) => `<div><p class="lbl">${k}</p><p>${esc(v)}</p></div>`).join('')}</div>` : ''}
@@ -202,9 +202,9 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
   .ladder .t { font-family: var(--body); font-size: var(--t-small); color: var(--ink); font-weight: 600; }
   .ladder .c { display: inline-flex; align-items: center; gap: 9px; }
   .ladder .lv-4 .w { color: var(--accent); font-weight: 600; }
-  .meter { display: inline-flex; gap: 2px; align-items: flex-end; height: 14px; }
-  .meter b { display: block; width: 6px; background: var(--line); }
-  .meter b:nth-child(1) { height: 5px; } .meter b:nth-child(2) { height: 8px; } .meter b:nth-child(3) { height: 11px; } .meter b:nth-child(4) { height: 14px; }
+  .meter { display: inline-flex; flex: none; gap: var(--mg, 2px); align-items: flex-end; height: var(--mh, 14px); }
+  .meter b { display: block; width: var(--mw, 6px); background: var(--line); }
+  .meter b:nth-child(1) { height: 36%; } .meter b:nth-child(2) { height: 57%; } .meter b:nth-child(3) { height: 79%; } .meter b:nth-child(4) { height: 100%; }
   .meter b.on { background: var(--bar-3); }
   .lv-3 .meter b.on { background: var(--bar-4); }
   .lv-4 .meter b.on { background: var(--accent); }
@@ -222,14 +222,12 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
   h3 { font-family: var(--display); font-weight: 500; font-variation-settings: var(--opsz); font-size: var(--t-block); line-height: 1.15; margin: 0 0 12px; text-wrap: balance; }
   h3 a { text-decoration: none; }
   h3 a:hover { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
-  /* the card's band and substitutability in the site's marks, not boxed tags (page revision 7, 28 Oct 2026): Extreme a 4 by 13 px
-     wine bar before its word, High a 6 px hollow ink square, as the chapter kicker and the rail draw them; substitutability
-     plain ink-2 text */
+  /* the card's band and substitutability as plain words, the band led by the site's four-bar meter, as on the chapters'
+     cards (28 Oct 2026; a single mark before it); substitutability plain ink-2 text */
   .pills { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px; margin: 0 0 12px; }
   .pill { font-size: 13px; font-weight: 400; letter-spacing: 0; padding: 0; border: 0; color: var(--ink-2); }
   .pill-c { font-weight: 500; color: var(--ink); }
-  .lv-4 .pill-c::before { content: ""; display: inline-block; width: 4px; height: 13px; margin: 0 7px -2px 0; background: var(--accent); }
-  .lv-3 .pill-c::before { content: ""; display: inline-block; width: 6px; height: 6px; margin: 0 7px 1px 0; border: 1.5px solid var(--ink); }
+  .pill-c .meter { --mh: 11px; --mw: 4px; --mg: 1.5px; margin: 0 7px 0 0; vertical-align: -1px; }
   .lede { margin: 0 0 14px; font-size: var(--t-small); line-height: 1.5; color: var(--ink); }
   .lbl { margin: 0 0 4px; font-size: 11.5px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
   .who-block { margin: 0 0 14px; }

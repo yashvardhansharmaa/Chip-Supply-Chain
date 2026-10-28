@@ -3944,8 +3944,7 @@ html.kb:has(.view[data-view="glossary"]:not([hidden])) { scroll-padding-top: cal
 .atlas .sa-strip-stops li { min-width: 0; }
 .sa-stopcard { display: flex; flex-direction: column; gap: 3px; padding: 10px 6px 8px 0; text-decoration: none; color: var(--ink); min-width: 0; border: 0; }
 .sa-stopcard-n { display: flex; align-items: flex-end; gap: 6px; font-family: var(--font-ui); font-size: 11.5px; line-height: 16px; color: var(--muted); font-variant-numeric: tabular-nums; }
-.sa-bmk { display: inline-block; width: 5px; height: 12px; margin-bottom: 2px; background: var(--bar-5); }
-.sa-stopcard[data-band="High"] .sa-bmk { height: 6px; background: transparent; box-shadow: inset 0 0 0 1.25px var(--ink); }
+.sa-stopcard-n .sa-bmk { --mh: 11px; --mw: 3px; --mg: 1.5px; margin-bottom: 3px; } /* the band's meter (src/modules/chapter.css .meter), at the rail's size */
 .sa-stopcard-t { display: block; font-family: var(--font-ui); font-weight: 500; font-size: 13.5px; line-height: 1.25; margin: 0; overflow-wrap: break-word; hyphens: auto; }
 .sa-stopcard-w { display: block; font-family: var(--font-ui); font-size: 11px; line-height: 15px; color: var(--muted); font-variant-numeric: tabular-nums; }
 .sa-stopcard:hover .sa-stopcard-t, .sa-stopcard.is-hot .sa-stopcard-t, .sa-stopcard:focus-visible .sa-stopcard-t { color: var(--accent-ink); }
@@ -4373,10 +4372,8 @@ html.kb:has(.view[data-view="glossary"]:not([hidden])) { scroll-padding-top: cal
   font-family: var(--font-ui); font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums;
 }
 .wk-sc { display: inline-flex; align-items: center; gap: 8px; }
-.wk-sc::before { content: ""; display: inline-block; flex: none; width: 6px; height: 4px; background: var(--ctx); }
-.wk-score[data-rank="5"] .wk-sc::before { height: 15px; background: var(--bar-5); } /* Extreme in wine */
-.wk-score[data-rank="4"] .wk-sc::before { height: 8px; background: transparent; box-shadow: inset 0 0 0 1.5px var(--ink); }
-.wk-sc b { color: var(--ink); font-weight: 500; font-size: 14px; }
+.wk-sc .meter { --mh: 13px; --mw: 4px; --mg: 1.5px; } /* the band's meter, beside its word (src/modules/chapter.css .meter) */
+.wk-sc > b { color: var(--ink); font-weight: 500; font-size: 14px; }
 .wk-read {
   margin-left: auto; font-family: var(--font-ui); font-weight: 500;
   font-size: 15px; letter-spacing: 0; white-space: nowrap; color: var(--ink);
