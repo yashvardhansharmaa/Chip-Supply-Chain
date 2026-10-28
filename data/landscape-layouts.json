@@ -79,7 +79,7 @@
       "https://www.nvidia.com/en-us/data-center/dgx-b200/",
       "https://3dfabric.tsmc.com/english/dedicatedFoundry/technology/cowos.htm"
     ],
-    "note": "Nvidia states two reticle-limited 4NP dies joined by NV-HBI and 192 GB of HBM3E in eight stacks; the die and stack footprints are the reticle limit (26 x 33 mm) and the JEDEC HBM package (about 11 x 11 mm), and the interposer and substrate rectangles are the geometric envelope of that arrangement, not published dimensions."
+    "note": "Nvidia states two reticle-limited 4NP dies joined by NV-HBI and 192 GB of HBM3E in eight stacks; the die and stack footprints are the reticle limit (26 × 33 mm) and the JEDEC HBM package (about 11 × 11 mm), and the interposer and substrate rectangles are the geometric envelope of that arrangement, not published dimensions."
   },
   "nvidia-b300": {
     "unit": "mm",
@@ -439,7 +439,7 @@
       "https://inferencex.semianalysis.com/chips/mi355x",
       "https://3dfabric.tsmc.com/english/dedicatedFoundry/technology/cowos.htm"
     ],
-    "note": "Eight N3P accelerator dies hybrid-bonded onto two N6 I/O dies, with eight 12-high HBM3E stacks four to a side; the OAM package outline is carried over from the published 76.8 x 72 mm MI300X package and the chiplet and interposer rectangles are estimated."
+    "note": "Eight N3P accelerator dies hybrid-bonded onto two N6 I/O dies, with eight 12-high HBM3E stacks four to a side; the OAM package outline is carried over from the published 76.8 × 72 mm MI300X package and the chiplet and interposer rectangles are estimated."
   },
   "amd-mi455x": {
     "unit": "mm",
@@ -1137,7 +1137,7 @@
       "https://www.cerebras.ai/blog/introducing-cerebras-cs-4",
       "https://www.cerebras.ai/blog/ultrafast-frontier-inference-cerebras-deep-dive-at-hot-chips-2026"
     ],
-    "note": "Cerebras publishes the two numbers that fix this drawing: 46,225 mm² of silicon, which is a 215 mm square, cut from a single 300 mm wafer; the 12 x 7 grid follows from the 84 reticle fields that fill that square, and there is no interposer, no substrate and no HBM."
+    "note": "Cerebras publishes the two numbers that fix this drawing: 46,225 mm² of silicon, which is a 215 mm square, cut from a single 300 mm wafer; the 12 × 7 grid follows from the 84 reticle fields that fill that square, and there is no interposer, no substrate and no HBM."
   },
   "groq-lpu": {
     "unit": "mm",
@@ -1459,7 +1459,7 @@
       "https://developer.nvidia.com/blog/nvidia-ampere-architecture-in-depth/",
       "https://www.nvidia.com/en-us/data-center/a100/"
     ],
-    "note": "Nvidia states one 826 mm2 GA100 die and five active HBM2e stacks. An odd number of stacks cannot be shared evenly between the two long edges, so they are drawn three to one edge and two to the other. Nvidia publishes no package dimensions, so the die rectangle (26 x 31.8 mm, the published area), the interposer and the substrate are estimated."
+    "note": "Nvidia states one 826 mm² GA100 die and five active HBM2e stacks. An odd number of stacks cannot be shared evenly between the two long edges, so they are drawn three to one edge and two to the other. Nvidia publishes no package dimensions, so the die rectangle (26 × 31.8 mm, the published area), the interposer and the substrate are estimated."
   },
   "nvidia-h100": {
     "unit": "mm",
@@ -1516,7 +1516,7 @@
       "https://developer.nvidia.com/blog/nvidia-hopper-architecture-in-depth/",
       "https://www.nvidia.com/en-us/data-center/h100/"
     ],
-    "note": "Nvidia states one 814 mm2 GH100 die, six HBM stack sites on the full chip and five HBM3 stacks active on the H100 SXM5. The five are drawn three to one edge and two to the other; the sixth site is left empty. Nvidia publishes no package dimensions, so the interposer and substrate rectangles are estimated."
+    "note": "Nvidia states one 814 mm² GH100 die, six HBM stack sites on the full chip and five HBM3 stacks active on the H100 SXM5. The five are drawn three to one edge and two to the other; the sixth site is left empty. Nvidia publishes no package dimensions, so the interposer and substrate rectangles are estimated."
   },
   "nvidia-a800": {
     "unit": "mm",
@@ -1573,7 +1573,7 @@
       "https://www.csis.org/analysis/where-chips-fall-us-export-controls-under-biden-administration-2022-2024",
       "https://developer.nvidia.com/blog/nvidia-ampere-architecture-in-depth/"
     ],
-    "note": "Physically the A100 package: the same 826 mm2 GA100 die and five active HBM2e stacks, since only the NVLink rate was changed for the China market. Drawn identically to the A100, and every dimension is estimated because Nvidia publishes none."
+    "note": "Physically the A100 package: the same 826 mm² GA100 die and five active HBM2e stacks, since only the NVLink rate was changed for the China market. Drawn identically to the A100, and every dimension is estimated because Nvidia publishes none."
   },
   "nvidia-h800": {
     "unit": "mm",
@@ -1630,7 +1630,7 @@
       "https://www.csis.org/analysis/where-chips-fall-us-export-controls-under-biden-administration-2022-2024",
       "https://developer.nvidia.com/blog/nvidia-hopper-architecture-in-depth/"
     ],
-    "note": "Physically the H100 package: the same 814 mm2 GH100 die and five active HBM3 stacks, since only the NVLink rate was changed. Drawn identically to the H100, and every dimension is estimated."
+    "note": "Physically the H100 package: the same 814 mm² GH100 die and five active HBM3 stacks, since only the NVLink rate was changed. Drawn identically to the H100, and every dimension is estimated."
   },
   "nvidia-h20": {
     "unit": "mm",
@@ -2369,7 +2369,7 @@
       "https://azure.microsoft.com/en-us/blog/azure-maia-for-the-era-of-ai-from-silicon-to-software-to-systems/",
       "https://epoch.ai/data/machine-learning-hardware"
     ],
-    "note": "Estimated, and more so than most. Microsoft says only that Maia 100 is one of the largest processors made on the 5 nm node with advanced packaging from TSMC; Epoch AI gives the die area as 820 mm2, drawn here as a 28.6 mm square. Microsoft publishes no memory configuration, so the four stacks are the smallest arrangement consistent with an HBM inference part of this size, and the stack count itself is a guess flagged as such rather than a sourced figure."
+    "note": "Estimated, and more so than most. Microsoft says only that Maia 100 is one of the largest processors made on the 5 nm node with advanced packaging from TSMC; Epoch AI gives the die area as 820 mm², drawn here as a 28.6 mm square. Microsoft publishes no memory configuration, so the four stacks are the smallest arrangement consistent with an HBM inference part of this size, and the stack count itself is a guess flagged as such rather than a sourced figure."
   },
   "meta-mtia-v2": {
     "unit": "mm",
@@ -2391,7 +2391,7 @@
     "sources": [
       "https://ai.meta.com/blog/next-generation-meta-training-inference-accelerator-AI-MTIA/"
     ],
-    "note": "The only fully published die outline on this page: Meta gives the MTIA v2 die as 25.6 by 16.4 mm, 421 mm2, on TSMC 5 nm. There is no HBM and no interposer, because the 128 GB of LPDDR5 sits on the board rather than on the package, so the die is drawn flip-chipped straight onto a build-up substrate. Only the substrate rectangle is estimated."
+    "note": "The only fully published die outline on this page: Meta gives the MTIA v2 die as 25.6 by 16.4 mm, 421 mm², on TSMC 5 nm. There is no HBM and no interposer, because the 128 GB of LPDDR5 sits on the board rather than on the package, so the die is drawn flip-chipped straight onto a build-up substrate. Only the substrate rectangle is estimated."
   },
   "meta-mtia-300": {
     "unit": "mm",
