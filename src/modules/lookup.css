@@ -11,13 +11,13 @@
 .view[data-view="glossary"] { width: 100%; padding: 0 var(--margin); }
 
 /* ---------- the head: the title, its standfirst, and six things to try beside them ---------- */
-.gl-head h1 { grid-column: 1 / 8; }
+.gl-head .vt { grid-column: 1 / 8; }
 .gl-head .dek { grid-column: 1 / 7; }
 .gl-try { grid-column: 8 / 13; grid-row: 2 / 4; align-self: end; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0; padding-top: 14px; border-top: 1px solid var(--ink); }
 .gl-try-k { margin-right: 8px; font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); line-height: 1; color: var(--muted); }
 html:not(.booted) .gl-try { visibility: hidden; } /* its six names arrive at boot */
 @media (max-width: 1199px) {
-  .gl-head h1, .gl-head .dek { grid-column: 1 / -1; }
+  .gl-head .vt, .gl-head .dek { grid-column: 1 / -1; }
   .gl-try { grid-column: 1 / -1; grid-row: auto; margin-top: 28px; }
 }
 @media (max-width: 760px) {

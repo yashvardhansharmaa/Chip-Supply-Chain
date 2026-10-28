@@ -15,7 +15,7 @@
 }
 .aic { position: relative; font-variant-numeric: lining-nums; line-height: 1.55; }
 .aic p { margin: 0; }
-.aic h1, .aic h2, .aic h3, .aic h4, .aic h5 { font-weight: 400; margin: 0; }
+.aic h1, .aic .vt, .aic h2, .aic h3, .aic h4, .aic h5 { font-weight: 400; margin: 0; }
 .aic svg.plan, .aic svg.chart { display: block; max-width: none; }
 .aic .cap { font: 500 12.5px/16px var(--font-ui); letter-spacing: .085em; text-transform: uppercase; color: var(--muted); margin: 0; }
 
@@ -23,7 +23,7 @@
 .aic .head { padding-top: clamp(40px, 7vh, 64px); }
 .aic .head-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 600px); gap: 24px 64px; align-items: stretch; }
 .aic .head-l { display: flex; flex-direction: column; min-width: 0; }
-.aic .head h1 { margin: 0 0 0 -0.045em; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: var(--t-title); line-height: 0.92; letter-spacing: -0.03em; } /* the seven steps (28 Oct 2026) */
+.aic .head .vt { margin: 0 0 0 -0.045em; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: var(--t-title); line-height: 0.92; letter-spacing: -0.03em; } /* the seven steps (28 Oct 2026) */
 .aic .head .dek { margin: 24px 0 0; max-width: 24em; font-family: var(--font-body); font-size: var(--t-lead); line-height: 1.38; color: var(--ink-2); }
 .aic .hfig { margin: 0; min-width: 0; }
 .aic .hfig .fig-h { font: 400 var(--t-lead)/1.35 var(--font-body); margin: 0 0 12px; }
@@ -291,11 +291,11 @@
 @media (max-width: 980px) {
   .aic .head-grid { display: flex; flex-direction: column; gap: 0; }
   .aic .head-l { display: contents; }
-  .aic .head-l h1 { order: 1; } .aic .head-l .dek { order: 2; } .aic .head .finding { order: 3; } .aic .hfig { order: 4; max-width: 666px; margin-top: 32px; } .aic .key { order: 5; margin-top: 0; }
+  .aic .head-l .vt { order: 1; } .aic .head-l .dek { order: 2; } .aic .head .finding { order: 3; } .aic .hfig { order: 4; max-width: 666px; margin-top: 32px; } .aic .key { order: 5; margin-top: 0; }
 }
 @media (max-width: 760px) {
   .aic .head { padding-top: 32px; }
-  .aic .head h1 { font-size: var(--t-title); }
+  .aic .head .vt { font-size: var(--t-title); }
   .aic .head .dek { margin-top: 16px; font-size: var(--t-text); line-height: 1.35; }
   .aic .chart-host { min-height: 260px; }
   .aic .shelves { margin-top: 36px; }

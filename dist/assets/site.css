@@ -147,7 +147,7 @@ a:hover { text-decoration-color: var(--accent); }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
 img, svg, canvas { max-width: 100%; }
 button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
-h1, h2, h3, h4 { margin: 0; text-wrap: balance; }
+h1, h2, h3, h4, .vt { margin: 0; text-wrap: balance; } /* .vt: a view's title on the home page, a level-one heading that is not a second h1 (src/template.html) */
 p, li, dd { text-wrap: pretty; }
 p { margin: 0 0 1.15em; }
 strong { font-weight: 600; }
@@ -163,7 +163,7 @@ small { font-size: 0.85em; }
 .num, .tabular { font-variant-numeric: tabular-nums; }
 
 /* ---------- display type: Source Serif 4, its optical size following the size, never bold ---------- */
-.wk-title, .ch-title, .view-head h1, .view-head h2, .thesis, .contents h2, .prose h3, .prose h4, .wk-t, .wk-end-t,
+.wk-title, .ch-title, .view-head h1, .view-head h2, .view-head .vt, .aic .vt, .thesis, .contents h2, .prose h3, .prose h4, .wk-t, .wk-end-t,
 .brief-head .t, .gl-entry dt, .timeline h4, .sources-list h3, .prevnext .pn .t, .fig-title,
 .ct-tip b, .gl-tip b, .cp-search-results b, .sheet-head b, .wk-pn-t, .ex-rank .name, .ex-panel figcaption b, .ex-tip b {
   font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); letter-spacing: 0;
@@ -440,7 +440,7 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before {
 
 /* ---------- landscape ---------- */
 .view-head { padding: clamp(36px, 7vh, 72px) 0 18px; }
-.view-head h1, .view-head h2 { font-weight: 400; font-size: var(--t-title); line-height: 1; text-transform: none; letter-spacing: -0.015em; margin-bottom: 14px; }
+.view-head h1, .view-head h2, .view-head .vt { font-weight: 400; font-size: var(--t-title); line-height: 1; text-transform: none; letter-spacing: -0.015em; margin-bottom: 14px; }
 .view-head .dek { font-size: var(--fs-lede); line-height: 1.45; color: var(--ink-2); max-width: 30em; }
 .picker { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 26px; }
 /* the picker: hairline chips, the maker's country as a code at the right edge, no tints */
@@ -1879,7 +1879,7 @@ article.ch-page { padding-top: 56px; border-top: 0; }
 }
 .aic { position: relative; font-variant-numeric: lining-nums; line-height: 1.55; }
 .aic p { margin: 0; }
-.aic h1, .aic h2, .aic h3, .aic h4, .aic h5 { font-weight: 400; margin: 0; }
+.aic h1, .aic .vt, .aic h2, .aic h3, .aic h4, .aic h5 { font-weight: 400; margin: 0; }
 .aic svg.plan, .aic svg.chart { display: block; max-width: none; }
 .aic .cap { font: 500 12.5px/16px var(--font-ui); letter-spacing: .085em; text-transform: uppercase; color: var(--muted); margin: 0; }
 
@@ -1887,7 +1887,7 @@ article.ch-page { padding-top: 56px; border-top: 0; }
 .aic .head { padding-top: clamp(40px, 7vh, 64px); }
 .aic .head-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 600px); gap: 24px 64px; align-items: stretch; }
 .aic .head-l { display: flex; flex-direction: column; min-width: 0; }
-.aic .head h1 { margin: 0 0 0 -0.045em; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: var(--t-title); line-height: 0.92; letter-spacing: -0.03em; } /* the seven steps (28 Oct 2026) */
+.aic .head .vt { margin: 0 0 0 -0.045em; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: var(--t-title); line-height: 0.92; letter-spacing: -0.03em; } /* the seven steps (28 Oct 2026) */
 .aic .head .dek { margin: 24px 0 0; max-width: 24em; font-family: var(--font-body); font-size: var(--t-lead); line-height: 1.38; color: var(--ink-2); }
 .aic .hfig { margin: 0; min-width: 0; }
 .aic .hfig .fig-h { font: 400 var(--t-lead)/1.35 var(--font-body); margin: 0 0 12px; }
@@ -2155,11 +2155,11 @@ article.ch-page { padding-top: 56px; border-top: 0; }
 @media (max-width: 980px) {
   .aic .head-grid { display: flex; flex-direction: column; gap: 0; }
   .aic .head-l { display: contents; }
-  .aic .head-l h1 { order: 1; } .aic .head-l .dek { order: 2; } .aic .head .finding { order: 3; } .aic .hfig { order: 4; max-width: 666px; margin-top: 32px; } .aic .key { order: 5; margin-top: 0; }
+  .aic .head-l .vt { order: 1; } .aic .head-l .dek { order: 2; } .aic .head .finding { order: 3; } .aic .hfig { order: 4; max-width: 666px; margin-top: 32px; } .aic .key { order: 5; margin-top: 0; }
 }
 @media (max-width: 760px) {
   .aic .head { padding-top: 32px; }
-  .aic .head h1 { font-size: var(--t-title); }
+  .aic .head .vt { font-size: var(--t-title); }
   .aic .head .dek { margin-top: 16px; font-size: var(--t-text); line-height: 1.35; }
   .aic .chart-host { min-height: 260px; }
   .aic .shelves { margin-top: 36px; }
@@ -2780,13 +2780,13 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
 .view[data-view="glossary"] { width: 100%; padding: 0 var(--margin); }
 
 /* ---------- the head: the title, its standfirst, and six things to try beside them ---------- */
-.gl-head h1 { grid-column: 1 / 8; }
+.gl-head .vt { grid-column: 1 / 8; }
 .gl-head .dek { grid-column: 1 / 7; }
 .gl-try { grid-column: 8 / 13; grid-row: 2 / 4; align-self: end; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0; padding-top: 14px; border-top: 1px solid var(--ink); }
 .gl-try-k { margin-right: 8px; font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); line-height: 1; color: var(--muted); }
 html:not(.booted) .gl-try { visibility: hidden; } /* its six names arrive at boot */
 @media (max-width: 1199px) {
-  .gl-head h1, .gl-head .dek { grid-column: 1 / -1; }
+  .gl-head .vt, .gl-head .dek { grid-column: 1 / -1; }
   .gl-try { grid-column: 1 / -1; grid-row: auto; margin-top: 28px; }
 }
 @media (max-width: 760px) {
@@ -4005,7 +4005,7 @@ html.kb:has(.view[data-view="glossary"]:not([hidden])) { scroll-padding-top: cal
   display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; align-items: end;
   padding: clamp(40px, 7vh, 64px) 0 0;
 }
-.view-head.vh h1 {
+.view-head.vh h1, .view-head.vh .vt {
   grid-column: 1 / -1; margin: 0 0 0 -0.045em;
   font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title);
   font-size: var(--t-title); line-height: 0.92; letter-spacing: -0.03em;
@@ -4014,11 +4014,11 @@ html.kb:has(.view[data-view="glossary"]:not([hidden])) { scroll-padding-top: cal
   grid-column: 1 / 7; margin: 24px 0 0; max-width: 31em;
   font-family: var(--font-body); font-size: var(--t-lead); line-height: 1.38; color: var(--ink-2);
 }
-.view-head.sup-head h1 { grid-column: 1 / 8; } /* beside its four counts */
-@media (max-width: 1199px) { .view-head.vh .dek { grid-column: 1 / -1; } .view-head.sup-head h1 { grid-column: 1 / -1; } }
+.view-head.sup-head .vt { grid-column: 1 / 8; } /* beside its four counts */
+@media (max-width: 1199px) { .view-head.vh .dek { grid-column: 1 / -1; } .view-head.sup-head .vt { grid-column: 1 / -1; } }
 @media (max-width: 760px) {
   .view-head.vh { display: block; padding-top: 32px; }
-  .view-head.vh h1 { font-size: var(--t-title); }
+  .view-head.vh h1, .view-head.vh .vt { font-size: var(--t-title); }
   .view-head.vh .dek { margin-top: 16px; font-size: var(--t-text); line-height: 1.35; }
 }
 

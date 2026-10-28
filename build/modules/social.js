@@ -294,16 +294,49 @@ a{color:#7a1f2b}
 // A reader without scripts stays, since this page has no meta refresh (it would send them to a main page that shows nothing
 // without scripts), and finds the deck that ends Start here as review questions, each answer linking to its chapter's
 // readable page. It takes the readable chapter pages' styles.
+function notFoundHTML(css) {
+  const root = (h) => h.replace(/(href|src)="\.\.\//g, '$1="/');
+  return `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Page not found · ${SITE}</title>
+<meta name="robots" content="noindex">
+${THEME_JS}
+${root(ICONS)}
+<meta name="color-scheme" content="light dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="${FONTS}">
+<style>${css}${EXTRA_CSS}</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+${root(MASTHEAD)}
+<main id="main" class="page">
+<header class="ch-head">
+<h1 class="ch-title">Page not found</h1>
+<p class="ch-lede">There is no page at this address. It may have moved when the chapters were renamed or merged.</p>
+<p><a href="/">Go to the home page</a> or <a href="/supply-chain/">see every chapter</a>.</p>
+</header>
+</main>
+</body>
+</html>
+`;
+}
 function introHTML(p, versions, css, review) {
+  // #/intro is the home page itself (src/app.js ALIAS), so this page's canonical is the home page's address, and its title is
+  // its own, "Start here", where it repeated the home page's (28 Oct 2026)
   const target = BASE + p.route;
   return `<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${esc(pageTitle(p))}</title>
+<title>Start here · ${SITE}</title>
 <meta name="description" content="${esc(p.description)}">
-<link rel="canonical" href="${esc(target)}">
+<link rel="canonical" href="${esc(BASE)}">
 ${shareTags(p, versions)}
 <!-- the tags above are what an unfurler reads; a person with scripts is sent on to the page itself -->
 <script>location.replace(${JSON.stringify(target)});</script>
@@ -526,6 +559,9 @@ module.exports = function (ctx) {
     const html = p.slug === 'intro' && introReview ? introHTML(p, versions, css, introReview) : pageHTML(p, versions);
     fs.writeFileSync(path.join(dir, 'index.html'), keepRanges(html));
   }
+  // a plain 404 page (GitHub Pages serves dist/404.html for an address it does not have): the masthead, one line and a link
+  // home, with root-relative paths, since it is served at whatever address was asked for (28 Oct 2026)
+  fs.writeFileSync(path.join(dist, '404.html'), notFoundHTML(css));
   // a chapter merged away keeps its address as a page that forwards to the merged chapter's (never listed in the sitemap)
   for (const [old, e] of Object.entries(RETIRED.chapters || {})) {
     const to = byId.get(e.to);
@@ -566,8 +602,7 @@ module.exports = function (ctx) {
 module.exports.manifest = manifest;
 module.exports.pageHTML = pageHTML;
 module.exports.BASE = BASE;
-module.exports.cardURL = (slug, root) => { const fs = require('fs'), path = require('path'); return cardURL(slug, cardVersions(root || path.resolve(__dirname, '..', '..'), fs, path)); }; // for the pages written elsewhere (summary-brief.js)
-module.exports.AUTHOR = AUTHOR;
+module.exports.cardURLFor = (slug, root) => { const fs = require('fs'), path = require('path'); return cardURL(slug, cardVersions(root || path.resolve(__dirname, '..', '..'), fs, path)); }; // a card's address with its version, for the pages written elsewhere (summary-brief.js)
 module.exports.stillSVG = stillSVG; // for the print still in each chapter with numbered parts (build.js)
 // for the reference pages (build/modules/reference-pages.js): the same head, tags, card and masthead as the chapter pages
 Object.assign(module.exports, { SITE, AUTHOR, FONTS, ICONS, MASTHEAD, masthead, THEME_JS, minCSS, pageTitle, shareTags, cardVersions, cardURL, describe });

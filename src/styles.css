@@ -147,7 +147,7 @@ a:hover { text-decoration-color: var(--accent); }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
 img, svg, canvas { max-width: 100%; }
 button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
-h1, h2, h3, h4 { margin: 0; text-wrap: balance; }
+h1, h2, h3, h4, .vt { margin: 0; text-wrap: balance; } /* .vt: a view's title on the home page, a level-one heading that is not a second h1 (src/template.html) */
 p, li, dd { text-wrap: pretty; }
 p { margin: 0 0 1.15em; }
 strong { font-weight: 600; }
@@ -163,7 +163,7 @@ small { font-size: 0.85em; }
 .num, .tabular { font-variant-numeric: tabular-nums; }
 
 /* ---------- display type: Source Serif 4, its optical size following the size, never bold ---------- */
-.wk-title, .ch-title, .view-head h1, .view-head h2, .thesis, .contents h2, .prose h3, .prose h4, .wk-t, .wk-end-t,
+.wk-title, .ch-title, .view-head h1, .view-head h2, .view-head .vt, .aic .vt, .thesis, .contents h2, .prose h3, .prose h4, .wk-t, .wk-end-t,
 .brief-head .t, .gl-entry dt, .timeline h4, .sources-list h3, .prevnext .pn .t, .fig-title,
 .ct-tip b, .gl-tip b, .cp-search-results b, .sheet-head b, .wk-pn-t, .ex-rank .name, .ex-panel figcaption b, .ex-tip b {
   font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); letter-spacing: 0;
@@ -440,7 +440,7 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before {
 
 /* ---------- landscape ---------- */
 .view-head { padding: clamp(36px, 7vh, 72px) 0 18px; }
-.view-head h1, .view-head h2 { font-weight: 400; font-size: var(--t-title); line-height: 1; text-transform: none; letter-spacing: -0.015em; margin-bottom: 14px; }
+.view-head h1, .view-head h2, .view-head .vt { font-weight: 400; font-size: var(--t-title); line-height: 1; text-transform: none; letter-spacing: -0.015em; margin-bottom: 14px; }
 .view-head .dek { font-size: var(--fs-lede); line-height: 1.45; color: var(--ink-2); max-width: 30em; }
 .picker { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 26px; }
 /* the picker: hairline chips, the maker's country as a code at the right edge, no tints */

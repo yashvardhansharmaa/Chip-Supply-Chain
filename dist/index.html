@@ -36,7 +36,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..600,0,0&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,400&family=Hanken+Grotesk:wght@400..700&family=Fragment+Mono&display=swap">
 <!-- the site's styles, one sheet every page shares and caches (build/build.js writes dist/assets/site.css) -->
-<link rel="stylesheet" href="assets/site.css?v=b705e6999b">
+<link rel="stylesheet" href="assets/site.css?v=55aa079da1">
 <style>
 /* the cite line under each chapter title, its actions: Link to chapter · Cite this chapter · Chapter PDF (build/build.js citeBlock) */
 .ch-cite { margin: 4px 0 0; }
@@ -508,7 +508,7 @@ html[data-chain] .view[data-view="stack"] > article.chapter { content-visibility
            src/app.js Landscape draws it into #aic-view (the title and the standfirst are here for the first paint, and the
            standfirst is read from here, by the app and by /chips/), src/modules/chips.css styles it -->
       <div class="aic" id="aic">
-        <div id="aic-view"><header class="head"><div class="head-grid"><div class="head-l"><h1>AI Chips</h1><p class="dek">The chips that train and run AI models, from 2020 to 2026, and who makes each of their parts.</p></div></div></header></div>
+        <div id="aic-view"><header class="head"><div class="head-grid"><div class="head-l"><p class="vt" role="heading" aria-level="1">AI Chips</p><p class="dek">The chips that train and run AI models, from 2020 to 2026, and who makes each of their parts.</p></div></div></header></div>
       </div>
       <p class="sr-only" id="aic-live" aria-live="polite"></p>
       <footer class="site-footer"><span class="ft-mark" aria-hidden="true"><svg class="wm-tile" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect width="16" height="16" rx="3.2"/><path transform="translate(3.3324 11.8693) scale(0.009179 -0.009179)" d="M1011 683 Q1011 612 960 564 Q909 515 823 515 Q739 515 696 561 Q653 607 653 680 L653 720 Q653 786 623 823 Q594 861 544 861 Q502 861 468 831 Q433 801 412 741 Q391 682 391 594 Q391 474 431 393 Q470 312 540 270 Q609 229 697 229 Q769 229 825 251 Q880 273 924 326 Q946 348 959 356 Q971 363 983 363 Q1000 363 1007 347 Q1015 330 1015 307 Q1012 216 954 140 Q896 64 796 19 Q695 -26 563 -26 Q417 -26 301 33 Q185 91 118 198 Q51 305 51 450 Q51 602 118 721 Q184 840 305 909 Q425 978 588 978 Q720 978 815 938 Q909 898 960 832 Q1011 765 1011 683 Z"/></svg></span><p class="credits">Made by <b><a href="https://www.linkedin.com/in/yashvardhan07/" target="_blank" rel="noopener">Yashvardhan Sharma</a></b> with Claude. Corrections and questions: <a href="mailto:contact@chipsupplychain.org">contact@chipsupplychain.org</a>.<span class="updated">Updated 28 October 2026</span></p></footer>
@@ -518,7 +518,7 @@ html[data-chain] .view[data-view="stack"] > article.chapter { content-visibility
       <!-- Suppliers (redesign stage 3): the title and its four counts, the route of one chip, the ribbons open on the page,
            then every firm under three tabs: by segment (the ladder), by country, and as a table -->
       <div class="view-head vh sup-head">
-        <h1>Suppliers</h1>
+        <p class="vt" role="heading" aria-level="1">Suppliers</p>
         <p class="dek">What each of the 226 firms makes, where it is based, and how hard it would be to replace.</p>
         <dl class="sup-facts-row"><div><dt>firms</dt><dd>226</dd></div><div><dt>home countries</dt><dd>18</dd></div><div><dt>segments</dt><dd>20</dd></div><div><dt><i class="sup-mk" aria-hidden="true"></i>Critical</dt><dd>28</dd></div></dl>
       </div>
@@ -687,7 +687,7 @@ html[data-chain] .view[data-view="stack"] > article.chapter { content-visibility
 
     <section class="view column wide" data-view="controls">
       <div class="view-head vh">
-        <h1>Export Controls</h1>
+        <p class="vt" role="heading" aria-level="1">Export Controls</p>
         <p class="dek">The main rules since 2018, what can still be sold to China, and China's share of revenue at 24 firms, from their filings.</p>
       </div>
       <nav class="subtabs" id="controls-subtabs" aria-label="Controls sections"><a href="#/controls" data-sub="timeline" aria-current="true">What the rules did</a><a href="#/exposure" data-sub="exposure">China revenue share</a></nav>
@@ -736,7 +736,7 @@ html[data-chain] .view[data-view="stack"] > article.chapter { content-visibility
            bar with the search, the kinds and the letters; an entry opens in the sheet. #lk-items and #glossary are the entries as
            data, read by the dictionary, the look-up popovers and the site search, and their ids are the entries' addresses -->
       <div class="view-head vh gl-head">
-        <h1>Glossary</h1>
+        <p class="vt" role="heading" aria-level="1">Glossary</p>
         <p class="dek">Every term, firm, chip and country, with the passages that mention them.</p>
         <p class="gl-try" id="gl-try"><span class="gl-try-k">Try</span></p>
       </div>
@@ -768,7 +768,7 @@ html[data-chain] .view[data-view="stack"] > article.chapter { content-visibility
 <script src="assets/kit.js?v=e46d343bc1"></script>
 <script src="assets/data.js?v=091f8bc078"></script>
 <script src="assets/terms.js?v=f90bff8a87"></script>
-<script src="assets/app.js?v=eee1858aa6"></script>
+<script src="assets/app.js?v=b0e92c076f"></script>
 <script>
 /* The printed cover's art (print-title.png, about 490 KB) is fetched only for print, never just because a page was read:
    when the reader points at or focuses "Print this page", before that button opens the dialog (it waits for the image,

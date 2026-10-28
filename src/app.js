@@ -1540,7 +1540,7 @@
     };
     var headHTML = function () {
       var mk = S.measure || 'fp16', cap = chartSaid(mk);
-      return '<header class="head"><div class="head-grid"><div class="head-l"><h1>AI Chips</h1><p class="dek">' + DEK + '</p><p class="finding">' + chartFinding(mk) + '</p>' + keyHTML(shelfK()) + '</div>' +
+      return '<header class="head"><div class="head-grid"><div class="head-l"><p class="vt" role="heading" aria-level="1">AI Chips</p><p class="dek">' + DEK + '</p><p class="finding">' + chartFinding(mk) + '</p>' + keyHTML(shelfK()) + '</div>' +
         '<figure class="hfig"><p class="fig-h">' + measureSelect(mk, 'aic-m-head') + ' <span>of each chip, by the month it was announced</span></p><div class="chart-host" id="aic-c-head"></div>' +
         (cap.length ? '<figcaption class="fcap">' + cap.join(' ') + '</figcaption>' : '') + '</figure></div></header>';
     };
@@ -3256,7 +3256,9 @@
       });
     },
     shown: function (el) { return !!el && !el.closest('[hidden]') && el.getClientRects().length > 0; },
-    title: function (view) { return view ? $$('h1', view).filter(this.shown)[0] || null : null; }, // the view's own h1 (the chain also holds the printed cover's)
+    // the view's own title: an h1, or for the views that share the home page a level-one heading in a paragraph (.vt), so the page
+    // carries one h1 (28 Oct 2026; the chain also holds the printed cover's)
+    title: function (view) { return view ? $$('h1, .vt[aria-level="1"]', view).filter(this.shown)[0] || null : null; },
     focus: function (el) {
       if (!el) return;
       if (!el.matches('a[href], button, input, select, textarea, [tabindex]')) el.setAttribute('tabindex', '-1');

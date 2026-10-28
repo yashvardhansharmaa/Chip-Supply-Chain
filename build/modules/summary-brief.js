@@ -336,7 +336,7 @@ h2 { margin: 16pt 0 1mm; padding-top: 2mm; border-top: 0.6pt solid var(--ink); f
 
   // the share card (build/cards.py renders cards/summary.png from social.js manifest()) and its alt text, as the other views' read
   const SOC = require('./social.js');
-  const cardImg = SOC.cardURL('summary', root);
+  const cardImg = SOC.cardURLFor('summary', root);
   const cardAlt = `Summary. The ${stages.length} stages of the AI chip supply chain in one read, with who leads each and how concentrated it is. Small drawings of all ${stages.length} stages run along the bottom.`;
   const html = `<!doctype html>
 <html lang="en">
