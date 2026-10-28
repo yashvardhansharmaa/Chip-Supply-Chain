@@ -243,15 +243,19 @@ html:not(.booted)[data-pick] .view[data-view="suppliers"] > :not(.view-head) { d
           <p class="pt-meta">Printed from {{SITE_HOST}} · Updated {{BUILT}}</p>
         </div>
       </section>
-      <!-- The Chain's contents page (design round six, "The line", chosen 28 Oct 2026): the title, the standfirst and the
-           downloads as small links, then the chain drawn as a route and each chapter's one line (build/build.js CONTENTS).
-           How to read a chapter went on 28 Oct 2026 (owner); its Extreme and High survive as the key over the route. Both
-           blocks show only on the contents (html[data-chain], CHAIN_ONE); on paper they are the book's title and contents -->
+      <!-- The Chain's contents page (design round eight, option 3 "clean", chosen 28 Oct 2026): the title with the downloads as
+           small links, and one sentence that is also the key (build/build.js chainStandfirst), then one row per chapter
+           (build/build.js CONTENTS). Both blocks show only on the contents (html[data-chain], CHAIN_ONE); on paper they are the
+           book's title and contents, and the book keeps its own standfirst (.howto-lede, print only, which src/modules/print.js
+           words for paper) -->
       <div class="howto" id="howto">
-        <h1 class="howto-title">The Chain</h1>
-        <div class="howto-r">
-          <p class="howto-lede">The Chain covers each of the {{STAGES_WORD}} stages of making an AI chip in detail, one chapter per stage, in the order a chip is made, from design software to the data center. Two more chapters at the end look across all the stages, at what a chip costs and who controls the chain. To help readers learn, each chapter has a 3D model, most have an animation, and every one ends with flashcards.</p>
+        <div class="howto-l">
+          <h1 class="howto-title">The Chain</h1>
           <p class="howto-dl"><a href="pdf/how-ai-chips-are-made.pdf" download>Download the chain as a PDF</a><a href="pdf/summary.pdf" download>Download a short summary</a><a href="summary/">Read the summary online</a></p>
+        </div>
+        <div class="howto-r">
+          <p class="howto-std">{{CHAIN_STANDFIRST}}</p>
+          <p class="howto-lede print-only">The Chain covers each of the {{STAGES_WORD}} stages of making an AI chip in detail, one chapter per stage, in the order a chip is made, from design software to the data center. Two more chapters at the end look across all the stages, at what a chip costs and who controls the chain. To help readers learn, each chapter has a 3D model, most have an animation, and every one ends with flashcards.</p>
         </div>
       </div>
       <div class="contents" id="contents">
