@@ -93,7 +93,7 @@
   }
   if (typeof module !== 'undefined' && module.exports) { module.exports = { route: route, chapterOf: chapterOf, moved: moved, away: away }; return; }
 
-  var html = document.documentElement, pre = root.CP_PRE = { view: null, touched: false, moved: moved, page: PAGE, chapters: CHAPTERS, away: function (h, s) { return away(h, s == null ? location.search : s); } }, r = null;
+  var html = document.documentElement, pre = root.CP_PRE = { view: null, touched: false, moved: moved, page: PAGE, chapters: CHAPTERS, away: function (h, s) { return away(h, s == null ? location.search : s); }, route: function (h) { return route(h, location.search); } }, r = null;
   try {
     var mv = moved(location.hash); // a merged chapter's address: the merged chapter's own, in place, before it is read
     if (mv && root.history && history.replaceState) history.replaceState(history.state, '', location.pathname + location.search + mv);

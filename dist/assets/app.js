@@ -8,7 +8,7 @@
   // under 900 px wide, read from a media query: reading window.innerWidth made the browser lay the page out first
   var wideMQ = window.matchMedia ? matchMedia('(min-width: 900px)') : null;
   var narrow = function () { return wideMQ ? !wideMQ.matches : window.innerWidth < 900; };
-  var safeUrl = function (u) { var v = String(u == null ? '' : u).trim(); return /^(https?:|mailto:|#|\/)/i.test(v) ? esc(v) : '#'; }; // data-fed link targets may only be web links, mail, fragments or site paths
+  var safeUrl = function (u) { var v = String(u == null ? '' : u).trim(); return /^(https?:|mailto:|#|\/|(\.\.\/)+|[a-z0-9-]+\/)/i.test(v) ? esc(v) : '#'; }; // data-fed link targets may only be web links, mail, fragments or site paths (a page's own, as ../#/suppliers or lithography/#…, since 28 Oct 2026)
   var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
   var dec = function (s) { try { return decodeURIComponent(s); } catch (e) { return s; } }; // a hand-typed "#%" is not valid escaping and must not throw the router
   var COUNTRY = { US: 'United States', NL: 'Netherlands', JP: 'Japan', TW: 'Taiwan', KR: 'South Korea', CN: 'China', DE: 'Germany', CH: 'Switzerland', GB: 'United Kingdom', FR: 'France', IL: 'Israel', SG: 'Singapore', MY: 'Malaysia', AT: 'Austria', IT: 'Italy', BE: 'Belgium', IN: 'India', AE: 'United Arab Emirates', SA: 'Saudi Arabia', CA: 'Canada', SE: 'Sweden', FI: 'Finland', DK: 'Denmark', IE: 'Ireland', TH: 'Thailand', VN: 'Vietnam', PH: 'Philippines', MX: 'Mexico', 'EU-other': 'Other Europe', Other: 'Other' };
@@ -532,6 +532,18 @@
      lands on carries it out once it has booted (Router.init). go(href, act) follows a link the app built: on this page it
      returns false and the caller acts as before; elsewhere it keeps act and leaves, and returns true */
   var AFTER = 'cp-after';
+  /* need(name, fn): the shared files the app fetches only when it needs them (build/build.js writes their addresses into
+     CP_ASSETS): search.js, the search index, when the search opens; glossary.js, the Glossary's lists and the chapters'
+     passages, when the Glossary opens. fn runs once the file is in, or at once if it already is (or failed to come) */
+  var NEEDS = { 'search.js': 'CP_SEARCH', 'glossary.js': 'CP_GLOSSARY' }, waits = {};
+  var need = function (name, fn) {
+    if (window[NEEDS[name]] || !(window.CP_ASSETS || {})[name]) { if (fn) fn(); return; }
+    if (waits[name]) { if (fn) waits[name].push(fn); return; }
+    waits[name] = fn ? [fn] : [];
+    var sc = document.createElement('script'); sc.src = window.CP_ASSETS[name];
+    sc.onload = sc.onerror = function () { var l = waits[name]; waits[name] = null; l.forEach(function (f) { try { f(); } catch (e) { console.warn(e); } }); };
+    document.head.appendChild(sc);
+  };
   var go = function (href, act) {
     var to = away(href); if (!to) return false;
     try { if (act) sessionStorage.setItem(AFTER, JSON.stringify(act)); } catch (e) { }
@@ -578,6 +590,7 @@
       if (act.q) Suppliers.show({ q: act.q });
       if (act.card && Tools.openCard) Tools.openCard(act.card.id, act.card.i);
       if (act.para && window.CP.Lookup && window.CP.Lookup.flash) window.CP.Lookup.flash(act.para);
+      if (act.land) Keys.land(act.land); // a search result's place takes focus, as it did on one page
     },
     route: function () {
       // an address of a chapter merged away lands in the merged chapter (src/preroute.js moved(), build/retired-chapters.js)
@@ -597,6 +610,7 @@
         var target = document.getElementById(anchor), host = target && target.closest ? target.closest('.view[data-view]') : null;
         if (host) v = host.getAttribute('data-view');
         else if (target) v = this.current || v;
+        else if (window.CP_PRE && window.CP_PRE.route) v = window.CP_PRE.route(h).view || v; // not on the page yet (the Glossary's entries come with glossary.js): the view its prefix names
       }
       if (ALIAS[v]) v = ALIAS[v];
       var sub = null; // the Export Controls page has three sections
@@ -2788,7 +2802,7 @@
     chapterHTML: function (f) {
       if (!f.chapter) return ''; // no chapter, no link
       var t = (DATA.chapters || []).filter(function (c) { return c.id === f.chapter; })[0];
-      return '<p class="cf-chapter"><a href="' + safeUrl('#' + f.chapter) + '">Read the chapter</a>' +
+      return '<p class="cf-chapter"><a href="' + safeUrl(addr('#' + f.chapter)) + '">Read the chapter</a>' +
         (t ? '<span class="cf-chapter-n">' + esc(t.title) + '</span>' : '') + '</p>';
     },
     /* ---- the scrubber: the years as equal segments, a playhead, and Now ---- */
@@ -2902,7 +2916,7 @@
   /* the Look up page lives in src/modules/lookup.js and registers itself for the glossary view */
 
   /* ---------------- glossary popover: one panel, shared by every .gl-term in the prose ----------------
-     The definitions already sit in the page, in the Glossary view, so nothing is duplicated. */
+     The definitions come from terms.js, which every page shares (build/build.js). */
   /* ---------------- footnote popovers: hover or focus a citation number for the full source; click opens it ---------------- */
   var Cite = {
     el: null, a: null, timer: null, at: 0,
@@ -2982,11 +2996,10 @@
     el: null, btn: null, defs: null, timer: null, at: 0,
     def: function (term) {
       if (!this.defs) {
+        // every term's definition, from terms.js, which every page loads (build/build.js reads them from the Glossary's list)
         this.defs = {};
-        $$('#glossary .gl-entry[data-term]').forEach(function (e) {
-          var p = e.querySelector('dd p'), dt = e.querySelector('dt');
-          if (p && dt) this.defs[e.getAttribute('data-term')] = { term: dt.firstChild.textContent.trim(), plain: p.textContent };
-        }, this);
+        var T = (window.CP_TERMS || {}).defs || {};
+        Object.keys(T).forEach(function (k) { this.defs[k] = { term: T[k][0], plain: T[k][1] }; }, this);
       }
       return this.defs[term];
     },
@@ -3007,9 +3020,9 @@
       var t = this.panel();
       var ds = btn.dataset || {}, slug = String(d.term).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
       if (ds.note) { // a rating tag: the band's own sentence, then this stage's test, then the full entry
-        t.innerHTML = '<b>' + esc(ds.head || btn.textContent.trim()) + '</b><p>' + esc(ds.note) + '</p>' + (ds.test ? '<p class="gl-tip-test"><span class="label">This stage</span>' + esc(ds.test) + '.</p>' : '') + '<a href="#gl-' + slug + '">How ' + esc(String(d.term).toLowerCase()) + ' is rated →</a>';
+        t.innerHTML = '<b>' + esc(ds.head || btn.textContent.trim()) + '</b><p>' + esc(ds.note) + '</p>' + (ds.test ? '<p class="gl-tip-test"><span class="label">This stage</span>' + esc(ds.test) + '.</p>' : '') + '<a href="' + esc(addr('#gl-' + slug)) + '">How ' + esc(String(d.term).toLowerCase()) + ' is rated →</a>';
       } else {
-        t.innerHTML = '<b>' + esc(d.term) + '</b><p>' + esc(d.plain) + '</p><a href="#gl-' + slug + '">Look it up →</a>';
+        t.innerHTML = '<b>' + esc(d.term) + '</b><p>' + esc(d.plain) + '</p><a href="' + esc(addr('#gl-' + slug)) + '">Look it up →</a>';
       }
       t.hidden = false;
       this.btn = btn; this.at = Date.now(); btn.setAttribute('aria-describedby', 'gl-tip');
@@ -3215,33 +3228,15 @@
 
   var Tools = {
     index: null, from: null,
+    /* the index: every chapter and its sections, Start here's paragraphs, each glossary term, supplier, chip, export-control
+       event and China revenue row, and each flashcard (found by its question or its answer: more, matched, never shown; the
+       result opens the deck at that card, question side up, Tools.openCard). The build makes it from the pages, in the order
+       and words this function once read from the page (build/build.js, dist/assets/search.js), since each chapter has its own
+       page (28 Oct 2026); it comes when the search first opens (need), and until then this gives null */
     buildIndex: function () {
       if (this.index) return this.index;
-      var idx = [];
-      idx.push({ kind: 'Start here', title: 'How AI chips are made', text: 'One plain paragraph per stage, in order, with the specimens', href: '#/intro' });
-      (DATA.chapters || []).forEach(function (c) { if (c.plain && c.id !== 'introduction-and-goals') idx.push({ kind: 'Start here', title: c.title + ', in plain terms', text: c.plain, href: '#/walk/' + c.id }); });
-      $$('[data-view="stack"] .chapter').forEach(function (ch) {
-        var title = (ch.querySelector('.ch-title') || {}).textContent || ch.id;
-        idx.push({ kind: 'Chapter', title: title.replace(/^Chapter \d+: /, ''), text: (ch.querySelector('.ch-lede') || {}).textContent || '', href: '#' + ch.id });
-        $$('.prose h3[id], .prose h4[id]', ch).forEach(function (h) {
-          var t = '', p = h.nextElementSibling;
-          // the snippet is the reading text: a copy of each block without its footnote marks, so "8 Gb/s per pin 9." reads "8 Gb/s per pin."
-          while (p && !/^H[1-4]$/.test(p.tagName) && t.length < 900) { if (/^(P|DIV|UL|OL|TABLE)$/.test(p.tagName)) { var c = p.cloneNode(true); $$('sup.cite', c).forEach(function (s) { s.remove(); }); t += ' ' + c.textContent; } p = p.nextElementSibling; }
-          idx.push({ kind: title.replace(/^Chapter \d+: /, ''), title: h.textContent.replace(/#$/, ''), text: t.replace(/\s+/g, ' ').replace(/\s+([.,;:)])/g, '$1').trim().slice(0, 900), href: '#' + h.id });
-        });
-      });
-      $$('#glossary .gl-entry').forEach(function (el) { idx.push({ kind: 'Term', title: el.querySelector('dt').firstChild.textContent, text: el.querySelector('dd p').textContent, href: '#' + el.id }); });
-      (DATA.suppliers || []).forEach(function (r) { idx.push({ kind: 'Supplier', title: r.name, text: r.category + ' · ' + cname(r.country) + (r.role ? ' · ' + r.role : ''), href: '#/suppliers', q: r.name }); });
-      (DATA.landscape || []).forEach(function (c) { idx.push({ kind: 'Chip', title: c.vendor + ' ' + c.name, text: ((c.process || {}).node || '') + ' · ' + ((c.memory || {}).type || '') + ' · ' + (c.status || ''), href: '#/landscape?pick=' + encodeURIComponent(c.id), chip: c.id }); });
-      (DATA.timeline || []).forEach(function (e) { idx.push({ kind: 'Event ' + e.date, title: e.title, text: e.summary || '', href: e.id ? '#/controls/' + encodeURIComponent(e.id) : '#/controls' }); }); // straight to the entry, opened
-      (DATA.exposure || []).forEach(function (r) { if (r.chinaShare != null) idx.push({ kind: 'China revenue', title: r.firm + ' ' + r.fiscalYear, text: 'China was ' + r.chinaShare + '% of revenue' + (r.basis ? ' · ' + r.basis : ''), href: (DATA.exposureLinks || {})[r.firm] || '#/exposure' }); }); // straight to the firm's chart
-      // each flashcard, found by its question or its answer (more: matched, never shown). The result opens the chapter's deck at
-      // that card, question side up (Tools.openCard), so the line under it names the deck and leaves the answer to recall.
-      // Start here's deck sits in the walk, in no chapter, and carries its own name (data-name)
-      $$('[data-view="stack"] .fc[id], [data-view="walk"] .fc[id]').forEach(function (fc) {
-        var ch = fc.closest('.chapter'), name = ch ? ((ch.querySelector('.ch-title') || {}).textContent || '').replace(/^Chapter \d+: /, '') : (fc.getAttribute('data-name') || ''), cards = $$('.fc-card', fc);
-        cards.forEach(function (c, k) { idx.push({ kind: 'Flashcard', title: ($('.fc-q', c) || {}).textContent || '', text: name + ' · card ' + (k + 1) + ' of ' + cards.length, more: 'flashcards ' + (($('.fc-a', c) || {}).textContent || ''), href: '#' + fc.id, card: { id: fc.id, i: k } }); });
-      });
+      if (!window.CP_SEARCH) return null;
+      var idx = window.CP_SEARCH.map(function (e) { var i = {}; for (var k in e) i[k] = e[k]; return i; });
       var self = this;
       idx.forEach(function (i) {
         i.hay = (i.kind + ' ' + i.title + ' ' + i.text + (i.more ? ' ' + i.more : '')).toLowerCase();
@@ -3257,6 +3252,7 @@
     // Rank rather than filter: an exact title first, then a title word, then the glossary, then body text.
     search: function (raw) {
       var self = this, idx = this.buildIndex(), qn = this.norm(raw);
+      if (!idx) return { hits: [], note: '', wait: true }; // the index is on its way (need)
       var words = qn.split(' ').filter(Boolean);
       var terms = words.filter(function (t) { return !self.STOP[t]; });
       if (!terms.length) terms = words;
@@ -3316,16 +3312,21 @@
           if (tryRow) tryRow.hidden = !!q; // the suggestions give way to the results
           if (!q) { list.innerHTML = ''; say(''); return; }
           var res = self.search(q), hits = res.hits;
+          if (res.wait) { need('search.js', function () { if (!box.hidden && inp.value.trim()) inp.dispatchEvent(new Event('input')); }); return; }
           say(res.note ? 'Nothing matches. ' + (hits.length === 1 ? '1 nearest term.' : hits.length + ' nearest terms.') : !hits.length ? 'Nothing matches.' : hits.length === 1 ? '1 result.' : hits.length + ' results.');
           list.innerHTML = (res.note ? '<li class="none">' + esc(res.note) + '</li>' : '') +
-            (hits.map(function (h, k) { return '<li><a href="' + safeUrl(h.href) + '" data-k="' + k + '"><span class="k">' + esc(h.kind) + '</span><b>' + esc(h.title) + '</b><span class="t">' + esc(clip(h.text, 140)) + '</span></a></li>'; }).join('') || (res.note ? '' : '<li class="none">Nothing matches.</li>'));
-          list.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { var h = hits[+a.getAttribute('data-k')]; self.close(true); Keys.land(h.href); if (h.href === location.hash) setTimeout(function () { Router.route(); }, 0); /* the address is already this one, so no hashchange will come: go there anyway */ if (h.chip) setTimeout(function () { Landscape.openCard(h.chip, { show: true }); }, 60); /* a chip opens its card on the chart and adds nothing */ if (h.q) setTimeout(function () { Suppliers.show({ q: h.q }); }, 60); /* the whole filter, so a country or stage left from an earlier visit cannot hide the firm */ if (h.el) setTimeout(function () { h.el.scrollIntoView({ block: 'center' }); }, 60); if (h.card && self.openCard) setTimeout(function () { self.openCard(h.card.id, h.card.i); }, 60); }); });
+            (hits.map(function (h, k) { return '<li><a href="' + safeUrl(addr(h.href)) + '" data-k="' + k + '"><span class="k">' + esc(h.kind) + '</span><b>' + esc(h.title) + '</b><span class="t">' + esc(clip(h.text, 140)) + '</span></a></li>'; }).join('') || (res.note ? '' : '<li class="none">Nothing matches.</li>'));
+          // a result on another page is a link to its address (addr), and what it did after the route there goes with it (go)
+          list.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function (e) { var h = hits[+a.getAttribute('data-k')];
+            if (away(h.href)) { if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return; e.preventDefault(); self.close(true); go(h.href, { chip: h.chip, q: h.q, card: h.card, land: h.href }); return; }
+            self.close(true); Keys.land(h.href); if (h.href === location.hash) setTimeout(function () { Router.route(); }, 0); /* the address is already this one, so no hashchange will come: go there anyway */ if (h.chip) setTimeout(function () { Landscape.openCard(h.chip, { show: true }); }, 60); /* a chip opens its card on the chart and adds nothing */ if (h.q) setTimeout(function () { Suppliers.show({ q: h.q }); }, 60); /* the whole filter, so a country or stage left from an earlier visit cannot hide the firm */ if (h.el) setTimeout(function () { h.el.scrollIntoView({ block: 'center' }); }, 60); if (h.card && self.openCard) setTimeout(function () { self.openCard(h.card.id, h.card.i); }, 60); }); });
         });
       }
       if (box.hidden) this.from = document.activeElement; // where the reader was, so closing can put them back
       box.hidden = false; $('input', box).value = ''; $('ol', box).innerHTML = ''; var tr = $('.cp-search-try', box); if (tr) tr.hidden = false;
       var sd = $('.cp-search-said', box); if (sd) { clearTimeout(this.sayT); sd.textContent = ''; }
       this.hold(true); $('input', box).focus();
+      need('search.js');
     },
     /* the dialog is modal: while it is open everything else on the page is inert, so Tab, a click or a screen reader's cursor
        stays in the dialog. Only what this call made inert is released (the phone Contents sheet keeps its own) */
@@ -3342,21 +3343,15 @@
     },
     /* the suggestions under an empty search box, drawn once per visit the way the Glossary draws its own Try row
        (src/modules/lookup.js suggest: two short terms, two firms that matter, one chip, one country) from the same list of
-       entries, #lk-items, which every page carries. A chip goes by its model ("Ascend 950PR", "Instinct MI300X"): the maker,
+       entries (the Glossary's #lk-items, as terms.js carries it to every page). A chip goes by its model ("Ascend 950PR", "Instinct MI300X"): the maker,
        a design house in brackets and a bracketed tail are dropped */
     tryNames: function () {
-      var items = $$('#lk-items li[data-kind]'), name = function (li) { return ((li.querySelector('.lk-name') || {}).textContent || '').trim(); };
-      var kind = function (k) { return items.filter(function (li) { return li.getAttribute('data-kind') === k; }); };
-      var pick = function (arr, n) { var a = arr.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a.slice(0, n); };
-      var big = {}; (DATA.suppliers || []).forEach(function (r) { if (r.chokepoint === 'Critical' || r.chokepoint === 'Important') big[r.name] = 1; });
-      var chosen = pick(kind('term').filter(function (li) { return name(li).length <= 22; }), 2)
-        .concat(pick(kind('firm').filter(function (li) { return big[li.getAttribute('data-key')]; }), 2), pick(kind('chip'), 1), pick(kind('country'), 1));
-      // a chip's list name is its maker and its name, so a chip takes its own name from the data (its data-key is the chip id), as the Glossary's Try row does
-      var chipName = {}; (DATA.landscape || []).forEach(function (c) { chipName[c.id] = c.name; });
-      return pick(chosen, chosen.length).map(function (li) {
-        var own = li.getAttribute('data-kind') === 'chip' ? chipName[li.getAttribute('data-key')] : '';
-        return String(own || name(li)).replace(/\s*\([^)]*\)$/, '');
-      }).filter(Boolean);
+      // the names come with terms.js on every page (build/build.js): terms of 22 letters or fewer, the firms rated Critical or
+      // Important, each chip by its own name and the countries, as the Glossary's list holds them
+      var P = (window.CP_TERMS || {}).try || {};
+      var pick = function (arr, n) { var a = (arr || []).slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a.slice(0, n); };
+      var chosen = pick(P.term, 2).concat(pick(P.firm, 2), pick(P.chip, 1), pick(P.country, 1));
+      return pick(chosen, chosen.length).map(function (n) { return String(n).replace(/\s*\([^)]*\)$/, ''); }).filter(Boolean);
     },
     close: function (following) { // following a result: the destination takes focus (Keys.land), so leave it alone
       var box = $('#cp-search'); if (!box || box.hidden) return;
@@ -3373,6 +3368,7 @@
       var nav = $('.tabs'), btn = document.createElement('button'); btn.type = 'button'; btn.className = 'search-btn'; btn.setAttribute('aria-label', 'Search'); btn.title = 'Search (Ctrl+K, or press /)';
       btn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>';
       btn.addEventListener('click', function () { self.open(); });
+      ['pointerenter', 'focus', 'touchstart'].forEach(function (t) { btn.addEventListener(t, function () { need('search.js'); }, { passive: true }); }); // the index is fetched as the reader heads for it
       if (nav) nav.insertBefore(btn, $('.theme-toggle'));
       Keys.init();
       // the readable pages' masthead has a search button too, a link here with ?search=1 (build/masthead.js): the
@@ -3677,7 +3673,7 @@
   })();
 
   window.CP = { Stage: Stage, Router: Router, Sections: Sections, Tools: Tools, Band: Band, DATA: DATA, $: $, $$: $$, esc: esc, narrow: narrow, safeUrl: safeUrl, cname: cname, reduced: reduced,
-    scrollToEl: scrollToEl, landAt: landAt, headerH: headerH,
+    scrollToEl: scrollToEl, landAt: landAt, headerH: headerH, page: PAGE, addr: addr, go: go, need: need,
     Landscape: Landscape, Suppliers: Suppliers, register: function (view, def) { MODULE_VIEWS[view] = def; if (Router.current === view && def.activate) def.activate(); } };
   function boot() {
     // QA aid: ?only=<chapter-id> shows just that chapter at the top of the page (screenshots in a hidden pane only paint the first frame)
@@ -3758,11 +3754,12 @@ try {
    columns in place, and the entries whose names match stand first. An entry opens in a sheet: beside the columns on a wide
    screen, over them on a narrower one, the whole screen on a phone. The sheet shows a term as the page lays it out, and a
    firm, a chip or a country as its card, then every passage that mentions it, with arrows to the next entry.
-   The entries are data in the page, written by build/build.js: #lk-items (each entry's kind, key, other names and search
-   text) and #glossary (each term's own block, which the look-up popovers and the site search read too, src/app.js Tip and
-   Search). Their ids stay each entry's address (#gl-euv, #lk-country-nl). The cards are drawn from DATA when an entry
-   opens. The passages are found by scanning the chapters, the board, the AI chips and the supplier list for the entry's
-   name, and each entry's count of them is worked out a few at a time while the browser is idle. */
+   The entries are data written by build/build.js: #lk-items (each entry's kind, key, other names and search text) and
+   #glossary (each term's own block). Since 28 Oct 2026 they come with glossary.js when the Glossary first opens (load), and
+   the pop-ups and the site search read terms.js and search.js. Their ids stay each entry's address (#gl-euv, #lk-country-nl). The cards are drawn from DATA when an entry
+   opens. The passages are found by scanning the chapters' paragraphs (glossary.js carries them, since the chapters have pages
+   of their own), the board, the AI chips and the supplier list for the entry's name, and each entry's count of them is
+   worked out a few at a time while the browser is idle. */
 (function () {
   var CP = window.CP; if (!CP) return;
   var $ = CP.$, $$ = CP.$$, esc = CP.esc, DATA = CP.DATA || {}, cname = CP.cname, reduced = CP.reduced;
@@ -3840,9 +3837,9 @@ try {
     refsHTML: function (it) {
       var R = (DATA.glossaryRefs || {})[it.key], t = this.term(it), ch = this.chapterMap(), home = null, also = [];
       if (R) { home = R[0] ? ch[R[0]] : null; also = (R[1] || []).map(function (id) { return ch[id]; }).filter(Boolean); }
-      else if (t.link) home = { id: String(t.link.getAttribute('href') || '').replace(/^#/, ''), title: t.link.textContent.replace(/^Read it in /, '').replace(/\s*→$/, '') };
+      else if (t.link) home = { id: String(t.link.getAttribute('href') || '').replace(/^#/, '').replace(/\/.*$/, ''), title: t.link.textContent.replace(/^Read it in /, '').replace(/\s*→$/, '') };
       if (!home && !also.length) return '';
-      var a = function (c) { return '<a href="#' + esc(c.id) + '">' + esc(c.title) + '</a>'; };
+      var a = function (c) { return '<a href="' + esc(CP.addr('#' + c.id)) + '">' + esc(c.title) + '</a>'; }; // the chapter's own page
       return '<p class="gl-refs">' + (home ? '<span class="gl-refs-k">Read it in</span> ' + a(home) : '') +
         (also.length ? (home ? ' <span class="gl-refs-k gl-refs-k2">Also in</span> ' : '<span class="gl-refs-k">In</span> ') + also.map(a).join(', ') : '') + '</p>';
     },
@@ -4269,7 +4266,7 @@ try {
     countryCard: function (co) {
       var cc = co.code, self = this, F = this.countryFacts(cc), named = F.named, firms = F.firms;
       var num = function (v) { return Math.round(v) === v ? String(v) : String(Math.round(v * 10) / 10); };
-      var chHref = function (ch) { return ch.id === 'geopolitics' ? '#/geopolitics' : '#' + ch.id; };
+      var chHref = function (ch) { return CP.addr(ch.id === 'geopolitics' ? '#/geopolitics' : '#' + ch.id); }; // the chapter's own page
       // shares: every matrix row that carries the country, largest first; rows under one percent are folded into one line
       var segs = (DATA.matrix || []).filter(function (r) { return r.shares && r.shares[cc] != null; }).map(function (r) {
         var rank = Object.keys(r.shares).sort(function (a, b) { return r.shares[b] - r.shares[a]; }).indexOf(cc) + 1;
@@ -4340,20 +4337,39 @@ try {
       var s = ''; for (var i = 0; i < node.childNodes.length; i++) { var n = node.childNodes[i]; if (n.nodeType === 3) s += n.nodeValue; else if (n.nodeType === 1) s += ' ' + this.textOf(n) + ' '; } return s;
     },
 
+    /* every chapter's paragraphs and list items, as glossary.js carries them (build/build.js reads them from the chapters by
+       the rules of domCorpus): each chapter has its own page since 28 Oct 2026, so the home page holds none of them. k is a
+       passage's place among its chapter's, for the chapter's page to find it (flash) */
     corpus: function () {
-      if (this.paras) return this.paras; var out = [], self = this;
+      if (this.paras) return this.paras;
+      var G = window.CP_GLOSSARY && window.CP_GLOSSARY.passages; if (!G) return this.domCorpus();
+      var out = [], at = {};
+      G.paras.forEach(function (p) { var c = G.chapters[p[0]] || [p[0], '']; at[p[0]] = at[p[0]] || 0; out.push({ chapter: p[0], title: c[0], num: c[1], text: p[1], k: at[p[0]]++ }); });
+      this.paras = out; return out;
+    },
+    // the passages of the chapters on this page, read from the page itself
+    domCorpus: function () {
+      var out = [], self = this;
       $$('.view[data-view="stack"] article.chapter').forEach(function (ch) {
-        var id = ch.id, title = ch.getAttribute('data-title') || id, num = ch.getAttribute('data-number') || '';
+        var id = ch.id, title = ch.getAttribute('data-title') || id, num = ch.getAttribute('data-number') || '', k = 0;
         $$('p, li', ch).forEach(function (el) {
           // the chapter head's facts line (.ch-meta: words, minutes, specimen, Updated) and its citation line and text (.ch-cite) are not passages (correctness P1-4)
           if (el.closest('.chapter-sources, .plate-head, .ch-meta, .ch-cite, .chain, figure, .chapter-nav, nav')) return;
           // a card's marks (and the comma between two of them) are not the passage's words
           var clone = el.cloneNode(true); $$('sup.cite, sup.cite-sep, .gl-tip, .chip', clone).forEach(function (s) { s.parentNode.removeChild(s); });
           var text = self.textOf(clone).replace(/\s+/g, ' ').replace(/\s+([.,;:])/g, '$1').trim();
-          if (text.length > 40) out.push({ chapter: id, title: title, num: num, el: el, text: text });
+          if (text.length > 40) out.push({ chapter: id, title: title, num: num, el: el, text: text, k: k++ });
         });
       });
-      this.paras = out; return out;
+      return out;
+    },
+    /* a passage followed from the Glossary to its chapter's page (src/app.js go, Router.after): found by its words, or else by
+       its place, it lands under the masthead and flashes, as it did when the chapters were on the Glossary's page */
+    flash: function (para) {
+      var mine = this.domCorpus().filter(function (p) { return p.chapter === para.chapter; });
+      var p = mine.filter(function (x) { return x.text === para.text; })[0] || mine[para.k]; if (!p) return;
+      CP.scrollToEl(p.el, false); if (CP.Router && CP.Router.settle) CP.Router.settle(p.el);
+      p.el.classList.add('lk-flash'); setTimeout(function () { p.el.classList.remove('lk-flash'); }, 2600);
     },
 
     regex: function (patterns, loose) { // loose: a typed query matches as a prefix, so "NXT:1980" finds "NXT:1980i"
@@ -4390,7 +4406,7 @@ try {
       var hits = [], n = 0, test = function (t) { re.lastIndex = 0; return re.test(t); };
       var mark = function (s) { return esc(s).replace(re, function (x) { return '<mark>' + x + '</mark>'; }); };
       var add = function (h) { n++; if (!count) hits.push(h()); };
-      this.corpus().forEach(function (p, i) { if (count ? test(p.text) : self.sentence(p.text, re)) add(function () { return { src: 'Chapter ' + p.num, sub: p.title, html: mark(self.sentence(p.text, re)), href: '#' + p.chapter, para: i }; }); });
+      this.corpus().forEach(function (p, i) { if (count ? test(p.text) : self.sentence(p.text, re)) add(function () { return { src: 'Chapter ' + p.num, sub: p.title, html: mark(self.sentence(p.text, re)), href: CP.addr('#' + p.chapter), para: i }; }); });
       (Array.isArray(DATA.timeline) ? DATA.timeline : ((DATA.timeline || {}).events || [])).forEach(function (e) { var t = [e.gist || '', e.title || '', e.summary || ''].join(' '); if (!test(t)) return; add(function () { var s = self.sentence(e.gist && test(e.gist) ? e.gist : (e.summary || e.title), re) || e.title; return { src: 'Export Controls', sub: e.date, html: mark(s), href: e.id ? '#/controls/' + encodeURIComponent(e.id) : '#/controls' }; }); }); // the entry's own address opens it (correctness P1-6)
       (Array.isArray(DATA.flows) ? DATA.flows : ((DATA.flows || {}).flows || [])).forEach(function (f) { (f.states || []).forEach(function (st) { if (st.label && test(st.label)) add(function () { return { src: 'Export Controls', sub: f.name, html: mark(st.label), href: st.event ? '#/controls/' + encodeURIComponent(st.event) : '#/controls' }; }); }); }); // a board state links to the entry that set it
       (DATA.landscape || []).forEach(function (c) { if (kind === 'chip' && c.id === key) return; var t = [c.notes || '', c.exportStatus || ''].join(' '); if (count ? test(t) : self.sentence(t, re)) add(function () { return { src: 'AI Chips', sub: c.vendor + ' ' + c.name, html: mark(self.sentence(t, re)), href: '#/landscape?pick=' + encodeURIComponent(c.id), chip: c.id }; }); });
@@ -4417,7 +4433,10 @@ try {
         if (a.hasAttribute('data-sup')) a.addEventListener('click', function () { var q = a.getAttribute('data-sup'); setTimeout(function () { var S = CP.Suppliers; if (S && S.show) S.show({ q: q }); }, 60); });
         if (a.hasAttribute('data-chip')) a.addEventListener('click', function () { var id = a.getAttribute('data-chip'); setTimeout(function () { if (window.CP.Landscape && CP.Landscape.openCard) CP.Landscape.openCard(id, { show: true }); }, 60); /* the chip's card on the chart, adding nothing */ });
         if (a.hasAttribute('data-para')) a.addEventListener('click', function (e) {
+          if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return; // a new tab opens the chapter's page
           e.preventDefault(); var p = self.paras[+a.getAttribute('data-para')]; if (!p) return;
+          // on another page (the chapter's own): the passage goes with the reader, and that page lands on it (flash)
+          if (!p.el) { CP.go('#' + p.chapter, { para: { chapter: p.chapter, k: p.k, text: p.text } }); return; }
           location.hash = '#' + p.chapter;
           // the router lands on the chapter and settles it there; the passage's own settle then takes over, so late fonts and
           // images cannot pull the page back to the chapter's top (correctness P1-1)
@@ -4449,7 +4468,23 @@ try {
   };
 
   CP.Lookup = Lookup;
-  CP.register('glossary', { activate: function () { Lookup.activate(); }, stage: false });
+  /* The Glossary's two lists and the chapters' passages come with glossary.js (build/build.js), fetched when the Glossary first
+     opens (CP.need): the lists go into #lk-items and #glossary, where the dictionary reads them, and until then the view
+     shows its head alone, as before boot */
+  Lookup.load = function (fn) {
+    var items = $('#lk-items'), view = $('.view[data-view="glossary"]');
+    if (!items || items.children.length || !CP.need) { fn(); return; }
+    var parts = view ? [].filter.call(view.children, function (c) { return !c.classList.contains('view-head'); }) : [];
+    parts.forEach(function (c) { c.style.visibility = 'hidden'; });
+    CP.need('glossary.js', function () {
+      var G = window.CP_GLOSSARY || {}, terms = $('#glossary');
+      if (!items.children.length) items.innerHTML = G.items || '';
+      if (terms && !terms.children.length) terms.innerHTML = G.terms || '';
+      parts.forEach(function (c) { c.style.visibility = ''; });
+      fn();
+    });
+  };
+  CP.register('glossary', { activate: function () { Lookup.load(function () { Lookup.activate(); }); }, stage: false });
 })();
 
 } catch (e) { console.warn('module lookup.js failed', e); }

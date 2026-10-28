@@ -1287,8 +1287,9 @@ fill('SITE_URL', SITE.url); fill('SITE_HOST', SITE.host);
 // the template's counts of the chain (the home card's alt text, the printed title page, The Chain's standfirst): never typed
 fill('N_STAGES', String(stages.length)); fill('STAGES_WORD', word(stages.length)); fill('CHAPTERS_WORD', word(all.length));
 // the counter: each hash route counts as its own page ("/lithography", "/suppliers"), and the query string is dropped;
-// the walk's step addresses (#/walk/<chapter>, replaced as the reader scrolls Start here) all count as the home page
-fill('ANALYTICS', SITE.analytics ? `<script>window.goatcounter={path:function(){return (location.hash||'').replace(/^#\\/?/,'/').replace(/\\?.*$/,'').replace(/^\\/walk\\/.*$/,'/')||'/';}};</script>\n<script async src="https://gc.zgo.at/count.js" data-goatcounter="${esc(SITE.analytics)}"></script>` : ''); fill('THESIS', thesisHTML); fill('SUBTITLE', subtitleHTML); fill('CHAIN', chainTrack(stages, null));
+// the walk's step addresses (#/walk/<chapter>, replaced as the reader scrolls Start here) all count as the home page; a chapter's
+// own page counts as its address, /lithography/, whatever section it is at (as the readable pages counted until 28 Oct 2026)
+fill('ANALYTICS', SITE.analytics ? `<script>window.goatcounter={path:function(){var p=location.pathname.replace(/index\\.html$/,'');if(p!=='/')return p;return (location.hash||'').replace(/^#\\/?/,'/').replace(/\\?.*$/,'').replace(/^\\/walk\\/.*$/,'/')||'/';}};</script>\n<script async src="https://gc.zgo.at/count.js" data-goatcounter="${esc(SITE.analytics)}"></script>` : ''); fill('THESIS', thesisHTML); fill('SUBTITLE', subtitleHTML); fill('CHAIN', chainTrack(stages, null));
 // Home is the Start here walk (#/ and #/intro open the same view), so it has one entry
 const sheetPages = [['#/', 'Home'], ['#/chain', 'Supply Chain'], ['#/landscape', 'AI Chips'], ['#/suppliers', 'Suppliers'], ['#/controls', 'Export Controls'], ['#/glossary', 'Glossary']].map((p) => `<a href="${p[0]}">${p[1]}</a>`).join('');
 const sheetItem = (ch) => `<li><a href="${ch.id === 'geopolitics' ? '#geopolitics' : '#' + esc(ch.id)}"><span class="n">${pad(ch.number)}</span><span class="t">${esc(ch.title)}</span></a></li>`;
@@ -1308,7 +1309,7 @@ fill('SUPPLIERS_INTRO', suppliersIntro); fill('SUPPLIERS_FACTS', suppliersFacts)
 for (const asset of ['print-title.png']) { const from = path.join(root, 'build', 'assets', asset); if (fs.existsSync(from)) fs.copyFileSync(from, path.join(root, 'dist', asset)); }
 // the site icons (drawn by `python3 build/icons.py`) go to the root of dist/, where browsers look for /favicon.ico
 for (const icon of ['favicon.ico', 'favicon.svg', 'apple-touch-icon.png']) { const from = path.join(root, 'build', 'assets', 'icons', icon); if (fs.existsSync(from)) fs.copyFileSync(from, path.join(root, 'dist', icon)); else warn(`icon ${icon} is missing; run python3 build/icons.py`); }
-fill('BRIEFING', briefingHTML); fill('GLOSSARY', glossaryHTML); fill('GLOSSARY_COUNT', String(glossary.length));
+fill('BRIEFING', briefingHTML); fill('GLOSSARY_COUNT', String(glossary.length)); // the Glossary's two lists go to dist/assets/glossary.js (below)
 // the Look up page: one list of every term, firm and chip, alphabetical, each with the kind a reader would call it
 const lkSlug = (s) => String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 const lkItems = [];
@@ -1342,13 +1343,94 @@ data.countries = Object.keys(COUNTRY).filter((cc) => /^[A-Z]{2}$/.test(cc) && ((
   .map((cc) => ({ code: cc, name: COUNTRY[cc], role: LK_ROLE[cc] || '', panel: html.indexOf(`class="sa-panel" data-cc="${cc}"`) >= 0, aliases: LK_CC_ALIAS[cc] || [cc] }));
 data.countries.forEach((c) => lkItems.push({ kind: 'country', id: 'lk-country-' + c.code.toLowerCase(), key: c.code, name: c.name, alias: c.aliases, label: 'Country', text: [c.name, c.code, c.aliases.join(' '), 'country', c.role].join(' ') }));
 lkItems.sort((a, b) => a.name.localeCompare(b.name, 'en', { sensitivity: 'base' }));
-fill('LOOKUP_LIST', lkItems.map((i) => `<li id="${esc(i.id)}" data-kind="${i.kind}" data-key="${esc(i.key || i.name)}"${i.alias && i.alias.length ? ` data-alias="${esc(i.alias.join('|'))}"` : ''} data-text="${esc(i.text.toLowerCase().replace(/\s+/g, ' '))}"><button type="button"><span class="lk-name">${esc(i.name)}</span><span class="lk-lab">${esc(i.label)}</span></button></li>`).join(''));
+const lookupListHTML = lkItems.map((i) => `<li id="${esc(i.id)}" data-kind="${i.kind}" data-key="${esc(i.key || i.name)}"${i.alias && i.alias.length ? ` data-alias="${esc(i.alias.join('|'))}"` : ''} data-text="${esc(i.text.toLowerCase().replace(/\s+/g, ' '))}"><button type="button"><span class="lk-name">${esc(i.name)}</span><span class="lk-lab">${esc(i.label)}</span></button></li>`).join('');
 // the Glossary's head: how many entries of each kind the list holds (src/template.html, the Glossary view)
 const lkKinds = (k) => lkItems.filter((i) => i.kind === k).length;
 fill('GLOSSARY_TALLY', [[lkKinds('term'), 'terms'], [lkKinds('firm'), 'firms'], [lkKinds('chip'), 'AI chips'], [lkKinds('country'), 'countries']].map(([n, w]) => `<span>${n} ${w}</span>`).join(''));
 fill('CONTROLS_DEK', controlsDek);
 fill('EXPOSURE_VIZ', exposureViz(exposure));
 fill('EXPOSURE_NOTE', exposureNote);
+/* ---------------- search, the glossary's terms and its passages, as shared data ----------------
+   While the home page held every chapter, the app read these from the page: the search index from the chapters, the
+   Glossary and the data (src/app.js Tools.buildIndex), the pop-ups' definitions from the Glossary's list (Tip.def), and the
+   Glossary's "Where it appears" from the chapters' paragraphs (src/modules/lookup.js corpus). Now each chapter has its own
+   page, so the build reads the same parts of the same markup by the same rules (build/page-text.js) and ships them:
+   - search.js, the whole index, in the order and words the app made it, fetched when the search opens (Tools.need);
+   - terms.js, every glossary term's definition and the names the empty search suggests, on every page;
+   - glossary.js, the Glossary's two lists (#lk-items and #glossary) and every chapter's paragraphs, fetched when the
+     Glossary opens (src/modules/lookup.js). */
+const PT = require('./page-text.js');
+// the app's own country names (src/app.js COUNTRY, "United Arab Emirates" where the build says "UAE"), as the index wrote them
+const APP_COUNTRY = (() => { const m = /var COUNTRY = (\{[^;]*\});/.exec(read(path.join(root, 'src', 'app.js')) || ''); try { return m ? new Function('return ' + m[1])() : COUNTRY; } catch (e) { warn('search: src/app.js COUNTRY could not be read, so the build\'s country names stand in'); return COUNTRY; } })();
+const ptFind = (n, test) => PT.all(n).find(test) || null;
+const chArticle = (id) => ptFind(PT.parse(articleOf.get(id) || ''), (n) => n.tag === 'article');
+const chTitle = (art) => { const t = art && ptFind(art, (n) => PT.hasClass(n, 'ch-title')); return (t ? PT.textContent(t) : '').replace(/^Chapter \d+: /, ''); };
+const glossaryDoc = PT.parse(glossaryHTML);
+const glEntries = PT.all(glossaryDoc).filter((n) => PT.hasClass(n, 'gl-entry')).map((el) => {
+  const dt = ptFind(el, (n) => n.tag === 'dt'), dd = ptFind(el, (n) => n.tag === 'dd'), p = dd && ptFind(dd, (n) => n.tag === 'p');
+  return { id: el.attrs.id, key: el.attrs['data-term'], term: dt && dt.kids[0] ? PT.textContent(dt.kids[0]) : '', plain: p ? PT.textContent(p) : '' };
+});
+const searchData = (() => {
+  const idx = [];
+  idx.push({ kind: 'Start here', title: 'How AI chips are made', text: 'One plain paragraph per stage, in order, with the specimens', href: '#/intro' });
+  data.chapters.forEach((c) => { if (c.plain && c.id !== 'introduction-and-goals') idx.push({ kind: 'Start here', title: c.title + ', in plain terms', text: c.plain, href: '#/walk/' + c.id }); });
+  const arts = all.map((c) => chArticle(c.id)).filter(Boolean);
+  arts.forEach((art) => {
+    const title = chTitle(art), lede = ptFind(art, (n) => PT.hasClass(n, 'ch-lede'));
+    idx.push({ kind: 'Chapter', title, text: lede ? PT.textContent(lede) : '', href: '#' + art.attrs.id });
+    PT.all(art).filter((h) => (h.tag === 'h3' || h.tag === 'h4') && h.attrs.id && PT.closest(h.parent, (x) => PT.hasClass(x, 'prose'))).forEach((h) => {
+      // the snippet is the reading text: each block after the heading, to the next, without its footnote marks
+      let t = '', p = PT.nextElement(h);
+      while (p && !/^h[1-4]$/.test(p.tag) && t.length < 900) { if (/^(p|div|ul|ol|table)$/.test(p.tag)) t += ' ' + PT.textContent(PT.without(p, (k) => k.tag === 'sup' && PT.hasClass(k, 'cite'))); p = PT.nextElement(p); }
+      idx.push({ kind: title, title: PT.textContent(h), text: t.replace(/\s+/g, ' ').replace(/\s+([.,;:)])/g, '$1').trim().slice(0, 900), href: '#' + h.attrs.id });
+    });
+  });
+  glEntries.forEach((g) => idx.push({ kind: 'Term', title: g.term, text: g.plain, href: '#' + g.id }));
+  (data.suppliers || []).forEach((r) => idx.push({ kind: 'Supplier', title: r.name, text: r.category + ' · ' + (APP_COUNTRY[r.country] || r.country) + (r.role ? ' · ' + r.role : ''), href: '#/suppliers', q: r.name }));
+  (data.landscape || []).forEach((c) => idx.push({ kind: 'Chip', title: c.vendor + ' ' + c.name, text: ((c.process || {}).node || '') + ' · ' + ((c.memory || {}).type || '') + ' · ' + (c.status || ''), href: '#/landscape?pick=' + encodeURIComponent(c.id), chip: c.id }));
+  (data.timeline || []).forEach((e) => idx.push({ kind: 'Event ' + e.date, title: e.title, text: e.summary || '', href: e.id ? '#/controls/' + encodeURIComponent(e.id) : '#/controls' }));
+  (data.exposure || []).forEach((r) => { if (r.chinaShare != null) idx.push({ kind: 'China revenue', title: r.firm + ' ' + r.fiscalYear, text: 'China was ' + r.chinaShare + '% of revenue' + (r.basis ? ' · ' + r.basis : ''), href: (data.exposureLinks || {})[r.firm] || '#/exposure' }); });
+  // each flashcard: Start here's deck (the walk comes first in the page), then each chapter's
+  const walkDoc = PT.parse(html.slice(html.indexOf('data-view="walk"'), html.indexOf('<!--/home-->')));
+  const decks = PT.all(walkDoc).filter((n) => PT.hasClass(n, 'fc') && n.attrs.id).map((fc) => [fc, fc.attrs['data-name'] || ''])
+    .concat(...arts.map((art) => PT.all(art).filter((n) => PT.hasClass(n, 'fc') && n.attrs.id).map((fc) => [fc, chTitle(art)])));
+  decks.forEach(([fc, name]) => {
+    const cards = PT.all(fc).filter((n) => PT.hasClass(n, 'fc-card'));
+    cards.forEach((c, k) => {
+      const q = ptFind(c, (n) => PT.hasClass(n, 'fc-q')), a = ptFind(c, (n) => PT.hasClass(n, 'fc-a'));
+      idx.push({ kind: 'Flashcard', title: q ? PT.textContent(q) : '', text: name + ' · card ' + (k + 1) + ' of ' + cards.length, more: 'flashcards ' + (a ? PT.textContent(a) : ''), href: '#' + fc.attrs.id, card: { id: fc.attrs.id, i: k } });
+    });
+  });
+  return idx;
+})();
+// the definitions the pop-ups show, by the term's key (its data-term), and the names the empty search suggests: two short
+// terms, two firms that matter (Critical or Important), a chip by its own name and a country (src/app.js Tools.tryNames)
+const termsData = (() => {
+  const defs = {}; glEntries.forEach((g) => { defs[g.key] = [g.term.trim(), g.plain]; });
+  const big = new Set(suppliers.filter((r) => r.chokepoint === 'Critical' || r.chokepoint === 'Important').map((r) => r.name));
+  const chipName = {}; landscape.forEach((c) => { chipName[c.id] = c.name; });
+  const of = (k) => lkItems.filter((i) => i.kind === k);
+  return { defs, try: { term: of('term').map((i) => i.name.trim()).filter((n) => n.length <= 22), firm: of('firm').filter((i) => big.has(i.key)).map((i) => i.name.trim()),
+    chip: of('chip').map((i) => chipName[i.key] || i.name.trim()), country: of('country').map((i) => i.name.trim()) } };
+})();
+// every chapter's paragraphs and list items, as the Glossary's "Where it appears" reads them (src/modules/lookup.js corpus):
+// [chapter, its k-th passage's text], with each chapter's title and number once
+const passagesData = (() => {
+  const SKIP = (n) => n.tag === 'figure' || n.tag === 'nav' || ['chapter-sources', 'plate-head', 'ch-meta', 'ch-cite', 'chain', 'chapter-nav'].some((c) => PT.hasClass(n, c));
+  const chs = {}, paras = [];
+  all.forEach((c) => {
+    const art = chArticle(c.id); if (!art) return;
+    chs[c.id] = [art.attrs['data-title'] || c.id, art.attrs['data-number'] || ''];
+    PT.all(art).filter((n) => n.tag === 'p' || n.tag === 'li').forEach((el) => {
+      if (PT.closest(el, SKIP)) return;
+      const clone = PT.without(el, (k) => (k.tag === 'sup' && (PT.hasClass(k, 'cite') || PT.hasClass(k, 'cite-sep'))) || PT.hasClass(k, 'gl-tip') || PT.hasClass(k, 'chip'));
+      const text = PT.text(clone).replace(/\s+/g, ' ').replace(/\s+([.,;:])/g, '$1').trim();
+      if (text.length > 40) paras.push([c.id, text]);
+    });
+  });
+  return { chapters: chs, paras };
+})();
+
 const moduleJS = modDir(path.join(root, 'src', 'modules')).filter((f) => f.endsWith('.js')).map((f) => `\n/* module: ${f} */\ntry {\n${read(path.join(root, 'src', 'modules', f))}\n} catch (e) { console.warn('module ${f} failed', e); }`).join('\n');
 
 /* ---------------- the shared files ----------------
@@ -1364,6 +1446,8 @@ const tryPart = (name, code) => `/* ${name} */\ntry {\n${code}\n} catch (e) { co
 writeAsset('site.css', siteCSS);
 writeAsset('kit.js', kit + '\n' + specimens + '\n');
 writeAsset('data.js', `window.CP_DATA = ${JSON.stringify(data)};\n`);
+writeAsset('terms.js', `window.CP_TERMS = ${JSON.stringify(termsData)};\n`);
+writeAsset('search.js', `window.CP_SEARCH = ${JSON.stringify(searchData)};\n`);
 writeAsset('app.js', read(path.join(root, 'src', 'app.js')) + moduleJS + '\n' + tryPart('cite line', CITE_JS) + tryPart('figure actions', FIG_JS) + tryPart('rail toggle', RAIL_TOGGLE_JS));
 fill('STYLESHEET', `<link rel="stylesheet" href="${assetURL['site.css']}">`);
 
@@ -1380,7 +1464,9 @@ fill('STYLESHEET', `<link rel="stylesheet" href="${assetURL['site.css']}">`);
 const pre = require(path.join(root, 'src', 'preroute.js'));
 const unmark = (h) => h.replace(/[ \t]*<!--\/?(head|home|book)-->\n?/g, '');
 const cutOut = (h, mark) => h.replace(new RegExp(`[ \\t]*<!--${mark}-->[\\s\\S]*?<!--/${mark}-->\\n?`, 'g'), '');
-const scriptTags = (names, up) => names.map((n) => `<script src="${up}${assetURL[n]}"></script>`).join('\n');
+// the page's scripts, in order, after the addresses of the two the app fetches when it needs them (src/app.js need())
+const scriptTags = (names, up) => `<script>window.CP_ASSETS = ${JSON.stringify({ 'search.js': up + assetURL['search.js'], 'glossary.js': up + assetURL['glossary.js'] })};</script>\n`
+  + names.map((n) => `<script src="${up}${assetURL[n]}"></script>`).join('\n');
 /* Links, settled for the page they sit on (the same rules src/preroute.js away() applies at run time, and src/app.js addr()
    to the links the app writes): a fragment whose place is on this page stays; one whose place is elsewhere becomes that
    place's address (a chapter's anchor from the home page, <id>/#<anchor>; a view's route from a chapter's page, ../#/<view>);
@@ -1410,6 +1496,8 @@ function relink(h, page) {
   });
   return h.replace(/\u0000(\d+)\u0000/g, (m, i) => held[+i]);
 }
+// the Glossary's two lists, with their chapter links as the home page has them, and the chapters' passages (the shared data, above)
+writeAsset('glossary.js', `window.CP_GLOSSARY = ${JSON.stringify({ items: lookupListHTML, terms: relink(glossaryHTML, { kind: 'home', chapter: '', root: '' }), passages: passagesData })};\n`);
 // the page from the template: the parts it does not hold cut, its own head, preroute line, chapters and scripts in
 function makePage(kind, o) {
   let h = html;
@@ -1436,7 +1524,7 @@ const writePage = (rel, h) => { fs.mkdirSync(path.dirname(path.join(root, 'dist'
 // the home page: dated by its text and DATA, the data its views draw from
 let homeHTML;
 {
-  const { h, page } = makePage('home', { root: '', chapters: '', ids: [], scripts: ['kit.js', 'data.js', 'app.js'] });
+  const { h, page } = makePage('home', { root: '', chapters: '', ids: [], scripts: ['kit.js', 'data.js', 'terms.js', 'app.js'] });
   let x = h.split(`Updated ${builtStr}`).join(`Updated ${DAY_TOKEN}`);
   const homeDates = pageDate('/', x + JSON.stringify(data));
   homeHTML = relink(citeDays(x.split(DAY_TOKEN).join(dayStr(homeDates.modified))), page);
@@ -1448,14 +1536,14 @@ for (const ch of all) {
   const art = articleOf.get(ch.id);
   if (!art || !ctx.chapterHead) { warn(`chapter page ${ch.id}: no article or no head, so it has no page`); continue; }
   const dates = pageDate('/' + ch.id + '/', art, ch.file);
-  const { h, page } = makePage('chapter', { root: '../', chapter: ch.id, chapters: art, ids: [ch.id], head: ctx.chapterHead(ch, dates), scripts: ['kit.js', 'app.js'] });
+  const { h, page } = makePage('chapter', { root: '../', chapter: ch.id, chapters: art, ids: [ch.id], head: ctx.chapterHead(ch, dates), scripts: ['kit.js', 'terms.js', 'app.js'] });
   writePage(ch.id + '/index.html', relink(citeDays(h.split(`Updated ${builtStr}`).join(`Updated ${dayStr(dates.modified)}`)), page));
 }
 // the book: every chapter, for print only, dated by the latest of the home page and its chapters
 {
   const last = ['/'].concat(all.map((c) => '/' + c.id + '/')).map((k) => (pageDates[k] || {}).modified || today).sort().pop();
   const head = `<title>How AI chips are made · Chip Supply Chain</title>\n<meta name="robots" content="noindex">\n<link rel="canonical" href="${SITE.url}">`;
-  const { h, page } = makePage('book', { root: '../', chapters: all.map((c) => articleOf.get(c.id)).filter(Boolean).join('\n'), ids: chainIds, head, scripts: ['kit.js', 'app.js'] });
+  const { h, page } = makePage('book', { root: '../', chapters: all.map((c) => articleOf.get(c.id)).filter(Boolean).join('\n'), ids: chainIds, head, scripts: ['kit.js', 'terms.js', 'app.js'] });
   writePage('book/index.html', relink(citeDays(h.split(`Updated ${builtStr}`).join(`Updated ${dayStr(last)}`)), page));
 }
 

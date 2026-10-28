@@ -167,7 +167,7 @@
   }
   if (typeof module !== 'undefined' && module.exports) { module.exports = { route: route, chapterOf: chapterOf, moved: moved, away: away }; return; }
 
-  var html = document.documentElement, pre = root.CP_PRE = { view: null, touched: false, moved: moved, page: PAGE, chapters: CHAPTERS, away: function (h, s) { return away(h, s == null ? location.search : s); } }, r = null;
+  var html = document.documentElement, pre = root.CP_PRE = { view: null, touched: false, moved: moved, page: PAGE, chapters: CHAPTERS, away: function (h, s) { return away(h, s == null ? location.search : s); }, route: function (h) { return route(h, location.search); } }, r = null;
   try {
     var mv = moved(location.hash); // a merged chapter's address: the merged chapter's own, in place, before it is read
     if (mv && root.history && history.replaceState) history.replaceState(history.state, '', location.pathname + location.search + mv);
@@ -255,7 +255,7 @@ html[data-chain="systems-and-networking"] .view[data-view="stack"] > article.cha
 html[data-chain] .view[data-view="stack"] > article.chapter { content-visibility: visible; border-top: 0; }
 }
 </style>
-<script>window.goatcounter={path:function(){return (location.hash||'').replace(/^#\/?/,'/').replace(/\?.*$/,'').replace(/^\/walk\/.*$/,'/')||'/';}};</script>
+<script>window.goatcounter={path:function(){var p=location.pathname.replace(/index\.html$/,'');if(p!=='/')return p;return (location.hash||'').replace(/^#\/?/,'/').replace(/\?.*$/,'').replace(/^\/walk\/.*$/,'/')||'/';}};</script>
 <script async src="https://gc.zgo.at/count.js" data-goatcounter="https://yashvardhan.goatcounter.com/count"></script>
 </head>
 <body>
@@ -360,8 +360,10 @@ html[data-chain] .view[data-view="stack"] > article.chapter { content-visibility
 </div>
 <!-- the shared code and data (build/build.js writes them to dist/assets/): the specimen kit, the data this page's views draw
      from, the search index, and the app with the cite, figure and rail scripts, each run in this order as the page ends -->
+<script>window.CP_ASSETS = {"search.js":"../assets/search.js?v=af8c83d017","glossary.js":"../assets/glossary.js?v=4c9ae04ee5"};</script>
 <script src="../assets/kit.js?v=e46d343bc1"></script>
-<script src="../assets/app.js?v=aa5528214e"></script>
+<script src="../assets/terms.js?v=37d5199684"></script>
+<script src="../assets/app.js?v=5872daef28"></script>
 <script>
 /* The printed cover's art (print-title.png, about 490 KB) is fetched only for print, never just because a page was read:
    when the reader points at or focuses "Print this page", before that button opens the dialog (it waits for the image,
