@@ -2061,6 +2061,23 @@
       $$('.sup-rung[data-lit], .sup-lab[data-lit]').forEach(function (el) { el.removeAttribute('data-lit'); });
       this.country = f.country || '';
       this.sync(); this.render();
+      if (q) this.reveal(q);
+    },
+    /* a filter that names one firm (a search result, a Glossary firm card) opens that firm on the list and brings it to the
+       middle of the screen, with focus on its name: the filtered list alone left it 2,000 px down and shut (28 Oct 2026) */
+    reveal: function (name) {
+      var n = String(name).trim().toLowerCase(), r = this.rows.filter(function (x) { return String(x.name).toLowerCase() === n; })[0];
+      if (!r) return;
+      if (this.tab === 'table') return; // the table, filtered to the firm, has it at its head
+      var w = $((this.tab === 'country' ? '#sup-ladder-cc' : '#sup-ladder') + ' .sup-nw[data-r="' + r._ix + '"]');
+      if (!w || w.hidden) return;
+      var btn = $('.sup-name', w);
+      if (btn.getAttribute('aria-expanded') !== 'true') this.openName(btn);
+      try { btn.focus({ preventScroll: true }); } catch (e) { }
+      // the firm's segment (or country) at the top, under the masthead: its heading, the names and the opened firm below them
+      var rung = w.closest('.sup-rung');
+      var go = function () { var top = (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--masthead')) || 64) + 12; document.documentElement.style.scrollBehavior = 'auto'; window.scrollTo(0, Math.max(0, rung.getBoundingClientRect().top + window.pageYOffset - top)); document.documentElement.style.scrollBehavior = ''; };
+      go(); setTimeout(go, 200); // again once the route has settled the page (Keys.land, the masthead)
     },
     sortBy: function (k) {
       if (this.sortKey === k) this.sortDir = -this.sortDir; else { this.sortKey = k; this.sortDir = 1; }

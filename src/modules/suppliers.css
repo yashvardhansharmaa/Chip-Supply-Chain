@@ -190,6 +190,7 @@
 .sup-crit-sq { display: inline-flex; align-items: flex-end; gap: 3px; }
 .sup-crit-sq i { display: block; width: 4px; height: 14px; background: var(--rib-crit); }
 .sup-names { grid-column: 3; grid-row: 1; margin: 0; line-height: 1.75; }
+.sup-panel { grid-column: 3; } /* here, ahead of the narrow layouts below: set after them, it put an opened firm in a third column over the segment's name on tablets and phones (28 Oct 2026) */
 .sup-nw { display: inline; white-space: nowrap; } /* a name and its comma stay together; the list breaks at the spaces between names */
 .sup-nw[hidden] { display: none; }
 .sup-nw::after { content: ","; color: var(--muted); }
@@ -222,7 +223,7 @@
 }
 
 /* ---------- the firm panel under a rung ---------- */
-.sup-panel { grid-column: 3; display: grid; grid-template-rows: 0fr; transition: grid-template-rows 220ms var(--ease); }
+.sup-panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 220ms var(--ease); }
 .sup-panel[data-open="1"] { grid-template-rows: 1fr; }
 .sup-panel-in { min-height: 0; overflow: hidden; visibility: hidden; transition: visibility 0s linear 220ms; }
 .sup-panel[data-open="1"] .sup-panel-in { visibility: visible; transition-delay: 0s; }
