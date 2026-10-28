@@ -56,7 +56,7 @@ An array of at least 130 firms across the whole chain. Aim for coverage, not jus
 {
   "name": "Lasertec",
   "nativeName": "レーザーテック",
-  "category": "Metrology & Inspection",
+  "category": "Metrology and inspection",
   "subcategory": "EUV mask blank and pattern inspection",
   "country": "JP",
   "city": "Yokohama",
@@ -76,26 +76,26 @@ An array of at least 130 firms across the whole chain. Aim for coverage, not jus
 
 `category` must be one of exactly these strings:
 
-- `Design & EDA`
-- `IP & Architecture`
-- `Silicon & Wafers`
-- `Chemicals & Gases`
-- `Photoresist & Materials`
+- `Design and EDA`
+- `IP and architecture`
+- `Silicon and wafers`
+- `Chemicals and gases`
+- `Photoresist and materials`
 - `Lithography`
 - `Photomasks`
-- `Deposition & Etch`
-- `Metrology & Inspection`
+- `Deposition and etch`
+- `Metrology and inspection`
 - `Foundry`
 - `Memory`
-- `Advanced Packaging & OSAT`
-- `Substrates & PCBs`
+- `Advanced packaging and OSAT`
+- `Substrates and PCBs`
 - `Test`
-- `Equipment Subsystems & Components`
-- `Interconnect & Networking`
-- `Optics & Photonics`
-- `Systems & Servers`
-- `Power & Cooling`
-- `AI Accelerator Vendor`
+- `Equipment subsystems and components`
+- `Interconnect and networking`
+- `Optics and photonics`
+- `Systems and servers`
+- `Power and cooling`
+- `AI accelerator vendors`
 
 `chokepoint` must be one of `Critical` (few or no substitutes worldwide), `Important` (2 to 4 credible suppliers), `Contested` (a challenger or domestic-substitution player), `Diversified` (many suppliers).
 

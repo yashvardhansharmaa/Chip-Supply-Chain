@@ -489,7 +489,6 @@ ${body}
       const no = none.filter((p) => ((p.c.compute || {}).support || {}).fp16 === 'no'), np = none.filter((p) => !no.includes(p));
       const tid = uid('fp16-timeline', 'sections');
       return `<section class="ref-sec" aria-labelledby="${tid}"><h2 class="ref-h2" id="${tid}">Speed at FP16, by the month each chip was announced<small>${have.length} of ${chips.length} chips have a published figure</small></h2>`
-        + `<p class="ref-sub">The ${esc(short(hi.c))} is the highest, at ${esc(nf(hi.v))} ${unit}.</p>`
         + `<figure class="ctl" role="group" aria-label="Speed at FP16 of ${have.length} chips, by the month each was announced"><p class="ctl-unit" aria-hidden="true">${unit}</p><div class="ctl-plot">`
         + `<svg class="ctl-grid" viewBox="0 0 1000 1000" preserveAspectRatio="none" aria-hidden="true" focusable="false">${grid}</svg>${marks}</div></figure>`
         + (np.length ? `<p class="ctl-none"><span>Not published at FP16</span> ${links(np)}</p>` : '') + (no.length ? `<p class="ctl-none"><span>Not supported at FP16</span> ${links(no)}</p>` : '')

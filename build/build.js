@@ -1453,12 +1453,12 @@ const lkItems = [];
 // (Suppliers.SHORT in src/app.js), any other stage name with its later words in lower case unless they are acronyms
 // ("Optics & photonics", "Substrates & PCBs"); data-text keeps the full category, so search still finds it
 const LK_SHORT = {
-  'Equipment Subsystems & Components': 'Equipment subsystems', 'Advanced Packaging & OSAT': 'Advanced packaging',
-  'Interconnect & Networking': 'Interconnect', 'AI Accelerator Vendor': 'Accelerator vendors',
-  'Photoresist & Materials': 'Photoresist', 'Metrology & Inspection': 'Metrology',
-  'Deposition & Etch': 'Deposition & etch', 'Chemicals & Gases': 'Chemicals & gases',
-  'Systems & Servers': 'Systems & servers', 'Power & Cooling': 'Power & cooling',
-  'Silicon & Wafers': 'Silicon wafers', 'IP & Architecture': 'IP & architecture'
+  'Equipment subsystems and components': 'Equipment subsystems', 'Advanced packaging and OSAT': 'Advanced packaging',
+  'Interconnect and networking': 'Interconnect', 'AI accelerator vendors': 'Accelerator vendors',
+  'Photoresist and materials': 'Photoresist', 'Metrology and inspection': 'Metrology',
+  'Deposition and etch': 'Deposition and etch', 'Chemicals and gases': 'Chemicals and gases',
+  'Systems and servers': 'Systems and servers', 'Power and cooling': 'Power and cooling',
+  'Silicon and wafers': 'Silicon wafers', 'IP and architecture': 'IP and architecture'
 };
 const lkStage = (c) => LK_SHORT[c] || String(c || 'Firm').split(' ').map((w, i) => (i && !/[A-Z].*[A-Z]/.test(w) ? w.toLowerCase() : w)).join(' ');
 // what the prose calls each entry: the name minus its corporate tail, a known nickname, a chip's model code and codename, a term's acronyms

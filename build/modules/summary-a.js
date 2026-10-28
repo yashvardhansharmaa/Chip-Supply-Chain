@@ -107,7 +107,7 @@ const SHORT = {
   'test-and-assembly': 'Test', 'systems-and-networking': 'Systems', 'data-centers-and-power': 'Power'
 };
 
-const EQUIPMENT = ['Lithography', 'Deposition & Etch', 'Metrology & Inspection', 'Test', 'Advanced Packaging & OSAT', 'Equipment Subsystems & Components'];
+const EQUIPMENT = ['Lithography', 'Deposition and etch', 'Metrology and inspection', 'Test', 'Advanced packaging and OSAT', 'Equipment subsystems and components'];
 
 /* Where a stop's town label sits when the country is chosen. The label is 11 px Hanken Grotesk on a 16 px line with 1 px of
  * padding above and below and 4 px at the sides (18 px tall, 6.6 px a character plus 8: Fragment Mono's width, which the
@@ -514,7 +514,7 @@ ${svg}
     const a = XY(x), lead = ((x.c.leaders || [])[0] || {}).name || '', side = sides[x.c.id] || 'r';
     return `<a class="sa-stop${x.st[4] === DEFAULT_CC ? ' is-on' : ''}" data-cc="${x.st[4]}" href="${href(x.c)}" style="left:${(a[0] / VW * 100).toFixed(2)}%;top:${(a[1] / VH * 100).toFixed(2)}%" data-place="${esc(x.st[1])}"${side === 'r' ? '' : ` data-lab="${side}"`} data-title="${esc(x.c.title)}" data-town="${esc(x.st[1])}, ${esc(COUNTRY[x.st[4]] || x.st[4])}" data-lead="${esc(lead)}" data-band="${esc(x.c.band || '')}" aria-label="Stop ${x.c.number}, ${esc(x.c.title)}: ${esc(x.st[1])}${lead ? ', led by ' + esc(lead) : ''}, ${x.c.band ? x.c.band.toLowerCase() + ' concentration' : ''}."><span>${x.c.number}</span></a>`;
   }).join('');
-  const strip = routeStops.map((x) => `<li><a class="sa-stopcard${x.st[4] === DEFAULT_CC ? ' is-on' : ''}" data-cc="${x.st[4]}" data-band="${esc(x.c.band || '')}" href="${href(x.c)}"><span class="sa-stopcard-n">${String(x.c.number).padStart(2, '0')}<i class="sa-bmk" aria-hidden="true"></i></span><span class="sa-stopcard-t">${esc(x.c.title.replace(/ and /g, ' & '))}</span><span class="sa-stopcard-w">${esc(x.st[1])}&nbsp;·&nbsp;${x.st[4]}</span></a></li>`).join('');
+  const strip = routeStops.map((x) => `<li><a class="sa-stopcard${x.st[4] === DEFAULT_CC ? ' is-on' : ''}" data-cc="${x.st[4]}" data-band="${esc(x.c.band || '')}" href="${href(x.c)}"><span class="sa-stopcard-n">${String(x.c.number).padStart(2, '0')}<i class="sa-bmk" aria-hidden="true"></i></span><span class="sa-stopcard-t">${esc(x.c.title)}</span><span class="sa-stopcard-w">${esc(x.st[1])}&nbsp;·&nbsp;${x.st[4]}</span></a></li>`).join('');
   const roleOrder = Object.keys(ROLE).filter((cc) => info[cc]).sort((a, b) => ((ledBy[b] || []).length - (ledBy[a] || []).length) || (info[b].named.length - info[a].named.length));
   // the country buttons keep the meta and the role line in their markup (the reference page reads them); each country's
   // panel beside the map prints them
