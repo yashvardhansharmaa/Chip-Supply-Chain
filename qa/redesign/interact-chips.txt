@@ -1,0 +1,99 @@
+ok   1440: arrival lists all 38 chips on the shelves, 36 drawn, nothing open
+ok   1440: the specimen stage does not show
+ok   1440: the field chart carries 1 label(s)
+ok   1440: the field chart sits at the head, 167 px down
+ok   1440: the cut lines are gone from the head and the shelves
+ok   1440: the kept lines are there (the wafer's scale, the two chips with no drawing, FP16 not published, the key)
+ok   1440 arrival, light: no sideways scroll (false), 0 texts under 11 px , 0 under 4.5:1 
+ok   1440: the wafer stays inside its own row {"inside":true,"clearPrev":true,"overMk":false}
+ok   1440: the arrow keys reach 30 of 30 dots
+ok   1440: a tap on each of 30 dots pins its tip (30)
+ok   1440: the memory leader in 2 clicks (open the select, choose Memory): "The Instinct MI455X has the highest published memory, 432 gigabytes. It was announced in January 2026." (#/landscape?measure=mem)
+ok   1440: "Open the …" in a tip opens one chip and adds nothing (nvidia-b200)
+ok   1440: Close puts the card away
+ok   1440: opening huawei-ascend-910c lands in view (card at 230 px, chip at 96 px, screen 900)
+ok   1440: opening amd-mi300x lands in view (card at 276 px, chip at 96 px, screen 900)
+ok   1440: opening moore-threads-mtt-s5000 lands in view (card at 227 px, chip at 96 px, screen 900)
+ok   1440: opening cerebras-wse3-turbo lands in view (card at 368 px, chip at 96 px, screen 900)
+ok   1440: the WSE-3 Turbo's card says its drawing is at a smaller scale
+ok   1440: console clean 
+ok   1440: a name on a shelf opens that one chip (nvidia-h100)
+ok   1440: Compare opens the picker, its field focused
+ok   1440: the H100 with the H20 in 3 clicks (nvidia-h100,nvidia-h20)
+ok   1440 two chips, light: no sideways scroll (false), 0 texts under 11 px , 0 under 4.5:1 
+ok   1440: four chips in 7 clicks (nvidia-b300,amd-mi355x,nvidia-vr200,amd-mi455x)
+ok   1440: at four there is no Add control, and the card says "A comparison holds up to four chips."
+ok   1440 four chips, light: no sideways scroll (false), 0 texts under 11 px , 0 under 4.5:1 
+ok   1440: a fifth chip is refused in words ("The comparison holds four chips, so the B200 was not added.")
+ok   1440: presses on every dot of both charts choose nothing (nvidia-b300,amd-mi355x,nvidia-vr200,amd-mi455x)
+ok   1440: Remove takes the Rubin out (nvidia-b300,amd-mi355x,amd-mi455x)
+ok   1440: the card's select changes the figure for both charts and chooses nothing (#/landscape?pick=nvidia-b300,amd-mi355x,amd-mi455x&measure=mem)
+ok   1440: Back brings the Rubin back (nvidia-b300,amd-mi355x,nvidia-vr200,amd-mi455x)
+ok   1440: Close returns to the field
+ok   1440: Back after Close reopens the comparison (nvidia-b300,amd-mi355x,nvidia-vr200,amd-mi455x)
+ok   1440: console clean 
+ok   1440: ?pick= opens the B200 and the Ascend 910C, in dark, the card in view (253 px)
+ok   1440 two chips from a shared link, dark: no sideways scroll (false), 0 texts under 11 px , 0 under 4.5:1 
+ok   1440: Back after Remove restores the shared pair (nvidia-b200,huawei-ascend-910c)
+ok   1440 arrival, dark: no sideways scroll (false), 0 texts under 11 px , 0 under 4.5:1 
+ok   1440 one chip, dark: no sideways scroll (false), 0 texts under 11 px , 0 under 4.5:1 
+ok   1440 four chips, dark: no sideways scroll (false), 0 texts under 11 px , 0 under 4.5:1 
+ok   1440: all 38 chips' cards open from their shelves, each named, with no undefined or NaN 
+ok   1440 after every card, light: no sideways scroll (false), 0 texts under 11 px , 0 under 4.5:1 
+ok   1440: console clean 
+ok   390: arrival lists all 38 chips on the shelves, 36 drawn, nothing open
+ok   390: the specimen stage does not show
+ok   390: the field chart carries 1 label(s)
+ok   390: the field chart sits at the head, 488 px down
+ok   390: the cut lines are gone from the head and the shelves
+ok   390: the kept lines are there (the wafer's scale, the two chips with no drawing, FP16 not published, the key)
+ok   390 arrival, light: no sideways scroll (false), 0 texts under 11 px , 0 under 4.5:1 
+ok   390: the wafer stays inside its own row {"inside":true,"clearPrev":true,"overMk":false}
+ok   390: the arrow keys reach 30 of 30 dots
+ok   390: a tap on each of 30 dots pins its tip (30)
+ok   390: the memory leader in 2 taps (open the select, choose Memory): "The Instinct MI455X has the highest published memory, 432 gigabytes. It was announced in January 2026." (#/landscape?measure=mem)
+ok   390: "Open the …" in a tip opens one chip and adds nothing (nvidia-b200)
+ok   390: Close puts the card away
+ok   390: opening huawei-ascend-910c lands in view (card at 339 px, chip at 141 px, screen 844)
+ok   390: opening amd-mi300x lands in view (card at 388 px, chip at 140 px, screen 844)
+ok   390: opening moore-threads-mtt-s5000 lands in view (card at 243 px, chip at 141 px, screen 844)
+ok   390: opening cerebras-wse3-turbo lands in view (card at 348 px, chip at 141 px, screen 844)
+ok   390: the WSE-3 Turbo's card says its drawing is at a smaller scale
+ok   390: console clean 
+ok   390: a name on a shelf opens that one chip (nvidia-h100)
+ok   390: Compare opens the picker as a bottom sheet, its field focused
+ok   390: the picker is a sheet at the foot of the screen
+ok   390: the H100 with the H20 in 3 taps (nvidia-h100,nvidia-h20)
+ok   390 two chips, light: no sideways scroll (false), 0 texts under 11 px , 0 under 4.5:1 
+ok   390: four chips in 7 taps (nvidia-b300,amd-mi355x,nvidia-vr200,amd-mi455x)
+ok   390: at four there is no Add control, and the card says "A comparison holds up to four chips."
+ok   390 four chips, light: no sideways scroll (false), 0 texts under 11 px , 0 under 4.5:1 
+ok   390: a fifth chip is refused in words ("The comparison holds four chips, so the B200 was not added.")
+ok   390: presses on every dot of both charts choose nothing (nvidia-b300,amd-mi355x,nvidia-vr200,amd-mi455x)
+ok   390: Remove takes the Rubin out (nvidia-b300,amd-mi355x,amd-mi455x)
+ok   390: the card's select changes the figure for both charts and chooses nothing (#/landscape?pick=nvidia-b300,amd-mi355x,amd-mi455x&measure=mem)
+ok   390: Back brings the Rubin back (nvidia-b300,amd-mi355x,nvidia-vr200,amd-mi455x)
+ok   390: Close returns to the field
+ok   390: Back after Close reopens the comparison (nvidia-b300,amd-mi355x,nvidia-vr200,amd-mi455x)
+ok   390: console clean 
+ok   390: ?pick= opens the B200 and the Ascend 910C, in dark, the card in view (362 px)
+ok   390 two chips from a shared link, dark: no sideways scroll (false), 0 texts under 11 px , 0 under 4.5:1 
+ok   390: Back after Remove restores the shared pair (nvidia-b200,huawei-ascend-910c)
+ok   390 arrival, dark: no sideways scroll (false), 0 texts under 11 px , 0 under 4.5:1 
+ok   390 one chip, dark: no sideways scroll (false), 0 texts under 11 px , 0 under 4.5:1 
+ok   390 four chips, dark: no sideways scroll (false), 0 texts under 11 px , 0 under 4.5:1 
+ok   390: all 38 chips' cards open from their shelves, each named, with no undefined or NaN 
+ok   390 after every card, light: no sideways scroll (false), 0 texts under 11 px , 0 under 4.5:1 
+ok   390: console clean 
+ok   /chips/: the full table (38 rows), the FP16 chart (30 dots, one the largest)
+ok   /chips/: the intro carries the page's standfirst and no line on how to click or scroll
+
+Clicks and taps for the tasks:
+  1440  which chip leads on memory: 2 clicks (the select at the head, then Memory)
+  1440  H100 with H20: 3 clicks (H100 on the Nvidia shelf, Compare with another chip, H20 under "Often set beside the H100")
+  1440  B300, Instinct MI355X, Rubin and Instinct MI455X: 7 clicks (B300, Compare with another chip, Instinct MI355X suggested, Add a chip, Rubin, Add a chip, Instinct MI455X)
+  390  which chip leads on memory: 2 taps (the select at the head, then Memory)
+  390  H100 with H20: 3 taps (H100 on the Nvidia shelf, Compare with another chip, H20 under "Often set beside the H100")
+  390  B300, Instinct MI355X, Rubin and Instinct MI455X: 7 taps (B300, Compare with another chip, Instinct MI355X suggested, Add a chip, Rubin, Add a chip, Instinct MI455X; the last one swipe down the sheet)
+
+all 89 checks pass
