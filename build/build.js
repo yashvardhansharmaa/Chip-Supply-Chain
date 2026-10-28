@@ -208,8 +208,9 @@ function figure(f, ctx) {
   const note = f.note ? `<span class="fs-note fig-source"><span class="fs-k">Note</span> ${esc(f.note)}</span>` : '';
   const box = `cite-${fid}`;
   const csv = data.length && !isAnim ? `<a class="fs-csv" href="${figCSV(f, data)}" download="chip-supply-chain-figure-${num.replace('.', '-')}-${esc(f.id)}.csv">CSV</a>` : '';
-  const acts = `<span class="fs-acts" data-kind="${esc(f.type)}"><button type="button" class="ch-cite-btn" aria-expanded="false" aria-controls="${box}">Cite</button>${csv}</span>`;
-  const citeText = `<div class="ch-cite-box fig-cite-box" id="${box}" role="region" aria-label="Citation for figure ${num}" hidden><p class="ch-cite-text">Sharma, Yashvardhan. “Figure ${num}: ${esc(figTitle(f))}.” <i>${CITE_WORK}</i>. Updated ${CITE_DAY(ctx.id)}. <a href="${esc(SITE.url + ctx.id + '/#' + fid)}">${esc(SITE.url + ctx.id + '/#' + fid)}</a></p></div>`;
+  // an explainer animation has no Cite (owner, 27 Oct): it explains a process and holds no figures of its own to cite
+  const acts = isAnim ? '' : `<span class="fs-acts" data-kind="${esc(f.type)}"><button type="button" class="ch-cite-btn" aria-expanded="false" aria-controls="${box}">Cite</button>${csv}</span>`;
+  const citeText = isAnim ? '' : `<div class="ch-cite-box fig-cite-box" id="${box}" role="region" aria-label="Citation for figure ${num}" hidden><p class="ch-cite-text">Sharma, Yashvardhan. “Figure ${num}: ${esc(figTitle(f))}.” <i>${CITE_WORK}</i>. Updated ${CITE_DAY(ctx.id)}. <a href="${esc(SITE.url + ctx.id + '/#' + fid)}">${esc(SITE.url + ctx.id + '/#' + fid)}</a></p></div>`;
   const strip = `<div class="fig-strip">${src}${note}<a class="fs-addr" href="#${fid}">${esc(figAddr(ctx, f))}</a>${acts}${citeText}</div>`;
   return `<figure class="figure${isAnim ? ' figure--anim' : ''}" id="${fid}" data-num="${num}">${head}<div class="fig-body">${body}</div>${strip}</figure>`;
 }

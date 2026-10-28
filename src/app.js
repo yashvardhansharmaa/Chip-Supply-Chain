@@ -3647,9 +3647,20 @@
         fig._v = v;
         var src = function () { return v.getAttribute('data-src') + '-' + theme(); };
         // the poster is a still the size of the frame: it is fetched only once its figure nears the screen (see near, below)
-        var poster = function () { fig._poster = true; v.poster = src() + (reduced && !v.getAttribute('src') ? '-end.jpg' : '-start.jpg'); };
+        var poster = function () { fig._poster = true; v.poster = src() + (reduced && !fig._src ? '-end.jpg' : '-start.jpg'); };
         fig._setPoster = poster;
-        var load = function () { if (!fig._poster) poster(); if (!v.getAttribute('src')) { v.preload = 'auto'; v.src = src() + '.mp4'; v.load(); } };
+        // the whole video (under 1 MB) is fetched once and played from memory, so a click on a step seeks there at once, whether
+        // or not the server answers byte ranges; a failed fetch falls back to the file itself
+        var setSrc = function (url, then) {
+          var my = fig._req = (fig._req || 0) + 1; fig._src = url; v.preload = 'auto';
+          var done = function (u) { if (my !== fig._req) return; v.src = u; v.load(); if (then) then(); };
+          if (!window.fetch || !window.URL || !URL.createObjectURL) { done(url); return; }
+          fetch(url).then(function (r) { if (!r.ok) throw new Error(r.status); return r.blob(); })
+            .then(function (b) { if (my !== fig._req) return; if (fig._blob) URL.revokeObjectURL(fig._blob); fig._blob = URL.createObjectURL(b); done(fig._blob); })
+            .catch(function () { done(url); });
+        };
+        fig._setSrc = setSrc;
+        var load = function () { if (!fig._poster) poster(); if (!fig._src) setSrc(src() + '.mp4'); };
         var show = function (i) {
           if (i === cur) return; cur = i;
           btns.forEach(function (b, j) { if (j === i) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current'); });
@@ -3669,10 +3680,10 @@
         stage.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
         btns.forEach(function (b, j) {
           b.addEventListener('click', function () {
-            load(); show(j);
-            var go = function () { try { v.currentTime = t0s[j] + 0.05; } catch (e) { } };
+            // a step is a request to watch from there: it plays at once, even after a pause (the reader asked for it)
+            load(); show(j); fig._user = false; fig.classList.remove('is-paused');
+            var go = function () { try { v.currentTime = t0s[j] + 0.05; } catch (e) { } v.play().catch(function () { }); };
             if (v.readyState >= 1) go(); else v.addEventListener('loadedmetadata', go, { once: true });
-            if (!still(fig) && fig._seen) v.play().catch(function () { });
           });
         });
         if (reduced) { stage.setAttribute('aria-label', 'Play the animation'); fig.classList.add('is-paused'); }
@@ -3682,11 +3693,12 @@
       new MutationObserver(function () {
         figs.forEach(function (fig) {
           var v = fig._v, base = v.getAttribute('data-src') + '-' + theme();
-          if (!v.getAttribute('src')) { if (fig._poster) v.poster = base + (reduced ? '-end.jpg' : '-start.jpg'); return; }
+          if (!fig._src) { if (fig._poster) v.poster = base + (reduced ? '-end.jpg' : '-start.jpg'); return; }
           var t = v.currentTime, playing = !v.paused;
-          v.poster = base + '-start.jpg'; v.preload = 'auto'; v.src = base + '.mp4';
-          v.addEventListener('loadedmetadata', function () { try { v.currentTime = t; } catch (e) { } }, { once: true });
-          if (playing) v.play().catch(function () { }); else v.load();
+          v.poster = base + '-start.jpg';
+          fig._setSrc(base + '.mp4', function () {
+            v.addEventListener('loadedmetadata', function () { try { v.currentTime = t; } catch (e) { } if (playing) v.play().catch(function () { }); }, { once: true });
+          });
         });
       }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
       // nothing to fetch for print: the animations are left out of paper and the PDF (styles.css), so neither their posters nor
@@ -3701,7 +3713,7 @@
         entries.forEach(function (en) {
           var fig = en.target, v = fig._v;
           fig._seen = en.isIntersecting;
-          if (en.isIntersecting && !still(fig)) { if (!fig._poster) fig._setPoster(); if (!v.getAttribute('src')) v.src = v.getAttribute('data-src') + '-' + theme() + '.mp4'; v.play().catch(function () { }); }
+          if (en.isIntersecting && !still(fig)) { if (!fig._poster) fig._setPoster(); if (!fig._src) fig._setSrc(v.getAttribute('data-src') + '-' + theme() + '.mp4', function () { if (fig._seen && !still(fig)) v.play().catch(function () { }); }); else v.play().catch(function () { }); }
           else if (!v.paused) v.pause();
         });
       }, { threshold: 0.45 });
