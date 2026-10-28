@@ -1,0 +1,14 @@
+static-lithography 390: ok (1368 boxes)
+static-lithography 1024: ok (1138 boxes)
+static-lithography 1440: ok (1170 boxes)
+static-lithography-dark 390: ok (1368 boxes)
+static-lithography-dark 1024: ok (1138 boxes)
+static-lithography-dark 1440: ok (1170 boxes)
+static-suppliers 390: ok (5784 boxes)
+static-suppliers 1024: ok (5164 boxes)
+static-suppliers 1440: ok (5148 boxes)
+static-glossary-dark 390: ok (7168 boxes)
+static-glossary-dark 1024: ok (6640 boxes)
+static-glossary-dark 1440: ok (7223 boxes)
+
+12 loads, 0 with findings
