@@ -817,7 +817,8 @@
     // the full drawing" for a drawing with no numbered parts)
     specTag: function (item) {
       var num = item.getAttribute('data-number'), sp = item.getAttribute('data-specimen') || '';
-      var ch = num ? esc(item.getAttribute('data-title') || '') : 'the whole chip', name = (DATA.specimenNames || {})[sp];
+      // the names come with the data on the home page and with terms.js on every page (a chapter's page loads no data)
+      var ch = num ? esc(item.getAttribute('data-title') || '') : 'the whole chip', name = (DATA.specimenNames || (window.CP_TERMS || {}).specimenNames || {})[sp];
       var parts = Router.current === 'stack' && $('.ch-spec .ch-parts', item);
       return 'Specimen <b>' + (num || '00') + '</b> · <span class="tag-ch">' + ch + '</span><span class="tag-sp">' + (name ? esc(name) : ch) + '</span>'
         + '<span class="tag-tap">' + (parts ? 'Tap for the drawing and its parts' : 'Tap for the full drawing') + '</span>';

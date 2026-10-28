@@ -1539,14 +1539,15 @@ const searchData = (() => {
   });
   return idx;
 })();
-// the definitions the pop-ups show, by the term's key (its data-term), and the names the empty search suggests: two short
+// the definitions the pop-ups show, by the term's key (its data-term), the specimens' names, and the names the empty search suggests: two short
 // terms, two firms that matter (Critical or Important), a chip by its own name and a country (src/app.js Tools.tryNames)
 const termsData = (() => {
   const defs = {}; glEntries.forEach((g) => { defs[g.key] = [g.term.trim(), g.plain]; });
   const big = new Set(suppliers.filter((r) => r.chokepoint === 'Critical' || r.chokepoint === 'Important').map((r) => r.name));
   const chipName = {}; landscape.forEach((c) => { chipName[c.id] = c.name; });
   const of = (k) => lkItems.filter((i) => i.kind === k);
-  return { defs, try: { term: of('term').map((i) => i.name.trim()).filter((n) => n.length <= 22), firm: of('firm').filter((i) => big.has(i.key)).map((i) => i.name.trim()),
+  // ...and each specimen's own name, which the phone's strip shows ("EUV scanner"), since a chapter's page loads no data.js
+  return { defs, specimenNames: SPECIMEN_NAME, try: { term: of('term').map((i) => i.name.trim()).filter((n) => n.length <= 22), firm: of('firm').filter((i) => big.has(i.key)).map((i) => i.name.trim()),
     chip: of('chip').map((i) => chipName[i.key] || i.name.trim()), country: of('country').map((i) => i.name.trim()) } };
 })();
 // every chapter's paragraphs and list items, as the Glossary's "Where it appears" reads them (src/modules/lookup.js corpus):
