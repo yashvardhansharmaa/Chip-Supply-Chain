@@ -73,6 +73,7 @@
  "type": "bars",
  "title": "Share held by the leading vendor in each of four design-software segments at advanced nodes, 7 nm and below. Lower end of each reported range",
  "finding": "In 2026 each segment's leading tool held at least 55 percent",
+ "mark": "Emulation (Cadence Palladium)",
  "unit": "%",
  "data": [["Static timing (Synopsys PrimeTime)", 90], ["Physical verification (Siemens Calibre)", 85], ["Synthesis (Synopsys Design Compiler)", 84], ["Emulation (Cadence Palladium)", 55]],
  "source": {"label": "SemiAnalysis, EDA Market Primer, May 2026, table of tool-level shares at advanced nodes", "url": "https://newsletter.semianalysis.com/p/eda-market-primer"}
