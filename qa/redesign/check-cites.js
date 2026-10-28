@@ -19,7 +19,7 @@ const check = (where, body, src) => {
 // each chapter, as the page holds it: its article, its marks before the source list, and the list
 const chaptersOf = (html, where) => html.split(/<article class="chapter[^"]*"[^>]*id="/).slice(1).forEach((p) => {
   const id = p.slice(0, p.indexOf('"')), si = p.indexOf('class="chapter-sources"'); if (si < 0) return;
-  const src = [...p.slice(si, p.indexOf('</details>', si)).matchAll(/<li>([\s\S]*?)<\/li>/g)].map((m) => { const a = /href="([^"]+)"/.exec(m[1]); return a ? dec(a[1]) : ''; });
+  const src = [...p.slice(si, p.indexOf('</details>', si)).matchAll(/<li\b[^>]*>([\s\S]*?)<\/li>/g)].map((m) => { const a = /href="([^"]+)"/.exec(m[1]); return a ? dec(a[1]) : ''; });
   check(where(id), p.slice(0, si), src);
 });
 // each chapter's page, which holds that chapter alone

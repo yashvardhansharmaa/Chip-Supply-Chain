@@ -2,7 +2,7 @@
 
 Branch `redesign-fixd`, worktree `chokepoints-rd-fixd`, cut from `redesign` at fceef96. Preview http://127.0.0.1:8784/. Not merged, not pushed.
 
-Shots are in `qa/redesign/shots/fix-d/` (173 files, in the worktree only: `qa/redesign/shots` is ignored by git), named `<finding>-<page>-<width>[-dark]-before|after.png`. The before shots are from 8766, which had already merged fix-b and fix-c when they were taken, so a before shot can differ from an after shot in places this section did not touch (the summary's money units, the timeline's dates, AI Chips' footnote marks). Check outputs are in `qa/redesign/fixd/`.
+Shots are in `qa/redesign/shots/fix-d/` (172 files, in the worktree only: `qa/redesign/shots` is ignored by git), named `<finding>-<page>-<width>[-dark]-before|after.png`. The before shots are from 8766, which had already merged fix-b and fix-c when they were taken, so a before shot can differ from an after shot in places this section did not touch (the summary's money units, the timeline's dates, AI Chips' footnote marks). Check outputs are in `qa/redesign/fixd/`.
 
 No source was added and nothing was fetched from the web. The only network use was the preview's Google Fonts, as every shot and print uses them.
 
@@ -121,12 +121,36 @@ A single style is not clearly better. The chapter caption reads as part of the c
 
 ## Checks (against 8784, outputs in qa/redesign/fixd/)
 
-See the results table at the end of this file.
+All pass.
+
+| Check | Result |
+|---|---|
+| `node build/build.js` | exit 0, no warnings |
+| check-speak | no matches |
+| check-integrity | no problems (18 pages, 1,807 ids, 16 chapters) |
+| check-sources | 2,817 citations, all tier A or B |
+| check-size | none over 5.0 MB |
+| check-seo | 16 chapter pages, 23 sitemap entries, no problems |
+| check-links --local 8784 | 28 pages, 1,167 addresses, no broken links |
+| smoke --port 8794 | 47 page loads, no failures |
+| check-perchapter | all 336 checks pass |
+| interact-chapter | all passed |
+| stage-chapters --base 8784 | 10 of 10 pass |
+| check-cites | 3,300 marks, 0 problems |
+| check-figs 8784 | 112 of 112 pass |
+| interact-glossary | all 90 checks pass |
+| interact-suppliers | 65 checks, 0 failed |
+| interact-masthead | all passed |
 
 Checks updated, where they asserted what a fix rightly changed:
 - `interact-chapter.js`: the kicker reads "Stage 4 of 14" (D16).
 - `interact-glossary.js`: the head tally is gone and each kind is counted on its button, and the count line is read out but not shown without a search (D16).
+- `stage-chapters.js`: on a phone the reader scrolls up a little before pressing Back to top, which now shows only while heading up (D4).
+- `check-cites.js`: a source's `<li>` may carry attributes, since each source now has an id (D19).
+- `check-figs.js`: the CSV's data rows end at the first blank row, since the figure's description follows (D11).
 - `check-merge89.js`: the door label and button (D16). This check is not in the required list.
+
+The first run failed stage-chapters 9, check-cites (3,300 mismatches) and check-figs (14 CSV rows), all for those three reasons. Each passed on a re-run once its check was updated. No site code changed between the runs.
 
 ## Shared lines touched, for the merge
 - `build/build.js`: figure cite, CSV and PNG (FIG_JS), the kicker, door and card head, the deck counter, the Sources key, table cells (`keepNames`), the per-view footer days, terms.js `specimenChapter`, the search kind "Home", the Suppliers counts, the Glossary tally (removed).

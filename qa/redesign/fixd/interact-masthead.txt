@@ -1,0 +1,17 @@
+ok   chapter page: the app's bar, at the app's margin and height, Home first: {"app":{"h":64,"x":64,"first":"Home","cur":"Supply Chain","rule":"rgb(122, 31, 43)","s":34,"t":34,"name":"Fraunces"},"page":{"h":64,"x":64,"first":"Home","cur":"Supply Chain","rule":"rgb(122, 31, 43)","s":34,"t":34,"name":"Fraunces"}}
+ok   chapter page: the current section on the wine rule: Supply Chain rgb(122, 31, 43)
+ok   chapter page: search and theme are 34 px round buttons: 34 / 34
+ok   chapter page: the theme button turns the page dark and back, and keeps the choice: {"dark":["dark","rgb(18, 18, 17)","dark","Switch to light mode"],"light":["light","rgb(252, 252, 250)","light"]}
+ok   reference page: the app's bar, at the app's margin and height, Home first: {"app":{"h":64,"x":64,"first":"Home","cur":"Supply Chain","rule":"rgb(122, 31, 43)","s":34,"t":34,"name":"Fraunces"},"page":{"h":64,"x":64,"first":"Home","cur":"Suppliers","rule":"rgb(122, 31, 43)","s":34,"t":34,"name":"Fraunces"}}
+ok   reference page: the current section on the wine rule: Suppliers rgb(122, 31, 43)
+ok   reference page: search and theme are 34 px round buttons: 34 / 34
+ok   reference page: the theme button turns the page dark and back, and keeps the choice: {"dark":["dark","rgb(18, 18, 17)","dark","Switch to light mode"],"light":["light","rgb(252, 252, 250)","light"]}
+ok   summary: the app's bar, at the app's margin and height, Home first: {"app":{"h":64,"x":64,"first":"Home","cur":"Supply Chain","rule":"rgb(122, 31, 43)","s":34,"t":34,"name":"Fraunces"},"page":{"h":64,"x":64,"first":"Home","cur":"","rule":"","s":34,"t":34,"name":"Fraunces"}}
+ok   summary: the current section on the wine rule:  
+ok   summary: search and theme are 34 px round buttons: 34 / 34
+ok   summary: the theme button turns the page dark and back, and keeps the choice: {"dark":["dark","rgb(18, 18, 17)","dark","Switch to light mode"],"light":["light","rgb(252, 252, 250)","light"]}
+ok   390: Home gives way to the wordmark, the two buttons pin to the first row, no sideways scroll: {"home":"none","s":[302,7,32],"t":[342,7,32],"sw":390}
+ok   chapter page: search opens its dialog in place
+ok   search: the link opens the app with its search dialog open, and drops ?search=1 from the address: [true,"","INPUT"]
+
+all passed

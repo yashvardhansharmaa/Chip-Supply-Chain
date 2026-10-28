@@ -1,0 +1,11 @@
+check-links 0
+smoke 0
+check-perchapter 0
+interact-chapter 0
+stage-chapters 1
+check-cites 1
+check-figs 1
+interact-glossary 0
+interact-suppliers 0
+interact-masthead 0
+DONE

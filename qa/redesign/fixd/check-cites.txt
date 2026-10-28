@@ -1,0 +1,34 @@
+/advanced-packaging/                          100 marks,  33 sources, first 1,2,2,3,4,5
+/chemicals-gases-and-photoresist/             113 marks,  49 sources, first 1,2,3,3,4,5
+/component-costs/                              87 marks,  33 sources, first 1,1,1,2,1,1
+/data-centers-and-power/                       97 marks,  37 sources, first 1,1,2,3,3,4
+/deposition-and-etch/                         112 marks,  48 sources, first 1,2,3,4,5,6
+/design-and-eda/                               95 marks,  30 sources, first 1,2,3,4,5,2
+/foundries-and-fabs/                          129 marks,  61 sources, first 1,2,3,4,5,6
+/geopolitics/                                 136 marks,  70 sources, first 1,2,3,4,5,5
+/lithography/                                 129 marks,  51 sources, first 1,2,3,4,5,6
+/memory-and-hbm/                               84 marks,  24 sources, first 1,1,2,3,3,4
+/metrology-and-inspection/                     97 marks,  35 sources, first 1,2,2,2,2,3
+/photomasks-and-pellicles/                    105 marks,  34 sources, first 1,2,3,4,5,6
+/silicon-and-wafers/                           94 marks,  30 sources, first 1,2,2,3,4,4
+/substrates-and-pcbs/                          92 marks,  47 sources, first 1,2,3,4,5,6
+/systems-and-networking/                       95 marks,  44 sources, first 1,2,3,3,3,4
+/test-and-assembly/                            85 marks,  39 sources, first 1,1,1,2,3,4
+the book #design-and-eda                       95 marks,  30 sources, first 1,2,3,4,5,2
+the book #silicon-and-wafers                   94 marks,  30 sources, first 1,2,2,3,4,4
+the book #chemicals-gases-and-photoresist     113 marks,  49 sources, first 1,2,3,3,4,5
+the book #lithography                         129 marks,  51 sources, first 1,2,3,4,5,6
+the book #photomasks-and-pellicles            105 marks,  34 sources, first 1,2,3,4,5,6
+the book #deposition-and-etch                 112 marks,  48 sources, first 1,2,3,4,5,6
+the book #metrology-and-inspection             97 marks,  35 sources, first 1,2,2,2,2,3
+the book #foundries-and-fabs                  129 marks,  61 sources, first 1,2,3,4,5,6
+the book #memory-and-hbm                       84 marks,  24 sources, first 1,1,2,3,3,4
+the book #advanced-packaging                  100 marks,  33 sources, first 1,2,2,3,4,5
+the book #substrates-and-pcbs                  92 marks,  47 sources, first 1,2,3,4,5,6
+the book #test-and-assembly                    85 marks,  39 sources, first 1,1,1,2,3,4
+the book #systems-and-networking               95 marks,  44 sources, first 1,2,3,3,3,4
+the book #data-centers-and-power               97 marks,  37 sources, first 1,1,2,3,3,4
+the book #component-costs                      87 marks,  33 sources, first 1,1,1,2,1,1
+the book #geopolitics                         136 marks,  70 sources, first 1,2,3,4,5,5
+
+3300 marks checked, 0 problems
