@@ -1,0 +1,15 @@
+== node qa/scripts/check-speak.js
+check-speak: no matches
+== node qa/scripts/check-integrity.js
+allowed: exposure row for Veeco Instruments has no supplier entry. Reason: Veeco files a China share, so it has a China revenue panel, but it is not in the supplier list. data/exposure-notes.md classes it as Deposition & Etch.
+integrity: no problems
+pages: 18 · views: walk, stack, landscape, suppliers, controls, glossary · ids: 1142 · chapters: 16
+== node qa/scripts/check-sources.js
+check-sources: 2817 citations, all tier A or B
+== node qa/scripts/check-size.js
+check-size: 938 files outside dist/ and media/, none over 5.0 MB
+== node qa/scripts/check-seo.js
+check-seo: 16 chapter pages, 23 sitemap entries, no problems
+== node qa/scripts/check-links.js --local http://127.0.0.1:8779
+check-links --local: 28 pages, 1166 addresses, 194 fetched from http://127.0.0.1:8779
+check-links --local: no broken links

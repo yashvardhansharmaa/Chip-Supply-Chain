@@ -1,0 +1,3 @@
+1440: 661 values checked, 0 mismatches
+390: 661 values checked, 0 mismatches
+1322 values checked at 1440 and 390, 0 mismatches

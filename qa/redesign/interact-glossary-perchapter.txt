@@ -1,0 +1,91 @@
+ok   1440: every entry stands in the columns: 487
+ok   1440: every definition is shown without a click
+ok   1440: the head counts each kind: 208 terms · 226 firms · 38 AI chips · 15 countries
+ok   1440: six things to try
+ok   1440: the count line
+ok   1440: the letters, X and Z as the data has them: X
+ok   1440: three columns
+ok   1440: a long letter is set as pages of nine: 9,9,9,9,9,4
+ok   1440: the counts of passages arrive
+ok   1440: EUV says where it appears: Where it appears, 109 places →
+ok   1440: a term no passage uses says so: 15 terms
+ok   1440: a firm offers its card
+ok   1440: Critical is the Suppliers mark in ink
+ok   search: the names that match stand first: HBM, base die, License Exception HBM
+ok   search: the count says how many of all: 65 of 487 entries
+ok   search: the guide line says what follows: 3 entries, then 62 more below that mention it
+ok   search: the bar has stuck under the masthead
+ok   search: every word must match
+ok   Enter: the first match opens in the sheet: HBM
+ok   Enter: its title takes focus
+ok   Enter: the address names the entry: #gl-hbm
+ok   the sheet stands beside the columns
+ok   the sheet hangs under the bar
+ok   the open entry is marked in the columns
+ok   the sheet counts its place: Term · 1 of 65
+ok   → steps to the next match: base die
+ok   ← steps back
+ok   ← is off at the first entry
+ok   Escape closes the sheet
+ok   Escape hands focus back to the headword
+ok   closing puts the address back: #/glossary
+ok   the arrows preview an entry, focus stays in the field
+ok   Escape in the field clears the search
+ok   Escape again closes the sheet
+ok   Firms shows the firms only
+ok   the pressed kind fills black
+ok   a letter with no firm is off
+ok   no entry: the count says so
+ok   no entry: the box says No entry and the words
+ok   Did you mean offers a name a typo away: Nvidia,Nvidia A100 (80 GB SXM),Nvidia A800 (China variant of the A100),Nvidia B200,Nvidia B300 (GB300 NVL72)
+ok   Did you mean opens the entry
+ok   no entry still lists the passages that mention it
+ok   a letter brings its columns under the bar: 20
+ok   the thumb index marks the letter in view
+ok   a headword opens its card
+ok   the card keeps its revenue and filing link
+ok   the opened entry stays in view beside the sheet
+ok   no script errors on the page
+ok   #gl-euv opens EUV
+ok   #gl-euv brings EUV into view in the columns
+ok   the term reads it in its chapters
+ok   the sheet and the column agree on the count: 109
+ok   twelve passages, then Show all
+ok   Show all shows every passage
+ok   a passage link opens its chapter's page: /chemicals-gases-and-photoresist/
+ok   the passage flashes in its chapter
+ok   Back returns to the entry: #gl-euv
+ok   the Glossary tab closes the sheet
+ok   #lk-country-nl opens the Netherlands card
+ok   the shares follow the chart rule: the largest wine, the rest the tint
+ok   the EU-27 line and its link
+ok   a Critical firm's button opens its card: ASML
+ok   #lk-chip- opens the chip card
+ok   a look-up card opens over the chapter text: scanner
+ok   it reads the same definition as the Glossary
+ok   the card is a popover over the text
+ok   Look it up opens the entry in the home page's Glossary: ../#gl-scanner -> scanner
+ok   after a move within the site the title takes focus
+ok   no script errors in the chapter and back
+ok   390: a tap opens the look-up card as a sheet over the text
+ok   390: Look it up opens the entry full screen
+ok   768: the sheet opens over the page as a dialog
+ok   768: a click beside the sheet closes it
+ok   390: one column
+ok   390: the letters scroll in their strip
+ok   390: no sideways scroll
+ok   390: the sheet takes the whole screen
+ok   390: the page under it is inert
+ok   390: Close lets the page go and returns to the entry
+ok   390: a passage link leaves no page inert
+ok   390: no script errors
+ok   dark: the ground and the sheet turn dark
+ok   dark: a chapter link is the secondary ink for dark
+ok   /glossary/: every term in the columns
+ok   /glossary/: the letter jumps
+ok   /glossary/: the thumb index sticks
+ok   /glossary/: the JSON-LD set of terms
+ok   /glossary/: the firm, chip and country lists
+ok   /glossary/: Open the interactive page
+ok   /glossary/: no button from the app, the theme button in the masthead aside
+all 90 checks pass
