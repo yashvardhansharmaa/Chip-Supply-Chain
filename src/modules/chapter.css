@@ -357,15 +357,17 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 .chapter .figure.is-table .hbars { display: none; }
 /* the source line, as the live site sets it (the visual pass of 27 Oct 2026): no box, one quiet line under the chart, "Source:",
    the linked title and its footnote number; at the line's end the actions as small text links, Cite · Table · CSV · PNG; a
-   note is one more quiet line, and an opened citation runs the full width under them */
+   note is one more quiet line, and an opened citation runs the full width under them. The source never shrinks to make room:
+   when it and the actions do not fit one line, the actions go just under it, from the left (space-between sets a line's
+   single item at its start) */
 .chapter .fig-strip {
-  display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 24px; row-gap: 4px; align-items: baseline;
+  display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; column-gap: 24px; row-gap: 2px;
   margin: 0 24px; padding: 2px 0 16px; background: none; border: 0;
   font-family: var(--font-ui); font-size: 12.5px; line-height: 18px; color: var(--muted);
 }
-.chapter .fig-strip > * { grid-column: 1; min-width: 0; }
-.chapter .fig-strip > .fs-acts { grid-column: 2; grid-row: 1; display: flex; flex-wrap: nowrap; white-space: nowrap; }
-.chapter .fig-strip > .ch-cite-box { grid-column: 1 / -1; max-width: none; }
+.chapter .fig-strip > * { flex: 0 0 auto; max-width: 100%; min-width: 0; }
+.chapter .fig-strip > .fs-acts { display: flex; flex-wrap: nowrap; white-space: nowrap; }
+.chapter .fig-strip > .fs-note, .chapter .fig-strip > .ch-cite-box { flex-basis: 100%; }
 .chapter .fig-strip .fs-src a { color: var(--ink-2); text-underline-offset: 3px; text-decoration-color: var(--line-2); }
 .chapter .fig-strip .fs-src a:hover { color: var(--ink); text-decoration-color: var(--accent); }
 /* the source's footnote number, in brackets on the line (it opens the same card as the marks in the text) */
@@ -518,8 +520,7 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
   .view[data-view="stack"] .chapter .figure { margin: 28px 0 36px; }
   .view[data-view="stack"] .chapter .fig-head, .view[data-view="stack"] .chapter .fig-body { padding-left: 0; padding-right: 0; }
   .view[data-view="stack"] .chapter .fig-strip { margin: 0; }
-  .chapter .fig-strip { grid-template-columns: minmax(0, 1fr); }
-  .chapter .fig-strip > .fs-acts { grid-column: 1; grid-row: auto; flex-wrap: wrap; }
+  .chapter .fig-strip > .fs-acts { flex-wrap: wrap; }
   .chapter .fc-face { padding: 20px 18px; }
   .chapter .fc-q { font-size: calc(22px * var(--text-scale)); }
   /* the door: the next chapter first, its still under the button, then Previous */

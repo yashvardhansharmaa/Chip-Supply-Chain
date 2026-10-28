@@ -944,7 +944,7 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
   .stage[data-collapsed="1"]:not([data-hidden="1"]) { display: block; padding: 8px 12px 9px 16px; } /* the caption under the thumbnail starts on the page's 16 px margin */
   .stage[data-collapsed="1"]:not([data-hidden="1"]) canvas { float: left; margin: 0 12px 2px -10px; } /* the thumbnail where it was: its drawing has room round it */
   .stage[data-collapsed="1"]:not([data-hidden="1"]) .stage-tag { padding: 2px 0 3px; }
-  .stage[data-collapsed="1"]:not([data-hidden="1"]) .stage-actions { position: absolute; right: 10px; bottom: 9px; }
+  .stage[data-collapsed="1"]:not([data-hidden="1"]) .stage-actions { position: absolute; right: 10px; bottom: 9px; z-index: 3; } /* over the caption, which stands at z-index 1 */
   .stage[data-collapsed="1"]:not([data-hidden="1"]) figcaption::after { content: ""; float: right; width: 212px; height: 30px; margin-top: 3px; }
   .stage[data-collapsed="1"]:not([data-hidden="1"]) .stage-pause { top: 92px; bottom: auto; left: 10px; } /* on the thumbnail's corner, clear of the caption under it */
   .stage[data-collapsed="0"] { height: min(58vh, 480px); grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: 44px minmax(0, 1fr) auto; padding: 0 12px 8px; }
