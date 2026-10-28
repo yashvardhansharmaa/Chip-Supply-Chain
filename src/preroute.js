@@ -10,8 +10,8 @@
    An address of a chapter merged away (build/retired-chapters.js: the old chapter's id, its sections and figures, and its step
    of the walk) is swapped for the merged chapter's nearest one before anything else reads it (moved()),
    and the router swaps a link followed later the same way (src/app.js Router.route, through CP_PRE.moved).
-   Since 28 Oct 2026 each chapter is a page of its own (<id>/), the home page holds the other views and The Chain's contents,
-   and book/ holds every chapter for print (build/build.js). The build writes the page's kind into PAGE. A hash this page
+   Since 28 Oct 2026 each chapter is a page of its own (<id>/), The Chain's contents too (supply-chain/), the home page holds
+   the other views, and book/ holds the contents and every chapter for print (build/build.js). The build writes the page's kind into PAGE. A hash this page
    does not serve (on the home page an old chapter link, /#lithography--who-makes-it; on a chapter page a view's route) is
    sent to the page that serves it with location.replace before anything paints (away()), and the router does the same for
    a hash set later (CP_PRE.away). */
@@ -28,7 +28,10 @@
   function own(id) { for (var i = 0; i < OWN.length; i++) if (OWN[i][0].test(id)) return OWN[i][1]; return 'stack'; }
   var CHAPTERS = []; // the chapters of The Chain, in order: build/build.js writes their ids here
   var MOVED = {}; // the addresses of a chapter merged away: build/build.js writes { chapters: { old: new }, anchors: { old: new } } here
-  var PAGE = { kind: 'book', chapter: '', root: '' }; // this page: build/build.js writes its kind (home, chapter or book), its chapter and the way to the site's root here
+  var PAGE = { kind: 'book', chapter: '', root: '' }; // this page: build/build.js writes its kind (home, contents, chapter or book), its chapter and the way to the site's root here
+  var CONTENTS = 'supply-chain'; // The Chain's contents have their own page, <root>supply-chain/ (build/build.js writes it there)
+  // the contents page's own ids (its title block, its list and the label over the chapters across the chain)
+  var CONTENTS_ID = /^(contents|howto|ct-)/;
   // the chapter an id in The Chain belongs to, by its prefix (the longest chapter id that fits wins), or '' if none fits
   function chapterOf(id, list) {
     var best = '';
@@ -73,25 +76,25 @@
     }
     return { view: view, sub: sub };
   }
-  /* Each chapter has a page of its own, <root><id>/ (28 Oct 2026), the home page holds the other views, and /book/ holds every
-     chapter for print. away() gives the address a hash belongs at when this page does not serve it, or '' when it does: on the
-     home page a chapter's hash (the chapter, a section, a figure, a citation, #/geopolitics, ?only=<chapter>) is that
-     chapter's page at that anchor; on a chapter page a view's route is the home page's, and another chapter's anchor that
-     chapter's page; the book serves The Chain and sends the views home. The address is relative to this page, and keeps
-     the query (?theme=dark) */
+  /* Each chapter has a page of its own, <root><id>/, and The Chain's contents theirs, <root>supply-chain/ (28 Oct 2026); the
+     home page holds the other views, and /book/ holds the contents and every chapter for print. away() gives the address a
+     hash belongs at when this page does not serve it, or '' when it does: a chapter's hash (the chapter, a section, a figure,
+     a citation, #/geopolitics, ?only=<chapter>) is that chapter's page at that anchor; the contents' (#/chain, #contents) is
+     the contents page; a view's route is the home page's. The book serves the contents and every chapter itself. The address
+     is relative to this page, and keeps the query (?theme=dark) */
   function away(hash, search, page, list) {
     page = page || PAGE; list = list || CHAPTERS;
     var h = String(hash || ''), q = String(search || ''), up = page.root || '';
-    if (page.kind !== 'home' && (h === '' || h === '#')) return ''; // the chapter's own top, or the book's contents
+    if (page.kind !== 'home' && (h === '' || h === '#')) return ''; // the page's own top
     var r = route(h, q, list), at = function (c, a) { return up + c + '/' + q + (a && a !== c ? '#' + a : ''); };
+    var contents = r.view === 'stack' && (r.chapter === 'contents' || (!r.chapter && !!r.anchor && CONTENTS_ID.test(r.anchor)));
+    if (contents) return page.kind === 'contents' || page.kind === 'book' ? '' : up + CONTENTS + '/' + q + (r.anchor ? '#' + r.anchor : '');
     if (r.view !== 'stack') return page.kind === 'home' ? '' : up + q + (h === '#/' || h === '' ? '' : h);
-    if (r.chapter === 'contents') return page.kind === 'chapter' ? up + q + '#/chain' : '';
-    if (!r.chapter) return ''; // an id no chapter owns: this page's own, or none
-    if (page.kind === 'home') return at(r.chapter, r.anchor);
-    if (page.kind === 'chapter' && r.chapter !== page.chapter) return at(r.chapter, r.anchor);
-    return '';
+    if (!r.chapter || page.kind === 'book') return ''; // an id no chapter owns (this page's own, or none), or the book's own chapter
+    if (page.kind === 'chapter' && r.chapter === page.chapter) return '';
+    return at(r.chapter, r.anchor);
   }
-  if (typeof module !== 'undefined' && module.exports) { module.exports = { route: route, chapterOf: chapterOf, moved: moved, away: away }; return; }
+  if (typeof module !== 'undefined' && module.exports) { module.exports = { route: route, chapterOf: chapterOf, moved: moved, away: away, CONTENTS: CONTENTS }; return; }
 
   var html = document.documentElement, pre = root.CP_PRE = { view: null, touched: false, moved: moved, page: PAGE, chapters: CHAPTERS, away: function (h, s) { return away(h, s == null ? location.search : s); }, route: function (h) { return route(h, location.search); } }, r = null;
   try {
@@ -106,6 +109,7 @@
     // chapter's page every anchor is in that chapter
     if (PAGE.kind !== 'home' && r.view !== 'stack') r = { view: 'stack', sub: '', chapter: PAGE.chapter || 'contents' };
     else if (PAGE.kind === 'chapter') r.chapter = PAGE.chapter;
+    else if (PAGE.kind === 'contents') r.chapter = 'contents';
     pre.view = r.view; html.setAttribute('data-route', r.view);
     if (r.sub) html.setAttribute('data-sub', r.sub);
     if (r.view === 'stack') html.setAttribute('data-chain', r.chapter || 'pending');

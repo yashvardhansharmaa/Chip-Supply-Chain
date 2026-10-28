@@ -1259,7 +1259,7 @@ Object.entries(RETIRED.chapters || {}).forEach(([old, e]) => {
   });
 }
 // the page's own line (its kind, its chapter and the way to the root) goes in page by page (the pages, below)
-const PRE_PAGE = "var PAGE = { kind: 'book', chapter: '', root: '' }; // this page: build/build.js writes its kind (home, chapter or book), its chapter and the way to the site's root here";
+const PRE_PAGE = "var PAGE = { kind: 'book', chapter: '', root: '' }; // this page: build/build.js writes its kind (home, contents, chapter or book), its chapter and the way to the site's root here";
 if (!preSrc.includes(PRE_PAGE)) warn('preroute: src/preroute.js has lost the line the build writes the page into');
 const preBase = preSrc.replace(PRE_CHAPTERS, `var CHAPTERS = ${JSON.stringify(chainIds)};`).replace(PRE_MOVED, `var MOVED = ${JSON.stringify(movedMap)};`);
 // one chapter at a time on The Chain (src/template.html, the style after the pre-boot rules): for each value of
@@ -1457,9 +1457,10 @@ writeAsset('app.js', read(path.join(root, 'src', 'app.js')) + moduleJS + '\n' + 
 fill('STYLESHEET', `<link rel="stylesheet" href="${assetURL['site.css']}">`);
 
 /* ---------------- the pages ----------------
-   One template, three kinds of page (28 Oct 2026; src/template.html marks the parts that differ):
-   - the home page, dist/index.html: home, The Chain's contents, AI Chips, Suppliers, Export Controls and the Glossary, and
-     no chapter's text;
+   One template, four kinds of page (28 Oct 2026; src/template.html marks the parts that differ):
+   - the home page, dist/index.html: home, AI Chips, Suppliers, Export Controls and the Glossary, and no chapter's text;
+   - The Chain's contents, dist/supply-chain/index.html: its title, the downloads, the standfirst and a row per chapter,
+     under their own head (social.js contentsHead);
    - each chapter's own page, dist/<id>/index.html: The Chain with that chapter alone, under the chapter's own head
      (social.js chapterHead), so it is the full chapter at its own address, and the one page that carries its text;
    - the book, dist/book/index.html: The Chain's cover, contents and every chapter, which build/pdf.py prints. It is for
@@ -1467,7 +1468,7 @@ fill('STYLESHEET', `<link rel="stylesheet" href="${assetURL['site.css']}">`);
    Each page's preroute line says which page it is (src/preroute.js PAGE), and relink settles its links for where it sits.
    Until 28 Oct 2026 dist/index.html held every chapter and dist/<id>/ a static readable copy of it. */
 const pre = require(path.join(root, 'src', 'preroute.js'));
-const unmark = (h) => h.replace(/[ \t]*<!--\/?(head|home|book)-->\n?/g, '');
+const unmark = (h) => h.replace(/[ \t]*<!--\/?(head|home|chain|book|cover)-->\n?/g, '');
 const cutOut = (h, mark) => h.replace(new RegExp(`[ \\t]*<!--${mark}-->[\\s\\S]*?<!--/${mark}-->\\n?`, 'g'), '');
 // the page's scripts, in order, after the addresses of the two the app fetches when it needs them (src/app.js need())
 const scriptTags = (names, up) => `<script>window.CP_ASSETS = ${JSON.stringify({ 'search.js': up + assetURL['search.js'], 'glossary.js': up + assetURL['glossary.js'] })};</script>\n`
@@ -1487,6 +1488,7 @@ function relink(h, page) {
       let id = v.slice(1).replace(/&amp;/g, '&'); try { id = decodeURIComponent(id); } catch (e) { }
       if (v.length < 2 || ids.has(id)) return v;
       const to = pre.away(v.replace(/&amp;/g, '&'), '', page, chainIds);
+      if (!to && page.kind === 'contents' && v.charAt(1) === '/') return page.root + pre.CONTENTS + '/'; // its own route (the Supply Chain tab): its own address
       return to ? esc(to) : v;
     }
     if (routed && page.chapter && v === page.chapter + '/') return '#' + page.chapter; // the chapter's own page: its top, in place
@@ -1508,8 +1510,10 @@ function makePage(kind, o) {
   let h = html;
   const put = (k, v) => { h = h.split(`{{${k}}}`).join(v); };
   if (kind !== 'home') h = cutOut(h, 'home');
+  else h = cutOut(h, 'chain'); // the home page holds no part of The Chain: its contents have their own page
   if (kind === 'chapter') h = cutOut(h, 'book');
-  if (o.head) h = h.replace(/<!--head-->[\s\S]*?<!--\/head-->/, o.head);
+  if (kind === 'contents') h = cutOut(h, 'cover'); // the cover is the book's
+  if (o.head) h = h.replace(/<!--head-->[\s\S]*?<!--\/head-->/, () => o.head); // as a function: a head's "$6,400" is text
   h = unmark(h);
   const page = { kind, chapter: o.chapter || '', root: o.root };
   put('PREROUTE', preBase.replace(PRE_PAGE, `var PAGE = ${JSON.stringify(page)};`).replace(/<\/script/gi, '<\\/script'));
@@ -1526,6 +1530,17 @@ function makePage(kind, o) {
 const citeDays = (h) => h.replace(/\{\{CITE_DAY:([a-z0-9-]+)\}\}/g, (m, id) => { const e = pageDates['/' + id + '/']; if (!e || !e.modified) warn(`cite line: chapter ${id} has no page date`); return dayStr((e && e.modified) || today); });
 const writePage = (rel, h) => { fs.mkdirSync(path.dirname(path.join(root, 'dist', rel)), { recursive: true }); fs.writeFileSync(path.join(root, 'dist', rel), keepRanges(h)); };
 
+// the contents page, /supply-chain/ (The Chain's title, standfirst and a row per chapter; until 28 Oct 2026 the home page's
+// #/chain): dated by its text, headed by social.js
+if (pre.CONTENTS !== 'supply-chain') warn(`preroute: src/preroute.js names the contents page ${pre.CONTENTS}/, but the build writes supply-chain/`);
+{
+  const { h, page } = makePage('contents', { root: '../', chapters: '', ids: [], scripts: ['kit.js', 'terms.js', 'app.js'], head: '<!--contents-head-->' });
+  const x = h.split(`Updated ${builtStr}`).join(`Updated ${DAY_TOKEN}`);
+  const dates = pageDate('/supply-chain/', x.slice(x.indexOf('<main'), x.indexOf('</main>')));
+  const head = ctx.contentsHead ? ctx.contentsHead(dates) : '';
+  if (!head) warn('contents page: social.js gave it no head');
+  writePage('supply-chain/index.html', relink(citeDays(x.split(DAY_TOKEN).join(dayStr(dates.modified)).replace('<!--contents-head-->', () => head)), page));
+}
 // the home page: dated by its text and DATA, the data its views draw from
 let homeHTML;
 {
@@ -1601,7 +1616,7 @@ const lastmod = (key) => (pageDates[key] || {}).modified || today;
 fs.writeFileSync(path.join(root, 'dist', 'robots.txt'), `User-agent: *\nAllow: /\nDisallow: /book/\n${Object.keys(OLD_PDFS).map((o) => `Disallow: /${o}\n`).join('')}\nSitemap: ${SITE.url}sitemap.xml\n`);
 fs.writeFileSync(path.join(root, 'dist', 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
   // HTML pages only (the owner, 21 Oct 2026): the PDFs stay on the site and are linked from their pages, but are not listed
-  ['/', ...chapterPages, '/summary/', ...(ctx.referencePages || [])].map((k) => `  <url><loc>${SITE.url}${k.slice(1)}</loc><lastmod>${lastmod(k)}</lastmod></url>`).join('\n') + `\n</urlset>\n`);
+  ['/', '/supply-chain/', ...chapterPages, '/summary/', ...(ctx.referencePages || [])].map((k) => `  <url><loc>${SITE.url}${k.slice(1)}</loc><lastmod>${lastmod(k)}</lastmod></url>`).join('\n') + `\n</urlset>\n`);
 // keep the dates of the pages this build wrote (a retired page drops out); the file is rewritten only when a date or hash moved
 {
   const kept = {};

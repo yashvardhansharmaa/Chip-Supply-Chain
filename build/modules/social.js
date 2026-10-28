@@ -126,7 +126,8 @@ function manifest(root) {
     // the home title is the site's own hero ("How AI chips are made"); the unfurl <title> and og:title still carry the site name (pageHTML)
     { slug: 'home', route: '', eyebrow: 'The AI chip supply chain', title: 'How AI chips are made', line: 'The AI chip supply chain, stage by stage: who makes each part, how concentrated each stage is, and what a substitute would cost.', description: 'How AI chips are made, and who controls each stage. The supply chain stage by stage: who makes each part, how concentrated each stage is, and what a substitute would cost.' },
     { slug: 'intro', route: '#/intro', eyebrow: `${SITE} · Start here`, title: 'How AI chips are made', line: `An introduction to the entire supply chain in ${mins} minutes.` },
-    { slug: 'chain', route: '#/chain', eyebrow: `${SITE} · Supply Chain`, title: 'Supply Chain', line: 'Every stage of the supply chain, and who controls it.', description: `Every stage of the supply chain, and who controls it. ${chapters.length} chapters, from chip design to the data center.` },
+    // /chain/ forwards to the contents page's own address, /supply-chain/ (28 Oct 2026), and keeps its card
+    { slug: 'chain', route: 'supply-chain/', eyebrow: `${SITE} · Supply Chain`, title: 'Supply Chain', line: 'Every stage of the supply chain, and who controls it.', description: `Every stage of the supply chain, and who controls it. ${chapters.length} chapters, from chip design to the data center.` },
     { slug: 'chips', route: '#/landscape', eyebrow: `${SITE} · AI Chips`, title: 'AI Chips', line: 'The chips that train and run AI models, from the A100 of 2020 to the parts shipping in 2026.', description: 'The chips that train and run AI models, from the A100 of 2020 to the parts shipping in 2026. Each entry names the foundry, process node, memory supplier and packaging plant behind the chip wherever the maker or a cited source has published them.' },
     { slug: 'suppliers', route: '#/suppliers', eyebrow: `${SITE} · Suppliers`, title: 'Suppliers', line: `What each of the ${suppliers.length || 220} firms makes, where it sits, and how hard it would be to replace.` },
     { slug: 'export-controls', route: '#/controls', eyebrow: `${SITE} · Export Controls`, title: 'Export Controls', line: `The main rules since 2018, what can still be sold to China, and China's share of revenue at ${exposureFirms} firms, from their filings.` },
@@ -172,7 +173,7 @@ const pageTitle = (p) => { const t = seoOf(p); if (t) return `${t.title} · ${SI
 // what an unfurler reads: the same tags on a chapter's readable page and on a view's forwarding page
 function shareTags(p, versions) {
   const url = BASE + p.slug + '/';
-  const image = cardURL(p.slug, versions);
+  const image = cardURL(p.card || p.slug, versions); // a page may wear another's card (the contents page, the chain's)
   const seo = seoOf(p), title = seo ? seo.title : p.kind === 'chapter' ? p.title : pageTitle(p);
   // a chapter's preview leads with its one-line summary (the fact a reader would share), whole; the meta description cuts it to search length
   const description = seo && seo.description ? seo.description : p.kind === 'chapter' && (p.shareDescription || p.metaDescription) ? (p.shareDescription || p.metaDescription) : p.description;
@@ -206,9 +207,10 @@ const MASTHEAD = masthead('');
 // reader hid stays hidden (build/build.js RAIL_TOGGLE_JS)
 const THEME_JS = `<script>(function(){try{var q=/[?&]theme=(light|dark)/.exec(location.search);var t=q?q[1]:localStorage.getItem('cp-theme');if(t)document.documentElement.setAttribute('data-theme',t);if(localStorage.getItem('cp-rail')==='off')document.documentElement.classList.add('rail-off');}catch(e){}})();</script>`;
 
-// a view's page: the tags, one paragraph, and straight on to the view on the main page
+// a view's page: the tags, one paragraph, and straight on to the view on the main page, or to a page of the site's own
+// (/chain/ goes on to /supply-chain/, a folder over, so the move works on any host)
 function pageHTML(p, versions) {
-  const target = BASE + p.route;
+  const target = BASE + p.route, go = /^#|^$/.test(p.route) ? target : '../' + p.route;
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -219,8 +221,8 @@ function pageHTML(p, versions) {
 <link rel="canonical" href="${esc(target)}">
 ${shareTags(p, versions)}
 <!-- the tags above are what an unfurler reads; a person is sent on to the page itself -->
-<meta http-equiv="refresh" content="0;url=${esc(target)}">
-<script>location.replace(${JSON.stringify(target)});</script>
+<meta http-equiv="refresh" content="0;url=${esc(go)}">
+<script>location.replace(${JSON.stringify(go)}${go === target ? '' : ' + location.search + location.hash'});</script>
 ${ICONS}
 <style>
 body{margin:0;background:#fff;color:#171716;font:19.5px/1.55 "Source Serif 4",Georgia,serif}
@@ -236,7 +238,7 @@ a{color:#7a1f2b}
 <p class="eyebrow">${esc(p.eyebrow)}</p>
 <h1>${esc(p.title)}</h1>
 <p>${esc(p.body)}</p>
-<p><a href="${esc(target)}">${esc(p.linkText)}</a></p>
+<p><a href="${esc(go)}">${esc(p.linkText)}</a></p>
 </main>
 </body>
 </html>
@@ -368,7 +370,7 @@ function chapterHead(p, ch, ctx, versions, dates) {
     }, leaders.length ? { mentions: leaders.map((n) => ({ '@type': 'Organization', name: n })) } : {}, {
       wordCount: ch.words, timeRequired: `PT${r.mins}M`, isAccessibleForFree: true,
     }),
-    { '@type': 'BreadcrumbList', '@id': url + '#breadcrumb', itemListElement: [['Home', BASE], ['Supply Chain', BASE + 'chain/'], [ch.title, url]]
+    { '@type': 'BreadcrumbList', '@id': url + '#breadcrumb', itemListElement: [['Home', BASE], ['Supply Chain', BASE + 'supply-chain/'], [ch.title, url]]
       .map(([name, item], k) => ({ '@type': 'ListItem', position: k + 1, name, item })) },
   ] };
   // the chapter's place in the reading order, for the engines that still read it (Google stopped in 2019; Bing has not said so)
@@ -386,6 +388,32 @@ ${seqLinks}
 ${scholar}
 ${shareTags(p, versions)}
 ${articleTags}
+<script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script>`;
+}
+
+/* The Chain's contents at their own address, <site>/supply-chain/ (28 Oct 2026; until then the home page's #/chain): its
+   head, as a chapter page's is made. The title and description are build/page-titles.json's; the share tags wear the
+   chain's card (build/assets/cards/chain.png), which /chain/ has carried; the JSON-LD is a CollectionPage whose main entity
+   is the list of the chapter pages, in reading order, with the trail Home › Supply Chain. dates is the page's own. */
+function contentsHead(ctx, versions, dates, chainView) {
+  const url = BASE + 'supply-chain/', seo = PAGE_TITLES('/supply-chain/') || {};
+  const title = seo.title ? `${seo.title} · ${SITE}` : `Supply Chain · ${SITE}`, description = seo.description || chainView.description;
+  const seq = ctx.chapters.concat(ctx.geo ? [ctx.geo] : []);
+  const p = Object.assign({}, chainView, { slug: 'supply-chain', card: 'chain', seo: { title: seo.title || 'Supply Chain', description } });
+  const ld = { '@context': 'https://schema.org', '@graph': [
+    { '@type': 'CollectionPage', '@id': url + '#page', url, name: seo.title || 'Supply Chain', description, inLanguage: 'en', dateModified: dates.modified,
+      isPartOf: { '@type': 'WebSite', '@id': BASE + '#website', name: SITE, url: BASE },
+      publisher: { '@type': 'Organization', '@id': BASE + '#publisher', name: SITE, url: BASE },
+      breadcrumb: { '@id': url + '#breadcrumb' }, mainEntity: { '@id': url + '#chapters' } },
+    { '@type': 'ItemList', '@id': url + '#chapters', name: 'The chapters', numberOfItems: seq.length, itemListOrder: 'https://schema.org/ItemListOrderAscending',
+      itemListElement: seq.map((c, k) => ({ '@type': 'ListItem', position: k + 1, url: BASE + c.id + '/', name: c.title })) },
+    { '@type': 'BreadcrumbList', '@id': url + '#breadcrumb', itemListElement: [['Home', BASE], ['Supply Chain', url]].map(([name, item], k) => ({ '@type': 'ListItem', position: k + 1, name, item })) },
+  ] };
+  return `<title>${esc(title)}</title>
+<meta name="description" content="${esc(description)}">
+<link rel="canonical" href="${esc(url)}">
+<meta name="robots" content="max-image-preview:large">
+${shareTags(p, versions)}
 <script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script>`;
 }
 
@@ -481,6 +509,7 @@ module.exports = function (ctx) {
   ctx.chapterPages = [];
   const chapterPage = new Map(pages.filter((p) => p.kind === 'chapter').map((p) => [p.slug, p]));
   ctx.chapterHead = (ch, dates) => chapterHead(chapterPage.get(ch.id), ch, ctx, versions, dates);
+  ctx.contentsHead = (dates) => contentsHead(ctx, versions, dates, pages.find((p) => p.slug === 'chain'));
   // the four views that have a real page of their own (build/modules/reference-pages.js, which runs first, writes and lists them)
   const written = new Set((ctx.referencePages || []).map((k) => k.replace(/\//g, '')));
   for (const p of pages) {

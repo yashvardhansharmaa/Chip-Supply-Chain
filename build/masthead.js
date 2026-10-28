@@ -11,7 +11,7 @@ const path = require('path');
 
 const TILE = '<svg class="wm-tile" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect width="16" height="16" rx="3.2"/><path transform="translate(3.3324 11.8693) scale(0.009179 -0.009179)" d="M1011 683 Q1011 612 960 564 Q909 515 823 515 Q739 515 696 561 Q653 607 653 680 L653 720 Q653 786 623 823 Q594 861 544 861 Q502 861 468 831 Q433 801 412 741 Q391 682 391 594 Q391 474 431 393 Q470 312 540 270 Q609 229 697 229 Q769 229 825 251 Q880 273 924 326 Q946 348 959 356 Q971 363 983 363 Q1000 363 1007 347 Q1015 330 1015 307 Q1012 216 954 140 Q896 64 796 19 Q695 -26 563 -26 Q417 -26 301 33 Q185 91 118 198 Q51 305 51 450 Q51 602 118 721 Q184 840 305 909 Q425 978 588 978 Q720 978 815 938 Q909 898 960 832 Q1011 765 1011 683 Z"/></svg>';
 // [path from the page's folder, label, the app view it names (the phone hides Home, as the app does)]
-const NAV = [['../', 'Home', 'walk'], ['../#/chain', 'Supply Chain', 'stack'], ['../chips/', 'AI Chips', 'landscape'], ['../suppliers/', 'Suppliers', 'suppliers'],
+const NAV = [['../', 'Home', 'walk'], ['../supply-chain/', 'Supply Chain', 'stack'], ['../chips/', 'AI Chips', 'landscape'], ['../suppliers/', 'Suppliers', 'suppliers'],
   ['../export-controls/', 'Export Controls', 'controls'], ['../glossary/', 'Glossary', 'glossary']];
 const SEARCH_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>';
 const MOON = '<svg class="ic-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg>';

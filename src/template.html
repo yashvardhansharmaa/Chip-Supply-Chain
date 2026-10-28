@@ -4,10 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- the title and description come from build/page-titles.json (filled by build/modules/social.js), as every static page's do.
-     The markers below (head, home, book) mark the parts that differ by page (build/build.js, 28 Oct 2026). The head is the home
-     page's own: a chapter's page and the book take their own in its place. The views marked home are the home page's alone.
-     The Chain's cover and contents, marked book, are the home page's and the book's; a chapter's page holds The Chain with
-     its one chapter -->
+     The markers below (head, home, chain, book, cover) mark the parts that differ by page (build/build.js, 28 Oct 2026). The
+     head is the home page's own: the other pages take their own in its place. The views marked home are the home page's
+     alone, and The Chain (marked chain) is the other pages': the contents page, /supply-chain/, holds its title and contents
+     (marked book); a chapter's page holds its one chapter; the book holds the cover (marked cover), the contents and every
+     chapter -->
 <meta name="cp-titles" content="{{VIEW_TITLES}}">
 <link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -234,8 +235,10 @@ html:not(.booted)[data-pick] .view[data-view="suppliers"] > :not(.view-head) { d
     </section>
     <!--/home-->
 
+    <!--chain-->
     <section class="view column" data-view="stack">
       <!--book-->
+      <!--cover-->
       <section class="print-only print-title" aria-hidden="true">
         <img class="pt-art" data-src="print-title.png" width="1558" height="1558" alt="">
         <div class="pt-type">
@@ -251,6 +254,7 @@ html:not(.booted)[data-pick] .view[data-view="suppliers"] > :not(.view-head) { d
           <p class="pt-meta">Printed from {{SITE_HOST}} · Updated {{BUILT}}</p>
         </div>
       </section>
+      <!--/cover-->
       <!-- The Chain's contents page (design round eight, option 3 "clean", chosen 28 Oct 2026): the title with the downloads as
            small links, and one sentence that is also the key (build/build.js chainStandfirst), then one row per chapter
            (build/build.js CONTENTS). Both blocks show only on the contents (html[data-chain], CHAIN_ONE); on paper they are the
@@ -275,6 +279,7 @@ html:not(.booted)[data-pick] .view[data-view="suppliers"] > :not(.view-head) { d
       {{GEO_ARTICLE}}
       <footer class="site-footer">{{FOOTER_KEY}}</footer>
     </section>
+    <!--/chain-->
 
     <!--home-->
     <section class="view column wide" data-view="glossary">

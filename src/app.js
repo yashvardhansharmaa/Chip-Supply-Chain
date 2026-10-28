@@ -519,9 +519,9 @@
   var VIEWS = ['home', 'stack', 'chain', 'intro', 'walk', 'briefing', 'landscape', 'ai-chips', 'suppliers', 'geopolitics', 'controls', 'export-controls', 'thresholds', 'exposure', 'glossary', 'sources'];
   var ALIAS = { chain: 'stack', home: 'walk', intro: 'walk', briefing: 'walk', geopolitics: 'stack', thresholds: 'controls', sources: 'stack', 'export-controls': 'controls', 'ai-chips': 'landscape' }; // the tab names typed as routes land on their pages // the Sources page was retired; its sources sit at the end of each chapter // the licence-thresholds tab was retired; its route lands on the board
   var MODULE_VIEWS = {}; // modules register { activate(), stage: bool } per view through window.CP.register
-  /* Each chapter has a page of its own since 28 Oct 2026 (build/build.js): PAGE says which page this is, the home page (the
-     views and The Chain's contents), a chapter's page (that chapter alone) or the book (every chapter, for print), and
-     where the site's root is from here. away(hash) is the address a hash belongs at when this page does not serve it, and ''
+  /* Each chapter has a page of its own since 28 Oct 2026 (build/build.js), and so do The Chain's contents: PAGE says which page
+     this is, the home page (the views), the contents page (/supply-chain/), a chapter's page (that chapter alone) or the
+     book (the contents and every chapter, for print), and where the site's root is from here. away(hash) is the address a hash belongs at when this page does not serve it, and ''
      when it does (src/preroute.js away()); addr(hash) is the address a link the app writes should carry: the hash itself
      where this page serves it, else that page's address, so a link to a chapter is a real link */
   var PAGE = (window.CP_PRE && window.CP_PRE.page) || { kind: 'book', chapter: '', root: '' };
@@ -714,13 +714,14 @@
     title: function () {
       if (!this.titles) { try { this.titles = JSON.parse(document.querySelector('meta[name="cp-titles"]').getAttribute('content')) || {}; } catch (e) { this.titles = {}; } }
       var T = this.titles, v = this.current, ch = v === 'stack' && this.chain !== 'contents' && Sections.currentId ? '/' + Sections.currentId + '/' : '';
-      var page = { walk: '/', landscape: '/chips/', suppliers: '/suppliers/', controls: '/export-controls/', glossary: '/glossary/' }[v];
+      var page = { walk: '/', landscape: '/chips/', suppliers: '/suppliers/', controls: '/export-controls/', glossary: '/glossary/', stack: '/supply-chain/' }[v];
       document.title = (ch && T[ch]) || (page && T[page]) || (v === 'stack' ? 'Supply Chain · Chip Supply Chain' : T['/'] || 'Chip Supply Chain');
     },
     /* what The Chain shows for an anchor: the chapter that holds it, or the contents (#/chain, the contents' own ids, an id
        found nowhere) */
     chainOf: function (anchor) {
       if (PAGE.kind === 'chapter') return PAGE.chapter; // a chapter's page shows its chapter, whichever of its anchors is named
+      if (PAGE.kind === 'contents') return 'contents'; // and the contents page its contents
       var el = anchor ? document.getElementById(anchor) : null, ch = el && el.closest ? el.closest('article.chapter') : null;
       return ch && ch.closest('.view[data-view="stack"]') ? ch.id : 'contents';
     },

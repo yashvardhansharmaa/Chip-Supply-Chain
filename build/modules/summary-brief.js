@@ -75,7 +75,7 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
 <p class="eyebrow"><b>Summary</b> · the whole chain in one read</p>
 <h1>${title}</h1>
 <p class="dek">${esc(dek)}</p>
-<p class="cta"><a class="btn" href="../pdf/summary.pdf" download>Download the PDF <span>4 pages</span></a><a class="btn ghost" href="${SITE.url}#/chain">Read the full chain</a></p>
+<p class="cta"><a class="btn" href="../pdf/summary.pdf" download>Download the PDF <span>4 pages</span></a><a class="btn ghost" href="${SITE.url}supply-chain/">Read the full chain</a></p>
 <p class="meta">Updated ${DAY} · Every figure is cited in the chapter each card links to</p>
 </section>
 <section class="glance" aria-labelledby="glance-h">

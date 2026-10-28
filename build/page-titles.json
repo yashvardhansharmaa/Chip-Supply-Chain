@@ -5,6 +5,11 @@
     "description": "How AI chips are made and who controls each stage of the supply chain, from ASML's EUV machines to TSMC's fabs. A free, sourced guide in {chapters} chapters."
   },
   {
+    "path": "/supply-chain/",
+    "title": "The AI chip supply chain, stage by stage",
+    "description": "All {chapters} chapters in the order a chip is made: {stages} stages from design software to the data center, then what a chip costs and who controls the chain."
+  },
+  {
     "path": "/design-and-eda/",
     "title": "How chips are designed with EDA software",
     "description": "How chip design software lays out billions of transistors. Synopsys, Cadence and Siemens EDA took over 85 percent of the $18 billion EDA and IP market in 2025."
