@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://chipsupplychain.org/</loc><lastmod>2026-10-27</lastmod></url>
+  <url><loc>https://chipsupplychain.org/</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://chipsupplychain.org/design-and-eda/</loc><lastmod>2026-10-27</lastmod></url>
   <url><loc>https://chipsupplychain.org/silicon-and-wafers/</loc><lastmod>2026-10-27</lastmod></url>
   <url><loc>https://chipsupplychain.org/chemicals-gases-and-photoresist/</loc><lastmod>2026-10-27</lastmod></url>
@@ -20,6 +20,6 @@
   <url><loc>https://chipsupplychain.org/summary/</loc><lastmod>2026-10-27</lastmod></url>
   <url><loc>https://chipsupplychain.org/suppliers/</loc><lastmod>2026-10-27</lastmod></url>
   <url><loc>https://chipsupplychain.org/export-controls/</loc><lastmod>2026-10-21</lastmod></url>
-  <url><loc>https://chipsupplychain.org/chips/</loc><lastmod>2026-10-27</lastmod></url>
+  <url><loc>https://chipsupplychain.org/chips/</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://chipsupplychain.org/glossary/</loc><lastmod>2026-10-27</lastmod></url>
 </urlset>

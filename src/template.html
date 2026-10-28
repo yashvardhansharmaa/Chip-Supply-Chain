@@ -70,10 +70,11 @@ html:not(.booted)[data-sub="exposure"] .view[data-view="controls"] .sub[data-sub
 html:not(.booted)[data-sub="country"] .view[data-view="suppliers"] #sup-ladder { display: none !important; }
 html:not(.booted)[data-sub="exposure"] .view[data-view="controls"] .sub[data-sub="exposure"] { display: block !important; }
 /* the views whose bodies boot() builds show only their heads until then, so nothing painted early moves when it does:
-   the Export Controls board and timeline, the Glossary, AI Chips, and the Suppliers atlas when the address picks a country */
+   the Export Controls board and timeline, the Glossary, AI Chips (whose #aic holds its title and standfirst), and the
+   Suppliers atlas when the address picks a country */
 html:not(.booted)[data-route="controls"]:not([data-sub="exposure"]) .view[data-view="controls"] > :not(.view-head):not(#controls-subtabs),
 html:not(.booted)[data-route="glossary"] .view[data-view="glossary"] > :not(.view-head),
-html:not(.booted)[data-route="landscape"] .view[data-view="landscape"] > :not(.view-head),
+html:not(.booted)[data-route="landscape"] .view[data-view="landscape"] > :not(.aic),
 html:not(.booted)[data-pick] .view[data-view="suppliers"] > :not(.view-head) { display: none !important; }
 </style>
 <style>
@@ -116,62 +117,22 @@ html:not(.booted)[data-pick] .view[data-view="suppliers"] > :not(.view-head) { d
     <figcaption id="stage-caption"></figcaption>
   </figure>
   <script>/* before boot the strip matches the routed view: a view with no specimen starts without one (Router.route keeps it so) */
-  (function(f){var r=document.documentElement.getAttribute('data-route');if(f&&r&&!/^(walk|stack|landscape)$/.test(r))f.setAttribute('data-hidden','1');})(document.currentScript&&document.currentScript.previousElementSibling);</script>
+  (function(f){var r=document.documentElement.getAttribute('data-route');if(f&&r&&!/^(walk|stack)$/.test(r))f.setAttribute('data-hidden','1');})(document.currentScript&&document.currentScript.previousElementSibling);</script>
 
   <main id="main" tabindex="-1">
     <!-- the views in the order a first visit needs them: home first, the three small views, The Chain, the Glossary -->
     <section class="view column" data-view="walk">{{WALK}}<footer class="site-footer">{{FOOTER}}</footer></section>
 
-    <section class="view column wide" data-view="landscape" data-specimen="package">
-      <!-- AI Chips (design round five, option B "the tick list", qa/design5/ai-chips/a/ in the main checkout, chosen 27 Oct 2026):
-           the title; then a rail with every chip by maker, each with a box to tick, and the specimen at its foot, beside the chart
-           of every chip by the month it was announced (or ranked highest first) against one measure the reader picks; then the
-           comparison, one row per ticked chip: the figures as one table, the makers and parts, the packages at one scale, the rest
-           in words, the notes and sources. On a phone the rail opens as a sheet and a tray carries the ticked chips.
-           src/app.js Landscape draws it, src/modules/chips.css styles it -->
-      <div class="view-head vh aic-head">
-        <h1>AI Chips</h1>
-        <div class="aic-head-r">
-          <p class="dek">The chips that train and run AI models, from the A100 of 2020 to the parts shipping in 2026. Each entry names the foundry, process node, memory supplier and packaging plant behind the chip wherever the maker or a cited source has published them.</p>
-          <p class="aic-meta">{{AIC_FACTS}}<span>Updated {{CITE_DAY:chips}}</span></p>
-        </div>
+    <section class="view column wide" data-view="landscape">
+      <!-- AI Chips (design round seven, option B "the shelves", qa/design7/b/ in the main checkout, chosen 28 Oct 2026): the title
+           and the standfirst beside the field chart, then one ruled shelf per maker with its packages drawn from above at one
+           scale; a chip opens in place under its shelf as a chip card, and widens into two to four columns to compare.
+           src/app.js Landscape draws it into #aic-view (the title and the standfirst are here for the first paint, and the
+           standfirst is read from here, by the app and by /chips/), src/modules/chips.css styles it -->
+      <div class="aic" id="aic">
+        <div id="aic-view"><header class="head"><div class="head-grid"><div class="head-l"><h1>AI Chips</h1><p class="dek">The chips that train and run AI models, from 2020 to 2026, and who makes each of their parts.</p></div></div></header></div>
       </div>
-      <div class="aic-ws">
-        <aside class="aic-rail" id="cx-rail" aria-labelledby="cx-rl-t">
-          <div class="aic-rail-in">
-            <div class="aic-rl-head"><h2 class="aic-rl-t" id="cx-rl-t">Tick to compare</h2><p class="aic-rl-c" id="cx-rl-n" aria-live="polite">0 of 4 ticked</p><button type="button" class="aic-x aic-rl-close" id="cx-rl-close" aria-label="Close the list">&times;</button></div>
-            <div class="aic-rl-find"><label class="sr-only" for="cx-find">Find a chip or maker</label><input id="cx-find" type="search" placeholder="Find a chip or maker" autocomplete="off" autocapitalize="off" spellcheck="false"></div>
-            <div class="aic-rl-cols" aria-hidden="true"><span>Chip</span><span>Year</span></div>
-            <div class="aic-rl-list" id="cx-list" role="group" aria-label="All chips, by maker"></div>
-            <div class="aic-rl-foot" id="cx-rl-foot"></div>
-            <figure class="ch-spec aic-spec">
-              <div class="ch-spec-draw aic-spec-draw"></div>
-              <figcaption class="ch-spec-cap aic-spec-cap"><p class="label"><span id="cx-spec-tag">AI chips · Package</span></p><p id="cx-spec-text">An AI accelerator package, drawn from above.</p></figcaption>
-            </figure>
-          </div>
-        </aside>
-        <div class="aic-main">
-          <section class="aic-atlas" aria-labelledby="cx-atlas-t">
-            <div class="aic-bar"><p class="aic-k" id="cx-atlas-k"></p><div class="aic-measures" id="cx-measures" role="group" aria-label="The measure on the chart"></div></div>
-            <figure class="aic-fig">
-              <div class="aic-hrow"><h2 class="aic-h" id="cx-atlas-t"></h2><div class="aic-view" id="cx-view" role="group" aria-label="How the chart sets the chips"></div></div>
-              <p class="aic-sub" id="cx-atlas-s"></p>
-              <div class="aic-chart" id="cx-chart"></div>
-              <div class="aic-tip" id="cx-tip" aria-hidden="true" hidden></div>
-              <div class="aic-gutter" id="cx-gutter"></div>
-              <p class="aic-note">Each dot is a chip, placed at the month its maker announced it. A chip dated only to a year sits in that year's middle, on a line across the year. The highest value is the one solid dot.</p>
-            </figure>
-            <button type="button" class="aic-open-list" id="cx-open-list" aria-controls="cx-rail" aria-expanded="false"><span>Tick chips to compare</span><span class="aic-k">0 of 4 ticked</span></button>
-          </section>
-          <section class="aic-cmp" id="cx-compare" aria-labelledby="cx-title">
-            <div id="cx-cmp"></div>
-            <section class="cx-notes" id="cx-notes" aria-labelledby="cx-notes-h" hidden></section>
-            <p class="sr-only" id="cxa-live" aria-live="polite"></p>
-          </section>
-        </div>
-      </div>
-      <div class="aic-tray" id="cx-tray" role="region" aria-label="Chips ticked to compare" hidden></div>
-      <div class="aic-scrim" id="cx-scrim" hidden></div>
+      <p class="sr-only" id="aic-live" aria-live="polite"></p>
       <footer class="site-footer">{{FOOTER}}</footer>
     </section>
 
