@@ -5802,7 +5802,8 @@ var rows=(hb.length?hb:cl.length?cl:cg).map(function(r,i){return{l:kind==='hb'?t
 if(!rows.length)return;
 var k=txt(fig.querySelector('.fig-k')),t1=txt(fig.querySelector('.fig-title')),t2=txt(fig.querySelector('.fig-sub'));
 var src=fig.querySelector('.fs-src'),sc=src?src.cloneNode(true):null;if(sc)[].forEach.call(sc.querySelectorAll('.fs-k'),function(x){x.remove();});
-var srcT=sc?txt(sc).replace(/\s*(\d+)$/,' [$1]'):'',addr=txt(fig.querySelector('.fig-cite-box a')).replace(/^https?:\/\//,'');
+var dl=(/Data: (.+)\.$/.exec(txt(fig.querySelector('.fig-cite-box .ch-cite-text')))||[])[1];
+var srcT=dl||(sc?txt(sc).replace(/\s*\d+$/,''):''),addr=txt(fig.querySelector('.fig-cite-box a')).replace(/^https?:\/\//,'');
 var W=800,P=40,S=2,cv=el('canvas'),g=cv.getContext('2d');
 var FD='"Fraunces",Georgia,serif',FB='"Source Serif 4",Georgia,serif',FU='"Hanken Grotesk","Helvetica Neue",Arial,sans-serif',FM='"Fragment Mono",Menlo,monospace';
 var WINE='#7a1f2b',TINT='#d2d1cc',INK='#171716',INK2='#45443f',RULE='#8c8a84',LINE='#e1e0db';

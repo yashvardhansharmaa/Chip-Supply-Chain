@@ -142,14 +142,21 @@ const figTitle = (f) => (unitOnValue(f.unit) ? String(f.title || '').split(` (${
 // the figure's short name in the chapter's contents rail: its title's first sentence
 const figShort = (f) => figTitle(f).split(/(?<=[a-z0-9)%])\.\s+(?=[A-Z])/)[0].replace(/\.$/, '');
 // the figure's data as a CSV file, a data: link the browser saves without any script (the readable pages carry it too)
-function figCSV(f, data) {
+// The table comes first, so a spreadsheet reads its header row as one; under it, after a blank row, what the file is: the
+// figure, its title, its source and the source's date, any note (an estimate says so there) and the figure's address
+// (28 Oct 2026). A first column of years is headed Year.
+function figCSV(f, data, meta) {
   const q = (v) => { const s = String(v == null ? '' : v); return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; };
-  const head = f.type === 'timeline' ? ['Date', 'Event'] : ['Item', f.unit ? `Value (${f.unit})` : 'Value'];
+  const years = data.length && data.every((d) => /^(FY ?)?\d{4}$/.test(String(d[0]).trim()));
+  const head = f.type === 'timeline' ? ['Date', 'Event'] : [years ? 'Year' : 'Item', f.unit ? `Value (${f.unit})` : 'Value'];
   // a row with its own range (["High-NA EUV", 350, 400]) gives its high end in a third column
   const hasHi = f.type !== 'timeline' && data.some((d) => typeof d[2] === 'number');
   if (hasHi) head.push(f.unit ? `High end of range (${f.unit})` : 'High end of range');
   const rows = [head].concat(data.map((d) => (hasHi ? [d[0], d[1], typeof d[2] === 'number' ? d[2] : ''] : [d[0], d[1]])));
-  return 'data:text/csv;charset=utf-8,' + encodeURIComponent('﻿' + rows.map((r) => r.map(q).join(',')).join('\r\n') + '\r\n');
+  const m = meta || {};
+  const about = [['Figure', m.num ? `Figure ${m.num}` : ''], ['Title', figShort(f)], ['Source', m.source || ''], ['Source date', m.when || ''], ['Source address', m.url || ''], ['Note', f.note || ''], ['Figure address', m.page || '']].filter((r) => r[1]);
+  const all = about.length ? rows.concat([[]], about) : rows;
+  return 'data:text/csv;charset=utf-8,' + encodeURIComponent('﻿' + all.map((r) => r.map(q).join(',')).join('\r\n') + '\r\n');
 }
 /* The marks a bars or columns figure draws, in the data's order (the owner's chart rule as amended on 28 Oct 2026, above).
    A row is ["label", value], or ["label", low, high] for a value known only as a range (04.2's "$350–400M"). A figure's
@@ -309,10 +316,19 @@ function figure(f, ctx) {
     : (f.source && f.source.label ? `<span class="fs-src"><span class="fs-k">Source:</span> ${esc(f.source.label)}</span>` : '');
   const note = f.note ? `<span class="fs-note fig-source"><span class="fs-k">Note:</span> ${esc(f.note)}</span>` : '';
   const box = `cite-${fid}`;
-  const csv = data.length && !isAnim ? `<a class="fs-csv" href="${figCSV(f, data)}" download="chip-supply-chain-figure-${num.replace('.', '-')}-${esc(f.id)}.csv">CSV</a>` : '';
+  // the figure's source by name and date, for the citation's Data line and the CSV (28 Oct 2026): the bibliography's date, or none
+  const srcB = f.source && f.source.url ? bibOf(f.source.url) : null;
+  const srcName = f.source ? String(f.source.label || (f.source.url ? host(f.source.url) : '')) : '';
+  // (a label that already gives a day, or names more than one source, keeps its own words: one date would be wrong for it)
+  const srcWhen = srcB && srcB.date && !/\b(January|February|March|April|May|June|July|August|September|October|November|December) \d{4}|;/.test(srcName) ? bibDate(srcB.date) : '';
+  const figURL = SITE.url + ctx.id + '/#' + fid;
+  const csv = data.length && !isAnim ? `<a class="fs-csv" href="${figCSV(f, data, { num, source: srcName, when: srcWhen, url: f.source && f.source.url ? String(f.source.url) : '', page: figURL })}" download="chip-supply-chain-figure-${num.replace('.', '-')}-${esc(f.id)}.csv">CSV</a>` : '';
   // an explainer animation has no Cite (owner, 27 Oct): it explains a process and holds no figures of its own to cite
   const acts = isAnim ? '' : `<span class="fs-acts" data-kind="${esc(f.type)}"><button type="button" class="ch-cite-btn" aria-expanded="false" aria-controls="${box}">Cite</button>${csv}</span>`;
-  const citeText = isAnim ? '' : `<div class="ch-cite-box fig-cite-box" id="${box}" role="region" aria-label="Citation for figure ${num}" hidden><p class="ch-cite-text">Sharma, Yashvardhan. “Figure ${num}: ${esc(figTitle(f))}.” <i>${CITE_WORK}</i>. Updated ${CITE_DAY(ctx.id)}. <a href="${esc(SITE.url + ctx.id + '/#' + fid)}">${esc(SITE.url + ctx.id + '/#' + fid)}</a></p></div>`;
+  // the citation names the figure by its title's first sentence (the sentences after it, and the note, are not its title) and
+  // ends on the data it shows: "Data: <source>, <date>." (28 Oct 2026)
+  const dataLine = srcName ? ` Data: ${esc(srcName)}${srcWhen ? ', ' + esc(srcWhen) : ''}.` : '';
+  const citeText = isAnim ? '' : `<div class="ch-cite-box fig-cite-box" id="${box}" role="region" aria-label="Citation for figure ${num}" hidden><p class="ch-cite-text">Sharma, Yashvardhan. “Figure ${num}: ${esc(figShort(f))}.” <i>${CITE_WORK}</i>. Updated ${CITE_DAY(ctx.id)}. <a href="${esc(figURL)}">${esc(figURL)}</a>.${dataLine}</p></div>`;
   const strip = `<div class="fig-strip">${src}${acts}${note}${citeText}</div>`;
   return `<figure class="figure${isAnim ? ' figure--anim' : ''}" id="${fid}" data-num="${num}">${head}<div class="fig-body">${body}</div>${strip}</figure>`;
 }
@@ -797,7 +813,8 @@ var rows=(hb.length?hb:cl.length?cl:cg).map(function(r,i){return{l:kind==='hb'?t
 if(!rows.length)return;
 var k=txt(fig.querySelector('.fig-k')),t1=txt(fig.querySelector('.fig-title')),t2=txt(fig.querySelector('.fig-sub'));
 var src=fig.querySelector('.fs-src'),sc=src?src.cloneNode(true):null;if(sc)[].forEach.call(sc.querySelectorAll('.fs-k'),function(x){x.remove();});
-var srcT=sc?txt(sc).replace(/\\s*(\\d+)$/,' [$1]'):'',addr=txt(fig.querySelector('.fig-cite-box a')).replace(/^https?:\\/\\//,'');
+var dl=(/Data: (.+)\\.$/.exec(txt(fig.querySelector('.fig-cite-box .ch-cite-text')))||[])[1];
+var srcT=dl||(sc?txt(sc).replace(/\\s*\\d+$/,''):''),addr=txt(fig.querySelector('.fig-cite-box a')).replace(/^https?:\\/\\//,'');
 var W=800,P=40,S=2,cv=el('canvas'),g=cv.getContext('2d');
 var FD='"Fraunces",Georgia,serif',FB='"Source Serif 4",Georgia,serif',FU='"Hanken Grotesk","Helvetica Neue",Arial,sans-serif',FM='"Fragment Mono",Menlo,monospace';
 var WINE='#7a1f2b',TINT='#d2d1cc',INK='#171716',INK2='#45443f',RULE='#8c8a84',LINE='#e1e0db';
