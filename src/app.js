@@ -1172,7 +1172,9 @@
       [['die', 'Logic dies'], ['hbm', 'Memory'], ['pkg', 'Package']].forEach(function (pair, ri) {
         rowsP += line(pair[1], cols(function (c, i) { return '<p class="cmp-t">' + sn(c) + partLine(c, P[i].rows[ri]) + '</p>'; }));
       });
-      var npP = []; P.forEach(function (p, i) { if (p.np.length) npP.push(npSentence(p.np, 'For the ' + esc(short(sel[i])) + ', ')); });
+      // the parts no source names, one sentence for each set of chips that lacks the same parts
+      var npP = [], npAt = {}; P.forEach(function (p, i) { if (!p.np.length) return; var key = npSentence(p.np, ''); if (!npAt[key]) { npAt[key] = { np: p.np, cs: [] }; npP.push(key); } npAt[key].cs.push(sel[i]); });
+      npP = npP.map(function (key) { var g = npAt[key]; return npSentence(g.np, 'For ' + join(g.cs.map(function (c) { return 'the ' + esc(short(c)); })) + ', '); });
       h += '<section class="cmp-sec"><h3>Who makes it</h3>' + rowsP + (npP.length ? line(null, '<p class="said">' + npP.join(' ') + '</p>', 'bare') : '') + '</section>';
       // about
       var rowsA = '', npA = [];
