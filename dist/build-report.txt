@@ -1,24 +1,24 @@
-built 2026-10-28T21:14:43.322Z
+built 2026-10-28T21:19:04.787Z
 source tiers: A 633 · B 32 · disallowed 0 · unclassified 0
 chapters: 15 + geopolitics
-words: 37833
+words: 37976
 sources: 665
 landscape: 38 chips · suppliers: 226 · timeline: 74 · matrix: 20 · glossary: 208 · controls: 40 · exposure: 126
 specimens: boule-and-wafer, cowos-exploded, die-floorplan, euv-scanner, foup, gaa-transistor, gas-cabinet, globe, gpu-baseboard, hbm-stack, package, photomask, probe-card, process-chamber, rack, sem-column, substrate-layers, wafer-cost, wafer
 size: home 302 KB
-  01 design-and-eda: 2322 words, 30 sources (D 0, ? 0), 4 figures
-  02 silicon-and-wafers: 2106 words, 30 sources (D 0, ? 0), 3 figures
+  01 design-and-eda: 2383 words, 30 sources (D 0, ? 0), 4 figures
+  02 silicon-and-wafers: 2100 words, 30 sources (D 0, ? 0), 3 figures
   03 chemicals-gases-and-photoresist: 2468 words, 49 sources (D 0, ? 0), 3 figures
-  04 lithography: 2519 words, 51 sources (D 0, ? 0), 5 figures
+  04 lithography: 2549 words, 51 sources (D 0, ? 0), 5 figures
   05 photomasks-and-pellicles: 2211 words, 34 sources (D 0, ? 0), 2 figures
-  06 deposition-and-etch: 2309 words, 48 sources (D 0, ? 0), 4 figures
+  06 deposition-and-etch: 2308 words, 48 sources (D 0, ? 0), 4 figures
   07 metrology-and-inspection: 2190 words, 35 sources (D 0, ? 0), 4 figures
   08 foundries-and-fabs: 3567 words, 61 sources (D 0, ? 0), 5 figures
-  09 memory-and-hbm: 2055 words, 24 sources (D 0, ? 0), 4 figures
-  10 advanced-packaging: 2317 words, 33 sources (D 0, ? 0), 4 figures
+  09 memory-and-hbm: 2082 words, 24 sources (D 0, ? 0), 4 figures
+  10 advanced-packaging: 2352 words, 33 sources (D 0, ? 0), 4 figures
   11 substrates-and-pcbs: 2086 words, 47 sources (D 0, ? 0), 3 figures
   12 test-and-assembly: 1760 words, 39 sources (D 0, ? 0), 4 figures
   13 systems-and-networking: 2113 words, 44 sources (D 0, ? 0), 3 figures
   14 data-centers-and-power: 2231 words, 37 sources (D 0, ? 0), 4 figures
-  15 component-costs: 2123 words, 33 sources (D 0, ? 0), 3 figures
+  15 component-costs: 2120 words, 33 sources (D 0, ? 0), 3 figures
   16 geopolitics: 3456 words, 70 sources (D 0, ? 0), 3 figures

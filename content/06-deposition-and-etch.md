@@ -12,35 +12,36 @@
  "concentration": "High",
  "chokepointScore": 4,
  "leaders": [
- {"name": "Applied Materials", "country": "US", "share": "82.4% of physical vapor deposition tools in 2025, by CSET's count from TechInsights data", "source": "https://chipexplorer.eto.tech/?parentNode=N35&selectedNode=N42"},
- {"name": "Lam Research", "country": "US", "share": "51.2% of conductor etch tools in 2025", "source": "https://chipexplorer.eto.tech/?parentNode=N46&selectedNode=N50"},
- {"name": "Tokyo Electron", "country": "JP", "share": "55.9% of dielectric etch tools in 2025", "source": "https://chipexplorer.eto.tech/?parentNode=N46&selectedNode=N51"},
- {"name": "ASM International", "country": "NL", "share": "54.5% of atomic layer deposition tools in 2025", "source": "https://chipexplorer.eto.tech/?parentNode=N35&selectedNode=N41"},
- {"name": "Naura", "country": "CN", "share": "14.7% of physical vapor deposition tools in 2025", "source": "https://chipexplorer.eto.tech/?parentNode=N35&selectedNode=N42"}
+ {"name": "Applied Materials", "country": "US", "share": "82.4 percent of physical vapor deposition tools in 2025, by CSET's count from TechInsights data", "source": "https://chipexplorer.eto.tech/?parentNode=N35&selectedNode=N42"},
+ {"name": "Lam Research", "country": "US", "share": "51.2 percent of conductor etch tools in 2025", "source": "https://chipexplorer.eto.tech/?parentNode=N46&selectedNode=N50"},
+ {"name": "Tokyo Electron", "country": "JP", "share": "55.9 percent of dielectric etch tools in 2025", "source": "https://chipexplorer.eto.tech/?parentNode=N46&selectedNode=N51"},
+ {"name": "ASM International", "country": "NL", "share": "54.5 percent of atomic layer deposition tools in 2025", "source": "https://chipexplorer.eto.tech/?parentNode=N35&selectedNode=N41"},
+ {"name": "Naura", "country": "CN", "share": "14.7 percent of physical vapor deposition tools in 2025", "source": "https://chipexplorer.eto.tech/?parentNode=N35&selectedNode=N42"}
  ],
  "countries": [
  {"code": "US", "note": "Applied Materials, Lam Research"},
  {"code": "JP", "note": "Tokyo Electron, Kokusai Electric"},
  {"code": "NL", "note": "ASM International, atomic layer deposition"},
  {"code": "KR", "note": "Large equipment buyer"},
- {"code": "CN", "note": "Naura, AMEC and Piotech, in the largest equipment market ($49.3B in 2025)"}
+ {"code": "CN", "note": "Naura, AMEC and Piotech, in the largest equipment market ($49.3 billion in 2025)"}
  ],
  "chinaStatus": "Chinese toolmakers held 12.4 percent of dry etch in 2025, according to CSET's analysis of TechInsights data. They held 2.6 percent of atomic layer deposition that year, by the same count.",
  "chinaSources": ["https://chipexplorer.eto.tech/?parentNode=N46&selectedNode=N103", "https://chipexplorer.eto.tech/?parentNode=N35&selectedNode=N41"],
  "usStatus": "A December 2024 US rule lists some dry etch, atomic layer deposition and deep-hole deposition tools as controlled exports. Its foreign direct product rule reaches some tools built outside the United States.",
  "usSources": ["https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf#page=32", "https://www.bis.gov/press-release/commerce-strengthens-export-controls-restrict-chinas-capability-produce-advanced-semiconductors-military"],
- "costSignal": "$26.2B deposition tool market in 2025, by CSET's count from TechInsights data. Dry etch tools were a $21.9B market in 2025",
+ "costSignal": "$26.2 billion deposition tool market in 2025, by CSET's count from TechInsights data. Dry etch tools were a $21.9 billion market in 2025",
  "costSources": ["https://chipexplorer.eto.tech/?parentNode=N35&selectedNode=N36", "https://chipexplorer.eto.tech/?parentNode=N46&selectedNode=N103"],
  "substitutability": {"band": "Moderate", "test": "In 2025 Lam Research held 41.1 percent of dry etch tools, Tokyo Electron 23.4 percent and Applied Materials 17.4 percent, by CSET's count from TechInsights data.", "testSources": ["https://chipexplorer.eto.tech/?parentNode=N46&selectedNode=N103"], "why": "Buyers have alternatives. At least five firms sell atomic layer deposition tools, which lay down a film a fraction of a layer of atoms at a time.", "whySources": ["https://www.govinfo.gov/content/pkg/FR-2023-10-25/pdf/2023-23049.pdf#page=16", "https://chipexplorer.eto.tech/?parentNode=N35&selectedNode=N41"]}
  },
  "keyFacts": [
+ {"fact": "Between 2019 and 2024 China-based suppliers went from 2 to 7 percent of deposition tools and from under 3 to almost 9 percent of etch and clean tools, by CSET's analysis of TechInsights data", "source": "https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/"},
+ {"fact": "Tokyo Electron's own fiscal 2026 results presentation, citing Gartner, puts its world share in calendar 2025 at 23 percent of dry etch, 38 percent of tube and low-pressure CVD and 15 percent of ALD, against 91 percent of coater/developers", "source": "https://www.tel.com/ir/library/report/pjuomj00000000tf-att/fy26q4transcript-e.pdf"},
  {"fact": "Producing one chip takes 1,000 to 1,500 steps, depending on how complex it is. A part-finished chip can cross international borders 70 or more times (SIA, 2025, with the border-crossing figure from a 2020 Accenture and Global Semiconductor Alliance study)", "source": "https://www.finance.senate.gov/download/051425-isaacs-testimony&download=1"},
- {"fact": "Global sales of chipmaking equipment reached $135.1B in 2025, up 15% from $117.1B in 2024, with wafer processing equipment up 12% (SEMI)", "source": "https://www.semi.org/en/SEMI-Reports-Global-Semiconductor-Equipment-Billings-Reached-135-Billion-in-2025"},
- {"fact": "China bought $49.3B of semiconductor equipment in 2025, down 0.5% and still the largest single market. Taiwan's purchases rose 90% to a record $31.5B (SEMI)", "source": "https://www.semi.org/en/SEMI-Reports-Global-Semiconductor-Equipment-Billings-Reached-135-Billion-in-2025"},
- {"fact": "Tokyo Electron's own fiscal 2026 results presentation, citing Gartner, puts its world share in calendar 2025 at 23% of dry etch, 38% of tube and low-pressure CVD and 15% of ALD, against 91% of coater/developers", "source": "https://www.tel.com/ir/library/report/pjuomj00000000tf-att/fy26q4transcript-e.pdf"},
- {"fact": "China-based suppliers held 9.8% of deposition tools worldwide in 2025 but only 2.6% of ALD tools, according to CSET's analysis of TechInsights data published in July 2026", "source": "https://chipexplorer.eto.tech/?parentNode=N35&selectedNode=N41"},
- {"fact": "AMEC's 2025 revenue was RMB 12.385 billion, up about 36.62%, and its thin-film tool revenue rose about 224.23%. It spent RMB 3.744 billion on R&D, 30.2% of sales", "source": "https://www.amec-inc.com/news/708.html"},
- {"fact": "BIS controls TSV etch tools that reach aspect ratios of 10:1 or more, etch faster than 7 microns per minute and keep depth within 2% across the wafer (ECCN 3B001.c.4)", "source": "https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf"},
+ {"fact": "Global sales of chipmaking equipment reached $135.1 billion in 2025, up 15 percent from $117.1 billion in 2024, with wafer processing equipment up 12 percent (SEMI)", "source": "https://www.semi.org/en/SEMI-Reports-Global-Semiconductor-Equipment-Billings-Reached-135-Billion-in-2025"},
+ {"fact": "China bought $49.3 billion of semiconductor equipment in 2025, down 0.5 percent and still the largest single market. Taiwan's purchases rose 90 percent to a record $31.5 billion (SEMI)", "source": "https://www.semi.org/en/SEMI-Reports-Global-Semiconductor-Equipment-Billings-Reached-135-Billion-in-2025"},
+ {"fact": "China-based suppliers held 9.8 percent of deposition tools worldwide in 2025 but only 2.6 percent of ALD tools, according to CSET's analysis of TechInsights data published in July 2026", "source": "https://chipexplorer.eto.tech/?parentNode=N35&selectedNode=N41"},
+ {"fact": "AMEC's 2025 revenue was RMB 12.385 billion, up about 36.62 percent, and its thin-film tool revenue rose about 224.23 percent. It spent RMB 3.744 billion on R&D, 30.2 percent of sales", "source": "https://www.amec-inc.com/news/708.html"},
+ {"fact": "BIS controls TSV etch tools that reach aspect ratios of 10:1 or more, etch faster than 7 microns per minute and keep depth within 2 percent across the wafer (ECCN 3B001.c.4)", "source": "https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf"},
  {"fact": "Lam Research's fiscal 2026 revenue was $23.233 billion, up from $18.436 billion in fiscal 2025", "source": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000033/lrcx_exhibitx991xq4x2026.htm"}
  ],
  "figures": [
@@ -49,7 +50,7 @@
  "id": "equipment-billings",
  "type": "columns",
  "title": "What the world spent on chipmaking equipment",
- "finding": "Chipmaking equipment sales rose to $135.1 billion in 2025, from $117.1 billion",
+ "finding": "Chipmaking equipment sales rose to $135.1 billion in 2025, from $117.1 billion",
  "unit": "$B",
  "data": [["2024", 117.1], ["2025", 135.1]],
  "source": {"label": "SEMI, Worldwide Semiconductor Equipment Market Statistics", "url": "https://www.semi.org/en/SEMI-Reports-Global-Semiconductor-Equipment-Billings-Reached-135-Billion-in-2025"}
@@ -58,7 +59,7 @@
  "id": "tel-tool-share",
  "type": "bars",
  "title": "Tokyo Electron world market share by tool type, 2025. Some types overlap, because deposition includes furnace, ALD and low-pressure CVD tools",
- "finding": "Tokyo Electron held 91 percent of coater/developers in 2025, on Gartner's figures",
+ "finding": "Tokyo Electron held 91 percent of coater/developers in 2025, on Gartner's figures",
  "unit": "%",
  "data": [["Coater/developer", 91], ["Tube and low-pressure CVD", 38], ["Oxidation/diffusion", 31], ["Deposition (furnace, ALD, LPCVD)", 27], ["Dry etch", 23], ["Cleaning", 20], ["ALD", 15]],
  "source": {"label": "Gartner, as reported in Tokyo Electron's FY2026 Q4 results presentation", "url": "https://www.tel.com/ir/library/report/pjuomj00000000tf-att/fy26q4transcript-e.pdf#page=28"}
@@ -67,7 +68,7 @@
  "id": "china-tool-share",
  "type": "bars",
  "title": "China-based suppliers' share of global tool segments, 2025",
- "finding": "China-based suppliers held 31 percent of dry strip in 2025, mostly Mattson's",
+ "finding": "China-based suppliers held 31 percent of dry strip in 2025, mostly Mattson's",
  "unit": "%",
  "data": [["Dry strip (mostly Mattson)", 31], ["PVD", 14.7], ["Dielectric etch", 13.4], ["Dry etch", 12.4], ["Etch and clean", 10.1], ["Deposition", 9.8], ["CVD", 8.8], ["Lithography (i-line)", 4.2], ["ALD", 2.6]],
  "source": {"label": "CSET analysis of TechInsights data (published July 2026), ETO Chip Explorer", "url": "https://chipexplorer.eto.tech/?parentNode=N35&selectedNode=N36"}
@@ -155,7 +156,7 @@ The United States tightened its export controls at least five times between 2022
 
 BIS enforces the rules on toolmakers too. In February 2026 BIS said Applied Materials had shipped ion implanters, tools that fire atoms into silicon, to a company in China on the Entity List in 2021 and 2022 without the license the Entity List requires ([source](https://www.bis.gov/press-release/applied-materials-pay-252-million-penalty-bis-illegally-exporting-semiconductor-manufacturing-equipment)). The tools, worth about $126 million, went to China through Applied's Korean unit ([source](https://www.bis.gov/press-release/applied-materials-pay-252-million-penalty-bis-illegally-exporting-semiconductor-manufacturing-equipment)). BIS set the penalty at about $252 million, twice their value and the most the law allows ([source](https://www.bis.gov/press-release/applied-materials-pay-252-million-penalty-bis-illegally-exporting-semiconductor-manufacturing-equipment)). In fiscal 2026 Applied Materials took a $253 million charge to settle an export controls compliance matter with BIS ([source](https://www.globenewswire.com/news-release/2026/08/13/3344890/0/en/applied-materials-announces-third-quarter-2026-results.html)).
 
-Of the tools in the chart below, China-based suppliers have their largest share in dry stripping, which clears leftover photoresist off the wafer ([source](https://chipexplorer.eto.tech/?parentNode=N46&selectedNode=N53)). Dry stripping was a $314.6 million market in 2025, by CSET's count from TechInsights data ([source](https://chipexplorer.eto.tech/?parentNode=N46&selectedNode=N53)). Japan's Kokusai held 35.7 percent of it, Mattson Technology 22.6 percent and Naura 8.3 percent ([source](https://chipexplorer.eto.tech/?parentNode=N46&selectedNode=N53)). Mattson is based in the United States, but Beijing E-Town bought it in 2016 ([source](https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/)). CSET counts Mattson's share as China's ([source](https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/)).
+Among deposition and etch tool segments, China-based suppliers have their largest share in dry stripping, which clears leftover photoresist off the wafer ([source](https://chipexplorer.eto.tech/?parentNode=N46&selectedNode=N53)). Dry stripping was a $314.6 million market in 2025, by CSET's count from TechInsights data ([source](https://chipexplorer.eto.tech/?parentNode=N46&selectedNode=N53)). Japan's Kokusai held 35.7 percent of it, Mattson Technology 22.6 percent and Naura 8.3 percent ([source](https://chipexplorer.eto.tech/?parentNode=N46&selectedNode=N53)). Mattson is based in the United States, but Beijing E-Town bought it in 2016 ([source](https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/)). CSET counts Mattson's share as China's ([source](https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/)).
 
 {{figure:china-tool-share}}
 

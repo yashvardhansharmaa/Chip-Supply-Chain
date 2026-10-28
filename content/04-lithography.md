@@ -4,7 +4,7 @@
  "number": 4,
  "title": "Lithography",
  "oneLiner": "ASML, a Dutch firm, is the only maker of extreme ultraviolet scanners, the machines that print the finest layers of a chip. It sold 48 of them in 2025.",
- "plain": "Lithography prints the pattern of a circuit onto the wafer. A machine holds a stencil of one layer of the circuit up to a light source and projects the image, four times smaller, onto the silicon. The shorter the wavelength of the light, the finer the lines a machine can print. Even so, a machine can print lines narrower than its light's wavelength. Immersion scanners, for example, shine the light through a layer of water between lens and wafer, which lets them print smaller features with the same light ([source](https://www.asml.com/en/technology/lithography-principles/lenses-and-mirrors)). ASML rates its NXT:2150i immersion scanner at features of 38 nanometers or less with 193-nanometer argon fluoride laser light ([source](https://www.asml.com/en/products/duv-lithography-systems/twinscan-nxt-2150i)). Air soaks up extreme ultraviolet light, the shortest in use, so machines that print with it work in a vacuum. Only ASML, a Dutch company, makes them. Export controls are government rules on who a company may sell to. Every advanced chip passes through ASML's machines, so export controls on ASML affect all advanced chipmaking.",
+ "plain": "Lithography prints the pattern of a circuit onto the wafer. A machine holds a stencil of one layer of the circuit up to a light source and projects the image, four times smaller, onto the silicon. The shorter the wavelength of the light, the finer the lines a machine can print. Even so, a machine can print lines narrower than its light's wavelength. Immersion scanners, for example, shine the light through a layer of water between lens and wafer, which lets them print smaller features with the same light ([source](https://www.asml.com/en/technology/lithography-principles/lenses-and-mirrors)). ASML rates one of its immersion scanners, the NXT:2150i, at features of 38 nanometers or less, printed with argon fluoride laser light at 193 nanometers ([source](https://www.asml.com/en/products/duv-lithography-systems/twinscan-nxt-2150i)). Air soaks up extreme ultraviolet light, the shortest in use, so machines that print with it work in a vacuum. Only ASML, a Dutch company, makes them. Export controls are government rules on who a company may sell to. Every advanced chip passes through ASML's machines, so export controls on ASML affect all advanced chipmaking.",
  "bridge": "Coated and still blank, the wafer goes to the machine that sets how small the circuit can be.",
  "specimen": "euv-scanner",
  "specimenCaption": "An extreme ultraviolet scanner cut open along its light path. The machine is the size of a bus and weighs about 180 metric tons. The blue-violet thread is the 13.5 nm light. The mask and the wafer are drawn about twice their true size.",
@@ -12,9 +12,9 @@
  "concentration": "Extreme",
  "chokepointScore": 5,
  "leaders": [
- {"name": "ASML", "country": "NL", "share": "100% of EUV (extreme ultraviolet) systems sold in 2025", "source": "https://ourbrand.asml.com/m/8ab959d4926657b/original/asml-2025-annual-report-strategic-report-section.pdf#page=16"},
- {"name": "Nikon", "country": "JP", "share": "22 new chip lithography systems in the year to March 2026", "source": "https://www.nikon.com/content/dam/web-assets/nikoncom/company/local/global/en/ir/ir_library/result/pdf/2026/26_all_e.pdf#page=8"},
- {"name": "Canon", "country": "JP", "share": "234 chip lithography systems in 2025, 188 of them i-line and 46 KrF", "source": "https://global.canon/en/ir/conference/pdf/conf2025e.pdf#page=22"}
+ {"name": "ASML", "country": "NL", "share": "327 lithography systems sold in 2025, including all 48 EUV (extreme ultraviolet) systems", "source": "https://ourbrand.asml.com/m/419103cb23dfeaa4/original/asml-2025-annual-report-financial-performance-section.pdf#page=5"},
+ {"name": "Canon", "country": "JP", "share": "234 chip lithography systems sold in 2025", "source": "https://global.canon/en/ir/conference/pdf/conf2025e.pdf#page=22"},
+ {"name": "Nikon", "country": "JP", "share": "22 new chip lithography systems sold in the year to March 2026", "source": "https://www.nikon.com/content/dam/web-assets/nikoncom/company/local/global/en/ir/ir_library/result/pdf/2026/26_all_e.pdf#page=8"}
  ],
  "countries": [
  {"code": "NL", "note": "ASML, the Dutch maker of every EUV scanner"},
@@ -22,26 +22,27 @@
  {"code": "US", "note": "ASML light-source research and manufacturing, San Diego"},
  {"code": "JP", "note": "Nikon and Canon lithography scanners and steppers"}
  ],
- "chinaStatus": "Chinese firms have begun small-batch production of immersion DUV scanners, but none has yet been shown fit for producing advanced chips, the Center for Technology & Statecraft found in September 2026. Its central estimate in 2026 was that China would have a commercially viable immersion scanner for 7 nm chips in the mid-2030s, with the early 2030s plausible, and EUV not before the second half of the 2030s. Meanwhile Chinese fabs had built a stockpile of more than 330 immersion DUV systems by the first quarter of 2026, most of them ASML's NXT:1980i.",
- "chinaSources": ["https://techstatecraft.org/duv/", "https://techstatecraft.org/duv/", "https://techstatecraft.org/duv/"],
- "usStatus": "No American firm makes lithography scanners, CSET found in 2021. But every immersion DUV scanner holds a light source from Cymer, a US company now part of ASML, or from Japan's Gigaphoton, so the two governments could stop sales by controlling those parts, the Center for Technology & Statecraft found in September 2026. A US rule published in October 2023 already covers immersion scanners with an alignment error between 1.5 nm and 2.4 nm bound for advanced chipmaking if they hold any American-made parts. The US entity list also requires a license to supply the firms it names.",
- "usSources": ["https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf#page=4", "https://techstatecraft.org/duv/", "https://www.federalregister.gov/documents/2023/10/25/2023-23049/export-controls-on-semiconductor-manufacturing-items", "https://www.federalregister.gov/documents/2025/09/30/2025-19001/expansion-of-end-user-controls-to-cover-affiliates-of-certain-listed-entities"],
- "costSignal": "About $200M for a standard EUV scanner, an estimated $350-400M for the newer High-NA version and roughly $60M for a tool in the DUV segment, according to Reuters in July 2026",
+ "chinaStatus": "In July 2026 Reuters reported, citing one unnamed source, that a Shanghai firm with two state shareholders had started producing immersion DUV tools. The Center for Technology & Statecraft found in September 2026 that Chinese firms had begun small-batch production of such scanners, but none had yet been shown fit for producing advanced chips. Its central estimate in 2026 was that China would have a commercially viable immersion scanner for 7 nm chips in the mid-2030s, with the early 2030s plausible, and EUV not before the second half of the 2030s. Meanwhile Chinese fabs had built a stockpile of more than 330 immersion DUV systems by the first quarter of 2026, most of them ASML's NXT:1980i.",
+ "chinaSources": ["https://www.reuters.com/world/china/china-starts-production-home-grown-immersion-duv-chipmaking-tools-source-2026-07-28/", "https://techstatecraft.org/duv/", "https://techstatecraft.org/duv/", "https://techstatecraft.org/duv/"],
+ "usStatus": "CSET found in 2021 that no American firm made lithography scanners. In September 2026 the Center for Technology & Statecraft found that ASML held about 99 percent of the market for immersion DUV scanners and Japan's Nikon the rest. But every immersion DUV scanner holds a light source from Cymer, a US company now part of ASML, or from Japan's Gigaphoton, so the two governments could stop sales by controlling those parts, the Center for Technology & Statecraft found in September 2026. A US rule published in October 2023 already covers immersion scanners with an alignment error between 1.5 nm and 2.4 nm bound for advanced chipmaking if they hold any American-made parts. The US entity list also requires a license to supply the firms it names.",
+ "usSources": ["https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf#page=4", "https://techstatecraft.org/duv/", "https://techstatecraft.org/duv/", "https://www.federalregister.gov/documents/2023/10/25/2023-23049/export-controls-on-semiconductor-manufacturing-items", "https://www.federalregister.gov/documents/2025/09/30/2025-19001/expansion-of-end-user-controls-to-cover-affiliates-of-certain-listed-entities"],
+ "costSignal": "About $200 million for a standard EUV scanner, an estimated $350 million to $400 million for the newer High-NA version and roughly $60 million for a tool in the DUV segment, according to Reuters in July 2026",
  "costSources": ["https://www.reuters.com/world/asia-pacific/250-million-asml-printer-behind-nvidias-chips-2026-07-28/"],
  "substitutability": {"band": "Very hard", "test": "ASML is the only maker of EUV scanners, and Zeiss is its sole supplier of their mirrors.", "testSources": ["https://www.sec.gov/Archives/edgar/data/937966/000162828026011377/asml-2025xannualxreportx.htm"], "why": "A newcomer would first have to make mirrors a meter wide, polished smooth to within tens of picometers, a picometer being a trillionth of a meter. It would also need a light source that hits tin droplets with a laser 50,000 times a second.", "whySources": ["https://www.asml.com/en/technology/lithography-principles/lenses-and-mirrors", "https://www.asml.com/en/technology/lithography-principles/light-and-lasers"]}
  },
  "keyFacts": [
+ {"fact": "ASML is the only company that makes extreme ultraviolet (EUV) scanners", "source": "https://ourbrand.asml.com/m/8ab959d4926657b/original/asml-2025-annual-report-strategic-report-section.pdf#page=16"},
  {"fact": "ASML sold 48 EUV systems in 2025, versus 44 in 2024", "source": "https://ourbrand.asml.com/m/419103cb23dfeaa4/original/asml-2025-annual-report-financial-performance-section.pdf"},
- {"fact": "ASML's total net sales were EUR 32.7 billion in 2025 at a 52.8% gross margin", "source": "https://ourbrand.asml.com/m/419103cb23dfeaa4/original/asml-2025-annual-report-financial-performance-section.pdf"},
- {"fact": "In October 2026 ASML expected 2026 net sales of EUR 44 to 45 billion at a gross margin of around 56%", "source": "https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/pressreleasefinancialresul.htm"},
- {"fact": "In July 2026 ASML put its 2026 capacity at around 65 standard (low-NA) EUV systems and said it plans to add 30% for 2027", "source": "https://ourbrand.asml.com/asset/c8dbf3fc-4c5e-4406-83f6-27694b138245/Press-Release-Financial-Results-Q2-2026.pdf"},
- {"fact": "EUV was 48% of ASML's net system sales in 2025. China was 33% of net system sales, down from 41% in 2024", "source": "https://ourbrand.asml.com/m/3136300aa4999bc1/original/2026_01_28_Presentation-Investor-Relations-Q4-2025.pdf"},
- {"fact": "The TWINSCAN NXE:3800E reaches its full 220 wafers-per-hour specification, a 37% improvement on the NXE:3600D", "source": "https://ourbrand.asml.com/m/8ab959d4926657b/original/asml-2025-annual-report-strategic-report-section.pdf"},
+ {"fact": "ASML's total net sales were EUR 32.7 billion in 2025 at a 52.8 percent gross margin", "source": "https://ourbrand.asml.com/m/419103cb23dfeaa4/original/asml-2025-annual-report-financial-performance-section.pdf"},
+ {"fact": "In October 2026 ASML expected 2026 net sales of EUR 44 to 45 billion at a gross margin of around 56 percent", "source": "https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/pressreleasefinancialresul.htm"},
+ {"fact": "In July 2026 ASML put its 2026 capacity at around 65 standard (low-NA) EUV systems and said it plans to add 30 percent for 2027", "source": "https://ourbrand.asml.com/asset/c8dbf3fc-4c5e-4406-83f6-27694b138245/Press-Release-Financial-Results-Q2-2026.pdf"},
+ {"fact": "EUV was 48 percent of ASML's net system sales in 2025. China was 33 percent of net system sales, down from 41 percent in 2024", "source": "https://ourbrand.asml.com/m/3136300aa4999bc1/original/2026_01_28_Presentation-Investor-Relations-Q4-2025.pdf"},
+ {"fact": "The TWINSCAN NXE:3800E reaches its full 220 wafers-per-hour specification, a 37 percent improvement on the NXE:3600D", "source": "https://ourbrand.asml.com/m/8ab959d4926657b/original/asml-2025-annual-report-strategic-report-section.pdf"},
  {"fact": "An EUV source hits each molten tin droplet with a low-intensity laser pulse and then a more powerful one that vaporizes it, a process repeated 50,000 times a second", "source": "https://www.asml.com/en/technology/lithography-principles/light-and-lasers"},
  {"fact": "ASML demonstrated the first 1,000-watt EUV light source in April 2025, and customers had run more than 400,000 wafers on High NA systems by the end of that year", "source": "https://ourbrand.asml.com/m/8ab959d4926657b/original/asml-2025-annual-report-strategic-report-section.pdf"},
  {"fact": "ASML sold four EXE (High NA) and 44 NXE systems in 2025, against two EXE and 42 NXE in 2024", "source": "https://ourbrand.asml.com/m/419103cb23dfeaa4/original/asml-2025-annual-report-financial-performance-section.pdf"},
  {"fact": "ASML lists 5,100 suppliers in its 2025 annual report", "source": "https://www.sec.gov/Archives/edgar/data/937966/000162828026011377/asml-2025xannualxreportx.htm"},
- {"fact": "Reuters puts tools in the DUV segment at roughly $60 million each, a standard EUV tool at around $200 million and a High-NA system at an estimated $350 million to $400 million. It puts ASML's share of DUV above 80%", "source": "https://www.reuters.com/world/asia-pacific/250-million-asml-printer-behind-nvidias-chips-2026-07-28/"}
+ {"fact": "Reuters puts tools in the DUV segment at roughly $60 million each, a standard EUV tool at around $200 million and a High-NA system at an estimated $350 million to $400 million. It puts ASML's share of DUV above 80 percent", "source": "https://www.reuters.com/world/asia-pacific/250-million-asml-printer-behind-nvidias-chips-2026-07-28/"}
  ],
  "figures": [
     {"id": "litho-print", "type": "animation", "src": "litho", "title": "How lithography prints a chip", "note": "Simplified. The newest machines, which use extreme ultraviolet light, carry the image with mirrors in place of a lens."},
@@ -53,13 +54,13 @@
  "finding": "ASML sold 48 EUV systems in 2025, up from 44 in 2024",
  "unit": "tools",
  "data": [["2023", 53], ["2024", 44], ["2025", 48]],
- "source": {"label": "ASML 2025 annual report (2024 and 2025); 2023 from ASML's Q4 2023 investor presentation", "url": "https://ourbrand.asml.com/m/419103cb23dfeaa4/original/asml-2025-annual-report-financial-performance-section.pdf#page=5"}
+ "source": {"label": "ASML 2025 annual report for 2024 and 2025, and ASML's Q4 2023 investor presentation for 2023", "url": "https://ourbrand.asml.com/m/419103cb23dfeaa4/original/asml-2025-annual-report-financial-performance-section.pdf#page=5"}
  },
  {
  "id": "tool-price",
  "type": "bars",
  "title": "What one lithography system costs. The DUV bar is one figure for the whole segment",
- "finding": "High-NA EUV scanners cost an estimated $350 million to $400 million in 2026",
+ "finding": "High-NA EUV scanners cost an estimated $350 million to $400 million in 2026",
  "unit": "$M",
  "data": [["DUV tool", 60], ["EUV, 0.33 NA", 200], ["High-NA EUV", 350, 400]],
  "source": {"label": "Reuters explainer on ASML's lithography machines, first published 28 January 2026 and updated 28 July 2026", "url": "https://www.reuters.com/world/asia-pacific/250-million-asml-printer-behind-nvidias-chips-2026-07-28/"}
@@ -68,7 +69,7 @@
  "id": "litho-mix",
  "type": "stack",
  "title": "ASML net system sales by technology, 2025",
- "finding": "EUV made up 48 percent of ASML's 2025 system sales",
+ "finding": "EUV made up 48 percent of ASML's 2025 system sales",
  "unit": "%",
  "data": [["EUV", 48], ["ArF immersion", 42], ["KrF", 4], ["Metrology and inspection", 3], ["ArF dry", 2], ["i-line", 1]],
  "source": {"label": "ASML Q4 2025 investor presentation", "url": "https://ourbrand.asml.com/m/3136300aa4999bc1/original/2026_01_28_Presentation-Investor-Relations-Q4-2025.pdf#page=9"}
@@ -77,7 +78,7 @@
  "id": "asml-region",
  "type": "stack",
  "title": "ASML net system sales by the region tools shipped to, 2025",
- "finding": "China took 33 percent of ASML's 2025 system sales, the largest share",
+ "finding": "China took 33 percent of ASML's 2025 system sales, the largest share",
  "unit": "%",
  "data": [["China", 33], ["South Korea", 25], ["Taiwan", 22], ["United States", 12], ["Japan", 5], ["Rest of Asia", 2], ["EMEA", 1]],
  "source": {"label": "ASML Q4 2025 investor presentation", "url": "https://ourbrand.asml.com/m/3136300aa4999bc1/original/2026_01_28_Presentation-Investor-Relations-Q4-2025.pdf#page=9"},
@@ -88,11 +89,11 @@
 ---
 # Lithography
 
-ASML sold 327 lithography systems in 2025, 48 of them extreme ultraviolet (EUV) ([source](https://ourbrand.asml.com/m/419103cb23dfeaa4/original/asml-2025-annual-report-financial-performance-section.pdf#page=5)). Nobody else makes EUV systems ([source](https://ourbrand.asml.com/m/8ab959d4926657b/original/asml-2025-annual-report-strategic-report-section.pdf#page=16)).
+ASML sold 327 lithography systems in 2025 ([source](https://ourbrand.asml.com/m/419103cb23dfeaa4/original/asml-2025-annual-report-financial-performance-section.pdf#page=5)). Tools shipped to China made up 33 percent of its net system sales that year, more than any other region ([source](https://ourbrand.asml.com/m/3136300aa4999bc1/original/2026_01_28_Presentation-Investor-Relations-Q4-2025.pdf#page=9)).
 
 ## How it works
 
-Lithography prints the pattern of a circuit onto the wafer. A machine holds a stencil of one layer of the circuit up to a light source and projects the image, four times smaller, onto the silicon. The shorter the wavelength of the light, the finer the lines a machine can print. Even so, a machine can print lines narrower than its light's wavelength. Immersion scanners, for example, shine the light through a layer of water between lens and wafer, which lets them print smaller features with the same light ([source](https://www.asml.com/en/technology/lithography-principles/lenses-and-mirrors)). ASML rates its NXT:2150i immersion scanner at features of 38 nanometers or less with 193-nanometer argon fluoride laser light ([source](https://www.asml.com/en/products/duv-lithography-systems/twinscan-nxt-2150i)). Air soaks up extreme ultraviolet light, the shortest in use, so machines that print with it work in a vacuum. Only ASML, a Dutch company, makes them. Export controls are government rules on who a company may sell to. Every advanced chip passes through ASML's machines, so export controls on ASML affect all advanced chipmaking.
+Lithography prints the pattern of a circuit onto the wafer. A machine holds a stencil of one layer of the circuit up to a light source and projects the image, four times smaller, onto the silicon. The shorter the wavelength of the light, the finer the lines a machine can print. Even so, a machine can print lines narrower than its light's wavelength. Immersion scanners, for example, shine the light through a layer of water between lens and wafer, which lets them print smaller features with the same light ([source](https://www.asml.com/en/technology/lithography-principles/lenses-and-mirrors)). ASML rates one of its immersion scanners, the NXT:2150i, at features of 38 nanometers or less, printed with argon fluoride laser light at 193 nanometers ([source](https://www.asml.com/en/products/duv-lithography-systems/twinscan-nxt-2150i)). Air soaks up extreme ultraviolet light, the shortest in use, so machines that print with it work in a vacuum. Only ASML, a Dutch company, makes them. Export controls are government rules on who a company may sell to. Every advanced chip passes through ASML's machines, so export controls on ASML affect all advanced chipmaking.
 
 The stencil is called a photomask, and the machine a scanner (see [Photomasks and pellicles](#photomasks-and-pellicles)).
 
@@ -197,6 +198,6 @@ Leading-edge AI accelerators are made with EUV, which prints their finest layers
 
 ## Takeaways
 
-ASML is the only company that makes extreme ultraviolet (EUV) scanners ([source](https://ourbrand.asml.com/m/8ab959d4926657b/original/asml-2025-annual-report-strategic-report-section.pdf#page=16)). It also holds above 80 percent of the market for deep ultraviolet (DUV) lithography, which uses light of longer wavelength than EUV ([source](https://www.reuters.com/world/asia-pacific/250-million-asml-printer-behind-nvidias-chips-2026-07-28/)). ASML says the production capacity of Zeiss, its sole supplier of optics, limits how many lithography systems it can build ([source](https://www.sec.gov/Archives/edgar/data/937966/000162828026011377/asml-2025xannualxreportx.htm)).
+Beyond extreme ultraviolet (EUV), ASML holds above 80 percent of the market for deep ultraviolet (DUV) lithography, which uses light of longer wavelength ([source](https://www.reuters.com/world/asia-pacific/250-million-asml-printer-behind-nvidias-chips-2026-07-28/)). In July 2026 ASML put its capacity for 2026 at around 65 standard EUV scanners, which caps how many fabs anywhere can add that year ([source](https://ourbrand.asml.com/asset/c8dbf3fc-4c5e-4406-83f6-27694b138245/Press-Release-Financial-Results-Q2-2026.pdf)). ASML says the production capacity of Zeiss, its sole supplier of optics, limits how many lithography systems it can build ([source](https://www.sec.gov/Archives/edgar/data/937966/000162828026011377/asml-2025xannualxreportx.htm)).
 
 Export controls set up by the United States with allies including the Netherlands block EUV scanners from Chinese chip foundries ([source](https://www.csis.org/blogs/strategic-technologies-blog/breakthroughs-or-boasts-assessing-recent-chinese-lithography)). In December 2025 Reuters reported a Chinese prototype that had made EUV light but had printed no chip ([source](https://www.reuters.com/world/china/how-china-built-its-manhattan-project-rival-west-ai-chips-2025-12-17/)). In July 2026 Reuters reported, citing one unnamed source, that a Shanghai firm with two state shareholders has started producing immersion DUV tools, which shine their light through water ([source](https://www.reuters.com/world/china/china-starts-production-home-grown-immersion-duv-chipmaking-tools-source-2026-07-28/)).

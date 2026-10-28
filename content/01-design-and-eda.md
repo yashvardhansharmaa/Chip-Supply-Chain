@@ -12,41 +12,41 @@
  "concentration": "Extreme",
  "chokepointScore": 4,
  "leaders": [
- {"name": "Synopsys", "country": "US", "share": "90%+ of the timing-signoff market at advanced nodes as of 2026", "source": "https://newsletter.semianalysis.com/p/eda-market-primer"},
- {"name": "Cadence", "country": "US", "share": "55-60% of the hardware emulator market at advanced nodes as of 2026", "source": "https://newsletter.semianalysis.com/p/eda-market-primer"},
- {"name": "Siemens EDA", "country": "US", "share": "85%+ of physical verification, the final layout check, at advanced nodes as of 2026", "source": "https://newsletter.semianalysis.com/p/eda-market-primer"},
- {"name": "Arm", "country": "GB", "share": "About 50% of processor compute at the top cloud firms as of May 2026", "source": "https://newsroom.arm.com/news/arm-q4-fye26-results"},
- {"name": "Broadcom", "country": "US", "share": "$16.7B of AI semiconductor revenue in the third quarter of fiscal 2026, custom accelerators and networking combined", "source": "https://www.sec.gov/Archives/edgar/data/0001730168/000173016826000076/avgo-08022026x8kxex99.htm"}
+ {"name": "Synopsys", "country": "US", "share": "Over 90 percent of the timing-signoff market at advanced nodes as of 2026", "source": "https://newsletter.semianalysis.com/p/eda-market-primer"},
+ {"name": "Cadence", "country": "US", "share": "55 to 60 percent of the hardware emulator market at advanced nodes as of 2026", "source": "https://newsletter.semianalysis.com/p/eda-market-primer"},
+ {"name": "Siemens EDA", "country": "US", "share": "Over 85 percent of physical verification, the final layout check, at advanced nodes as of 2026", "source": "https://newsletter.semianalysis.com/p/eda-market-primer"},
+ {"name": "Arm", "country": "GB", "share": "About 50 percent of processor compute at the top cloud firms as of May 2026", "source": "https://newsroom.arm.com/news/arm-q4-fye26-results"},
+ {"name": "Broadcom", "country": "US", "share": "$16.7 billion of AI semiconductor revenue in the third quarter of fiscal 2026, custom accelerators and networking combined", "source": "https://www.sec.gov/Archives/edgar/data/0001730168/000173016826000076/avgo-08022026x8kxex99.htm"}
  ],
  "countries": [
  {"code": "US", "note": "Synopsys, Cadence, Broadcom, Marvell and Nvidia"},
  {"code": "GB", "note": "Arm processor and interconnect designs licensed from Cambridge, and since 2026 its own server chip"},
  {"code": "TW", "note": "Alchip, Global Unichip and MediaTek: design services that carry a chip to the factory"},
  {"code": "IL", "note": "Annapurna Labs, the AWS design house behind Trainium and Graviton"},
- {"code": "IN", "note": "Nearly 20% of the world's chip design engineers, on the Indian government's count"}
+ {"code": "IN", "note": "Nearly 20 percent of the world's chip design engineers, on the Indian government's count"}
  ],
  "chinaStatus": "China designs its own AI accelerators, but Huawei's most powerful chip in 2026, the Ascend 950, delivers about half the computing performance of Nvidia's H100 from 2022, on Epoch AI's estimate. CSIS found that as of 2025 Chinese design tools were still far from replacing the full range of advanced capabilities US firms offer, especially for 5 nm and 3 nm chips.",
  "chinaSources": ["https://epoch.ai/publications/huaweis-roadmap-to-2031", "https://csis-website-prod.s3.amazonaws.com/s3fs-public/2025-10/251006_Reinsch_Semiconductor_Export_0.pdf#page=33"],
  "usStatus": "Synopsys and Cadence, the two largest design-software vendors by 2025 revenue, are American.",
  "usSources": ["https://newsletter.semianalysis.com/p/eda-market-primer"],
- "costSignal": "$18B world market for design software, simulation software and licensed circuit blocks in 2025. SemiAnalysis put a single respin, a design revision that needs some new masks, at leading-edge nodes at $50-100M in May 2026",
+ "costSignal": "$18 billion world market for design software, simulation software and licensed circuit blocks in 2025. SemiAnalysis put a single respin, a design revision that needs some new masks, at leading-edge nodes at $50 million to $100 million in May 2026",
  "costSources": ["https://newsletter.semianalysis.com/p/eda-market-primer", "https://newsletter.semianalysis.com/p/eda-market-primer"],
  "substitutability": {"band": "Hard", "test": "Only three complete sets of chip design software exist. A fourth would have to be written from nothing and approved by a foundry.", "testSources": ["https://csis-website-prod.s3.amazonaws.com/s3fs-public/2025-10/251006_Reinsch_Semiconductor_Export_0.pdf#page=13", "https://newsletter.semianalysis.com/p/eda-market-primer"], "why": "Changing one tool, such as the synthesis tool that turns a design's code into logic cells, means re-running the later steps of the design. The foundry that makes the chip also specifies which signoff tools its customers must use.", "whySources": ["https://newsletter.semianalysis.com/p/eda-market-primer", "https://newsletter.semianalysis.com/p/eda-market-primer"]}
  },
  "keyFacts": [
- {"fact": "The market for chip design software, simulation software and licensed circuit blocks was about $18B in 2025, with Synopsys, Cadence and Siemens EDA holding over 85%, counting Ansys as part of Synopsys", "source": "https://newsletter.semianalysis.com/p/eda-market-primer"},
- {"fact": "Synopsys reported $7.054B of revenue for fiscal year 2025, the twelve months to 31 October 2025, of which Ansys contributed $756.6M after the July close", "source": "https://www.sec.gov/Archives/edgar/data/883241/000119312525314200/d29055dex991.htm"},
- {"fact": "In 2022 SemiAnalysis put a photomask set at over $1M at 28 nm and over $10M at 7 nm, and expected 3 nm sets to push into the $40M range. It also reported that startups had designed and taped out chips on TSMC 7 nm, then a leading-edge process, for $50-75M", "source": "https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor"},
- {"fact": "In May 2026 SemiAnalysis put a leading-edge photomask set at $40M and a single respin at leading-edge nodes at $50-100M", "source": "https://newsletter.semianalysis.com/p/eda-market-primer"},
+ {"fact": "The market for chip design software, simulation software and licensed circuit blocks was about $18 billion in 2025, with Synopsys, Cadence and Siemens EDA holding over 85 percent, counting Ansys as part of Synopsys", "source": "https://newsletter.semianalysis.com/p/eda-market-primer"},
+ {"fact": "Synopsys reported $7.054 billion of revenue for fiscal year 2025, the twelve months to 31 October 2025, of which Ansys contributed $756.6 million after the July close", "source": "https://www.sec.gov/Archives/edgar/data/883241/000119312525314200/d29055dex991.htm"},
+ {"fact": "In 2022 SemiAnalysis put a photomask set at over $1 million at 28 nm and over $10 million at 7 nm, and expected 3 nm sets to push into the $40 million range. It also reported that startups had designed and taped out chips on TSMC 7 nm, then a leading-edge process, for $50 million to $75 million", "source": "https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor"},
+ {"fact": "In May 2026 SemiAnalysis put a leading-edge photomask set at $40 million and a single respin at leading-edge nodes at $50 million to $100 million", "source": "https://newsletter.semianalysis.com/p/eda-market-primer"},
  {"fact": "The US Bureau of Industry and Security told Cadence on 23 May 2025 that exports of design software to China needed a license, then rescinded that requirement on 2 July 2025", "source": "https://www.sec.gov/Archives/edgar/data/813672/000081367225000093/cdns-20250702.htm"},
  {"fact": "Since 14 October 2022, design software specially made for chips with gate-all-around transistors has needed a US export license for national-security reasons, carrying out a December 2021 Wassenaar Arrangement decision", "source": "https://www.federalregister.gov/documents/2022/08/15/2022-17125/implementation-of-certain-2021-wassenaar-arrangement-decisions-on-four-section-1758-technologies"},
- {"fact": "Arm reported $4.92B revenue and $2.61B of royalty revenue in fiscal 2026", "source": "https://newsroom.arm.com/news/arm-q4-fye26-results"},
- {"fact": "Broadcom reported $16.7B of AI semiconductor revenue in Q3 FY2026, up 221% year on year, a figure covering its custom AI accelerators and its AI networking chips", "source": "https://www.sec.gov/Archives/edgar/data/0001730168/000173016826000076/avgo-08022026x8kxex99.htm"},
+ {"fact": "Arm reported $4.92 billion revenue and $2.61 billion of royalty revenue in fiscal 2026", "source": "https://newsroom.arm.com/news/arm-q4-fye26-results"},
+ {"fact": "Broadcom reported $16.7 billion of AI semiconductor revenue in Q3 FY2026, up 221 percent year on year, a figure covering its custom AI accelerators and its AI networking chips", "source": "https://www.sec.gov/Archives/edgar/data/0001730168/000173016826000076/avgo-08022026x8kxex99.htm"},
  {"fact": "In October 2025 OpenAI and Broadcom announced a collaboration to deploy 10 gigawatts of OpenAI-designed AI accelerators", "source": "https://investors.broadcom.com/news-releases/news-release-details/openai-and-broadcom-announce-strategic-collaboration-deploy-10"},
- {"fact": "In December 2024 Broadcom said its 3.5D XDSiP packages more than 6,000 mm2 of silicon and 12 high-bandwidth memory stacks in one device", "source": "https://docs.broadcom.com/doc/3-5d-xdsip-platform-technology"},
- {"fact": "Alchip reported $992M of revenue in 2025", "source": "https://www.alchip.com/en/Investors/financials/"},
+ {"fact": "In December 2024 Broadcom said its 3.5D XDSiP packages more than 6,000 mm² of silicon and 12 high-bandwidth memory stacks in one device", "source": "https://docs.broadcom.com/doc/3-5d-xdsip-platform-technology"},
+ {"fact": "Alchip reported $992 million of revenue in 2025", "source": "https://www.alchip.com/en/Investors/financials/"},
  {"fact": "UCIe 3.0, the open standard for links between chiplets, adds 48 GT/s and 64 GT/s data rates", "source": "https://www.uciexpress.org/specifications"},
- {"fact": "In July 2025 the Indian government said nearly 20% of the world's chip design engineers work in India", "source": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2148393"}
+ {"fact": "In July 2025 the Indian government said nearly 20 percent of the world's chip design engineers work in India", "source": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2148393"}
  ],
  "figures": [
  {"id": "design-timing", "type": "animation", "src": "chip-design", "title": "How a chip is designed", "note": "Simplified. Not to scale. The floorplan follows a GPU die. One tick, less than a billionth of a second, is slowed to about two seconds."},
@@ -54,7 +54,7 @@
  "id": "eda-share",
  "type": "stack",
  "title": "Share of revenue from design software, simulation software and licensed blocks, 2025. Synopsys includes part of Ansys's revenue",
- "finding": "Synopsys took 44 percent of the 2025 market, Cadence 30 percent",
+ "finding": "Synopsys took 44 percent of the 2025 market, Cadence 30 percent",
  "unit": "%",
  "data": [["Synopsys", 44], ["Cadence", 30], ["Siemens EDA", 13], ["All others", 13]],
  "source": {"label": "SemiAnalysis, EDA Market Primer, May 2026, table of calendar 2025 vendor shares", "url": "https://newsletter.semianalysis.com/p/eda-market-primer"}
@@ -62,17 +62,17 @@
  {
  "id": "mask-cost",
  "type": "bars",
- "title": "What one photomask set costs, by node, 2022 ($M). The 28 nm and 7 nm figures are minimums",
- "finding": "A 3 nm mask set was forecast at $40 million in 2022",
+ "title": "What one photomask set costs, by node, 2022 ($M). The 28 nm and 7 nm figures are minimums, and 3 nm was a forecast",
+ "finding": "In 2022 SemiAnalysis forecast a 3 nm mask set at $40 million",
  "unit": "$M",
  "data": [["28 nm", 1], ["7 nm", 10], ["3 nm", 40]],
- "source": {"label": "SemiAnalysis, The Dark Side of the Semiconductor Design Renaissance, July 2022. The 3 nm figure was a 2022 forecast. SemiAnalysis's May 2026 EDA Market Primer puts a leading-edge mask set at $40M", "url": "https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor"}
+ "source": {"label": "SemiAnalysis, The Dark Side of the Semiconductor Design Renaissance, July 2022. SemiAnalysis's May 2026 EDA Market Primer puts a leading-edge mask set at $40 million", "url": "https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor"}
  },
  {
  "id": "tool-lock",
  "type": "bars",
  "title": "Share held by the leading vendor in each of four design-software segments at advanced nodes, 7 nm and below. Lower end of each reported range",
- "finding": "In 2026 each segment's leading tool held at least 55 percent",
+ "finding": "In 2026 each segment's leading tool held at least 55 percent",
  "mark": "Emulation (Cadence Palladium)",
  "unit": "%",
  "data": [["Static timing (Synopsys PrimeTime)", 90], ["Physical verification (Siemens Calibre)", 85], ["Synthesis (Synopsys Design Compiler)", 84], ["Emulation (Cadence Palladium)", 55]],
@@ -95,7 +95,7 @@ Design runs in five stages, all in software, and each stage's output is the next
 
 - **Architecture.** Engineers fix the shape of the chip: the width of the block that multiplies numbers, the amount of fast on-chip memory beside it and the number of high-bandwidth memory stacks along the chip's edges. The output is a plan.
 - **RTL.** Engineers write the plan as register-transfer-level code, RTL, in the hardware language SystemVerilog. A register is a small store on the chip that holds one number. On each tick of the chip's clock, every register takes its next value at the same moment. The code says what every register holds on every tick. The output is a text description of the whole chip.
-- **Verification.** A large team checks that the code does what the plan says. They run it in simulation and prove parts of it correct with mathematics. They also load it into emulators, cabinets of reprogrammable chips that behave like the design, so the chip's own software can boot before any silicon exists.
+- **Verification.** A large team checks that the code does what the plan says. They run it in simulation and prove parts of it correct with mathematics. They also load it into emulators, large machines full of reprogrammable chips that behave like the design, so the chip's own software can boot before any silicon exists.
 - **Physical design.** Software swaps each piece of the code for a logic cell, a small ready-made circuit the foundry has already proved it can make. It then places the cells on the chip, wires them together and proves that every signal arrives in time.
 - **Tape-out.** Engineers hand the finished layout to the foundry, a step called tape-out. After tape-out, software turns the layout into pattern files for the mask shop ([source](https://blogs.sw.siemens.com/calibre/2025/01/08/unlocking-post-tapeout-flow-scalability-and-performance-with-cloud-computing/)). First it pre-distorts each shape so that the shape prints as drawn, a step called optical proximity correction. Then it cuts the layout into the files a mask writer reads, a step called mask data preparation.
 
@@ -131,7 +131,7 @@ RISC-V is an open instruction set, the basic list of commands a processor unders
 
 ### Chiplets
 
-The reticle limit caps the size of a single die, one piece of silicon ([source](https://docs.broadcom.com/doc/3-5d-xdsip-platform-technology)). That limit is the largest area a scanner, the machine that prints the chip's pattern, can expose in one shot. Many large accelerators are built from chiplets, several smaller dies wired together inside one package ([source](https://www.uciexpress.org/specifications)). UCIe is an open industry standard for the links between them ([source](https://www.uciexpress.org/specifications)). Version 3.0 of UCIe adds faster data rates, 48 and 64 gigatransfers per second ([source](https://www.uciexpress.org/specifications)). In a December 2024 presentation, Broadcom said its 3.5D XDSiP platform packs more than 6,000 mm2 of silicon and 12 high-bandwidth memory stacks into one package ([source](https://docs.broadcom.com/doc/3-5d-xdsip-platform-technology)).
+The reticle limit caps the size of a single die, one piece of silicon ([source](https://docs.broadcom.com/doc/3-5d-xdsip-platform-technology)). That limit is the largest area a scanner, the machine that prints the chip's pattern, can expose in one shot. Many large accelerators are built from chiplets, several smaller dies wired together inside one package ([source](https://www.uciexpress.org/specifications)). UCIe is an open industry standard for the links between them ([source](https://www.uciexpress.org/specifications)). Version 3.0 of UCIe adds two faster data rates, 48 and 64 billion transfers per second, written GT/s for gigatransfers per second ([source](https://www.uciexpress.org/specifications)). In a December 2024 presentation, Broadcom described its 3.5D XDSiP platform, which stacks dies face to face and sets the stacks side by side on an interposer ([source](https://docs.broadcom.com/doc/3-5d-xdsip-platform-technology)). It said the platform packs more than 6,000 mm² of silicon and 12 high-bandwidth memory stacks into one package ([source](https://docs.broadcom.com/doc/3-5d-xdsip-platform-technology)).
 
 ## Who makes it
 
@@ -171,6 +171,6 @@ Epoch puts Huawei's chips three to four years behind Nvidia's until at least 203
 
 ## Takeaways
 
-The US government required a license to sell design software to anyone in China from late May to 2 July 2025 ([source](https://www.sec.gov/Archives/edgar/data/813672/000081367225000093/cdns-20250702.htm)). Since October 2022 a narrower requirement has covered software specially made for chips with gate-all-around transistors, a transistor design the rule calls key to processes at 3 nm and below ([source](https://www.federalregister.gov/documents/2022/08/15/2022-17125/implementation-of-certain-2021-wassenaar-arrangement-decisions-on-four-section-1758-technologies)).
+At advanced nodes, 7 nm and below, Synopsys alone has more than 90 percent of the market for static timing analysis, the check that every signal arrives in time ([source](https://newsletter.semianalysis.com/p/eda-market-primer)). SemiAnalysis wrote in May 2026 that no startup can replicate a complete design flow by writing it from scratch ([source](https://newsletter.semianalysis.com/p/eda-market-primer)).
 
-As of 2025, the think tank CSIS found Chinese design tools still far from replacing the full range of advanced capabilities US firms offer, especially for 5 nm and 3 nm chip design ([source](https://csis-website-prod.s3.amazonaws.com/s3fs-public/2025-10/251006_Reinsch_Semiconductor_Export_0.pdf#page=33)). But Chinese design-software companies were winning share at older manufacturing processes, the research firm SemiAnalysis reported ([source](https://newsletter.semianalysis.com/p/eda-market-primer)).
+Since October 2022 a US license has been needed to export design software specially made for chips with gate-all-around transistors, a transistor design the rule calls key to processes at 3 nm and below ([source](https://www.federalregister.gov/documents/2022/08/15/2022-17125/implementation-of-certain-2021-wassenaar-arrangement-decisions-on-four-section-1758-technologies)). As of 2025, the think tank CSIS found Chinese design tools still far from replacing the full range of advanced capabilities US firms offer, especially for 5 nm and 3 nm chip design ([source](https://csis-website-prod.s3.amazonaws.com/s3fs-public/2025-10/251006_Reinsch_Semiconductor_Export_0.pdf#page=33)). But Chinese design-software companies were winning share at older manufacturing processes, the research firm SemiAnalysis reported ([source](https://newsletter.semianalysis.com/p/eda-market-primer)).

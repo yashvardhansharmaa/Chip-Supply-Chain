@@ -2,7 +2,7 @@
   {
     "name": "Synopsys",
     "nativeName": null,
-    "category": "Design & EDA",
+    "category": "Design and EDA",
     "subcategory": "Full-flow EDA, silicon IP and simulation",
     "country": "US",
     "city": "Sunnyvale",
@@ -11,7 +11,7 @@
     "ownership": "Public",
     "role": "Makes the synthesis, place-and-route, verification and signoff software that turns the code describing an AI accelerator's logic (its RTL) into a layout a fab can build. It also sells the largest commercial catalog of silicon IP, ready-made circuit blocks that chip designers license. Its 2025 acquisition of Ansys added multiphysics simulation for thermal and power integrity.",
     "chokepoint": "Critical",
-    "shareNote": "About $8B of calendar 2025 EDA and IP revenue including Ansys, against Cadence at $5.30B and Siemens EDA at an estimated $2.2-2.5B",
+    "shareNote": "About $8 billion of calendar 2025 EDA and IP revenue including Ansys, against Cadence at $5.30 billion and Siemens EDA at an estimated $2.2 billion to $2.5 billion",
     "customers": [
       "Nvidia",
       "AMD",
@@ -37,7 +37,7 @@
   {
     "name": "Cadence Design Systems",
     "nativeName": null,
-    "category": "Design & EDA",
+    "category": "Design and EDA",
     "subcategory": "Digital and analog implementation, verification, IP",
     "country": "US",
     "city": "San Jose",
@@ -46,7 +46,7 @@
     "ownership": "Public",
     "role": "The second-largest of the three main makers of chip design (EDA) software, strong in analog and custom design, simulation and hardware emulation. Designers verify large AI chips on its Palladium and Protium emulation systems, which run a design in hardware before it goes to the fab.",
     "chokepoint": "Critical",
-    "shareNote": "About $5.30B of calendar 2025 EDA revenue, second behind Synopsys",
+    "shareNote": "About $5.30 billion of calendar 2025 EDA revenue, second behind Synopsys",
     "customers": [
       "Nvidia",
       "Broadcom",
@@ -72,7 +72,7 @@
   {
     "name": "Siemens EDA",
     "nativeName": null,
-    "category": "Design & EDA",
+    "category": "Design and EDA",
     "subcategory": "Design for test, physical verification, Calibre",
     "country": "US",
     "city": "Wilsonville",
@@ -81,7 +81,7 @@
     "ownership": "Subsidiary of Siemens AG of Germany (acquired as Mentor Graphics in 2017)",
     "role": "The third-largest maker of chip design (EDA) software. Its Calibre tool is the de facto standard for physical verification, the check foundries use to confirm a layout follows their manufacturing rules before they accept it. It also sells design-for-test software. Foundries write the rule files they give chip designers in Calibre's format.",
     "chokepoint": "Critical",
-    "shareNote": "Estimated $2.2-2.5B of calendar 2025 EDA revenue, third behind Synopsys and Cadence. The EDA country share counts it under Germany, its parent's home",
+    "shareNote": "Estimated $2.2 billion to $2.5 billion of calendar 2025 EDA revenue, third behind Synopsys and Cadence. The EDA country share counts it under Germany, its parent's home",
     "customers": [
       "TSMC",
       "Samsung",
@@ -97,7 +97,7 @@
   {
     "name": "Ansys",
     "nativeName": null,
-    "category": "Design & EDA",
+    "category": "Design and EDA",
     "subcategory": "Multiphysics, thermal and power integrity simulation",
     "country": "US",
     "city": "Canonsburg",
@@ -132,7 +132,7 @@
   {
     "name": "Empyrean Technology",
     "nativeName": "华大九天",
-    "category": "Design & EDA",
+    "category": "Design and EDA",
     "subcategory": "Analog and flat-panel EDA, China domestic substitution",
     "country": "CN",
     "city": "Beijing",
@@ -165,7 +165,7 @@
   {
     "name": "Primarius Technologies",
     "nativeName": "概伦电子",
-    "category": "Design & EDA",
+    "category": "Design and EDA",
     "subcategory": "Device modeling, SPICE simulation and DTCO",
     "country": "CN",
     "city": "Shanghai",
@@ -198,7 +198,7 @@
   {
     "name": "Semitronix",
     "nativeName": "杭州广立微",
-    "category": "Design & EDA",
+    "category": "Design and EDA",
     "subcategory": "Yield-analysis EDA and test chips",
     "country": "CN",
     "city": "Hangzhou",
@@ -231,7 +231,7 @@
   {
     "name": "Arm Holdings",
     "nativeName": null,
-    "category": "IP & Architecture",
+    "category": "IP and architecture",
     "subcategory": "CPU instruction set and core IP",
     "country": "GB",
     "city": "Cambridge",
@@ -266,7 +266,7 @@
   {
     "name": "Rambus",
     "nativeName": null,
-    "category": "IP & Architecture",
+    "category": "IP and architecture",
     "subcategory": "Memory interface IP and controllers",
     "country": "US",
     "city": "San Jose",
@@ -300,7 +300,7 @@
   {
     "name": "Alphawave Semi",
     "nativeName": null,
-    "category": "IP & Architecture",
+    "category": "IP and architecture",
     "subcategory": "High-speed SerDes and chiplet connectivity IP",
     "country": "GB",
     "city": "London",
@@ -334,7 +334,7 @@
   {
     "name": "SiFive",
     "nativeName": null,
-    "category": "IP & Architecture",
+    "category": "IP and architecture",
     "subcategory": "RISC-V processor IP",
     "country": "US",
     "city": "Santa Clara",
@@ -358,7 +358,7 @@
   {
     "name": "Imagination Technologies",
     "nativeName": null,
-    "category": "IP & Architecture",
+    "category": "IP and architecture",
     "subcategory": "GPU and neural accelerator IP",
     "country": "GB",
     "city": "Kings Langley",
@@ -381,7 +381,7 @@
   {
     "name": "Nvidia",
     "nativeName": null,
-    "category": "AI Accelerator Vendor",
+    "category": "AI accelerator vendors",
     "subcategory": "Merchant GPUs and rack-scale AI systems",
     "country": "US",
     "city": "Santa Clara",
@@ -416,7 +416,7 @@
   {
     "name": "AMD",
     "nativeName": null,
-    "category": "AI Accelerator Vendor",
+    "category": "AI accelerator vendors",
     "subcategory": "Merchant GPUs, server CPUs and rack systems",
     "country": "US",
     "city": "Santa Clara",
@@ -451,7 +451,7 @@
   {
     "name": "Intel",
     "nativeName": null,
-    "category": "AI Accelerator Vendor",
+    "category": "AI accelerator vendors",
     "subcategory": "Server CPUs and AI accelerators",
     "country": "US",
     "city": "Santa Clara",
@@ -485,7 +485,7 @@
   {
     "name": "Google",
     "nativeName": null,
-    "category": "AI Accelerator Vendor",
+    "category": "AI accelerator vendors",
     "subcategory": "Hyperscaler in-house TPU",
     "country": "US",
     "city": "Mountain View",
@@ -509,7 +509,7 @@
   {
     "name": "Annapurna Labs",
     "nativeName": null,
-    "category": "AI Accelerator Vendor",
+    "category": "AI accelerator vendors",
     "subcategory": "Hyperscaler in-house training and inference silicon",
     "country": "US",
     "city": "Austin",
@@ -531,7 +531,7 @@
   {
     "name": "Microsoft Azure Silicon",
     "nativeName": null,
-    "category": "AI Accelerator Vendor",
+    "category": "AI accelerator vendors",
     "subcategory": "Hyperscaler in-house accelerator",
     "country": "US",
     "city": "Redmond",
@@ -553,7 +553,7 @@
   {
     "name": "Meta Platforms",
     "nativeName": null,
-    "category": "AI Accelerator Vendor",
+    "category": "AI accelerator vendors",
     "subcategory": "Hyperscaler in-house inference accelerator",
     "country": "US",
     "city": "Menlo Park",
@@ -574,7 +574,7 @@
   {
     "name": "Broadcom",
     "nativeName": null,
-    "category": "AI Accelerator Vendor",
+    "category": "AI accelerator vendors",
     "subcategory": "Custom AI ASICs (XPUs) plus Ethernet switch silicon",
     "country": "US",
     "city": "Palo Alto",
@@ -609,7 +609,7 @@
   {
     "name": "Marvell Technology",
     "nativeName": null,
-    "category": "AI Accelerator Vendor",
+    "category": "AI accelerator vendors",
     "subcategory": "Custom AI silicon, optical DSPs and interconnect",
     "country": "US",
     "city": "Santa Clara",
@@ -642,7 +642,7 @@
   {
     "name": "Alchip Technologies",
     "nativeName": "世芯電子",
-    "category": "AI Accelerator Vendor",
+    "category": "AI accelerator vendors",
     "subcategory": "ASIC design services and backend implementation",
     "country": "TW",
     "city": "Taipei",
@@ -675,7 +675,7 @@
   {
     "name": "Global Unichip",
     "nativeName": "創意電子",
-    "category": "AI Accelerator Vendor",
+    "category": "AI accelerator vendors",
     "subcategory": "ASIC design services, TSMC-affiliated",
     "country": "TW",
     "city": "Hsinchu",
@@ -708,7 +708,7 @@
   {
     "name": "MediaTek",
     "nativeName": "聯發科技",
-    "category": "AI Accelerator Vendor",
+    "category": "AI accelerator vendors",
     "subcategory": "Custom ASIC and mobile SoCs",
     "country": "TW",
     "city": "Hsinchu",
@@ -741,7 +741,7 @@
   {
     "name": "Qualcomm",
     "nativeName": null,
-    "category": "AI Accelerator Vendor",
+    "category": "AI accelerator vendors",
     "subcategory": "Edge AI SoCs and data-center inference accelerators",
     "country": "US",
     "city": "San Diego",
@@ -774,7 +774,7 @@
   {
     "name": "Cerebras Systems",
     "nativeName": null,
-    "category": "AI Accelerator Vendor",
+    "category": "AI accelerator vendors",
     "subcategory": "Wafer-scale AI processors",
     "country": "US",
     "city": "Sunnyvale",
@@ -808,7 +808,7 @@
   {
     "name": "Groq",
     "nativeName": null,
-    "category": "AI Accelerator Vendor",
+    "category": "AI accelerator vendors",
     "subcategory": "Deterministic inference accelerators (LPU)",
     "country": "US",
     "city": "Mountain View",
@@ -831,7 +831,7 @@
   {
     "name": "HiSilicon",
     "nativeName": "海思半导体",
-    "category": "AI Accelerator Vendor",
+    "category": "AI accelerator vendors",
     "subcategory": "Ascend AI accelerators",
     "country": "CN",
     "city": "Shenzhen",
@@ -855,7 +855,7 @@
   {
     "name": "Cambricon Technologies",
     "nativeName": "寒武纪",
-    "category": "AI Accelerator Vendor",
+    "category": "AI accelerator vendors",
     "subcategory": "Merchant AI training and inference chips",
     "country": "CN",
     "city": "Beijing",
@@ -888,7 +888,7 @@
   {
     "name": "Hygon Information Technology",
     "nativeName": "海光信息",
-    "category": "AI Accelerator Vendor",
+    "category": "AI accelerator vendors",
     "subcategory": "x86 server CPUs and DCU accelerators",
     "country": "CN",
     "city": "Tianjin",
@@ -920,7 +920,7 @@
   {
     "name": "Moore Threads",
     "nativeName": "摩尔线程",
-    "category": "AI Accelerator Vendor",
+    "category": "AI accelerator vendors",
     "subcategory": "General-purpose GPUs for graphics and AI",
     "country": "CN",
     "city": "Beijing",
@@ -952,7 +952,7 @@
   {
     "name": "Biren Technology",
     "nativeName": "壁仞科技",
-    "category": "AI Accelerator Vendor",
+    "category": "AI accelerator vendors",
     "subcategory": "General-purpose GPUs for AI training",
     "country": "CN",
     "city": "Shanghai",
@@ -983,7 +983,7 @@
   {
     "name": "MetaX",
     "nativeName": "沐曦集成电路",
-    "category": "AI Accelerator Vendor",
+    "category": "AI accelerator vendors",
     "subcategory": "GPGPU for training and inference",
     "country": "CN",
     "city": "Shanghai",
@@ -1014,7 +1014,7 @@
   {
     "name": "Iluvatar CoreX",
     "nativeName": "天数智芯",
-    "category": "AI Accelerator Vendor",
+    "category": "AI accelerator vendors",
     "subcategory": "GPGPU for AI training and inference",
     "country": "CN",
     "city": "Shanghai",
@@ -1045,7 +1045,7 @@
   {
     "name": "Tenstorrent",
     "nativeName": null,
-    "category": "AI Accelerator Vendor",
+    "category": "AI accelerator vendors",
     "subcategory": "RISC-V AI processors and licensable IP",
     "country": "CA",
     "city": "Toronto",
@@ -1069,7 +1069,7 @@
   {
     "name": "SambaNova Systems",
     "nativeName": null,
-    "category": "AI Accelerator Vendor",
+    "category": "AI accelerator vendors",
     "subcategory": "Reconfigurable dataflow accelerators",
     "country": "US",
     "city": "Palo Alto",
@@ -1092,7 +1092,7 @@
   {
     "name": "d-Matrix",
     "nativeName": null,
-    "category": "AI Accelerator Vendor",
+    "category": "AI accelerator vendors",
     "subcategory": "Digital in-memory compute inference accelerators",
     "country": "US",
     "city": "Santa Clara",
@@ -1114,7 +1114,7 @@
   {
     "name": "Etched",
     "nativeName": null,
-    "category": "AI Accelerator Vendor",
+    "category": "AI accelerator vendors",
     "subcategory": "Transformer-specific ASIC",
     "country": "US",
     "city": "Cupertino",
@@ -1135,7 +1135,7 @@
   {
     "name": "Rebellions",
     "nativeName": "리벨리온",
-    "category": "AI Accelerator Vendor",
+    "category": "AI accelerator vendors",
     "subcategory": "Inference accelerators",
     "country": "KR",
     "city": "Seongnam",
@@ -1158,7 +1158,7 @@
   {
     "name": "FuriosaAI",
     "nativeName": "퓨리오사AI",
-    "category": "AI Accelerator Vendor",
+    "category": "AI accelerator vendors",
     "subcategory": "Inference accelerators",
     "country": "KR",
     "city": "Seoul",
@@ -1180,7 +1180,7 @@
   {
     "name": "Shin-Etsu Chemical",
     "nativeName": "信越化学工業",
-    "category": "Silicon & Wafers",
+    "category": "Silicon and wafers",
     "subcategory": "300 mm polished and epitaxial wafers, photoresist, pellicles",
     "country": "JP",
     "city": "Tokyo",
@@ -1214,7 +1214,7 @@
   {
     "name": "SUMCO",
     "nativeName": "株式会社SUMCO",
-    "category": "Silicon & Wafers",
+    "category": "Silicon and wafers",
     "subcategory": "300 mm polished and epitaxial wafers",
     "country": "JP",
     "city": "Tokyo",
@@ -1248,7 +1248,7 @@
   {
     "name": "GlobalWafers",
     "nativeName": "環球晶圓",
-    "category": "Silicon & Wafers",
+    "category": "Silicon and wafers",
     "subcategory": "Silicon wafers, SOI and compound substrates",
     "country": "TW",
     "city": "Hsinchu",
@@ -1281,7 +1281,7 @@
   {
     "name": "Siltronic",
     "nativeName": null,
-    "category": "Silicon & Wafers",
+    "category": "Silicon and wafers",
     "subcategory": "300 mm polished and epitaxial wafers",
     "country": "DE",
     "city": "Munich",
@@ -1314,7 +1314,7 @@
   {
     "name": "SK Siltron",
     "nativeName": "에스케이실트론",
-    "category": "Silicon & Wafers",
+    "category": "Silicon and wafers",
     "subcategory": "300 mm silicon wafers and SiC substrates",
     "country": "KR",
     "city": "Gumi",
@@ -1337,7 +1337,7 @@
   {
     "name": "Soitec",
     "nativeName": null,
-    "category": "Silicon & Wafers",
+    "category": "Silicon and wafers",
     "subcategory": "Engineered substrates, SOI and POI",
     "country": "FR",
     "city": "Bernin",
@@ -1370,7 +1370,7 @@
   {
     "name": "National Silicon Industry Group",
     "nativeName": "沪硅产业",
-    "category": "Silicon & Wafers",
+    "category": "Silicon and wafers",
     "subcategory": "300 mm wafers for Chinese fabs",
     "country": "CN",
     "city": "Shanghai",
@@ -1403,7 +1403,7 @@
   {
     "name": "Hemlock Semiconductor",
     "nativeName": null,
-    "category": "Silicon & Wafers",
+    "category": "Silicon and wafers",
     "subcategory": "Ultra-high-purity polysilicon feedstock",
     "country": "US",
     "city": "Hemlock",
@@ -1427,7 +1427,7 @@
   {
     "name": "Wacker Chemie",
     "nativeName": null,
-    "category": "Silicon & Wafers",
+    "category": "Silicon and wafers",
     "subcategory": "Semiconductor-grade polysilicon",
     "country": "DE",
     "city": "Munich",
@@ -1459,7 +1459,7 @@
   {
     "name": "Tokuyama",
     "nativeName": "株式会社トクヤマ",
-    "category": "Silicon & Wafers",
+    "category": "Silicon and wafers",
     "subcategory": "Semiconductor-grade polysilicon and IPA",
     "country": "JP",
     "city": "Tokyo",
@@ -1491,7 +1491,7 @@
   {
     "name": "OCI Holdings",
     "nativeName": "오씨아이홀딩스",
-    "category": "Silicon & Wafers",
+    "category": "Silicon and wafers",
     "subcategory": "Polysilicon and electronic-grade chemicals",
     "country": "KR",
     "city": "Seoul",
@@ -1523,7 +1523,7 @@
   {
     "name": "Eswin Material",
     "nativeName": "西安奕材",
-    "category": "Silicon & Wafers",
+    "category": "Silicon and wafers",
     "subcategory": "300 mm polished and epitaxial wafers",
     "country": "CN",
     "city": "Xi'an",
@@ -1544,7 +1544,7 @@
   {
     "name": "JSR Corporation",
     "nativeName": "JSR株式会社",
-    "category": "Photoresist & Materials",
+    "category": "Photoresist and materials",
     "subcategory": "ArF, KrF and EUV photoresist",
     "country": "JP",
     "city": "Tokyo",
@@ -1568,7 +1568,7 @@
   {
     "name": "Tokyo Ohka Kogyo",
     "nativeName": "東京応化工業",
-    "category": "Photoresist & Materials",
+    "category": "Photoresist and materials",
     "subcategory": "Photoresist and high-purity process chemicals",
     "country": "JP",
     "city": "Kawasaki",
@@ -1602,7 +1602,7 @@
   {
     "name": "Fujifilm",
     "nativeName": "富士フイルム",
-    "category": "Photoresist & Materials",
+    "category": "Photoresist and materials",
     "subcategory": "Photoresist, CMP slurry and cleaning chemicals",
     "country": "JP",
     "city": "Tokyo",
@@ -1635,7 +1635,7 @@
   {
     "name": "Sumitomo Chemical",
     "nativeName": "住友化学",
-    "category": "Photoresist & Materials",
+    "category": "Photoresist and materials",
     "subcategory": "Photoresist and high-purity aluminum targets",
     "country": "JP",
     "city": "Tokyo",
@@ -1667,7 +1667,7 @@
   {
     "name": "Qnity Electronics",
     "nativeName": null,
-    "category": "Photoresist & Materials",
+    "category": "Photoresist and materials",
     "subcategory": "CMP slurries and pads, lithography and packaging materials",
     "country": "US",
     "city": "Wilmington",
@@ -1701,7 +1701,7 @@
   {
     "name": "Inpria",
     "nativeName": null,
-    "category": "Photoresist & Materials",
+    "category": "Photoresist and materials",
     "subcategory": "Metal-oxide EUV photoresist",
     "country": "US",
     "city": "Corvallis",
@@ -1725,7 +1725,7 @@
   {
     "name": "Dongjin Semichem",
     "nativeName": "동진쎄미켐",
-    "category": "Photoresist & Materials",
+    "category": "Photoresist and materials",
     "subcategory": "Photoresist and thinner for Korean fabs",
     "country": "KR",
     "city": "Seoul",
@@ -1747,7 +1747,7 @@
   {
     "name": "Soulbrain",
     "nativeName": "솔브레인",
-    "category": "Photoresist & Materials",
+    "category": "Photoresist and materials",
     "subcategory": "High-purity etchants and electrolytes",
     "country": "KR",
     "city": "Seongnam",
@@ -1778,7 +1778,7 @@
   {
     "name": "Adeka",
     "nativeName": "株式会社ADEKA",
-    "category": "Photoresist & Materials",
+    "category": "Photoresist and materials",
     "subcategory": "ALD and CVD precursor chemicals",
     "country": "JP",
     "city": "Tokyo",
@@ -1811,7 +1811,7 @@
   {
     "name": "Fujimi Incorporated",
     "nativeName": "株式会社フジミインコーポレーテッド",
-    "category": "Photoresist & Materials",
+    "category": "Photoresist and materials",
     "subcategory": "CMP slurries and polishing materials",
     "country": "JP",
     "city": "Kiyosu",
@@ -1844,7 +1844,7 @@
   {
     "name": "JX Advanced Metals",
     "nativeName": "JX金属",
-    "category": "Photoresist & Materials",
+    "category": "Photoresist and materials",
     "subcategory": "Sputtering targets and ultra-high-purity metals",
     "country": "JP",
     "city": "Tokyo",
@@ -1877,7 +1877,7 @@
   {
     "name": "Merck KGaA",
     "nativeName": null,
-    "category": "Chemicals & Gases",
+    "category": "Chemicals and gases",
     "subcategory": "Electronic materials, deposition gases and specialty chemicals",
     "country": "DE",
     "city": "Darmstadt",
@@ -1911,7 +1911,7 @@
   {
     "name": "Entegris",
     "nativeName": null,
-    "category": "Chemicals & Gases",
+    "category": "Chemicals and gases",
     "subcategory": "Filtration, wafer handling and process chemistries",
     "country": "US",
     "city": "Billerica",
@@ -1945,7 +1945,7 @@
   {
     "name": "Linde",
     "nativeName": null,
-    "category": "Chemicals & Gases",
+    "category": "Chemicals and gases",
     "subcategory": "Bulk and electronic specialty gases",
     "country": "GB",
     "city": "Woking",
@@ -1979,7 +1979,7 @@
   {
     "name": "Air Liquide",
     "nativeName": null,
-    "category": "Chemicals & Gases",
+    "category": "Chemicals and gases",
     "subcategory": "Electronic specialty gases and advanced precursors",
     "country": "FR",
     "city": "Paris",
@@ -2012,7 +2012,7 @@
   {
     "name": "Air Products",
     "nativeName": null,
-    "category": "Chemicals & Gases",
+    "category": "Chemicals and gases",
     "subcategory": "Bulk gases and on-site supply",
     "country": "US",
     "city": "Allentown",
@@ -2045,7 +2045,7 @@
   {
     "name": "Nippon Sanso Holdings",
     "nativeName": "日本酸素ホールディングス",
-    "category": "Chemicals & Gases",
+    "category": "Chemicals and gases",
     "subcategory": "Electronic specialty and bulk gases",
     "country": "JP",
     "city": "Tokyo",
@@ -2078,7 +2078,7 @@
   {
     "name": "SK Specialty",
     "nativeName": "에스케이스페셜티",
-    "category": "Chemicals & Gases",
+    "category": "Chemicals and gases",
     "subcategory": "Nitrogen trifluoride and specialty etch gases",
     "country": "KR",
     "city": "Yeongju",
@@ -2101,7 +2101,7 @@
   {
     "name": "Kanto Denka Kogyo",
     "nativeName": "関東電化工業",
-    "category": "Chemicals & Gases",
+    "category": "Chemicals and gases",
     "subcategory": "Fluorinated etch gases",
     "country": "JP",
     "city": "Tokyo",
@@ -2134,7 +2134,7 @@
   {
     "name": "Stella Chemifa",
     "nativeName": "ステラケミファ",
-    "category": "Chemicals & Gases",
+    "category": "Chemicals and gases",
     "subcategory": "Ultra-high-purity hydrofluoric acid",
     "country": "JP",
     "city": "Osaka",
@@ -2167,7 +2167,7 @@
   {
     "name": "Morita Chemical Industries",
     "nativeName": "森田化学工業",
-    "category": "Chemicals & Gases",
+    "category": "Chemicals and gases",
     "subcategory": "High-purity hydrogen fluoride and fluorine compounds",
     "country": "JP",
     "city": "Osaka",
@@ -2190,7 +2190,7 @@
   {
     "name": "Resonac Holdings",
     "nativeName": "株式会社レゾナック",
-    "category": "Chemicals & Gases",
+    "category": "Chemicals and gases",
     "subcategory": "Etch gases, packaging materials and CMP slurries",
     "country": "JP",
     "city": "Tokyo",
@@ -2391,7 +2391,7 @@
   {
     "name": "Carl Zeiss SMT",
     "nativeName": null,
-    "category": "Equipment Subsystems & Components",
+    "category": "Equipment subsystems and components",
     "subcategory": "EUV projection optics, illuminators and mask metrology",
     "country": "DE",
     "city": "Oberkochen",
@@ -2412,7 +2412,7 @@
   {
     "name": "Trumpf",
     "nativeName": null,
-    "category": "Equipment Subsystems & Components",
+    "category": "Equipment subsystems and components",
     "subcategory": "CO2 drive lasers for EUV sources",
     "country": "DE",
     "city": "Ditzingen",
@@ -2434,7 +2434,7 @@
   {
     "name": "VDL Groep",
     "nativeName": null,
-    "category": "Equipment Subsystems & Components",
+    "category": "Equipment subsystems and components",
     "subcategory": "Precision mechanical modules and frames",
     "country": "NL",
     "city": "Eindhoven",
@@ -2456,7 +2456,7 @@
   {
     "name": "Jenoptik",
     "nativeName": null,
-    "category": "Equipment Subsystems & Components",
+    "category": "Equipment subsystems and components",
     "subcategory": "Optical systems and metrology components",
     "country": "DE",
     "city": "Jena",
@@ -2488,7 +2488,7 @@
   {
     "name": "Edwards Vacuum",
     "nativeName": null,
-    "category": "Equipment Subsystems & Components",
+    "category": "Equipment subsystems and components",
     "subcategory": "Dry vacuum pumps and abatement systems",
     "country": "GB",
     "city": "Burgess Hill",
@@ -2513,7 +2513,7 @@
   {
     "name": "MKS Instruments",
     "nativeName": null,
-    "category": "Equipment Subsystems & Components",
+    "category": "Equipment subsystems and components",
     "subcategory": "RF power, flow control, lasers and plating chemistry",
     "country": "US",
     "city": "Andover",
@@ -2546,7 +2546,7 @@
   {
     "name": "Advanced Energy Industries",
     "nativeName": null,
-    "category": "Equipment Subsystems & Components",
+    "category": "Equipment subsystems and components",
     "subcategory": "Plasma power delivery and precision power",
     "country": "US",
     "city": "Denver",
@@ -2579,7 +2579,7 @@
   {
     "name": "Ichor Holdings",
     "nativeName": null,
-    "category": "Equipment Subsystems & Components",
+    "category": "Equipment subsystems and components",
     "subcategory": "Gas and fluid delivery subsystems",
     "country": "US",
     "city": "Fremont",
@@ -2611,7 +2611,7 @@
   {
     "name": "Ultra Clean Holdings",
     "nativeName": null,
-    "category": "Equipment Subsystems & Components",
+    "category": "Equipment subsystems and components",
     "subcategory": "Subsystem assembly and parts cleaning",
     "country": "US",
     "city": "Hayward",
@@ -2643,7 +2643,7 @@
   {
     "name": "VAT Group",
     "nativeName": null,
-    "category": "Equipment Subsystems & Components",
+    "category": "Equipment subsystems and components",
     "subcategory": "High-vacuum valves",
     "country": "CH",
     "city": "Haag",
@@ -2652,7 +2652,7 @@
     "ownership": "Public",
     "role": "Makes the high-vacuum isolation and control valves that seal and gate every process chamber. How many particles a valve sheds and how many cycles it lasts directly affect tool uptime and wafer defect counts.",
     "chokepoint": "Critical",
-    "shareNote": "About 71% of the semiconductor and semiconductor-related vacuum valve market (2025)",
+    "shareNote": "About 71 percent of the semiconductor and semiconductor-related vacuum valve market (2025)",
     "customers": [
       "Applied Materials",
       "Lam Research",
@@ -2676,7 +2676,7 @@
   {
     "name": "Pfeiffer Vacuum",
     "nativeName": null,
-    "category": "Equipment Subsystems & Components",
+    "category": "Equipment subsystems and components",
     "subcategory": "Turbomolecular pumps and leak detection",
     "country": "DE",
     "city": "Asslar",
@@ -2708,7 +2708,7 @@
   {
     "name": "Horiba",
     "nativeName": "株式会社堀場製作所",
-    "category": "Equipment Subsystems & Components",
+    "category": "Equipment subsystems and components",
     "subcategory": "Mass flow controllers and in-line analysis",
     "country": "JP",
     "city": "Kyoto",
@@ -2741,7 +2741,7 @@
   {
     "name": "Comet Group",
     "nativeName": null,
-    "category": "Equipment Subsystems & Components",
+    "category": "Equipment subsystems and components",
     "subcategory": "RF impedance matching and X-ray inspection",
     "country": "CH",
     "city": "Flamatt",
@@ -2773,7 +2773,7 @@
   {
     "name": "Ferrotec Holdings",
     "nativeName": "フェローテックホールディングス",
-    "category": "Equipment Subsystems & Components",
+    "category": "Equipment subsystems and components",
     "subcategory": "Quartz, ceramics, ferrofluidic seals and thermoelectrics",
     "country": "JP",
     "city": "Tokyo",
@@ -2981,7 +2981,7 @@
     "ownership": "Majority owned by Intel, with Bain Capital and TSMC holding minority stakes",
     "role": "Builds the multi-beam electron mask writers that pattern EUV masks with hundreds of thousands of parallel beamlets. On CSET's count it led the market for all electron-beam mask writers in 2025. NuFlare is the only other maker of multi-beam writers.",
     "chokepoint": "Critical",
-    "shareNote": "46.6% of the $994M market for all electron-beam mask writers in 2025, ahead of NuFlare (39.2%) and JEOL (14.2%), on CSET's analysis of TechInsights data",
+    "shareNote": "46.6 percent of the $994 million market for all electron-beam mask writers in 2025, ahead of NuFlare (39.2 percent) and JEOL (14.2 percent), on CSET's analysis of TechInsights data",
     "customers": [
       "TSMC",
       "Samsung",
@@ -3096,7 +3096,7 @@
   {
     "name": "KLA",
     "nativeName": null,
-    "category": "Metrology & Inspection",
+    "category": "Metrology and inspection",
     "subcategory": "Wafer and reticle inspection, process control",
     "country": "US",
     "city": "Milpitas",
@@ -3105,7 +3105,7 @@
     "ownership": "Public",
     "role": "Supplies process control equipment: optical and electron beam wafer inspection, reticle inspection, overlay and film metrology. Its tools find the defects that determine yield on large dies.",
     "chokepoint": "Critical",
-    "shareNote": "56.8% of the process control market in 2025 on CSET's count, against 11.2% for Applied Materials, the next largest. Gartner data in KLA's 2026 investor day put it at 56.5% in 2024, 6.5 times the nearest competitor.",
+    "shareNote": "56.8 percent of the process control market in 2025 on CSET's count, against 11.2 percent for Applied Materials, the next largest. Gartner data in KLA's 2026 investor day put it at 56.5 percent in 2024, 6.5 times the nearest competitor.",
     "customers": [
       "TSMC",
       "Samsung",
@@ -3130,7 +3130,7 @@
   {
     "name": "Lasertec",
     "nativeName": "レーザーテック株式会社",
-    "category": "Metrology & Inspection",
+    "category": "Metrology and inspection",
     "subcategory": "EUV mask blank and pattern inspection",
     "country": "JP",
     "city": "Yokohama",
@@ -3162,7 +3162,7 @@
   {
     "name": "Hitachi High-Tech",
     "nativeName": "株式会社日立ハイテク",
-    "category": "Metrology & Inspection",
+    "category": "Metrology and inspection",
     "subcategory": "CD-SEM metrology and etch systems",
     "country": "JP",
     "city": "Tokyo",
@@ -3187,7 +3187,7 @@
   {
     "name": "Onto Innovation",
     "nativeName": null,
-    "category": "Metrology & Inspection",
+    "category": "Metrology and inspection",
     "subcategory": "Optical metrology, inspection and lithography software",
     "country": "US",
     "city": "Wilmington",
@@ -3221,7 +3221,7 @@
   {
     "name": "Nova Ltd",
     "nativeName": null,
-    "category": "Metrology & Inspection",
+    "category": "Metrology and inspection",
     "subcategory": "Optical CD and materials metrology",
     "country": "IL",
     "city": "Rehovot",
@@ -3255,7 +3255,7 @@
   {
     "name": "Camtek",
     "nativeName": null,
-    "category": "Metrology & Inspection",
+    "category": "Metrology and inspection",
     "subcategory": "Advanced packaging inspection and metrology",
     "country": "IL",
     "city": "Migdal HaEmek",
@@ -3289,7 +3289,7 @@
   {
     "name": "Park Systems",
     "nativeName": "파크시스템스",
-    "category": "Metrology & Inspection",
+    "category": "Metrology and inspection",
     "subcategory": "Atomic force microscopy",
     "country": "KR",
     "city": "Gwacheon",
@@ -3322,7 +3322,7 @@
   {
     "name": "Skyverse Technology",
     "nativeName": "中科飞测",
-    "category": "Metrology & Inspection",
+    "category": "Metrology and inspection",
     "subcategory": "Domestic Chinese wafer inspection and metrology",
     "country": "CN",
     "city": "Shenzhen",
@@ -3331,7 +3331,7 @@
     "ownership": "Public (Shanghai STAR Market), with state-backed investors",
     "role": "A Shenzhen maker of wafer defect inspection and film metrology tools, aiming to replace KLA systems in Chinese fabs. Its coverage is strongest at mature nodes.",
     "chokepoint": "Contested",
-    "shareNote": "2,053,298,171.74 yuan of revenue in 2025, up 48.75% on 2024, per its 2025 annual report summary.",
+    "shareNote": "2,053,298,171.74 yuan of revenue in 2025, up 48.75 percent on 2024, per its 2025 annual report summary.",
     "customers": [
       "SMIC",
       "Hua Hong",
@@ -3346,7 +3346,7 @@
   {
     "name": "Wuhan Jingce Electronic",
     "nativeName": "武汉精测电子",
-    "category": "Metrology & Inspection",
+    "category": "Metrology and inspection",
     "subcategory": "Domestic Chinese metrology and display test",
     "country": "CN",
     "city": "Wuhan",
@@ -3379,7 +3379,7 @@
   {
     "name": "Applied Materials",
     "nativeName": null,
-    "category": "Deposition & Etch",
+    "category": "Deposition and etch",
     "subcategory": "Deposition, epitaxy, CMP, implant and e-beam metrology",
     "country": "US",
     "city": "Santa Clara",
@@ -3413,7 +3413,7 @@
   {
     "name": "Lam Research",
     "nativeName": null,
-    "category": "Deposition & Etch",
+    "category": "Deposition and etch",
     "subcategory": "Plasma etch, deposition and wafer clean",
     "country": "US",
     "city": "Fremont",
@@ -3447,7 +3447,7 @@
   {
     "name": "Tokyo Electron",
     "nativeName": "東京エレクトロン株式会社",
-    "category": "Deposition & Etch",
+    "category": "Deposition and etch",
     "subcategory": "Coater/developer track, etch, deposition and clean",
     "country": "JP",
     "city": "Tokyo",
@@ -3456,7 +3456,7 @@
     "ownership": "Public",
     "role": "Makes the coater/developer track, which applies photoresist, develops it after exposure and is physically linked to every scanner in a fab. It also makes etch, deposition, cleaning and wafer bonding systems, and wafer probers for chip testing.",
     "chokepoint": "Critical",
-    "shareNote": "91% of the world coater/developer (track) market in CY2025, on Gartner data published in Tokyo Electron's own results presentation",
+    "shareNote": "91 percent of the world coater/developer (track) market in CY2025, on Gartner data published in Tokyo Electron's own results presentation",
     "customers": [
       "TSMC",
       "Samsung",
@@ -3481,7 +3481,7 @@
   {
     "name": "ASM International",
     "nativeName": null,
-    "category": "Deposition & Etch",
+    "category": "Deposition and etch",
     "subcategory": "Atomic layer deposition and epitaxy",
     "country": "NL",
     "city": "Almere",
@@ -3514,7 +3514,7 @@
   {
     "name": "Kokusai Electric",
     "nativeName": "株式会社Kokusai Electric",
-    "category": "Deposition & Etch",
+    "category": "Deposition and etch",
     "subcategory": "Batch ALD and vertical furnaces",
     "country": "JP",
     "city": "Tokyo",
@@ -3548,7 +3548,7 @@
   {
     "name": "Naura Technology",
     "nativeName": "北方华创",
-    "category": "Deposition & Etch",
+    "category": "Deposition and etch",
     "subcategory": "Etch, deposition, clean and furnace systems",
     "country": "CN",
     "city": "Beijing",
@@ -3581,7 +3581,7 @@
   {
     "name": "AMEC",
     "nativeName": "中微公司",
-    "category": "Deposition & Etch",
+    "category": "Deposition and etch",
     "subcategory": "Plasma etch and MOCVD",
     "country": "CN",
     "city": "Shanghai",
@@ -3614,7 +3614,7 @@
   {
     "name": "Piotech",
     "nativeName": "拓荆科技",
-    "category": "Deposition & Etch",
+    "category": "Deposition and etch",
     "subcategory": "PECVD, ALD and wafer bonding",
     "country": "CN",
     "city": "Shenyang",
@@ -3647,7 +3647,7 @@
   {
     "name": "SCREEN Holdings",
     "nativeName": "株式会社SCREENホールディングス",
-    "category": "Deposition & Etch",
+    "category": "Deposition and etch",
     "subcategory": "Wafer cleaning and surface preparation",
     "country": "JP",
     "city": "Kyoto",
@@ -3681,7 +3681,7 @@
   {
     "name": "SEMES",
     "nativeName": "세메스",
-    "category": "Deposition & Etch",
+    "category": "Deposition and etch",
     "subcategory": "Cleaning, track and packaging equipment",
     "country": "KR",
     "city": "Cheonan",
@@ -3703,7 +3703,7 @@
   {
     "name": "ACM Research",
     "nativeName": "盛美半导体",
-    "category": "Deposition & Etch",
+    "category": "Deposition and etch",
     "subcategory": "Wafer cleaning, plating and packaging tools",
     "country": "US",
     "city": "Fremont",
@@ -4283,7 +4283,7 @@
   {
     "name": "ASE Technology Holding",
     "nativeName": "日月光投資控股",
-    "category": "Advanced Packaging & OSAT",
+    "category": "Advanced packaging and OSAT",
     "subcategory": "OSAT assembly, test and fan-out packaging",
     "country": "TW",
     "city": "Kaohsiung",
@@ -4292,7 +4292,7 @@
     "ownership": "Public, and includes Siliconware Precision Industries (SPIL)",
     "role": "Packages and tests chips for fabless firms and foundries, and is adding 2.5D and fan-out capacity for AI parts. It calls itself the leading provider of semiconductor assembly and testing services. It absorbed Siliconware Precision Industries (SPIL) in 2018.",
     "chokepoint": "Important",
-    "shareNote": "Revenue is for the whole group. About 59% of 2025 revenue came from packaging and test (NT$389.2bn) and about 40% from electronics manufacturing services, per its Q4 2025 6-K filing.",
+    "shareNote": "Revenue is for the whole group. About 59 percent of 2025 revenue came from packaging and test (NT$389.2 billion) and about 40 percent from electronics manufacturing services, per its Q4 2025 6-K filing.",
     "customers": [
       "Nvidia",
       "AMD",
@@ -4317,7 +4317,7 @@
   {
     "name": "Amkor Technology",
     "nativeName": null,
-    "category": "Advanced Packaging & OSAT",
+    "category": "Advanced packaging and OSAT",
     "subcategory": "OSAT assembly, test and advanced packaging",
     "country": "US",
     "city": "Tempe",
@@ -4351,7 +4351,7 @@
   {
     "name": "JCET Group",
     "nativeName": "长电科技",
-    "category": "Advanced Packaging & OSAT",
+    "category": "Advanced packaging and OSAT",
     "subcategory": "OSAT assembly, test and fan-out packaging",
     "country": "CN",
     "city": "Jiangyin",
@@ -4383,7 +4383,7 @@
   {
     "name": "Powertech Technology",
     "nativeName": "力成科技",
-    "category": "Advanced Packaging & OSAT",
+    "category": "Advanced packaging and OSAT",
     "subcategory": "Memory packaging and test",
     "country": "TW",
     "city": "Hsinchu",
@@ -4416,7 +4416,7 @@
   {
     "name": "Tongfu Microelectronics",
     "nativeName": "通富微电",
-    "category": "Advanced Packaging & OSAT",
+    "category": "Advanced packaging and OSAT",
     "subcategory": "OSAT assembly and test, AMD partner",
     "country": "CN",
     "city": "Nantong",
@@ -4447,7 +4447,7 @@
   {
     "name": "Hua Tian Technology",
     "nativeName": "华天科技",
-    "category": "Advanced Packaging & OSAT",
+    "category": "Advanced packaging and OSAT",
     "subcategory": "OSAT assembly and test",
     "country": "CN",
     "city": "Tianshui",
@@ -4478,7 +4478,7 @@
   {
     "name": "King Yuan Electronics",
     "nativeName": "京元電子",
-    "category": "Advanced Packaging & OSAT",
+    "category": "Advanced packaging and OSAT",
     "subcategory": "Wafer sort and final test services",
     "country": "TW",
     "city": "Miaoli",
@@ -4511,7 +4511,7 @@
   {
     "name": "Chipbond Technology",
     "nativeName": "頎邦科技",
-    "category": "Advanced Packaging & OSAT",
+    "category": "Advanced packaging and OSAT",
     "subcategory": "Gold bumping and display driver packaging",
     "country": "TW",
     "city": "Hsinchu",
@@ -4543,7 +4543,7 @@
   {
     "name": "UTAC Holdings",
     "nativeName": null,
-    "category": "Advanced Packaging & OSAT",
+    "category": "Advanced packaging and OSAT",
     "subcategory": "OSAT assembly and test",
     "country": "SG",
     "city": "Singapore",
@@ -4565,7 +4565,7 @@
   {
     "name": "BE Semiconductor Industries",
     "nativeName": null,
-    "category": "Advanced Packaging & OSAT",
+    "category": "Advanced packaging and OSAT",
     "subcategory": "Die bonding and hybrid bonding equipment",
     "country": "NL",
     "city": "Duiven",
@@ -4599,7 +4599,7 @@
   {
     "name": "ASMPT",
     "nativeName": "ASM太平洋科技",
-    "category": "Advanced Packaging & OSAT",
+    "category": "Advanced packaging and OSAT",
     "subcategory": "Bonding, packaging and SMT equipment",
     "country": "SG",
     "city": "Singapore",
@@ -4634,7 +4634,7 @@
   {
     "name": "Hanmi Semiconductor",
     "nativeName": "한미반도체",
-    "category": "Advanced Packaging & OSAT",
+    "category": "Advanced packaging and OSAT",
     "subcategory": "Thermocompression bonders for HBM",
     "country": "KR",
     "city": "Incheon",
@@ -4657,7 +4657,7 @@
   {
     "name": "Disco Corporation",
     "nativeName": "株式会社ディスコ",
-    "category": "Advanced Packaging & OSAT",
+    "category": "Advanced packaging and OSAT",
     "subcategory": "Wafer dicing, grinding and laser cutting",
     "country": "JP",
     "city": "Tokyo",
@@ -4666,7 +4666,7 @@
     "ownership": "Public",
     "role": "Makes the dicing saws, laser dicers and back-grinders that cut wafers into dies and thin them for stacking. HBM and other 3D stacks need wafers thinned to tens of micrometers.",
     "chokepoint": "Critical",
-    "shareNote": "87% of the $1.9bn market for dicing saws and wafer grinders in 2025, on CSET's analysis of TechInsights data",
+    "shareNote": "87 percent of the $1.9 billion market for dicing saws and wafer grinders in 2025, on CSET's analysis of TechInsights data",
     "customers": [
       "TSMC",
       "Samsung",
@@ -4691,7 +4691,7 @@
   {
     "name": "Kulicke and Soffa",
     "nativeName": null,
-    "category": "Advanced Packaging & OSAT",
+    "category": "Advanced packaging and OSAT",
     "subcategory": "Wire bonders and advanced assembly",
     "country": "SG",
     "city": "Singapore",
@@ -4724,7 +4724,7 @@
   {
     "name": "EV Group",
     "nativeName": null,
-    "category": "Advanced Packaging & OSAT",
+    "category": "Advanced packaging and OSAT",
     "subcategory": "Wafer bonding and nanoimprint lithography",
     "country": "AT",
     "city": "St. Florian am Inn",
@@ -4749,7 +4749,7 @@
   {
     "name": "SUSS MicroTec",
     "nativeName": null,
-    "category": "Advanced Packaging & OSAT",
+    "category": "Advanced packaging and OSAT",
     "subcategory": "Coaters, bonders and packaging lithography",
     "country": "DE",
     "city": "Garching",
@@ -4782,16 +4782,16 @@
   {
     "name": "Ajinomoto",
     "nativeName": "味の素株式会社",
-    "category": "Substrates & PCBs",
+    "category": "Substrates and PCBs",
     "subcategory": "ABF build-up film dielectric",
     "country": "JP",
     "city": "Tokyo",
     "founded": 1909,
     "ticker": "2802.T",
     "ownership": "Public",
-    "role": "Makes Ajinomoto Build-up Film (ABF), the insulating layer between the copper layers of flip-chip package substrates. Ajinomoto, a food company, developed the material from its amino acid chemistry. It says ABF holds over 95 percent of its market.",
+    "role": "Makes Ajinomoto Build-up Film (ABF), the insulating layer between the copper layers of flip-chip package substrates. Ajinomoto, a food company, developed the material from its amino acid chemistry. It told investors in June 2026 that ABF has held over 95 percent of its market since its launch.",
     "chokepoint": "Critical",
-    "shareNote": "Over 95% of the ABF build-up film market, per Ajinomoto's June 2026 electronic materials briefing",
+    "shareNote": "Over 95 percent of its market since its launch, Ajinomoto told investors in June 2026",
     "customers": [
       "Ibiden",
       "Shinko Electric",
@@ -4816,7 +4816,7 @@
   {
     "name": "Ibiden",
     "nativeName": "イビデン株式会社",
-    "category": "Substrates & PCBs",
+    "category": "Substrates and PCBs",
     "subcategory": "FC-BGA package substrates",
     "country": "JP",
     "city": "Ogaki",
@@ -4849,7 +4849,7 @@
   {
     "name": "Shinko Electric Industries",
     "nativeName": "新光電気工業",
-    "category": "Substrates & PCBs",
+    "category": "Substrates and PCBs",
     "subcategory": "FC-BGA substrates and lead frames",
     "country": "JP",
     "city": "Nagano",
@@ -4883,7 +4883,7 @@
   {
     "name": "Unimicron",
     "nativeName": "欣興電子",
-    "category": "Substrates & PCBs",
+    "category": "Substrates and PCBs",
     "subcategory": "IC substrates and HDI boards",
     "country": "TW",
     "city": "Taoyuan",
@@ -4917,7 +4917,7 @@
   {
     "name": "Kinsus Interconnect",
     "nativeName": "景碩科技",
-    "category": "Substrates & PCBs",
+    "category": "Substrates and PCBs",
     "subcategory": "IC substrates and flexible circuits",
     "country": "TW",
     "city": "Taoyuan",
@@ -4950,7 +4950,7 @@
   {
     "name": "Nan Ya PCB",
     "nativeName": "南亞電路板",
-    "category": "Substrates & PCBs",
+    "category": "Substrates and PCBs",
     "subcategory": "ABF substrates and printed circuit boards",
     "country": "TW",
     "city": "Taoyuan",
@@ -4983,7 +4983,7 @@
   {
     "name": "AT&S",
     "nativeName": null,
-    "category": "Substrates & PCBs",
+    "category": "Substrates and PCBs",
     "subcategory": "IC substrates and high-end PCBs",
     "country": "AT",
     "city": "Leoben",
@@ -5016,7 +5016,7 @@
   {
     "name": "Samsung Electro-Mechanics",
     "nativeName": "삼성전기",
-    "category": "Substrates & PCBs",
+    "category": "Substrates and PCBs",
     "subcategory": "FC-BGA substrates and MLCCs",
     "country": "KR",
     "city": "Suwon",
@@ -5050,7 +5050,7 @@
   {
     "name": "LG Innotek",
     "nativeName": "엘지이노텍",
-    "category": "Substrates & PCBs",
+    "category": "Substrates and PCBs",
     "subcategory": "FC-BGA substrates and camera modules",
     "country": "KR",
     "city": "Seoul",
@@ -5082,7 +5082,7 @@
   {
     "name": "Nittobo",
     "nativeName": "日東紡績株式会社",
-    "category": "Substrates & PCBs",
+    "category": "Substrates and PCBs",
     "subcategory": "Low-CTE T-glass fiber and glass cloth",
     "country": "JP",
     "city": "Tokyo",
@@ -5106,7 +5106,7 @@
   {
     "name": "Mitsubishi Gas Chemical",
     "nativeName": "三菱瓦斯化学株式会社",
-    "category": "Substrates & PCBs",
+    "category": "Substrates and PCBs",
     "subcategory": "BT resin and copper-clad laminates",
     "country": "JP",
     "city": "Tokyo",
@@ -5136,7 +5136,7 @@
   {
     "name": "Panasonic Industry",
     "nativeName": "パナソニック インダストリー",
-    "category": "Substrates & PCBs",
+    "category": "Substrates and PCBs",
     "subcategory": "Copper-clad laminates and electronic materials",
     "country": "JP",
     "city": "Osaka",
@@ -5161,7 +5161,7 @@
   {
     "name": "Victory Giant Technology",
     "nativeName": "胜宏科技",
-    "category": "Substrates & PCBs",
+    "category": "Substrates and PCBs",
     "subcategory": "High-multilayer PCBs for AI servers",
     "country": "CN",
     "city": "Huizhou",
@@ -5194,7 +5194,7 @@
   {
     "name": "WUS Printed Circuit",
     "nativeName": "沪电股份",
-    "category": "Substrates & PCBs",
+    "category": "Substrates and PCBs",
     "subcategory": "High-speed PCBs for servers and networking",
     "country": "CN",
     "city": "Kunshan",
@@ -5227,7 +5227,7 @@
   {
     "name": "Gold Circuit Electronics",
     "nativeName": "金像電子",
-    "category": "Substrates & PCBs",
+    "category": "Substrates and PCBs",
     "subcategory": "Server and networking PCBs",
     "country": "TW",
     "city": "Taoyuan",
@@ -5260,7 +5260,7 @@
   {
     "name": "TTM Technologies",
     "nativeName": null,
-    "category": "Substrates & PCBs",
+    "category": "Substrates and PCBs",
     "subcategory": "PCBs and RF components",
     "country": "US",
     "city": "Santa Ana",
@@ -5293,7 +5293,7 @@
   {
     "name": "Absolics",
     "nativeName": null,
-    "category": "Substrates & PCBs",
+    "category": "Substrates and PCBs",
     "subcategory": "Glass core substrates",
     "country": "US",
     "city": "Covington",
@@ -5323,7 +5323,7 @@
     "ownership": "Public",
     "role": "Makes automated test equipment for logic and memory, including the V93000 platform used to test AI accelerators and the testers used for HBM. Test time on AI dies is long and rising.",
     "chokepoint": "Critical",
-    "shareNote": "66% of the SoC tester market in CY2025, up from 56% in CY2024, on Advantest's own tester market share report",
+    "shareNote": "66 percent of the SoC tester market in CY2025, up from 56 percent in CY2024, on Advantest's own tester market share report",
     "customers": [
       "TSMC",
       "Nvidia",
@@ -5357,7 +5357,7 @@
     "ownership": "Public",
     "role": "Supplies SoC, memory and system-level test platforms, and forms the automated test equipment duopoly with Advantest. It also sells industrial automation equipment through its robotics arm.",
     "chokepoint": "Important",
-    "shareNote": "$2.52bn of semiconductor test revenue in 2025, service included: $1.89bn from SoC testers and $0.505bn from memory testers, per its 2025 10-K",
+    "shareNote": "$2.52 billion of semiconductor test revenue in 2025, service included: $1.89 billion from SoC testers and $0.505 billion from memory testers, per its 2025 10-K",
     "customers": [
       "Apple",
       "Qualcomm",
@@ -5623,7 +5623,7 @@
     "ownership": "Public",
     "role": "Makes probers, the machines that move each wafer under the probe card and hold it at a set temperature during wafer test, plus dicing machines and grinders. It sells as Accretech and says it has the top global share in probers.",
     "chokepoint": "Important",
-    "shareNote": "8.1% of the $1.9bn market for dicing saws and wafer grinders in 2025, second to Disco, on CSET's analysis of TechInsights data",
+    "shareNote": "8.1 percent of the $1.9 billion market for dicing saws and wafer grinders in 2025, second to Disco, on CSET's analysis of TechInsights data",
     "customers": [
       "Chipmakers",
       "Assembly and test firms"
@@ -5636,7 +5636,7 @@
   {
     "name": "Astera Labs",
     "nativeName": null,
-    "category": "Interconnect & Networking",
+    "category": "Interconnect and networking",
     "subcategory": "PCIe and CXL retimers, fabric switches",
     "country": "US",
     "city": "San Jose",
@@ -5670,7 +5670,7 @@
   {
     "name": "Credo Technology",
     "nativeName": null,
-    "category": "Interconnect & Networking",
+    "category": "Interconnect and networking",
     "subcategory": "SerDes, active electrical cables and optical DSPs",
     "country": "US",
     "city": "San Jose",
@@ -5703,7 +5703,7 @@
   {
     "name": "Arista Networks",
     "nativeName": null,
-    "category": "Interconnect & Networking",
+    "category": "Interconnect and networking",
     "subcategory": "Data center Ethernet switches",
     "country": "US",
     "city": "Santa Clara",
@@ -5736,7 +5736,7 @@
   {
     "name": "Cisco Systems",
     "nativeName": null,
-    "category": "Interconnect & Networking",
+    "category": "Interconnect and networking",
     "subcategory": "Networking systems and Silicon One switch chips",
     "country": "US",
     "city": "San Jose",
@@ -5768,7 +5768,7 @@
   {
     "name": "Accton Technology",
     "nativeName": "智邦科技",
-    "category": "Interconnect & Networking",
+    "category": "Interconnect and networking",
     "subcategory": "White-box switch manufacturing",
     "country": "TW",
     "city": "Hsinchu",
@@ -5802,7 +5802,7 @@
   {
     "name": "Amphenol",
     "nativeName": null,
-    "category": "Interconnect & Networking",
+    "category": "Interconnect and networking",
     "subcategory": "High-speed connectors, cables and backplanes",
     "country": "US",
     "city": "Wallingford",
@@ -5836,7 +5836,7 @@
   {
     "name": "Luxshare Precision",
     "nativeName": "立讯精密",
-    "category": "Interconnect & Networking",
+    "category": "Interconnect and networking",
     "subcategory": "Connectors, cable assemblies and modules",
     "country": "CN",
     "city": "Dongguan",
@@ -5868,7 +5868,7 @@
   {
     "name": "Innolight Technology",
     "nativeName": "中际旭创",
-    "category": "Optics & Photonics",
+    "category": "Optics and photonics",
     "subcategory": "800G and 1.6T optical transceivers",
     "country": "CN",
     "city": "Suzhou",
@@ -5902,7 +5902,7 @@
   {
     "name": "Eoptolink Technology",
     "nativeName": "新易盛",
-    "category": "Optics & Photonics",
+    "category": "Optics and photonics",
     "subcategory": "High-speed optical transceivers",
     "country": "CN",
     "city": "Chengdu",
@@ -5933,7 +5933,7 @@
   {
     "name": "Coherent Corp",
     "nativeName": null,
-    "category": "Optics & Photonics",
+    "category": "Optics and photonics",
     "subcategory": "Lasers, optical components and transceivers",
     "country": "US",
     "city": "Saxonburg",
@@ -5967,7 +5967,7 @@
   {
     "name": "Lumentum",
     "nativeName": null,
-    "category": "Optics & Photonics",
+    "category": "Optics and photonics",
     "subcategory": "Lasers, photonic components and transceivers",
     "country": "US",
     "city": "San Jose",
@@ -5999,7 +5999,7 @@
   {
     "name": "Fabrinet",
     "nativeName": null,
-    "category": "Optics & Photonics",
+    "category": "Optics and photonics",
     "subcategory": "Contract manufacturing of optical modules",
     "country": "TH",
     "city": "Bangkok",
@@ -6032,7 +6032,7 @@
   {
     "name": "Ayar Labs",
     "nativeName": null,
-    "category": "Optics & Photonics",
+    "category": "Optics and photonics",
     "subcategory": "In-package optical I/O",
     "country": "US",
     "city": "Santa Clara",
@@ -6056,7 +6056,7 @@
   {
     "name": "Lightmatter",
     "nativeName": null,
-    "category": "Optics & Photonics",
+    "category": "Optics and photonics",
     "subcategory": "Photonic interconnect and compute",
     "country": "US",
     "city": "Mountain View",
@@ -6077,7 +6077,7 @@
   {
     "name": "Corning",
     "nativeName": null,
-    "category": "Optics & Photonics",
+    "category": "Optics and photonics",
     "subcategory": "Optical fiber, cable and glass substrates",
     "country": "US",
     "city": "Corning",
@@ -6109,7 +6109,7 @@
   {
     "name": "AXT",
     "nativeName": null,
-    "category": "Optics & Photonics",
+    "category": "Optics and photonics",
     "subcategory": "Indium phosphide and gallium arsenide substrates",
     "country": "US",
     "city": "Fremont",
@@ -6130,7 +6130,7 @@
   {
     "name": "Hon Hai Precision",
     "nativeName": "鴻海精密工業",
-    "category": "Systems & Servers",
+    "category": "Systems and servers",
     "subcategory": "AI server and rack integration",
     "country": "TW",
     "city": "New Taipei",
@@ -6164,7 +6164,7 @@
   {
     "name": "Quanta Computer",
     "nativeName": "廣達電腦",
-    "category": "Systems & Servers",
+    "category": "Systems and servers",
     "subcategory": "AI server ODM",
     "country": "TW",
     "city": "Taoyuan",
@@ -6198,7 +6198,7 @@
   {
     "name": "Wistron",
     "nativeName": "緯創資通",
-    "category": "Systems & Servers",
+    "category": "Systems and servers",
     "subcategory": "AI server and GPU baseboard manufacturing",
     "country": "TW",
     "city": "New Taipei",
@@ -6231,7 +6231,7 @@
   {
     "name": "Wiwynn",
     "nativeName": "緯穎科技",
-    "category": "Systems & Servers",
+    "category": "Systems and servers",
     "subcategory": "Hyperscale server and rack ODM",
     "country": "TW",
     "city": "New Taipei",
@@ -6263,7 +6263,7 @@
   {
     "name": "Inventec",
     "nativeName": "英業達",
-    "category": "Systems & Servers",
+    "category": "Systems and servers",
     "subcategory": "AI server ODM",
     "country": "TW",
     "city": "Taipei",
@@ -6295,7 +6295,7 @@
   {
     "name": "Super Micro Computer",
     "nativeName": null,
-    "category": "Systems & Servers",
+    "category": "Systems and servers",
     "subcategory": "AI servers and liquid-cooled racks",
     "country": "US",
     "city": "San Jose",
@@ -6328,7 +6328,7 @@
   {
     "name": "Dell Technologies",
     "nativeName": null,
-    "category": "Systems & Servers",
+    "category": "Systems and servers",
     "subcategory": "AI servers and integrated systems",
     "country": "US",
     "city": "Round Rock",
@@ -6361,7 +6361,7 @@
   {
     "name": "Hewlett Packard Enterprise",
     "nativeName": null,
-    "category": "Systems & Servers",
+    "category": "Systems and servers",
     "subcategory": "AI servers, supercomputers and networking",
     "country": "US",
     "city": "Spring",
@@ -6393,7 +6393,7 @@
   {
     "name": "Lenovo",
     "nativeName": "联想集团",
-    "category": "Systems & Servers",
+    "category": "Systems and servers",
     "subcategory": "AI servers and liquid cooling",
     "country": "CN",
     "city": "Beijing",
@@ -6425,7 +6425,7 @@
   {
     "name": "ZT Systems",
     "nativeName": null,
-    "category": "Systems & Servers",
+    "category": "Systems and servers",
     "subcategory": "Rack-scale AI system design",
     "country": "US",
     "city": "Secaucus",
@@ -6447,7 +6447,7 @@
   {
     "name": "Celestica",
     "nativeName": null,
-    "category": "Systems & Servers",
+    "category": "Systems and servers",
     "subcategory": "Hyperscale hardware and switch manufacturing",
     "country": "CA",
     "city": "Toronto",
@@ -6478,7 +6478,7 @@
   {
     "name": "Jabil",
     "nativeName": null,
-    "category": "Systems & Servers",
+    "category": "Systems and servers",
     "subcategory": "Contract manufacturing and liquid cooling hardware",
     "country": "US",
     "city": "St. Petersburg",
@@ -6510,7 +6510,7 @@
   {
     "name": "Vertiv",
     "nativeName": null,
-    "category": "Power & Cooling",
+    "category": "Power and cooling",
     "subcategory": "Data center power and thermal management",
     "country": "US",
     "city": "Westerville",
@@ -6544,7 +6544,7 @@
   {
     "name": "Schneider Electric",
     "nativeName": null,
-    "category": "Power & Cooling",
+    "category": "Power and cooling",
     "subcategory": "Electrical distribution, UPS and cooling",
     "country": "FR",
     "city": "Rueil-Malmaison",
@@ -6577,7 +6577,7 @@
   {
     "name": "Eaton",
     "nativeName": null,
-    "category": "Power & Cooling",
+    "category": "Power and cooling",
     "subcategory": "Power distribution, switchgear and UPS",
     "country": "IE",
     "city": "Dublin",
@@ -6609,7 +6609,7 @@
   {
     "name": "Delta Electronics",
     "nativeName": "台達電子",
-    "category": "Power & Cooling",
+    "category": "Power and cooling",
     "subcategory": "Power supplies, power shelves and thermal systems",
     "country": "TW",
     "city": "Taipei",
@@ -6643,7 +6643,7 @@
   {
     "name": "CoolIT Systems",
     "nativeName": null,
-    "category": "Power & Cooling",
+    "category": "Power and cooling",
     "subcategory": "Direct liquid cooling",
     "country": "CA",
     "city": "Calgary",
@@ -6667,7 +6667,7 @@
   {
     "name": "Asetek",
     "nativeName": null,
-    "category": "Power & Cooling",
+    "category": "Power and cooling",
     "subcategory": "Liquid cooling systems",
     "country": "DK",
     "city": "Aalborg",
@@ -6698,7 +6698,7 @@
   {
     "name": "Hitachi Energy",
     "nativeName": null,
-    "category": "Power & Cooling",
+    "category": "Power and cooling",
     "subcategory": "Grid equipment and large transformers",
     "country": "CH",
     "city": "Zurich",
@@ -6721,7 +6721,7 @@
   {
     "name": "Siemens Energy",
     "nativeName": null,
-    "category": "Power & Cooling",
+    "category": "Power and cooling",
     "subcategory": "Turbines, grid technology and transformers",
     "country": "DE",
     "city": "Munich",
@@ -6753,7 +6753,7 @@
   {
     "name": "GE Vernova",
     "nativeName": null,
-    "category": "Power & Cooling",
+    "category": "Power and cooling",
     "subcategory": "Gas turbines, grid equipment including transformers, and generation",
     "country": "US",
     "city": "Cambridge",
@@ -6785,7 +6785,7 @@
   {
     "name": "Monolithic Power Systems",
     "nativeName": null,
-    "category": "Power & Cooling",
+    "category": "Power and cooling",
     "subcategory": "Point-of-load power management ICs",
     "country": "US",
     "city": "Kirkland",
@@ -6818,7 +6818,7 @@
   {
     "name": "Infineon",
     "nativeName": null,
-    "category": "Power & Cooling",
+    "category": "Power and cooling",
     "subcategory": "Power semiconductors and power stages",
     "country": "DE",
     "city": "Neubiberg",
@@ -6851,7 +6851,7 @@
   {
     "name": "Nidec",
     "nativeName": "ニデック株式会社",
-    "category": "Power & Cooling",
+    "category": "Power and cooling",
     "subcategory": "Fans, pumps and thermal modules",
     "country": "JP",
     "city": "Kyoto",
@@ -6884,7 +6884,7 @@
   {
     "name": "Mitsubishi Power",
     "nativeName": null,
-    "category": "Power & Cooling",
+    "category": "Power and cooling",
     "subcategory": "Gas turbines and power generation equipment",
     "country": "JP",
     "city": "Tokyo",

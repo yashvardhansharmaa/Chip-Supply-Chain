@@ -47,15 +47,24 @@ module.exports = function (ctx) {
     return `<li class="lv-${LEVEL[conc(ch)] || 0}"><a href="#s-${esc(ch.id)}"><span class="n">${pad(i + 1)}</span><span class="t">${esc(ch.title)}</span><span class="c">${meter(conc(ch))}<span class="w">${esc(conc(ch))}</span></span><span class="s">${esc(sub(ch))}</span><span class="who">${who}</span></a></li>`;
   }).join('');
   const nExtreme = stages.filter((ch) => conc(ch) === 'Extreme').length;
+  // a sourced figure on a card links its source, as a chapter's marks do (final QA C13): a leader's share its own url, and the
+  // lede's first percentage the key fact that carries the same figure, when one does
+  const srcLink = (u) => (u ? ` <a class="src-l" href="${esc(u)}" target="_blank" rel="noopener">Source</a>` : '');
+  const ledeSrc = (ch) => {
+    const fig = (String(ch.meta.oneLiner || '').match(/\d[\d,.]*\s(?:to\s\d[\d,.]*\s)?percent/) || [''])[0].replace(/^.*\sto\s/, '');
+    const re = fig ? new RegExp('(?<![\\d.,])' + fig.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')) : null; // "7 percent" never matches "17 percent"
+    const k = re ? (ch.meta.keyFacts || []).find((f) => re.test(String(f.fact || ''))) : null;
+    return k ? k.source : '';
+  };
   const stageCards = stages.map((ch, i) => {
     const c = card(ch);
-    const who = leaders(c, 3).map((l) => `<li><b>${esc(l.name)}</b>${l.country ? ` <span class="cc" title="${esc(COUNTRY[l.country] || l.country)}">${esc(l.country)}</span>` : ''}${l.share ? `<span class="share">${esc(l.share)}</span>` : ''}</li>`).join('');
+    const who = leaders(c, 3).map((l) => `<li><b>${esc(l.name)}</b>${l.country ? ` <span class="cc" title="${esc(COUNTRY[l.country] || l.country)}">${esc(l.country)}</span>` : ''}${l.share ? `<span class="share">${esc(l.share)}${srcLink(l.source)}</span>` : ''}</li>`).join('');
     const sides = [['China', c.chinaStatus], ['United States', c.usStatus]].filter((x) => x[1]);
     return `<article class="card lv-${LEVEL[conc(ch)] || 0}" id="s-${esc(ch.id)}">
 <p class="card-k"><span class="n">${pad(i + 1)}</span>Stage ${i + 1} of ${stages.length}</p>
 <h3><a href="${url(ch.id)}">${esc(ch.title)}</a></h3>
 <p class="pills"><span class="pill pill-c${LEVEL[conc(ch)] === 4 ? ' x' : ''}">${esc(conc(ch))} concentration</span>${sub(ch) ? `<span class="pill">${esc(subWords(ch))}</span>` : ''}</p>
-${ch.meta.oneLiner ? `<p class="lede">${esc(ch.meta.oneLiner)}</p>` : ''}
+${ch.meta.oneLiner ? `<p class="lede">${esc(ch.meta.oneLiner)}${srcLink(ledeSrc(ch))}</p>` : ''}
 ${who ? `<div class="who-block"><p class="lbl">Who leads</p><ul>${who}</ul></div>` : ''}
 ${sides.length ? `<div class="sides">${sides.map(([k, v]) => `<div><p class="lbl">${k}</p><p>${esc(v)}</p></div>`).join('')}</div>` : ''}
 <p class="more"><a href="${url(ch.id)}">Read the chapter, with its sources</a></p>
@@ -238,6 +247,7 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
   .who-block li b { color: var(--ink); font-weight: 600; }
   .who-block .cc { margin-left: 4px; }
   .who-block .share { display: block; font-size: var(--t-note); color: var(--muted); }
+  .src-l { font-size: var(--t-note); color: var(--muted); text-decoration: underline; text-underline-offset: 2px; white-space: nowrap; }
   /* China and the United States at the card's full width, one under the other (page revision 7): about 60 characters a line */
   .sides { display: block; border-top: 1px solid var(--line); padding-top: 12px; margin: 0 0 12px; }
   .sides > div + div { margin-top: 14px; }

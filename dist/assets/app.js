@@ -1690,15 +1690,15 @@
       'The ribbons count it under the UK. The specialty gases share counts it under Germany for its roots in Linde AG, as Georgetown University\'s Emerging Technology Observatory does.',
     LEVELS: ['Critical', 'Important', 'Contested', 'Diversified'],
     RANK: { Critical: 0, Important: 1, Contested: 2, Diversified: 3 },
-    ORDER: ['Design & EDA', 'IP & Architecture', 'Silicon & Wafers', 'Photomasks', 'Lithography', 'Deposition & Etch', 'Photoresist & Materials', 'Chemicals & Gases', 'Optics & Photonics', 'Equipment Subsystems & Components', 'Metrology & Inspection', 'Foundry', 'Memory', 'Advanced Packaging & OSAT', 'Test', 'Substrates & PCBs', 'Interconnect & Networking', 'Power & Cooling', 'Systems & Servers', 'AI Accelerator Vendor'], // chain order, design first
+    ORDER: ['Design and EDA', 'IP and architecture', 'Silicon and wafers', 'Photomasks', 'Lithography', 'Deposition and etch', 'Photoresist and materials', 'Chemicals and gases', 'Optics and photonics', 'Equipment subsystems and components', 'Metrology and inspection', 'Foundry', 'Memory', 'Advanced packaging and OSAT', 'Test', 'Substrates and PCBs', 'Interconnect and networking', 'Power and cooling', 'Systems and servers', 'AI accelerator vendors'], // chain order, design first
     /* the long category names would collide under a 59 px column, so the drawing uses these */
     SHORT: {
-      'Equipment Subsystems & Components': 'Equipment subsystems', 'Advanced Packaging & OSAT': 'Advanced packaging',
-      'Interconnect & Networking': 'Interconnect', 'AI Accelerator Vendor': 'Accelerator vendors',
-      'Photoresist & Materials': 'Photoresist', 'Metrology & Inspection': 'Metrology',
-      'Deposition & Etch': 'Deposition & etch', 'Chemicals & Gases': 'Chemicals & gases',
-      'Systems & Servers': 'Systems & servers', 'Power & Cooling': 'Power & cooling',
-      'Silicon & Wafers': 'Silicon wafers', 'IP & Architecture': 'IP & architecture'
+      'Equipment subsystems and components': 'Equipment subsystems', 'Advanced packaging and OSAT': 'Advanced packaging',
+      'Interconnect and networking': 'Interconnect', 'AI accelerator vendors': 'Accelerator vendors',
+      'Photoresist and materials': 'Photoresist', 'Metrology and inspection': 'Metrology',
+      'Deposition and etch': 'Deposition and etch', 'Chemicals and gases': 'Chemicals and gases',
+      'Systems and servers': 'Systems and servers', 'Power and cooling': 'Power and cooling',
+      'Silicon and wafers': 'Silicon wafers', 'IP and architecture': 'IP and architecture'
     },
     /* the address: #/suppliers opens By segment, ?tab=country By country and ?tab=table the table; &group=eu draws the EU-27
        members as one column in the ribbons and lands on them (the Glossary's EU-27 card links there) */
