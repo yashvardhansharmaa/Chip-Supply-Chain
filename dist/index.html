@@ -14734,6 +14734,18 @@ PC.register('wafer', function (p) {
       var edge = function () { tabs.setAttribute('data-end', tabs.scrollLeft + tabs.clientWidth >= tabs.scrollWidth - 2 ? '1' : '0'); };
       tabs.addEventListener('scroll', edge, { passive: true }); window.addEventListener('resize', edge); edge();
     })();
+    (function () { // The Chain's contents (build/build.js CONTENTS): the chapter pointed at or focused, in the picture or the list, is marked in both
+      var box = $('#contents'), hot = null; if (!box) return;
+      var mark = function (id) {
+        if (id === hot) return;
+        if (hot) $$('[data-ch="' + hot + '"]', box).forEach(function (x) { x.classList.remove('is-hot'); });
+        hot = id;
+        if (id) $$('[data-ch="' + id + '"]', box).forEach(function (x) { x.classList.add('is-hot'); });
+      };
+      var at = function (e) { var el = e.target.closest ? e.target.closest('[data-ch]') : null; mark(el ? el.getAttribute('data-ch') : null); };
+      box.addEventListener('mouseover', at); box.addEventListener('focusin', at);
+      box.addEventListener('mouseleave', function () { mark(null); }); box.addEventListener('focusout', function () { mark(null); });
+    })();
     Tools.init();
     // The masthead wraps on phones, so the sticky offsets make room for its real height when it is taller than the
     // stylesheet's --masthead (large text, a narrow screen). A shorter one keeps the stylesheet's value: the page has been

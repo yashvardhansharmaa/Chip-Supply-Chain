@@ -36,12 +36,36 @@ const view = (v) => `(document.querySelector('.view[data-view="${v}"]') && !docu
 const count = (sel) => `document.querySelectorAll(${JSON.stringify(sel)}).length`;
 const shown = (sel) => `!!(document.querySelector(${JSON.stringify(sel)}) && document.querySelector(${JSON.stringify(sel)}).getClientRects().length)`; // laid out on screen
 const shownCount = (sel) => `[].filter.call(document.querySelectorAll(${JSON.stringify(sel)}), (e) => e.getClientRects().length).length`;
+// The Chain's contents, measured against CP_DATA.chapters: the stages on the line (shown, each linked to its own chapter
+// and with its drawing), the Extreme ones on the wine route, the chapters across the chain on the bracket, every chapter in
+// the list with its #<id> link, the downloads, and How to read a chapter gone
+const CHAIN_STATE = `(function () {
+  var D = (window.CP_DATA && CP_DATA.chapters) || [], st = D.filter(function (c) { return c.stage; }), x = D.filter(function (c) { return !c.stage; });
+  var vis = function (el) { return !!(el && el.getClientRects().length); };
+  var li = [].slice.call(document.querySelectorAll('#contents .ln-st > li'));
+  var line = li.map(function (l) { var a = l.querySelector('a'); return a && vis(a) && l.querySelector('.ln-sp img') ? a.getAttribute('data-route') + ' ' + a.getAttribute('href') : 'none'; });
+  var wantLine = st.map(function (c) { return '#' + c.id + ' ' + c.id + '/'; });
+  var wine = li.filter(function (l) { return l.getAttribute('data-band') === 'x' && getComputedStyle(l.querySelector('.ln-rt')).backgroundColor !== 'rgba(0, 0, 0, 0)'; }).map(function (l) { return l.getAttribute('data-ch'); });
+  var wantWine = st.filter(function (c) { return c.concentration === 'Extreme'; }).map(function (c) { return c.id; });
+  var brk = [].filter.call(document.querySelectorAll('#contents .ln-brk a.ln-bx'), vis).map(function (a) { return a.getAttribute('data-route'); });
+  var list = [].map.call(document.querySelectorAll('#contents .contents-grid .item a.t'), function (a) { return a.getAttribute('href'); });
+  var dl = [].filter.call(document.querySelectorAll('#howto .howto-dl a'), vis).map(function (a) { return a.getAttribute('href'); });
+  return { line: line.join() === wantLine.join(), stages: st.length, lineShown: line.filter(function (v) { return v !== 'none'; }).length,
+    wine: wine.join() === wantWine.join(), extreme: wantWine.length, bracket: brk.join() === x.map(function (c) { return '#' + c.id; }).join(), across: brk.length,
+    list: list.join() === D.map(function (c) { return '#' + c.id; }).join(), listed: list.length,
+    downloads: dl.join() === 'pdf/how-ai-chips-are-made.pdf,pdf/summary.pdf,summary/', howToRead: !!document.querySelector('.howto-read, #howto-read') };
+})()`;
+const CHAIN_OK = `(function (s) { return s.stages >= 14 && s.line && s.wine && s.extreme > 0 && s.bracket && s.across >= 2 && s.list && s.downloads && !s.howToRead; })(${CHAIN_STATE})`;
 // the counts below follow the chain since the merge of chapters 8 and 9 (27 Oct 2026): 14 stages, 16 chapters
 const ROUTES = [
   { name: 'walk', url: '/#/', ready: `${view('walk')} && ${count('.view[data-view="walk"] .wk-step')} >= 14`, detail: `'walk view shown: ' + ${view('walk')} + ', steps: ' + ${count('.view[data-view="walk"] .wk-step')}` },
   // The Chain shows one chapter at a time (src/template.html, html[data-chain]): #/chain is its contents, every chapter is held
   // in the page (print and search read them all) and none is shown; a chapter's address shows that chapter alone
-  { name: 'chain', url: '/#/chain', ready: `${view('stack')} && ${count('.view[data-view="stack"] article.chapter')} >= 16 && ${count('.view[data-view="stack"] article.chapter .plate')} >= 14 && ${shown('#contents')} && ${count('#contents a.t')} >= 16 && ${shownCount('.view[data-view="stack"] > article.chapter')} === 0`, detail: `'chapters: ' + ${count('.view[data-view="stack"] article.chapter')} + ', cards: ' + ${count('.view[data-view="stack"] article.chapter .plate')} + ', contents rows: ' + ${count('#contents a.t')} + ', chapters shown: ' + ${shownCount('.view[data-view="stack"] > article.chapter')}` },
+  // The contents page is The line (design round six, 28 Oct 2026): every stage drawn on the route and linked (its static page
+  // in href, the app's route in data-route), wine under each Extreme stage, the chapters across the chain on the bracket, each
+  // chapter's one line (the list the book PDF reads, href="#<id>"), the three downloads, and no How to read a chapter.
+  // The counts come from the page's own data (CP_DATA.chapters), never typed here
+  { name: 'chain', url: '/#/chain', ready: `${view('stack')} && ${count('.view[data-view="stack"] article.chapter')} >= 16 && ${count('.view[data-view="stack"] article.chapter .plate')} >= 14 && ${shown('#contents')} && ${shownCount('.view[data-view="stack"] > article.chapter')} === 0 && ${CHAIN_OK}`, detail: `'chapters: ' + ${count('.view[data-view="stack"] article.chapter')} + ', cards: ' + ${count('.view[data-view="stack"] article.chapter .plate')} + ', chapters shown: ' + ${shownCount('.view[data-view="stack"] > article.chapter')} + ', contents: ' + JSON.stringify(${CHAIN_STATE})` },
   { name: 'chapter', url: '/#lithography', ready: `${view('stack')} && ${shownCount('.view[data-view="stack"] > article.chapter')} === 1 && ${shown('#lithography .plate')} && ${shown('#lithography .prevnext .next')} && !${shown('#contents')}`, detail: `'chapters shown: ' + ${shownCount('.view[data-view="stack"] > article.chapter')} + ' (' + [].filter.call(document.querySelectorAll('.view[data-view="stack"] > article.chapter'), (a) => a.getClientRects().length).map((a) => a.id).join(', ') + '), card: ' + ${shown('#lithography .plate')} + ', door: ' + ${shown('#lithography .prevnext .next')} + ', contents shown: ' + ${shown('#contents')}` },
   { name: 'landscape', url: '/#/landscape', ready: `${view('landscape')} && ${count('#cx-list input[data-tick]')} >= 20 && ${count('#cx-chart .pt')} >= 20`, detail: `'boxes in the list: ' + ${count('#cx-list input[data-tick]')} + ', dots on the chart: ' + ${count('#cx-chart .pt')}` }, // the tick list (design round five)
   { name: 'suppliers', url: '/#/suppliers', ready: `${view('suppliers')} && /\\d/.test((document.getElementById('sup-count') || {}).textContent || '') && document.querySelector('#sup-ladder') && document.querySelector('#sup-ladder').children.length > 0`, detail: `'count: ' + ((document.getElementById('sup-count') || {}).textContent || 'none') + ', ladder parts: ' + (document.querySelector('#sup-ladder') ? document.querySelector('#sup-ladder').children.length : 0)` },

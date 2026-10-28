@@ -13,6 +13,9 @@
      6. a Suppliers link to a stage lands on that chapter (AI Chips has no link to a stage);
      7. print emulation of #/chain (and of a chapter's address) shows all 16 chapters (17 before the merge of 27 Oct 2026), the head and the contents;
      8. the page's height at 1440 for one chapter, against the whole chain's;
+    10. the contents page (The line, 28 Oct 2026) at 1440, 1024 and 390: every title on the line opens its chapter, the
+        bracket carries the chapters across the chain and each opens, the three downloads show on the first screen and are
+        served;
    and every other way in: the home page, a look-up card, Export Controls, the phone's contents sheet and slim bar, the
    specimen strip's Top, and #/chain from a chapter.
    usage: node qa/redesign/stage-chapters.js [--base http://127.0.0.1:8766] [--only 1,3] > qa/redesign/stage-chapters.txt
@@ -376,13 +379,70 @@ const want = (n) => !ONLY.length || ONLY.includes(String(n));
       await go(t, `the specimen strip's Top (the strip reads "${tag}")`, '.stage-top', 'memory-and-hbm', { into: false });
       if (!/09/.test(tag)) { ok = false; out.push('the strip does not show chapter 09\'s specimen (FAIL)'); } // Memory and HBM, chapter 10 before the merge of 27 Oct 2026
       if (t.errors.length) { ok = false; out.push('errors: ' + t.errors.join(' | ')); }
-      // the phone's strip on the contents, which show no chapter: the first chapter's specimen, as before the change
+      // the phone's strip on the contents, which draw every stage themselves (design round six, 28 Oct 2026): the strip stands
+      // down there, and comes back on a chapter
       await t.click('.tabs a[data-view="stack"]', false); await sleep(1500);
-      const ctag = await t.ev(`document.getElementById('stage-tag-text').textContent`), cst = await t.ev(STATE);
-      const cpass = /01/.test(ctag) && cst.contents && !cst.shown.length && /^The Chain/.test(cst.title);
-      ok = ok && cpass; out.push(`the phone's The Chain tab from chapter 09: the contents, the strip reads "${ctag}", title "${cst.title}"${cpass ? '' : ' (FAIL)'}`);
+      const strip = `getComputedStyle(document.querySelector('.stage')).display`;
+      const cstrip = await t.ev(strip), cst = await t.ev(STATE);
+      const cpass = cstrip === 'none' && cst.contents && !cst.shown.length && /^The Chain/.test(cst.title);
+      ok = ok && cpass; out.push(`the phone's The Chain tab from chapter 09: the contents, the strip ${cstrip === 'none' ? 'stands down' : 'shows (' + cstrip + ')'}, title "${cst.title}"${cpass ? '' : ' (FAIL)'}`);
+      await t.back(); const bstrip = await t.ev(strip), bst = await t.ev(STATE);
+      const bpass = bstrip !== 'none' && bst.shown.join() === 'memory-and-hbm';
+      ok = ok && bpass; out.push(`Back to chapter 09: the strip ${bstrip !== 'none' ? 'shows again' : 'is still gone'}${bpass ? '' : ' (FAIL)'}`);
       await t.close();
       report(9, 'every other way in lands', ok, out.join('\n        '));
+    }
+
+    // 10. The Chain's contents page (design round six, The line, 28 Oct 2026), driven by real clicks at the three layouts (one
+    //     row of stages at 1440, two rows at 1024, the route down the page at 390): every title on the line opens its chapter
+    //     alone at its top, and its static page (the href a new tab opens) exists; the bracket carries the chapters across the
+    //     chain, in order, and each opens; the three downloads show on the first screen and each is served
+    if (want(10)) {
+      const out = []; let ok = true;
+      const D = await (async () => { const t = await tab(chrome, '/#/chain'); const d = await t.ev('CP_DATA.chapters.map(function (c) { return { id: c.id, stage: c.stage, title: c.title }; })'); await t.close(); return d; })();
+      const stagesD = D.filter((c) => c.stage), acrossD = D.filter((c) => !c.stage);
+      const opens = async (t, sel, id) => {
+        await t.ev(`location.hash = '#/chain', 1`); await sleep(900);
+        const clicked = await t.click(sel); await sleep(1100);
+        const st = await t.ev(STATE);
+        return { pass: clicked && st.view === 'stack' && st.shown.join() === id && st.hash === '#' + id && st.y <= 4 && !st.contents, st, clicked };
+      };
+      for (const width of [1440, 1024, 390]) {
+        const t = await tab(chrome, '/#/chain', { width });
+        const line = await t.ev(`[].map.call(document.querySelectorAll('#contents .ln-st > li'), function (l) { return l.getAttribute('data-ch'); })`);
+        if (line.join() !== stagesD.map((c) => c.id).join()) { ok = false; out.push(`${width}: the line holds ${line.length} stages, not the ${stagesD.length} in order (FAIL)`); }
+        const bad = [];
+        for (const c of stagesD) {
+          const r = await opens(t, `#contents .ln-st li[data-ch="${c.id}"] .ln-t`, c.id);
+          if (!r.pass) bad.push(`${c.id}: ${r.clicked ? `shows ${r.st.shown.join(',') || 'nothing'} at y ${r.st.y}, ${r.st.hash}` : 'no title to click'}`);
+        }
+        ok = ok && !bad.length;
+        out.push(`${width}: ${bad.length ? 'titles that fail: ' + bad.join('; ') + ' (FAIL)' : `each of the ${stagesD.length} titles on the line opens its chapter alone at its top`}`);
+        const xs = await t.ev(`[].map.call(document.querySelectorAll('#contents .ln-brk a.ln-bx'), function (a) { return a.getAttribute('data-ch') + '|' + a.querySelector('.ln-t').textContent; })`);
+        const xpass = xs.join() === acrossD.map((c) => c.id + '|' + c.title).join();
+        const xbad = [];
+        for (const c of acrossD) { const r = await opens(t, `#contents .ln-brk a.ln-bx[data-ch="${c.id}"]`, c.id); if (!r.pass) xbad.push(`${c.id}: shows ${r.st.shown.join(',') || 'nothing'} at y ${r.st.y}`); }
+        ok = ok && xpass && !xbad.length;
+        out.push(`${width}: the bracket carries ${xs.map((x) => x.split('|')[1]).join(' and ')}${xpass ? '' : ' (FAIL: not the chapters across the chain, in order)'}${xbad.length ? '; ' + xbad.join('; ') + ' (FAIL)' : ', and each opens alone at its top'}`);
+        // the downloads: on the first screen, each served
+        await t.ev(`location.hash = '#/chain', 1`); await sleep(900); await t.jump(0);
+        const dl = await t.ev(`Promise.all([].map.call(document.querySelectorAll('#howto .howto-dl a'), function (a) { var b = a.getBoundingClientRect();
+          return fetch(a.href, { method: 'HEAD' }).then(function (r) { return { href: a.getAttribute('href'), text: a.textContent, dl: a.hasAttribute('download'), y: Math.round(b.bottom), status: r.status, type: (r.headers.get('content-type') || '').split(';')[0] }; }); }))`);
+        const vh = width < 768 ? 844 : 900;
+        const dpass = dl.length === 3 && dl.every((d) => d.status === 200 && d.y > 0 && d.y < vh)
+          && dl[0].href === 'pdf/how-ai-chips-are-made.pdf' && dl[0].dl && dl[0].type === 'application/pdf'
+          && dl[1].href === 'pdf/summary.pdf' && dl[1].dl && dl[1].type === 'application/pdf'
+          && dl[2].href === 'summary/' && !dl[2].dl && dl[2].type === 'text/html';
+        ok = ok && dpass; out.push(`${width}: downloads ${dl.map((d) => `"${d.text}" ${d.href} ${d.status} ${d.type} at y ${d.y}`).join('; ')}${dpass ? '' : ' (FAIL)'}`);
+        if (width === 1440) { // each title's static page, which a new tab or a crawler follows
+          const pages = await t.ev(`Promise.all([].map.call(document.querySelectorAll('#contents .ln-st a, #contents .ln-brk a'), function (a) { return fetch(a.href, { method: 'HEAD' }).then(function (r) { return a.getAttribute('href') + ' ' + r.status; }); }))`);
+          const pbad = pages.filter((p) => !/ 200$/.test(p));
+          ok = ok && !pbad.length && pages.length === D.length; out.push(`${width}: the ${pages.length} links' static pages: ${pbad.length ? pbad.join(', ') + ' (FAIL)' : 'all served'}`);
+        }
+        if (t.errors.length) { ok = false; out.push(`${width}: errors: ` + t.errors.join(' | ')); }
+        await t.close();
+      }
+      report(10, 'the contents page: every title on the line opens its chapter, the bracket\'s two chapters, the downloads', ok, out.join('\n        '));
     }
   } finally { await chrome.close(); }
   const fails = results.filter((r) => !r.pass);
