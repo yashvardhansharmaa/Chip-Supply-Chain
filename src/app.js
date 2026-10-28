@@ -1409,8 +1409,10 @@
       if (!nar()) { // under its control, or above it when the screen has no room below; placed within #aic
         var r = trigger.getBoundingClientRect(), base = $('#aic').getBoundingClientRect(), w = Math.min(380, window.innerWidth - 32);
         var left = r.left + w > window.innerWidth - 16 ? Math.max(16, r.right - w) : r.left;
-        P.el.style.width = w + 'px'; P.el.style.left = Math.round(left - base.left) + 'px'; P.el.style.top = Math.round(r.bottom - base.top + 8) + 'px';
-        var hgt = P.el.offsetHeight; if (r.bottom + hgt + 16 > window.innerHeight && r.top - hgt - 8 > headerH() + 6) P.el.style.top = Math.round(r.top - base.top - hgt - 8) + 'px';
+        P.el.style.width = w + 'px'; P.el.style.left = Math.round(left - base.left) + 'px'; P.el.style.top = Math.round(r.bottom - base.top + 8) + 'px'; P.el.style.maxHeight = '';
+        var hgt = P.el.offsetHeight, below = window.innerHeight - r.bottom - 24;
+        if (r.bottom + hgt + 16 > window.innerHeight && r.top - hgt - 8 > headerH() + 6) P.el.style.top = Math.round(r.top - base.top - hgt - 8) + 'px';
+        else if (hgt > below && below >= 320) P.el.style.maxHeight = Math.round(below) + 'px'; // the list scrolls inside the room under its control
       }
       trigger.setAttribute('aria-expanded', 'true');
       P.input.focus({ preventScroll: true });
@@ -1426,14 +1428,14 @@
     // package, is drawn on its own smaller scale with its own scale bar, so it never rises out of its row
     var shelfK = function () { var w = window.innerWidth; return w <= 760 ? 0.62 : w <= 1180 ? 0.95 : 1.15; };
     var WAFER = 0.4;
-    var chartW = function () { return nar() ? Math.round(innerW()) : 600; };
+    var chartW = function () { var f = $('#aic .hfig'); return Math.round(Math.min(f && f.clientWidth ? f.clientWidth : innerW(), nar() ? 9999 : 600)); }; // the head's column, 600 px at most beside the title
     var keyHTML = function (k) {
-      return '<p class="key"><span class="sw die" aria-hidden="true"></span>Logic die<span class="sw hbm" aria-hidden="true"></span>Memory stack<span class="sw int" aria-hidden="true"></span>Package<span class="key-b">' + scaleBar(k, 90) + '</span></p>';
+      return '<p class="key"><span class="ki"><span class="sw die" aria-hidden="true"></span>Logic die</span><span class="ki"><span class="sw hbm" aria-hidden="true"></span>Memory stack</span><span class="ki"><span class="sw int" aria-hidden="true"></span>Package</span><span class="ki key-b">' + scaleBar(k, 90) + '</span></p>';
     };
     var headHTML = function () {
       var mk = S.measure || 'fp16', cap = chartSaid(mk);
-      return '<header class="head"><div class="head-grid"><div class="head-l"><h1>AI Chips</h1><p class="dek">' + DEK + '</p>' + keyHTML(shelfK()) + '</div>' +
-        '<figure class="hfig"><p class="fig-h">' + measureSelect(mk, 'aic-m-head') + ' <span>of each chip, by the month it was announced</span></p><p class="finding">' + chartFinding(mk) + '</p><div class="chart-host" id="aic-c-head"></div>' +
+      return '<header class="head"><div class="head-grid"><div class="head-l"><h1>AI Chips</h1><p class="dek">' + DEK + '</p><p class="finding">' + chartFinding(mk) + '</p>' + keyHTML(shelfK()) + '</div>' +
+        '<figure class="hfig"><p class="fig-h">' + measureSelect(mk, 'aic-m-head') + ' <span>of each chip, by the month it was announced</span></p><div class="chart-host" id="aic-c-head"></div>' +
         (cap.length ? '<figcaption class="fcap">' + cap.join(' ') + '</figcaption>' : '') + '</figure></div></header>';
     };
     var itemK = function (c, k) { return (c.layout || {}).waferScale ? k * WAFER : k; };

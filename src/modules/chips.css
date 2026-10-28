@@ -21,23 +21,23 @@
 
 /* ---------------------------------------------------------------- the head: the title and the standfirst beside the field chart */
 .aic .head { padding-top: clamp(40px, 7vh, 64px); }
-.aic .head-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 600px); gap: 24px 64px; align-items: start; }
+.aic .head-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 600px); gap: 24px 64px; align-items: stretch; }
 .aic .head-l { display: flex; flex-direction: column; min-width: 0; }
 .aic .head h1 { margin: 0 0 0 -0.045em; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: clamp(48px, 6vw, 88px); line-height: 0.92; letter-spacing: -0.03em; }
 .aic .head .dek { margin: 24px 0 0; max-width: 24em; font-family: var(--font-body); font-size: calc(clamp(19px, 1.62vw, 23px) * var(--text-scale)); line-height: 1.38; color: var(--ink-2); }
 .aic .hfig { margin: 0; min-width: 0; }
-.aic .hfig .fig-h { font: 400 19px/1.35 var(--font-body); margin: 0 0 4px; }
-.aic .hfig .finding { font: 400 16px/1.45 var(--font-body); color: var(--ink-2); margin: 0 0 8px; }
+.aic .hfig .fig-h { font: 400 19px/1.35 var(--font-body); margin: 0 0 12px; }
+.aic .head .finding { margin: 28px 0 0; max-width: 26em; padding-top: 14px; border-top: 1px solid var(--line-2); font: 400 17.5px/1.5 var(--font-body); color: var(--ink); }
 .aic .hfig .fcap { font: 400 14.5px/1.5 var(--font-body); color: var(--muted); margin-top: 6px; max-width: 666px; }
 .aic .chart-host { min-height: 250px; }
 /* the key to the drawings: the marks a shelf uses, and the shelves' scale */
-.aic .key { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 8px; margin-top: 32px; font: 400 13px/1.3 var(--font-ui); color: var(--muted); }
-.aic .key .sw { width: 12px; height: 12px; display: inline-block; border: 1px solid var(--ink-2); margin-left: 10px; }
-.aic .key .sw:first-child { margin-left: 0; }
+.aic .key { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; margin-top: auto; padding-top: 28px; font: 400 13px/1.3 var(--font-ui); color: var(--muted); }
+.aic .key .ki { display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; }
+.aic .key .sw { width: 12px; height: 12px; display: inline-block; flex: none; border: 1px solid var(--ink-2); }
 .aic .key .sw.die { background: repeating-linear-gradient(45deg, var(--ink) 0 1px, transparent 1px 3.2px); border-color: var(--ink); }
 .aic .key .sw.hbm { background: var(--aic-hbm); }
 .aic .key .sw.int { background: var(--aic-int); }
-.aic .key-b { margin-left: 18px; display: inline-flex; }
+.aic .key-b { margin-left: 6px; }
 
 /* ---------------------------------------------------------------- the shelves: one ruled row per maker */
 .aic .shelves { margin-top: 30px; }
@@ -167,7 +167,7 @@
 .aic .card-top .card-m { font: 400 14px/1.3 var(--font-ui); color: var(--muted); }
 .aic .card-top [data-home] { font-size: 14px; padding: 0; margin-left: auto; }
 .aic .card-top .tact { padding: 0 0 2px; }
-.aic .card-top .four { font-size: 15px; }
+.aic .card-top .four { font: 400 14px/1.3 var(--font-ui); color: var(--muted); }
 /* one chip: the name and the drawing, then the figures in one row, then ruled rows with their label at the left */
 .aic .card-intro { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, auto); gap: 24px 48px; padding: 30px 0; align-items: start; }
 .aic .ci-text h2 { font: 400 clamp(46px, 4.4vw, 60px)/1.02 var(--font-display); letter-spacing: -0.018em; margin: 0 0 14px -0.03em; outline: none; }
@@ -286,9 +286,13 @@
 @media (max-width: 1180px) {
   .aic .card-intro { grid-template-columns: minmax(0, 1fr); }
   .aic .stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .aic .head-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 540px); column-gap: 40px; }
+}
+/* under 981 px the head stacks: the title, the standfirst, the finding, the chart, the key */
+@media (max-width: 980px) {
   .aic .head-grid { display: flex; flex-direction: column; gap: 0; }
   .aic .head-l { display: contents; }
-  .aic .head-l h1 { order: 1; } .aic .head-l .dek { order: 2; } .aic .hfig { order: 3; max-width: 666px; margin-top: 28px; } .aic .key { order: 4; margin-top: 30px; }
+  .aic .head-l h1 { order: 1; } .aic .head-l .dek { order: 2; } .aic .head .finding { order: 3; } .aic .hfig { order: 4; max-width: 666px; margin-top: 32px; } .aic .key { order: 5; margin-top: 0; }
 }
 @media (max-width: 760px) {
   .aic .head { padding-top: 32px; }
