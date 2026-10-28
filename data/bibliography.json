@@ -651,44 +651,44 @@
     "accessed": "2026-10-20"
   },
   "https://data.sec.gov/api/xbrl/companyconcept/CIK0000006951/us-gaap/RevenueFromContractWithCustomerExcludingAssessedTax.json": {
-    "title": "Revenue from Contract with Customer, Excluding Assessed Tax (us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax) reported by APPLIED MATERIALS INC /DE, XBRL company concept data",
-    "publisher": "U.S. Securities and Exchange Commission (XBRL data for APPLIED MATERIALS INC /DE)",
+    "title": "Applied Materials, revenue reported to the SEC (XBRL company data)",
+    "publisher": "U.S. Securities and Exchange Commission (XBRL data for Applied Materials)",
     "type": "dataset",
     "accessed": "2026-09-09"
   },
   "https://data.sec.gov/api/xbrl/companyconcept/CIK0000021535/us-gaap/RevenueFromContractWithCustomerIncludingAssessedTax.json": {
-    "title": "Revenue from Contract with Customer, Including Assessed Tax (us-gaap:RevenueFromContractWithCustomerIncludingAssessedTax) reported by COHU, INC., XBRL company concept data",
-    "publisher": "U.S. Securities and Exchange Commission (XBRL data for COHU, INC.)",
+    "title": "Cohu, revenue reported to the SEC (XBRL company data)",
+    "publisher": "U.S. Securities and Exchange Commission (XBRL data for Cohu)",
     "type": "dataset",
     "accessed": "2026-09-09"
   },
   "https://data.sec.gov/api/xbrl/companyconcept/CIK0000056978/us-gaap/Revenues.json": {
-    "title": "Revenues (us-gaap:Revenues) reported by KULICKE AND SOFFA INDUSTRIES, INC., XBRL company concept data",
-    "publisher": "U.S. Securities and Exchange Commission (XBRL data for KULICKE AND SOFFA INDUSTRIES, INC.)",
+    "title": "Kulicke and Soffa, revenue reported to the SEC (XBRL company data)",
+    "publisher": "U.S. Securities and Exchange Commission (XBRL data for Kulicke and Soffa)",
     "type": "dataset",
     "accessed": "2026-09-09"
   },
   "https://data.sec.gov/api/xbrl/companyconcept/CIK0000319201/us-gaap/RevenueFromContractWithCustomerExcludingAssessedTax.json": {
-    "title": "Revenue from Contract with Customer, Excluding Assessed Tax (us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax) reported by KLA CORP, XBRL company concept data",
-    "publisher": "U.S. Securities and Exchange Commission (XBRL data for KLA CORP)",
+    "title": "KLA, revenue reported to the SEC (XBRL company data)",
+    "publisher": "U.S. Securities and Exchange Commission (XBRL data for KLA)",
     "type": "dataset",
     "accessed": "2026-09-09"
   },
   "https://data.sec.gov/api/xbrl/companyconcept/CIK0001039399/us-gaap/RevenueFromContractWithCustomerExcludingAssessedTax.json": {
-    "title": "Revenue from Contract with Customer, Excluding Assessed Tax (us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax) reported by FormFactor, Inc., XBRL company concept data",
-    "publisher": "U.S. Securities and Exchange Commission (XBRL data for FormFactor, Inc.)",
+    "title": "FormFactor, revenue reported to the SEC (XBRL company data)",
+    "publisher": "U.S. Securities and Exchange Commission (XBRL data for FormFactor)",
     "type": "dataset",
     "accessed": "2026-09-09"
   },
   "https://data.sec.gov/api/xbrl/companyconcept/CIK0001109345/us-gaap/Revenues.json": {
-    "title": "Revenues (us-gaap:Revenues) reported by NOVA LTD., XBRL company concept data",
-    "publisher": "U.S. Securities and Exchange Commission (XBRL data for NOVA LTD.)",
+    "title": "Nova, revenue reported to the SEC (XBRL company data)",
+    "publisher": "U.S. Securities and Exchange Commission (XBRL data for Nova)",
     "type": "dataset",
     "accessed": "2026-09-09"
   },
   "https://data.sec.gov/api/xbrl/companyconcept/CIK0001122411/ifrs-full/Revenue.json": {
-    "title": "Revenue (ifrs-full:Revenue) reported by ASE Technology Holding Co., Ltd., XBRL company concept data",
-    "publisher": "U.S. Securities and Exchange Commission (XBRL data for ASE Technology Holding Co., Ltd.)",
+    "title": "ASE Technology Holding, revenue reported to the SEC (XBRL company data)",
+    "publisher": "U.S. Securities and Exchange Commission (XBRL data for ASE Technology Holding)",
     "type": "dataset",
     "accessed": "2026-09-09"
   },
@@ -5435,694 +5435,694 @@
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/0001046179/000104617926000451/a2q26e_withguidancexfinal.htm": {
-    "title": "TAIWAN SEMICONDUCTOR MANUFACTURING CO LTD, Form 6-K report of foreign private issuer for the period ended 2026-06-30 (6-K)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by TAIWAN SEMICONDUCTOR MANUFACTURING CO LTD)",
+    "title": "TSMC, report on Form 6-K dated 30 June 2026",
+    "publisher": "U.S. Securities and Exchange Commission (filing by TSMC)",
     "date": "2026-07-16",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/0001047127/000104712726000043/amkr6302026erex-991.htm": {
-    "title": "AMKOR TECHNOLOGY, INC., Form 8-K current report for the period ended 2026-07-27 (8-K)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by AMKOR TECHNOLOGY, INC.)",
+    "title": "Amkor Technology, current report on Form 8-K dated 27 July 2026",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Amkor Technology)",
     "date": "2026-07-27",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/0001730168/000173016826000076/avgo-08022026x8kxex99.htm": {
-    "title": "Broadcom Inc., Form 8-K current report for the period ended 2026-09-02 (8-K)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by Broadcom Inc.)",
+    "title": "Broadcom, current report on Form 8-K dated 2 September 2026",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Broadcom)",
     "date": "2026-09-02",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/0002120882/000119312526299963/d32785d424b4.htm": {
-    "title": "SK hynix Inc., Form 424B4 prospectus for the period ended 2026-07-10 (424(B)(4))",
-    "publisher": "U.S. Securities and Exchange Commission (filing by SK hynix Inc.)",
+    "title": "SK hynix, prospectus on Form 424B4 dated 10 July 2026",
+    "publisher": "U.S. Securities and Exchange Commission (filing by SK hynix)",
     "date": "2026-07-10",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/103145/000110465926019711/R108.htm": {
-    "title": "VEECO INSTRUMENTS INC, Form 10-K annual report for the period ended 2025-12-31 (financial statement R108)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by VEECO INSTRUMENTS INC)",
+    "title": "Veeco Instruments, annual report on Form 10-K for the fiscal year ended 31 December 2025, financial statement table",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Veeco Instruments)",
     "date": "2026-02-25",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/103145/000155837024001289/R104.htm": {
-    "title": "VEECO INSTRUMENTS INC, Form 10-K annual report for the period ended 2023-12-31 (financial statement R104)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by VEECO INSTRUMENTS INC)",
+    "title": "Veeco Instruments, annual report on Form 10-K for the fiscal year ended 31 December 2023, financial statement table",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Veeco Instruments)",
     "date": "2024-02-16",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/1039399/000103939926000009/form-20251227.htm": {
-    "title": "FORMFACTOR INC, Form 10-K annual report for the period ended 2025-12-27 (10-K)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by FORMFACTOR INC)",
+    "title": "FormFactor, annual report on Form 10-K for the fiscal year ended 27 December 2025",
+    "publisher": "U.S. Securities and Exchange Commission (filing by FormFactor)",
     "date": "2026-02-20",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/1040470/000165495426006919/aehr_10k.htm": {
-    "title": "AEHR TEST SYSTEMS, Form 10-K annual report for the period ended 2026-05-29",
-    "publisher": "U.S. Securities and Exchange Commission (filing by AEHR TEST SYSTEMS)",
+    "title": "Aehr Test Systems, annual report on Form 10-K for the fiscal year ended 29 May 2026",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Aehr Test Systems)",
     "date": "2026-07-27",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/1045810/000104581022000146/nvda-20220826.htm": {
-    "title": "NVIDIA CORP, Form 8-K current report for the period ended 2022-08-26 (8-K)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by NVIDIA CORP)",
+    "title": "Nvidia, current report on Form 8-K dated 26 August 2022",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Nvidia)",
     "date": "2022-08-31",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/1045810/000104581023000017/R87.htm": {
-    "title": "NVIDIA CORP, Form 10-K annual report for the period ended 2023-01-29 (financial statement R87)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by NVIDIA CORP)",
+    "title": "Nvidia, annual report on Form 10-K for the fiscal year ended 29 January 2023, financial statement table",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Nvidia)",
     "date": "2023-02-24",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/1045810/000104581023000221/nvda-20231023.htm": {
-    "title": "NVIDIA CORP, Form 8-K current report for the period ended 2023-10-23 (8-K)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by NVIDIA CORP)",
+    "title": "Nvidia, current report on Form 8-K dated 23 October 2023",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Nvidia)",
     "date": "2023-10-24",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000082/nvda-20250409.htm": {
-    "title": "NVIDIA CORP, Form 8-K current report for the period ended 2025-04-09 (8-K)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by NVIDIA CORP)",
+    "title": "Nvidia, current report on Form 8-K dated 9 April 2025",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Nvidia)",
     "date": "2025-04-15",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000209/nvda-20250727.htm": {
-    "title": "NVIDIA CORP, Form 10-Q quarterly report for the period ended 2025-07-27 (10-Q)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by NVIDIA CORP)",
+    "title": "Nvidia, quarterly report on Form 10-Q for the quarter ended 27 July 2025",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Nvidia)",
     "date": "2025-08-27",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/R84.htm": {
-    "title": "NVIDIA CORP, Form 10-K annual report for the period ended 2026-01-25 (financial statement R84)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by NVIDIA CORP)",
+    "title": "Nvidia, annual report on Form 10-K for the fiscal year ended 25 January 2026, financial statement table",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Nvidia)",
     "date": "2026-02-25",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm": {
-    "title": "NVIDIA CORP, Form 10-K annual report for the period ended 2026-01-25 (10-K)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by NVIDIA CORP)",
+    "title": "Nvidia, annual report on Form 10-K for the fiscal year ended 25 January 2026",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Nvidia)",
     "date": "2026-02-25",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000052/nvda-20260426.htm": {
-    "title": "NVIDIA CORP, Form 10-Q quarterly report for the period ended 2026-04-26 (10-Q)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by NVIDIA CORP)",
+    "title": "Nvidia, quarterly report on Form 10-Q for the quarter ended 26 April 2026",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Nvidia)",
     "date": "2026-05-20",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm": {
-    "title": "NVIDIA CORP, Form 10-Q quarterly report for the period ended 2026-07-26 (10-Q)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by NVIDIA CORP)",
+    "title": "Nvidia, quarterly report on Form 10-Q for the quarter ended 26 July 2026",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Nvidia)",
     "date": "2026-08-26",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/1046179/000104617925000019/tsmc2024q4consolidatedfina.htm": {
-    "title": "TAIWAN SEMICONDUCTOR MANUFACTURING CO LTD, Form 6-K report of foreign private issuer for the period ended 2024-12-31 (6-K)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by TAIWAN SEMICONDUCTOR MANUFACTURING CO LTD)",
+    "title": "TSMC, report on Form 6-K dated 31 December 2024",
+    "publisher": "U.S. Securities and Exchange Commission (filing by TSMC)",
     "date": "2025-02-27",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000726/a3q26e_withguidancexfinal.htm": {
     "title": "TSMC Reports Third Quarter EPS of NT$29.43",
-    "publisher": "U.S. Securities and Exchange Commission (filing by TAIWAN SEMICONDUCTOR MANUFACTURING CO LTD)",
+    "publisher": "U.S. Securities and Exchange Commission (filing by TSMC)",
     "date": "2026-10-15",
     "type": "filing",
     "accessed": "2026-10-20"
   },
   "https://www.sec.gov/Archives/edgar/data/1046179/000119312524099840/R120.htm": {
-    "title": "TAIWAN SEMICONDUCTOR MANUFACTURING CO LTD, Form 20-F annual report for the period ended 2023-12-31 (financial statement R120)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by TAIWAN SEMICONDUCTOR MANUFACTURING CO LTD)",
+    "title": "TSMC, annual report on Form 20-F for the fiscal year ended 31 December 2023, financial statement table",
+    "publisher": "U.S. Securities and Exchange Commission (filing by TSMC)",
     "date": "2024-04-18",
     "type": "filing",
     "accessed": "2026-10-20"
   },
   "https://www.sec.gov/Archives/edgar/data/1046179/000162828026025362/R123.htm": {
-    "title": "TAIWAN SEMICONDUCTOR MANUFACTURING CO LTD, Form 20-F annual report for the period ended 2025-12-31 (financial statement R123)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by TAIWAN SEMICONDUCTOR MANUFACTURING CO LTD)",
+    "title": "TSMC, annual report on Form 20-F for the fiscal year ended 31 December 2025, financial statement table",
+    "publisher": "U.S. Securities and Exchange Commission (filing by TSMC)",
     "date": "2026-04-16",
     "type": "filing",
     "accessed": "2026-10-20"
   },
   "https://www.sec.gov/Archives/edgar/data/1046179/000162828026025362/tsm-20251231.htm": {
-    "title": "TAIWAN SEMICONDUCTOR MANUFACTURING CO LTD, Form 20-F annual report for the period ended 2025-12-31 (20-F)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by TAIWAN SEMICONDUCTOR MANUFACTURING CO LTD)",
+    "title": "TSMC, annual report on Form 20-F for the fiscal year ended 31 December 2025",
+    "publisher": "U.S. Securities and Exchange Commission (filing by TSMC)",
     "date": "2026-04-16",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/1047127/000104712726000007/amkr123125erex-991.htm": {
-    "title": "AMKOR TECHNOLOGY, INC., Form 8-K current report for the period ended 2026-02-09 (8-K)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by AMKOR TECHNOLOGY, INC.)",
+    "title": "Amkor Technology, current report on Form 8-K dated 9 February 2026",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Amkor Technology)",
     "date": "2026-02-09",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/1047127/000104712726000014/amkr-20251231.htm": {
-    "title": "AMKOR TECHNOLOGY, INC., Form 10-K annual report for the period ended 2025-12-31 (10-K)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by AMKOR TECHNOLOGY, INC.)",
+    "title": "Amkor Technology, annual report on Form 10-K for the fiscal year ended 31 December 2025",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Amkor Technology)",
     "date": "2026-02-20",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/1047127/000104712726000043/amkr6302026erex-991.htm": {
-    "title": "AMKOR TECHNOLOGY, INC., Form 8-K current report for the period ended 2026-07-27 (8-K)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by AMKOR TECHNOLOGY, INC.)",
+    "title": "Amkor Technology, current report on Form 8-K dated 27 July 2026",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Amkor Technology)",
     "date": "2026-07-27",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/1051627/000143774926027677/axti20260630_10q.htm": {
-    "title": "AXT INC, Form 10-Q quarterly report for the period ended 2026-06-30",
-    "publisher": "U.S. Securities and Exchange Commission (filing by AXT INC)",
+    "title": "AXT, quarterly report on Form 10-Q for the quarter ended 30 June 2026",
+    "publisher": "U.S. Securities and Exchange Commission (filing by AXT)",
     "date": "2026-08-13",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/1101302/000110130224000009/R105.htm": {
-    "title": "ENTEGRIS INC, Form 10-K annual report for the period ended 2023-12-31 (financial statement R105)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by ENTEGRIS INC)",
+    "title": "Entegris, annual report on Form 10-K for the fiscal year ended 31 December 2023, financial statement table",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Entegris)",
     "date": "2024-02-15",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/1101302/000110130226000012/R106.htm": {
-    "title": "ENTEGRIS INC, Form 10-K annual report for the period ended 2025-12-31 (financial statement R106)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by ENTEGRIS INC)",
+    "title": "Entegris, annual report on Form 10-K for the fiscal year ended 31 December 2025, financial statement table",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Entegris)",
     "date": "2026-02-11",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/1101302/000114036122025275/ny20004647x3_ex99-1.htm": {
-    "title": "ENTEGRIS INC, Form 8-K current report for the period ended 2022-07-06",
-    "publisher": "U.S. Securities and Exchange Commission (filing by ENTEGRIS INC)",
+    "title": "Entegris, current report on Form 8-K dated 6 July 2022",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Entegris)",
     "date": "2022-07-06",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/1102934/000110293420000048/ccmp-20201001xex991.htm": {
-    "title": "CMC Materials, Inc., Form 8-K current report for the period ended 2020-09-28 (8-K)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by CMC Materials, Inc.)",
+    "title": "CMC Materials, current report on Form 8-K dated 28 September 2020",
+    "publisher": "U.S. Securities and Exchange Commission (filing by CMC Materials)",
     "date": "2020-10-01",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/1109138/000117891324001028/R90.htm": {
-    "title": "CAMTEK LTD, Form 20-F annual report for the period ended 2023-12-31 (financial statement R90)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by CAMTEK LTD)",
+    "title": "Camtek, annual report on Form 20-F for the fiscal year ended 31 December 2023, financial statement table",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Camtek)",
     "date": "2024-03-21",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/1109138/000117891326000549/zk2634405.htm": {
-    "title": "CAMTEK LTD, Form 6-K report of foreign private issuer for the period ended 2026-02-18 (6-K)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by CAMTEK LTD)",
+    "title": "Camtek, report on Form 6-K dated 18 February 2026",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Camtek)",
     "date": "2026-02-18",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/1109138/000117891326001561/R91.htm": {
-    "title": "CAMTEK LTD, Form 20-F annual report for the period ended 2025-12-31 (financial statement R91)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by CAMTEK LTD)",
+    "title": "Camtek, annual report on Form 20-F for the fiscal year ended 31 December 2025, financial statement table",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Camtek)",
     "date": "2026-03-19",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/1109345/000117891323000775/R82.htm": {
-    "title": "NOVA LTD., Form 20-F annual report for the period ended 2022-12-31 (financial statement R82)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by NOVA LTD.)",
+    "title": "Nova, annual report on Form 20-F for the fiscal year ended 31 December 2022, financial statement table",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Nova)",
     "date": "2023-02-28",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/1109345/000117891326000504/R84.htm": {
-    "title": "NOVA LTD., Form 20-F annual report for the period ended 2025-12-31 (financial statement R84)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by NOVA LTD.)",
+    "title": "Nova, annual report on Form 20-F for the fiscal year ended 31 December 2025, financial statement table",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Nova)",
     "date": "2026-02-17",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/1116942/000119312526051976/ttmi-20251229.htm": {
-    "title": "TTM TECHNOLOGIES INC, Form 10-K annual report for the period ended 2025-12-29 (10-K)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by TTM TECHNOLOGIES INC)",
+    "title": "TTM Technologies, annual report on Form 10-K for the fiscal year ended 29 December 2025",
+    "publisher": "U.S. Securities and Exchange Commission (filing by TTM Technologies)",
     "date": "2026-02-17",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/1122411/000095010326001661/dp241159_6k.htm": {
-    "title": "ASE Technology Holding Co., Ltd., Form 6-K report of foreign private issuer for the period ended 2026-02-05",
-    "publisher": "U.S. Securities and Exchange Commission (filing by ASE Technology Holding Co., Ltd.)",
+    "title": "ASE Technology Holding, report on Form 6-K dated 5 February 2026",
+    "publisher": "U.S. Securities and Exchange Commission (filing by ASE Technology Holding)",
     "date": "2026-02-05",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/1122411/000095010326001662/dp241167_6k.htm": {
-    "title": "ASE Technology Holding Co., Ltd., Form 6-K report of foreign private issuer for the period ended 2026-02-05",
-    "publisher": "U.S. Securities and Exchange Commission (filing by ASE Technology Holding Co., Ltd.)",
+    "title": "ASE Technology Holding, report on Form 6-K dated 5 February 2026",
+    "publisher": "U.S. Securities and Exchange Commission (filing by ASE Technology Holding)",
     "date": "2026-02-05",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/1122411/000095010326011351/dp250868_6k.htm": {
-    "title": "ASE Technology Holding Co., Ltd., Form 6-K report of foreign private issuer for the period ended 2026-07-30",
-    "publisher": "U.S. Securities and Exchange Commission (filing by ASE Technology Holding Co., Ltd.)",
+    "title": "ASE Technology Holding, report on Form 6-K dated 30 July 2026",
+    "publisher": "U.S. Securities and Exchange Commission (filing by ASE Technology Holding)",
     "date": "2026-07-30",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/1122411/000095010326011353/dp250875_6k.htm": {
-    "title": "ASE Technology Holding Co., Ltd., Form 6-K report of foreign private issuer for the period ended 2026-07-30",
-    "publisher": "U.S. Securities and Exchange Commission (filing by ASE Technology Holding Co., Ltd.)",
+    "title": "ASE Technology Holding, report on Form 6-K dated 30 July 2026",
+    "publisher": "U.S. Securities and Exchange Commission (filing by ASE Technology Holding)",
     "date": "2026-07-30",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/1122411/000119312526135585/d50802d20f.htm": {
-    "title": "ASE Technology Holding Co., Ltd., Form 20-F annual report for the period ended 2025-12-31",
-    "publisher": "U.S. Securities and Exchange Commission (filing by ASE Technology Holding Co., Ltd.)",
+    "title": "ASE Technology Holding, annual report on Form 20-F for the fiscal year ended 31 December 2025",
+    "publisher": "U.S. Securities and Exchange Commission (filing by ASE Technology Holding)",
     "date": "2026-04-01",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/1622536/000162828025030559/a20250611pressreleasebusin.htm": {
-    "title": "Talen Energy Corp, Form 8-K current report for the period ended 2025-06-11 (8-K)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by Talen Energy Corp)",
+    "title": "Talen Energy, current report on Form 8-K dated 11 June 2025",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Talen Energy)",
     "date": "2025-06-11",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/1707925/000162828026011430/lin-20251231.htm": {
-    "title": "LINDE PLC, Form 10-K annual report for the period ended 2025-12-31 (10-K)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by LINDE PLC)",
+    "title": "Linde, annual report on Form 10-K for the fiscal year ended 31 December 2025",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Linde)",
     "date": "2026-02-25",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/1730168/000173016825000121/avgo-20251102.htm": {
-    "title": "Broadcom Inc., Form 10-K annual report for the period ended 2025-11-02 (10-K)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by Broadcom Inc.)",
+    "title": "Broadcom, annual report on Form 10-K for the fiscal year ended 2 November 2025",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Broadcom)",
     "date": "2025-12-18",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000076/avgo-08022026x8kxex99.htm": {
-    "title": "Broadcom Inc., Form 8-K current report for the period ended 2026-09-02 (8-K)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by Broadcom Inc.)",
+    "title": "Broadcom, current report on Form 8-K dated 2 September 2026",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Broadcom)",
     "date": "2026-09-02",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm": {
-    "title": "Credo Technology Group Holding Ltd, Form 10-K annual report for the period ended 2026-05-02 (10-K)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by Credo Technology Group Holding Ltd)",
+    "title": "Credo Technology Group, annual report on Form 10-K for the fiscal year ended 2 May 2026",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Credo Technology Group)",
     "date": "2026-06-15",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/1835632/000183563224000193/final2024_12x02xmarvell-.htm": {
-    "title": "Marvell Technology, Inc., Form 8-K current report for the period ended 2024-12-02 (8-K)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by Marvell Technology, Inc.)",
+    "title": "Marvell Technology, current report on Form 8-K dated 2 December 2024",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Marvell Technology)",
     "date": "2024-12-02",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000011/mrvl-20260131.htm": {
-    "title": "Marvell Technology, Inc., Form 10-K annual report for the period ended 2026-01-31 (10-K)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by Marvell Technology, Inc.)",
+    "title": "Marvell Technology, annual report on Form 10-K for the fiscal year ended 31 January 2026",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Marvell Technology)",
     "date": "2026-03-11",
     "type": "filing",
     "accessed": "2026-10-20"
   },
   "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000097/arm-20260331.htm": {
-    "title": "ARM HOLDINGS PLC /UK, Form 20-F annual report for the period ended 2026-03-31 (20-F)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by ARM HOLDINGS PLC /UK)",
+    "title": "Arm Holdings, annual report on Form 20-F for the fiscal year ended 31 March 2026",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Arm Holdings)",
     "date": "2026-05-26",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000015/gev-20251231.htm": {
-    "title": "GE Vernova Inc., Form 10-K annual report for the period ended 2025-12-31 (10-K)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by GE Vernova Inc.)",
+    "title": "GE Vernova, annual report on Form 10-K for the fiscal year ended 31 December 2025",
+    "publisher": "U.S. Securities and Exchange Commission (filing by GE Vernova)",
     "date": "2026-01-29",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm": {
-    "title": "GE Vernova Inc., Form 8-K current report for the period ended 2026-07-22 (8-K)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by GE Vernova Inc.)",
+    "title": "GE Vernova, current report on Form 8-K dated 22 July 2026",
+    "publisher": "U.S. Securities and Exchange Commission (filing by GE Vernova)",
     "date": "2026-07-22",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/2058873/000205887326000010/q-20251231.htm": {
-    "title": "Qnity Electronics, Inc., Form 10-K annual report for the period ended 2025-12-31 (10-K)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by Qnity Electronics, Inc.)",
+    "title": "Qnity Electronics, annual report on Form 10-K for the fiscal year ended 31 December 2025",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Qnity Electronics)",
     "date": "2026-02-26",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/2120882/000119312526299963/d32785d424b4.htm": {
-    "title": "SK hynix Inc., Form 424B4 prospectus for the period ended 2026-07-10 (424(B)(4))",
-    "publisher": "U.S. Securities and Exchange Commission (filing by SK hynix Inc.)",
+    "title": "SK hynix, prospectus on Form 424B4 dated 10 July 2026",
+    "publisher": "U.S. Securities and Exchange Commission (filing by SK hynix)",
     "date": "2026-07-10",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/21535/000143774926004339/cohu20251227_10k.htm": {
-    "title": "COHU, INC., Form 10-K annual report for the period ended 2025-12-27 (10-K)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by COHU, INC.)",
+    "title": "Cohu, annual report on Form 10-K for the fiscal year ended 27 December 2025",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Cohu)",
     "date": "2026-02-17",
     "type": "filing",
     "accessed": "2026-10-20"
   },
   "https://www.sec.gov/Archives/edgar/data/2488/000000248824000012/R73.htm": {
-    "title": "ADVANCED MICRO DEVICES INC, Form 10-K annual report for the period ended 2023-12-30 (financial statement R73)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by ADVANCED MICRO DEVICES INC)",
+    "title": "AMD, annual report on Form 10-K for the fiscal year ended 30 December 2023, financial statement table",
+    "publisher": "U.S. Securities and Exchange Commission (filing by AMD)",
     "date": "2024-01-31",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/R54.htm": {
-    "title": "ADVANCED MICRO DEVICES INC, Form 10-K annual report for the period ended 2025-12-27 (financial statement R54)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by ADVANCED MICRO DEVICES INC)",
+    "title": "AMD, annual report on Form 10-K for the fiscal year ended 27 December 2025, financial statement table",
+    "publisher": "U.S. Securities and Exchange Commission (filing by AMD)",
     "date": "2026-02-04",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/319201/000031920123000031/R125.htm": {
-    "title": "KLA CORP, Form 10-K annual report for the period ended 2023-06-30 (financial statement R125)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by KLA CORP)",
+    "title": "KLA, annual report on Form 10-K for the fiscal year ended 30 June 2023, financial statement table",
+    "publisher": "U.S. Securities and Exchange Commission (filing by KLA)",
     "date": "2023-08-04",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/319201/000031920126000027/R112.htm": {
-    "title": "KLA CORP, Form 10-K annual report for the period ended 2026-06-30 (financial statement R112)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by KLA CORP)",
+    "title": "KLA, annual report on Form 10-K for the fiscal year ended 30 June 2026, financial statement table",
+    "publisher": "U.S. Securities and Exchange Commission (filing by KLA)",
     "date": "2026-08-06",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/50863/000005086325000129/0000050863-25-000129-index.htm": {
-    "title": "INTEL CORP, Form 8-K current report for the period ended 2025-08-22 (8-K)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by INTEL CORP)",
+    "title": "Intel, current report on Form 8-K dated 22 August 2025",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Intel)",
     "date": "2025-08-25",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm": {
-    "title": "INTEL CORP, Form 10-K annual report for the period ended 2025-12-27 (10-K)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by INTEL CORP)",
+    "title": "Intel, annual report on Form 10-K for the fiscal year ended 27 December 2025",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Intel)",
     "date": "2026-01-23",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/50863/000005086326000157/intc-20260627.htm": {
-    "title": "INTEL CORP, Form 10-Q quarterly report for the period ended 2026-06-27 (10-Q)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by INTEL CORP)",
+    "title": "Intel, quarterly report on Form 10-Q for the quarter ended 27 June 2026",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Intel)",
     "date": "2026-07-24",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/56978/000005697825000078/ex991liveq42025.htm": {
-    "title": "KULICKE AND SOFFA INDUSTRIES, INC., Form 8-K, exhibit 99.1: results for the fourth quarter and fiscal 2025 (8-K)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by KULICKE AND SOFFA INDUSTRIES, INC.)",
+    "title": "Kulicke and Soffa, results for the fourth quarter and fiscal 2025 (Form 8-K, exhibit 99.1)",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Kulicke and Soffa)",
     "date": "2025-11-19",
     "type": "filing",
     "accessed": "2026-10-20"
   },
   "https://www.sec.gov/Archives/edgar/data/6951/000000695122000043/R104.htm": {
-    "title": "APPLIED MATERIALS INC /DE, Form 10-K annual report for the period ended 2022-10-30 (financial statement R104)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by APPLIED MATERIALS INC /DE)",
+    "title": "Applied Materials, annual report on Form 10-K for the fiscal year ended 30 October 2022, financial statement table",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Applied Materials)",
     "date": "2022-12-16",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/6951/000162828025056742/R85.htm": {
-    "title": "APPLIED MATERIALS INC /DE, Form 10-K annual report for the period ended 2025-10-26 (financial statement R85)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by APPLIED MATERIALS INC /DE)",
+    "title": "Applied Materials, annual report on Form 10-K for the fiscal year ended 26 October 2025, financial statement table",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Applied Materials)",
     "date": "2025-12-12",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/704532/000095017024020150/R79.htm": {
-    "title": "ONTO INNOVATION INC., Form 10-K annual report for the period ended 2023-12-30 (financial statement R79)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by ONTO INNOVATION INC.)",
+    "title": "Onto Innovation, annual report on Form 10-K for the fiscal year ended 30 December 2023, financial statement table",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Onto Innovation)",
     "date": "2024-02-26",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/704532/000119312526066937/R94.htm": {
-    "title": "ONTO INNOVATION INC., Form 10-K annual report for the period ended 2026-01-03 (financial statement R94)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by ONTO INNOVATION INC.)",
+    "title": "Onto Innovation, annual report on Form 10-K for the fiscal year ended 3 January 2026, financial statement table",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Onto Innovation)",
     "date": "2026-02-24",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/707549/000070754923000102/R103.htm": {
-    "title": "LAM RESEARCH CORP, Form 10-K annual report for the period ended 2023-06-25 (financial statement R103)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by LAM RESEARCH CORP)",
+    "title": "Lam Research, annual report on Form 10-K for the fiscal year ended 25 June 2023, financial statement table",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Lam Research)",
     "date": "2023-08-15",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/707549/000070754926000033/lrcx_exhibitx991xq4x2026.htm": {
-    "title": "LAM RESEARCH CORP, Form 8-K current report for the period ended 2026-07-29 (8-K)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by LAM RESEARCH CORP)",
+    "title": "Lam Research, current report on Form 8-K dated 29 July 2026",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Lam Research)",
     "date": "2026-07-29",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/707549/000070754926000037/R94.htm": {
-    "title": "LAM RESEARCH CORP, Form 10-K annual report for the period ended 2026-06-28 (financial statement R94)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by LAM RESEARCH CORP)",
+    "title": "Lam Research, annual report on Form 10-K for the fiscal year ended 28 June 2026, financial statement table",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Lam Research)",
     "date": "2026-08-07",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/707549/000070754926000037/lrcx-20260628.htm": {
-    "title": "LAM RESEARCH CORP, Form 10-K annual report for the period ended 2026-06-28 (10-K)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by LAM RESEARCH CORP)",
+    "title": "Lam Research, annual report on Form 10-K for the fiscal year ended 28 June 2026",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Lam Research)",
     "date": "2026-08-07",
     "type": "filing",
     "accessed": "2026-10-20"
   },
   "https://www.sec.gov/Archives/edgar/data/723125/000072312522000048/R106.htm": {
-    "title": "MICRON TECHNOLOGY INC, Form 10-K annual report for the period ended 2022-09-01 (financial statement R106)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by MICRON TECHNOLOGY INC)",
+    "title": "Micron Technology, annual report on Form 10-K for the fiscal year ended 1 September 2022, financial statement table",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Micron Technology)",
     "date": "2022-10-07",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/723125/000072312525000028/R113.htm": {
-    "title": "MICRON TECHNOLOGY INC, Form 10-K annual report for the period ended 2025-08-28 (financial statement R113)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by MICRON TECHNOLOGY INC)",
+    "title": "Micron Technology, annual report on Form 10-K for the fiscal year ended 28 August 2025, financial statement table",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Micron Technology)",
     "date": "2025-10-03",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/723125/000072312525000028/mu-20250828.htm": {
-    "title": "MICRON TECHNOLOGY INC, Form 10-K annual report for the period ended 2025-08-28 (10-K)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by MICRON TECHNOLOGY INC)",
+    "title": "Micron Technology, annual report on Form 10-K for the fiscal year ended 28 August 2025",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Micron Technology)",
     "date": "2025-10-03",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/723125/000072312525000040/202510karscopy.pdf": {
     "title": "MICRON TECHNOLOGY INC, Form ARS for the period ended 2025-08-28 (ARS)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by MICRON TECHNOLOGY INC)",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Micron Technology)",
     "date": "2025-11-25",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/723125/000072312526000015/mu-20260528.htm": {
-    "title": "MICRON TECHNOLOGY INC, Form 10-Q quarterly report for the period ended 2026-05-28 (10-Q)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by MICRON TECHNOLOGY INC)",
+    "title": "Micron Technology, quarterly report on Form 10-Q for the quarter ended 28 May 2026",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Micron Technology)",
     "date": "2026-06-25",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/723125/000072312526000023/R85.htm": {
-    "title": "MICRON TECHNOLOGY INC, Form 10-K annual report for the period ended 2026-09-03 (financial statement R85)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by MICRON TECHNOLOGY INC)",
+    "title": "Micron Technology, annual report on Form 10-K for the fiscal year ended 3 September 2026, financial statement table",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Micron Technology)",
     "date": "2026-10-09",
     "type": "filing",
     "accessed": "2026-10-20"
   },
   "https://www.sec.gov/Archives/edgar/data/723125/000072312526000023/mu-20260903.htm": {
-    "title": "MICRON TECHNOLOGY INC, Form 10-K annual report for the period ended 2026-09-03 (10-K)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by MICRON TECHNOLOGY INC)",
+    "title": "Micron Technology, annual report on Form 10-K for the fiscal year ended 3 September 2026",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Micron Technology)",
     "date": "2026-10-09",
     "type": "filing",
     "accessed": "2026-10-20"
   },
   "https://www.sec.gov/Archives/edgar/data/810136/000081013626000006/plab8-K_3q-earn-exhibit99-2.pdf": {
-    "title": "PHOTRONICS INC, Form 8-K current report for the period ended 2026-08-26 (CURRENT REPORT FILING)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by PHOTRONICS INC)",
+    "title": "Photronics, current report on Form 8-K dated 26 August 2026",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Photronics)",
     "date": "2026-08-26",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/810136/000114036125045801/ef20057458_10k.htm": {
-    "title": "PHOTRONICS INC, Form 10-K annual report for the period ended 2025-10-31 (10-K)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by PHOTRONICS INC)",
+    "title": "Photronics, annual report on Form 10-K for the fiscal year ended 31 October 2025",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Photronics)",
     "date": "2025-12-17",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/813672/000081367223000011/R115.htm": {
-    "title": "CADENCE DESIGN SYSTEMS INC, Form 10-K annual report for the period ended 2022-12-31 (financial statement R115)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by CADENCE DESIGN SYSTEMS INC)",
+    "title": "Cadence Design Systems, annual report on Form 10-K for the fiscal year ended 31 December 2022, financial statement table",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Cadence Design Systems)",
     "date": "2023-02-13",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/813672/000081367225000093/cdns-20250702.htm": {
-    "title": "CADENCE DESIGN SYSTEMS INC, Form 8-K current report for the period ended 2025-07-02 (8-K)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by CADENCE DESIGN SYSTEMS INC)",
+    "title": "Cadence Design Systems, current report on Form 8-K dated 2 July 2025",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Cadence Design Systems)",
     "date": "2025-07-03",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/813672/000081367226000013/cdns02172026ex9901.htm": {
-    "title": "CADENCE DESIGN SYSTEMS INC, Form 8-K current report for the period ended 2026-02-17 (8-K)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by CADENCE DESIGN SYSTEMS INC)",
+    "title": "Cadence Design Systems, current report on Form 8-K dated 17 February 2026",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Cadence Design Systems)",
     "date": "2026-02-17",
     "type": "filing",
     "accessed": "2026-10-20"
   },
   "https://www.sec.gov/Archives/edgar/data/813672/000081367226000016/R115.htm": {
-    "title": "CADENCE DESIGN SYSTEMS INC, Form 10-K annual report for the period ended 2025-12-31 (financial statement R115)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by CADENCE DESIGN SYSTEMS INC)",
+    "title": "Cadence Design Systems, annual report on Form 10-K for the fiscal year ended 31 December 2025, financial statement table",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Cadence Design Systems)",
     "date": "2026-02-19",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/813672/000081367226000016/cdns-20251231.htm": {
-    "title": "CADENCE DESIGN SYSTEMS INC, Form 10-K annual report for the period ended 2025-12-31 (10-K)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by CADENCE DESIGN SYSTEMS INC)",
+    "title": "Cadence Design Systems, annual report on Form 10-K for the fiscal year ended 31 December 2025",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Cadence Design Systems)",
     "date": "2026-02-19",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/883241/000088324122000017/R104.htm": {
-    "title": "SYNOPSYS INC, Form 10-K annual report for the period ended 2022-10-31 (financial statement R104)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by SYNOPSYS INC)",
+    "title": "Synopsys, annual report on Form 10-K for the fiscal year ended 31 October 2022, financial statement table",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Synopsys)",
     "date": "2022-12-12",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/883241/000088324124000024/R117.htm": {
-    "title": "SYNOPSYS INC, Form 10-K annual report for the period ended 2024-10-31 (financial statement R117)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by SYNOPSYS INC)",
+    "title": "Synopsys, annual report on Form 10-K for the fiscal year ended 31 October 2024, financial statement table",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Synopsys)",
     "date": "2024-12-19",
     "type": "filing",
     "accessed": "2026-10-20"
   },
   "https://www.sec.gov/Archives/edgar/data/883241/000088324125000028/R122.htm": {
-    "title": "SYNOPSYS INC, Form 10-K annual report for the period ended 2025-10-31 (financial statement R122)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by SYNOPSYS INC)",
+    "title": "Synopsys, annual report on Form 10-K for the fiscal year ended 31 October 2025, financial statement table",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Synopsys)",
     "date": "2025-12-22",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/883241/000088324125000028/snps-20251031.htm": {
-    "title": "SYNOPSYS INC, Form 10-K annual report for the period ended 2025-10-31 (10-K)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by SYNOPSYS INC)",
+    "title": "Synopsys, annual report on Form 10-K for the fiscal year ended 31 October 2025",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Synopsys)",
     "date": "2025-12-22",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/883241/000119312525155294/d80081d8k.htm": {
-    "title": "SYNOPSYS INC, Form 8-K current report for the period ended 2025-07-02 (8-K)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by SYNOPSYS INC)",
+    "title": "Synopsys, current report on Form 8-K dated 2 July 2025",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Synopsys)",
     "date": "2025-07-03",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/883241/000119312525314200/d29055dex991.htm": {
-    "title": "SYNOPSYS INC, Form 8-K current report for the period ended 2025-12-10 (8-K)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by SYNOPSYS INC)",
+    "title": "Synopsys, current report on Form 8-K dated 10 December 2025",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Synopsys)",
     "date": "2025-12-10",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/937966/000093796617000010/pressreleasequarterlyresul.htm": {
     "title": "Stronger than expected demand drives ASML Q1 sales",
-    "publisher": "U.S. Securities and Exchange Commission (filing by ASML HOLDING NV)",
+    "publisher": "U.S. Securities and Exchange Commission (filing by ASML Holding)",
     "date": "2017-04-19",
     "type": "filing",
     "accessed": "2026-10-18"
   },
   "https://www.sec.gov/Archives/edgar/data/937966/000093796623000014/R68.htm": {
-    "title": "ASML HOLDING NV, Form 20-F annual report for the period ended 2022-12-31 (financial statement R68)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by ASML HOLDING NV)",
+    "title": "ASML Holding, annual report on Form 20-F for the fiscal year ended 31 December 2022, financial statement table",
+    "publisher": "U.S. Securities and Exchange Commission (filing by ASML Holding)",
     "date": "2023-02-15",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/937966/000093796625000009/asml-20241231.htm": {
-    "title": "ASML HOLDING NV, Form 20-F annual report for the period ended 2024-12-31 (20-F)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by ASML HOLDING NV)",
+    "title": "ASML Holding, annual report on Form 20-F for the fiscal year ended 31 December 2024",
+    "publisher": "U.S. Securities and Exchange Commission (filing by ASML Holding)",
     "date": "2025-03-05",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/937966/000162828026011377/asml-2025xannualxreportx.htm": {
-    "title": "ASML HOLDING NV, Form 6-K report of foreign private issuer for the period ended 2025-12-31 (6-K)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by ASML HOLDING NV)",
+    "title": "ASML Holding, 2025 annual report, filed on Form 6-K",
+    "publisher": "U.S. Securities and Exchange Commission (filing by ASML Holding)",
     "date": "2026-02-25",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/937966/000162828026011378/R71.htm": {
-    "title": "ASML HOLDING NV, Form 20-F annual report for the period ended 2025-12-31 (financial statement R71)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by ASML HOLDING NV)",
+    "title": "ASML Holding, annual report on Form 20-F for the fiscal year ended 31 December 2025, financial statement table",
+    "publisher": "U.S. Securities and Exchange Commission (filing by ASML Holding)",
     "date": "2026-02-25",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/pressreleasefinancialresul.htm": {
     "title": "ASML reports €11.7 billion total net sales and €5.0 billion net income in Q3 2026",
-    "publisher": "U.S. Securities and Exchange Commission (filing by ASML HOLDING NV)",
+    "publisher": "U.S. Securities and Exchange Commission (filing by ASML Holding)",
     "date": "2026-10-14",
     "type": "filing",
     "accessed": "2026-10-20"
   },
   "https://www.sec.gov/Archives/edgar/data/97210/000119312523044711/R130.htm": {
-    "title": "TERADYNE, INC, Form 10-K annual report for the period ended 2022-12-31 (financial statement R130)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by TERADYNE, INC)",
+    "title": "Teradyne, annual report on Form 10-K for the fiscal year ended 31 December 2022, financial statement table",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Teradyne)",
     "date": "2023-02-22",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/97210/000119312526059002/R140.htm": {
-    "title": "TERADYNE, INC, Form 10-K annual report for the period ended 2025-12-31 (financial statement R140)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by TERADYNE, INC)",
+    "title": "Teradyne, annual report on Form 10-K for the fiscal year ended 31 December 2025, financial statement table",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Teradyne)",
     "date": "2026-02-19",
     "type": "filing",
     "accessed": "2026-09-09"
   },
   "https://www.sec.gov/Archives/edgar/data/97210/000119312526059002/ter-20251231.htm": {
-    "title": "TERADYNE, INC, Form 10-K annual report for the period ended 2025-12-31 (10-K)",
-    "publisher": "U.S. Securities and Exchange Commission (filing by TERADYNE, INC)",
+    "title": "Teradyne, annual report on Form 10-K for the fiscal year ended 31 December 2025",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Teradyne)",
     "date": "2026-02-19",
     "type": "filing",
     "accessed": "2026-09-09"
