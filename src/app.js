@@ -203,6 +203,10 @@
       if (!slot) return;
       var cap = $('#stage-caption'), tg = $('#stage-tag-text');
       if (cap) cap.innerHTML = caption ? caption : (slot.caption ? esc(slot.caption) : '');
+      // the phone's collapsed strip shows the specimen's line drawing (the still /supply-chain/ shows), where the live drawing
+      // at 52 px was a dark blob; a specimen with no still keeps the live one (src/styles.css .stage-thumb)
+      var th = $('.stage-thumb', this.fig), cid = ((window.CP_TERMS || {}).specimenChapter || {})[name];
+      if (th) { if (cid) { var u = (PAGE.root || '') + 'media/line-' + cid + '.webp'; if (th.getAttribute('src') !== u) th.setAttribute('src', u); th.hidden = false; this.fig.setAttribute('data-thumb', '1'); } else { th.hidden = true; this.fig.removeAttribute('data-thumb'); } }
       if (tg && tag) tg.innerHTML = tag;
       if (this.cur && this.cur.key === slot.key) return;
       this.prev = this.cur; this.cur = slot; this.transStart = performance.now();

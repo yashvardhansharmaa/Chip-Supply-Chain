@@ -1590,7 +1590,10 @@ const termsData = (() => {
   const chipName = {}; landscape.forEach((c) => { chipName[c.id] = c.name; });
   const of = (k) => lkItems.filter((i) => i.kind === k);
   // ...and each specimen's own name, which the phone's strip shows ("EUV scanner"), since a chapter's page loads no data.js
-  return { defs, specimenNames: SPECIMEN_NAME, try: { term: of('term').map((i) => i.name.trim()).filter((n) => n.length <= 22), firm: of('firm').filter((i) => big.has(i.key)).map((i) => i.name.trim()),
+  // ...and the chapter whose line drawing stands for each specimen in the phone's collapsed strip (media/line-<id>.webp), a
+  // still at 52 px where the live drawing was a dark blob (28 Oct 2026)
+  const specimenChapter = {}; all.forEach((c) => { if (c.meta.specimen && lineStills[c.id] && !specimenChapter[c.meta.specimen]) specimenChapter[c.meta.specimen] = c.id; });
+  return { defs, specimenNames: SPECIMEN_NAME, specimenChapter, try: { term: of('term').map((i) => i.name.trim()).filter((n) => n.length <= 22), firm: of('firm').filter((i) => big.has(i.key)).map((i) => i.name.trim()),
     chip: of('chip').map((i) => chipName[i.key] || i.name.trim()), country: of('country').map((i) => i.name.trim()) } };
 })();
 // every chapter's paragraphs and list items, as the Glossary's "Where it appears" reads them (src/modules/lookup.js corpus):

@@ -234,6 +234,7 @@ small { font-size: 0.85em; }
 }
 /* the canvas is as tall as it is wide, so the drawing fills it and the caption sits right under the drawing; on a short window
    it gives up height first (flex-shrink), and the caption keeps its place under it */
+.stage .stage-thumb { display: none; } /* the phone's collapsed strip only (below) */
 .stage canvas { order: 1; position: relative; flex: 0 1 auto; aspect-ratio: 1 / 1; min-height: 120px; width: 100%; align-self: stretch; display: block; margin-top: 0; }
 @media (hover: hover) and (pointer: fine) { .stage canvas { pointer-events: auto; cursor: grab; touch-action: none; outline: none; } /* the figure itself lets clicks through to the page; the canvas takes them so it can be turned */ .stage canvas.is-dragging { cursor: grabbing; } .stage canvas:focus-visible { box-shadow: inset 0 0 0 2px var(--accent); } }
 .stage .stage-tag {
@@ -958,6 +959,11 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
   .stage[data-collapsed="1"]:not([data-hidden="1"]) .stage-tag { position: absolute; left: 76px; right: 116px; top: 50%; transform: translateY(-50%); margin: 0; padding: 0; font-family: var(--font-ui); font-size: 13px; font-weight: 500; letter-spacing: 0; text-transform: none; line-height: 18px; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .stage[data-collapsed="1"] .stage-tag .tag-tap { display: block; overflow: hidden; text-overflow: ellipsis; font-weight: 400; color: var(--ink-2); }
   .stage[data-collapsed="1"] figcaption, .stage[data-collapsed="1"] .stage-pause { display: none; }
+  /* the specimen's line drawing in the collapsed strip, in place of the live one (src/app.js Stage.show); the canvas keeps its
+     box, so the drawing is the right size the moment the strip opens */
+  .stage[data-collapsed="1"][data-thumb="1"]:not([data-hidden="1"]) .stage-thumb { display: block; position: absolute; left: 12px; top: 6px; width: 52px; height: 52px; object-fit: contain; mix-blend-mode: multiply; pointer-events: none; }
+  :root[data-theme="dark"] .stage[data-collapsed="1"][data-thumb="1"] .stage-thumb { filter: invert(1) hue-rotate(180deg); mix-blend-mode: screen; }
+  .stage[data-collapsed="1"][data-thumb="1"]:not([data-hidden="1"]) canvas { visibility: hidden; }
   .stage[data-collapsed="1"]:not([data-hidden="1"]) .stage-actions { position: static; }
   .stage[data-collapsed="1"]:not([data-hidden="1"]) .stage-menu { position: absolute; right: 12px; top: 18px; z-index: 3; }
   .stage[data-collapsed="1"]:not([data-hidden="1"]) .stage-actions .stage-toggle { position: absolute; left: 0; top: 0; bottom: 0; right: 108px; z-index: 2; margin: 0; padding: 0; border: 0; border-radius: 0; min-height: 0; background: none; color: transparent; font-size: 0; cursor: pointer; }
