@@ -18,7 +18,7 @@
       "source": "https://epoch.ai/data-insights/b200-cost-breakdown"
     },
     {
-      "fact": "Epoch AI's B200 model assumes a $17,000 wafer on TSMC's 4NP process, two logic dies of roughly 800 mm2 each and a die yield of 40 to 70 percent, centered on 60",
+      "fact": "Epoch AI's B200 model assumes a $17,000 wafer on TSMC's 4NP process, two logic dies of roughly 800 mm² each and a die yield of 40 to 70 percent, centered on 60",
       "source": "https://epoch.ai/data-insights/b200-cost-breakdown"
     },
     {
@@ -30,11 +30,11 @@
       "source": "https://inferencex.semianalysis.com/blog/vera-rubin-nvl72-vs-gb200-nvl72-inference"
     },
     {
-      "fact": "Micron's GAAP gross margin was 86.8% in the quarter to 3 September 2026, and 80.7% for fiscal 2026, up from 39.8% for fiscal 2025",
+      "fact": "Micron's GAAP gross margin was 86.8 percent in the quarter to 3 September 2026, and 80.7 percent for fiscal 2026, up from 39.8 percent for fiscal 2025",
       "source": "https://investors.micron.com/news/press-release/2026/Micron-Technology-Inc--Reports-Record-Fiscal-Fourth-Quarter-and-Full-Year-2026-Results/default.aspx"
     },
     {
-      "fact": "Nvidia's data center revenue was $193.7B in fiscal 2026, and its GAAP gross margin for the year was 71.1%",
+      "fact": "Nvidia's data center revenue was $193.7 billion in fiscal 2026, and its GAAP gross margin for the year was 71.1 percent",
       "source": "https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-fourth-quarter-and-fiscal-2026"
     },
     {
@@ -42,7 +42,7 @@
       "source": "https://newsletter.semianalysis.com/p/100000-h100-clusters-power-network"
     },
     {
-      "fact": "In June 2026, World Semiconductor Trade Statistics put 2025 chip sales at $795.6B and forecast $1.51 trillion for 2026, with memory up about 250% and logic up 37%",
+      "fact": "In June 2026, World Semiconductor Trade Statistics put 2025 chip sales at $795.6 billion and forecast $1.51 trillion for 2026, with memory up about 250 percent and logic up 37 percent",
       "source": "https://www.wsts.org/esraCMS/extension/media/f/WST/7618/WSTS_FC-Release-2026-May.pdf"
     }
   ],
@@ -84,7 +84,7 @@
       "id": "gross-margins",
       "type": "bars",
       "title": "Gross margin, quarters ended June to September 2026",
-      "finding": "Micron's gross margin, 86.8 percent, was highest of nine firms in 2026",
+      "finding": "Micron's gross margin, 86.8 percent, was highest of nine firms in 2026",
       "unit": "%",
       "data": [
         [
@@ -125,7 +125,7 @@
         ]
       ],
       "source": {
-        "label": "Each firm's own quarterly earnings release; quarters end between June and September 2026; ASE's bar is its packaging and test segment; KLA's bar is the non-GAAP figure from its shareholder letter (TSMC shown)",
+        "label": "Each firm's own quarterly earnings release, for quarters ending between June and September 2026 (TSMC's linked). ASE's bar is its packaging and test segment. KLA's bar is the non-GAAP figure from its shareholder letter",
         "url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000726/a3q26e_withguidancexfinal.htm"
       }
     },
@@ -133,7 +133,7 @@
       "id": "market-2025",
       "type": "bars",
       "title": "Chip sales, capital spending at five tech firms, Nvidia data center revenue and equipment sales, 2025",
-      "finding": "World chip sales reached $791.7 billion in 2025, the largest total shown",
+      "finding": "World chip sales reached $791.7 billion in 2025, the largest total shown",
       "unit": "$B",
       "data": [
         [
@@ -154,7 +154,7 @@
         ]
       ],
       "source": {
-        "label": "Semiconductor Industry Association on chip sales; Epoch AI quarterly capital spending at Alphabet, Amazon, Meta, Microsoft and Oracle, summed for 2025; Nvidia data center revenue for its fiscal year to January 2026; SEMI on equipment billings",
+        "label": "Semiconductor Industry Association for chip sales. Epoch AI's quarterly capital spending at Alphabet, Amazon, Meta, Microsoft and Oracle, summed for 2025. Nvidia's data center revenue for its fiscal year to January 2026. SEMI for equipment billings",
         "url": "https://www.semiconductors.org/global-annual-semiconductor-sales-increase-25-6-to-791-7-billion-in-2025/"
       }
     }
@@ -172,7 +172,7 @@ Most of what it costs to build Nvidia's B200, an AI chip from its Blackwell line
 Three numbers set the cost of a die, the finished rectangle of circuitry cut out of a wafer.
 
 - **Wafer price.** TSMC does not publish it. TSMC makes Nvidia's Blackwell chips on a custom-built process called 4NP ([source](https://www.nvidia.com/en-us/data-center/technologies/blackwell-architecture/)). Epoch AI estimates $17,000 for a 12-inch (300 mm) wafer on that process ([source](https://epoch.ai/data-insights/b200-cost-breakdown)).
-- **Dies per wafer.** A wafer is a circle and dies are rectangles, so the edge of the wafer goes to waste. The bigger the die, the fewer fit. Each of the two logic dies in a B200 is about 800 mm2 ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Nvidia calls them reticle-limited, meaning they are near the largest size a scanner can print in one shot ([source](https://www.nvidia.com/en-us/data-center/technologies/blackwell-architecture/)).
+- **Dies per wafer.** A wafer is a circle and dies are rectangles, so the edge of the wafer goes to waste. The bigger the die, the fewer fit. Each of the two logic dies in a B200 is about 800 mm² ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Nvidia calls them reticle-limited, meaning they are near the largest size a scanner can print in one shot ([source](https://www.nvidia.com/en-us/data-center/technologies/blackwell-architecture/)).
 - **Yield.** Yield is the share of dies that work. Defects land at random, so a bigger die is more likely to catch one. Epoch AI models Blackwell die yield at 40 to 70 percent, centered on 60 ([source](https://epoch.ai/data-insights/b200-cost-breakdown)).
 
 Together, those three numbers put the two dies inside a B200 at about $900 ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Epoch AI's estimate for the whole B200 counts only variable costs, which rise with each chip made ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). It leaves out fixed costs such as research and development ([source](https://epoch.ai/data-insights/b200-cost-breakdown)).
@@ -232,11 +232,11 @@ One level up, a cluster needs power and a network as well as servers. SemiAnalys
 | ASE Technology | Packaging and test segment | June 2026 | 27.3% ([source](https://www.prnewswire.com/news-releases/ase-technology-holding-co-ltd-reports-its-unaudited-consolidated-financial-results-for-the-second-quarter-of-2026-302838714.html)) |
 | Amkor | OSAT | June 2026 | 16.8% ([source](https://www.sec.gov/Archives/edgar/data/0001047127/000104712726000043/amkr6302026erex-991.htm)) |
 
-In the table, gross margin is highest at the memory maker Micron and lowest in assembly and test. The firms in design, equipment and leading-edge wafers earn gross margins of 50.3 to 75.0 percent, and those in assembly and test 16.8 to 27.3 percent. Micron's gross margin rose from 39.8 percent for the year to August 2025 to 80.7 percent for the year to September 2026 ([source](https://investors.micron.com/news/press-release/2026/Micron-Technology-Inc--Reports-Record-Fiscal-Fourth-Quarter-and-Full-Year-2026-Results/default.aspx)). It reached 86.8 percent in the last quarter of that year ([source](https://investors.micron.com/news/press-release/2026/Micron-Technology-Inc--Reports-Record-Fiscal-Fourth-Quarter-and-Full-Year-2026-Results/default.aspx)).
+Gross margin is highest at the memory maker Micron and lowest in assembly and test. The firms in design, equipment and leading-edge wafers earn gross margins of 50.3 to 75.0 percent, and those in assembly and test 16.8 to 27.3 percent. Micron's gross margin rose from 39.8 percent for the year to August 2025 to 80.7 percent for the year to September 2026 ([source](https://investors.micron.com/news/press-release/2026/Micron-Technology-Inc--Reports-Record-Fiscal-Fourth-Quarter-and-Full-Year-2026-Results/default.aspx)). It reached 86.8 percent in the last quarter of that year ([source](https://investors.micron.com/news/press-release/2026/Micron-Technology-Inc--Reports-Record-Fiscal-Fourth-Quarter-and-Full-Year-2026-Results/default.aspx)).
 
-Each figure except KLA's comes from the firm's own earnings release. KLA's shareholder letter gives only a non-GAAP gross margin for the quarter, 62.4 percent ([source](https://d1io3yog0oux5.cloudfront.net/_b9ee755a5f60dd0fb3f9e27967aed6af/klatencor/db/1117/10668/letter_to_shareholders/KLA+Earnings+Shareholder+Letter+-+Q4+FY26.pdf#page=3)). KLA's non-GAAP figures adjust its results under US accounting rules, known as GAAP, to leave out items such as acquisition-related charges and restructuring, severance and other charges ([source](https://ir.kla.com/news-events/press-releases/detail/518/kla-corporation-reports-fiscal-2026-fourth-quarter-and-full)). For ASE the table shows its packaging and test segment ([source](https://www.prnewswire.com/news-releases/ase-technology-holding-co-ltd-reports-its-unaudited-consolidated-financial-results-for-the-second-quarter-of-2026-302838714.html)). The company as a whole had a gross margin of 21.0 percent, because about a third of its revenue came from electronics manufacturing services, which earned 8.9 percent ([source](https://www.prnewswire.com/news-releases/ase-technology-holding-co-ltd-reports-its-unaudited-consolidated-financial-results-for-the-second-quarter-of-2026-302838714.html)).
+Each figure except KLA's comes from the firm's own earnings release. KLA's shareholder letter gives only a non-GAAP gross margin for the quarter, 62.4 percent ([source](https://d1io3yog0oux5.cloudfront.net/_b9ee755a5f60dd0fb3f9e27967aed6af/klatencor/db/1117/10668/letter_to_shareholders/KLA+Earnings+Shareholder+Letter+-+Q4+FY26.pdf#page=3)). KLA's non-GAAP figures adjust its results under US accounting rules, known as GAAP, to leave out items such as acquisition-related charges and restructuring, severance and other charges ([source](https://ir.kla.com/news-events/press-releases/detail/518/kla-corporation-reports-fiscal-2026-fourth-quarter-and-full)). For ASE the figure is its packaging and test segment ([source](https://www.prnewswire.com/news-releases/ase-technology-holding-co-ltd-reports-its-unaudited-consolidated-financial-results-for-the-second-quarter-of-2026-302838714.html)). The company as a whole had a gross margin of 21.0 percent, because about a third of its revenue came from electronics manufacturing services, which earned 8.9 percent ([source](https://www.prnewswire.com/news-releases/ase-technology-holding-co-ltd-reports-its-unaudited-consolidated-financial-results-for-the-second-quarter-of-2026-302838714.html)).
 
-The table leaves out two firms whose results give no gross margin. SK hynix's operating margin was 76 percent in the quarter to June 2026, and its revenue was up 257 percent from a year earlier ([source](https://news.skhynix.com/en/q2-2026-business-results/)). The substrate maker Ibiden's operating profit was 21.8 percent of net sales in the quarter to June 2026 ([source](https://www.ibiden.com/ir/items/outline2026Q1.pdf)).
+Two other firms' results give no gross margin. SK hynix's operating margin was 76 percent in the quarter to June 2026, and its revenue was up 257 percent from a year earlier ([source](https://news.skhynix.com/en/q2-2026-business-results/)). The substrate maker Ibiden's operating profit was 21.8 percent of net sales in the quarter to June 2026 ([source](https://www.ibiden.com/ir/items/outline2026Q1.pdf)).
 
 {{figure:gross-margins}}
 
@@ -248,7 +248,7 @@ In 2025 capital spending at five large tech firms far exceeded the world's sales
 
 ## Where the money goes
 
-The table below sorts each stage by whether its cost falls as volume grows. A structurally expensive stage stays costly because the work is hard, capacity is short or one firm sets the price. A stage compressible with scale gets cheaper as volume grows. An already commoditized stage has several competing suppliers. The classes are a judgment drawn from the sources in this chapter and the stage chapters.
+Each stage falls into one of three classes, by whether its cost falls as volume grows. A structurally expensive stage stays costly because the work is hard, capacity is short or one firm sets the price. A stage compressible with scale gets cheaper as volume grows. An already commoditized stage has several competing suppliers. The classes are a judgment drawn from the sources in this chapter and the stage chapters.
 
 | Stage | Class | Why |
 |---|---|---|
@@ -263,7 +263,7 @@ The table below sorts each stage by whether its cost falls as volume grows. A st
 | Leading-edge logic wafers | Compressible with scale | A very large die yields well only once a process matures. See [Foundries and fabs](#foundries-and-fabs). |
 | Design and EDA | Compressible with scale | A design is paid for once, and its cost is spread across every chip sold. See [Chip design, EDA and IP](#design-and-eda). |
 | Deposition and etch tools | Compressible with scale | Most deposition and etch steps have three or four established tool makers. See [Deposition and etch](#deposition-and-etch). |
-| Test and assembly (OSAT) | Already commoditized | Gross margins of 16.8 to 27.3 percent at Amkor and ASE's packaging and test segment, in the table above. |
+| Test and assembly (OSAT) | Already commoditized | Gross margins of 16.8 to 27.3 percent at Amkor and ASE's packaging and test segment in the quarter to June 2026. |
 | Wafers and bulk gases | Already commoditized | Several firms make approved 300 mm wafers. By Siltronic's estimate, the five largest wafer makers served around 75 percent of the market in the first three quarters of 2025 ([source](https://www.siltronic.com/fileadmin/investorrelations/2026/Q1/20260429_Siltronic_InvestorPresentation__.pdf#page=6)). See [Silicon and wafers](#silicon-and-wafers). |
 | Rack integration (ODM) | Already commoditized | In October 2025 Nvidia said more than 50 makers of systems and components were gearing up for the Vera Rubin NVL72 ([source](https://blogs.nvidia.com/blog/gigawatt-ai-factories-ocp-vera-rubin)). See [Systems and networking](#systems-and-networking). |
 

@@ -13,10 +13,10 @@
     "chokepointScore": 3,
     "leaders": [
       {"name": "Nvidia", "country": "US", "share": "NVLink, InfiniBand and Spectrum-X Ethernet, which it credited for data center growth in the quarter to April 2026", "source": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000052/nvda-20260426.htm"},
-      {"name": "Broadcom", "country": "US", "share": "$16.7B of AI semiconductor revenue in the quarter to August 2026, up 221%", "source": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000076/avgo-08022026x8kxex99.htm"},
+      {"name": "Broadcom", "country": "US", "share": "$16.7 billion of AI semiconductor revenue in the quarter to August 2026, up 221 percent", "source": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000076/avgo-08022026x8kxex99.htm"},
       {"name": "Foxconn", "country": "TW", "share": "World's largest AI server provider, its chairman said in March 2026", "source": "https://www.honhai.com/en-us/press-center/press-releases/latest-news/1978"},
       {"name": "InnoLight", "country": "CN", "share": "High-speed optical modules made in Suzhou and, since 2019, Thailand", "source": "https://www.innolight.com/about"},
-      {"name": "Coherent", "country": "US", "share": "Lasers and optical networking products, with a $2B Nvidia investment agreed in March 2026", "source": "https://nvidianews.nvidia.com/news/nvidia-and-coherent-announce-strategic-partnership-to-develop-optics-technology-to-scale-next-generation-data-center-architecture"}
+      {"name": "Coherent", "country": "US", "share": "Lasers and optical networking products, with a $2 billion Nvidia investment agreed in March 2026", "source": "https://nvidianews.nvidia.com/news/nvidia-and-coherent-announce-strategic-partnership-to-develop-optics-technology-to-scale-next-generation-data-center-architecture"}
     ],
     "countries": [
       {"code": "US", "note": "Switch and accelerator silicon, system design, indium phosphide lasers"},
@@ -34,14 +34,14 @@
     "substitutability": {"band": "Moderate", "test": "Rated on NVLink and its NVSwitch chips, which Nvidia controls and which join the accelerators in a rack. Separately, lasers for the optical links were scarce in 2026. Nvidia secured future capacity rights for them from Lumentum in March 2026.", "testSources": ["https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm", "https://asia.nikkei.com/business/technology/tech-asia/ai-demand-strains-supplies-of-lasers-fiber-and-other-optical-tech", "https://nvidianews.nvidia.com/news/nvidia-announces-strategic-partnership-with-lumentum-to-develop-state-of-the-art-optics-technology"], "why": "UALink is an open specification for the same job as NVLink. AMD's Helios rack, launched in July 2026, runs it over Ethernet. Since May 2025 Nvidia's NVLink Fusion program has let other firms' custom chips use NVLink, which keeps those firms tied to Nvidia's interconnect.", "whySources": ["https://ualinkconsortium.org/blog/ualink-200g-1-0-specification-overview-802/", "https://newsroom.amd.com/news/aai-2026-helios-update/", "https://nvidianews.nvidia.com/news/nvidia-nvlink-fusion-semi-custom-ai-infrastructure-partner-ecosystem"]}
   },
   "keyFacts": [
+    {"fact": "In 2025 China produced about 70 percent of the world's indium, the raw material for indium phosphide lasers, and it put indium under new export restrictions in February 2025", "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-indium.pdf"},
     {"fact": "NVLink 6 carries 3,600 GB/s per GPU and a Vera Rubin NVL72 rack moves 260 TB/s, by Nvidia's Rubin launch release of January 2026", "source": "https://nvidianews.nvidia.com/news/rubin-platform-ai-supercomputer"},
     {"fact": "A GB300 NVL72 rack holds 18 compute trays and 9 NVLink switch trays with two NVSwitch chips each, and draws up to 142 kW", "source": "https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html"},
     {"fact": "UALink 200G 1.0 runs 200 Gb/s per lane, four lanes to a station, and addresses up to 1,024 endpoints in a pod", "source": "https://ualinkconsortium.org/blog/ualink-200g-1-0-specification-overview-802/"},
     {"fact": "Broadcom's Tomahawk 6 switches 102.4 Tbps on a single chip, double the bandwidth of any Ethernet switch on the market when it shipped in June 2025", "source": "https://investors.broadcom.com/news-releases/news-release-details/broadcom-ships-tomahawk-6-worlds-first-1024-tbps-switch"},
-    {"fact": "Tomahawk 6 Davisson cuts optical interconnect power by 70% compared with traditional pluggable optics, Broadcom said in October 2025", "source": "https://investors.broadcom.com/news-releases/news-release-details/broadcom-announces-tomahawkr-6-davisson-industrys-first-1024"},
-    {"fact": "In 2025 China produced about 70% of the world's indium, the raw material for indium phosphide lasers, and it put indium under new export restrictions in February 2025", "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-indium.pdf"},
+    {"fact": "Tomahawk 6 Davisson cuts optical interconnect power by 70 percent compared with traditional pluggable optics, Broadcom said in October 2025", "source": "https://investors.broadcom.com/news-releases/news-release-details/broadcom-announces-tomahawkr-6-davisson-industrys-first-1024"},
     {"fact": "In March 2026 Nvidia agreed to invest $2 billion in Lumentum, alongside a multibillion purchase commitment and future capacity access rights for advanced laser components", "source": "https://nvidianews.nvidia.com/news/nvidia-announces-strategic-partnership-with-lumentum-to-develop-state-of-the-art-optics-technology"},
-    {"fact": "Broadcom's AI semiconductor revenue was $16.7B in Q3 fiscal 2026, up 221% year over year and 54% quarter over quarter", "source": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000076/avgo-08022026x8kxex99.htm"}
+    {"fact": "Broadcom's AI semiconductor revenue was $16.7 billion in Q3 fiscal 2026, up 221 percent year over year and 54 percent quarter over quarter", "source": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000076/avgo-08022026x8kxex99.htm"}
   ],
   "figures": [
     {"id": "racks-wired", "type": "animation", "src": "racks", "title": "How AI chips are wired together", "note": "Simplified. The trays follow the layout of an Nvidia NVL72 rack. Racks and fibers are not drawn to scale."},
@@ -52,7 +52,7 @@
       "finding": "NVLink per GPU rose from 900 to 3,600 GB/s, Hopper to Rubin",
       "unit": "GB/s",
       "data": [["NVLink 4 (Hopper)", 900], ["NVLink 5 (Blackwell)", 1800], ["NVLink 6 (Rubin)", 3600]],
-      "source": {"label": "NVIDIA NVLink product page (NVLink 4 and 5); NVIDIA Rubin launch release, January 2026 (NVLink 6)", "url": "https://nvidianews.nvidia.com/news/rubin-platform-ai-supercomputer"}
+      "source": {"label": "Nvidia NVLink product page for NVLink 4 and 5, and Nvidia's Rubin launch release of January 2026 for NVLink 6", "url": "https://nvidianews.nvidia.com/news/rubin-platform-ai-supercomputer"}
     },
     {
       "id": "switch-bandwidth",

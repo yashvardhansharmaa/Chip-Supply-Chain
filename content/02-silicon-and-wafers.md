@@ -12,11 +12,11 @@
  "concentration": "High",
  "chokepointScore": 4,
  "leaders": [
- {"name": "Shin-Etsu Handotai", "country": "JP", "share": "Its parent's electronics materials segment, wafers included, had ¥1,015.7bn of sales in the year to March 2026", "source": "https://www.shinetsu.co.jp/wp-content/uploads/2025/07/20260428_con_E.pdf#page=6"},
- {"name": "SUMCO", "country": "JP", "share": "¥409,670m of net sales in 2025", "source": "https://www.sumcosi.com/english/pdf/ir/library/shareholders/27/pdf/nc_e_27.pdf#page=24"},
- {"name": "GlobalWafers", "country": "TW", "share": "NT$60.6bn revenue in 2025", "source": "https://www.sas-globalwafers.com/en/gwc_news_en_20260303/"},
+ {"name": "Shin-Etsu Handotai", "country": "JP", "share": "Its parent's electronics materials segment, wafers included, had ¥1,015.7 billion of sales in the year to March 2026", "source": "https://www.shinetsu.co.jp/wp-content/uploads/2025/07/20260428_con_E.pdf#page=6"},
+ {"name": "SUMCO", "country": "JP", "share": "¥409,670 million of net sales in 2025", "source": "https://www.sumcosi.com/english/pdf/ir/library/shareholders/27/pdf/nc_e_27.pdf#page=24"},
+ {"name": "GlobalWafers", "country": "TW", "share": "NT$60.6 billion revenue in 2025", "source": "https://www.sas-globalwafers.com/en/gwc_news_en_20260303/"},
  {"name": "SK Siltron", "country": "KR", "share": "One of the top five wafer makers by revenue in the first three quarters of 2025", "source": "https://www.siltronic.com/fileadmin/investorrelations/2026/Q1/20260429_Siltronic_InvestorPresentation__.pdf#page=6"},
- {"name": "Siltronic", "country": "DE", "share": "€1,346.7m revenue in 2025", "source": "https://www.siltronic.com/en/press/press-releases/siltronic-ag-robust-business-performance-in-2025-demonstrates-resilience-despite-challenging-conditions.html"}
+ {"name": "Siltronic", "country": "DE", "share": "€1,346.7 million revenue in 2025", "source": "https://www.siltronic.com/en/press/press-releases/siltronic-ag-robust-business-performance-in-2025-demonstrates-resilience-despite-challenging-conditions.html"}
  ],
  "countries": [
  {"code": "JP", "note": "Shin-Etsu and SUMCO crystal growth and polishing"},
@@ -29,37 +29,37 @@
  "chinaSources": ["https://pubs.usgs.gov/myb/vol3/2023/myb3-2023-china.pdf#page=7", "https://static.cninfo.com.cn/finalpage/2026-08-26/1225503057.PDF#page=18"],
  "usStatus": "None of the five largest wafer makers in 2025 was American. GlobalWafers of Taiwan won CHIPS awards of up to $406 million in December 2024 for wafer plants in Texas and Missouri.",
  "usSources": ["https://www.siltronic.com/fileadmin/investorrelations/2026/Q1/20260429_Siltronic_InvestorPresentation__.pdf#page=6", "https://www.nist.gov/news-events/news/2024/12/biden-harris-administration-announces-chips-incentives-awards-globalwafers"],
- "costSignal": "$11.4bn world wafer market in 2025, on 12,973 million square inches shipped",
+ "costSignal": "$11.4 billion world wafer market in 2025, on 12,973 million square inches shipped",
  "costSources": ["https://www.prnewswire.com/news-releases/semi-reports-2025-annual-worldwide-silicon-wafer-shipments-and-revenue-results-302683028.html"],
  "substitutability": {"band": "Moderate", "test": "Several firms already make 300 mm wafers that fabs have approved, but customers have to test and approve a new wafer plant before they buy from it.", "testSources": ["https://www.siltronic.com/fileadmin/investorrelations/2026/Q1/20260429_Siltronic_InvestorPresentation__.pdf#page=12"], "why": "Losing one of the top five wafer makers leaves four, and a new wafer plant can still be built. Customer approval of a new plant is called qualification. Siltronic completed key customer qualifications at its new Singapore fab in July 2025.", "whySources": ["https://www.siltronic.com/fileadmin/investorrelations/2026/Q1/20260429_Siltronic_InvestorPresentation__.pdf#page=6", "https://www.siltronic.com/fileadmin/investorrelations/2026/Q1/20260429_Siltronic_InvestorPresentation__.pdf#page=12", "https://www.siltronic.com/fileadmin/investorrelations/2026/Q1/20260429_Siltronic_InvestorPresentation__.pdf#page=12"]}
  },
  "keyFacts": [
- {"fact": "Worldwide silicon wafer shipments rose 5.8% to 12,973 million square inches in 2025 while revenue fell 1.2% to $11.4 billion", "source": "https://www.prnewswire.com/news-releases/semi-reports-2025-annual-worldwide-silicon-wafer-shipments-and-revenue-results-302683028.html"},
- {"fact": "The top five wafer makers serve around 75% of the semiconductor silicon wafer market, which Siltronic sizes at $11.4bn for 2025", "source": "https://www.siltronic.com/fileadmin/investorrelations/2026/Q1/20260429_Siltronic_InvestorPresentation__.pdf"},
- {"fact": "99.7% of world fab capacity able to make chips at 45 nm and below used 300 mm wafers (SEMI World Fab Forecast, November 2020 edition, cited by CSET in January 2021)", "source": "https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf"},
- {"fact": "300 mm wafers made up about 78.8% of all silicon wafer area shipped worldwide in 2025, by a SEMI estimate cited in Eswin's 2025 annual report summary (April 2026)", "source": "https://static.cninfo.com.cn/finalpage/2026-04-21/1225128957.PDF"},
- {"fact": "China produced 1.50 Mt of polysilicon in 2023, about 93% of world output, of which an estimated 98% was solar-grade and 2% electronic-grade", "source": "https://pubs.usgs.gov/myb/vol3/2023/myb3-2023-china.pdf"},
- {"fact": "Electronic-grade silicon was a $1.4bn market in 2025, with five major suppliers: Wacker, Hemlock, OCI, Tokuyama and Mitsubishi", "source": "https://www.siltronic.com/fileadmin/investorrelations/2026/Q1/20260429_Siltronic_InvestorPresentation__.pdf"},
- {"fact": "SUMCO's 2025 net sales were ¥409,670m, but operating profit fell to ¥1,342m from ¥36,924m and it lost ¥11,751m", "source": "https://www.sumcosi.com/english/pdf/ir/library/shareholders/27/pdf/nc_e_27.pdf"},
- {"fact": "Siltronic reported a €77.9m net loss in 2025 on €1,346.7m of sales, with capital spending of €369.1m concentrated on its Singapore fab", "source": "https://www.siltronic.com/en/press/press-releases/siltronic-ag-robust-business-performance-in-2025-demonstrates-resilience-despite-challenging-conditions.html"},
- {"fact": "As of 2018, Chinese wafer producers made 12% of the wafers for Chinese-headquartered 300 mm fabs and 18% for 100 to 200 mm fabs", "source": "https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf"}
+ {"fact": "China produced 1.50 Mt of polysilicon in 2023, about 93 percent of world output, of which an estimated 98 percent was solar-grade and 2 percent electronic-grade", "source": "https://pubs.usgs.gov/myb/vol3/2023/myb3-2023-china.pdf"},
+ {"fact": "Electronic-grade silicon was a $1.4 billion market in 2025, with five major suppliers: Wacker, Hemlock, OCI, Tokuyama and Mitsubishi", "source": "https://www.siltronic.com/fileadmin/investorrelations/2026/Q1/20260429_Siltronic_InvestorPresentation__.pdf"},
+ {"fact": "Worldwide silicon wafer shipments rose 5.8 percent to 12,973 million square inches in 2025 while revenue fell 1.2 percent to $11.4 billion", "source": "https://www.prnewswire.com/news-releases/semi-reports-2025-annual-worldwide-silicon-wafer-shipments-and-revenue-results-302683028.html"},
+ {"fact": "The top five wafer makers serve around 75 percent of the semiconductor silicon wafer market, which Siltronic sizes at $11.4 billion for 2025", "source": "https://www.siltronic.com/fileadmin/investorrelations/2026/Q1/20260429_Siltronic_InvestorPresentation__.pdf"},
+ {"fact": "99.7 percent of world fab capacity able to make chips at 45 nm and below used 300 mm wafers (SEMI World Fab Forecast, November 2020 edition, cited by CSET in January 2021)", "source": "https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf"},
+ {"fact": "300 mm wafers made up about 78.8 percent of all silicon wafer area shipped worldwide in 2025, by a SEMI estimate cited in Eswin's 2025 annual report summary (April 2026)", "source": "https://static.cninfo.com.cn/finalpage/2026-04-21/1225128957.PDF"},
+ {"fact": "SUMCO's 2025 net sales were ¥409,670 million, but operating profit fell to ¥1,342 million from ¥36,924 million and it lost ¥11,751 million", "source": "https://www.sumcosi.com/english/pdf/ir/library/shareholders/27/pdf/nc_e_27.pdf"},
+ {"fact": "Siltronic reported a €77.9 million net loss in 2025 on €1,346.7 million of sales, with capital spending of €369.1 million concentrated on its Singapore fab", "source": "https://www.siltronic.com/en/press/press-releases/siltronic-ag-robust-business-performance-in-2025-demonstrates-resilience-despite-challenging-conditions.html"},
+ {"fact": "As of 2018, Chinese wafer producers made 12 percent of the wafers for Chinese-headquartered 300 mm fabs and 18 percent for 100 to 200 mm fabs", "source": "https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf"}
  ],
  "figures": [
     {"id": "sand-to-wafer", "type": "animation", "src": "silicon", "title": "From sand to wafer", "note": "Simplified. The ingot and the machines are not drawn to scale."},
  {
  "id": "wafer-concentration",
  "type": "stack",
- "title": "Silicon wafer sales by supplier headquarters, 2023. Japan held 53%, and the source shows no separate share for China or the United States",
- "finding": "Companies based in Japan held 53 percent of 2023 wafer sales",
+ "title": "Silicon wafer sales by supplier headquarters, 2023. The source shows no separate share for China or the United States",
+ "finding": "Companies based in Japan held 53 percent of 2023 wafer sales",
  "unit": "%",
  "data": [["Japan", 53], ["Taiwan", 19], ["South Korea", 13], ["Europe", 10], ["Other", 5]],
- "source": {"label": "METI, December 2025, from Fuji Keizai data (2023); Japan's and Europe's shares are printed, the others are read off METI's chart", "url": "https://www.meti.go.jp/policy/mono_info_service/joho/conference/semicon_digital/0014/handeji14-4.pdf#page=8"}
+ "source": {"label": "METI, December 2025, from Fuji Keizai data (2023). Japan's and Europe's shares are printed, and the others are read off METI's chart", "url": "https://www.meti.go.jp/policy/mono_info_service/joho/conference/semicon_digital/0014/handeji14-4.pdf#page=8"}
  },
  {
  "id": "polysilicon-grade",
  "type": "stack",
- "title": "China's polysilicon output by grade, 2023. China made 1.50 million metric tons that year, about 93% of world output",
- "finding": "An estimated 98 percent of China's 2023 polysilicon was solar-grade",
+ "title": "China's polysilicon output by grade, 2023. China made 1.50 million metric tons that year, about 93 percent of world output",
+ "finding": "An estimated 98 percent of China's 2023 polysilicon was solar-grade",
  "unit": "%",
  "data": [["Solar-grade", 98], ["Electronic-grade", 2]],
  "source": {"label": "USGS Minerals Yearbook, China, 2023", "url": "https://pubs.usgs.gov/myb/vol3/2023/myb3-2023-china.pdf#page=7"}
@@ -105,7 +105,7 @@ China's 300 mm wafer industry has grown since 2018. As of 2018, five Chinese fir
 
 {{figure:wafer-concentration}}
 
-Japanese companies held 53 percent of the world's silicon wafer sales in 2023 ([source](https://www.meti.go.jp/policy/mono_info_service/joho/conference/semicon_digital/0014/handeji14-4.pdf#page=8)). The chart shows shares of 2023 sales from a survey by Fuji Keizai, a Japanese research firm ([source](https://www.meti.go.jp/policy/mono_info_service/joho/conference/semicon_digital/0014/handeji14-4.pdf#page=8)). Japan's Ministry of Economy, Trade and Industry reproduced the figures in a December 2025 strategy deck ([source](https://www.meti.go.jp/policy/mono_info_service/joho/conference/semicon_digital/0014/handeji14-4.pdf#page=8)). The ministry's chart of the Fuji Keizai survey prints only Japan's 53 percent, so the other shares in the chart above are measured from its bars ([source](https://www.meti.go.jp/policy/mono_info_service/joho/conference/semicon_digital/0014/handeji14-4.pdf#page=8)). An earlier page of the ministry's deck prints Europe's share in the same Fuji Keizai survey as 10 percent ([source](https://www.meti.go.jp/policy/mono_info_service/joho/conference/semicon_digital/0014/handeji14-4.pdf#page=4)). The chart gives no separate share to Chinese or US companies ([source](https://www.meti.go.jp/policy/mono_info_service/joho/conference/semicon_digital/0014/handeji14-4.pdf#page=8)).
+Japanese companies held 53 percent of the world's silicon wafer sales in 2023 ([source](https://www.meti.go.jp/policy/mono_info_service/joho/conference/semicon_digital/0014/handeji14-4.pdf#page=8)). The shares come from a survey of 2023 sales by Fuji Keizai, a Japanese research firm ([source](https://www.meti.go.jp/policy/mono_info_service/joho/conference/semicon_digital/0014/handeji14-4.pdf#page=8)). Japan's Ministry of Economy, Trade and Industry reproduced the figures in a December 2025 strategy deck ([source](https://www.meti.go.jp/policy/mono_info_service/joho/conference/semicon_digital/0014/handeji14-4.pdf#page=8)). The ministry's chart of the survey prints only Japan's 53 percent, so the other shares are measured from its bars ([source](https://www.meti.go.jp/policy/mono_info_service/joho/conference/semicon_digital/0014/handeji14-4.pdf#page=8)). An earlier page of the ministry's deck prints Europe's share in the same Fuji Keizai survey as 10 percent ([source](https://www.meti.go.jp/policy/mono_info_service/joho/conference/semicon_digital/0014/handeji14-4.pdf#page=4)). The ministry's figures give no separate share to Chinese or US companies ([source](https://www.meti.go.jp/policy/mono_info_service/joho/conference/semicon_digital/0014/handeji14-4.pdf#page=8)).
 
 Siltronic's April 2026 investor presentation says the top five wafer makers serve around 75 percent of the market, based on revenue in the first three quarters of 2025 ([source](https://www.siltronic.com/fileadmin/investorrelations/2026/Q1/20260429_Siltronic_InvestorPresentation__.pdf#page=6)). It names the five as Shin-Etsu, SUMCO, GlobalWafers, SK Siltron and Siltronic itself ([source](https://www.siltronic.com/fileadmin/investorrelations/2026/Q1/20260429_Siltronic_InvestorPresentation__.pdf#page=6)). Siltronic describes itself as the only Western-based maker among the five ([source](https://www.siltronic.com/fileadmin/investorrelations/2026/Q1/20260429_Siltronic_InvestorPresentation__.pdf#page=6)).
 

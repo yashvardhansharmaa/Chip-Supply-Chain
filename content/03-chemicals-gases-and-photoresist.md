@@ -12,11 +12,11 @@
  "concentration": "High",
  "chokepointScore": 4,
  "leaders": [
- {"name": "JSR", "country": "JP", "share": "A vehicle of the state-backed Japan Investment Corporation bought 84.36% of JSR in April 2024", "source": "https://www.jiccapital.co.jp/en/news/.assets/E_20240417_JIC_JICC_PressRelease.pdf"},
- {"name": "Tokyo Ohka Kogyo", "country": "JP", "share": "Resist maker with ¥139,668m of sales in the first half of fiscal 2026", "source": "https://www.tok.co.jp/application/files/7417/8598/0069/q2_2612_en.pdf#page=4"},
- {"name": "Air Liquide", "country": "FR", "share": "€2,465m of electronics revenue in 2025, 9.1% of group sales", "source": "https://www.airliquide.com/group/activities/electronics"},
+ {"name": "JSR", "country": "JP", "share": "A vehicle of the state-backed Japan Investment Corporation bought 84.36 percent of JSR in April 2024", "source": "https://www.jiccapital.co.jp/en/news/.assets/E_20240417_JIC_JICC_PressRelease.pdf"},
+ {"name": "Tokyo Ohka Kogyo", "country": "JP", "share": "Resist maker with ¥139,668 million of sales in the first half of fiscal 2026", "source": "https://www.tok.co.jp/application/files/7417/8598/0069/q2_2612_en.pdf#page=4"},
+ {"name": "Air Liquide", "country": "FR", "share": "€2,465 million of electronics revenue in 2025, 9.1 percent of group sales", "source": "https://www.airliquide.com/group/activities/electronics"},
  {"name": "Entegris", "country": "US", "share": "Bought the polishing-slurry maker CMC Materials in July 2022", "source": "https://www.sec.gov/Archives/edgar/data/1101302/000114036122025275/ny20004647x3_ex99-1.htm"},
- {"name": "JX Advanced Metals", "country": "JP", "share": "Says it holds about 65% of the world market for semiconductor sputtering targets as of fiscal 2026", "source": "https://www.jx-nmm.com/english/company/glance/"}
+ {"name": "JX Advanced Metals", "country": "JP", "share": "Says it holds about 65 percent of the world market for semiconductor sputtering targets as of fiscal 2026", "source": "https://www.jx-nmm.com/english/company/glance/"}
  ],
  "countries": [
  {"code": "JP", "note": "Photoresist, ultra-pure hydrofluoric acid, sputtering targets, polishing slurries"},
@@ -29,22 +29,22 @@
  "chinaSources": ["https://static.cninfo.com.cn/finalpage/2026-03-27/1225036148.PDF#page=2", "https://www.mofcom.gov.cn/zcfb/dwmygl/art/2023/art_52b9a321087f402bb3d310d18b07967e.html"],
  "usStatus": "In photoresist, American companies ranked a distant second to Japanese companies by sales in 2023. In 2021 JSR of Japan agreed to buy Inpria, an Oregon-based US maker of resist for extreme ultraviolet.",
  "usSources": ["https://www.meti.go.jp/policy/mono_info_service/joho/conference/semicon_digital/0014/handeji14-4.pdf#page=8", "https://www.jsr.co.jp/jsr_e/news/2021/20210917.html"],
- "costSignal": "$45.8bn market for wafer fabrication materials in 2025. SEMI's count includes silicon wafers and photomasks",
+ "costSignal": "$45.8 billion market for wafer fabrication materials in 2025. SEMI's count includes silicon wafers and photomasks",
  "costSources": ["https://www.prnewswire.com/news-releases/global-semiconductor-materials-market-revenue-reaches-record-73-2-billion-in-2025--semi-reports-302768700.html", "https://www.semi.org/en/products-services/market-data/mmds"],
  "substitutability": {"band": "Moderate", "test": "This rating is based on photoresist, the hardest input to replace at this stage.", "testSources": ["https://www.semiconductors.org/wp-content/uploads/2023/06/FINAL-PAG-Case-Study.pdf#page=21"], "why": "Each formula is tuned to the layers it prints and has to pass qualification in the fab. So a new supplier has to develop its version together with the fab, one layer at a time. When Japan required individual export licenses for resist and two other chemicals sold to South Korea in 2019, South Korea bought more hydrogen fluoride from the United States and Taiwan and more resist from Belgium.", "whySources": ["https://www.semiconductors.org/wp-content/uploads/2023/06/FINAL-PAG-Case-Study.pdf#page=21", "https://www.semiconductors.org/wp-content/uploads/2023/06/FINAL-PAG-Case-Study.pdf#page=22", "https://www.rieti.go.jp/en/columns/v01_0201.html"]}
  },
  "keyFacts": [
- {"fact": "A January 2021 brief by Georgetown University's CSET, citing a 2019 estimate, put Japan's share of the semiconductor photoresist market at 90% and found that China could not make extreme-ultraviolet resists", "source": "https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf"},
- {"fact": "Japanese companies held 78% of world photoresist sales in 2023, counted by company nationality in Fuji Keizai data published by METI in December 2025", "source": "https://www.meti.go.jp/policy/mono_info_service/joho/conference/semicon_digital/0014/handeji14-4.pdf"},
+ {"fact": "China has controlled gallium exports since August 2023 and accounted for 99 percent of world primary low-purity gallium production, according to USGS in February 2026", "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-gallium.pdf"},
+ {"fact": "JX Advanced Metals says it holds about 65 percent of the global market for semiconductor sputtering targets as of fiscal 2026", "source": "https://www.jx-nmm.com/english/company/glance/"},
+ {"fact": "A January 2021 brief by Georgetown University's CSET, citing a 2019 estimate, put Japan's share of the semiconductor photoresist market at 90 percent and found that China could not make extreme-ultraviolet resists", "source": "https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf"},
+ {"fact": "Japanese companies held 78 percent of world photoresist sales in 2023, counted by company nationality in Fuji Keizai data published by METI in December 2025", "source": "https://www.meti.go.jp/policy/mono_info_service/joho/conference/semicon_digital/0014/handeji14-4.pdf"},
  {"fact": "In its 2025 annual report summary, published in March 2026, Hubei Dinglong said China had not yet reached large-scale production of advanced 248 nm, 193 nm or EUV resists", "source": "https://static.cninfo.com.cn/finalpage/2026-03-27/1225036148.PDF"},
- {"fact": "A Japan Investment Corporation vehicle bought 84.36% of JSR at ¥4,350 a share in a tender offer that closed on 16 April 2024", "source": "https://www.jiccapital.co.jp/en/news/.assets/E_20240417_JIC_JICC_PressRelease.pdf"},
- {"fact": "The global semiconductor materials market reached $73.2bn in 2025: $45.8bn of wafer fabrication materials and $27.4bn of packaging materials", "source": "https://www.prnewswire.com/news-releases/global-semiconductor-materials-market-revenue-reaches-record-73-2-billion-in-2025--semi-reports-302768700.html"},
- {"fact": "Before the 2022 invasion Ukraine supplied about 70% of the world's neon and 90% of the semiconductor-grade neon used by US industry", "source": "https://www.csis.org/blogs/perspectives-innovation/russias-invasion-ukraine-impacts-gas-markets-critical-chip-production"},
- {"fact": "Japan's 2019 export licensing cut hydrogen fluoride exports to South Korea by 87.9%", "source": "https://www.rieti.go.jp/en/columns/v01_0201.html"},
- {"fact": "JX Advanced Metals says it holds about 65% of the global market for semiconductor sputtering targets as of fiscal 2026", "source": "https://www.jx-nmm.com/english/company/glance/"},
- {"fact": "China has controlled gallium exports since August 2023 and accounted for 99% of world primary low-purity gallium production, according to USGS in February 2026", "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-gallium.pdf"},
+ {"fact": "A Japan Investment Corporation vehicle bought 84.36 percent of JSR at ¥4,350 a share in a tender offer that closed on 16 April 2024", "source": "https://www.jiccapital.co.jp/en/news/.assets/E_20240417_JIC_JICC_PressRelease.pdf"},
+ {"fact": "The global semiconductor materials market reached $73.2 billion in 2025: $45.8 billion of wafer fabrication materials and $27.4 billion of packaging materials", "source": "https://www.prnewswire.com/news-releases/global-semiconductor-materials-market-revenue-reaches-record-73-2-billion-in-2025--semi-reports-302768700.html"},
+ {"fact": "Before the 2022 invasion Ukraine supplied about 70 percent of the world's neon and 90 percent of the semiconductor-grade neon used by US industry", "source": "https://www.csis.org/blogs/perspectives-innovation/russias-invasion-ukraine-impacts-gas-markets-critical-chip-production"},
+ {"fact": "Japan's 2019 export licensing cut hydrogen fluoride exports to South Korea by 87.9 percent", "source": "https://www.rieti.go.jp/en/columns/v01_0201.html"},
  {"fact": "In November 2025 China suspended its December 2024 ban on exports of gallium, germanium, antimony and superhard materials to the US until 27 November 2026", "source": "https://www.mofcom.gov.cn/zwgk/zcfb/art/2025/art_5c68985a6b1a46778e2e8dbff1bb1601.html"},
- {"fact": "In Europe, germanium metal averaged an estimated $4,100 per kilogram in 2025 against $1,392 in 2023, on Argus Media prices reported by USGS. US imports of the metal fell an estimated 67% in 2025", "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-germanium.pdf"}
+ {"fact": "In Europe, germanium metal averaged an estimated $4,100 per kilogram in 2025 against $1,392 in 2023, on Argus Media prices reported by USGS. US imports of the metal fell an estimated 67 percent in 2025", "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-germanium.pdf"}
  ],
  "figures": [
  {"id": "materials-loop", "type": "animation", "src": "chemicals", "title": "Why one missing material can stop a fab", "note": "Simplified diagram. Six steps and their materials stand for the many a fab uses, and each real layer uses its own mix."},
@@ -52,7 +52,7 @@
  "id": "resist-country",
  "type": "stack",
  "title": "Photoresist sales share by company nationality, 2023",
- "finding": "Japanese companies held 78 percent of photoresist sales in 2023",
+ "finding": "Japanese companies held 78 percent of photoresist sales in 2023",
  "unit": "%",
  "data": [["Japanese companies", 78], ["US, South Korean and other companies", 22]],
  "source": {"label": "METI, December 2025, from Fuji Keizai data", "url": "https://www.meti.go.jp/policy/mono_info_service/joho/conference/semicon_digital/0014/handeji14-4.pdf#page=8"}

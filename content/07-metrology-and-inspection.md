@@ -12,40 +12,40 @@
  "concentration": "High",
  "chokepointScore": 4,
  "leaders": [
- {"name": "KLA", "country": "US", "share": "56.8% of process control tools in 2025 by CSET's count", "source": "https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60"},
- {"name": "Applied Materials", "country": "US", "share": "11.2% of process control tools in 2025", "source": "https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60"},
- {"name": "Lasertec", "country": "JP", "share": "6.4% of process control tools in 2025", "source": "https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60"},
- {"name": "Hitachi High-Tech", "country": "JP", "share": "6.2% of process control tools in 2025", "source": "https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60"},
- {"name": "ASML", "country": "NL", "share": "5.9% of process control tools in 2025", "source": "https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60"},
- {"name": "Nova", "country": "IL", "share": "4.3% of process control tools in 2025", "source": "https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60"},
- {"name": "Onto Innovation", "country": "US", "share": "2.6% of process control tools in 2025", "source": "https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60"}
+ {"name": "KLA", "country": "US", "share": "56.8 percent of process control tools in 2025 by CSET's count", "source": "https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60"},
+ {"name": "Applied Materials", "country": "US", "share": "11.2 percent of process control tools in 2025", "source": "https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60"},
+ {"name": "Lasertec", "country": "JP", "share": "6.4 percent of process control tools in 2025", "source": "https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60"},
+ {"name": "Hitachi High-Tech", "country": "JP", "share": "6.2 percent of process control tools in 2025", "source": "https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60"},
+ {"name": "ASML", "country": "NL", "share": "5.9 percent of process control tools in 2025", "source": "https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60"},
+ {"name": "Nova", "country": "IL", "share": "4.3 percent of process control tools in 2025", "source": "https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60"},
+ {"name": "Onto Innovation", "country": "US", "share": "2.6 percent of process control tools in 2025", "source": "https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60"}
  ],
  "countries": [
  {"code": "US", "note": "KLA (Milpitas), Onto Innovation (Wilmington, MA), Applied Materials"},
  {"code": "NL", "note": "ASML YieldStar and HMI e-beam, Veldhoven and San Jose"},
  {"code": "JP", "note": "Hitachi High-Tech (CD-SEM), Lasertec (mask inspection), Rigaku (X-ray)"},
  {"code": "IL", "note": "Nova (Rehovot) and Camtek (Migdal Haemek)"},
- {"code": "CN", "note": "Skyverse (Shenzhen), RSIC and other domestic makers, with 0.7% of the market in 2025 by CSET's count"}
+ {"code": "CN", "note": "Skyverse (Shenzhen), RSIC and other domestic makers, with 0.7 percent of the market in 2025 by CSET's count"}
  ],
  "chinaStatus": "Chinese firms held 0.7 percent of the world market for tools that measure and inspect wafers in 2025, by CSET's count. Skyverse, a Shenzhen maker of inspection and metrology tools, reported 2,053,298,171.74 yuan of revenue in 2025, up 48.75 percent on 2024.",
  "chinaSources": ["https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60", "https://static.cninfo.com.cn/finalpage/2026-04-25/1225182755.PDF#page=12"],
  "usStatus": "In 2025 the American firm KLA was the world's largest maker of metrology and inspection tools. Citing Gartner, KLA puts its 2024 share at 56.5 percent, 6.5 times its nearest rival's share.",
  "usSources": ["https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60", "https://d1io3yog0oux5.cloudfront.net/_7791115a123b86b3f10b1a5eb5210224/klatencor/db/1166/10653/file/2026+Investor+Day+Master+Final_IR+copy.pdf#page=35"],
- "costSignal": "$15.7B process control tool market in 2025. KLA puts the 2025 wafer equipment market at about $120B",
+ "costSignal": "$15.7 billion process control tool market in 2025. KLA puts the 2025 wafer equipment market at about $120 billion",
  "costSources": ["https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60", "https://d1io3yog0oux5.cloudfront.net/_b9ee755a5f60dd0fb3f9e27967aed6af/klatencor/db/1117/10668/letter_to_shareholders/KLA+Earnings+Shareholder+Letter+-+Q4+FY26.pdf#page=7"],
  "substitutability": {"band": "Moderate", "test": "Every kind of measuring and inspecting tool had a second maker in 2025.", "testSources": ["https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60"], "why": "Eight firms besides KLA each held more than 1 percent of the market in 2025. But KLA alone held 85.9 percent of defect inspection, the largest kind, that year.", "whySources": ["https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60", "https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60"]}
  },
  "keyFacts": [
- {"fact": "Die yield is (1 + D0A/a) to the power minus a, where a is 3 to 4 for modern CMOS, so die yield falls as defect density and die area grow", "source": "https://web.ece.ucsb.edu/~parhami/docs_folder/f33-book-dep-comp-pt2.pdf"},
- {"fact": "KLA became the largest supplier of process control tools for advanced wafer-level packaging in calendar 2025, adding 14 percentage points of share and growing that revenue about 70%", "source": "https://d1io3yog0oux5.cloudfront.net/_a357bfc9113388e37f3bfcb2ea2f0b64/klatencor/db/1117/10655/letter_to_shareholders/KLA+Shareholder+Letter+-+Q3+FY26.pdf"},
+ {"fact": "CSET's Supply Chain Explorer puts KLA at 56.8 percent of a $15.7 billion process control tool market in 2025, ahead of Applied Materials at 11.2 percent and Lasertec at 6.4 percent", "source": "https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60"},
  {"fact": "KLA says its process control share grew 360 basis points from 2021 to 2025 and is about 7 times the nearest competitor", "source": "https://d1io3yog0oux5.cloudfront.net/_a357bfc9113388e37f3bfcb2ea2f0b64/klatencor/db/1117/10655/letter_to_shareholders/KLA+Shareholder+Letter+-+Q3+FY26.pdf"},
- {"fact": "KLA's March 2026 investor day, citing Gartner, puts its process control market share at 56.5% in 2024, up 2% from 2021 and 6.5 times its nearest competitor", "source": "https://d1io3yog0oux5.cloudfront.net/_7791115a123b86b3f10b1a5eb5210224/klatencor/db/1166/10653/file/2026+Investor+Day+Master+Final_IR+copy.pdf"},
- {"fact": "CSET's Supply Chain Explorer puts KLA at 56.8% of a $15.7 billion process control tool market in 2025, ahead of Applied Materials at 11.2% and Lasertec at 6.4%", "source": "https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60"},
+ {"fact": "Die yield is (1 + D0A/a) to the power minus a, where a is 3 to 4 for modern CMOS, so die yield falls as defect density and die area grow", "source": "https://web.ece.ucsb.edu/~parhami/docs_folder/f33-book-dep-comp-pt2.pdf"},
+ {"fact": "KLA became the largest supplier of process control tools for advanced wafer-level packaging in calendar 2025, adding 14 percentage points of share and growing that revenue about 70 percent", "source": "https://d1io3yog0oux5.cloudfront.net/_a357bfc9113388e37f3bfcb2ea2f0b64/klatencor/db/1117/10655/letter_to_shareholders/KLA+Shareholder+Letter+-+Q3+FY26.pdf"},
+ {"fact": "KLA's March 2026 investor day, citing Gartner, puts its process control market share at 56.5 percent in 2024, up 2 percent from 2021 and 6.5 times its nearest competitor", "source": "https://d1io3yog0oux5.cloudfront.net/_7791115a123b86b3f10b1a5eb5210224/klatencor/db/1166/10653/file/2026+Investor+Day+Master+Final_IR+copy.pdf"},
  {"fact": "KLA's fiscal 2026 revenue was $13.579 billion, up from $12.156 billion in fiscal 2025", "source": "https://data.sec.gov/api/xbrl/companyconcept/CIK0000319201/us-gaap/RevenueFromContractWithCustomerExcludingAssessedTax.json"},
- {"fact": "ASML's HMI eScan 1100 uses 25 electron beams for up to 15x the throughput of single-beam e-beam inspection and finds patterning defects down to 7 nm", "source": "https://www.asml.com/en/products/metrology-and-inspection-systems/hmi-escan-1100"},
- {"fact": "KLA expects about $1.1 billion of revenue from advanced packaging process control systems in calendar 2026, up more than 70% year-over-year and almost twice the growth rate of the advanced packaging market", "source": "https://d1io3yog0oux5.cloudfront.net/_b9ee755a5f60dd0fb3f9e27967aed6af/klatencor/db/1117/10668/letter_to_shareholders/KLA+Earnings+Shareholder+Letter+-+Q4+FY26.pdf"},
+ {"fact": "ASML's HMI eScan 1100 uses 25 electron beams for up to 15× the throughput of single-beam e-beam inspection and finds patterning defects down to 7 nm", "source": "https://www.asml.com/en/products/metrology-and-inspection-systems/hmi-escan-1100"},
+ {"fact": "KLA expects about $1.1 billion of revenue from advanced packaging process control systems in calendar 2026, up more than 70 percent year-over-year and almost twice the growth rate of the advanced packaging market", "source": "https://d1io3yog0oux5.cloudfront.net/_b9ee755a5f60dd0fb3f9e27967aed6af/klatencor/db/1117/10668/letter_to_shareholders/KLA+Earnings+Shareholder+Letter+-+Q4+FY26.pdf"},
  {"fact": "Onto Innovation signed a volume purchase agreement estimated at over $240 million with an HBM maker for Dragonfly 2D inspection and 3D bump metrology through 2027", "source": "https://investors.ontoinnovation.com/news/news-details/2026/Onto-Innovation-Reports-2025-Fourth-Quarter-and-Full-Year-Results/default.aspx"},
- {"fact": "Camtek 2025 revenue was a record $496.1 million, up 16% from $429.2 million", "source": "https://www.sec.gov/Archives/edgar/data/1109138/000117891326000549/zk2634405.htm"}
+ {"fact": "Camtek 2025 revenue was a record $496.1 million, up 16 percent from $429.2 million", "source": "https://www.sec.gov/Archives/edgar/data/1109138/000117891326000549/zk2634405.htm"}
  ],
  "figures": [
     {"id": "defect-yield", "type": "animation", "src": "defects", "title": "Why big chips lose more to defects", "note": "Simulated wafer laid out like the textbook example: 120 chips 1 centimeter on a side, or 26 chips 2 centimeters on a side. Specks land at random in loose clusters, 0.8 per square centimeter. The share of flawless chips follows the formula above, with a clustering constant of 3, as closely as whole chips allow."},
@@ -53,7 +53,7 @@
  "id": "pc-segments",
  "type": "bars",
  "title": "Process control market by tool family, 2025",
- "finding": "Defect inspection was the largest tool family in 2025, at $6.7 billion",
+ "finding": "Defect inspection was the largest tool family in 2025, at $6,700 million",
  "unit": "$M",
  "data": [["Defect inspection", 6700], ["Film and shape metrology", 2600], ["Mask inspection and repair", 2200], ["E-beam metrology", 1300], ["CD metrology", 1200], ["Overlay metrology", 991.4], ["Defect review", 729.1]],
  "source": {"label": "ETO Supply Chain Explorer, CSET", "url": "https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60"}
@@ -62,7 +62,7 @@
  "id": "pc-share",
  "type": "stack",
  "title": "Process control tool revenue share, 2025",
- "finding": "KLA held 56.8 percent of process control tool revenue in 2025",
+ "finding": "KLA held 56.8 percent of process control tool revenue in 2025",
  "unit": "%",
  "data": [["KLA", 56.8], ["Applied Materials", 11.2], ["Lasertec", 6.4], ["Hitachi High-Tech", 6.2], ["ASML", 5.9], ["Nova", 4.3], ["Onto Innovation", 2.6], ["Camtek", 1.6], ["Rigaku", 1.2], ["All others", 3.8]],
  "source": {"label": "ETO Supply Chain Explorer, CSET", "url": "https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60"}
@@ -71,7 +71,7 @@
  "id": "kla-mix",
  "type": "stack",
  "title": "KLA revenue by product line, June 2026 quarter",
- "finding": "Wafer inspection was 49 percent of KLA's June 2026 quarter revenue",
+ "finding": "Wafer inspection was 49 percent of KLA's June 2026 quarter revenue",
  "unit": "%",
  "data": [["Wafer inspection", 49], ["Services", 22], ["Patterning", 20], ["PCB and component inspection", 4], ["Specialty semiconductor process", 4], ["Other", 1]],
  "source": {"label": "KLA letter to shareholders, Q4 FY2026", "url": "https://d1io3yog0oux5.cloudfront.net/_b9ee755a5f60dd0fb3f9e27967aed6af/klatencor/db/1117/10668/letter_to_shareholders/KLA+Earnings+Shareholder+Letter+-+Q4+FY26.pdf#page=5"}

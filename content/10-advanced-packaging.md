@@ -7,17 +7,17 @@
   "plain": "Packaging joins finished chips into one component and mounts them on a small circuit board, called a substrate, wired far more coarsely than the chips themselves. A lithography machine, which prints a chip's circuits, can cover only a rectangle about the size of a postage stamp in one shot. Many leading accelerators, Nvidia's Blackwell among them, need more logic than fits in that rectangle. So they are built from several chips, called dies, set side by side on an interposer, a layer of much finer wiring that links them and sits on the substrate. Stacks of memory chips sit on the same interposer, a few millimeters away. The interposer is either one piece of silicon or layers of fine copper wiring that often carry small silicon bridges where the links are densest. Silicon expands less than the resin substrate beneath it when heated, so the package can warp and its joints crack. Preventing that in high volume is hard. Nvidia, Google, AMD and Amazon all use TSMC's interposer packaging, called CoWoS, made in Taiwan.",
   "bridge": "Logic and memory are still two separate parts, made in different countries. The next stage puts them side by side in one package.",
   "specimen": "cowos-exploded",
-  "specimenCaption": "A CoWoS-L package, pulled apart. Two logic dies and eight HBM stacks sit on the interposer, shown in silver with its copper wiring. In CoWoS-L the interposer is fine redistribution wiring with small embedded silicon bridges. It sits on a resin substrate with a grid of solder balls underneath. The chips together cover about 2,700 mm2, a little over three reticle fields. Footprints are to scale. Thicknesses and the gaps between layers are exaggerated.",
+  "specimenCaption": "A CoWoS-L package, pulled apart. Two logic dies and eight HBM stacks sit on the interposer, shown in silver with its copper wiring. In CoWoS-L the interposer is fine redistribution wiring with small embedded silicon bridges. It sits on a resin substrate with a grid of solder balls underneath. The chips together cover about 2,700 mm², a little over three reticle fields. Footprints are to scale. Thicknesses and the gaps between layers are exaggerated.",
   "card": {
     "concentration": "Extreme",
     "chokepointScore": 5,
     "leaders": [
       {"name": "TSMC", "country": "TW", "share": "CoWoS packaging used by Nvidia, Google, AMD and Amazon in 2025", "source": "https://epoch.ai/data-insights/ai-chip-supply-chain-constraints"},
       {"name": "Intel", "country": "US", "share": "Foveros 3D packaging in volume at Rio Rancho, New Mexico, since January 2024", "source": "https://www.intel.com/content/www/us/en/newsroom/news/intel-opens-fab-9-new-mexico.html"},
-      {"name": "ASE Technology", "country": "TW", "share": "NT$389.2B assembly, test and materials revenue, 2025", "source": "https://www.prnewswire.com/news-releases/ase-technology-holding-co-ltd-reports-its-unaudited-consolidated-financial-results-for-the-fourth-quarter-and-the-full-year-of-2025-302679779.html"},
-      {"name": "Amkor", "country": "US", "share": "$6.71B net sales, 2025", "source": "https://www.sec.gov/Archives/edgar/data/1047127/000104712726000007/amkr123125erex-991.htm"},
-      {"name": "JCET", "country": "CN", "share": "RMB 38.87B revenue, 2025", "source": "https://www.jcetglobal.com/en/site/news-detail?id=2048"},
-      {"name": "ASMPT", "country": "SG", "share": "Thermocompression bonders, with $532.1M of advanced packaging revenue in 2025", "source": "https://www.asmpt.com/en/investor-relations/news-events/asmpt-announces-2025-annual-results/"}
+      {"name": "ASE Technology", "country": "TW", "share": "NT$389.2 billion assembly, test and materials revenue, 2025", "source": "https://www.prnewswire.com/news-releases/ase-technology-holding-co-ltd-reports-its-unaudited-consolidated-financial-results-for-the-fourth-quarter-and-the-full-year-of-2025-302679779.html"},
+      {"name": "Amkor", "country": "US", "share": "$6.71 billion net sales, 2025", "source": "https://www.sec.gov/Archives/edgar/data/1047127/000104712726000007/amkr123125erex-991.htm"},
+      {"name": "JCET", "country": "CN", "share": "RMB 38.87 billion revenue, 2025", "source": "https://www.jcetglobal.com/en/site/news-detail?id=2048"},
+      {"name": "ASMPT", "country": "SG", "share": "Thermocompression bonders, with $532.1 million of advanced packaging revenue in 2025", "source": "https://www.asmpt.com/en/investor-relations/news-events/asmpt-announces-2025-annual-results/"}
     ],
     "countries": [
       {"code": "TW", "note": "TSMC advanced packaging fabs and a cluster of outsourced assembly and test firms"},
@@ -28,28 +28,28 @@
     ],
     "chinaStatus": "Chinese firms had 5.3 percent of the market for fabrication tools built for advanced packaging in 2025, by CSET's analysis of TechInsights data. Between 2019 and 2024 they gained 5 percentage points of share in test tools but lost share in bonding and other conventional assembly and packaging tools.",
     "chinaSources": ["https://chipexplorer.eto.tech/?parentNode=N69&selectedNode=N109", "https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/"],
-    "usStatus": "Intel opened Fab 9 in Rio Rancho, New Mexico, in January 2024 to make its Foveros 3D packages in volume. Amkor broke ground in October 2025 on a $7B packaging and test campus in Peoria, Arizona, and expects production to start in early 2028.",
+    "usStatus": "Intel opened Fab 9 in Rio Rancho, New Mexico, in January 2024 to make its Foveros 3D packages in volume. Amkor broke ground in October 2025 on a $7 billion packaging and test campus in Peoria, Arizona, and expects production to start in early 2028.",
     "usSources": ["https://www.intel.com/content/www/us/en/newsroom/news/intel-opens-fab-9-new-mexico.html", "https://ir.amkor.com/news-releases/news-release-details/amkor-technology-breaks-ground-new-semiconductor-advanced"],
     "costSignal": "About $1,100 for the CoWoS-L packaging of one Nvidia B200, plus about $1,000 for the dies and memory lost in failed packages, against about $900 for its two logic dies, by Epoch AI's December 2025 estimate",
     "costSources": ["https://epoch.ai/data-insights/b200-cost-breakdown"],
     "substitutability": {"band": "Moderate", "test": "Rated on CoWoS capacity, which TSMC said in July 2026 was so tight that it limited its customers' growth.", "testSources": ["https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-08/3e494f0c14dd0890f897aa044415e21d93486cc4/TSMC%202Q26%20Transcript.pdf#page=10"], "why": "CoWoS packaging has been outsourced to assembly firms such as ASE and Amkor before. Intel's EMIB, which links chips through silicon bridges embedded in the substrate, is another option, and Amazon's Trainium and Google's TPU were both adopting it as of March 2026. But a newcomer would have to match TSMC, which said in April 2026 that it was producing CoWoS at 5.5 times the area a scanner prints in one shot.", "whySources": ["https://newsletter.semianalysis.com/p/the-great-ai-silicon-shortage", "https://newsletter.semianalysis.com/p/the-great-ai-silicon-shortage", "https://pr.tsmc.com/english/news/3302"]}
   },
   "keyFacts": [
-    {"fact": "A scanner's maximum exposure field is 26 mm by 33 mm, or 858 mm2", "source": "https://www.asml.com/en/products/euv-lithography-systems/twinscan-nxe3400c"},
-    {"fact": "TSMC said in April 2026 that it was producing 5.5-reticle CoWoS and planning larger versions", "source": "https://pr.tsmc.com/english/news/3302"},
-    {"fact": "CoWoS-S silicon interposers reach up to 3.3x reticle size. TSMC recommends CoWoS-R or CoWoS-L for larger interposers", "source": "https://3dfabric.tsmc.com/english/dedicatedFoundry/technology/cowos.htm"},
-    {"fact": "TSMC told its 2024 symposium that CoWoS capacity would grow at a 60% compound annual rate over the following years. In July 2024 its chief executive, C.C. Wei, said he could not balance supply and demand", "source": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2024-08/5122725a56670882d777a8e8bfe0ed247cc55330/TSMC%202Q24%20Transcript.pdf"},
-    {"fact": "Industry estimates from SemiWiki and TrendForce, compiled by Epoch AI, put CoWoS capacity at about 65,000 to 75,000 wafers a month at the end of 2025, up from 35,000 to 40,000 a year earlier", "source": "https://epoch.ai/data-insights/ai-chip-supply-chain-constraints"},
+    {"fact": "Epoch AI estimates Nvidia used 60.3 percent of the world's CoWoS packaging capacity in 2025, with a 90 percent confidence interval of 56.5 to 64.3. It estimates that Nvidia, Google, AMD and Amazon together used around 90 percent of CoWoS capacity, but only about 12 percent of advanced logic die production", "source": "https://epoch.ai/data-insights/ai-chip-supply-chain-constraints"},
     {"fact": "On the July 2026 earnings call, Wei said TSMC's packaging capacity was so tight that it limited customers' growth, and that back-end capacity was still in shortage", "source": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-08/3e494f0c14dd0890f897aa044415e21d93486cc4/TSMC%202Q26%20Transcript.pdf"},
+    {"fact": "A scanner's maximum exposure field is 26 mm by 33 mm, or 858 mm²", "source": "https://www.asml.com/en/products/euv-lithography-systems/twinscan-nxe3400c"},
+    {"fact": "TSMC said in April 2026 that it was producing 5.5-reticle CoWoS and planning larger versions", "source": "https://pr.tsmc.com/english/news/3302"},
+    {"fact": "CoWoS-S silicon interposers reach up to 3.3× reticle size. TSMC recommends CoWoS-R or CoWoS-L for larger interposers", "source": "https://3dfabric.tsmc.com/english/dedicatedFoundry/technology/cowos.htm"},
+    {"fact": "TSMC told its 2024 symposium that CoWoS capacity would grow at a 60 percent compound annual rate over the following years. In July 2024 its chief executive, C.C. Wei, said he could not balance supply and demand", "source": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2024-08/5122725a56670882d777a8e8bfe0ed247cc55330/TSMC%202Q24%20Transcript.pdf"},
+    {"fact": "Industry estimates from SemiWiki and TrendForce, compiled by Epoch AI, put CoWoS capacity at about 65,000 to 75,000 wafers a month at the end of 2025, up from 35,000 to 40,000 a year earlier", "source": "https://epoch.ai/data-insights/ai-chip-supply-chain-constraints"},
     {"fact": "In October 2025 Wei still would not give an absolute figure for CoWoS capacity in 2026. He said a large outsourced packaging partner, already breaking ground in Arizona, was on an earlier schedule than TSMC's own two packaging fabs there", "source": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2025-10/6860312f04fd291d0f26b46c1234f84e6332717e/TSMC%203Q25%20Transcript.pdf"},
     {"fact": "TSMC plans to produce a 14-reticle CoWoS carrying about 10 large compute dies and 20 HBM stacks in 2028. For 2029 it plans more than 14 reticles and a 40-reticle System-on-Wafer", "source": "https://pr.tsmc.com/english/news/3302"},
-    {"fact": "ASE Technology Holding had revenue of NT$645.4 billion in 2025, up 8.4%, about 40% of it from electronics manufacturing services. Its assembly, test and materials revenue was NT$389.2 billion, up from NT$325.9 billion in 2024", "source": "https://www.prnewswire.com/news-releases/ase-technology-holding-co-ltd-reports-its-unaudited-consolidated-financial-results-for-the-fourth-quarter-and-the-full-year-of-2025-302679779.html"},
-    {"fact": "JCET, a leading Chinese assembly and test firm, had record revenue of RMB 38.87 billion in 2025, up 8.1%", "source": "https://www.jcetglobal.com/en/site/news-detail?id=2048"},
-    {"fact": "ASMPT's advanced packaging revenue was $532.1M in 2025, up 30.2%, with thermocompression bonder revenue up about 146%. It targets 35-40% of the thermocompression bonding market", "source": "https://www.asmpt.com/en/investor-relations/news-events/asmpt-announces-2025-annual-results/"},
-    {"fact": "Amkor started building a $7B two-phase packaging and test campus in Peoria, Arizona in October 2025, with production expected from early 2028", "source": "https://ir.amkor.com/news-releases/news-release-details/amkor-technology-breaks-ground-new-semiconductor-advanced"},
-    {"fact": "In December 2024 the Commerce Department awarded Amkor up to $407M in CHIPS Act direct funding for its Arizona facility", "source": "https://www.sec.gov/Archives/edgar/data/1047127/000104712726000014/amkr-20251231.htm"},
-    {"fact": "TSMC's Arizona commitment reached $265 billion in July 2026, covering 10 fabs and 2 advanced packaging facilities", "source": "https://www.azcommerce.com/news-events/news/2026/7/tsmc-announcement/"},
-    {"fact": "Epoch AI estimates Nvidia used 60.3% of the world's CoWoS packaging capacity in 2025, with a 90% confidence interval of 56.5 to 64.3. It estimates that Nvidia, Google, AMD and Amazon together used around 90% of CoWoS capacity, but only about 12% of advanced logic die production", "source": "https://epoch.ai/data-insights/ai-chip-supply-chain-constraints"}
+    {"fact": "ASE Technology Holding had revenue of NT$645.4 billion in 2025, up 8.4 percent, about 40 percent of it from electronics manufacturing services. Its assembly, test and materials revenue was NT$389.2 billion, up from NT$325.9 billion in 2024", "source": "https://www.prnewswire.com/news-releases/ase-technology-holding-co-ltd-reports-its-unaudited-consolidated-financial-results-for-the-fourth-quarter-and-the-full-year-of-2025-302679779.html"},
+    {"fact": "JCET, a leading Chinese assembly and test firm, had record revenue of RMB 38.87 billion in 2025, up 8.1 percent", "source": "https://www.jcetglobal.com/en/site/news-detail?id=2048"},
+    {"fact": "ASMPT's advanced packaging revenue was $532.1 million in 2025, up 30.2 percent, with thermocompression bonder revenue up about 146 percent. It targets 35 to 40 percent of the thermocompression bonding market", "source": "https://www.asmpt.com/en/investor-relations/news-events/asmpt-announces-2025-annual-results/"},
+    {"fact": "Amkor started building a $7 billion two-phase packaging and test campus in Peoria, Arizona in October 2025, with production expected from early 2028", "source": "https://ir.amkor.com/news-releases/news-release-details/amkor-technology-breaks-ground-new-semiconductor-advanced"},
+    {"fact": "In December 2024 the Commerce Department awarded Amkor up to $407 million in CHIPS Act direct funding for its Arizona facility", "source": "https://www.sec.gov/Archives/edgar/data/1047127/000104712726000014/amkr-20251231.htm"},
+    {"fact": "TSMC's Arizona commitment reached $265 billion in July 2026, covering 10 fabs and 2 advanced packaging facilities", "source": "https://www.azcommerce.com/news-events/news/2026/7/tsmc-announcement/"}
   ],
   "figures": [
     {"id": "package-build", "type": "animation", "src": "package", "title": "The parts of an AI accelerator", "note": "Simplified view of a two-die, eight-stack accelerator. Footprints follow the sizes given in this chapter and chapter 9. Heights are exaggerated so each layer shows."},
@@ -68,7 +68,7 @@
       "type": "bars",
       "mark": "Advanced packaging fabrication tools",
       "title": "China-based suppliers' share of advanced packaging fabrication tools and three test tool segments, 2024",
-      "finding": "China-based suppliers held 7 percent of the market for advanced packaging fabrication tools in 2024",
+      "finding": "China-based suppliers held 7 percent of the market for advanced packaging fabrication tools in 2024",
       "unit": "%",
       "data": [["Test, linear and discrete", 69], ["Burn-in test", 9], ["Advanced packaging fabrication tools", 7], ["SoC test", 5]],
       "source": {"label": "CSET, Inside Beijing’s Chipmaking Offensive", "url": "https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/"}
@@ -77,7 +77,7 @@
       "id": "cowos-buyers",
       "type": "stack",
       "title": "Estimated share of CoWoS capacity used, 2025",
-      "finding": "Nvidia used an estimated 60.3 percent of CoWoS capacity in 2025",
+      "finding": "Nvidia used an estimated 60.3 percent of CoWoS capacity in 2025",
       "unit": "%",
       "data": [["Nvidia", 60.3], ["Google", 13.5], ["AMD", 8.4], ["Amazon", 7.4], ["Everyone else", 10.4]],
       "source": {"label": "Epoch AI, advanced packaging and HBM were the bottlenecks on AI chip production in 2025", "url": "https://epoch.ai/data-insights/ai-chip-supply-chain-constraints"}
@@ -87,13 +87,13 @@
 ---
 # Advanced Packaging
 
-A lithography scanner prints a rectangle 26 mm by 33 mm, or 858 mm2, in one exposure ([source](https://www.asml.com/en/products/euv-lithography-systems/twinscan-nxe3400c)). That area is called the reticle field. Every leading AI accelerator, counting its memory stacks, covers more area than that. Packaging is the stage that lets an accelerator be larger than one reticle field, and the packaging method limits how much larger it can be.
+A lithography scanner prints a rectangle 26 mm by 33 mm, or 858 mm², in one exposure ([source](https://www.asml.com/en/products/euv-lithography-systems/twinscan-nxe3400c)). That area is called the reticle field. Every leading AI accelerator, counting its memory stacks, covers more area than that. Packaging is the stage that lets an accelerator be larger than one reticle field, and the packaging method limits how much larger it can be.
 
 ## How it works
 
 Packaging joins finished chips into one component and mounts them on a small circuit board, called a substrate, wired far more coarsely than the chips themselves. A lithography machine, which prints a chip's circuits, can cover only a rectangle about the size of a postage stamp in one shot. Many leading accelerators, Nvidia's Blackwell among them, need more logic than fits in that rectangle. So they are built from several chips, called dies, set side by side on an interposer, a layer of much finer wiring that links them and sits on the substrate. Stacks of memory chips sit on the same interposer, a few millimeters away. The interposer is either one piece of silicon or layers of fine copper wiring that often carry small silicon bridges where the links are densest. Silicon expands less than the resin substrate beneath it when heated, so the package can warp and its joints crack. Preventing that in high volume is hard. Nvidia, Google, AMD and Amazon all use TSMC's interposer packaging, called CoWoS, made in Taiwan.
 
-A second reason for the interposer is high bandwidth memory (HBM). An HBM4 stack connects through 2,048 data signals, packed too tightly for a standard resin substrate, so the memory sits beside the logic on the interposer ([source](https://www.jedec.org/news/pressreleases/new-jedec%C2%AE-sphbm4-standard-enables-hbm4-class-bandwidth-organic-substrates)). Even Nvidia's H100, whose single logic die is 814 mm2 and fits inside one reticle field, carries five HBM stacks ([source](https://developer.nvidia.com/blog/nvidia-hopper-architecture-in-depth/)). Epoch AI counts TSMC's CoWoS packaging among the three inputs the H100 needs, along with its logic die and its HBM ([source](https://epoch.ai/data-insights/ai-chip-supply-chain-constraints)).
+A second reason for the interposer is high bandwidth memory (HBM). An HBM4 stack connects through 2,048 data signals, packed too tightly for a standard resin substrate, so the memory sits beside the logic on the interposer ([source](https://www.jedec.org/news/pressreleases/new-jedec%C2%AE-sphbm4-standard-enables-hbm4-class-bandwidth-organic-substrates)). Even Nvidia's H100, whose single logic die is 814 mm² and fits inside one reticle field, carries five HBM stacks ([source](https://developer.nvidia.com/blog/nvidia-hopper-architecture-in-depth/)). Epoch AI counts TSMC's CoWoS packaging among the three inputs the H100 needs, along with its logic die and its HBM ([source](https://epoch.ai/data-insights/ai-chip-supply-chain-constraints)).
 
 {{figure:package-build}}
 
@@ -107,9 +107,9 @@ One cracked joint can scrap a package holding eight tested HBM stacks and two la
 
 | Family | Carrier | Size limit | Used for |
 |---|---|---|---|
-| CoWoS-S | Full silicon interposer | Up to 3.3x reticle | H100-class parts |
-| CoWoS-R | Resin interposer with fine redistribution wiring | Above 3.3x reticle | Cost-sensitive, fewer HBM stacks |
-| CoWoS-L | Redistribution wiring with local silicon bridges | 5.5x reticle in production, 9.5x in development | Blackwell, Rubin |
+| CoWoS-S | Full silicon interposer | Up to 3.3× reticle | H100-class parts |
+| CoWoS-R | Resin interposer with fine redistribution wiring | Above 3.3× reticle | Cost-sensitive, fewer HBM stacks |
+| CoWoS-L | Redistribution wiring with local silicon bridges | 5.5× reticle in production, 9.5× in development | Blackwell, Rubin |
 
 ### 2.5D: silicon, RDL and bridges
 

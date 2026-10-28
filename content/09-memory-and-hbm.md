@@ -12,9 +12,9 @@
     "concentration": "Extreme",
     "chokepointScore": 5,
     "leaders": [
-      {"name": "SK hynix", "country": "KR", "share": "63.2% of HBM revenue in 2025", "source": "https://www.sec.gov/Archives/edgar/data/2120882/000119312526299963/d32785d424b4.htm"},
-      {"name": "Samsung", "country": "KR", "share": "19.3% of HBM revenue in 2025", "source": "https://www.sec.gov/Archives/edgar/data/2120882/000119312526299963/d32785d424b4.htm"},
-      {"name": "Micron", "country": "US", "share": "17.4% of HBM revenue in 2025", "source": "https://www.sec.gov/Archives/edgar/data/2120882/000119312526299963/d32785d424b4.htm"}
+      {"name": "SK hynix", "country": "KR", "share": "63.2 percent of HBM revenue in 2025", "source": "https://www.sec.gov/Archives/edgar/data/2120882/000119312526299963/d32785d424b4.htm"},
+      {"name": "Samsung", "country": "KR", "share": "19.3 percent of HBM revenue in 2025", "source": "https://www.sec.gov/Archives/edgar/data/2120882/000119312526299963/d32785d424b4.htm"},
+      {"name": "Micron", "country": "US", "share": "17.4 percent of HBM revenue in 2025", "source": "https://www.sec.gov/Archives/edgar/data/2120882/000119312526299963/d32785d424b4.htm"}
     ],
     "countries": [
       {"code": "KR", "note": "SK hynix in Cheongju and Icheon, Samsung in Pyeongtaek and Hwaseong"},
@@ -27,22 +27,22 @@
     "chinaSources": ["https://newsletter.semianalysis.com/p/chinas-cxmt-is-set-to-challenge-dram", "https://ifp.org/the-b30a-decision/", "https://www.huawei.com/en/news/2025/9/hc-xu-keynote-speech"],
     "usStatus": "Micron is the only American HBM maker. As of October 2026, License Exception HBM lets US and allied exporters ship HBM below 3.3 GB per second per square millimeter without a license, including to China when the chip designer buys it directly and it goes straight to the packaging site.",
     "usSources": ["https://www.sec.gov/Archives/edgar/data/2120882/000119312526299963/d32785d424b4.htm", "https://www.ecfr.gov/current/title-15/subtitle-B/chapter-VII/subchapter-C/part-740/section-740.25"],
-    "costSignal": "About $35B HBM market in 2025, Micron's December 2025 estimate",
+    "costSignal": "About $35 billion HBM market in 2025, Micron's December 2025 estimate",
     "costSources": ["https://s25.q4cdn.com/621799436/files/doc_financials/2026/q1/Micron_Q1-2026-Prepared-Remarks.pdf"],
     "substitutability": {"band": "Hard", "test": "Three firms took nearly all HBM revenue in 2025.", "testSources": ["https://www.sec.gov/Archives/edgar/data/2120882/000119312526299963/d32785d424b4.htm"], "why": "SK hynix says only a few firms have the expertise and resources to design, make and package memory chips. It says HBM also needs advanced processes such as packaging with through-silicon vias (TSVs), the copper-filled holes that link the layers, and must pass customers' rigorous testing and approval.", "whySources": ["https://www.sec.gov/Archives/edgar/data/2120882/000119312526299963/d32785d424b4.htm", "https://www.sec.gov/Archives/edgar/data/2120882/000119312526299963/d32785d424b4.htm"]}
   },
   "keyFacts": [
+    {"fact": "SK hynix's July 2026 US prospectus, citing IDC, splits 2025 HBM revenue between SK hynix at 63.2 percent, Samsung at 19.3 percent and Micron at 17.4 percent", "source": "https://www.sec.gov/Archives/edgar/data/2120882/000119312526299963/d32785d424b4.htm"},
+    {"fact": "Micron forecast in December 2025 that the HBM market would grow about 40 percent a year through 2028, from about $35 billion in 2025 to around $100 billion in 2028", "source": "https://s25.q4cdn.com/621799436/files/doc_financials/2026/q1/Micron_Q1-2026-Prepared-Remarks.pdf"},
     {"fact": "The HBM4 standard sets a 2,048-bit interface with 32 channels, 2 TB/s per stack at 8 Gb/s per pin, and up to 64 GB per stack", "source": "https://www.jedec.org/news/pressreleases/jedec%C2%AE-and-industry-leaders-collaborate-release-jesd270-4-hbm4-standard-advancing"},
     {"fact": "An HBM3E cube has 1,024 I/O pins split into 16 independent channels, or 32 pseudo-channels. Micron's runs above 9.2 Gbps per pin for more than 1.2 TB/s per stack", "source": "https://www.micron.com/products/memory/hbm/hbm3e"},
     {"fact": "Micron HBM4 runs a 2,048-pin bus above 11.0 Gbps for more than 2.8 TB/s per stack, over double the previous generation", "source": "https://www.micron.com/products/memory/hbm/hbm4"},
     {"fact": "SK hynix completed HBM4 development in September 2025 at over 10 Gbps per pin, above the JEDEC standard of 8 Gbps, using Advanced MR-MUF", "source": "https://news.skhynix.com/en/sk-hynix-completes-worlds-first-hbm4-development-and-readies-mass-production/"},
     {"fact": "Samsung says it began mass production and shipped the industry's first commercial HBM4 in February 2026, at 11.7 Gbps per pin with a 4 nm logic base die", "source": "https://news.samsung.com/global/samsung-ships-industry-first-commercial-hbm4"},
     {"fact": "HBM package height rises from 720 to 775 micrometers starting with HBM4. SK hynix gives about 20 micrometers as the typical spacing between microbumps, against less than 1 micrometer for hybrid bonds", "source": "https://news.skhynix.com/en/tech-note-series-ep2/"},
-    {"fact": "Micron forecast in December 2025 that the HBM market would grow about 40% a year through 2028, from about $35 billion in 2025 to around $100 billion in 2028", "source": "https://s25.q4cdn.com/621799436/files/doc_financials/2026/q1/Micron_Q1-2026-Prepared-Remarks.pdf"},
     {"fact": "Nvidia's Rubin GPU carries up to 288 GB of HBM4 at up to 22 TB/s using 12-high stacks", "source": "https://developer.nvidia.com/blog/inside-nvidia-rubin-gpu-architecture-powering-the-era-of-agentic-ai/"},
     {"fact": "ECCN 3A090.c, added by the rule at 89 FR 96790, controls HBM with a memory bandwidth density above 2 gigabytes per second per square millimeter of package or stack area", "source": "https://www.federalregister.gov/documents/2024/12/05/2024-28270/foreign-produced-direct-product-rule-additions-and-refinements-to-controls-for-advanced-computing"},
-    {"fact": "SK hynix's July 2026 US prospectus, citing IDC, splits 2025 HBM revenue between SK hynix at 63.2%, Samsung at 19.3% and Micron at 17.4%", "source": "https://www.sec.gov/Archives/edgar/data/2120882/000119312526299963/d32785d424b4.htm"},
-    {"fact": "The same filing puts SK hynix at 29.1% of DRAM including HBM in the first quarter of 2026 and says three firms held more than 90% of DRAM revenue in that quarter", "source": "https://www.sec.gov/Archives/edgar/data/2120882/000119312526299963/d32785d424b4.htm"}
+    {"fact": "The same filing puts SK hynix at 29.1 percent of DRAM including HBM in the first quarter of 2026 and says three firms held more than 90 percent of DRAM revenue in that quarter", "source": "https://www.sec.gov/Archives/edgar/data/2120882/000119312526299963/d32785d424b4.htm"}
   ],
   "figures": [
     {"id": "hbm-inside", "type": "animation", "src": "hbm-stack", "title": "Inside a memory stack", "note": "Simplified cross-section. Heights follow the HBM height limits of 720 and 775 micrometers and are drawn to one vertical scale. Widths are not to scale."},
@@ -60,7 +60,7 @@
       "id": "hbm-revenue",
       "type": "columns",
       "title": "HBM market, Micron's estimate for 2025 and forecast for 2028",
-      "finding": "Micron sees HBM reaching $100 billion in 2028, from an estimated $35 billion",
+      "finding": "Micron sees HBM reaching $100 billion in 2028, from an estimated $35 billion",
       "unit": "$B",
       "data": [["2025", 35], ["2028", 100]],
       "source": {"label": "Micron prepared remarks, fiscal first quarter 2026, 17 December 2025", "url": "https://s25.q4cdn.com/621799436/files/doc_financials/2026/q1/Micron_Q1-2026-Prepared-Remarks.pdf"}
@@ -69,7 +69,7 @@
       "id": "hbm-suppliers",
       "type": "stack",
       "title": "Global HBM revenue by supplier, 2025",
-      "finding": "SK hynix took 63.2 percent of global HBM revenue in 2025",
+      "finding": "SK hynix took 63.2 percent of global HBM revenue in 2025",
       "unit": "%",
       "data": [["SK hynix (KR)", 63.2], ["Samsung (KR)", 19.3], ["Micron (US)", 17.4]],
       "source": {"label": "SK hynix Form 424B4 prospectus, 10 July 2026, on IDC data", "url": "https://www.sec.gov/Archives/edgar/data/2120882/000119312526299963/d32785d424b4.htm"}

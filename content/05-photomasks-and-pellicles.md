@@ -15,39 +15,39 @@
  {"name": "AGC", "country": "JP", "share": "Ranks itself No.2 worldwide in EUV mask blanks on its own fiscal 2026 estimates", "source": "https://www.agc.com/en/ir/library/outline/pdf/reference.pdf#page=8"},
  {"name": "Hoya", "country": "JP", "share": "Said in its 2026 report that its share of mask blanks is exceptionally high", "source": "https://www.hoya.com/ir/2026/en/review/it.html"},
  {"name": "Lasertec", "country": "JP", "share": "Launched the world's first tool that inspects patterned EUV masks at the scanner's own wavelength in 2019", "source": "https://www.lasertec.co.jp/en/news/2025/20251031_3912.html"},
- {"name": "IMS Nanofabrication", "country": "AT", "share": "CSET puts its 2025 share of the market for all electron-beam mask writers at 46.6%, using TechInsights data", "source": "https://chipexplorer.eto.tech/?parentNode=N25&selectedNode=N29"},
- {"name": "Photronics", "country": "US", "share": "$849.3M of revenue in fiscal 2025", "source": "https://www.globenewswire.com/news-release/2025/12/10/3203040/0/en/Photronics-Reports-Full-Year-and-Fourth-Quarter-Fiscal-2025-Results.html"}
+ {"name": "IMS Nanofabrication", "country": "AT", "share": "CSET puts its 2025 share of the market for all electron-beam mask writers at 46.6 percent, using TechInsights data", "source": "https://chipexplorer.eto.tech/?parentNode=N25&selectedNode=N29"},
+ {"name": "Photronics", "country": "US", "share": "$849.3 million of revenue in fiscal 2025", "source": "https://www.globenewswire.com/news-release/2025/12/10/3203040/0/en/Photronics-Reports-Full-Year-and-Fourth-Quarter-Fiscal-2025-Results.html"}
  ],
  "countries": [
  {"code": "JP", "note": "Mask blanks (AGC, Hoya), DUV blanks (Shin-Etsu), inspection (Lasertec), writers (NuFlare), pellicles (Mitsui Chemicals)"},
  {"code": "AT", "note": "IMS Nanofabrication multi-beam mask writers"},
  {"code": "DE", "note": "Zeiss mask checking in EUV light (AIMS EUV) and mask repair"},
  {"code": "US", "note": "Photronics merchant mask shops, KLA inspection"},
- {"code": "TW", "note": "TSMC, which held 10% of IMS at the end of 2024"}
+ {"code": "TW", "note": "TSMC, which held 10 percent of IMS at the end of 2024"}
  ],
  "chinaStatus": "As of 2026 SMIC runs two mask shops of its own in Shanghai. No Chinese firm appears in CSET's 2025 market shares for electron-beam mask writers, the machines that draw the pattern onto a mask.",
  "chinaSources": ["https://www.smics.com/en/site/mask", "https://chipexplorer.eto.tech/?parentNode=N25&selectedNode=N29"],
  "usStatus": "In December 2025 Photronics called itself a leading worldwide maker of photomasks. As of 2026 KLA sells tools that inspect EUV masks and optical masks, the quartz masks used with deep ultraviolet light.",
  "usSources": ["https://www.globenewswire.com/news-release/2025/12/10/3203040/0/en/Photronics-Reports-Full-Year-and-Fourth-Quarter-Fiscal-2025-Results.html", "https://www.kla.com/products/reticle-manufacturing"],
- "costSignal": "$40M for a leading-edge mask set, SemiAnalysis's May 2026 figure. In July 2022 it put a 7 nm set above $10M",
+ "costSignal": "$40 million for a leading-edge mask set, SemiAnalysis's May 2026 figure. In July 2022 it put a 7 nm set above $10 million",
  "costSources": ["https://newsletter.semianalysis.com/p/eda-market-primer", "https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor"],
  "substitutability": {"band": "Hard", "test": "AGC said in December 2024 that only three firms supply the blank plates for EUV masks.", "testSources": ["https://www.agc.com/en/hub/pr/the-japanese-glass-behind-next-generation-chips.html"], "why": "AGC says it spent more than a decade meeting the EUV blank's requirements, such as near-zero thermal expansion, and began mass production only in 2017. Germany's Zeiss calls its AIMS the only system that tests how a mask will print under conditions equivalent to the scanner's.", "whySources": ["https://www.agc.com/en/hub/pr/the-japanese-glass-behind-next-generation-chips.html", "https://www.zeiss.com/semiconductor-manufacturing-technology/products/photomask-solutions/mask-qualification.html"]}
  },
  "keyFacts": [
- {"fact": "AGC calls itself the world's only maker of EUV mask blanks that handles every step from glass material to coating. In April 2023 it said its capacity would grow by about 30% in 2025 under a supply-chain program of METI, Japan's industry ministry", "source": "https://www.agc.com/en/news/detail/1203819_2814.html"},
+ {"fact": "AGC says it is one of three companies worldwide that supply photomask blanks for EUV lithography, and the only one that handles every material and process itself. In December 2024 it said its EUV blank sales grew 50 percent in 2023", "source": "https://www.agc.com/en/hub/pr/the-japanese-glass-behind-next-generation-chips.html"},
  {"fact": "Hoya says it holds an exceptionally high share of the mask blank market, and that customers may gradually start buying EUV blanks from more than one supplier", "source": "https://www.hoya.com/ir/2026/en/review/it.html"},
- {"fact": "AGC says it is one of three companies worldwide that supply photomask blanks for EUV lithography, and the only one that handles every material and process itself. In December 2024 it said its EUV blank sales grew 50% in 2023", "source": "https://www.agc.com/en/hub/pr/the-japanese-glass-behind-next-generation-chips.html"},
- {"fact": "AGC said in June 2026 that its EUV blank sales reached ¥40bn in 2024, declined in 2025 and were recovering in 2026", "source": "https://www.agc.com/en/ir/library/bizbriefing/pdf/2026_0602esemiconductor_transcript.pdf"},
- {"fact": "In its August 2026 company overview, AGC sets out capacity expansions of 20-50% across EUV mask blanks, polishing slurry and lens materials for lithography tools, with no separate figure for the blanks. Mass production on the added capacity is to begin in 2028", "source": "https://www.agc.com/en/ir/library/outline/pdf/c_overview.pdf"},
+ {"fact": "AGC calls itself the world's only maker of EUV mask blanks that handles every step from glass material to coating. In April 2023 it said its capacity would grow by about 30 percent in 2025 under a supply-chain program of METI, Japan's industry ministry", "source": "https://www.agc.com/en/news/detail/1203819_2814.html"},
+ {"fact": "AGC said in June 2026 that its EUV blank sales reached ¥40 billion in 2024, declined in 2025 and were recovering in 2026", "source": "https://www.agc.com/en/ir/library/bizbriefing/pdf/2026_0602esemiconductor_transcript.pdf"},
+ {"fact": "In its August 2026 company overview, AGC sets out capacity expansions of 20 to 50 percent across EUV mask blanks, polishing slurry and lens materials for lithography tools, with no separate figure for the blanks. Mass production on the added capacity is to begin in 2028", "source": "https://www.agc.com/en/ir/library/outline/pdf/c_overview.pdf"},
  {"fact": "AGC's own data book ranks the company No.2 worldwide in EUV lithography photomask blanks, on AGC's fiscal 2026 estimates", "source": "https://www.agc.com/en/ir/library/outline/pdf/reference.pdf"},
  {"fact": "An EUV mask's mirror is about 40 molybdenum and silicon layer pairs, 7 nm to a pair, capped with 3 nm of ruthenium. The absorber on top is 58 nm of TaBN plus 2 nm of TaBO", "source": "https://arxiv.org/pdf/1912.09075"},
  {"fact": "ASML's EUV pellicle is a membrane 13 nm thick that can withstand up to 500°C in a high vacuum. Every photon it absorbs costs the customer output", "source": "https://www.asml.com/en/news/stories/2022/the-euv-pellicle-indistinguishable-from-magic"},
- {"fact": "Imec exposed carbon nanotube pellicles in an NXE:3300 scanner and measured up to 97% EUV transmission in a single pass, with a low and correctable effect on imaging", "source": "https://www.imec-int.com/en/press/imec-demonstrates-cnt-pellicle-utilization-euv-scanner"},
- {"fact": "Mitsui Chemicals' carbon nanotube pellicles are designed to pass 92% or more of EUV light and to withstand light sources above 1,000 W", "source": "https://jp.mitsuichemicals.com/en/release/2024/2024_0528_1/index.htm"},
- {"fact": "In July 2022 SemiAnalysis put mask sets above $1M at 28 nm and above $10M at 7 nm, and expected 3 nm sets to approach $40M", "source": "https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor"},
- {"fact": "In May 2026 SemiAnalysis put a leading-edge photomask set at $40M, and a single respin, remaking a chip after a design flaw, at $50-100M at leading-edge nodes", "source": "https://newsletter.semianalysis.com/p/eda-market-primer"},
- {"fact": "Intel agreed in September 2023 to sell roughly 10% of IMS Nanofabrication to TSMC at a valuation of about $4.3 billion", "source": "https://www.intc.com/news-events/press-releases/detail/1645/intel-to-sell-minority-stake-in-ims-nanofabrication"},
- {"fact": "TSMC's 2024 financial statements show its subsidiary TSMC Development holding 10% of IMS Nanofabrication at 31 December 2024, at a fair value of US$432.8 million", "source": "https://www.sec.gov/Archives/edgar/data/1046179/000104617925000019/tsmc2024q4consolidatedfina.htm"},
+ {"fact": "Imec exposed carbon nanotube pellicles in an NXE:3300 scanner and measured up to 97 percent EUV transmission in a single pass, with a low and correctable effect on imaging", "source": "https://www.imec-int.com/en/press/imec-demonstrates-cnt-pellicle-utilization-euv-scanner"},
+ {"fact": "Mitsui Chemicals' carbon nanotube pellicles are designed to pass 92 percent or more of EUV light and to withstand light sources above 1,000 W", "source": "https://jp.mitsuichemicals.com/en/release/2024/2024_0528_1/index.htm"},
+ {"fact": "In July 2022 SemiAnalysis put mask sets above $1 million at 28 nm and above $10 million at 7 nm, and expected 3 nm sets to approach $40 million", "source": "https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor"},
+ {"fact": "In May 2026 SemiAnalysis put a leading-edge photomask set at $40 million, and a single respin, remaking a chip after a design flaw, at $50 million to $100 million at leading-edge nodes", "source": "https://newsletter.semianalysis.com/p/eda-market-primer"},
+ {"fact": "Intel agreed in September 2023 to sell roughly 10 percent of IMS Nanofabrication to TSMC at a valuation of about $4.3 billion", "source": "https://www.intc.com/news-events/press-releases/detail/1645/intel-to-sell-minority-stake-in-ims-nanofabrication"},
+ {"fact": "TSMC's 2024 financial statements show its subsidiary TSMC Development holding 10 percent of IMS Nanofabrication at 31 December 2024, at a fair value of US$432.8 million", "source": "https://www.sec.gov/Archives/edgar/data/1046179/000104617925000019/tsmc2024q4consolidatedfina.htm"},
  {"fact": "Lasertec reported JPY 230,485 million of net sales and JPY 237,504 million of orders in the year to June 2026", "source": "https://www.lasertec.co.jp/en/ir/plan/message.html"},
  {"fact": "Photronics calls itself a leading worldwide maker of photomasks for chips and flat panel displays. It had $849.3 million of revenue in fiscal 2025, $615.1 million of it from chip masks", "source": "https://www.globenewswire.com/news-release/2025/12/10/3203040/0/en/Photronics-Reports-Full-Year-and-Fourth-Quarter-Fiscal-2025-Results.html"}
  ],
@@ -56,11 +56,11 @@
  {
  "id": "mask-set-cost",
  "type": "bars",
- "title": "What one mask set costs, by node, 2022 ($M). The 28 nm and 7 nm figures are minimums and 3 nm was a projection",
- "finding": "In 2022 SemiAnalysis projected a 3 nm mask set at $40 million",
+ "title": "What one photomask set costs, by node, 2022 ($M). The 28 nm and 7 nm figures are minimums, and 3 nm was a forecast",
+ "finding": "In 2022 SemiAnalysis forecast a 3 nm mask set at $40 million",
  "unit": "$M",
  "data": [["28 nm", 1], ["7 nm", 10], ["3 nm", 40]],
- "source": {"label": "SemiAnalysis, The Dark Side of the Semiconductor Design Renaissance, July 2022. SemiAnalysis's May 2026 EDA Market Primer puts a leading-edge mask set at $40M", "url": "https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor"}
+ "source": {"label": "SemiAnalysis, The Dark Side of the Semiconductor Design Renaissance, July 2022. SemiAnalysis's May 2026 EDA Market Primer puts a leading-edge mask set at $40 million", "url": "https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor"}
  }
  ]
 }

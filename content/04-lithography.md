@@ -26,22 +26,23 @@
  "chinaSources": ["https://www.reuters.com/world/china/china-starts-production-home-grown-immersion-duv-chipmaking-tools-source-2026-07-28/", "https://techstatecraft.org/duv/", "https://techstatecraft.org/duv/", "https://techstatecraft.org/duv/"],
  "usStatus": "CSET found in 2021 that no American firm made lithography scanners. In September 2026 the Center for Technology & Statecraft found that ASML held about 99 percent of the market for immersion DUV scanners and Japan's Nikon the rest. But every immersion DUV scanner holds a light source from Cymer, a US company now part of ASML, or from Japan's Gigaphoton, so the two governments could stop sales by controlling those parts, the Center for Technology & Statecraft found in September 2026. A US rule published in October 2023 already covers immersion scanners with an alignment error between 1.5 nm and 2.4 nm bound for advanced chipmaking if they hold any American-made parts. The US entity list also requires a license to supply the firms it names.",
  "usSources": ["https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf#page=4", "https://techstatecraft.org/duv/", "https://techstatecraft.org/duv/", "https://www.federalregister.gov/documents/2023/10/25/2023-23049/export-controls-on-semiconductor-manufacturing-items", "https://www.federalregister.gov/documents/2025/09/30/2025-19001/expansion-of-end-user-controls-to-cover-affiliates-of-certain-listed-entities"],
- "costSignal": "About $200M for a standard EUV scanner, an estimated $350-400M for the newer High-NA version and roughly $60M for a tool in the DUV segment, according to Reuters in July 2026",
+ "costSignal": "About $200 million for a standard EUV scanner, an estimated $350 million to $400 million for the newer High-NA version and roughly $60 million for a tool in the DUV segment, according to Reuters in July 2026",
  "costSources": ["https://www.reuters.com/world/asia-pacific/250-million-asml-printer-behind-nvidias-chips-2026-07-28/"],
  "substitutability": {"band": "Very hard", "test": "ASML is the only maker of EUV scanners, and Zeiss is its sole supplier of their mirrors.", "testSources": ["https://www.sec.gov/Archives/edgar/data/937966/000162828026011377/asml-2025xannualxreportx.htm"], "why": "A newcomer would first have to make mirrors a meter wide, polished smooth to within tens of picometers, a picometer being a trillionth of a meter. It would also need a light source that hits tin droplets with a laser 50,000 times a second.", "whySources": ["https://www.asml.com/en/technology/lithography-principles/lenses-and-mirrors", "https://www.asml.com/en/technology/lithography-principles/light-and-lasers"]}
  },
  "keyFacts": [
+ {"fact": "ASML is the only company that makes extreme ultraviolet (EUV) scanners", "source": "https://ourbrand.asml.com/m/8ab959d4926657b/original/asml-2025-annual-report-strategic-report-section.pdf#page=16"},
  {"fact": "ASML sold 48 EUV systems in 2025, versus 44 in 2024", "source": "https://ourbrand.asml.com/m/419103cb23dfeaa4/original/asml-2025-annual-report-financial-performance-section.pdf"},
- {"fact": "ASML's total net sales were EUR 32.7 billion in 2025 at a 52.8% gross margin", "source": "https://ourbrand.asml.com/m/419103cb23dfeaa4/original/asml-2025-annual-report-financial-performance-section.pdf"},
- {"fact": "In October 2026 ASML expected 2026 net sales of EUR 44 to 45 billion at a gross margin of around 56%", "source": "https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/pressreleasefinancialresul.htm"},
- {"fact": "In July 2026 ASML put its 2026 capacity at around 65 standard (low-NA) EUV systems and said it plans to add 30% for 2027", "source": "https://ourbrand.asml.com/asset/c8dbf3fc-4c5e-4406-83f6-27694b138245/Press-Release-Financial-Results-Q2-2026.pdf"},
- {"fact": "EUV was 48% of ASML's net system sales in 2025. China was 33% of net system sales, down from 41% in 2024", "source": "https://ourbrand.asml.com/m/3136300aa4999bc1/original/2026_01_28_Presentation-Investor-Relations-Q4-2025.pdf"},
- {"fact": "The TWINSCAN NXE:3800E reaches its full 220 wafers-per-hour specification, a 37% improvement on the NXE:3600D", "source": "https://ourbrand.asml.com/m/8ab959d4926657b/original/asml-2025-annual-report-strategic-report-section.pdf"},
+ {"fact": "ASML's total net sales were EUR 32.7 billion in 2025 at a 52.8 percent gross margin", "source": "https://ourbrand.asml.com/m/419103cb23dfeaa4/original/asml-2025-annual-report-financial-performance-section.pdf"},
+ {"fact": "In October 2026 ASML expected 2026 net sales of EUR 44 to 45 billion at a gross margin of around 56 percent", "source": "https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/pressreleasefinancialresul.htm"},
+ {"fact": "In July 2026 ASML put its 2026 capacity at around 65 standard (low-NA) EUV systems and said it plans to add 30 percent for 2027", "source": "https://ourbrand.asml.com/asset/c8dbf3fc-4c5e-4406-83f6-27694b138245/Press-Release-Financial-Results-Q2-2026.pdf"},
+ {"fact": "EUV was 48 percent of ASML's net system sales in 2025. China was 33 percent of net system sales, down from 41 percent in 2024", "source": "https://ourbrand.asml.com/m/3136300aa4999bc1/original/2026_01_28_Presentation-Investor-Relations-Q4-2025.pdf"},
+ {"fact": "The TWINSCAN NXE:3800E reaches its full 220 wafers-per-hour specification, a 37 percent improvement on the NXE:3600D", "source": "https://ourbrand.asml.com/m/8ab959d4926657b/original/asml-2025-annual-report-strategic-report-section.pdf"},
  {"fact": "An EUV source hits each molten tin droplet with a low-intensity laser pulse and then a more powerful one that vaporizes it, a process repeated 50,000 times a second", "source": "https://www.asml.com/en/technology/lithography-principles/light-and-lasers"},
  {"fact": "ASML demonstrated the first 1,000-watt EUV light source in April 2025, and customers had run more than 400,000 wafers on High NA systems by the end of that year", "source": "https://ourbrand.asml.com/m/8ab959d4926657b/original/asml-2025-annual-report-strategic-report-section.pdf"},
  {"fact": "ASML sold four EXE (High NA) and 44 NXE systems in 2025, against two EXE and 42 NXE in 2024", "source": "https://ourbrand.asml.com/m/419103cb23dfeaa4/original/asml-2025-annual-report-financial-performance-section.pdf"},
  {"fact": "ASML lists 5,100 suppliers in its 2025 annual report", "source": "https://www.sec.gov/Archives/edgar/data/937966/000162828026011377/asml-2025xannualxreportx.htm"},
- {"fact": "Reuters puts tools in the DUV segment at roughly $60 million each, a standard EUV tool at around $200 million and a High-NA system at an estimated $350 million to $400 million. It puts ASML's share of DUV above 80%", "source": "https://www.reuters.com/world/asia-pacific/250-million-asml-printer-behind-nvidias-chips-2026-07-28/"}
+ {"fact": "Reuters puts tools in the DUV segment at roughly $60 million each, a standard EUV tool at around $200 million and a High-NA system at an estimated $350 million to $400 million. It puts ASML's share of DUV above 80 percent", "source": "https://www.reuters.com/world/asia-pacific/250-million-asml-printer-behind-nvidias-chips-2026-07-28/"}
  ],
  "figures": [
     {"id": "litho-print", "type": "animation", "src": "litho", "title": "How lithography prints a chip", "note": "Simplified. The newest machines, which use extreme ultraviolet light, carry the image with mirrors in place of a lens."},
@@ -53,13 +54,13 @@
  "finding": "ASML sold 48 EUV systems in 2025, up from 44 in 2024",
  "unit": "tools",
  "data": [["2023", 53], ["2024", 44], ["2025", 48]],
- "source": {"label": "ASML 2025 annual report (2024 and 2025); 2023 from ASML's Q4 2023 investor presentation", "url": "https://ourbrand.asml.com/m/419103cb23dfeaa4/original/asml-2025-annual-report-financial-performance-section.pdf#page=5"}
+ "source": {"label": "ASML 2025 annual report for 2024 and 2025, and ASML's Q4 2023 investor presentation for 2023", "url": "https://ourbrand.asml.com/m/419103cb23dfeaa4/original/asml-2025-annual-report-financial-performance-section.pdf#page=5"}
  },
  {
  "id": "tool-price",
  "type": "bars",
  "title": "What one lithography system costs. The DUV bar is one figure for the whole segment",
- "finding": "High-NA EUV scanners cost an estimated $350 million to $400 million in 2026",
+ "finding": "High-NA EUV scanners cost an estimated $350 million to $400 million in 2026",
  "unit": "$M",
  "data": [["DUV tool", 60], ["EUV, 0.33 NA", 200], ["High-NA EUV", 350, 400]],
  "source": {"label": "Reuters explainer on ASML's lithography machines, first published 28 January 2026 and updated 28 July 2026", "url": "https://www.reuters.com/world/asia-pacific/250-million-asml-printer-behind-nvidias-chips-2026-07-28/"}
@@ -68,7 +69,7 @@
  "id": "litho-mix",
  "type": "stack",
  "title": "ASML net system sales by technology, 2025",
- "finding": "EUV made up 48 percent of ASML's 2025 system sales",
+ "finding": "EUV made up 48 percent of ASML's 2025 system sales",
  "unit": "%",
  "data": [["EUV", 48], ["ArF immersion", 42], ["KrF", 4], ["Metrology and inspection", 3], ["ArF dry", 2], ["i-line", 1]],
  "source": {"label": "ASML Q4 2025 investor presentation", "url": "https://ourbrand.asml.com/m/3136300aa4999bc1/original/2026_01_28_Presentation-Investor-Relations-Q4-2025.pdf#page=9"}
@@ -77,7 +78,7 @@
  "id": "asml-region",
  "type": "stack",
  "title": "ASML net system sales by the region tools shipped to, 2025",
- "finding": "China took 33 percent of ASML's 2025 system sales, the largest share",
+ "finding": "China took 33 percent of ASML's 2025 system sales, the largest share",
  "unit": "%",
  "data": [["China", 33], ["South Korea", 25], ["Taiwan", 22], ["United States", 12], ["Japan", 5], ["Rest of Asia", 2], ["EMEA", 1]],
  "source": {"label": "ASML Q4 2025 investor presentation", "url": "https://ourbrand.asml.com/m/3136300aa4999bc1/original/2026_01_28_Presentation-Investor-Relations-Q4-2025.pdf#page=9"}

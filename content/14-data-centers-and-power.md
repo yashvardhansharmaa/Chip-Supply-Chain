@@ -98,6 +98,14 @@
   },
   "keyFacts": [
     {
+      "fact": "In 2024, large power transformer lead times of 36 months were commonly quoted, and the longest reached 60 months. Before the pandemic an order took under a year, and 82 percent of the units put into US service in 2019 were imported",
+      "source": "https://www.energy.gov/sites/default/files/2024-10/EXEC-2022-001242%20-%20Large%20Power%20Transformer%20Resilience%20Report%20signed%20by%20Secretary%20Granholm%20on%207-10-24.pdf"
+    },
+    {
+      "fact": "Measured by capacity, US producers supplied 29.2 percent of the large power transformers of 60 MVA and above bought in the US in 2023, down from 32.5 percent in 2021. Their lead times averaged three years in 2023, against one and a half years for importers",
+      "source": "https://www.usitc.gov/publications/701_731/pub5531.pdf"
+    },
+    {
       "fact": "A GB300 NVL72 rack draws up to 142 kW, fed by eight 33 kW power shelves",
       "source": "https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html"
     },
@@ -106,19 +114,19 @@
       "source": "https://developer.nvidia.com/blog/nvidia-800-v-hvdc-architecture-will-power-the-next-generation-of-ai-factories/"
     },
     {
-      "fact": "Nvidia's Kyber rack will hold 576 Rubin Ultra GPUs by 2027 on an 800-volt DC bus that carries over 150% more power through the same copper",
+      "fact": "Nvidia's Kyber rack will hold 576 Rubin Ultra GPUs by 2027 on an 800-volt DC bus that carries over 150 percent more power through the same copper",
       "source": "https://blogs.nvidia.com/blog/gigawatt-ai-factories-ocp-vera-rubin"
     },
     {
-      "fact": "US data centers used 192 TWh in 2024, 4.7% of US electricity. Lawrence Berkeley National Laboratory's reference case projects 649 TWh in 2030, or 11.8%, within a range of 521 to 843 TWh",
+      "fact": "US data centers used 192 TWh in 2024, 4.7 percent of US electricity. Lawrence Berkeley National Laboratory's reference case projects 649 TWh in 2030, or 11.8 percent, within a range of 521 to 843 TWh",
       "source": "https://www.energy.gov/documents/united-states-data-center-energy-usage-report-2025-update"
     },
     {
-      "fact": "Capital spending by Alphabet, Amazon, Meta, Microsoft and Oracle came to $448.2B in 2025, the sum of Epoch AI's quarterly figures. If the trend continues, it will reach $770B in 2026",
+      "fact": "Capital spending by Alphabet, Amazon, Meta, Microsoft and Oracle came to $448.2 billion in 2025, the sum of Epoch AI's quarterly figures. If the trend continues, it will reach $770 billion in 2026",
       "source": "https://epoch.ai/data-insights/hyperscaler-capex-trend"
     },
     {
-      "fact": "ERCOT, the grid operator for most of Texas, was tracking about 474 GW of large loads seeking a grid connection in June 2026, about 90% of it data centers. In July 2026, ERCOT found that only about 205 GW of those requests had the engineering study needed to enter Batch Zero, the first batch of requests it studies together",
+      "fact": "ERCOT, the grid operator for most of Texas, was tracking about 474 GW of large loads seeking a grid connection in June 2026, about 90 percent of it data centers. In July 2026, ERCOT found that only about 205 GW of those requests had the engineering study needed to enter Batch Zero, the first batch of requests it studies together",
       "source": "https://www.ercot.com/files/docs/2026/07/29/ERCOT-Senate-July-29-Panel-1-Assessing-The-Grid.pdf"
     },
     {
@@ -130,19 +138,11 @@
       "source": "https://www.ercot.com/files/docs/2026/10/16/ERCOT-Monthly-Operational-Overview-September.pdf"
     },
     {
-      "fact": "In 2024, large power transformer lead times of 36 months were commonly quoted, and the longest reached 60 months. Before the pandemic an order took under a year, and 82% of the units put into US service in 2019 were imported",
-      "source": "https://www.energy.gov/sites/default/files/2024-10/EXEC-2022-001242%20-%20Large%20Power%20Transformer%20Resilience%20Report%20signed%20by%20Secretary%20Granholm%20on%207-10-24.pdf"
-    },
-    {
-      "fact": "Measured by capacity, US producers supplied 29.2% of the large power transformers of 60 MVA and above bought in the US in 2023, down from 32.5% in 2021. Their lead times averaged three years in 2023, against one and a half years for importers",
-      "source": "https://www.usitc.gov/publications/701_731/pub5531.pdf"
-    },
-    {
       "fact": "GE Vernova's gas power equipment backlog and reserved factory slots grew from 100 GW to 116 GW in the second quarter of 2026. It expects its annual gas turbine output to reach 20 GW in the third quarter of 2026, 24 GW in 2028 and 30 GW in 2030",
       "source": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm"
     },
     {
-      "fact": "In its October 2026 Short-Term Energy Outlook, the US Energy Information Administration expects US electricity sales of 4,152.0 TWh in 2026 and 4,216.6 TWh in 2027. It expects electricity demand from the commercial sector, which includes data centers, to grow 2.8% in 2027",
+      "fact": "In its October 2026 Short-Term Energy Outlook, the US Energy Information Administration expects US electricity sales of 4,152.0 TWh in 2026 and 4,216.6 TWh in 2027. It expects electricity demand from the commercial sector, which includes data centers, to grow 2.8 percent in 2027",
       "source": "https://www.eia.gov/outlooks/steo/archives/oct26.pdf"
     }
   ],
@@ -152,7 +152,7 @@
       "id": "hyperscaler-capex",
       "type": "bars",
       "title": "Capital spending by five large US data center operators, 2025",
-      "finding": "Amazon spent the most of five large operators, $134.7 billion in 2025",
+      "finding": "Amazon spent the most of five large operators, $134.7 billion in 2025",
       "unit": "$B",
       "data": [
         [

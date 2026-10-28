@@ -12,18 +12,18 @@
     "concentration": "High",
     "chokepointScore": 4,
     "leaders": [
-      {"name": "Advantest", "country": "JP", "share": "About 65% of the tester market in 2025, by its own estimate", "source": "https://www.advantest.com/document/en/investors/ir-library/result/JE_BIZ_260427_note.pdf#page=13"},
-      {"name": "Teradyne", "country": "US", "share": "$2.52bn of semiconductor test revenue in 2025, service included", "source": "https://www.sec.gov/Archives/edgar/data/97210/000119312526059002/ter-20251231.htm"},
+      {"name": "Advantest", "country": "JP", "share": "About 65 percent of the tester market in 2025, by its own estimate", "source": "https://www.advantest.com/document/en/investors/ir-library/result/JE_BIZ_260427_note.pdf#page=13"},
+      {"name": "Teradyne", "country": "US", "share": "$2.52 billion of semiconductor test revenue in 2025, service included", "source": "https://www.sec.gov/Archives/edgar/data/97210/000119312526059002/ter-20251231.htm"},
       {"name": "ASE", "country": "TW", "share": "Ran 8,348 testers in Q2 2026, up from 6,797 a year earlier", "source": "https://www.sec.gov/Archives/edgar/data/1122411/000095010326011351/dp250868_6k.htm"},
-      {"name": "Amkor", "country": "US", "share": "$6.71bn of 2025 revenue", "source": "https://www.sec.gov/Archives/edgar/data/1047127/000104712726000007/amkr123125erex-991.htm"},
-      {"name": "Disco", "country": "JP", "share": "87% of the $1.9bn market for dicing saws and grinders in 2025, on CSET's analysis of TechInsights data", "source": "https://chipexplorer.eto.tech/?parentNode=N69&selectedNode=N71"}
+      {"name": "Amkor", "country": "US", "share": "$6.71 billion of 2025 revenue", "source": "https://www.sec.gov/Archives/edgar/data/1047127/000104712726000007/amkr123125erex-991.htm"},
+      {"name": "Disco", "country": "JP", "share": "87 percent of the $1.9 billion market for dicing saws and grinders in 2025, on CSET's analysis of TechInsights data", "source": "https://chipexplorer.eto.tech/?parentNode=N69&selectedNode=N71"}
     ],
     "countries": [
       {"code": "TW", "note": "Taiwanese firms such as ASE and Powertech lead outsourced assembly and test"},
       {"code": "JP", "note": "Advantest testers, Accretech and Tokyo Electron probers, Disco and Accretech dicing and grinding"},
       {"code": "US", "note": "Test equipment from Teradyne, FormFactor, Cohu and Aehr, and Amkor's planned Arizona packaging plant"},
       {"code": "CN", "note": "Four of the top ten assembly and test firms by 2024 revenue, in a TrendForce ranking cited by CSET"},
-      {"code": "MY", "note": "Malaysia said in July 2026 that it ships 13% of the world's packaged chips"}
+      {"code": "MY", "note": "Malaysia said in July 2026 that it ships 13 percent of the world's packaged chips"}
     ],
     "chinaStatus": "Georgetown's CSET, analyzing TechInsights data, finds that between 2019 and 2024 Chinese toolmakers gained 5 percentage points of world market share in test tools and 4 points in fabrication tools built for advanced packaging. But they lost share in bonding and other conventional assembly and packaging tools.",
     "chinaSources": ["https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/", "https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/"],
@@ -34,26 +34,26 @@
     "substitutability": {"band": "Moderate", "test": "Rated on test tools, where Advantest held 62.7 percent of the market in 2025 and Teradyne 21.8 percent, by CSET's analysis of TechInsights data.", "testSources": ["https://chipexplorer.eto.tech/?parentNode=N78&selectedNode=N120"], "why": "Customers such as ASE already buy testers from both firms. The barrier is cost, because switching means rebuilding a customer's whole test setup, Advantest says.", "whySources": ["https://www.sec.gov/Archives/edgar/data/1122411/000119312526135585/d50802d20f.htm", "https://www.advantest.com/document/en/investors/ir-library/investors-guide/Investors_Guide_2607E.pdf#page=12"]}
   },
   "keyFacts": [
-    {"fact": "Advantest estimates that it held about 65% of the tester market by value in calendar 2025. It puts its share of system-on-chip (SoC) testers at 66%, up about 10 points in a year, and of memory test at about 60%", "source": "https://www.advantest.com/document/en/investors/ir-library/result/JE_BIZ_260427_note.pdf"},
-    {"fact": "The tester market was about $9.0 billion in calendar 2025: $6.9 billion of SoC testers, up about 68% year on year, and $2.1 billion of memory testers", "source": "https://www.advantest.com/document/en/investors/ir-library/result/JE_BIZ_260427_note.pdf"},
-    {"fact": "Advantest's April 2025 investor guide said Advantest and Teradyne together held about 80% of the tester market, and put Advantest's own 2024 share at 58%", "source": "https://www.advantest.com/document/en/investors/ir-library/investors-guide/Investors_Guide_2504E.pdf"},
+    {"fact": "Advantest estimates that it held about 65 percent of the tester market by value in calendar 2025. It puts its share of system-on-chip (SoC) testers at 66 percent, up about 10 points in a year, and of memory test at about 60 percent", "source": "https://www.advantest.com/document/en/investors/ir-library/result/JE_BIZ_260427_note.pdf"},
+    {"fact": "The tester market was about $9.0 billion in calendar 2025: $6.9 billion of SoC testers, up about 68 percent year on year, and $2.1 billion of memory testers", "source": "https://www.advantest.com/document/en/investors/ir-library/result/JE_BIZ_260427_note.pdf"},
+    {"fact": "Advantest's April 2025 investor guide said Advantest and Teradyne together held about 80 percent of the tester market, and put Advantest's own 2024 share at 58 percent", "source": "https://www.advantest.com/document/en/investors/ir-library/investors-guide/Investors_Guide_2504E.pdf"},
     {"fact": "Teradyne's semiconductor test revenue was $2.52 billion in 2025, including system-level testers and service", "source": "https://www.sec.gov/Archives/edgar/data/97210/000119312526059002/ter-20251231.htm"},
-    {"fact": "Teradyne's 2025 revenue was $3.19 billion, up 13%, with fourth-quarter growth of 44% driven by AI compute and memory test", "source": "https://investors.teradyne.com/news-events/press-releases/detail/433/teradyne-reports-fourth-quarter-and-full-year-2025-results"},
-    {"fact": "Technoprobe's 2025 revenue was EUR 628.4 million, up 15.7%, with about 38% of revenue from AI applications", "source": "https://technoprobe.com/wp-content/uploads/2026/03/PR-FY-2025_.pdf"},
+    {"fact": "Teradyne's 2025 revenue was $3.19 billion, up 13 percent, with fourth-quarter growth of 44 percent driven by AI compute and memory test", "source": "https://investors.teradyne.com/news-events/press-releases/detail/433/teradyne-reports-fourth-quarter-and-full-year-2025-results"},
+    {"fact": "Technoprobe's 2025 revenue was EUR 628.4 million, up 15.7 percent, with about 38 percent of revenue from AI applications", "source": "https://technoprobe.com/wp-content/uploads/2026/03/PR-FY-2025_.pdf"},
     {"fact": "Aehr received a further $22 million order for AI processor wafer-level burn-in systems in August 2026", "source": "https://www.aehr.com/2026/08/aehr-receives-22-million-follow-on-order-for-ai-processor-wafer-level-burn-in-systems/"},
     {"fact": "ASE's installed tester count rose from 6,797 in the second quarter of 2025 to 8,348 a year later", "source": "https://www.sec.gov/Archives/edgar/data/1122411/000095010326011351/dp250868_6k.htm"},
     {"fact": "ASE spent $2.7 billion on machinery and $1.4 billion on buildings, facilities and automation in the first half of 2026", "source": "https://www.sec.gov/Archives/edgar/data/1122411/000095010326011353/dp250875_6k.htm"},
     {"fact": "Four of the top ten outsourced assembly and test firms by 2024 revenue are headquartered in China, in a TrendForce ranking cited by CSET", "source": "https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/"},
-    {"fact": "Malaysia's investment agency said in July 2026 that the country ships 13% of the world's packaged chips. It said a consortium of five Malaysian firms aims to help the country capture 7% of world advanced packaging shipments by 2035", "source": "https://www.mida.gov.my/advanced-packaging-how-malaysia-is-packaging-the-future-of-ai/"},
-    {"fact": "Malaysia held 7% of global assembly, test and packaging capacity in 2022, the largest share in Southeast Asia, which held about 20% in all. Capacity is measured as factory floor space at contractors and chipmakers' own plants", "source": "https://www.semiconductors.org/wp-content/uploads/2024/05/Report_Emerging-Resilience-in-the-Semiconductor-Supply-Chain.pdf"}
+    {"fact": "Malaysia's investment agency said in July 2026 that the country ships 13 percent of the world's packaged chips. It said a consortium of five Malaysian firms aims to help the country capture 7 percent of world advanced packaging shipments by 2035", "source": "https://www.mida.gov.my/advanced-packaging-how-malaysia-is-packaging-the-future-of-ai/"},
+    {"fact": "Malaysia held 7 percent of global assembly, test and packaging capacity in 2022, the largest share in Southeast Asia, which held about 20 percent in all. Capacity is measured as factory floor space at contractors and chipmakers' own plants", "source": "https://www.semiconductors.org/wp-content/uploads/2024/05/Report_Emerging-Resilience-in-the-Semiconductor-Supply-Chain.pdf"}
   ],
   "figures": [
     {"id": "wafer-probe", "type": "animation", "src": "wafer-test", "title": "How a chip is tested", "note": "Simplified. Nine needles stand for thousands. A real prober, the machine that moves the wafer under the card, holds the card still and raises the wafer to meet the needles. The failed chips are placed for illustration and do not reflect a real yield. The package follows chapter 10: two logic chips and eight memory stacks on an interposer and a package base."},
     {
       "id": "ate-share",
       "type": "stack",
-      "title": "Automated test equipment: share of the ~$9.0bn tester market, 2025",
-      "finding": "Advantest put its tester market share at about 65 percent in 2025",
+      "title": "Automated test equipment: share of the ~$9.0 billion tester market, 2025",
+      "finding": "Advantest put its tester market share at about 65 percent in 2025",
       "unit": "%",
       "data": [["Advantest", 65], ["Teradyne and all others", 35]],
       "source": {"label": "Advantest FY2025 results briefing, April 2026", "url": "https://www.advantest.com/document/en/investors/ir-library/result/JE_BIZ_260427_note.pdf#page=13"}
@@ -62,7 +62,7 @@
       "id": "tester-market",
       "type": "stack",
       "title": "Where the tester money went in calendar 2025",
-      "finding": "SoC testers took an estimated $6.9 billion in 2025, memory $2.1 billion",
+      "finding": "SoC testers took an estimated $6.9 billion in 2025, memory $2.1 billion",
       "unit": "$bn",
       "data": [["SoC testers", 6.9], ["Memory testers", 2.1]],
       "source": {"label": "Advantest FY2025 results briefing, April 2026", "url": "https://www.advantest.com/document/en/investors/ir-library/result/JE_BIZ_260427_note.pdf#page=13"}
