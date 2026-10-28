@@ -1,13 +1,11 @@
 /* SOCIAL: one real URL per chapter and per view, so a pasted link unfurls with its own title, text and card.
 
-   Chapters: dist/<chapter>/index.html is the chapter itself as a static, readable page, for search engines,
-   citation and anyone who arrives from a shared link. It is assembled from the very HTML the main page prints
-   (build.js keeps it on ch.rendered: In plain terms, In short, the chokepoint card and the prose, before the
-   glossary buttons go in), so the two never drift. What needs the app is turned into what a static page can
-   carry: an animation becomes its video with controls and its steps as text, the specimen becomes its caption,
-   the flashcards become questions whose answers open in place, and the card's glossary buttons become plain
-   tags. It has no redirect: a button opens the interactive chapter at <site>/#<chapter>. Its canonical URL is
-   its own, and build.js lists it in the sitemap (ctx.readablePages). Styles: build/assets/chapter-page.css.
+   Chapters: dist/<chapter>/index.html is the full interactive chapter since 28 Oct 2026, written by build.js from the same
+   template as the home page with that chapter alone in The Chain, so search engines index each chapter at its own address
+   and the home page no longer carries every chapter's text. This module gives each chapter page its head (chapterHead: the
+   approved title and description, the canonical, prev and next, the citation and article tags, the share tags and card,
+   and the JSON-LD), as the static readable page it used to write here had it. build.js lists the pages in the sitemap
+   (ctx.chapterPages).
 
    Views (/home/, /intro/, /chain/): a small static page with the title, description, canonical, Open Graph and
    Twitter tags and one paragraph, then a meta refresh and a location.replace to the hash route on the main page.
@@ -38,7 +36,6 @@ const TILE = { 'component-costs': 'The economics', geopolitics: 'The contest' };
 const STAGES = require('../stages.js'); // which chapters are stages (all but the two that look across the chain)
 const RETIRED = require('../retired-chapters.js'); // a chapter merged away: its page forwards to the merged chapter's (retiredHTML)
 const PAGE_TITLES = require('../page-titles.js'); // the approved <title> and description of each static page
-const RELATED = (() => { try { return require('../related-chapters.js'); } catch (e) { return {}; } })(); // the hand-picked "Related chapters" line
 
 const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const pad = (n) => String(n).padStart(2, '0');
@@ -207,15 +204,6 @@ const { masthead, mastheadCSS, NAV } = require('../masthead.js');
 const MASTHEAD = masthead('');
 // the static pages open light; ?theme= or the site's saved choice sets the theme before the first paint, and a contents rail the
 // reader hid stays hidden (build/build.js RAIL_TOGGLE_JS)
-// the rail's On this page marks the section the reader is in, as the app's does (src/app.js Rail.update): the last section
-// whose top has passed 30 percent of the window takes aria-current, which src/modules/chapter.css draws as a wine rule. Then the
-// names beside the still's balloons are set at 14 px on screen, as the app sets them, whatever the still's scale (stage 2
-// review, item 6); without scripts they keep the size the still is drawn at
-const RAIL_JS = `(function(){var r=document.querySelector('.ch-rail .rail-toc');if(!r)return;var dec=function(s){try{return decodeURIComponent(s);}catch(e){return s;}};
-var xs=[].slice.call(r.querySelectorAll('a[href^="#"]')).map(function(a){return [a,document.getElementById(dec(a.getAttribute('href').slice(1)))];}).filter(function(x){return x[1];}),cur=null,q=0;
-function up(){q=0;var line=Math.max(innerHeight*0.3,80),on=null;xs.forEach(function(x){if(x[1].getBoundingClientRect().top<line)on=x;});if(on!==cur){if(cur)cur[0].removeAttribute('aria-current');if(on)on[0].setAttribute('aria-current','location');cur=on;}}
-addEventListener('scroll',function(){if(!q)q=requestAnimationFrame(up);},{passive:true});addEventListener('resize',up);up();})();
-(function(){var nm=function(){[].forEach.call(document.querySelectorAll('svg.ch-still--wide'),function(s){var m=s.getScreenCTM&&s.getScreenCTM();if(!m||!m.a)return;[].forEach.call(s.querySelectorAll('text.nm'),function(t){t.style.fontSize=(14/m.a).toFixed(1)+'px';});});};nm();addEventListener('resize',nm);addEventListener('load',nm);})();`;
 const THEME_JS = `<script>(function(){try{var q=/[?&]theme=(light|dark)/.exec(location.search);var t=q?q[1]:localStorage.getItem('cp-theme');if(t)document.documentElement.setAttribute('data-theme',t);if(localStorage.getItem('cp-rail')==='off')document.documentElement.classList.add('rail-off');}catch(e){}})();</script>`;
 
 // a view's page: the tags, one paragraph, and straight on to the view on the main page
@@ -339,12 +327,69 @@ ${review}
 `;
 }
 
-/* ---------------- the readable chapter page ---------------- */
-const BANDS = { Extreme: 4, High: 3, Moderate: 2, Low: 1 }; // as build.js ranks them for the chain's bars
-// the band's meter, as build.js draws it (meterHTML): four rising bars, as many lit as the band's rank (src/modules/chapter.css .meter)
-const meterHTML = (b) => { const l = BANDS[b] || 0; return `<span class="meter" data-level="${l}" aria-hidden="true">${[1, 2, 3, 4].map((k) => `<b${k <= l ? ' class="on"' : ''}></b>`).join('')}</span>`; };
+/* ---------------- the chapter page's head ----------------
+   Each chapter's own page, <site>/<id>/, is the full chapter since 28 Oct 2026: build.js writes it from src/template.html with
+   that chapter alone in The Chain. Until then this module wrote a static, readable copy there and the chapter itself lived at
+   <site>/#<id>. What search engines and unfurlers read stays this module's, as it was on the readable page: the approved
+   title and description (build/page-titles.js), the canonical, the place in the reading order, the citation tags Google
+   Scholar reads, the share tags and card, the article tags and one JSON-LD graph. dates is the page's { published, modified }
+   (build.js page dates), r its words and minutes. */
+function chapterHead(p, ch, ctx, versions, dates) {
+  const r = ch.rendered || {}, m = ch.meta || {};
+  const url = BASE + p.slug + '/', image = cardURL(p.slug, versions);
+  const seo = seoOf(p), metaDescription = seo && seo.description ? seo.description : (p.metaDescription || p.description); // the approved line (build/page-titles.js)
+  const seq = ctx.chapters.concat(ctx.geo ? [ctx.geo] : []);
+  const si = ctx.stages.findIndex((c) => c.id === ch.id);
+  const ymd = String(dates.modified).replace(/-/g, '/');
+  const scholar = `<meta name="citation_title" content="${esc(ch.title)}">
+<meta name="citation_author" content="Sharma, Yashvardhan">
+<meta name="citation_date" content="${esc(ymd)}">
+<meta name="citation_publisher" content="${SITE}">
+<meta name="citation_language" content="en">
+<meta name="citation_public_url" content="${esc(url)}">
+<meta name="citation_fulltext_html_url" content="${esc(url)}">`;
+
+  // the structured data (schema.org JSON-LD, one graph): the chapter as an Article, and the trail Home › The Chain › chapter.
+  // Every value is one the page shows: the headline is the h1, the description the meta description, the dates the "Updated"
+  // day and the day the chapter first appeared, the image the share card, the firms the card's leaders
+  const at = seq.findIndex((c) => c.id === ch.id), prevCh = seq[at - 1], nextCh = seq[at + 1];
+  const seoTitle = seo ? seo.title : ch.title;
+  const leaders = si >= 0 ? ((m.card || {}).leaders || []).map((l) => (l && typeof l === 'object' ? l.name : l)).filter(Boolean) : [];
+  const ld = { '@context': 'https://schema.org', '@graph': [
+    Object.assign({
+      '@type': 'Article', '@id': url + '#article', headline: ch.title }, seoTitle !== ch.title ? { alternativeHeadline: seoTitle } : {}, {
+      description: metaDescription, url, mainEntityOfPage: { '@type': 'WebPage', '@id': url, url, name: pageTitle(p), breadcrumb: { '@id': url + '#breadcrumb' } },
+      image: { '@type': 'ImageObject', url: image, width: 1200, height: 630 },
+      inLanguage: 'en', datePublished: dates.published, dateModified: dates.modified,
+      author: { '@type': 'Person', name: AUTHOR.name, url: AUTHOR.url },
+      publisher: { '@type': 'Organization', '@id': BASE + '#publisher', name: SITE, url: BASE, logo: { '@type': 'ImageObject', url: BASE + 'apple-touch-icon.png', width: 180, height: 180 } },
+      isPartOf: { '@type': 'WebSite', '@id': BASE + '#website', name: SITE, url: BASE },
+      articleSection: 'The Chain', about: { '@type': 'Thing', name: ch.title },
+    }, leaders.length ? { mentions: leaders.map((n) => ({ '@type': 'Organization', name: n })) } : {}, {
+      wordCount: ch.words, timeRequired: `PT${r.mins}M`, isAccessibleForFree: true,
+    }),
+    { '@type': 'BreadcrumbList', '@id': url + '#breadcrumb', itemListElement: [['Home', BASE], ['The Chain', BASE + 'chain/'], [ch.title, url]]
+      .map(([name, item], k) => ({ '@type': 'ListItem', position: k + 1, name, item })) },
+  ] };
+  // the chapter's place in the reading order, for the engines that still read it (Google stopped in 2019; Bing has not said so)
+  const seqLinks = [prevCh ? `<link rel="prev" href="${esc(BASE + prevCh.id + '/')}">` : '', nextCh ? `<link rel="next" href="${esc(BASE + nextCh.id + '/')}">` : ''].filter(Boolean).join('\n');
+  const articleTags = `<meta property="article:published_time" content="${esc(dates.published)}">
+<meta property="article:modified_time" content="${esc(dates.modified)}">
+<meta property="article:author" content="${esc(AUTHOR.url)}">
+<meta property="article:section" content="The Chain">`;
+  return `<title>${esc(pageTitle(p))}</title>
+<meta name="description" content="${esc(metaDescription)}">
+<link rel="canonical" href="${esc(url)}">
+${seqLinks}
+<meta name="robots" content="max-image-preview:large">
+<meta name="author" content="${AUTHOR.name}">
+${scholar}
+${shareTags(p, versions)}
+${articleTags}
+<script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script>`;
+}
+
 const minCSS = (s) => s.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\s+/g, ' ').replace(/\s*([{};])\s*/g, '$1').replace(/;}/g, '}').trim();
-const textOf = (html) => String(html || '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
 // the readable page's own additions to build/assets/chapter-page.css: the head's facts (words / minutes · Updated <day>) and,
 // under them, the cite line's actions (build.js citeBlock; the citation opens as the link's :target without scripts, and as
 // a toggle with them), and the key under the stage strip. On a phone a line that wraps drops its dots, so none ends on one.
@@ -383,47 +428,10 @@ const EXTRA_CSS = minCSS(`
 .plate sup.cite-sep { font-family: var(--font-label); font-size: max(11px, 0.62em); line-height: 0; vertical-align: 0.55em; color: var(--accent); }
 `);
 
-
-// The main page's headings start at h3 under the chapter's h2; here the chapter title is the h1, so each moves up one level.
-const levelUp =(html) => String(html || '').replace(/<(\/?)h([3-6])(?=[\s>])/g, (m, s, n) => `<${s}h${n - 1}`);
-
-// A footnote number opens its source, as on the main page; the hover card becomes the link's title (title, publisher, date).
-// The space the Markdown leaves before a citation is dropped, so the number sits on its word as a footnote does in print,
-// and the number carries brackets that take no room on screen (.cite .br) but stay in the text: copied, quoted or read
-// by a search engine, "in 2025" plus footnote 13 comes out as "in 2025[13]", never "202513".
-const plainCites = (html) => html.replace(/\s+(?=<sup class="cite">)/g, '').replace(/<sup class="cite"><a href="([^"]*)"[^>]*?aria-label="Source (\d+): ([^"]*)">\d+<\/a><\/sup>/g,
-  (m, href, n, label) => `<sup class="cite"><a href="${href}" target="_blank" rel="noopener" title="${label}" aria-label="Source ${n}: ${label}"><span class="br">[</span>${n}<span class="br">]</span></a></sup>`);
-
-// Glossary buttons need the app's popover; here they are plain text. The card's two rating values (.v-btn) keep their
-// dotted rule and carry their one-line definition as a title.
-const plainTerms = (html) => String(html || '').replace(/<button type="button" class="gl-term\b\s*([^"]*)"([^>]*)>([\s\S]*?)<\/button>/g, (m, cls, attrs, inner) => {
-  const band = (attrs.match(/\bdata-band="([^"]*)"/) || [])[1];
-  const note = (attrs.match(/\bdata-note="([^"]*)"/) || [])[1];
-  return `<span${cls.trim() ? ` class="${cls.trim()}"` : ''}${band ? ` data-band="${band}"` : ''}${note ? ` title="${note}"` : ''}>${inner}</span>`;
-});
-
-// An explainer animation: the main page plays it in time with its captions; here it is the video, with controls and
-// nothing fetched until it is played, the last frame as its poster, and every step written out underneath. The still is
-// for paper only (hidden on screen, chapter-page.css), so it loads lazily: the browser fetches it when the page is printed.
-const staticAnimations = (html) => html.replace(/(<figure class="figure figure--anim"[^>]*>[\s\S]*?)<div class="fig-body">([\s\S]*?)<\/div><div class="fig-strip">/g, (m, head, inner) => {
-  const src = (inner.match(/\bdata-src="([^"]*)"/) || [])[1];
-  if (!src) return m;
-  const title = textOf((head.match(/<p class="fig-title[^"]*">([\s\S]*?)<\/p>/) || [])[1] || '');
-  const ratio = inner.match(/aspect-ratio:(\d+)\/(\d+)/);
-  const steps = (inner.match(/<ol class="anim-transcript">([\s\S]*?)<\/ol>/) || [])[1] || '';
-  const base = '../' + src;
-  const size = ratio ? ` width="${ratio[1]}" height="${ratio[2]}"` : '';
-  return `${head}<div class="fig-body"><div class="anim-frame"><video controls preload="none" playsinline muted${size} poster="${base}-light-end.jpg" src="${base}-light.mp4" data-media="${base}" aria-label="Animation: ${esc(title)}"></video></div><img class="anim-still" src="${base}-print-end.jpg" alt="Last frame of the animation: ${esc(title)}" loading="lazy" decoding="async" fetchpriority="low">${steps ? `<ol class="anim-steps">${steps}</ol>` : ''}</div><div class="fig-strip">`;
-});
-// The figures' controls without the app: Cite becomes a link to its citation, which opens as the link's :target without scripts
-// and as a toggle with them (CITE_JS); Table and PNG come from FIG_JS. A chapter link (href="<id>/" with the app's data-route)
-// goes to that chapter's readable page.
-const staticFigures = (html) => html
-  .replace(/<button type="button" class="ch-cite-btn" aria-expanded="false" aria-controls="([^"]+)">Cite<\/button>/g, '<a class="ch-cite-btn" href="#$1" aria-controls="$1">Cite</a>')
-  .replace(/(<div class="ch-cite-box fig-cite-box"[^>]*?) hidden>/g, '$1>');
-const staticRoutes = (html) => html.replace(/href="([a-z0-9-]+)\/" data-route="#[a-z0-9-]+"/g, 'href="../$1/"');
-// the annotated still a readable page shows where the app draws the live specimen (data/specimen-parts.json "still"): the
-// picture, and over it a balloon per part in a column clear of the drawing on the part's side, each with its leader lines
+// the annotated still of a chapter whose drawing carries numbered parts (data/specimen-parts.json "still"), which the chapter
+// prints in place of the live drawing (src/modules/print.js stills): the picture, and over it a balloon per part in a column clear
+// of the drawing on the part's side, each with its leader lines. Its picture's path is from the site's root (build.js relink adds
+// the way there). The readable pages drew it until 28 Oct 2026, so the print still keeps their wide and narrow forms
 function stillSVG(still, parts, title) {
   const S = +still.size || 772, cx = S / 2;
   const items = parts.map((p, i) => {
@@ -440,21 +448,9 @@ function stillSVG(still, parts, title) {
     const lines = x.pts.map((q) => { const dx = q[0] - bx, dy = q[1] - by, L = Math.hypot(dx, dy) || 1; return `<line x1="${f(bx + dx / L * o.r0)}" y1="${f(by + dy / L * o.r0)}" x2="${f(q[0])}" y2="${f(q[1])}" style="stroke-width:${o.sw}"/><circle class="dot" cx="${f(q[0])}" cy="${f(q[1])}" r="${o.dot}"/>`; }).join('');
     return `<g>${lines}<circle class="bal" cx="${f(bx)}" cy="${f(by)}" r="${o.r0}" style="stroke-width:${o.sw}"/><text class="num" x="${f(bx)}" y="${f(by + o.fs * 0.36)}" text-anchor="middle" style="font-size:${o.fs}px">${+x.p.n}</text>${o.names ? `<text class="nm" x="${f(x.side < 0 ? bx - o.r0 - 12 : bx + o.r0 + 12)}" y="${f(by)}" dominant-baseline="central" text-anchor="${x.side < 0 ? 'end' : 'start'}" style="font-size:${o.fn}px">${esc(x.p.name)}</text>` : ''}</g>`;
   }).join('');
-  const img = `<image href="../media/${esc(still.file)}" x="0" y="0" width="${S}" height="${S}"/>`;
+  const img = `<image href="media/${esc(still.file)}" x="0" y="0" width="${S}" height="${S}"/>`;
   return `<svg class="ch-still ch-still--wide" viewBox="-300 -14 ${S + 560} ${S + 28}" role="img" aria-label="${label}">${img}${draw({ l: -64, r: S + 74, r0: 24, fs: 24, fn: 30, sw: 2.4, dot: 6, names: true })}</svg>`
     + `<svg class="ch-still ch-still--narrow" viewBox="-96 -14 ${S + 192} ${S + 28}" aria-hidden="true">${img}${draw({ l: -46, r: S + 46, r0: 40, fs: 40, fn: 0, sw: 3.6, dot: 9, names: false })}</svg>`;
-}
-
-// Links inside the chapter: a heading on this page stays a fragment, another chapter goes to its readable page, anything
-// else on the main page (a view, a glossary entry) goes to the main page.
-function fixLinks(html, chapterIds) {
-  const local = new Set();
-  html.replace(/\sid="([^"]+)"/g, (m, id) => { local.add(id); return m; });
-  return html.replace(/href="#([^"]*)"/g, (m, id) => {
-    if (local.has(id)) return m;
-    if (chapterIds.has(id)) return `href="../${id}/"`;
-    return `href="${BASE}#${id}"`;
-  });
 }
 
 // A flashcard deck without scripts: review questions whose answers open in place, each reason ending with the link more(card)
@@ -464,175 +460,6 @@ const reviewSection = (cards, more) => `<section class="review" aria-labelledby=
   return `<details><summary>${esc(c.q)}</summary><div class="answer"><p><b>${esc(c.a)}</b></p>${c.why || link ? `<p class="why">${esc(c.why || '')}${link}</p>` : ''}</div></details>`;
 }).join('')}</section>`;
 
-function readableHTML(p, ch, ctx, versions, css) {
-  const { stages, flashcards, SPECIMEN_NAME, tierTag, sourceLine, builtOn, builtStr } = ctx;
-  const r = ch.rendered, m = ch.meta || {};
-  const url = BASE + p.slug + '/', app = BASE + '#' + ch.id, image = cardURL(p.slug, versions);
-  const seo = seoOf(p), metaDescription = seo && seo.description ? seo.description : (p.metaDescription || p.description); // the approved line (build/page-titles.js)
-  const seq = ctx.chapters.concat(ctx.geo ? [ctx.geo] : []);
-  const si = stages.findIndex((c) => c.id === ch.id);
-  const fc = flashcards[ch.id];
-  const cards = fc && Array.isArray(fc.cards) ? fc.cards.filter((c) => c.q && c.a) : [];
-
-  const conc = si >= 0 ? (m.card || {}).concentration || '' : '';
-  // the card's verdict, as The Chain's kicker carries it (build.js bandMark): "Extreme concentration · Very hard to substitute"
-  const subBand = ((m.card || {}).substitutability || {}).band || '';
-  const kick = `<p class="ch-kick"><span>Chapter ${pad(ch.number)}</span><span>${si >= 0 ? `Stage ${si + 1} of ${stages.length}` : esc(TILE[ch.id] || '')}</span>${conc ? `<span class="ch-band ch-verdict" data-band="${BANDS[conc] || 0}">${meterHTML(conc)}<span>${esc(conc)} concentration</span>${subBand ? `<span class="sep" aria-hidden="true">·</span><span>${esc(SUBWORD[subBand] || subBand)}</span>` : ''}</span>` : ''}</p>`;
-  const adds = ['a 3D model', 'glossary definitions', cards.length ? 'flashcards' : ''].filter(Boolean);
-  const note = `The interactive chapter adds ${adds.length > 1 ? adds.slice(0, -1).join(', ') + ' and ' + adds[adds.length - 1] : adds[0]}.`;
-  const cta = (cls) => `<div class="cta${cls}"><a class="btn" href="${esc(app)}">Open the interactive chapter <span aria-hidden="true">→</span></a><p class="cta-note">${note}</p></div>`;
-
-  const specimen = m.specimen || (ch.id === 'geopolitics' ? 'globe' : 'wafer');
-  // the specimen: Lithography shows its annotated still (data/specimen-parts.json); every chapter its caption, flush left, and
-  // the way to the live drawing. With no drawing on the page, the two chapters that are not stages have no night ground to set it on
-  const pe = (ctx.specimenParts || {})[ch.id], parts = pe && Array.isArray(pe.parts) ? pe.parts : [];
-  let still = pe && pe.still && parts.length ? stillSVG(pe.still, parts, m.specimenCaption ? m.specimenCaption.split('. ')[0] : ch.title) : '';
-  // every other chapter shows a still of its own specimen, shot from the app at the angle it opens on (qa/redesign/stills.js,
-  // build/assets/specimens/<id>.webp at twice the pixels it is shown at), so no readable page opens on a lone caption
-  // its alt text is what the drawing shows, the caption's first sentence ("A silicon ingot, one crystal pulled whole from a melt,
-  // with two wafers sawn from it."); it is the first picture on the page, so it is fetched first (fetchpriority)
-  const sz = !still && (ctx.stillSizes || {})[ch.id];
-  const stillAlt = m.specimenCaption ? m.specimenCaption.split('. ')[0].replace(/\.$/, '') + '.' : `${SPECIMEN_NAME[specimen] || specimen.replace(/-/g, ' ')}, the chapter's specimen`;
-  if (sz) still = `<img class="ch-still-img" src="../media/spec-${esc(ch.id)}.webp" width="${Math.round(sz[0] / 2)}" height="${Math.round(sz[1] / 2)}" alt="${esc(stillAlt)}" fetchpriority="high" decoding="async">`;
-  // the annotated still is drawn inside an SVG, which the browser's preload scanner does not read: the head preloads its picture
-  const preloadStill = pe && pe.still && pe.still.file && parts.length ? `<link rel="preload" as="image" href="../media/${esc(pe.still.file)}" fetchpriority="high">` : '';
-  const specimenHTML = `<figure class="ch-spec${still ? ' has-still' : ''}"${still && !STAGES.isStage(ch) ? ' data-night="1"' : ''}>${still ? `<div class="ch-spec-draw">${still}</div>` : ''}<figcaption class="ch-spec-cap${r.parts ? ' has-parts' : ''}"><span class="label">Specimen ${pad(ch.number)} · ${esc(ch.title)}</span>${m.specimenCaption ? `<p>${esc(m.specimenCaption)}</p>` : ''}${r.parts || ''}<a class="ch-spec-3d" href="${esc(app)}">See it in 3D in the interactive chapter</a></figcaption></figure>`;
-
-  // the contents rail, as the app draws it (build.js railHTML), with this page's own section anchors
-  const toc = (r.plain ? [[`${ch.id}--plain`, 'In plain terms']] : []).concat(r.plate ? [[`${ch.id}--card`, 'Chokepoint card']] : []).concat((ch.headings || []).map((h) => [h.id, esc(String(h.text).replace(/\*\*/g, ''))]))
-    .concat(cards.length ? [['review-questions', 'Review questions']] : []).concat(ch.cites.length ? [['sources', 'Sources']] : []);
-  const rail = ctx.railHTML ? ctx.railHTML(ch, si, toc) : '';
-  const review = cards.length ? reviewSection(cards, (c) => {
-    const anchor = c.section ? `${ch.id}--${ctx.slug(c.section)}` : '';
-    return anchor ? ` <a href="#${esc(anchor)}">Reread: ${esc(c.section)}</a>` : '';
-  }) : '';
-
-  // the door to the next chapter, as The Chain ends each chapter (build.js chapterDoor), leading to the next readable page; the
-  // last chapter's leads to the contents of The Chain (fixLinks sends its #/chain to the main page)
-  const prevnext = ctx.chapterDoor ? ctx.chapterDoor(ch, (c) => `href="../${esc(c.id)}/"`, 'div', '../media/') : '';
-
-  const sources = ch.cites.length ? `<section class="sources" aria-labelledby="sources"><h2 class="label" id="sources">Sources (${ch.cites.length})</h2><ol>${ch.cites.map((c, k) => `<li id="source-${k + 1}">${tierTag(c.url)}${sourceLine(c.url)}</li>`).join('')}</ol></section>` : '';
-
-  const article = `<article class="chapter ch-page" data-number="${pad(ch.number)}">
-<header class="chapter-head">
-<div class="ch-open">${kick}<h1 class="ch-title${ch.title.length > 16 ? ' is-long' : ''}">${esc(ch.title)}</h1>
-${m.oneLiner ? `<p class="ch-lede">${esc(m.oneLiner)}</p>` : ''}
-<div class="ch-omet"><p class="ch-meta"><span class="label">${ch.words.toLocaleString('en-US')} words / ${r.mins} min</span><span class="label">Specimen: ${esc(SPECIMEN_NAME[specimen] || specimen.replace(/-/g, ' '))}</span>${ch.cites.length ? `<span class="label">${ch.cites.length} sources</span>` : ''}</p>
-${cta('')}</div></div>
-${specimenHTML}
-${levelUp(r.plain || '')}
-${r.inShort ? `<section class="inshort"><h2 class="label">In short</h2>${levelUp(r.inShort)}</section>` : ''}
-</header>
-${rail}
-<div class="prose">
-${staticFigures(staticAnimations(levelUp(r.prose)))/* the lead, the card (build.js withCard), then the sections */}
-${review}
-<nav class="endnav" aria-label="After the chapter">${cta(' cta--end')}${prevnext}</nav>
-${sources}
-</div>
-</article>`;
-  const text = fixLinks(staticRoutes(plainTerms(plainCites(article))), new Set(seq.map((c) => c.id)));
-  // the day this chapter's text last changed (build.js keeps a hash of `text` per page), and the day it first appeared;
-  // the footer's "Updated" day says the same, in the main page's wording
-  const today = builtOn.toISOString().slice(0, 10);
-  const dates = ctx.pageDate ? ctx.pageDate('/' + p.slug + '/', text, ch.file) : { published: today, modified: today };
-  const day = ctx.dayStr ? ctx.dayStr(dates.modified) : builtStr;
-  const footerKey = ctx.dayStr ? ctx.footerKey.split(`Updated ${builtStr}`).join(`Updated ${day}`) : ctx.footerKey;
-  // after the hash, the page furniture that is not the chapter's text: the head's "Updated <day>" and the cite line under it
-  // (they carry the day, so they cannot be hashed)
-  // ...and, before Previous and Next, the hand-picked related chapters (build/related-chapters.js), by name
-  const picks = RELATED[ch.id] || [];
-  const rel = picks.map((k) => {
-    if (String(k).charAt(0) === '/') { const n = NAV.find(([h]) => h === '..' + k); if (!n) ctx.warn(`related chapters: ${ch.id} names ${k}, which is not a reference page`); return n ? `<a href="${n[0]}">${n[1]}</a>` : ''; }
-    const c = seq.find((x) => x.id === k); if (!c) ctx.warn(`related chapters: ${ch.id} names ${k}, which is not a chapter`);
-    return c && c.id !== ch.id ? `<a href="../${esc(c.id)}/">${esc(c.title)}</a>` : '';
-  }).filter(Boolean);
-  const related = rel.length ? `<p class="related"><span class="label">${picks.every((k) => String(k).charAt(0) !== '/') ? 'Related chapters' : 'Related pages'}</span>${rel.join('')}</p>` : '';
-  const main = text
-    .replace(/(<p class="ch-meta">[\s\S]*?)(<span class="label">\d+ sources<\/span>)?(<\/p>)/, (m, meta, srcs, end) => meta + `<span class="label">Updated ${esc(day)}</span>` + (srcs || '') + end + (ctx.citeBlock ? ctx.citeBlock(ch, day, true) : ''))
-    .replace(/\{\{CITE_DAY:[a-z0-9-]+\}\}/g, esc(day))
-    .replace(/(<nav class="endnav"[^>]*>[\s\S]*?)(<div class="prevnext">)/, (m, head, pn) => head + related + pn);
-  const ymd = String(dates.modified).replace(/-/g, '/');
-  const scholar = `<meta name="citation_title" content="${esc(ch.title)}">
-<meta name="citation_author" content="Sharma, Yashvardhan">
-<meta name="citation_date" content="${esc(ymd)}">
-<meta name="citation_publisher" content="${SITE}">
-<meta name="citation_language" content="en">
-<meta name="citation_public_url" content="${esc(url)}">
-<meta name="citation_fulltext_html_url" content="${esc(url)}">`;
-
-  // the structured data (schema.org JSON-LD, one graph): the chapter as an Article, and the trail Home › The Chain › chapter.
-  // Every value is one the page shows: the headline is the h1, the description the meta description, the dates the "Updated"
-  // day and the day the chapter first appeared, the image the share card, the firms the card's leaders
-  const at = seq.findIndex((c) => c.id === ch.id), prevCh = seq[at - 1], nextCh = seq[at + 1];
-  const seoTitle = seo ? seo.title : ch.title;
-  const leaders = si >= 0 ? ((m.card || {}).leaders || []).map((l) => (l && typeof l === 'object' ? l.name : l)).filter(Boolean) : [];
-  const ld = { '@context': 'https://schema.org', '@graph': [
-    Object.assign({
-      '@type': 'Article', '@id': url + '#article', headline: ch.title }, seoTitle !== ch.title ? { alternativeHeadline: seoTitle } : {}, {
-      description: metaDescription, url, mainEntityOfPage: { '@type': 'WebPage', '@id': url, url, name: pageTitle(p), breadcrumb: { '@id': url + '#breadcrumb' } },
-      image: { '@type': 'ImageObject', url: image, width: 1200, height: 630 },
-      inLanguage: 'en', datePublished: dates.published, dateModified: dates.modified,
-      author: { '@type': 'Person', name: AUTHOR.name, url: AUTHOR.url },
-      publisher: { '@type': 'Organization', '@id': BASE + '#publisher', name: SITE, url: BASE, logo: { '@type': 'ImageObject', url: BASE + 'apple-touch-icon.png', width: 180, height: 180 } },
-      isPartOf: { '@type': 'WebSite', '@id': BASE + '#website', name: SITE, url: BASE },
-      articleSection: 'The Chain', about: { '@type': 'Thing', name: ch.title },
-    }, leaders.length ? { mentions: leaders.map((n) => ({ '@type': 'Organization', name: n })) } : {}, {
-      wordCount: ch.words, timeRequired: `PT${r.mins}M`, isAccessibleForFree: true,
-    }),
-    { '@type': 'BreadcrumbList', '@id': url + '#breadcrumb', itemListElement: [['Home', BASE], ['The Chain', BASE + 'chain/'], [ch.title, url]]
-      .map(([name, item], k) => ({ '@type': 'ListItem', position: k + 1, name, item })) },
-  ] };
-  // the chapter's place in the reading order, for the engines that still read it (Google stopped in 2019; Bing has not said so)
-  const seqLinks = [prevCh ? `<link rel="prev" href="${esc(BASE + prevCh.id + '/')}">` : '', nextCh ? `<link rel="next" href="${esc(BASE + nextCh.id + '/')}">` : ''].filter(Boolean).join('\n');
-  const articleTags = `<meta property="article:published_time" content="${esc(dates.published)}">
-<meta property="article:modified_time" content="${esc(dates.modified)}">
-<meta property="article:author" content="${esc(AUTHOR.url)}">
-<meta property="article:section" content="The Chain">`;
-  const hasVideo = /<video /.test(main);
-  return `<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${esc(pageTitle(p))}</title>
-<meta name="description" content="${esc(metaDescription)}">
-<link rel="canonical" href="${esc(url)}">
-${seqLinks}
-<meta name="robots" content="max-image-preview:large">
-<meta name="author" content="${AUTHOR.name}">
-${scholar}
-${shareTags(p, versions)}
-${articleTags}
-${ICONS}
-<meta name="color-scheme" content="light dark">
-<script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="${FONTS}">
-${preloadStill}
-${THEME_JS}
-<style>${css}${EXTRA_CSS}</style>
-${SITE_CONFIG.analytics ? `<script async src="https://gc.zgo.at/count.js" data-goatcounter="${esc(SITE_CONFIG.analytics)}"></script>` : ''}
-</head>
-<body>
-<a class="skip" href="#main">Skip to content</a>
-${masthead('../#/chain')}
-<main id="main" class="page page--chapter">
-${main}
-<footer class="site-footer">${footerKey}</footer>
-</main>
-${ctx.CITE_JS ? `<script>${ctx.CITE_JS}</script>` : ''}
-${ctx.FIG_JS ? `<script>${ctx.FIG_JS}</script>` : ''}
-<script>${RAIL_JS}</script>
-${ctx.RAIL_TOGGLE_JS ? `<script>${ctx.RAIL_TOGGLE_JS}</script>` : ''}
-${hasVideo ? `<script>(function(){var t=document.documentElement.getAttribute('data-theme');if(t!=='dark')return;[].forEach.call(document.querySelectorAll('video[data-media]'),function(v){var b=v.getAttribute('data-media');v.poster=b+'-dark-end.jpg';v.src=b+'-dark.mp4';});})();
-/* the print still loads lazily; a browser that does not fetch lazy images for print is told to now */
-window.addEventListener('beforeprint',function(){[].forEach.call(document.querySelectorAll('img.anim-still[loading="lazy"]'),function(i){i.loading='eager';});});</script>` : ''}
-</body>
-</html>
-`;
-}
 
 module.exports = function (ctx) {
   const { root, fs, path, warn } = ctx;
@@ -640,35 +467,32 @@ module.exports = function (ctx) {
   const dist = path.join(root, 'dist');
   const versions = cardVersions(root, fs, path);
   let css = '';
-  try { css = minCSS(fs.readFileSync(path.join(root, 'build', 'assets', 'chapter-page.css'), 'utf8') + mastheadCSS(root)); } catch (e) { warn('chapter pages: build/assets/chapter-page.css is missing, so they ship unstyled'); }
-  // the chapter page's own sheet, shared with The Chain in the app (src/modules/chapter.css), after the readable pages' common one
-  let chCSS = '';
-  try { chCSS = minCSS(fs.readFileSync(path.join(root, 'src', 'modules', 'chapter.css'), 'utf8')); } catch (e) { warn('chapter pages: src/modules/chapter.css is missing'); }
+  try { css = minCSS(fs.readFileSync(path.join(root, 'build', 'assets', 'chapter-page.css'), 'utf8') + mastheadCSS(root)); } catch (e) { warn('static pages: build/assets/chapter-page.css is missing, so /intro/ ships unstyled'); }
   const byId = new Map((ctx.all || []).map((c) => [c.id, c]));
-  // the deck that ends Start here (data/flashcards.json "intro"), for /intro/: each answer links to its chapter's readable page
+  // the deck that ends Start here (data/flashcards.json "intro"), for /intro/: each answer links to its chapter's page
   const introDeck = (ctx.flashcards || {}).intro;
   const introCards = introDeck && Array.isArray(introDeck.cards) ? introDeck.cards.filter((c) => c.q && c.a) : [];
   const introReview = introCards.length ? reviewSection(introCards, (c) => {
     const ch = byId.get(c.chapter);
     return ch ? ` <a href="../${esc(ch.id)}/">Read: ${esc(ch.title)}</a>` : '';
   }) : '';
-  ctx.readablePages = []; // build.js lists these in the sitemap
+  // each chapter's own page is written by build.js (the full chapter, 28 Oct 2026); this module gives it its head, and build.js
+  // lists the pages in the sitemap
+  ctx.chapterPages = [];
+  const chapterPage = new Map(pages.filter((p) => p.kind === 'chapter').map((p) => [p.slug, p]));
+  ctx.chapterHead = (ch, dates) => chapterHead(chapterPage.get(ch.id), ch, ctx, versions, dates);
   // the four views that have a real page of their own (build/modules/reference-pages.js, which runs first, writes and lists them)
   const written = new Set((ctx.referencePages || []).map((k) => k.replace(/\//g, '')));
   for (const p of pages) {
-    if (p.kind === 'view' && written.has(p.slug)) continue;
+    if (p.kind === 'chapter') {
+      if (byId.has(p.slug) && byId.get(p.slug).rendered) ctx.chapterPages.push(p.slug);
+      else warn(`chapter page ${p.slug}: the chapter was not rendered, so it has no page`);
+      continue;
+    }
+    if (written.has(p.slug)) continue;
     const dir = path.join(dist, p.slug);
     fs.mkdirSync(dir, { recursive: true });
-    const ch = p.kind === 'chapter' ? byId.get(p.slug) : null;
-    let html;
-    if (ch && ch.rendered) {
-      html = readableHTML(p, ch, ctx, versions, css + chCSS);
-      if (/<button\b(?![^>]*\bclass="theme-toggle")/.test(html)) warn(`chapter page ${p.slug}: a button from the app survived into the static page`); // the masthead's theme button is the page's own
-      ctx.readablePages.push(p.slug);
-    } else {
-      if (p.kind === 'chapter') warn(`chapter page ${p.slug}: the chapter was not rendered, so its link only forwards to the main page`);
-      html = p.slug === 'intro' && introReview ? introHTML(p, versions, css, introReview) : pageHTML(p, versions);
-    }
+    const html = p.slug === 'intro' && introReview ? introHTML(p, versions, css, introReview) : pageHTML(p, versions);
     fs.writeFileSync(path.join(dir, 'index.html'), keepRanges(html));
   }
   // a chapter merged away keeps its address as a page that forwards to the merged chapter's (never listed in the sitemap)
@@ -684,7 +508,7 @@ module.exports = function (ctx) {
     const from = path.join(root, 'build', 'assets', 'specimens', id + '.webp');
     if (fs.existsSync(from)) { fs.mkdirSync(path.join(dist, 'media'), { recursive: true }); fs.copyFileSync(from, path.join(dist, 'media', 'spec-' + id + '.webp')); }
   }
-  // the annotated stills the readable pages show in place of the live specimen (data/specimen-parts.json "still")
+  // the annotated stills a chapter prints in place of its live specimen (data/specimen-parts.json "still"; the readable pages showed them)
   for (const e of Object.values(ctx.specimenParts || {})) {
     const f = e && e.still && e.still.file;
     if (!f) continue;
@@ -711,5 +535,6 @@ module.exports = function (ctx) {
 module.exports.manifest = manifest;
 module.exports.pageHTML = pageHTML;
 module.exports.BASE = BASE;
+module.exports.stillSVG = stillSVG; // for the print still in each chapter with numbered parts (build.js)
 // for the reference pages (build/modules/reference-pages.js): the same head, tags, card and masthead as the chapter pages
 Object.assign(module.exports, { SITE, AUTHOR, FONTS, ICONS, MASTHEAD, masthead, THEME_JS, minCSS, pageTitle, shareTags, cardVersions, cardURL, describe });

@@ -519,6 +519,24 @@
   var VIEWS = ['home', 'stack', 'chain', 'intro', 'walk', 'briefing', 'landscape', 'ai-chips', 'suppliers', 'geopolitics', 'controls', 'export-controls', 'thresholds', 'exposure', 'glossary', 'sources'];
   var ALIAS = { chain: 'stack', home: 'walk', intro: 'walk', briefing: 'walk', geopolitics: 'stack', thresholds: 'controls', sources: 'stack', 'export-controls': 'controls', 'ai-chips': 'landscape' }; // the tab names typed as routes land on their pages // the Sources page was retired; its sources sit at the end of each chapter // the licence-thresholds tab was retired; its route lands on the board
   var MODULE_VIEWS = {}; // modules register { activate(), stage: bool } per view through window.CP.register
+  /* Each chapter has a page of its own since 28 Oct 2026 (build/build.js): PAGE says which page this is, the home page (the
+     views and The Chain's contents), a chapter's page (that chapter alone) or the book (every chapter, for print), and
+     where the site's root is from here. away(hash) is the address a hash belongs at when this page does not serve it, and ''
+     when it does (src/preroute.js away()); addr(hash) is the address a link the app writes should carry: the hash itself
+     where this page serves it, else that page's address, so a link to a chapter is a real link */
+  var PAGE = (window.CP_PRE && window.CP_PRE.page) || { kind: 'book', chapter: '', root: '' };
+  var away = function (h) { return window.CP_PRE && window.CP_PRE.away ? window.CP_PRE.away(h) : ''; };
+  var addr = function (h) { return away(h) || h; };
+  /* An action that used to follow a route on the same page (a search result's chip card, supplier filter or flashcard, a
+     glossary passage's paragraph) and now crosses to another page is kept for that page in sessionStorage; the page it
+     lands on carries it out once it has booted (Router.init). go(href, act) follows a link the app built: on this page it
+     returns false and the caller acts as before; elsewhere it keeps act and leaves, and returns true */
+  var AFTER = 'cp-after';
+  var go = function (href, act) {
+    var to = away(href); if (!to) return false;
+    try { if (act) sessionStorage.setItem(AFTER, JSON.stringify(act)); } catch (e) { }
+    location.href = to; return true;
+  };
   var Router = {
     current: null, from: null, places: {}, marks: 0, chain: null,
     init: function () {
@@ -530,24 +548,49 @@
       window.addEventListener('hashchange', function () { self.route(); });
       // chapter links carry their static page as the href, for search engines, and the app's route in data-route: a plain
       // click stays in the app (a click on the route already showing lands it again); a new-tab click opens the static page
+      // (only the book still carries data-route: on the home page and the chapter pages a chapter link is a plain link to its page)
       document.addEventListener('click', function (e) {
         var a = e.target.closest ? e.target.closest('a[data-route]') : null;
         if (!a || e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return;
-        e.preventDefault();
         var r = a.getAttribute('data-route');
+        if (away(r)) return; // not on this page: the link's own address
+        e.preventDefault();
         if (r === location.hash) self.route(); else location.hash = r;
       });
-      var wm = $('.wordmark'); // the wordmark always takes you back to the top of the stack
-      if (wm) wm.addEventListener('click', function (e) { e.preventDefault(); if (location.hash && location.hash !== '#/') location.hash = '#/'; window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' }); });
+      // a fragment link whose place is on another page (a glossary entry from a chapter, another chapter's section) goes to that
+      // page's address; a click with a modifier opens this address in a new tab, whose page forwards it the same way
+      document.addEventListener('click', function (e) {
+        var a = e.target.closest ? e.target.closest('a[href^="#"]') : null;
+        if (!a || e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return;
+        var to = away(a.getAttribute('href'));
+        if (to) { e.preventDefault(); location.href = to; }
+      });
+      var wm = $('.wordmark'); // the wordmark always takes you back to the top of the stack (from another page, its link goes home)
+      if (wm && PAGE.kind === 'home') wm.addEventListener('click', function (e) { e.preventDefault(); if (location.hash && location.hash !== '#/') location.hash = '#/'; window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' }); });
       this.route();
+      // an action kept by the page the reader came from (go(), above), once this page has drawn its view
+      var act = null; try { act = JSON.parse(sessionStorage.getItem(AFTER) || 'null'); sessionStorage.removeItem(AFTER); } catch (e) { act = null; }
+      if (act) setTimeout(function () { self.after(act); }, 60);
+    },
+    /* the kept action (go()): a chip's card on AI Chips, a filter on Suppliers, a deck at one card, a passage flashed */
+    after: function (act) {
+      if (act.chip) Landscape.openCard(act.chip, { show: true });
+      if (act.q) Suppliers.show({ q: act.q });
+      if (act.card && Tools.openCard) Tools.openCard(act.card.id, act.card.i);
+      if (act.para && window.CP.Lookup && window.CP.Lookup.flash) window.CP.Lookup.flash(act.para);
     },
     route: function () {
       // an address of a chapter merged away lands in the merged chapter (src/preroute.js moved(), build/retired-chapters.js)
       var mv = window.CP_PRE && window.CP_PRE.moved ? window.CP_PRE.moved(location.hash) : '';
       if (mv) { try { history.replaceState(history.state, '', location.pathname + location.search + mv); } catch (e) { } }
+      // a hash this page does not serve (a chapter's on the home page, a view's on a chapter's page) goes to its page, in
+      // place of this entry, so Back returns to where the reader was
+      var to = away(location.hash);
+      if (to) { location.replace(to); return; }
       var h = location.hash || '#/', m = h.match(/^#\/([a-z-]+)/), bare = h.replace(/^#/, '');
       var atHome = bare === '' || bare === '/' || bare.indexOf('/?') === 0; // '#/?country=JP' is the home page with a query
       var v = (atHome || m) ? 'walk' : 'stack'; // the site opens on the walk (trial, 11 Sept 2026); an unknown #/route goes home; a bare chapter anchor opens the chain
+      if (PAGE.kind !== 'home' && v === 'walk') { v = 'stack'; m = null; bare = ''; } // a chapter's page and the book hold The Chain alone (their own top)
       if (m && VIEWS.indexOf(m[1]) >= 0) v = m[1];
       var anchor = v === 'geopolitics' ? 'geopolitics' : ((!m && bare && !atHome) ? dec(bare) : null);
       if (anchor && !m) { // a bare anchor belongs to whichever view holds it; one that sits outside them all (the skip link's #app) leaves the view alone
@@ -659,6 +702,7 @@
     /* what The Chain shows for an anchor: the chapter that holds it, or the contents (#/chain, the contents' own ids, an id
        found nowhere) */
     chainOf: function (anchor) {
+      if (PAGE.kind === 'chapter') return PAGE.chapter; // a chapter's page shows its chapter, whichever of its anchors is named
       var el = anchor ? document.getElementById(anchor) : null, ch = el && el.closest ? el.closest('article.chapter') : null;
       return ch && ch.closest('.view[data-view="stack"]') ? ch.id : 'contents';
     },

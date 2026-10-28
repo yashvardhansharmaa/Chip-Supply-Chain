@@ -858,7 +858,9 @@ ${railHTML(ch, stageIdx, toc)}
 <div class="prose">${withCard(glossaryWrap(pb.html), plateGl)}${reviewHTML(ch)}${sources}${prevNext(ch)}</div>
 </article>`;
 }
-const chaptersHTML = chapters.length ? chapters.map(chapterHTML).join('\n') : `<article class="chapter" id="placeholder" data-specimen="wafer" data-number="01" data-title="Placeholder"><header class="chapter-head"><div class="chapter-num">01</div><h2 class="chapter-title">No chapters yet</h2></header><div class="prose"><p>No chapters found. This is a shell build.</p></div></article>`;
+// each chapter's article, by id: on its own page alone, and all of them in the book (the pages, below)
+const articleOf = new Map(chapters.map((c) => [c.id, chapterHTML(c)]));
+const chaptersHTML = chapters.length ? chapters.map((c) => articleOf.get(c.id)).join('\n') : `<article class="chapter" id="placeholder" data-specimen="wafer" data-number="01" data-title="Placeholder"><header class="chapter-head"><div class="chapter-num">01</div><h2 class="chapter-title">No chapters yet</h2></header><div class="prose"><p>No chapters found. This is a shell build.</p></div></article>`;
 
 /* The Chain's contents page (design round eight, option 3 "clean", chosen by the owner on 28 Oct 2026; MAIN/qa/design8/b/
    b1-clean.html, its builder src/build_clean.py and the "B1 clean" section of its notes.md). Under the head (src/template.html
@@ -1052,7 +1054,7 @@ function exposureViz(rows) {
 let geoArticle = '', geoDek = 'Who holds each chokepoint, how the export-control campaign has unfolded since 2018, and where the chips go.';
 // the essay, the last chapter, is drawn by the same chapterHTML as the others (redesign stage 2): the opener, its specimen on the night ground and
 // the rail; it has no card, being no stage
-if (geo) { geoDek = geo.meta.oneLiner || geoDek; geoArticle = chapterHTML(geo); }
+if (geo) { geoDek = geo.meta.oneLiner || geoDek; geoArticle = chapterHTML(geo); articleOf.set(geo.id, geoArticle); }
 
 /* ---------------- sources view ---------------- */
 const all = chapters.concat(geo ? [geo] : []);
@@ -1249,16 +1251,19 @@ Object.entries(RETIRED.chapters || {}).forEach(([old, e]) => {
     if (onPage(from)) warn(`retired chapters: #${from} is still an anchor on the page, so it must not be forwarded`);
   });
 }
-fill('PREROUTE', preSrc.replace(PRE_CHAPTERS, `var CHAPTERS = ${JSON.stringify(chainIds)};`).replace(PRE_MOVED, `var MOVED = ${JSON.stringify(movedMap)};`).replace(/<\/script/gi, '<\\/script'));
+// the page's own line (its kind, its chapter and the way to the root) goes in page by page (the pages, below)
+const PRE_PAGE = "var PAGE = { kind: 'book', chapter: '', root: '' }; // this page: build/build.js writes its kind (home, chapter or book), its chapter and the way to the site's root here";
+if (!preSrc.includes(PRE_PAGE)) warn('preroute: src/preroute.js has lost the line the build writes the page into');
+const preBase = preSrc.replace(PRE_CHAPTERS, `var CHAPTERS = ${JSON.stringify(chainIds)};`).replace(PRE_MOVED, `var MOVED = ${JSON.stringify(movedMap)};`);
 // one chapter at a time on The Chain (src/template.html, the style after the pre-boot rules): for each value of
-// html[data-chain], what of The Chain stays hidden on screen
-{
+// html[data-chain], what of The Chain stays hidden on screen, for the chapters a page holds
+const chainOne = (ids) => {
   const S = '.view[data-view="stack"] >';
   const off = [`html[data-chain]:not([data-chain="contents"]) ${S} .howto`, `html[data-chain]:not([data-chain="contents"]) ${S} .contents`,
     `html[data-chain="contents"] ${S} article.chapter`, `html[data-chain="pending"] ${S} article.chapter`]
-    .concat(chainIds.map((id) => `html[data-chain="${id}"] ${S} article.chapter:not(#${id})`));
-  fill('CHAIN_ONE', `@media screen {\n${off.join(',\n')} { display: none; }\nhtml[data-chain] ${S} article.chapter { content-visibility: visible; border-top: 0; }\n}`);
-}
+    .concat(ids.map((id) => `html[data-chain="${id}"] ${S} article.chapter:not(#${id})`));
+  return `@media screen {\n${off.join(',\n')} { display: none; }\nhtml[data-chain] ${S} article.chapter { content-visibility: visible; border-top: 0; }\n}`;
+};
 const modDir = (d) => (fs.existsSync(d) ? fs.readdirSync(d).filter((f) => !f.startsWith('.')).sort() : []);
 const moduleCSS = modDir(path.join(root, 'src', 'modules')).filter((f) => f.endsWith('.css')).map((f) => `\n/* module: ${f} */\n` + read(path.join(root, 'src', 'modules', f))).join('\n');
 const siteCSS = read(path.join(root, 'src', 'styles.css')) + moduleCSS; // dist/assets/site.css (the shared files, below)
@@ -1289,7 +1294,7 @@ const sheetPages = [['#/', 'Home'], ['#/chain', 'The Chain'], ['#/landscape', 'A
 const sheetItem = (ch) => `<li><a href="${ch.id === 'geopolitics' ? '#geopolitics' : '#' + esc(ch.id)}"><span class="n">${pad(ch.number)}</span><span class="t">${esc(ch.title)}</span></a></li>`;
 const sheetChapters = stages.map(sheetItem).join('') + (acrossChapters.length ? `<li class="sheet-k" aria-hidden="true">Across the chain</li>` + acrossChapters.map(sheetItem).join('') : '');
 fill('SHEET_PAGES', sheetPages); fill('SHEET_CHAPTERS', sheetChapters);
-fill('CONTENTS', contentsHTML); fill('CHAIN_STANDFIRST', chainStandfirst); fill('CHAPTERS', chaptersHTML); fill('CREDITS', credits);
+fill('CONTENTS', contentsHTML); fill('CHAIN_STANDFIRST', chainStandfirst); fill('CREDITS', credits); // the chapters go in page by page (the pages, below)
 // the footer opens with the masthead's own tile (src/template.html), which signs off in the ledger column on the walk and
 // The Chain (styles.css .ft-mark) and stays hidden elsewhere. It is added here, so footer and footerKey, which the readable
 // pages and the summary reuse, keep their words and markup.
@@ -1303,7 +1308,6 @@ fill('SUPPLIERS_INTRO', suppliersIntro); fill('SUPPLIERS_FACTS', suppliersFacts)
 for (const asset of ['print-title.png']) { const from = path.join(root, 'build', 'assets', asset); if (fs.existsSync(from)) fs.copyFileSync(from, path.join(root, 'dist', asset)); }
 // the site icons (drawn by `python3 build/icons.py`) go to the root of dist/, where browsers look for /favicon.ico
 for (const icon of ['favicon.ico', 'favicon.svg', 'apple-touch-icon.png']) { const from = path.join(root, 'build', 'assets', 'icons', icon); if (fs.existsSync(from)) fs.copyFileSync(from, path.join(root, 'dist', icon)); else warn(`icon ${icon} is missing; run python3 build/icons.py`); }
-fill('GEO_ARTICLE', geoArticle); // the essay, the last chapter, from the same chapterHTML as the others
 fill('BRIEFING', briefingHTML); fill('GLOSSARY', glossaryHTML); fill('GLOSSARY_COUNT', String(glossary.length));
 // the Look up page: one list of every term, firm and chip, alphabetical, each with the kind a reader would call it
 const lkSlug = (s) => String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -1361,24 +1365,105 @@ writeAsset('site.css', siteCSS);
 writeAsset('kit.js', kit + '\n' + specimens + '\n');
 writeAsset('data.js', `window.CP_DATA = ${JSON.stringify(data)};\n`);
 writeAsset('app.js', read(path.join(root, 'src', 'app.js')) + moduleJS + '\n' + tryPart('cite line', CITE_JS) + tryPart('figure actions', FIG_JS) + tryPart('rail toggle', RAIL_TOGGLE_JS));
-const scriptTag = (name) => `<script src="${assetURL[name]}"></script>`;
 fill('STYLESHEET', `<link rel="stylesheet" href="${assetURL['site.css']}">`);
-fill('SCRIPTS', ['kit.js', 'data.js', 'app.js'].map(scriptTag).join('\n'));
-// any placeholder no module filled is removed rather than shipped as braces
-html = html.replace(/\{\{[A-Z_]+\}\}/g, () => '');
-// the main page's "Updated" day (footer and printed title page) is the day its content last changed, not the build's
-// (page dates, above): the footers and the printed title page say "Updated <build day>" until here; they take the DAY_TOKEN,
-// the page is hashed by its text and DATA, and then the token becomes the day the content last changed
-html = html.split(`Updated ${builtStr}`).join(`Updated ${DAY_TOKEN}`);
-const homeDates = pageDate('/', html + JSON.stringify(data));
-html = html.split(DAY_TOKEN).join(dayStr(homeDates.modified));
-// each chapter's cite line carries that chapter's own day, the one its readable page shows (social.js has just dated it);
-// it goes in only now, so that neither the main page's hash nor its "Updated" rewrite above ever sees a chapter's day
-html = html.replace(/\{\{CITE_DAY:([a-z0-9-]+)\}\}/g, (m, id) => { const e = pageDates['/' + id + '/']; if (!e || !e.modified) warn(`cite line: chapter ${id} has no page date`); return dayStr((e && e.modified) || today); });
 
-// the route before boot: an address that names an id in one view must not show another view while the page loads
+/* ---------------- the pages ----------------
+   One template, three kinds of page (28 Oct 2026; src/template.html marks the parts that differ):
+   - the home page, dist/index.html: home, The Chain's contents, AI Chips, Suppliers, Export Controls and the Glossary, and
+     no chapter's text;
+   - each chapter's own page, dist/<id>/index.html: The Chain with that chapter alone, under the chapter's own head
+     (social.js chapterHead), so it is the full chapter at its own address, and the one page that carries its text;
+   - the book, dist/book/index.html: The Chain's cover, contents and every chapter, which build/pdf.py prints. It is for
+     print only: noindex, linked from nowhere and disallowed in robots.txt.
+   Each page's preroute line says which page it is (src/preroute.js PAGE), and relink settles its links for where it sits.
+   Until 28 Oct 2026 dist/index.html held every chapter and dist/<id>/ a static readable copy of it. */
+const pre = require(path.join(root, 'src', 'preroute.js'));
+const unmark = (h) => h.replace(/[ \t]*<!--\/?(head|home|book)-->\n?/g, '');
+const cutOut = (h, mark) => h.replace(new RegExp(`[ \\t]*<!--${mark}-->[\\s\\S]*?<!--/${mark}-->\\n?`, 'g'), '');
+const scriptTags = (names, up) => names.map((n) => `<script src="${up}${assetURL[n]}"></script>`).join('\n');
+/* Links, settled for the page they sit on (the same rules src/preroute.js away() applies at run time, and src/app.js addr()
+   to the links the app writes): a fragment whose place is on this page stays; one whose place is elsewhere becomes that
+   place's address (a chapter's anchor from the home page, <id>/#<anchor>; a view's route from a chapter's page, ../#/<view>);
+   a relative path gains the way to the root (../media/, ../pdf/, ../<id>/). A chapter's link to its own page goes to its
+   top in place. data-route, which kept a chapter link in the app while every chapter was on one page, stays only on the
+   book. The scripts' and styles' own text is left alone. */
+function relink(h, page) {
+  const ids = new Set(), held = [];
+  for (const m of h.matchAll(/\sid="([^"]+)"/g)) ids.add(m[1]);
+  h = h.replace(/(<(script|style)\b[^>]*>)([\s\S]*?)(<\/\2>)/gi, (m, open, tag, body, close) => { held.push(body); return `${open}\u0000${held.length - 1}\u0000${close}`; });
+  const fix = (v, routed) => {
+    if (v.charAt(0) === '#') {
+      let id = v.slice(1).replace(/&amp;/g, '&'); try { id = decodeURIComponent(id); } catch (e) { }
+      if (v.length < 2 || ids.has(id)) return v;
+      const to = pre.away(v.replace(/&amp;/g, '&'), '', page, chainIds);
+      return to ? esc(to) : v;
+    }
+    if (routed && page.chapter && v === page.chapter + '/') return '#' + page.chapter; // the chapter's own page: its top, in place
+    if (!page.root || /^([a-z][a-z0-9+.-]*:|\/|\?|\.\.\/)/i.test(v)) return v;
+    return page.root + v;
+  };
+  h = h.replace(/<[a-zA-Z][^>\u0000]*>/g, (tag) => {
+    const routed = /\sdata-route="/.test(tag);
+    let t = tag.replace(/(\s(?:href|src|data-src|poster))="([^"]*)"/g, (m, a, v) => `${a}="${fix(v, routed)}"`);
+    if (page.kind !== 'book') t = t.replace(/\sdata-route="[^"]*"/, '');
+    return t;
+  });
+  return h.replace(/\u0000(\d+)\u0000/g, (m, i) => held[+i]);
+}
+// the page from the template: the parts it does not hold cut, its own head, preroute line, chapters and scripts in
+function makePage(kind, o) {
+  let h = html;
+  const put = (k, v) => { h = h.split(`{{${k}}}`).join(v); };
+  if (kind !== 'home') h = cutOut(h, 'home');
+  if (kind === 'chapter') h = cutOut(h, 'book');
+  if (o.head) h = h.replace(/<!--head-->[\s\S]*?<!--\/head-->/, o.head);
+  h = unmark(h);
+  const page = { kind, chapter: o.chapter || '', root: o.root };
+  put('PREROUTE', preBase.replace(PRE_PAGE, `var PAGE = ${JSON.stringify(page)};`).replace(/<\/script/gi, '<\\/script'));
+  put('CHAIN_ONE', chainOne(o.ids));
+  put('CHAPTERS', o.chapters); put('GEO_ARTICLE', '');
+  put('SCRIPTS', scriptTags(o.scripts, o.root));
+  // any placeholder no module filled is removed rather than shipped as braces
+  h = h.replace(/\{\{[A-Z_]+\}\}/g, () => '');
+  return { h, page };
+}
+// a page's "Updated" day: the footers and the printed title page say "Updated <build day>" until the page is dated, then the
+// day its content last changed (page dates, above); and each cite line its chapter's own day, which goes in last, so that
+// no page's hash or "Updated" rewrite ever sees a chapter's day
+const citeDays = (h) => h.replace(/\{\{CITE_DAY:([a-z0-9-]+)\}\}/g, (m, id) => { const e = pageDates['/' + id + '/']; if (!e || !e.modified) warn(`cite line: chapter ${id} has no page date`); return dayStr((e && e.modified) || today); });
+const writePage = (rel, h) => { fs.mkdirSync(path.dirname(path.join(root, 'dist', rel)), { recursive: true }); fs.writeFileSync(path.join(root, 'dist', rel), keepRanges(h)); };
+
+// the home page: dated by its text and DATA, the data its views draw from
+let homeHTML;
 {
-  const pre = require(path.join(root, 'src', 'preroute.js')), main = html.slice(html.indexOf('<main'), html.indexOf('</main>'));
+  const { h, page } = makePage('home', { root: '', chapters: '', ids: [], scripts: ['kit.js', 'data.js', 'app.js'] });
+  let x = h.split(`Updated ${builtStr}`).join(`Updated ${DAY_TOKEN}`);
+  const homeDates = pageDate('/', x + JSON.stringify(data));
+  homeHTML = relink(citeDays(x.split(DAY_TOKEN).join(dayStr(homeDates.modified))), page);
+  writePage('index.html', homeHTML);
+}
+// each chapter's page: dated by its article (the chapter's own text, figures and sources, as the readable page was), headed
+// by social.js, and carrying, for print, the annotated still of a drawing with numbered parts (src/modules/print.js)
+for (const ch of all) {
+  const art = articleOf.get(ch.id);
+  if (!art || !ctx.chapterHead) { warn(`chapter page ${ch.id}: no article or no head, so it has no page`); continue; }
+  const dates = pageDate('/' + ch.id + '/', art, ch.file);
+  const { h, page } = makePage('chapter', { root: '../', chapter: ch.id, chapters: art, ids: [ch.id], head: ctx.chapterHead(ch, dates), scripts: ['kit.js', 'app.js'] });
+  writePage(ch.id + '/index.html', relink(citeDays(h.split(`Updated ${builtStr}`).join(`Updated ${dayStr(dates.modified)}`)), page));
+}
+// the book: every chapter, for print only, dated by the latest of the home page and its chapters
+{
+  const last = ['/'].concat(all.map((c) => '/' + c.id + '/')).map((k) => (pageDates[k] || {}).modified || today).sort().pop();
+  const head = `<title>How AI chips are made · Chip Supply Chain</title>\n<meta name="robots" content="noindex">\n<link rel="canonical" href="${SITE.url}">`;
+  const { h, page } = makePage('book', { root: '../', chapters: all.map((c) => articleOf.get(c.id)).filter(Boolean).join('\n'), ids: chainIds, head, scripts: ['kit.js', 'app.js'] });
+  writePage('book/index.html', relink(citeDays(h.split(`Updated ${builtStr}`).join(`Updated ${dayStr(last)}`)), page));
+}
+
+// the route before boot: an address that names an id in one view must not show another view while the page loads (checked
+// over the home page's views and the book's chapters, which between them hold every view and every chapter)
+{
+  const full = unmark(html).split('{{CHAPTERS}}').join(all.map((c) => articleOf.get(c.id)).filter(Boolean).join('\n'));
+  const main = full.slice(full.indexOf('<main'), full.indexOf('</main>'));
   const cuts = [...main.matchAll(/<section class="view\b[^"]*" data-view="([a-z]+)"/g)], wrong = [], strays = [];
   cuts.forEach((c, i) => {
     const part = main.slice(c.index, i + 1 < cuts.length ? cuts[i + 1].index : main.length);
@@ -1397,15 +1482,13 @@ html = html.replace(/\{\{CITE_DAY:([a-z0-9-]+)\}\}/g, (m, id) => { const e = pag
   if (wrong.length) warn(`preroute: ${wrong.length} ids would show the wrong view while the page loads, so add their prefix to OWN in src/preroute.js: ${wrong.slice(0, 8).join(', ')}`);
   if (strays.length) warn(`preroute: ${strays.length} ids in The Chain would show the wrong chapter while the page loads, so start them with their chapter's id (src/preroute.js chapterOf): ${strays.slice(0, 8).join(', ')}`);
 }
-fs.mkdirSync(path.join(root, 'dist'), { recursive: true });
-fs.writeFileSync(path.join(root, 'dist', 'index.html'), keepRanges(html));
 if (SITE.cname) fs.writeFileSync(path.join(root, 'dist', 'CNAME'), SITE.cname + '\n'); else if (fs.existsSync(path.join(root, 'dist', 'CNAME'))) fs.unlinkSync(path.join(root, 'dist', 'CNAME'));
 // for search engines: everything may be crawled, and the sitemap lists the HTML pages that carry their own content
 // (the site itself, each chapter's readable page, the summary, and the four reference pages that reference-pages.js writes;
 // the other view share pages only forward to the site, so they are left out). The PDFs are still dated here, by their bytes.
 // each with the day its content last changed (page dates, above): the readable pages hash their article, a PDF its bytes
-const chapterPages = (ctx.readablePages || []).map((id) => '/' + id + '/'); // social.js lists the readable pages it wrote
-if (chapterPages.length !== all.length) warn(`sitemap: ${all.length - chapterPages.length} of ${all.length} chapters have no readable page`);
+const chapterPages = (ctx.chapterPages || []).map((id) => '/' + id + '/'); // social.js lists the chapters that have a page
+if (chapterPages.length !== all.length) warn(`sitemap: ${all.length - chapterPages.length} of ${all.length} chapters have no page`);
 const pdfName = 'pdf/how-ai-chips-are-made.pdf', pdfFile = path.join(root, 'dist', pdfName);
 if (fs.existsSync(pdfFile)) pageDate('/' + pdfName, fs.readFileSync(pdfFile)); else warn(`sitemap: dist/${pdfName} is missing`);
 const summaryPdf = 'pdf/summary.pdf', summaryPdfFile = path.join(root, 'dist', summaryPdf);
@@ -1420,7 +1503,8 @@ Object.entries(OLD_PDFS).forEach(([old, now]) => { if (fs.existsSync(now)) fs.co
 const chapterPdfs = all.filter((c) => chapterPDF(c.id)).map((c) => { const p = chapterPDF(c.id); pageDate('/' + p.href, p.bytes); return '/' + p.href; });
 if (chapterPdfs.length < all.length) warn(`chapter PDFs: ${all.length - chapterPdfs.length} of ${all.length} are not in dist/pdf/ yet (python3 build/chapter_pdfs.py), so their cite lines carry no PDF link: ${all.filter((c) => !chapterPDF(c.id)).map((c) => c.id).join(', ')}`);
 const lastmod = (key) => (pageDates[key] || {}).modified || today;
-fs.writeFileSync(path.join(root, 'dist', 'robots.txt'), `User-agent: *\nAllow: /\n${Object.keys(OLD_PDFS).map((o) => `Disallow: /${o}\n`).join('')}\nSitemap: ${SITE.url}sitemap.xml\n`);
+// the book (dist/book/, the pages above) is for print alone, so it is kept from search engines too
+fs.writeFileSync(path.join(root, 'dist', 'robots.txt'), `User-agent: *\nAllow: /\nDisallow: /book/\n${Object.keys(OLD_PDFS).map((o) => `Disallow: /${o}\n`).join('')}\nSitemap: ${SITE.url}sitemap.xml\n`);
 fs.writeFileSync(path.join(root, 'dist', 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
   // HTML pages only (the owner, 21 Oct 2026): the PDFs stay on the site and are linked from their pages, but are not listed
   ['/', ...chapterPages, '/summary/', ...(ctx.referencePages || [])].map((k) => `  <url><loc>${SITE.url}${k.slice(1)}</loc><lastmod>${lastmod(k)}</lastmod></url>`).join('\n') + `\n</urlset>\n`);
@@ -1441,7 +1525,7 @@ fs.readdirSync(ASSET_DIR).forEach((f) => { if (!assetURL[f]) fs.unlinkSync(path.
 const tierTotal = tierCounts([].concat(...all.map((c) => c.cites)));
 const report = [`built ${new Date().toISOString()}`, `source tiers: A ${tierTotal.A} · B ${tierTotal.B} · disallowed ${tierTotal.C + tierTotal.D} · unclassified ${tierTotal['?']}`, `chapters: ${chapters.length}${geo ? ' + geopolitics' : ''}`, `words: ${totalWords}`, `sources: ${all.reduce((a, c) => a + c.cites.length, 0)}`,
   `landscape: ${landscape.length} chips · suppliers: ${suppliers.length} · timeline: ${timeline.length} · matrix: ${matrix.length} · glossary: ${glossary.length} · controls: ${controls.length} · exposure: ${exposure.length}`, `specimens: ${[...specNames].join(', ')}`,
-  `size: ${(html.length / 1024).toFixed(0)} KB`, ...all.map((c) => { const tc = tierCounts(c.cites); return `  ${pad(c.number)} ${c.id}: ${c.words} words, ${c.cites.length} sources (D ${tc.D}, ? ${tc['?']}), ${(c.meta.figures || []).length} figures`; }), ...warnings.map((w) => 'WARN ' + w)].join('\n');
+  `size: home ${(homeHTML.length / 1024).toFixed(0)} KB`, ...all.map((c) => { const tc = tierCounts(c.cites); return `  ${pad(c.number)} ${c.id}: ${c.words} words, ${c.cites.length} sources (D ${tc.D}, ? ${tc['?']}), ${(c.meta.figures || []).length} figures`; }), ...warnings.map((w) => 'WARN ' + w)].join('\n');
 fs.writeFileSync(path.join(root, 'dist', 'build-report.txt'), report);
 console.log(report);
 if (fatal.length) { console.error(`build failed: ${fatal.length} problem${fatal.length === 1 ? '' : 's'}; dist/ is incomplete, do not deploy it`); fatal.forEach((p) => console.error('  ' + p)); process.exit(1); }

@@ -9,7 +9,12 @@
    The build runs route() over every id on the page and warns when one would open a view, or a chapter, other than the one it sits in.
    An address of a chapter merged away (build/retired-chapters.js: the old chapter's id, its sections and figures, and its step
    of the walk) is swapped for the merged chapter's nearest one before anything else reads it (moved()),
-   and the router swaps a link followed later the same way (src/app.js Router.route, through CP_PRE.moved). */
+   and the router swaps a link followed later the same way (src/app.js Router.route, through CP_PRE.moved).
+   Since 28 Oct 2026 each chapter is a page of its own (<id>/), the home page holds the other views and The Chain's contents,
+   and book/ holds every chapter for print (build/build.js). The build writes the page's kind into PAGE. A hash this page
+   does not serve (on the home page an old chapter link, /#lithography--who-makes-it; on a chapter page a view's route) is
+   sent to the page that serves it with location.replace before anything paints (away()), and the router does the same for
+   a hash set later (CP_PRE.away). */
 (function (root) {
   'use strict';
   // the #/<name> routes, as Router.route maps them (VIEWS and ALIAS in src/app.js); an unknown name goes home
@@ -23,6 +28,7 @@
   function own(id) { for (var i = 0; i < OWN.length; i++) if (OWN[i][0].test(id)) return OWN[i][1]; return 'stack'; }
   var CHAPTERS = []; // the chapters of The Chain, in order: build/build.js writes their ids here
   var MOVED = {}; // the addresses of a chapter merged away: build/build.js writes { chapters: { old: new }, anchors: { old: new } } here
+  var PAGE = { kind: 'book', chapter: '', root: '' }; // this page: build/build.js writes its kind (home, chapter or book), its chapter and the way to the site's root here
   // the chapter an id in The Chain belongs to, by its prefix (the longest chapter id that fits wins), or '' if none fits
   function chapterOf(id, list) {
     var best = '';
@@ -67,13 +73,39 @@
     }
     return { view: view, sub: sub };
   }
-  if (typeof module !== 'undefined' && module.exports) { module.exports = { route: route, chapterOf: chapterOf, moved: moved }; return; }
+  /* Each chapter has a page of its own, <root><id>/ (28 Oct 2026), the home page holds the other views, and /book/ holds every
+     chapter for print. away() gives the address a hash belongs at when this page does not serve it, or '' when it does: on the
+     home page a chapter's hash (the chapter, a section, a figure, a citation, #/geopolitics, ?only=<chapter>) is that
+     chapter's page at that anchor; on a chapter page a view's route is the home page's, and another chapter's anchor that
+     chapter's page; the book serves The Chain and sends the views home. The address is relative to this page, and keeps
+     the query (?theme=dark) */
+  function away(hash, search, page, list) {
+    page = page || PAGE; list = list || CHAPTERS;
+    var h = String(hash || ''), q = String(search || ''), up = page.root || '';
+    if (page.kind !== 'home' && (h === '' || h === '#')) return ''; // the chapter's own top, or the book's contents
+    var r = route(h, q, list), at = function (c, a) { return up + c + '/' + q + (a && a !== c ? '#' + a : ''); };
+    if (r.view !== 'stack') return page.kind === 'home' ? '' : up + q + (h === '#/' || h === '' ? '' : h);
+    if (r.chapter === 'contents') return page.kind === 'chapter' ? up + q + '#/chain' : '';
+    if (!r.chapter) return ''; // an id no chapter owns: this page's own, or none
+    if (page.kind === 'home') return at(r.chapter, r.anchor);
+    if (page.kind === 'chapter' && r.chapter !== page.chapter) return at(r.chapter, r.anchor);
+    return '';
+  }
+  if (typeof module !== 'undefined' && module.exports) { module.exports = { route: route, chapterOf: chapterOf, moved: moved, away: away }; return; }
 
-  var html = document.documentElement, pre = root.CP_PRE = { view: null, touched: false, moved: moved }, r = null;
+  var html = document.documentElement, pre = root.CP_PRE = { view: null, touched: false, moved: moved, page: PAGE, chapters: CHAPTERS, away: function (h, s) { return away(h, s == null ? location.search : s); } }, r = null;
   try {
     var mv = moved(location.hash); // a merged chapter's address: the merged chapter's own, in place, before it is read
     if (mv && root.history && history.replaceState) history.replaceState(history.state, '', location.pathname + location.search + mv);
+    // a hash this page does not serve goes to the page that does, in place of this entry, so Back is not broken (an old link
+    // to /#lithography lands on /lithography/); nothing paints here meanwhile
+    var to = away(location.hash, location.search);
+    if (to) { pre.left = to; html.setAttribute('data-route', 'pending'); location.replace(to); return; }
     r = route(location.hash, location.search);
+    // a chapter's page and the book hold The Chain alone: their own top is the chapter, or the book's contents, and on a
+    // chapter's page every anchor is in that chapter
+    if (PAGE.kind !== 'home' && r.view !== 'stack') r = { view: 'stack', sub: '', chapter: PAGE.chapter || 'contents' };
+    else if (PAGE.kind === 'chapter') r.chapter = PAGE.chapter;
     pre.view = r.view; html.setAttribute('data-route', r.view);
     if (r.sub) html.setAttribute('data-sub', r.sub);
     if (r.view === 'stack') html.setAttribute('data-chain', r.chapter || 'pending');

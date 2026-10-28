@@ -3,14 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- the title and description come from build/page-titles.json (filled by build/modules/social.js), as every static page's do -->
-<title>{{HOME_TITLE}}</title>
+<!-- the title and description come from build/page-titles.json (filled by build/modules/social.js), as every static page's do.
+     The markers below (head, home, book) mark the parts that differ by page (build/build.js, 28 Oct 2026). The head is the home
+     page's own: a chapter's page and the book take their own in its place. The views marked home are the home page's alone.
+     The Chain's cover and contents, marked book, are the home page's and the book's; a chapter's page holds The Chain with
+     its one chapter -->
 <meta name="cp-titles" content="{{VIEW_TITLES}}">
-<meta name="description" content="{{HOME_DESCRIPTION}}">
-<link rel="canonical" href="{{SITE_URL}}">
 <link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
+<!--head-->
+<title>{{HOME_TITLE}}</title>
+<meta name="description" content="{{HOME_DESCRIPTION}}">
+<link rel="canonical" href="{{SITE_URL}}">
 <meta property="og:site_name" content="Chip Supply Chain">
 <meta property="og:type" content="website">
 <meta property="og:title" content="{{HOME_TITLE}}">
@@ -27,6 +32,7 @@
 <!-- the site as a WebSite, with the same publisher the chapter pages name (build/modules/social.js). No SearchAction: the
      site's search is a dialog with no address of its own, and Google retired the sitelinks search box in November 2024 -->
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebSite", "@id": "{{SITE_URL}}#website", "name": "Chip Supply Chain", "url": "{{SITE_URL}}", "description": "How AI chips are made: an introduction to the entire semiconductor supply chain.", "inLanguage": "en", "author": {"@type": "Person", "name": "Yashvardhan Sharma", "url": "https://www.linkedin.com/in/yashvardhan07/"}, "publisher": {"@type": "Organization", "@id": "{{SITE_URL}}#publisher", "name": "Chip Supply Chain", "url": "{{SITE_URL}}", "logo": {"@type": "ImageObject", "url": "{{SITE_URL}}apple-touch-icon.png", "width": 180, "height": 180}}}</script>
+<!--/head-->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..600,0,0&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,400&family=Hanken+Grotesk:wght@400..700&family=Fragment+Mono&display=swap">
@@ -119,6 +125,7 @@ html:not(.booted)[data-pick] .view[data-view="suppliers"] > :not(.view-head) { d
   (function(f){var r=document.documentElement.getAttribute('data-route');if(f&&r&&!/^(walk|stack)$/.test(r))f.setAttribute('data-hidden','1');})(document.currentScript&&document.currentScript.previousElementSibling);</script>
 
   <main id="main" tabindex="-1">
+    <!--home-->
     <!-- the views in the order a first visit needs them: home first, the three small views, The Chain, the Glossary -->
     <section class="view column" data-view="walk">{{WALK}}<footer class="site-footer">{{FOOTER}}</footer></section>
 
@@ -225,8 +232,10 @@ html:not(.booted)[data-pick] .view[data-view="suppliers"] > :not(.view-head) { d
       </div>
       <footer class="site-footer">{{FOOTER}}</footer>
     </section>
+    <!--/home-->
 
     <section class="view column" data-view="stack">
+      <!--book-->
       <section class="print-only print-title" aria-hidden="true">
         <img class="pt-art" data-src="print-title.png" width="1558" height="1558" alt="">
         <div class="pt-type">
@@ -261,11 +270,13 @@ html:not(.booted)[data-pick] .view[data-view="suppliers"] > :not(.view-head) { d
         <h2 class="contents-h">Contents</h2>
         {{CONTENTS}}
       </div>
+      <!--/book-->
       {{CHAPTERS}}
       {{GEO_ARTICLE}}
       <footer class="site-footer">{{FOOTER_KEY}}</footer>
     </section>
 
+    <!--home-->
     <section class="view column wide" data-view="glossary">
       <!-- The Glossary as a dictionary (redesign option B, src/modules/lookup.js): every entry in columns, A to Z, under a sticky
            bar with the search, the kinds and the letters; an entry opens in the sheet. #lk-items and #glossary are the entries as
@@ -294,6 +305,7 @@ html:not(.booted)[data-pick] .view[data-view="suppliers"] > :not(.view-head) { d
       </aside>
       <footer class="site-footer">{{FOOTER}}</footer>
     </section>
+    <!--/home-->
 
 
   </main>
