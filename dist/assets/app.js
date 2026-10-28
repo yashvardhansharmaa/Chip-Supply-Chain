@@ -3972,7 +3972,7 @@ try {
       this.shown = top.concat(LETTERS.reduce(function (acc, L) { return self.groups[L] ? acc.concat(self.groups[L].filter(function (it) { return it.on && top.indexOf(it) < 0; })) : acc; }, []));
       this.cursor = -1;
       var tot = this.counts[kind] || 0, c = $('#lk-count');
-      if (c) c.textContent = lq ? (res.length ? res.length + ' of ' + tot + ' entries' : 'No entry matches.') : tot + ' entries';
+      if (c) { c.textContent = lq ? (res.length ? res.length + ' of ' + tot + ' entries' : 'No entry matches.') : tot + ' entries'; c.classList.toggle('sr-only', !lq); } // the kind's count is on its button; the line shows for a search only, and is always read out
       $('#gl-clear').hidden = !lq;
       this.guide();
       var none = $('#gl-none'), dict = $('#gl-dict');

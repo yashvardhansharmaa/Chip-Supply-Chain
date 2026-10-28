@@ -113,7 +113,7 @@ ${nExtreme ? `<p class="wk-gl-p"><b>${nExtreme} of the ${stages.length} stages</
     return `<li class="wk-step" id="${esc(stepId(ch.id))}" data-title="${esc(ch.title)}" data-number="${pad(ch.number)}" data-specimen="${esc((ch.meta && ch.meta.specimen) || '')}" data-caption="${esc((ch.meta && ch.meta.specimenCaption) || '')}">
 <div class="wk-mark" aria-hidden="true"><span class="wk-n">${pad(ch.number)}</span></div>
 <div class="wk-block">
-<p class="wk-where"><span class="label">Chapter ${pad(ch.number)}</span>${stage ? `<span class="label wk-stage">${esc(stage)}</span>` : ''}</p>
+<p class="wk-where">${stage ? `<span class="label wk-stage">${esc(stage)}</span>` : `<span class="label">Chapter ${pad(ch.number)}</span>`}</p>
 <h2 class="wk-t">${esc(ch.title)}</h2>
 ${ctx.glossaryWrap ? ctx.glossaryWrap(`<p class="wk-p">${esc(plainOf(ch.id))}</p>`) : `<p class="wk-p">${esc(plainOf(ch.id))}</p>`}
 ${ctx.glossaryWrap ? ctx.glossaryWrap(factsHTML(ch)) : factsHTML(ch)}

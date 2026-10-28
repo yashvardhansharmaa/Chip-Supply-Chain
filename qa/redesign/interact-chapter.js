@@ -177,7 +177,7 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8766';
     for (const width of [1440, 390]) {
       const t = await open(chrome, BASE + '/lithography/', { width, wait: 2500 });
       check(`page ${width}: the masthead's search and theme buttons`, await t.ev("!!document.querySelector('.masthead .search-btn') && !!document.querySelector('.masthead .theme-toggle')"));
-      check(`page ${width}: the opener's kicker`, /Chapter 04\s*Stage 4 of 14\s*Extreme/.test(await t.ev("document.querySelector('.ch-kick').textContent")), await t.ev("document.querySelector('.ch-kick').textContent"));
+      check(`page ${width}: the opener's kicker, one numbering (fix-d D16)`, /^Stage 4 of 14\s*Extreme/.test(await t.ev("document.querySelector('.ch-kick').textContent")), await t.ev("document.querySelector('.ch-kick').textContent"));
       check(`page ${width}: the live drawing, in the slot (1440) or the strip (390)`, await t.ev(width < 900 ? "!!document.querySelector('.stage > canvas#stage-canvas')" : "!!document.querySelector('#lithography .ch-spec-draw canvas')"));
       check(`page ${width}: look-up buttons and the flashcards`, await t.ev("document.querySelectorAll('#lithography .prose button.gl-term').length > 5 && !!document.querySelector('#lithography--flashcards .fc-show')"));
       check(`page ${width}: the figure strip has Cite, Table, CSV and PNG`, await t.ev("[].map.call(document.querySelectorAll('#fig-lithography-asml-region .fs-acts > *'),function(a){return a.textContent}).join(' ')") === 'Cite Table CSV PNG');

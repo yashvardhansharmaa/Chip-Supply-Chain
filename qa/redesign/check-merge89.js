@@ -67,7 +67,7 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8774';
       check('still: the readable page shows the transistor still', st && /spec-foundries-and-fabs\.webp/.test(st.src) && st.w === 847 && st.h === 908 && /gate-all-around|transistor/i.test(st.alt), st);
       const door = await open(chrome, BASE + '/#metrology-and-inspection', { width: 1440, wait: 2000 });
       const d = await door.ev(`(function(){var a=document.querySelector('#metrology-and-inspection .prevnext .next');var i=a&&a.querySelector('img');return {label:a&&a.querySelector('.label').textContent,t:a&&a.querySelector('.t').textContent,img:i&&i.getAttribute('src'),go:a&&a.querySelector('.go').textContent};})()`);
-      check('the door from chapter 07 leads to stage 08 / 14 with the transistor still', d.label === 'Next, stage 08 / 14' && d.t === 'Foundries and Fabs' && /spec-foundries-and-fabs/.test(d.img) && /chapter 08/.test(d.go), d);
+      check('the door from chapter 07 leads to stage 08 / 14 with the transistor still', d.label === 'Next · Stage 8 of 14' && d.t === 'Foundries and Fabs' && /spec-foundries-and-fabs/.test(d.img) && /Continue reading/.test(d.go), d);
       await r.close(); await door.close();
     }
   } catch (e) { out.push('ERROR ' + e.message); bad++; }

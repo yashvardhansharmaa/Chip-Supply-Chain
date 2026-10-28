@@ -540,7 +540,7 @@ const COST_LEAD = /^((?:about |roughly |up to |from |over |under |~|≈)?(?:US)?
 // gl, when given, marks glossary terms in the card's prose (the substitutability test, the reason and the China and US
 // lines), the first use of each across the card; it takes and returns escaped HTML. ctx is the chapter's citation context
 // ({ id, cites }); without it the card is drawn without marks.
-// where, when given, names the stage at the card's head ("Lithography, stage 4 of 14")
+// where, when given, names the stage at the card's head ("Lithography")
 function nameplate(card, title, gl, ctx, where) {
   if (!card) return '';
   const g = gl || ((s) => s), plain = (s) => s;
@@ -703,15 +703,16 @@ function chapterDoor(ch, attrs, tag, media) {
   const i = seq.findIndex((c) => c.id === ch.id);
   if (i < 0) return '';
   const prev = seq[i - 1], next = seq[i + 1];
-  const where = (c, of) => { const si = stages.findIndex((x) => x.id === c.id); return si >= 0 ? `stage ${pad(si + 1)}${of ? ` / ${pad(stages.length)}` : ''}` : 'across the chain'; };
+  // the door numbers a chapter as the kicker does: "Stage 5 of 14", or "Across the chain" (28 Oct 2026)
+  const where = (c) => { const si = stages.findIndex((x) => x.id === c.id); return si >= 0 ? `Stage ${si + 1} of ${stages.length}` : 'Across the chain'; };
   const go = (words) => `<span class="go">${words}<span class="circ" aria-hidden="true">→</span></span>`;
   // the drawing is the title's picture, so it has no words of its own; the two chapters that are not stages keep their night ground
   const st = next ? doorStill(next) : null;
   const ex = st ? `<span class="ex"${!isStage(next) ? ' data-night="1"' : ''}><img src="${media || ''}${esc(st.file)}" width="${Math.round(st.w / 2)}" height="${Math.round(st.h / 2)}" alt="" loading="lazy" decoding="async"></span>` : '';
   const nx = next
-    ? `<a class="pn next" ${attrs(next)}><span class="label">Next, ${where(next, true)}</span><span class="t">${esc(next.title)}</span>${next.meta.oneLiner ? `<span class="ol">${esc(next.meta.oneLiner)}</span>` : ''}${go(`Continue to chapter ${pad(next.number)}`)}${ex}</a>`
+    ? `<a class="pn next" ${attrs(next)}><span class="label">Next · ${where(next)}</span><span class="t">${esc(next.title)}</span>${next.meta.oneLiner ? `<span class="ol">${esc(next.meta.oneLiner)}</span>` : ''}${go('Continue reading')}${ex}</a>`
     : `<a class="pn next" href="#/chain"><span class="label">Contents</span><span class="t">All ${word(seq.length)} chapters</span><span class="ol">The ${word(stages.length)} stages run from chip design to the data center. The last ${word(seq.length - stages.length)} chapters cover what a chip costs and who controls the chain.</span>${go('Back to the contents')}</a>`;
-  const pv = prev ? `<a class="pn prev" ${attrs(prev)}><span class="label">Previous, ${where(prev, false)}</span><span class="t">${esc(prev.title)}</span></a>` : '';
+  const pv = prev ? `<a class="pn prev" ${attrs(prev)}><span class="label">Previous · ${where(prev)}</span><span class="t">${esc(prev.title)}</span></a>` : '';
   return tag === 'div' ? `<div class="prevnext">${nx}${pv}</div>` : `<nav class="prevnext" aria-label="Next chapter">${nx}${pv}</nav>`;
 }
 const prevNext = (ch) => chapterDoor(ch, (c) => `href="${esc(c.id)}/" data-route="${chapterHref(c)}"`, 'nav', 'media/');
@@ -739,7 +740,9 @@ function deckHTML(fc, o) {
     if (!c.q || !c.a) warn(`flashcards ${o.id} #${i + 1}: needs q and a`);
     const link = o.more(c, i);
     const more = link ? ` <a class="fc-more" href="${esc(link.href)}">${esc(link.text)}</a>` : '';
-    const count = `<span class="label">Card ${i + 1} of ${n}</span>`;
+    // the squares under the deck show the place; a screen reader hears it here. Clipped in place, not moved off to the left as
+    // .sr-only is: on the turned card's back a left offset becomes a right one and widened the page by 10,000 px
+    const count = `<span class="fc-n">Card ${i + 1} of ${n}. </span>`;
     return `<div class="fc-card" data-i="${i}"${i ? ' hidden' : ''}>`
       + `<div class="fc-face fc-front"><div class="fc-row">${count}<span class="label">Question</span></div><p class="fc-q">${esc(c.q)}</p><div class="fc-row fc-row--end"><button type="button" class="fc-btn fc-btn--solid fc-show">Show answer</button></div></div>`
       + `<div class="fc-face fc-back" inert><div class="fc-row">${count}<span class="label">Answer</span></div><p class="fc-a">${esc(c.a)}</p>${c.why || more ? `<p class="fc-why">${esc(c.why || '')}${more}</p>` : ''}<div class="fc-row fc-row--foot"><button type="button" class="fc-link fc-flipback">Show question</button><span class="fc-marks"><button type="button" class="fc-btn fc-mark" data-known="0">Didn’t know</button><button type="button" class="fc-btn fc-btn--solid fc-mark" data-known="1">Knew it</button></span></div></div>`
@@ -1006,7 +1009,7 @@ function chapterHTML(ch) {
   const sources = ch.cites.length ? `<details class="chapter-sources" id="${esc(ch.id)}--sources"><summary>Sources (${ch.cites.length})</summary><ol>${ch.cites.map((c) => `<li>${tierTag(c.url)}${sourceLine(c.url)}</li>`).join('')}</ol></details>` : '';
   const stageIdx = stages.findIndex((c) => c.id === ch.id);
   const conc = stageIdx >= 0 ? (m.card || {}).concentration || '' : '';
-  const where = stageIdx >= 0 ? `${ch.title}, stage ${stageIdx + 1} of ${stages.length}` : '';
+  const where = stageIdx >= 0 ? ch.title : ''; // the card names its stage; the kicker above gives its number (28 Oct 2026)
   const cardCtx = { id: ch.id, cites: ch.cites, figures: [] }; // the card's marks number with the body's (its urls were registered in reading order)
   // the card has an address of its own (On this page lists it), and stands in the text after the lead (withCard)
   const cardId = (h) => h.replace('<section class="plate"', `<section class="plate" id="${esc(ch.id)}--card"`);
@@ -1017,7 +1020,9 @@ function chapterHTML(ch) {
   // the main page's blocks (In plain terms, In short, the card's prose) each mark the first use of each glossary term in them
   const cardUsed = new Set();
   const plateGl = isStage(ch) ? cardId(nameplate(m.card, ch.title, (h) => glossaryWrap(h, cardUsed), cardCtx, where)) : '';
-  const kick = `<p class="ch-kick"><span>Chapter ${pad(ch.number)}</span><span>${stageIdx >= 0 ? `Stage ${stageIdx + 1} of ${stages.length}` : esc(TILE_WORD[ch.id] || '')}</span>${bandMark(conc, ((m.card || {}).substitutability || {}).band)}</p>`;
+  // one numbering (28 Oct 2026): a stage is "Stage 4 of 14" (its chapter number is the same, so "Chapter 04" went); the two
+  // chapters across the chain keep their chapter number and their word
+  const kick = `<p class="ch-kick">${stageIdx >= 0 ? `<span>Stage ${stageIdx + 1} of ${stages.length}</span>` : `<span>Chapter ${pad(ch.number)}</span><span>${esc(TILE_WORD[ch.id] || '')}</span>`}${bandMark(conc, ((m.card || {}).substitutability || {}).band)}</p>`;
   const facts = `<p class="ch-meta"><span class="label">${ch.words.toLocaleString('en-US')} words / ${mins} min</span><span class="label">Specimen: ${esc(SPECIMEN_NAME[specimen] || specimen.replace(/-/g, ' '))}</span><span class="label">Updated ${CITE_DAY(ch.id)}</span>${ch.cites.length ? `<span class="label">${ch.cites.length} sources</span>` : ''}</p>`;
   // the specimen's slot and its caption; the two chapters that are not stages set their drawing on the night ground (data-night)
   const ps = partsOf(ch), night = !isStage(ch);
@@ -1324,7 +1329,7 @@ const suppliersIntro = suppliers.length ? `What each of the ${suppliers.length} 
 // the four counts beside the Suppliers title, from the list itself: firms, the countries they are based in, the segments (the
 // list's 20 categories) and the firms rated Critical, whose mark is the page's one red wine
 const suppliersFacts = suppliers.length ? `<dl class="sup-facts-row">${[
-  [suppliers.length, 'firms'], [new Set(suppliers.map((r) => r.country)).size, 'countries'], [new Set(suppliers.map((r) => r.category)).size, 'segments'],
+  [suppliers.length, 'firms'], [new Set(suppliers.map((r) => r.country)).size, 'home countries'], // where the firms are based: the Glossary counts its country entries, a different number (28 Oct 2026) [new Set(suppliers.map((r) => r.category)).size, 'segments'],
   [suppliers.filter((r) => r.chokepoint === 'Critical').length, 'Critical']
 ].map(([n, k], i) => `<div><dt>${i === 3 ? '<i class="sup-mk" aria-hidden="true"></i>' : ''}${k}</dt><dd>${n}</dd></div>`).join('')}</dl>` : '';
 // the Export Controls dek and the note under the China revenue charts, printed by the main page and by /export-controls/ (build/modules/reference-pages.js)
@@ -1525,7 +1530,7 @@ lkItems.sort((a, b) => a.name.localeCompare(b.name, 'en', { sensitivity: 'base' 
 const lookupListHTML = lkItems.map((i) => `<li id="${esc(i.id)}" data-kind="${i.kind}" data-key="${esc(i.key || i.name)}"${i.alias && i.alias.length ? ` data-alias="${esc(i.alias.join('|'))}"` : ''} data-text="${esc(i.text.toLowerCase().replace(/\s+/g, ' '))}"><button type="button"><span class="lk-name">${esc(i.name)}</span><span class="lk-lab">${esc(i.label)}</span></button></li>`).join('');
 // the Glossary's head: how many entries of each kind the list holds (src/template.html, the Glossary view)
 const lkKinds = (k) => lkItems.filter((i) => i.kind === k).length;
-fill('GLOSSARY_TALLY', [[lkKinds('term'), 'terms'], [lkKinds('firm'), 'firms'], [lkKinds('chip'), 'AI chips'], [lkKinds('country'), 'countries']].map(([n, w]) => `<span>${n} ${w}</span>`).join(''));
+// the Glossary's head no longer tallies its kinds: each kind's button carries its count (28 Oct 2026; the counts showed three times)
 fill('CONTROLS_DEK', controlsDek);
 fill('EXPOSURE_VIZ', exposureViz(exposure));
 fill('EXPOSURE_NOTE', exposureNote);
