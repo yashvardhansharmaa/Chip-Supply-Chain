@@ -1731,7 +1731,16 @@ let homeHTML;
   const { h, page } = makePage('home', { root: '', chapters: '', ids: [], scripts: ['kit.js', 'data.js', 'terms.js', 'app.js'] });
   let x = h.split(`Updated ${builtStr}`).join(`Updated ${DAY_TOKEN}`);
   const homeDates = pageDate('/', x + JSON.stringify(data));
-  homeHTML = relink(citeDays(x.split(DAY_TOKEN).join(dayStr(homeDates.modified))), page);
+  // a view with a page of its own (build/modules/reference-pages.js, which runs first) gives its footer that page's day, so
+  // #/controls and /export-controls/ say the same "Updated" day for the same data (28 Oct 2026; the views all said the home
+  // page's); the rest say the home page's
+  const VIEW_PAGE = { landscape: '/chips/', suppliers: '/suppliers/', controls: '/export-controls/', glossary: '/glossary/' };
+  const homeDay = dayStr(homeDates.modified);
+  x = x.split(/(?=<section class="view\b)/).map((part) => {
+    const v = (/^<section class="view\b[^"]*" data-view="([a-z-]+)"/.exec(part) || [])[1], e = v && VIEW_PAGE[v] ? pageDates[VIEW_PAGE[v]] : null;
+    return e && e.modified ? part.split(DAY_TOKEN).join(dayStr(e.modified)) : part;
+  }).join('');
+  homeHTML = relink(citeDays(x.split(DAY_TOKEN).join(homeDay)), page);
   writePage('index.html', homeHTML);
 }
 // each chapter's page: dated by its article (the chapter's own text, figures and sources, as the readable page was), headed
