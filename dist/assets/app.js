@@ -765,7 +765,16 @@
       var toTop = $('.to-top'); // Back to top on every long page, not only the chain (on a phone too: Top left the strip, page revision 2)
       if (toTop) {
         var contentsEl = Router.current === 'stack' && Router.chain === 'contents' ? $('#contents') : null;
-        toTop.setAttribute('data-show', (contentsEl ? contentsEl.getBoundingClientRect().bottom < 0 : window.scrollY > window.innerHeight * 0.8) ? '1' : '0');
+        var far = contentsEl ? contentsEl.getBoundingClientRect().bottom < 0 : window.scrollY > window.innerHeight * 0.8;
+        // on a phone the pill sat over the text: there it shows only while the reader heads back up, and goes after 3 s at rest
+        // or on the next move down (28 Oct 2026); a wide screen keeps it in its empty corner
+        if (narrow()) {
+          var y = window.scrollY, dy = y - (this.lastY == null ? y : this.lastY), self2 = this; this.lastY = y;
+          if (!far || dy > 6) this.upShow = false;
+          else if (dy < -6) { this.upShow = true; clearTimeout(this.upT); this.upT = setTimeout(function () { self2.upShow = false; var b = $('.to-top'); if (b && document.activeElement !== b) b.setAttribute('data-show', '0'); }, 3000); }
+          far = far && !!this.upShow;
+        }
+        toTop.setAttribute('data-show', far ? '1' : '0');
       }
       if (Router.current !== 'stack' && Router.current !== 'walk') return;
       var items = Router.current === 'walk' ? this.walkItems : this.items;
