@@ -440,3 +440,17 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
 .ex-panel figcaption span { font-family: var(--font-ui); font-size: 12px; }
 .table-view > summary { font-family: var(--font-ui); font-size: 13.5px; color: var(--ink-2); }
 @media (max-width: 760px) { .ex-h { margin-top: 28px; } }
+
+/* final QA B1 and B3 (28 Oct 2026). A stay that holds up a row's own outcome draws its pill back in every state alike: the
+   denial pill's 1.5 px ink outline above (line 417) no longer outranks it, and the ramp's dashed dot wins over the closed fill.
+   A stay of one measure inside a row keeps the pill in ink and names the measure in its tag (Geo.stayText in src/app.js).
+   A second review policy sits beside the first, each followed by whom it covers. Past the day the data was checked, a stay
+   whose end has come, or a change that falls due, is tagged as not confirmed, in a darker dash. */
+.cf-pill.is-suspended { border-width: 1px; border-color: var(--line-2); color: var(--muted); background: transparent; padding: 2px 8px 3px; }
+.cf-ramp.is-susp .cf-ramp-f { background: var(--line-2); }
+.cf-ramp.is-susp .cf-ramp-d { background: var(--bg); border: 1.5px dashed var(--ink-2); }
+.cf-for { font-family: var(--font-ui); font-size: 12px; line-height: 16px; color: var(--muted); margin-right: 6px; }
+.cf-susp.is-unconfirmed { border-color: var(--ink-2); color: var(--ink); white-space: normal; }
+.cf-checked { margin-left: 10px; font-size: 12px; color: var(--muted); }
+.cf-checked[hidden] { display: none; }
+.cf-up-i.is-passed .cf-up-n { white-space: normal; color: var(--ink); }

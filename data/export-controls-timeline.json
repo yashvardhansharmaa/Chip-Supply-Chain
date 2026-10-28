@@ -382,6 +382,10 @@
     "summary": "The Netherlands' national export control measure for advanced semiconductor manufacturing equipment entered into force on 1 September 2023. ASML said on 30 June 2023 that it would need Dutch licenses for all shipments of its most advanced immersion DUV systems, the TWINSCAN NXT:2000i and later models. The Dutch government would grant or deny the applications case by case. ASML said sales of its EUV systems were already restricted. It said it expected no material impact on its financial outlook for 2023.",
     "category": "Other governments",
     "instrument": "rule",
+    "frCitation": "Staatscourant 2023, 18212",
+    "cite": {
+      "url": "https://zoek.officielebekendmakingen.nl/stcrt-2023-18212.html"
+    },
     "source": "https://www.asml.com/en/news/press-releases/2023/statement-regarding-export-control-regulations-dutch-government",
     "gist": "ASML needed Dutch licenses to ship its most advanced immersion DUV scanners, from the NXT:2000i on.",
     "id": "2023-09-01-dutch-licence",
@@ -964,7 +968,7 @@
   {
     "date": "2025-12-08",
     "actor": "US (White House)",
-    "title": "Trump clears H200 sales to China",
+    "title": "White House clears H200 sales to China",
     "summary": "President Trump announced that the United States would allow the H200 and similar products to be shipped to approved customers in China. BIS announced the implementing rule on 13 January 2026, and it took effect on publication on 15 January. It moved license applications for the Nvidia H200, the AMD MI325X and similar chips from a presumption of denial, under which they are normally refused, to case-by-case review. The applicant must show that the exports will not reduce the global semiconductor capacity available to US customers. It must also show that the Chinese purchaser has adopted export compliance procedures, including customer screening, and that the item has passed independent third-party testing in the United States. Nvidia's filings state that the licenses require each H200 to pass a US inspection before shipment. The filings say that, as a result, any H200 shipped under the program is subject to a 25 percent tariff on importation into the United States. Nvidia says it has been unable to pass the tariff on to customers.",
     "category": "US export control",
     "instrument": "licence-policy",
@@ -1027,12 +1031,12 @@
     "date": "2026-02-12",
     "actor": "US (BIS)",
     "title": "Applied Materials pays about $252 million for shipments to SMIC",
-    "summary": "BIS announced a settlement of about $252 million with Applied Materials and its Korean subsidiary. The case concerned unlicensed reexports of ion implanters, chipmaking tools classified under ECCN 3B991, to SMIC after SMIC was added to the Entity List. The equipment was built in Massachusetts and routed through Korea. The shipments were worth about $126 million, so the penalty is twice the transaction value. That is the most the law allows, and the penalty is the second largest in BIS history. Applied Materials agreed to multiple compliance audits and annual certifications, and the employees responsible no longer work for the company.",
+    "summary": "BIS announced a settlement of about $252 million with Applied Materials and its Korean subsidiary. The case concerned unlicensed reexports of ion implanters, chipmaking tools classified under ECCN 3B991, to SMIC after SMIC was added to the Entity List. The equipment was built in Massachusetts and routed through Korea. The shipments were worth about $126 million, so the penalty is twice the transaction value. That is the most the law allows, and BIS called it \"the second-highest penalty ever imposed by BIS\". Applied Materials agreed to multiple compliance audits and annual certifications, and the employees responsible no longer work for the company.",
     "category": "US export control",
     "instrument": "enforcement",
     "cfr": "15 CFR part 764",
     "source": "https://www.bis.gov/press-release/applied-materials-pay-252-million-penalty-bis-illegally-exporting-semiconductor-manufacturing-equipment",
-    "gist": "Applied Materials paid twice what the shipments were worth, the second largest penalty in BIS history.",
+    "gist": "Applied Materials paid twice what the shipments were worth, which BIS called its second-highest penalty ever.",
     "id": "2026-02-12-applied-materials",
     "flows": [
       "entity",
