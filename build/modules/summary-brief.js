@@ -243,7 +243,7 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
   /* China and the United States at the card's full width, one under the other (page revision 7): about 60 characters a line */
   .sides { display: block; border-top: 1px solid var(--line); padding-top: 12px; margin: 0 0 12px; }
   .sides > div + div { margin-top: 14px; }
-  .sides p { margin: 0; font-size: 15px; line-height: 22.5px; color: var(--ink-2); }
+  .sides p { margin: 0; font-size: var(--t-small); line-height: 1.5; color: var(--ink-2); } /* the small step (28 Oct 2026; 15 px before) */
   .sides p.lbl { margin-bottom: 4px; font-size: 11.5px; color: var(--muted); }
   .short p { margin: 0 0 12px; font-size: var(--t-small); color: var(--ink-2); }
   .more { margin: auto 0 0; padding-top: 10px; font-size: 13px; font-weight: 600; }
