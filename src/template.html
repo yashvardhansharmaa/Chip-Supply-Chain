@@ -113,8 +113,9 @@ html:not(.booted)[data-pick] .view[data-view="suppliers"] > :not(.view-head) { d
   <figure class="stage" aria-label="3D specimen of the current stage">
     <canvas id="stage-canvas"></canvas>
     <div class="stage-tag"><span id="stage-tag-text">Specimen <b>00</b> · the whole chip</span></div>
-    <div class="stage-actions"><button type="button" class="stage-top">Top</button><button type="button" class="stage-menu" aria-haspopup="dialog" aria-controls="sheet">Contents</button><button type="button" class="stage-toggle" aria-expanded="false">Expand</button></div>
+    <div class="stage-actions"><button type="button" class="stage-menu" aria-haspopup="dialog" aria-controls="sheet">Contents</button><button type="button" class="stage-toggle" aria-expanded="false">Expand</button></div>
     <figcaption id="stage-caption"></figcaption>
+    <span class="stage-read" aria-hidden="true"></span>
   </figure>
   <script>/* before boot the strip matches the routed view: a view with no specimen starts without one (Router.route keeps it so) */
   (function(f){var r=document.documentElement.getAttribute('data-route');if(f&&r&&!/^(walk|stack)$/.test(r))f.setAttribute('data-hidden','1');})(document.currentScript&&document.currentScript.previousElementSibling);</script>
