@@ -1220,10 +1220,16 @@
         else dots += '<circle class="dot' + (p.top ? ' top' : '') + (p.mine ? ' mine' : '') + '" cx="' + r2(p.x) + '" cy="' + r2(p.y) + '" r="' + (p.top || p.mine ? r + 0.6 : r) + '"/>';
         if (p.mine) rings += '<circle class="ring" cx="' + r2(p.x) + '" cy="' + r2(p.y) + '" r="' + (r + 5) + '"/>';
       });
-      // labels: the reader's chips first, then the largest; a label sits nearer its own dot than any other, clear of every box
-      var boxes = [], labs = '', base = Tp + ph - 3;
+      // labels: the reader's chips first, then the largest; a label sits nearer its own dot than any other, clear of every box.
+      // Where dots crowd and no place is clear, it takes the place inside the plot, clear of the axes and the other labels, that
+      // covers the fewest dots (its halo keeps it legible), so it never falls on the years or the figures of the axis
+      var boxes = [], labs = '', base = Tp + ph - 3, nDots = pts.length;
       pts.forEach(function (p) { boxes.push([p.x - r - 2, p.y - r - 2, p.x + r + 2, p.y + r + 2]); });
-      var hit = function (b) { if (b[0] < 2 || b[2] > w - 2 || b[1] < 2 || b[3] > base) return true; for (var j = 0; j < boxes.length; j++) { var q = boxes[j]; if (b[0] < q[2] && b[2] > q[0] && b[1] < q[3] && b[3] > q[1]) return true; } return false; };
+      var over = function (b, q) { return b[0] < q[2] && b[2] > q[0] && b[1] < q[3] && b[3] > q[1]; };
+      var outside = function (b) { return b[0] < Lp || b[2] > w - 2 || b[1] < 2 || b[3] > base; };
+      boxes.push([0, Tp - 12 - LAB, textW(m.unit) + 4, Tp - 12 + 3]); nDots++; // the unit over the axis
+      var hit = function (b) { if (outside(b)) return true; for (var j = 0; j < boxes.length; j++) if (over(b, boxes[j])) return true; return false; };
+      var covers = function (b) { for (var j = nDots; j < boxes.length; j++) if (over(b, boxes[j])) return -1; var k = 0; for (j = 0; j < nDots; j++) if (over(b, boxes[j])) k++; return k; };
       var dist = function (b, x, y) { var dx = Math.max(b[0] - x, 0, x - b[2]), dy = Math.max(b[1] - y, 0, y - b[3]); return Math.sqrt(dx * dx + dy * dy); };
       var clear = function (b, p) { var d0 = dist(b, p.x, p.y); for (var j = 0; j < pts.length; j++) { var q = pts[j]; if (q !== p && dist(b, q.x, q.y) < d0 + 5) return false; } return true; };
       pts.slice().sort(function (a, b) { return (b.mine - a.mine) || (b.top - a.top) || (b.v - a.v); }).forEach(function (p) {
@@ -1231,14 +1237,15 @@
         var txt = short(p.c) + ', ' + nf(p.v), tw = textW(txt, true), rr = r + (p.mine ? 6 : 4), th = LAB;
         var cand = p.off ? [[p.x + 9, p.y + 4, 'start'], [p.x - 9, p.y + 4, 'end']] :
           [[p.x + rr, p.y + 4, 'start'], [p.x - rr, p.y + 4, 'end'], [p.x, p.y - rr - 2, 'middle'], [p.x, p.y + rr + th, 'middle'], [p.x + rr - 2, p.y - rr, 'start'], [p.x - rr + 2, p.y - rr, 'end'], [p.x + rr - 2, p.y + rr + th - 2, 'start'], [p.x - rr + 2, p.y + rr + th - 2, 'end']];
-        for (var q = 0; q < cand.length; q++) {
-          var cx = cand[q][0], cy = cand[q][1], an = cand[q][2], x0 = an === 'start' ? cx : an === 'end' ? cx - tw : cx - tw / 2, bb = [x0 - 2, cy - th + 2, x0 + tw + 2, cy + 3];
-          if ((!hit(bb) && clear(bb, p)) || q === cand.length - 1) {
-            boxes.push(bb);
-            labs += '<text class="lab lab-h' + (p.mine ? ' mine' : ' top') + '" x="' + r2(cx) + '" y="' + r2(cy) + '" text-anchor="' + an + '">' + esc(txt) + '</text>';
-            break;
-          }
-        }
+        var place = function (q) { var cx = cand[q][0], cy = cand[q][1], an = cand[q][2], x0 = an === 'start' ? cx : an === 'end' ? cx - tw : cx - tw / 2; return { cx: cx, cy: cy, an: an, bb: [x0 - 2, cy - th + 2, x0 + tw + 2, cy + 3] }; };
+        var got = null, q, best = 1e9;
+        for (q = 0; q < cand.length && !got; q++) { var c1 = place(q); if (!hit(c1.bb) && clear(c1.bb, p)) got = c1; }
+        // farther off, a line at a time: each line away costs as much as a dot covered, so a label stays as near its dot as it can
+        if (!got && !p.off) for (var s = 1; s <= 3; s++) { var dy = (th + 3) * s; cand.push([p.x, p.y - rr - 2 - dy, 'middle', s], [p.x + rr - 2, p.y - rr - dy, 'start', s], [p.x - rr + 2, p.y - rr - dy, 'end', s], [p.x, p.y + rr + th + dy, 'middle', s]); }
+        if (!got) for (q = 0; q < cand.length; q++) { var c2 = place(q), k = outside(c2.bb) ? -1 : covers(c2.bb); if (k >= 0 && k + (cand[q][3] || 0) < best) { best = k + (cand[q][3] || 0); got = c2; } }
+        if (!got) got = place(cand.length > 2 ? 2 : 0); // above its dot (an arrow above the scale: beside it)
+        boxes.push(got.bb);
+        labs += '<text class="lab lab-h' + (p.mine ? ' mine' : ' top') + '" x="' + r2(got.cx) + '" y="' + r2(got.cy) + '" text-anchor="' + got.an + '">' + esc(txt) + '</text>';
       });
       var aria = esc(m.label) + ' of each chip by the month it was announced. ' + F.pts.length + ' chips have a figure. The arrow keys move from chip to chip.';
       return { svg: '<svg class="chart" width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + ' ' + h + '" tabindex="0" role="group" aria-roledescription="chart" aria-label="' + aria + '">' + g + dots + rings + labs + '<g class="hov"></g><g class="foc"></g><rect class="hit" x="0" y="0" width="' + w + '" height="' + h + '" fill="transparent"/></svg>', pts: pts, F: F };

@@ -6,7 +6,10 @@
    usage: node qa/redesign/sweep-full.js <base> <widths> <out> "<name>|<url>[|<js>]" ...
    e.g.   node qa/redesign/sweep-full.js http://127.0.0.1:8773 320,390,768,1024,1280,1440 /tmp/full.txt "lithography|/#lithography"
    A third field of script runs after the page loads and before the measure (27 Oct 2026: to hide the chapter's contents rail,
-   "litho-hidden|/#lithography|localStorage.setItem('cp-rail','off');document.documentElement.classList.add('rail-off')"). */
+   "litho-hidden|/#lithography|localStorage.setItem('cp-rail','off');document.documentElement.classList.add('rail-off')").
+   Since 28 Oct 2026 it also measures contrast: text (its color, or an SVG text's fill) under 4.5:1 against the first solid
+   ground behind it. A text of marks alone (a dash for a missing value, a dot between words) is a mark, not reading, and is
+   left out. For dark, add ?theme=dark before the address's # ("dark|/?theme=dark#/landscape"). */
 'use strict';
 const fs = require('fs');
 const [BASE, widths, OUT, ...specs] = process.argv.slice(2);
@@ -14,7 +17,11 @@ const { launch, open } = require('./cdp.js');
 const MEASURE = `(async () => {
   const st = document.createElement('style'); st.textContent = '*{content-visibility:visible!important}'; document.head.appendChild(st);
   await new Promise((r) => setTimeout(r, 400));
-  const W = innerWidth, de = document.documentElement, out = { sw: de.scrollWidth, W, small: [], clipped: [], overlap: [], boxes: 0 };
+  const W = innerWidth, de = document.documentElement, out = { sw: de.scrollWidth, W, small: [], clipped: [], overlap: [], low: [], boxes: 0 };
+  const rgba = (c) => { const m = String(c).match(/[\d.]+/g); return m && m.length >= 3 ? { v: m.slice(0, 3).map(Number), a: m[3] == null ? 1 : +m[3] } : null; };
+  const lum = (v) => { const f = (x) => { x /= 255; return x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4); }; return 0.2126 * f(v[0]) + 0.7152 * f(v[1]) + 0.0722 * f(v[2]); };
+  const ground = (el) => { for (let p = el; p && p.nodeType === 1; p = p.parentElement) { const b = rgba(getComputedStyle(p).backgroundColor); if (b && b.a > 0.99) return b; } return rgba(getComputedStyle(document.body).backgroundColor); };
+  const faint = (el) => { for (let p = el; p && p.nodeType === 1; p = p.parentElement) if (+getComputedStyle(p).opacity < 1) return true; return false; };
   const name = (el) => (el.tagName.toLowerCase() + (el.id ? '#' + el.id : '') + (typeof el.className === 'string' && el.className.trim() ? '.' + el.className.trim().split(/\\s+/).slice(0, 2).join('.') : '')).slice(0, 70);
   const shown = (el) => { for (let p = el; p && p.nodeType === 1; p = p.parentElement) { const cs = getComputedStyle(p); if (cs.display === 'none' || cs.visibility === 'hidden' || +cs.opacity === 0) return false; } return true; };
   const srOnly = (el) => { for (let p = el; p && p.nodeType === 1; p = p.parentElement) { const r = p.getBoundingClientRect(); const cs = getComputedStyle(p); if ((r.width <= 1 && r.height <= 1) || cs.clip === 'rect(0px, 0px, 0px, 0px)' || cs.clipPath === 'inset(50%)') return true; } return false; };
@@ -33,6 +40,10 @@ const MEASURE = `(async () => {
     let px = parseFloat(cs.fontSize);
     if (el instanceof SVGElement && el.getScreenCTM) { const m = el.getScreenCTM(); if (m) px = px * Math.hypot(m.a, m.b); }
     if (px < 10.95) out.small.push(name(el) + ' ' + px.toFixed(1) + 'px "' + n.nodeValue.trim().slice(0, 30) + '"');
+    if (/[A-Za-z0-9]/.test(n.nodeValue) && !faint(el)) {
+      const fg = rgba(el instanceof SVGElement ? cs.fill : cs.color), bg = ground(el);
+      if (fg && bg && fg.a > 0.99) { const a = lum(fg.v), b = lum(bg.v), ratio = (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05); if (ratio < 4.5) out.low.push(name(el) + ' ' + ratio.toFixed(2) + ':1 "' + n.nodeValue.trim().slice(0, 30) + '"'); }
+    }
     if (!(el instanceof SVGElement)) {
       const clips = /(hidden|clip)/.test(cs.overflowX + cs.overflowY);
       const ell = cs.textOverflow === 'ellipsis' || cs.webkitLineClamp !== 'none';
@@ -84,6 +95,7 @@ const MEASURE = `(async () => {
         if (m.small.length) probs.push(`under 11 px (${m.small.length}): ` + m.small.slice(0, 6).join('; '));
         if (m.clipped.length) probs.push(`clipped (${m.clipped.length}): ` + m.clipped.slice(0, 6).join('; '));
         if (m.overlap.length) probs.push(`overlap (${m.overlap.length}): ` + m.overlap.slice(0, 8).join('; '));
+        if (m.low.length) probs.push(`under 4.5:1 (${m.low.length}): ` + m.low.slice(0, 6).join('; '));
         if (probs.length) bad++;
         const line = `${name} ${w}: ${probs.length ? probs.join(' | ') : 'ok'} (${m.boxes} boxes)`; lines.push(line); console.log(line);
       } catch (e) { bad++; const line = `${name} ${w}: ERROR ${e.message}`; lines.push(line); console.log(line); }
