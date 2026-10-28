@@ -225,10 +225,7 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 .chapter .rail-figs a { display: grid; grid-template-columns: 44px minmax(0, 1fr); padding: 2px 0; font-size: 13px; line-height: 16px; color: var(--ink-2); text-decoration: none; }
 .chapter .rail-figs a:hover { color: var(--ink); }
 .chapter .rail-figs .n { font-family: var(--font-code); font-size: 11.5px; color: var(--muted); }
-.chapter .rail-key { display: inline-flex; gap: 10px; color: var(--muted); }
-.chapter .rail-key span { display: inline-flex; align-items: baseline; gap: 5px; }
-.chapter .rail-key i { display: inline-block; width: 5px; height: 11px; background: var(--bar-5); } /* Extreme in wine (the visual pass of 27 Oct 2026) */
-.chapter .rail-key i.h { height: 6px; background: transparent; box-shadow: inset 0 0 0 1.25px var(--ink); }
+/* the rail's Extreme and High key was removed at the owner's request (28 Oct 2026): each stage's mark and its link's label carry the band */
 /* the chain: number, name, the band's mark at the line's end (Extreme solid wine, High an ink outline); the current stage's
    number in wine and its name bold, its mark keeping its band's look */
 .chapter .ch-rail .chain-track { display: block; gap: 0; }

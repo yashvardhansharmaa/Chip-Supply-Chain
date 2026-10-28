@@ -809,7 +809,7 @@ function railHTML(ch, stageIdx, toc) {
     + `<div class="rail-body" id="${esc(ch.id)}--rail">`
     + `<div class="rail-part rail-on"><p class="rail-k">On this page</p><ol class="rail-toc">${toc.map(([id, t]) => `<li><a href="#${esc(id)}">${t}</a></li>`).join('')}</ol></div>`
     + (figs.length ? `<div class="rail-part rail-figs-w"><p class="rail-k">Figures</p><ol class="rail-figs">${figs.map((f) => `<li><a href="#${esc(f.id)}"><span class="n">${esc(f.num)}</span><span class="t">${esc(f.label)}</span></a></li>`).join('')}</ol></div>` : '')
-    + `<div class="rail-part rail-chain-w"><p class="rail-k">The chain <span class="rail-key" aria-hidden="true"><span><i></i>Extreme</span><span><i class="h"></i>High</span></span></p>`
+    + `<div class="rail-part rail-chain-w"><p class="rail-k">The chain</p>`
     + `<ol class="chain-track rail-chain">${stages.map((c, i) => item(c, i)).join('')}</ol>`
     + (across.length ? `<ol class="rail-chain rail-across">${across.map((c) => item(c, null)).join('')}</ol>` : '') + `</div></div></nav>`;
 }
