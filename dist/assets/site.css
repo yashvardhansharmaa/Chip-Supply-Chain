@@ -269,6 +269,7 @@ small { font-size: 0.85em; }
 .stage .stage-pause:hover { color: var(--ink); border-color: var(--ink); }
 @media (max-width: 900px) {
   .stage .stage-pause { position: absolute; left: 9px; bottom: 9px; z-index: 2; margin: 0; width: 28px; height: 28px; }
+  .stage .stage-pause::before { content: ""; position: absolute; inset: -8px; } /* a 44 px target round the 28 px button */
   .stage[data-collapsed="0"] .stage-pause { bottom: auto; top: 50px; left: 12px; }
 }
 
@@ -307,10 +308,12 @@ sup.cite a { position: relative; font-family: var(--font-mono); font-weight: 500
 /* the footnote number in the label gray, wine on hover and focus: wine is kept for the signal (design round nine, revision 2) */
 sup.cite a:hover, sup.cite a:focus-visible { color: var(--accent-ink); background: var(--accent-soft); text-decoration: none; }
 /* small controls keep their look but take a fingertip: an invisible box at least 24 px square, centered on the control */
-sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before {
+sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before, .gl-tip a::before {
   content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 24px); height: max(100%, 26px); transform: translate(-50%, -50%);
 }
-.ch-copy, .permalink, .fc-more { position: relative; }
+.ch-copy, .permalink, .fc-more, .gl-tip a { position: relative; }
+/* on a touch screen the boxes grow to a fingertip's 32 by 36 px, the footnote numbers most of all (28 Oct 2026) */
+@media (pointer: coarse) { sup.cite a::before, .gl-tip a::before { width: max(100%, 32px); height: max(100%, 36px); } }
 /* link targets land clear of the fixed masthead, whose real height app.js measures into --masthead */
 .figure[id], h2[id], h3[id], h4[id], h5[id], .timeline li[id], .lk-entry { scroll-margin-top: calc(var(--masthead) + var(--band, 0px) + 16px); }
 .ct-tip { position: fixed; z-index: 50; width: max-content; max-width: min(360px, calc(100vw - 16px)); background: var(--bg); border: 1px solid var(--line-2); border-radius: 0; box-shadow: var(--shadow); padding: 12px 15px 13px; }
@@ -995,6 +998,12 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
   .sheet-chapters { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
   .sheet-chapters a { display: grid; grid-template-columns: 34px 1fr; align-items: baseline; gap: 10px; padding: 11px 0; border-bottom: 1px solid var(--line); color: var(--ink); text-decoration: none; }
   .sheet-chapters .n { font-family: var(--font-mono); font-size: var(--fs-cap); color: var(--muted); font-variant-numeric: tabular-nums; }
+  /* the chapter being read, in wine, with its sections under it (src/app.js Band) */
+  .sheet-chapters a[aria-current="page"] .t, .sheet-chapters a[aria-current="page"] .n { color: var(--accent-ink); }
+  .sheet-chapters a[aria-current="page"] { box-shadow: inset 2px 0 0 var(--accent); padding-left: 10px; }
+  .sheet-secs { list-style: none; margin: 0; padding: 4px 0 10px 54px; border-bottom: 1px solid var(--line); }
+  .sheet-secs a { display: block; padding: 7px 0; border-bottom: 0; font-family: var(--font-ui); font-size: 14px; line-height: 1.35; color: var(--ink-2); text-decoration: none; }
+  .sheet-secs a:hover { color: var(--accent-ink); }
   .sheet-chapters .t { font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: var(--t-text); }
   .sheet-chapters .sheet-k { font-family: var(--font-mono); font-size: var(--fs-cap); font-weight: 500; letter-spacing: 0; color: var(--muted); padding: 18px 0 8px; border-bottom: 1px solid var(--line); }
   .hero { padding-top: 22px; }
@@ -1775,7 +1784,8 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 @media (max-width: 900px) {
   .stage[data-collapsed="0"] figcaption { display: block; -webkit-line-clamp: unset; max-height: 9.5em; overflow-y: auto; }
   .stage[data-collapsed="0"] .stage-parts { display: block; }
-  .stage .stage-parts .ch-parts-k { margin-top: 8px; }
+  .stage .stage-parts .ch-parts-k { margin-top: 0; }
+  .stage[data-collapsed="0"] .stage-parts + .stage-cap-t { display: block; margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--line); }
   .stage .stage-parts .ch-parts { font-size: 12.5px; }
 }
 

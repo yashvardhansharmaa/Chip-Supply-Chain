@@ -618,7 +618,8 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 @media (max-width: 900px) {
   .stage[data-collapsed="0"] figcaption { display: block; -webkit-line-clamp: unset; max-height: 9.5em; overflow-y: auto; }
   .stage[data-collapsed="0"] .stage-parts { display: block; }
-  .stage .stage-parts .ch-parts-k { margin-top: 8px; }
+  .stage .stage-parts .ch-parts-k { margin-top: 0; }
+  .stage[data-collapsed="0"] .stage-parts + .stage-cap-t { display: block; margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--line); }
   .stage .stage-parts .ch-parts { font-size: 12.5px; }
 }
 

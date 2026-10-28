@@ -96,7 +96,13 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
 <div class="grid two">${acrossCards}</div>
 </section>
 </main>
-<footer class="site-footer scr">${footerKey}</footer>`;
+<footer class="site-footer scr">${footerKey}</footer>
+<button class="to-top" type="button" data-show="0">Back to top</button>
+<script>/* Back to top, as the app shows it (src/app.js): past most of a screen, and on a phone only while the reader heads back up */
+(function(){var b=document.querySelector('.to-top');if(!b)return;var last=window.scrollY,up=false,t=0,mq=window.matchMedia&&matchMedia('(max-width: 899px)');
+b.addEventListener('click',function(){window.scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});});
+function upd(){var y=window.scrollY,dy=y-last;last=y;var far=y>window.innerHeight*0.8;if(mq&&mq.matches){if(!far||dy>6)up=false;else if(dy<-6){up=true;clearTimeout(t);t=setTimeout(function(){up=false;if(document.activeElement!==b)b.setAttribute('data-show','0');},3000);}far=far&&up;}b.setAttribute('data-show',far?'1':'0');}
+window.addEventListener('scroll',upd,{passive:true});upd();})();</script>`;
 
   /* ---------- print layout (the PDF) ----------
      It opens on the wordmark (the tile and the name, as on every page of the site), then "Summary" as a label. */
@@ -247,7 +253,7 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
   .sides p.lbl { margin-bottom: 4px; font-size: 11.5px; color: var(--muted); }
   .short p { margin: 0 0 12px; font-size: var(--t-small); color: var(--ink-2); }
   .more { margin: auto 0 0; padding-top: 10px; font-size: 13px; font-weight: 600; }
-  .more a { color: var(--accent); text-decoration: none; }
+  .more a { display: inline-block; padding: 8px 0; margin: -8px 0; color: var(--accent); text-decoration: none; } /* a 33 px tall target, the line's look unchanged (28 Oct 2026) */
   .more a::after { content: " \\2192"; }
   .more a:hover { text-decoration: underline; text-underline-offset: 3px; }
   .site-footer { max-width: 1080px; border-top: 1px solid var(--line-2); margin-top: 64px; padding-top: 26px; padding-bottom: 56px; font-size: 12.5px; line-height: 1.7; color: var(--muted); }
@@ -274,7 +280,13 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
     h3 { font-size: var(--t-lead); }
   }
 }
-@media print { .scr, .masthead, .site-footer { display: none !important; } }
+@media print { .scr, .masthead, .site-footer, .to-top { display: none !important; } }
+@media screen {
+  .to-top { position: fixed; right: 24px; bottom: 20px; z-index: 35; font-family: var(--label); font-weight: 500; font-size: 13px; color: var(--ink-2); border: 1px solid var(--line-2); background: var(--bg); padding: 7px 14px; border-radius: 999px; cursor: pointer; opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0s 0.3s; }
+  .to-top[data-show="1"] { opacity: 1; visibility: visible; transition: opacity 0.3s; }
+  .to-top:hover { color: var(--ink); border-color: var(--ink); }
+  @media (max-width: 899px) { .to-top { right: 12px; bottom: 16px; } }
+}
 @media screen and (prefers-reduced-motion: reduce) { * { transition: none !important; } }`;
 
   const PRINT_CSS = `

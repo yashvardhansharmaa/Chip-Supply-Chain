@@ -486,7 +486,27 @@
         if (href) Keys.land(href);
         else if (back && back.focus && document.contains(back)) { try { back.focus({ preventScroll: true }); } catch (e) { } }
       };
-      if (menu) menu.addEventListener('click', function () { open(true); });
+      // the sheet marks the chapter being read and lists its sections under it, as the rail does on a wide screen (28 Oct 2026)
+      var markSheet = function () {
+        if (!sheet) return;
+        var id = PAGE.chapter || (Router.current === 'stack' && Router.chain && Router.chain !== 'contents' ? Router.chain : '');
+        $$('.sheet-chapters a[aria-current]', sheet).forEach(function (a) { a.removeAttribute('aria-current'); });
+        $$('.sheet-secs', sheet).forEach(function (o) { o.remove(); });
+        if (!id) return;
+        var cur = $$('.sheet-chapters > li > a', sheet).filter(function (a) { var h = a.getAttribute('href') || ''; return h === '#' + id || new RegExp('(^|/)' + id + '/$').test(h); })[0];
+        if (!cur) return;
+        cur.setAttribute('aria-current', 'page');
+        var toc = $$('.ch-rail .rail-toc', document).filter(function (o) { var r = o.closest('.ch-rail'), art = o.closest('article.chapter'); return !art || art.id === id; })[0];
+        if (!toc) return;
+        var ol = document.createElement('ol'); ol.className = 'sheet-secs'; ol.setAttribute('aria-label', 'In this chapter');
+        $$('a', toc).forEach(function (a) { var li = document.createElement('li'), b = document.createElement('a'); b.href = a.getAttribute('href'); b.textContent = a.textContent; li.appendChild(b); ol.appendChild(li); });
+        cur.parentNode.appendChild(ol);
+      };
+      if (menu) menu.addEventListener('click', function () {
+        markSheet(); open(true);
+        var cur = $('.sheet-chapters a[aria-current]', sheet); // the chapter being read in view, under the head
+        if (cur) sheet.scrollTop = Math.max(0, cur.getBoundingClientRect().top - sheet.getBoundingClientRect().top + sheet.scrollTop - 160);
+      });
       if (sheet) {
         sheet.addEventListener('click', function (e) { var a = e.target.closest('a'); if (a || e.target.closest('.sheet-close')) { open(false, a ? a.getAttribute('href') : null); self.set(true); } });
         document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !sheet.hidden) open(false); });
@@ -847,7 +867,8 @@
     caption: function (item) {
       var c = item.getAttribute('data-caption') ? esc(item.getAttribute('data-caption')) : null;
       var parts = Router.current === 'stack' ? $('.ch-spec .ch-parts', item) : null, k = parts ? $('.ch-spec .ch-parts-k', item) : null;
-      return c && parts ? c + '<span class="stage-parts">' + (k ? k.outerHTML : '') + parts.outerHTML + '</span>' : c;
+      // the parts first, so the opened strip names the drawing's numbers before its scroll (28 Oct 2026; they sat under the caption)
+      return c && parts ? '<span class="stage-parts">' + (k ? k.outerHTML : '') + parts.outerHTML + '</span><span class="stage-cap-t">' + c + '</span>' : c;
     },
     // the chapter's slot that is most in view takes the drawing, and the drawing becomes that chapter's specimen
     hostSpec: function () {
