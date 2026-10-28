@@ -857,31 +857,29 @@ ${railHTML(ch, stageIdx, toc)}
 }
 const chaptersHTML = chapters.length ? chapters.map(chapterHTML).join('\n') : `<article class="chapter" id="placeholder" data-specimen="wafer" data-number="01" data-title="Placeholder"><header class="chapter-head"><div class="chapter-num">01</div><h2 class="chapter-title">No chapters yet</h2></header><div class="prose"><p>No chapters found. This is a shell build.</p></div></article>`;
 
-/* The Chain's contents page (design round six, "The line", chosen by the owner on 28 Oct 2026; MAIN/qa/design6/a, its review in
-   MAIN/qa/design6/review). Under the head (src/template.html .howto: the title, the standfirst, the downloads) it draws the
-   chain: the stages in order, each its specimen drawing standing on one route, with its number, its band's mark and its title
-   under it, all linking to the chapter. The route turns into a wine bar under every Extreme stage and ends in an arrow. One
-   bracket under all the stages carries the chapters that look across them, with the note under it, and the two-line key says
-   what Extreme and High mean. Then each chapter's one line: the first half of the stages under the picture's left half, the
-   rest under its right, and the chapters across the chain under a plain rule. src/modules/chapter.css lays it out.
-   The list keeps the classes the book PDF reads (.contents-grid .item, .n and .t with href="#<id>", src/modules/print.css,
-   which turns them into its contents with page numbers); the picture is not printed, and the group heads that only the book
-   prints (.print-only) stand where the picture's label and bracket are on screen. Every count comes from the chapters. */
-// the band's mark, as the chapter rail draws it: a solid bar for Extreme (wine), an outline for High
+/* The Chain's contents page (design round eight, option 3 "clean", chosen by the owner on 28 Oct 2026; MAIN/qa/design8/b/
+   b1-clean.html, its builder src/build_clean.py and the "B1 clean" section of its notes.md). Under the head (src/template.html
+   .howto: the title with the three downloads, and one sentence that is also the key, chainStandfirst below) one row per
+   chapter: its drawing in a fixed box on the page's ground, its number with the band's mark, its title, and its one line in
+   quieter ink. The stages run in two columns, the first half on the left (one column on a phone); the two chapters across
+   the chain follow as the same rows under a small label. src/modules/contents.css lays it out.
+   The rows are the list the book PDF reads (.contents-grid .item, .n and .t with href="#<id>", src/modules/print.css, which
+   turns them into its contents with page numbers). The drawings and the label are not printed, and the group heads that only
+   the book prints (.print-only) stand where the label is on screen. Every count comes from the chapters. */
+// the band's mark, one per stage: a solid bar for Extreme (wine), an outline for High
 const bandOf = (ch) => ((ch.meta && ch.meta.card) || {}).concentration || '';
 const contentsMark = (band) => (band === 'Extreme' || band === 'High' ? `<i class="ct-bmk${band === 'High' ? ' h' : ''}" aria-hidden="true"></i>` : '');
-// a list entry: the number with the mark, the title and the chapter's one line (decision 12)
-const contentsItem = (ch) => `<div class="item" data-ch="${esc(ch.id)}"><span class="n">${pad(ch.number)}${contentsMark(bandOf(ch))}</span><a class="t" href="#${esc(ch.id)}">${esc(ch.title)}</a>${ch.meta.oneLiner ? `<p class="ol">${esc(ch.meta.oneLiner)}</p>` : ''}</div>`;
 const stageIds = new Set(stages.map((c) => c.id));
 const acrossChapters = chapters.filter((c) => !stageIds.has(c.id)).concat(geo ? [geo] : []);
-// the drawings: each stage's still, trimmed, evened in size and tone (python3 build/line-stills.py writes build/assets/line/),
-// copied to dist/media/line-<id>.webp. w1, w2 and w3 are the share of its cell a drawing fills in one row, two rows and on a phone
+// the drawings: each stage's still, trimmed, evened in size and tone, and the two chapters across the chain turned to the
+// day side (python3 build/line-stills.py writes build/assets/line/), copied to dist/media/line-<id>.webp. wt is the share
+// of the row's box a drawing fills
 const LINE_DIR = path.join(root, 'build', 'assets', 'line');
 const lineStills = readJSON(path.join(LINE_DIR, 'line.json'), {});
 {
   const parts = readJSON(path.join(root, 'data', 'specimen-parts.json'), {});
   const stale = [], missing = [];
-  stages.forEach((c) => {
+  stages.concat(acrossChapters).forEach((c) => {
     const s = lineStills[c.id], file = path.join(LINE_DIR, c.id + '.webp');
     if (!s || !fs.existsSync(file)) { missing.push(c.id); return; }
     const from = path.join(root, 'build', 'assets', 'specimens', (((parts[c.id] || {}).still || {}).file) || c.id + '.webp');
@@ -892,31 +890,40 @@ const lineStills = readJSON(path.join(LINE_DIR, 'line.json'), {});
   if (missing.length) warn(`The Chain's contents: no drawing for ${missing.join(', ')} in build/assets/line/ (run python3 build/line-stills.py)`);
   if (stale.length) warn(`The Chain's contents: the specimen still of ${stale.join(', ')} changed since its drawing was made (run python3 build/line-stills.py)`);
 }
+// a row: the drawing, the number with the mark, the title (the link, which covers the row) and the chapter's one line
+const contentsItem = (ch) => {
+  const b = bandOf(ch), s = lineStills[ch.id];
+  const img = s ? `<img src="media/line-${esc(ch.id)}.webp" width="${s.w}" height="${s.h}" alt="" loading="lazy" decoding="async" style="--w:${s.wt}%">` : '';
+  return `<li class="item" data-ch="${esc(ch.id)}"><span class="ct-tile">${img}</span><span class="n">${pad(ch.number)}${contentsMark(b)}</span>`
+    + `<a class="t" href="#${esc(ch.id)}" aria-label="${pad(ch.number)} ${esc(ch.title)}${b ? `, ${esc(b)} concentration` : ''}">${esc(ch.title)}</a>`
+    + `${ch.meta.oneLiner ? `<p class="ol">${esc(ch.meta.oneLiner)}</p>` : ''}</li>`;
+};
 const contentsHTML = (() => {
-  const n = stages.length, half = Math.ceil(n / 2), link = (c) => `href="${esc(c.id)}/" data-route="${chapterHref(c)}"`;
-  const station = (c, i) => {
-    const b = bandOf(c), s = lineStills[c.id];
-    const fit = s ? ` style="--w1:${s.w1}%;--w2:${s.w2}%;--w3:${s.w3}%"` : '';
-    const img = s ? `<img src="media/line-${esc(c.id)}.webp" width="${s.w}" height="${s.h}" alt="" loading="lazy" decoding="async">` : '';
-    return `<li data-ch="${esc(c.id)}"${b === 'Extreme' ? ' data-band="x"' : b === 'High' ? ' data-band="h"' : ''}${i === half - 1 ? ' class="ln-wrap"' : ''}${fit}>`
-      + `<a ${link(c)} aria-label="${pad(c.number)} ${esc(c.title)}${b ? `, ${esc(b)} concentration` : ''}"><span class="ln-sp">${img}</span><i class="ln-rt" aria-hidden="true"></i>`
-      + `<span class="ln-n">${pad(c.number)}${contentsMark(b)}</span><span class="ln-t">${esc(c.title)}</span></a></li>`;
-  };
-  const xlink = (c) => `<a class="ln-bx" data-ch="${esc(c.id)}" ${link(c)}><span class="ln-n">${pad(c.number)}</span><span class="ln-t">${esc(c.title)}</span></a>`;
-  const k = `The ${word(n)} stages, in the order a chip is made`;
-  const key = `<span class="ln-key"><span><i class="ct-bmk" aria-hidden="true"></i><b>Extreme</b> three or fewer firms could supply the stage, or one holds more than half</span>`
-    + `<span><i class="ct-bmk h" aria-hidden="true"></i><b>High</b> four to six firms could supply it</span></span>`;
+  const n = stages.length, half = Math.ceil(n / 2);
+  const col = (list, from) => `<ol class="contents-grid ct-col"${from > 1 ? ` start="${from}"` : ''}>${list.map(contentsItem).join('')}</ol>`;
   const note = `These ${word(acrossChapters.length)} chapters are not stages. They look across all ${word(n)}, at what a chip costs and at the contest over who controls each stage.`;
-  const pic = `<figure class="ln" aria-labelledby="ln-k"><figcaption class="ln-head"><span class="ln-k" id="ln-k">${k}</span>${key}</figcaption>`
-    + `<ol class="ln-st" style="--ln-n:${n};--ln-half:${half}">${stages.map(station).join('')}</ol>`
-    + (acrossChapters.length ? `<div class="ln-x"><p class="ln-brk"><span class="ln-k">Across the chain</span>${acrossChapters.map(xlink).join('')}</p><p class="ln-note">${note}</p></div>` : '')
-    + `</figure>`;
   // the book's own heads (print only): the stages with the key, then Across the chain with its note
   const bookK = `<div class="contents-kr print-only"><h3 class="contents-k">The ${word(n)} stages of the chain</h3><p class="ct-key"><span><i class="ct-bmk"></i>Extreme</span><span><i class="ct-bmk h"></i>High</span></p></div>`;
-  const list = `<div class="ln-list" role="group" aria-label="Each stage in one line"><div class="contents-grid">${stages.slice(0, half).map(contentsItem).join('')}</div><div class="contents-grid">${stages.slice(half).map(contentsItem).join('')}</div></div>`;
-  const xlist = acrossChapters.length ? `<div class="print-only"><h3 class="contents-k">Across the chain</h3><p class="contents-note">${note}</p></div>`
-    + `<div class="ln-list ln-list-x" role="group" aria-label="Across the chain, each chapter in one line">${acrossChapters.map((c) => `<div class="contents-grid">${contentsItem(c)}</div>`).join('')}</div>` : '';
-  return pic + bookK + list + xlist;
+  const list = `<section class="ct-st" aria-label="The ${word(n)} stages">${col(stages.slice(0, half), 1)}${col(stages.slice(half), half + 1)}</section>`;
+  const xlist = acrossChapters.length ? `<section class="ct-x" aria-labelledby="ct-xk"><h3 class="ct-xk" id="ct-xk">Across the chain</h3>`
+    + `<div class="print-only"><h3 class="contents-k">Across the chain</h3><p class="contents-note">${note}</p></div>`
+    + `<div class="ct-st">${acrossChapters.map((c, i) => col([c], n + i + 1)).join('')}</div></section>` : '';
+  return bookK + list + xlist;
+})();
+/* The standfirst, one sentence that is also the key: how many stages are rated Extreme and what that means, as the home page
+   says it (build/modules/walk.js, from the card's own note), and the rest High, with each band's mark before its word. The
+   counts come from the chapters' cards. The printed contents keep their own standfirst (src/template.html .howto-lede) */
+const chainStandfirst = (() => {
+  const nX = stages.filter((c) => bandOf(c) === 'Extreme').length, nH = stages.filter((c) => bandOf(c) === 'High').length;
+  // "Three or fewer firms could supply this stage today, or one firm holds more than half of it." follows "meaning"
+  const xNote = String(BAND_NOTE.Extreme || ''), hNote = String(BAND_NOTE.High || '');
+  const xMeaning = /this stage/.test(xNote) ? xNote.replace('this stage', 'each').replace(/ of it\.$/, '.').replace(/\.$/, '').replace(/^\w/, (m) => m.toLowerCase()) : '';
+  // "Four to six firms could supply this stage today, ..." gives "four to six could"
+  const hm = /^(.+?) firms could supply this stage/.exec(hNote), hMeaning = hm ? `${hm[1].toLowerCase()} could` : '';
+  const mark = (b) => `${contentsMark(b)}${b}`;
+  const x = `${nX} of the ${stages.length} stages are rated ${mark('Extreme')}${xMeaning ? `, meaning ${esc(xMeaning)}` : ' concentration'}`;
+  const h = nH ? `${nX + nH === stages.length ? 'the other' : ''} ${nH} ${mark('High')}${hMeaning ? `, meaning ${esc(hMeaning)}` : ''}`.trim() : '';
+  return nX ? `${x}${h ? `, and ${h}` : ''}.` : '';
 })();
 const thesisHTML = 'How AI chips are made';
 const subtitleHTML = 'Every stage of the supply chain, and who controls it.';
@@ -1273,7 +1280,7 @@ const sheetPages = [['#/', 'Home'], ['#/chain', 'The Chain'], ['#/landscape', 'A
 const sheetItem = (ch) => `<li><a href="${ch.id === 'geopolitics' ? '#geopolitics' : '#' + esc(ch.id)}"><span class="n">${pad(ch.number)}</span><span class="t">${esc(ch.title)}</span></a></li>`;
 const sheetChapters = stages.map(sheetItem).join('') + (acrossChapters.length ? `<li class="sheet-k" aria-hidden="true">Across the chain</li>` + acrossChapters.map(sheetItem).join('') : '');
 fill('SHEET_PAGES', sheetPages); fill('SHEET_CHAPTERS', sheetChapters);
-fill('CONTENTS', contentsHTML); fill('CHAPTERS', chaptersHTML); fill('CREDITS', credits);
+fill('CONTENTS', contentsHTML); fill('CHAIN_STANDFIRST', chainStandfirst); fill('CHAPTERS', chaptersHTML); fill('CREDITS', credits);
 // the footer opens with the masthead's own tile (src/template.html), which signs off in the ledger column on the walk and
 // The Chain (styles.css .ft-mark) and stays hidden elsewhere. It is added here, so footer and footerKey, which the readable
 // pages and the summary reuse, keep their words and markup.
