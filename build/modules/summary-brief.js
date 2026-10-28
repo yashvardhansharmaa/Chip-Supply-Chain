@@ -52,7 +52,8 @@ module.exports = function (ctx) {
   const srcLink = (u) => (u ? ` <a class="src-l" href="${esc(u)}" target="_blank" rel="noopener">Source</a>` : '');
   const ledeSrc = (ch) => {
     const fig = (String(ch.meta.oneLiner || '').match(/\d[\d,.]*\s(?:to\s\d[\d,.]*\s)?percent/) || [''])[0].replace(/^.*\sto\s/, '');
-    const k = fig ? (ch.meta.keyFacts || []).find((f) => String(f.fact || '').includes(fig)) : null;
+    const re = fig ? new RegExp('(?<![\\d.,])' + fig.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')) : null; // "7 percent" never matches "17 percent"
+    const k = re ? (ch.meta.keyFacts || []).find((f) => re.test(String(f.fact || ''))) : null;
     return k ? k.source : '';
   };
   const stageCards = stages.map((ch, i) => {
