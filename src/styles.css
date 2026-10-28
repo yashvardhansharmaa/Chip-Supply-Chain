@@ -336,6 +336,19 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before, .gl-
 .prose td.n, .prose th.n { text-align: right; white-space: nowrap; padding-left: 18px; padding-right: 0; font-variant-numeric: tabular-nums lining-nums; }
 .prose th:not(.n):last-child, .prose td:not(.n):last-child { padding-right: 0; }
 @media (max-width: 480px) { .prose td.n, .prose th.n { white-space: normal; } } /* a phone lets a long range wrap at its dash so the table fits its box */
+/* a phone (28 Oct 2026): a table in the note step, so a long name ("Blackwell") fits its column, and a soft shadow at an edge
+   while more of the table lies past it, so a table wider than the screen says it scrolls */
+@media screen and (max-width: 480px) {
+  .prose table { font-size: var(--t-note); }
+  .prose th, .prose td, .prose td.n:not(:last-child), .prose th.n:not(:last-child) { padding-right: 10px; }
+  .table-wrap {
+    --sh: color-mix(in srgb, var(--ink) 16%, transparent);
+    background: linear-gradient(to right, var(--bg) 40%, transparent) left / 28px 100% no-repeat local,
+      linear-gradient(to left, var(--bg) 40%, transparent) right / 28px 100% no-repeat local,
+      linear-gradient(to right, var(--sh), transparent) left / 12px 100% no-repeat scroll,
+      linear-gradient(to left, var(--sh), transparent) right / 12px 100% no-repeat scroll;
+  }
+}
 
 /* figures */
 .figure { margin: 1.6em 0 2em; padding: 16px 0 12px; border: 0; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--line-2); border-radius: 0; background: none; }

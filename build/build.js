@@ -413,7 +413,9 @@ function markdown(src, ctx) {
       });
       const dashRanges = (h) => h.split(/(<[^>]+>)/).map((part, k) => (k % 2 ? part : part.replace(/(\d)-(?=[$€£¥]?\d)/g, '$1\u2013'))).join('');
       let html = `<div class="table-wrap" tabindex="0"><table><thead><tr>${head.map((h, c) => `<th${numCol[c] ? ' class="n"' : ''}>${h}</th>`).join('')}</tr></thead><tbody>`;
-      body.forEach((cs) => { html += `<tr>${cs.map((h, c) => (numCol[c] ? `<td class="n">${dashRanges(h)}</td>` : `<td>${h}</td>`)).join('')}</tr>`; });
+      // a short name with a hyphen ("CoWoS-S") stays whole on a narrow screen: it broke at its hyphen (28 Oct 2026)
+      const keepNames = (h) => h.split(/(<[^>]+>)/).map((part, k) => (k % 2 ? part : part.replace(/(^|[\s(])([A-Za-z0-9]+-[A-Za-z0-9]{1,3})(?=$|[\s,.;:)])/g, '$1<span class="nw">$2</span>'))).join('');
+      body.forEach((cs) => { html += `<tr>${cs.map((h, c) => (numCol[c] ? `<td class="n">${dashRanges(h)}</td>` : `<td>${keepNames(h)}</td>`)).join('')}</tr>`; });
       out.push(html + '</tbody></table></div>');
       continue;
     }
