@@ -43,7 +43,7 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8766';
       check('1440: the kicker carries the card\'s verdict', /Extreme concentration\s*·\s*Very hard to substitute/.test(col.kick), col.kick);
       check('1440: the specimen is a plate at the measure, in the text column', col.specW === 666 && col.specX === col.textX, `${col.specW} px at x ${col.specX}, text at ${col.textX}`);
       check('1440: the plate is fitted to its drawing (--draw-h, --lift)', /^\d+px$/.test(col.drawH) && /^\d+px$/.test(col.lift), `--draw-h ${col.drawH}, --lift ${col.lift}`);
-      check('1440: the card is in the text after the lead, before section 01, at the measure', !col.inHead && col.prev === 'P' && col.next === 'lithography--how-it-works' && col.cardW === 666 && col.cardId === 'lithography--card', JSON.stringify({ prev: col.prev, next: col.next, w: col.cardW }));
+      check('1440: the card is in the text after the lead, before section 01, as wide as the flashcards (720 px since 27 Oct)', !col.inHead && col.prev === 'P' && col.next === 'lithography--how-it-works' && col.cardW === 720 && col.cardId === 'lithography--card', JSON.stringify({ prev: col.prev, next: col.next, w: col.cardW }));
       check('1440: On this page lists the card after In plain terms', col.toc === 'In plain terms | Chokepoint card | How it works', col.toc);
       await t.ev("document.querySelector('#lithography .rail-toc a[href=\"#lithography--card\"]').click(),1"); await sleep(1200);
       const land = await t.ev("(function(){var c=document.getElementById('lithography--card').getBoundingClientRect();return {top:Math.round(c.top),hash:location.hash,cur:(document.querySelector('#lithography .rail-toc a[aria-current]')||{}).textContent};})()");
