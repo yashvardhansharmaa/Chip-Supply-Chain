@@ -28,7 +28,7 @@
 @media (max-width: 1199px) { .view-head.vh .dek { grid-column: 1 / -1; } .view-head.sup-head h1 { grid-column: 1 / -1; } }
 @media (max-width: 760px) {
   .view-head.vh { display: block; padding-top: 32px; }
-  .view-head.vh h1 { font-size: min(76px, 19vw); }
+  .view-head.vh h1 { font-size: var(--t-title); }
   .view-head.vh .dek { margin-top: 16px; font-size: var(--t-text); line-height: 1.35; }
 }
 

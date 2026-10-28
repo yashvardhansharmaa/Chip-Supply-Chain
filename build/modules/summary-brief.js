@@ -159,6 +159,7 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
   --font-ui: var(--label); --font-display: var(--display); --margin: clamp(16px, 4.45vw, 64px); --accent-ink: var(--accent);
   --label: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif; --kicker: "Fragment Mono", ui-monospace, Menlo, monospace;
   --gutter: clamp(16px, 4vw, 40px); color-scheme: light; }
+@media (max-width: 900px) { :root { --t-title: min(68px, 15vw); } } /* a phone's page titles, as src/styles.css sets them */
 /* dark: the site's own bar inks (src/styles.css), High in --bar-4 above Moderate in --bar-3 */
 :root[data-theme="dark"] { --bg: #121211; --bg-2: #1c1c1a; --card: #1c1c1a; --ink: #e8e7e3; --ink-2: #c6c4be; --muted: #8f8d87; --line: #2c2b28; --line-2: #45443f;
   --accent: #d98a95; --accent-fill: #a8414b; --accent-soft: rgba(217, 138, 149, 0.16); --on-accent: #fff; --bar-4: #8c8a84; --bar-3: #5a5953; --bar-2: #45443f; color-scheme: dark; }

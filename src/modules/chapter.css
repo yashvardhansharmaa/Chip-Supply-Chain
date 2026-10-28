@@ -485,7 +485,7 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
   .chapter .ch-open { order: 1; } .chapter .ch-spec { order: 2; } .chapter .ch-rail { order: 3; }
   .chapter .plain { order: 4; } .chapter .inshort { order: 5; } article.chapter > .prose { order: 6; }
   .chapter .ch-kick { gap: 4px 14px; }
-  .chapter .ch-title, .chapter .ch-title.is-long { margin: 16px 0 0 -0.04em; font-size: min(68px, 15vw); line-height: 0.98; }
+  .chapter .ch-title, .chapter .ch-title.is-long { margin: 16px 0 0 -0.04em; font-size: var(--t-title); line-height: 0.98; }
   .chapter .ch-title.is-long { font-size: min(46px, 11vw); line-height: 1.02; }
   .chapter .ch-lede { margin-top: 16px; font-size: var(--t-lead); line-height: 1.38; }
   .chapter .ch-omet { margin-top: 14px; }

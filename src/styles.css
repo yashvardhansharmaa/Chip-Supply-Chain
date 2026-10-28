@@ -127,6 +127,8 @@ html.kb:has(.view[data-view="walk"]:not([hidden]) .wk-rail[data-show="1"]:not([h
   html.kb:has(.stage[data-hidden="1"]) { scroll-padding-bottom: 60px; }
 }
 @media (prefers-reduced-motion: reduce) { .stage { transition: none; } html { scroll-behavior: auto; } }
+/* a phone's page titles: one size for the chapters and the views, as large as the width allows */
+@media (max-width: 900px) { :root { --t-title: min(68px, 15vw); } }
 body {
   margin: 0;
   background: var(--bg);

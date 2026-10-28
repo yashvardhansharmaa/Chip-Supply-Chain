@@ -85,7 +85,7 @@ html.kb:has(.view[data-view="glossary"]:not([hidden])) { scroll-padding-top: cal
 .gl-hw button { font: inherit; text-align: left; color: var(--ink); overflow-wrap: anywhere; }
 .gl-hw button:hover { color: var(--accent-ink); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
 .gl-de.is-on .gl-hw button { color: var(--accent-ink); }
-.gl-pos { font-family: var(--font-body); font-style: italic; font-weight: 400; font-size: var(--t-note); line-height: 1.3; color: var(--muted); }
+.gl-pos { font-family: var(--font-body); font-style: italic; font-weight: 400; font-variation-settings: normal; font-size: var(--t-note); line-height: 1.3; color: var(--muted); }
 .gl-aka { margin: 3px 0 0; font-family: var(--font-ui); font-size: 12.5px; line-height: 1.45; color: var(--muted); }
 .gl-meta { display: flex; align-items: flex-start; gap: 8px; margin: 5px 0 0; font-family: var(--font-ui); font-size: 12.5px; line-height: 1.45; color: var(--ink-2); }
 .gl-meta > span { min-width: 0; }

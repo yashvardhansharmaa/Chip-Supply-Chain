@@ -35,7 +35,7 @@
 .row { display: grid; grid-template-columns: minmax(0, 15em) minmax(0, 1fr); gap: 6px 32px; padding: 16px 0 18px; border-bottom: 1px solid var(--line); scroll-margin-top: 16px; }
 .row:target { box-shadow: inset 3px 0 0 var(--accent); padding-left: 14px; background: var(--accent-soft); }
 .row-h { font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: var(--t-text); line-height: 1.22; margin: 0 0 4px; }
-.row-h .native { display: block; margin-top: 3px; font-family: var(--font-body); font-size: var(--t-small); font-weight: 400; color: var(--muted); }
+.row-h .native { display: block; margin-top: 3px; font-family: var(--font-body); font-variation-settings: normal; font-size: var(--t-small); font-weight: 400; color: var(--muted); }
 .row-meta { margin: 0 0 8px; font-family: var(--font-label); font-size: var(--fs-ui-s); line-height: 1.45; color: var(--muted); }
 .row-body { min-width: 0; }
 :where(.row-body) p { font-size: var(--fs-small); line-height: 1.52; margin: 0 0 8px; max-width: 40em; }

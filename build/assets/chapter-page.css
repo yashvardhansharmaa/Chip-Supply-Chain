@@ -44,6 +44,7 @@
   --night: #121211; --night-ink: #e8e7e3; --night-ink2: #a9a7a1; --night-rule: #34332f; --night-accent: #d98a95;
   color-scheme: light;
 }
+@media (max-width: 900px) { :root { --t-title: min(68px, 15vw); } } /* a phone's page titles, as src/styles.css sets them */
 /* dark only on an explicit choice (?theme=dark or the site's saved choice): the site opens light for everyone, the owner's call of 21 Oct */
 :root[data-theme="dark"] {
   --bg: #121211; --bg-2: #1c1c1a; --ink: #e8e7e3; --ink-2: #c6c4be; --muted: #8f8d87;
