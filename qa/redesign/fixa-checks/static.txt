@@ -1,0 +1,5 @@
+check-speak: no matches
+pages: 18 · views: walk, stack, landscape, suppliers, controls, glossary · ids: 1142 · chapters: 16
+check-sources: 2835 citations, all tier A or B
+check-size: 952 files outside dist/ and media/, none over 5.0 MB
+check-seo: 16 chapter pages, 23 sitemap entries, no problems
