@@ -1,0 +1,42 @@
+clock 2026-10-28 | Board as of 28 Oct 2026
+  ai-chips: Case by case
+  ai-chips-top: Presumption of denial
+  us-tools: Presumption of denial | advanced fabs | Case by case | other fabs
+  allies: Case by case
+  hbm: Presumption of denial
+  entity: Presumption of denial | Affiliates rule suspended until 9 Nov 2026
+  minerals: Case by case | Ban suspended until 27 Nov 2026
+  minerals-world: Case by case | October 2025 rules suspended until 10 Nov 2026
+  china-market: Restricted
+  diffusion: Case by case
+  industrial: Policy
+  coming up: Coming up / 9 Nov 2026 / In 12 days / The US suspension of the affiliates rule ends unless extended, and the rule returns the next dayEntry → / 10 Nov 2026 / In 13 days / China's suspension of six October 2025 export control announcements, including the 0.1 percent rare earth rule, ends unless extendedEntry → / 27 Nov 2026 / In 30 days / China's suspension of its ban on gallium, germanium, antimony and superhard material exports to the US ends unless extendedEntry → / 4 Dec 2026 / In 37 days / US minimum import prices on polysilicon and its products, and an extra 15 percent duty on ingots and other listed products, take effectEntry → / 31 Dec 2026 / In 64 days / Last day for chip designers to apply for approved IC designer status under the US foundry ruleEntry → / 23 Dec 2027 / In 421 days / The ban on US federal agencies buying products that contain SMIC, CXMT or YMTC chips takes effectEntry →
+future-board: ok
+clock 2026-11-12 | Board as of 12 Nov 2026· data checked 28 Oct 2026
+  ai-chips: Case by case
+  ai-chips-top: Presumption of denial
+  us-tools: Presumption of denial | advanced fabs | Case by case | other fabs
+  allies: Case by case
+  hbm: Presumption of denial
+  entity: Presumption of denial | Affiliates rule due to end 9 Nov 2026, extension not confirmed
+  minerals: Case by case | Ban suspended until 27 Nov 2026
+  minerals-world: Case by case | October 2025 rules due to end 10 Nov 2026, extension not confirmed
+  china-market: Restricted
+  diffusion: Case by case
+  industrial: Policy
+  coming up: Coming up / 9 Nov 2026 / Passed, outcome not confirmed / The US suspension of the affiliates rule ends unless extended, and the rule returns the next dayEntry → / 10 Nov 2026 / Passed, outcome not confirmed / China's suspension of six October 2025 export control announcements, including the 0.1 percent rare earth rule, ends unless extendedEntry → / 27 Nov 2026 / In 15 days / China's suspension of its ban on gallium, germanium, antimony and superhard material exports to the US ends unless extendedEntry → / 4 Dec 2026 / In 22 days / US minimum import prices on polysilicon and its products, and an extra 15 percent duty on ingots and other listed products, take effectEntry → / 31 Dec 2026 / In 49 days / Last day for chip designers to apply for approved IC designer status under the US foundry ruleEntry → / 23 Dec 2027 / In 406 days / The ban on US federal agencies buying products that contain SMIC, CXMT or YMTC chips takes effectEntry →
+future-board: ok
+clock 2026-11-28 | Board as of 28 Nov 2026· data checked 28 Oct 2026
+  ai-chips: Case by case
+  ai-chips-top: Presumption of denial
+  us-tools: Presumption of denial | advanced fabs | Case by case | other fabs
+  allies: Case by case
+  hbm: Presumption of denial
+  entity: Presumption of denial | Affiliates rule due to end 9 Nov 2026, extension not confirmed
+  minerals: Case by case | Ban due to end 27 Nov 2026, extension not confirmed
+  minerals-world: Case by case | October 2025 rules due to end 10 Nov 2026, extension not confirmed
+  china-market: Restricted
+  diffusion: Case by case
+  industrial: Policy
+  coming up: Coming up / 9 Nov 2026 / Passed, outcome not confirmed / The US suspension of the affiliates rule ends unless extended, and the rule returns the next dayEntry → / 10 Nov 2026 / Passed, outcome not confirmed / China's suspension of six October 2025 export control announcements, including the 0.1 percent rare earth rule, ends unless extendedEntry → / 27 Nov 2026 / Passed, outcome not confirmed / China's suspension of its ban on gallium, germanium, antimony and superhard material exports to the US ends unless extendedEntry → / 4 Dec 2026 / In 6 days / US minimum import prices on polysilicon and its products, and an extra 15 percent duty on ingots and other listed products, take effectEntry → / 31 Dec 2026 / In 33 days / Last day for chip designers to apply for approved IC designer status under the US foundry ruleEntry → / 23 Dec 2027 / In 390 days / The ban on US federal agencies buying products that contain SMIC, CXMT or YMTC chips takes effectEntry →
+future-board: ok

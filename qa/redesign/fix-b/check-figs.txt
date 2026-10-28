@@ -1,0 +1,114 @@
+PASS tool-price (bars): drawn as bars
+PASS tool-price (bars): 3 marks for 3 data rows
+PASS tool-price (bars): every mark's values match the data
+PASS tool-price (bars): wine on High-NA EUV only
+PASS tool-price (bars): Table rows match the data (3)
+PASS tool-price (bars): CSV rows match the data
+PASS tool-price (bars): PNG exports at 1,600 px wide
+PASS tool-price (bars): no page errors
+PASS euv-shipments (columns): drawn as columns
+PASS euv-shipments (columns): 3 marks for 3 data rows
+PASS euv-shipments (columns): every mark's values match the data
+PASS euv-shipments (columns): wine on 2025 only
+PASS euv-shipments (columns): Table rows match the data (3)
+PASS euv-shipments (columns): CSV rows match the data
+PASS euv-shipments (columns): PNG exports at 1,600 px wide
+PASS euv-shipments (columns): no page errors
+PASS hbm-bandwidth (bars): drawn as bars
+PASS hbm-bandwidth (bars): 3 marks for 3 data rows
+PASS hbm-bandwidth (bars): every mark's values match the data
+PASS hbm-bandwidth (bars): wine on HBM4, 2,048-bit only
+PASS hbm-bandwidth (bars): Table rows match the data (3)
+PASS hbm-bandwidth (bars): CSV rows match the data
+PASS hbm-bandwidth (bars): PNG exports at 1,600 px wide
+PASS hbm-bandwidth (bars): no page errors
+PASS us-dc-electricity (columns): drawn as columns
+PASS us-dc-electricity (columns): 2 marks for 4 data rows
+PASS us-dc-electricity (columns): every mark's values match the data
+PASS us-dc-electricity (columns): wine on 2030, projected only
+PASS us-dc-electricity (columns): Table rows match the data (4)
+PASS us-dc-electricity (columns): CSV rows match the data
+PASS us-dc-electricity (columns): PNG exports at 1,600 px wide
+PASS us-dc-electricity (columns): no page errors
+PASS china-tool-revenue (change): drawn as change
+PASS china-tool-revenue (change): 4 marks for 8 data rows
+PASS china-tool-revenue (change): every mark's values match the data
+PASS china-tool-revenue (change): wine on Tokyo Electron only
+PASS china-tool-revenue (change): Table rows match the data (8)
+PASS china-tool-revenue (change): CSV rows match the data
+PASS china-tool-revenue (change): PNG exports at 1,600 px wide
+PASS china-tool-revenue (change): no page errors
+PASS germanium-price (columns): drawn as columns
+PASS germanium-price (columns): 5 marks for 5 data rows
+PASS germanium-price (columns): every mark's values match the data
+PASS germanium-price (columns): wine on 2025 only
+PASS germanium-price (columns): Table rows match the data (5)
+PASS germanium-price (columns): CSV rows match the data
+PASS germanium-price (columns): PNG exports at 1,600 px wide
+PASS germanium-price (columns): no page errors
+PASS equipment-billings (columns): drawn as columns
+PASS equipment-billings (columns): 2 marks for 2 data rows
+PASS equipment-billings (columns): every mark's values match the data
+PASS equipment-billings (columns): wine on 2025 only
+PASS equipment-billings (columns): Table rows match the data (2)
+PASS equipment-billings (columns): CSV rows match the data
+PASS equipment-billings (columns): PNG exports at 1,600 px wide
+PASS equipment-billings (columns): no page errors
+PASS hbm-revenue (columns): drawn as columns
+PASS hbm-revenue (columns): 2 marks for 2 data rows
+PASS hbm-revenue (columns): every mark's values match the data
+PASS hbm-revenue (columns): wine on 2028 only
+PASS hbm-revenue (columns): Table rows match the data (2)
+PASS hbm-revenue (columns): CSV rows match the data
+PASS hbm-revenue (columns): PNG exports at 1,600 px wide
+PASS hbm-revenue (columns): no page errors
+PASS cowos-reticles (columns): drawn as columns
+PASS cowos-reticles (columns): 4 marks for 4 data rows
+PASS cowos-reticles (columns): every mark's values match the data
+PASS cowos-reticles (columns): wine on 2028 only
+PASS cowos-reticles (columns): Table rows match the data (4)
+PASS cowos-reticles (columns): CSV rows match the data
+PASS cowos-reticles (columns): PNG exports at 1,600 px wide
+PASS cowos-reticles (columns): no page errors
+PASS abf-layers (columns): drawn as columns
+PASS abf-layers (columns): 3 marks for 3 data rows
+PASS abf-layers (columns): every mark's values match the data
+PASS abf-layers (columns): wine on AI package, 2026 only
+PASS abf-layers (columns): Table rows match the data (3)
+PASS abf-layers (columns): CSV rows match the data
+PASS abf-layers (columns): PNG exports at 1,600 px wide
+PASS abf-layers (columns): no page errors
+PASS ase-testers (columns): drawn as columns
+PASS ase-testers (columns): 3 marks for 3 data rows
+PASS ase-testers (columns): every mark's values match the data
+PASS ase-testers (columns): wine on Q2 2026 only
+PASS ase-testers (columns): Table rows match the data (3)
+PASS ase-testers (columns): CSV rows match the data
+PASS ase-testers (columns): PNG exports at 1,600 px wide
+PASS ase-testers (columns): no page errors
+PASS nvlink-bandwidth (columns): drawn as columns
+PASS nvlink-bandwidth (columns): 3 marks for 3 data rows
+PASS nvlink-bandwidth (columns): every mark's values match the data
+PASS nvlink-bandwidth (columns): wine on NVLink 6 (Rubin) only
+PASS nvlink-bandwidth (columns): Table rows match the data (3)
+PASS nvlink-bandwidth (columns): CSV rows match the data
+PASS nvlink-bandwidth (columns): PNG exports at 1,600 px wide
+PASS nvlink-bandwidth (columns): no page errors
+PASS switch-bandwidth (columns): drawn as columns
+PASS switch-bandwidth (columns): 3 marks for 3 data rows
+PASS switch-bandwidth (columns): every mark's values match the data
+PASS switch-bandwidth (columns): wine on Tomahawk 6 only
+PASS switch-bandwidth (columns): Table rows match the data (3)
+PASS switch-bandwidth (columns): CSV rows match the data
+PASS switch-bandwidth (columns): PNG exports at 1,600 px wide
+PASS switch-bandwidth (columns): no page errors
+PASS turbine-output (columns): drawn as columns
+PASS turbine-output (columns): 3 marks for 3 data rows
+PASS turbine-output (columns): every mark's values match the data
+PASS turbine-output (columns): wine on 2030 only
+PASS turbine-output (columns): Table rows match the data (3)
+PASS turbine-output (columns): CSV rows match the data
+PASS turbine-output (columns): PNG exports at 1,600 px wide
+PASS turbine-output (columns): no page errors
+
+112 of 112 checks pass; 0 mismatches

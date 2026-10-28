@@ -1,0 +1,17 @@
+== check-speak
+check-speak: no matches
+== check-integrity
+allowed: exposure row for Veeco Instruments has no supplier entry. Reason: Veeco files a China share, so it has a China revenue panel, but it is not in the supplier list. data/exposure-notes.md classes it as Deposition & Etch.
+integrity: no problems
+pages: 18 · views: walk, stack, landscape, suppliers, controls, glossary · ids: 1142 · chapters: 16
+== check-sources
+check-sources: 2820 citations, all tier A or B
+== check-size
+check-size: 952 files outside dist/ and media/, none over 5.0 MB
+== check-seo
+check-seo: 16 chapter pages, 23 sitemap entries, no problems
+== check-links
+check-links --local: 28 pages, 1166 addresses, 194 fetched from http://127.0.0.1:8782
+check-links --local: no broken links
+== check-cites
+3304 marks checked, 0 problems
