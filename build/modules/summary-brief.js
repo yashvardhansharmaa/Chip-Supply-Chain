@@ -50,17 +50,19 @@ module.exports = function (ctx) {
     return `<li class="lv-${LEVEL[conc(ch)] || 0}"><a href="#s-${esc(ch.id)}"><span class="n">${pad(i + 1)}</span><span class="t">${esc(ch.title)}</span><span class="c">${meter(conc(ch))}<span class="w">${esc(conc(ch))}</span></span><span class="s">${esc(subShort(ch))}<span class="s-x"> to substitute</span></span><span class="who">${who}</span></a></li>`;
   }).join('');
   const nExtreme = stages.filter((ch) => conc(ch) === 'Extreme').length;
+  // the cards mark each glossary term's first use, as the chapters do, and a term opens its definition (the script below; 28 Oct 2026)
+  const gw = (h, used) => (ctx.glossaryWrap ? ctx.glossaryWrap(h, used) : h);
   const stageCards = stages.map((ch, i) => {
-    const c = card(ch);
+    const c = card(ch), used = new Set();
     const who = leaders(c, 3).map((l) => `<li><b>${esc(l.name)}</b>${l.country ? ` <span class="cc" title="${esc(COUNTRY[l.country] || l.country)}">${esc(l.country)}</span>` : ''}${l.share ? `<span class="share">${esc(l.share)}</span>` : ''}</li>`).join('');
     const sides = [['China', c.chinaStatus], ['United States', c.usStatus]].filter((x) => x[1]);
     return `<article class="card lv-${LEVEL[conc(ch)] || 0}" id="s-${esc(ch.id)}">
 <p class="card-k"><span class="n">${pad(i + 1)}</span>Stage ${i + 1} of ${stages.length}</p>
 <h3><a href="${url(ch.id)}">${esc(ch.title)}</a></h3>
 <p class="pills"><span class="pill pill-c${LEVEL[conc(ch)] === 4 ? ' x' : ''}">${meter(conc(ch))}${esc(conc(ch))} concentration</span>${sub(ch) ? `<span class="pill">${esc(subWords(ch))}</span>` : ''}</p>
-${ch.meta.oneLiner ? `<p class="lede">${esc(ch.meta.oneLiner)}</p>` : ''}
+${ch.meta.oneLiner ? `<p class="lede">${gw(esc(ch.meta.oneLiner), used)}</p>` : ''}
 ${who ? `<div class="who-block"><p class="lbl">Who leads</p><ul>${who}</ul></div>` : ''}
-${sides.length ? `<div class="sides">${sides.map(([k, v]) => `<div><p class="lbl">${k}</p><p>${esc(v)}</p></div>`).join('')}</div>` : ''}
+${sides.length ? `<div class="sides">${sides.map(([k, v]) => `<div><p class="lbl">${k}</p><p>${gw(esc(v), used)}</p></div>`).join('')}</div>` : ''}
 <p class="more"><a href="${url(ch.id)}">Read the chapter, with its sources</a></p>
 </article>`;
   }).join('');
@@ -78,7 +80,7 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
 <p class="eyebrow"><b>Summary</b> · the whole chain in one read</p>
 <h1>${title}</h1>
 <p class="dek">${esc(dek)}</p>
-<p class="cta"><a class="btn" href="../pdf/summary.pdf" download>Download the PDF <span>4 pages</span></a><a class="btn ghost" href="${SITE.url}supply-chain/">Read the full chain</a></p>
+<p class="cta"><a class="btn" href="../pdf/summary.pdf" download="chip-supply-chain-summary.pdf">Download the PDF <span>4 pages</span></a><a class="btn ghost" href="${SITE.url}supply-chain/">Read the full chain</a></p>
 <p class="meta">Updated ${DAY} · Every figure is cited in the chapter each card links to</p>
 </section>
 <section class="glance" aria-labelledby="glance-h">
@@ -98,6 +100,22 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
 </main>
 <footer class="site-footer scr">${footerKey}</footer>
 <button class="to-top" type="button" data-show="0">Back to top</button>
+<script src="../assets/terms.js"></script>
+<script>/* the glossary pop-up, as on the chapters (src/app.js Tip): a term's definition on hover, focus or tap, a sheet on a phone */
+(function(){var T=(window.CP_TERMS||{}).defs||{},tip=null,cur=null,hT=0;
+function E(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function panel(){if(tip)return tip;tip=document.createElement('div');tip.className='gl-tip';tip.id='gl-tip';tip.setAttribute('role','tooltip');tip.hidden=true;document.body.appendChild(tip);tip.addEventListener('mouseenter',function(){clearTimeout(hT);});tip.addEventListener('mouseleave',later);return tip;}
+function place(b){var t=panel();if(innerWidth<700){t.classList.add('is-sheet');t.style.left='';t.style.top='';return;}t.classList.remove('is-sheet');var r=b.getBoundingClientRect(),w=t.offsetWidth,h=t.offsetHeight,l=Math.max(8,Math.min(r.left+r.width/2-w/2,innerWidth-w-8)),y=r.top-h-10;if(y<8)y=r.bottom+10;t.style.left=Math.round(l)+'px';t.style.top=Math.round(y)+'px';}
+function show(b){var d=T[b.getAttribute('data-term')];if(!d)return;clearTimeout(hT);var t=panel(),slug=String(d[0]).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');t.innerHTML='<b>'+E(d[0])+'</b><p>'+E(d[1])+'</p><a href="../#gl-'+slug+'">Look it up \u2192</a>';t.hidden=false;if(cur&&cur!==b)cur.removeAttribute('aria-describedby');cur=b;b.setAttribute('aria-describedby','gl-tip');place(b);}
+function hide(){clearTimeout(hT);if(tip)tip.hidden=true;if(cur){cur.removeAttribute('aria-describedby');cur=null;}}
+function later(){clearTimeout(hT);hT=setTimeout(hide,220);}
+function term(e){return e.target.closest?e.target.closest('.gl-term'):null;}
+document.addEventListener('mouseover',function(e){var b=term(e);if(b)show(b);});
+document.addEventListener('mouseout',function(e){if(term(e))later();});
+document.addEventListener('focusin',function(e){var b=term(e);if(b)show(b);else if(tip&&!tip.contains(e.target))hide();});
+document.addEventListener('click',function(e){var b=term(e);if(b){show(b);return;}if(tip&&!tip.contains(e.target))hide();});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&tip&&!tip.hidden){var b=cur;hide();if(b)b.focus();}});
+window.addEventListener('scroll',function(){if(cur&&tip&&!tip.hidden&&!tip.classList.contains('is-sheet'))place(cur);},{passive:true});})();</script>
 <script>/* Back to top, as the app shows it (src/app.js): past most of a screen, and on a phone only while the reader heads back up */
 (function(){var b=document.querySelector('.to-top');if(!b)return;var last=window.scrollY,up=false,t=0,mq=window.matchMedia&&matchMedia('(max-width: 899px)');
 b.addEventListener('click',function(){window.scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});});
@@ -285,6 +303,16 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
   .to-top { position: fixed; right: 24px; bottom: 20px; z-index: 35; font-family: var(--label); font-weight: 500; font-size: 13px; color: var(--ink-2); border: 1px solid var(--line-2); background: var(--bg); padding: 7px 14px; border-radius: 999px; cursor: pointer; opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0s 0.3s; }
   .to-top[data-show="1"] { opacity: 1; visibility: visible; transition: opacity 0.3s; }
   .to-top:hover { color: var(--ink); border-color: var(--ink); }
+  /* glossary terms and their pop-up, as src/styles.css sets them on the chapters */
+  .gl-term { font: inherit; color: inherit; background: none; border: 0; padding: 0; margin: 0; text-align: inherit; cursor: help; text-decoration: underline dotted; text-decoration-color: color-mix(in srgb, var(--muted) 75%, var(--bg)); text-decoration-thickness: 1.5px; text-underline-offset: 0.24em; }
+  .gl-term:hover, .gl-term[aria-describedby] { text-decoration-style: solid; text-decoration-color: var(--accent); }
+  .nw { white-space: nowrap; } .nw > .gl-term { white-space: normal; }
+  .gl-tip { position: fixed; z-index: 50; width: max-content; max-width: min(340px, calc(100vw - 16px)); background: var(--bg); border: 1px solid var(--line-2); border-top: 2px solid var(--ink); padding: 12px 16px 13px; box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12); }
+  .gl-tip[hidden] { display: none; }
+  .gl-tip b { display: block; font-family: var(--display); font-weight: 500; font-size: var(--t-text); line-height: 1.2; margin-bottom: 6px; }
+  .gl-tip p { margin: 0 0 10px; font-size: var(--t-small); line-height: 1.45; color: var(--ink-2); }
+  .gl-tip a { font-family: var(--label); font-weight: 500; font-size: 12.5px; color: var(--accent); text-decoration: none; }
+  .gl-tip.is-sheet { left: 8px; right: 8px; bottom: 8px; top: auto; width: auto; max-width: none; }
   @media (max-width: 899px) { .to-top { right: 12px; bottom: 16px; } }
 }
 @media screen and (prefers-reduced-motion: reduce) { * { transition: none !important; } }`;
