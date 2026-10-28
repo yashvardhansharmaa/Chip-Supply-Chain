@@ -37,25 +37,26 @@ const count = (sel) => `document.querySelectorAll(${JSON.stringify(sel)}).length
 const shown = (sel) => `!!(document.querySelector(${JSON.stringify(sel)}) && document.querySelector(${JSON.stringify(sel)}).getClientRects().length)`; // laid out on screen
 const shownCount = (sel) => `[].filter.call(document.querySelectorAll(${JSON.stringify(sel)}), (e) => e.getClientRects().length).length`;
 // The Chain's contents, measured against CP_DATA.chapters: the stages on the line (shown, each linked to its own chapter
-// and with its drawing), the Extreme ones on the wine route, the chapters across the chain on the bracket, every chapter in
+// and with its drawing fetched and decoded), the Extreme ones on the wine route, the chapters across the chain on the bracket, every chapter in
 // the list with its #<id> link, the downloads, and How to read a chapter gone
 const CHAIN_STATE = `(function () {
   var D = (window.CP_DATA && CP_DATA.chapters) || [], st = D.filter(function (c) { return c.stage; }), x = D.filter(function (c) { return !c.stage; });
   var vis = function (el) { return !!(el && el.getClientRects().length); };
   var li = [].slice.call(document.querySelectorAll('#contents .ln-st > li'));
   var line = li.map(function (l) { var a = l.querySelector('a'); return a && vis(a) && l.querySelector('.ln-sp img') ? a.getAttribute('data-route') + ' ' + a.getAttribute('href') : 'none'; });
+  var drawn = li.filter(function (l) { var i = l.querySelector('.ln-sp img'); return i && i.complete && i.naturalWidth > 0; }).length; // each drawing fetched and decoded
   var wantLine = st.map(function (c) { return '#' + c.id + ' ' + c.id + '/'; });
   var wine = li.filter(function (l) { return l.getAttribute('data-band') === 'x' && getComputedStyle(l.querySelector('.ln-rt')).backgroundColor !== 'rgba(0, 0, 0, 0)'; }).map(function (l) { return l.getAttribute('data-ch'); });
   var wantWine = st.filter(function (c) { return c.concentration === 'Extreme'; }).map(function (c) { return c.id; });
   var brk = [].filter.call(document.querySelectorAll('#contents .ln-brk a.ln-bx'), vis).map(function (a) { return a.getAttribute('data-route'); });
   var list = [].map.call(document.querySelectorAll('#contents .contents-grid .item a.t'), function (a) { return a.getAttribute('href'); });
   var dl = [].filter.call(document.querySelectorAll('#howto .howto-dl a'), vis).map(function (a) { return a.getAttribute('href'); });
-  return { line: line.join() === wantLine.join(), stages: st.length, lineShown: line.filter(function (v) { return v !== 'none'; }).length,
+  return { line: line.join() === wantLine.join(), stages: st.length, lineShown: line.filter(function (v) { return v !== 'none'; }).length, drawn: drawn,
     wine: wine.join() === wantWine.join(), extreme: wantWine.length, bracket: brk.join() === x.map(function (c) { return '#' + c.id; }).join(), across: brk.length,
     list: list.join() === D.map(function (c) { return '#' + c.id; }).join(), listed: list.length,
     downloads: dl.join() === 'pdf/how-ai-chips-are-made.pdf,pdf/summary.pdf,summary/', howToRead: !!document.querySelector('.howto-read, #howto-read') };
 })()`;
-const CHAIN_OK = `(function (s) { return s.stages >= 14 && s.line && s.wine && s.extreme > 0 && s.bracket && s.across >= 2 && s.list && s.downloads && !s.howToRead; })(${CHAIN_STATE})`;
+const CHAIN_OK = `(function (s) { return s.stages >= 14 && s.line && s.drawn === s.stages && s.wine && s.extreme > 0 && s.bracket && s.across >= 2 && s.list && s.downloads && !s.howToRead; })(${CHAIN_STATE})`;
 // the counts below follow the chain since the merge of chapters 8 and 9 (27 Oct 2026): 14 stages, 16 chapters
 const ROUTES = [
   { name: 'walk', url: '/#/', ready: `${view('walk')} && ${count('.view[data-view="walk"] .wk-step')} >= 14`, detail: `'walk view shown: ' + ${view('walk')} + ', steps: ' + ${count('.view[data-view="walk"] .wk-step')}` },
