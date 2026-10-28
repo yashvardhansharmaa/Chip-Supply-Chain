@@ -227,7 +227,10 @@ small { font-size: 0.85em; }
 /* on the home page, beside the hero, the specimen's label and description are centered under the drawing, the description
    set as the rail's links are, in Hanken Grotesk (owner, 27 Oct). The phone's strip keeps its own small, left-set caption. */
 @media (min-width: 901px) {
-  html[data-view="walk"] .stage .stage-tag { text-align: center; margin-left: var(--margin); }
+  /* the label spans the stage as the description does, and the pause button sits outside its centre: padding on the left as
+     wide as the button and its gap keeps "Specimen 01" itself on the same centre line as the text under it */
+  html[data-view="walk"] .stage .stage-tag { align-self: stretch; margin-left: var(--margin); margin-right: var(--margin); text-align: center; }
+  html[data-view="walk"] .stage .stage-tag:has(.stage-pause) { padding-left: 36px; }
   html[data-view="walk"] .stage figcaption { margin-left: var(--margin); margin-right: var(--margin); max-width: none; align-self: center; text-align: center; text-wrap: balance;
     font-family: var(--font-ui); font-size: 15px; line-height: 1.6; color: var(--ink-2); }
 }
