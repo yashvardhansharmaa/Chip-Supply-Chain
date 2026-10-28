@@ -196,7 +196,7 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 /* ---------- 3. the chokepoint card, the chapter's first table: in the text after the lead, before section 01 (build/build.js
    withCard), at the measure on the paper tint; its three ratings in a row, then each field as a row, the label in a column of
    its own (wide enough for "Why substitution is slow" on one line) and the answer beside it ---------- */
-.chapter .plate { max-width: 666px; margin: 44px 0 0; padding: 20px 26px 22px; background: var(--bg-2); border: 0; overflow: visible; }
+.chapter .plate { max-width: 40em; margin: 44px 0 0; padding: 20px 26px 22px; background: var(--bg-2); border: 0; overflow: visible; }
 /* On this page lands the card clear of the masthead (and of the phone's slim bar) */
 .chapter .plate[id] { scroll-margin-top: calc(var(--masthead) + var(--band, 0px) + 16px); }
 .chapter .plate-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 20px; padding: 0 0 16px; border-bottom: 1px solid var(--ink); }
@@ -237,7 +237,7 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
    the phone's rules: Paged.js (build/pdf.py) lifts every rule with one out of its media query and applies it on paper too, so
    ".plate" in the selector outweighs the older "div + div" rules instead */
 @media screen {
-  .chapter > .prose > .plate { max-width: 666px; }
+  .chapter > .prose > .plate { max-width: 40em; } /* as wide as the flashcards and sources (owner, 27 Oct) */
   .chapter .plate-head { padding: 0 0 12px; }
   .chapter .plate-kpis { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 22px; padding: 16px 0 18px; }
   .chapter .plate-kpis > div:last-child { grid-column: auto; padding-left: 0; border-top: 0; } /* the price stays in the row at every width */
