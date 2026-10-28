@@ -245,11 +245,13 @@ td.n { width: 7mm; font: 400 7.4pt var(--kicker); color: var(--muted); }
 td.t { padding-right: 4mm; white-space: nowrap; } /* the stage on one line, clear of who leads it; a wrapped row tips the page */
 td.t a { font-family: var(--display); font-weight: 500; font-size: 9.2pt; }
 td.band { font: 400 8pt var(--label); white-space: nowrap; color: var(--ink-2); }
-/* the band as the site draws it: Extreme a solid bar and the word in ink, High an outline */
-.b-Extreme::before, .b-High::before { content: ""; display: inline-block; width: 1.2mm; height: 2.5mm; margin-right: 1.4mm; vertical-align: baseline; }
+/* the band as the site draws it (28 Oct 2026): the four-bar meter before the word, as many bars in ink as the band's rank, the
+   word of an Extreme stage in ink at 600 */
+.meter { display: inline-flex; align-items: flex-end; gap: 0.3mm; height: 2.4mm; margin-right: 1.4mm; vertical-align: -0.1mm; }
+.meter b { display: block; width: 0.7mm; background: var(--line-2); }
+.meter b:nth-child(1) { height: 36%; } .meter b:nth-child(2) { height: 57%; } .meter b:nth-child(3) { height: 79%; } .meter b:nth-child(4) { height: 100%; }
+.meter b.on { background: var(--ink); }
 .b-Extreme { font-weight: 600; color: var(--ink); }
-.b-Extreme::before { background: var(--ink); }
-.b-High::before { height: 1.3mm; box-shadow: inset 0 0 0 0.6pt var(--ink); }
 .cc { font: 400 6.8pt var(--kicker); color: var(--muted); }
 h2 { margin: 16pt 0 1mm; padding-top: 2mm; border-top: 0.6pt solid var(--ink); font: 400 14pt/1.15 var(--display); letter-spacing: -0.012em; break-after: avoid; }
 .h2-note { margin: 0 0 3mm; font-size: 8.6pt; color: var(--ink-2); }
@@ -259,8 +261,7 @@ h2 { margin: 16pt 0 1mm; padding-top: 2mm; border-top: 0.6pt solid var(--ink); f
 .stage h3 { margin: 0 0 1mm; font: 500 10pt/1.25 var(--display); }
 .stage h3 .n { margin-right: 1.2mm; font: 400 7.2pt var(--kicker); color: var(--muted); }
 .tags { margin: 0 0 1.2mm; font: 400 7.4pt/1.35 var(--label); color: var(--ink-2); }
-.tags .b-Extreme::before, .tags .b-High::before { height: 2.2mm; }
-.tags .b-High::before { height: 1.1mm; }
+.tags .meter { height: 2.2mm; }
 .stage p, .stage li, .short p { margin: 0 0 2.2pt; font-size: 8.1pt; line-height: 1.32; } /* 1.36 until 27 Oct: the longer China and US lines ran the brief onto a fifth page */
 .lede { color: var(--ink); }
 .who { margin: 0 0 2.5pt; padding-left: 4mm; }
@@ -460,7 +461,7 @@ window.addEventListener('scroll',upd,{passive:true});upd();})();</script>
 </div>
 <table>
 <thead><tr><th>#</th><th>Stage</th><th>Who leads</th><th>Concentration</th><th>Substitutability</th></tr></thead>
-<tbody><tr><td class="n">01</td><td class="t"><a href="https://chipsupplychain.org/design-and-eda/">Chip Design, EDA and IP</a></td><td>Synopsys <span class="cc">US</span>, Cadence <span class="cc">US</span></td><td class="band b-Extreme">Extreme</td><td class="band">Hard</td></tr><tr><td class="n">02</td><td class="t"><a href="https://chipsupplychain.org/silicon-and-wafers/">Silicon and Wafers</a></td><td>Shin-Etsu Handotai <span class="cc">JP</span>, SUMCO <span class="cc">JP</span></td><td class="band b-High">High</td><td class="band">Moderately hard</td></tr><tr><td class="n">03</td><td class="t"><a href="https://chipsupplychain.org/chemicals-gases-and-photoresist/">Chemicals, Gases and Photoresist</a></td><td>JSR <span class="cc">JP</span>, Tokyo Ohka Kogyo <span class="cc">JP</span></td><td class="band b-High">High</td><td class="band">Moderately hard</td></tr><tr><td class="n">04</td><td class="t"><a href="https://chipsupplychain.org/lithography/">Lithography</a></td><td>ASML <span class="cc">NL</span>, Nikon <span class="cc">JP</span></td><td class="band b-Extreme">Extreme</td><td class="band">Very hard</td></tr><tr><td class="n">05</td><td class="t"><a href="https://chipsupplychain.org/photomasks-and-pellicles/">Photomasks and Pellicles</a></td><td>AGC <span class="cc">JP</span>, Hoya <span class="cc">JP</span></td><td class="band b-Extreme">Extreme</td><td class="band">Hard</td></tr><tr><td class="n">06</td><td class="t"><a href="https://chipsupplychain.org/deposition-and-etch/">Deposition and Etch</a></td><td>Applied Materials <span class="cc">US</span>, Lam Research <span class="cc">US</span></td><td class="band b-High">High</td><td class="band">Moderately hard</td></tr><tr><td class="n">07</td><td class="t"><a href="https://chipsupplychain.org/metrology-and-inspection/">Metrology and Inspection</a></td><td>KLA <span class="cc">US</span>, Applied Materials <span class="cc">US</span></td><td class="band b-High">High</td><td class="band">Moderately hard</td></tr><tr><td class="n">08</td><td class="t"><a href="https://chipsupplychain.org/foundries-and-fabs/">Foundries and Fabs</a></td><td>TSMC <span class="cc">TW</span>, Intel <span class="cc">US</span></td><td class="band b-Extreme">Extreme</td><td class="band">Hard</td></tr><tr><td class="n">09</td><td class="t"><a href="https://chipsupplychain.org/memory-and-hbm/">Memory and HBM</a></td><td>SK hynix <span class="cc">KR</span>, Samsung <span class="cc">KR</span></td><td class="band b-Extreme">Extreme</td><td class="band">Hard</td></tr><tr><td class="n">10</td><td class="t"><a href="https://chipsupplychain.org/advanced-packaging/">Advanced Packaging</a></td><td>TSMC <span class="cc">TW</span>, Intel <span class="cc">US</span></td><td class="band b-Extreme">Extreme</td><td class="band">Moderately hard</td></tr><tr><td class="n">11</td><td class="t"><a href="https://chipsupplychain.org/substrates-and-pcbs/">Substrates and PCBs</a></td><td>Ajinomoto <span class="cc">JP</span>, Nitto Boseki <span class="cc">JP</span></td><td class="band b-Extreme">Extreme</td><td class="band">Hard</td></tr><tr><td class="n">12</td><td class="t"><a href="https://chipsupplychain.org/test-and-assembly/">Test and Assembly</a></td><td>Advantest <span class="cc">JP</span>, Teradyne <span class="cc">US</span></td><td class="band b-High">High</td><td class="band">Moderately hard</td></tr><tr><td class="n">13</td><td class="t"><a href="https://chipsupplychain.org/systems-and-networking/">Systems and Networking</a></td><td>Nvidia <span class="cc">US</span>, Broadcom <span class="cc">US</span></td><td class="band b-High">High</td><td class="band">Moderately hard</td></tr><tr><td class="n">14</td><td class="t"><a href="https://chipsupplychain.org/data-centers-and-power/">Data Centers and Power</a></td><td>GE Vernova <span class="cc">US</span>, Hitachi Energy <span class="cc">CH</span></td><td class="band b-High">High</td><td class="band">Moderately hard</td></tr></tbody>
+<tbody><tr><td class="n">01</td><td class="t"><a href="https://chipsupplychain.org/design-and-eda/">Chip Design, EDA and IP</a></td><td>Synopsys <span class="cc">US</span>, Cadence <span class="cc">US</span></td><td class="band b-Extreme"><span class="meter" aria-hidden="true"><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b></span>Extreme</td><td class="band">Hard</td></tr><tr><td class="n">02</td><td class="t"><a href="https://chipsupplychain.org/silicon-and-wafers/">Silicon and Wafers</a></td><td>Shin-Etsu Handotai <span class="cc">JP</span>, SUMCO <span class="cc">JP</span></td><td class="band b-High"><span class="meter" aria-hidden="true"><b class="on"></b><b class="on"></b><b class="on"></b><b></b></span>High</td><td class="band">Moderately hard</td></tr><tr><td class="n">03</td><td class="t"><a href="https://chipsupplychain.org/chemicals-gases-and-photoresist/">Chemicals, Gases and Photoresist</a></td><td>JSR <span class="cc">JP</span>, Tokyo Ohka Kogyo <span class="cc">JP</span></td><td class="band b-High"><span class="meter" aria-hidden="true"><b class="on"></b><b class="on"></b><b class="on"></b><b></b></span>High</td><td class="band">Moderately hard</td></tr><tr><td class="n">04</td><td class="t"><a href="https://chipsupplychain.org/lithography/">Lithography</a></td><td>ASML <span class="cc">NL</span>, Nikon <span class="cc">JP</span></td><td class="band b-Extreme"><span class="meter" aria-hidden="true"><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b></span>Extreme</td><td class="band">Very hard</td></tr><tr><td class="n">05</td><td class="t"><a href="https://chipsupplychain.org/photomasks-and-pellicles/">Photomasks and Pellicles</a></td><td>AGC <span class="cc">JP</span>, Hoya <span class="cc">JP</span></td><td class="band b-Extreme"><span class="meter" aria-hidden="true"><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b></span>Extreme</td><td class="band">Hard</td></tr><tr><td class="n">06</td><td class="t"><a href="https://chipsupplychain.org/deposition-and-etch/">Deposition and Etch</a></td><td>Applied Materials <span class="cc">US</span>, Lam Research <span class="cc">US</span></td><td class="band b-High"><span class="meter" aria-hidden="true"><b class="on"></b><b class="on"></b><b class="on"></b><b></b></span>High</td><td class="band">Moderately hard</td></tr><tr><td class="n">07</td><td class="t"><a href="https://chipsupplychain.org/metrology-and-inspection/">Metrology and Inspection</a></td><td>KLA <span class="cc">US</span>, Applied Materials <span class="cc">US</span></td><td class="band b-High"><span class="meter" aria-hidden="true"><b class="on"></b><b class="on"></b><b class="on"></b><b></b></span>High</td><td class="band">Moderately hard</td></tr><tr><td class="n">08</td><td class="t"><a href="https://chipsupplychain.org/foundries-and-fabs/">Foundries and Fabs</a></td><td>TSMC <span class="cc">TW</span>, Intel <span class="cc">US</span></td><td class="band b-Extreme"><span class="meter" aria-hidden="true"><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b></span>Extreme</td><td class="band">Hard</td></tr><tr><td class="n">09</td><td class="t"><a href="https://chipsupplychain.org/memory-and-hbm/">Memory and HBM</a></td><td>SK hynix <span class="cc">KR</span>, Samsung <span class="cc">KR</span></td><td class="band b-Extreme"><span class="meter" aria-hidden="true"><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b></span>Extreme</td><td class="band">Hard</td></tr><tr><td class="n">10</td><td class="t"><a href="https://chipsupplychain.org/advanced-packaging/">Advanced Packaging</a></td><td>TSMC <span class="cc">TW</span>, Intel <span class="cc">US</span></td><td class="band b-Extreme"><span class="meter" aria-hidden="true"><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b></span>Extreme</td><td class="band">Moderately hard</td></tr><tr><td class="n">11</td><td class="t"><a href="https://chipsupplychain.org/substrates-and-pcbs/">Substrates and PCBs</a></td><td>Ajinomoto <span class="cc">JP</span>, Nitto Boseki <span class="cc">JP</span></td><td class="band b-Extreme"><span class="meter" aria-hidden="true"><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b></span>Extreme</td><td class="band">Hard</td></tr><tr><td class="n">12</td><td class="t"><a href="https://chipsupplychain.org/test-and-assembly/">Test and Assembly</a></td><td>Advantest <span class="cc">JP</span>, Teradyne <span class="cc">US</span></td><td class="band b-High"><span class="meter" aria-hidden="true"><b class="on"></b><b class="on"></b><b class="on"></b><b></b></span>High</td><td class="band">Moderately hard</td></tr><tr><td class="n">13</td><td class="t"><a href="https://chipsupplychain.org/systems-and-networking/">Systems and Networking</a></td><td>Nvidia <span class="cc">US</span>, Broadcom <span class="cc">US</span></td><td class="band b-High"><span class="meter" aria-hidden="true"><b class="on"></b><b class="on"></b><b class="on"></b><b></b></span>High</td><td class="band">Moderately hard</td></tr><tr><td class="n">14</td><td class="t"><a href="https://chipsupplychain.org/data-centers-and-power/">Data Centers and Power</a></td><td>GE Vernova <span class="cc">US</span>, Hitachi Energy <span class="cc">CH</span></td><td class="band b-High"><span class="meter" aria-hidden="true"><b class="on"></b><b class="on"></b><b class="on"></b><b></b></span>High</td><td class="band">Moderately hard</td></tr></tbody>
 </table>
 <h2>Across the chain</h2>
 <p class="h2-note">Two chapters look across all fourteen stages, at what a chip costs and at the contest over who controls them.</p>
@@ -479,7 +480,7 @@ window.addEventListener('scroll',upd,{passive:true});upd();})();</script>
 <p class="h2-note">In the order a chip is made.</p>
 <div class="stages"><section class="stage">
 <h3><span class="n">01</span> Chip Design, EDA and IP</h3>
-<p class="tags"><span class="b-Extreme">Extreme concentration</span> · Hard to substitute</p>
+<p class="tags"><span class="b-Extreme"><span class="meter" aria-hidden="true"><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b></span>Extreme concentration</span> · Hard to substitute</p>
 <p class="lede">Synopsys, Cadence and Siemens EDA make the software used to design every advanced chip. In 2025 they took over 85 percent of its $18 billion market, licensed blocks included.</p>
 <ul class="who"><li><b>Synopsys</b> <span class="cc">United States</span>. 90%+ of the timing-signoff market at advanced nodes as of 2026</li><li><b>Cadence</b> <span class="cc">United States</span>. <span class="nw">55-60%</span> of the hardware emulator market at advanced nodes as of 2026</li></ul>
 <p><span class="k">China</span> China designs its own AI accelerators, but Huawei's most powerful chip in 2026, the Ascend 950, delivers about half the computing performance of Nvidia's H100 from 2022, on Epoch AI's estimate. CSIS found that as of 2025 Chinese design tools were still far from replacing the full range of advanced capabilities US firms offer, especially for 5 nm and 3 nm chips.</p>
@@ -487,7 +488,7 @@ window.addEventListener('scroll',upd,{passive:true});upd();})();</script>
 <p class="src">Sources: <a href="https://chipsupplychain.org/design-and-eda/">chipsupplychain.org/design-and-eda/</a></p>
 </section><section class="stage">
 <h3><span class="n">02</span> Silicon and Wafers</h3>
-<p class="tags"><span class="b-High">High concentration</span> · Moderately hard to substitute</p>
+<p class="tags"><span class="b-High"><span class="meter" aria-hidden="true"><b class="on"></b><b class="on"></b><b class="on"></b><b></b></span>High concentration</span> · Moderately hard to substitute</p>
 <p class="lede">Firms based in Japan, Taiwan, Germany and South Korea make most 300 mm wafers used for advanced chips. China makes most polysilicon, almost all of it for solar cells.</p>
 <ul class="who"><li><b>Shin-Etsu Handotai</b> <span class="cc">Japan</span>. Its parent's electronics materials segment, wafers included, had ¥1,015.7bn of sales in the year to March 2026</li><li><b>SUMCO</b> <span class="cc">Japan</span>. ¥409,670m of net sales in 2025</li></ul>
 <p><span class="k">China</span> China made about 93 percent of the world's polysilicon in 2023, and an estimated 98 percent of China's output was solar-grade. Eswin, mainland China's largest maker of 300 mm wafers, says it had about 7.7 percent of world 300 mm shipments in the first half of 2026.</p>
@@ -495,7 +496,7 @@ window.addEventListener('scroll',upd,{passive:true});upd();})();</script>
 <p class="src">Sources: <a href="https://chipsupplychain.org/silicon-and-wafers/">chipsupplychain.org/silicon-and-wafers/</a></p>
 </section><section class="stage">
 <h3><span class="n">03</span> Chemicals, Gases and Photoresist</h3>
-<p class="tags"><span class="b-High">High concentration</span> · Moderately hard to substitute</p>
+<p class="tags"><span class="b-High"><span class="meter" aria-hidden="true"><b class="on"></b><b class="on"></b><b class="on"></b><b></b></span>High concentration</span> · Moderately hard to substitute</p>
 <p class="lede">Japanese companies held 78 percent of world photoresist sales in 2023. Supply of chip chemicals, gases and metals has been disrupted three times since 2019.</p>
 <ul class="who"><li><b>JSR</b> <span class="cc">Japan</span>. A vehicle of the state-backed Japan Investment Corporation bought 84.36% of JSR in April 2024</li><li><b>Tokyo Ohka Kogyo</b> <span class="cc">Japan</span>. Resist maker with ¥139,668m of sales in the first half of fiscal 2026</li></ul>
 <p><span class="k">China</span> In March 2026 the Chinese resist maker Hubei Dinglong said China had yet to reach large-scale production of advanced resist for 248 nm, 193 nm or extreme-ultraviolet printing. Since August 2023 China has required licenses to export gallium and germanium.</p>
@@ -503,7 +504,7 @@ window.addEventListener('scroll',upd,{passive:true});upd();})();</script>
 <p class="src">Sources: <a href="https://chipsupplychain.org/chemicals-gases-and-photoresist/">chipsupplychain.org/chemicals-gases-and-photoresist/</a></p>
 </section><section class="stage">
 <h3><span class="n">04</span> Lithography</h3>
-<p class="tags"><span class="b-Extreme">Extreme concentration</span> · Very hard to substitute</p>
+<p class="tags"><span class="b-Extreme"><span class="meter" aria-hidden="true"><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b></span>Extreme concentration</span> · Very hard to substitute</p>
 <p class="lede">ASML, a Dutch firm, is the only maker of extreme ultraviolet scanners, the machines that print the finest layers of a chip. It sold 48 of them in 2025.</p>
 <ul class="who"><li><b>ASML</b> <span class="cc">Netherlands</span>. 100% of EUV (extreme ultraviolet) systems sold in 2025</li><li><b>Nikon</b> <span class="cc">Japan</span>. 22 new chip lithography systems in the year to March 2026</li></ul>
 <p><span class="k">China</span> Chinese firms have begun small-batch production of immersion DUV scanners, but none has yet been shown fit for producing advanced chips, the Center for Technology &amp; Statecraft found in September 2026. Its central estimate in 2026 was that China would have a commercially viable immersion scanner for 7 nm chips in the mid-2030s, with the early 2030s plausible, and EUV not before the second half of the 2030s. Meanwhile Chinese fabs had built a stockpile of more than 330 immersion DUV systems by the first quarter of 2026, most of them ASML's NXT:1980i.</p>
@@ -511,7 +512,7 @@ window.addEventListener('scroll',upd,{passive:true});upd();})();</script>
 <p class="src">Sources: <a href="https://chipsupplychain.org/lithography/">chipsupplychain.org/lithography/</a></p>
 </section><section class="stage">
 <h3><span class="n">05</span> Photomasks and Pellicles</h3>
-<p class="tags"><span class="b-Extreme">Extreme concentration</span> · Hard to substitute</p>
+<p class="tags"><span class="b-Extreme"><span class="meter" aria-hidden="true"><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b></span>Extreme concentration</span> · Hard to substitute</p>
 <p class="lede">Only three firms in the world make the blank plates for the masks used to print the finest layers of leading-edge chips. Japan's AGC and Hoya are two of them.</p>
 <ul class="who"><li><b>AGC</b> <span class="cc">Japan</span>. Ranks itself No.2 worldwide in EUV mask blanks on its own fiscal 2026 estimates</li><li><b>Hoya</b> <span class="cc">Japan</span>. Said in its 2026 report that its share of mask blanks is exceptionally high</li></ul>
 <p><span class="k">China</span> As of 2026 SMIC runs two mask shops of its own in Shanghai. No Chinese firm appears in CSET's 2025 market shares for electron-beam mask writers, the machines that draw the pattern onto a mask.</p>
@@ -519,7 +520,7 @@ window.addEventListener('scroll',upd,{passive:true});upd();})();</script>
 <p class="src">Sources: <a href="https://chipsupplychain.org/photomasks-and-pellicles/">chipsupplychain.org/photomasks-and-pellicles/</a></p>
 </section><section class="stage">
 <h3><span class="n">06</span> Deposition and Etch</h3>
-<p class="tags"><span class="b-High">High concentration</span> · Moderately hard to substitute</p>
+<p class="tags"><span class="b-High"><span class="meter" aria-hidden="true"><b class="on"></b><b class="on"></b><b class="on"></b><b></b></span>High concentration</span> · Moderately hard to substitute</p>
 <p class="lede">Deposition and etch tools build a chip layer by layer. China-based toolmakers' share of deposition tools rose from 2 to 7 percent between 2019 and 2024, by CSET's count.</p>
 <ul class="who"><li><b>Applied Materials</b> <span class="cc">United States</span>. 82.4% of physical vapor deposition tools in 2025, by CSET's count from TechInsights data</li><li><b>Lam Research</b> <span class="cc">United States</span>. 51.2% of conductor etch tools in 2025</li></ul>
 <p><span class="k">China</span> Chinese toolmakers held 12.4 percent of dry etch in 2025, according to CSET's analysis of TechInsights data. They held 2.6 percent of atomic layer deposition that year, by the same count.</p>
@@ -527,7 +528,7 @@ window.addEventListener('scroll',upd,{passive:true});upd();})();</script>
 <p class="src">Sources: <a href="https://chipsupplychain.org/deposition-and-etch/">chipsupplychain.org/deposition-and-etch/</a></p>
 </section><section class="stage">
 <h3><span class="n">07</span> Metrology and Inspection</h3>
-<p class="tags"><span class="b-High">High concentration</span> · Moderately hard to substitute</p>
+<p class="tags"><span class="b-High"><span class="meter" aria-hidden="true"><b class="on"></b><b class="on"></b><b class="on"></b><b></b></span>High concentration</span> · Moderately hard to substitute</p>
 <p class="lede">KLA, an American firm, held 56.8 percent of the market for tools that measure and inspect wafers in 2025, by CSET's count.</p>
 <ul class="who"><li><b>KLA</b> <span class="cc">United States</span>. 56.8% of process control tools in 2025 by CSET's count</li><li><b>Applied Materials</b> <span class="cc">United States</span>. 11.2% of process control tools in 2025</li></ul>
 <p><span class="k">China</span> Chinese firms held 0.7 percent of the world market for tools that measure and inspect wafers in 2025, by CSET's count. Skyverse, a Shenzhen maker of inspection and metrology tools, reported 2,053,298,171.74 yuan of revenue in 2025, up 48.75 percent on 2024.</p>
@@ -535,7 +536,7 @@ window.addEventListener('scroll',upd,{passive:true});upd();})();</script>
 <p class="src">Sources: <a href="https://chipsupplychain.org/metrology-and-inspection/">chipsupplychain.org/metrology-and-inspection/</a></p>
 </section><section class="stage">
 <h3><span class="n">08</span> Foundries and Fabs</h3>
-<p class="tags"><span class="b-Extreme">Extreme concentration</span> · Hard to substitute</p>
+<p class="tags"><span class="b-Extreme"><span class="meter" aria-hidden="true"><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b></span>Extreme concentration</span> · Hard to substitute</p>
 <p class="lede">The newest chips need the know-how to build the newest transistors and a fab that costs tens of billions of dollars. Only TSMC, Intel and Samsung have both.</p>
 <ul class="who"><li><b>TSMC</b> <span class="cc">Taiwan</span>. N2, its first nanosheet node, in volume production since 4Q25</li><li><b>Intel</b> <span class="cc">United States</span>. 18A in high-volume production in the United States, as of 2026</li></ul>
 <p><span class="k">China</span> China's SMIC made its most advanced chips on N+3, a 7 nm-class process built without extreme ultraviolet scanners, SemiAnalysis found in June 2026. SMIC cannot buy those scanners, so it prints its tightest layers in several passes on older deep-ultraviolet machines. China will keep the world's largest installed fab capacity in 2026 and 2027, SEMI projected in its third-quarter 2026 forecast.</p>
@@ -543,7 +544,7 @@ window.addEventListener('scroll',upd,{passive:true});upd();})();</script>
 <p class="src">Sources: <a href="https://chipsupplychain.org/foundries-and-fabs/">chipsupplychain.org/foundries-and-fabs/</a></p>
 </section><section class="stage">
 <h3><span class="n">09</span> Memory and HBM</h3>
-<p class="tags"><span class="b-Extreme">Extreme concentration</span> · Hard to substitute</p>
+<p class="tags"><span class="b-Extreme"><span class="meter" aria-hidden="true"><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b></span>Extreme concentration</span> · Hard to substitute</p>
 <p class="lede">SK hynix, Samsung and Micron make nearly all high bandwidth memory (HBM), the stacked memory beside AI chips. SK hynix took 63.2 percent of HBM revenue in 2025.</p>
 <ul class="who"><li><b>SK hynix</b> <span class="cc">South Korea</span>. 63.2% of HBM revenue in 2025</li><li><b>Samsung</b> <span class="cc">South Korea</span>. 19.3% of HBM revenue in 2025</li></ul>
 <p><span class="k">China</span> The Institute for Progress estimated in October 2025 that China would make virtually no HBM that year. Huawei said in September 2025 that its Ascend 950 chips would use two HBM designs of its own, without saying who would manufacture the memory.</p>
@@ -551,7 +552,7 @@ window.addEventListener('scroll',upd,{passive:true});upd();})();</script>
 <p class="src">Sources: <a href="https://chipsupplychain.org/memory-and-hbm/">chipsupplychain.org/memory-and-hbm/</a></p>
 </section><section class="stage">
 <h3><span class="n">10</span> Advanced Packaging</h3>
-<p class="tags"><span class="b-Extreme">Extreme concentration</span> · Moderately hard to substitute</p>
+<p class="tags"><span class="b-Extreme"><span class="meter" aria-hidden="true"><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b></span>Extreme concentration</span> · Moderately hard to substitute</p>
 <p class="lede">Epoch AI estimates that in 2025 Nvidia, Google, AMD and Amazon used around 90 percent of the capacity for CoWoS, TSMC's packaging for AI chips.</p>
 <ul class="who"><li><b>TSMC</b> <span class="cc">Taiwan</span>. CoWoS packaging used by Nvidia, Google, AMD and Amazon in 2025</li><li><b>Intel</b> <span class="cc">United States</span>. Foveros 3D packaging in volume at Rio Rancho, New Mexico, since January 2024</li></ul>
 <p><span class="k">China</span> Chinese firms had 5.3 percent of the market for fabrication tools built for advanced packaging in 2025, by CSET's analysis of TechInsights data. Between 2019 and 2024 they gained 5 percentage points of share in test tools but lost share in bonding and other conventional assembly and packaging tools.</p>
@@ -559,7 +560,7 @@ window.addEventListener('scroll',upd,{passive:true});upd();})();</script>
 <p class="src">Sources: <a href="https://chipsupplychain.org/advanced-packaging/">chipsupplychain.org/advanced-packaging/</a></p>
 </section><section class="stage">
 <h3><span class="n">11</span> Substrates and PCBs</h3>
-<p class="tags"><span class="b-Extreme">Extreme concentration</span> · Hard to substitute</p>
+<p class="tags"><span class="b-Extreme"><span class="meter" aria-hidden="true"><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b></span>Extreme concentration</span> · Hard to substitute</p>
 <p class="lede">Ajinomoto, a Japanese food company, told investors in June 2026 that it holds over 95 percent of the market for the insulating film inside high-end chip packages.</p>
 <ul class="who"><li><b>Ajinomoto</b> <span class="cc">Japan</span>. Told investors in June 2026 that its build-up film has held over 95% of its market since launch</li><li><b>Nitto Boseki</b> <span class="cc">Japan</span>. Claimed an overwhelming advantage in low thermal expansion glass in its 2025 integrated report</li></ul>
 <p><span class="k">China</span> TTM, an American circuit board maker, said in its annual report for 2025 that its circuit board competitors are mostly based in China and Taiwan. Nitto Boseki, a Japanese glass fiber maker, said in its 2025 integrated report that Chinese and Taiwanese companies are aggressively catching up with it in the special glass sector.</p>
@@ -567,7 +568,7 @@ window.addEventListener('scroll',upd,{passive:true});upd();})();</script>
 <p class="src">Sources: <a href="https://chipsupplychain.org/substrates-and-pcbs/">chipsupplychain.org/substrates-and-pcbs/</a></p>
 </section><section class="stage">
 <h3><span class="n">12</span> Test and Assembly</h3>
-<p class="tags"><span class="b-High">High concentration</span> · Moderately hard to substitute</p>
+<p class="tags"><span class="b-High"><span class="meter" aria-hidden="true"><b class="on"></b><b class="on"></b><b class="on"></b><b></b></span>High concentration</span> · Moderately hard to substitute</p>
 <p class="lede">Testing finds bad chips before they go into an expensive package. Japan's Advantest took about 65 percent of 2025 spending on chip testers, by its own estimate.</p>
 <ul class="who"><li><b>Advantest</b> <span class="cc">Japan</span>. About 65% of the tester market in 2025, by its own estimate</li><li><b>Teradyne</b> <span class="cc">United States</span>. $2.52bn of semiconductor test revenue in 2025, service included</li></ul>
 <p><span class="k">China</span> Georgetown's CSET, analyzing TechInsights data, finds that between 2019 and 2024 Chinese toolmakers gained 5 percentage points of world market share in test tools and 4 points in fabrication tools built for advanced packaging. But they lost share in bonding and other conventional assembly and packaging tools.</p>
@@ -575,7 +576,7 @@ window.addEventListener('scroll',upd,{passive:true});upd();})();</script>
 <p class="src">Sources: <a href="https://chipsupplychain.org/test-and-assembly/">chipsupplychain.org/test-and-assembly/</a></p>
 </section><section class="stage">
 <h3><span class="n">13</span> Systems and Networking</h3>
-<p class="tags"><span class="b-High">High concentration</span> · Moderately hard to substitute</p>
+<p class="tags"><span class="b-High"><span class="meter" aria-hidden="true"><b class="on"></b><b class="on"></b><b class="on"></b><b></b></span>High concentration</span> · Moderately hard to substitute</p>
 <p class="lede">Nvidia's and AMD's racks wire 72 AI chips together to run as one computer. Many firms can assemble the racks, but lasers for the optical links were scarce in 2026.</p>
 <ul class="who"><li><b>Nvidia</b> <span class="cc">United States</span>. NVLink, InfiniBand and Spectrum-X Ethernet, which it credited for data center growth in the quarter to April 2026</li><li><b>Broadcom</b> <span class="cc">United States</span>. $16.7B of AI semiconductor revenue in the quarter to August 2026, up 221%</li></ul>
 <p><span class="k">China</span> Chinese firms such as InnoLight assemble high-speed optical modules in volume, at sites including Suzhou and, since 2019, Thailand. In February 2025 China put indium under new export restrictions. The same month it began requiring export permits for indium phosphide substrates, the wafers that lasers for optical links are grown on.</p>
@@ -583,7 +584,7 @@ window.addEventListener('scroll',upd,{passive:true});upd();})();</script>
 <p class="src">Sources: <a href="https://chipsupplychain.org/systems-and-networking/">chipsupplychain.org/systems-and-networking/</a></p>
 </section><section class="stage">
 <h3><span class="n">14</span> Data Centers and Power</h3>
-<p class="tags"><span class="b-High">High concentration</span> · Moderately hard to substitute</p>
+<p class="tags"><span class="b-High"><span class="meter" aria-hidden="true"><b class="on"></b><b class="on"></b><b class="on"></b><b></b></span>High concentration</span> · Moderately hard to substitute</p>
 <p class="lede">SemiAnalysis forecast in October 2026 that 50 GW of data center capacity would be added in 2027, about as much as the world had built through 2024. The large transformers that connect such sites to the grid commonly took three years to arrive in 2024.</p>
 <ul class="who"><li><b>GE Vernova</b> <span class="cc">United States</span>. Gas equipment, transformers and switchgear, including through Prolec GE</li><li><b>Hitachi Energy</b> <span class="cc">Switzerland</span>. Power transformers and switchgear</li></ul>
 <p><span class="k">China</span> China used 25 percent of the world's data center electricity in 2024, second to the United States, by the International Energy Agency's estimate. Data centers made up around 3 percent of the growth in China's electricity demand from 2022 to 2024.</p>

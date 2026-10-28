@@ -127,14 +127,14 @@ window.addEventListener('scroll',upd,{passive:true});upd();})();</script>`;
   const rows = stages.map((ch, i) => {
     const c = card(ch);
     const who = leaders(c, 2).map((l) => `${esc(l.name)}${l.country ? ` <span class="cc">${esc(l.country)}</span>` : ''}`).join(', ');
-    return `<tr><td class="n">${pad(i + 1)}</td><td class="t"><a href="${url(ch.id)}">${esc(ch.title)}</a></td><td>${who}</td><td class="band b-${esc(c.concentration || '')}">${esc(c.concentration || '')}</td><td class="band">${esc(subShort(ch))}</td></tr>`;
+    return `<tr><td class="n">${pad(i + 1)}</td><td class="t"><a href="${url(ch.id)}">${esc(ch.title)}</a></td><td>${who}</td><td class="band b-${esc(c.concentration || '')}">${meter(c.concentration)}${esc(c.concentration || '')}</td><td class="band">${esc(subShort(ch))}</td></tr>`;
   }).join('');
   const blocks = stages.map((ch, i) => {
     const c = card(ch);
     const who = leaders(c, 2).map((l) => `<li><b>${esc(l.name)}</b>${l.country ? ` <span class="cc">${esc(COUNTRY[l.country] || l.country)}</span>` : ''}${l.share ? `. ${esc(l.share)}` : ''}</li>`).join('');
     return `<section class="stage">
 <h3><span class="n">${pad(i + 1)}</span> ${esc(ch.title)}</h3>
-<p class="tags"><span class="b-${esc(c.concentration || '')}">${esc(c.concentration || '')} concentration</span>${sub(ch) ? ` · ${esc(subWords(ch))}` : ''}</p>
+<p class="tags"><span class="b-${esc(c.concentration || '')}">${meter(c.concentration)}${esc(c.concentration || '')} concentration</span>${sub(ch) ? ` · ${esc(subWords(ch))}` : ''}</p>
 ${ch.meta.oneLiner ? `<p class="lede">${esc(ch.meta.oneLiner)}</p>` : ''}
 ${who ? `<ul class="who">${who}</ul>` : ''}
 ${c.chinaStatus ? `<p><span class="k">China</span> ${esc(c.chinaStatus)}</p>` : ''}
@@ -347,11 +347,13 @@ td.n { width: 7mm; font: 400 7.4pt var(--kicker); color: var(--muted); }
 td.t { padding-right: 4mm; white-space: nowrap; } /* the stage on one line, clear of who leads it; a wrapped row tips the page */
 td.t a { font-family: var(--display); font-weight: 500; font-size: 9.2pt; }
 td.band { font: 400 8pt var(--label); white-space: nowrap; color: var(--ink-2); }
-/* the band as the site draws it: Extreme a solid bar and the word in ink, High an outline */
-.b-Extreme::before, .b-High::before { content: ""; display: inline-block; width: 1.2mm; height: 2.5mm; margin-right: 1.4mm; vertical-align: baseline; }
+/* the band as the site draws it (28 Oct 2026): the four-bar meter before the word, as many bars in ink as the band's rank, the
+   word of an Extreme stage in ink at 600 */
+.meter { display: inline-flex; align-items: flex-end; gap: 0.3mm; height: 2.4mm; margin-right: 1.4mm; vertical-align: -0.1mm; }
+.meter b { display: block; width: 0.7mm; background: var(--line-2); }
+.meter b:nth-child(1) { height: 36%; } .meter b:nth-child(2) { height: 57%; } .meter b:nth-child(3) { height: 79%; } .meter b:nth-child(4) { height: 100%; }
+.meter b.on { background: var(--ink); }
 .b-Extreme { font-weight: 600; color: var(--ink); }
-.b-Extreme::before { background: var(--ink); }
-.b-High::before { height: 1.3mm; box-shadow: inset 0 0 0 0.6pt var(--ink); }
 .cc { font: 400 6.8pt var(--kicker); color: var(--muted); }
 h2 { margin: 16pt 0 1mm; padding-top: 2mm; border-top: 0.6pt solid var(--ink); font: 400 14pt/1.15 var(--display); letter-spacing: -0.012em; break-after: avoid; }
 .h2-note { margin: 0 0 3mm; font-size: 8.6pt; color: var(--ink-2); }
@@ -361,8 +363,7 @@ h2 { margin: 16pt 0 1mm; padding-top: 2mm; border-top: 0.6pt solid var(--ink); f
 .stage h3 { margin: 0 0 1mm; font: 500 10pt/1.25 var(--display); }
 .stage h3 .n { margin-right: 1.2mm; font: 400 7.2pt var(--kicker); color: var(--muted); }
 .tags { margin: 0 0 1.2mm; font: 400 7.4pt/1.35 var(--label); color: var(--ink-2); }
-.tags .b-Extreme::before, .tags .b-High::before { height: 2.2mm; }
-.tags .b-High::before { height: 1.1mm; }
+.tags .meter { height: 2.2mm; }
 .stage p, .stage li, .short p { margin: 0 0 2.2pt; font-size: 8.1pt; line-height: 1.32; } /* 1.36 until 27 Oct: the longer China and US lines ran the brief onto a fifth page */
 .lede { color: var(--ink); }
 .who { margin: 0 0 2.5pt; padding-left: 4mm; }
