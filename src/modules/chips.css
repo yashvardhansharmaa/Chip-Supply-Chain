@@ -148,6 +148,19 @@
 .aic svg.chart { outline: none; }
 .aic svg.chart:focus-visible { outline: 1.5px solid var(--accent); outline-offset: 6px; border-radius: 4px; }
 .aic .chart .foc .kf { fill: none; stroke: var(--accent); stroke-width: 2; }
+/* the head's chart and the shelves, linked (quick win B, 29 Oct 2026; src/app.js Landscape, Lk): the dot of the package under
+   the pointer or the focus in ink, ringed, with its name and figure; the package a dot led to ringed in ink, its name in wine,
+   and flashed once as it comes into view */
+.aic .chart .lit { pointer-events: none; }
+.aic .chart .lit .lit-dot { fill: var(--ink); stroke: var(--bg); stroke-width: 1.5; }
+.aic .chart .lit .lit-ring { fill: none; stroke: var(--ink); stroke-width: 1.5; }
+.aic .chart .lit .lit-lab { font-weight: 600; fill: var(--ink); }
+.aic .chart .lit .lit-none { font-weight: 500; fill: var(--ink-2); }
+.aic li.it.is-lit .it-b .nm { color: var(--accent-ink); text-decoration-color: var(--accent); }
+.aic li.it.is-lit .it-b .pic { outline: 1.5px solid var(--ink); outline-offset: 6px; border-radius: 2px; }
+@keyframes aic-flash { 0%, 30% { background: var(--accent-soft); box-shadow: 0 0 0 8px var(--accent-soft); } 100% { background: transparent; box-shadow: 0 0 0 8px transparent; } }
+.aic .it-b.flash { animation: aic-flash 1.8s ease-out; }
+@media (prefers-reduced-motion: reduce) { .aic .it-b.flash { animation: none; } }
 .aic .ctip { position: absolute; z-index: 6; min-width: 170px; max-width: 260px; background: var(--bg); border-radius: 8px; box-shadow: var(--shadow); padding: 10px 14px 12px; pointer-events: auto; }
 .aic .ct-n { font: 400 18px/1.25 var(--font-body); }
 .aic .ct-n span { font: 400 13px/1 var(--font-ui); color: var(--muted); margin-left: 8px; }

@@ -1357,10 +1357,11 @@
         labs += '<text class="lab lab-h' + (p.mine ? ' mine' : ' top') + '" x="' + r2(got.cx) + '" y="' + r2(got.cy) + '" text-anchor="' + got.an + '">' + esc(txt) + '</text>';
       });
       var aria = esc(m.label) + ' of each chip by the month it was announced. ' + F.pts.length + ' chips have a figure. The arrow keys move from chip to chip.';
-      return { svg: '<svg class="chart" width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + ' ' + h + '" tabindex="0" role="group" aria-roledescription="chart" aria-label="' + aria + '">' + g + dots + rings + labs + '<g class="hov"></g><g class="foc"></g><rect class="hit" x="0" y="0" width="' + w + '" height="' + h + '" fill="transparent"/></svg>', pts: pts, F: F };
+      return { svg: '<svg class="chart" width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + ' ' + h + '" tabindex="0" role="group" aria-roledescription="chart" aria-label="' + aria + '">' + g + dots + rings + labs + '<g class="lit"></g><g class="hov"></g><g class="foc"></g><rect class="hit" x="0" y="0" width="' + w + '" height="' + h + '" fill="transparent"/></svg>', pts: pts, F: F };
     };
     // hover shows a chip's name; a click, a tap or the arrow keys pin a tip with its figure, its month and "Open the B300", which
-    // opens that chip on its own. Nothing on the chart adds a chip to a comparison
+    // opens that chip on its own. Nothing on the chart adds a chip to a comparison. On the head's chart (o.link) a click or a tap
+    // on a dot goes to that chip's package on its shelf instead (quick win B, 29 Oct 2026, below); the keys still pin the tip
     var tipClose = null; // the open tip's closer: a press anywhere else puts it away (one listener for every chart, set in init)
     var interactChart = function (host, res, o) {
       o = o || {};
@@ -1391,7 +1392,8 @@
       var nearest = function (e, rad) { var b = svg.getBoundingClientRect(), x = e.clientX - b.left, y = e.clientY - b.top, best = -1, bd = rad * rad; pts.forEach(function (p, i) { var d = (p.x - x) * (p.x - x) + (p.y - y) * (p.y - y); if (d < bd) { bd = d; best = i; } }); return best; };
       svg.addEventListener('pointermove', function (e) { if (e.pointerType !== 'mouse') return; var i = nearest(e, 18); label(i >= 0 && i !== cur ? pts[i] : null, hov); });
       svg.addEventListener('pointerleave', function () { label(null, hov); });
-      svg.addEventListener('click', function (e) { var i = nearest(e, e.pointerType === 'mouse' ? 18 : 30); if (i < 0) i = nearest(e, 30); pin(i); });
+      svg.addEventListener('click', function (e) { var i = nearest(e, e.pointerType === 'mouse' ? 18 : 30); if (i < 0) i = nearest(e, 30); if (o.link && i >= 0) { pin(-1); o.link(pts[i].c.id); return; } pin(i); });
+      if (o.link) svg.addEventListener('mousedown', function (e) { e.preventDefault(); }); // a press goes to the package, so it must not focus the chart, whose focus opens the tip
       svg.addEventListener('keydown', function (e) {
         var k = e.key, n = pts.length; if (!n) return;
         if (k === 'ArrowRight' || k === 'ArrowDown') { e.preventDefault(); pin(cur < 0 ? 0 : Math.min(n - 1, cur + 1)); }
@@ -1614,10 +1616,45 @@
         '<div class="card-more"><section class="card-stand"><h3 class="card-h3">Where they stand</h3>' + standInner() + '</section></div>' +
         '<section class="card-notes"><h3 class="card-h3">Notes and sources</h3>' + notes + '</section></section>';
     };
+    /* ---- the head's chart and the shelves, linked (quick win B, owner, 29 Oct 2026) ----
+       Hovering or focusing a package lights its dot in ink, with its name and figure; a chip with no figure on the chart says so
+       in the chart's own words. A click or a tap on a dot lights its package and brings it into view, where the tip used to
+       open; a click on the package then opens its card, as before. The keys on the chart keep the tip. Lk holds the head
+       chart's points (chartSVG's, each with its chip), the chip whose dot is lit, which a new drawing of the chart lights again,
+       and the package a dot led to, which keeps its mark until another dot is pressed or the shelves are drawn again. */
+    var Lk = { host: null, res: null, id: null, pkg: null };
+    var litDot = function () {
+      var svg = Lk.host && $('svg.chart', Lk.host), g = svg && $('.lit', svg); if (!g) return;
+      var id = Lk.id, res = Lk.res, m = res.F.m, W = +svg.getAttribute('width'), p = null;
+      if (!id) { g.innerHTML = ''; return; }
+      res.pts.forEach(function (q) { if (q.c.id === id) p = q; });
+      if (!p) { // no figure on this chart: the words the chart's notes use for it
+        var c = byId(id);
+        g.innerHTML = c ? '<text class="lab lab-h lit-none" x="' + (W - 2) + '" y="14" text-anchor="end">' + esc(nilKind(c, m) === 'no' ? m.fmt.toUpperCase() + ' is not supported by the ' + short(c) : m.label + ' is not published for the ' + short(c)) + '</text>' : '';
+        return;
+      }
+      var t = short(p.c) + ', ' + nf(p.v), tw = textW(t, true), right = p.x + 14 + tw < W - 4;
+      g.innerHTML = (p.off ? '' : '<circle class="lit-ring" cx="' + r2(p.x) + '" cy="' + r2(p.y) + '" r="9"/><circle class="lit-dot" cx="' + r2(p.x) + '" cy="' + r2(p.y) + '" r="4.6"/>') +
+        '<text class="lab lab-h lit-lab" x="' + r2(right ? p.x + 14 : p.x - 14) + '" y="' + r2(Math.max(14, p.y - 10)) + '" text-anchor="' + (right ? 'start' : 'end') + '">' + esc(t) + '</text>';
+    };
+    var litPkg = function (id) {
+      $$('#aic li.it.is-lit').forEach(function (li) { li.classList.remove('is-lit'); });
+      var b = id ? document.getElementById('aic-it-' + id) : null;
+      if (b) b.parentNode.classList.add('is-lit');
+      return b;
+    };
+    var light = function (id) { Lk.id = id || Lk.pkg || null; litDot(); }; // none: back to the package a dot led to, if any
+    var toPackage = function (id) { // a dot pressed: its package marked, brought to the middle of the window, and flashed once
+      Lk.id = Lk.pkg = id; litDot();
+      var b = litPkg(id); if (!b) return;
+      var br = b.getBoundingClientRect(), top = br.top + window.pageYOffset - Math.max(headerH() + 24, (window.innerHeight - br.height) / 2 - 40);
+      window.scrollTo({ top: Math.max(0, Math.round(top)), behavior: reduced ? 'auto' : 'smooth' });
+      b.classList.remove('flash'); void b.offsetWidth; b.classList.add('flash');
+    };
     var drawChart = function () {
       var sel = selection(), mk = S.measure;
       var head = document.getElementById('aic-c-head');
-      if (head) { var r0 = chartSVG({ measure: mk || 'fp16', w: chartW(), h: nar() ? 260 : 250, sel: S.picked, small: true }); head.innerHTML = r0.svg; interactChart(head, r0, { here: S.picked }); }
+      if (head) { var r0 = chartSVG({ measure: mk || 'fp16', w: chartW(), h: nar() ? 260 : 250, sel: S.picked, small: true }); head.innerHTML = r0.svg; interactChart(head, r0, { here: S.picked, link: toPackage }); Lk.host = head; Lk.res = r0; litDot(); }
       var host = document.getElementById('aic-c-card'); if (!host) return;
       var w = Math.round(host.clientWidth || 520);
       var res = chartSVG({ measure: mk || firstMeasure(sel), w: Math.max(280, Math.min(w, 666)), h: nar() ? 250 : 300, sel: S.picked, small: nar() });
@@ -1633,7 +1670,7 @@
     var render = function (how) {
       how = how || {};
       var view = $('#aic-view'); if (!view) return;
-      tipClose = null;
+      tipClose = null; Lk.id = Lk.pkg = null; // the shelves are drawn afresh; a package that keeps the focus lights its dot again (focusin)
       var key = S.picked.join(','), focusId = document.activeElement && view.contains(document.activeElement) ? document.activeElement.id : null, y = window.pageYOffset;
       view.innerHTML = headHTML() + shelvesHTML();
       if (Router.current === 'landscape') { Router.title(); var sel = selection(); if (sel.length) document.title = sel.map(short).join(', ') + ' · ' + document.title; }
@@ -1669,6 +1706,12 @@
         }
       });
       document.addEventListener('change', function (e) { var t = e.target; if (t.classList && t.classList.contains('mselect') && t.closest('#aic')) setMeasure(t.value); });
+      // a package under the pointer, or with the focus, lights its dot on the head's chart (a touch goes straight to the click)
+      var pkgOf = function (t) { return Router.current === 'landscape' && t && t.closest ? t.closest('#aic .shelves .it-b') : null; };
+      document.addEventListener('pointerover', function (e) { var b = pkgOf(e.target); if (b && e.pointerType !== 'touch') light(b.getAttribute('data-open')); });
+      document.addEventListener('pointerout', function (e) { var b = pkgOf(e.target); if (!b || (e.relatedTarget && b.contains(e.relatedTarget))) return; var f = pkgOf(document.activeElement); light(f ? f.getAttribute('data-open') : null); });
+      document.addEventListener('focusin', function (e) { var b = pkgOf(e.target); if (b) light(b.getAttribute('data-open')); });
+      document.addEventListener('focusout', function (e) { var b = pkgOf(e.target); if (b && !pkgOf(e.relatedTarget)) light(null); });
       document.addEventListener('pointerdown', function (e) { if (tipClose) tipClose(e); }, true);
       var rt = null, lastW = window.innerWidth;
       window.addEventListener('resize', function () {
@@ -5910,8 +5953,55 @@ y+=20;g.fillStyle='#45443f';g.font='400 12.5px '+FU;var sl=wrap(g,(srcT?'Source:
 g.fillStyle='#56554f';g.font='400 12px '+FM;g.fillText(addr,P,y+20);
 save(cv,fig,k);
 }
+/* parts inside a whole (15.3, 29 Oct 2026): the whole's bracket and words, the total's, the bar (an outline to the whole's low
+   end, hatched to its high end) with the parts carved inside it, and each part named under it on a leader, as the page draws them */
+function pngWithin(fig){
+var pw=fig.querySelector('.fig-body .pw');if(!pw)return;
+var k=txt(fig.querySelector('.fig-k')),t1=txt(fig.querySelector('.fig-title')),t2=txt(fig.querySelector('.fig-sub'));
+var dl=(/Data: (.+)\.$/.exec(txt(fig.querySelector('.fig-cite-box .ch-cite-text')))||[])[1],src=fig.querySelector('.fs-src'),sc=src?src.cloneNode(true):null;if(sc)[].forEach.call(sc.querySelectorAll('.fs-k'),function(x){x.remove();});
+var srcT=dl||(sc?txt(sc).replace(/\s*\d+$/,''):''),addr=txt(fig.querySelector('.fig-cite-box a')).replace(/^https?:\/\//,'');
+var wh=pw.querySelector('.pw-whole'),to=pw.querySelector('.pw-total');if(!wh||!to)return;
+var hi=+wh.getAttribute('data-hi'),lo=+wh.getAttribute('data-v'),tv=+to.getAttribute('data-v');
+var words=function(e){var c=e.querySelector('.pw-lab').cloneNode(true),b=c.querySelector('b'),bt=txt(b);if(b)b.remove();return{b:bt,r:txt(c)};},LW=words(wh),LT=words(to);
+var parts=[].map.call(pw.querySelectorAll('.pw-part'),function(p){var r=pw.querySelector('.pw-row[data-k="'+p.getAttribute('data-k')+'"]');return{v:+p.getAttribute('data-v'),top:p.classList.contains('top'),nm:txt(r&&r.querySelector('.pw-nm')),vt:txt(r&&r.querySelector('.pw-v'))};});
+var W=800,P=40,S=2,cv=el('canvas'),g=cv.getContext('2d');
+var FD='"Fraunces",Georgia,serif',FB='"Source Serif 4",Georgia,serif',FU='"Hanken Grotesk","Helvetica Neue",Arial,sans-serif',FM='"Fragment Mono",Menlo,monospace';
+var WINE='#7a1f2b',TINT='#d2d1cc',INK='#171716',INK2='#45443f',RULE='#8c8a84',LINE='#e1e0db';
+var CW=W-2*P,X=function(v){return P+v/hi*CW;},BH=36,RH=26,G=14;
+g.font='500 24px '+FD;var L1=wrap(g,t1,W-2*P);g.font='400 16px '+FB;var L2=t2?wrap(g,t2,W-2*P):[];
+var chartH=22+10+22+10+BH+G+parts.length*RH;
+var H=P+18+L1.length*31+(L2.length?6+L2.length*21:0)+24+chartH+20+56;
+cv.width=W*S;cv.height=H*S;g.scale(S,S);g.fillStyle='#ffffff';g.fillRect(0,0,W,H);
+var y=P;g.textBaseline='alphabetic';g.fillStyle='#56554f';g.font='400 13px '+FM;g.fillText(k,P,y+12);y+=22;
+g.fillStyle=INK;g.font='500 24px '+FD;L1.forEach(function(s){y+=28;g.fillText(s,P,y);y+=3;});
+if(L2.length){y+=6;g.fillStyle=INK2;g.font='400 16px '+FB;L2.forEach(function(s){y+=19;g.fillText(s,P,y);y+=2;});}
+y+=24;
+var brk=function(x0,x1,yy){g.strokeStyle=INK2;g.lineWidth=1;g.beginPath();g.moveTo(x0+0.5,yy+5);g.lineTo(x0+0.5,yy+0.5);g.lineTo(x1-0.5,yy+0.5);g.lineTo(x1-0.5,yy+5);g.stroke();};
+var say=function(L,x,yy,right){g.font='600 14px '+FU;var bw=g.measureText(L.b+' ').width;g.font='400 14px '+FU;var rw=g.measureText(L.r).width,x0=right?x-bw-rw:x;g.fillStyle=INK;g.font='600 14px '+FU;g.fillText(L.b,x0,yy);g.fillStyle=INK2;g.font='400 14px '+FU;g.fillText(L.r,x0+bw,yy);};
+say(LW,P+CW,y+15,true);y+=22;brk(P,P+CW,y);y+=10;
+say(LT,P,y+15,false);y+=22;brk(P,X(tv),y);y+=10;
+var yb=y;
+g.save();g.beginPath();g.rect(X(lo),yb,X(hi)-X(lo),BH);g.clip();g.strokeStyle=RULE;g.lineWidth=1.5;for(var i=-BH;i<X(hi)-X(lo)+BH;i+=6){g.beginPath();g.moveTo(X(lo)+i,yb+BH);g.lineTo(X(lo)+i+BH,yb);g.stroke();}g.restore();
+var at=0;parts.forEach(function(p,i){p.x0=X(at);at+=p.v;p.x1=X(at);g.fillStyle=p.top?WINE:TINT;g.fillRect(p.x0+(i?0.6:1.5),yb+1.5,Math.max(1,p.x1-p.x0-(i?1.2:2.1)),BH-3);});
+g.strokeStyle=RULE;g.lineWidth=1.5;g.strokeRect(P+0.75,yb+0.75,CW-1.5,BH-1.5);g.beginPath();g.moveTo(X(lo),yb);g.lineTo(X(lo),yb+BH);g.stroke();
+var lx=X(at)+18;
+parts.slice().reverse().forEach(function(p,i){var ry=yb+BH+G+i*RH+RH/2,cx=(p.x0+p.x1)/2;
+g.strokeStyle=p.top?WINE:RULE;g.lineWidth=1;g.beginPath();g.moveTo(cx,yb+BH+2);g.lineTo(cx,ry);g.lineTo(lx-6,ry);g.stroke();
+g.font=(p.top?'600':'400')+' 14px '+FU;g.fillStyle=p.top?INK:INK2;g.fillText(p.nm,lx,ry+5);var nw=g.measureText(p.nm).width;
+g.font=(p.top?'700 15px ':'400 14px ')+FU;g.fillStyle=p.top?WINE:INK;g.fillText(p.vt,lx+nw+10,ry+5);});
+y=yb+BH+G+parts.length*RH;
+y+=14;g.fillStyle=LINE;g.fillRect(P,y,W-2*P,1);y+=22;
+g.fillStyle='#45443f';g.font='400 12.5px '+FU;var sl=wrap(g,(srcT?'Source: '+srcT:''),W-2*P);sl.slice(0,1).forEach(function(s){g.fillText(s,P,y);});
+g.fillStyle='#56554f';g.font='400 12px '+FM;g.fillText(addr,P,y+20);
+save(cv,fig,k);
+}
+/* hovering a part, or its name, lights both and dims the rest (15.3) */
+function pwLit(pw,key){[].forEach.call(pw.querySelectorAll('[data-k]'),function(x){x.classList.toggle('lit',x.getAttribute('data-k')===key);});pw.classList.toggle('has-lit',key!=null);}
+D.addEventListener('pointerover',function(e){var pw=e.target.closest?e.target.closest('.figure .pw'):null;if(!pw)return;var t=e.target.closest('[data-k]');pwLit(pw,t&&pw.contains(t)?t.getAttribute('data-k'):null);});
+D.addEventListener('pointerout',function(e){var pw=e.target.closest?e.target.closest('.figure .pw'):null;if(pw&&!(e.relatedTarget&&pw.contains(e.relatedTarget)))pwLit(pw,null);});
 function png(fig){
 if(fig.querySelector('.fig-body .tl'))return pngTl(fig);
+if(fig.querySelector('.fig-body .pw'))return pngWithin(fig);
 var hb=[].slice.call(fig.querySelectorAll('.hbars .hb')),cl=[].slice.call(fig.querySelectorAll('.cols-plot .col')),cg=[].slice.call(fig.querySelectorAll('.cg-row:not(.cg-axis)'));
 var kind=hb.length?'hb':cl.length?'cols':'cg',labs=fig.querySelectorAll('.cols-lab span');
 var num=function(r,a){var v=r.getAttribute(a);return v==null||v===''?null:+v;};
@@ -5971,7 +6061,7 @@ save(cv,fig,k);
 }
 function add(acts){
 if(acts.getAttribute('data-ready'))return;acts.setAttribute('data-ready','1');
-var kind=acts.getAttribute('data-kind'),fig=acts.closest('.figure');if(!fig||['bars','stack','columns','change','timeline'].indexOf(kind)<0)return;
+var kind=acts.getAttribute('data-kind'),fig=acts.closest('.figure');if(!fig||['bars','stack','columns','change','timeline','within'].indexOf(kind)<0)return;
 var tl=kind==='timeline'; /* a timeline takes a PNG but no Table: it is already its rows, each date beside its event (28 Oct 2026) */
 var tb=tl?null:el('button','fs-tab','Table');if(tb){tb.type='button';tb.setAttribute('aria-pressed','false');
 tb.addEventListener('click',function(){var on=!fig.classList.contains('is-table'),t=fig.querySelector('table.fig-table');fig.classList.toggle('is-table',on);if(t)t.classList.toggle('sr-only',!on);tb.setAttribute('aria-pressed',on?'true':'false');});}

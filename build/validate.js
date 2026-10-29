@@ -17,7 +17,7 @@ const STAGES = require('./stages.js');
 
 const BANDS = ['Extreme', 'High', 'Moderate', 'Low'];
 const SUB_BANDS = ['Very hard', 'Hard', 'Moderate', 'Easy'];
-const FIGURE_TYPES = ['bars', 'stack', 'columns', 'change', 'timeline', 'animation']; // columns and change: revision 5, 28 Oct 2026
+const FIGURE_TYPES = ['bars', 'stack', 'columns', 'change', 'timeline', 'animation', 'within']; // columns and change: revision 5, 28 Oct 2026; within: 15.3, 29 Oct 2026
 // the datasets the site cannot do without, and the shape each must have; every other data/*.json must still parse
 const DATASETS = {
   'bibliography.json': { kind: 'object', what: 'source titles' },
@@ -143,6 +143,13 @@ function checkChapters(root, problems) {
       const labels = new Set(rows.map((d) => String(d[0])));
       if (fig.range) ['low', 'high', 'ref'].forEach((k) => { if (fig.range[k] != null && !labels.has(String(fig.range[k]))) problems.push(`${rel}: ${name}'s range ${k} "${fig.range[k]}" names no row`); });
       if (fig.mark != null && fig.type !== 'change' && !labels.has(String(fig.mark)) && !(fig.range && fig.range.label === fig.mark)) problems.push(`${rel}: ${name}'s mark "${fig.mark}" names no row`);
+      if (fig.type === 'within') { // its first "parts" rows are the parts; "total" names the row that totals them and "whole" a range row
+        const np = +fig.parts, whole = rows.find((d) => String(d[0]) === String(fig.whole));
+        if (!(np >= 1 && np < rows.length)) problems.push(`${rel}: ${name} is a within figure; "parts" must count its first rows, the parts`);
+        if (!labels.has(String(fig.total))) problems.push(`${rel}: ${name}'s total "${fig.total}" names no row`);
+        if (!whole || typeof whole[2] !== 'number') problems.push(`${rel}: ${name}'s whole "${fig.whole}" must name a row with a range, ["label", low, high]`);
+        if (Array.isArray(fig.about)) fig.about.forEach((a) => { if (!labels.has(String(a))) problems.push(`${rel}: ${name}'s about "${a}" names no row`); });
+      }
       if (fig.type === 'change' && rows.length % 2) problems.push(`${rel}: ${name} is a change figure with ${rows.length} rows; it needs them in pairs, earlier then later`);
       rows.forEach((d) => { if (d.length > 2 && typeof d[2] === 'number' && !(d[2] > d[1])) problems.push(`${rel}: ${name} row "${d[0]}" has a range whose high end ${d[2]} is not above its low end ${d[1]}`); });
     });
