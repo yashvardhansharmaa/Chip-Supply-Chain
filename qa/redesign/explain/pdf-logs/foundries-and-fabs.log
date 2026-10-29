@@ -1,0 +1,12 @@
+[   7.0s] prepared: {"mode":"footnotes","cites":129,"notes":129,"chapters":1,"dropped":0,"chapter":"foundries-and-fabs","edition":"Edition of 29 October 2026"}
+[   7.2s] print fonts: 13 faces loaded
+[   8.2s] paginating: 0 pages
+[  11.2s] paginated 17 pages in 3.0s (Paged.js reports 1199 ms)
+[  11.3s] footnotes: {"pages":17,"notes":92,"repeats":0,"stray":0,"overflow":0,"short":["2:59%"],"stranded":[],"split":["8:figure"],"overlap":[3],"crowded":["foundries-and-fabs"],"lost":[],"lostIn":[],"sources":["foundries-and-fabs"],"strandedIds":[],"floats":[],"failed":[],"tight":["foundries-and-fabs"],"gap":1.27}
+[  11.3s] laying out again: foundries-and-fabs closer, foundries-and-fabs card may break, foundries-and-fabs sources closer
+[  17.7s] prepared: {"mode":"footnotes","cites":129,"notes":129,"chapters":1,"dropped":0,"chapter":"foundries-and-fabs","edition":"Edition of 29 October 2026"}
+[  17.8s] print fonts: 13 faces loaded
+[  18.8s] paginating: 0 pages
+[  21.8s] paginated 16 pages in 3.0s (Paged.js reports 677 ms)
+[  21.8s] footnotes: {"pages":16,"notes":94,"repeats":0,"stray":0,"overflow":0,"short":[],"stranded":["3:Why the gate wraps around the channel"],"split":["2:plate","3:figure","7:figure"],"overlap":[],"crowded":[],"lost":[],"lostIn":[],"sources":[],"strandedIds":[],"floats":[],"failed":[],"tight":[],"gap":0.78}
+[  24.5s] wrote /var/folders/d1/s8nt256s36g24pjjb8v00_5w0000gn/T/cp-chapter-pdfs-25vpvbh1/foundries-and-fabs.pdf 0.81 MB

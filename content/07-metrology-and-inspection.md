@@ -48,7 +48,12 @@
  {"fact": "Camtek 2025 revenue was a record $496.1 million, up 16 percent from $429.2 million", "source": "https://www.sec.gov/Archives/edgar/data/1109138/000117891326000549/zk2634405.htm"}
  ],
  "figures": [
-    {"id": "defect-yield", "type": "animation", "src": "defects", "title": "Why big chips lose more to defects", "note": "Simulated wafer laid out like the textbook example: 120 chips 1 centimeter on a side, or 26 chips 2 centimeters on a side. Specks land at random in loose clusters, 0.8 per square centimeter. The share of flawless chips follows the formula above, with a clustering constant of 3, as closely as whole chips allow."},
+    {"id": "defect-yield", "type": "animation", "live": "yield", "title": "Why big chips lose more to defects", "steps": [
+      {"k": "Specks land", "cap": "Specks of dust and tiny flaws land at random on every wafer. A textbook example assumes 0.8 per square centimeter."},
+      {"k": "Small chips", "cap": "Of chips 1 centimeter on a side, 49.2 percent miss every speck and come out flawless."},
+      {"k": "Big chips", "cap": "Chips 2 centimeters on a side are bigger targets for the same specks. Only 11.3 percent come out flawless."},
+      {"k": "The cost", "cap": "The big chip yields less and fits fewer times on a wafer, so it costs 20.1 times as much as the small one."}
+    ], "note": "Simulated wafer laid out like the textbook example: 120 chips 1 centimeter on a side, or 26 chips 2 centimeters on a side. Other sizes fill the same wafer with whole chips only. Specks land at random in loose clusters, at the density set. The share of flawless chips follows the formula above, with a clustering constant of 3, as closely as whole chips allow. The cost compares good chips per wafer, from the shares as shown."},
  {
  "id": "pc-segments",
  "type": "bars",

@@ -1,0 +1,6 @@
+ok   all 456 settings: the wafer shows exactly the flawless chips the share allows  0 mismatches
+ok   every readout is a number, and the cost is 1.0 at 1 cm
+ok   the textbook's wafer: 120 chips of 1 cm, 26 of 2 cm  120 and 26
+ok   the model at the chapter's inputs: 49.2, 11.3 and 20.1  49.2 / 11.3 / 20.1
+ok   the page, through the sliders, at the chapter's inputs: 49.2, 11.3 and 20.1  49.2 / 11.3 / 20.1
+ok   no page errors

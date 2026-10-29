@@ -47,12 +47,12 @@
   "/foundries-and-fabs/": {
     "published": "2026-09-09",
     "modified": "2026-10-29",
-    "content": "fdfa991b0cfe7224"
+    "content": "85cf5ed7c6787ee3"
   },
   "/geopolitics/": {
     "published": "2026-09-09",
     "modified": "2026-10-29",
-    "content": "228bd064c3fe8b3f"
+    "content": "6ea223e43ee6ab2a"
   },
   "/glossary/": {
     "published": "2026-10-21",
@@ -62,7 +62,7 @@
   "/lithography/": {
     "published": "2026-09-09",
     "modified": "2026-10-29",
-    "content": "7156ad27c48b7374"
+    "content": "76476872ccbe96d0"
   },
   "/memory-and-hbm/": {
     "published": "2026-09-09",
@@ -72,7 +72,7 @@
   "/metrology-and-inspection/": {
     "published": "2026-09-09",
     "modified": "2026-10-29",
-    "content": "98a4bdc3e9293b54"
+    "content": "18b6e282a41a321f"
   },
   "/pdf/advanced-packaging.pdf": {
     "published": "2026-10-20",
@@ -106,13 +106,13 @@
   },
   "/pdf/foundries-and-fabs.pdf": {
     "published": "2026-10-20",
-    "modified": "2026-10-28",
-    "content": "2e57957699392a4f"
+    "modified": "2026-10-29",
+    "content": "04d2a9e10395b8d7"
   },
   "/pdf/geopolitics.pdf": {
     "published": "2026-10-20",
-    "modified": "2026-10-28",
-    "content": "e15b90b46ab51820"
+    "modified": "2026-10-29",
+    "content": "f41a24f51e2f4f87"
   },
   "/pdf/how-ai-chips-are-made.pdf": {
     "published": "2026-10-26",
@@ -121,8 +121,8 @@
   },
   "/pdf/lithography.pdf": {
     "published": "2026-10-20",
-    "modified": "2026-10-28",
-    "content": "ed0a4032518482a8"
+    "modified": "2026-10-29",
+    "content": "ca24e1b229736336"
   },
   "/pdf/memory-and-hbm.pdf": {
     "published": "2026-10-20",
@@ -131,8 +131,8 @@
   },
   "/pdf/metrology-and-inspection.pdf": {
     "published": "2026-10-20",
-    "modified": "2026-10-28",
-    "content": "63a94d6f7c292e32"
+    "modified": "2026-10-29",
+    "content": "d6c19da8de1f274b"
   },
   "/pdf/photomasks-and-pellicles.pdf": {
     "published": "2026-10-20",

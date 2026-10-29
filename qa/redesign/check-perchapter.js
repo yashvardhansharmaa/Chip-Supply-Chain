@@ -101,7 +101,7 @@ const kb = (b) => (b / 1024).toFixed(0) + ' KB';
           card: vis(q('.prose > .plate')), cardMeter: !!q('.prose > .plate .meter'),
           cite: !!q('.ch-cite-line .ch-cite-btn'), pdf: (q('.ch-cite-line .ch-cite-pdf') || { getAttribute: function () { return ''; } }).getAttribute('href'),
           sources: a ? a.querySelectorAll('#' + a.id + '--sources li').length : 0, said: +((/(?:^|\\|)(\\d+) sources(?:\\||$)/.exec(meta) || [])[1] || 0),
-          deck: !!q('.fc .fc-show'), anim: !!q('.figure--anim .anim-steps button'), door: (q('.prevnext .next') || { getAttribute: function () { return ''; } }).getAttribute('href') };
+          deck: !!q('.fc .fc-show'), anim: !!q('.figure--anim video'), door: (q('.prevnext .next') || { getAttribute: function () { return ''; } }).getAttribute('href') };
       })()`);
       check(`${W}: the page is its chapter alone`, S.path === '/' + id + '/' && S.articles === id, `${S.path} ${S.articles}`);
       check(`${W}: the masthead with search and theme`, S.search && S.theme);
@@ -135,12 +135,12 @@ const kb = (b) => (b / 1024).toFixed(0) + ' KB';
       // the cite line, and its PDF served
       const pdf = S.pdf ? await t.ev(`fetch(${JSON.stringify(S.pdf)}, { method: 'HEAD' }).then(function (r) { return r.status + ' ' + r.headers.get('content-type'); }, function () { return 'failed'; })`) : 'no link';
       check(`${W}: the cite line's Cite this chapter and Chapter PDF (served)`, S.cite && S.pdf === '../pdf/' + id + '.pdf' && /^200 application\/pdf/.test(pdf), `${S.pdf} ${pdf}`);
-      // an animation's step seeks the video
+      // an animation's step seeks the video (a video explainer: since 29 Oct 2026 a live explainer, 04.2 and 07.1, has none; qa/redesign/check-explain.js checks those)
       if (S.anim) {
-        const want = await t.ev(`(function () { var f = document.querySelector('#${id} .figure--anim'), b = f.querySelectorAll('.anim-steps button')[2] || f.querySelectorAll('.anim-steps button')[1]; document.documentElement.style.scrollBehavior = 'auto'; f.scrollIntoView({ block: 'center' }); b.id = 'qa-step'; return +b.getAttribute('data-t'); })()`);
+        const want = await t.ev(`(function () { var f = document.querySelector('#${id} .figure--anim video').closest('.figure'), b = f.querySelectorAll('.anim-steps button')[2] || f.querySelectorAll('.anim-steps button')[1]; document.documentElement.style.scrollBehavior = 'auto'; f.scrollIntoView({ block: 'center' }); b.id = 'qa-step'; return +b.getAttribute('data-t'); })()`);
         await sleep(800);
         await t.ev("(document.getElementById('qa-step').click(), 1)");
-        let st = null; for (let k = 0; k < 20; k++) { await sleep(250); st = await t.ev(`(function () { var f = document.querySelector('#${id} .figure--anim'), v = f.querySelector('video'); return { cur: document.getElementById('qa-step').getAttribute('aria-current'), t: v.currentTime, src: !!v.currentSrc }; })()`); if (st.cur === 'step' && Math.abs(st.t - want) < 0.6) break; }
+        let st = null; for (let k = 0; k < 20; k++) { await sleep(250); st = await t.ev(`(function () { var v = document.querySelector('#${id} .figure--anim video'); return { cur: document.getElementById('qa-step').getAttribute('aria-current'), t: v.currentTime, src: !!v.currentSrc }; })()`); if (st.cur === 'step' && Math.abs(st.t - want) < 0.6) break; }
         check(`${W}: an animation step seeks the video`, st && st.cur === 'step' && Math.abs(st.t - want) < 0.6, `step at ${want}s: ${JSON.stringify(st)}`);
       }
       // a flashcard turns

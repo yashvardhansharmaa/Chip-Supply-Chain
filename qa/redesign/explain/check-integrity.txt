@@ -1,0 +1,4 @@
+warn: 06-deposition-and-etch.md card chinaStatus: a figure with no year: "They held 2.6 percent of atomic layer deposition that year, by the same count."
+allowed: exposure row for Veeco Instruments has no supplier entry. Reason: Veeco files a China share, so it has a China revenue panel, but it is not in the supplier list. data/exposure-notes.md classes it as Deposition & Etch.
+integrity: no problems
+pages: 18 · views: walk, stack, landscape, suppliers, controls, glossary · ids: 1808 · chapters: 16

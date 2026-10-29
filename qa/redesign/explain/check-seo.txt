@@ -1,0 +1,2 @@
+note: /supply-chain/: title is 46 characters, outside 50 to 60: "The semiconductor supply chain, stage by stage"
+check-seo: 16 chapter pages, 22 sitemap entries, no problems (1 note)

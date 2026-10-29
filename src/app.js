@@ -3759,7 +3759,7 @@
   /* ---------- explainer animations (figure--anim): play while on screen, captions follow the video ---------- */
   var Anim = {
     init: function () {
-      var figs = $$('.figure--anim'); if (!figs.length) return;
+      var figs = $$('.figure--anim').filter(function (f) { return !!$('video', f); }); if (!figs.length) return; // a live explainer draws itself (src/modules/live-*.js)
       var theme = function () { return Theme.current() === 'dark' ? 'dark' : 'light'; };
       var still = function (fig) { return reduced || fig._user; };
       figs.forEach(function (fig) {
