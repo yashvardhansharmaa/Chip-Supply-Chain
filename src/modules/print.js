@@ -145,7 +145,7 @@
     if (!list) return null;
     var box = node('section', 'cp-sources');
     var head = d.querySelector('summary');
-    box.appendChild(node('h3', 'cp-sources-h', head ? head.textContent.trim() : 'Sources'));
+    box.appendChild(node('h2', 'cp-sources-h', head ? head.textContent.trim() : 'Sources')); // a section of the chapter, as its others are h2 (29 Oct 2026)
     var ol = node('ol');
     each('li', list, function (li) {
       var item = li.cloneNode(true), a = item.querySelector('a[href]');
@@ -262,13 +262,22 @@
     });
   }
 
-  /* Each section's number, written on its heading for print.css (h3::before): the screen counts them with a CSS counter,
-     which starts again on every page Paged.js lays out. */
+  /* Each section's number, written on its heading for print.css (h2::before; the sections were h3 until 29 Oct 2026): the
+     screen counts them with a CSS counter, which starts again on every page Paged.js lays out. */
   function sectionNumbers() {
     each('article.chapter > .prose', document, function (prose) {
       var i = 0;
-      each(':scope > h3', prose, function (h) { i++; h.setAttribute('data-cp-n', (i < 10 ? '0' : '') + i); });
+      each(':scope > h2', prose, function (h) { i++; h.setAttribute('data-cp-n', (i < 10 ? '0' : '') + i); });
     });
+  }
+
+  /* The words of the right running head (print.css string-set, which reads data-cp-run), on each of its sources, the same
+     list as print.css's: a section's heading gives its data-k, the short heading content/*.md writes and the rail lists, so
+     a chapter's own words for it (data/section-headings.json, 29 Oct 2026) stay out of the head; every other source gives
+     its own text, as the head read it until then. Once the source list and the questions are in place. */
+  function runningHeads() {
+    each('.prose > h2', document, function (h) { h.setAttribute('data-cp-run', h.getAttribute('data-k') || h.textContent); });
+    each('.plate-head .label, .cp-sources .cp-sources-h, .review .cp-quiz h3.label, .review .rv-keep h3.label', document, function (el) { el.setAttribute('data-cp-run', el.textContent); });
   }
 
   /* A chapter whose drawing carries numbered parts (data/specimen-parts.json: Lithography) prints its annotated still,
@@ -312,8 +321,9 @@
     each('section.review', document, function (rv) {
       var keep = rv.querySelector('.rv-keep'), cards = rv.querySelectorAll('.fc-card .fc-q');
       if (!keep || !cards.length) return;
-      var box = node('div', 'cp-quiz');
-      box.appendChild(node('h4', 'label', (COUNT[cards.length] || cards.length) + (cards.length === 1 ? ' question' : ' questions') + ' to answer from memory'));
+      var box = node('div', 'cp-quiz'), lab = keep.querySelector('.label');
+      // its heading at the level of the things to remember beside it: h3 under a chapter's deck (h2), since 29 Oct 2026
+      box.appendChild(node(lab ? lab.tagName.toLowerCase() : 'h4', 'label', (COUNT[cards.length] || cards.length) + (cards.length === 1 ? ' question' : ' questions') + ' to answer from memory'));
       var ol = node('ol');
       each('.fc-card', rv, function (card) {
         var q = card.querySelector('.fc-q'), more = card.querySelector('.fc-more');
@@ -519,6 +529,7 @@
       var box = sourceList(d);
       if (box) d.parentNode.replaceChild(box, d); else d.remove();
     });
+    runningHeads();
 
     /* the colophon's sentence about hovering and end-of-chapter lists is a screen sentence */
     each('.site-footer .sources-key', document, function (p) {
@@ -827,7 +838,7 @@
     var moving = {};
     out.floats.forEach(function (f) { moving[f.id] = 1; });
     for (var i = 1; i < pages.length; i++) {
-      var first = pages[i].querySelector('.pagedjs_page_content .plate, .pagedjs_page_content p, .pagedjs_page_content li, .pagedjs_page_content h3');
+      var first = pages[i].querySelector('.pagedjs_page_content .plate, .pagedjs_page_content p, .pagedjs_page_content li, .pagedjs_page_content h2'); // a section's heading (h3 until 29 Oct 2026)
       var ch = first && first.matches('.plate') && !first.hasAttribute('data-split-from') && !moving[first.id] && fills[i - 1] < 0.8 ? first.closest('article.chapter') : null;
       var cid = ch ? ch.id || ch.getAttribute('data-id') : ''; // Paged.js moves the id of a split element's later parts to data-id
       if (cid && out.tight.indexOf(cid) < 0) out.tight.push(cid);

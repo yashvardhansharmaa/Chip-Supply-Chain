@@ -288,13 +288,13 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 /* In plain terms and In short follow the specimen, then the prose; In plain terms' ink rule divides them from the opener.
    Both keep to the measure (666 px), as the title, the plate and the text do, so the ink rule ends where the card's tint does */
 .chapter .plain { grid-column: 4 / 13; grid-row: 3; max-width: 666px; margin: 56px 0 0; padding: 14px 0 0; border: 0; border-top: 1px solid var(--ink); background: none; }
-.chapter .plain h3.label, .chapter .plain .label {
+.chapter .plain h2.label, .chapter .plain .label {
   display: block; margin: 14px 0 22px; padding: 0; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title);
   font-size: var(--t-section); line-height: 1.08; letter-spacing: -0.02em; text-transform: none; color: var(--ink);
 }
 .chapter .plain p { margin: 0; font-family: var(--font-body); font-size: var(--t-lead); line-height: 1.57; color: var(--ink); max-width: 33em; }
 .chapter .inshort { grid-column: 4 / 13; grid-row: 4; max-width: 666px; margin: 36px 0 0; }
-.chapter .inshort h3.label { margin: 0 0 12px; font-family: var(--font-ui); font-weight: 500; font-size: var(--ui); line-height: 20px; color: var(--ink); letter-spacing: 0; text-transform: none; }
+.chapter .inshort h2.label { margin: 0 0 12px; font-family: var(--font-ui); font-weight: 500; font-size: var(--ui); line-height: 20px; color: var(--ink); letter-spacing: 0; text-transform: none; }
 .chapter .inshort p, .chapter .inshort li { font-family: var(--font-body); font-size: var(--t-text); line-height: 1.55; color: var(--ink); }
 .chapter .inshort p { margin: 0 0 0.7em; }
 .chapter > .prose { grid-column: 4 / 13; grid-row: 5; max-width: none; min-width: 0; margin-top: 16px; counter-reset: sec; }
@@ -303,14 +303,15 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 .chapter > .prose > * { max-width: calc(36em / var(--text-scale)); }
 .chapter > .prose > .table-wrap, .chapter > .prose > .prevnext { max-width: none; }
 /* each section opens on an ink rule, its number alone above a large heading in the display face (design round nine,
-   revision 4: the kicker no longer repeats the heading) */
-.chapter > .prose > h3 {
+   revision 4: the kicker no longer repeats the heading). The sections are h2 and their subsections h3 since 29 Oct 2026
+   (build/build.js markdown(); they were h3 and h4) */
+.chapter > .prose > h2 {
   counter-increment: sec; margin: 72px 0 22px; padding-top: 14px; border-top: 1px solid var(--ink); max-width: 666px; /* its rule spans the text and figures under it */
   font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title);
   font-size: var(--t-section); line-height: 1.12; letter-spacing: -0.015em; /* was 32 to 44 px (owner, 27 Oct: too large) */
 }
-.chapter > .prose > h3::before { content: counter(sec, decimal-leading-zero); display: block; margin: 0 0 14px; font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); line-height: 16px; color: var(--muted); }
-.chapter > .prose > h4 { margin: 40px 0 14px; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: var(--t-lead); line-height: 1.27; letter-spacing: -0.005em; }
+.chapter > .prose > h2::before { content: counter(sec, decimal-leading-zero); display: block; margin: 0 0 14px; font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); line-height: 16px; color: var(--muted); }
+.chapter > .prose > h3 { margin: 40px 0 14px; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: var(--t-lead); line-height: 1.27; letter-spacing: -0.005em; }
 .chapter > .prose > p, .chapter > .prose > ul, .chapter > .prose > ol { font-size: var(--t-text); line-height: 1.55; }
 
 /* ---------- figures: one grammar for every chart ---------- */
@@ -564,7 +565,7 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
   .chapter .plain { margin-top: 32px; }
   .chapter .plain p { font-size: var(--t-text); line-height: 1.55; }
   .chapter .inshort p, .chapter .inshort li { font-size: var(--t-text); }
-  .chapter > .prose > h3 { margin-top: 56px; font-size: var(--t-section); }
+  .chapter > .prose > h2 { margin-top: 56px; font-size: var(--t-section); }
   .chapter > .prose > p, .chapter > .prose > ul, .chapter > .prose > ol { font-size: var(--t-text); }
   .chapter .figure { margin: 28px calc(-1 * var(--margin)) 36px; border-left: 0; border-right: 0; }
   .chapter .fig-head { padding: 16px var(--margin) 0; }

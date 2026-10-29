@@ -168,10 +168,10 @@
 
   /* In plain terms opens the text as a section does: an ink rule, then the heading in the display face. In short follows it. */
   .chapter .plain, .chapter .ch-page .plain { max-width: var(--pcol, 128mm); margin: 6mm 0 0; padding: 2.6mm 0 0; border: 0; border-top: 0.6pt solid var(--ink); background: none; }
-  .chapter .plain h3.label, .chapter .plain .label { display: block; margin: 0 0 2.4mm; padding: 0; font-family: var(--font-display); font-weight: 400; font-size: 16pt; line-height: 1.12; letter-spacing: -0.012em; color: var(--ink); }
+  .chapter .plain h2.label, .chapter .plain .label { display: block; margin: 0 0 2.4mm; padding: 0; font-family: var(--font-display); font-weight: 400; font-size: 16pt; line-height: 1.12; letter-spacing: -0.012em; color: var(--ink); }
   .chapter .plain p { margin: 0; max-width: var(--pcol, 128mm); font-family: var(--font-body); font-size: calc(10.2pt * var(--text-scale)); line-height: 1.5; color: var(--ink); }
   .chapter .inshort { max-width: var(--pcol, 128mm); margin: 5mm 0 0; padding: 0; border: 0; }
-  .chapter .inshort h3.label { margin: 0 0 1.2mm; font-family: var(--font-ui); font-weight: 600; font-size: 8pt; line-height: 1.3; color: var(--ink); }
+  .chapter .inshort h2.label { margin: 0 0 1.2mm; font-family: var(--font-ui); font-weight: 600; font-size: 8pt; line-height: 1.3; color: var(--ink); }
   /* each paragraph stands 1.8 mm below the one before. No "a + b" or ":first-of-type" selectors in this file: Paged.js
      rewrites them as attribute rules of lower weight, and they lose. */
   .chapter .inshort p, .chapter .inshort li { margin: 1.8mm 0 0; font-family: var(--font-body); font-size: calc(10pt * var(--text-scale)); line-height: 1.48; color: var(--ink); }
@@ -182,17 +182,17 @@
   .chapter > .prose { margin: 5mm 0 0; max-width: none; }
   .chapter > .prose > * { max-width: var(--pcol, none); } /* figures, tables and the deck end with the text's right edge */
   .chapter > .prose > p, .chapter > .prose > ul, .chapter > .prose > ol, .chapter > .prose > blockquote,
-  .chapter > .prose > h3, .chapter > .prose > h4, .chapter > .prose > h5 { max-width: var(--pcol, 128mm); }
+  .chapter > .prose > h2, .chapter > .prose > h3, .chapter > .prose > h4 { max-width: var(--pcol, 128mm); }
   .chapter > .prose > p, .chapter > .prose > ul, .chapter > .prose > ol, .chapter > .prose > blockquote { margin: 2.4mm 0 0; font-size: calc(9.8pt * var(--text-scale)); line-height: 1.5; }
   .chapter .prose li { margin: 0.3em 0 0; }
   .chapter .prose blockquote { padding-left: 4mm; border-left: 0.6pt solid var(--ink); }
   .chapter .prose code { font-family: var(--font-code); font-size: 0.86em; }
   /* each section opens on an ink rule, its number in mono above the heading in the display face (print.js numbers them: a CSS
-     counter starts again on every page Paged.js lays out) */
-  .chapter > .prose > h3 { break-inside: avoid; margin: 7mm 0 2.2mm; padding: 2.4mm 0 0; border-top: 0.6pt solid var(--ink); font-family: var(--font-display); font-weight: 400; font-size: 16pt; line-height: 1.12; letter-spacing: -0.012em; color: var(--ink); }
-  .chapter > .prose > h3::before { content: attr(data-cp-n); display: block; margin: 0 0 1.6mm; font-family: var(--font-code); font-size: 7pt; font-weight: 400; line-height: 1.3; letter-spacing: 0; color: var(--muted); }
-  .chapter > .prose > h4 { margin: 4.6mm 0 1.4mm; font-family: var(--font-display); font-weight: 500; font-size: 11.2pt; line-height: 1.25; letter-spacing: 0; color: var(--ink); }
-  .chapter > .prose > h5 { margin: 4mm 0 1.2mm; font-family: var(--font-ui); font-weight: 600; font-size: 8pt; color: var(--ink); }
+     counter starts again on every page Paged.js lays out). Sections are h2, subsections h3, since 29 Oct 2026 (h3 and h4 before) */
+  .chapter > .prose > h2 { break-inside: avoid; margin: 7mm 0 2.2mm; padding: 2.4mm 0 0; border-top: 0.6pt solid var(--ink); font-family: var(--font-display); font-weight: 400; font-size: 16pt; line-height: 1.12; letter-spacing: -0.012em; color: var(--ink); }
+  .chapter > .prose > h2::before { content: attr(data-cp-n); display: block; margin: 0 0 1.6mm; font-family: var(--font-code); font-size: 7pt; font-weight: 400; line-height: 1.3; letter-spacing: 0; color: var(--muted); }
+  .chapter > .prose > h3 { margin: 4.6mm 0 1.4mm; font-family: var(--font-display); font-weight: 500; font-size: 11.2pt; line-height: 1.25; letter-spacing: 0; color: var(--ink); }
+  .chapter > .prose > h4 { margin: 4mm 0 1.2mm; font-family: var(--font-ui); font-weight: 600; font-size: 8pt; color: var(--ink); }
 
   /* 3. the chokepoint card: in the text after the lead, before section 01, as on screen (print.js cardsToText). On paper it
      is ruled, not tinted: an ink rule over the head, the two ratings large in the display face with the band's meter, then label and
@@ -349,7 +349,7 @@
   .chapter > .prose > .review { max-width: var(--pcol, 128mm); margin: 7mm 0 0; padding: 0; border-top: 0; } /* the deck's head is screen-only, so its rule would stand alone over the list's own */
   .review .fc-end { margin-top: 0; }
   .review .rv-keep { margin: 0; padding-top: 2.6mm; }
-  .review .rv-keep h4.label, .review .cp-quiz h4.label { margin: 0 0 1mm; font-family: var(--font-ui); font-weight: 600; font-size: 8pt; line-height: 1.35; letter-spacing: 0; text-transform: none; color: var(--ink); }
+  .review .rv-keep h4.label, .review .cp-quiz h4.label, .chapter .review .rv-keep h3.label, .chapter .review .cp-quiz h3.label { margin: 0 0 1mm; font-family: var(--font-ui); font-weight: 600; font-size: 8pt; line-height: 1.35; letter-spacing: 0; text-transform: none; color: var(--ink); }
   .review .rv-keep li { margin-top: 1.6mm; padding: 0 0 0 6mm; font-family: var(--font-body); font-size: calc(9.6pt * var(--text-scale)); line-height: 1.45; }
   .review .rv-keep li::before { left: 0.6mm; top: 0.7em; width: 2.8mm; border-top: 0.8pt solid var(--ink); }
   /* the deck's questions, printed above the takeaways (print.js quiz): each with the section that answers it, so a
@@ -557,8 +557,11 @@
      the h2 carries "Chapter 4: " for screen readers, which makes it the running head already */
   .ch-title { string-set: chapter content(text); }
   /* and the right head names the section. Paged.js keeps one selector list per name, so every source of the name is in
-     this one rule; the deck's hidden "Flashcards" heading is not a child of the text, so it never names a page */
-  .prose > h3, .plate-head .label, .cp-sources .cp-sources-h, .review .cp-quiz h4.label, .review .rv-keep h4.label { string-set: section content(text); }
+     this one rule; the deck's hidden "Flashcards" heading is not a child of the text, so it never names a page. Each source's
+     words are its data-cp-run (print.js runningHeads): a section's short heading, as the rail lists it, so a chapter's own
+     words for a heading (data/section-headings.json, 29 Oct 2026) never lengthen the head, and any other source's own text.
+     The sections are h2 and the deck's two labels h3 since 29 Oct 2026 (h3 and h4 before) */
+  .prose > h2, .plate-head .label, .cp-sources .cp-sources-h, .review .cp-quiz h3.label, .review .rv-keep h3.label { string-set: section attr(data-cp-run); }
   /* no running head over a chapter's opening page or the colophon (print.js finish() marks those pages) */
   .cp-opener .pagedjs_margin-top-left, .cp-opener .pagedjs_margin-top-right,
   .cp-colophon .pagedjs_margin-top-left, .cp-colophon .pagedjs_margin-top-right { visibility: hidden; }

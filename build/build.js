@@ -351,10 +351,21 @@ function tableFallback(data, f) {
 // a table cell that is a figure: an amount, a share or a range, with an optional sign, unit and bracketed note ("$2,900",
 // "86.8%", "$2,800-3,100", "~$6,400", "about 40 percent" is prose and does not count)
 const TABLE_FIGURE = /^[~≈<>+\-−]?\s?(about\s)?[$€£¥]?\s?\d[\d.,]*(\s?(%|bn|billion|million|M|B|k|x|×|nm|mm|W|kW|MW|GW|TWh|GB|TB\/s|GB\/s|mm2|mm²|pp))?(\s?[-–]\s?[$€£¥]?\d[\d.,]*(\s?(%|bn|M|B|k|x|nm|mm|W|GB))?)?\s*(\(.*\))?$/i;
+/* A chapter's own words for its section headings (data/section-headings.json, 29 Oct 2026): { "<chapter id>": { "<the heading
+   as content/*.md writes it>": "<the words the reader sees>" } }, so the stages' shared "How it works" can read "How EUV
+   lithography works". Only the visible heading takes them: its id, its data-k, the rail's On this page and the phone's sheet
+   keep the short heading, so every link and the rail stay as they were. A heading with no entry reads as written. The
+   chapter loop warns on a chapter or a heading the file names that does not exist. */
+const SECTION_HEADINGS = readJSON(path.join(root, 'data', 'section-headings.json'), {});
 function markdown(src, ctx) {
   const lines = src.replace(/\r/g, '').split('\n');
   const out = [];
   const headings = [];
+  const named = []; // every heading's text as written, for the check of data/section-headings.json
+  // a "##" section's level: h2 on a chapter's page, under its h1 title (29 Oct 2026; it was h3, from when every chapter sat under
+  // a page's h2), and h3 for any other Markdown (the AI Chips notes); "###" and "####" sit one and two levels below it
+  const top = ctx.sectionLevel || 3;
+  const renamed = SECTION_HEADINGS[ctx.id] || {};
   let i = 0, inTakeaways = false, para = [];
   const flushPara = () => { if (para.length) { out.push(`<p>${inline(para.join(' '), ctx)}</p>`); para = []; } };
   const closeTakeaways = () => { if (inTakeaways) { out.push('</div>'); inTakeaways = false; } };
@@ -370,15 +381,18 @@ function markdown(src, ctx) {
       let text = hm[2].replace(/\s*\{#[^}]*\}\s*$/, '').replace(/\*\*/g, '').trim();
       if (level === 1) { i++; continue; } // chapter title comes from front matter
       const id = `${ctx.id}--${slug(text)}`;
+      // the words shown: the chapter's own, when data/section-headings.json gives them; the id and data-k keep the short heading
+      const shown = typeof renamed[text] === 'string' && renamed[text].trim() ? renamed[text].trim() : text;
       if (level === 2) {
         closeTakeaways();
-        if (/^takeaways?$/i.test(text)) { out.push(`<div class="takeaways"><h3 id="${id}">Takeaways</h3>`); inTakeaways = true; i++; continue; }
+        if (/^takeaways?$/i.test(text)) { out.push(`<div class="takeaways"><h${top} id="${id}">Takeaways</h${top}>`); inTakeaways = true; i++; continue; }
         headings.push({ id, text });
+        named.push(text);
         // data-k: the section's name in plain words, for its kicker ("05 · The chokepoint", src/modules/chapter.css)
         const kick = text.replace(/\[([^\]]*)\]\([^)]*\)/g, '$1').replace(/[*_`]/g, '').trim();
-        out.push(`<h3 id="${id}" data-k="${esc(kick)}">${inline(text, ctx)}</h3>`);
-      } else if (level === 3) out.push(`<h4 id="${id}">${inline(text, ctx)}</h4>`);
-      else out.push(`<h5 id="${id}">${inline(text, ctx)}</h5>`);
+        out.push(`<h${top} id="${id}" data-k="${esc(kick)}">${inline(shown, ctx)}</h${top}>`);
+      } else if (level === 3) { named.push(text); out.push(`<h${top + 1} id="${id}">${inline(shown, ctx)}</h${top + 1}>`); }
+      else { named.push(text); out.push(`<h${top + 2} id="${id}">${inline(shown, ctx)}</h${top + 2}>`); }
       i++; continue;
     }
     // figure marker
@@ -460,7 +474,7 @@ function markdown(src, ctx) {
   }
   flushPara();
   closeTakeaways();
-  return { html: out.join('\n'), headings };
+  return { html: out.join('\n'), headings, named };
 }
 
 function wordCount(body) {
@@ -527,8 +541,8 @@ function readingOrderCites(meta, body, ctx, hasCard) {
   inline((first < 0 ? [] : lines.slice(0, first)).filter((l) => !/^#\s/.test(l.trim())).join('\n'), ctx);
   cardCites(meta.card, ctx);
 }
-// the card in the text: after the lead, before the first section heading (an <h3> in The Chain, an <h2> on the readable page)
-const withCard = (prose, card, tag) => { if (!card) return prose; const i = prose.search(new RegExp('<' + (tag || 'h3') + '[\\s>]')); return i < 0 ? prose + card : prose.slice(0, i) + card + '\n' + prose.slice(i); };
+// the card in the text: after the lead, before the first section heading (an <h2> since 29 Oct 2026, under the chapter's h1)
+const withCard = (prose, card, tag) => { if (!card) return prose; const i = prose.search(new RegExp('<' + (tag || 'h2') + '[\\s>]')); return i < 0 ? prose + card : prose.slice(0, i) + card + '\n' + prose.slice(i); };
 // The marks for one place in the text. More urls than sentences: the extras sit with the last sentence, a comma between
 // marks so that 1 and 2 never read as 12. A sentence with no url gets no mark.
 const cardMarks = (urls, ctx) => (ctx ? urls.filter(Boolean).map((u) => cite(u, ctx)).join('<sup class="cite-sep" aria-hidden="true">,</sup>') : '');
@@ -591,12 +605,15 @@ const contentDir = path.join(root, 'content');
 const files = fs.existsSync(contentDir) ? fs.readdirSync(contentDir).filter((f) => /^\d\d-.*\.md$/.test(f)).sort() : [];
 const chapters = [];
 let geo = null;
+const headingsOf = new Map(); // each chapter's headings as written, for the check of data/section-headings.json below
 for (const f of files) {
   const { meta, body } = parseChapter(read(path.join(contentDir, f)), f);
   const id = meta.id || f.replace(/^\d\d-/, '').replace(/\.md$/, '');
-  const ctx = { id, cites: [], figures: meta.figures || [], number: meta.number || chapters.length + 1, figList: [] };
+  // sectionLevel: the chapter's sections are h2 under its h1 title (markdown(), 29 Oct 2026)
+  const ctx = { id, cites: [], figures: meta.figures || [], number: meta.number || chapters.length + 1, figList: [], sectionLevel: 2 };
   readingOrderCites(meta, body, ctx, STAGES.isStage({ id, number: meta.number }));
-  const { html, headings } = markdown(body, ctx);
+  const { html, headings, named } = markdown(body, ctx);
+  headingsOf.set(id, named);
   const words = wordCount(body);
   // figList: the figures in the order they are placed, numbered "04.1" on, for the contents rail (chapterHTML)
   const ch = { file: f, id, meta, html, headings, words, cites: ctx.cites, figList: ctx.figList, number: meta.number || chapters.length + 1, title: meta.title || id };
@@ -605,6 +622,18 @@ for (const f of files) {
 }
 chapters.sort((a, b) => a.number - b.number);
 if (!chapters.length) warn('no chapters found; building with a placeholder');
+// data/section-headings.json names only chapters that exist, and only headings each of them has, as content/*.md writes them
+// (a "Takeaways" heading leads the chapter as In short, so it is not one); each entry's words are a line of text
+if (!SECTION_HEADINGS || typeof SECTION_HEADINGS !== 'object' || Array.isArray(SECTION_HEADINGS)) warn('section headings: data/section-headings.json is not an object keyed by chapter id');
+else Object.entries(SECTION_HEADINGS).forEach(([cid, map]) => {
+  if (!headingsOf.has(cid)) { warn(`section headings: no chapter "${cid}" (chapters: ${[...headingsOf.keys()].join(', ')})`); return; }
+  if (!map || typeof map !== 'object' || Array.isArray(map)) { warn(`section headings: ${cid} is not an object of heading: words`); return; }
+  Object.entries(map).forEach(([key, words]) => {
+    if (!headingsOf.get(cid).includes(key)) warn(`section headings: ${cid} has no heading "${key}" (its headings: ${headingsOf.get(cid).join(' · ')})`);
+    if (typeof words !== 'string' || !words.trim()) warn(`section headings: ${cid} "${key}" has no words, so it reads as written`);
+    else if (/[<>\n]/.test(words)) warn(`section headings: ${cid} "${key}" holds markup or a line break`);
+  });
+});
 
 const pad = (n) => String(n).padStart(2, '0');
 const SHORT = { 'design-and-eda': 'Design', 'silicon-and-wafers': 'Silicon', 'chemicals-gases-and-photoresist': 'Chem­icals', lithography: 'Litho', 'photomasks-and-pellicles': 'Masks', 'deposition-and-etch': 'Dep / etch', 'metrology-and-inspection': 'Metro­logy', 'foundries-and-fabs': 'Foundry', 'memory-and-hbm': 'Memory', 'advanced-packaging': 'Pack­aging', 'substrates-and-pcbs': 'Sub­strate', 'test-and-assembly': 'Test', 'systems-and-networking': 'Systems', 'data-centers-and-power': 'Power', 'introduction-and-goals': 'Intro', 'component-costs': 'Costs', geopolitics: 'Geopolitics' };
@@ -618,20 +647,21 @@ function chainTrack(chs, currentId) {
 }
 const textOf = (html) => String(html || '').replace(/<sup class="cite">[\s\S]*?<\/sup>/g, '').replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim();
 const norm = (t) => textOf(t).toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
-// Pull the Takeaways block out of the body so it can lead the chapter as "In short".
+// Pull the Takeaways block out of the body so it can lead the chapter as "In short" (its heading is a section's, h2).
 function splitTakeaways(html) {
-  const m = html.match(/<div class="takeaways"><h3[^>]*>Takeaways<\/h3>([\s\S]*?)<\/div>\s*$/) || html.match(/<div class="takeaways"><h3[^>]*>Takeaways<\/h3>([\s\S]*?)<\/div>/);
+  const m = html.match(/<div class="takeaways"><h2[^>]*>Takeaways<\/h2>([\s\S]*?)<\/div>\s*$/) || html.match(/<div class="takeaways"><h2[^>]*>Takeaways<\/h2>([\s\S]*?)<\/div>/);
   if (!m) return { body: html, inShort: '' };
   return { body: html.replace(m[0], ''), inShort: m[1].trim() };
 }
 // Replace the paragraph that repeats meta.plain with a highlighted "In plain terms" box (or insert one after the first h3).
-// Remove the paragraph that repeats meta.plain from the body; the head shows it as the "In plain terms" box.
+// Remove the paragraph that repeats meta.plain from the body; the head shows it as the "In plain terms" box, whose heading
+// is a section's, h2 (29 Oct 2026)
 function plainBox(html, plain, ctx) {
   if (!plain) return { html, box: '' };
   const key = norm(plain).slice(0, 60);
   let done = false;
   html = html.replace(/<p>([\s\S]*?)<\/p>/g, (whole, inner) => { if (!done && key && norm(inner).slice(0, 60) === key) { done = true; return ''; } return whole; });
-  return { html, box: `<div class="plain" id="${esc(ctx.id)}--plain"><h3 class="label">In plain terms</h3><p>${inline(plain, ctx)}</p></div>` };
+  return { html, box: `<div class="plain" id="${esc(ctx.id)}--plain"><h2 class="label">In plain terms</h2><p>${inline(plain, ctx)}</p></div>` };
 }
 // the main page's "In plain terms" box, with the first use of each glossary term in its paragraph marked (the label is left alone)
 const glPlain = (box) => String(box || '').replace(/<p>([\s\S]*)<\/p>/, (m, inner) => `<p>${glossaryWrap(inner)}</p>`);
@@ -730,17 +760,18 @@ function reviewHTML(ch) {
   const fc = flashcards[ch.id];
   if (!fc || !Array.isArray(fc.cards) || !fc.cards.length) return '';
   // each card's reason ends with a link back to the section of the chapter that covers it
-  return deckHTML(fc, { id: ch.id, title: ch.title, more: (c, i) => {
+  // the deck's title is one of the chapter's sections, h2 (29 Oct 2026)
+  return deckHTML(fc, { id: ch.id, title: ch.title, level: 2, more: (c, i) => {
     const anchor = c.section ? `${ch.id}--${slug(c.section)}` : '';
     if (anchor && !ch.html.includes(`id="${anchor}"`)) warn(`flashcards ${ch.id} #${i + 1}: no section "${c.section}"`);
     return anchor ? { href: '#' + anchor, text: 'Reread: ' + c.section } : null;
   } });
 }
 // one deck, wherever it sits: o.id makes its address ("<id>--flashcards"), o.title its label, o.more(card, i) the link that
-// ends a card's reason ({ href, text } or null), o.attrs any attributes of its own (Start here's names its storage key) and
-// o.sub the line beside its title
+// ends a card's reason ({ href, text } or null), o.attrs any attributes of its own (Start here's names its storage key),
+// o.sub the line beside its title and o.level its title's heading level (h3, or a chapter's h2), the things to remember one below
 function deckHTML(fc, o) {
-  const n = fc.cards.length;
+  const n = fc.cards.length, lv = o.level || 3;
   const cards = fc.cards.map((c, i) => {
     if (!c.q || !c.a) warn(`flashcards ${o.id} #${i + 1}: needs q and a`);
     const link = o.more(c, i);
@@ -754,9 +785,9 @@ function deckHTML(fc, o) {
       + `</div>`;
   }).join('');
   const dots = `<span class="fc-dots" aria-hidden="true">${fc.cards.map((_, i) => `<i${i ? '' : ' class="on"'}></i>`).join('')}</span>`;
-  const keep = Array.isArray(fc.takeaways) && fc.takeaways.length ? `<div class="rv-keep"><h4 class="label">${NUM_WORD[fc.takeaways.length] || fc.takeaways.length} things to remember</h4><ul>${fc.takeaways.map((t) => `<li>${esc(t)}</li>`).join('')}</ul></div>` : '';
+  const keep = Array.isArray(fc.takeaways) && fc.takeaways.length ? `<div class="rv-keep"><h${lv + 1} class="label">${NUM_WORD[fc.takeaways.length] || fc.takeaways.length} things to remember</h${lv + 1}><ul>${fc.takeaways.map((t) => `<li>${esc(t)}</li>`).join('')}</ul></div>` : '';
   // the deck's id is the address search links to (src/app.js opens the deck at the card that was found)
-  return `<section class="review fc" id="${esc(o.id)}--flashcards"${o.attrs || ''} aria-label="Flashcards: ${esc(o.title)}"><header class="rv-head"><h3 class="rv-title">Flashcards</h3><p class="rv-sub">${esc(o.sub || 'Recall each answer, then turn the card.')}</p></header>`
+  return `<section class="review fc" id="${esc(o.id)}--flashcards"${o.attrs || ''} aria-label="Flashcards: ${esc(o.title)}"><header class="rv-head"><h${lv} class="rv-title">Flashcards</h${lv}><p class="rv-sub">${esc(o.sub || 'Recall each answer, then turn the card.')}</p></header>`
     + `<div class="fc-deck"><div class="fc-behind fc-behind--2"></div><div class="fc-behind"></div>${cards}</div>`
     + `<div class="fc-nav">${dots}<span class="fc-steps"><button type="button" class="fc-link fc-prev" disabled>Previous card</button><button type="button" class="fc-link fc-next" disabled>Next card</button></span></div>`
     + `<div class="fc-end" hidden><p class="fc-score"><span class="fc-big"></span><span class="fc-score-t"></span></p>${keep}<p class="fc-row fc-row--gap"><button type="button" class="fc-btn fc-back-to-cards">Previous card</button><button type="button" class="fc-btn fc-reset">Start over</button></p></div></section>`;
@@ -946,8 +977,10 @@ const LEDGER_KEY = (() => {
       the sources and the door to the next chapter.
    The head keeps its class (.chapter-head) and the prose stays the article's own child, which the search index and the print
    path read (src/app.js Tools, src/modules/print.js). The title is the page's h1 since each chapter has a page of its own (28
-   Oct 2026; it was an h2 under the home page's views), and its styles go by its class, so it looks as it did; the sections
-   keep their levels (h3, h4), which the styles and the print path read. */
+   Oct 2026; it was an h2 under the home page's views), and its styles go by its class, so it looks as it did. Since 29 Oct
+   2026 the sections are h2 under it (In plain terms, In short, each section of the text and the flashcards) and their
+   subsections h3; until then they kept the h3 and h4 they had under that h2. The styles and the print path moved with them
+   (src/styles.css, src/modules/chapter.css, print.css, print.js), so the page looks and prints as it did. */
 // the chapters whose drawing carries numbered parts (the owner's decision of 25 Oct 2026: Lithography only for now). The file is
 // keyed by chapter id; each part has its number, its name, either its maker or the stage that covers it, and the points on the
 // specimen its balloon points at ("at", in the specimen's own units, as specimens/<name>.js draws it)
@@ -1045,7 +1078,7 @@ function chapterHTML(ch) {
 <div class="ch-open">${kick}<h1 class="ch-title${ch.title.length > 16 ? ' is-long' : ''}"><span class="sr-only">Chapter ${ch.number}: </span>${esc(ch.title)}</h1>${m.oneLiner ? `<p class="ch-lede">${esc(m.oneLiner)}</p>` : ''}<div class="ch-omet">${facts}${citeBlock(ch, CITE_DAY(ch.id), copyLink(ch.id))}</div></div>
 ${spec}
 ${glPlain(pb.box)}
-${parts.inShort ? `<section class="inshort"><h3 class="label">In short</h3>${glossaryWrap(parts.inShort)}</section>` : ''}
+${parts.inShort ? `<section class="inshort"><h2 class="label">In short</h2>${glossaryWrap(parts.inShort)}</section>` : ''}
 </header>
 ${railHTML(ch, stageIdx, toc)}
 <div class="prose">${withCard(glossaryWrap(pb.html), plateGl)}${reviewHTML(ch)}${sources}${prevNext(ch)}</div>
@@ -1569,10 +1602,11 @@ const searchData = (() => {
   arts.forEach((art) => {
     const title = chTitle(art), lede = ptFind(art, (n) => PT.hasClass(n, 'ch-lede'));
     idx.push({ kind: 'Chapter', title, text: lede ? PT.textContent(lede) : '', href: '#' + art.attrs.id });
-    PT.all(art).filter((h) => (h.tag === 'h3' || h.tag === 'h4') && h.attrs.id && PT.closest(h.parent, (x) => PT.hasClass(x, 'prose'))).forEach((h) => {
+    // each section (h2) and subsection (h3, until 29 Oct 2026 h3 and h4), by the words its heading shows
+    PT.all(art).filter((h) => (h.tag === 'h2' || h.tag === 'h3') && h.attrs.id && PT.closest(h.parent, (x) => PT.hasClass(x, 'prose'))).forEach((h) => {
       // the snippet is the reading text: each block after the heading, to the next, without its footnote marks
       let t = '', p = PT.nextElement(h);
-      while (p && !/^h[1-4]$/.test(p.tag) && t.length < 900) { if (/^(p|div|ul|ol|table)$/.test(p.tag)) t += ' ' + PT.textContent(PT.without(p, (k) => k.tag === 'sup' && PT.hasClass(k, 'cite'))); p = PT.nextElement(p); }
+      while (p && !/^h[1-3]$/.test(p.tag) && t.length < 900) { if (/^(p|div|ul|ol|table)$/.test(p.tag)) t += ' ' + PT.textContent(PT.without(p, (k) => k.tag === 'sup' && PT.hasClass(k, 'cite'))); p = PT.nextElement(p); }
       idx.push({ kind: title, title: PT.textContent(h), text: t.replace(/\s+/g, ' ').replace(/\s+([.,;:)])/g, '$1').trim().slice(0, 900), href: '#' + h.attrs.id });
     });
   });

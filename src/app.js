@@ -3643,9 +3643,10 @@
         else window.prompt('Copy this link', url);
       });
       // heading permalinks
-      // heading permalinks: the "#" that appears on hover copies the section's full address and sets the hash
+      // heading permalinks: the "#" that appears on hover copies the section's full address and sets the hash. A chapter's
+      // sections are h2 and its subsections h3 since 29 Oct 2026 (build/build.js markdown(); h3 and h4 before)
       var canon = $('link[rel="canonical"]'), base = canon && canon.href ? canon.href.replace(/#.*$/, '') : location.href.replace(/#.*$/, '');
-      $$('.prose h3[id], .prose h4[id]').forEach(function (h) { var a = document.createElement('a'); a.className = 'permalink'; a.href = '#' + h.id; a.setAttribute('aria-label', 'Copy a link to this section'); a.title = 'Copy link'; a.textContent = '#'; h.appendChild(a); });
+      $$('.chapter .prose h2[id], .chapter .prose h3[id]').forEach(function (h) { var a = document.createElement('a'); a.className = 'permalink'; a.href = '#' + h.id; a.setAttribute('aria-label', 'Copy a link to this section'); a.title = 'Copy link'; a.textContent = '#'; h.appendChild(a); });
       document.addEventListener('click', function (e) {
         var a = e.target.closest ? e.target.closest('.permalink') : null;
         if (!a) return;
