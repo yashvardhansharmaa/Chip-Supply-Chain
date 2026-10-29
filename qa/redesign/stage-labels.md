@@ -87,7 +87,10 @@ The parts and points need no change.
   - the page without WebGL.
 
   It also checks that both HBM versions draw with four balloons and that the default is A.
-- **PDFs:** silicon, HBM and CoWoS were printed on DevTools port 9366 with `build/chapter_pdfs.py`, Edition of 29 October 2026. They come to 11, 10 and 12 pages (before: 10, 10 and 11). The final layout pass of each is clean. Each prints its still with numbered balloons over the caption and parts list (`labels/pdf/parts-pages.png`).
+- **PDFs:** silicon, HBM and CoWoS were printed on DevTools port 9366 with `build/chapter_pdfs.py`, Edition of 29 October 2026. They come to 11, 10 and 12 pages (before: 10, 10 and 11).
+  - Each prints its still with numbered balloons over the caption and parts list (`labels/pdf/parts-pages.png`).
+  - Final layout pass: no notes lost or stranded and no overflow. HBM's pass is fully clean.
+  - Silicon and CoWoS are one page longer, because the still adds about a third of a page to page 1. Each now ends with its last few sources, the colophon and the citation on a page of their own. `pdf.py` reports this as `sources` and could not pull them back (`labels/pdf/*.log`, `labels/pdf/tails.png`).
   - **Not committed.** quickwins changes the same chapters, so the lead should reprint them after merging. The copies are in `labels/pdf/`.
 - **No check was changed.**
 
