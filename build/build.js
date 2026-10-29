@@ -948,9 +948,11 @@ const LEDGER_KEY = (() => {
    path read (src/app.js Tools, src/modules/print.js). The title is the page's h1 since each chapter has a page of its own (28
    Oct 2026; it was an h2 under the home page's views), and its styles go by its class, so it looks as it did; the sections
    keep their levels (h3, h4), which the styles and the print path read. */
-// the chapters whose drawing carries numbered parts (the owner's decision of 25 Oct 2026: Lithography only for now). The file is
-// keyed by chapter id; each part has its number, its name, either its maker or the stage that covers it, and the points on the
-// specimen its balloon points at ("at", in the specimen's own units, as specimens/<name>.js draws it)
+// the chapters whose drawing carries numbered parts (the owner's decision of 25 Oct 2026: Lithography; 29 Oct 2026: Silicon and
+// Wafers, Memory and HBM, Advanced Packaging). The file is keyed by chapter id; each part has its number, its name, the shorter
+// name its balloon carries where the list's is long (label), either its maker (with a link to a section of the chapter that
+// covers it, link: [href, words]) or the stage that covers it, and the points on the specimen its balloon points at ("at", in
+// the specimen's own units, as specimens/<name>.js draws it)
 const specimenParts = readJSON(path.join(root, 'data', 'specimen-parts.json'), {});
 // each chapter's still of its specimen (qa/redesign/stills.js; [width, height] at twice the pixels shown), for the door that
 // leads to the chapter
@@ -967,6 +969,11 @@ function partsHTML(ch) {
       const c = chapterById(p.stage), si = stages.findIndex((x) => x.id === p.stage);
       if (!c) { warn(`specimen-parts: ${ch.id} part ${p.n} names no chapter ${p.stage}`); return esc(p.name); }
       return `${esc(p.name)}: <a href="${esc(c.id)}/" data-route="#${esc(c.id)}">see stage ${pad(si >= 0 ? si + 1 : c.number)}, ${esc(c.title)}</a>`;
+    }
+    if (Array.isArray(p.link)) {
+      const [href, words] = p.link;
+      if (/^#/.test(href) && !(ch.headings || []).some((h) => '#' + h.id === href)) warn(`specimen-parts: ${ch.id} part ${p.n} links to ${href}, which is no section of the chapter`);
+      return `${esc(p.name)}: ${esc(p.maker || '')}, <a href="${esc(href)}">${esc(words)}</a>`;
     }
     return `${esc(p.name)}: ${esc(p.maker || '')}`;
   };
@@ -1033,7 +1040,7 @@ function chapterHTML(ch) {
   const facts = `<p class="ch-meta"><span class="label">${ch.words.toLocaleString('en-US')} words / ${mins} min</span><span class="label">Specimen: ${esc(SPECIMEN_NAME[specimen] || specimen.replace(/-/g, ' '))}</span><span class="label">Updated ${CITE_DAY(ch.id)}</span>${ch.cites.length ? `<span class="label">${ch.cites.length} sources</span>` : ''}</p>`;
   // the specimen's slot and its caption; the two chapters that are not stages set their drawing on the night ground (data-night)
   const ps = partsOf(ch), night = !isStage(ch);
-  const spec = `<figure class="ch-spec"${night ? ' data-night="1"' : ''}${ps.length ? ` data-parts="${esc(JSON.stringify(ps.map((p) => ({ n: +p.n, name: p.name, at: p.at || [] }))))}"` : ''}>`
+  const spec = `<figure class="ch-spec"${night ? ' data-night="1"' : ''}${ps.length ? ` data-parts="${esc(JSON.stringify(ps.map((p) => ({ n: +p.n, name: p.label || p.name, at: p.at || [] }))))}"` : ''}>`
     + `<div class="ch-spec-draw"></div>`
     + `<figcaption class="ch-spec-cap${ch.rendered.parts ? ' has-parts' : ''}"><span class="label">Specimen ${pad(ch.number)} · ${esc(ch.title)}</span>${m.specimenCaption ? `<p>${esc(m.specimenCaption)}</p>` : ''}${ch.rendered.parts}</figcaption>${printStill(ch)}</figure>`;
   // On this page: In plain terms, the chokepoint card, the chapter's own sections, the flashcards and the sources
