@@ -114,6 +114,7 @@ function host(url) { try { const m = String(url).match(/^https?:\/\/web\.archive
 /* ---------------- figures ---------------- */
 function fmtNum(v) { if (typeof v !== 'number') return esc(v); return Math.abs(v) >= 1000 ? v.toLocaleString('en-US') : (Number.isInteger(v) ? String(v) : v.toFixed(1)); }
 const USED_MEDIA = new Set(); // animations placed in a chapter; only their files are copied to dist/media
+const FS = require('./figsteps.js')(esc); // a bars figure that steps, 13.2 and 16.2 (29 Oct 2026): build/figsteps.js, src/modules/figsteps.js
 /* A figure's unit (decision 11, 21 Oct 2026). A unit of eight characters or fewer travels with every value, and the tag after
    the title goes: "%" gives 56.8%, a currency unit puts its sign before the figure and the rest after it ($60M, $2,900,
    $1,187/kg), and a word follows the figure (48 tools, 1,200 GB/s). A longer unit ("million 8-inch-equivalent wafers per
@@ -227,16 +228,18 @@ function figure(f, ctx) {
     // (.range) is solid to its low end (--lo, a share of the bar) and hatched to its high end.
     const marks = figMarks(f, data);
     const max = Math.max(...marks.map((m) => (m.hi != null ? m.hi : m.v)), 1e-9);
-    const vals = marks.map((m) => markText(m, f.unit));
+    const vals = marks.map((m) => FS.shown(f, m.label) || markText(m, f.unit));
     const lw = Math.max(...marks.map((m) => m.label.length)), vw = Math.max(...vals.map((v) => v.replace(/&[a-z]+;/g, '&').length));
-    body = `<div class="hbars" aria-hidden="true" style="--lw:${(lw * 0.56 + 0.4).toFixed(1)}em;--vw:${(vw * 0.62 + 0.9).toFixed(1)}em">`
+    FS.problems(f).forEach((p) => warn(`${ctx.id}: figure ${f.id}: ${p}`));
+    body = FS.head(f) + `<div class="hbars" aria-hidden="true" style="--lw:${(lw * 0.56 + 0.4).toFixed(1)}em;--vw:${(vw * 0.62 + 0.9).toFixed(1)}em">`
       + marks.map((m, i) => {
         const hi = m.hi != null ? m.hi : m.v, cls = (m.rest ? ' rest' : m.top ? ' top' : '') + (m.hi != null ? ' range' : '') + (m.span ? ' span' : '');
         const lo = m.hi != null ? `;--lo:${(m.v / hi * 100).toFixed(1)}%` : '';
         const ref = m.ref != null ? `<span class="hb-ref" style="left:${(m.ref / hi * 100).toFixed(1)}%"><span>${esc(m.refLabel)} ${fmtNum(m.ref)}</span></span>` : '';
         return `<div class="hb${cls}" data-v="${m.v}"${m.hi != null ? ` data-hi="${m.hi}"` : ''}${m.ref != null ? ` data-ref="${m.ref}"` : ''}><span class="hb-l">${esc(m.label)}</span><span class="hb-r"><i style="width:${Math.max(0.6, hi / max * 100).toFixed(1)}%${lo}">${ref}</i><b>${vals[i]}</b></span></div>`;
       }).join('')
-      + `</div>` + tableFallback(data, f);
+      + `</div>` + FS.tail(f) + tableFallback(data, f);
+    body = FS.rows(f, body, marks, f.unit && !unitOnValue(f.unit) ? ' ' + esc(f.unit) : '');
   } else if (f.type === 'columns') {
     // a series over time or generations (revision 5, 28 Oct 2026): columns in the data's order, years left to right, on an ink
     // baseline, each value over its column and each label under it; the marked column wine (the chart rule above). A range is
@@ -350,7 +353,7 @@ function figure(f, ctx) {
   const head = `<div class="fig-head"><a class="fig-k" href="#${fid}">${esc(kick)}</a>`
     + `<p class="fig-title${finding ? ' fig-find' : ''}">${esc(big)}${small ? '' : unitTag}</p>${small ? `<p class="fig-sub">${esc(small)}${unitTag}</p>` : ''}</div>`;
   // the source line: Source (or a note) first, then the actions
-  const src = f.source && f.source.url ? `<span class="fs-src"><span class="fs-k">Source:</span> <a href="${safeUrl(f.source.url)}" target="_blank" rel="noopener">${esc(f.source.label || host(f.source.url))}</a> ${srcMark}</span>`
+  const src = f.source && f.source.url ? `<span class="fs-src"><span class="fs-k">Source:</span> <a href="${safeUrl(f.source.url)}" target="_blank" rel="noopener">${esc(f.source.label || host(f.source.url))}</a> ${srcMark}${FS.more(f, (u) => cite(u, ctx), safeUrl)}</span>`
     : (f.source && f.source.label ? `<span class="fs-src"><span class="fs-k">Source:</span> ${esc(f.source.label)}</span>` : '');
   const note = f.note ? `<span class="fs-note fig-source"><span class="fs-k">Note:</span> ${esc(f.note)}</span>` : '';
   const box = `cite-${fid}`;
@@ -368,7 +371,7 @@ function figure(f, ctx) {
   const dataLine = srcName ? ` Data: ${esc(srcName)}${srcWhen ? ', ' + esc(srcWhen) : ''}.` : '';
   const citeText = isAnim ? '' : `<div class="ch-cite-box fig-cite-box" id="${box}" role="region" aria-label="Citation for figure ${num}" hidden><p class="ch-cite-text">Sharma, Yashvardhan. “Figure ${num}: ${esc(figShort(f))}.” <i>${CITE_WORK}</i>. Updated ${CITE_DAY(ctx.id)}. <a href="${esc(figURL)}">${esc(figURL)}</a>.${dataLine}</p></div>`;
   const strip = `<div class="fig-strip">${src}${acts}${note}${citeText}</div>`;
-  return `<figure class="figure${isAnim ? ' figure--anim' : ''}" id="${fid}" data-num="${num}">${head}<div class="fig-body">${body}</div>${strip}</figure>`;
+  return `<figure class="figure${isAnim ? ' figure--anim' : ''}${FS.figClass(f)}" id="${fid}" data-num="${num}"${FS.figAttrs(f)}>${head}<div class="fig-body">${body}</div>${strip}</figure>`;
 }
 // A date in a figure: { key, the day it sorts as; iso, for <time datetime>; label, what the reader sees }. A full day reads day
 // first, "16 May 2019" (final QA B8: never the data's ISO form); a month reads "March 2028"; a bare year reads "2028" and sorts as

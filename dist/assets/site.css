@@ -2872,6 +2872,74 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
 }
 
 
+/* module: figsteps.css */
+/* Figures that step, 13.2 and 16.2 (build/figsteps.js, src/modules/figsteps.js). They sit in the chapter's figure grammar
+   (chapter.css: the box, the head, the bars, the source strip); this sheet adds the step row, the step's sentence, the bars
+   arriving with their step and the drawing of 13.2. On paper the figure is at rest: every bar, the drawing whole, the last
+   sentence, and no step row. */
+
+/* the step row, as the explainers set theirs (styles.css .anim-steps) */
+.figure--steps ol.sf-steps { display: flex; flex-wrap: wrap; gap: 2px 13px; list-style: none; margin: 0 0 16px; padding: 0; max-width: none; }
+.figure--steps ol.sf-steps li { margin: 0; padding: 0; }
+.figure--steps ol.sf-steps li::before { content: none; display: none; }
+.figure--steps .sf-cap { margin: 14px 0 0; min-height: 4.5em; font-family: var(--font-body); font-size: var(--t-small); line-height: 1.5; color: var(--ink); }
+.figure--steps.is-table .sf-steps, .figure--steps.is-table .sf-cap, .figure--steps.is-table .sf-draw { display: none; }
+
+/* bars that arrive with their step (screen only: on paper every bar stands) */
+@media screen {
+  .figure--steps .hbars .hb { transition: opacity 420ms var(--ease); }
+  .figure--steps .hbars .hb-r i { transition: width 900ms var(--ease); }
+  .figure--steps .hbars .hb.is-off { opacity: 0; }
+  .figure--steps .hbars .hb.is-off .hb-r i { width: 0 !important; }
+  .figure--steps .hbars .hb.is-new .hb-l { color: var(--ink); }
+}
+
+/* 13.2: the racks and one GPU's two links (figsteps.js draws the svg at the column's width) */
+.sf-draw { position: relative; margin: 0 0 18px; }
+.sf-draw svg { display: block; width: 100%; height: auto; overflow: visible; }
+.sy-frame { fill: var(--bg); stroke: var(--line-2); stroke-width: 1; transition: stroke 500ms var(--ease), stroke-width 500ms var(--ease); }
+.sy-frame.held { stroke: var(--ink); stroke-width: 1.5; }
+.sy-ctray { fill: var(--bg-2); }
+.sy-gpu { fill: var(--rule-ink); transition: fill 500ms var(--ease); }
+.sy-gpu.on { fill: var(--accent); }
+.sy-stray { fill: var(--ink-2); }
+.sy-port { fill: var(--bg-3); }
+.sy-up { fill: none; stroke: var(--accent); stroke-linejoin: round; }
+.sy-up.ctx, .sy-out.ctx { stroke: var(--ctx); }
+.sy-out { fill: none; stroke: var(--ink-2); stroke-linejoin: round; }
+.sy-net { fill: none; stroke: var(--ink-2); }
+.sy-flow { fill: none; stroke-linecap: round; }
+.sy-flow.up { stroke: var(--bg); }
+.sy-flow.out { stroke: var(--ink); }
+.sy-lab { font-family: var(--font-ui); font-size: 12px; fill: var(--ink-2); }
+.sy-lab.k { font-weight: 600; fill: var(--ink); }
+.sy-lab.w { font-weight: 700; fill: var(--accent-ink); }
+.sy-lab.m { fill: var(--muted); }
+.sy-layer { fill: var(--ink); }
+.sy-blk-t { font-family: var(--font-ui); font-size: 11.5px; fill: var(--ink); text-anchor: middle; }
+.sy-drop { stroke: var(--ink); stroke-width: 1; fill: none; }
+.sy-hold { fill: var(--ink); }
+.sy-fade { transition: opacity 500ms var(--ease); }
+.sy-fade.off { opacity: 0; }
+@keyframes sy-up { to { stroke-dashoffset: -12; } }
+@keyframes sy-out { to { stroke-dashoffset: -108; } }
+.sy-flow.up.go { animation: sy-up 0.6s linear infinite; }
+.sy-flow.out.go { animation: sy-out 5.4s linear infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .sy-flow.up.go, .sy-flow.out.go { animation: none; }
+  .figure--steps .hbars .hb, .figure--steps .hbars .hb-r i, .sy-gpu, .sy-fade, .sy-frame { transition: none; }
+}
+
+@media print {
+  .figure--steps .sf-steps { display: none !important; }
+  .figure--steps .sf-cap { min-height: 0; margin: 2.4mm 0 0; font-size: calc(8.4pt * var(--text-scale, 1)); line-height: 1.38; }
+  .sf-draw { margin: 0 0 3mm; break-inside: avoid; }
+  .sf-draw svg { max-width: min(100%, 134mm); }
+  .sy-flow { animation: none !important; }
+  .sy-fade, .sy-gpu, .sy-frame { transition: none !important; }
+}
+
+
 /* module: live.css */
 /* Live explainers (29 Oct 2026, the owner's approved mockups): figure 04.2, several passes (src/modules/live-saqp.js), and
    figure 07.1, driven by its model (src/modules/live-yield.js). Each is a .figure--anim whose stage the module draws into;
@@ -4261,50 +4329,22 @@ html.kb:has(.view[data-view="glossary"]:not([hidden])) { scroll-padding-top: cal
 .sup-sec-sub { margin: 0; font-family: var(--font-ui); font-size: 12.5px; line-height: 16px; color: var(--muted); font-variant-numeric: tabular-nums; }
 @media (max-width: 760px) { .sup-sec-h { display: block; } .sup-sec-sub { margin-top: 6px; } .sup-sec-h h2 { font-size: var(--t-lead); } }
 
-/* ---------- the ribbons ---------- */
+/* ---------- the ribbons (by share since 29 Oct 2026: src/modules/supshares.css draws their states, the phone rows and the
+   Table on these shared parts) ---------- */
 .sup-pipe { position: relative; margin: 88px 0 0; }
 .sup-pipe-top { align-items: center; }
-.sup-seg2 { display: inline-flex; gap: 2px; padding: 3px; border: 1px solid var(--control-edge); border-radius: 999px; }
-.sup-gbtn { font-family: var(--font-ui); font-weight: 400; font-size: 13.5px; line-height: 1; padding: 8px 14px; min-height: 30px; border-radius: 999px; color: var(--ink-2); background: none; }
-.sup-gbtn:hover { color: var(--ink); }
-.sup-gbtn[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
-.sup-gbtn:focus-visible { outline-offset: 2px; }
 .sup-pipe-body { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; align-items: start; }
 .sup-pipe-plot { grid-column: 1 / 10; position: relative; padding-top: 18px; min-width: 0; }
-.sup-pipe-side { grid-column: 10 / 13; padding-top: 22px; min-width: 0; }
-.sup-pipe-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-.sup-pipe-scroll[data-end="0"] { -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 26px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 26px), transparent); }
-.sup-pipe-svg { display: block; max-width: none; } /* the site caps every svg at its column; this one keeps its drawn width and the box scrolls */
-
-/* a pairing is two ribbons (drawPipe): its Critical firms on top in red wine, as wide as their count, then the rest in gray */
+.sup-pipe-svg { display: block; max-width: none; } /* the site caps every svg at its column; this one is drawn at the column's width */
 .sup-band { cursor: pointer; transition: opacity 160ms linear, fill 160ms linear; }
 .sup-band.sup-rib { stroke: none; fill: var(--rib); opacity: 0.8; }
-.sup-band.sup-rib.is-crit { fill: var(--rib-crit); opacity: 0.95; }
-/* a country followed (its button, or the route's chosen country), a hovered ribbon or the firm filter: the rest fade, its
-   other ribbons turn dark gray and its Critical ones stay wine */
-.sup-pipe[data-lit="1"] .sup-rib, .sup-pipe[data-filtered="1"] .sup-rib, .sup-pipe-svg[data-hot="1"] .sup-rib { opacity: 0.32; }
-.sup-pipe[data-lit="1"] .sup-rib.is-crit, .sup-pipe[data-filtered="1"] .sup-rib.is-crit, .sup-pipe-svg[data-hot="1"] .sup-rib.is-crit { opacity: 0.16; }
-.sup-pipe[data-lit="1"] .sup-rib[data-lit], .sup-pipe[data-filtered="1"] .sup-rib[data-on], .sup-pipe-svg[data-hot="1"] .sup-rib[data-hot="1"] { fill: var(--rib-on); opacity: 0.9; }
-.sup-pipe[data-lit="1"] .sup-rib.is-crit[data-lit], .sup-pipe[data-filtered="1"] .sup-rib.is-crit[data-on], .sup-pipe-svg[data-hot="1"] .sup-rib.is-crit[data-hot="1"] { fill: var(--rib-crit); opacity: 1; }
 .sup-cnode { fill: var(--ink); }
 .sup-snode { fill: var(--ink-2); }
-.sup-chit { fill: transparent; cursor: pointer; }
 .sup-hit { fill: transparent; cursor: pointer; outline: none; }
 .sup-hit:focus-visible { stroke: var(--accent); stroke-width: 1.5px; } /* the keyboard's segment: a frame round its label (the rect takes no outline) */
 .sup-clab { font-family: var(--font-ui); font-weight: 500; fill: var(--ink); text-anchor: end; }
-.sup-clab .sup-cn { font-family: var(--font-ui); font-weight: 400; font-size: 11px; fill: var(--muted); font-variant-numeric: tabular-nums; }
 .sup-lab-t { font-family: var(--font-ui); font-weight: 400; fill: var(--ink); text-anchor: start; }
-.sup-lab .sup-lab-n { font-family: var(--font-ui); font-size: 11px; fill: var(--muted); font-variant-numeric: tabular-nums; }
-.sup-lab[data-hot="1"] .sup-lab-t { font-weight: 600; }
-.sup-lab[data-lit="1"] .sup-lab-t { fill: var(--accent-ink); font-weight: 600; } /* the segment the list is filtered to: the reader's own choice */
-.sup-lab[data-lit="1"] .sup-lab-n { fill: var(--accent-ink); }
 .sup-flow text { pointer-events: none; }
-@media (max-width: 599px) { .sup-clab { font-family: var(--font-ui); font-weight: 400; } font-variant-numeric: tabular-nums; } /* a phone draws country codes, set like the codes after every name */
-
-/* the entrance: the ribbons are wiped in from the left, once, on the first draw */
-.sup-wipe { transform-box: view-box; transform-origin: 0 0; }
-.sup-wipe.is-new { animation: sup-wipe 620ms var(--ease) both; }
-@keyframes sup-wipe { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 
 /* beside the ribbons: the key, the country buttons, the notes */
 .sup-legend { display: grid; gap: 10px; margin: 0; font-family: var(--font-ui); font-size: 14px; line-height: 20px; color: var(--ink-2); }
@@ -4319,38 +4359,20 @@ html.kb:has(.view[data-view="glossary"]:not([hidden])) { scroll-padding-top: cal
 .sup-chip:hover { border-color: var(--ink); }
 .sup-chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--bg); }
 .sup-note { margin: 0; font-family: var(--font-ui); font-size: 13.5px; line-height: 1.55; color: var(--ink-2); }
-.sup-note-sel { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line); }
-/* under the drawing, how a firm is given a country: today's full note, word for word */
+/* under the drawing, its source */
 .sup-pipe-note { grid-column: 1 / 10; margin-top: 16px; max-width: 78ch; color: var(--muted); }
 @media (max-width: 1199px) {
-  .sup-pipe-plot, .sup-pipe-side, .sup-pipe-note { grid-column: 1 / -1; }
-  .sup-pipe-side { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 28px; align-items: start; }
-  .sup-pipe-side .sup-legend, .sup-pipe-side .sup-follow { grid-column: 1; }
-  .sup-pipe-side .sup-note-sel { grid-column: 2; grid-row: 1 / span 2; margin-top: 0; }
+  .sup-pipe-plot, .sup-pipe-note { grid-column: 1 / -1; }
   .sup-pipe-note { margin-top: 22px; }
 }
-@media (max-width: 760px) {
-  .sup-pipe { margin-top: 56px; }
-  .sup-pipe-top .sup-seg2 { margin-top: 12px; }
-  .sup-pipe-side { display: block; }
-  .sup-pipe-side .sup-note-sel { margin-top: 18px; }
-}
+@media (max-width: 760px) { .sup-pipe { margin-top: 56px; } }
 
 /* the tip over the ribbons */
 .sup-tip { position: absolute; z-index: 30; min-width: 180px; max-width: 340px; padding: 10px 12px 11px; background: var(--bg); border: 1px solid var(--line-2); box-shadow: var(--shadow); pointer-events: none; }
 .sup-tip[hidden] { display: none; }
 @media (hover: hover) { .sup-tip { pointer-events: auto; } } /* a mouse can move onto the tip and it stays (WCAG 1.4.13); a tap still reaches the drawing under it */
 .sup-tip b { display: block; font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 500; font-size: var(--t-small); line-height: 1.2; color: var(--ink); }
-.sup-tip .sup-tip-n { display: block; margin: 3px 0 7px; font-family: var(--font-ui); font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
-.sup-tip .sup-tip-co { display: flex; flex-wrap: wrap; gap: 3px 10px; }
-.sup-tip-c { display: inline-flex; align-items: center; gap: 4px; font-family: var(--font-ui); font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
-.sup-tip-c b { display: inline; font-family: var(--font-ui); font-weight: 400; font-size: 11px; color: var(--ink); font-variant-numeric: tabular-nums; }
-.sup-tip .sup-sw { display: none; } /* countries carry no color */
-.sup-tip .sup-tip-crit { display: block; margin-top: 8px; padding-top: 7px; border-top: 1px solid var(--line); font-family: var(--font-ui); font-size: 13px; line-height: 1.4; color: var(--accent-ink); }
-.sup-tip .sup-tip-crit .sup-crit-sw { display: inline-block; width: 4px; height: 11px; margin-right: 6px; vertical-align: -1px; }
-.sup-tip-stages { font-family: var(--font-ui); font-size: 13px; line-height: 1.45; color: var(--ink-2); }
-.sup-tip-stages b { font-family: var(--font-ui); font-size: 13px; font-weight: 600; color: var(--ink); display: inline; }
-#sup-tip .sup-tip-stages small { display: inline; font-size: 0.92em; color: var(--muted); }
+.sup-tip .sup-tip-n { display: block; margin: 3px 0 7px; font-family: var(--font-ui); font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
 
 /* ---------- every firm: the tabs and the filters, the toolbar, the lists ---------- */
 .sup-reg { margin: 88px 0 0; scroll-margin-top: calc(var(--masthead) + 14px); }
@@ -4457,7 +4479,6 @@ html.kb:has(.view[data-view="glossary"]:not([hidden])) { scroll-padding-top: cal
 .sup-wrap { margin: 18px 0 40px; overflow-x: auto; border-top: 1px solid var(--ink); }
 
 @media (prefers-reduced-motion: reduce) {
-  .sup-wipe.is-new { animation: none; }
   .sup-panel, .sup-panel-in, .sup-band { transition: none; }
 }
 
@@ -4487,6 +4508,258 @@ html.kb:has(.view[data-view="glossary"]:not([hidden])) { scroll-padding-top: cal
   100% { background-color: transparent; box-shadow: 0 0 0 10px transparent; }
 }
 @media (prefers-reduced-motion: reduce) { .ex-panel.ex-flash { animation: none; } }
+
+
+/* module: supshares.css */
+/* The Suppliers ribbons, by share (build/modules/supplier-shares.js, src/modules/supshares.js). They take the ribbon styles
+   in suppliers.css (.sup-pipe, .sup-rib, the key, the buttons, the tip); this sheet adds the layout that puts the follow
+   buttons first, the ribbon states, the printed shares, the firm names, the phone rows, the tip, the Table and the source
+   line with its actions. */
+.ss .ss-code { font-family: var(--font-code); font-size: 12px; }
+
+/* the follow buttons come first in the page's order (and so in the tab order), the drawing after them. A wide screen still
+   sets them in the right-hand column, beside the drawing, with the notes under them. */
+.ss-body { grid-template-rows: auto 1fr auto; }
+.ss .ss-side-top { grid-column: 10 / 13; grid-row: 1; padding-top: 22px; min-width: 0; }
+.ss .ss-plot { grid-column: 1 / 10; grid-row: 1 / 3; }
+.ss .ss-side-note { grid-column: 10 / 13; grid-row: 2; align-self: start; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line); }
+.ss .ss-src { grid-column: 1 / 10; grid-row: 3; }
+.ss .ss-side-note p { margin: 0; }
+.ss .ss-side-note p + p { margin-top: 10px; }
+@media (max-width: 1199px) {
+  .ss-body { grid-template-rows: none; }
+  .ss .ss-side-top, .ss .ss-plot, .ss .ss-side-note, .ss .ss-src { grid-column: 1 / -1; grid-row: auto; }
+  .ss .ss-side-top { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); column-gap: 28px; align-items: start; padding-top: 18px; }
+  .ss .ss-side-top .sup-follow { margin-top: 0; padding-top: 0; border-top: 0; }
+  .ss .ss-side-note { max-width: 78ch; }
+}
+@media (max-width: 760px) {
+  .ss .ss-side-top { display: block; }
+  .ss .ss-side-top .sup-follow { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line); }
+}
+.ss .sup-legend .sup-lg { display: flex; align-items: center; gap: 10px; }
+.ss .sup-legend .ss-key { padding-left: 36px; }
+
+/* the ribbons: gray, the followed country's in wine, a hovered segment's or ribbon's darker and the rest faded */
+.ss .sup-rib { fill: var(--rib); opacity: 0.8; }
+.ss[data-lit="1"] .sup-rib { opacity: 0.45; }
+.ss[data-lit="1"] .sup-rib[data-lit] { fill: var(--rib-crit); opacity: 0.95; }
+.ss .ss-svg[data-hot="1"] .sup-rib { opacity: 0.22; }
+.ss .ss-svg[data-hot="1"] .sup-rib[data-lit] { opacity: 0.4; }
+.ss .ss-svg[data-hot="1"] .sup-rib[data-hot] { fill: var(--rib-on); opacity: 0.9; }
+.ss .ss-svg[data-hot="1"] .sup-rib[data-hot][data-lit] { fill: var(--rib-crit); opacity: 1; }
+.ss-clab.on { fill: var(--accent-ink); font-weight: 600; }
+.ss-hit { fill: transparent; cursor: pointer; outline: none; }
+.ss-hit:focus-visible { stroke: var(--accent); stroke-width: 1.5px; }
+
+/* shares printed on the drawing, with a ground-colored halo so they read over the ribbons */
+.ss-v { font-family: var(--font-ui); font-size: 12px; font-weight: 600; fill: var(--ink); font-variant-numeric: tabular-nums; paint-order: stroke; stroke: var(--bg); stroke-width: 3.5px; stroke-linejoin: round; }
+.ss-v.ss-v-lit { fill: var(--accent-ink); }
+
+/* the segment labels: a muted mark where the row is not 2025 revenue, and the firms under the name. A followed country's
+   firms go to ink and the rest to the label gray (5.3:1 light, 5.7:1 dark). */
+.ss-mk { fill: var(--muted); color: var(--muted); font-size: 11.5px; }
+.ss-names { font-family: var(--font-ui); fill: var(--ink-2); }
+.ss-fn, .ss-fsep { transition: fill 160ms linear, color 160ms linear; }
+.ss-fsep { fill: var(--muted); color: var(--muted); }
+.ss-fn.on { fill: var(--ink); color: var(--ink); font-weight: 600; }
+.ss-fn.off { fill: var(--muted); color: var(--muted); }
+
+/* the tip */
+.ss-tip { max-width: 360px; }
+.ss-tip .ss-tip-big { display: block; margin: 0 0 6px; font-family: var(--font-ui); font-size: 20px; font-weight: 600; line-height: 1.1; color: var(--ink); font-variant-numeric: tabular-nums; }
+.ss-tip .ss-tip-firms { display: block; margin-top: 2px; font-family: var(--font-ui); font-size: 13px; line-height: 1.45; color: var(--ink); }
+.ss-tip .ss-tip-firms .k { display: block; font-size: 11.5px; color: var(--muted); }
+.ss-tip .ss-tip-src { display: block; margin-top: 8px; padding-top: 7px; border-top: 1px solid var(--line); font-family: var(--font-ui); font-size: 12px; line-height: 1.45; color: var(--ink-2); }
+.ss-tip .ss-tip-src a { color: var(--ink-2); text-underline-offset: 2px; }
+
+/* narrower than 600 px: one row per segment */
+.ss-rows { list-style: none; margin: 0; padding: 0; }
+.ss-row { margin: 0; padding: 10px 0 11px; border-bottom: 1px solid var(--line); }
+.ss-row:first-child { padding-top: 2px; }
+.ss-row-h { margin: 0 0 6px; font-family: var(--font-ui); font-size: 14px; line-height: 19px; color: var(--ink); }
+.ss-row-h .ss-mk { font-size: 12px; }
+.ss-strip { display: flex; height: 24px; }
+.ss-sl { flex: none; box-sizing: border-box; display: flex; align-items: center; min-width: 1px; overflow: hidden; border-right: 1px solid var(--bg); background: var(--rib); }
+.ss-sl:last-child { border-right: 0; }
+.ss-sl b { padding: 0 5px; font-family: var(--font-ui); font-size: 11.5px; font-weight: 600; line-height: 1; white-space: nowrap; color: var(--ink); font-variant-numeric: tabular-nums; }
+.ss-sl[data-lit] { background: var(--rib-crit); }
+.ss-sl[data-lit] b { color: #fff; } /* 10.2:1 on the light wine, 4.8:1 on the dark */
+.ss-rest { margin: 5px 0 0; font-family: var(--font-ui); font-size: 12px; line-height: 17px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.ss-rest span[data-lit] { color: var(--accent-ink); font-weight: 600; }
+.ss-row-f { margin: 5px 0 0; font-family: var(--font-ui); font-size: 12.5px; line-height: 18px; color: var(--ink-2); }
+.ss-row-f:empty { display: none; }
+
+/* the source line, with Cite, Table and CSV at its end as a figure's strip has them; the citation opens under it */
+.ss .ss-src { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; column-gap: 24px; row-gap: 4px; }
+.ss .ss-src .fs-src { flex: 1 1 32em; min-width: 0; }
+.ss .ss-acts { display: flex; flex-wrap: nowrap; white-space: nowrap; font-family: var(--font-ui); font-size: var(--ui-s); }
+.ss .ss-acts > a, .ss .ss-acts > button { font: inherit; color: var(--ink-2); background: none; border: 0; padding: 3px 0; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line-2); text-decoration-thickness: 1px; }
+.ss .ss-acts > * + *::before { content: "\00b7"; display: inline-block; width: 17px; text-align: center; color: var(--muted); }
+.ss .ss-acts > a:hover, .ss .ss-acts > button:hover { color: var(--accent-ink); text-decoration-color: var(--accent); }
+.ss .ss-acts > [aria-pressed="true"] { color: var(--accent-ink); text-decoration-color: var(--accent); }
+.ss .ss-src .ch-cite-box { flex-basis: 100%; margin: 6px 0 0; padding: 10px 14px; border-left: 2px solid var(--accent); background: var(--bg-2); }
+.ss .ss-src .ch-cite-text { margin: 0; font-family: var(--font-body); font-size: var(--t-note); line-height: 1.5; color: var(--ink); }
+.ss .ss-src .ch-cite-text a { font-family: var(--font-code); font-size: 12.5px; overflow-wrap: anywhere; }
+.ss .ss-src .ch-cite-copy { font-family: var(--font-ui); font-size: 13px; font-weight: 500; color: var(--accent-ink); background: none; border: 0; padding: 4px 0; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+
+/* the Table, in the drawing's place: the followed country's shares in bold */
+.ss-table { width: 100%; border-collapse: collapse; font-family: var(--font-ui); font-size: 13.5px; line-height: 19px; color: var(--ink); }
+.ss-table th, .ss-table td { padding: 7px 12px 7px 0; border-bottom: 1px solid var(--line); text-align: left; font-weight: 400; vertical-align: top; }
+.ss-table thead th { color: var(--muted); font-size: 12.5px; border-bottom-color: var(--ink); }
+.ss-table td { font-variant-numeric: tabular-nums; color: var(--ink-2); }
+.ss-table td a { color: var(--ink-2); text-underline-offset: 2px; text-decoration-color: var(--line-2); }
+.ss-table .ss-tc[data-lit] { color: var(--ink); font-weight: 700; }
+.ss-table .ss-tseg { display: block; font-weight: 500; color: var(--ink); }
+.ss-table .ss-tfirms { display: block; font-size: 12.5px; color: var(--muted); }
+@media (max-width: 599px) {
+  .ss-table { font-size: 12.5px; line-height: 17px; }
+  .ss-table th, .ss-table td { padding-right: 8px; }
+  .ss-table .ss-tfirms { font-size: 11.5px; }
+}
+@media (prefers-reduced-motion: reduce) { .ss-fn, .ss-fsep { transition: none; } }
+
+/* on paper: the drawing as it stands, scaled to the page, with its key and notes; no tip and no actions */
+@media print {
+  .ss .ss-tip, .ss .ss-acts, .ss .ch-cite-box { display: none !important; }
+  .ss .ss-svg { max-width: 100%; height: auto; }
+  .ss .ss-plot { break-inside: avoid; }
+}
+
+
+/* module: underline.css */
+/* Chips built just under the line, first on Export Controls (build/modules/under-line.js, src/modules/underline.js). The
+   figure takes the chapter figure's grammar (chapter.css) outside a chapter: the ruled box at 666 px, the Fraunces title,
+   the source strip with Cite, Table, CSV and PNG. Beside it on a wide screen, the chosen chip; under it below 1,100 px. */
+.ul { margin: 40px 0 8px; }
+.ul-grid { display: grid; grid-template-columns: minmax(0, 666px) minmax(0, 1fr); column-gap: 48px; align-items: start; margin-top: 24px; }
+@media (max-width: 1099px) { .ul-grid { display: block; } }
+
+.ul .figure { margin: 0; padding: 0; border: 1px solid var(--line-2); background: var(--bg); max-width: 666px; }
+.ul .fig-head { padding: 18px 24px 0; }
+.ul .figure .fig-title { margin: 6px 0 4px; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: var(--t-lead); line-height: 1.27; letter-spacing: -0.008em; text-wrap: balance; color: var(--ink); }
+.ul .fig-sub { margin: 0; font-family: var(--font-body); font-size: var(--t-small); line-height: 1.45; color: var(--ink-2); text-wrap: pretty; }
+.ul .fig-body { padding: 16px 24px 14px; }
+.ul .fig-strip { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; column-gap: 24px; row-gap: 2px; margin: 0 24px; padding: 2px 0 16px; font-family: var(--font-ui); font-size: var(--ui-s); line-height: 18px; color: var(--muted); }
+.ul .fig-strip > * { flex: 0 0 auto; max-width: 100%; min-width: 0; }
+.ul .fig-strip > .fs-acts { display: flex; flex-wrap: nowrap; white-space: nowrap; }
+.ul .fig-strip > .ch-cite-box { flex-basis: 100%; }
+.ul .fig-strip a { color: var(--ink-2); text-underline-offset: 3px; text-decoration-color: var(--line-2); }
+.ul .fig-strip a:hover { color: var(--ink); text-decoration-color: var(--accent); }
+.ul .fs-acts > a, .ul .fs-acts > button { font: inherit; color: var(--ink-2); background: none; border: 0; padding: 3px 0; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line-2); text-decoration-thickness: 1px; }
+.ul .fs-acts > * + *::before { content: "\00b7"; display: inline-block; width: 17px; text-align: center; color: var(--muted); }
+.ul .fs-acts > a:hover, .ul .fs-acts > button:hover { color: var(--accent-ink); text-decoration-color: var(--accent); }
+.ul .fs-acts > [aria-pressed="true"] { color: var(--accent-ink); text-decoration-color: var(--accent); }
+.ul .ch-cite-box { margin: 6px 0 0; padding: 10px 14px; border-left: 2px solid var(--accent); background: var(--bg-2); }
+.ul .ch-cite-text { margin: 0; font-family: var(--font-body); font-size: var(--t-note); line-height: 1.5; color: var(--ink); }
+.ul .ch-cite-text a { font-family: var(--font-code); font-size: 12.5px; overflow-wrap: anywhere; }
+.ul .ch-cite-copy { font-family: var(--font-ui); font-size: 13px; font-weight: 500; color: var(--accent-ink); background: none; border: 0; padding: 4px 0; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+@media (max-width: 760px) {
+  .ul .figure { margin: 0 calc(-1 * var(--margin)); border-left: 0; border-right: 0; }
+  .ul .fig-head { padding: 16px var(--margin) 0; }
+  .ul .fig-body { padding: 14px var(--margin) 12px; }
+  .ul .fig-strip { margin: 0 var(--margin); }
+  .ul .fig-strip > .fs-acts { flex-wrap: wrap; }
+  .ul .figure .fig-title { font-size: var(--t-text); line-height: 1.3; }
+}
+
+/* the step row of rule dates, as the explainers set theirs (styles.css .anim-steps) */
+.ul ol.ul-steps { display: flex; flex-wrap: wrap; gap: 2px 13px; list-style: none; margin: 0 0 16px; padding: 0; }
+.ul ol.ul-steps li { margin: 0; padding: 0; }
+.ul ol.ul-steps li::before { content: none; display: none; }
+
+/* the date: the rule in force, then the chart, then the ruler that sets the date, then the rule's sentence */
+.ul-when { margin: 0 0 6px; font-family: var(--font-ui); font-size: 13px; line-height: 18px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.ul-when b { font-weight: 600; color: var(--ink); }
+.ul-plot { position: relative; }
+.ul-plot svg { display: block; width: 100%; height: auto; overflow: visible; }
+.ul-cap { margin: 14px 0 0; min-height: 4.5em; font-family: var(--font-body); font-size: var(--t-small); line-height: 1.5; color: var(--ink); }
+.ul-scrub { position: relative; margin: 6px 0 0; padding: 0 0 26px; }
+.ul-scrub input[type=range] { -webkit-appearance: none; appearance: none; display: block; width: 100%; height: 28px; margin: 0; background: none; cursor: pointer; }
+.ul-scrub input[type=range]::-webkit-slider-runnable-track { height: 2px; background: var(--ink); }
+.ul-scrub input[type=range]::-moz-range-track { height: 2px; background: var(--ink); }
+.ul-scrub input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; margin-top: -7px; border-radius: 50%; background: var(--bg); border: 2px solid var(--ink); }
+.ul-scrub input[type=range]::-moz-range-thumb { width: 12px; height: 12px; border-radius: 50%; background: var(--bg); border: 2px solid var(--ink); }
+.ul-scrub input[type=range]:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.ul-ticks { position: absolute; left: 8px; right: 8px; top: 20px; height: 22px; pointer-events: none; }
+.ul-ticks span { position: absolute; top: 0; transform: translateX(-50%); font-family: var(--font-ui); font-size: 11.5px; line-height: 14px; color: var(--muted); white-space: nowrap; }
+.ul-ticks .ul-stop { position: absolute; top: -12px; width: 2px; height: 10px; margin-left: -1px; background: var(--ink); }
+.ul-ticks .ul-stop.on { background: var(--accent); height: 12px; top: -13px; }
+
+/* the Table in place of the chart */
+.ul .figure.is-table .ul-plot, .ul .figure.is-table .ul-scrub, .ul .figure.is-table .ul-when, .ul .figure.is-table .ul-steps, .ul .figure.is-table .ul-cap { display: none; }
+.ul .figure.is-table table.fig-table { position: static; width: 100%; height: auto; margin: 0; clip: auto; clip-path: none; overflow: visible; white-space: normal; border-collapse: collapse; font-family: var(--font-ui); font-size: 13.5px; line-height: 19px; }
+.ul .figure.is-table table.fig-table caption { display: none; }
+.ul .figure.is-table table.fig-table th, .ul .figure.is-table table.fig-table td { padding: 6px 8px 6px 0; border-bottom: 1px solid var(--line); text-align: left; font-weight: 400; vertical-align: top; color: var(--ink); }
+.ul .figure.is-table table.fig-table thead th { color: var(--muted); font-size: 12.5px; border-bottom-color: var(--ink); }
+.ul .figure.is-table table.fig-table td { font-variant-numeric: tabular-nums; }
+
+/* the drawing */
+.ct-reg { transition: y 600ms var(--ease), height 600ms var(--ease), opacity 500ms var(--ease); }
+.ct-ctrl { fill: var(--ctx); opacity: 0.45; }
+.ct-case { fill: var(--bg); stroke: var(--ink); stroke-width: 1.2; stroke-dasharray: 4 3; }
+.ct-hatch-line { stroke: var(--rule-ink); stroke-width: 1; opacity: 0.55; }
+.ct-line { stroke: var(--ink); stroke-width: 1.4; transition: opacity 500ms var(--ease); }
+.ct-line.soft { stroke: var(--rule-ink); stroke-width: 1; stroke-dasharray: 2 3; }
+.ct-line.gone { stroke: var(--rule-ink); stroke-width: 1; stroke-dasharray: 5 4; }
+.ct-line.dot { stroke: var(--rule-ink); stroke-dasharray: 2 3; }
+.ct-axis { stroke: var(--ink); stroke-width: 1; }
+.ct-gut { stroke: var(--line-2); stroke-width: 1; stroke-dasharray: 3 3; }
+.ct-t { font-family: var(--font-ui); font-size: 12px; fill: var(--ink-2); font-variant-numeric: tabular-nums; }
+.ct-t.k { font-weight: 600; fill: var(--ink); }
+.ct-t.m { fill: var(--muted); font-size: 11.5px; }
+.ct-fade { transition: opacity 500ms var(--ease); }
+.ct-fade.off { opacity: 0; pointer-events: none; }
+.ct-chip { cursor: pointer; transition: transform 700ms var(--ease), opacity 400ms var(--ease); outline: none; }
+.ct-chip.off { opacity: 0; pointer-events: none; }
+.ct-chip .ct-dot { fill: var(--ink-2); stroke: var(--bg); stroke-width: 1.5; }
+.ct-chip.own .ct-dot { fill: var(--bg); stroke: var(--ink-2); stroke-width: 1.4; }
+.ct-chip.named .ct-dot { fill: var(--accent); stroke: var(--bg); }
+.ct-chip .ct-rng { stroke: var(--ink-2); stroke-width: 9; stroke-linecap: round; opacity: 0; transition: opacity 400ms var(--ease); }
+.ct-chip.named .ct-rng { stroke: var(--accent); }
+.ct-chip.ranged .ct-rng { opacity: 1; }
+.ct-chip .ct-ring { fill: none; stroke: var(--accent); stroke-width: 1.6; opacity: 0; transition: opacity 400ms var(--ease); }
+.ct-chip.ringed .ct-ring { opacity: 1; }
+.ct-chip .ct-sel { fill: none; stroke: var(--ink); stroke-width: 1.4; opacity: 0; }
+.ct-chip.sel .ct-sel, .ct-chip:focus-visible .ct-sel { opacity: 1; }
+.ct-chip text { font-family: var(--font-ui); font-size: 11.5px; fill: var(--muted); transition: opacity 300ms var(--ease); paint-order: stroke; stroke: var(--bg); stroke-width: 3.5px; stroke-linejoin: round; }
+.ct-chip text .ct-nm { fill: var(--accent-ink); font-weight: 700; font-size: 13px; }
+.ct-chip text .ct-ot { fill: var(--ink-2); font-weight: 400; font-size: 11.5px; }
+.ct-chip text .ct-sep { fill: var(--muted); font-weight: 400; }
+.ct-chip text.hide { opacity: 0; }
+.ct-chip:hover text, .ct-chip.sel text { opacity: 1; }
+
+/* the chosen chip, beside the figure (or under it) */
+.ul-side { padding-top: 4px; border-top: 1px solid var(--ink); }
+.ul-side .k { margin: 12px 0 8px; font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); line-height: 16px; color: var(--muted); }
+.ul-side h3 { margin: 0 0 10px; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: var(--t-lead); line-height: 1.25; color: var(--ink); }
+.ul-side dl { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 6px 16px; margin: 0 0 12px; font-family: var(--font-ui); font-size: 14px; line-height: 20px; }
+.ul-side dt { color: var(--muted); }
+.ul-side dd { margin: 0; color: var(--ink); font-variant-numeric: tabular-nums; }
+.ul-side p { margin: 0 0 10px; font-family: var(--font-body); font-size: var(--t-small); line-height: 1.5; color: var(--ink); }
+.ul-side a { font-family: var(--font-ui); font-size: 13.5px; color: var(--ink-2); text-underline-offset: 3px; }
+.ul-key { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 16px 0 0; padding: 12px 0 0; border-top: 1px solid var(--line); font-family: var(--font-ui); font-size: 12.5px; line-height: 18px; color: var(--ink-2); }
+.ul-key span { display: inline-flex; align-items: center; gap: 7px; }
+.ul-key i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; }
+.ul-key i.m { background: var(--ink-2); }
+.ul-key i.o { border: 1.4px solid var(--ink-2); }
+.ul-key i.n { background: var(--accent); }
+.ul-key i.c { border-radius: 0; width: 14px; background: var(--ctx); opacity: 0.7; }
+@media (max-width: 1099px) { .ul-side { margin-top: 28px; max-width: 666px; } }
+@media (prefers-reduced-motion: reduce) { .ct-reg, .ct-line, .ct-fade, .ct-chip, .ct-chip .ct-rng, .ct-chip .ct-ring, .ct-chip text { transition: none; } }
+
+/* on paper: the chart as it stands, with its date line and the rule's sentence; no buttons, ruler or actions */
+@media print {
+  .ul-grid { display: block; }
+  .ul .figure { break-inside: avoid; }
+  .ul .ul-steps, .ul .ul-scrub, .ul .fs-acts, .ul .ch-cite-box, .ul-key { display: none !important; }
+  .ul .figure { margin: 0 !important; border: 0; border-top: 0.6pt solid var(--ink); max-width: 666px; }
+  .ul .fig-head, .ul .fig-body { padding-left: 0; padding-right: 0; }
+  .ul .fig-strip { margin: 0; }
+  .ul-cap { min-height: 0; }
+  .ul-side { margin-top: 4mm; }
+  .ct-reg, .ct-line, .ct-fade, .ct-chip, .ct-chip text { transition: none !important; }
+}
 
 
 /* module: walk.css */

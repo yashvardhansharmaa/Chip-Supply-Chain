@@ -1,0 +1,132 @@
+/* Chips built just under the line, first on Export Controls (build/modules/under-line.js, src/modules/underline.js). The
+   figure takes the chapter figure's grammar (chapter.css) outside a chapter: the ruled box at 666 px, the Fraunces title,
+   the source strip with Cite, Table, CSV and PNG. Beside it on a wide screen, the chosen chip; under it below 1,100 px. */
+.ul { margin: 40px 0 8px; }
+.ul-grid { display: grid; grid-template-columns: minmax(0, 666px) minmax(0, 1fr); column-gap: 48px; align-items: start; margin-top: 24px; }
+@media (max-width: 1099px) { .ul-grid { display: block; } }
+
+.ul .figure { margin: 0; padding: 0; border: 1px solid var(--line-2); background: var(--bg); max-width: 666px; }
+.ul .fig-head { padding: 18px 24px 0; }
+.ul .figure .fig-title { margin: 6px 0 4px; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: var(--t-lead); line-height: 1.27; letter-spacing: -0.008em; text-wrap: balance; color: var(--ink); }
+.ul .fig-sub { margin: 0; font-family: var(--font-body); font-size: var(--t-small); line-height: 1.45; color: var(--ink-2); text-wrap: pretty; }
+.ul .fig-body { padding: 16px 24px 14px; }
+.ul .fig-strip { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; column-gap: 24px; row-gap: 2px; margin: 0 24px; padding: 2px 0 16px; font-family: var(--font-ui); font-size: var(--ui-s); line-height: 18px; color: var(--muted); }
+.ul .fig-strip > * { flex: 0 0 auto; max-width: 100%; min-width: 0; }
+.ul .fig-strip > .fs-acts { display: flex; flex-wrap: nowrap; white-space: nowrap; }
+.ul .fig-strip > .ch-cite-box { flex-basis: 100%; }
+.ul .fig-strip a { color: var(--ink-2); text-underline-offset: 3px; text-decoration-color: var(--line-2); }
+.ul .fig-strip a:hover { color: var(--ink); text-decoration-color: var(--accent); }
+.ul .fs-acts > a, .ul .fs-acts > button { font: inherit; color: var(--ink-2); background: none; border: 0; padding: 3px 0; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line-2); text-decoration-thickness: 1px; }
+.ul .fs-acts > * + *::before { content: "\00b7"; display: inline-block; width: 17px; text-align: center; color: var(--muted); }
+.ul .fs-acts > a:hover, .ul .fs-acts > button:hover { color: var(--accent-ink); text-decoration-color: var(--accent); }
+.ul .fs-acts > [aria-pressed="true"] { color: var(--accent-ink); text-decoration-color: var(--accent); }
+.ul .ch-cite-box { margin: 6px 0 0; padding: 10px 14px; border-left: 2px solid var(--accent); background: var(--bg-2); }
+.ul .ch-cite-text { margin: 0; font-family: var(--font-body); font-size: var(--t-note); line-height: 1.5; color: var(--ink); }
+.ul .ch-cite-text a { font-family: var(--font-code); font-size: 12.5px; overflow-wrap: anywhere; }
+.ul .ch-cite-copy { font-family: var(--font-ui); font-size: 13px; font-weight: 500; color: var(--accent-ink); background: none; border: 0; padding: 4px 0; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+@media (max-width: 760px) {
+  .ul .figure { margin: 0 calc(-1 * var(--margin)); border-left: 0; border-right: 0; }
+  .ul .fig-head { padding: 16px var(--margin) 0; }
+  .ul .fig-body { padding: 14px var(--margin) 12px; }
+  .ul .fig-strip { margin: 0 var(--margin); }
+  .ul .fig-strip > .fs-acts { flex-wrap: wrap; }
+  .ul .figure .fig-title { font-size: var(--t-text); line-height: 1.3; }
+}
+
+/* the step row of rule dates, as the explainers set theirs (styles.css .anim-steps) */
+.ul ol.ul-steps { display: flex; flex-wrap: wrap; gap: 2px 13px; list-style: none; margin: 0 0 16px; padding: 0; }
+.ul ol.ul-steps li { margin: 0; padding: 0; }
+.ul ol.ul-steps li::before { content: none; display: none; }
+
+/* the date: the rule in force, then the chart, then the ruler that sets the date, then the rule's sentence */
+.ul-when { margin: 0 0 6px; font-family: var(--font-ui); font-size: 13px; line-height: 18px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.ul-when b { font-weight: 600; color: var(--ink); }
+.ul-plot { position: relative; }
+.ul-plot svg { display: block; width: 100%; height: auto; overflow: visible; }
+.ul-cap { margin: 14px 0 0; min-height: 4.5em; font-family: var(--font-body); font-size: var(--t-small); line-height: 1.5; color: var(--ink); }
+.ul-scrub { position: relative; margin: 6px 0 0; padding: 0 0 26px; }
+.ul-scrub input[type=range] { -webkit-appearance: none; appearance: none; display: block; width: 100%; height: 28px; margin: 0; background: none; cursor: pointer; }
+.ul-scrub input[type=range]::-webkit-slider-runnable-track { height: 2px; background: var(--ink); }
+.ul-scrub input[type=range]::-moz-range-track { height: 2px; background: var(--ink); }
+.ul-scrub input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; margin-top: -7px; border-radius: 50%; background: var(--bg); border: 2px solid var(--ink); }
+.ul-scrub input[type=range]::-moz-range-thumb { width: 12px; height: 12px; border-radius: 50%; background: var(--bg); border: 2px solid var(--ink); }
+.ul-scrub input[type=range]:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.ul-ticks { position: absolute; left: 8px; right: 8px; top: 20px; height: 22px; pointer-events: none; }
+.ul-ticks span { position: absolute; top: 0; transform: translateX(-50%); font-family: var(--font-ui); font-size: 11.5px; line-height: 14px; color: var(--muted); white-space: nowrap; }
+.ul-ticks .ul-stop { position: absolute; top: -12px; width: 2px; height: 10px; margin-left: -1px; background: var(--ink); }
+.ul-ticks .ul-stop.on { background: var(--accent); height: 12px; top: -13px; }
+
+/* the Table in place of the chart */
+.ul .figure.is-table .ul-plot, .ul .figure.is-table .ul-scrub, .ul .figure.is-table .ul-when, .ul .figure.is-table .ul-steps, .ul .figure.is-table .ul-cap { display: none; }
+.ul .figure.is-table table.fig-table { position: static; width: 100%; height: auto; margin: 0; clip: auto; clip-path: none; overflow: visible; white-space: normal; border-collapse: collapse; font-family: var(--font-ui); font-size: 13.5px; line-height: 19px; }
+.ul .figure.is-table table.fig-table caption { display: none; }
+.ul .figure.is-table table.fig-table th, .ul .figure.is-table table.fig-table td { padding: 6px 8px 6px 0; border-bottom: 1px solid var(--line); text-align: left; font-weight: 400; vertical-align: top; color: var(--ink); }
+.ul .figure.is-table table.fig-table thead th { color: var(--muted); font-size: 12.5px; border-bottom-color: var(--ink); }
+.ul .figure.is-table table.fig-table td { font-variant-numeric: tabular-nums; }
+
+/* the drawing */
+.ct-reg { transition: y 600ms var(--ease), height 600ms var(--ease), opacity 500ms var(--ease); }
+.ct-ctrl { fill: var(--ctx); opacity: 0.45; }
+.ct-case { fill: var(--bg); stroke: var(--ink); stroke-width: 1.2; stroke-dasharray: 4 3; }
+.ct-hatch-line { stroke: var(--rule-ink); stroke-width: 1; opacity: 0.55; }
+.ct-line { stroke: var(--ink); stroke-width: 1.4; transition: opacity 500ms var(--ease); }
+.ct-line.soft { stroke: var(--rule-ink); stroke-width: 1; stroke-dasharray: 2 3; }
+.ct-line.gone { stroke: var(--rule-ink); stroke-width: 1; stroke-dasharray: 5 4; }
+.ct-line.dot { stroke: var(--rule-ink); stroke-dasharray: 2 3; }
+.ct-axis { stroke: var(--ink); stroke-width: 1; }
+.ct-gut { stroke: var(--line-2); stroke-width: 1; stroke-dasharray: 3 3; }
+.ct-t { font-family: var(--font-ui); font-size: 12px; fill: var(--ink-2); font-variant-numeric: tabular-nums; }
+.ct-t.k { font-weight: 600; fill: var(--ink); }
+.ct-t.m { fill: var(--muted); font-size: 11.5px; }
+.ct-fade { transition: opacity 500ms var(--ease); }
+.ct-fade.off { opacity: 0; pointer-events: none; }
+.ct-chip { cursor: pointer; transition: transform 700ms var(--ease), opacity 400ms var(--ease); outline: none; }
+.ct-chip.off { opacity: 0; pointer-events: none; }
+.ct-chip .ct-dot { fill: var(--ink-2); stroke: var(--bg); stroke-width: 1.5; }
+.ct-chip.own .ct-dot { fill: var(--bg); stroke: var(--ink-2); stroke-width: 1.4; }
+.ct-chip.named .ct-dot { fill: var(--accent); stroke: var(--bg); }
+.ct-chip .ct-rng { stroke: var(--ink-2); stroke-width: 9; stroke-linecap: round; opacity: 0; transition: opacity 400ms var(--ease); }
+.ct-chip.named .ct-rng { stroke: var(--accent); }
+.ct-chip.ranged .ct-rng { opacity: 1; }
+.ct-chip .ct-ring { fill: none; stroke: var(--accent); stroke-width: 1.6; opacity: 0; transition: opacity 400ms var(--ease); }
+.ct-chip.ringed .ct-ring { opacity: 1; }
+.ct-chip .ct-sel { fill: none; stroke: var(--ink); stroke-width: 1.4; opacity: 0; }
+.ct-chip.sel .ct-sel, .ct-chip:focus-visible .ct-sel { opacity: 1; }
+.ct-chip text { font-family: var(--font-ui); font-size: 11.5px; fill: var(--muted); transition: opacity 300ms var(--ease); paint-order: stroke; stroke: var(--bg); stroke-width: 3.5px; stroke-linejoin: round; }
+.ct-chip text .ct-nm { fill: var(--accent-ink); font-weight: 700; font-size: 13px; }
+.ct-chip text .ct-ot { fill: var(--ink-2); font-weight: 400; font-size: 11.5px; }
+.ct-chip text .ct-sep { fill: var(--muted); font-weight: 400; }
+.ct-chip text.hide { opacity: 0; }
+.ct-chip:hover text, .ct-chip.sel text { opacity: 1; }
+
+/* the chosen chip, beside the figure (or under it) */
+.ul-side { padding-top: 4px; border-top: 1px solid var(--ink); }
+.ul-side .k { margin: 12px 0 8px; font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); line-height: 16px; color: var(--muted); }
+.ul-side h3 { margin: 0 0 10px; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: var(--t-lead); line-height: 1.25; color: var(--ink); }
+.ul-side dl { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 6px 16px; margin: 0 0 12px; font-family: var(--font-ui); font-size: 14px; line-height: 20px; }
+.ul-side dt { color: var(--muted); }
+.ul-side dd { margin: 0; color: var(--ink); font-variant-numeric: tabular-nums; }
+.ul-side p { margin: 0 0 10px; font-family: var(--font-body); font-size: var(--t-small); line-height: 1.5; color: var(--ink); }
+.ul-side a { font-family: var(--font-ui); font-size: 13.5px; color: var(--ink-2); text-underline-offset: 3px; }
+.ul-key { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 16px 0 0; padding: 12px 0 0; border-top: 1px solid var(--line); font-family: var(--font-ui); font-size: 12.5px; line-height: 18px; color: var(--ink-2); }
+.ul-key span { display: inline-flex; align-items: center; gap: 7px; }
+.ul-key i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; }
+.ul-key i.m { background: var(--ink-2); }
+.ul-key i.o { border: 1.4px solid var(--ink-2); }
+.ul-key i.n { background: var(--accent); }
+.ul-key i.c { border-radius: 0; width: 14px; background: var(--ctx); opacity: 0.7; }
+@media (max-width: 1099px) { .ul-side { margin-top: 28px; max-width: 666px; } }
+@media (prefers-reduced-motion: reduce) { .ct-reg, .ct-line, .ct-fade, .ct-chip, .ct-chip .ct-rng, .ct-chip .ct-ring, .ct-chip text { transition: none; } }
+
+/* on paper: the chart as it stands, with its date line and the rule's sentence; no buttons, ruler or actions */
+@media print {
+  .ul-grid { display: block; }
+  .ul .figure { break-inside: avoid; }
+  .ul .ul-steps, .ul .ul-scrub, .ul .fs-acts, .ul .ch-cite-box, .ul-key { display: none !important; }
+  .ul .figure { margin: 0 !important; border: 0; border-top: 0.6pt solid var(--ink); max-width: 666px; }
+  .ul .fig-head, .ul .fig-body { padding-left: 0; padding-right: 0; }
+  .ul .fig-strip { margin: 0; }
+  .ul-cap { min-height: 0; }
+  .ul-side { margin-top: 4mm; }
+  .ct-reg, .ct-line, .ct-fade, .ct-chip, .ct-chip text { transition: none !important; }
+}

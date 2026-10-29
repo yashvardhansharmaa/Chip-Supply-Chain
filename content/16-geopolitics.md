@@ -102,6 +102,29 @@
       }
     },
     {
+      "id": "ascend-memory",
+      "type": "bars",
+      "title": "Huawei's Ascend AI chip packages, shipped in 2025 and possible from China's memory, as SemiAnalysis estimated in September 2025",
+      "finding": "China's own memory could fill only 250,000 to 300,000 more Ascend packages in 2026",
+      "unit": "Ascend packages",
+      "mark": "From CXMT's memory made in 2026, about 2 million stacks",
+      "data": [
+        ["Huawei's expected shipments, 2025", 805000],
+        ["From the 13 million memory stacks China procured", 1600000],
+        ["From CXMT's memory made in 2026, about 2 million stacks", 250000, 300000]
+      ],
+      "shown": {"From the 13 million memory stacks China procured": "1.6 million"},
+      "steps": [
+        {"k": "Shipped in 2025", "row": "Huawei's expected shipments, 2025", "cap": "SemiAnalysis expected Huawei to ship about 805,000 Ascend AI chips in 2025, with dies made by both TSMC and SMIC."},
+        {"k": "Memory in stock", "row": "From the 13 million memory stacks China procured", "cap": "By its count, China had procured roughly 13 million memory stacks, enough for about 1.6 million Ascend 910C packages."},
+        {"k": "CXMT in 2026", "row": "From CXMT's memory made in 2026, about 2 million stacks", "cap": "SemiAnalysis expected CXMT, China's own memory maker, to make only about 2 million stacks in 2026, enough for 250,000 to 300,000 more packages."}
+      ],
+      "source": {
+        "label": "Huawei Ascend Production Ramp: Die Banks, TSMC Continued Production, HBM is The Bottleneck",
+        "url": "https://newsletter.semianalysis.com/p/huawei-ascend-production-ramp"
+      }
+    },
+    {
       "id": "chips-awards",
       "type": "bars",
       "title": "CHIPS Act direct funding awarded, by firm, as of July 2025",
@@ -296,6 +319,8 @@ Chinese chipmakers remain behind at the leading edge, where TSMC makes 2 nm chip
 In September 2025 the research firm SemiAnalysis conservatively put SMIC's capacity at 7 nm and below at 45,000 wafers a month by the end of 2025 ([source](https://newsletter.semianalysis.com/p/huawei-ascend-production-ramp)). It expected 60,000 in 2026 and 80,000 in 2027 ([source](https://newsletter.semianalysis.com/p/huawei-ascend-production-ramp)). Those figures count wafers, and how many working chips they give depends on yield, the share of chips on a wafer that work.
 
 SemiAnalysis judged that memory would limit China's output of AI chips before logic wafers did ([source](https://newsletter.semianalysis.com/p/huawei-ascend-production-ramp)). It expected Huawei to ship about 805,000 of its Ascend AI chips in 2025, with dies made by both TSMC and SMIC ([source](https://newsletter.semianalysis.com/p/huawei-ascend-production-ramp)). SemiAnalysis says Huawei got Ascend dies made at TSMC, in violation of export controls, while SMIC ramped up its own production ([source](https://newsletter.semianalysis.com/p/huawei-ascend-production-ramp)). By its count, China had procured roughly 13 million memory stacks, enough for about 1.6 million Ascend 910C packages ([source](https://newsletter.semianalysis.com/p/huawei-ascend-production-ramp)). It expected CXMT, China's own memory maker, to make only about 2 million stacks in 2026, enough for 250,000 to 300,000 more packages ([source](https://newsletter.semianalysis.com/p/huawei-ascend-production-ramp)).
+
+{{figure:ascend-memory}}
 
 Huawei said in September 2025 that its Ascend 950 chips, due in 2026, would carry high-bandwidth memory of its own design ([source](https://www.huawei.com/en/news/2025/9/hc-xu-keynote-speech)). It gave no figure for how much of that memory it would make ([source](https://www.huawei.com/en/news/2025/9/hc-xu-keynote-speech)).
 

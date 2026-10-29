@@ -46,22 +46,25 @@
   "figures": [
     {"id": "racks-wired", "type": "animation", "src": "racks", "title": "How AI chips are wired together", "note": "Simplified. The trays follow the layout of an Nvidia NVL72 rack. Racks and fibers are not drawn to scale."},
     {
-      "id": "nvlink-bandwidth",
-      "type": "columns",
-      "title": "NVLink bandwidth per GPU by generation",
-      "finding": "NVLink per GPU rose from 900 to 3,600 GB/s, Hopper to Rubin",
-      "unit": "GB/s",
-      "data": [["NVLink 4 (Hopper)", 900], ["NVLink 5 (Blackwell)", 1800], ["NVLink 6 (Rubin)", 3600]],
-      "source": {"label": "Nvidia NVLink product page for NVLink 4 and 5, and Nvidia's Rubin launch release of January 2026 for NVLink 6", "url": "https://nvidianews.nvidia.com/news/rubin-platform-ai-supercomputer"}
-    },
-    {
-      "id": "switch-bandwidth",
-      "type": "columns",
-      "title": "Broadcom Tomahawk switching capacity on one chip",
-      "finding": "Tomahawk switch chip capacity rose from 25.6 Tbps to 102.4 Tbps",
-      "unit": "Tbps",
-      "data": [["Tomahawk 4", 25.6], ["Tomahawk 5", 51.2], ["Tomahawk 6", 102.4]],
-      "source": {"label": "Broadcom product releases for Tomahawk 4, 5 and 6", "url": "https://investors.broadcom.com/news-releases/news-release-details/broadcom-ships-tomahawk-6-worlds-first-1024-tbps-switch"}
+      "id": "scale-up-out",
+      "type": "bars",
+      "title": "One GPU's links in an Nvidia GB300 NVL72 rack, scale-up inside the rack against scale-out between racks, drawn to scale",
+      "finding": "Each GPU has nine times as much bandwidth inside its rack as between racks",
+      "unit": "Gb/s",
+      "data": [["Scale-up, inside the rack (900 GB/s each way)", 7200], ["Scale-out, between racks", 800]],
+      "draw": "scale-up-out",
+      "steps": [
+        {"k": "One rack", "cap": "One AI chip is not enough to train a model, so 72 of them are wired together in a rack and run as one computer. An Nvidia GB300 NVL72 holds 18 compute trays plus nine switch trays, 72 GPUs in all."},
+        {"k": "Scale-up", "row": "Scale-up, inside the rack (900 GB/s each way)", "cap": "Scale-up connects the GPUs closely enough that they can read each other's memory. Each GPU in a GB300 NVL72 can send 900 gigabytes per second each way over it, or 7,200 gigabits per second."},
+        {"k": "Scale-out", "row": "Scale-out, between racks", "cap": "Scale-out joins the racks to one another. Over it each GPU can send 800 gigabits per second, so each GPU has nine times as much bandwidth for scale-up as for scale-out, SemiAnalysis calculated in January 2026."},
+        {"k": "Splitting a model", "cap": "A model too big for one accelerator is split across many. The parts that exchange data constantly stay inside the scale-up group, and whole blocks of layers can sit on different groups across the slower scale-out network."}
+      ],
+      "source": {"label": "Co-Packaged Optics (CPO) Book – Scaling with Light for the Next Wave of Interconnect", "url": "https://newsletter.semianalysis.com/p/co-packaged-optics-cpo-book-scaling"},
+      "sources": [
+        {"label": "Nvidia NVL72 system hardware and components", "url": "https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html"},
+        {"label": "Nvidia NeMo parallelisms guide", "url": "https://docs.nvidia.com/nemo-framework/user-guide/latest/nemotoolkit/features/parallelisms.html"}
+      ],
+      "note": "Simplified. One GPU's two links are drawn to scale, and the racks are not."
     }
   ]
 }
@@ -86,6 +89,8 @@ The accelerators in an AI cluster exchange data over two networks that are not i
 
 Scale-up bandwidth limits how efficiently a large model trains. A model too big for one accelerator is split across many. The parts that exchange data constantly stay inside the scale-up group, because they need its high bandwidth ([source](https://docs.nvidia.com/nemo-framework/user-guide/latest/nemotoolkit/features/parallelisms.html)). Whole blocks of layers, the stages a model's calculation passes through in turn, can sit on different groups across the slower scale-out network ([source](https://docs.nvidia.com/nemo-framework/user-guide/latest/nemotoolkit/features/parallelisms.html)).
 
+{{figure:scale-up-out}}
+
 ## Variants and trade-offs
 
 ### Scale-up: NVLink, UALink and Google's torus
@@ -96,13 +101,9 @@ The designs differ in how many accelerators can share one pool of memory.
 - **UALink.** The open specification, from the UALink Consortium, runs 200 Gb/s per lane, and four lanes, which it calls a station, carry 800 Gb/s ([source](https://ualinkconsortium.org/blog/ualink-200g-1-0-specification-overview-802/)). It can address up to 1,024 endpoints, such as accelerators, in one group ([source](https://ualinkconsortium.org/blog/ualink-200g-1-0-specification-overview-802/)). AMD's Helios rack, launched in July 2026, joins 72 GPUs and runs UALink over Ethernet for its scale-up network ([source](https://newsroom.amd.com/news/aai-2026-helios-update/)).
 - **Google's 3D torus.** Google wires 64 of its Ironwood TPU accelerators into each rack, called a cube ([source](https://cloud.google.com/blog/products/compute/inside-the-ironwood-tpu-codesigned-ai-stack)). Inside the cube each chip links directly to six others, in a three-dimensional grid that Google calls a 3D torus ([source](https://cloud.google.com/blog/products/compute/inside-the-ironwood-tpu-codesigned-ai-stack)). Optical circuit switches, which steer light from one fiber to another, join cubes into superpods of 9,216 chips and can route around a failed cube or link ([source](https://cloud.google.com/blog/products/compute/inside-the-ironwood-tpu-codesigned-ai-stack)).
 
-{{figure:nvlink-bandwidth}}
-
 ### Scale-out: InfiniBand versus Ethernet
 
 Scale-out networks typically use InfiniBand or Ethernet, SemiAnalysis wrote in January 2026 ([source](https://newsletter.semianalysis.com/p/co-packaged-optics-cpo-book-scaling)). InfiniBand is a specialized network long used in supercomputers. But Ethernet switch capacity has grown quickly. Broadcom's Tomahawk 4 switched 25.6 Tbps on one chip in December 2019 ([source](https://investors.broadcom.com/news-releases/news-release-details/broadcom-ships-tomahawk-4-industrys-highest-bandwidth-ethernet)). Tomahawk 5 reached 51.2 Tbps in August 2022, and Broadcom said it had doubled the bandwidth about every two years since 2014 ([source](https://investors.broadcom.com/news-releases/news-release-details/broadcom-ships-tomahawk-5-industrys-highest-bandwidth-switch)). Tomahawk 6 doubled it again to 102.4 Tbps in June 2025 ([source](https://investors.broadcom.com/news-releases/news-release-details/broadcom-ships-tomahawk-6-worlds-first-1024-tbps-switch)). In June 2025 the Ultra Ethernet Consortium published its 1.0 specification, a set of Ethernet-based rules for communication in AI and supercomputing ([source](https://ultraethernet.org/ultra-ethernet-consortium-uec-launches-specification-1-0-transforming-ethernet-for-ai-and-hpc-at-scale/)). It covers how data is carried, how traffic jams are avoided and how one machine reads or writes another's memory directly ([source](https://ultraethernet.org/ultra-ethernet-consortium-uec-launches-specification-1-0-transforming-ethernet-for-ai-and-hpc-at-scale/)).
-
-{{figure:switch-bandwidth}}
 
 Nvidia sells switches and network cards for both InfiniBand and Ethernet. Its data center revenue, which counts its GPUs as well as its networking gear, reached $89.0 billion in the quarter to July 2026, up 117 percent from a year earlier ([source](https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm)). In the quarter before, it credited its data center growth to Blackwell 300 products and to demand for its "InfiniBand, Spectrum-X Ethernet, and NVLink" solutions ([source](https://www.sec.gov/Archives/edgar/data/1045810/000104581026000052/nvda-20260426.htm)).
 
