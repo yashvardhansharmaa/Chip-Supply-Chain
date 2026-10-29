@@ -74,6 +74,8 @@ const WINE = 'rgb(122, 31, 43)', GRAY = 'rgb(210, 209, 204)', INK = 'rgb(23, 23,
       else {
         await t.ev("(document.querySelector('.ss-hit[data-i=\"5\"]').dispatchEvent(new MouseEvent('click', { bubbles: true })), 1)"); await sleep(500);
         check(`${width}: a segment on the ribbons opens its tip, with its year and source`, await t.ev("!document.getElementById('sup-tip').hidden && /EUV lithography tools/.test(document.getElementById('sup-tip').textContent) && /Source:/.test(document.getElementById('sup-tip').textContent)"), await t.ev("document.getElementById('sup-tip').textContent"));
+        // the firms are in the tip, not beside the segment (owner, 29 Oct 2026)
+        check(`${width}: ...naming its firms, which are not drawn beside the segments`, await t.ev("/Firms on the list/.test(document.getElementById('sup-tip').textContent) && /ASML/.test(document.getElementById('sup-tip').textContent) && !document.querySelector('#sup-pipe .ss-names, #sup-pipe .ss-fn')"));
         await t.ev("(document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true })), 1)"); await sleep(200);
         check(`${width}: ...and Escape closes it`, await t.ev("document.getElementById('sup-tip').hidden"));
       }

@@ -6202,12 +6202,13 @@ try {
    whole, drawn at one height, and where a ribbon meets a segment its width is that country's share. At the country end every
    ribbon narrows to a point, so no country is drawn with a size and no sum of shares is ever drawn. The countries are evenly
    spaced and ordered to cross as little as possible (ORDER). Each segment's slices are stacked largest first, with the two
-   catch-all columns last (row.order), and the firms under its name follow the same order, so names and slices match.
-   Narrower than 600 px: one row per segment, the name, a full-width strip of its shares and its firms.
+   catch-all columns last (row.order). The firms show in the box that hovering or focusing a segment opens, so the column
+   of names stays clean (owner, 29 Oct 2026). Narrower than 600 px, where nothing hovers: one row per segment, the name, a
+   full-width strip of its shares and its firms.
 
    Gray throughout until the reader follows a country: its ribbons or slices turn wine, its share is printed at every segment
-   it reaches, its firms go to ink and the Table sets its shares in bold. Hovering or focusing a segment prints each
-   country's share at the left. Segments with no country split show only their name and firms. Every share is printed as the
+   it reaches, its firms (on a phone) go to ink and the Table sets its shares in bold. Hovering or focusing a segment prints
+   each country's share at the left. Segments with no country split show only their name (and, on a phone, their firms). Every share is printed as the
    matrix writes it (row.sharesT). Year and measure appear only where a row is not 2025 revenue. The route's chosen country
    (src/modules/summary-a.js, through Suppliers.light) follows its column, where it has one. */
 (function () {
@@ -6263,8 +6264,7 @@ try {
     return out;
   })();
 
-  /* ---- the firms under a segment: the followed country's first, then the segment's own order, at most three, and on a
-     wide screen only as many as fit the label column */
+  /* ---- the firms under a segment on a phone: the followed country's first, then the segment's own order, at most three */
   function width(s, font) { if (!ctx) ctx = D.createElement('canvas').getContext('2d'); ctx.font = font || state.font; return ctx.measureText(s).width; }
   function lineFirms(r) {
     var lit = state.lit, list = r.firms;
@@ -6333,9 +6333,8 @@ try {
     ROWS.forEach(function (r, i) {
       var y = padT + i * (segH + gR), m = mark(r);
       if (r.shares) nodesR += '<rect class="sup-snode" x="' + x1 + '" y="' + y.toFixed(1) + '" width="' + wR + '" height="' + segH + '"></rect>';
-      labR += '<g class="sup-lab" data-i="' + i + '"><text class="sup-lab-t" x="' + xl + '" y="' + (y + 12).toFixed(1) + '" font-size="' + fsR + '">' + esc(r.name) +
-        (m ? '<tspan class="ss-mk"> · ' + esc(m) + '</tspan>' : '') + '</text>' +
-        '<text class="ss-names" data-i="' + i + '" x="' + xl + '" y="' + (y + 26).toFixed(1) + '" font-size="12"></text></g>';
+      labR += '<g class="sup-lab" data-i="' + i + '"><text class="sup-lab-t" x="' + xl + '" y="' + (y + segH / 2 + 4.5).toFixed(1) + '" font-size="' + fsR + '">' + esc(r.name) +
+        (m ? '<tspan class="ss-mk"> · ' + esc(m) + '</tspan>' : '') + '</text></g>';
       hits += '<rect class="sup-hit ss-hit" data-i="' + i + '" x="' + (x1 - 4) + '" y="' + y.toFixed(1) + '" width="' + (W - x1 + 4) + '" height="' + segH + '" tabindex="0" role="button" aria-describedby="sup-ss-hint" aria-label="' + esc(aria(r)) + '"></rect>';
     });
     state.geo = { left: left, ends: ends, x1: x1 };
@@ -6392,9 +6391,11 @@ try {
   function showSeg(i, anchor) {
     var r = ROWS[i]; state.hotSeg = i; state.rib = null;
     hot(function (p) { return +p.getAttribute('data-i') === i; }); paintHot();
-    var f = r.firms.map(function (x) { return esc(x.s); });
-    tip.innerHTML = '<b>' + esc(r.name) + '</b>' + (r.shares ? '<span class="sup-tip-n">' + esc(whenT(r)) + '</span>' + srcHTML(r)
-      : '<span class="ss-tip-firms"><span class="k">Firms on the list</span>' + f.join(', ') + '</span>');
+    // the segment's firms, now only here on a wide screen (owner, 29 Oct 2026): the followed country's first, at most five
+    var lit = state.lit, list = lit ? r.firms.filter(function (x) { return x.col === lit; }).concat(r.firms.filter(function (x) { return x.col !== lit; })) : r.firms;
+    var f = list.slice(0, 5).map(function (x) { return esc(x.s); }).join(', ') + (list.length > 5 ? ', and ' + (list.length - 5) + ' more' : '');
+    var fl = f ? '<span class="ss-tip-firms"><span class="k">Firms on the list</span>' + f + '</span>' : '';
+    tip.innerHTML = '<b>' + esc(r.name) + '</b>' + (r.shares ? '<span class="sup-tip-n">' + esc(whenT(r)) + '</span>' + fl + srcHTML(r) : fl);
     // in the label column, under the segment (over it near the foot), so it hides neither the segment's ribbons nor the
     // shares printed at the left
     var m = plot.getBoundingClientRect(), b = anchor.getBoundingClientRect();
@@ -6458,7 +6459,6 @@ try {
     sec.setAttribute('data-lit', c ? '1' : '0');
     [].forEach.call(sec.querySelectorAll('.sup-rib, .ss-sl, .ss-rest span, .ss-tc'), function (p) { if (c && p.getAttribute('data-c') === c) p.setAttribute('data-lit', '1'); else p.removeAttribute('data-lit'); });
     [].forEach.call(sec.querySelectorAll('.ss-clab'), function (t) { t.classList.toggle('on', t.getAttribute('data-c') === c); });
-    [].forEach.call(sec.querySelectorAll('.ss-names'), function (t) { t.innerHTML = namesHTML(ROWS[+t.getAttribute('data-i')], 'tspan'); });
     [].forEach.call(sec.querySelectorAll('.ss-row-f'), function (t) { t.innerHTML = namesHTML(ROWS[+t.getAttribute('data-i')], 'span'); });
     [].forEach.call(chipsEl.querySelectorAll('.sup-chip'), function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-c') === c ? 'true' : 'false'); });
     if (state.geo) paintEnds();

@@ -46,7 +46,6 @@
 /* the segment labels: a muted mark where the row is not 2025 revenue, and the firms under the name. A followed country's
    firms go to ink and the rest to the label gray (5.3:1 light, 5.7:1 dark). */
 .ss-mk { fill: var(--muted); color: var(--muted); font-size: 11.5px; }
-.ss-names { font-family: var(--font-ui); fill: var(--ink-2); }
 .ss-fn, .ss-fsep { transition: fill 160ms linear, color 160ms linear; }
 .ss-fsep { fill: var(--muted); color: var(--muted); }
 .ss-fn.on { fill: var(--ink); color: var(--ink); font-weight: 600; }

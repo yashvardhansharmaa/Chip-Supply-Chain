@@ -802,7 +802,9 @@ function reviewHTML(ch) {
   if (!fc || !Array.isArray(fc.cards) || !fc.cards.length) return '';
   // each card's reason ends with a link back to the section of the chapter that covers it
   // the deck's title is one of the chapter's sections, h2 (29 Oct 2026)
+  // a card whose idea is stated only on the chokepoint card names "Chokepoint card", which links to the card (29 Oct 2026)
   return deckHTML(fc, { id: ch.id, title: ch.title, level: 2, more: (c, i) => {
+    if (c.section === 'Chokepoint card') return { href: `#${ch.id}--card`, text: 'Reread: Chokepoint card' };
     const anchor = c.section ? `${ch.id}--${slug(c.section)}` : '';
     if (anchor && !ch.html.includes(`id="${anchor}"`)) warn(`flashcards ${ch.id} #${i + 1}: no section "${c.section}"`);
     return anchor ? { href: '#' + anchor, text: 'Reread: ' + c.section } : null;

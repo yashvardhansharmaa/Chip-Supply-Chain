@@ -90,7 +90,10 @@ module.exports = function (ctx) {
   const glanceRow = (s, i) => {
     const b = (card[s.id] || {}).band || '', sp = specOf(s), on = i === SHOW_FIRST;
     const pick = b ? `<button type="button" class="wk-gl-c" aria-pressed="${on}" tabindex="${on ? 0 : -1}" data-spec="${esc(sp.spec)}" data-n="${pad(i + 1)}" data-t="${esc(s.title)}" data-cap="${esc(sp.cap)}">${meter(b)}<span class="wk-gl-w">${esc(b)}<span class="sr-only"> concentration. Show its specimen</span></span></button>` : '';
-    return `<li data-level="${LEVEL[b] || 0}"${on ? ' class="is-shown"' : ''}><a class="wk-gl-a" ${pageLink(s.id)}><span class="wk-gl-n">${pad(i + 1)}</span><span class="wk-gl-t">${esc(s.title)}</span></a>${pick}</li>`;
+    // the first three firms on the stage's card, on a quiet line under its name (owner, 29 Oct 2026)
+    const ls = ((card[s.id] || {}).leaders || []).slice(0, 3);
+    const lead = ls.length ? `<span class="wk-gl-lead">${ls.map((l) => `<span class="f">${esc(l.name)}</span>`).join(', ')}</span>` : '';
+    return `<li data-level="${LEVEL[b] || 0}"${on ? ' class="is-shown"' : ''}><a class="wk-gl-a" ${pageLink(s.id)}><span class="wk-gl-n">${pad(i + 1)}</span><span class="wk-gl-t">${esc(s.title)}${lead}</span></a>${pick}</li>`;
   };
   const GLANCE = stages.length ? `<section class="wk-gl" aria-labelledby="wk-gl-h">
 <h2 class="label wk-gl-h" id="wk-gl-h">The chain at a glance</h2>
