@@ -315,6 +315,20 @@
   .chapter .cg-v { font-family: var(--font-code); font-size: 7pt; }
   .chapter .cg-row.top .cg-v { font-family: var(--font-ui); font-size: 7.8pt; font-weight: 700; color: var(--accent-ink); }
   .chapter .figure .cols, .chapter .figure .cg { break-inside: avoid; }
+  /* parts inside a whole (15.3): the screen's drawing in the figures' small type, hairlines and the wine of paper */
+  .chapter .pw { --rh: 4.4mm; --g: 2mm; --lx: 3.2mm; --bh: 6mm; font-size: 7.6pt; line-height: 1.3; break-inside: avoid; }
+  .chapter .pw-total { margin-top: 1mm; }
+  .chapter .pw-brk { height: 1mm; margin-top: 0.8mm; border-width: 0.5pt; border-color: var(--ink-2); }
+  .chapter .pw-bar { margin-top: 1mm; }
+  .chapter .pw-bar::after { box-shadow: inset 0 0 0 0.8pt var(--rule-ink); }
+  .chapter .pw-range { border-left-width: 0.8pt; background: repeating-linear-gradient(135deg, var(--rule-ink) 0 0.6pt, transparent 0.6pt 1.5mm); }
+  .chapter .pw-part { top: 0.8pt; bottom: 0.8pt; }
+  .chapter .pw-part[data-k="0"] { left: 0.8pt; width: calc(var(--w) - 1.4pt); }
+  .chapter .pw-part.top { background: var(--accent-fill); }
+  .chapter .pw-lead { top: calc(0.6mm - var(--g) - var(--i) * var(--rh)); height: calc(var(--g) - 0.6mm + var(--i) * var(--rh) + var(--rh) / 2); border-width: 0 0 0.5pt 0.5pt; }
+  .chapter .pw-row.top .pw-lead { border-color: var(--accent-fill); }
+  .chapter .pw-v { font-family: var(--font-code); font-size: 7pt; }
+  .chapter .pw-row.top .pw-v { font-family: var(--font-ui); font-size: 7.8pt; }
   .chapter .figure .tl li { font-family: var(--font-body); font-size: calc(8.4pt * var(--text-scale)); line-height: 1.36; }
   .chapter .figure .tl li .d { font-family: var(--font-code); font-size: 6.8pt; }
   /* an animation on paper: its last frame, then its steps in the figures' small type (styles.css prints the list) */

@@ -5898,8 +5898,55 @@ y+=20;g.fillStyle='#45443f';g.font='400 12.5px '+FU;var sl=wrap(g,(srcT?'Source:
 g.fillStyle='#56554f';g.font='400 12px '+FM;g.fillText(addr,P,y+20);
 save(cv,fig,k);
 }
+/* parts inside a whole (15.3, 29 Oct 2026): the whole's bracket and words, the total's, the bar (an outline to the whole's low
+   end, hatched to its high end) with the parts carved inside it, and each part named under it on a leader, as the page draws them */
+function pngWithin(fig){
+var pw=fig.querySelector('.fig-body .pw');if(!pw)return;
+var k=txt(fig.querySelector('.fig-k')),t1=txt(fig.querySelector('.fig-title')),t2=txt(fig.querySelector('.fig-sub'));
+var dl=(/Data: (.+)\.$/.exec(txt(fig.querySelector('.fig-cite-box .ch-cite-text')))||[])[1],src=fig.querySelector('.fs-src'),sc=src?src.cloneNode(true):null;if(sc)[].forEach.call(sc.querySelectorAll('.fs-k'),function(x){x.remove();});
+var srcT=dl||(sc?txt(sc).replace(/\s*\d+$/,''):''),addr=txt(fig.querySelector('.fig-cite-box a')).replace(/^https?:\/\//,'');
+var wh=pw.querySelector('.pw-whole'),to=pw.querySelector('.pw-total');if(!wh||!to)return;
+var hi=+wh.getAttribute('data-hi'),lo=+wh.getAttribute('data-v'),tv=+to.getAttribute('data-v');
+var words=function(e){var c=e.querySelector('.pw-lab').cloneNode(true),b=c.querySelector('b'),bt=txt(b);if(b)b.remove();return{b:bt,r:txt(c)};},LW=words(wh),LT=words(to);
+var parts=[].map.call(pw.querySelectorAll('.pw-part'),function(p){var r=pw.querySelector('.pw-row[data-k="'+p.getAttribute('data-k')+'"]');return{v:+p.getAttribute('data-v'),top:p.classList.contains('top'),nm:txt(r&&r.querySelector('.pw-nm')),vt:txt(r&&r.querySelector('.pw-v'))};});
+var W=800,P=40,S=2,cv=el('canvas'),g=cv.getContext('2d');
+var FD='"Fraunces",Georgia,serif',FB='"Source Serif 4",Georgia,serif',FU='"Hanken Grotesk","Helvetica Neue",Arial,sans-serif',FM='"Fragment Mono",Menlo,monospace';
+var WINE='#7a1f2b',TINT='#d2d1cc',INK='#171716',INK2='#45443f',RULE='#8c8a84',LINE='#e1e0db';
+var CW=W-2*P,X=function(v){return P+v/hi*CW;},BH=36,RH=26,G=14;
+g.font='500 24px '+FD;var L1=wrap(g,t1,W-2*P);g.font='400 16px '+FB;var L2=t2?wrap(g,t2,W-2*P):[];
+var chartH=22+10+22+10+BH+G+parts.length*RH;
+var H=P+18+L1.length*31+(L2.length?6+L2.length*21:0)+24+chartH+20+56;
+cv.width=W*S;cv.height=H*S;g.scale(S,S);g.fillStyle='#ffffff';g.fillRect(0,0,W,H);
+var y=P;g.textBaseline='alphabetic';g.fillStyle='#56554f';g.font='400 13px '+FM;g.fillText(k,P,y+12);y+=22;
+g.fillStyle=INK;g.font='500 24px '+FD;L1.forEach(function(s){y+=28;g.fillText(s,P,y);y+=3;});
+if(L2.length){y+=6;g.fillStyle=INK2;g.font='400 16px '+FB;L2.forEach(function(s){y+=19;g.fillText(s,P,y);y+=2;});}
+y+=24;
+var brk=function(x0,x1,yy){g.strokeStyle=INK2;g.lineWidth=1;g.beginPath();g.moveTo(x0+0.5,yy+5);g.lineTo(x0+0.5,yy+0.5);g.lineTo(x1-0.5,yy+0.5);g.lineTo(x1-0.5,yy+5);g.stroke();};
+var say=function(L,x,yy,right){g.font='600 14px '+FU;var bw=g.measureText(L.b+' ').width;g.font='400 14px '+FU;var rw=g.measureText(L.r).width,x0=right?x-bw-rw:x;g.fillStyle=INK;g.font='600 14px '+FU;g.fillText(L.b,x0,yy);g.fillStyle=INK2;g.font='400 14px '+FU;g.fillText(L.r,x0+bw,yy);};
+say(LW,P+CW,y+15,true);y+=22;brk(P,P+CW,y);y+=10;
+say(LT,P,y+15,false);y+=22;brk(P,X(tv),y);y+=10;
+var yb=y;
+g.save();g.beginPath();g.rect(X(lo),yb,X(hi)-X(lo),BH);g.clip();g.strokeStyle=RULE;g.lineWidth=1.5;for(var i=-BH;i<X(hi)-X(lo)+BH;i+=6){g.beginPath();g.moveTo(X(lo)+i,yb+BH);g.lineTo(X(lo)+i+BH,yb);g.stroke();}g.restore();
+var at=0;parts.forEach(function(p,i){p.x0=X(at);at+=p.v;p.x1=X(at);g.fillStyle=p.top?WINE:TINT;g.fillRect(p.x0+(i?0.6:1.5),yb+1.5,Math.max(1,p.x1-p.x0-(i?1.2:2.1)),BH-3);});
+g.strokeStyle=RULE;g.lineWidth=1.5;g.strokeRect(P+0.75,yb+0.75,CW-1.5,BH-1.5);g.beginPath();g.moveTo(X(lo),yb);g.lineTo(X(lo),yb+BH);g.stroke();
+var lx=X(at)+18;
+parts.slice().reverse().forEach(function(p,i){var ry=yb+BH+G+i*RH+RH/2,cx=(p.x0+p.x1)/2;
+g.strokeStyle=p.top?WINE:RULE;g.lineWidth=1;g.beginPath();g.moveTo(cx,yb+BH+2);g.lineTo(cx,ry);g.lineTo(lx-6,ry);g.stroke();
+g.font=(p.top?'600':'400')+' 14px '+FU;g.fillStyle=p.top?INK:INK2;g.fillText(p.nm,lx,ry+5);var nw=g.measureText(p.nm).width;
+g.font=(p.top?'700 15px ':'400 14px ')+FU;g.fillStyle=p.top?WINE:INK;g.fillText(p.vt,lx+nw+10,ry+5);});
+y=yb+BH+G+parts.length*RH;
+y+=14;g.fillStyle=LINE;g.fillRect(P,y,W-2*P,1);y+=22;
+g.fillStyle='#45443f';g.font='400 12.5px '+FU;var sl=wrap(g,(srcT?'Source: '+srcT:''),W-2*P);sl.slice(0,1).forEach(function(s){g.fillText(s,P,y);});
+g.fillStyle='#56554f';g.font='400 12px '+FM;g.fillText(addr,P,y+20);
+save(cv,fig,k);
+}
+/* hovering a part, or its name, lights both and dims the rest (15.3) */
+function pwLit(pw,key){[].forEach.call(pw.querySelectorAll('[data-k]'),function(x){x.classList.toggle('lit',x.getAttribute('data-k')===key);});pw.classList.toggle('has-lit',key!=null);}
+D.addEventListener('pointerover',function(e){var pw=e.target.closest?e.target.closest('.figure .pw'):null;if(!pw)return;var t=e.target.closest('[data-k]');pwLit(pw,t&&pw.contains(t)?t.getAttribute('data-k'):null);});
+D.addEventListener('pointerout',function(e){var pw=e.target.closest?e.target.closest('.figure .pw'):null;if(pw&&!(e.relatedTarget&&pw.contains(e.relatedTarget)))pwLit(pw,null);});
 function png(fig){
 if(fig.querySelector('.fig-body .tl'))return pngTl(fig);
+if(fig.querySelector('.fig-body .pw'))return pngWithin(fig);
 var hb=[].slice.call(fig.querySelectorAll('.hbars .hb')),cl=[].slice.call(fig.querySelectorAll('.cols-plot .col')),cg=[].slice.call(fig.querySelectorAll('.cg-row:not(.cg-axis)'));
 var kind=hb.length?'hb':cl.length?'cols':'cg',labs=fig.querySelectorAll('.cols-lab span');
 var num=function(r,a){var v=r.getAttribute(a);return v==null||v===''?null:+v;};
@@ -5959,7 +6006,7 @@ save(cv,fig,k);
 }
 function add(acts){
 if(acts.getAttribute('data-ready'))return;acts.setAttribute('data-ready','1');
-var kind=acts.getAttribute('data-kind'),fig=acts.closest('.figure');if(!fig||['bars','stack','columns','change','timeline'].indexOf(kind)<0)return;
+var kind=acts.getAttribute('data-kind'),fig=acts.closest('.figure');if(!fig||['bars','stack','columns','change','timeline','within'].indexOf(kind)<0)return;
 var tl=kind==='timeline'; /* a timeline takes a PNG but no Table: it is already its rows, each date beside its event (28 Oct 2026) */
 var tb=tl?null:el('button','fs-tab','Table');if(tb){tb.type='button';tb.setAttribute('aria-pressed','false');
 tb.addEventListener('click',function(){var on=!fig.classList.contains('is-table'),t=fig.querySelector('table.fig-table');fig.classList.toggle('is-table',on);if(t)t.classList.toggle('sr-only',!on);tb.setAttribute('aria-pressed',on?'true':'false');});}

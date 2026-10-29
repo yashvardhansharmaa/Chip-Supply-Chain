@@ -1586,12 +1586,44 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
   .chapter .cg-row.has-ends .cg-t { min-height: 46px; }
   .chapter .cg-row.has-ends .cg-arrow, .chapter .cg-row.has-ends .cg-from { top: 62%; }
 }
+/* parts inside a whole, on one scale (15.3, quick win A of 29 Oct 2026; figure() in build/build.js): the whole's words over its
+   bracket, the total's words over its own, then the bar, an outline to the whole's low end (--lo) and hatched to its high end as
+   a range is, with the parts carved inside it on hairlines of ground; under it each part's name and value on a leader, the
+   rightmost first. --b is where the total ends. A row of names is --rh tall and the first sits --g under the bar, so each
+   leader (row --i) runs from the bar's foot to its row. Hovering a part or its name lights both (FIG_JS) */
+.chapter .pw { --rh: 24px; --g: 10px; --lx: 18px; --bh: 34px; margin: 0; font-family: var(--font-ui); font-size: 13.5px; line-height: 18px; font-variant-numeric: tabular-nums; color: var(--ink-2); }
+.chapter .pw-lab { display: block; white-space: nowrap; }
+.chapter .pw-lab b { font-weight: 600; color: var(--ink); }
+.chapter .pw-whole { text-align: right; }
+.chapter .pw-whole .pw-lab { white-space: normal; }
+.chapter .pw-total { width: var(--b); margin-top: 6px; }
+.chapter .pw-brk { display: block; box-sizing: border-box; height: 5px; margin-top: 4px; border: 1px solid var(--ink-2); border-bottom: 0; }
+.chapter .pw-bar { position: relative; height: var(--bh); margin-top: 5px; }
+.chapter .pw-bar::after { content: ""; position: absolute; inset: 0; box-shadow: inset 0 0 0 1.5px var(--rule-ink); pointer-events: none; }
+.chapter .pw-range { position: absolute; top: 0; bottom: 0; left: var(--lo); right: 0; border-left: 1.5px solid var(--rule-ink); background: repeating-linear-gradient(135deg, var(--rule-ink) 0 2px, transparent 2px 6px); }
+.chapter .pw-part { position: absolute; top: 1.5px; bottom: 1.5px; left: calc(var(--x0) + 0.6px); width: calc(var(--w) - 1.2px); background: var(--ctx); transition: opacity .15s; }
+.chapter .pw-part[data-k="0"] { left: 1.5px; width: calc(var(--w) - 2.1px); }
+.chapter .pw-part.top { background: var(--accent); }
+.chapter .pw-rows { margin-top: var(--g); }
+.chapter .pw-row { position: relative; height: var(--rh); padding-left: calc(var(--b) + var(--lx)); line-height: var(--rh); white-space: nowrap; transition: opacity .15s; }
+.chapter .pw-lead { position: absolute; box-sizing: border-box; left: var(--x); width: calc(var(--b) + var(--lx) - 6px - var(--x)); top: calc(2px - var(--g) - var(--i) * var(--rh)); height: calc(var(--g) - 2px + var(--i) * var(--rh) + var(--rh) / 2); margin-left: -0.5px; border: solid var(--rule-ink); border-width: 0 0 1px 1px; }
+.chapter .pw-v { margin-left: 6px; font-size: 14px; font-weight: 400; color: var(--ink); }
+.chapter .pw-row.top .pw-nm { font-weight: 600; color: var(--ink); }
+.chapter .pw-row.top .pw-v { font-weight: 700; color: var(--accent-ink); }
+.chapter .pw-row.top .pw-lead { border-color: var(--accent); }
+.chapter .pw.has-lit .pw-part:not(.lit), .chapter .pw.has-lit .pw-row:not(.lit) { opacity: .35; }
+.chapter .pw-row.lit .pw-lead { border-color: var(--ink); }
+.chapter .pw-row.top.lit .pw-lead { border-color: var(--accent); }
+@media screen and (max-width: 640px) {
+  .chapter .pw { --rh: 22px; --lx: 14px; --bh: 30px; font-size: 12.5px; }
+  .chapter .pw-v { font-size: 13px; }
+}
 /* the table a reader can switch to (Table, src/app.js Figs): the figure's own rows, ruled */
 .chapter .figure.is-table table.fig-table { position: static; width: 100%; height: auto; margin: 0; clip: auto; clip-path: none; overflow: visible; white-space: normal; border-collapse: collapse; font-family: var(--font-ui); font-size: 14px; line-height: 20px; }
 .chapter .figure.is-table table.fig-table caption { display: none; }
 .chapter .figure.is-table table.fig-table th, .chapter .figure.is-table table.fig-table td { padding: 7px 0; border-bottom: 1px solid var(--line); text-align: left; font-weight: 400; }
 .chapter .figure.is-table table.fig-table td { text-align: right; font-family: var(--font-ui); font-size: 14px; font-variant-numeric: tabular-nums; }
-.chapter .figure.is-table .hbars, .chapter .figure.is-table .cols, .chapter .figure.is-table .cg { display: none; }
+.chapter .figure.is-table .hbars, .chapter .figure.is-table .cols, .chapter .figure.is-table .cg, .chapter .figure.is-table .pw { display: none; }
 /* the source line, as the live site sets it (the visual pass of 27 Oct 2026): no box, one quiet line under the chart, "Source:",
    the linked title and its footnote number; at the line's end the actions as small text links, Cite · Table · CSV · PNG; a
    note is one more quiet line, and an opened citation runs the full width under them. The source never shrinks to make room:
@@ -3397,6 +3429,20 @@ html.kb:has(.view[data-view="glossary"]:not([hidden])) { scroll-padding-top: cal
   .chapter .cg-v { font-family: var(--font-code); font-size: 7pt; }
   .chapter .cg-row.top .cg-v { font-family: var(--font-ui); font-size: 7.8pt; font-weight: 700; color: var(--accent-ink); }
   .chapter .figure .cols, .chapter .figure .cg { break-inside: avoid; }
+  /* parts inside a whole (15.3): the screen's drawing in the figures' small type, hairlines and the wine of paper */
+  .chapter .pw { --rh: 4.4mm; --g: 2mm; --lx: 3.2mm; --bh: 6mm; font-size: 7.6pt; line-height: 1.3; break-inside: avoid; }
+  .chapter .pw-total { margin-top: 1mm; }
+  .chapter .pw-brk { height: 1mm; margin-top: 0.8mm; border-width: 0.5pt; border-color: var(--ink-2); }
+  .chapter .pw-bar { margin-top: 1mm; }
+  .chapter .pw-bar::after { box-shadow: inset 0 0 0 0.8pt var(--rule-ink); }
+  .chapter .pw-range { border-left-width: 0.8pt; background: repeating-linear-gradient(135deg, var(--rule-ink) 0 0.6pt, transparent 0.6pt 1.5mm); }
+  .chapter .pw-part { top: 0.8pt; bottom: 0.8pt; }
+  .chapter .pw-part[data-k="0"] { left: 0.8pt; width: calc(var(--w) - 1.4pt); }
+  .chapter .pw-part.top { background: var(--accent-fill); }
+  .chapter .pw-lead { top: calc(0.6mm - var(--g) - var(--i) * var(--rh)); height: calc(var(--g) - 0.6mm + var(--i) * var(--rh) + var(--rh) / 2); border-width: 0 0 0.5pt 0.5pt; }
+  .chapter .pw-row.top .pw-lead { border-color: var(--accent-fill); }
+  .chapter .pw-v { font-family: var(--font-code); font-size: 7pt; }
+  .chapter .pw-row.top .pw-v { font-family: var(--font-ui); font-size: 7.8pt; }
   .chapter .figure .tl li { font-family: var(--font-body); font-size: calc(8.4pt * var(--text-scale)); line-height: 1.36; }
   .chapter .figure .tl li .d { font-family: var(--font-code); font-size: 6.8pt; }
   /* an animation on paper: its last frame, then its steps in the figures' small type (styles.css prints the list) */

@@ -130,32 +130,29 @@
       }
     },
     {
-      "id": "market-2025",
-      "type": "bars",
-      "title": "Chip sales, capital spending at five tech firms, Nvidia data center revenue and equipment sales, 2025",
-      "finding": "World chip sales reached $791.7 billion in 2025, the largest total shown",
-      "unit": "$B",
+      "id": "b200-price",
+      "type": "within",
+      "short": "One B200, its build cost inside its price",
+      "title": "One B200, drawn to scale. Epoch AI's December 2025 estimate of what it cost to build, inside the selling price reported in March 2024",
+      "finding": "Memory, $2,900, is the largest cost of building a B200, which sells for $30,000 to $40,000",
+      "unit": "$",
+      "mark": "Memory, HBM3E 192 GB",
+      "parts": 5,
+      "total": "Build cost",
+      "whole": "Selling price per chip",
+      "about": ["Build cost"],
       "data": [
-        [
-          "Semiconductor sales",
-          791.7
-        ],
-        [
-          "Hyperscaler capex",
-          448.2
-        ],
-        [
-          "Nvidia data center revenue",
-          193.7
-        ],
-        [
-          "Semiconductor equipment",
-          135.1
-        ]
+        ["Memory, HBM3E 192 GB", 2900],
+        ["CoWoS-L packaging", 1100],
+        ["Packaging yield loss", 1000],
+        ["Logic dies, two on 4NP", 900],
+        ["Power delivery, board, test", 480],
+        ["Build cost", 6400],
+        ["Selling price per chip", 30000, 40000]
       ],
       "source": {
-        "label": "Semiconductor Industry Association for chip sales. Epoch AI's quarterly capital spending at Alphabet, Amazon, Meta, Microsoft and Oracle, summed for 2025. Nvidia's data center revenue for its fiscal year to January 2026. SEMI for equipment billings",
-        "url": "https://www.semiconductors.org/global-annual-semiconductor-sales-increase-25-6-to-791-7-billion-in-2025/"
+        "label": "Epoch AI B200 cost model, December 2025, and the March 2024 reports of its selling price that Epoch AI cites",
+        "url": "https://epoch.ai/data-insights/b200-cost-breakdown"
       }
     }
   ]
@@ -240,11 +237,11 @@ Two other firms' results give no gross margin. SK hynix's operating margin was 7
 
 {{figure:gross-margins}}
 
+{{figure:b200-price}}
+
 World chip sales are forecast to jump in 2026, with memory growing far faster than logic. The Semiconductor Industry Association, using monthly data compiled by World Semiconductor Trade Statistics, counted $791.7 billion of global chip sales in 2025 ([source](https://www.semiconductors.org/global-annual-semiconductor-sales-increase-25-6-to-791-7-billion-in-2025/)). In its June 2026 forecast, World Semiconductor Trade Statistics put 2025 slightly higher, at $795.6 billion ([source](https://www.wsts.org/esraCMS/extension/media/f/WST/7618/WSTS_FC-Release-2026-May.pdf)). It forecast $1.51 trillion for 2026, with memory growing about 250 percent and logic 37 percent ([source](https://www.wsts.org/esraCMS/extension/media/f/WST/7618/WSTS_FC-Release-2026-May.pdf)).
 
 In 2025 capital spending at five large tech firms far exceeded the world's sales of chipmaking equipment. The industry group SEMI counted $135.1 billion of semiconductor equipment billings in 2025 ([source](https://www.semi.org/en/SEMI-Reports-Global-Semiconductor-Equipment-Billings-Reached-135-Billion-in-2025)). Capital spending at Alphabet, Amazon, Meta, Microsoft and Oracle came to $448.2 billion in 2025, the sum of Epoch AI's quarterly figures ([source](https://epoch.ai/data-insights/hyperscaler-capex-trend)). Epoch AI says that spending would reach $770 billion in 2026 if the trend continues ([source](https://epoch.ai/data-insights/hyperscaler-capex-trend)). These totals overlap, so they cannot be added together.
-
-{{figure:market-2025}}
 
 ## Where the money goes
 

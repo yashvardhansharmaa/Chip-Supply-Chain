@@ -141,8 +141,10 @@ function withUnit(v, unit) {
 const STACK_REST = /^(other|others|all others|everyone else|rest of world|.* and all others|.*other companies)$/i;
 // a unit that moves onto the values leaves the title, and so does any copy of it the title spells out ("2022 ($M)", "price in Europe ($/kg)", decision 11)
 const figTitle = (f) => (unitOnValue(f.unit) ? String(f.title || '').split(` (${f.unit})`).join('') : String(f.title || ''));
-// the figure's short name in the chapter's contents rail: its title's first sentence
-const figShort = (f) => figTitle(f).split(/(?<=[a-z0-9)%])\.\s+(?=[A-Z])/)[0].replace(/\.$/, '');
+// the figure's short name in the chapter's contents rail, its citation and its CSV: its title's first sentence, or its own
+// "short" where that sentence would not name it (15.3's title opens "One B200, drawn to scale", 29 Oct 2026)
+const figFirst = (f) => figTitle(f).split(/(?<=[a-z0-9)%])\.\s+(?=[A-Z])/)[0].replace(/\.$/, '');
+const figShort = (f) => (f.short ? String(f.short) : figFirst(f));
 // the figure's data as a CSV file, a data: link the browser saves without any script (the readable pages carry it too)
 // The table comes first, so a spreadsheet reads its header row as one; under it, after a blank row, what the file is: the
 // figure, its title, its source and the source's date, any note (an estimate says so there) and the figure's address
@@ -282,6 +284,26 @@ function figure(f, ctx) {
           + `<b class="cg-v">${vals[i]}</b></div>`;
       }).join('')
       + `</div>` + tableFallback(data, f);
+  } else if (f.type === 'within') {
+    // parts inside a whole, on one scale (quick win A, 29 Oct 2026: 15.3, one B200's build cost inside its selling price). The
+    // data's first rows ("parts" of them) are the parts, from the left; then the row that totals them ("total"), a bracket over
+    // the parts, and the whole ("whole"), a range drawn as one bar: an outline to its low end, hatched to its high end, with a
+    // bracket over it all. The parts are carved inside the bar and named under it, each on a leader, the rightmost first so no
+    // leader crosses another. Wine marks the part the title names ("mark"), as the chart rule says; the rest take the tint. A
+    // row named in "about" reads "about" before its value. Hovering a part or its name lights both (FIG_JS).
+    const np = Math.max(0, +f.parts || 0), find = (lab) => data.find((d) => String(d[0]) === String(lab));
+    const tot = find(f.total), whole = find(f.whole);
+    if (!np || np > data.length || !tot || !whole || typeof whole[2] !== 'number') { warn(`figure ${f.id}: a within figure needs its parts, its total and its whole as a range`); return ''; }
+    const max = whole[2], pc = (v) => `${(v / max * 100).toFixed(3)}%`;
+    let at = 0;
+    const parts = data.slice(0, np).map((d, k) => { const p = { k, label: String(d[0]), v: +d[1], x0: at }; at += p.v; p.top = f.mark != null && String(f.mark) === p.label; return p; });
+    if (f.mark != null && !parts.some((p) => p.top)) warn(`figure ${f.id}: its mark "${f.mark}" names no part`);
+    body = `<div class="pw" aria-hidden="true" style="--b:${pc(+tot[1])};--lo:${pc(+whole[1])}">`
+      + `<div class="pw-whole" data-v="${+whole[1]}" data-hi="${whole[2]}"><span class="pw-lab"><b>${esc(whole[0])}</b> ${aboutOf(f, whole[0])}${spanText(whole[1], whole[2], f.unit)}</span><i class="pw-brk"></i></div>`
+      + `<div class="pw-total" data-v="${+tot[1]}"><span class="pw-lab"><b>${esc(tot[0])}</b> ${aboutOf(f, tot[0])}${withUnit(+tot[1], f.unit)}</span><i class="pw-brk"></i></div>`
+      + `<div class="pw-bar"><i class="pw-range"></i>${parts.map((p) => `<i class="pw-part${p.top ? ' top' : ''}" data-k="${p.k}" data-v="${p.v}" style="--x0:${pc(p.x0)};--w:${pc(p.v)}"></i>`).join('')}</div>`
+      + `<div class="pw-rows">${parts.slice().reverse().map((p, i) => `<div class="pw-row${p.top ? ' top' : ''}" data-k="${p.k}" style="--i:${i};--x:${pc(p.x0 + p.v / 2)}"><i class="pw-lead"></i><span class="pw-nm">${esc(p.label)}</span> <b class="pw-v">${aboutOf(f, p.label)}${withUnit(p.v, f.unit)}</b></div>`).join('')}</div>`
+      + `</div>` + tableFallback(data, f);
   } else if (isAnim) {
     // an explainer animation rendered by build/animate.py: the step names and captions are page text, kept in time
     // with the video by app.js; the transcript is read by screen readers and printed in place of the video
@@ -309,7 +331,7 @@ function figure(f, ctx) {
   }
   // the large line is the finding when the figure has one, with the title under it; without one, the title's first sentence,
   // with any sentences after it under it ("What one lithography system costs" over "The DUV bar is one figure …")
-  const tt = figTitle(f), first = figShort(f), rest = tt.length > first.length ? tt.slice(first.length).replace(/^\.\s*/, '').trim() : '';
+  const tt = figTitle(f), first = figFirst(f), rest =tt.length > first.length ? tt.slice(first.length).replace(/^\.\s*/, '').trim() : '';
   const [big, small] = finding ? [finding, tt] : rest ? [first, /[.!?)]$/.test(rest) ? rest : rest + '.'] : [tt, ''];
   const head = `<div class="fig-head"><a class="fig-k" href="#${fid}">${esc(kick)}</a>`
     + `<p class="fig-title${finding ? ' fig-find' : ''}">${esc(big)}${small ? '' : unitTag}</p>${small ? `<p class="fig-sub">${esc(small)}${unitTag}</p>` : ''}</div>`;
@@ -343,8 +365,10 @@ function figDate(s) {
   if (!m || (m[2] && (+m[2] < 1 || +m[2] > 12)) || (m[3] && (+m[3] < 1 || +m[3] > 31))) return null;
   return { key: `${m[1]}-${m[2] || '01'}-${m[3] || '01'}`, iso: v, label: m[3] ? `${+m[3]} ${MONTHS[+m[2] - 1]} ${m[1]}` : m[2] ? `${MONTHS[+m[2] - 1]} ${m[1]}` : m[1] };
 }
+// "about " before a value the figure gives as approximate (its "about" names the rows: 15.3's build cost, "about $6,400")
+const aboutOf = (f, label) => (Array.isArray(f.about) && f.about.map(String).includes(String(label)) ? 'about ' : '');
 function tableFallback(data, f) {
-  return `<table class="sr-only fig-table"><caption>${esc(figTitle(f))}</caption><tbody>${data.map((d) => `<tr><th scope="row">${esc(d[0])}</th><td>${typeof d[2] === 'number' ? spanText(d[1], d[2], f.unit, true) + (unitOnValue(f.unit) || !f.unit ? '' : ' ' + esc(f.unit)) : unitOnValue(f.unit) ? withUnit(d[1], f.unit) : fmtNum(d[1]) + (f.unit ? ' ' + esc(f.unit) : '')}</td></tr>`).join('')}</tbody></table>`;
+  return `<table class="sr-only fig-table"><caption>${esc(figTitle(f))}</caption><tbody>${data.map((d) => `<tr><th scope="row">${esc(d[0])}</th><td>${aboutOf(f, d[0])}${typeof d[2] === 'number' ? spanText(d[1], d[2], f.unit, true) + (unitOnValue(f.unit) || !f.unit ? '' : ' ' + esc(f.unit)) : unitOnValue(f.unit) ? withUnit(d[1], f.unit) : fmtNum(d[1]) + (f.unit ? ' ' + esc(f.unit) : '')}</td></tr>`).join('')}</tbody></table>`;
 }
 
 /* ---------------- block markdown ---------------- */
@@ -836,8 +860,55 @@ y+=20;g.fillStyle='#45443f';g.font='400 12.5px '+FU;var sl=wrap(g,(srcT?'Source:
 g.fillStyle='#56554f';g.font='400 12px '+FM;g.fillText(addr,P,y+20);
 save(cv,fig,k);
 }
+/* parts inside a whole (15.3, 29 Oct 2026): the whole's bracket and words, the total's, the bar (an outline to the whole's low
+   end, hatched to its high end) with the parts carved inside it, and each part named under it on a leader, as the page draws them */
+function pngWithin(fig){
+var pw=fig.querySelector('.fig-body .pw');if(!pw)return;
+var k=txt(fig.querySelector('.fig-k')),t1=txt(fig.querySelector('.fig-title')),t2=txt(fig.querySelector('.fig-sub'));
+var dl=(/Data: (.+)\\.$/.exec(txt(fig.querySelector('.fig-cite-box .ch-cite-text')))||[])[1],src=fig.querySelector('.fs-src'),sc=src?src.cloneNode(true):null;if(sc)[].forEach.call(sc.querySelectorAll('.fs-k'),function(x){x.remove();});
+var srcT=dl||(sc?txt(sc).replace(/\\s*\\d+$/,''):''),addr=txt(fig.querySelector('.fig-cite-box a')).replace(/^https?:\\/\\//,'');
+var wh=pw.querySelector('.pw-whole'),to=pw.querySelector('.pw-total');if(!wh||!to)return;
+var hi=+wh.getAttribute('data-hi'),lo=+wh.getAttribute('data-v'),tv=+to.getAttribute('data-v');
+var words=function(e){var c=e.querySelector('.pw-lab').cloneNode(true),b=c.querySelector('b'),bt=txt(b);if(b)b.remove();return{b:bt,r:txt(c)};},LW=words(wh),LT=words(to);
+var parts=[].map.call(pw.querySelectorAll('.pw-part'),function(p){var r=pw.querySelector('.pw-row[data-k="'+p.getAttribute('data-k')+'"]');return{v:+p.getAttribute('data-v'),top:p.classList.contains('top'),nm:txt(r&&r.querySelector('.pw-nm')),vt:txt(r&&r.querySelector('.pw-v'))};});
+var W=800,P=40,S=2,cv=el('canvas'),g=cv.getContext('2d');
+var FD='"Fraunces",Georgia,serif',FB='"Source Serif 4",Georgia,serif',FU='"Hanken Grotesk","Helvetica Neue",Arial,sans-serif',FM='"Fragment Mono",Menlo,monospace';
+var WINE='#7a1f2b',TINT='#d2d1cc',INK='#171716',INK2='#45443f',RULE='#8c8a84',LINE='#e1e0db';
+var CW=W-2*P,X=function(v){return P+v/hi*CW;},BH=36,RH=26,G=14;
+g.font='500 24px '+FD;var L1=wrap(g,t1,W-2*P);g.font='400 16px '+FB;var L2=t2?wrap(g,t2,W-2*P):[];
+var chartH=22+10+22+10+BH+G+parts.length*RH;
+var H=P+18+L1.length*31+(L2.length?6+L2.length*21:0)+24+chartH+20+56;
+cv.width=W*S;cv.height=H*S;g.scale(S,S);g.fillStyle='#ffffff';g.fillRect(0,0,W,H);
+var y=P;g.textBaseline='alphabetic';g.fillStyle='#56554f';g.font='400 13px '+FM;g.fillText(k,P,y+12);y+=22;
+g.fillStyle=INK;g.font='500 24px '+FD;L1.forEach(function(s){y+=28;g.fillText(s,P,y);y+=3;});
+if(L2.length){y+=6;g.fillStyle=INK2;g.font='400 16px '+FB;L2.forEach(function(s){y+=19;g.fillText(s,P,y);y+=2;});}
+y+=24;
+var brk=function(x0,x1,yy){g.strokeStyle=INK2;g.lineWidth=1;g.beginPath();g.moveTo(x0+0.5,yy+5);g.lineTo(x0+0.5,yy+0.5);g.lineTo(x1-0.5,yy+0.5);g.lineTo(x1-0.5,yy+5);g.stroke();};
+var say=function(L,x,yy,right){g.font='600 14px '+FU;var bw=g.measureText(L.b+' ').width;g.font='400 14px '+FU;var rw=g.measureText(L.r).width,x0=right?x-bw-rw:x;g.fillStyle=INK;g.font='600 14px '+FU;g.fillText(L.b,x0,yy);g.fillStyle=INK2;g.font='400 14px '+FU;g.fillText(L.r,x0+bw,yy);};
+say(LW,P+CW,y+15,true);y+=22;brk(P,P+CW,y);y+=10;
+say(LT,P,y+15,false);y+=22;brk(P,X(tv),y);y+=10;
+var yb=y;
+g.save();g.beginPath();g.rect(X(lo),yb,X(hi)-X(lo),BH);g.clip();g.strokeStyle=RULE;g.lineWidth=1.5;for(var i=-BH;i<X(hi)-X(lo)+BH;i+=6){g.beginPath();g.moveTo(X(lo)+i,yb+BH);g.lineTo(X(lo)+i+BH,yb);g.stroke();}g.restore();
+var at=0;parts.forEach(function(p,i){p.x0=X(at);at+=p.v;p.x1=X(at);g.fillStyle=p.top?WINE:TINT;g.fillRect(p.x0+(i?0.6:1.5),yb+1.5,Math.max(1,p.x1-p.x0-(i?1.2:2.1)),BH-3);});
+g.strokeStyle=RULE;g.lineWidth=1.5;g.strokeRect(P+0.75,yb+0.75,CW-1.5,BH-1.5);g.beginPath();g.moveTo(X(lo),yb);g.lineTo(X(lo),yb+BH);g.stroke();
+var lx=X(at)+18;
+parts.slice().reverse().forEach(function(p,i){var ry=yb+BH+G+i*RH+RH/2,cx=(p.x0+p.x1)/2;
+g.strokeStyle=p.top?WINE:RULE;g.lineWidth=1;g.beginPath();g.moveTo(cx,yb+BH+2);g.lineTo(cx,ry);g.lineTo(lx-6,ry);g.stroke();
+g.font=(p.top?'600':'400')+' 14px '+FU;g.fillStyle=p.top?INK:INK2;g.fillText(p.nm,lx,ry+5);var nw=g.measureText(p.nm).width;
+g.font=(p.top?'700 15px ':'400 14px ')+FU;g.fillStyle=p.top?WINE:INK;g.fillText(p.vt,lx+nw+10,ry+5);});
+y=yb+BH+G+parts.length*RH;
+y+=14;g.fillStyle=LINE;g.fillRect(P,y,W-2*P,1);y+=22;
+g.fillStyle='#45443f';g.font='400 12.5px '+FU;var sl=wrap(g,(srcT?'Source: '+srcT:''),W-2*P);sl.slice(0,1).forEach(function(s){g.fillText(s,P,y);});
+g.fillStyle='#56554f';g.font='400 12px '+FM;g.fillText(addr,P,y+20);
+save(cv,fig,k);
+}
+/* hovering a part, or its name, lights both and dims the rest (15.3) */
+function pwLit(pw,key){[].forEach.call(pw.querySelectorAll('[data-k]'),function(x){x.classList.toggle('lit',x.getAttribute('data-k')===key);});pw.classList.toggle('has-lit',key!=null);}
+D.addEventListener('pointerover',function(e){var pw=e.target.closest?e.target.closest('.figure .pw'):null;if(!pw)return;var t=e.target.closest('[data-k]');pwLit(pw,t&&pw.contains(t)?t.getAttribute('data-k'):null);});
+D.addEventListener('pointerout',function(e){var pw=e.target.closest?e.target.closest('.figure .pw'):null;if(pw&&!(e.relatedTarget&&pw.contains(e.relatedTarget)))pwLit(pw,null);});
 function png(fig){
 if(fig.querySelector('.fig-body .tl'))return pngTl(fig);
+if(fig.querySelector('.fig-body .pw'))return pngWithin(fig);
 var hb=[].slice.call(fig.querySelectorAll('.hbars .hb')),cl=[].slice.call(fig.querySelectorAll('.cols-plot .col')),cg=[].slice.call(fig.querySelectorAll('.cg-row:not(.cg-axis)'));
 var kind=hb.length?'hb':cl.length?'cols':'cg',labs=fig.querySelectorAll('.cols-lab span');
 var num=function(r,a){var v=r.getAttribute(a);return v==null||v===''?null:+v;};
@@ -897,7 +968,7 @@ save(cv,fig,k);
 }
 function add(acts){
 if(acts.getAttribute('data-ready'))return;acts.setAttribute('data-ready','1');
-var kind=acts.getAttribute('data-kind'),fig=acts.closest('.figure');if(!fig||['bars','stack','columns','change','timeline'].indexOf(kind)<0)return;
+var kind=acts.getAttribute('data-kind'),fig=acts.closest('.figure');if(!fig||['bars','stack','columns','change','timeline','within'].indexOf(kind)<0)return;
 var tl=kind==='timeline'; /* a timeline takes a PNG but no Table: it is already its rows, each date beside its event (28 Oct 2026) */
 var tb=tl?null:el('button','fs-tab','Table');if(tb){tb.type='button';tb.setAttribute('aria-pressed','false');
 tb.addEventListener('click',function(){var on=!fig.classList.contains('is-table'),t=fig.querySelector('table.fig-table');fig.classList.toggle('is-table',on);if(t)t.classList.toggle('sr-only',!on);tb.setAttribute('aria-pressed',on?'true':'false');});}
