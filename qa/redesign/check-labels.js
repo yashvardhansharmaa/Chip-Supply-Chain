@@ -38,7 +38,8 @@ const BAL = `(function(){var s=document.querySelector('.ch-balloons'),d=document
         const min = l.some((b) => b.under) ? 58 : 34, gaps = l.slice(1).map((b, i) => Math.round(b.y - l[i].y));
         check(`${id} 1440: the ${side} balloons keep ${min} px apart${min === 58 ? ', since a name there stands under its balloon' : ''}`, gaps.every((g) => g >= min - 0.5), gaps.join(', '));
       }
-      const list = await t.ev(`[].map.call(document.querySelectorAll('.ch-spec .ch-parts li'),function(li){var a=li.querySelector('a');return li.querySelector('span').textContent+(a?' -> '+a.getAttribute('href'):'');})`);
+      // the pages set typographer's quotes (build/keep-ranges.js, 29 Oct 2026) and the data keeps straight ones, so the list is read as straight
+      const list = (await t.ev(`[].map.call(document.querySelectorAll('.ch-spec .ch-parts li'),function(li){var a=li.querySelector('a');return li.querySelector('span').textContent+(a?' -> '+a.getAttribute('href'):'');})`)).map((s) => s.replace(/[\u2018\u2019]/g, "'").replace(/[\u201c\u201d]/g, '"'));
       const want = e.parts.map((p) => p.stage ? null : `${p.name}: ${p.maker}${p.link ? ', ' + p.link[1] + ' -> ' + p.link[0] : ''}`);
       check(`${id}: the parts list reads as the data file says`, list.length === e.parts.length && list.every((s, i) => want[i] === null ? /: see stage \d\d, .* -> \.\.\/[a-z-]+\/$/.test(s) : s === want[i]), list.join(' | '));
       const tpl = await t.ev(`(function(){var tp=document.querySelector('.ch-spec template.cp-still-src');if(!tp)return null;var s=tp.content.querySelector('svg.ch-still--wide');return {img:s.querySelector('image').getAttribute('href'),n:s.querySelectorAll('g').length,label:s.getAttribute('aria-label')};})()`);

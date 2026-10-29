@@ -41,7 +41,8 @@ const num = (s) => (s == null || s === '' ? null : +s);
       const f = figData(ch, id), fid = `fig-${ch}-${id}`, rows = f.data;
       const t = await open(chrome, `${base}/#${ch}`, { width: 1440, wait: 2000 });
       await t.ev(`(function(){var e=document.getElementById('${fid}');document.documentElement.style.scrollBehavior='auto';e.scrollIntoView({block:'center'});return 1;})()`); await sleep(500);
-      const got = await t.ev(`(function(){var f=document.getElementById('${fid}');var T=function(n){return n?n.textContent.replace(/\\s+/g,' ').trim():'';};
+      // the pages set typographer's quotes (build/keep-ranges.js, 29 Oct 2026) and the data keeps straight ones: T() reads them as straight
+      const got = await t.ev(`(function(){var f=document.getElementById('${fid}');var T=function(n){return n?n.textContent.replace(/\\s+/g,' ').replace(/[\u2018\u2019]/g,"'").replace(/[\u201c\u201d]/g,'"').trim():'';};
         var wine=function(el){var c=getComputedStyle(el);return c.backgroundColor==='rgb(122, 31, 43)'||/rgb\\(122, 31, 43\\)/.test(c.backgroundImage)||/rgb\\(122, 31, 43\\)/.test(c.boxShadow);};
         var marks=[].map.call(f.querySelectorAll('.hbars .hb'),function(r){return {kind:'bars',label:T(r.querySelector('.hb-l')),v:r.getAttribute('data-v'),hi:r.getAttribute('data-hi'),ref:r.getAttribute('data-ref'),text:T(r.querySelector('.hb-r > b')),top:r.classList.contains('top'),wine:wine(r.querySelector('.hb-r i'))};})
           .concat([].map.call(f.querySelectorAll('.cols-plot .col'),function(r,i){return {kind:'columns',label:T(f.querySelectorAll('.cols-lab span')[i]),v:r.getAttribute('data-v'),hi:r.getAttribute('data-hi'),ref:r.getAttribute('data-ref'),text:T(r.querySelector('b')),top:r.classList.contains('top'),wine:wine(r.querySelector('i'))};}))
