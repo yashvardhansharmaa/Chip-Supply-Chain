@@ -51,7 +51,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..600,0,0&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,400&family=Hanken+Grotesk:wght@400..700&family=Fragment+Mono&display=swap">
 <!-- the site's styles, one sheet every page shares and caches (build/build.js writes dist/assets/site.css) -->
-<link rel="stylesheet" href="../assets/site.css?v=645bc8032a">
+<link rel="stylesheet" href="../assets/site.css?v=83f956e521">
 <style>
 /* the cite line under each chapter title, its actions: Link to chapter · Cite this chapter · Chapter PDF (build/build.js citeBlock) */
 .ch-cite { margin: 4px 0 0; }
@@ -237,10 +237,10 @@ html:not(.booted)[data-sub="exposure"] .view[data-view="controls"] .sub[data-sub
 html:not(.booted)[data-sub="country"] .view[data-view="suppliers"] #sup-ladder { display: none !important; }
 html:not(.booted)[data-sub="exposure"] .view[data-view="controls"] .sub[data-sub="exposure"] { display: block !important; }
 /* the views whose bodies boot() builds show only their heads until then, so nothing painted early moves when it does:
-   the Export Controls board and timeline, the Glossary, AI Chips (whose #aic holds its title and standfirst), and the
-   Suppliers atlas when the address picks a country */
+   the Export Controls board and timeline, AI Chips (whose #aic holds its title and standfirst), and the Suppliers atlas
+   when the address picks a country. The Glossary paints its index head at once and keeps the parts its list fills hidden
+   until the list is in (src/modules/lookup.css, .gl-wait) */
 html:not(.booted)[data-route="controls"]:not([data-sub="exposure"]) .view[data-view="controls"] > :not(.view-head):not(#controls-subtabs),
-html:not(.booted)[data-route="glossary"] .view[data-view="glossary"] > :not(.view-head),
 html:not(.booted)[data-route="landscape"] .view[data-view="landscape"] > :not(.aic),
 html:not(.booted)[data-pick] .view[data-view="suppliers"] > :not(.view-head) { display: none !important; }
 </style>
@@ -384,10 +384,10 @@ html[data-chain] .view[data-view="stack"] > article.chapter { content-visibility
 </div>
 <!-- the shared code and data (build/build.js writes them to dist/assets/): the specimen kit, the data this page's views draw
      from, the search index, and the app with the cite, figure and rail scripts, each run in this order as the page ends -->
-<script>window.CP_ASSETS = {"search.js":"../assets/search.js?v=9885d0c76b","glossary.js":"../assets/glossary.js?v=b742a7067a"};</script>
+<script>window.CP_ASSETS = {"search.js":"../assets/search.js?v=9885d0c76b","glossary.js":"../assets/glossary.js?v=4de83c5ca0"};</script>
 <script src="../assets/kit.js?v=05791ce791"></script>
 <script src="../assets/terms.js?v=76ff7c3823"></script>
-<script src="../assets/app.js?v=4ec156df91"></script>
+<script src="../assets/app.js?v=0922315e5e"></script>
 <script>
 /* The printed cover's art (print-title.png, about 490 KB) is fetched only for print, never just because a page was read:
    when the reader points at or focuses "Print this page", before that button opens the dialog (it waits for the image,
