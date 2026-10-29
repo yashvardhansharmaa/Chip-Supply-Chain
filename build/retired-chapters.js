@@ -32,5 +32,8 @@ module.exports = {
     f('variants-and-trade-offs', 'the-foundry-and-the-fab'), f('pure-play-foundries', 'the-foundry-and-the-fab'),
     f('integrated-device-makers-turned-foundry', 'the-foundry-and-the-fab'), f('national-champions', 'who-makes-it'),
     f('mature-node-capacity', 'the-chokepoint'),
+    // two figures retired without a chapter (29 Oct 2026): Systems and Networking's NVLink and Tomahawk columns, and their
+    // citations, land on the one figure 13.2 that replaced them
+    ...['nvlink-bandwidth', 'switch-bandwidth'].flatMap((x) => [[`fig-systems-and-networking-${x}`, 'fig-systems-and-networking-scale-up-out'], [`cite-fig-systems-and-networking-${x}`, 'fig-systems-and-networking-scale-up-out']]),
   ]),
 };

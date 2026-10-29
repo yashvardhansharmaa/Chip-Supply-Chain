@@ -117,7 +117,7 @@ module.exports = function (ctx) {
   const rows = chips.map((c) => [`${c.vendor} ${c.full}`, annT(c.announced), c.tppT, c.c2cT, c.bwT]);
   const page = SITE.url + '#/controls';
   const q = (v) => { const s = String(v == null ? '' : v); return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; };
-  const about = [['Title', TITLE], ['Source', SOURCES.map((s) => s[0]).join('; ') + '; each chip\'s record on AI Chips'], ['Figure address', page]];
+  const about = [['Title', TITLE], ['Source', SOURCES.map((s) => s[0]).join(', ') + ', and each chip\'s record on AI Chips'], ['Figure address', page]];
   const csv = 'data:text/csv;charset=utf-8,' + encodeURIComponent('﻿' + [head].concat(rows, [[]], about).map((r) => r.map(q).join(',')).join('\r\n') + '\r\n');
   const table = `<table class="sr-only fig-table"><caption>${esc(TITLE)}</caption><thead><tr>${head.map((h) => `<th scope="col">${esc(h)}</th>`).join('')}</tr></thead><tbody>`
     + rows.map((r) => `<tr><th scope="row">${esc(r[0])}</th>${r.slice(1).map((v) => `<td>${esc(v)}</td>`).join('')}</tr>`).join('') + '</tbody></table>';
