@@ -28,7 +28,7 @@
 
   function geom() {
     var W = Math.round(plot.clientWidth), wide = W >= 520, PH = wide ? 300 : 240, top = 50, y1 = top + PH, x0 = 6, x1 = W - 6;
-    return { W: W, wide: wide, PH: PH, top: top, y1: y1, x0: x0, x1: x1, H: y1 + 66,
+    return { W: W, wide: wide, PH: PH, top: top, y1: y1, x0: x0, x1: x1, H: y1 + (W < 380 ? 80 : 66),
       X: function (t) { return x0 + t / 24000 * (x1 - x0); },
       Yc: function (v) { return y1 - v / 1300 * PH; }, Ym: function (v) { return y1 - v / 7000 * PH; }, gy: y1 + 18 };
   }
@@ -67,7 +67,8 @@
     o.push('<text class="ct-t m" x="' + (g.x0 + 2) + '" y="' + (g.y1 + 44) + '">0</text>');
     o.push('<text class="ct-t k" x="' + g.x1 + '" y="' + (g.y1 + 44) + '" text-anchor="end">Total processing performance (TPP) →</text>');
     o.push('<line class="ct-gut ct-fade" data-e="0-1" x1="' + g.x0 + '" x2="' + g.x1 + '" y1="' + (g.y1 + 30) + '" y2="' + (g.y1 + 30) + '"></line>');
-    o.push('<text class="ct-t m ct-fade" data-e="0-1" x="' + g.x0 + '" y="' + (g.y1 + 60) + '">Under the axis, chips with no single chip-to-chip figure stated</text>');
+    // the gutter's key, on two lines where one would run past a narrow phone's edge
+    o.push('<text class="ct-t m ct-fade" data-e="0-1" x="' + g.x0 + '" y="' + (g.y1 + 60) + '">' + (g.W < 380 ? 'Under the axis, chips with no single<tspan x="' + g.x0 + '" dy="14">chip-to-chip figure stated</tspan>' : 'Under the axis, chips with no single chip-to-chip figure stated') + '</text>');
     // the chips
     chips.forEach(function (c) {
       var cls = 'ct-chip' + (NAMED[c.id] ? ' named' : '') + (LABELED[c.id] ? ' lab' : '') + (c.merchant ? '' : ' own');

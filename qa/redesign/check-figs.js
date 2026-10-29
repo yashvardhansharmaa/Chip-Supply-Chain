@@ -17,8 +17,11 @@ const base = (process.argv[2] || 'http://127.0.0.1:8778').replace(/\/$/, '');
 const outdir = process.argv[3] || path.join(root, 'qa', 'redesign', 'shots', 'stage-pages');
 const FIGS = [['lithography', 'tool-price'], ['lithography', 'euv-shipments'], ['memory-and-hbm', 'hbm-bandwidth'], ['data-centers-and-power', 'us-dc-electricity'],
   ['geopolitics', 'china-tool-revenue'], ['chemicals-gases-and-photoresist', 'germanium-price'], ['deposition-and-etch', 'equipment-billings'], ['memory-and-hbm', 'hbm-revenue'],
-  ['advanced-packaging', 'cowos-reticles'], ['substrates-and-pcbs', 'abf-layers'], ['test-and-assembly', 'ase-testers'], ['systems-and-networking', 'nvlink-bandwidth'],
-  ['systems-and-networking', 'switch-bandwidth'], ['data-centers-and-power', 'turbine-output']];
+  ['advanced-packaging', 'cowos-reticles'], ['substrates-and-pcbs', 'abf-layers'], ['test-and-assembly', 'ase-testers'], ['systems-and-networking', 'scale-up-out'],
+  ['geopolitics', 'ascend-memory'], ['data-centers-and-power', 'turbine-output']];
+// 29 Oct 2026 (the figures build): 13.2 and 13.3 (nvlink-bandwidth, switch-bandwidth) left the site for one 13.2, scale-up-out,
+// and 16.2, ascend-memory, is new; both are stepped bars figures (build/figsteps.js). A row the source words ("shown":
+// "1.6 million") is read back in those words, beside its bar and in the Table, and its number in the CSV
 
 function figData(ch, id) {
   const file = fs.readdirSync(path.join(root, 'content')).find((f) => f.replace(/^\d+-/, '').replace(/\.md$/, '') === ch);
@@ -80,7 +83,8 @@ const num = (s) => (s == null || s === '' ? null : +s);
           const digits = (x) => String(x).replace(/[^0-9.]/g, '');
           const fmt = (x) => (Math.abs(x) >= 1000 ? x.toLocaleString('en-US') : String(x)).replace(/[^0-9.]/g, '');
           const tx = g.text.replace(/,/g, '');
-          if (!digits(tx).includes(fmt(w.v).replace(/,/g, '')) || (w.hi != null && !digits(tx).includes(fmt(w.hi)))) { mism++; notes.push(`${w.label} text "${g.text}"`); }
+          const said = f.shown && f.shown[w.label];
+          if (said ? g.text !== said : (!digits(tx).includes(fmt(w.v).replace(/,/g, '')) || (w.hi != null && !digits(tx).includes(fmt(w.hi))))) { mism++; notes.push(`${w.label} text "${g.text}"`); }
         }
       });
       check(`${tag}: every mark's values match the data`, mism === 0, notes.join('; '));
@@ -94,7 +98,7 @@ const num = (s) => (s == null || s === '' ? null : +s);
       check(`${tag}: wine on ${want.filter((w, i) => expect[i]).map((w) => w.label).join(', ')} only`, got.marks.every((m, i) => m.top === expect[i] && m.wine === expect[i]),
         got.marks.map((m) => `${m.label}:${m.top ? 'top' : '-'}/${m.wine ? 'wine' : '-'}`).join(' '));
       // the Table and the CSV hold the data's own rows
-      const tOK = got.table.length === rows.length && rows.every((d, i) => got.table[i][0] === String(d[0]) && got.table[i][1].replace(/[^0-9.]/g, '').startsWith(String(d[1]).replace(/[^0-9.]/g, '')));
+      const tOK = got.table.length === rows.length && rows.every((d, i) => got.table[i][0] === String(d[0]) && (f.shown && f.shown[d[0]] ? got.table[i][1].startsWith(f.shown[d[0]]) : got.table[i][1].replace(/[^0-9.]/g, '').startsWith(String(d[1]).replace(/[^0-9.]/g, ''))));
       check(`${tag}: Table rows match the data (${rows.length})`, tOK, JSON.stringify(got.table));
       // fix-d D11: the CSV's table comes first, then a blank row and what the file is (figure, title, source, date, note, address)
       const lines = got.csv.trim().split(/\r?\n\r?\n/)[0].split(/\r?\n/).slice(1);
