@@ -90,6 +90,10 @@ const SOURCES = [
 ];
 const TITLE = 'Seven AI chips by total processing performance (TPP), and whether shipping each to China needed a US license, after each of four US moves from October 2022 to January 2026';
 const FINDING = 'Nvidia built the A800, H800 and H20 to stay under US limits, and the US closed each gap';
+// held back (owner, 29 Oct 2026: "remove the 'Chips built just under the line' and start with the coming up section and the
+// timeline below"): the checks still run on every build, the page shows nothing until a simpler picture is chosen
+// (MAIN/qa/excellence/controls-alt/)
+const SHOWN = false;
 const FID = 'controls-ul-fig'; // ids open with "controls", so src/preroute.js shows Export Controls for them before boot
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -144,5 +148,5 @@ module.exports = function (ctx) {
       </figure>
       <script type="application/json" id="controls-ul-data">${json}</script>
       </section>`;
-  return { UNDER_LINE: html };
+  return { UNDER_LINE: SHOWN ? html : '' };
 };
