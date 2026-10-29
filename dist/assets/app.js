@@ -1357,10 +1357,11 @@
         labs += '<text class="lab lab-h' + (p.mine ? ' mine' : ' top') + '" x="' + r2(got.cx) + '" y="' + r2(got.cy) + '" text-anchor="' + got.an + '">' + esc(txt) + '</text>';
       });
       var aria = esc(m.label) + ' of each chip by the month it was announced. ' + F.pts.length + ' chips have a figure. The arrow keys move from chip to chip.';
-      return { svg: '<svg class="chart" width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + ' ' + h + '" tabindex="0" role="group" aria-roledescription="chart" aria-label="' + aria + '">' + g + dots + rings + labs + '<g class="hov"></g><g class="foc"></g><rect class="hit" x="0" y="0" width="' + w + '" height="' + h + '" fill="transparent"/></svg>', pts: pts, F: F };
+      return { svg: '<svg class="chart" width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + ' ' + h + '" tabindex="0" role="group" aria-roledescription="chart" aria-label="' + aria + '">' + g + dots + rings + labs + '<g class="lit"></g><g class="hov"></g><g class="foc"></g><rect class="hit" x="0" y="0" width="' + w + '" height="' + h + '" fill="transparent"/></svg>', pts: pts, F: F };
     };
     // hover shows a chip's name; a click, a tap or the arrow keys pin a tip with its figure, its month and "Open the B300", which
-    // opens that chip on its own. Nothing on the chart adds a chip to a comparison
+    // opens that chip on its own. Nothing on the chart adds a chip to a comparison. On the head's chart (o.link) a click or a tap
+    // on a dot goes to that chip's package on its shelf instead (quick win B, 29 Oct 2026, below); the keys still pin the tip
     var tipClose = null; // the open tip's closer: a press anywhere else puts it away (one listener for every chart, set in init)
     var interactChart = function (host, res, o) {
       o = o || {};
@@ -1391,7 +1392,8 @@
       var nearest = function (e, rad) { var b = svg.getBoundingClientRect(), x = e.clientX - b.left, y = e.clientY - b.top, best = -1, bd = rad * rad; pts.forEach(function (p, i) { var d = (p.x - x) * (p.x - x) + (p.y - y) * (p.y - y); if (d < bd) { bd = d; best = i; } }); return best; };
       svg.addEventListener('pointermove', function (e) { if (e.pointerType !== 'mouse') return; var i = nearest(e, 18); label(i >= 0 && i !== cur ? pts[i] : null, hov); });
       svg.addEventListener('pointerleave', function () { label(null, hov); });
-      svg.addEventListener('click', function (e) { var i = nearest(e, e.pointerType === 'mouse' ? 18 : 30); if (i < 0) i = nearest(e, 30); pin(i); });
+      svg.addEventListener('click', function (e) { var i = nearest(e, e.pointerType === 'mouse' ? 18 : 30); if (i < 0) i = nearest(e, 30); if (o.link && i >= 0) { pin(-1); o.link(pts[i].c.id); return; } pin(i); });
+      if (o.link) svg.addEventListener('mousedown', function (e) { e.preventDefault(); }); // a press goes to the package, so it must not focus the chart, whose focus opens the tip
       svg.addEventListener('keydown', function (e) {
         var k = e.key, n = pts.length; if (!n) return;
         if (k === 'ArrowRight' || k === 'ArrowDown') { e.preventDefault(); pin(cur < 0 ? 0 : Math.min(n - 1, cur + 1)); }
@@ -1614,10 +1616,45 @@
         '<div class="card-more"><section class="card-stand"><h3 class="card-h3">Where they stand</h3>' + standInner() + '</section></div>' +
         '<section class="card-notes"><h3 class="card-h3">Notes and sources</h3>' + notes + '</section></section>';
     };
+    /* ---- the head's chart and the shelves, linked (quick win B, owner, 29 Oct 2026) ----
+       Hovering or focusing a package lights its dot in ink, with its name and figure; a chip with no figure on the chart says so
+       in the chart's own words. A click or a tap on a dot lights its package and brings it into view, where the tip used to
+       open; a click on the package then opens its card, as before. The keys on the chart keep the tip. Lk holds the head
+       chart's points (chartSVG's, each with its chip), the chip whose dot is lit, which a new drawing of the chart lights again,
+       and the package a dot led to, which keeps its mark until another dot is pressed or the shelves are drawn again. */
+    var Lk = { host: null, res: null, id: null, pkg: null };
+    var litDot = function () {
+      var svg = Lk.host && $('svg.chart', Lk.host), g = svg && $('.lit', svg); if (!g) return;
+      var id = Lk.id, res = Lk.res, m = res.F.m, W = +svg.getAttribute('width'), p = null;
+      if (!id) { g.innerHTML = ''; return; }
+      res.pts.forEach(function (q) { if (q.c.id === id) p = q; });
+      if (!p) { // no figure on this chart: the words the chart's notes use for it
+        var c = byId(id);
+        g.innerHTML = c ? '<text class="lab lab-h lit-none" x="' + (W - 2) + '" y="14" text-anchor="end">' + esc(nilKind(c, m) === 'no' ? m.fmt.toUpperCase() + ' is not supported by the ' + short(c) : m.label + ' is not published for the ' + short(c)) + '</text>' : '';
+        return;
+      }
+      var t = short(p.c) + ', ' + nf(p.v), tw = textW(t, true), right = p.x + 14 + tw < W - 4;
+      g.innerHTML = (p.off ? '' : '<circle class="lit-ring" cx="' + r2(p.x) + '" cy="' + r2(p.y) + '" r="9"/><circle class="lit-dot" cx="' + r2(p.x) + '" cy="' + r2(p.y) + '" r="4.6"/>') +
+        '<text class="lab lab-h lit-lab" x="' + r2(right ? p.x + 14 : p.x - 14) + '" y="' + r2(Math.max(14, p.y - 10)) + '" text-anchor="' + (right ? 'start' : 'end') + '">' + esc(t) + '</text>';
+    };
+    var litPkg = function (id) {
+      $$('#aic li.it.is-lit').forEach(function (li) { li.classList.remove('is-lit'); });
+      var b = id ? document.getElementById('aic-it-' + id) : null;
+      if (b) b.parentNode.classList.add('is-lit');
+      return b;
+    };
+    var light = function (id) { Lk.id = id || Lk.pkg || null; litDot(); }; // none: back to the package a dot led to, if any
+    var toPackage = function (id) { // a dot pressed: its package marked, brought to the middle of the window, and flashed once
+      Lk.id = Lk.pkg = id; litDot();
+      var b = litPkg(id); if (!b) return;
+      var br = b.getBoundingClientRect(), top = br.top + window.pageYOffset - Math.max(headerH() + 24, (window.innerHeight - br.height) / 2 - 40);
+      window.scrollTo({ top: Math.max(0, Math.round(top)), behavior: reduced ? 'auto' : 'smooth' });
+      b.classList.remove('flash'); void b.offsetWidth; b.classList.add('flash');
+    };
     var drawChart = function () {
       var sel = selection(), mk = S.measure;
       var head = document.getElementById('aic-c-head');
-      if (head) { var r0 = chartSVG({ measure: mk || 'fp16', w: chartW(), h: nar() ? 260 : 250, sel: S.picked, small: true }); head.innerHTML = r0.svg; interactChart(head, r0, { here: S.picked }); }
+      if (head) { var r0 = chartSVG({ measure: mk || 'fp16', w: chartW(), h: nar() ? 260 : 250, sel: S.picked, small: true }); head.innerHTML = r0.svg; interactChart(head, r0, { here: S.picked, link: toPackage }); Lk.host = head; Lk.res = r0; litDot(); }
       var host = document.getElementById('aic-c-card'); if (!host) return;
       var w = Math.round(host.clientWidth || 520);
       var res = chartSVG({ measure: mk || firstMeasure(sel), w: Math.max(280, Math.min(w, 666)), h: nar() ? 250 : 300, sel: S.picked, small: nar() });
@@ -1633,7 +1670,7 @@
     var render = function (how) {
       how = how || {};
       var view = $('#aic-view'); if (!view) return;
-      tipClose = null;
+      tipClose = null; Lk.id = Lk.pkg = null; // the shelves are drawn afresh; a package that keeps the focus lights its dot again (focusin)
       var key = S.picked.join(','), focusId = document.activeElement && view.contains(document.activeElement) ? document.activeElement.id : null, y = window.pageYOffset;
       view.innerHTML = headHTML() + shelvesHTML();
       if (Router.current === 'landscape') { Router.title(); var sel = selection(); if (sel.length) document.title = sel.map(short).join(', ') + ' · ' + document.title; }
@@ -1669,6 +1706,12 @@
         }
       });
       document.addEventListener('change', function (e) { var t = e.target; if (t.classList && t.classList.contains('mselect') && t.closest('#aic')) setMeasure(t.value); });
+      // a package under the pointer, or with the focus, lights its dot on the head's chart (a touch goes straight to the click)
+      var pkgOf = function (t) { return Router.current === 'landscape' && t && t.closest ? t.closest('#aic .shelves .it-b') : null; };
+      document.addEventListener('pointerover', function (e) { var b = pkgOf(e.target); if (b && e.pointerType !== 'touch') light(b.getAttribute('data-open')); });
+      document.addEventListener('pointerout', function (e) { var b = pkgOf(e.target); if (!b || (e.relatedTarget && b.contains(e.relatedTarget))) return; var f = pkgOf(document.activeElement); light(f ? f.getAttribute('data-open') : null); });
+      document.addEventListener('focusin', function (e) { var b = pkgOf(e.target); if (b) light(b.getAttribute('data-open')); });
+      document.addEventListener('focusout', function (e) { var b = pkgOf(e.target); if (b && !pkgOf(e.relatedTarget)) light(null); });
       document.addEventListener('pointerdown', function (e) { if (tipClose) tipClose(e); }, true);
       var rt = null, lastW = window.innerWidth;
       window.addEventListener('resize', function () {

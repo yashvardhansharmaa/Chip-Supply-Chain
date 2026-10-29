@@ -97,16 +97,21 @@ const audited = async (t, tag) => { const a = await t.ev(AUDIT); say(!a.overflow
       const withFig = await t.ev(`CP.Landscape.fieldOf('fp16').pts.length`);
       const keys = await t.ev(`(function(){ var s=document.querySelector('#aic-c-head svg.chart'), host=s.parentNode, seen={}; s.focus(); s.dispatchEvent(new KeyboardEvent('keydown',{key:'Home',bubbles:true})); for (var i=0;i<45;i++){ var tp=host.querySelector('.ctip'); if(tp && !tp.hidden) seen[tp.querySelector('.ct-n').firstChild.textContent]=1; s.dispatchEvent(new KeyboardEvent('keydown',{key:'ArrowRight',bubbles:true})); } s.blur(); return Object.keys(seen).length; })()`);
       say(keys === withFig, `${tag}: the arrow keys reach ${keys} of ${withFig} dots`);
-      const taps = await t.ev(`(function(){ var s=document.querySelector('#aic-c-head svg.chart'), host=s.parentNode, ok=0; var cs=[].slice.call(s.querySelectorAll('circle.dot, path.off')); cs.forEach(function(c){ var r=c.getBoundingClientRect(); s.dispatchEvent(new MouseEvent('click',{bubbles:true,clientX:r.left+r.width/2,clientY:r.top+r.height/2})); var tp=host.querySelector('.ctip'); if(tp && !tp.hidden) ok++; }); return { ok: ok, n: cs.length }; })()`);
-      say(taps.ok === taps.n && taps.n === withFig, `${tag}: a tap on each of ${taps.n} dots pins its tip (${taps.ok})`);
+      // quick win B (29 Oct 2026): a tap on a dot of the head's chart marks that chip's package on its shelf, in place of the tip.
+      // The dots are drawn in fieldOf's order; where two dots share a place, the package of either one counts
+      const taps = await t.ev(`(function(){ document.documentElement.style.scrollBehavior='auto'; var s=document.querySelector('#aic-c-head svg.chart'), host=s.parentNode, ok=0, F=CP.Landscape.fieldOf(CP.Landscape.S.measure||'fp16'); var cs=[].slice.call(s.querySelectorAll('circle.dot, path.off')), at={};
+        var mid=function(c){ var r=c.getBoundingClientRect(); return { x:r.left+r.width/2, y:r.top+r.height/2 }; }; cs.forEach(function(c,i){ at[F.pts[i].c.id]=c; });
+        cs.forEach(function(c){ var m=mid(c); s.dispatchEvent(new MouseEvent('click',{bubbles:true,clientX:m.x,clientY:m.y})); m=mid(c); var li=document.querySelector('#aic li.it.is-lit .it-b'), tp=host.querySelector('.ctip'), q=li&&at[li.getAttribute('data-open')]&&mid(at[li.getAttribute('data-open')]); if(q && Math.abs(q.x-m.x)<1 && Math.abs(q.y-m.y)<1 && (!tp || tp.hidden)) ok++; });
+        window.scrollTo(0,0); return { ok: ok, n: cs.length }; })()`);
+      say(taps.ok === taps.n && taps.n === withFig, `${tag}: a tap on each of ${taps.n} dots marks its package on its shelf, with no tip (${taps.ok})`);
       // the memory leader: open the select, choose Memory (a native select: one press opens it, one choice)
       await t.ev(`(function(){ var s=document.getElementById('aic-m-head'); s.focus(); s.value='mem'; s.dispatchEvent(new Event('change',{bubbles:true})); })()`);
       await sleep(300);
       const lead = await t.ev(`document.querySelector('#aic .head .finding').textContent`), mh = await t.ev('location.hash');
       say(/^The Instinct MI455X has the highest published memory, 432 gigabytes\./.test(lead) && /measure=mem/.test(mh) && (await t.pick()) === '', `${tag}: the memory leader in 2 ${word} (open the select, choose Memory): "${lead}" (${mh})`);
       tasks.push(`${tag}  which chip leads on memory: 2 ${word} (the select at the head, then Memory)`);
-      // "Open the …" in a tip opens one chip and adds nothing
-      await t.ev(`(function(){ var s=document.querySelector('#aic-c-head svg.chart'), c=s.querySelector('circle.dot'), r=c.getBoundingClientRect(); s.dispatchEvent(new MouseEvent('click',{bubbles:true,clientX:r.left+r.width/2,clientY:r.top+r.height/2})); })()`);
+      // "Open the …" in a tip opens one chip and adds nothing (the head's tip now opens from the keys, quick win B, 29 Oct 2026)
+      await t.ev(`(function(){ document.querySelector('#aic-c-head svg.chart').focus(); })()`);
       await t.click(`document.querySelector('#aic-c-head .ctip a[data-open]')`);
       const opened = await t.pick();
       say(opened && opened.split(',').length === 1 && !!(await t.ev(`!!document.getElementById('aic-card')`)), `${tag}: "Open the …" in a tip opens one chip and adds nothing (${opened})`);
