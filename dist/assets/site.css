@@ -4390,6 +4390,123 @@ html.kb:has(.view[data-view="glossary"]:not([hidden])) { scroll-padding-top: cal
 @media (prefers-reduced-motion: reduce) { .ex-panel.ex-flash { animation: none; } }
 
 
+/* module: supshares.css */
+/* The Suppliers ribbons, by share (build/modules/supplier-shares.js, src/modules/supshares.js). They take the ribbon styles
+   in suppliers.css (.sup-pipe, .sup-rib, the key, the buttons, the tip); this sheet adds the layout that puts the follow
+   buttons first, the ribbon states, the printed shares, the firm names, the phone rows, the tip, the Table and the source
+   line with its actions. */
+.ss .ss-code { font-family: var(--font-code); font-size: 12px; }
+
+/* the follow buttons come first in the page's order (and so in the tab order), the drawing after them. A wide screen still
+   sets them in the right-hand column, beside the drawing, with the notes under them. */
+.ss-body { grid-template-rows: auto 1fr auto; }
+.ss .ss-side-top { grid-column: 10 / 13; grid-row: 1; padding-top: 22px; min-width: 0; }
+.ss .ss-plot { grid-column: 1 / 10; grid-row: 1 / 3; }
+.ss .ss-side-note { grid-column: 10 / 13; grid-row: 2; align-self: start; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line); }
+.ss .ss-src { grid-column: 1 / 10; grid-row: 3; }
+.ss .ss-side-note p { margin: 0; }
+.ss .ss-side-note p + p { margin-top: 10px; }
+@media (max-width: 1199px) {
+  .ss-body { grid-template-rows: none; }
+  .ss .ss-side-top, .ss .ss-plot, .ss .ss-side-note, .ss .ss-src { grid-column: 1 / -1; grid-row: auto; }
+  .ss .ss-side-top { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); column-gap: 28px; align-items: start; padding-top: 18px; }
+  .ss .ss-side-top .sup-follow { margin-top: 0; padding-top: 0; border-top: 0; }
+  .ss .ss-side-note { max-width: 78ch; }
+}
+@media (max-width: 760px) {
+  .ss .ss-side-top { display: block; }
+  .ss .ss-side-top .sup-follow { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line); }
+}
+.ss .sup-legend .sup-lg { display: flex; align-items: center; gap: 10px; }
+.ss .sup-legend .ss-key { padding-left: 36px; }
+
+/* the ribbons: gray, the followed country's in wine, a hovered segment's or ribbon's darker and the rest faded */
+.ss .sup-rib { fill: var(--rib); opacity: 0.8; }
+.ss[data-lit="1"] .sup-rib { opacity: 0.45; }
+.ss[data-lit="1"] .sup-rib[data-lit] { fill: var(--rib-crit); opacity: 0.95; }
+.ss .ss-svg[data-hot="1"] .sup-rib { opacity: 0.22; }
+.ss .ss-svg[data-hot="1"] .sup-rib[data-lit] { opacity: 0.4; }
+.ss .ss-svg[data-hot="1"] .sup-rib[data-hot] { fill: var(--rib-on); opacity: 0.9; }
+.ss .ss-svg[data-hot="1"] .sup-rib[data-hot][data-lit] { fill: var(--rib-crit); opacity: 1; }
+.ss-clab.on { fill: var(--accent-ink); font-weight: 600; }
+.ss-hit { fill: transparent; cursor: pointer; outline: none; }
+.ss-hit:focus-visible { stroke: var(--accent); stroke-width: 1.5px; }
+
+/* shares printed on the drawing, with a ground-colored halo so they read over the ribbons */
+.ss-v { font-family: var(--font-ui); font-size: 12px; font-weight: 600; fill: var(--ink); font-variant-numeric: tabular-nums; paint-order: stroke; stroke: var(--bg); stroke-width: 3.5px; stroke-linejoin: round; }
+.ss-v.ss-v-lit { fill: var(--accent-ink); }
+
+/* the segment labels: a muted mark where the row is not 2025 revenue, and the firms under the name. A followed country's
+   firms go to ink and the rest to the label gray (5.3:1 light, 5.7:1 dark). */
+.ss-mk { fill: var(--muted); color: var(--muted); font-size: 11.5px; }
+.ss-names { font-family: var(--font-ui); fill: var(--ink-2); }
+.ss-fn, .ss-fsep { transition: fill 160ms linear, color 160ms linear; }
+.ss-fsep { fill: var(--muted); color: var(--muted); }
+.ss-fn.on { fill: var(--ink); color: var(--ink); font-weight: 600; }
+.ss-fn.off { fill: var(--muted); color: var(--muted); }
+
+/* the tip */
+.ss-tip { max-width: 360px; }
+.ss-tip .ss-tip-big { display: block; margin: 0 0 6px; font-family: var(--font-ui); font-size: 20px; font-weight: 600; line-height: 1.1; color: var(--ink); font-variant-numeric: tabular-nums; }
+.ss-tip .ss-tip-firms { display: block; margin-top: 2px; font-family: var(--font-ui); font-size: 13px; line-height: 1.45; color: var(--ink); }
+.ss-tip .ss-tip-firms .k { display: block; font-size: 11.5px; color: var(--muted); }
+.ss-tip .ss-tip-src { display: block; margin-top: 8px; padding-top: 7px; border-top: 1px solid var(--line); font-family: var(--font-ui); font-size: 12px; line-height: 1.45; color: var(--ink-2); }
+.ss-tip .ss-tip-src a { color: var(--ink-2); text-underline-offset: 2px; }
+
+/* narrower than 600 px: one row per segment */
+.ss-rows { list-style: none; margin: 0; padding: 0; }
+.ss-row { margin: 0; padding: 10px 0 11px; border-bottom: 1px solid var(--line); }
+.ss-row:first-child { padding-top: 2px; }
+.ss-row-h { margin: 0 0 6px; font-family: var(--font-ui); font-size: 14px; line-height: 19px; color: var(--ink); }
+.ss-row-h .ss-mk { font-size: 12px; }
+.ss-strip { display: flex; height: 24px; }
+.ss-sl { flex: none; box-sizing: border-box; display: flex; align-items: center; min-width: 1px; overflow: hidden; border-right: 1px solid var(--bg); background: var(--rib); }
+.ss-sl:last-child { border-right: 0; }
+.ss-sl b { padding: 0 5px; font-family: var(--font-ui); font-size: 11.5px; font-weight: 600; line-height: 1; white-space: nowrap; color: var(--ink); font-variant-numeric: tabular-nums; }
+.ss-sl[data-lit] { background: var(--rib-crit); }
+.ss-sl[data-lit] b { color: #fff; } /* 10.2:1 on the light wine, 4.8:1 on the dark */
+.ss-rest { margin: 5px 0 0; font-family: var(--font-ui); font-size: 12px; line-height: 17px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.ss-rest span[data-lit] { color: var(--accent-ink); font-weight: 600; }
+.ss-row-f { margin: 5px 0 0; font-family: var(--font-ui); font-size: 12.5px; line-height: 18px; color: var(--ink-2); }
+.ss-row-f:empty { display: none; }
+
+/* the source line, with Cite, Table and CSV at its end as a figure's strip has them; the citation opens under it */
+.ss .ss-src { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; column-gap: 24px; row-gap: 4px; }
+.ss .ss-src .fs-src { flex: 1 1 32em; min-width: 0; }
+.ss .ss-acts { display: flex; flex-wrap: nowrap; white-space: nowrap; font-family: var(--font-ui); font-size: var(--ui-s); }
+.ss .ss-acts > a, .ss .ss-acts > button { font: inherit; color: var(--ink-2); background: none; border: 0; padding: 3px 0; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line-2); text-decoration-thickness: 1px; }
+.ss .ss-acts > * + *::before { content: "\00b7"; display: inline-block; width: 17px; text-align: center; color: var(--muted); }
+.ss .ss-acts > a:hover, .ss .ss-acts > button:hover { color: var(--accent-ink); text-decoration-color: var(--accent); }
+.ss .ss-acts > [aria-pressed="true"] { color: var(--accent-ink); text-decoration-color: var(--accent); }
+.ss .ss-src .ch-cite-box { flex-basis: 100%; margin: 6px 0 0; padding: 10px 14px; border-left: 2px solid var(--accent); background: var(--bg-2); }
+.ss .ss-src .ch-cite-text { margin: 0; font-family: var(--font-body); font-size: var(--t-note); line-height: 1.5; color: var(--ink); }
+.ss .ss-src .ch-cite-text a { font-family: var(--font-code); font-size: 12.5px; overflow-wrap: anywhere; }
+.ss .ss-src .ch-cite-copy { font-family: var(--font-ui); font-size: 13px; font-weight: 500; color: var(--accent-ink); background: none; border: 0; padding: 4px 0; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+
+/* the Table, in the drawing's place: the followed country's shares in bold */
+.ss-table { width: 100%; border-collapse: collapse; font-family: var(--font-ui); font-size: 13.5px; line-height: 19px; color: var(--ink); }
+.ss-table th, .ss-table td { padding: 7px 12px 7px 0; border-bottom: 1px solid var(--line); text-align: left; font-weight: 400; vertical-align: top; }
+.ss-table thead th { color: var(--muted); font-size: 12.5px; border-bottom-color: var(--ink); }
+.ss-table td { font-variant-numeric: tabular-nums; color: var(--ink-2); }
+.ss-table td a { color: var(--ink-2); text-underline-offset: 2px; text-decoration-color: var(--line-2); }
+.ss-table .ss-tc[data-lit] { color: var(--ink); font-weight: 700; }
+.ss-table .ss-tseg { display: block; font-weight: 500; color: var(--ink); }
+.ss-table .ss-tfirms { display: block; font-size: 12.5px; color: var(--muted); }
+@media (max-width: 599px) {
+  .ss-table { font-size: 12.5px; line-height: 17px; }
+  .ss-table th, .ss-table td { padding-right: 8px; }
+  .ss-table .ss-tfirms { font-size: 11.5px; }
+}
+@media (prefers-reduced-motion: reduce) { .ss-fn, .ss-fsep { transition: none; } }
+
+/* on paper: the drawing as it stands, scaled to the page, with its key and notes; no tip and no actions */
+@media print {
+  .ss .ss-tip, .ss .ss-acts, .ss .ch-cite-box { display: none !important; }
+  .ss .ss-svg { max-width: 100%; height: auto; }
+  .ss .ss-plot { break-inside: avoid; }
+}
+
+
 /* module: underline.css */
 /* Chips built just under the line, first on Export Controls (build/modules/under-line.js, src/modules/underline.js). The
    figure takes the chapter figure's grammar (chapter.css) outside a chapter: the ruled box at 666 px, the Fraunces title,

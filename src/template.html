@@ -154,19 +154,8 @@ html:not(.booted)[data-pick] .view[data-view="suppliers"] > :not(.view-head) { d
         {{SUPPLIERS_FACTS}}
       </div>
       {{HOME_MAP}}
-      <section class="sup-pipe" id="sup-pipe" aria-labelledby="sup-pipe-h">
-        <div class="sup-sec-h sup-pipe-top"><h2 class="sup-pipe-h" id="sup-pipe-h">Which countries supply which segments</h2>
-          <div class="sup-seg2 sup-group" id="sup-group" role="group" aria-label="Count the EU-27 members"><button type="button" class="sup-gbtn" data-group="country" aria-pressed="true">Each country</button><button type="button" class="sup-gbtn" data-group="eu" aria-pressed="false">EU-27 together</button></div></div>
-        <div class="sup-pipe-body">
-          <div class="sup-pipe-plot"><div class="sup-pipe-scroll" id="sup-pipe-scroll"></div><div class="sup-tip" id="sup-tip" role="tooltip" hidden></div></div>
-          <div class="sup-pipe-side">
-            <p class="sup-legend" id="sup-legend"></p>
-            <div class="sup-follow"><p class="sup-follow-k" id="sup-follow-k">Choose a country to follow its ribbons</p><div class="sup-chips" id="sup-chips" role="group" aria-labelledby="sup-follow-k"></div></div>
-            <p class="sup-note sup-note-sel">The list is a selection of the main suppliers in each segment, so a ribbon's width counts firms on this list and says nothing about market share.</p>
-          </div>
-          <p class="sup-note sup-pipe-note" id="sup-note"></p>
-        </div>
-      </section>
+      <!-- the ribbons by share (build/modules/supplier-shares.js, src/modules/supshares.js; 29 Oct 2026) -->
+      {{SUPPLIER_SHARES}}
       <section class="sup-reg" id="sup-reg" aria-labelledby="sup-tab-segment">
       <div class="sup-reg-h">
         <nav class="sup-tabs" aria-label="Firms by segment, by country or in a table"><a href="#/suppliers" id="sup-tab-segment" data-tab="segment" aria-current="true">By segment</a><a href="#/suppliers?tab=country" data-tab="country">By country</a><a href="#/suppliers?tab=table" data-tab="table">Table</a></nav>

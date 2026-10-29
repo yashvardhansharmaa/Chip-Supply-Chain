@@ -1692,35 +1692,21 @@
   })();
 
   /* ---------------- suppliers ----------------
-     One list of firms, drawn twice and listed three ways. The ribbons run from the countries the firms are based in to the
-     twenty segments of the list (its categories), a ribbon's width the number of firms; the firms rated Critical ride on top
-     in red wine, the one data color on the site, and every other ribbon is gray. Under them the firms are listed by segment
-     (the ladder, from design to power), by country, or in a table, every name opening its own panel. "Stages" are the
+     One list of firms, listed three ways: by segment (the ladder, from design to power), by country, or in a table, every
+     name opening its own panel. Over it, the ribbons by share (src/modules/supshares.js, since 29 Oct 2026): which countries
+     hold each of the chokepoint matrix's twenty segments. Until then the ribbons counted the firms on this list. "Stages" are the
      stage chapters of the chain (build/stages.js); the list's own categories are "segments". */
   var Suppliers = {
     rows: DATA.suppliers || [], built: false, stage: '', country: '', chk: '', q: '', sortKey: 'name', sortDir: 1,
-    tab: 'segment', savedTab: '', follow: '', atlasCC: '', stages: [], at: 0, tipAt: -1, drawW: 0, wiped: false,
-    CO: ['US', 'JP', 'CN', 'TW', 'KR', 'NL', 'DE'], // the band order down the stack; every other country stacks last
-    /* the ribbons can also count the EU's members as one column (#/suppliers?tab=country&group=eu). Every firm keeps its own
-       country: the grouping only changes which column it is drawn in, and the list's "Other countries" follows the drawing */
+    tab: 'segment', savedTab: '', atlasCC: '', stages: [],
+    CO: ['US', 'JP', 'CN', 'TW', 'KR', 'NL', 'DE'], // the firm filter's "Other countries" holds every country but these
+    /* the EU-27 members, for the firm filter's "EU-27 members", which #/suppliers?group=eu sets (the Glossary's EU-27 card) */
     EU27: ['AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE'], // the members in 2026
-    EU_CO: ['US', 'JP', 'CN', 'TW', 'KR', 'EU'], group: 'country',
-    cols: function () { return (this.group === 'eu' ? this.EU_CO : this.CO).concat(['Other']); },
-    colOf: function (cc) { // the column a firm of this country is drawn in
-      if (this.group === 'eu' && this.EU27.indexOf(cc) >= 0) return 'EU';
-      return (this.group === 'eu' ? this.EU_CO : this.CO).indexOf(cc) >= 0 ? cc : 'Other';
-    },
-    keyOf: function (c) { return c === 'Other' ? '__other' : c === 'EU' ? '__eu' : c; }, // a column, as the firm filter's value
-    /* under the ribbons: they count firms by each one's own headquarters, as the supplier list does, while the country shares
-       count by parent company (data/chokepoint-matrix-notes.md, "Converting firm shares to country shares"; the Glossary's
-       country cards carry the same note) */
-    NOTE: 'The ribbons count each firm in the supplier list under the country of its own headquarters. Country shares of a market\'s revenue count most firms under their parent company\'s home country. ' +
-      'Siemens EDA is run from Oregon but owned by Siemens AG, so the ribbons count it under the US and the EDA software share under Germany. Linde plc is incorporated in Ireland, with head offices in the UK and the US. ' +
-      'The ribbons count it under the UK. The specialty gases share counts it under Germany for its roots in Linde AG, as Georgetown University\'s Emerging Technology Observatory does.',
+    colOf: function (cc) { return this.CO.indexOf(cc) >= 0 ? cc : 'Other'; }, // the firm filter's "Other countries" are those outside CO
     LEVELS: ['Critical', 'Important', 'Contested', 'Diversified'],
     RANK: { Critical: 0, Important: 1, Contested: 2, Diversified: 3 },
     ORDER: ['Design and EDA', 'IP and architecture', 'Silicon and wafers', 'Photomasks', 'Lithography', 'Deposition and etch', 'Photoresist and materials', 'Chemicals and gases', 'Optics and photonics', 'Equipment subsystems and components', 'Metrology and inspection', 'Foundry', 'Memory', 'Advanced packaging and OSAT', 'Test', 'Substrates and PCBs', 'Interconnect and networking', 'Power and cooling', 'Systems and servers', 'AI accelerator vendors'], // chain order, design first
-    /* the long category names would collide under a 59 px column, so the drawing uses these */
+    /* the shorter names the ladder's jump list and /suppliers/ use for the long categories (build/modules/reference-pages.js reads them) */
     SHORT: {
       'Equipment subsystems and components': 'Equipment subsystems', 'Advanced packaging and OSAT': 'Advanced packaging',
       'Interconnect and networking': 'Interconnect', 'AI accelerator vendors': 'Accelerator vendors',
@@ -1729,38 +1715,24 @@
       'Systems and servers': 'Systems and servers', 'Power and cooling': 'Power and cooling',
       'Silicon and wafers': 'Silicon wafers', 'IP and architecture': 'IP and architecture'
     },
-    /* the address: #/suppliers opens By segment, ?tab=country By country and ?tab=table the table; &group=eu draws the EU-27
-       members as one column in the ribbons and lands on them (the Glossary's EU-27 card links there) */
+    /* the address: #/suppliers opens By segment, ?tab=country By country and ?tab=table the table; &group=eu filters the firms
+       to the EU-27 members and lands on them (the Glossary's EU-27 card links there). Until 29 Oct 2026 it drew the members as
+       one column of the ribbons; the ribbons by share have no EU-27 column, since it would draw sums of shares. */
     activate: function () {
       var h = location.hash || '', eu = /[?&]group=eu\b/.test(h);
       var tab = /[?&]tab=country\b/.test(h) ? 'country' : /[?&]tab=table\b/.test(h) ? 'table' : '';
-      if (eu) this.setGroup('eu', true); // before the first draw, so the ribbons are drawn once, grouped
-      if (!this.built) this.build(); else this.fitPipe();
+      if (!this.built) this.build();
       this.setTab(tab || this.savedTab || 'segment', true);
-      // the router has just put the page at its top; a link to the EU-27 view lands on the ribbons, under the route
-      if (eu) setTimeout(function () { var t = $('#sup-pipe'); if (t && !t.closest('[hidden]')) { scrollToEl(t, false); Router.settle(t); } }, 0);
+      // the router has just put the page at its top; the EU-27 address lands on the firms, under the ribbons
+      if (eu) { this.show({ country: '__eu' }); setTimeout(function () { var t = $('#sup-reg'); if (t && !t.closest('[hidden]')) { scrollToEl(t, false); Router.settle(t); } }, 0); }
     },
-    /* the ribbons by country, or with the EU-27 members as one column; quiet: set it up before the first draw */
-    setGroup: function (g, quiet) {
-      g = g === 'eu' ? 'eu' : 'country';
-      $$('#sup-group .sup-gbtn').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-group') === g ? 'true' : 'false'); });
-      if (g === this.group) return;
-      this.group = g;
-      this.follow = g === 'eu' ? 'EU' : this.atlasCol(); // the EU column lights as it appears; back by country, the route's choice lights again
-      if (!this.built) return;
-      this.groupStages(); this.legend(); this.chips(); this.otherCount();
-      this.drawW = 0; this.drawPipe();
-      this.sync(); this.render();
-      if (!quiet) this.url();
-    },
-    /* the address follows the tab and the grouping, without a new history entry */
+    /* the address follows the tab, without a new history entry */
     url: function () {
       var q = [];
       if (this.tab === 'country' || this.tab === 'table') q.push('tab=' + this.tab);
-      if (this.group === 'eu') q.push('group=eu');
       try { history.replaceState(history.state, '', '#/suppliers' + (q.length ? '?' + q.join('&') : '')); } catch (e) { }
     },
-    otherCount: function () { // "Other countries" in the firm filter counts what the drawing's Other column holds
+    otherCount: function () { // "Other countries" in the firm filter counts the firms of every country outside CO
       var self = this, o = $('#sup-country option[value="__other"]'); if (!o) return;
       o.textContent = 'Other countries (' + this.rows.filter(function (r) { return self.colOf(r.country) === 'Other'; }).length + ')';
     },
@@ -1775,15 +1747,9 @@
       if (!quiet) this.url();
     },
     toStage: function () { if (this.tab !== 'segment') this.setTab('segment'); }, // the ribbons index the ladder by segment
-    atlasCol: function () { var c = this.atlasCC ? this.colOf(this.atlasCC) : ''; return c === 'Other' ? '' : c; }, // a country drawn inside Other lights nothing
-    light: function (cc) { // the route's chosen country lights its column's ribbons and presses its button there
+    light: function (cc) { // the route's chosen country follows its column in the ribbons, where it has one (src/modules/supshares.js)
       this.atlasCC = cc || '';
-      this.follow = this.atlasCol();
-      if (this.built) this.sync();
-    },
-    followCol: function (c) { // a country button over the ribbons: press it to follow its ribbons, press it again to let go
-      this.follow = this.follow === c ? '' : c;
-      this.sync();
+      var S = window.CP_SUPSHARES; if (S) S.follow(S.column(this.atlasCC));
     },
 
     build: function () {
@@ -1801,15 +1767,6 @@
       if (other) { var oo = document.createElement('option'); oo.value = '__other'; oo.textContent = 'Other countries (' + other + ')'; sel.appendChild(oo); }
       this.otherCount();
       sel.addEventListener('change', function () { self.setCountry(sel.value, false); });
-      // over the ribbons, the switch that counts the EU-27 as one column; beside them, the buttons that follow a country's
-      // ribbons, and the note on how a firm is given a country
-      $$('#sup-group .sup-gbtn').forEach(function (b) {
-        b.setAttribute('aria-pressed', b.getAttribute('data-group') === self.group ? 'true' : 'false');
-        b.addEventListener('click', function () { self.setGroup(b.getAttribute('data-group')); });
-      });
-      var note = $('#sup-note'); if (note) note.textContent = this.NOTE;
-      var chipBox = $('#sup-chips'); if (chipBox) chipBox.addEventListener('click', function (e) { var b = e.target.closest ? e.target.closest('.sup-chip') : null; if (b) self.followCol(b.getAttribute('data-c')); });
-      this.chips();
       // the tabs change the list in place and keep the reader where they are; the address follows (url)
       $$('.sup-tabs a').forEach(function (a) { a.addEventListener('click', function (e) { if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return; e.preventDefault(); self.setTab(a.getAttribute('data-tab')); }); });
 
@@ -1822,15 +1779,6 @@
 
       this.buildLadder();
       this.buildCountries();
-      this.legend();
-      this.drawPipe();
-      var host = $('#sup-pipe-scroll');
-      host.addEventListener('scroll', function () { self.hideTip(); });
-      // the tip stays while the pointer moves onto it, and Escape closes it (WCAG 1.4.13; accessibility #10)
-      var tipEl = $('#sup-tip');
-      if (tipEl) { tipEl.addEventListener('mouseenter', function () { clearTimeout(self.tipT); }); tipEl.addEventListener('mouseleave', function () { self.hideTip(); }); }
-      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { var t = $('#sup-tip'); if (t && !t.hidden) self.hideTip(); } });
-      var rt; window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(function () { self.fitPipe(); }, 160); });
       this.sync();
       this.render();
     },
@@ -1849,221 +1797,6 @@
       var order = this.ORDER.filter(function (c) { return by[c]; }); // a category the data adds later lands at the end
       Object.keys(by).sort().forEach(function (c) { if (order.indexOf(c) < 0) order.push(c); });
       this.stages = order.map(function (c, i) { var s = by[c]; s.i = i; s.short = self.SHORT[c] || c; s.id = 'sup-rung-' + i; return s; });
-    },
-    coName: function (c) { return c === 'Other' ? 'Other' : c === 'EU' ? 'European Union' : cname(c); },
-    otherNames: function (rows) { var seen = {}; rows.forEach(function (r) { if (this.colOf(r.country) !== r.country) seen[cname(r.country)] = 1; }, this); return Object.keys(seen).sort(); }, // the real countries behind an Other or EU band or ribbon
-
-    /* ---- the ribbons: countries on the left, the segments on the right ---- */
-    fitPipe: function () {
-      var host = $('#sup-pipe-scroll'); if (!host) return;
-      if (Math.max(280, Math.round(host.clientWidth) || 280) !== this.drawW) this.drawPipe();
-    },
-    drawPipe: function () { // the ribbons: countries on the left, the twenty segments on the right, a ribbon for every pairing, its width the firms
-      var self = this, host = $('#sup-pipe-scroll'); if (!host || !host.clientWidth) return; // a hidden view has no width; it is drawn when it opens
-      var st = this.stages, n = st.length; if (!n) return;
-      // drawn to the column's width; a phone gets country codes on the left and a taller field, so every segment label stays on screen
-      var W = Math.max(280, Math.round(host.clientWidth) || 280), tight = W < 1000, phone = W < 600;
-      this.drawW = W;
-      var cols = this.cols(), nc = cols.length;
-      var total = this.rows.length || 1;
-      var H = phone ? 720 : tight ? 520 : 580, padT = 16, padB = 16, inner = H - padT - padB;
-      var x0 = phone ? 66 : tight ? 128 : 172, wL = phone ? 10 : 12, x1 = W - (phone ? 150 : tight ? 168 : 214), wR = phone ? 8 : 10;
-      var coLab = function (c) { return phone ? c : self.coName(c); };
-      var gL = 8, gR = 4;
-      var uL = (inner - gL * (nc - 1)) / total, uR = (inner - gR * (n - 1)) / total;
-      var cTot = {}; cols.forEach(function (c) { cTot[c] = 0; });
-      st.forEach(function (s) { cols.forEach(function (c) { cTot[c] += s.by[c] || 0; }); });
-      var ly = {}, y = padT;                                             // the left nodes, in the fixed country order
-      cols.forEach(function (c) { ly[c] = [y, y + cTot[c] * uL]; y += cTot[c] * uL + gL; });
-      var ry = [], y2 = padT;                                            // the right nodes, in the segments' chain order
-      st.forEach(function (s) { ry.push([y2, y2 + s.n * uR]); y2 += s.n * uR + gR; });
-      var curL = {}, curR = []; cols.forEach(function (c) { curL[c] = ly[c][0]; }); st.forEach(function (s, i) { curR[i] = ry[i][0]; });
-      var ribs = '', mx = (x0 + wL + x1) / 2;
-      cols.forEach(function (c) {                                        // each country's ribbons leave in segment order; each segment's arrive in country order
-        st.forEach(function (s, i) {
-          var k = s.by[c] || 0; if (!k) return;
-          var kc = s.rows.filter(function (r) { return self.colOf(r.country) === c && r.chokepoint === 'Critical'; }).length;
-          var a0 = curL[c], a1 = a0 + k * uL, b0 = curR[i], b1 = b0 + k * uR;
-          curL[c] = a1; curR[i] = b1;
-          // the pairing's Critical firms ride on top as a ribbon of their own, as wide as their count, so the red wine counts them
-          var am = a0 + kc * uL, bm = b0 + kc * uR, xa = x0 + wL;
-          var path = function (A0, A1, B0, B1, cls) {
-            return '<path class="sup-band sup-rib c-' + c + cls + '" data-c="' + c + '" data-i="' + i + '" d="M' + xa + ',' + A0.toFixed(1) +
-              ' C' + mx.toFixed(1) + ',' + A0.toFixed(1) + ' ' + mx.toFixed(1) + ',' + B0.toFixed(1) + ' ' + x1 + ',' + B0.toFixed(1) +
-              ' L' + x1 + ',' + B1.toFixed(1) + ' C' + mx.toFixed(1) + ',' + B1.toFixed(1) + ' ' + mx.toFixed(1) + ',' + A1.toFixed(1) + ' ' + xa + ',' + A1.toFixed(1) + 'Z"></path>';
-          };
-          if (kc) ribs += path(a0, am, b0, bm, ' is-crit');
-          if (kc < k) ribs += path(am, a1, bm, b1, '');
-        });
-      });
-      var fsL = phone ? 11.5 : tight ? 12.5 : 13.5, fsR = phone ? 11 : tight ? 11.5 : 12.5; // no label under 11 px (redesign, 25 Oct 2026)
-      var nodesL = '', hitsL = '';
-      cols.forEach(function (c) {
-        var yy = ly[c], mid = (yy[0] + yy[1]) / 2;
-        nodesL += '<rect class="sup-cnode c-' + c + '" data-c="' + c + '" x="' + x0 + '" y="' + yy[0].toFixed(1) + '" width="' + wL + '" height="' + Math.max(1.5, yy[1] - yy[0]).toFixed(1) + '"></rect>' +
-          '<text class="sup-clab" x="' + (x0 - 10) + '" y="' + (mid + 4.5).toFixed(1) + '" font-size="' + fsL + '">' + esc(coLab(c)) + '<tspan class="sup-cn"> ' + cTot[c] + '</tspan></text>';
-        hitsL += '<rect class="sup-chit" data-c="' + c + '" x="0" y="' + Math.max(0, yy[0] - 4).toFixed(1) + '" width="' + (x0 + wL + 6) + '" height="' + Math.max(18, yy[1] - yy[0] + 8).toFixed(1) + '"></rect>';
-      });
-      var nodesR = '', labs = '', hits = '';
-      st.forEach(function (s, i) {
-        var yy = ry[i], mid = (yy[0] + yy[1]) / 2;
-        nodesR += '<rect class="sup-snode" data-i="' + i + '" x="' + x1 + '" y="' + yy[0].toFixed(1) + '" width="' + wR + '" height="' + Math.max(1.5, yy[1] - yy[0]).toFixed(1) + '"></rect>';
-        labs += '<g class="sup-lab" data-i="' + i + '"><text class="sup-lab-t" x="' + (x1 + wR + 8) + '" y="' + (mid + 4).toFixed(1) + '" font-size="' + fsR + '">' + esc(s.short) + '<tspan class="sup-lab-n"> ' + s.n + '</tspan></text></g>';
-        var top = Math.min(yy[0], mid - 9), hgt = Math.max(18, yy[1] - yy[0]);
-        hits += '<rect class="sup-hit" data-i="' + i + '" x="' + (x1 - 6) + '" y="' + top.toFixed(1) + '" width="' + (W - x1 + 6) + '" height="' + hgt.toFixed(1) +
-          '" role="button" tabindex="' + (i === self.at ? '0' : '-1') + '" aria-label="' + esc(s.name + ': ' + s.n + ' firms, ' + s.crit.length + ' critical.') + '"></rect>';
-      });
-      // tabindex -1: Chrome otherwise makes the drawing itself a tab stop (its content overflows it), one before the stages
-      host.innerHTML = '<svg class="sup-pipe-svg" width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '" tabindex="-1" role="group" aria-label="Countries to segments: a ribbon for every country and segment pairing, its width the number of firms, red wine for the Critical firms' + (this.group === 'eu' ? '. The EU-27 members are drawn as one' : '') + '">' +
-        '<defs><clipPath id="sup-wipe-clip"><rect class="sup-wipe' + (this.wiped ? '' : ' is-new') + '" x="0" y="0" width="' + W + '" height="' + H + '"></rect></clipPath></defs>' +
-        '<g class="sup-flow" clip-path="url(#sup-wipe-clip)">' + ribs + nodesL + nodesR + '<g class="sup-labels">' + labs + '</g><g class="sup-clabs">' + '</g></g>' +
-        '<g class="sup-chits">' + hitsL + '</g><g class="sup-hits">' + hits + '</g></svg>';
-      // the country labels must sit above the hit rects to stay crisp, but the hits must catch the pointer: labels go last, pointer-events off
-      var svg = $('.sup-pipe-svg', host);
-      var clabs = ''; cols.forEach(function (c) { var yy = ly[c], mid = (yy[0] + yy[1]) / 2; clabs += '<text class="sup-clab" x="' + (x0 - 10) + '" y="' + (mid + 4.5).toFixed(1) + '" font-size="' + fsL + '">' + esc(coLab(c)) + '<tspan class="sup-cn"> ' + cTot[c] + '</tspan></text>'; });
-      $$('.sup-clab', svg).forEach(function (t) { t.parentNode.removeChild(t); });
-      svg.insertAdjacentHTML('beforeend', '<g class="sup-clabs" pointer-events="none">' + clabs + '</g>');
-      this.wiped = true;
-      this.x1 = x1;
-      var x = function () { return x1; };                                // the keyboard scroll-into-view below asks where a segment sits
-      var hot = function (sel, on) { svg.setAttribute('data-hot', on ? '1' : '0'); $$('.sup-rib', svg).forEach(function (r) { if (on && sel(r)) r.setAttribute('data-hot', '1'); else r.removeAttribute('data-hot'); }); };
-      svg.addEventListener('mouseover', function (e) {
-        var rib = e.target.closest ? e.target.closest('.sup-rib') : null;
-        clearTimeout(self.tipT); // back on the drawing before the tip went: it stays, or the new one takes its place
-        if (rib) { var rc = rib.getAttribute('data-c'), ri = rib.getAttribute('data-i'); hot(function (r) { return r.getAttribute('data-c') === rc && r.getAttribute('data-i') === ri; }, true); self.showRibTip(rib.getAttribute('data-c'), +rib.getAttribute('data-i'), rib, e); return; }
-        var ch = e.target.closest ? e.target.closest('.sup-chit') : null;
-        if (ch) { var c = ch.getAttribute('data-c'); hot(function (r) { return r.getAttribute('data-c') === c; }, true); self.showCountryTip(c, ch); return; }
-        var h = e.target.closest ? e.target.closest('.sup-hit') : null;
-        if (h) { var i = +h.getAttribute('data-i'); hot(function (r) { return +r.getAttribute('data-i') === i; }, true); self.showTip(i); }
-      });
-      svg.addEventListener('mouseleave', function () { clearTimeout(self.tipT); self.tipT = setTimeout(function () { self.hideTip(); }, 260); }); // a moment to reach the tip; hideTip clears the lit ribbons too
-      svg.addEventListener('click', function (e) {
-        var rib = e.target.closest ? e.target.closest('.sup-rib') : null;
-        if (rib) { var c0 = rib.getAttribute('data-c'); self.stage = ''; self.setCountry(self.keyOf(c0), false, true); self.goStage(+rib.getAttribute('data-i')); return; } // a ribbon sets its country, never clears it
-        var ch = e.target.closest ? e.target.closest('.sup-chit') : null;
-        if (ch) { var c = ch.getAttribute('data-c'); self.setCountry(self.keyOf(c), true); return; }
-        var h = e.target.closest ? e.target.closest('.sup-hit') : null;
-        if (h) self.goStage(+h.getAttribute('data-i'));
-      });
-      svg.addEventListener('focusin', function (e) {
-        var h = e.target.closest ? e.target.closest('.sup-hit') : null; if (!h) return;
-        self.at = +h.getAttribute('data-i'); self.roving(); hot(function (r) { return +r.getAttribute('data-i') === self.at; }, true); self.showTip(self.at, true);
-      });
-      svg.addEventListener('focusout', function () { hot(null, false); self.hideTip(); });
-      svg.addEventListener('keydown', function (e) {
-        var h = e.target.closest ? e.target.closest('.sup-hit') : null; if (!h) return;
-        var i = +h.getAttribute('data-i'), key = e.key, j = -1;
-        if (key === 'ArrowRight' || key === 'ArrowDown') j = Math.min(n - 1, i + 1);
-        else if (key === 'ArrowLeft' || key === 'ArrowUp') j = Math.max(0, i - 1);
-        else if (key === 'Home') j = 0;
-        else if (key === 'End') j = n - 1;
-        else if (key === 'Enter' || key === ' ') { e.preventDefault(); self.goStage(i); return; }
-        if (j < 0) return;
-        e.preventDefault(); self.at = j; self.roving();
-        var t = $('.sup-hit[data-i="' + j + '"]', svg); if (!t) return;
-        var xl = x(j);                                                   // keep the focused stage inside the scroller
-        if (xl - host.scrollLeft < 70) host.scrollLeft = Math.max(0, xl - 70);
-        else if (xl - host.scrollLeft > host.clientWidth - 70) host.scrollLeft = xl - host.clientWidth + 70;
-        t.focus();
-      });
-      var edge = function () { host.setAttribute('data-end', host.scrollLeft + host.clientWidth >= host.scrollWidth - 2 ? '1' : '0'); }; // a faded right edge says the drawing keeps going
-      if (!host.getAttribute('data-wired')) { host.setAttribute('data-wired', '1'); host.addEventListener('scroll', edge); }
-      edge();
-      this.sync();
-    },
-    wrapLabel: function (text, maxChars) {                               // two lines is the budget; the rest is squeezed
-      var words = String(text).split(' '), lines = [''], i, t;
-      for (i = 0; i < words.length; i++) {
-        t = lines[lines.length - 1] ? lines[lines.length - 1] + ' ' + words[i] : words[i];
-        if (t.length <= maxChars || !lines[lines.length - 1]) lines[lines.length - 1] = t;
-        else if (lines.length < 2) lines.push(words[i]);
-        else lines[1] += ' ' + words[i];
-      }
-      return lines;
-    },
-    roving: function () { // one tab stop for the whole drawing; the arrow keys walk the segments
-      var self = this;
-      $$('.sup-hit').forEach(function (r) { r.setAttribute('tabindex', +r.getAttribute('data-i') === self.at ? '0' : '-1'); });
-    },
-    legend: function () { // the key: gray for the firms on the list, red wine for those rated Critical
-      $('#sup-legend').innerHTML = '<span class="sup-lg"><i class="sup-all-sw" aria-hidden="true"></i>Firms on the list, by headquarters</span>' +
-        '<span class="sup-lg"><i class="sup-crit-sw" aria-hidden="true"></i>Of them, firms rated Critical</span>';
-    },
-    chips: function () { // one button a column of the drawing, so the EU-27 view has one for the EU
-      var self = this, box = $('#sup-chips'); if (!box) return;
-      box.innerHTML = this.cols().map(function (c) { return '<button type="button" class="sup-chip" data-c="' + c + '" aria-pressed="' + (self.follow === c) + '">' + esc(self.coName(c)) + '</button>'; }).join('');
-    },
-    tipAt: function (el, anchor, alignRight) { // place #sup-tip beside an element of the drawing, inside #sup-pipe
-      var host = $('#sup-pipe'); if (!host || !anchor) return;
-      el.hidden = false;
-      var r = anchor.getBoundingClientRect(), m = host.getBoundingClientRect(), w = el.offsetWidth, hh = el.offsetHeight;
-      var left = alignRight ? r.left - m.left - w - 10 : r.right - m.left + 10;
-      left = Math.max(0, Math.min(left, m.width - w));
-      var top = r.top - m.top + r.height / 2 - hh / 2;
-      top = Math.max(0, Math.min(top, m.height - hh));
-      el.style.left = Math.round(left) + 'px'; el.style.top = Math.round(top) + 'px';
-    },
-    showTip: function (i, focused) { // a segment: its firms by country and its Critical names
-      var s = this.stages[i], el = $('#sup-tip'), hit = $('.sup-hit[data-i="' + i + '"]');
-      if (!s || !el || !hit) return;
-      var self = this, co = '';
-      this.cols().forEach(function (c) {
-        var v = s.by[c] || 0; if (!v) return;
-        co += '<span class="sup-tip-c"><i class="sup-sw c-' + c + '"></i>' + esc(c) + '<b>' + v + '</b></span>';
-      });
-      el.innerHTML = '<b>' + esc(s.name) + '</b><span class="sup-tip-n">' + s.n + ' firms</span><span class="sup-tip-co">' + co + '</span>' +
-        (s.crit.length ? '<span class="sup-tip-crit"><i class="sup-crit-sw"></i>Critical: ' + esc(s.crit.join(', ')) + '</span>' : '');
-      this.tipAt(el, hit, true);
-      $$('.sup-lab').forEach(function (g) { if (+g.getAttribute('data-i') === i) g.setAttribute('data-hot', '1'); else g.removeAttribute('data-hot'); });
-    },
-    showCountryTip: function (c, anchor) { // a country: how many firms, in which segments, and its Critical names
-      var self = this, el = $('#sup-tip'); if (!el) return;
-      var rows = this.rows.filter(function (r) { return self.colOf(r.country) === c; });
-      var by = {}; rows.forEach(function (r) { by[r.category] = (by[r.category] || 0) + 1; });
-      var stages = this.stages.filter(function (s) { return by[s.name]; }).map(function (s) { return esc(s.short) + ' <b>' + by[s.name] + '</b>'; });
-      var crit = rows.filter(function (r) { return r.chokepoint === 'Critical'; }).map(function (r) { return r.name; });
-      var others = c === 'Other' || c === 'EU' ? this.otherNames(rows) : [];
-      el.innerHTML = '<b>' + esc(this.coName(c)) + '</b><span class="sup-tip-n">' + rows.length + ' firms across ' + stages.length + ' segments</span>' +
-        (others.length ? '<span class="sup-tip-co">' + esc(others.join(', ')) + '</span>' : '') +
-        '<span class="sup-tip-co sup-tip-stages">' + stages.join(' · ') + '</span>' +
-        (crit.length ? '<span class="sup-tip-crit"><i class="sup-crit-sw"></i>Critical: ' + esc(crit.join(', ')) + '</span>' : '');
-      this.tipAt(el, anchor, false);
-    },
-    showRibTip: function (c, i, anchor, ev) { // a ribbon: the firms of one country in one segment; ev, the pointer that found it
-      var self = this, s = this.stages[i], el = $('#sup-tip'); if (!s || !el) return;
-      var rows = s.rows.filter(function (r) { return self.colOf(r.country) === c; });
-      var isOther = c === 'Other' || c === 'EU'; // a column of several countries names each firm's own
-      var names = rows.map(function (r) { var n = (r.chokepoint === 'Critical' ? '<b>' + esc(r.name) + '</b>' : esc(r.name)); return isOther ? n + ' <small>(' + esc(cname(r.country)) + ')</small>' : n; });
-      var others = isOther ? this.otherNames(rows) : [];
-      el.innerHTML = '<b>' + esc(this.coName(c)) + ' → ' + esc(s.name) + '</b><span class="sup-tip-n">' + rows.length + (rows.length === 1 ? ' firm' : ' firms') + (others.length ? ' from ' + esc(others.join(', ')) : '') + (names.some(function (x) { return x.indexOf('<b>') === 0; }) ? ' · bold is Critical' : '') + '</span>' +
-        '<span class="sup-tip-co sup-tip-stages">' + names.join(', ') + '</span>';
-      var host = $('#sup-pipe'), m = host.getBoundingClientRect(), r = anchor.getBoundingClientRect();
-      el.hidden = false;
-      // the tip takes the pointer now (so it can be hovered), so it sits just over the pointer, never under it, or a click on the
-      // ribbon would land on the tip; below the pointer when there is no room above
-      var cx = ev && ev.clientX != null ? ev.clientX : (r.left + r.right) / 2, cy = ev && ev.clientY != null ? ev.clientY : (r.top + r.bottom) / 2;
-      var left = Math.max(0, Math.min(cx - m.left - el.offsetWidth / 2, m.width - el.offsetWidth)), top = cy - m.top - el.offsetHeight - 14;
-      if (top < 0) top = cy - m.top + 18;
-      el.style.left = Math.round(left) + 'px'; el.style.top = Math.round(top) + 'px';
-    },
-    hideTip: function () {
-      clearTimeout(this.tipT);
-      var el = $('#sup-tip'); if (el) el.hidden = true;
-      $$('.sup-lab[data-hot]').forEach(function (g) { g.removeAttribute('data-hot'); });
-      var svg = $('.sup-pipe-svg'); if (svg) { svg.setAttribute('data-hot', '0'); $$('.sup-rib[data-hot]', svg).forEach(function (r) { r.removeAttribute('data-hot'); }); }
-    },
-    goStage: function (i) { // the ribbons are the ladder's index: a segment filters the list to its firms and goes to its rung; click it again to clear
-      var s = this.stages[i]; if (!s) return;
-      this.hideTip();
-      var off = this.stage === s.name;
-      this.stage = off ? '' : s.name;
-      if (!off) this.toStage();
-      $$('.sup-rung').forEach(function (el) { if (!off && el.id === s.id) el.setAttribute('data-lit', '1'); else el.removeAttribute('data-lit'); });
-      $$('.sup-lab').forEach(function (g) { if (!off && +g.getAttribute('data-i') === i) g.setAttribute('data-lit', '1'); else g.removeAttribute('data-lit'); });
-      this.render();
-      if (off) return;
-      var el = document.getElementById(s.id);
-      if (el) el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
     },
     clearStage: function () {
       this.stage = '';
@@ -2115,28 +1848,18 @@
       // the table is drawn afresh, so the pressed header would take focus with it: give it to the new one (accessibility #12)
       var b = inTable ? $('#sup-table button[data-sort="' + k + '"]') : null; if (b) b.focus();
     },
-    sync: function () { // every control, the ribbons and the lists show the same state
-      var self = this, on = this.country, tab = this.tab;
+    sync: function () { // every control and the lists show the same state
+      var tab = this.tab;
       var sel = $('#sup-country'); if (sel) sel.value = this.country || '';
       $('#sup-ladder').hidden = tab !== 'segment';
       $('#sup-ladder-cc').hidden = tab !== 'country';
       $('#sup-wrap').hidden = tab !== 'table';
       var lh = $('#sup-ladder-h'); if (lh) { lh.hidden = tab === 'table'; lh.textContent = tab === 'country' ? 'Countries by number of firms, most first' : 'Segments from chip design to power'; }
       var key = $('#sup-key'); if (key) key.hidden = tab === 'table'; // the key names the colors of the names, so it goes with the lists
-      // a pressed country button (or the route's chosen country) follows its column; else the firm filter lights each ribbon
-      // that holds a firm it keeps, so a country drawn inside the Other or EU column lights those ribbons
-      var lit = this.follow && this.cols().indexOf(this.follow) >= 0 ? this.follow : '';
-      $$('.sup-chip').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-c') === lit ? 'true' : 'false'); });
-      $$('.sup-band').forEach(function (p) {
-        var i = p.getAttribute('data-i'), st = on && !lit && i != null ? self.stages[+i] : null, c = p.getAttribute('data-c');
-        if (st && st.rows.some(function (r) { return self.colOf(r.country) === c && self.inCountry(r); })) p.setAttribute('data-on', '1'); else p.removeAttribute('data-on');
-      });
-      $$('.sup-rib').forEach(function (p) { if (lit && p.getAttribute('data-c') === lit) p.setAttribute('data-lit', '1'); else p.removeAttribute('data-lit'); });
-      var pipe = $('#sup-pipe'); if (pipe) { pipe.setAttribute('data-filtered', on && !lit ? '1' : '0'); pipe.setAttribute('data-lit', lit ? '1' : '0'); }
     },
     countryLabel: function () { return this.country === '__other' ? 'Other countries' : this.country === '__eu' ? 'EU-27 members' : cname(this.country); },
     filtering: function () { return !!this.stage || !!(this.country || this.chk || this.q); },
-    inCountry: function (r) { // the firm filter's country test: one country, the EU-27 members, or the drawing's Other column
+    inCountry: function (r) { // the firm filter's country test: one country, the EU-27 members, or every country outside CO
       if (this.country === '__other') return this.colOf(r.country) === 'Other';
       if (this.country === '__eu') return this.EU27.indexOf(r.country) >= 0;
       return !this.country || r.country === this.country;
@@ -4615,7 +4338,7 @@ try {
           var rows = cats[cat], crit = rows.filter(function (r) { return r.chokepoint === 'Critical'; });
           return '<li><span class="lk-stage-k">' + esc(cat) + '</span><span class="lk-stage-c">' + rows.length + '</span>' + (crit.length ? '<span class="lk-stage-f">' + crit.map(function (r) { return firmId[r.name] ? '<button type="button" class="lk-go" data-go="' + esc(firmId[r.name]) + '">' + esc(r.name) + '</button>' : esc(r.name); }).join(' ') + '</span>' : '') + '</li>';
         }).join('') + '</ul>';
-        // a member of the EU-27: the bloc's firms counted together, as the Suppliers ribbons can draw them (the member list is app.js's)
+        // a member of the EU-27: the bloc's firms counted together, as the Suppliers firm list can filter them (the member list is app.js's)
         var EU27 = (CP.Suppliers && CP.Suppliers.EU27) || [];
         if (EU27.indexOf(cc) >= 0) {
           var eu = (DATA.suppliers || []).filter(function (r) { return EU27.indexOf(r.country) >= 0; }), euCrit = eu.filter(function (r) { return r.chokepoint === 'Critical'; }).length;
@@ -5824,6 +5547,296 @@ try {
 })();
 
 } catch (e) { console.warn('module summary-a.js failed', e); }
+
+/* module: supshares.js */
+try {
+/* The Suppliers ribbons, by share (build/modules/supplier-shares.js writes the section and its data; the owner's approved
+   mockup 6 of 29 Oct 2026, third round). Which countries hold each of the matrix's twenty segments, from
+   data/chokepoint-matrix.json.
+
+   600 px and wider: a ribbon drawing. Countries on the left, the segments on the right in chain order. Each segment is one
+   whole, drawn at one height, and where a ribbon meets a segment its width is that country's share. At the country end every
+   ribbon narrows to a point, so no country is drawn with a size and no sum of shares is ever drawn. The countries are evenly
+   spaced and ordered to cross as little as possible (ORDER). Each segment's slices are stacked largest first, with the two
+   catch-all columns last (row.order), and the firms under its name follow the same order, so names and slices match.
+   Narrower than 600 px: one row per segment, the name, a full-width strip of its shares and its firms.
+
+   Gray throughout until the reader follows a country: its ribbons or slices turn wine, its share is printed at every segment
+   it reaches, its firms go to ink and the Table sets its shares in bold. Hovering or focusing a segment prints each
+   country's share at the left. Segments with no country split show only their name and firms. Every share is printed as the
+   matrix writes it (row.sharesT). Year and measure appear only where a row is not 2025 revenue. The route's chosen country
+   (src/modules/summary-a.js, through Suppliers.light) follows its column, where it has one. */
+(function () {
+  'use strict';
+  var D = document, sec = D.getElementById('sup-pipe'), data = D.getElementById('sup-shares-data');
+  if (!sec || !data || !sec.classList.contains('ss')) return;
+  var ROWS; try { ROWS = JSON.parse(data.textContent); } catch (e) { return; }
+  var COLS = ['US', 'JP', 'CN', 'TW', 'KR', 'NL', 'DE', 'GB', 'IL', 'EU-other', 'Other'];
+  var NAME = { US: 'United States', JP: 'Japan', CN: 'China', TW: 'Taiwan', KR: 'South Korea', NL: 'Netherlands', DE: 'Germany', GB: 'United Kingdom', IL: 'Israel', 'EU-other': 'Other EU', Other: 'Other' };
+  var OWN = { US: 'The United States’', JP: 'Japan’s', CN: 'China’s', TW: 'Taiwan’s', KR: 'South Korea’s', NL: 'The Netherlands’', DE: 'Germany’s', GB: 'The United Kingdom’s', IL: 'Israel’s', 'EU-other': 'Other EU countries’', Other: 'Other countries’' };
+  // the phone strip's labels: a country's code, and UK for the United Kingdom, as readers know it (owner, 29 Oct 2026)
+  var CODE = { US: 'US', JP: 'JP', CN: 'CN', TW: 'TW', KR: 'KR', NL: 'NL', DE: 'DE', GB: 'UK', IL: 'IL', 'EU-other': 'Other EU', Other: 'Other' };
+  var cname = function (cc) { return window.CP && CP.cname ? CP.cname(cc) : cc; };
+  var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+  var share = function (r, c) { return r.sharesT[c] + '%'; }; // as the matrix writes it: 6.0 stays 6.0
+  var lower = function (s) { return /^[A-Z][a-z]/.test(s) ? s.charAt(0).toLowerCase() + s.slice(1) : s; };
+  var capacity = function (r) { return /site location/.test(r.metric || ''); };
+  // the mark after a segment's name, only where the row is not 2025 revenue (the key says so once)
+  var mark = function (r) { return r.shares ? [capacity(r) ? 'capacity' : '', r.year !== 2025 ? String(r.year) : ''].filter(Boolean).join(', ') : ''; };
+  var whenT = function (r) { return (capacity(r) ? 'Share of plant capacity, by plant location' : r.metric) + ', ' + r.year + (/estimate|derived/.test(r.basis || '') ? ', ' + r.basisT : ''); };
+  var srcT = function (r) { return r.srcShort + (r.via ? ' (' + r.via + ')' : ''); };
+  var sharesT = function (r) { return r.order.map(function (c) { return NAME[c] + ' ' + share(r, c); }).join(', '); };
+  var state = { lit: '', W: 0, phone: false, room: 0, font: '', hotSeg: -1, rib: null, geo: null };
+  var host = sec.querySelector('.ss-draw'), tip = sec.querySelector('.ss-tip'), chipsEl = sec.querySelector('.ss-chips'), tableBox = sec.querySelector('.ss-tablebox'), plot = sec.querySelector('.ss-plot'), ctx;
+  var paper = window.matchMedia ? matchMedia('print') : { matches: false };
+
+  /* ---- the countries' order down the left: the one with the least crossing, each crossing weighted by the two ribbons'
+     shares. Where a ribbon meets its segment does not depend on the order, so the cost of putting a above b is fixed and an
+     exact search over the 2^11 subsets is quick. */
+  var ORDER = (function () {
+    var at = {}; // a ribbon's middle where it meets its segment, in share points down the right-hand column
+    ROWS.forEach(function (r, i) { var y = i * 113; (r.order || []).forEach(function (c) { var v = r.shares[c]; at[c + i] = y + v / 2; y += v; }); });
+    var rib = {}; COLS.forEach(function (c) { rib[c] = []; });
+    ROWS.forEach(function (r, i) { (r.order || []).forEach(function (c) { rib[c].push([at[c + i], r.shares[c]]); }); });
+    var n = COLS.length, cost = [];
+    for (var a = 0; a < n; a++) {
+      cost.push([]);
+      for (var b = 0; b < n; b++) { var s = 0; rib[COLS[a]].forEach(function (p) { rib[COLS[b]].forEach(function (q) { if (p[0] > q[0]) s += p[1] * q[1]; }); }); cost[a].push(s); }
+    }
+    var full = (1 << n) - 1, best = [], from = [];
+    for (var z = 0; z <= full; z++) { best.push(Infinity); from.push(-1); }
+    best[0] = 0;
+    for (var m = 0; m < full; m++) {
+      if (best[m] === Infinity) continue;
+      for (var k = 0; k < n; k++) {
+        if (m & (1 << k)) continue;
+        var add = 0;
+        for (var j = 0; j < n; j++) if (m & (1 << j)) add += cost[j][k]; // j above k
+        var m2 = m | (1 << k); if (best[m] + add < best[m2]) { best[m2] = best[m] + add; from[m2] = k; }
+      }
+    }
+    var out = [], mm = full; while (mm) { var k2 = from[mm]; out.unshift(COLS[k2]); mm &= ~(1 << k2); }
+    return out;
+  })();
+
+  /* ---- the firms under a segment: the followed country's first, then the segment's own order, at most three, and on a
+     wide screen only as many as fit the label column */
+  function width(s, font) { if (!ctx) ctx = D.createElement('canvas').getContext('2d'); ctx.font = font || state.font; return ctx.measureText(s).width; }
+  function lineFirms(r) {
+    var lit = state.lit, list = r.firms;
+    if (lit) list = list.filter(function (f) { return f.col === lit; }).concat(list.filter(function (f) { return f.col !== lit; }));
+    var out = [], w = 0, sep = width(' · ');
+    for (var k = 0; k < list.length && out.length < 3; k++) {
+      var fw = width(list[k].s) + (out.length ? sep : 0);
+      if (out.length && w + fw > state.room) break;
+      out.push(list[k]); w += fw;
+    }
+    return out;
+  }
+  function namesHTML(r, tag) {
+    return lineFirms(r).map(function (f, k) {
+      return (k ? '<' + tag + ' class="ss-fsep"> · </' + tag + '>' : '') + '<' + tag + ' class="ss-fn' + (state.lit ? (f.col === state.lit ? ' on' : ' off') : '') + '">' + esc(f.s) + '</' + tag + '>';
+    }).join('');
+  }
+  function aria(r) {
+    var f = r.firms.slice(0, 3).map(function (x) { return x.s; }).join(', ');
+    return r.name + '. ' + (r.shares ? sharesT(r) + '. ' : '') + (f ? 'Firms: ' + f + '. ' : '') + (r.shares ? whenT(r) + ', ' + srcT(r) + '.' : '');
+  }
+
+  function draw() {
+    var W = Math.round(host.clientWidth); if (!W) return;
+    state.W = W; state.phone = W < 600;
+    clearHot();
+    if (state.phone) drawRows(); else drawRibbons(W);
+    paintLit();
+  }
+
+  /* ---- 600 px and wider: the ribbons ---- */
+  function drawRibbons(W) {
+    var ui = getComputedStyle(D.documentElement).getPropertyValue('--font-ui').trim() || 'sans-serif';
+    var n = ROWS.length, segH = 30, gR = 4, padT = 10, inner = n * segH + (n - 1) * gR, H = inner + padT * 2, u = segH / 100;
+    var fsL = W < 1000 ? 12.5 : 13.5, fsR = 12.5;
+    var labW = Math.max.apply(null, COLS.map(function (c) { return width(NAME[c], '500 ' + fsL + 'px ' + ui); }));
+    var x0 = Math.ceil(labW) + 18, x1 = W - 300, wR = 10, xl = x1 + wR + 8;
+    state.font = '400 12px ' + ui; state.room = W - xl - 4;
+    // the country ends: a point each, evenly spaced
+    var step = inner / ORDER.length, left = {};
+    ORDER.forEach(function (c, k) { left[c] = { x: x0 + 4, mid: padT + (k + 0.5) * step }; });
+    // the right ends: each segment's slices stacked in its own order, largest first
+    var ends = [];
+    ROWS.forEach(function (r, i) {
+      var y = padT + i * (segH + gR); ends.push({});
+      (r.order || []).forEach(function (c) { var v = r.shares[c] * u; ends[i][c] = [y, y + v]; y += v; });
+    });
+    // a ribbon: from its country's point to its slice of the segment
+    var ribs = '', xa = x0 + 4, mx = (xa + x1) / 2;
+    ORDER.forEach(function (c) {
+      var a = left[c].mid.toFixed(2);
+      ROWS.forEach(function (r, i) {
+        var b = ends[i][c]; if (!b) return;
+        ribs += '<path class="sup-band sup-rib" data-c="' + c + '" data-i="' + i + '" d="M' + xa + ',' + a +
+          ' C' + mx.toFixed(1) + ',' + a + ' ' + mx.toFixed(1) + ',' + b[0].toFixed(2) + ' ' + x1 + ',' + b[0].toFixed(2) +
+          ' L' + x1 + ',' + b[1].toFixed(2) + ' C' + mx.toFixed(1) + ',' + b[1].toFixed(2) + ' ' + mx.toFixed(1) + ',' + a + ' ' + xa + ',' + a + 'Z"></path>';
+      });
+    });
+    var nodesL = '', labL = '';
+    ORDER.forEach(function (c) {
+      var L = left[c];
+      nodesL += '<circle class="sup-cnode" cx="' + L.x + '" cy="' + L.mid.toFixed(1) + '" r="3.5"></circle>';
+      labL += '<text class="sup-clab ss-clab" data-c="' + c + '" x="' + (x0 - 8) + '" y="' + (L.mid + 4.5).toFixed(1) + '" font-size="' + fsL + '">' + esc(NAME[c]) + '</text>';
+    });
+    var nodesR = '', labR = '', hits = '';
+    ROWS.forEach(function (r, i) {
+      var y = padT + i * (segH + gR), m = mark(r);
+      if (r.shares) nodesR += '<rect class="sup-snode" x="' + x1 + '" y="' + y.toFixed(1) + '" width="' + wR + '" height="' + segH + '"></rect>';
+      labR += '<g class="sup-lab" data-i="' + i + '"><text class="sup-lab-t" x="' + xl + '" y="' + (y + 12).toFixed(1) + '" font-size="' + fsR + '">' + esc(r.name) +
+        (m ? '<tspan class="ss-mk"> · ' + esc(m) + '</tspan>' : '') + '</text>' +
+        '<text class="ss-names" data-i="' + i + '" x="' + xl + '" y="' + (y + 26).toFixed(1) + '" font-size="12"></text></g>';
+      hits += '<rect class="sup-hit ss-hit" data-i="' + i + '" x="' + (x1 - 4) + '" y="' + y.toFixed(1) + '" width="' + (W - x1 + 4) + '" height="' + segH + '" tabindex="0" role="button" aria-describedby="sup-ss-hint" aria-label="' + esc(aria(r)) + '"></rect>';
+    });
+    state.geo = { left: left, ends: ends, x1: x1 };
+    host.innerHTML = '<svg class="sup-pipe-svg ss-svg" width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '" role="group" aria-label="Countries to segments. Where a ribbon meets a segment, its width is that country’s share.">' +
+      '<g class="sup-flow">' + ribs + nodesL + nodesR + '<g class="sup-labels">' + labR + '</g></g><g pointer-events="none">' + labL + '<g class="ss-endv"></g><g class="ss-hotv"></g></g><g class="ss-hits">' + hits + '</g></svg>';
+    wire(host.querySelector('svg'));
+  }
+  // the followed country's share at every segment it reaches
+  function paintEnds() {
+    var g = host.querySelector('.ss-endv'); if (!g) return;
+    var c = state.lit, G = state.geo;
+    g.innerHTML = c ? ROWS.map(function (r, i) { var e = G.ends[i][c]; return e ? '<text class="ss-v ss-v-lit" x="' + (G.x1 - 6) + '" y="' + ((e[0] + e[1]) / 2 + 4).toFixed(1) + '" text-anchor="end">' + share(r, c) + '</text>' : ''; }).join('') : '';
+  }
+  // a segment hovered or focused: each country's share beside it at the left
+  function paintHot() {
+    var g = host.querySelector('.ss-hotv'); if (!g) return;
+    var i = state.hotSeg, G = state.geo, r = ROWS[i];
+    g.innerHTML = i >= 0 && r.shares ? r.order.map(function (c) { var L = G.left[c]; return '<text class="ss-v" x="' + (L.x + 9) + '" y="' + (L.mid + 4).toFixed(1) + '">' + share(r, c) + '</text>'; }).join('') : '';
+  }
+
+  /* ---- the drawing's tips, by pointer, touch and keyboard ---- */
+  function wire(svg) {
+    svg.addEventListener('mouseover', function (e) { pick(e, false); });
+    svg.addEventListener('click', function (e) { if (!pick(e, true)) clearHot(); });
+    svg.addEventListener('mouseleave', function () { setTimeout(function () { if (!tip.matches(':hover') && !svg.contains(D.activeElement)) clearHot(); }, 240); });
+    svg.addEventListener('focusin', function (e) { var h = e.target.closest('.ss-hit'); if (h) showSeg(+h.getAttribute('data-i'), h); });
+    svg.addEventListener('focusout', function (e) { if (!svg.contains(e.relatedTarget)) clearHot(); });
+    svg.addEventListener('keydown', function (e) {
+      var h = e.target.closest('.ss-hit'); if (!h) return;
+      var i = +h.getAttribute('data-i'), r = ROWS[i], k = e.key;
+      if (k === 'ArrowRight' || k === 'ArrowLeft') {
+        if (!r.shares) return;
+        e.preventDefault();
+        var at = state.rib && state.rib.i === i ? r.order.indexOf(state.rib.c) : -1, len = r.order.length;
+        at = k === 'ArrowRight' ? (at + 1) % len : (at <= 0 ? len - 1 : at - 1);
+        showRib(r.order[at], i, null);
+      } else if (k === 'ArrowDown' || k === 'ArrowUp') {
+        var t = svg.querySelector('.ss-hit[data-i="' + (i + (k === 'ArrowDown' ? 1 : -1)) + '"]');
+        if (t) { e.preventDefault(); t.focus(); }
+      } else if (k === 'Enter' || k === ' ') { e.preventDefault(); showSeg(i, h); }
+    });
+  }
+  function pick(e, tap) {
+    var rib = e.target.closest('.sup-rib'), h = e.target.closest('.ss-hit');
+    if (rib) { showRib(rib.getAttribute('data-c'), +rib.getAttribute('data-i'), e); return true; }
+    if (h) { if (tap || state.hotSeg !== +h.getAttribute('data-i') || state.rib) showSeg(+h.getAttribute('data-i'), h); return true; }
+    return false;
+  }
+  function hot(fn) {
+    var svg = host.querySelector('svg'); if (!svg) return;
+    svg.setAttribute('data-hot', fn ? '1' : '0');
+    [].forEach.call(svg.querySelectorAll('.sup-rib'), function (p) { if (fn && fn(p)) p.setAttribute('data-hot', '1'); else p.removeAttribute('data-hot'); });
+  }
+  function showSeg(i, anchor) {
+    var r = ROWS[i]; state.hotSeg = i; state.rib = null;
+    hot(function (p) { return +p.getAttribute('data-i') === i; }); paintHot();
+    var f = r.firms.map(function (x) { return esc(x.s); });
+    tip.innerHTML = '<b>' + esc(r.name) + '</b>' + (r.shares ? '<span class="sup-tip-n">' + esc(whenT(r)) + '</span>' + srcHTML(r)
+      : '<span class="ss-tip-firms"><span class="k">Firms on the list</span>' + f.join(', ') + '</span>');
+    // in the label column, under the segment (over it near the foot), so it hides neither the segment's ribbons nor the
+    // shares printed at the left
+    var m = plot.getBoundingClientRect(), b = anchor.getBoundingClientRect();
+    tip.style.maxWidth = Math.round(b.width) + 'px'; tip.hidden = false;
+    var top = b.bottom - m.top + 6;
+    if (top + tip.offsetHeight > m.height) top = b.top - m.top - tip.offsetHeight - 6;
+    tip.style.left = Math.round(Math.min(b.left - m.left, m.width - tip.offsetWidth)) + 'px'; tip.style.top = Math.round(top) + 'px';
+  }
+  function showRib(c, i, ev) {
+    var r = ROWS[i]; state.hotSeg = -1; state.rib = { c: c, i: i };
+    var svg = host.querySelector('svg'), el = svg.querySelector('.sup-rib[data-c="' + c + '"][data-i="' + i + '"]');
+    hot(function (p) { return p === el; }); paintHot();
+    var firms = r.firms.filter(function (f) { return f.col === c; }).map(function (f) { return esc(f.s) + (c === 'Other' || c === 'EU-other' ? ' (' + esc(cname(f.cc)) + ')' : ''); });
+    tip.innerHTML = '<b>' + esc(OWN[c]) + ' share of ' + esc(lower(r.name)) + '</b><span class="sup-tip-n">' + esc(whenT(r)) + '</span>' +
+      '<span class="ss-tip-big">' + share(r, c) + '</span>' +
+      (firms.length ? '<span class="ss-tip-firms"><span class="k">' + (capacity(r) ? 'Firms on the list based here' : 'Firms on the list') + '</span>' + firms.join(', ') + '</span>' : '') + srcHTML(r);
+    if (ev) place(ev, el);
+    else { var G = state.geo, e = G.ends[i][c], b = svg.getBoundingClientRect(); place({ clientX: b.left + G.x1 - 70, clientY: b.top + (e[0] + e[1]) / 2 }, el); }
+  }
+  function clearHot() {
+    state.hotSeg = -1; state.rib = null;
+    if (tip) tip.hidden = true;
+    if (host) { hot(null); paintHot(); }
+  }
+  function place(ev, anchor) {
+    var m = plot.getBoundingClientRect(), r = anchor.getBoundingClientRect();
+    tip.style.maxWidth = ''; tip.hidden = false;
+    var cx = ev && ev.clientX != null ? ev.clientX : (r.left + r.right) / 2, cy = ev && ev.clientY != null ? ev.clientY : r.top;
+    var left = Math.max(0, Math.min(cx - m.left - tip.offsetWidth / 2, m.width - tip.offsetWidth)), top = cy - m.top - tip.offsetHeight - 14;
+    if (top < 0) top = cy - m.top + 18;
+    tip.style.left = Math.round(left) + 'px'; tip.style.top = Math.round(top) + 'px';
+  }
+  function srcHTML(r) {
+    return '<span class="ss-tip-src">Source: <a href="' + esc(r.src) + '" target="_blank" rel="noopener">' + esc(r.srcTitle) + '</a>' + (r.via ? ', with ' + esc(r.via) + ' data' : '') + '.</span>';
+  }
+
+  /* ---- narrower than 600 px: one row per segment, its shares as a full-width strip ---- */
+  function drawRows() {
+    var ui = getComputedStyle(D.documentElement).getPropertyValue('--font-ui').trim() || 'sans-serif';
+    var sw = Math.round(host.clientWidth), f = '600 11.5px ' + ui;
+    state.font = '400 11.5px ' + ui; state.room = Infinity; state.geo = null;
+    host.innerHTML = '<ol class="ss-rows">' + ROWS.map(function (r, i) {
+      var m = mark(r), strip = '', rest = [];
+      if (r.shares) {
+        strip = '<div class="ss-strip" aria-hidden="true">' + r.order.map(function (c) {
+          var v = r.shares[c], t = CODE[c] + ' ' + share(r, c), fits = width(t, f) + 10 <= sw * v / 100;
+          if (!fits) rest.push(c);
+          return '<span class="ss-sl" data-c="' + c + '" style="width:' + v + '%">' + (fits ? '<b>' + esc(t) + '</b>' : '') + '</span>';
+        }).join('') + '</div>';
+      }
+      return '<li class="ss-row"><p class="ss-row-h">' + esc(r.name) + (m ? ' <span class="ss-mk">· ' + esc(m) + '</span>' : '') + '</p>' + strip +
+        (r.shares ? '<p class="ss-sr sr-only">' + esc(sharesT(r)) + '</p>' : '') +
+        (rest.length ? '<p class="ss-rest" aria-hidden="true">' + rest.map(function (c) { return '<span data-c="' + c + '">' + esc(NAME[c]) + ' ' + share(r, c) + '</span>'; }).join(' · ') + '</p>' : '') +
+        '<p class="ss-row-f" data-i="' + i + '"></p></li>';
+    }).join('') + '</ol>';
+  }
+
+  /* ---- the country followed: its ribbons or slices in wine, its shares printed, its firms in ink, its Table shares bold ---- */
+  function paintLit() {
+    var c = state.lit;
+    sec.setAttribute('data-lit', c ? '1' : '0');
+    [].forEach.call(sec.querySelectorAll('.sup-rib, .ss-sl, .ss-rest span, .ss-tc'), function (p) { if (c && p.getAttribute('data-c') === c) p.setAttribute('data-lit', '1'); else p.removeAttribute('data-lit'); });
+    [].forEach.call(sec.querySelectorAll('.ss-clab'), function (t) { t.classList.toggle('on', t.getAttribute('data-c') === c); });
+    [].forEach.call(sec.querySelectorAll('.ss-names'), function (t) { t.innerHTML = namesHTML(ROWS[+t.getAttribute('data-i')], 'tspan'); });
+    [].forEach.call(sec.querySelectorAll('.ss-row-f'), function (t) { t.innerHTML = namesHTML(ROWS[+t.getAttribute('data-i')], 'span'); });
+    [].forEach.call(chipsEl.querySelectorAll('.sup-chip'), function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-c') === c ? 'true' : 'false'); });
+    if (state.geo) paintEnds();
+  }
+  function follow(c) { state.lit = c && COLS.indexOf(c) >= 0 ? c : ''; paintLit(); }
+
+  chipsEl.addEventListener('click', function (e) { var b = e.target.closest('.sup-chip'); if (!b) return; var c = b.getAttribute('data-c'); follow(state.lit === c ? '' : c); });
+  var tb = sec.querySelector('.ss-tab');
+  tb.addEventListener('click', function () { var on = tableBox.hidden; tableBox.hidden = !on; host.hidden = on; clearHot(); tb.setAttribute('aria-pressed', on ? 'true' : 'false'); if (!on) draw(); });
+  tip.addEventListener('mouseleave', function () { if (!host.querySelector('svg:hover')) clearHot(); });
+  D.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !tip.hidden) clearHot(); });
+  D.addEventListener('click', function (e) { if (!tip.hidden && !e.target.closest('.ss-plot')) clearHot(); });
+  window.addEventListener('beforeprint', clearHot);
+  // the route's chosen country (Suppliers.light) follows its column; a country with no column of its own follows nothing
+  window.CP_SUPSHARES = { follow: follow, column: function (cc) { return COLS.indexOf(cc) >= 0 && cc !== 'EU-other' && cc !== 'Other' ? cc : ''; } };
+  draw();
+  if (D.fonts && D.fonts.ready) D.fonts.ready.then(function () { draw(); }); // the names are measured in the page's own face
+  // drawn when the view opens (a hidden view has no width) and again when the column's width changes, never for paper
+  if ('ResizeObserver' in window) new ResizeObserver(function () { var w = Math.round(host.clientWidth); if (w && w !== state.W && !paper.matches) draw(); }).observe(host);
+})();
+
+} catch (e) { console.warn('module supshares.js failed', e); }
 
 /* module: underline.js */
 try {
