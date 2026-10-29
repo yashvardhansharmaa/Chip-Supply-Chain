@@ -1,10 +1,116 @@
 {
+  "design-and-eda": {
+    "How it works": "How a chip is designed",
+    "Variants and trade-offs": "GPUs, custom chips and chiplets",
+    "Who makes it": "Who makes the design software and custom chips",
+    "The chokepoint": "Design software export controls and China's own tools"
+  },
+  "silicon-and-wafers": {
+    "How it works": "How silicon wafers are made",
+    "Variants and trade-offs": "Types of silicon wafers",
+    "Who makes it": "Who makes silicon wafers and polysilicon",
+    "The chokepoint": "Why 300 mm wafers are a chokepoint"
+  },
+  "chemicals-gases-and-photoresist": {
+    "How it works": "How photoresist and chip chemicals work",
+    "Variants and trade-offs": "Types of photoresist",
+    "Who makes it": "Who makes photoresist, gases and chip chemicals",
+    "The chokepoint": "Supply risks for chip chemicals, gases and metals"
+  },
   "lithography": {
-    "How it works": "How EUV lithography works",
-    "Who makes it": "Who makes EUV machines",
-    "The chokepoint": "Why EUV machines are a chokepoint"
+    "How it works": "How lithography prints a chip's pattern",
+    "Variants and trade-offs": "DUV and EUV scanners compared",
+    "Who makes it": "Who makes lithography machines",
+    "Controls and China's answer": "Lithography export controls and China's own scanners",
+    "The chokepoint": "Why ASML's EUV scanners are a chokepoint"
+  },
+  "photomasks-and-pellicles": {
+    "How it works": "How photomasks are made and used",
+    "Variants and trade-offs": "The tools and materials of mask making",
+    "Cost and design economics": "Why masks cost more for newer chips",
+    "Who makes it": "Who makes photomasks",
+    "The chokepoint": "The few firms behind every EUV mask"
+  },
+  "deposition-and-etch": {
+    "How it works": "How deposition and etching work",
+    "Variants and trade-offs": "Types of deposition and etching",
+    "Who makes it": "Who makes deposition and etch tools",
+    "China and the controls": "China's toolmakers and export controls",
+    "The chokepoint": "Why deposition and etch are a weaker chokepoint"
+  },
+  "metrology-and-inspection": {
+    "How it works": "How chipmakers measure and inspect wafers",
+    "Variants and trade-offs": "Types of inspection and measuring tools",
+    "Who makes it": "KLA and its smaller rivals",
+    "Packaging, AI and China": "Packaging inspection, China's toolmakers and export controls",
+    "The chokepoint": "Why KLA's inspection tools are a chokepoint"
+  },
+  "foundries-and-fabs": {
+    "How it works": "How a transistor works and why it leaks",
+    "How a transistor is built": "How transistors are built",
+    "The newest designs": "The newest transistor designs",
+    "The back end of line": "The wiring above the transistors",
+    "The foundry and the fab": "What foundries do and how a fab runs",
+    "Capacity and cost": "The cost and capacity of the newest fabs",
+    "Who makes it": "TSMC, Intel, Samsung, SMIC and Rapidus",
+    "The chokepoint": "Why leading-edge chipmaking is so concentrated"
   },
   "memory-and-hbm": {
-    "Who makes it": "Who makes HBM"
+    "How it works": "How HBM works and why AI needs it",
+    "Variants and trade-offs": "HBM3E and HBM4 compared",
+    "How a stack is built": "How an HBM stack is built",
+    "Who makes it": "Who makes HBM",
+    "The chokepoint": "HBM export controls and China's efforts"
+  },
+  "advanced-packaging": {
+    "How it works": "How advanced packaging and CoWoS work",
+    "Variants and trade-offs": "Types of advanced packaging",
+    "Capacity": "TSMC's CoWoS capacity and its buyers",
+    "Who makes it": "Who makes advanced packages"
+  },
+  "substrates-and-pcbs": {
+    "How it works": "How a package substrate is built",
+    "Variants and trade-offs": "Types of package substrates",
+    "The materials underneath": "Ajinomoto's film and Nitto Boseki's glass cloth",
+    "Who makes it": "Who makes package substrates",
+    "The boards under the GPU": "Printed circuit boards for AI data centers",
+    "The chokepoint": "Why substrate supply is hard to expand"
+  },
+  "test-and-assembly": {
+    "How it works": "How chips are tested before they ship",
+    "Variants and trade-offs": "The stages of chip testing",
+    "Who makes it": "Who makes test and assembly tools",
+    "The back end's geography": "Where chips are assembled and tested",
+    "The chokepoint": "Tester switching costs and China's toolmakers"
+  },
+  "systems-and-networking": {
+    "How it works": "How AI racks and clusters are wired",
+    "Variants and trade-offs": "Types of links between AI chips",
+    "Who makes it": "Who makes optics, switch chips and AI servers",
+    "The chokepoint": "Lasers and other hard-to-source parts"
+  },
+  "data-centers-and-power": {
+    "How it works": "How AI data centers are powered and cooled",
+    "Variants and trade-offs": "Cooling and power options",
+    "Who makes it": "Data center spending and power equipment makers",
+    "Capacity and demand": "Data center electricity demand forecasts",
+    "The chokepoint": "Long waits for grid power and equipment"
+  },
+  "component-costs": {
+    "How it works": "What an Nvidia B200 costs to build",
+    "Variants and trade-offs": "The B200's parts and rack costs",
+    "Who captures the value": "Profit margins along the supply chain",
+    "Where the money goes": "Which stages stay expensive and which get cheaper"
+  },
+  "geopolitics": {
+    "The shape of the contest": "How chip export controls work",
+    "Chokepoints and who holds them": "Which countries lead each segment",
+    "US export controls, 2018 to today": "How US chip export controls have changed",
+    "Ways around the controls": "Renting compute abroad and chip smuggling",
+    "Allies: the Netherlands, Japan, Korea and Europe": "The Netherlands, Japan, Korea and Europe",
+    "China's response": "China's response to the chip controls",
+    "Industrial policy: CHIPS, Rapidus, Big Fund and the rest": "CHIPS Act, Big Fund, Rapidus and other subsidies",
+    "Taiwan": "Taiwan, TSMC and the silicon shield",
+    "Who gains and who pays": "What each country gains and loses"
   }
 }
