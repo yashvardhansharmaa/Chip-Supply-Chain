@@ -2823,6 +2823,74 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
 }
 
 
+/* module: figsteps.css */
+/* Figures that step, 13.2 and 16.2 (build/figsteps.js, src/modules/figsteps.js). They sit in the chapter's figure grammar
+   (chapter.css: the box, the head, the bars, the source strip); this sheet adds the step row, the step's sentence, the bars
+   arriving with their step and the drawing of 13.2. On paper the figure is at rest: every bar, the drawing whole, the last
+   sentence, and no step row. */
+
+/* the step row, as the explainers set theirs (styles.css .anim-steps) */
+.figure--steps ol.sf-steps { display: flex; flex-wrap: wrap; gap: 2px 13px; list-style: none; margin: 0 0 16px; padding: 0; max-width: none; }
+.figure--steps ol.sf-steps li { margin: 0; padding: 0; }
+.figure--steps ol.sf-steps li::before { content: none; display: none; }
+.figure--steps .sf-cap { margin: 14px 0 0; min-height: 4.5em; font-family: var(--font-body); font-size: var(--t-small); line-height: 1.5; color: var(--ink); }
+.figure--steps.is-table .sf-steps, .figure--steps.is-table .sf-cap, .figure--steps.is-table .sf-draw { display: none; }
+
+/* bars that arrive with their step (screen only: on paper every bar stands) */
+@media screen {
+  .figure--steps .hbars .hb { transition: opacity 420ms var(--ease); }
+  .figure--steps .hbars .hb-r i { transition: width 900ms var(--ease); }
+  .figure--steps .hbars .hb.is-off { opacity: 0; }
+  .figure--steps .hbars .hb.is-off .hb-r i { width: 0 !important; }
+  .figure--steps .hbars .hb.is-new .hb-l { color: var(--ink); }
+}
+
+/* 13.2: the racks and one GPU's two links (figsteps.js draws the svg at the column's width) */
+.sf-draw { position: relative; margin: 0 0 18px; }
+.sf-draw svg { display: block; width: 100%; height: auto; overflow: visible; }
+.sy-frame { fill: var(--bg); stroke: var(--line-2); stroke-width: 1; transition: stroke 500ms var(--ease), stroke-width 500ms var(--ease); }
+.sy-frame.held { stroke: var(--ink); stroke-width: 1.5; }
+.sy-ctray { fill: var(--bg-2); }
+.sy-gpu { fill: var(--rule-ink); transition: fill 500ms var(--ease); }
+.sy-gpu.on { fill: var(--accent); }
+.sy-stray { fill: var(--ink-2); }
+.sy-port { fill: var(--bg-3); }
+.sy-up { fill: none; stroke: var(--accent); stroke-linejoin: round; }
+.sy-up.ctx, .sy-out.ctx { stroke: var(--ctx); }
+.sy-out { fill: none; stroke: var(--ink-2); stroke-linejoin: round; }
+.sy-net { fill: none; stroke: var(--ink-2); }
+.sy-flow { fill: none; stroke-linecap: round; }
+.sy-flow.up { stroke: var(--bg); }
+.sy-flow.out { stroke: var(--ink); }
+.sy-lab { font-family: var(--font-ui); font-size: 12px; fill: var(--ink-2); }
+.sy-lab.k { font-weight: 600; fill: var(--ink); }
+.sy-lab.w { font-weight: 700; fill: var(--accent-ink); }
+.sy-lab.m { fill: var(--muted); }
+.sy-layer { fill: var(--ink); }
+.sy-blk-t { font-family: var(--font-ui); font-size: 11.5px; fill: var(--ink); text-anchor: middle; }
+.sy-drop { stroke: var(--ink); stroke-width: 1; fill: none; }
+.sy-hold { fill: var(--ink); }
+.sy-fade { transition: opacity 500ms var(--ease); }
+.sy-fade.off { opacity: 0; }
+@keyframes sy-up { to { stroke-dashoffset: -12; } }
+@keyframes sy-out { to { stroke-dashoffset: -108; } }
+.sy-flow.up.go { animation: sy-up 0.6s linear infinite; }
+.sy-flow.out.go { animation: sy-out 5.4s linear infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .sy-flow.up.go, .sy-flow.out.go { animation: none; }
+  .figure--steps .hbars .hb, .figure--steps .hbars .hb-r i, .sy-gpu, .sy-fade, .sy-frame { transition: none; }
+}
+
+@media print {
+  .figure--steps .sf-steps { display: none !important; }
+  .figure--steps .sf-cap { min-height: 0; margin: 2.4mm 0 0; font-size: calc(8.4pt * var(--text-scale, 1)); line-height: 1.38; }
+  .sf-draw { margin: 0 0 3mm; break-inside: avoid; }
+  .sf-draw svg { max-width: min(100%, 134mm); }
+  .sy-flow { animation: none !important; }
+  .sy-fade, .sy-gpu, .sy-frame { transition: none !important; }
+}
+
+
 /* module: lookup.css */
 /* The Glossary as a printed dictionary (redesign option B, chosen 25 Oct 2026; src/modules/lookup.js).
    The head (the title and six things to try; its counts went to the kinds' buttons on 28 Oct 2026), a sticky bar (the search, the kinds, the thumb index of letters), then

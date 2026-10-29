@@ -1,4 +1,4 @@
-built 2026-10-28T23:30:51.504Z
+built 2026-10-29T05:27:47.627Z
 source tiers: A 633 · B 32 · disallowed 0 · unclassified 0
 chapters: 15 + geopolitics
 words: 37975
@@ -18,7 +18,7 @@ size: home 314 KB
   10 advanced-packaging: 2351 words, 33 sources (D 0, ? 0), 4 figures
   11 substrates-and-pcbs: 2086 words, 47 sources (D 0, ? 0), 3 figures
   12 test-and-assembly: 1760 words, 39 sources (D 0, ? 0), 4 figures
-  13 systems-and-networking: 2113 words, 44 sources (D 0, ? 0), 3 figures
+  13 systems-and-networking: 2113 words, 44 sources (D 0, ? 0), 2 figures
   14 data-centers-and-power: 2231 words, 37 sources (D 0, ? 0), 4 figures
   15 component-costs: 2120 words, 33 sources (D 0, ? 0), 3 figures
-  16 geopolitics: 3456 words, 70 sources (D 0, ? 0), 3 figures
+  16 geopolitics: 3456 words, 70 sources (D 0, ? 0), 4 figures
