@@ -3603,9 +3603,10 @@ html.kb:has(.view[data-view="glossary"]:not([hidden])) { scroll-padding-top: cal
 
   /* ---------- the chapter's source list, after its text ----------
      print.js (sourceList) builds it from the screen's list: numbered as the notes are, each source with its tier, its
-     title, its publisher and date, and its full address. It opens as a section does. */
+     title, its publisher and date, and its full address. It opens as a section does. Its heading is an h2 since 29 Oct 2026
+     (an h3 before), so this rule names the chapter, to outweigh the screen's .chapter .prose h2 as it did .prose h3 */
   .cp-sources { max-width: none; margin: 9mm 0 0; padding-top: 2.4mm; border-top: 0.6pt solid var(--ink); }
-  .cp-sources .cp-sources-h { margin: 0 0 2.6mm; font-family: var(--font-display); font-weight: 400; font-size: 16pt; line-height: 1.12; letter-spacing: -0.012em; text-transform: none; color: var(--ink); break-after: avoid; }
+  .chapter .cp-sources .cp-sources-h { margin: 0 0 2.6mm; font-family: var(--font-display); font-weight: 400; font-size: 16pt; line-height: 1.12; letter-spacing: -0.012em; text-transform: none; color: var(--ink); break-after: avoid; }
   .cp-sources ol { margin: 0; padding-left: 6.5mm; font-family: var(--font-body); font-size: calc(7.4pt * var(--text-scale)); line-height: 1.34; color: var(--ink-2); }
   .cp-sources li { padding-left: 3.8mm; margin: 1.1mm 0 0; break-inside: avoid; }
   .cp-sources li::marker { font-family: var(--font-code); font-size: 6.4pt; color: var(--ink-2); }
