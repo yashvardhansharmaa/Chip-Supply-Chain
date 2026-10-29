@@ -2,7 +2,7 @@
 /* The two live explainers of 29 Oct 2026 (qa/excellence/BUILD-BRIEF-2.md, "explain"), on the local preview, ported from the
    mockups' check.js and grown to the brief's list:
    - 04.2, several passes: where it sits, the chapter's figure numbers and the rail's list, the link from Deep ultraviolet and
-     from chapters 08 and 16; the latest version (no mask drawn in the EUV lane, which carries "Light reflected off a mirror
+     the "(see figure 04.2)" links from chapters 08 and 16, which keep their multipatterning look-up; the latest version (no mask drawn in the EUV lane, which carries "Light reflected off a mirror
      mask"; the cut on a teal line, so the four wine lines stay four; no step-total line), read from the drawing's pixels; the
      tiles; steps that play from where they start; reduced motion opening paused on the last step; dark mode's colors.
    - 07.1, driven by its model: the readouts under "The model's output" at the chapter's inputs (49.2, 11.3 and 20.1), the
@@ -106,8 +106,8 @@ const near = (a, hex, tol = 10) => { const n = parseInt(hex.slice(1), 16), b = [
     // the links from chapters 08 and 16
     for (const ch of ['foundries-and-fabs', 'geopolitics']) {
       const t = await open(chrome, `${BASE}/${ch}/`, { width: 1440, wait: 1500 });
-      const a = await t.ev(`(function(){var a=document.querySelector('#${ch} .prose a[href="../lithography/${SAQP}"]');return a?a.textContent+' '+a.nextSibling.textContent.trim().slice(0,40):null;})()`);
-      check(`${ch}: links its several passes to figure 04.2 on Lithography's page`, !!a && /\(figure 04\.2\)/.test(a), a);
+      const a = await t.ev(`(function(){var a=document.querySelector('#${ch} .prose a[href="../lithography/${SAQP}"]'),g=document.querySelectorAll('#${ch} .gl-term[data-term="multipatterning"]').length;if(!g)return 'no multipatterning look-up';if(!a)return null;var p=a.closest('p').textContent,i=p.indexOf('several');return a.textContent+' | '+p.slice(i,p.indexOf(')',i)+1);})()`);
+      check(`${ch}: "(see figure 04.2)" links its several passes to the figure on Lithography's page`, !!a && /^figure 04\.2 \| several (passes on deep-ultraviolet tools|patterning steps) \(see figure 04\.2\)$/.test(a), a);
       await t.close();
     }
     /* ---------- 07.1 ---------- */
