@@ -1310,9 +1310,10 @@
     // o: measure, w, h, sel (ids), small. Labeled: the reader's chips and the largest
     var chartSVG = function (o) {
       var F = fieldOf(o.measure), m = F.m, w = o.w, h = o.h, small = !!o.small;
-      var Lp = small ? 38 : 50, Rp = small ? 10 : 16, Tp = F.off.length ? 40 : 26, Bp = 30;
-      var pw = w - Lp - Rp, ph = h - Tp - Bp;
       var step = niceStep(F.inMax || 1, small ? 3 : 5), ymax = Math.ceil((F.inMax || 1) / step) * step;
+      // the left margin fits the widest figure on the axis, so "30,000" keeps its first digit
+      var Lp = Math.max(small ? 38 : 50, Math.ceil(textW(nfAxis(ymax))) + 12), Rp = small ? 10 : 16, Tp = F.off.length ? 40 : 26, Bp = 30;
+      var pw = w - Lp - Rp, ph = h - Tp - Bp;
       var X = function (t) { return Lp + (t - T0) / (T1 - T0) * pw; }, Y = function (v) { return Tp + ph - v / ymax * ph; };
       var sel = o.sel || [], g = '';
       for (var v = 0; v <= ymax + 1e-9; v += step) g += '<line class="' + (v === 0 ? 'base' : 'grid') + '" x1="' + Lp + '" x2="' + (Lp + pw) + '" y1="' + r2(Y(v)) + '" y2="' + r2(Y(v)) + '"/><text class="tick" x="' + (Lp - 8) + '" y="' + r2(Y(v) + 4) + '" text-anchor="end">' + nfAxis(v) + '</text>';
