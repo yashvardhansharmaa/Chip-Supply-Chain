@@ -33,7 +33,7 @@ const near = (a, hex, tol = 10) => { const n = parseInt(hex.slice(1), 16), b = [
       const W = `04.2 ${width}`;
       const t = await open(chrome, `${BASE}/lithography/`, { width, wait: 2500 });   // reduced motion (cdp.js's default)
       const P = await t.ev(`(function(){var f=document.querySelector('${SAQP}');if(!f)return null;var prev=f.previousElementSibling,next=f.nextElementSibling;
-        return {prev:prev&&prev.textContent.slice(0,60),next:next&&next.tagName+' '+next.textContent.slice(0,30),k:f.querySelector('.fig-k').textContent,title:f.querySelector('.fig-title').textContent,
+        return {prev:prev&&prev.textContent.slice(0,60),next:next&&next.tagName+' '+(next.getAttribute('data-k')||'')+' | '+next.textContent.slice(0,30),k:f.querySelector('.fig-k').textContent,title:f.querySelector('.fig-title').textContent,
           nums:[].map.call(document.querySelectorAll('#lithography .prose .fig-k'),function(e){return (/[0-9][0-9][.][0-9]+/.exec(e.textContent)||[''])[0]+'='+e.closest('.figure').id.replace('fig-lithography-','')}).join(' '),
           rail:[].map.call(document.querySelectorAll('#lithography .rail-figs a'),function(a){return a.querySelector('.n').textContent+'='+a.getAttribute('href').replace('#fig-lithography-','')}).join(' '),
           railT:(document.querySelector('#lithography .rail-figs a[href="${SAQP}"] .t')||{}).textContent,
@@ -43,7 +43,7 @@ const near = (a, hex, tol = 10) => { const n = parseInt(hex.slice(1), 16), b = [
           text:f.querySelector('.lv-screen').textContent,reflect:(f.querySelector('[data-l="reflect"]')||{}).textContent,euvLabs:[].map.call(f.querySelectorAll('.sq-draw-euv .lv-lab'),function(e){return e.textContent}).join('|')};})()`);
       check(`${W}: the figure is on the page`, !!P);
       if (!P) { await t.close(); continue; }
-      check(`${W}: it follows the multipatterning paragraph and comes before Variants and trade-offs`, /^When one exposure cannot draw a pattern finely enough/.test(P.prev) && /^H3 Variants and trade-offs/.test(P.next), `${P.prev} ... ${P.next}`);
+      check(`${W}: it follows the multipatterning paragraph and comes before the Variants and trade-offs section (found by its short heading, data-k, since its shown words changed on 29 Oct 2026)`, /^When one exposure cannot draw a pattern finely enough/.test(P.prev) && /^H[23] Variants and trade-offs \|/.test(P.next), `${P.prev} ... ${P.next}`);
       check(`${W}: numbered "Figure 04.2 · Explainer, 26 seconds", titled as the mockup`, P.k === 'Figure 04.2 · Explainer, 26 seconds' && P.title === 'How several passes turn one line into four', `${P.k} / ${P.title}`);
       const want = '04.1=litho-print 04.2=several-passes 04.3=tool-price 04.4=euv-shipments 04.5=litho-mix 04.6=asml-region';
       check(`${W}: the chapter's figures run 04.1 to 04.6, the old 04.2 to 04.5 now 04.3 to 04.6`, P.nums === want, P.nums);
