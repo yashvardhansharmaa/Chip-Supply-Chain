@@ -2919,6 +2919,8 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
 @media print {
   .figure--live .lv-screen { display: none !important; }
   .figure--live .anim-stage { display: block !important; padding: 0 !important; cursor: auto; }
+  /* 04.2's still is near square: held to 100 mm tall (about 105 mm wide), so the figure and its first steps share a page */
+  .chapter .figure--live.figure--anim .anim-print { width: auto; max-width: 134mm; max-height: 100mm; }
 }
 
 
