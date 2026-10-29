@@ -292,14 +292,13 @@ const want = (n) => !ONLY.length || ONLY.includes(String(n));
 
     // 5. a Glossary passage link
     if (want(5)) {
-      const t = await tab(chrome, '/#/glossary', { wait: 2500 });
-      await t.until(`document.querySelector('#gl-dict .gl-de[data-kind="term"] button[data-open]')`);
-      const term = await t.ev(`(function () { var b = [].filter.call(document.querySelectorAll('#gl-dict .gl-de[data-kind="term"] button[data-open]'), function (b) { return /^EUV|^Extreme ultraviolet/i.test(b.textContent); })[0] || document.querySelector('#gl-dict .gl-de[data-kind="term"] button[data-open]'); b.id = 'qa-term'; return b.textContent; })()`);
-      await t.click('#qa-term'); await sleep(900);
-      const has = await t.until(`document.querySelector('#gl-sheet:not([hidden]) .lk-men a[data-para]')`, 4000);
+      // the Glossary is Index and entry since 29 Oct 2026: EUV opens by its address, its passages in the entry pane
+      const t = await tab(chrome, '/#gl-euv', { wait: 2500 });
+      const term = 'EUV';
+      const has = await t.until(`document.querySelector('#gl-pane a[data-para]')`, 4000);
       let pass = has, detail = '';
       if (has) {
-        const link = await t.ev(`(function () { var a = document.querySelectorAll('#gl-sheet .lk-men a[data-para]')[1] || document.querySelector('#gl-sheet .lk-men a[data-para]'); a.id = 'qa-pass'; var p = CP.Lookup.paras[+a.getAttribute('data-para')]; return { href: a.getAttribute('href'), chapter: p.chapter, text: a.textContent.slice(0, 90) }; })()`);
+        const link = await t.ev(`(function () { var a = document.querySelectorAll('#gl-pane a[data-para]')[1] || document.querySelector('#gl-pane a[data-para]'); a.id = 'qa-pass'; var p = CP.Lookup.paras[+a.getAttribute('data-para')]; return { href: a.getAttribute('href'), chapter: p.chapter, text: a.textContent.slice(0, 90) }; })()`);
         await t.click('#qa-pass'); await sleep(2600);
         const st = await t.ev(STATE);
         const p = await t.ev(`(function () { var e = document.querySelector('.lk-flash'); if (!e) return { flash: false }; var r = e.getBoundingClientRect(); return { top: Math.round(r.top), land: Math.round(CP.landAt(e)), flash: true }; })()`);
@@ -376,9 +375,9 @@ const want = (n) => !ONLY.length || ONLY.includes(String(n));
       await go(t, 'the home page, a stage in its chain', `document.querySelector('.view[data-view="walk"] a[href="memory-and-hbm/"]')`, 'memory-and-hbm');
       await t.close();
       t = await tab(chrome, '/#lk-country-nl', { wait: 2500 });
-      await t.until(`document.querySelector('#gl-sheet:not([hidden]) .lk-cards a')`, 4000);
-      const card = await t.ev(`(function () { var a = document.querySelector('#gl-sheet .lk-cards a'); return a ? a.getAttribute('href').replace(/\\/$/, '') : null; })()`);
-      if (card) await go(t, `a look-up card (the Netherlands, its chokepoint card ${card})`, '#gl-sheet .lk-cards a', card);
+      await t.until(`document.querySelector('#gl-pane .gl-cards a')`, 4000);
+      const card = await t.ev(`(function () { var a = document.querySelector('#gl-pane .gl-cards a'); return a ? a.getAttribute('href').replace(/\\/$/, '').replace(/^.*\\//, '') : null; })()`);
+      if (card) await go(t, `a look-up card (the Netherlands, its chokepoint card ${card})`, '#gl-pane .gl-cards a', card);
       else { ok = false; out.push('a look-up card: the Netherlands card listed no chapter (FAIL)'); }
       await t.close();
       t = await tab(chrome, '/#/controls', { wait: 2500 });
