@@ -171,7 +171,8 @@ const cardURL = (slug, versions) => BASE + 'cards/' + slug + '.png' + ((versions
 // a page's search title and description: the approved list (build/page-titles.js) where it names the page, or p.seo, which a
 // writer passes with its counts filled in (reference-pages.js); the share card's own title and line stay the manifest's
 const seoOf = (p) => p.seo || PAGE_TITLES('/' + p.slug + '/');
-const pageTitle = (p) => { const t = seoOf(p); if (t) return `${t.title} · ${SITE}`; return p.kind === 'chapter' ? `${p.title} · ${SITE}` : (p.slug === 'home' ? SITE : `${p.title} · ${SITE}`); };
+const pageTitle = (p) => { const t = seoOf(p); if (t) return t.site === false ? t.title : `${t.title} · ${SITE}`; // "site": false keeps a title whole (the hub's, 29 Oct 2026)
+  return p.kind === 'chapter' ? `${p.title} · ${SITE}` : (p.slug === 'home' ? SITE : `${p.title} · ${SITE}`); };
 // what an unfurler reads: the same tags on a chapter's readable page and on a view's forwarding page
 function shareTags(p, versions) {
   const url = BASE + p.slug + '/';
@@ -432,7 +433,7 @@ ${articleTags}
    is the list of the chapter pages, in reading order, with the trail Home › Supply Chain. dates is the page's own. */
 function contentsHead(ctx, versions, dates, chainView) {
   const url = BASE + 'supply-chain/', seo = PAGE_TITLES('/supply-chain/') || {};
-  const title = seo.title ? `${seo.title} · ${SITE}` : `Supply Chain · ${SITE}`, description = seo.description || chainView.description;
+  const title = seo.title ? (seo.site === false ? seo.title : `${seo.title} · ${SITE}`) : `Supply Chain · ${SITE}`, description = seo.description || chainView.description;
   const seq = ctx.chapters.concat(ctx.geo ? [ctx.geo] : []);
   const p = Object.assign({}, chainView, { slug: 'supply-chain', card: 'chain', seo: { title: seo.title || 'Supply Chain', description } });
   const ld = { '@context': 'https://schema.org', '@graph': [
@@ -596,7 +597,7 @@ module.exports = function (ctx) {
   if (!home) warn('page titles: build/page-titles.json has no entry for the main page, so it keeps the site name as its title');
   // the same titles for the app's own tab, by page path, so a chapter read in The Chain carries its static page's title (src/app.js Router.title)
   const viewTitles = {};
-  for (const p of PAGE_TITLES.paths()) { const e = PAGE_TITLES(p); viewTitles[p] = p === '/' ? e.title : `${e.title} · ${SITE}`; }
+  for (const p of PAGE_TITLES.paths()) { const e = PAGE_TITLES(p); viewTitles[p] = p === '/' || e.site === false ? e.title : `${e.title} · ${SITE}`; }
   return { HOME_CARD: cardURL('home', versions), HOME_TITLE: esc(home ? home.title : SITE), HOME_DESCRIPTION: esc(home && home.description ? home.description : 'How AI chips are made, and who controls each stage of the supply chain.'), VIEW_TITLES: esc(JSON.stringify(viewTitles)) };
 };
 module.exports.manifest = manifest;

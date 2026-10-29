@@ -1,13 +1,14 @@
 [
   {
     "path": "/",
-    "title": "How AI chips are made · Chip Supply Chain",
-    "description": "How AI chips are made and who controls each stage of the supply chain, from ASML's EUV machines to TSMC's fabs. A free, sourced guide in {chapters} chapters."
+    "title": "How AI chips are made · The semiconductor supply chain",
+    "description": "A free, sourced guide to the semiconductor supply chain. How AI chips are made and who controls each step, from ASML's EUV machines to TSMC's fabs."
   },
   {
     "path": "/supply-chain/",
-    "title": "The AI chip supply chain, stage by stage",
-    "description": "All {chapters} chapters in the order a chip is made: {stages} stages from design software to the data center, then what a chip costs and who controls the chain."
+    "title": "The semiconductor supply chain, stage by stage",
+    "description": "All {chapters} chapters of a free, sourced guide to the semiconductor supply chain, in the order a chip is made, from design software to the data center.",
+    "site": false
   },
   {
     "path": "/design-and-eda/",
@@ -36,8 +37,8 @@
   },
   {
     "path": "/deposition-and-etch/",
-    "title": "How deposition and etch build a chip",
-    "description": "How deposition and etch tools build a chip layer by layer. Applied Materials, Lam Research, Tokyo Electron and ASM International make most of them."
+    "title": "How deposition and etching build a chip",
+    "description": "How deposition and etching tools build a chip layer by layer. Applied Materials, Lam Research, Tokyo Electron and ASM International make most of them."
   },
   {
     "path": "/metrology-and-inspection/",
@@ -46,7 +47,7 @@
   },
   {
     "path": "/foundries-and-fabs/",
-    "title": "How foundries like TSMC make transistors",
+    "title": "How TSMC and other foundries make chips",
     "description": "How fabs build gate-all-around transistors, and why only TSMC, Intel and Samsung can make the newest chips. TSMC's six largest plants are all in Taiwan."
   },
   {

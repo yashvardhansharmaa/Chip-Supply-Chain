@@ -87,8 +87,8 @@ const audited = async (t, tag) => { const a = await t.ev(AUDIT); say(!a.overflow
       say(arr.chartTop > 0 && arr.chartTop < (w < 768 ? 1400 : 900), `${tag}: the field chart sits at the head, ${arr.chartTop} px down`);
       const cut = ['Below, each maker', 'Select a dot', 'oldest first', 'Open a chip', 'drawn from above, at one scale'];
       say(!arr.lines.some((l) => cut.some((c) => l.indexOf(c) >= 0)), `${tag}: the cut lines are gone from the head and the shelves`);
-      say(arr.lines.some((l) => /^A whole wafer, drawn smaller than the rest\./.test(l)) && arr.lines.some((l) => l === 'The TPU 8t and the Ascend 950DT have no drawing, because their package layouts are not published.') && arr.lines.some((l) => /^Speed at FP16 is not published for /.test(l)) && arr.lines.some((l) => /Logic die.*Memory stack.*Package.*\d+ mm/.test(l)),
-        `${tag}: the kept lines are there (the wafer's scale, the two chips with no drawing, FP16 not published, the key)`);
+      say(arr.lines.some((l) => /^A whole wafer, drawn smaller than the rest\./.test(l)) && arr.lines.some((l) => l === 'The TPU 8t and the Ascend 950DT have no drawing, because their package layouts are not published.') && arr.lines.some((l) => /Logic die.*Memory stack.*Package.*\d+ mm/.test(l)),
+        `${tag}: the kept lines are there (the wafer's scale, the two chips with no drawing, the key; the chart names no chip it leaves off, 28 Oct 2026)`);
       await audited(t, `${tag} arrival, light`);
       // the wafer in its own row: inside the Cerebras shelf, clear of the row above and of the maker's name
       const wafer = await t.ev(`(function(){ var li=document.getElementById('aic-sh-cerebras'), svg=li.querySelector('svg.plan'), prev=li.previousElementSibling, mk=li.querySelector('.sh-mk h2'), r=svg.getBoundingClientRect(), L=li.getBoundingClientRect(), P=prev.getBoundingClientRect(), M=mk.getBoundingClientRect(); return { inside: r.top >= L.top && r.bottom <= L.bottom, clearPrev: r.top >= P.bottom, overMk: r.left < M.right && r.right > M.left && r.top < M.bottom && r.bottom > M.top }; })()`);

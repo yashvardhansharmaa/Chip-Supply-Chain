@@ -1108,21 +1108,17 @@ const contentsHTML = (() => {
     + `<div class="ct-st">${acrossChapters.map((c, i) => col([c], n + i + 1)).join('')}</div></section>` : '';
   return bookK + list + xlist;
 })();
-/* The standfirst, one sentence that is also the key: how many stages are rated Extreme and what that means, as the home page
-   says it (build/modules/walk.js, from the card's own note), and the rest High, with each band's mark before its word. The
-   counts come from the chapters' cards. The printed contents keep their own standfirst (src/template.html .howto-lede) */
+/* The standfirst under the title: one finding, how many stages depend on three or fewer firms (the Extreme band), as the
+   card's note defines it (BAND_NOTE), with the count from the chapters' cards. Under it the key to the rows' two marks, each
+   band's mark before its word and a short form of its note (the owner's option 2 of 28 Oct 2026, in place of one long
+   sentence that was both). The printed contents keep their own standfirst (src/template.html .howto-lede) */
 const chainStandfirst = (() => {
-  const nX = stages.filter((c) => bandOf(c) === 'Extreme').length, nH = stages.filter((c) => bandOf(c) === 'High').length;
-  // "Three or fewer firms could supply this stage today, or one firm holds more than half of it." follows "meaning"
-  const xNote = String(BAND_NOTE.Extreme || ''), hNote = String(BAND_NOTE.High || '');
-  const xMeaning = /this stage/.test(xNote) ? xNote.replace('this stage', 'each').replace(/ of it\.$/, '.').replace(/\.$/, '').replace(/^\w/, (m) => m.toLowerCase()) : '';
-  // "Four to six firms could supply this stage today, ..." gives "four to six could"
-  const hm = /^(.+?) firms could supply this stage/.exec(hNote), hMeaning = hm ? `${hm[1].toLowerCase()} could` : '';
-  const mark = (b) => `${contentsMark(b)}${b}`;
-  const x = `${nX} of the ${stages.length} stages are rated ${mark('Extreme')}${xMeaning ? `, meaning ${esc(xMeaning)}` : ' concentration'}`;
-  const h = nH ? `${nX + nH === stages.length ? 'the other' : ''} ${nH} ${mark('High')}${hMeaning ? `, meaning ${esc(hMeaning)}` : ''}`.trim() : '';
-  return nX ? `${x}${h ? `, and ${h}` : ''}.` : '';
+  const nX = stages.filter((c) => bandOf(c) === 'Extreme').length;
+  return nX ? `${cap(word(nX))} of the ${word(stages.length)} stages depend on three or fewer firms, or on one firm with more than half the market.` : '';
 })();
+const chainKey = [['Extreme', 'three or fewer firms, or one with more than half'], ['High', 'four to six firms']]
+  .filter(([b]) => stages.some((c) => bandOf(c) === b))
+  .map(([b, t]) => `<span>${contentsMark(b)}${b}, ${t}</span>`).join('');
 const thesisHTML = 'How AI chips are made';
 const subtitleHTML = 'Every stage of the supply chain, and who controls it.';
 
@@ -1489,7 +1485,7 @@ const sheetPages = [['#/', 'Home'], ['#/chain', 'Supply Chain'], ['#/landscape',
 const sheetItem = (ch) => `<li><a href="${ch.id === 'geopolitics' ? '#geopolitics' : '#' + esc(ch.id)}"><span class="n">${pad(ch.number)}</span><span class="t">${esc(ch.title)}</span></a></li>`;
 const sheetChapters = stages.map(sheetItem).join('') + (acrossChapters.length ? `<li class="sheet-k" aria-hidden="true">Across the chain</li>` + acrossChapters.map(sheetItem).join('') : '');
 fill('SHEET_PAGES', sheetPages); fill('SHEET_CHAPTERS', sheetChapters);
-fill('CONTENTS', contentsHTML); fill('CHAIN_STANDFIRST', chainStandfirst); fill('CREDITS', credits); // the chapters go in page by page (the pages, below)
+fill('CONTENTS', contentsHTML); fill('CHAIN_STANDFIRST', chainStandfirst); fill('CHAIN_KEY', chainKey); fill('CREDITS', credits); // the chapters go in page by page (the pages, below)
 // the footer opens with the masthead's own tile (src/template.html), which signs off in the ledger column on the walk and
 // The Chain (styles.css .ft-mark) and stays hidden elsewhere. It is added here, so footer and footerKey, which the readable
 // pages and the summary reuse, keep their words and markup.
@@ -1819,7 +1815,7 @@ const lastmod = (key) => (pageDates[key] || {}).modified || today;
 fs.writeFileSync(path.join(root, 'dist', 'robots.txt'), `User-agent: *\nAllow: /\nDisallow: /book/\n${Object.keys(OLD_PDFS).map((o) => `Disallow: /${o}\n`).join('')}\nSitemap: ${SITE.url}sitemap.xml\n`);
 fs.writeFileSync(path.join(root, 'dist', 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
   // HTML pages only (the owner, 21 Oct 2026): the PDFs stay on the site and are linked from their pages, but are not listed
-  ['/', '/supply-chain/', ...chapterPages, '/summary/', ...(ctx.referencePages || [])].map((k) => `  <url><loc>${SITE.url}${k.slice(1)}</loc><lastmod>${lastmod(k)}</lastmod></url>`).join('\n') + `\n</urlset>\n`);
+  ['/', '/supply-chain/', ...chapterPages, ...(ctx.referencePages || [])].map((k) => `  <url><loc>${SITE.url}${k.slice(1)}</loc><lastmod>${lastmod(k)}</lastmod></url>`).join('\n') + `\n</urlset>\n`);
 // keep the dates of the pages this build wrote (a retired page drops out); the file is rewritten only when a date or hash moved
 {
   const kept = {};

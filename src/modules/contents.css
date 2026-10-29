@@ -5,8 +5,8 @@
    (.is-hot). Only the app loads this sheet: the readable chapter pages inline src/modules/chapter.css alone. Print:
    src/modules/print.css, which comes after this file, makes the head and the rows the book's title and contents.
    ========================================================================== */
-/* ---------- The head: the title with the three downloads under it on the left, and on the right one sentence that is
-   also the key, its band marks before their words. Space under it, no rule.
+/* ---------- The head: the title with one finding and the key to the marks under it on the left, and the downloads as a
+   short column of small links on the right (the owner's option 2 of 28 Oct 2026). Space under it, no rule.
    ---------- The rows: one per chapter, with no route. The drawing in a fixed box on the page's ground (no tint: the owner
    rejects gray blocks under drawings), centered, every drawing at the same area of it (build/line-stills.py); the number
    with its band's single mark (a solid wine bar for Extreme, a hollow ink mark for High); the title, which links to the
@@ -24,19 +24,21 @@
     display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; align-items: end;
     padding: 34px 0 0;
   }
-  .howto .howto-l { grid-column: 1 / 7; min-width: 0; }
+  .howto .howto-l { grid-column: 1 / 9; min-width: 0; }
   .howto h1.howto-title {
     margin: 0 0 0 -0.045em; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title);
     font-size: var(--t-title); line-height: 0.92; letter-spacing: -0.03em; /* the seven steps (28 Oct 2026; 80 px before) */
   }
-  /* the downloads, within reach and quiet: one line of small links under the title */
-  .howto .howto-dl { display: flex; flex-wrap: wrap; gap: 4px 20px; margin: 16px 0 0; font-family: var(--font-ui); font-size: 13px; line-height: 20px; }
+  /* the downloads, within reach and quiet: small links stacked beside the title */
+  .howto .howto-dl { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; margin: 0; font-family: var(--font-ui); font-size: 13px; line-height: 20px; }
   .howto .howto-dl a { color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 3px; }
   .howto .howto-dl a:hover { color: var(--accent-ink); text-decoration-color: var(--accent); }
-  .howto .howto-r { grid-column: 7 / 13; min-width: 0; padding-bottom: 22px; }
-  .howto .howto-std { max-width: 38em; margin: 0; font-family: var(--font-body); font-size: var(--t-lead); line-height: 1.45; color: var(--ink-2); } /* a standfirst's step */
-  .howto-std .ct-bmk { margin: 0 5px 0 1px; vertical-align: -1px; }
-  .howto-std .ct-bmk.h { vertical-align: 0; }
+  .howto .howto-r { grid-column: 9 / 13; align-self: start; min-width: 0; padding-top: 18px; }
+  .howto .howto-std { max-width: 30em; margin: 22px 0 0; font-family: var(--font-body); font-size: var(--t-lead); line-height: 1.45; color: var(--ink-2); } /* a standfirst's step */
+  /* the key to the rows' marks, each mark before its band's word */
+  .howto .howto-key { display: flex; flex-wrap: wrap; gap: 4px 26px; margin: 14px 0 0; font-family: var(--font-ui); font-size: 13px; line-height: 20px; color: var(--muted); }
+  .howto-key .ct-bmk { margin: 0 7px 0 0; vertical-align: -1px; }
+  .howto-key .ct-bmk.h { vertical-align: 0; }
   .view[data-view="stack"] > .contents { margin: 0; padding: 0 0 24px; border: 0; }
   .contents > .contents-h { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; } /* for screen readers; the book prints it */
 
@@ -65,6 +67,13 @@
   .contents .ct-col .ol { grid-column: 3; grid-row: 2; margin: 5px 0 0; max-width: 33em; font-family: var(--font-body); font-size: var(--t-small); line-height: 1.55; color: var(--muted); }
   /* the reader's selection: the chapter pointed at or focused (src/app.js) */
   .contents .ct-col > .item:hover .t, .contents .ct-col > .item.is-hot .t, .contents .ct-col > .item:hover .n, .contents .ct-col > .item.is-hot .n { color: var(--accent-ink); }
+  /* and its drawing lifts off the page (owner, 28 Oct 2026); with reduced motion it stays where it is */
+  .contents .ct-tile img { transition: transform .3s cubic-bezier(.2, .7, .2, 1); }
+  .contents .ct-col > .item:hover .ct-tile img, .contents .ct-col > .item.is-hot .ct-tile img { transform: translateY(-6px) scale(1.08); }
+  @media (prefers-reduced-motion: reduce) {
+    .contents .ct-tile img { transition: none; }
+    .contents .ct-col > .item:hover .ct-tile img, .contents .ct-col > .item.is-hot .ct-tile img { transform: none; }
+  }
 
   /* the chapters across the chain: the same rows, under a small label and space */
   .contents .ct-x { margin: 30px 0 0; }
@@ -79,10 +88,6 @@
   .contents .ct-st { display: block; margin-top: 48px; }
   .contents .ct-col > .item { padding-right: 0; }
 }
-@media screen and (max-width: 1199px) {
-  .howto .howto-l { grid-column: 1 / 6; }
-  .howto .howto-r { grid-column: 6 / 13; }
-}
 /* one column, each title with its one line beside it */
 @media screen and (min-width: 1000px) and (max-width: 1299px) {
   .contents .ct-col > .item { --tw: 96px; --th: 72px; grid-template-columns: calc(var(--tw) + 24px) 44px minmax(0, 14em) minmax(0, 1fr); padding-bottom: 28px; }
@@ -94,18 +99,18 @@
   .contents .ct-col > .item { --tw: 96px; --th: 72px; }
   .contents .ct-col .ol { max-width: 36em; }
 }
-/* a phone: the title, the downloads, the sentence (it is the key to the marks, so it comes before the sixteen rows: 28 Oct
-   2026; it sat at the foot until then), then the rows. Each row sets its drawing, number and title on one line, the one
-   line under all three */
+/* a phone: the title, the finding, the key to the marks (before the sixteen rows it decodes), the downloads, then the
+   rows. Each row sets its drawing, number and title on one line, the one line under all three */
 @media screen and (max-width: 759px) {
   .view[data-view="stack"] > .howto { display: block; padding-top: 0; }
   html[data-chain="contents"] .view[data-view="stack"]:not([hidden]) { display: flex; flex-direction: column; }
   html[data-chain="contents"] .view[data-view="stack"] > .howto, html[data-chain="contents"] .howto .howto-l, html[data-chain="contents"] .howto .howto-r { display: contents; }
   .howto h1.howto-title { order: 0; margin-top: 26px; font-size: var(--t-title); }
-  .howto .howto-dl { order: 1; margin-top: 12px; }
-  .howto .howto-std { order: 2; margin: 22px 0 0; font-size: var(--t-text); }
-  .view[data-view="stack"] > .contents { order: 3; padding-bottom: 24px; }
-  .view[data-view="stack"] > .site-footer { order: 4; }
+  .howto .howto-std { order: 1; margin: 18px 0 0; font-size: var(--t-text); }
+  .howto .howto-key { order: 2; margin-top: 12px; }
+  .howto .howto-dl { order: 3; flex-direction: row; flex-wrap: wrap; gap: 4px 20px; margin-top: 16px; }
+  .view[data-view="stack"] > .contents { order: 4; padding-bottom: 24px; }
+  .view[data-view="stack"] > .site-footer { order: 5; }
   .contents .ct-st { margin-top: 36px; }
   .contents .ct-x { margin-top: 18px; }
   .contents .ct-col > .item { --tw: 64px; --th: 48px; grid-template-columns: calc(var(--tw) + 14px) 36px minmax(0, 1fr); padding: 0 0 30px; }
@@ -117,7 +122,7 @@
 }
 /* on paper the rows are the book's contents: no drawing, no label, and the book's own standfirst in place of the sentence */
 @media print {
-  .howto .howto-std, .contents .ct-tile, .contents .ct-xk { display: none !important; }
+  .howto .howto-std, .howto .howto-key, .contents .ct-tile, .contents .ct-xk { display: none !important; }
 }
 
 /* The Chain's contents draw every chapter themselves, so on a phone the specimen strip stands down there too, before boot

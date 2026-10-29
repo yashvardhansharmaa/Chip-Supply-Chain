@@ -396,7 +396,9 @@ h2 { margin: 16pt 0 1mm; padding-top: 2mm; border-top: 0.6pt solid var(--ink); f
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(seo.title)} · Chip Supply Chain</title>
 <meta name="description" content="${esc(seo.description)}">
-<link rel="canonical" href="${SITE.url}summary/">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="${SITE.url}">
+<script>/* the summary's screen page was folded into home (owner, 28 Oct 2026). It stays as the page build/summary_pdf.py prints, which asks for ?print, and a reader who follows an old link lands on home */ if (!/[?&]print(=|&|$)/.test(location.search)) location.replace('../');</script>
 <meta property="og:title" content="${esc(seo.title)}">
 <meta property="og:description" content="${esc(seo.description)}">
 <meta name="twitter:title" content="${esc(seo.title)}">

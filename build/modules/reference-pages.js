@@ -201,7 +201,7 @@ ${body}
     };
     const stageHTML = (s) => {
       const rows = s.rows.slice().sort((a, b) => (rank(a) - rank(b)) || String(a.name).localeCompare(String(b.name)));
-      return `<section class="ref-sec" aria-labelledby="${s.id}-h"><h2 class="ref-h2" id="${s.id}">${esc(s.name)}<small id="${s.id}-h-n">${s.rows.length} ${s.rows.length === 1 ? 'firm' : 'firms'}${s.crit ? ` · ${s.crit} critical` : ''}</small></h2><span hidden id="${s.id}-h">${esc(s.name)}</span><ol class="ledger">${rows.map(firm).join('')}</ol></section>`;
+      return `<section class="ref-sec" aria-labelledby="${s.id}-h"><h2 class="ref-h2" id="${s.id}">${esc(s.name)} <small id="${s.id}-h-n">${s.rows.length} ${s.rows.length === 1 ? 'firm' : 'firms'}${s.crit ? ` · ${s.crit} critical` : ''}</small></h2><span hidden id="${s.id}-h">${esc(s.name)}</span><ol class="ledger">${rows.map(firm).join('')}</ol></section>`;
     };
     const jump = `<nav class="jump" aria-labelledby="stages-k"><span class="label" id="stages-k">${esc(ladderLabel || 'Segments from chip design to power')}</span><ol>${ladder.map((s) => `<li><a href="#${s.id}">${esc(SHORT[s.name] || s.name)}</a><span class="n">${s.rows.length}</span></li>`).join('')}<li><a href="#countries">What each country makes</a></li></ol></nav>`;
 
@@ -278,7 +278,7 @@ ${body}
         + (f.what ? `<p class="row-fine">${esc(f.what)}</p>` : '') + '</div></li>';
     };
     const key = LEGEND.length ? `<ul class="key" aria-label="What each state means">${LEGEND.map((l) => `<li>${l.status === 'suspended' ? `<span class="susp">${esc(l.word)}</span>` : `<span class="pill is-${esc(l.status)}">${esc(l.word)}</span>`}<span>${esc(l.text)}</span></li>`).join('')}</ul>` : '';
-    const board = flows.length ? `<section class="ref-sec" aria-labelledby="board"><h2 class="ref-h2" id="board">What can be sold<small>On ${ASOF}${today > checked ? ` · data checked ${esc(ctx.dayStr ? ctx.dayStr(checked) : checked)}` : ''}</small></h2><ol class="ledger">${flows.map(flowHTML).join('')}</ol>${key}</section>` : '';
+    const board = flows.length ? `<section class="ref-sec" aria-labelledby="board"><h2 class="ref-h2" id="board">What can be sold <small>On ${ASOF}${today > checked ? ` · data checked ${esc(ctx.dayStr ? ctx.dayStr(checked) : checked)}` : ''}</small></h2><ol class="ledger">${flows.map(flowHTML).join('')}</ol>${key}</section>` : '';
 
     // the timeline, oldest first, by year (Geo.renderTimeline): each entry with its date, actor, kind, title, summary and source
     const instWord = (v) => { const k = String(v || ''); if (!k) return ''; if (INSTRUMENT[k]) return INSTRUMENT[k]; const w = k.replace(/-/g, ' '); return w.charAt(0).toUpperCase() + w.slice(1); };
@@ -295,7 +295,7 @@ ${body}
         + (src ? `<p class="row-src">${src}</p>` : '') + '</div></li>';
     };
     const last = timeline.length ? String(timeline[timeline.length - 1].date).slice(0, 4) : first;
-    const tl = timeline.length ? `<section class="ref-sec" aria-labelledby="timeline"><h2 class="ref-h2" id="timeline">The timeline of AI chip export controls, ${esc(first)} to ${esc(last)}<small>${timeline.length} entries</small></h2>`
+    const tl = timeline.length ? `<section class="ref-sec" aria-labelledby="timeline"><h2 class="ref-h2" id="timeline">The timeline of AI chip export controls, ${esc(first)} to ${esc(last)} <small>${timeline.length} entries</small></h2>`
       + `<nav class="jump" aria-label="Years"><ol>${years.map((g) => `<li><a href="#year-${g.y}">${esc(g.y)}</a><span class="n">${g.rows.length}</span></li>`).join('')}</ol></nav>`
       + years.map((g) => `<h3 class="ref-h3" id="${uid('year-' + g.y, 'years')}">${esc(g.y)}<small>${g.rows.length} ${g.rows.length === 1 ? 'move' : 'moves'}</small></h3><ol class="ledger">${g.rows.map(entry).join('')}</ol>`).join('') + '</section>' : '';
 
@@ -325,7 +325,7 @@ ${body}
       }).join('') + '</tr>';
     };
     const exNote = String(ctx.exposureNote || '').replace(/^The charts cover/, 'The table covers');
-    const exposure = fOrder.length ? `<section class="ref-sec" aria-labelledby="china-revenue"><h2 class="ref-h2" id="china-revenue">China share of revenue, from company filings<small>${fOrder.length} firms · ${esc(ys[0])} to ${esc(lastY)}</small></h2>`
+    const exposure = fOrder.length ? `<section class="ref-sec" aria-labelledby="china-revenue"><h2 class="ref-h2" id="china-revenue">China share of revenue, from company filings <small>${fOrder.length} firms · ${esc(ys[0])} to ${esc(lastY)}</small></h2>`
       + `<p class="ex-key"><span>Each share links to the firm's filing for that year.</span><span><i class="k-peak" aria-hidden="true"></i>The year it peaked</span><span><i class="k-brk" aria-hidden="true"></i>The firm changed how it counts China</span></p>`
       + `<p class="tbl-cue" aria-hidden="true">Scroll the table sideways to see every year.</p><div class="tbl ex" role="region" aria-labelledby="china-revenue" tabindex="0"><table><thead><tr><th scope="col">Firm</th>${ys.map((y) => `<th scope="col">${esc(y)}</th>`).join('')}</tr></thead><tbody>${fOrder.map(exRow).join('')}</tbody></table></div>`
       + (exNote ? `<p class="ref-note">${esc(exNote)}</p>` : '') + '</section>' : '';
@@ -476,13 +476,13 @@ ${body}
       const links = (list) => list.map((p) => `<a href="#${chipIds.get(p.c.id)}">${esc(short(p.c))}</a>`).join(', ');
       const no = none.filter((p) => ((p.c.compute || {}).support || {}).fp16 === 'no'), np = none.filter((p) => !no.includes(p));
       const tid = uid('fp16-timeline', 'sections');
-      return `<section class="ref-sec" aria-labelledby="${tid}"><h2 class="ref-h2" id="${tid}">Speed at FP16, by the month each chip was announced<small>${have.length} of ${chips.length} chips have a published figure</small></h2>`
+      return `<section class="ref-sec" aria-labelledby="${tid}"><h2 class="ref-h2" id="${tid}">Speed at FP16, by the month each chip was announced <small>${have.length} of ${chips.length} chips have a published figure</small></h2>`
         + `<figure class="ctl" role="group" aria-label="Speed at FP16 of ${have.length} chips, by the month each was announced"><p class="ctl-unit" aria-hidden="true">${unit}</p><div class="ctl-plot">`
         + `<svg class="ctl-grid" viewBox="0 0 1000 1000" preserveAspectRatio="none" aria-hidden="true" focusable="false">${grid}</svg>${marks}</div></figure>`
         + (np.length ? `<p class="ctl-none"><span>Not published at FP16</span> ${links(np)}</p>` : '') + (no.length ? `<p class="ctl-none"><span>Not supported at FP16</span> ${links(no)}</p>` : '')
         + `<p class="ref-sub ctl-note">A chip dated only to a year sits in that year's middle, on a line across the year. The highest value is the one colored dot.</p></section>`;
     })();
-    const table = `<section class="ref-sec" aria-labelledby="specs"><h2 class="ref-h2" id="specs">Specs side by side<small>${chips.length} chips</small></h2>${specsSub ? `<p class="ref-sub">${specsSub}</p>` : ''}`
+    const table = `<section class="ref-sec" aria-labelledby="specs"><h2 class="ref-h2" id="specs">Specs side by side <small>${chips.length} chips</small></h2>${specsSub ? `<p class="ref-sub">${specsSub}</p>` : ''}`
       + `<p class="ref-sub">Each figure carries the number of its source in the chip's list below.</p>`
       + `<div class="tbl chips-t" role="region" aria-labelledby="specs" tabindex="0"><table><thead><tr><th scope="col">Chip</th>${COLS.map((col) => `<th scope="col"${col.num ? ' class="num"' : ''}>${esc(col.label)}</th>`).join('')}</tr></thead><tbody>${chips.map(rowHTML).join('')}</tbody></table></div></section>`;
     // each chip's sources, numbered as the cells cite them, after its note on how the speed figures are measured
@@ -494,7 +494,7 @@ ${body}
         + (pn ? `<p><b>How the speed figures are measured.</b> ${esc(pn)}</p>` : '')
         + (srcs.length ? `<ol>${srcs.map((s, i) => `<li id="${id}-s${i + 1}">${ext(s.url, esc(s.label || s.url))}</li>`).join('')}</ol>` : '') + '</section>';
     };
-    const sources = `<section class="ref-sec" aria-labelledby="chip-sources"><h2 class="ref-h2" id="chip-sources">Sources<small>${chips.reduce((a, c) => a + (c.sources || []).length, 0)} sources for ${chips.length} chips</small></h2><div class="srcs">${chips.map(srcBlock).join('')}</div></section>`;
+    const sources = `<section class="ref-sec" aria-labelledby="chip-sources"><h2 class="ref-h2" id="chip-sources">Sources <small>${chips.reduce((a, c) => a + (c.sources || []).length, 0)} sources for ${chips.length} chips</small></h2><div class="srcs">${chips.map(srcBlock).join('')}</div></section>`;
     const makers = new Set(chips.map((c) => c.vendor)).size;
     return page({
       slug: 'chips', route: '#/landscape', h1: 'AI Chips',
@@ -580,7 +580,7 @@ ${body}
     const firmList = suppliers.map((r) => ({ name: r.name, lab: stageLabel(r.category) + ' · ' + cname(r.country), href: '../suppliers/#' + (firmIds.get(r.name) || slug(r.name)) })).sort(byName);
     const chipList = chips.map((c) => ({ name: `${c.vendor} ${c.name}`, lab: 'AI chip' + (c.announced ? ' · ' + String(c.announced).slice(0, 4) : ''), href: '../chips/#' + (chipIds.get(c.id) || slug(c.id)) })).sort(byName);
     const countryList = [...countryIds.keys()].map((cc) => ({ name: cname(cc), lab: 'Country', href: '../suppliers/#' + countryIds.get(cc) })).sort(byName);
-    const idx = (id, title, list, sub) => (list.length ? `<section class="ref-sec" aria-labelledby="${id}"><h2 class="ref-h2" id="${id}">${title}<small>${list.length}</small></h2>${sub ? `<p class="ref-sub">${sub}</p>` : ''}<ul class="idx">${list.map((x) => `<li><a href="${esc(x.href)}">${esc(x.name)}</a><span class="lab">${esc(x.lab)}</span></li>`).join('')}</ul></section>` : '');
+    const idx = (id, title, list, sub) => (list.length ? `<section class="ref-sec" aria-labelledby="${id}"><h2 class="ref-h2" id="${id}">${title} <small>${list.length}</small></h2>${sub ? `<p class="ref-sub">${sub}</p>` : ''}<ul class="idx">${list.map((x) => `<li><a href="${esc(x.href)}">${esc(x.name)}</a><span class="lab">${esc(x.lab)}</span></li>`).join('')}</ul></section>` : '');
     const others = idx('list-firms', 'Firms', firmList, 'Each firm links to its entry on the Suppliers page.') + idx('list-chips', 'AI chips', chipList, 'Each chip links to its row on the AI Chips page.') + idx('list-countries', 'Countries', countryList, 'Each country links to its line on the Suppliers page.');
 
     const firstWord = (terms.find((g) => /^[A-Za-z]/.test(g.term)) || terms[0] || { term: '' }).term, lastWord = (terms[terms.length - 1] || { term: '' }).term;

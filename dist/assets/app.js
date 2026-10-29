@@ -1408,13 +1408,10 @@
       var t = F.top[0].c, tops = F.top.map(function (p) { return 'the ' + esc(short(p.c)); });
       return cap1(join(tops)) + (F.top.length > 1 ? ' share' : ' has') + ' the highest published ' + esc(low1(m.label)) + ', ' + esc(nf(F.max)) + ' ' + esc(unitWords[m.unit]) + (F.top.length > 1 ? '.' : '. It was announced in ' + esc(when(t.announced)) + '.');
     };
-    // the chips the chart cannot show, and any value set above the scale
+    // any value set above the scale. The chips with no figure are left off without a word (owner, 28 Oct 2026: the list of
+    // them ran to six lines); each chip's own record says whether its figure is unpublished or its format unsupported
     var chartSaid = function (mkey) {
-      var F = fieldOf(mkey), s = [], m = F.m;
-      var no = F.none.filter(function (c) { return nilKind(c, m) === 'no'; }), np = F.none.filter(function (c) { return nilKind(c, m) !== 'no'; });
-      var list = function (cs) { return join(cs.map(function (c) { return 'the ' + esc(short(c)); })); };
-      if (np.length) s.push(esc(m.label) + ' is not published for ' + list(np) + '.');
-      if (no.length) s.push(m.fmt.toUpperCase() + ' is not supported by ' + list(no) + '.');
+      var F = fieldOf(mkey), s = [];
       var offs = F.pts.filter(function (p) { return F.off.indexOf(p.v) >= 0; });
       if (offs.length) s.push(cap1(join(offs.map(function (p) { return 'the ' + esc(short(p.c)) + ', at ' + nf(p.v); }))) + ', ' + (offs.length > 1 ? 'sit' : 'sits') + ' above the top of the scale, marked by ' + (offs.length > 1 ? 'arrows' : 'an arrow') + '.');
       return s;

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Print the short summary (dist/summary/index.html, written by build/modules/summary-brief.js) to a PDF.
 
-usage: python3 build/summary_pdf.py [<url>] [<out.pdf>] [--port 9761] [--wait 4] [--edition YYYY-MM-DD] [--force] [--dark]
+usage: python3 build/summary_pdf.py [<url, ending /summary/?print>] [<out.pdf>] [--port 9761] [--wait 4] [--edition YYYY-MM-DD] [--force] [--dark]
 defaults: http://127.0.0.1:8765/summary/ and dist/pdf/summary.pdf
 
 Chrome's own pagination is enough here: the page is A4 with its own @page rules, and the stage blocks do not break
@@ -45,7 +45,7 @@ force = '--force' in args
 if force: args.remove('--force')
 dark = '--dark' in args
 if dark: args.remove('--dark')
-url = args[0] if len(args) > 0 else 'http://127.0.0.1:8765/summary/'
+url = args[0] if len(args) > 0 else 'http://127.0.0.1:8765/summary/?print' # ?print: without it the page sends a reader home (28 Oct 2026)
 out = args[1] if len(args) > 1 else os.path.join(ROOT, 'dist', 'pdf', 'summary.pdf')
 site = json.loads(subprocess.run(['node', '-e', 'var s=require(%s);process.stdout.write(JSON.stringify({url:s.url,host:s.host}))'
                                   % json.dumps(os.path.join(ROOT, 'build', 'site.js'))], capture_output=True, text=True, check=True).stdout)

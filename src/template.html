@@ -256,18 +256,20 @@ html:not(.booted)[data-pick] .view[data-view="suppliers"] > :not(.view-head) { d
         </div>
       </section>
       <!--/cover-->
-      <!-- The Chain's contents page (design round eight, option 3 "clean", chosen 28 Oct 2026): the title with the downloads as
-           small links, and one sentence that is also the key (build/build.js chainStandfirst), then one row per chapter
+      <!-- The Chain's contents page (design round eight, option 3 "clean", chosen 28 Oct 2026): the title with the finding and
+           the key to the marks under it (build/build.js chainStandfirst, chainKey; the owner's option 2 of 28 Oct), the
+           downloads as small links beside them, then one row per chapter
            (build/build.js CONTENTS). Both blocks show only on the contents (html[data-chain], CHAIN_ONE); on paper they are the
            book's title and contents, and the book keeps its own standfirst (.howto-lede, print only, which src/modules/print.js
            words for paper) -->
       <div class="howto" id="howto">
         <div class="howto-l">
           <h1 class="howto-title">Supply Chain</h1>
-          <p class="howto-dl"><a href="pdf/how-ai-chips-are-made.pdf" download="chip-supply-chain-how-ai-chips-are-made.pdf">Download all chapters as a PDF</a><a href="pdf/summary.pdf" download="chip-supply-chain-summary.pdf">Download a short summary</a><a href="summary/">Read the summary online</a></p>
+          <p class="howto-std">{{CHAIN_STANDFIRST}}</p>
+          <p class="howto-key">{{CHAIN_KEY}}</p>
         </div>
         <div class="howto-r">
-          <p class="howto-std">{{CHAIN_STANDFIRST}}</p>
+          <p class="howto-dl"><a href="pdf/how-ai-chips-are-made.pdf" download="chip-supply-chain-how-ai-chips-are-made.pdf">Download all chapters as a PDF</a><a href="pdf/summary.pdf" download="chip-supply-chain-summary.pdf">Download a short summary</a></p>
           <p class="howto-lede print-only">This edition covers each of the {{STAGES_WORD}} stages of making an AI chip in detail, one chapter per stage, in the order a chip is made, from design software to the data center. Two more chapters at the end look across all the stages, at what a chip costs and who controls the chain. To help readers learn, each chapter has a 3D model, most have an animation, and every one ends with flashcards.</p>
         </div>
       </div>

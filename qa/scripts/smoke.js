@@ -62,8 +62,10 @@ const CHAIN_STATE = `(function () {
   var flat = rows.filter(function (r) { return getComputedStyle(r.querySelector('.ct-tile')).backgroundColor === ground; }).length;
   var lefts = stRows.filter(vis).map(function (r) { return Math.round(r.getBoundingClientRect().left); }).filter(function (v, i, a) { return a.indexOf(v) === i; }).length;
   var sf = document.querySelector('#howto .howto-std'), sfText = sf ? sf.textContent.replace(/\\s+/g, ' ') : '', nH = st.filter(function (c) { return c.concentration === 'High'; }).length;
-  var standfirst = vis(sf) && sfText.indexOf(wantWine.length + ' of the ' + st.length + ' stages are rated Extreme') === 0 && (wantWine.length + nH !== st.length || sfText.indexOf('the other ' + nH + ' High') > 0)
-    && sf.querySelectorAll('.ct-bmk:not(.h)').length === 1 && sf.querySelectorAll('.ct-bmk.h').length === 1;
+  // the finding under the title, its count in words, and under it the key to the two marks (the owner's option 2, 28 Oct 2026)
+  var W = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen'], key = document.querySelector('#howto .howto-key');
+  var standfirst = vis(sf) && sfText.toLowerCase().indexOf(W[wantWine.length] + ' of the ' + W[st.length] + ' stages depend on three or fewer firms') === 0
+    && vis(key) && key.querySelectorAll('.ct-bmk:not(.h)').length === 1 && key.querySelectorAll('.ct-bmk.h').length === (nH ? 1 : 0);
   var list = [].map.call(document.querySelectorAll('#contents .contents-grid .item a.t'), function (a) { return a.getAttribute('href'); });
   var dl = [].filter.call(document.querySelectorAll('#howto .howto-dl a'), vis).map(function (a) { return a.getAttribute('href'); });
   return { at: location.pathname, rows: shownRows.join() === D.map(function (c) { return '../' + c.id + '/'; }).join(), chapters: D.length, rowsShown: shownRows.filter(function (v) { return v !== 'none'; }).length, drawn: drawn,
@@ -72,7 +74,7 @@ const CHAIN_STATE = `(function () {
     wine: wine.join() === wantWine.join(), extreme: wantWine.length, flat: flat === rows.length, cols: lefts === (innerWidth >= 1300 ? 2 : 1), columns: lefts,
     label: !x.length || vis(document.querySelector('#contents .ct-xk')), standfirst: standfirst,
     list: list.join() === D.map(function (c) { return '../' + c.id + '/'; }).join(), listed: list.length,
-    downloads: dl.join() === '../pdf/how-ai-chips-are-made.pdf,../pdf/summary.pdf,../summary/', howToRead: !!document.querySelector('.howto-read, #howto-read') };
+    downloads: dl.join() === '../pdf/how-ai-chips-are-made.pdf,../pdf/summary.pdf', howToRead: !!document.querySelector('.howto-read, #howto-read') };
 })()`;
 const CHAIN_OK = `(function (s) { return s.at === '/supply-chain/' && s.stages >= 14 && s.rows && s.drawn === s.chapters && s.groups && s.across >= 2 && s.marks && s.wine && s.extreme > 0 && s.flat && s.cols && s.label && s.standfirst && s.list && s.downloads && !s.howToRead; })(${CHAIN_STATE})`;
 // the counts below follow the chain since the merge of chapters 8 and 9 (27 Oct 2026): 14 stages, 16 chapters
@@ -98,10 +100,10 @@ const ROUTES = [
   { name: 'essay-page', url: '/#/geopolitics', ready: `location.pathname === '/geopolitics/' && ${shownCount('article.chapter')} === 1 && ${shown('#geopolitics .prevnext .next')}`, detail: `'at ' + location.pathname + ', chapters shown: ' + ${shownCount('article.chapter')}` },
   // the book, for print only: the cover, the contents (each row's link #<id>, which its PDF numbers) and every chapter
   { name: 'book', url: '/book/#/chain', ready: `${count('article.chapter')} === 16 && ${count('#contents .item a.t[href^="#"]')} === 16 && ${shown('#contents')} && ${shownCount('article.chapter')} === 0`, detail: `'chapters: ' + ${count('article.chapter')} + ', contents rows: ' + ${count('#contents .item a.t[href^="#"]')}` },
-  { name: 'summary', url: '/summary/', ready: `${count('.ladder li')} === 14 && ${count('.grid .card')} >= 14`, detail: `'ladder rows: ' + ${count('.ladder li')} + ', cards: ' + ${count('.grid .card')}` },
+  { name: 'summary', url: '/summary/?print', ready: `${count('.ladder li')} === 14 && ${count('.grid .card')} >= 14`, detail: `'ladder rows: ' + ${count('.ladder li')} + ', cards: ' + ${count('.grid .card')}` },
 ];
 // the theme default: these three page types, with the device set to dark
-const THEMED = [['main page', '/#/', '/?theme=dark#/'], ['contents page', '/supply-chain/', '/supply-chain/?theme=dark'], ['chapter page', '/lithography/', '/lithography/?theme=dark'], ['summary', '/summary/', '/summary/?theme=dark']];
+const THEMED = [['main page', '/#/', '/?theme=dark#/'], ['contents page', '/supply-chain/', '/supply-chain/?theme=dark'], ['chapter page', '/lithography/', '/lithography/?theme=dark'], ['summary', '/summary/?print', '/summary/?print&theme=dark']];
 
 /* ---------- a static server for dist/ ---------- */
 const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png', '.jpg': 'image/jpeg', '.ico': 'image/x-icon', '.mp4': 'video/mp4', '.pdf': 'application/pdf', '.txt': 'text/plain', '.xml': 'application/xml', '.webmanifest': 'application/manifest+json' };

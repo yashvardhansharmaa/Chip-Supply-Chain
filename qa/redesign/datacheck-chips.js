@@ -12,8 +12,8 @@
      - four comparisons: every cell of every figure row (the value, or a dash marked "Not published" or "Not supported"), a row
        left out only when no chip has it, which values are set in wine (the largest, ties included, when two or more have a
        figure), and each column's package size;
-     - the field chart at each of the six figures: the finding (the leader and its value), the dots set in wine, and the chips
-       the caption names as having no figure.
+     - the field chart at each of the six figures: the finding (the leader and its value), the dots set in wine, and a
+       caption that names no chip it leaves off (28 Oct 2026).
    usage: node qa/redesign/datacheck-chips.js [--base http://127.0.0.1:8775] [--out qa/redesign/datacheck-chips.json] */
 'use strict';
 const fs = require('fs');
@@ -139,7 +139,8 @@ const READ_FIELD = `(function () {
         eq('field ' + m.key + ' finding', true, r.finding.indexOf(want) === 0);
         eq('field ' + m.key + ' dots', pts.length, r.dots);
         eq('field ' + m.key + ' wine dots', tops.length, r.wine);
-        DATA.filter((c) => m.get(c) == null).forEach((c) => eq(`field ${m.key} caption names ${c.id} as ${kind(c, m)}`, true, r.cap.split(/(?<=\.)\s+/).some((s) => s.indexOf(kind(c, m)) >= 0 && new RegExp('the ' + short(c).replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '(,| and|\\.)').test(s))));
+        // the chart names no chip it leaves off (owner, 28 Oct 2026), so its caption is empty unless a value sits above the scale
+        eq('field ' + m.key + ' caption names no missing chip', true, !/not published|not supported/.test(r.cap));
       }
       await t.ev(`CP.Landscape.setMeasure('')`);
       report.widths[w] = { checked: n, mismatches: bad };

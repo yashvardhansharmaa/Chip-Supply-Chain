@@ -1,7 +1,8 @@
 // The <title> and meta description of the main page and of every static page (the chapters, /summary/ and the four
 // reference pages), approved by the owner on 21 Oct 2026. The words are a plain-language editor's, kept verbatim in
 // build/page-titles.json (copied from qa/code-review/titles.json): edit them there. The build adds " · Chip Supply Chain"
-// to every title except the main page's, which carries it already, and uses the same words for the Open Graph and Twitter
+// to every title except the main page's and any marked "site": false (29 Oct 2026: the main page and the contents page
+// name the semiconductor supply chain, and the site's name shows above the result), and uses the same words for the Open Graph and Twitter
 // tags. The share cards (build/cards.py) keep their own titles. Pure: build modules require this file.
 // A count of the chain is never typed (27 Oct 2026, the merge of chapters 8 and 9): "{chapters}" and "{stages}" in the
 // words stand for the number of chapters and of stages in content/ (build/stages.js), spelled out as the site spells them.

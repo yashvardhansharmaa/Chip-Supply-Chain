@@ -462,10 +462,10 @@ const want = (n) => !ONLY.length || ONLY.includes(String(n));
             out.push({ href: a.getAttribute('href'), text: a.textContent, dl: a.hasAttribute('download'), y: Math.round(b.bottom), status: r.status, type: r.type }); }
           return out; })()`);
         const vh = width < 768 ? 844 : 900;
-        const dpass = dl.length === 3 && dl.every((d) => d.status === 200 && d.y > 0 && d.y < vh)
+        // two downloads since the summary's screen page was folded into home (owner, 28 Oct 2026)
+        const dpass = dl.length === 2 && dl.every((d) => d.status === 200 && d.y > 0 && d.y < vh)
           && dl[0].href === '../pdf/how-ai-chips-are-made.pdf' && dl[0].dl && dl[0].type === 'application/pdf'
-          && dl[1].href === '../pdf/summary.pdf' && dl[1].dl && dl[1].type === 'application/pdf'
-          && dl[2].href === '../summary/' && !dl[2].dl && dl[2].type === 'text/html';
+          && dl[1].href === '../pdf/summary.pdf' && dl[1].dl && dl[1].type === 'application/pdf';
         ok = ok && dpass; out.push(`${width}: downloads ${dl.map((d) => `"${d.text}" ${d.href} ${d.status} ${d.type} at y ${d.y}`).join('; ')}${dpass ? '' : ' (FAIL)'}`);
         if (width === 1440) { // each row's drawing, served as a picture
           const pics = await t.ev(`(async function () { var out = []; for (var i of document.querySelectorAll('#contents .item .ct-tile img')) { var r = await ${HEAD}(i.src); out.push(i.getAttribute('src') + ' ' + r.status + ' ' + r.type); } return out; })()`);
