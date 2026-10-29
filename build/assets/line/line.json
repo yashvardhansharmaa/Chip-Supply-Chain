@@ -10,8 +10,8 @@
   "w": 98,
   "h": 300,
   "wt": 22.9,
-  "gamma": 3.09,
-  "src": "346c9df50c555acf"
+  "gamma": 1.99,
+  "src": "ef2e89b99aad0be8"
  },
  "chemicals-gases-and-photoresist": {
   "w": 252,
@@ -57,17 +57,17 @@
  },
  "memory-and-hbm": {
   "w": 300,
-  "h": 253,
-  "wt": 70.7,
-  "gamma": 3.38,
-  "src": "5ddcacbdb24d3482"
+  "h": 255,
+  "wt": 70.4,
+  "gamma": 2.14,
+  "src": "800923e5c5165e3c"
  },
  "advanced-packaging": {
   "w": 300,
   "h": 198,
   "wt": 79.9,
-  "gamma": 2.79,
-  "src": "3bad49274bda1eb8"
+  "gamma": 2.77,
+  "src": "d1948e243e36a9a9"
  },
  "substrates-and-pcbs": {
   "w": 300,

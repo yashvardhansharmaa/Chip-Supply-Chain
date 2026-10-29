@@ -217,8 +217,9 @@
     /* The model's view matrix for a slot at the current turn (as draw() sets it), so the balloons can find a part on the screen */
     model: function (slot, extraRot, sc) {
       var t = slot.tilt, idle = this.spin + slot.spinBase;
+      // a turntable specimen makes every turn about its own axis, so it never leans (the HBM stack, 29 Oct 2026); t[1] is where it starts
       var M = slot.turntable
-        ? mul(rotZ(t[2]), mul(rotY(t[1] + this.scrollAngle + extraRot), mul(rotX(t[0]), rotY(idle))))
+        ? mul(rotZ(t[2]), mul(rotX(t[0]), rotY(t[1] + idle + this.scrollAngle + extraRot)))
         : mul(rotZ(t[2]), mul(rotY(t[1] + idle + this.scrollAngle + extraRot), rotX(t[0])));
       M = mul(M, scale(sc));
       if (this.userYaw || this.userPitch) M = mul(rotX(this.userPitch), mul(rotY(this.userYaw), M));
@@ -238,7 +239,7 @@
       var P = this.proj(w / h), t = slot.tilt, smp = slot.sample, bottom = 0, top = h, side = 0;
       for (var a = 0; a < 24; a++) {
         var yaw = a * Math.PI / 12;
-        var M = slot.turntable ? mul(rotZ(t[2]), mul(rotY(t[1]), mul(rotX(t[0]), rotY(yaw)))) : mul(rotZ(t[2]), mul(rotY(t[1] + yaw), rotX(t[0])));
+        var M = slot.turntable ? mul(rotZ(t[2]), mul(rotX(t[0]), rotY(t[1] + yaw))) : mul(rotZ(t[2]), mul(rotY(t[1] + yaw), rotX(t[0])));
         var A = mul(P, M);
         for (var i = 0; i < smp.length; i += 3) {
           var x = smp[i], y = smp[i + 1], z = smp[i + 2];
@@ -348,7 +349,8 @@
       var r = this.canvas.getBoundingClientRect(), w = r.width, h = r.height;
       if (!w || !h) return;
       this.balloonEl.style.display = '';
-      if (this.balloonEl.classList.contains('is-strip')) { var bs = this.balloonEl.style; bs.left = this.canvas.offsetLeft + 'px'; bs.top = this.canvas.offsetTop + 'px'; bs.width = w + 'px'; bs.height = h + 'px'; } // over the strip's canvas
+      var strip = this.balloonEl.classList.contains('is-strip');
+      if (strip) { var bs = this.balloonEl.style; bs.left = this.canvas.offsetLeft + 'px'; bs.top = this.canvas.offsetTop + 'px'; bs.width = w + 'px'; bs.height = h + 'px'; } // over the strip's canvas
       var k = easeOut((performance.now() - this.transStart) / this.transDur);
       var A = mul(this.proj(w / h), this.model(slot, -0.45 * (1 - k), 0.94 + 0.06 * k));
       var nc = slot.norm.c, nk = slot.norm.k, e = this.reach(slot) || { side: w * 0.3 };
@@ -367,11 +369,17 @@
         var want = mx < cx ? -1 : 1; if (!p.side || (want !== p.side && Math.abs(mx - cx) > w * 0.04)) p.side = want;
         p.ty = my; sides[p.side < 0 ? 0 : 1].push(p);
       });
-      // on each side, the balloons keep 34 px apart, in the order of the parts' heights
-      sides.forEach(function (list) {
+      // a name's width, measured once the faces are in
+      var nameW = function (p) { var t = p.tw || 0; if (!t) { t = p.tl.getComputedTextLength ? p.tl.getComputedTextLength() : 0; if (t > 0) p.tw = t; else t = String(p.name).length * 8; } return t; };
+      // on each side, the balloons keep 34 px apart, in the order of the parts' heights. Where a name has no room beside its
+      // balloon it stands under it (below), and the balloons on that side then keep 58 px apart, so a name never runs into the
+      // next balloon (a drawing as wide as its slot, CoWoS; labels mockup of 29 Oct 2026). The strip shows no names
+      sides.forEach(function (list, si) {
+        var x = si ? colR : colL, under = !strip && list.some(function (p) { return si ? x + 18 + nameW(p) > w - 2 : x - 18 - nameW(p) < 2; });
+        var step = under ? 58 : 34;
         list.sort(function (a, b) { return a.ty - b.ty; });
-        for (var i = 1; i < list.length; i++) if (list[i].ty - list[i - 1].ty < 34) list[i].ty = list[i - 1].ty + 34;
-        var over = list.length ? list[list.length - 1].ty - (h - 18) : 0;
+        for (var i = 1; i < list.length; i++) if (list[i].ty - list[i - 1].ty < step) list[i].ty = list[i - 1].ty + step;
+        var over = list.length ? list[list.length - 1].ty - (h - (under ? 40 : 18)) : 0;
         if (over > 0) list.forEach(function (p) { p.ty -= over; });
       });
       var snap = this.balloonsSnap; this.balloonsSnap = false;
@@ -381,8 +389,7 @@
         if (p.x === null || snap || reduced) { p.x = tx; p.y = ty; } else { p.x += (tx - p.x) * 0.14; p.y += (ty - p.y) * 0.14; }
         p.c.setAttribute('cx', p.x.toFixed(1)); p.c.setAttribute('cy', p.y.toFixed(1));
         p.tn.setAttribute('x', p.x.toFixed(1)); p.tn.setAttribute('y', (p.y + 4.5).toFixed(1));
-        var left = p.x < cx, tw = p.tw || 0;
-        if (!tw) { tw = p.tl.getComputedTextLength ? p.tl.getComputedTextLength() : 0; if (tw > 0) p.tw = tw; else tw = String(p.name).length * 8; } // measured once the faces are in
+        var left = p.x < cx, tw = nameW(p);
         // the name beside its balloon, or under it where beside would run past the drawing's edge (the page clips there)
         var under = left ? p.x - 18 - tw < 2 : p.x + 18 + tw > w - 2;
         p.tl.setAttribute('x', (under ? p.x : left ? p.x - 18 : p.x + 18).toFixed(1)); p.tl.setAttribute('y', (under ? p.y + 32 : p.y + 5).toFixed(1));
@@ -399,8 +406,8 @@
     draw: function (slot, op, extraRot, sc) {
       var gl = this.gl, aspect = this.w / this.h;
       // proj(): the perspective, and the camera pulled back on narrow (portrait) stages so the bounding sphere fits the width too
-      // (3.8 keeps the unit sphere inside 89% of the canvas height, including perspective). model(): turntable specimens spin
-      // about their own vertical axis before the tilt (a plan view rotating in its plane), the rest about the world axis, and the
+      // (3.8 keeps the unit sphere inside 89% of the canvas height, including perspective). model(): turntable specimens turn
+      // about their own vertical axis before the tilt (a stack that never leans), the rest about the world axis, and the
       // reader's own turn about the world axes
       var MVP = mul(this.proj(aspect), this.model(slot, extraRot, sc));
       gl.uniformMatrix4fv(this.loc.uMVP, false, new Float32Array(MVP));

@@ -1,0 +1,6 @@
+lithography-1440-light-litho-before ["1 Light source @164,300 name@146,305 end","2 Mirrors @502,230 name@520,235 start","3 Mask @502,109 name@520,114 start","4 Wafer @502,328 name@520,333 start"]
+lithography-1440-dark-litho-before ["1 Light source @164,300 name@146,305 end","2 Mirrors @502,230 name@520,235 start","3 Mask @502,109 name@520,114 start","4 Wafer @502,328 name@520,333 start"]
+lithography-1024-light-litho-before ["1 Light source @164,300 name@146,305 end","2 Mirrors @502,230 name@520,235 start","3 Mask @502,109 name@520,114 start","4 Wafer @502,328 name@520,333 start"]
+lithography-1024-dark-litho-before ["1 Light source @164,300 name@146,305 end","2 Mirrors @502,230 name@520,235 start","3 Mask @502,109 name@520,114 start","4 Wafer @502,328 name@520,333 start"]
+lithography-390-light-litho-before ["1 Light source @70,198 name@70,230 middle","2 Mirrors @297,152 name@297,184 middle","3 Mask @297,72 name@315,77 start","4 Wafer @297,217 name@315,222 start"]
+lithography-390-dark-litho-before ["1 Light source @69,198 name@69,230 middle","2 Mirrors @297,152 name@297,184 middle","3 Mask @297,72 name@315,77 start","4 Wafer @297,217 name@315,222 start"]

@@ -1,0 +1,1 @@
+check-size: 1008 files outside dist/ and media/, none over 5.0 MB

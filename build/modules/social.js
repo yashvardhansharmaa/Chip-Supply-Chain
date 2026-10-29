@@ -505,12 +505,14 @@ function stillSVG(still, parts, title) {
   }).filter((x) => x.pts.length);
   [-1, 1].forEach((side) => { const l = items.filter((x) => x.side === side).sort((a, b) => a.y - b.y); for (let i = 1; i < l.length; i++) if (l[i].y - l[i - 1].y < 96) l[i].y = l[i - 1].y + 96; });
   const f = (n) => n.toFixed(1);
-  const label = `${esc(title)}, with ${parts.length} numbered parts: ${parts.map((p) => `${+p.n} ${esc(String(p.name).toLowerCase())}`).join(', ')}.`;
+  // a part's name in the sentence: its first letter in lower case, unless it opens an acronym ("TSVs")
+  const lc = (s) => (/^[A-Z][A-Z]/.test(s) ? s : s.charAt(0).toLowerCase() + s.slice(1));
+  const label = `${esc(title)}, with ${parts.length} numbered parts: ${parts.map((p) => `${+p.n} ${esc(lc(String(p.label || p.name)))}`).join(', ')}.`;
   // wide: each balloon named beside it; narrow (a phone), the numbers alone, larger, and the list under the caption names them
   const draw = (o) => items.map((x) => {
     const bx = x.side < 0 ? o.l : o.r, by = x.y;
     const lines = x.pts.map((q) => { const dx = q[0] - bx, dy = q[1] - by, L = Math.hypot(dx, dy) || 1; return `<line x1="${f(bx + dx / L * o.r0)}" y1="${f(by + dy / L * o.r0)}" x2="${f(q[0])}" y2="${f(q[1])}" style="stroke-width:${o.sw}"/><circle class="dot" cx="${f(q[0])}" cy="${f(q[1])}" r="${o.dot}"/>`; }).join('');
-    return `<g>${lines}<circle class="bal" cx="${f(bx)}" cy="${f(by)}" r="${o.r0}" style="stroke-width:${o.sw}"/><text class="num" x="${f(bx)}" y="${f(by + o.fs * 0.36)}" text-anchor="middle" style="font-size:${o.fs}px">${+x.p.n}</text>${o.names ? `<text class="nm" x="${f(x.side < 0 ? bx - o.r0 - 12 : bx + o.r0 + 12)}" y="${f(by)}" dominant-baseline="central" text-anchor="${x.side < 0 ? 'end' : 'start'}" style="font-size:${o.fn}px">${esc(x.p.name)}</text>` : ''}</g>`;
+    return `<g>${lines}<circle class="bal" cx="${f(bx)}" cy="${f(by)}" r="${o.r0}" style="stroke-width:${o.sw}"/><text class="num" x="${f(bx)}" y="${f(by + o.fs * 0.36)}" text-anchor="middle" style="font-size:${o.fs}px">${+x.p.n}</text>${o.names ? `<text class="nm" x="${f(x.side < 0 ? bx - o.r0 - 12 : bx + o.r0 + 12)}" y="${f(by)}" dominant-baseline="central" text-anchor="${x.side < 0 ? 'end' : 'start'}" style="font-size:${o.fn}px">${esc(x.p.label || x.p.name)}</text>` : ''}</g>`;
   }).join('');
   const img = `<image href="media/${esc(still.file)}" x="0" y="0" width="${S}" height="${S}"/>`;
   return `<svg class="ch-still ch-still--wide" viewBox="-300 -14 ${S + 560} ${S + 28}" role="img" aria-label="${label}">${img}${draw({ l: -64, r: S + 74, r0: 24, fs: 24, fn: 30, sw: 2.4, dot: 6, names: true })}</svg>`

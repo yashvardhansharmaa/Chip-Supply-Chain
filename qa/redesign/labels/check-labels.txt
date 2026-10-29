@@ -1,0 +1,39 @@
+ok   silicon-and-wafers 1440: 4 balloons on the drawing: 1 Seed (231,56), 2 Neck (231,90), 3 Ingot (231,218), 4 Wafers (436,344)
+ok   silicon-and-wafers 1440: each balloon carries its part's short name
+ok   silicon-and-wafers 1440: every name inside the drawing's box, at 11 px or more
+ok   silicon-and-wafers 1440: the left balloons keep 34 px apart: 34, 129
+ok   silicon-and-wafers: the parts list reads as the data file says: Seed: lowered to the melt and drawn slowly back up | Neck: keeps the seed's first flaws out of the ingot | Ingot: grown by Shin-Etsu Handotai (JP), SUMCO (JP), GlobalWafers (TW), SK Siltron (KR) and Siltronic (DE) | Wafers: sawn from the ingot, then lapped, etched and polished
+ok   silicon-and-wafers: the print still waits in its template, a balloon per part: ../media/silicon-and-wafers-annotated.webp, 4 balloons, "A silicon ingot, one crystal pulled whole from a melt, with two wafers sawn from it, with 4 numbered parts: 1 seed, 2 neck, 3 ingot, 4 wafers."
+ok   silicon-and-wafers: the still's picture is served: image/webp
+ok   lithography 1440: 4 balloons on the drawing: 1 Light source (164,300), 2 Mirrors (502,230), 3 Mask (502,109), 4 Wafer (502,328)
+ok   lithography 1440: each balloon carries its part's short name
+ok   lithography 1440: every name inside the drawing's box, at 11 px or more
+ok   lithography 1440: the right balloons keep 34 px apart: 121, 98
+ok   lithography: the parts list reads as the data file says: Light source: ASML San Diego (US), laser by Trumpf (DE) | Mirrors: Zeiss SMT (DE) | Mask: see stage 05, Photomasks and Pellicles -> ../photomasks-and-pellicles/ | Wafer: see stage 02, Silicon and Wafers -> ../silicon-and-wafers/
+ok   lithography: the print still waits in its template, a balloon per part: ../media/lithography-annotated.webp, 4 balloons, "An extreme ultraviolet scanner cut open along its light path, with 4 numbered parts: 1 light source, 2 mirrors, 3 mask, 4 wafer."
+ok   lithography: the still's picture is served: image/webp
+ok   memory-and-hbm 1440: 4 balloons on the drawing: 1 Memory dies (540,174), 2 Base die (540,365), 3 TSVs (540,240), 4 Microbumps (540,313)
+ok   memory-and-hbm 1440: each balloon carries its part's short name
+ok   memory-and-hbm 1440: every name inside the drawing's box, at 11 px or more
+ok   memory-and-hbm 1440: the right balloons keep 34 px apart: 67, 72, 53
+ok   memory-and-hbm: the parts list reads as the data file says: Memory dies: SK hynix (KR), Samsung (KR), Micron (US) | Base die: SK hynix (KR) through HBM3E, TSMC (TW) for SK hynix's HBM4 | TSVs (through-silicon vias): etched and filled with copper by the memory maker | Microbumps: joined by the memory maker, see How a stack is built -> #memory-and-hbm--how-a-stack-is-built
+ok   memory-and-hbm: the print still waits in its template, a balloon per part: ../media/memory-and-hbm-annotated.webp, 4 balloons, "A twelve-high HBM stack, pulled apart and cut open: a logic die at the base, shown in copper, and twelve memory dies above it, with 4 numbered parts: 1 memory dies, 2 base die, 3 TSVs, 4 microbumps."
+ok   memory-and-hbm: the still's picture is served: image/webp
+ok   advanced-packaging 1440: 4 balloons on the drawing: 1 Logic dies (58,240), 2 HBM stacks (608,248), 3 Interposer (608,306), 4 Substrate (58,390)
+ok   advanced-packaging 1440: each balloon carries its part's short name
+ok   advanced-packaging 1440: every name inside the drawing's box, at 11 px or more
+ok   advanced-packaging 1440: the left balloons keep 58 px apart, since a name there stands under its balloon: 150
+ok   advanced-packaging 1440: the right balloons keep 58 px apart, since a name there stands under its balloon: 58
+ok   advanced-packaging: the parts list reads as the data file says: Logic dies, two: see stage 08, Foundries and Fabs -> ../foundries-and-fabs/ | HBM stacks, eight: see stage 09, Memory and HBM -> ../memory-and-hbm/ | Interposer: TSMC (TW), as CoWoS | Substrate: see stage 11, Substrates and PCBs -> ../substrates-and-pcbs/
+ok   advanced-packaging: the print still waits in its template, a balloon per part: ../media/advanced-packaging-annotated.webp, 4 balloons, "A CoWoS-L package, pulled apart, with 4 numbered parts: 1 logic dies, 2 HBM stacks, 3 interposer, 4 substrate."
+ok   advanced-packaging: the still's picture is served: image/webp
+ok   silicon-and-wafers, no WebGL: the slot goes, the caption and its 4 parts stay: {"noStage":true,"slot":"none","parts":4,"shown":true,"cap":true}
+ok   lithography, no WebGL: the slot goes, the caption and its 4 parts stay: {"noStage":true,"slot":"none","parts":4,"shown":true,"cap":true}
+ok   memory-and-hbm, no WebGL: the slot goes, the caption and its 4 parts stay: {"noStage":true,"slot":"none","parts":4,"shown":true,"cap":true}
+ok   advanced-packaging, no WebGL: the slot goes, the caption and its 4 parts stay: {"noStage":true,"slot":"none","parts":4,"shown":true,"cap":true}
+ok   HBM default: the stack draws (70804 points) and turns on its own axis, four balloons on it: 70804 points; 411,144 409,203 | 403,365 | 355,240 | 389,313
+ok   HBM ?hbm=a: the stack draws (70804 points) and turns on its own axis, four balloons on it: 70804 points; 411,144 409,203 | 403,365 | 355,240 | 389,313
+ok   HBM ?hbm=b: the stack draws (63618 points) and turns on its own axis, four balloons on it: 63618 points; 447,146 446,213 | 442,409 | 367,274 | 419,350
+ok   HBM: the default is version a
+
+all passed
