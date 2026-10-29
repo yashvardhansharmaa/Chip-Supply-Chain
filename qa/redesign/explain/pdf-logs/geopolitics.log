@@ -1,0 +1,6 @@
+[   7.0s] prepared: {"mode":"footnotes","cites":138,"notes":138,"chapters":1,"dropped":0,"chapter":"geopolitics","edition":"Edition of 29 October 2026"}
+[   7.2s] print fonts: 13 faces loaded
+[   8.2s] paginating: 0 pages
+[  11.2s] paginated 16 pages in 3.0s (Paged.js reports 1138 ms)
+[  11.3s] footnotes: {"pages":16,"notes":92,"repeats":0,"stray":0,"overflow":0,"short":[],"stranded":[],"split":[],"overlap":[],"crowded":[],"lost":[],"lostIn":[],"sources":[],"strandedIds":[],"floats":[],"failed":[],"tight":[],"gap":0.68}
+[  12.2s] wrote /var/folders/d1/s8nt256s36g24pjjb8v00_5w0000gn/T/cp-chapter-pdfs-25vpvbh1/geopolitics.pdf 0.7 MB

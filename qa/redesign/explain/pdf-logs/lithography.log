@@ -1,0 +1,24 @@
+[   7.0s] prepared: {"mode":"footnotes","cites":131,"notes":131,"chapters":1,"dropped":0,"chapter":"lithography","edition":"Edition of 29 October 2026"}
+[   7.3s] print fonts: 13 faces loaded
+[   8.2s] paginating: 0 pages
+[  11.3s] paginated 15 pages in 3.0s (Paged.js reports 1348 ms)
+[  11.3s] footnotes: {"pages":15,"notes":89,"repeats":0,"stray":0,"overflow":0,"short":["2:66%"],"stranded":[],"split":["4:figure","5:figure"],"overlap":[3],"crowded":["lithography"],"lost":["1:3"],"lostIn":["lithography"],"sources":[],"strandedIds":[],"floats":[],"failed":[],"tight":["lithography"],"gap":1.23}
+[  11.3s] laying out again: lithography closer, lithography card may break, lithography sources closer
+[  17.8s] prepared: {"mode":"footnotes","cites":131,"notes":131,"chapters":1,"dropped":0,"chapter":"lithography","edition":"Edition of 29 October 2026"}
+[  17.9s] print fonts: 13 faces loaded
+[  18.9s] paginating: 0 pages
+[  21.9s] paginated 14 pages in 3.0s (Paged.js reports 598 ms)
+[  21.9s] footnotes: {"pages":14,"notes":87,"repeats":0,"stray":0,"overflow":0,"short":[],"stranded":[],"split":["2:plate","5:figure"],"overlap":[],"crowded":[],"lost":["1:6"],"lostIn":["lithography"],"sources":[],"strandedIds":[],"floats":[],"failed":[],"tight":[],"gap":0.42}
+[  21.9s] laying out again: lithography lines closer
+[  28.4s] prepared: {"mode":"footnotes","cites":131,"notes":131,"chapters":1,"dropped":0,"chapter":"lithography","edition":"Edition of 29 October 2026"}
+[  28.5s] print fonts: 13 faces loaded
+[  29.5s] paginating: 0 pages
+[  32.5s] paginated 14 pages in 3.0s (Paged.js reports 699 ms)
+[  32.5s] footnotes: {"pages":14,"notes":87,"repeats":0,"stray":0,"overflow":0,"short":[],"stranded":[],"split":["2:plate","3:figure"],"overlap":[],"crowded":[],"lost":["1:6"],"lostIn":["lithography"],"sources":[],"strandedIds":[],"floats":[],"failed":[],"tight":[],"gap":0.52}
+[  32.5s] laying out again: lithography lines looser
+[  39.0s] prepared: {"mode":"footnotes","cites":131,"notes":131,"chapters":1,"dropped":0,"chapter":"lithography","edition":"Edition of 29 October 2026"}
+[  39.1s] print fonts: 13 faces loaded
+[  40.1s] paginating: 0 pages
+[  43.1s] paginated 14 pages in 3.0s (Paged.js reports 590 ms)
+[  43.1s] footnotes: {"pages":14,"notes":90,"repeats":0,"stray":0,"overflow":0,"short":[],"stranded":[],"split":["2:plate","5:figure"],"overlap":[],"crowded":[],"lost":[],"lostIn":[],"sources":[],"strandedIds":[],"floats":[],"failed":[],"tight":[],"gap":0.37}
+[  46.0s] wrote /var/folders/d1/s8nt256s36g24pjjb8v00_5w0000gn/T/cp-chapter-pdfs-g_prv6m3/lithography.pdf 1.28 MB

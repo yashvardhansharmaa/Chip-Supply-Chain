@@ -1,0 +1,50 @@
+smoke: Chrome/156.0.8078.73, serving dist on http://127.0.0.1:8795
+walk at 320: walk view shown: true, steps: 16, page 320 px wide
+walk at 390: walk view shown: true, steps: 16, page 390 px wide
+walk at 1440: walk view shown: true, steps: 16
+chain at 320: chapters held: 0, contents: {"at":"/supply-chain/","rows":true,"chapters":16,"rowsShown":16,"drawn":16,"groups":true,"stages":14,"across":2,"marks":true,"wine":true,"extreme":7,"flat":true,"cols":true,"columns":1,"label":true,"standfirst":true,"list":true,"listed":16,"downloads":true,"howToRead":false}, page 320 px wide
+chain at 390: chapters held: 0, contents: {"at":"/supply-chain/","rows":true,"chapters":16,"rowsShown":16,"drawn":16,"groups":true,"stages":14,"across":2,"marks":true,"wine":true,"extreme":7,"flat":true,"cols":true,"columns":1,"label":true,"standfirst":true,"list":true,"listed":16,"downloads":true,"howToRead":false}, page 390 px wide
+chain at 1440: chapters held: 0, contents: {"at":"/supply-chain/","rows":true,"chapters":16,"rowsShown":16,"drawn":16,"groups":true,"stages":14,"across":2,"marks":true,"wine":true,"extreme":7,"flat":true,"cols":true,"columns":2,"label":true,"standfirst":true,"list":true,"listed":16,"downloads":true,"howToRead":false}
+chain-stub at 320: at /supply-chain/, current tab Supply Chain, page 320 px wide
+chain-stub at 390: at /supply-chain/, current tab Supply Chain, page 390 px wide
+chain-stub at 1440: at /supply-chain/, current tab Supply Chain
+chapter at 320: at /lithography/#lithography--who-makes-it, chapters: lithography, card: true, door: true, page 320 px wide
+chapter at 390: at /lithography/#lithography--who-makes-it, chapters: lithography, card: true, door: true, page 390 px wide
+chapter at 1440: at /lithography/#lithography--who-makes-it, chapters: lithography, card: true, door: true
+landscape at 320: chips on the shelves: 38, drawings: 36, dots on the chart: 30, page 320 px wide
+landscape at 390: chips on the shelves: 38, drawings: 36, dots on the chart: 30, page 390 px wide
+landscape at 1440: chips on the shelves: 38, drawings: 36, dots on the chart: 30
+suppliers at 320: count: 226 suppliers, ladder parts: 20, page 320 px wide
+suppliers at 390: count: 226 suppliers, ladder parts: 20, page 390 px wide
+suppliers at 1440: count: 226 suppliers, ladder parts: 20
+controls at 320: board rows: 11, page 320 px wide
+controls at 390: board rows: 11, page 390 px wide
+controls at 1440: board rows: 11
+exposure-asml at 320: ASML chart: top 128, height 246, page 320 px wide
+exposure-asml at 390: ASML chart: top 128, height 280, page 390 px wide
+exposure-asml at 1440: ASML chart: top 116, height 241
+glossary at 320: entries: 487, page 320 px wide
+glossary at 390: entries: 487, page 390 px wide
+glossary at 1440: entries: 487
+chapter-page at 320: title: Chapter 4: Lithography, card: true, sources: 51, drawing in its slot: false, page 320 px wide
+chapter-page at 390: title: Chapter 4: Lithography, card: true, sources: 51, drawing in its slot: false, page 390 px wide
+chapter-page at 1440: title: Chapter 4: Lithography, card: true, sources: 51, drawing in its slot: true
+essay-page at 320: at /geopolitics/, chapters shown: 1, page 320 px wide
+essay-page at 390: at /geopolitics/, chapters shown: 1, page 390 px wide
+essay-page at 1440: at /geopolitics/, chapters shown: 1
+book at 320: chapters: 16, contents rows: 16, page 320 px wide
+book at 390: chapters: 16, contents rows: 16, page 390 px wide
+book at 1440: chapters: 16, contents rows: 16
+summary at 320: ladder rows: 14, cards: 16, page 320 px wide
+summary at 390: ladder rows: 14, cards: 16, page 390 px wide
+summary at 1440: ladder rows: 14, cards: 16
+theme, main page, device dark, nothing saved: ground rgb(252, 252, 250)
+theme, main page, ?theme=dark: ground rgb(18, 18, 17)
+theme, contents page, device dark, nothing saved: ground rgb(252, 252, 250)
+theme, contents page, ?theme=dark: ground rgb(18, 18, 17)
+theme, chapter page, device dark, nothing saved: ground rgb(252, 252, 250)
+theme, chapter page, ?theme=dark: ground rgb(18, 18, 17)
+theme, summary, device dark, nothing saved: ground rgb(252, 252, 250)
+theme, summary, ?theme=dark: ground rgb(18, 18, 17)
+
+smoke: 47 page loads, no failures (45 s)

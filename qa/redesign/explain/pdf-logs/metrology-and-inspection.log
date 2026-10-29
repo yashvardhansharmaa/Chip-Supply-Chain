@@ -1,0 +1,18 @@
+[   6.9s] prepared: {"mode":"footnotes","cites":97,"notes":97,"chapters":1,"dropped":0,"chapter":"metrology-and-inspection","edition":"Edition of 29 October 2026"}
+[   7.1s] print fonts: 13 faces loaded
+[   8.1s] paginating: 0 pages
+[  11.1s] paginated 12 pages in 3.0s (Paged.js reports 901 ms)
+[  11.2s] footnotes: {"pages":12,"notes":54,"repeats":0,"stray":0,"overflow":0,"short":["2:42%"],"stranded":[],"split":["4:figure"],"overlap":[],"crowded":[],"lost":[],"lostIn":[],"sources":[],"strandedIds":[],"floats":[{"id":"fig-metrology-and-inspection-kla-mix","k":2,"page":8}],"failed":[],"tight":["metrology-and-inspection"],"gap":1.49}
+[  11.2s] laying out again: fig-metrology-and-inspection-kla-mix down 2, metrology-and-inspection closer
+[  17.6s] prepared: {"mode":"footnotes","cites":97,"notes":97,"chapters":1,"dropped":0,"moved":1,"chapter":"metrology-and-inspection","edition":"Edition of 29 October 2026"}
+[  17.7s] print fonts: 13 faces loaded
+[  18.7s] paginating: 0 pages
+[  21.7s] paginated 11 pages in 3.0s (Paged.js reports 421 ms)
+[  21.7s] footnotes: {"pages":11,"notes":51,"repeats":0,"stray":0,"overflow":0,"short":[],"stranded":[],"split":["3:figure"],"overlap":[],"crowded":[],"lost":[],"lostIn":[],"sources":["metrology-and-inspection"],"strandedIds":[],"floats":[],"failed":[],"tight":[],"gap":0.47}
+[  21.7s] laying out again: metrology-and-inspection sources closer
+[  28.2s] prepared: {"mode":"footnotes","cites":97,"notes":97,"chapters":1,"dropped":0,"moved":1,"chapter":"metrology-and-inspection","edition":"Edition of 29 October 2026"}
+[  28.3s] print fonts: 13 faces loaded
+[  29.2s] paginating: 0 pages
+[  32.3s] paginated 11 pages in 3.0s (Paged.js reports 486 ms)
+[  32.3s] footnotes: {"pages":11,"notes":51,"repeats":0,"stray":0,"overflow":0,"short":[],"stranded":[],"split":["3:figure"],"overlap":[],"crowded":[],"lost":[],"lostIn":[],"sources":["metrology-and-inspection"],"strandedIds":[],"floats":[],"failed":[],"tight":[],"gap":0.43}
+[  34.9s] wrote /var/folders/d1/s8nt256s36g24pjjb8v00_5w0000gn/T/cp-chapter-pdfs-25vpvbh1/metrology-and-inspection.pdf 0.57 MB

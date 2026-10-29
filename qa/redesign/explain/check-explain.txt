@@ -1,0 +1,76 @@
+ok   04.2 1440: the figure is on the page
+ok   04.2 1440: it follows the multipatterning paragraph and comes before Variants and trade-offs
+ok   04.2 1440: numbered "Figure 04.2 · Explainer, 26 seconds", titled as the mockup
+ok   04.2 1440: the chapter's figures run 04.1 to 04.6, the old 04.2 to 04.5 now 04.3 to 04.6
+ok   04.2 1440: the rail lists the same six, 04.2 by its title
+ok   04.2 1440: "several passes per layer" in Deep ultraviolet links to it, "(figure 04.2)"
+ok   04.2 1440: no Cite, Table, CSV or PNG (an explainer, as 04.1)
+ok   04.2 1440: reduced motion opens paused on the last step, its caption and every tile
+ok   04.2 1440: no step-total line (no count or total in the drawing's words)
+ok   04.2 1440: the EUV lane's one label is "Light reflected off a mirror mask", and it names no mask of its own
+ok   04.2 1440: at 2.4 s the DUV mask is drawn (#2b323c)
+ok   04.2 1440: at 2.4 s the EUV lane has no mask, only light (no #2b323c across the band where a mask would sit)
+ok   04.2 1440: at the end, three teal, four wine, two teal, the cut's gap, one teal
+ok   04.2 1440: every label 11.5 px or more
+ok   04.2 1440: no sideways scroll
+ok   04.2 1440: in print, the still (../media/saqp-print-end.jpg) in place of the drawing, the six steps listed, "Figure 04.2" kept
+ok   04.2 1440: no page errors
+ok   04.2 390: the figure is on the page
+ok   04.2 390: it follows the multipatterning paragraph and comes before Variants and trade-offs
+ok   04.2 390: numbered "Figure 04.2 · Explainer, 26 seconds", titled as the mockup
+ok   04.2 390: the chapter's figures run 04.1 to 04.6, the old 04.2 to 04.5 now 04.3 to 04.6
+ok   04.2 390: the rail lists the same six, 04.2 by its title
+ok   04.2 390: "several passes per layer" in Deep ultraviolet links to it, "(figure 04.2)"
+ok   04.2 390: no Cite, Table, CSV or PNG (an explainer, as 04.1)
+ok   04.2 390: reduced motion opens paused on the last step, its caption and every tile
+ok   04.2 390: no step-total line (no count or total in the drawing's words)
+ok   04.2 390: the EUV lane's one label is "Light reflected off a mirror mask", and it names no mask of its own
+ok   04.2 390: at 2.4 s the DUV mask is drawn (#2b323c)
+ok   04.2 390: at 2.4 s the EUV lane has no mask, only light (no #2b323c across the band where a mask would sit)
+ok   04.2 390: at the end, three teal, four wine, two teal, the cut's gap, one teal
+ok   04.2 390: every label 11.5 px or more
+ok   04.2 390: no sideways scroll
+ok   04.2 390: in print, the still (../media/saqp-print-end.jpg) in place of the drawing, the six steps listed, "Figure 04.2" kept
+ok   04.2 390: no page errors
+ok   04.2 motion: it plays while on screen
+ok   04.2 motion: a click on the drawing pauses it, and the Paused mark shows
+ok   04.2 motion: step 05 plays from Four lines, marked and captioned
+ok   04.2 motion: no page errors
+ok   04.2 dark 390: the wafer and the wine lines take the dark palette (#343b45, #a8414b)
+ok   04.2 dark 390: labels 11.5 px or more, no sideways scroll
+ok   04.2 dark 390: no page errors
+ok   foundries-and-fabs: "(see figure 04.2)" links its several passes to the figure on Lithography's page
+ok   geopolitics: "(see figure 04.2)" links its several passes to the figure on Lithography's page
+ok   07.1 1440: "Figure 07.1 · Interactive explainer", the same title, no video
+ok   07.1 1440: the readouts sit under "The model’s output"
+ok   07.1 1440: at the chapter's inputs they read 49.2, 11.3 and 20.1
+ok   07.1 1440: the rail still lists 07.1 to 07.4; no Cite, Table, CSV or PNG
+ok   07.1 1440: the chip-size slider moves the readouts (15 mm)
+ok   07.1 1440: at 1 cm the chosen chips are the 1 cm chips (49.2, 49.2, 1.0)
+ok   07.1 1440: back at 2 cm and 0.8 it reads the chapter's 49.2, 11.3 and 20.1
+ok   07.1 1440: at 26 × 33 mm and 1.0 the readouts stay numbers
+ok   07.1 1440: at 1 cm and 0.1 (the low ends)
+ok   07.1 1440: step 03 returns the sliders to 2 cm and 0.8
+ok   07.1 1440: every label 11.5 px or more
+ok   07.1 1440: no sideways scroll
+ok   07.1 1440: in print, the still (../media/yield-print-end.jpg) in place of the wafer, readouts and sliders, the four steps listed, "Figure 07.1" kept
+ok   07.1 1440: no page errors
+ok   07.1 390: "Figure 07.1 · Interactive explainer", the same title, no video
+ok   07.1 390: the readouts sit under "The model’s output"
+ok   07.1 390: at the chapter's inputs they read 49.2, 11.3 and 20.1
+ok   07.1 390: the rail still lists 07.1 to 07.4; no Cite, Table, CSV or PNG
+ok   07.1 390: the chip-size slider moves the readouts (15 mm)
+ok   07.1 390: at 1 cm the chosen chips are the 1 cm chips (49.2, 49.2, 1.0)
+ok   07.1 390: back at 2 cm and 0.8 it reads the chapter's 49.2, 11.3 and 20.1
+ok   07.1 390: at 26 × 33 mm and 1.0 the readouts stay numbers
+ok   07.1 390: at 1 cm and 0.1 (the low ends)
+ok   07.1 390: step 03 returns the sliders to 2 cm and 0.8
+ok   07.1 390: every label 11.5 px or more
+ok   07.1 390: no sideways scroll
+ok   07.1 390: wafer, readouts and both sliders fit on one screen
+ok   07.1 390: in print, the still (../media/yield-print-end.jpg) in place of the wafer, readouts and sliders, the four steps listed, "Figure 07.1" kept
+ok   07.1 390: no page errors
+ok   07.1 dark motion: on screen it plays the four steps once and ends on The cost at 49.2, 11.3 and 20.1
+ok   07.1 dark motion: no page errors
+
+74 of 74 checks pass
