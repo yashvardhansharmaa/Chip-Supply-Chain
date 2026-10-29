@@ -222,7 +222,9 @@
     input.addEventListener('input', function () { state.m = +input.value; update(); });
     actions();
     draw();
-    if ('ResizeObserver' in window) new ResizeObserver(function () { var w = Math.round(plot.clientWidth); if (w && w !== state.W) draw(); }).observe(plot);
+    // redrawn when the column's width changes on screen; on paper the screen's drawing is scaled to the page, as it stands
+    var paper = window.matchMedia ? matchMedia('print') : { matches: false };
+    if ('ResizeObserver' in window) new ResizeObserver(function () { var w = Math.round(plot.clientWidth); if (w && w !== state.W && !paper.matches) draw(); }).observe(plot);
   }
   if (D.readyState === 'loading') D.addEventListener('DOMContentLoaded', mount); else mount();
 })();

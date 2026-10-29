@@ -4027,7 +4027,9 @@ try {
     }
     btns.forEach(function (b) { b.addEventListener('click', function () { stop(); played = true; go(+b.getAttribute('data-step')); }); });
     render(); go(last);
-    if (draw && 'ResizeObserver' in window) new ResizeObserver(function () { if (Math.round(host.clientWidth) !== lastW) render(); }).observe(host);
+    // redrawn when the column's width changes on screen; on paper the screen's drawing is scaled to the page, as it stands
+    var paper = window.matchMedia ? matchMedia('print') : { matches: false };
+    if (draw && 'ResizeObserver' in window) new ResizeObserver(function () { if (Math.round(host.clientWidth) !== lastW && !paper.matches && !D.documentElement.classList.contains('cp-print')) render(); }).observe(host);
     if (!reduce && 'IntersectionObserver' in window) {
       var io = new IntersectionObserver(function (es) {
         es.forEach(function (e) { if (e.isIntersecting && e.intersectionRatio > 0.45 && !played && !D.documentElement.classList.contains('cp-print')) { played = true; play(); io.disconnect(); } });
@@ -6049,7 +6051,9 @@ try {
     input.addEventListener('input', function () { state.m = +input.value; update(); });
     actions();
     draw();
-    if ('ResizeObserver' in window) new ResizeObserver(function () { var w = Math.round(plot.clientWidth); if (w && w !== state.W) draw(); }).observe(plot);
+    // redrawn when the column's width changes on screen; on paper the screen's drawing is scaled to the page, as it stands
+    var paper = window.matchMedia ? matchMedia('print') : { matches: false };
+    if ('ResizeObserver' in window) new ResizeObserver(function () { var w = Math.round(plot.clientWidth); if (w && w !== state.W && !paper.matches) draw(); }).observe(plot);
   }
   if (D.readyState === 'loading') D.addEventListener('DOMContentLoaded', mount); else mount();
 })();

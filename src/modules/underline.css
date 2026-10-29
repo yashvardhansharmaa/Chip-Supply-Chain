@@ -120,10 +120,10 @@
 
 /* on paper: the chart as it stands, with its date line and the rule's sentence; no buttons, ruler or actions */
 @media print {
-  .ul { break-inside: avoid; }
   .ul-grid { display: block; }
+  .ul .figure { break-inside: avoid; }
   .ul .ul-steps, .ul .ul-scrub, .ul .fs-acts, .ul .ch-cite-box, .ul-key { display: none !important; }
-  .ul .figure { border: 0; border-top: 0.6pt solid var(--ink); max-width: none; }
+  .ul .figure { margin: 0 !important; border: 0; border-top: 0.6pt solid var(--ink); max-width: 666px; }
   .ul .fig-head, .ul .fig-body { padding-left: 0; padding-right: 0; }
   .ul .fig-strip { margin: 0; }
   .ul-cap { min-height: 0; }
