@@ -160,11 +160,12 @@ const want = (n) => !ONLY.length || ONLY.includes(String(n));
       if (contentsState.shown.length || !contentsState.contents) report('1b', '#/chain is the contents page', false, JSON.stringify(contentsState));
     }
 
-    // 2. a section and a figure in another chapter, by a link and on a fresh load; a link in the text to another chapter
+    // 2. a section and a figure in another chapter, by a link and on a fresh load; a link in the text to another chapter (a
+    // section is an h2 since 29 Oct 2026; h3 before)
     if (want(2)) {
       const b = await tab(chrome, '/book/#/chain');
       const pick = await b.ev(`(function () {
-        var sec = document.querySelectorAll('#memory-and-hbm > .prose > h3[id]')[2], fig = document.querySelector('#advanced-packaging .figure[id]');
+        var sec = document.querySelectorAll('#memory-and-hbm > .prose > h2[id]')[2], fig = document.querySelector('#advanced-packaging .figure[id]');
         var link = null; document.querySelectorAll('.view[data-view="stack"] article.chapter .prose a[href^="#"]').forEach(function (a) {
           var h = a.getAttribute('href').slice(1), ch = a.closest('article.chapter'), to = document.getElementById(h);
           if (!link && to && to.matches('article.chapter') && to !== ch && !a.closest('.prevnext')) link = { from: ch.id, to: h, text: a.textContent };
@@ -267,10 +268,10 @@ const want = (n) => !ONLY.length || ONLY.includes(String(n));
       report(3, 'the door goes to the next chapter\'s top, and Back returns to the place left', ok, out.join('\n        '));
     }
 
-    // 4. a search result inside another chapter
+    // 4. a search result inside another chapter (Lithography's fourth section, an h2 since 29 Oct 2026; h3 before)
     if (want(4)) {
       const lp = await tab(chrome, '/lithography/');
-      const h = await lp.ev(`(function () { var h = document.querySelectorAll('#lithography > .prose > h3[id]')[3]; return { id: h.id, text: h.textContent.replace(/#$/, '').trim() }; })()`);
+      const h = await lp.ev(`(function () { var h = document.querySelectorAll('#lithography > .prose > h2[id]')[3]; return { id: h.id, text: h.textContent.replace(/#$/, '').trim() }; })()`);
       await lp.close();
       const t = await tab(chrome, '/design-and-eda/');
       await t.jump(2500);

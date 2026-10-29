@@ -1,0 +1,61 @@
+# levels alone (commit 947e51d, no data/section-headings.json), 8766 vs 8785
+lithography-1440-light-top: same
+lithography-1440-light-mid: same
+lithography-1440-light-flashcards: same
+lithography-1440-dark-top: same
+lithography-1440-dark-mid: same
+lithography-1440-dark-flashcards: same
+lithography-390-light-top: same
+lithography-390-light-mid: same
+lithography-390-light-flashcards: same
+memory-and-hbm-1440-light-top: same
+memory-and-hbm-1440-light-mid: same
+memory-and-hbm-1440-light-flashcards: same
+memory-and-hbm-1440-dark-top: same
+memory-and-hbm-1440-dark-mid: same
+memory-and-hbm-1440-dark-flashcards: same
+memory-and-hbm-390-light-top: same
+memory-and-hbm-390-light-mid: same
+memory-and-hbm-390-light-flashcards: same
+systems-and-networking-1440-light-top: same
+systems-and-networking-1440-light-mid: same
+systems-and-networking-1440-light-flashcards: same
+systems-and-networking-1440-dark-top: same
+systems-and-networking-1440-dark-mid: same
+systems-and-networking-1440-dark-flashcards: same
+systems-and-networking-390-light-top: same
+systems-and-networking-390-light-mid: same
+systems-and-networking-390-light-flashcards: same
+
+27 frames the same, 0 differ only where allowed, 0 differ elsewhere
+
+# with the four test headings (commit b773b8c and after), 8766 vs 8785
+lithography-1440-light-top: differs in 0.004% of pixels, within (794, 368, 801, 378), all of it in the renamed headings or the facts line
+lithography-1440-light-mid: differs in 0.163% of pixels, within (582, 170, 798, 197), all of it in the renamed headings or the facts line
+lithography-1440-light-flashcards: same
+lithography-1440-dark-top: differs in 0.004% of pixels, within (794, 368, 801, 378), all of it in the renamed headings or the facts line
+lithography-1440-dark-mid: differs in 0.163% of pixels, within (582, 170, 798, 197), all of it in the renamed headings or the facts line
+lithography-1440-dark-flashcards: same
+lithography-390-light-top: differs in 0.012% of pixels, within (169, 843, 181, 861), all of it in the renamed headings or the facts line (lithography--how-it-works reflows from y=9432; lithography--who-makes-it reflows from y=23227; lithography--the-chokepoint reflows from y=34952)
+lithography-390-light-mid: differs in 5.068% of pixels, within (35, 338, 735, 1566), all of it in the renamed headings or the facts line (lithography--how-it-works reflows from y=0; lithography--who-makes-it reflows from y=239; lithography--the-chokepoint reflows from y=11965)
+lithography-390-light-flashcards: differs in 1.130% of pixels, within (34, 360, 746, 1530), all of it in the renamed headings or the facts line (lithography--how-it-works reflows from y=0; lithography--who-makes-it reflows from y=0; lithography--the-chokepoint reflows from y=0)
+memory-and-hbm-1440-light-top: differs in 0.004% of pixels, within (771, 368, 778, 378), all of it in the renamed headings or the facts line
+memory-and-hbm-1440-light-mid: differs in 0.078% of pixels, within (582, 172, 660, 197), all of it in the renamed headings or the facts line
+memory-and-hbm-1440-light-flashcards: same
+memory-and-hbm-1440-dark-top: differs in 0.004% of pixels, within (771, 368, 778, 378), all of it in the renamed headings or the facts line
+memory-and-hbm-1440-dark-mid: differs in 0.078% of pixels, within (582, 172, 660, 197), all of it in the renamed headings or the facts line
+memory-and-hbm-1440-dark-flashcards: same
+memory-and-hbm-390-light-top: differs in 0.012% of pixels, within (169, 959, 181, 977), all of it in the renamed headings or the facts line
+memory-and-hbm-390-light-mid: differs in 0.181% of pixels, within (338, 340, 465, 381), all of it in the renamed headings or the facts line
+memory-and-hbm-390-light-flashcards: same
+systems-and-networking-1440-light-top: same
+systems-and-networking-1440-light-mid: same
+systems-and-networking-1440-light-flashcards: same
+systems-and-networking-1440-dark-top: same
+systems-and-networking-1440-dark-mid: same
+systems-and-networking-1440-dark-flashcards: same
+systems-and-networking-390-light-top: same
+systems-and-networking-390-light-mid: DIFFERS OUTSIDE THE RENAMED HEADINGS in 0.253% of pixels, within (24, 1604, 128, 1648); stray pixels within (24, 1604, 128, 1648)
+systems-and-networking-390-light-flashcards: same
+
+13 frames the same, 13 differ only where allowed, 1 differ elsewhere

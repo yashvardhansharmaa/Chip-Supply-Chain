@@ -162,9 +162,9 @@ const kb = (b) => (b / 1024).toFixed(0) + ' KB';
       await p.close();
     }
 
-    /* ---------- 3. old hash links ---------- */
+    /* ---------- 3. old hash links (each chapter's third section, an h2 since 29 Oct 2026; h3 before) ---------- */
     const book = await open(chrome, BASE + '/book/#/chain', { width: 1440, wait: 1500 });
-    const anchors = await book.ev(`JSON.stringify([].map.call(document.querySelectorAll('article.chapter'), function (a) { var s = a.querySelectorAll(':scope > .prose > h3[id]'), f = a.querySelector('.prose .figure[id]'); return { id: a.id, sec: s[Math.min(2, s.length - 1)] ? s[Math.min(2, s.length - 1)].id : null, fig: f ? f.id : null, deck: a.querySelector('.fc[id]') ? a.querySelector('.fc[id]').id : null }; }))`);
+    const anchors = await book.ev(`JSON.stringify([].map.call(document.querySelectorAll('article.chapter'), function (a) { var s = a.querySelectorAll(':scope > .prose > h2[id]'), f = a.querySelector('.prose .figure[id]'); return { id: a.id, sec: s[Math.min(2, s.length - 1)] ? s[Math.min(2, s.length - 1)].id : null, fig: f ? f.id : null, deck: a.querySelector('.fc[id]') ? a.querySelector('.fc[id]').id : null }; }))`);
     await book.close();
     const land = async (url, wantPath, wantHash, label) => {
       const t = await open(chrome, BASE + url, { width: 1440, wait: 2200 });

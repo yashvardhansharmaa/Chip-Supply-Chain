@@ -1,0 +1,114 @@
+design-and-eda: 53 ids, the same before and after; outline h1 h2 h2 h2 h2 h3 h3 h3 h3 h2 h2 h2 h3
+  1440 screen: 1111 elements, every one styled the same, each box in the same place and size
+  1440 print: 1111 elements, every one styled the same
+  390 screen: 1110 elements, every one styled the same, each box in the same place and size
+  390 print: 1110 elements, every one styled the same
+  390: the phone's sheet lists the same 8 entries as before
+silicon-and-wafers: 49 ids, the same before and after; outline h1 h2 h2 h2 h2 h3 h3 h2 h2 h2 h3
+  1440 screen: 991 elements, every one styled the same, each box in the same place and size
+  1440 print: 991 elements, every one styled the same
+  390 screen: 990 elements, every one styled the same, each box in the same place and size
+  390 print: 990 elements, every one styled the same
+  390: the phone's sheet lists the same 8 entries as before
+chemicals-gases-and-photoresist: 66 ids, the same before and after; outline h1 h2 h2 h2 h2 h2 h2 h2 h3
+  1440 screen: 1154 elements, every one styled the same, each box in the same place and size
+  1440 print: 1154 elements, every one styled the same
+  390 screen: 1153 elements, every one styled the same, each box in the same place and size
+  390 print: 1153 elements, every one styled the same
+  390: the phone's sheet lists the same 8 entries as before
+lithography: 76 ids, the same before and after; outline h1 h2 h2 h2 h2 h3 h3 h3 h2 h2 h2 h2 h3
+  1440 screen: 1391 elements, every one styled the same, each box the same down to the first renamed heading
+  1440 print: 1391 elements, every one styled the same
+  #lithography--how-it-works: "How it works" -> "How EUV lithography works", h3 -> h2; rail "How it works"
+  #lithography--who-makes-it: "Who makes it" -> "Who makes EUV machines", h3 -> h2; rail "Who makes it"
+  #lithography--the-chokepoint: "The chokepoint" -> "Why EUV machines are a chokepoint", h3 -> h2; rail "The chokepoint"
+  390 screen: 1363 elements, every one styled the same, each box the same down to the first renamed heading
+  390 print: 1363 elements, every one styled the same
+  390: the phone's sheet lists the same 9 entries as before
+photomasks-and-pellicles: 54 ids, the same before and after; outline h1 h2 h2 h2 h2 h3 h3 h3 h3 h2 h2 h2 h2 h3
+  1440 screen: 995 elements, every one styled the same, each box in the same place and size
+  1440 print: 995 elements, every one styled the same
+  390 screen: 994 elements, every one styled the same, each box in the same place and size
+  390 print: 994 elements, every one styled the same
+  390: the phone's sheet lists the same 9 entries as before
+deposition-and-etch: 70 ids, the same before and after; outline h1 h2 h2 h2 h2 h3 h3 h2 h2 h2 h2 h3
+  1440 screen: 1275 elements, every one styled the same, each box in the same place and size
+  1440 print: 1275 elements, every one styled the same
+  390 screen: 1274 elements, every one styled the same, each box in the same place and size
+  390 print: 1274 elements, every one styled the same
+  390: the phone's sheet lists the same 9 entries as before
+metrology-and-inspection: 55 ids, the same before and after; outline h1 h2 h2 h2 h2 h2 h2 h2 h2 h3
+  1440 screen: 1198 elements, every one styled the same, each box in the same place and size
+  1440 print: 1198 elements, every one styled the same
+  390 screen: 1197 elements, every one styled the same, each box in the same place and size
+  390 print: 1197 elements, every one styled the same
+  390: the phone's sheet lists the same 9 entries as before
+foundries-and-fabs: 88 ids, the same before and after; outline h1 h2 h2 h2 h2 h2 h3 h3 h3 h2 h2 h2 h2 h2 h2 h3
+  1440 screen: 1445 elements, every one styled the same, each box in the same place and size
+  1440 print: 1445 elements, every one styled the same
+  390 screen: 1444 elements, every one styled the same, each box in the same place and size
+  390 print: 1444 elements, every one styled the same
+  390: the phone's sheet lists the same 12 entries as before
+memory-and-hbm: 46 ids, the same before and after; outline h1 h2 h2 h2 h2 h3 h3 h2 h2 h2 h2 h3
+  1440 screen: 1012 elements, every one styled the same, each box the same down to the first renamed heading
+  1440 print: 1012 elements, every one styled the same
+  #memory-and-hbm--who-makes-it: "Who makes it" -> "Who makes HBM", h3 -> h2; rail "Who makes it"
+  390 screen: 1011 elements, every one styled the same, each box the same down to the first renamed heading
+  390 print: 1011 elements, every one styled the same
+  390: the phone's sheet lists the same 9 entries as before
+advanced-packaging: 56 ids, the same before and after; outline h1 h2 h2 h2 h2 h3 h3 h3 h2 h2 h2 h2 h3
+  1440 screen: 1182 elements, every one styled the same, each box in the same place and size
+  1440 print: 1182 elements, every one styled the same
+  390 screen: 1181 elements, every one styled the same, each box in the same place and size
+  390 print: 1181 elements, every one styled the same
+  390: the phone's sheet lists the same 9 entries as before
+substrates-and-pcbs: 69 ids, the same before and after; outline h1 h2 h2 h2 h2 h3 h3 h3 h2 h2 h2 h2 h2 h3
+  1440 screen: 1068 elements, every one styled the same, each box in the same place and size
+  1440 print: 1068 elements, every one styled the same
+  390 screen: 1067 elements, every one styled the same, each box in the same place and size
+  390 print: 1067 elements, every one styled the same
+  390: the phone's sheet lists the same 10 entries as before
+test-and-assembly: 61 ids, the same before and after; outline h1 h2 h2 h2 h2 h3 h3 h2 h2 h2 h2 h3
+  1440 screen: 1017 elements, every one styled the same, each box in the same place and size
+  1440 print: 1017 elements, every one styled the same
+  390 screen: 1016 elements, every one styled the same, each box in the same place and size
+  390 print: 1016 elements, every one styled the same
+  390: the phone's sheet lists the same 9 entries as before
+systems-and-networking: 64 ids, the same before and after; outline h1 h2 h2 h2 h2 h3 h3 h3 h2 h2 h2 h3
+  1440 screen: 1049 elements, every one styled the same, each box in the same place and size
+  1440 print: 1049 elements, every one styled the same
+  390 screen: 1048 elements, every one styled the same, each box in the same place and size
+  390 print: 1048 elements, every one styled the same
+  390: the phone's sheet lists the same 8 entries as before
+data-centers-and-power: 60 ids, the same before and after; outline h1 h2 h2 h2 h2 h3 h3 h3 h2 h2 h2 h2 h3
+  1440 screen: 1080 elements, every one styled the same, each box in the same place and size
+  1440 print: 1080 elements, every one styled the same
+  390 screen: 1079 elements, every one styled the same, each box in the same place and size
+  390 print: 1079 elements, every one styled the same
+  390: the phone's sheet lists the same 9 entries as before
+component-costs: 54 ids, the same before and after; outline h1 h2 h2 h2 h2 h3 h3 h3 h3 h2 h2 h2 h3
+  1440 screen: 1130 elements, every one styled the same, each box in the same place and size
+  1440 print: 1130 elements, every one styled the same
+  390 screen: 1129 elements, every one styled the same, each box in the same place and size
+  390 print: 1129 elements, every one styled the same
+  390: the phone's sheet lists the same 7 entries as before
+geopolitics: 92 ids, the same before and after; outline h1 h2 h2 h2 h2 h2 h2 h2 h2 h2 h2 h2 h2 h3
+  1440 screen: 1424 elements, every one styled the same, each box in the same place and size
+  1440 print: 1424 elements, every one styled the same
+  390 screen: 1423 elements, every one styled the same, each box in the same place and size
+  390 print: 1423 elements, every one styled the same
+  390: the phone's sheet lists the same 12 entries as before
+before /lithography/#lithography--who-makes-it: lands on /lithography/#lithography--who-makes-it, the H3 80 px from the top (masthead 64 px)
+before /#lithography--who-makes-it: lands on /lithography/#lithography--who-makes-it, the H3 80 px from the top (masthead 64 px)
+before /memory-and-hbm/#memory-and-hbm--who-makes-it: lands on /memory-and-hbm/#memory-and-hbm--who-makes-it, the H3 80 px from the top (masthead 64 px)
+before /#memory-and-hbm--who-makes-it: lands on /memory-and-hbm/#memory-and-hbm--who-makes-it, the H3 80 px from the top (masthead 64 px)
+before /lithography/#lithography--how-it-works: lands on /lithography/#lithography--how-it-works, the H3 80 px from the top (masthead 64 px)
+before /systems-and-networking/#systems-and-networking--the-chokepoint: lands on /systems-and-networking/#systems-and-networking--the-chokepoint, the H3 80 px from the top (masthead 64 px)
+after /lithography/#lithography--who-makes-it: lands on /lithography/#lithography--who-makes-it, the H2 80 px from the top (masthead 64 px)
+after /#lithography--who-makes-it: lands on /lithography/#lithography--who-makes-it, the H2 80 px from the top (masthead 64 px)
+after /memory-and-hbm/#memory-and-hbm--who-makes-it: lands on /memory-and-hbm/#memory-and-hbm--who-makes-it, the H2 80 px from the top (masthead 64 px)
+after /#memory-and-hbm--who-makes-it: lands on /memory-and-hbm/#memory-and-hbm--who-makes-it, the H2 80 px from the top (masthead 64 px)
+after /lithography/#lithography--how-it-works: lands on /lithography/#lithography--how-it-works, the H2 80 px from the top (masthead 64 px)
+after /systems-and-networking/#systems-and-networking--the-chokepoint: lands on /systems-and-networking/#systems-and-networking--the-chokepoint, the H2 80 px from the top (masthead 64 px)
+
+all held

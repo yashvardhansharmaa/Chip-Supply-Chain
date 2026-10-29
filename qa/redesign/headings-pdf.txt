@@ -1,0 +1,21 @@
+# PDFs printed with build/pdf.py on DevTools port 9365, --edition 2026-10-28, before from 8766 and after from 8785 (29 Oct 2026)
+systems-and-networking (chapter): 11 pages before, 11 after; text identical; all 11 page images identical (80 dpi)
+lithography (chapter): 14 pages before, 14 after; text differs in 3 lines only:
+  < How it works
+  > How EUV lithography works
+  < Who makes it
+  > Who makes EUV machines
+  < The chokepoint
+  > Why EUV machines are a chokepoint
+  page images: 11 of 14 identical; 3, 7 and 10 differ only inside the renamed heading's box
+book (/book/): 187 pages before, 187 after; text differs in 8 lines only:
+  < How it works
+  > How EUV lithography works
+  < Who makes it
+  > Who makes EUV machines
+  < The chokepoint
+  > Why EUV machines are a chokepoint
+  < Who makes it
+  > Who makes HBM
+  page images (50 dpi): 183 of 187 identical; 38, 42, 45 and 103 differ only inside the renamed heading's box
+  the after book's text also matches dist/pdf/how-ai-chips-are-made.pdf (Edition of 28 October 2026) but for the same 4 headings

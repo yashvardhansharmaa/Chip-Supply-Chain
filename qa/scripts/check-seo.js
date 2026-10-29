@@ -3,9 +3,9 @@
  * dist/<chapter>/index.html (the full chapter since 28 Oct 2026; a static readable copy before), is missing what a search
  * engine reads, or says something its page does not:
  *   - the chapter itself: its article, once, and no other chapter's;
- *   - one <h1>, which is the chapter's title, and headings that never skip a level going down. The interactive chapter's
- *     sections are h3 and h4, as they were under The Chain's h2 title (the styles and the print path go by those levels), so
- *     the h1 counts as the level above them;
+ *   - one <h1>, which is the chapter's title, its sections h2 (In plain terms, In short, each section of the text and the
+ *     flashcards; 29 Oct 2026, when they left the h3 and h4 they had under The Chain's h2 title, which this check let stand by
+ *     counting the h1 as an h2), and headings that never skip a level going down;
  *   - one <title>, one meta description and one canonical link, the canonical being the page's own address;
  *   - the Open Graph and Twitter tags, og:url the canonical;
  *   - rel=prev and rel=next to the chapters before and after it in reading order;
@@ -91,14 +91,16 @@ chapters.forEach((c, i) => {
   if (arts.join() !== c.id) fail(page, `holds the articles ${JSON.stringify(arts)}, not its own alone`);
 
   // headings (the title's words for screen readers, "Chapter 4: ", are not its headline)
-  const hs = [...body.matchAll(/<h([1-6])\b[^>]*>([\s\S]*?)<\/h\1>/gi)].map((m) => ({ n: +m[1], t: text(m[2].replace(/<span class="sr-only">[\s\S]*?<\/span>/g, '')) }));
+  const hs = [...body.matchAll(/<h([1-6])\b([^>]*)>([\s\S]*?)<\/h\1>/gi)].map((m) => ({ n: +m[1], sec: /\sdata-k="/.test(m[2]), t: text(m[3].replace(/<span class="sr-only">[\s\S]*?<\/span>/g, '')) }));
   const h1s = hs.filter((h) => h.n === 1);
   if (h1s.length !== 1) fail(page, `has ${h1s.length} h1 headings`);
   const h1 = h1s[0] ? h1s[0].t : '';
   if (hs.length && hs[0].n !== 1) fail(page, `its first heading is an h${hs[0].n}, not the h1`);
-  const level = (n) => (n === 1 ? 2 : n); // the h1 stands where The Chain's h2 title stood, over the h3 sections
-  for (let k = 1; k < hs.length; k++) if (level(hs[k].n) > level(hs[k - 1].n) + 1) fail(page, `heading "${hs[k].t}" is an h${hs[k].n} under an h${hs[k - 1].n}`);
-  if (hs.some((h) => h.n === 2)) fail(page, 'has an h2, a level the chapter does not use');
+  for (let k = 1; k < hs.length; k++) if (hs[k].n > hs[k - 1].n + 1) fail(page, `heading "${hs[k].t}" is an h${hs[k].n} under an h${hs[k - 1].n}`);
+  // the sections of the text (the headings that carry their short name, data-k) are h2, and so is what opens the page under the title
+  if (!hs.some((h) => h.sec)) fail(page, 'has no section heading (an h2 with data-k)');
+  hs.filter((h) => h.sec && h.n !== 2).forEach((h) => fail(page, `section "${h.t}" is an h${h.n}, not an h2`));
+  if (hs.length > 1 && hs[1].n !== 2) fail(page, `the heading under the title, "${hs[1].t}", is an h${hs[1].n}, not an h2`);
 
   // title, description, canonical, sequence
   const titles = [...head.matchAll(/<title>([\s\S]*?)<\/title>/gi)].map((m) => text(m[1]));

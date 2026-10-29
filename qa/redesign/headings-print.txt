@@ -1,0 +1,18 @@
+design-and-eda: 1732 elements on paper, every one styled the same, each box in the same place and size; running head 8 sources, the same words (H3.label H4.label H3.cp-sources-h -> H2.label H3.label H2.cp-sources-h)
+silicon-and-wafers: 1594 elements on paper, every one styled the same, each box in the same place and size; running head 8 sources, the same words (H3.label H4.label H3.cp-sources-h -> H2.label H3.label H2.cp-sources-h)
+chemicals-gases-and-photoresist: 1873 elements on paper, every one styled the same, each box in the same place and size; running head 8 sources, the same words (H3.label H4.label H3.cp-sources-h -> H2.label H3.label H2.cp-sources-h)
+lithography: 2227 elements on paper, every one styled the same, each box the same down to the first renamed heading; running head 9 sources, the same words (H3.label H4.label H3.cp-sources-h -> H2.label H3.label H2.cp-sources-h)
+photomasks-and-pellicles: 1654 elements on paper, every one styled the same, each box in the same place and size; running head 9 sources, the same words (H3.label H4.label H3.cp-sources-h -> H2.label H3.label H2.cp-sources-h)
+deposition-and-etch: 1985 elements on paper, every one styled the same, each box in the same place and size; running head 9 sources, the same words (H3.label H4.label H3.cp-sources-h -> H2.label H3.label H2.cp-sources-h)
+metrology-and-inspection: 1822 elements on paper, every one styled the same, each box in the same place and size; running head 9 sources, the same words (H3.label H4.label H3.cp-sources-h -> H2.label H3.label H2.cp-sources-h)
+foundries-and-fabs: 2250 elements on paper, every one styled the same, each box in the same place and size; running head 12 sources, the same words (H3.label H4.label H3.cp-sources-h -> H2.label H3.label H2.cp-sources-h)
+memory-and-hbm: 1568 elements on paper, every one styled the same, each box the same down to the first renamed heading; running head 9 sources, the same words (H3.label H4.label H3.cp-sources-h -> H2.label H3.label H2.cp-sources-h)
+advanced-packaging: 1826 elements on paper, every one styled the same, each box in the same place and size; running head 9 sources, the same words (H3.label H4.label H3.cp-sources-h -> H2.label H3.label H2.cp-sources-h)
+substrates-and-pcbs: 1675 elements on paper, every one styled the same, each box in the same place and size; running head 10 sources, the same words (H3.label H4.label H3.cp-sources-h -> H2.label H3.label H2.cp-sources-h)
+test-and-assembly: 1581 elements on paper, every one styled the same, each box in the same place and size; running head 9 sources, the same words (H3.label H4.label H3.cp-sources-h -> H2.label H3.label H2.cp-sources-h)
+systems-and-networking: 1670 elements on paper, every one styled the same, each box in the same place and size; running head 8 sources, the same words (H3.label H4.label H3.cp-sources-h -> H2.label H3.label H2.cp-sources-h)
+data-centers-and-power: 1699 elements on paper, every one styled the same, each box in the same place and size; running head 9 sources, the same words (H3.label H4.label H3.cp-sources-h -> H2.label H3.label H2.cp-sources-h)
+component-costs: 1698 elements on paper, every one styled the same, each box in the same place and size; running head 7 sources, the same words (H3.label H4.label H3.cp-sources-h -> H2.label H3.label H2.cp-sources-h)
+geopolitics: 2289 elements on paper, every one styled the same, each box in the same place and size; running head 12 sources, the same words (H3.label H4.label H3.cp-sources-h -> H2.label H3.label H2.cp-sources-h)
+
+all held
