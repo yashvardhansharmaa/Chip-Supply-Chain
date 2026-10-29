@@ -10,6 +10,7 @@ One page for the weekly update of chipsupplychain.org. Every command runs from t
 | Suppliers, chips, the China revenue panels | `data/suppliers.json`, `data/landscape.json`, `data/exposure.json` |
 | Export Controls | `data/export-controls-timeline.json`, `data/control-flows.json` |
 | The Glossary and the flashcards | `data/glossary.json`, `data/flashcards.json` |
+| A section heading's words in one chapter | `data/section-headings.json`, keyed by the chapter's id and the heading as its Markdown writes it ("How it works"); the link to the section and the contents rail keep the Markdown's words |
 | A source's title | `data/bibliography.json` (by hand, never by `build/harvest-bibliography.js`, which erases the dates added in round two) |
 
 Never edit `dist/`. The build rewrites it. What the build refuses is listed at the top of `build/validate.js`. The card's rules are in `qa/round2/SCHEMA.md`, the other fields in `brief/DATA_SCHEMAS.md`, and the writing rules in `.claude/skills/writing-well/SKILL.md`.
