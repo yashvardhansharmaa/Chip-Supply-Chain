@@ -130,6 +130,12 @@ function checkChapters(root, problems) {
       if (!fig || typeof fig !== 'object') { problems.push(`${rel}: ${name} is not an object`); return; }
       if (!fig.id) problems.push(`${rel}: ${name} has no "id"`);
       if (!FIGURE_TYPES.includes(fig.type)) { problems.push(`${rel}: ${name} has type ${show(fig.type)}; it must be ${list(FIGURE_TYPES)}`); return; }
+      if (fig.type === 'animation' && fig.live) {
+        // a live explainer (29 Oct 2026): drawn in the page by src/modules/live-<live>.js, its steps and captions here
+        if (!fs.existsSync(path.join(root, 'src', 'modules', `live-${fig.live}.js`))) problems.push(`${rel}: ${name} is live, but src/modules/live-${fig.live}.js does not exist`);
+        if (!(Array.isArray(fig.steps) && fig.steps.length && fig.steps.every((st) => st && st.k && st.cap))) problems.push(`${rel}: ${name} is live and needs "steps", each with "k" and "cap"`);
+        return;
+      }
       if (fig.type === 'animation') {
         if (!fig.src) { problems.push(`${rel}: ${name} is an animation with no "src"`); return; }
         const mediaRel = `media/${fig.src}.json`, meta2 = parseFile(path.join(root, mediaRel), mediaRel, problems);

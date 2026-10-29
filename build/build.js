@@ -161,7 +161,7 @@ function figCSV(f, data, meta) {
   return 'data:text/csv;charset=utf-8,' + encodeURIComponent('﻿' + all.map((r) => r.map(q).join(',')).join('\r\n') + '\r\n');
 }
 /* The marks a bars or columns figure draws, in the data's order (the owner's chart rule as amended on 28 Oct 2026, above).
-   A row is ["label", value], or ["label", low, high] for a value known only as a range (04.2's "$350–400M"). A figure's
+   A row is ["label", value], or ["label", low, high] for a value known only as a range (04.3's "$350–400M"). A figure's
    "range" joins rows that are the cases of one estimate into one mark ({ label, low, high, ref, refLabel }, each naming a
    row: 14.4's 2030 low, reference and high cases), drawn where its first row stood; the rows stay as they are in the Table
    and the CSV. Each mark is { label, v (its value or low end), hi (high end or null), ref (a reference value inside the
@@ -282,6 +282,20 @@ function figure(f, ctx) {
           + `<b class="cg-v">${vals[i]}</b></div>`;
       }).join('')
       + `</div>` + tableFallback(data, f);
+  } else if (isAnim && f.live) {
+    // a live explainer (29 Oct 2026): drawn in the page by src/modules/live-<live>.js into the stage, from the figure's own
+    // steps. A timed one ("seconds") plays and pauses as the videos do; an interactive one opens on its last step. Paper and
+    // the PDF take its still, media/<live>-print-end.jpg (qa/redesign/live-stills.js shoots it), above the list of steps.
+    const steps = (Array.isArray(f.steps) ? f.steps : []).filter((st) => st && st.k && st.cap), live = esc(f.live), timed = +f.seconds > 0;
+    if (!steps.length) { warn(`${ctx.id}: live explainer ${f.id} has no steps`); return ''; }
+    if (!fs.existsSync(path.join(root, 'media', f.live + '-print-end.jpg'))) warn(`${ctx.id}: live explainer ${f.id} has no print still (run node qa/redesign/live-stills.js)`);
+    USED_MEDIA.add(f.live);
+    kick += timed ? ` · Explainer, ${Math.round(+f.seconds)} seconds` : ' · Interactive explainer';
+    const on = timed ? 0 : steps.length - 1;
+    body = `<div class="anim-bar"><ol class="anim-steps">${steps.map((st, i) => `<li><button type="button" data-i="${i}"${i === on ? ' aria-current="step"' : ''}><span class="n">${String(i + 1).padStart(2, "0")}</span>${esc(st.k)}</button></li>`).join('')}</ol>${timed ? '<span class="anim-state" aria-hidden="true">Paused</span>' : ''}</div>`
+      + `<div class="anim-stage" data-live="${live}"${timed ? ' role="button" tabindex="0" aria-label="Pause the animation"' : ''}><img class="anim-print" src="media/${live}-print-end.jpg" alt="" loading="lazy"></div>`
+      + `<p class="anim-cap"${timed ? ' aria-hidden="true"' : ' aria-live="polite"'}>${esc(steps[on].cap)}</p>`
+      + `<ol class="anim-transcript">${steps.map((st) => `<li><b>${esc(st.k)}.</b> ${esc(st.cap)}</li>`).join('')}</ol>`;
   } else if (isAnim) {
     // an explainer animation rendered by build/animate.py: the step names and captions are page text, kept in time
     // with the video by app.js; the transcript is read by screen readers and printed in place of the video

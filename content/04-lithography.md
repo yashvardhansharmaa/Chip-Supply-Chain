@@ -46,6 +46,14 @@
  ],
  "figures": [
     {"id": "litho-print", "type": "animation", "src": "litho", "title": "How lithography prints a chip", "note": "Simplified. The newest machines, which use extreme ultraviolet light, carry the image with mirrors in place of a lens."},
+    {"id": "several-passes", "type": "animation", "live": "saqp", "seconds": 26, "title": "How several passes turn one line into four", "steps": [
+      {"k": "Print", "cap": "A deep ultraviolet scanner shines light through a mask and prints a row of lines, called cores, in one exposure. The chip needs lines four times as dense, closer than one exposure can draw."},
+      {"k": "Coat", "cap": "A thin film is deposited over everything, covering the top and both sides of every core."},
+      {"k": "Etch back", "cap": "An etch straight down clears the film from the tops and the floor and leaves it on the sides of each core. These strips are the spacers, and the edges of the cores set where they stand."},
+      {"k": "Two lines", "cap": "An etch removes the cores and leaves the spacers standing, two for each printed line. All of them trace back to one exposure, so they cannot misalign with each other."},
+      {"k": "Four lines", "cap": "The spacers now serve as cores. The same deposition and etch steps give each of them spacers of its own, so every printed line ends up as four, at a quarter of the spacing."},
+      {"k": "Cut", "cap": "A later exposure prints blocks that break the lines where the circuit needs gaps. ASML says one EUV exposure per layer cuts masks and process steps and lowers cost."}
+    ], "note": "Simplified. Drawn in cross-section, as if the wafer were cut across the lines. The deep ultraviolet mask is drawn at the size of the pattern it prints."},
  {
  "id": "euv-shipments",
  "type": "columns",
@@ -109,6 +117,8 @@ Finer lines need shorter light. Glass and air both absorb the shortest light in 
 
 When one exposure cannot draw a pattern finely enough, chipmakers use multipatterning. In the litho-etch kind, the pattern is split between two or more masks printed in turn ([source](https://www.imec-int.com/en/imec-magazine/imec-magazine-june-2019/euv-lithography-weighing-the-options-for-future-logic-and-memory-applications)). Each added mask brings more process steps, more cost and a risk that the parts of the pattern misalign ([source](https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-innovative-pattern-shaping-technology-reduces)). Self-aligned double and quadruple patterning (SADP and SAQP) print the lines with one exposure and then multiply them with deposition and etch steps ([source](https://www.imec-int.com/en/imec-magazine/imec-magazine-june-2019/euv-lithography-weighing-the-options-for-future-logic-and-memory-applications)). In SAQP each printed line ends up as four ([source](https://www.imec-int.com/en/imec-magazine/imec-magazine-june-2019/euv-lithography-weighing-the-options-for-future-logic-and-memory-applications)). Because one exposure places all those lines, they cannot misalign with each other ([source](https://www.imec-int.com/en/imec-magazine/imec-magazine-june-2019/euv-lithography-weighing-the-options-for-future-logic-and-memory-applications)). A later exposure still prints blocks that break them where the circuit needs gaps ([source](https://www.imec-int.com/en/imec-magazine/imec-magazine-june-2019/euv-lithography-weighing-the-options-for-future-logic-and-memory-applications)). ASML says one EUV exposure per layer cuts masks and process steps and lowers cost ([source](https://ourbrand.asml.com/m/8ab959d4926657b/original/asml-2025-annual-report-strategic-report-section.pdf#page=16)).
 
+{{figure:several-passes}}
+
 ## Variants and trade-offs
 
 ### Deep ultraviolet
@@ -119,7 +129,7 @@ Of the systems ASML sold in 2025, 131 were ArF immersion, 78 KrF and 16 ArF dry,
 
 Reuters gives one price for the whole DUV segment, with tools costing roughly $60 million each ([source](https://www.reuters.com/world/asia-pacific/250-million-asml-printer-behind-nvidias-chips-2026-07-28/)). ASML's own figures split its DUV sales by tool type. In 2025 the 131 ArF immersion tools it sold made up 42 percent of its system sales, and the 78 KrF tools only 4 percent ([source](https://ourbrand.asml.com/m/3136300aa4999bc1/original/2026_01_28_Presentation-Investor-Relations-Q4-2025.pdf#page=9)). In DUV, ASML competes with Nikon and Canon, and it still holds above 80 percent of that market ([source](https://www.reuters.com/world/asia-pacific/250-million-asml-printer-behind-nvidias-chips-2026-07-28/)).
 
-Chipmakers without EUV build their finest layers on immersion DUV scanners, in several passes per layer ([source](https://ourbrand.asml.com/m/8ab959d4926657b/original/asml-2025-annual-report-strategic-report-section.pdf#page=16)). From 1 September 2023, Dutch export licensing covered the most advanced of these scanners, ASML's NXT:2000i and later models ([source](https://www.asml.com/en/news/press-releases/2023/statement-regarding-export-control-regulations-dutch-government)).
+Chipmakers without EUV build their finest layers on immersion DUV scanners, in [several passes per layer](#fig-lithography-several-passes) (figure 04.2) ([source](https://ourbrand.asml.com/m/8ab959d4926657b/original/asml-2025-annual-report-strategic-report-section.pdf#page=16)). From 1 September 2023, Dutch export licensing covered the most advanced of these scanners, ASML's NXT:2000i and later models ([source](https://www.asml.com/en/news/press-releases/2023/statement-regarding-export-control-regulations-dutch-government)).
 
 ### Extreme ultraviolet
 
