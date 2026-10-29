@@ -1,0 +1,6 @@
+3 chapters from http://127.0.0.1:8786/<id>/?theme=light, Edition of 29 October 2026
+02 silicon-and-wafers: 11 pages, 0.69 MB (47 s)
+09 memory-and-hbm: 10 pages, 1.20 MB (57 s)
+10 advanced-packaging: 12 pages, 0.98 MB (58 s)
+wrote 3 to dist/pdf/: 33 pages, 2.9 MB in all
+next: node build/build.js, so the cite lines link them and the sitemap lists them

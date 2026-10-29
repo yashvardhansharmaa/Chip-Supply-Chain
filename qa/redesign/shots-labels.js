@@ -35,6 +35,8 @@ const BALLOONS = `(function(){var s=document.querySelector('.ch-balloons');if(!s
             console.log(f, JSON.stringify(await t.ev(BALLOONS)));
           } else {
             await t.ev("(document.documentElement.style.scrollBehavior='auto', window.scrollTo(0, 1400), 1)"); await sleep(1200);
+            // THUMB=<file>: the collapsed strip shows that line drawing (a version of the drawing that is not the default has none in dist/)
+            if (process.env.THUMB) { await t.ev(`(function(){var i=document.querySelector('.stage-thumb');i.src='data:image/webp;base64,${fs.readFileSync(process.env.THUMB).toString('base64')}';return new Promise(function(r){i.complete?r(1):i.onload=function(){r(1)};});})()`); await sleep(300); }
             const r = await t.ev(`(function(){var b=document.querySelector('.stage').getBoundingClientRect();return {x:b.left,y:b.top+scrollY,w:b.width,h:b.height};})()`);
             const shot = await t.s('Page.captureScreenshot', { format: 'png', clip: { x: r.x, y: r.y, width: r.w, height: r.h, scale: 3 } });
             fs.writeFileSync(path.join(OUT, f + '-strip.png'), Buffer.from(shot.data, 'base64'));

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """The phone strip's 52 px thumbnail of each HBM version (29 Oct 2026): each version's annotated still made into The Chain's
-line drawing exactly as build/line-stills.py makes it, then set in a 52 px box as the strip sets it (object-fit: contain),
+line drawing exactly as build/line-stills.py makes it (the stills, made by qa/redesign/stills-parts.js --suffix, in qa/redesign/labels/), then set in a 52 px box as the strip sets it (object-fit: contain),
 shown at 1x and at 3x beside today's. Writes qa/redesign/labels/thumbs-hbm.png (and line-memory-and-hbm-<v>.webp there).
 usage: python3 -I qa/redesign/thumbs-labels.py"""
 import importlib.util, os
@@ -27,7 +27,7 @@ def tile(im, px, bg=(252, 252, 250)):
 
 rows = [('today', Image.open(os.path.join(ROOT, 'build', 'assets', 'line', 'memory-and-hbm.webp')).convert('RGB'))]
 for v in ('a', 'b'):
-    f = os.path.join(ROOT, 'build', 'assets', 'specimens', 'memory-and-hbm-annotated-%s.webp' % v)
+    f = os.path.join(OUT, 'memory-and-hbm-annotated-%s.webp' % v)  # node qa/redesign/stills-parts.js --only memory-and-hbm --query hbm=<v> --suffix -<v>, moved here
     if os.path.exists(f):
         im = line(f); im.save(os.path.join(OUT, 'line-memory-and-hbm-%s.webp' % v), 'WEBP', quality=84, method=6); rows.append((v, im))
 sheet = Image.new('RGB', (len(rows) * 230, 230), (255, 255, 255))

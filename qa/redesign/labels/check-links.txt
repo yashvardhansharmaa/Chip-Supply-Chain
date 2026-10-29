@@ -1,0 +1,2 @@
+check-links --local: 28 pages, 1224 addresses, 195 fetched from http://127.0.0.1:8786
+check-links --local: no broken links

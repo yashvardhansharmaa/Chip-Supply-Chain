@@ -1,0 +1,15 @@
+{
+ "base": "http://127.0.0.1:8786",
+ "widths": {
+  "390": {
+   "checked": 692,
+   "mismatches": []
+  },
+  "1440": {
+   "checked": 692,
+   "mismatches": []
+  }
+ },
+ "checked": 1384,
+ "mismatches": 0
+}
