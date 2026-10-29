@@ -56,7 +56,8 @@
 .gl-ebar { display: none; }
 .gl-kind { margin: 0 0 14px; }
 .gl-hw { margin: 0; font-family: var(--font-display); font-weight: 400; font-size: clamp(44px, 4.3vw, 62px); line-height: 1.04; letter-spacing: -0.022em; color: var(--ink); overflow-wrap: anywhere; outline: none; }
-.gl-hw:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+/* the name takes focus when an entry opens (a heading, never a control), so it carries no ring, as the old sheet's title did */
+.gl-hw:focus, .gl-hw:focus-visible { outline: none; }
 .gl-native { margin-left: 0.32em; font-family: var(--font-body); font-size: 0.42em; letter-spacing: 0; color: var(--muted); }
 .gl-names, .gl-meta { margin: 14px 0 0; font-family: var(--font-ui); font-size: 15px; line-height: 1.5; color: var(--muted); }
 .gl-def { margin: 26px 0 0; font-family: var(--font-body); font-size: var(--t-lead); line-height: 1.5; color: var(--ink); }

@@ -128,8 +128,9 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8766';
       const onCard = await lp.ev("JSON.stringify(CP.Lookup.domCorpus().filter(function (p) { return p.el.closest('.prose > .plate'); }).map(function (p) { return p.chapter + '|' + p.text; }))");
       await lp.close();
       const t = await open(chrome, BASE + '/#/glossary', { width: 1440, wait: 3000 });
-      await t.ev(`(function () { var b = [].filter.call(document.querySelectorAll('#gl-dict .gl-de[data-kind="term"] button[data-open]'), function (b) { return /^EUV|^Extreme ultraviolet/i.test(b.textContent); })[0]; b.click(); return 1; })()`); await sleep(1500);
-      const para = await t.ev(`(function () { var card = ${onCard}, as = document.querySelectorAll('#gl-sheet .lk-men a[data-para]'); for (var i = 0; i < as.length; i++) { var p = CP.Lookup.paras[+as[i].getAttribute('data-para')]; if (p && card.indexOf(p.chapter + '|' + p.text) >= 0) { as[i].id = 'qa-card-pass'; return p.chapter + '|' + p.text; } } return null; })()`);
+      // the Glossary's index and entry (29 Oct 2026): EUV's row opens its entry, and Show all lists every place it appears
+      await t.ev(`(function () { document.querySelector('#lk-term-euv > a').click(); var all = document.querySelector('#gl-pane .gl-more button'); if (all) all.click(); return 1; })()`); await sleep(1500);
+      const para = await t.ev(`(function () { var card = ${onCard}, as = document.querySelectorAll('#gl-pane .gl-men a[data-para]'); for (var i = 0; i < as.length; i++) { var p = CP.Lookup.paras[+as[i].getAttribute('data-para')]; if (p && card.indexOf(p.chapter + '|' + p.text) >= 0) { as[i].id = 'qa-card-pass'; return p.chapter + '|' + p.text; } } return null; })()`);
       let p = null;
       if (para != null) {
         await t.ev("(document.getElementById('qa-card-pass').click(), 1)");
