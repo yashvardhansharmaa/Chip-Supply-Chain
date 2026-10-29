@@ -78,7 +78,9 @@
 
 /* the source line, with Cite, Table and CSV at its end as a figure's strip has them; the citation opens under it */
 .ss .ss-src { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; column-gap: 24px; row-gap: 4px; }
-.ss .ss-src .fs-src { flex: 1 1 32em; min-width: 0; }
+.ss .ss-src { max-width: none; } /* the links sit at the drawing's right edge, as on chapter figures */
+.ss .ss-src .fs-src { flex: 0 1 auto; min-width: 0; max-width: 78ch; }
+@media (max-width: 599px) { .ss .ss-side-note p:first-child { display: none; } } /* it describes the ribbons, which a phone does not draw */
 .ss .ss-acts { display: flex; flex-wrap: nowrap; white-space: nowrap; font-family: var(--font-ui); font-size: var(--ui-s); }
 .ss .ss-acts > a, .ss .ss-acts > button { font: inherit; color: var(--ink-2); background: none; border: 0; padding: 3px 0; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line-2); text-decoration-thickness: 1px; }
 .ss .ss-acts > * + *::before { content: "\00b7"; display: inline-block; width: 17px; text-align: center; color: var(--muted); }

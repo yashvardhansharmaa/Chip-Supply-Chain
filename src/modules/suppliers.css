@@ -136,6 +136,9 @@
   letter-spacing: -0.04em; color: var(--ink); font-variant-numeric: tabular-nums lining-nums;
 }
 .sup-rung[data-lit="1"] .sup-rank { color: var(--accent-ink); }
+/* the numeral counts firms, as the stat strip's "226 / firms" does (design10 data P1.3): in chain order it could read as a stage number */
+.sup-rank::after { content: attr(data-unit); display: block; margin-top: 7px; font: 400 12px/1 var(--font-ui); font-variation-settings: normal; letter-spacing: 0; color: var(--muted); }
+.sup-rung[data-empty="1"] .sup-rank::after { content: none; }
 .sup-rung-head { grid-column: 2; grid-row: 1 / span 2; margin: 0; }
 .sup-rung-name { margin: 0; font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 500; font-size: var(--t-text); line-height: 1.2; color: var(--ink); }
 .sup-rung-n { margin: 8px 0 0; font-family: var(--font-ui); font-size: 12px; line-height: 16px; color: var(--muted); font-variant-numeric: tabular-nums; }

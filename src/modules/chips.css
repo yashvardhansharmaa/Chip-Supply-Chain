@@ -96,8 +96,9 @@
 .aic .note-s { font: 400 15.5px/1.55 var(--font-body); color: var(--muted); }
 .aic .nil { color: var(--line-2); }
 .aic sup.cm { font: 500 11px/0 var(--font-ui); margin-left: 2px; vertical-align: super; }
-.aic sup.cm a { color: var(--accent-ink); text-decoration: none; padding: 0 1px; }
-.aic sup.cm a:hover { text-decoration: underline; }
+.aic sup.cm a { position: relative; font-family: var(--font-mono); color: var(--muted); text-decoration: none; padding: 0 1px; } /* gray, as in the chapters: wine marks each row's largest value */
+.aic sup.cm a:hover, .aic sup.cm a:focus-visible { color: var(--accent-ink); background: var(--accent-soft); text-decoration: none; }
+.aic sup.cm a::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 24px); height: max(100%, 26px); transform: translate(-50%, -50%); }
 /* the site's text action, as "Link to chapter" is set */
 .aic .tact { font: 500 15px/22px var(--font-ui); color: var(--ink); text-decoration: underline; text-decoration-color: var(--ink); text-decoration-thickness: 1px; text-underline-offset: 7px; padding: 4px 0 8px; white-space: nowrap; }
 .aic .tact:hover { color: var(--accent-ink); text-decoration-color: var(--accent); }
@@ -177,7 +178,7 @@
 .aic .card .tact, .aic .card .tbtn { background: none; }
 .aic .card-top { display: flex; align-items: baseline; gap: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--ink); }
 .aic .card-top .card-m { font: 400 14px/1.3 var(--font-ui); color: var(--muted); }
-.aic .card-top [data-home] { font-size: 14px; padding: 0; margin-left: auto; }
+.aic .card-top [data-home] { font-size: 14px; padding: 2px 0; margin-left: auto; }
 .aic .card-top .tact { padding: 0 0 2px; }
 .aic .card-top .four { font: 400 14px/1.3 var(--font-ui); color: var(--muted); }
 /* one chip: the name and the drawing, then the figures in one row, then ruled rows with their label at the left */
@@ -232,7 +233,7 @@
 .aic .cmp-head { padding-bottom: 6px; min-width: 0; }
 .aic .cmp-head h3 { font: 400 27px/1.1 var(--font-body); letter-spacing: -0.01em; margin-top: 12px; }
 .aic .cmp-head .meta { font: 400 14.5px/1.4 var(--font-ui); color: var(--muted); margin-top: 6px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; }
-.aic .cmp-head .tbtn { font-size: 13.5px; padding: 0; }
+.aic .cmp-head .tbtn { font-size: 13.5px; padding: 2px 0; }
 .aic .cmp-pic { display: flex; align-items: flex-end; }
 .aic .cmp-head .sz { font: 400 13px/1.35 var(--font-ui); color: var(--muted); margin-top: 10px; }
 .aic .cmp-pic .none { font: 400 15px/1.45 var(--font-body); color: var(--muted); padding-bottom: 6px; max-width: 16em; }

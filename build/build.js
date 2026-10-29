@@ -353,7 +353,7 @@ function figure(f, ctx) {
   const head = `<div class="fig-head"><a class="fig-k" href="#${fid}">${esc(kick)}</a>`
     + `<p class="fig-title${finding ? ' fig-find' : ''}">${esc(big)}${small ? '' : unitTag}</p>${small ? `<p class="fig-sub">${esc(small)}${unitTag}</p>` : ''}</div>`;
   // the source line: Source (or a note) first, then the actions
-  const src = f.source && f.source.url ? `<span class="fs-src"><span class="fs-k">Source:</span> <a href="${safeUrl(f.source.url)}" target="_blank" rel="noopener">${esc(f.source.label || host(f.source.url))}</a> ${srcMark}${FS.more(f, (u) => cite(u, ctx), safeUrl)}</span>`
+  const src = f.source && f.source.url ? `<span class="fs-src"><span class="fs-k">Source:</span> <a href="${safeUrl(f.source.url)}" target="_blank" rel="noopener">${esc(f.source.label || host(f.source.url))}</a>&nbsp;${srcMark}${FS.more(f, (u) => cite(u, ctx), safeUrl)}</span>`
     : (f.source && f.source.label ? `<span class="fs-src"><span class="fs-k">Source:</span> ${esc(f.source.label)}</span>` : '');
   const note = f.note ? `<span class="fs-note fig-source"><span class="fs-k">Note:</span> ${esc(f.note)}</span>` : '';
   const box = `cite-${fid}`;
@@ -758,6 +758,10 @@ function glossaryWrap(html, used) {
   out += depth ? html.slice(last) : wrapText(html.slice(last));
   return out;
 }
+// a term button is an atomic inline, so a line may break after it and start with its footnote mark. On every written page
+// (writePage, below) the button, its marks and any closing punctuation stay on one line. The card's marks go in after
+// glossaryWrap has run, so this waits for the finished page (design10 chapter P1.2, 29 Oct 2026; 21 October's P1.2 had come back)
+const keepMarks = (h) => h.replace(/(?<!<span class="nw">)(<button type="button" class="gl-term" data-term="[^"]*">[^<]*<\/button>)((?:<sup class="cite">[\s\S]*?<\/sup>)+[,.;:!?)\]]*)/g, '<span class="nw">$1$2</span>');
 
 // The reading spine: the numbered chapters, then the geopolitics essay, which sits on its own route.
 const chapterHref = (c) => '#' + esc(c.id); // the essay is the last chapter inside the chain
@@ -1364,7 +1368,10 @@ function exposureViz(rows) {
       s += `<text x="${Math.max(2 + was.length * cw, bx - 3).toFixed(1)}" y="${py0 - 10}" class="tick" text-anchor="end">${esc(was)}</text>`;
       s += `<text x="${Math.min(PW - 2 - now.length * cw, bx + 3).toFixed(1)}" y="${py0 - 10}" class="tick">${esc(now)}</text>`;
     });
-    s += `<text x="${px0}" y="${PH - 4}" class="tick">${esc(f.first.fiscalYear)}</text><text x="${px1}" y="${PH - 4}" class="tick" text-anchor="end">${esc(f.last.fiscalYear)}</text></svg>${f.pnote ? `<p class="ex-pnote">${esc(f.pnote)}</p>` : ''}</figure>`;
+    // the first and last fiscal years sit under their own bars, so a label never claims the empty years at the axis ends
+    // (design10 data P1.2, 29 Oct 2026). Every firm has three bars or more, so the two never meet
+    const fx = Math.max(22, X(mid(f.first.fyEnd))), lx = Math.min(PW - 22, X(mid(f.last.fyEnd)));
+    s += `<text x="${fx.toFixed(1)}" y="${PH - 4}" class="tick" text-anchor="middle">${esc(f.first.fiscalYear)}</text><text x="${lx.toFixed(1)}" y="${PH - 4}" class="tick" text-anchor="middle">${esc(f.last.fiscalYear)}</text></svg>${f.pnote ? `<p class="ex-pnote">${esc(f.pnote)}</p>` : ''}</figure>`;
     d += s;
   });
   return d + (lastCat === null ? '' : '</div>') + '</div>';
@@ -1702,9 +1709,26 @@ const searchData = (() => {
     // each section (h2) and subsection (h3, until 29 Oct 2026 h3 and h4), by the words its heading shows
     PT.all(art).filter((h) => (h.tag === 'h2' || h.tag === 'h3') && h.attrs.id && PT.closest(h.parent, (x) => PT.hasClass(x, 'prose'))).forEach((h) => {
       // the snippet is the reading text: each block after the heading, to the next, without its footnote marks
-      let t = '', p = PT.nextElement(h);
-      while (p && !/^h[1-3]$/.test(p.tag) && t.length < 900) { if (/^(p|div|ul|ol|table)$/.test(p.tag)) t += ' ' + PT.textContent(PT.without(p, (k) => k.tag === 'sup' && PT.hasClass(k, 'cite'))); p = PT.nextElement(p); }
-      idx.push({ kind: title, title: PT.textContent(h), text: t.replace(/\s+/g, ' ').replace(/\s+([.,;:)])/g, '$1').trim().slice(0, 900), href: '#' + h.attrs.id });
+      // a table reads row by row, its cells joined by " · " and its rows by "; ". A header row goes to `more`, which the search
+      // matches but never shows, so a snippet never runs the column names together (design10 frame P1-1, 29 Oct 2026)
+      let t = '', more = '', p = PT.nextElement(h);
+      const plain = (n) => PT.textContent(PT.without(n, (k) => k.tag === 'sup' && PT.hasClass(k, 'cite'))).trim();
+      while (p && !/^h[1-3]$/.test(p.tag) && t.length < 900) {
+        if (/^(p|div|ul|ol|table)$/.test(p.tag)) {
+          const tables = p.tag === 'table' ? [p] : PT.all(p).filter((k) => k.tag === 'table');
+          if (tables.length) tables.forEach((tb) => {
+            const rows = [];
+            PT.all(tb).filter((r) => r.tag === 'tr').forEach((r) => {
+              const cells = PT.elementKids(r).filter((c) => c.tag === 'td' || c.tag === 'th'), line = cells.map(plain).join(' · ');
+              if (cells.length && cells.every((c) => c.tag === 'th')) more += ' ' + line; else if (line) rows.push(line);
+            });
+            t += ' ' + rows.join('; ') + '.';
+          });
+          else t += ' ' + PT.textContent(PT.without(p, (k) => k.tag === 'sup' && PT.hasClass(k, 'cite')));
+        }
+        p = PT.nextElement(p);
+      }
+      idx.push({ kind: title, title: PT.textContent(h), text: t.replace(/\s+/g, ' ').replace(/\s+([.,;:)])/g, '$1').trim().slice(0, 900), ...(more.trim() ? { more: more.trim() } : {}), href: '#' + h.attrs.id });
     });
   });
   glEntries.forEach((g) => idx.push({ kind: 'Term', title: g.term, text: g.plain, href: '#' + g.id }));
@@ -1849,7 +1873,7 @@ function makePage(kind, o) {
 // day its content last changed (page dates, above); and each cite line its chapter's own day, which goes in last, so that
 // no page's hash or "Updated" rewrite ever sees a chapter's day
 const citeDays = (h) => h.replace(/\{\{CITE_DAY:([a-z0-9-]+)\}\}/g, (m, id) => { const e = pageDates['/' + id + '/']; if (!e || !e.modified) warn(`cite line: chapter ${id} has no page date`); return dayStr((e && e.modified) || today); });
-const writePage = (rel, h) => { fs.mkdirSync(path.dirname(path.join(root, 'dist', rel)), { recursive: true }); fs.writeFileSync(path.join(root, 'dist', rel), keepRanges(h)); };
+const writePage = (rel, h) => { fs.mkdirSync(path.dirname(path.join(root, 'dist', rel)), { recursive: true }); fs.writeFileSync(path.join(root, 'dist', rel), keepRanges(keepMarks(h))); };
 
 // the contents page, /supply-chain/ (The Chain's title, standfirst and a row per chapter; until 28 Oct 2026 the home page's
 // #/chain): dated by its text, headed by social.js

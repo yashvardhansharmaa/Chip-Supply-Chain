@@ -50,7 +50,7 @@ module.exports = function (esc) {
     more(f, cite, safeUrl) {
       const xs = Array.isArray(f.sources) ? f.sources.filter((s) => s && s.url) : [];
       if (!xs.length) return '';
-      const one = (s) => `<a href="${safeUrl(s.url)}" target="_blank" rel="noopener">${esc(s.label || s.url)}</a> ${cite(s.url)}`;
+      const one = (s) => `<a href="${safeUrl(s.url)}" target="_blank" rel="noopener">${esc(s.label || s.url)}</a>&nbsp;${cite(s.url)}`; // the number never sits alone on a line
       return xs.map((s, i) => (i === xs.length - 1 ? ' and ' : ', ') + one(s)).join('');
     },
     // the checks the build makes: every step that names a row names one the figure has, and a drawing has a name

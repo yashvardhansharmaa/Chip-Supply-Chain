@@ -866,7 +866,7 @@
       // the names come with the data on the home page and with terms.js on every page (a chapter's page loads no data)
       var ch = num ? esc(item.getAttribute('data-title') || '') : 'the whole chip', name = (DATA.specimenNames || (window.CP_TERMS || {}).specimenNames || {})[sp];
       var parts = Router.current === 'stack' && $('.ch-spec .ch-parts', item);
-      return 'Specimen <b>' + (num || '00') + '</b> · <span class="tag-ch">' + ch + '</span><span class="tag-sp">' + (name ? esc(name) : ch) + '</span>'
+      return 'Specimen <b>' + (num || '00') + '</b> · <span class="tag-ch">' + ch + '</span><span class="tag-sp">' + (name ? esc(name.charAt(0).toUpperCase() + name.slice(1)) : ch) + '</span>'
         + '<span class="tag-tap">' + (parts ? 'Tap for the drawing and its parts' : 'Tap for the full drawing') + '</span>';
     },
     // the caption the stage shows for an item: its own words, and on The Chain the parts list under them (the phone's strip
@@ -1279,7 +1279,7 @@
       // under the figures, what each chip's figures describe where its data says (the Nvidia racks); each figure carries its own source
       var bases = sel.some(function (c) { return c.basis; });
       h += '<section class="cmp-sec"><h3>Figures</h3>' + rowsF + (said.length ? line(null, '<p class="said">' + said.join(' ') + '</p>', 'bare') : '') +
-        (bases ? line(null, cols(function (c) { return '<div class="cmp-src">' + basisLine(c, stack ? short(c) : '') + '</div>'; }), 'bare src') : '') + '</section>';
+        (bases ? line(null, cols(function (c) { return '<div class="cmp-src">' + basisLine(c, short(c)) + '</div>'; }), 'bare src') : '') + '</section>';
       // who makes it
       var P = sel.map(partsData), rowsP = '';
       [['die', 'Logic dies'], ['hbm', 'Memory'], ['pkg', 'Package']].forEach(function (pair, ri) {
@@ -1962,7 +1962,7 @@
         }).join(' '); // the lines break at these spaces, so a name never leaves its comma at the start of the next line
         // the numeral is the segment's number of firms
         html += '<section class="sup-rung" id="' + s.id + '" data-i="' + s.i + '" data-crit="' + s.crit.length + '" aria-labelledby="' + s.id + '-h">' +
-          '<span class="sup-rank" aria-hidden="true">' + s.n + '</span>' +
+          '<span class="sup-rank" aria-hidden="true" data-unit="' + (s.n === 1 ? 'firm' : 'firms') + '">' + s.n + '</span>' +
           '<div class="sup-rung-head"><h3 class="sup-rung-name" id="' + s.id + '-h">' + esc(s.name) + '</h3>' +
           '<p class="sup-rung-n">' + self.rungCount(s.n, s.crit.length) + '</p></div>' +
           '<p class="sup-names">' + names + '</p>' +
@@ -1987,7 +1987,7 @@
               (f.chokepoint === 'Critical' || f.chokepoint === 'Diversified' ? '<span class="sr-only">, ' + esc(f.chokepoint) + '</span>' : '') + '</button></span>';
           }).join(' ');
           html += '<section class="sup-rung" id="' + id + '" data-crit="' + c.crit + '" aria-labelledby="' + id + '-h">' +
-            '<span class="sup-rank" aria-hidden="true">' + c.rows.length + '</span>' +
+            '<span class="sup-rank" aria-hidden="true" data-unit="' + (c.rows.length === 1 ? 'firm' : 'firms') + '">' + c.rows.length + '</span>' +
             '<div class="sup-rung-head"><h3 class="sup-rung-name" id="' + id + '-h">' + esc(cname(c.cc)) + '</h3>' +
             '<p class="sup-rung-n">' + self.rungCount(c.rows.length, c.crit) + '</p></div>' +
             '<p class="sup-names">' + names + '</p>' +
@@ -3194,6 +3194,7 @@
         box = document.createElement('div'); box.id = 'cp-search'; box.hidden = true; box.setAttribute('role', 'dialog'); box.setAttribute('aria-modal', 'true'); box.setAttribute('aria-label', 'Search');
         box.innerHTML = '<div class="cp-search-panel"><input type="search" placeholder="Search chapters, terms, suppliers, chips and events…" aria-label="Search"><p class="cp-search-try"></p><ol class="cp-search-results"></ol><p class="cp-search-hint">Enter opens the first result · Esc closes</p></div>';
         // the number of results goes to a polite status, so a screen reader hears it once the typing pauses
+        if (window.matchMedia && matchMedia('(max-width: 640px)').matches) $('input', box).placeholder = 'Search chapters, terms, firms, chips…'; // the long one was cut mid-word on a phone
         var said = document.createElement('p'); said.className = 'sr-only cp-search-said'; said.setAttribute('role', 'status'); $('.cp-search-panel', box).appendChild(said);
         document.body.appendChild(box);
         var inp = $('input', box), list = $('ol', box), tryRow = $('.cp-search-try', box);
@@ -3411,7 +3412,7 @@
         if (!b) return;
         if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return;
         e.preventDefault();
-        var url = b.getAttribute('data-copy'), done = function () { b.textContent = 'Copied'; b.setAttribute('data-done', '1'); setTimeout(function () { b.textContent = 'Link to chapter'; b.removeAttribute('data-done'); }, 1600); };
+        var url = b.getAttribute('data-copy'), done = function () { b.style.minWidth = b.offsetWidth + 'px'; b.textContent = 'Copied'; b.setAttribute('data-done', '1'); setTimeout(function () { b.textContent = 'Link to chapter'; b.style.minWidth = ''; b.removeAttribute('data-done'); }, 1600); }; // the width holds, so Cite does not slide under a second click
         if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(done, function () { window.prompt('Copy this link', url); });
         else window.prompt('Copy this link', url);
       });
@@ -3426,6 +3427,16 @@
         var url = base + a.getAttribute('href'), done = function () { a.textContent = 'Copied'; a.setAttribute('data-done', '1'); setTimeout(function () { a.textContent = '#'; a.removeAttribute('data-done'); }, 1600); };
         if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(done, function () {});
       });
+      // a sticky rail taller than the window scrolls, and macOS hides its scrollbar: while rows wait below, its foot fades
+      // (data-more; src/modules/chapter.css). A rail that fits draws no fade (design10 chapter P2.3, 29 Oct 2026)
+      var rails = $$('.chapter .ch-rail'), railT = 0, railMore = function () { railT = 0; rails.forEach(function (r) { if (r.scrollHeight - r.scrollTop - r.clientHeight > 1) r.setAttribute('data-more', ''); else r.removeAttribute('data-more'); }); };
+      if (rails.length) {
+        var railSoon = function () { if (!railT) railT = requestAnimationFrame(railMore); };
+        rails.forEach(function (r) { r.addEventListener('scroll', railSoon, { passive: true }); });
+        addEventListener('resize', railSoon); addEventListener('scroll', railSoon, { passive: true });
+        if (document.fonts && document.fonts.ready) document.fonts.ready.then(railMore);
+        railMore();
+      }
       // dataset export buttons (copy to clipboard: JSON or CSV)
       var copy = function (text, btn, label) { var done = function (ok) { btn.textContent = ok ? 'Copied' : 'Copy failed'; setTimeout(function () { btn.textContent = label; }, 2000); }; if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(false); }); else done(false); };
       var toCSV = function (rows) { if (!rows.length) return ''; var cols = []; rows.forEach(function (r) { Object.keys(r).forEach(function (k) { if (cols.indexOf(k) < 0) cols.push(k); }); }); var q = function (v) { if (v == null) return ''; if (typeof v === 'object') v = JSON.stringify(v); return String(v).replace(/[\t\n\r]+/g, ' '); }; return cols.join('\t') + '\n' + rows.map(function (r) { return cols.map(function (c) { return q(r[c]); }).join('\t'); }).join('\n'); }; // tab-separated, so a spreadsheet splits the columns on paste

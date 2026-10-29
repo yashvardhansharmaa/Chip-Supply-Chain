@@ -198,7 +198,9 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
    the phone's rules: Paged.js (build/pdf.py) lifts every rule with one out of its media query and applies it on paper too, so
    ".plate" in the selector outweighs the older "div + div" rules instead */
 @media screen {
-  .chapter > .prose > .plate { max-width: 40em; } /* as wide as the flashcards and sources (owner, 27 Oct) */
+  /* the card stays as wide as the flashcards and sources (owner, 27 Oct), and all three now end on the text's own edge, 666 px,
+     so a chapter has one right edge (design10 chapter P2.2, 29 Oct 2026) */
+  .chapter > .prose > .plate { max-width: 666px; } /* the flashcards and sources take the same edge below, after their own rules */
   .chapter .plate-head { padding: 0 0 12px; }
   .chapter .plate-kpis { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 22px; padding: 16px 0 18px; }
   .chapter .plate-kpis > div:last-child { grid-column: auto; padding-left: 0; border-top: 0; } /* the price stays in the row at every width */
@@ -264,6 +266,7 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 .chapter .ch-rail .rail-tog { display: none; }
 @media screen and (min-width: 1200px) {
   .chapter .ch-rail { margin-top: -8px; padding-top: 8px; }
+  .chapter .ch-rail[data-more] { -webkit-mask-image: linear-gradient(#000 calc(100% - 28px), transparent); mask-image: linear-gradient(#000 calc(100% - 28px), transparent); } /* on a short window the rail scrolls and macOS hides its scrollbar: while rows wait below (src/app.js sets data-more), its foot fades */
   .chapter .ch-rail .rail-tog {
     align-items: center; gap: 6px; margin: 0; cursor: pointer; background: none; color: var(--muted);
     font-family: var(--font-ui); font-size: 13px; font-weight: 500; line-height: 16px; letter-spacing: 0; white-space: nowrap;
@@ -393,6 +396,7 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 .chapter .cg-row.top .cg-v { font-size: 15px; font-weight: 700; color: var(--accent-ink); }
 /* on a phone: narrower columns; a change row's name and years on one line over its axis */
 @media screen and (max-width: 640px) {
+  .chapter .col-ref span { width: 6em; white-space: normal; } /* "reference case 649" ran past the page at 320 px (WCAG reflow) */
   .chapter .cols { --ch: 150px; --cw: 96px; --cg: 10px; }
   .chapter .col > b, .chapter .cols-lab span { font-size: 12.5px; }
   .chapter .col.top > b { font-size: 13.5px; }
@@ -506,6 +510,7 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 .chapter .fc-more { font-family: var(--font-ui); font-size: 13.5px; font-weight: 500; }
 /* the sources fold under an ink rule, their summary a section heading */
 .chapter > .prose > .chapter-sources { max-width: 40em; margin: 88px 0 0; border-top: 1px solid var(--ink); }
+@media screen { .chapter > .prose > .review, .chapter > .prose > .chapter-sources { max-width: 666px; } } /* one right edge with the text and the card (design10 chapter P2.2); paper keeps 40em */
 .chapter .chapter-sources summary {
   padding: 16px 0 12px; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title);
   font-size: var(--t-block); line-height: 1.2; letter-spacing: -0.01em; color: var(--ink);
