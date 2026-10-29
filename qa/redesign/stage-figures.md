@@ -1,4 +1,4 @@
-# Redesign: the three approved data figures (29 October 2026)
+# Redesign: the three approved data figures and the Suppliers ribbons by share (29 October 2026)
 
 Branch `redesign-figs`, from `25d8080`, built to `MAIN/qa/excellence/BUILD-BRIEF-2.md` ("figures") and the mockups in `WT/dist/mock/figures/` with their notes (`MAIN/qa/excellence/mocks/figures/notes.md`, sections 2, 5 and 7). Commits `7c69dc7` to the last one on the branch. Nothing is pushed or merged.
 
@@ -100,9 +100,97 @@ Run on the build at `83b03f6`, preview http://127.0.0.1:8788/. Every check passe
 - Fonts in both: Fraunces, Source Serif 4, Hanken Grotesk and Fragment Mono, all embedded.
 - Export Controls has no PDF. The view was printed through Chrome's own print. The chart prints as it stands, with its date line, the rule's sentence and its source. The buttons, ruler and actions are left off.
 
+## The Suppliers ribbons by share (added on the coordinator's request, 29 October)
+
+The owner approved the third round of mockup 6 after the three figures were done. It replaces the Suppliers ribbons in place, on the same branch, built to `MAIN/qa/excellence/mocks/figures/notes.md` section 6, `critique-suppliers.md` and the mockup's code in `WT/dist/mock/figures/suppliers-share.*`. Commits `9fa29b9` and `9533ab6`.
+
+### What it does, as the mockup does
+- **The drawing.** Each ribbon narrows to a point at its country. The countries are evenly spaced, in the order with the fewest crossings, each crossing weighted by the two shares (the mockup's exact search). A ribbon's width is the country's share where it meets one of the matrix's 20 segments.
+- **Slices and firms.** Each segment's slices are stacked largest first, with Other EU and Other last.
+  - Up to three firms sit under each segment, in their country's share order.
+  - Ties are broken by a share the supplier list states for the firm, then Critical first, then the list's own order.
+  - Lam Research comes before Tokyo Electron in etch.
+- **Year and measure.** A mark follows the name only where a row is not 2025 revenue, such as "· 2023" or "· capacity, 2022". The key has one line: "Shares are of 2025 revenue unless marked".
+- **Shares on the drawing.**
+  - Following a country prints its share in wine at every segment it reaches, turns its firms to ink and bolds its shares in the Table.
+  - Hovering or focusing a segment prints each country's share beside its point.
+- **Keyboard and screen readers.**
+  - The follow buttons come before the 20 segment stops.
+  - Each segment's label gives every share, its first three firms, its year, measure and source.
+  - Left and Right step through a segment's countries, each with its tip. Up and Down move between segments.
+  - Escape, or a tap elsewhere, closes a tip.
+- **Segments with no split** (advanced packaging, IC substrates, server assembly) show their name and firms only, with no hatching and no note.
+- **Below 600 px:** one share strip per segment, each slice labeled inside where the label fits, the rest on the line under it, then the firms. **"UK" replaces "GB"** on the strips, as asked.
+- **Table, CSV and Cite** sit at the end of the source line. The mockup had Table only.
+  - The CSV has one row per segment and one column per country, each share as the matrix writes it.
+  - Then come the measure, year, basis, source, its address and the first three firms.
+- **Dark mode** uses the site's ribbon tokens.
+- **Print** shows the drawing as it stands, scaled to the page, with no tip and no actions.
+- **The route's chosen country** follows its column, where it has one (Japan does, France does not), as the old ribbons did.
+
+### The EU-27 toggle: removed
+An EU-27 column would have to draw sums of the members' shares (the Netherlands, Germany and Other EU), so the toggle is gone, as the mockup's notes already said.
+
+The Glossary's EU-27 cards link to `#/suppliers?group=eu`. That address now filters the firm list to the EU-27 members and lands on it, so "See them together on the Suppliers page" still holds.
+
+### How it is built
+- **`build/modules/supplier-shares.js` (new)** writes the section and its data from `data/chokepoint-matrix.json`, `data/suppliers.json`, `data/bibliography.json` and the chapters. It ports `build-data.py`'s rules and the firm table from notes.md section 6.
+  - Every share is read a second time as text, so 6.0 stays 6.0.
+  - The build stops if a share's text differs from its number, if a firm's basis phrase is not in the text it cites, or if a stated firm share is not in its entry.
+  - Its data matches the mockup's `suppliers-share-data.js` row for row, every share, order, firm and column included.
+- **`src/modules/supshares.js` and `.css` (new)** draw it. They are the mockup's code with the site's names, plus Cite, CSV and the route link.
+- **`src/app.js`:** the old drawing leaves the Suppliers object (about 290 lines): the count ribbons, their tips, the EU-27 grouping, and the segment link that filtered the firm list. Nothing outside the Suppliers object changed.
+- **`src/template.html`:** the old section becomes `{{SUPPLIER_SHARES}}`.
+- **`src/modules/suppliers.css`:** the old ribbons' dead rules leave it, and the tip's measure line goes from 11 to 11.5 px.
+- **`src/modules/lookup.js`:** one comment.
+
+### Checks for the port
+- **`qa/redesign/check-shares.js` (new, ported from the mockup's).**
+  - It reads the matrix as raw text and opens `#/suppliers` at 1440 and at 390.
+  - It reads back every share printed in eight places: the Table, the aria-labels, the left-hand shares on hover, every ribbon's tip, the shares for each followed country, the phone strips (UK for GB), the line under each strip and the phone's reader line.
+  - It fails if any printed share differs from the matrix as written, or if a place that should carry every share misses one.
+  - **Result: 83 shares in 17 segments, 452 printed values, every one matches.**
+- **`interact-suppliers.js`: updated where it tested the old count-based ribbons, now 55 checks (was 65).**
+  - "Critical ribbons are red wine" and "every other ribbon is gray" are now one check: at rest every ribbon is gray. On a phone it reads the strip slices.
+  - The ribbon note on headquarters is now the new note on where a firm counts.
+  - Following Japan used to turn its ribbons dark gray with Critical in wine. Now its ribbons turn wine, the others fade, and its share is printed at each of its segments. On a phone its slices turn wine and the others stay gray.
+  - The four EU-27 switch checks are now one: there is no switch.
+  - "A segment filters the list" and "All segments" are now: a segment opens its tip, with year and source, and Escape closes it. On a phone, EUV lithography's row names it and ASML.
+  - The Glossary's EU-27 address now lists the EU-27 members' firms and lands on them. It drew the EU as one column before.
+  - The ribbon count is now exact: 83 ribbons wide, 17 strips under 20 names on a phone.
+- **My own probe:**
+  - Tab order, keyboard steps and Escape.
+  - Following the Netherlands prints its five shares, inks ASML and ASM International, and bolds only its shares in the Table.
+  - Table, Cite and CSV.
+  - The route's Japan follows Japan, and France follows nothing.
+  - No sideways scroll and no text under 11.5 px at 320, 390, 768 and 1440, light and dark.
+  - Shots of the drawing, dark mode with a country followed and a segment hovered, and the phone strips all match the mockup's third-round shots.
+  - Chrome's print of the view shows the drawing as a still.
+
+### The full check list again, after the port (build at `9533ab6`)
+All 19 checks pass:
+- the build;
+- the five static checks;
+- `check-links --local`, with no broken links;
+- smoke, 47 loads;
+- `check-perchapter`, 337 of 337;
+- `interact-chapter`, all;
+- `stage-chapters`, 10 of 10;
+- `check-cites`, 3,324 marks;
+- `check-figs`, 112 of 112;
+- `interact-chips`, 93 of 93;
+- `datacheck-chips`, 1,384 values;
+- `interact-glossary`, 90 of 90;
+- `interact-suppliers`, 55 of 55;
+- `interact-masthead`, all;
+- `check-shares`, 452 values.
+
+`check-integrity` counts 1,809 ids, where it counted 1,812 before. The old ribbon section's ids left, and the new section's took their place.
+
 ## What I did not do
 
 - **The PDFs in `dist/pdf/` are not reprinted.** Chapters 13 and 16 were printed on DevTools port 9368 to a scratch folder to check them, and the book was not. `geopolitics.pdf` and `systems-and-networking.pdf` (and the book) still show the old figures until they are reprinted after the merge. Chapter 13 grows from 11 to 12 pages, and chapter 16 stays at 16.
 - **The PNG of 13.2** draws its bars, title and source, without the racks, as the mockup's did through the site's runtime. Drawing the racks into the PNG would mean changing `FIG_JS` in `build/build.js`.
 - **`/export-controls/`**, the static reference page, does not carry the new chart. The brief placed it on the interactive page only.
 - The Export Controls chart has no figure number, since that page numbers none.
+- **Suppliers:** the ribbons by share have no PDF, since the Suppliers page has none. Its static page `/suppliers/` does not carry the shares, which the brief did not ask for.
