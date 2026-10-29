@@ -4629,10 +4629,10 @@ html.kb:has(.view[data-view="glossary"]:not([hidden])) { scroll-padding-top: cal
 /* module: underline.css */
 /* Chips built just under the line, first on Export Controls (build/modules/under-line.js, src/modules/underline.js). The
    figure takes the chapter figure's grammar (chapter.css) outside a chapter: the ruled box at 666 px, the Fraunces title,
-   the source strip with Cite, Table, CSV and PNG. Beside it on a wide screen, the chosen chip; under it below 1,100 px. */
+   the source strip with Cite, Table, CSV and PNG. Inside, the ladder (29 Oct 2026): one row for each US move, its date and
+   rule, its lanes and lines, and its sentence. A chip's record opens beside its dot. */
 .ul { margin: 40px 0 8px; }
-.ul-grid { display: grid; grid-template-columns: minmax(0, 666px) minmax(0, 1fr); column-gap: 48px; align-items: start; margin-top: 24px; }
-@media (max-width: 1099px) { .ul-grid { display: block; } }
+.ul .figure.ul-fig { margin-top: 24px; }
 
 .ul .figure { margin: 0; padding: 0; border: 1px solid var(--line-2); background: var(--bg); max-width: 666px; }
 .ul .fig-head { padding: 18px 24px 0; }
@@ -4662,102 +4662,88 @@ html.kb:has(.view[data-view="glossary"]:not([hidden])) { scroll-padding-top: cal
   .ul .figure .fig-title { font-size: var(--t-text); line-height: 1.3; }
 }
 
-/* the step row of rule dates, as the explainers set theirs (styles.css .anim-steps) */
-.ul ol.ul-steps { display: flex; flex-wrap: wrap; gap: 2px 13px; list-style: none; margin: 0 0 16px; padding: 0; }
-.ul ol.ul-steps li { margin: 0; padding: 0; }
-.ul ol.ul-steps li::before { content: none; display: none; }
-
-/* the date: the rule in force, then the chart, then the ruler that sets the date, then the rule's sentence */
-.ul-when { margin: 0 0 6px; font-family: var(--font-ui); font-size: 13px; line-height: 18px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
-.ul-when b { font-weight: 600; color: var(--ink); }
-.ul-plot { position: relative; }
-.ul-plot svg { display: block; width: 100%; height: auto; overflow: visible; }
-.ul-cap { margin: 14px 0 0; min-height: 4.5em; font-family: var(--font-body); font-size: var(--t-small); line-height: 1.5; color: var(--ink); }
-.ul-scrub { position: relative; margin: 6px 0 0; padding: 0 0 26px; }
-.ul-scrub input[type=range] { -webkit-appearance: none; appearance: none; display: block; width: 100%; height: 28px; margin: 0; background: none; cursor: pointer; }
-.ul-scrub input[type=range]::-webkit-slider-runnable-track { height: 2px; background: var(--ink); }
-.ul-scrub input[type=range]::-moz-range-track { height: 2px; background: var(--ink); }
-.ul-scrub input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; margin-top: -7px; border-radius: 50%; background: var(--bg); border: 2px solid var(--ink); }
-.ul-scrub input[type=range]::-moz-range-thumb { width: 12px; height: 12px; border-radius: 50%; background: var(--bg); border: 2px solid var(--ink); }
-.ul-scrub input[type=range]:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
-.ul-ticks { position: absolute; left: 8px; right: 8px; top: 20px; height: 22px; pointer-events: none; }
-.ul-ticks span { position: absolute; top: 0; transform: translateX(-50%); font-family: var(--font-ui); font-size: 11.5px; line-height: 14px; color: var(--muted); white-space: nowrap; }
-.ul-ticks .ul-stop { position: absolute; top: -12px; width: 2px; height: 10px; margin-left: -1px; background: var(--ink); }
-.ul-ticks .ul-stop.on { background: var(--accent); height: 12px; top: -13px; }
-
-/* the Table in place of the chart */
-.ul .figure.is-table .ul-plot, .ul .figure.is-table .ul-scrub, .ul .figure.is-table .ul-when, .ul .figure.is-table .ul-steps, .ul .figure.is-table .ul-cap { display: none; }
-.ul .figure.is-table table.fig-table { position: static; width: 100%; height: auto; margin: 0; clip: auto; clip-path: none; overflow: visible; white-space: normal; border-collapse: collapse; font-family: var(--font-ui); font-size: 13.5px; line-height: 19px; }
-.ul .figure.is-table table.fig-table caption { display: none; }
-.ul .figure.is-table table.fig-table th, .ul .figure.is-table table.fig-table td { padding: 6px 8px 6px 0; border-bottom: 1px solid var(--line); text-align: left; font-weight: 400; vertical-align: top; color: var(--ink); }
-.ul .figure.is-table table.fig-table thead th { color: var(--muted); font-size: 12.5px; border-bottom-color: var(--ink); }
-.ul .figure.is-table table.fig-table td { font-variant-numeric: tabular-nums; }
-
-/* the drawing */
-.ct-reg { transition: y 600ms var(--ease), height 600ms var(--ease), opacity 500ms var(--ease); }
-.ct-ctrl { fill: var(--ctx); opacity: 0.45; }
-.ct-case { fill: var(--bg); stroke: var(--ink); stroke-width: 1.2; stroke-dasharray: 4 3; }
-.ct-hatch-line { stroke: var(--rule-ink); stroke-width: 1; opacity: 0.55; }
-.ct-line { stroke: var(--ink); stroke-width: 1.4; transition: opacity 500ms var(--ease); }
-.ct-line.soft { stroke: var(--rule-ink); stroke-width: 1; stroke-dasharray: 2 3; }
-.ct-line.gone { stroke: var(--rule-ink); stroke-width: 1; stroke-dasharray: 5 4; }
-.ct-line.dot { stroke: var(--rule-ink); stroke-dasharray: 2 3; }
-.ct-axis { stroke: var(--ink); stroke-width: 1; }
-.ct-gut { stroke: var(--line-2); stroke-width: 1; stroke-dasharray: 3 3; }
-.ct-t { font-family: var(--font-ui); font-size: 12px; fill: var(--ink-2); font-variant-numeric: tabular-nums; }
-.ct-t.k { font-weight: 600; fill: var(--ink); }
-.ct-t.m { fill: var(--muted); font-size: 11.5px; }
-.ct-fade { transition: opacity 500ms var(--ease); }
-.ct-fade.off { opacity: 0; pointer-events: none; }
-.ct-chip { cursor: pointer; transition: transform 700ms var(--ease), opacity 400ms var(--ease); outline: none; }
-.ct-chip.off { opacity: 0; pointer-events: none; }
-.ct-chip .ct-dot { fill: var(--ink-2); stroke: var(--bg); stroke-width: 1.5; }
-.ct-chip.own .ct-dot { fill: var(--bg); stroke: var(--ink-2); stroke-width: 1.4; }
-.ct-chip.named .ct-dot { fill: var(--accent); stroke: var(--bg); }
-.ct-chip .ct-rng { stroke: var(--ink-2); stroke-width: 9; stroke-linecap: round; opacity: 0; transition: opacity 400ms var(--ease); }
-.ct-chip.named .ct-rng { stroke: var(--accent); }
-.ct-chip.ranged .ct-rng { opacity: 1; }
-.ct-chip .ct-ring { fill: none; stroke: var(--accent); stroke-width: 1.6; opacity: 0; transition: opacity 400ms var(--ease); }
-.ct-chip.ringed .ct-ring { opacity: 1; }
-.ct-chip .ct-sel { fill: none; stroke: var(--ink); stroke-width: 1.4; opacity: 0; }
-.ct-chip.sel .ct-sel, .ct-chip:focus-visible .ct-sel { opacity: 1; }
-.ct-chip text { font-family: var(--font-ui); font-size: 11.5px; fill: var(--muted); transition: opacity 300ms var(--ease); paint-order: stroke; stroke: var(--bg); stroke-width: 3.5px; stroke-linejoin: round; }
-.ct-chip text .ct-nm { fill: var(--accent-ink); font-weight: 700; font-size: 13px; }
-.ct-chip text .ct-ot { fill: var(--ink-2); font-weight: 400; font-size: 11.5px; }
-.ct-chip text .ct-sep { fill: var(--muted); font-weight: 400; }
-.ct-chip text.hide { opacity: 0; }
-.ct-chip:hover text, .ct-chip.sel text { opacity: 1; }
-
-/* the chosen chip, beside the figure (or under it) */
-.ul-side { padding-top: 4px; border-top: 1px solid var(--ink); }
-.ul-side .k { margin: 12px 0 8px; font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); line-height: 16px; color: var(--muted); }
-.ul-side h3 { margin: 0 0 10px; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: var(--t-lead); line-height: 1.25; color: var(--ink); }
-.ul-side dl { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 6px 16px; margin: 0 0 12px; font-family: var(--font-ui); font-size: 14px; line-height: 20px; }
-.ul-side dt { color: var(--muted); }
-.ul-side dd { margin: 0; color: var(--ink); font-variant-numeric: tabular-nums; }
-.ul-side p { margin: 0 0 10px; font-family: var(--font-body); font-size: var(--t-small); line-height: 1.5; color: var(--ink); }
-.ul-side a { font-family: var(--font-ui); font-size: 13.5px; color: var(--ink-2); text-underline-offset: 3px; }
-.ul-key { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 16px 0 0; padding: 12px 0 0; border-top: 1px solid var(--line); font-family: var(--font-ui); font-size: 12.5px; line-height: 18px; color: var(--ink-2); }
+/* the key, above the ladder */
+.ul-key { display: flex; flex-wrap: wrap; gap: 4px 18px; margin: 0 0 4px; font-family: var(--font-ui); font-size: 12.5px; line-height: 18px; color: var(--ink-2); }
 .ul-key span { display: inline-flex; align-items: center; gap: 7px; }
 .ul-key i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; }
-.ul-key i.m { background: var(--ink-2); }
-.ul-key i.o { border: 1.4px solid var(--ink-2); }
 .ul-key i.n { background: var(--accent); }
-.ul-key i.c { border-radius: 0; width: 14px; background: var(--ctx); opacity: 0.7; }
-@media (max-width: 1099px) { .ul-side { margin-top: 28px; max-width: 666px; } }
-@media (prefers-reduced-motion: reduce) { .ct-reg, .ct-line, .ct-fade, .ct-chip, .ct-chip .ct-rng, .ct-chip .ct-ring, .ct-chip text { transition: none; } }
+.ul-key i.m { background: var(--muted); }
+.ul-key i.l { width: 16px; height: 11px; border-radius: 0; background: var(--ctx); }
+.ul-key i.c { width: 16px; height: 11px; border-radius: 0; background: var(--ctx) repeating-linear-gradient(135deg, transparent 0 3px, var(--rule-ink) 3px 4px); opacity: 0.9; }
 
-/* on paper: the chart as it stands, with its date line and the rule's sentence; no buttons, ruler or actions */
+/* the ladder: one row for each move */
+.ul ol.ul-ladder { list-style: none; margin: 0; padding: 0; }
+.ul ol.ul-ladder li.ul-row { margin: 0; padding: 18px 0 14px; border-top: 1px solid var(--line); }
+.ul ol.ul-ladder li.ul-row::before { content: none; display: none; }
+.ul ol.ul-ladder li.ul-row:first-child { border-top: 0; padding-top: 12px; }
+.ul-rh { margin: 0 0 8px; font-family: var(--font-ui); font-size: 14px; line-height: 20px; color: var(--ink); text-wrap: pretty; }
+.ul-rh b { font-weight: 600; font-variant-numeric: tabular-nums; }
+.ul-rk { margin: 0 8px 0 6px; color: var(--muted); }
+.ul-rk::before { content: "· "; }
+.ul-track { position: relative; }
+.ul-track svg { display: block; width: 100%; height: auto; overflow: visible; }
+.ul-rn { margin: 6px 0 0; font-family: var(--font-body); font-size: var(--t-small); line-height: 1.5; color: var(--ink); text-wrap: pretty; }
+.ul-axis { margin: 4px 0 0; font-family: var(--font-ui); font-size: 12.5px; line-height: 18px; color: var(--ink-2); text-align: right; }
+
+/* the drawing */
+.ul-lane.lic { fill: var(--ctx); opacity: 0.5; }
+.ul-lane.case { opacity: 1; }
+.ul-hatch { stroke: var(--rule-ink); stroke-width: 1; opacity: 0.6; }
+.ul-sep { stroke: var(--bg); stroke-width: 2; }
+.ul-base { stroke: var(--ink); stroke-width: 1; }
+.ul-ln { font-family: var(--font-ui); font-size: 11.5px; fill: var(--ink-2); }
+.ul-ln.lic, .ul-ln.case { fill: var(--ink); font-weight: 600; }
+.ul-tl { stroke: var(--ink); stroke-width: 1.4; }
+.ul-tl.m { stroke: var(--ink-2); stroke-width: 1.2; stroke-dasharray: 4 3; }
+.ul-tv { font-family: var(--font-ui); font-size: 12px; fill: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+.ul-tv.m { font-weight: 400; fill: var(--ink-2); }
+.ul-inset .ul-tv { font-weight: 400; fill: var(--muted); font-size: 11.5px; }
+.ul-inset .ul-tv.m { fill: var(--ink-2); font-weight: 600; }
+.ul-inset .axis { stroke: var(--ink-2); stroke-width: 1; }
+.ul-inset .lead { fill: none; stroke: var(--rule-ink); stroke-width: 1; stroke-dasharray: 2 3; }
+.ul-arrow line, .ul-arrow path { fill: none; stroke: var(--accent); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.ul-cut { font-family: var(--font-ui); font-size: 11.5px; font-weight: 500; fill: var(--accent-ink); paint-order: stroke; stroke: var(--bg); stroke-width: 3.5px; stroke-linejoin: round; font-variant-numeric: tabular-nums; }
+.ul-dot { cursor: pointer; outline: none; }
+.ul-dot .hit { fill: transparent; }
+.ul-dot .d { fill: var(--muted); stroke: var(--bg); stroke-width: 1.5; }
+.ul-dot.named .d { fill: var(--accent); }
+.ul-dot .ring { fill: none; stroke: var(--ink); stroke-width: 1.4; opacity: 0; }
+.ul-dot.on .ring, .ul-dot:focus-visible .ring { opacity: 1; }
+.ul-lab { font-family: var(--font-ui); paint-order: stroke; stroke: var(--bg); stroke-width: 3.5px; stroke-linejoin: round; pointer-events: none; }
+.ul-lab .nm { fill: var(--accent-ink); font-weight: 700; font-size: 13px; }
+.ul-lab .ot { fill: var(--ink-2); font-size: 12px; }
+.ul-lab .num { fill: var(--ink-2); font-size: 12px; font-variant-numeric: tabular-nums; }
+.ul .ul-dot, .ul .ul-lab, .ul .ul-arrow, .ul .ul-cut { transition: opacity 160ms linear; }
+.ul.is-hot .ul-dot:not(.on), .ul.is-hot .ul-lab:not(.on), .ul.is-hot .ul-arrow:not(.on) { opacity: 0.3; }
+
+/* a chip's record, beside its dot */
+.ul .fig-body { position: relative; }
+.ul-rec { position: absolute; z-index: 5; width: 250px; max-width: calc(100% - 8px); padding: 12px 14px; background: var(--bg); border: 1px solid var(--line-2); box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12); }
+.ul-rec[hidden] { display: none; }
+.ul-rec .h { margin: 0 0 8px; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 16px; line-height: 1.3; color: var(--ink); }
+.ul-rec dl { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 3px 12px; margin: 0 0 8px; font-family: var(--font-ui); font-size: 13px; line-height: 18px; }
+.ul-rec dt { color: var(--muted); }
+.ul-rec dd { margin: 0; color: var(--ink); font-variant-numeric: tabular-nums; }
+.ul-rec a { font-family: var(--font-ui); font-size: 13px; color: var(--ink-2); text-underline-offset: 3px; }
+
+/* the Table in place of the ladder */
+.ul .figure.is-table .ul-ladder, .ul .figure.is-table .ul-key, .ul .figure.is-table .ul-axis, .ul .figure.is-table .ul-rec { display: none; }
+.ul .figure.is-table table.fig-table { position: static; width: 100%; height: auto; margin: 0; clip: auto; clip-path: none; overflow: visible; white-space: normal; border-collapse: collapse; font-family: var(--font-ui); font-size: 13px; line-height: 18px; }
+.ul .figure.is-table table.fig-table caption { display: none; }
+.ul .figure.is-table table.fig-table th, .ul .figure.is-table table.fig-table td { padding: 6px 8px 6px 0; border-bottom: 1px solid var(--line); text-align: left; font-weight: 400; vertical-align: top; color: var(--ink); }
+.ul .figure.is-table table.fig-table thead th { color: var(--muted); font-size: 12px; border-bottom-color: var(--ink); }
+.ul .figure.is-table table.fig-table td { font-variant-numeric: tabular-nums; }
+.ul .figure.is-table .fig-body { overflow-x: auto; }
+@media (prefers-reduced-motion: reduce) { .ul .ul-dot, .ul .ul-lab, .ul .ul-arrow, .ul .ul-cut { transition: none; } }
+
+/* on paper: the ladder as it stands; no actions or record */
 @media print {
-  .ul-grid { display: block; }
   .ul .figure { break-inside: avoid; }
-  .ul .ul-steps, .ul .ul-scrub, .ul .fs-acts, .ul .ch-cite-box, .ul-key { display: none !important; }
+  .ul .fs-acts, .ul .ch-cite-box, .ul-rec { display: none !important; }
   .ul .figure { margin: 0 !important; border: 0; border-top: 0.6pt solid var(--ink); max-width: 666px; }
   .ul .fig-head, .ul .fig-body { padding-left: 0; padding-right: 0; }
   .ul .fig-strip { margin: 0; }
-  .ul-cap { min-height: 0; }
-  .ul-side { margin-top: 4mm; }
-  .ct-reg, .ct-line, .ct-fade, .ct-chip, .ct-chip text { transition: none !important; }
+  .ul ol.ul-ladder li.ul-row { break-inside: avoid; }
 }
 
 
