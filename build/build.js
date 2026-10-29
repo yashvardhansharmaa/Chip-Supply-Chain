@@ -1670,7 +1670,19 @@ data.countries = Object.keys(COUNTRY).filter((cc) => /^[A-Z]{2}$/.test(cc) && ((
   .map((cc) => ({ code: cc, name: COUNTRY[cc], role: LK_ROLE[cc] || '', panel: html.indexOf(`class="sa-panel" data-cc="${cc}"`) >= 0, aliases: LK_CC_ALIAS[cc] || [cc] }));
 data.countries.forEach((c) => lkItems.push({ kind: 'country', id: 'lk-country-' + c.code.toLowerCase(), key: c.code, name: c.name, alias: c.aliases, label: 'Country', text: [c.name, c.code, c.aliases.join(' '), 'country', c.role].join(' ') }));
 lkItems.sort((a, b) => a.name.localeCompare(b.name, 'en', { sensitivity: 'base' }));
-const lookupListHTML = lkItems.map((i) => `<li id="${esc(i.id)}" data-kind="${i.kind}" data-key="${esc(i.key || i.name)}"${i.alias && i.alias.length ? ` data-alias="${esc(i.alias.join('|'))}"` : ''} data-text="${esc(i.text.toLowerCase().replace(/\s+/g, ' '))}"><button type="button"><span class="lk-name">${esc(i.name)}</span><span class="lk-lab">${esc(i.label)}</span></button></li>`).join('');
+/* the Glossary's index (Index and entry, the owner's choice of 29 Oct 2026; src/modules/lookup.js): every entry A to Z under
+   its letter, one link each, which glossary.js carries and the Glossary puts into its #lk-items. Each row keeps the entry's
+   addresses (the row's lk- id, and a term's link its gl- id, which the chapters' pop-ups and the site search link to) and the
+   data the Glossary's search reads: the kind, the key, the other names, the label and the words */
+const LK_LETTERS = ['0-9'].concat('ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''));
+const lkLetter = (n) => { const c = String(n).charAt(0).toUpperCase(); return /[A-Z]/.test(c) ? c : '0-9'; };
+const lkRow = (i) => `<li class="gl-r" id="${esc(i.id)}" data-kind="${i.kind}" data-key="${esc(i.key || i.name)}"${i.alias && i.alias.length ? ` data-alias="${esc(i.alias.join('|'))}"` : ''} data-label="${esc(i.label)}" data-text="${esc(i.text.toLowerCase().replace(/\s+/g, ' '))}"><a href="#${esc(i.kind === 'term' ? i.key : i.id)}"${i.kind === 'term' ? ` id="${esc(i.key)}"` : ''}>${esc(i.name)}</a></li>`;
+const lookupListHTML = LK_LETTERS.map((L) => { const rows = lkItems.filter((i) => lkLetter(i.name) === L); return rows.length ? `<li class="gl-g" data-l="${L}"><h2 class="gl-lh" id="gl-lh-${L}">${L === '0-9' ? '0–9' : L}</h2><ul class="gl-rows">${rows.map(lkRow).join('')}</ul></li>` : ''; }).join('');
+// each term's own words for its entry, by its address: the term, its other names, the definition, the reason, and the chapter
+// it is read in (its id and title), as data/glossary.json gives them
+const lkTerms = {};
+glossary.forEach((g) => { const t = g.chapter ? chapterTitle(g.chapter) : null; lkTerms['gl-' + lkSlug(g.term)] = [g.term, g.aka || '', g.plain || '', g.why || '', t ? g.chapter : '', t || '']; });
+fill('GL_ENTRIES', String(lkItems.length)); // the Glossary's count and its search's hint, in the page before the list arrives
 // the Glossary's head: how many entries of each kind the list holds (src/template.html, the Glossary view)
 const lkKinds = (k) => lkItems.filter((i) => i.kind === k).length;
 // the Glossary's head no longer tallies its kinds: each kind's button carries its count (28 Oct 2026; the counts showed three times)
@@ -1848,8 +1860,8 @@ function relink(h, page) {
   });
   return h.replace(/\u0000(\d+)\u0000/g, (m, i) => held[+i]);
 }
-// the Glossary's two lists, with their chapter links as the home page has them, and the chapters' passages (the shared data, above)
-writeAsset('glossary.js', `window.CP_GLOSSARY = ${JSON.stringify({ items: lookupListHTML, terms: relink(glossaryHTML, { kind: 'home', chapter: '', root: '' }), passages: passagesData })};\n`);
+// the Glossary's index of entries, each term's words, and the chapters' passages (the shared data, above)
+writeAsset('glossary.js', `window.CP_GLOSSARY = ${JSON.stringify({ items: lookupListHTML, terms: lkTerms, passages: passagesData })};\n`);
 // the page from the template: the parts it does not hold cut, its own head, preroute line, chapters and scripts in
 function makePage(kind, o) {
   let h = html;

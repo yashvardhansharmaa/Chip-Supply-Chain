@@ -1,747 +1,693 @@
-/* The Glossary (#/glossary), as the owner chose it on 25 Oct 2026: option B, "The dictionary" (qa/design4/glossary/ in the
-   main checkout). Every entry stands in columns, A to Z, under its letter, so every definition can be read without a click:
-   a term with its other names, its definition, the reason it matters and the chapters that use it; a firm, a chip or a
-   country with its kind and its one line. A sticky bar holds the search, the kinds and the letters. Search filters the
-   columns in place, and the entries whose names match stand first. An entry opens in a sheet: beside the columns on a wide
-   screen, over them on a narrower one, the whole screen on a phone. The sheet shows a term as the page lays it out, and a
-   firm, a chip or a country as its card, then every passage that mentions it, with arrows to the next entry.
-   The entries are data written by build/build.js: #lk-items (each entry's kind, key, other names and search text) and
-   #glossary (each term's own block). Since 28 Oct 2026 they come with glossary.js when the Glossary first opens (load), and
-   the pop-ups and the site search read terms.js and search.js. Their ids stay each entry's address (#gl-euv, #lk-country-nl). The cards are drawn from DATA when an entry
-   opens. The passages are found by scanning the chapters' paragraphs (glossary.js carries them, since the chapters have pages
-   of their own), the board, the AI chips and the supplier list for the entry's name, and each entry's count of them is
-   worked out a few at a time while the browser is idle. */
+/* The Glossary (#/glossary) as an index and one entry: "Index and entry", the owner's choice of 29 Oct 2026 (the mockup and its
+   notes are qa/excellence/glossary-alt/twopane/ in the main checkout).
+   The index: the title and count, a labeled search, the kinds, and every entry A to Z, names only, under sticky letter heads,
+   with a column of letters to jump by. The entry: one at a time, whole: its kind, its name and other names, what it is, the
+   reason, the chapters it is read in, a firm's, chip's or country's facts, then every place the site uses it, and the entries
+   on either side. On a wide screen (880 px and up) the index keeps its place under the masthead and scrolls on its own while
+   the entry scrolls with the page. Under 880 px the index is the page, and an entry opens over it as a dialog with
+   "‹ Glossary", previous and next; Back, that button or Escape return to the same row.
+   The address names the entry shown: #gl-<slug> for a term (what the chapters' pop-ups and the site search link to),
+   #lk-firm-, #lk-chip- and #lk-country- for the rest, and #lk-term-<slug> also opens a term; #/glossary opens chip on a wide
+   screen and the list on a phone. The rows come with glossary.js (build/build.js) when the Glossary first opens (load): each
+   row's li carries the entry's lk- id and its search data, and a term's link its gl- id, so every link the site writes lands
+   whatever the search or kind. The firms, chips and countries are read from DATA; the passages from the chapters' paragraphs
+   (glossary.js), the Export Controls entries, the board, AI Chips and the supplier list. */
 (function () {
   var CP = window.CP; if (!CP) return;
-  var $ = CP.$, $$ = CP.$$, esc = CP.esc, DATA = CP.DATA || {}, cname = CP.cname, reduced = CP.reduced;
-  var LETTERS = ['0-9'].concat('ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''));
-  var KINDS = [['all', 'All'], ['term', 'Terms'], ['firm', 'Firms'], ['chip', 'AI chips'], ['country', 'Countries']];
+  var $ = CP.$, $$ = CP.$$, esc = CP.esc, DATA = CP.DATA || {}, cname = CP.cname;
+  var root = document.documentElement;
+  var MQ = window.matchMedia ? matchMedia('(min-width: 880px)') : null;
+  var wide = function () { return MQ ? MQ.matches : window.innerWidth >= 880; };
+  var here = function () { return !!CP.Router && CP.Router.current === 'glossary'; };
   var KIND = { term: 'Term', firm: 'Firm', chip: 'AI chip', country: 'Country' };
-  var letterOf = function (name) { var c = String(name).charAt(0).toUpperCase(); return /[A-Z]/.test(c) ? c : '0-9'; };
+  // each kind's button, its plural and its singular for the count line
+  var KINDS = { all: ['entries', 'entry'], term: ['terms', 'term'], firm: ['firms', 'firm'], chip: ['AI chips', 'AI chip'], country: ['countries', 'country'] };
+  var LETTERS = ['0-9'].concat('ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''));
   var showL = function (L) { return L === '0-9' ? '0–9' : L; };
-  var idL = function (L) { return L === '0-9' ? '0-9' : L.toLowerCase(); };
+  var DEFAULT = 'lk-term-chip'; // the opening entry: the word every chapter uses, defined from nothing (the mockup's notes)
   // an AI chip's facts in words, as AI Chips sets them: "2024-04" reads April 2024, "2024-Q4" Q4 2024; the node alone where it
   // already names the foundry ("TSMC 5 nm", not "TSMC TSMC 5 nm")
   var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   var when = function (s) { s = String(s || ''); var m = /^(\d{4})-(\d{2})$/.exec(s); if (m) return MONTHS[+m[2] - 1] + ' ' + m[1]; m = /^(\d{4})-Q(\d)$/.exec(s); return m ? 'Q' + m[2] + ' ' + m[1] : s; };
-  var nf = function (v) { var p = String(v).split('.'); return p[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',') + (p.length > 1 ? '.' + p[1] : ''); }; // every digit kept, thousands grouped
+  var nf = function (v) { var p = String(v).split('.'); return p[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',') + (p.length > 1 ? '.' + p[1] : ''); };
   var madeBy = function (p) { return p.foundry && p.node && p.node.indexOf(p.foundry + ' ') === 0 ? [p.node] : [p.foundry, p.node]; };
-  var full = function () { return window.innerWidth <= 760; };   // the sheet takes the whole screen
-  var beside = function () { return window.innerWidth >= 1000; }; // the columns make room for the sheet beside them
-  var idle = window.requestIdleCallback ? function (fn) { window.requestIdleCallback(fn, { timeout: 500 }); }
-    : function (fn) { setTimeout(function () { fn({ timeRemaining: function () { return 10; } }); }, 40); };
-  var jump = function (y, smooth) { // html scrolls smoothly by default; a jump must not glide
-    var root = document.documentElement, prev = root.style.scrollBehavior, glide = !!smooth && !reduced;
-    if (!glide) root.style.scrollBehavior = 'auto';
-    window.scrollTo({ top: Math.max(0, Math.round(y)), behavior: glide ? 'smooth' : 'auto' });
-    if (!glide) root.style.scrollBehavior = prev;
-  };
+  var chHref = function (id) { return CP.addr(id === 'geopolitics' ? '#/geopolitics' : '#' + id); }; // each chapter's own page
+  var focusEl = function (el) { if (!el) return; try { el.focus({ preventScroll: true }); } catch (e) { el.focus(); } };
+  var jump = function (y) { var prev = root.style.scrollBehavior; root.style.scrollBehavior = 'auto'; window.scrollTo(0, Math.max(0, Math.round(y))); root.style.scrollBehavior = prev; }; // html glides; these are jumps
+  var ARROW_L = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>', ARROW_R = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>';
 
-  var Lookup = {
-    built: false, items: [], byId: {}, groups: {}, secs: {}, kind: 'all', q: '', shown: [], top: [], open: null, cursor: -1, paras: null, held: null,
+  var L = { built: false, items: [], byId: {}, byKey: {}, kind: 'all', q: '', shown: [], cur: null, searching: false, paras: null, pushed: false, held: [] };
+  var TERMS = {}, sup = {}, chip = {}, co = {}, chs = {}, azRow = {}, resRow = {}, groupEl = {}, counts = {}, XL = null;
+  var listEl, jumpEl, paneEl, inp, countEl;
 
-    init: function () {
-      var self = this, inp = $('#gl-search'), dict = $('#gl-dict'); if (!inp || !dict || this.built) return;
-      this.built = true;
-      // each term's own block, each firm's row, each chip and each country, keyed as the list keys them
-      var blocks = {}, sup = {}, chip = {}, co = {};
-      $$('#glossary .gl-entry').forEach(function (e) { blocks[e.id] = e; });
-      (DATA.suppliers || []).forEach(function (r) { sup[r.name] = r; });
-      (DATA.landscape || []).forEach(function (c) { chip[c.id] = c; });
-      (DATA.countries || []).forEach(function (c) { co[c.code] = c; });
-      this.items = $$('#lk-items li[data-kind]').map(function (li, i) {
-        var it = { id: li.id, kind: li.getAttribute('data-kind'), key: li.getAttribute('data-key') || '', order: i, on: true,
-          name: ((li.querySelector('.lk-name') || {}).textContent || '').trim(), label: ((li.querySelector('.lk-lab') || {}).textContent || '').trim(),
-          text: li.getAttribute('data-text') || '', alias: li.getAttribute('data-alias') || '' };
-        it.lname = it.name.toLowerCase(); it.al = it.alias.toLowerCase().split('|');
-        it.data = it.kind === 'term' ? blocks[it.key] : it.kind === 'firm' ? sup[it.key] : it.kind === 'chip' ? chip[it.key] : co[it.key];
-        self.byId[it.id] = it; return it;
-      });
-      this.counts = { all: this.items.length, term: 0, firm: 0, chip: 0, country: 0 };
-      this.items.forEach(function (it) { self.counts[it.kind]++; });
-      this.build();
-      this.wire();
-      this.suggest();
-      this.filter('', false);
-      this.measure();
-      this.countAll();
-    },
-
-    /* ---------- the dictionary ---------- */
-    build: function () {
-      var self = this, groups = this.groups = {};
-      this.items.forEach(function (it) { var L = letterOf(it.name); (groups[L] = groups[L] || []).push(it); });
-      var html = '<section class="gl-sec gl-best" id="gl-best" aria-labelledby="gl-best-h" hidden><div class="gl-sec-h"><h2 class="gl-L" id="gl-best-h">Names that match</h2><p class="gl-gw"></p></div><div class="gl-pages"></div></section>';
-      html += LETTERS.filter(function (L) { return groups[L]; }).map(function (L) {
-        return '<section class="gl-sec" id="gl-sec-' + idL(L) + '" aria-labelledby="gl-h-' + idL(L) + '"><div class="gl-sec-h"><h2 class="gl-L" id="gl-h-' + idL(L) + '">' + showL(L) + '</h2><p class="gl-gw"></p></div><div class="gl-pages"><div class="gl-cols">' +
-          groups[L].map(function (it) { return self.entryHTML(it); }).join('') + '</div></div></section>';
-      }).join('');
-      $('#gl-dict').innerHTML = html;
-      this.best = $('#gl-best');
-      LETTERS.forEach(function (L) { if (groups[L]) self.secs[L] = document.getElementById('gl-sec-' + idL(L)); });
-      $$('#gl-dict .gl-de').forEach(function (el) { var it = self.byId[el.getAttribute('data-id')]; if (it) it.el = el; });
-    },
-
-    /* a term's parts, read from its own block (build/build.js glossaryHTML) */
-    term: function (it) {
-      if (it.t) return it.t;
-      var b = it.data; if (!b) return (it.t = { term: it.name, aka: '', plain: '', why: '', link: null });
-      var dt = b.querySelector('dt'), aka = dt && dt.querySelector('.aka'), plain = b.querySelector('dd > p:not(.why)'), why = b.querySelector('dd > p.why');
-      return (it.t = { term: dt && dt.firstChild ? dt.firstChild.textContent : it.name, aka: aka ? aka.textContent : '', plain: plain ? plain.textContent : '', why: why ? why.textContent : '', link: b.querySelector('a.gl-link') });
-    },
-    /* the chapters a term is read in, as the static page lists them (build/modules/reference-pages.js writes DATA.glossaryRefs):
-       its own chapter first, then the others that use it */
-    refsHTML: function (it) {
-      var R = (DATA.glossaryRefs || {})[it.key], t = this.term(it), ch = this.chapterMap(), home = null, also = [];
-      if (R) { home = R[0] ? ch[R[0]] : null; also = (R[1] || []).map(function (id) { return ch[id]; }).filter(Boolean); }
-      else if (t.link) home = { id: String(t.link.getAttribute('href') || '').replace(/^#/, '').replace(/\/.*$/, ''), title: t.link.textContent.replace(/^Read it in /, '').replace(/\s*→$/, '') };
-      if (!home && !also.length) return '';
-      var a = function (c) { return '<a href="' + esc(CP.addr('#' + c.id)) + '">' + esc(c.title) + '</a>'; }; // the chapter's own page
-      return '<p class="gl-refs">' + (home ? '<span class="gl-refs-k">Read it in</span> ' + a(home) : '') +
-        (also.length ? (home ? ' <span class="gl-refs-k gl-refs-k2">Also in</span> ' : '<span class="gl-refs-k">In</span> ') + also.map(a).join(', ') : '') + '</p>';
-    },
-    chapterMap: function () {
-      if (!this.chs) { var m = this.chs = {}; (DATA.chapters || []).forEach(function (c) { m[c.id] = c; }); }
-      return this.chs;
-    },
-
-    /* one entry as a dictionary sets it: the headword and its kind, then what it is. The headword opens the sheet; the line at
-       the foot says what the sheet adds (its count of passages arrives once countAll reaches the entry) */
-    entryHTML: function (it) {
-      var d = it.data || {}, pos = '', body = '';
-      if (it.kind === 'term') {
-        var t = this.term(it);
-        pos = it.label.toLowerCase();
-        body = (t.aka ? '<p class="gl-aka">' + esc(t.aka) + '</p>' : '') + '<p class="gl-df">' + esc(t.plain) + '</p>' + (t.why ? '<p class="gl-wy">' + esc(t.why) + '</p>' : '') + this.refsHTML(it);
-      } else if (it.kind === 'firm') {
-        pos = 'firm' + (d.country ? ', ' + cname(d.country) : '');
-        var seg = [d.chokepoint, it.label, d.subcategory].filter(Boolean).join(' · ');
-        body = (seg ? '<p class="gl-meta">' + (d.chokepoint ? '<i class="gl-mk gl-mk--' + esc(String(d.chokepoint).toLowerCase()) + '" aria-hidden="true"></i>' : '') + '<span>' + esc(seg) + '</span></p>' : '') +
-          (d.role ? '<p class="gl-df">' + esc(d.role) + '</p>' : '');
-      } else if (it.kind === 'chip') {
-        var p = d.process || {}, m = d.memory || {};
-        pos = 'AI chip' + (d.vendorCountry ? ', ' + cname(d.vendorCountry) : '');
-        var line = [d.announced ? 'Announced ' + when(d.announced) : '', madeBy(p).filter(Boolean).join(' '), m.type || '', m.capacityGB ? nf(m.capacityGB) + ' GB' : '', d.tdpW ? nf(d.tdpW) + ' W' : ''].filter(Boolean).join(' · ');
-        body = (line ? '<p class="gl-meta"><span>' + esc(line) + '</span></p>' : '') + (d.status ? '<p class="gl-df">' + esc(d.status) + '</p>' : '');
-      } else {
-        pos = it.label.toLowerCase();
-        var meta = d.code ? this.countryMeta(d) : '';
-        body = (meta ? '<p class="gl-meta"><span>' + esc(meta) + '</span></p>' : '') + (d.role ? '<p class="gl-df">' + esc(d.role) + '.</p>' : '');
-      }
-      return '<article class="gl-de" data-id="' + esc(it.id) + '" data-kind="' + esc(it.kind) + '">' +
-        '<h3 class="gl-hw"><button type="button" data-open aria-controls="gl-sheet">' + esc(it.kind === 'term' ? this.term(it).term : it.name) + '</button><span class="gl-pos">' + esc(pos) + '</span></h3>' +
-        body + '<p class="gl-foot"><button type="button" class="gl-more" data-open tabindex="-1">' + this.moreText(it) + '</button></p></article>';
-    },
-    moreText: function (it) {
-      var n = it.places, places = n == null ? '' : n + (n === 1 ? ' place' : ' places');
-      return (it.kind === 'term' ? 'Where it appears' + (places ? ', ' + places : '') : 'Card' + (n ? ' and ' + places : '')) + ' <span aria-hidden="true">→</span>';
-    },
-
-    /* ---------- search, kinds and letters ---------- */
-    /* every word must be in the entry's text; an entry whose name contains the query, or one of whose other names starts with it,
-       is a name match ("dutch", "prc", "foxconn"), and one that goes by exactly the query ("us", "tsmc") tops them */
-    filter: function (q, typed) {
-      var self = this, lq = String(q || '').trim().toLowerCase(), words = lq.split(/\s+/).filter(Boolean), kind = this.kind, res = [];
-      this.q = lq;
-      this.items.forEach(function (it) {
-        var ok = (kind === 'all' || it.kind === kind) && (!lq || words.every(function (w) { return it.text.indexOf(w) >= 0; }));
-        it.on = ok; it.isName = ok && !!lq && (it.lname.indexOf(lq) >= 0 || it.al.some(function (a) { return a && a.indexOf(lq) === 0; }));
-        it.isExact = ok && !!lq && (it.lname === lq || it.al.indexOf(lq) >= 0);
-        if (ok) res.push(it);
-      });
-      // the names that match stand first, six at most, above the rest of the matches in their letters
-      var top = lq ? res.filter(function (it) { return it.isName; }).sort(function (a, b) { return (b.isExact - a.isExact) || (a.order - b.order); }).slice(0, 6) : [];
-      // the entries that stood first go back to their letters, and this search's names take their place
-      this.items.forEach(function (it) { it.moved = false; it.el.hidden = !it.on; });
-      top.forEach(function (it) { it.moved = true; });
-      this.top = top;
-      this.paginate(true);
-      this.best.hidden = !top.length;
-      this.best.querySelector('.gl-gw').textContent = top.length ? top.length + (top.length === 1 ? ' entry' : ' entries') + (res.length > top.length ? ', then ' + (res.length - top.length) + ' more below that mention it' : '') : '';
-      // the order the reader sees, which the sheet's arrows follow
-      this.shown = top.concat(LETTERS.reduce(function (acc, L) { return self.groups[L] ? acc.concat(self.groups[L].filter(function (it) { return it.on && top.indexOf(it) < 0; })) : acc; }, []));
-      this.cursor = -1;
-      var tot = this.counts[kind] || 0, c = $('#lk-count');
-      if (c) { c.textContent = lq ? (res.length ? res.length + ' of ' + tot + ' entries' : 'No entry matches.') : tot + ' entries'; c.classList.toggle('sr-only', !lq); } // the kind's count is on its button; the line shows for a search only, and is always read out
-      $('#gl-clear').hidden = !lq;
-      this.guide();
-      var none = $('#gl-none'), dict = $('#gl-dict');
-      if (lq && !res.length) { this.showRaw(String(q).trim()); none.hidden = false; dict.hidden = true; }
-      else { none.hidden = true; none.innerHTML = ''; dict.hidden = false; }
-      // the results start under the bar, so each word typed shows its first matches
-      if (typed) { var at = this.barTop(); if (at != null && Math.abs(window.pageYOffset - at) > 1) jump(at); }
-      this.spy();
-    },
-
-    /* a letter's entries set as pages, three to a column: each page's columns are about a screen tall, so the eye goes down a
-       column and back up to the next without a long scroll, as a printed dictionary turns its page. One column needs no pages */
-    paginate: function (force) {
-      var self = this, w = ($('#gl-dict') || {}).clientWidth || this.lastW || 0, cols = full() ? 1 : w >= 996 ? 3 : w >= 648 ? 2 : 1; // columns: 300px 3, a 48 px gap; one on a phone
-      if (w) this.lastW = w;
-      if (!force && cols === this.cols) return;
-      this.cols = cols;
-      var per = cols > 1 ? cols * 3 : 1e9;
-      Object.keys(this.secs).forEach(function (L) { self.pages(self.secs[L].querySelector('.gl-pages'), self.groups[L].filter(function (it) { return !it.moved; }), per); });
-      this.pages(this.best.querySelector('.gl-pages'), this.top, per);
-    },
-    pages: function (box, list, per) {
-      var frag = document.createDocumentFragment(), page = null, n = 0, off = null;
-      list.forEach(function (it) {
-        if (!it.on) { if (!off) { off = document.createElement('div'); off.className = 'gl-off'; off.hidden = true; } off.appendChild(it.el); return; }
-        if (n++ % per === 0) { page = document.createElement('div'); page.className = 'gl-cols'; frag.appendChild(page); }
-        page.appendChild(it.el);
-      });
-      if (off) frag.appendChild(off);
-      box.textContent = ''; box.appendChild(frag);
-    },
-
-    /* each letter's guide words, as a printed dictionary heads its page: the first and last entry shown, and how many */
-    guide: function () {
-      var self = this;
-      Object.keys(this.secs).forEach(function (L) {
-        var sec = self.secs[L], vis = self.groups[L].filter(function (it) { return it.on && !it.moved; });
-        sec.hidden = !vis.length;
-        var name = function (it) { return it.kind === 'term' ? self.term(it).term : it.name; };
-        sec.querySelector('.gl-gw').innerHTML = vis.length ? '<b>' + esc(name(vis[0])) + '</b>' + (vis.length > 1 ? '<span>to</span><b>' + esc(name(vis[vis.length - 1])) + '</b>' : '') + '<span>' + vis.length + (vis.length === 1 ? ' entry' : ' entries') + '</span>' : '';
-      });
-      var ul = $('#gl-letters'); if (!ul) return;
-      ul.innerHTML = LETTERS.map(function (L) {
-        var on = self.secs[L] && !self.secs[L].hidden;
-        return '<li>' + (on ? '<button type="button" data-l="' + L + '" aria-label="' + (L === '0-9' ? 'Numbers' : L) + '">' + showL(L) + '</button>' : '<span aria-hidden="true">' + showL(L) + '</span>') + '</li>';
-      }).join('');
-    },
-
-    /* the page's place under the bar: where the bar sticks, measured from the marker in front of it */
-    barTop: function () {
-      var at = $('#gl-bar-at'), bar = $('#gl-bar'); if (!at || !bar || !at.offsetParent) return null;
-      return at.getBoundingClientRect().top + window.pageYOffset + (parseFloat(getComputedStyle(bar).marginTop) || 0) - CP.headerH();
-    },
-    barH: function () { var b = $('#gl-bar'); return b ? b.offsetHeight : 0; },
-    measure: function () { document.documentElement.style.setProperty('--gl-bar-h', this.barH() + 'px'); },
-    under: function () { return CP.headerH() + this.barH(); }, // what covers the top of the window
-
-    /* the thumb index marks the letter the reader is in, and on a phone keeps it in view in its strip */
-    spy: function () {
-      var self = this; if (this.spyQ) return; this.spyQ = true;
-      requestAnimationFrame(function () {
-        self.spyQ = false;
-        if (!CP.Router || CP.Router.current !== 'glossary') return;
-        var line = self.under() + 40, cur = null;
-        Object.keys(self.secs).forEach(function (L) { var s = self.secs[L]; if (!s.hidden && s.getBoundingClientRect().top <= line) cur = L; });
-        if (cur === self.curL) return; self.curL = cur;
-        $$('#gl-letters button').forEach(function (b) { var on = b.getAttribute('data-l') === cur; if (on) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current'); });
-        var strip = $('#gl-letters'), b = cur && strip && strip.querySelector('button[data-l="' + cur + '"]');
-        if (b && strip.scrollWidth > strip.clientWidth) { var sr = strip.getBoundingClientRect(), br = b.getBoundingClientRect(); if (br.left < sr.left + 8) strip.scrollLeft -= sr.left + 8 - br.left; else if (br.right > sr.right - 8) strip.scrollLeft += br.right - sr.right + 8; }
-      });
-    },
-    toLetter: function (L) {
-      var sec = this.secs[L]; if (!sec) return;
-      var h = sec.querySelector('.gl-sec-h');
-      jump(h.getBoundingClientRect().top + window.pageYOffset - this.under() - 20, true);
-    },
-
-    /* ---------- events ---------- */
-    wire: function () {
-      var self = this, inp = $('#gl-search'), view = $('.view[data-view="glossary"]');
-      $('#gl-kinds').innerHTML = KINDS.map(function (k) { return '<button type="button" class="gl-pill" data-k="' + k[0] + '" aria-pressed="' + (k[0] === 'all') + '">' + k[1] + '<span class="gl-n">' + self.counts[k[0]] + '</span></button>'; }).join('');
-      var typing = null;
-      inp.addEventListener('input', function () { clearTimeout(typing); typing = setTimeout(function () { self.filter(inp.value, true); }, 100); });
-      inp.addEventListener('keydown', function (e) {
-        if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
-          e.preventDefault(); if (!self.shown.length) return;
-          // on a phone the sheet would cover the field, so the arrow goes to the first entry; elsewhere the arrows preview an
-          // entry in the sheet while focus stays in the field
-          if (full()) { if (e.key === 'ArrowDown') { var b = self.shown[0].el.querySelector('.gl-hw button'); if (b) b.focus(); } return; }
-          self.cursor = e.key === 'ArrowDown' ? Math.min(self.shown.length - 1, self.cursor + 1) : Math.max(0, self.cursor - 1);
-          self.show(self.shown[self.cursor].id, { push: true, reveal: true });
-        } else if (e.key === 'Enter') { // Enter chooses: the entry opens and its title takes focus, so the next Tab is in the card
-          e.preventDefault(); clearTimeout(typing); if (inp.value.trim().toLowerCase() !== self.q) self.filter(inp.value, true);
-          var it = self.shown[Math.max(0, self.cursor)]; if (it) self.show(it.id, { push: true, focus: true, reveal: true });
-        } else if (e.key === 'Escape') {
-          if (inp.value) { e.preventDefault(); inp.value = ''; self.filter('', true); }
-          else if (self.open) { e.preventDefault(); self.close(true); }
-        }
-      });
-      $('#gl-clear').addEventListener('click', function () { inp.value = ''; self.filter('', true); inp.focus(); });
-      $('#gl-kinds').addEventListener('click', function (e) {
-        var b = e.target.closest('button[data-k]'); if (!b) return;
-        self.kind = b.getAttribute('data-k');
-        $$('#gl-kinds button').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
-        self.filter(inp.value, true);
-      });
-      $('#gl-letters').addEventListener('click', function (e) { var b = e.target.closest('button[data-l]'); if (b) self.toLetter(b.getAttribute('data-l')); });
-      $('#gl-dict').addEventListener('click', function (e) {
-        var b = e.target.closest('[data-open]'); if (!b) return;
-        var de = b.closest('.gl-de'); if (de) self.show(de.getAttribute('data-id'), { push: true, focus: true, reveal: true });
-      });
-      $('#gl-try').addEventListener('click', function (e) { var b = e.target.closest('[data-go]'); if (b) self.show(b.getAttribute('data-go'), { push: true, focus: true, reveal: true }); });
-      $('#gl-close').addEventListener('click', function () { self.close(true); });
-      $('#gl-prev').addEventListener('click', function () { self.step(-1); });
-      $('#gl-next').addEventListener('click', function () { self.step(1); });
-      document.addEventListener('keydown', function (e) {
-        if (e.key !== 'Escape' || e.defaultPrevented || !self.open || $('#gl-sheet').hidden) return;
-        if (!CP.Router || CP.Router.current !== 'glossary' || document.activeElement === inp) return;
-        var box = $('#cp-search'); if (box && !box.hidden) return; // the site search closes first
-        var tip = $('#gl-tip'); if (tip && !tip.hidden) return;
-        self.close(true);
-      });
-      // under 1,000 px the sheet lies over the page, so a click beside it closes it
-      document.addEventListener('click', function (e) {
-        if (!self.open || beside() || full() || !CP.Router || CP.Router.current !== 'glossary') return;
-        var s = $('#gl-sheet'); if (s.hidden || s.contains(e.target) || (e.target.closest && e.target.closest('[data-open], [data-go], #gl-try, .masthead, #cp-search'))) return;
-        self.close(false);
-      });
-      window.addEventListener('scroll', function () { if (self.built) self.spy(); }, { passive: true });
-      var rs = null;
-      window.addEventListener('resize', function () { clearTimeout(rs); rs = setTimeout(function () { self.measure(); if (self.open) self.layout(); else self.paginate(false); self.spy(); }, 120); });
-      if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { self.measure(); });
-      // a link in the sheet that leaves the Glossary leaves nothing held: the rest of the page is no longer inert
-      window.addEventListener('hashchange', function () { if (!CP.Router || CP.Router.current !== 'glossary') self.hold(false); });
-      if (view) view.setAttribute('data-gl', 'ready');
-    },
-
-    /* six things to try, drawn afresh on every load: two terms, two firms that matter, one chip, one country */
-    suggest: function () {
-      var self = this, box = $('#gl-try'); if (!box) return;
-      var pick = function (arr, n) { var a = arr.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a.slice(0, n); };
-      var terms = this.items.filter(function (it) { return it.kind === 'term' && it.name.length <= 22; });
-      var big = {}; (DATA.suppliers || []).forEach(function (r) { if (r.chokepoint === 'Critical' || r.chokepoint === 'Important') big[r.name] = 1; });
-      var firms = this.items.filter(function (it) { return it.kind === 'firm' && big[it.key]; });
-      var chips = this.items.filter(function (it) { return it.kind === 'chip'; }), countries = this.items.filter(function (it) { return it.kind === 'country'; });
-      var chosen = pick(terms, 2).concat(pick(firms, 2), pick(chips, 1), pick(countries, 1)); chosen = pick(chosen, chosen.length);
-      // a chip's list name is its maker and its name ("Huawei (HiSilicon) Ascend 950PR", build/build.js), so a suggestion takes the
-      // chip's own name from the data; a trailing aside, "(Ironwood)", is dropped as for every kind
-      box.innerHTML = '<span class="gl-try-k">Try</span> ' + chosen.map(function (it) {
-        var own = it.kind === 'chip' && it.data ? it.data.name : '';
-        return '<button type="button" class="gl-pill" data-go="' + esc(it.id) + '">' + esc(String(own || it.name).replace(/\s*\(.*\)$/, '')) + '</button>';
-      }).join(' ');
-    },
-
-    /* ---------- the sheet ---------- */
-    activate: function () {
-      this.init(); if (!this.built) return;
-      this.measure(); this.curL = null; this.spy();
-      var h = (location.hash || '').replace(/^#/, ''), id = h;
-      try { id = decodeURIComponent(h); } catch (e) { }
-      var el = id && document.getElementById(id);
-      if (el && (el.closest('#lk-items') || (el.classList && el.classList.contains('gl-entry')))) {
-        // an address that names an entry (a popover's Look it up, a search result, a card's link, Back): the entry opens, and the
-        // columns bring it into view. After a move within the site (not a first load) its title takes focus too
-        // (a move from another page of the site, such as Look it up on a chapter's page, counts as one)
-        var R = CP.Router || {}, came = !this.arrived && /^https?:/.test(document.referrer) && document.referrer.indexOf(location.origin + '/') === 0 && document.referrer !== location.href;
-        this.arrived = true;
-        this.show(id, { reveal: true, land: true, focus: !!(R.routed && R.from) || came });
-      } else if (this.open) this.close(false);
-    },
-
-    show: function (id, o) {
-      o = o || {};
-      if (/^gl-/.test(id)) id = 'lk-term-' + id.slice(3); // a term's own address (popovers, search, old links) names its entry
-      var self = this, it = this.byId[id]; if (!it || !it.el) return;
-      if (!it.on) { var inp = $('#gl-search'); inp.value = ''; this.kind = 'all'; $$('#gl-kinds button').forEach(function (x) { x.setAttribute('aria-pressed', x.getAttribute('data-k') === 'all' ? 'true' : 'false'); }); this.filter('', false); }
-      if (this.open && this.open !== it && this.open.el) this.open.el.classList.remove('is-on');
-      this.open = it; it.el.classList.add('is-on');
-      var i = this.shown.indexOf(it); if (i >= 0) this.cursor = i;
-      var body = $('#gl-sheet-body'), hits = this.hitsFor(it);
-      body.innerHTML = this.cardHTML(it) + this.passagesHTML(hits, it.kind, 12, 'gl-sheet');
-      body.scrollTop = 0;
-      this.wirePassages(body, hits, it.kind);
-      this.wireCard(body);
-      var title = body.querySelector('.lk-t'); if (title) title.id = 'gl-sheet-t'; // the sheet takes the entry's name
-      $('#gl-sheet-k').textContent = KIND[it.kind] + ' · ' + (i + 1) + ' of ' + this.shown.length;
-      $('#gl-prev').disabled = i <= 0; $('#gl-next').disabled = i < 0 || i >= this.shown.length - 1;
-      var sheet = $('#gl-sheet'), wasOpen = !sheet.hidden;
-      sheet.hidden = false;
-      this.layout();
-      if (o.push) { var anchor = it.kind === 'term' ? it.key : it.id; if (location.hash !== '#' + anchor) history.replaceState(null, '', '#' + anchor); }
-      if (o.reveal) this.reveal(it, !o.land && wasOpen);
-      if (o.focus) { var t = body.querySelector('.lk-t'); if (t) { t.setAttribute('tabindex', '-1'); try { t.focus({ preventScroll: true }); } catch (e) { t.focus(); } } }
-    },
-    /* the sheet's place: beside the columns from 1,000 px, over them below that (the rest of the page inert), the whole screen on a phone */
-    layout: function () {
-      var view = $('.view[data-view="glossary"]'), open = !!this.open && !$('#gl-sheet').hidden;
-      view.classList.toggle('gl-open', open);
-      view.classList.toggle('gl-split', open && beside());
-      this.paginate(false);
-      this.hold(open && !beside());
-      var sheet = $('#gl-sheet');
-      if (open && !beside()) { sheet.setAttribute('role', 'dialog'); sheet.setAttribute('aria-modal', 'true'); }
-      else { sheet.removeAttribute('role'); sheet.removeAttribute('aria-modal'); }
-    },
-    /* while the sheet lies over the page, everything but the sheet is inert, so Tab and a screen reader stay in it */
-    hold: function (on) {
-      if (on) {
-        if (this.held) return;
-        var sheet = $('#gl-sheet'), view = $('.view[data-view="glossary"]'), held = [];
-        [$('.masthead'), $('.stage'), $('.to-top')].concat($$(':scope > *', view)).forEach(function (el) { if (el && el !== sheet && !el.inert) { el.inert = true; held.push(el); } });
-        this.held = held;
-        document.documentElement.classList.add('gl-held');
-      } else if (this.held) {
-        this.held.forEach(function (el) { el.inert = false; }); this.held = null;
-        document.documentElement.classList.remove('gl-held');
-      }
-    },
-    /* bring the open entry into view beside the sheet: on a wide screen under the bar, once the bar has stuck */
-    reveal: function (it, smooth) {
-      if (!it || !it.el || it.el.hidden) return;
-      // on a phone the sheet covers the page, so the entry waits where the reader will find it on closing
-      if (full()) { jump(it.el.getBoundingClientRect().top + window.pageYOffset - this.under() - 16); return; }
-      var stick = this.barTop(); if (stick != null && window.pageYOffset < stick) jump(stick); // the bar sticks, and the sheet hangs under it
-      var r = it.el.getBoundingClientRect(), under = this.under();
-      if (r.top < under + 8 || r.bottom > window.innerHeight - 8) jump(r.top + window.pageYOffset - under - 16, smooth);
-    },
-    close: function (focus) {
-      var it = this.open, sheet = $('#gl-sheet');
-      sheet.hidden = true; this.open = null; this.cursor = -1; this.layout();
-      if (it && it.el) {
-        it.el.classList.remove('is-on');
-        if (focus) { var b = it.el.querySelector('.gl-hw button'); if (b) { try { b.focus({ preventScroll: true }); } catch (e) { b.focus(); } this.reveal(it, false); } }
-      }
-      if (CP.Router && CP.Router.current === 'glossary' && /^#(gl-|lk-)/.test(location.hash)) history.replaceState(null, '', location.pathname + location.search + '#/glossary');
-    },
-    step: function (d) {
-      var i = this.shown.indexOf(this.open), n = this.shown[i + d]; if (!n) return;
-      this.show(n.id, { push: true, reveal: true });
-      var b = $(d < 0 ? '#gl-prev' : '#gl-next'); if (b && b.disabled) { var t = $('#gl-sheet-body .lk-t'); if (t) { t.setAttribute('tabindex', '-1'); t.focus({ preventScroll: true }); } }
-    },
-
-    /* the whole entry: a term as the page lays it out; a firm, a chip or a country as the site's card */
-    cardHTML: function (it) {
-      if (it.kind === 'term') {
-        var t = this.term(it);
-        return '<article class="lk-card lk-card--term"><p class="lk-kind">' + esc(it.label) + '</p><h2 class="lk-t">' + esc(t.term) + '</h2>' +
-          (t.aka ? '<p class="lk-aka">' + esc(t.aka) + '</p>' : '') + '<p class="lk-lede">' + esc(t.plain) + '</p>' + (t.why ? '<p class="lk-p lk-why">' + esc(t.why) + '</p>' : '') + this.refsHTML(it) + '</article>';
-      }
-      var d = it.data; if (!d) return '';
-      return it.kind === 'firm' ? this.firmCard(d) : it.kind === 'chip' ? this.chipCard(d) : this.countryCard(d);
-    },
-
-    /* no entry, but the site may still mention it: a tool model, a place, a person */
-    showRaw: function (q) {
-      var self = this, near = this.nearest(q), box = $('#gl-none'), hits = this.mentions([q], 'raw', q);
-      box.innerHTML = '<div class="lk-noentry"><p class="lk-kind">No entry</p><p class="lk-t">' + esc(q) + '</p>' +
-        (near.length ? '<p class="lk-near"><span>Did you mean</span> ' + near.map(function (it) { return '<button type="button" class="gl-pill" data-go="' + esc(it.id) + '">' + esc(it.name) + '</button>'; }).join(' ') + '</p>' : '') + '</div>' +
-        this.passagesHTML(hits, 'raw', 12, 'gl-none');
-      this.wirePassages(box, hits, 'raw');
-      $$('[data-go]', box).forEach(function (b) { b.addEventListener('click', function () { var inp = $('#gl-search'); inp.value = ''; self.filter('', false); self.show(b.getAttribute('data-go'), { push: true, focus: true, reveal: true }); }); });
-    },
-
-    nearest: function (q) { // names a typo away: an edit distance of one or two against each word of each name
-      q = q.toLowerCase(); if (q.length < 4) return [];
-      var dist = function (a, b) { var m = a.length, n = b.length, prev = [], cur = [], i, j; for (j = 0; j <= n; j++) prev[j] = j; for (i = 1; i <= m; i++) { cur = [i]; for (j = 1; j <= n; j++) cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1)); prev = cur; } return prev[n]; };
-      var scored = [];
-      this.items.forEach(function (it) {
-        var best = dist(q, it.lname);
-        it.lname.split(/[\s()\-]+/).forEach(function (w) { if (w.length >= 3) best = Math.min(best, dist(q, w)); });
-        if (best <= (q.length >= 8 ? 3 : 2)) scored.push({ it: it, d: best });
-      });
-      return scored.sort(function (a, b) { return a.d - b.d; }).slice(0, 5).map(function (x) { return x.it; });
-    },
-
-    /* ---------- cards ---------- */
-    firmCard: function (r) {
-      var meta = [r.category, r.subcategory].filter(Boolean).join(' · ');
-      var where = [r.city, cname(r.country)].filter(Boolean).join(', ');
-      var facts = [];
-      if (where) facts.push(['Based in', where]);
-      if (r.founded) facts.push(['Founded', String(r.founded)]);
-      if (r.ownership || r.ticker) facts.push(['Ownership', [r.ownership, r.ticker ? 'ticker ' + r.ticker : ''].filter(Boolean).join(', ')]);
-      if (r.customers && r.customers.length) facts.push(['Named customers', r.customers.join(', ')]);
-      // revenue as filed, linked to the filing, with about how much in dollars (the Suppliers row prints it the same way, src/app.js);
-      // it comes last and takes the card's full width, so the filing's note follows it. A firm with no filed revenue yet keeps its earlier dollar figure.
-      var rs = r.revenueShown, revHTML = rs && CP.Suppliers && CP.Suppliers.revenueHTML ? CP.Suppliers.revenueHTML(rs) : '';
-      if (revHTML) facts.push(['Revenue', revHTML, true]);
-      else if (r.revenueUSDb != null) facts.push(['Revenue', '$' + (Math.round(r.revenueUSDb * 10) / 10).toLocaleString('en-US') + 'bn' + (r.revenueYear ? ', ' + r.revenueYear : '')]);
-      // under the revenue, the share of it that came from China (the China revenue panel's latest year), linked to the firm's chart,
-      // with the firm's small China chart under it, as in the Suppliers panel (Suppliers.exMini in src/app.js).
-      // safeUrl escapes what it returns, so it is not escaped again
-      if (r.china && r.china.href) facts.push(['From China', '<a href="' + CP.safeUrl(r.china.href) + '">' + esc(String(r.china.label).replace(/^China /, '')) + ' <span aria-hidden="true">→</span></a>' +
-        (CP.Suppliers && CP.Suppliers.exMini ? CP.Suppliers.exMini(r.china.href) : ''), true]);
-      return '<article class="lk-card lk-card--firm">' +
-        '<p class="lk-kind">Firm' + (r.chokepoint ? ' · <span class="lk-chk lk-chk--' + esc(String(r.chokepoint).toLowerCase()) + '">' + esc(r.chokepoint) + '</span>' : '') + '</p>' +
-        '<h2 class="lk-t">' + esc(r.name) + (r.nativeName ? ' <span class="lk-native">' + esc(r.nativeName) + '</span>' : '') + '</h2>' +
-        (meta ? '<p class="lk-meta">' + esc(meta) + '</p>' : '') +
-        (r.role ? '<p class="lk-lede">' + esc(r.role) + '</p>' : '') +
-        (r.shareNote ? '<p class="lk-p">' + esc(r.shareNote) + '</p>' : '') +
-        (r.aiRelevance ? '<p class="lk-p lk-why">' + esc(r.aiRelevance) + '</p>' : '') +
-        (facts.length ? '<dl class="lk-facts">' + facts.map(function (f) { return (f[2] ? '<div class="lk-fact-wide">' : '<div>') + '<dt>' + esc(f[0]) + '</dt><dd>' + (f[2] ? f[1] : esc(f[1])) + '</dd></div>'; }).join('') + '</dl>' : '') +
-        // the filing's note (build/build.js leaves out the lines meant for the editors): a figure from an unaudited release, a year older, or one the auditor would not sign
-        (revHTML && rs.note ? '<p class="lk-revnote"><b>About the revenue figure.</b> ' + esc(rs.note) + '</p>' : '') +
-        '<p class="lk-links"><a href="#/suppliers" data-sup="' + esc(r.name) + '">In the supplier list →</a>' + (r.source && CP.safeUrl(r.source) !== '#' ? ' <a href="' + CP.safeUrl(r.source) + '" target="_blank" rel="noopener">Company page ↗</a>' : '') + '</p>' +
-        '</article>';
-    },
-
-    chipCard: function (c) {
-      var p = c.process || {}, m = c.memory || {}, comp = c.compute || {};
-      var facts = [];
-      if (c.announced || c.shipping) facts.push(['Announced / shipping', [c.announced, c.shipping].filter(Boolean).map(when).join(' / ')]);
-      if (p.node || p.foundry) facts.push(['Made by', madeBy(p).concat(p.country ? cname(p.country) : '').filter(Boolean).join(', ')]);
-      if (m.type) facts.push(['Memory', [m.type, m.stacks ? m.stacks + ' stacks' : '', m.capacityGB ? m.capacityGB + ' GB' : '', m.bandwidthTBs ? m.bandwidthTBs + ' TB/s' : ''].filter(Boolean).join(', ')]);
-      var fp = []; if (comp.fp16TFLOPS) fp.push('FP16 ' + comp.fp16TFLOPS.toLocaleString('en-US')); if (comp.fp8TFLOPS) fp.push('FP8 ' + comp.fp8TFLOPS.toLocaleString('en-US')); if (comp.fp4TFLOPS) fp.push('FP4 ' + comp.fp4TFLOPS.toLocaleString('en-US'));
-      if (fp.length) facts.push(['Dense TFLOPS', fp.join(' · ')]);
-      if (c.tdpW) facts.push(['Power', nf(c.tdpW) + ' W']);
-      if (c.target) facts.push(['Built for', c.target]);
-      return '<article class="lk-card lk-card--chip">' +
-        '<p class="lk-kind">AI chip · ' + esc(c.vendor) + (c.vendorCountry ? ', ' + esc(cname(c.vendorCountry)) : '') + '</p>' +
-        '<h2 class="lk-t">' + esc(c.vendor + ' ' + c.name) + '</h2>' +
-        (c.status ? '<p class="lk-meta">' + esc(c.status) + '</p>' : '') +
-        (c.notes ? '<p class="lk-lede">' + esc(c.notes) + '</p>' : '') +
-        (c.exportStatus ? '<p class="lk-p lk-why"><b>Export status.</b> ' + esc(c.exportStatus) + '</p>' : '') +
-        (facts.length ? '<dl class="lk-facts">' + facts.map(function (f) { return '<div><dt>' + esc(f[0]) + '</dt><dd>' + esc(f[1]) + '</dd></div>'; }).join('') + '</dl>' : '') +
-        '<p class="lk-links"><a href="#/landscape?pick=' + esc(encodeURIComponent(c.id)) + '" data-chip="' + esc(c.id) + '">On AI Chips →</a></p>' +
-        '</article>';
-    },
-
-    /* the firms whose country differs between the shares and the supplier list, as data/chokepoint-matrix-notes.md gives them
-       (the specialty gases and core IP rows' notes say the same), and the country cards they touch */
-    SPLITS: {
-      siemens: 'Siemens EDA is run from Oregon but owned by Siemens AG, so the EDA software share counts it under Germany and the supplier list under the US.',
-      linde: 'Linde plc is incorporated in Ireland, with head offices in the UK and the US. The specialty gases share counts it under Germany for its roots in Linde AG, as Georgetown University\'s Emerging Technology Observatory does. The supplier list counts it under the UK.',
-      arm: 'The core IP share counts Arm under the UK, where it has its headquarters, although SoftBank of Japan owns most of it.'
-    },
-    SPLIT_BY: { DE: ['siemens', 'linde'], US: ['siemens'], GB: ['arm', 'linde'] },
-    /* a country's facts: the stages it leads, the chokepoint cards that name it, its firms in the supplier list. Every figure is
-       computed from DATA; the card's meta line and the dictionary's line under the name are both this */
-    countryFacts: function (cc) {
-      var chapters = DATA.chapters || [];
-      var stages = chapters.filter(function (ch) { return ch.stage; }); // build/stages.js, through CP_DATA.chapters
-      var cardCount = chapters.filter(function (ch) { return ch.concentration; }).length; // only the stage chapters carry a chokepoint card
-      var named = chapters.filter(function (ch) { return (ch.countries || []).some(function (x) { return x.code === cc; }); })
-        .sort(function (a, b) { return (b.bandRank || 0) - (a.bandRank || 0) || a.number - b.number; });
-      var led = stages.filter(function (ch) { var f = (ch.countries || [])[0]; return f && f.code === cc; });
-      var extreme = led.filter(function (ch) { return ch.band === 'Extreme'; }).length;
-      var firms = (DATA.suppliers || []).filter(function (r) { return r.country === cc; });
-      var critical = firms.filter(function (r) { return r.chokepoint === 'Critical'; }).length;
-      var meta = [];
-      if (led.length === 1) meta.push('leads 1 stage' + (extreme ? ', of extreme concentration' : ''));
-      else if (led.length) meta.push('leads ' + led.length + ' stages' + (extreme ? ', ' + (extreme === led.length ? 'all' : extreme) + ' of them extreme' : ''));
-      meta.push('named on ' + named.length + ' of ' + cardCount + ' chokepoint cards');
-      if (firms.length) meta.push(firms.length + (firms.length === 1 ? ' firm' : ' firms') + ' in the supplier list' + (critical ? ', ' + critical + ' Critical' : ''));
-      return { named: named, firms: firms, meta: meta.join(' · ') };
-    },
-    countryMeta: function (co) { return this.countryFacts(co.code).meta; },
-    /* a country: the Suppliers page's one line on what it makes, the stages it leads or holds a share of, the chokepoint
-       cards that name it, and its firms by category with the Critical ones named */
-    countryCard: function (co) {
-      var cc = co.code, self = this, F = this.countryFacts(cc), named = F.named, firms = F.firms;
-      var num = function (v) { return Math.round(v) === v ? String(v) : String(Math.round(v * 10) / 10); };
-      var chHref = function (ch) { return CP.addr(ch.id === 'geopolitics' ? '#/geopolitics' : '#' + ch.id); }; // the chapter's own page
-      // shares: every matrix row that carries the country, largest first; rows under one percent are folded into one line
-      var segs = (DATA.matrix || []).filter(function (r) { return r.shares && r.shares[cc] != null; }).map(function (r) {
-        var rank = Object.keys(r.shares).sort(function (a, b) { return r.shares[b] - r.shares[a]; }).indexOf(cc) + 1;
-        var basis = r.basis === 'relayed' ? 'reported by ' + (r.relayedVia || 'a third party') : r.basis === 'derived' ? 'computed' : (r.basis || '');
-        return { seg: r.segment, v: r.shares[cc], rank: rank, basis: basis, year: String(r.asOf || r.year || ''), method: r.method || '', capacity: /^capacity/i.test(r.metric || '') };
-      }).sort(function (a, b) { return b.v - a.v; });
-      var big = segs.filter(function (s) { return s.rank === 1 || s.v >= 1; }), small = segs.filter(function (s) { return s.rank !== 1 && s.v < 1; });
-      // firms by category, the Critical ones named; each name opens that firm's entry
-      var firmId = {}; this.items.forEach(function (it) { if (it.kind === 'firm') firmId[it.key] = it.id; });
-      var cats = {};
-      firms.forEach(function (r) { (cats[r.category || 'Other'] = cats[r.category || 'Other'] || []).push(r); });
-      var catNames = Object.keys(cats).sort(function (a, b) { return cats[b].length - cats[a].length || a.localeCompare(b); });
-      var h = '<article class="lk-card lk-card--country">' +
-        '<p class="lk-kind">Country · ' + esc(cc) + '</p>' +
-        '<h2 class="lk-t">' + esc(co.name) + '</h2>' +
-        '<p class="lk-meta">' + esc(F.meta) + '</p>' +
-        (co.role ? '<p class="lk-lede">' + esc(co.role) + '.</p>' : '');
-      if (segs.length) {
-        h += '<h3 class="lk-h lk-h--in">Share of each segment</h3><ul class="lk-shares">' + big.map(function (s) {
-          var m = [s.rank === 1 ? 'largest share' : 'rank ' + s.rank, s.basis, s.year].filter(Boolean).join(' · ');
-          return '<li class="lk-share' + (s.rank === 1 ? ' is-lead' : '') + '"' + (s.method ? ' title="' + esc(s.method) + '"' : '') + '><span class="lk-share-bar" style="--w:' + Math.min(100, s.v) + '%"></span><span class="lk-share-k">' + esc(s.seg) + '</span><span class="lk-share-v">' + num(s.v) + '%</span><span class="lk-share-m">' + esc(m) + '</span></li>';
-        }).join('') + '</ul>' + (small.length ? '<p class="lk-small">Under 1%: ' + esc(small.map(function (s) { return s.seg; }).join(', ')) + '.</p>' : '');
-      }
-      if (named.length) {
-        h += '<h3 class="lk-h lk-h--in">On the chokepoint cards</h3><ul class="lk-cards">' + named.map(function (ch) {
-          var note = ((ch.countries || []).filter(function (x) { return x.code === cc; })[0] || {}).note || '';
-          return '<li><a href="' + esc(chHref(ch)) + '"><span class="lk-card-t">' + esc(ch.title) + '</span>' + (ch.band ? '<b class="lk-band lk-band--' + esc(String(ch.band).toLowerCase()) + '">' + esc(ch.band) + '</b>' : '') + (note ? '<span class="lk-card-n">' + esc(note) + '</span>' : '') + '</a></li>';
-        }).join('') + '</ul>';
-      }
-      if (firms.length) {
-        h += '<h3 class="lk-h lk-h--in">In the supplier list <span class="lk-n">' + firms.length + ' across ' + catNames.length + (catNames.length === 1 ? ' category' : ' categories') + '</span></h3><ul class="lk-stages">' + catNames.map(function (cat) {
-          var rows = cats[cat], crit = rows.filter(function (r) { return r.chokepoint === 'Critical'; });
-          return '<li><span class="lk-stage-k">' + esc(cat) + '</span><span class="lk-stage-c">' + rows.length + '</span>' + (crit.length ? '<span class="lk-stage-f">' + crit.map(function (r) { return firmId[r.name] ? '<button type="button" class="lk-go" data-go="' + esc(firmId[r.name]) + '">' + esc(r.name) + '</button>' : esc(r.name); }).join(' ') + '</span>' : '') + '</li>';
-        }).join('') + '</ul>';
-        // a member of the EU-27: the bloc's firms counted together, as the Suppliers firm list can filter them (the member list is app.js's)
-        var EU27 = (CP.Suppliers && CP.Suppliers.EU27) || [];
-        if (EU27.indexOf(cc) >= 0) {
-          var eu = (DATA.suppliers || []).filter(function (r) { return EU27.indexOf(r.country) >= 0; }), euCrit = eu.filter(function (r) { return r.chokepoint === 'Critical'; }).length;
-          h += '<p class="lk-eu">Across the EU-27, the supplier list has ' + eu.length + ' firms' + (euCrit ? ', ' + euCrit + ' of them Critical' : '') + '. <a href="#/suppliers?group=eu">See them together on the Suppliers page →</a></p>';
-        }
-      }
-      // how the card's numbers give a firm its country: shares of a market's revenue go by parent company, capacity by plant, the
-      // supplier list by each firm's own headquarters (data/chokepoint-matrix-notes.md, "Converting firm shares to country shares"),
-      // with the firms that part the shares from the list named on the cards whose numbers they touch
-      if (segs.length) {
-        var rev = segs.some(function (s) { return !s.capacity; }), cap = segs.some(function (s) { return s.capacity; }), note = [];
-        if (rev) note.push('Country shares of a market\'s revenue count most firms under their parent company\'s home country' + (firms.length ? ', and the supplier list counts each firm under the country of its own headquarters.' : '.'));
-        if (cap) note.push('Shares of manufacturing capacity count each plant under the country where it stands.');
-        if (!rev && firms.length) note.push('The supplier list counts each firm under the country of its own headquarters.');
-        (this.SPLIT_BY[cc] || []).forEach(function (k) { note.push(self.SPLITS[k]); });
-        h += '<p class="lk-note">' + esc(note.join(' ')) + '</p>';
-      }
-      h += '<p class="lk-links">' + (co.panel ? '<a href="#/suppliers?country=' + esc(cc) + '">See what it makes on the Suppliers page →</a>' : '') + (firms.length ? '<a href="#/suppliers" data-supcc="' + esc(cc) + '">Its firms in the supplier list →</a>' : '') + '</p></article>';
-      return h;
-    },
-
-    wireCard: function (root) {
-      var self = this;
-      // the supplier list takes the whole filter from the link (a firm's name, or a country), so an older search or stage cannot narrow it (correctness P1-2)
-      $$('a[data-sup]', root).forEach(function (a) { a.addEventListener('click', function () { var q = a.getAttribute('data-sup'); setTimeout(function () { var S = CP.Suppliers; if (S && S.show) S.show({ q: q }); }, 60); }); });
-      $$('a[data-supcc]', root).forEach(function (a) { a.addEventListener('click', function () { var cc = a.getAttribute('data-supcc'); setTimeout(function () { var S = CP.Suppliers; if (S && S.show) S.show({ country: cc }); }, 60); }); });
-      $$('button[data-go]', root).forEach(function (b) { b.addEventListener('click', function () { self.show(b.getAttribute('data-go'), { push: true, focus: true, reveal: true }); }); });
-      $$('a[data-chip]', root).forEach(function (a) { a.addEventListener('click', function () { var id = a.getAttribute('data-chip'); setTimeout(function () { if (window.CP.Landscape && CP.Landscape.openCard) CP.Landscape.openCard(id, { show: true }); }, 60); /* the chip's card on the chart, adding nothing */ }); });
-    },
-
-    /* ---------- where the site uses it ---------- */
-    textOf: function (node) { // like textContent, but an element boundary counts as a space
-      var s = ''; for (var i = 0; i < node.childNodes.length; i++) { var n = node.childNodes[i]; if (n.nodeType === 3) s += n.nodeValue; else if (n.nodeType === 1) s += ' ' + this.textOf(n) + ' '; } return s;
-    },
-
-    /* every chapter's paragraphs and list items, as glossary.js carries them (build/build.js reads them from the chapters by
-       the rules of domCorpus): each chapter has its own page since 28 Oct 2026, so the home page holds none of them. k is a
-       passage's place among its chapter's, for the chapter's page to find it (flash) */
-    corpus: function () {
-      if (this.paras) return this.paras;
-      var G = window.CP_GLOSSARY && window.CP_GLOSSARY.passages; if (!G) return this.domCorpus();
-      var out = [], at = {};
-      G.paras.forEach(function (p) { var c = G.chapters[p[0]] || [p[0], '']; at[p[0]] = at[p[0]] || 0; out.push({ chapter: p[0], title: c[0], num: c[1], text: p[1], k: at[p[0]]++ }); });
-      this.paras = out; return out;
-    },
-    // the passages of the chapters on this page, read from the page itself
-    domCorpus: function () {
-      var out = [], self = this;
-      $$('.view[data-view="stack"] article.chapter').forEach(function (ch) {
-        var id = ch.id, title = ch.getAttribute('data-title') || id, num = ch.getAttribute('data-number') || '', k = 0;
-        $$('p, li', ch).forEach(function (el) {
-          // the chapter head's facts line (.ch-meta: words, minutes, specimen, Updated) and its citation line and text (.ch-cite) are not passages (correctness P1-4)
-          if (el.closest('.chapter-sources, .plate-head, .ch-meta, .ch-cite, .chain, figure, .chapter-nav, nav')) return;
-          // a card's marks (and the comma between two of them) are not the passage's words
-          var clone = el.cloneNode(true); $$('sup.cite, sup.cite-sep, .gl-tip, .chip', clone).forEach(function (s) { s.parentNode.removeChild(s); });
-          var text = self.textOf(clone).replace(/\s+/g, ' ').replace(/\s+([.,;:])/g, '$1').trim();
-          if (text.length > 40) out.push({ chapter: id, title: title, num: num, el: el, text: text, k: k++ });
-        });
-      });
-      return out;
-    },
-    /* a passage followed from the Glossary to its chapter's page (src/app.js go, Router.after): found by its words, or else by
-       its place, it lands under the masthead and flashes, as it did when the chapters were on the Glossary's page */
-    flash: function (para) {
-      var mine = this.domCorpus().filter(function (p) { return p.chapter === para.chapter; });
-      var p = mine.filter(function (x) { return x.text === para.text; })[0] || mine[para.k]; if (!p) return;
-      CP.scrollToEl(p.el, false); if (CP.Router && CP.Router.settle) CP.Router.settle(p.el);
-      p.el.classList.add('lk-flash'); setTimeout(function () { p.el.classList.remove('lk-flash'); }, 2600);
-    },
-
-    regex: function (patterns, loose) { // loose: a typed query matches as a prefix, so "NXT:1980" finds "NXT:1980i"
-      var parts = patterns.map(function (p) { p = String(p).trim(); if (!p) return null; var e = p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); var bounded = /^[A-Za-z0-9]/.test(p) && /[A-Za-z0-9)]$/.test(p);
-        // a short alias like "Arm" or "ASE" must keep its capitals, or it matches "arm" and "ease"; longer names may be written either way
-        if (p.length <= 4 && /[A-Z]/.test(p) && !loose) e = e.split('').map(function (ch) { return /[a-z]/i.test(ch) ? (/[A-Z]/.test(ch) ? ch : '[' + ch + ch.toUpperCase() + ']') : ch; }).join('');
-        return bounded ? '\\b' + e + (loose ? '' : '(?![A-Za-z0-9])') : e; }).filter(Boolean);
-      if (!parts.length) return null;
-      var short = patterns.some(function (p) { return String(p).trim().length <= 4 && /[A-Z]/.test(p); });
-      return new RegExp(parts.join('|'), short && !loose ? 'g' : 'gi');
-    },
-
-    sentence: function (text, re) {
-      re.lastIndex = 0; var m = re.exec(text); if (!m) return null;
-      var start = text.lastIndexOf('. ', m.index); start = start < 0 ? 0 : start + 2;
-      var end = text.indexOf('. ', m.index + m[0].length); end = end < 0 ? text.length : end + 1;
-      var s = text.slice(start, end).trim();
-      if (s.length > 320) { var a = Math.max(0, m.index - start - 140); s = (a ? '… ' : '') + s.slice(a, a + 300).trim() + ' …'; }
-      return s;
-    },
-
-    patterns: function (it) {
-      var p = it.kind === 'chip' ? [] : [it.name];
-      it.alias.split('|').forEach(function (a) { if (a) p.push(a); });
-      if (it.kind === 'chip' && !p.length) p = [it.name];
-      return p;
-    },
-    hitsFor: function (it) { return this.mentions(this.patterns(it), it.kind, it.key); },
-
-    /* every place the site uses it, in the site's order: the chapters, the Export Controls entries, the board, AI Chips, Suppliers.
-       count: only how many, for the line under each entry (the sheet's own count is the same) */
-    mentions: function (patterns, kind, key, count) {
-      var self = this, re = this.regex(patterns, kind === 'raw'); if (!re) return count ? 0 : [];
-      var hits = [], n = 0, test = function (t) { re.lastIndex = 0; return re.test(t); };
-      var mark = function (s) { return esc(s).replace(re, function (x) { return '<mark>' + x + '</mark>'; }); };
-      var add = function (h) { n++; if (!count) hits.push(h()); };
-      this.corpus().forEach(function (p, i) { if (count ? test(p.text) : self.sentence(p.text, re)) add(function () { return { src: 'Chapter ' + p.num, sub: p.title, html: mark(self.sentence(p.text, re)), href: CP.addr('#' + p.chapter), para: i }; }); });
-      (Array.isArray(DATA.timeline) ? DATA.timeline : ((DATA.timeline || {}).events || [])).forEach(function (e) { var t = [e.gist || '', e.title || '', e.summary || ''].join(' '); if (!test(t)) return; add(function () { var s = self.sentence(e.gist && test(e.gist) ? e.gist : (e.summary || e.title), re) || e.title; return { src: 'Export Controls', sub: e.date, html: mark(s), href: e.id ? '#/controls/' + encodeURIComponent(e.id) : '#/controls' }; }); }); // the entry's own address opens it (correctness P1-6)
-      (Array.isArray(DATA.flows) ? DATA.flows : ((DATA.flows || {}).flows || [])).forEach(function (f) { (f.states || []).forEach(function (st) { if (st.label && test(st.label)) add(function () { return { src: 'Export Controls', sub: f.name, html: mark(st.label), href: st.event ? '#/controls/' + encodeURIComponent(st.event) : '#/controls' }; }); }); }); // a board state links to the entry that set it
-      (DATA.landscape || []).forEach(function (c) { if (kind === 'chip' && c.id === key) return; var t = [c.notes || '', c.exportStatus || ''].join(' '); if (count ? test(t) : self.sentence(t, re)) add(function () { return { src: 'AI Chips', sub: c.vendor + ' ' + c.name, html: mark(self.sentence(t, re)), href: '#/landscape?pick=' + encodeURIComponent(c.id), chip: c.id }; }); });
-      (DATA.suppliers || []).forEach(function (r) { if (kind === 'firm' && r.name === key) return; var t = [r.role || '', r.shareNote || '', r.aiRelevance || ''].join(' '); if (count ? test(t) : self.sentence(t, re)) add(function () { return { src: 'Suppliers', sub: r.name, html: mark(self.sentence(t, re)), href: '#/suppliers', sup: r.name }; }); });
-      return count ? n : hits;
-    },
-
-    passagesHTML: function (hits, kind, limit, idp) {
-      var all = hits.length, hid = (idp || 'gl') + '-pass-h';
-      if (!all) return '<section class="lk-pass" aria-labelledby="' + hid + '"><h3 class="lk-pass-h" id="' + hid + '">Where it appears</h3><p class="lk-none">' + (kind === 'firm' ? 'Only in the supplier list.' : kind === 'chip' ? 'Only on the AI Chips page.' : kind === 'term' ? 'Only in this entry.' : 'Nowhere else.') + '</p></section>';
-      return '<section class="lk-pass" aria-labelledby="' + hid + '"><h3 class="lk-pass-h" id="' + hid + '"><span>Where it appears</span><span class="lk-n">' + all + (all === 1 ? ' place' : ' places') + '</span></h3><ul class="lk-men">' + hits.slice(0, limit).map(this.row).join('') + '</ul>' +
-        (all > limit ? '<p class="lk-more"><button type="button" class="gl-pill">Show all ' + all + '</button></p>' : '') + '</section>';
-    },
-    row: function (h) { var attrs = h.para != null ? ' data-para="' + h.para + '"' : h.chip ? ' data-chip="' + esc(h.chip) + '"' : h.sup ? ' data-sup="' + esc(h.sup) + '"' : ''; return '<li><a href="' + esc(h.href) + '"' + attrs + '><span class="lk-src"><b>' + esc(h.src) + '</b> ' + esc(h.sub) + '</span><span class="lk-txt">' + h.html + '</span></a></li>'; },
-    wirePassages: function (box, hits, kind) {
-      var self = this, more = $('.lk-more button', box);
-      if (more) more.addEventListener('click', function () { var ul = $('.lk-men', box), n = ul.children.length; ul.innerHTML = hits.map(self.row).join(''); more.parentNode.parentNode.removeChild(more.parentNode); self.wireLinks(box); var next = ul.children[n] && ul.children[n].querySelector('a'); if (next) next.focus({ preventScroll: false }); });
-      this.wireLinks(box);
-    },
-    wireLinks: function (box) {
-      var self = this;
-      $$('.lk-men a', box).forEach(function (a) {
-        if (a.getAttribute('data-wired')) return; a.setAttribute('data-wired', '1');
-        if (a.hasAttribute('data-sup')) a.addEventListener('click', function () { var q = a.getAttribute('data-sup'); setTimeout(function () { var S = CP.Suppliers; if (S && S.show) S.show({ q: q }); }, 60); });
-        if (a.hasAttribute('data-chip')) a.addEventListener('click', function () { var id = a.getAttribute('data-chip'); setTimeout(function () { if (window.CP.Landscape && CP.Landscape.openCard) CP.Landscape.openCard(id, { show: true }); }, 60); /* the chip's card on the chart, adding nothing */ });
-        if (a.hasAttribute('data-para')) a.addEventListener('click', function (e) {
-          if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return; // a new tab opens the chapter's page
-          e.preventDefault(); var p = self.paras[+a.getAttribute('data-para')]; if (!p) return;
-          // on another page (the chapter's own): the passage goes with the reader, and that page lands on it (flash)
-          if (!p.el) { CP.go('#' + p.chapter, { para: { chapter: p.chapter, k: p.k, text: p.text } }); return; }
-          location.hash = '#' + p.chapter;
-          // the router lands on the chapter and settles it there; the passage's own settle then takes over, so late fonts and
-          // images cannot pull the page back to the chapter's top (correctness P1-1)
-          setTimeout(function () {
-            CP.scrollToEl(p.el, false); if (CP.Router && CP.Router.settle) CP.Router.settle(p.el);
-            p.el.classList.add('lk-flash'); setTimeout(function () { p.el.classList.remove('lk-flash'); }, 2600);
-          }, 140);
-        });
-      });
-    },
-
-    /* each entry's count of passages, a few entries at a time while the browser is idle, so the page answers at once */
-    countAll: function () {
-      var self = this, i = 0;
-      var run = function (dl) {
-        var t0 = Date.now();
-        while (i < self.items.length && (dl.timeRemaining() > 2 || Date.now() - t0 < 6)) {
-          var it = self.items[i++];
-          it.places = self.mentions(self.patterns(it), it.kind, it.key, true);
-          var foot = it.el && it.el.querySelector('.gl-foot');
-          if (foot) foot.innerHTML = it.kind === 'term' && !it.places ? '<span class="gl-nil">Only in this entry.</span>' : '<button type="button" class="gl-more" data-open tabindex="-1">' + self.moreText(it) + '</button>';
-          if (Date.now() - t0 > 12) break;
-        }
-        if (i < self.items.length) idle(run);
-        else $('.view[data-view="glossary"]').setAttribute('data-gl', 'counted');
-      };
-      idle(run);
-    }
-  };
-
-  CP.Lookup = Lookup;
-  /* The Glossary's two lists and the chapters' passages come with glossary.js (build/build.js), fetched when the Glossary first
-     opens (CP.need): the lists go into #lk-items and #glossary, where the dictionary reads them, and until then the view
-     shows its head alone, as before boot */
-  Lookup.load = function (fn) {
-    var items = $('#lk-items'), view = $('.view[data-view="glossary"]');
-    if (!items || items.children.length || !CP.need) { fn(); return; }
-    var parts = view ? [].filter.call(view.children, function (c) { return !c.classList.contains('view-head'); }) : [];
-    parts.forEach(function (c) { c.style.visibility = 'hidden'; });
-    CP.need('glossary.js', function () {
-      var G = window.CP_GLOSSARY || {}, terms = $('#glossary');
-      if (!items.children.length) items.innerHTML = G.items || '';
-      if (terms && !terms.children.length) terms.innerHTML = G.terms || '';
-      parts.forEach(function (c) { c.style.visibility = ''; });
-      fn();
+  /* ---------- the entries ---------- */
+  function init() {
+    if (L.built) return;
+    var az = $('#lk-items'); if (!az) return;
+    var G = window.CP_GLOSSARY || {};
+    if (!az.children.length) az.innerHTML = G.items || '';
+    if (!az.children.length) return;
+    L.built = true;
+    TERMS = G.terms || {};
+    (DATA.suppliers || []).forEach(function (r) { sup[r.name] = r; });
+    (DATA.landscape || []).forEach(function (c) { chip[c.id] = c; });
+    (DATA.countries || []).forEach(function (c) { co[c.code] = c; });
+    (DATA.chapters || []).forEach(function (c) { chs[c.id] = c; });
+    listEl = $('#gl-list'); jumpEl = $('#gl-jump'); paneEl = $('#gl-pane'); inp = $('#gl-search'); countEl = $('#gl-count');
+    L.items = $$('#lk-items .gl-r').map(function (li, i) {
+      var a = li.firstElementChild;
+      var it = { id: li.id, kind: li.getAttribute('data-kind'), key: li.getAttribute('data-key') || '', name: a.textContent, label: li.getAttribute('data-label') || '',
+        alias: li.getAttribute('data-alias') || '', text: li.getAttribute('data-text') || '', order: i, row: a, L: li.parentNode.parentNode.getAttribute('data-l') };
+      a.setAttribute('data-id', it.id);
+      it.lname = it.name.toLowerCase(); it.al = it.alias.toLowerCase().split('|').filter(Boolean);
+      if (it.kind === 'term') { var t = TERMS[it.key] || [it.name, '', '', '', '', '']; it.t = { term: t[0], aka: t[1], plain: t[2], why: t[3], ch: t[4], chTitle: t[5] }; it.title = t[0]; }
+      else it.title = it.name;
+      it.data = it.kind === 'firm' ? sup[it.key] : it.kind === 'chip' ? chip[it.key] : it.kind === 'country' ? co[it.key] : null;
+      azRow[it.id] = a; L.byId[it.id] = it; L.byKey[it.key] = it;
+      return it;
     });
+    counts = { all: L.items.length, term: 0, firm: 0, chip: 0, country: 0 };
+    L.items.forEach(function (it) { counts[it.kind]++; });
+    $$('#lk-items > .gl-g').forEach(function (g) { groupEl[g.getAttribute('data-l')] = g; });
+    wire();
+    renderList();
+    measure();
+    $('.view[data-view="glossary"]').setAttribute('data-gl', 'ready');
+  }
+  var fromHash = function () {
+    var h = (location.hash || '').replace(/^#/, ''); try { h = decodeURIComponent(h); } catch (e) { }
+    if (/^gl-/.test(h)) return L.byKey[h] || null;
+    if (/^lk-/.test(h)) return L.byId[h] || null;
+    return null;
   };
-  CP.register('glossary', { activate: function () { Lookup.load(function () { Lookup.activate(); }); }, stage: false });
+  var anchorOf = function (it) { return it.kind === 'term' ? it.key : it.id; };
+
+  /* ---------- the index ---------- */
+  var say = function (s) { var e = $('#gl-say'); if (!e) return; e.textContent = ''; setTimeout(function () { e.textContent = s; }, 30); };
+  var barH = function () { var b = $('#gl-bar'); return b ? b.offsetHeight : 0; };
+  var measure = function () { root.style.setProperty('--gl-bar-h', (wide() ? 0 : barH()) + 'px'); };
+
+  function jumpLetters() {
+    jumpEl.innerHTML = LETTERS.map(function (l) {
+      var g = groupEl[l], on = g && !g.hidden;
+      return on ? '<button type="button" data-l="' + l + '" aria-label="' + (l === '0-9' ? 'Numbers' : l) + '">' + showL(l) + '</button>' : '<span aria-hidden="true">' + showL(l) + '</span>';
+    }).join('');
+    spy(true);
+  }
+
+  /* the list the reader sees: A to Z by kind, or a search's matches with the names first. Every word typed must be in the
+     entry's words; a name that contains the query, or another name that starts with it, is a name match ("dutch", "prc",
+     "foxconn"), and one that is exactly the query ("us", "tsmc") tops them */
+  function renderList() {
+    var lq = L.q.trim().toLowerCase(), words = lq.split(/\s+/).filter(Boolean), kind = L.kind, k = KINDS[kind];
+    L.searching = !!lq;
+    var res = L.items.filter(function (it) { return (kind === 'all' || it.kind === kind) && (!lq || words.every(function (w) { return it.text.indexOf(w) >= 0 || it.lname.indexOf(w) >= 0; })); });
+    var resEl = $('#gl-res'), azEl = $('#lk-items');
+    if (!lq) {
+      L.items.forEach(function (it) { it.row.parentNode.hidden = !(kind === 'all' || it.kind === kind); });
+      LETTERS.forEach(function (l) { var g = groupEl[l]; if (g) g.hidden = !res.some(function (it) { return it.L === l; }); });
+      azEl.hidden = false; resEl.hidden = true; resEl.innerHTML = ''; resRow = {};
+      L.shown = res; jumpEl.hidden = false; jumpLetters();
+      countEl.textContent = counts[kind] + ' ' + k[0];
+      inp.placeholder = 'Search ' + counts[kind] + ' ' + k[0];
+    } else {
+      res.forEach(function (it) {
+        it.isName = it.lname.indexOf(lq) >= 0 || it.al.some(function (a) { return a.indexOf(lq) === 0; });
+        it.isExact = it.lname === lq || it.al.indexOf(lq) >= 0;
+        it.starts = it.lname.indexOf(lq) === 0;
+      });
+      var names = res.filter(function (it) { return it.isName; }).sort(function (a, b) { return (b.isExact - a.isExact) || (b.starts - a.starts) || (a.order - b.order); });
+      var rest = res.filter(function (it) { return !it.isName; });
+      var row = function (it) { return '<li class="gl-r"><a href="#' + esc(anchorOf(it)) + '" data-id="' + esc(it.id) + '">' + esc(it.title) + '</a></li>'; };
+      var h = '';
+      if (names.length) h += '<div class="gl-g"><h2 class="gl-lh gl-lk">Name matches</h2><ul class="gl-rows">' + names.map(row).join('') + '</ul></div>';
+      if (rest.length) h += '<div class="gl-g"><h2 class="gl-lh gl-lk">Text matches</h2><ul class="gl-rows">' + rest.map(row).join('') + '</ul></div>';
+      if (!res.length) {
+        var near = nearest(lq);
+        h = '<p class="gl-none">No entry matches <b>' + esc(L.q.trim()) + '</b>' + (kind !== 'all' ? ' among the ' + esc(k[0]) : '') + '.</p>' +
+          (near.length ? '<p class="gl-near">Did you mean ' + near.map(function (it) { return '<a href="#' + esc(anchorOf(it)) + '" data-id="' + esc(it.id) + '">' + esc(it.title) + '</a>'; }).join(' ') + '</p>' : '') +
+          (wide() ? '' : passagesHTML(mentions([L.q.trim()], 'raw', L.q.trim()), 'raw'));
+      }
+      resEl.innerHTML = h; azEl.hidden = true; resEl.hidden = false;
+      resRow = {}; $$('.gl-r a[data-id]', resEl).forEach(function (a) { resRow[a.getAttribute('data-id')] = a; });
+      L.shown = names.concat(rest); jumpEl.hidden = true;
+      countEl.textContent = res.length ? res.length + (res.length === 1 ? ' match' : ' matches') : 'No match';
+      listEl.scrollTop = 0;
+      // on a phone the matches start under the bar, so each letter typed shows its first ones
+      if (!wide()) { var top = listEl.getBoundingClientRect().top + window.pageYOffset - CP.headerH() - barH(); if (window.pageYOffset > top) jump(top); }
+    }
+    $('#gl-clear').hidden = !L.q;
+    markRow();
+  }
+
+  var rowOf = function (it) { return it ? (L.searching ? resRow[it.id] : azRow[it.id]) : null; };
+  function markRow() {
+    $$('.gl-r a[aria-current]', listEl).forEach(function (a) { a.removeAttribute('aria-current'); });
+    var a = rowOf(L.cur); if (a) a.setAttribute('aria-current', 'true');
+  }
+  // the open entry's row in view: on a wide screen inside the index's own scroll, under its letter; on a phone in the page
+  function reveal(it, centre) {
+    var a = rowOf(it); if (!a || a.offsetParent === null) return;
+    if (wide()) {
+      var r = a.getBoundingClientRect(), c = listEl.getBoundingClientRect(), head = 42;
+      if (centre) listEl.scrollTop += r.top - c.top - Math.round(c.height * 0.3);
+      else if (r.top < c.top + head) listEl.scrollTop -= c.top + head - r.top + 6;
+      else if (r.bottom > c.bottom - 8) listEl.scrollTop += r.bottom - c.bottom + 14;
+    } else {
+      var under = CP.headerH() + barH() + 46, ar = a.getBoundingClientRect();
+      if (centre || ar.top < under || ar.bottom > window.innerHeight - 20) jump(ar.top + window.pageYOffset - under - (centre ? 80 : 0));
+    }
+  }
+
+  // the column of letters marks the letter at the top of the index, and on a phone keeps its place under the bar
+  var spyQ = false;
+  function spy(now) {
+    if (!L.built || (spyQ && !now)) return; spyQ = true;
+    requestAnimationFrame(function () {
+      spyQ = false;
+      if (!here()) return;
+      jumpEl.style.top = wide() ? '' : Math.round($('#gl-bar').getBoundingClientRect().bottom + 6) + 'px';
+      if (L.searching) return;
+      var line = wide() ? listEl.getBoundingClientRect().top + 30 : CP.headerH() + barH() + 30, curL = null;
+      LETTERS.forEach(function (l) { var g = groupEl[l]; if (g && !g.hidden && g.getBoundingClientRect().top <= line) curL = l; });
+      if (!curL) curL = LETTERS.filter(function (l) { return groupEl[l] && !groupEl[l].hidden; })[0];
+      $$('button', jumpEl).forEach(function (b) { if (b.getAttribute('data-l') === curL) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current'); });
+    });
+  }
+  function toLetter(l) {
+    var g = groupEl[l]; if (!g || g.hidden) return;
+    if (wide()) listEl.scrollTop = g.offsetTop;
+    else jump(g.getBoundingClientRect().top + window.pageYOffset - CP.headerH() - barH() + 1);
+    spy(true);
+  }
+
+  /* ---------- an entry ---------- */
+  /* the other entries named in an entry's own text link to them, the first time each is named and three to a paragraph at
+     most: terms by their names and other names, firms by theirs, countries by name. "chip" is left alone, since nearly every
+     entry uses the word. The words are unchanged */
+  function xlinks() {
+    if (XL) return XL;
+    var map = {}, rank = { term: 0, firm: 1, country: 2 };
+    var add = function (p, it) { p = String(p || '').trim(); if (p.length < 2) return; var k = p.toLowerCase(), o = map[k]; if (o && rank[o.it.kind] <= rank[it.kind]) return; map[k] = { it: it, p: p }; };
+    L.items.forEach(function (it) {
+      if (it.kind === 'chip' || it.id === DEFAULT) return;
+      add(it.title, it);
+      if (it.kind !== 'country') it.alias.split('|').forEach(function (a) { if (a && !/^for example/i.test(a)) add(a, it); });
+    });
+    var frag = Object.keys(map).map(function (k) { return map[k].p; }).sort(function (a, b) { return b.length - a.length; }).map(function (p) {
+      var e = p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      if (p.length > 4 && /^[A-Za-z]/.test(p)) e = '[' + p.charAt(0).toLowerCase() + p.charAt(0).toUpperCase() + ']' + e.slice(1);
+      return e;
+    });
+    // a name stands alone: no letter or digit on either side (the one before is matched and kept, since not every browser looks behind)
+    return (XL = { map: map, re: new RegExp('(^|[^A-Za-z0-9])(' + frag.join('|') + ')(?![A-Za-z0-9])', 'g') });
+  }
+  function xl(text, used) {
+    var X = xlinks(), s = String(text || ''), out = '', last = 0, m, n = 0; X.re.lastIndex = 0;
+    while (n < 3 && (m = X.re.exec(s))) {
+      var at = m.index + m[1].length, word = m[2], hit = X.map[word.toLowerCase()];
+      if (!hit || used[hit.it.id]) { X.re.lastIndex = at + word.length; continue; }
+      used[hit.it.id] = 1; n++;
+      out += esc(s.slice(last, at)) + '<a class="gl-x" href="#' + esc(anchorOf(hit.it)) + '" data-id="' + esc(hit.it.id) + '">' + esc(word) + '</a>';
+      last = at + word.length;
+    }
+    return out + esc(s.slice(last));
+  }
+
+  /* the chapters a term is read in, as the static page lists them (build/modules/reference-pages.js writes DATA.glossaryRefs):
+     its own chapter first, then the others that use it; a term most chapters use names four of them, and the rest wait */
+  function readsHTML(it) {
+    var R = (DATA.glossaryRefs || {})[it.key], home = null, also = [];
+    if (R) { home = R[0] ? chs[R[0]] || null : null; also = (R[1] || []).map(function (id) { return chs[id]; }).filter(Boolean); }
+    if (!home && it.t.ch) home = chs[it.t.ch] || { id: it.t.ch, title: it.t.chTitle };
+    if (!home && !also.length) return '';
+    var a = function (c) { return '<a href="' + esc(chHref(c.id)) + '">' + esc(c.title) + '</a>'; };
+    return '<p class="gl-reads">' + (home ? '<span class="gl-rr"><span class="k">Read it in</span>' + a(home) + '</span>' : '') +
+      (also.length ? '<span class="gl-rr gl-also"><span class="k">' + (home ? 'Also in' : 'In') + '</span>' + also.slice(0, also.length > 5 ? 4 : 5).map(a).join(', ') +
+        (also.length > 5 ? '<span class="gl-rest" hidden>, ' + also.slice(4).map(a).join(', ') + '</span> <button type="button" class="gl-tbtn" data-rest>and ' + (also.length - 4) + ' more</button>' : '') + '</span>' : '') + '</p>';
+  }
+
+  function termHTML(it, used) {
+    var t = it.t;
+    return '<p class="label gl-kind">' + esc(it.label) + '</p><h2 class="gl-hw" id="gl-hw" tabindex="-1">' + esc(t.term) + '</h2>' +
+      (t.aka ? '<p class="gl-names">' + esc(t.aka) + '</p>' : '') + '<p class="gl-def">' + xl(t.plain, used) + '</p>' +
+      (t.why ? '<p class="gl-p">' + xl(t.why, used) + '</p>' : '') + readsHTML(it);
+  }
+
+  var facts = function (rows) { return rows.length ? '<dl class="gl-facts">' + rows.map(function (f) { return '<dt>' + esc(f[0]) + '</dt><dd>' + (f[2] ? f[1] : esc(f[1])) + '</dd>'; }).join('') + '</dl>' : ''; };
+
+  /* a firm: the Suppliers row's facts, its revenue as filed and linked to the filing, and the share of it from China with the
+     firm's small China chart, as the Suppliers panel draws it (Suppliers.revenueHTML and exMini in src/app.js) */
+  function firmHTML(it, used) {
+    var r = it.data || {}, rows = [], S = CP.Suppliers || {};
+    var where = [r.city, cname(r.country)].filter(Boolean).join(', ');
+    if (r.chokepoint) rows.push(['Chokepoint level', '<span class="gl-chk gl-chk--' + esc(String(r.chokepoint).toLowerCase()) + '">' + esc(r.chokepoint) + '</span>', true]);
+    if (where) rows.push(['Based in', where]);
+    if (r.founded) rows.push(['Founded', String(r.founded)]);
+    if (r.ownership || r.ticker) rows.push(['Ownership', [r.ownership, r.ticker ? 'ticker ' + r.ticker : ''].filter(Boolean).join(', ')]);
+    if (r.customers && r.customers.length) rows.push(['Named customers', r.customers.join(', ')]);
+    var rs = r.revenueShown, rev = rs && S.revenueHTML ? S.revenueHTML(rs) : '';
+    if (rev) rows.push(['Revenue', rev, true]);
+    else if (r.revenueUSDb != null) rows.push(['Revenue', '$' + (Math.round(r.revenueUSDb * 10) / 10).toLocaleString('en-US') + 'bn' + (r.revenueYear ? ', ' + r.revenueYear : '')]);
+    // safeUrl escapes what it returns, so it is not escaped again
+    if (r.china && r.china.href) rows.push(['From China', '<a href="' + CP.safeUrl(r.china.href) + '">' + esc(String(r.china.label).replace(/^China /, '')) + ' <span aria-hidden="true">→</span></a>' + (S.exMini ? S.exMini(r.china.href) : ''), true]);
+    var meta = [r.category, r.subcategory].filter(Boolean).join(' · ');
+    return '<p class="label gl-kind">Firm' + (r.country ? ' · ' + esc(cname(r.country)) : '') + '</p>' +
+      '<h2 class="gl-hw" id="gl-hw" tabindex="-1">' + esc(r.name || it.name) + (r.nativeName ? '<span class="gl-native">' + esc(r.nativeName) + '</span>' : '') + '</h2>' +
+      (meta ? '<p class="gl-meta">' + esc(meta) + '</p>' : '') +
+      (r.role ? '<p class="gl-def">' + xl(r.role, used) + '</p>' : '') +
+      (r.shareNote ? '<p class="gl-p">' + xl(r.shareNote, used) + '</p>' : '') +
+      (r.aiRelevance ? '<p class="gl-p">' + xl(r.aiRelevance, used) + '</p>' : '') +
+      facts(rows) +
+      // the filing's note (build/build.js leaves out the lines meant for the editors)
+      (rev && rs.note ? '<p class="gl-note"><b>About the revenue figure.</b> ' + esc(rs.note) + '</p>' : '') +
+      '<p class="gl-links"><a href="#/suppliers" data-sup="' + esc(r.name || it.name) + '">In the supplier list →</a>' + (r.source && CP.safeUrl(r.source) !== '#' ? '<a href="' + CP.safeUrl(r.source) + '" target="_blank" rel="noopener">Company page ↗</a>' : '') + '</p>';
+  }
+
+  function chipHTML(it, used) {
+    var c = it.data || {}, p = c.process || {}, m = c.memory || {}, comp = c.compute || {}, rows = [];
+    if (c.announced || c.shipping) rows.push(['Announced / shipping', [c.announced, c.shipping].filter(Boolean).map(when).join(' / ')]);
+    if (p.node || p.foundry) rows.push(['Made by', madeBy(p).concat(p.country ? cname(p.country) : '').filter(Boolean).join(', ')]);
+    if (m.type) rows.push(['Memory', [m.type, m.stacks ? m.stacks + ' stacks' : '', m.capacityGB ? m.capacityGB + ' GB' : '', m.bandwidthTBs ? m.bandwidthTBs + ' TB/s' : ''].filter(Boolean).join(', ')]);
+    var fp = []; if (comp.fp16TFLOPS) fp.push('FP16 ' + comp.fp16TFLOPS.toLocaleString('en-US')); if (comp.fp8TFLOPS) fp.push('FP8 ' + comp.fp8TFLOPS.toLocaleString('en-US')); if (comp.fp4TFLOPS) fp.push('FP4 ' + comp.fp4TFLOPS.toLocaleString('en-US'));
+    if (fp.length) rows.push(['Dense TFLOPS', fp.join(' · ')]);
+    if (c.tdpW) rows.push(['Power', nf(c.tdpW) + ' W']);
+    if (c.target) rows.push(['Built for', c.target]);
+    return '<p class="label gl-kind">AI chip · ' + esc(c.vendor) + (c.vendorCountry ? ', ' + esc(cname(c.vendorCountry)) : '') + '</p>' +
+      '<h2 class="gl-hw" id="gl-hw" tabindex="-1">' + esc((c.vendor || '') + ' ' + (c.name || it.name)) + '</h2>' +
+      (c.status ? '<p class="gl-meta">' + esc(c.status) + '</p>' : '') +
+      (c.notes ? '<p class="gl-def">' + xl(c.notes, used) + '</p>' : '') +
+      (c.exportStatus ? '<p class="gl-p"><b>Export status.</b> ' + xl(c.exportStatus, used) + '</p>' : '') +
+      facts(rows) + '<p class="gl-links"><a href="#/landscape?pick=' + esc(encodeURIComponent(c.id)) + '" data-chip="' + esc(c.id) + '">On AI Chips →</a></p>';
+  }
+
+  /* a country: the stages it leads, the chokepoint cards that name it, its shares, its firms. The firms whose country differs
+     between the shares and the supplier list, as data/chokepoint-matrix-notes.md gives them, are named on the cards they touch */
+  var SPLITS = {
+    siemens: 'Siemens EDA is run from Oregon but owned by Siemens AG, so the EDA software share counts it under Germany and the supplier list under the US.',
+    linde: 'Linde plc is incorporated in Ireland, with head offices in the UK and the US. The specialty gases share counts it under Germany for its roots in Linde AG, as Georgetown University\'s Emerging Technology Observatory does. The supplier list counts it under the UK.',
+    arm: 'The core IP share counts Arm under the UK, where it has its headquarters, although SoftBank of Japan owns most of it.'
+  };
+  var SPLIT_BY = { DE: ['siemens', 'linde'], US: ['siemens'], GB: ['arm', 'linde'] };
+  function countryFacts(cc) {
+    var chapters = DATA.chapters || [];
+    var stages = chapters.filter(function (ch) { return ch.stage; });
+    var cardCount = chapters.filter(function (ch) { return ch.concentration; }).length; // only the stage chapters carry a chokepoint card
+    var named = chapters.filter(function (ch) { return (ch.countries || []).some(function (x) { return x.code === cc; }); }).sort(function (a, b) { return (b.bandRank || 0) - (a.bandRank || 0) || a.number - b.number; });
+    var led = stages.filter(function (ch) { var f = (ch.countries || [])[0]; return f && f.code === cc; });
+    var extreme = led.filter(function (ch) { return ch.band === 'Extreme'; }).length;
+    var firms = (DATA.suppliers || []).filter(function (r) { return r.country === cc; });
+    var critical = firms.filter(function (r) { return r.chokepoint === 'Critical'; }).length, meta = [];
+    if (led.length === 1) meta.push('leads 1 stage' + (extreme ? ', of extreme concentration' : ''));
+    else if (led.length) meta.push('leads ' + led.length + ' stages' + (extreme ? ', ' + (extreme === led.length ? 'all' : extreme) + ' of them extreme' : ''));
+    meta.push('named on ' + named.length + ' of ' + cardCount + ' chokepoint cards');
+    if (firms.length) meta.push(firms.length + (firms.length === 1 ? ' firm' : ' firms') + ' in the supplier list' + (critical ? ', ' + critical + ' Critical' : ''));
+    return { named: named, firms: firms, meta: meta.join(' · ') };
+  }
+  function countryHTML(it, used) {
+    var c = it.data || {}, cc = c.code, F = countryFacts(cc), named = F.named, firms = F.firms;
+    var num = function (v) { return Math.round(v) === v ? String(v) : String(Math.round(v * 10) / 10); };
+    var segs = (DATA.matrix || []).filter(function (r) { return r.shares && r.shares[cc] != null; }).map(function (r) {
+      var rank = Object.keys(r.shares).sort(function (a, b) { return r.shares[b] - r.shares[a]; }).indexOf(cc) + 1;
+      var basis = r.basis === 'relayed' ? 'reported by ' + (r.relayedVia || 'a third party') : r.basis === 'derived' ? 'computed' : (r.basis || '');
+      return { seg: r.segment, v: r.shares[cc], rank: rank, basis: basis, year: String(r.asOf || r.year || ''), method: r.method || '', capacity: /^capacity/i.test(r.metric || '') };
+    }).sort(function (a, b) { return b.v - a.v; });
+    var big = segs.filter(function (s) { return s.rank === 1 || s.v >= 1; }), small = segs.filter(function (s) { return s.rank !== 1 && s.v < 1; });
+    var firmItem = {}; L.items.forEach(function (x) { if (x.kind === 'firm') firmItem[x.key] = x; });
+    var cats = {}; firms.forEach(function (r) { (cats[r.category || 'Other'] = cats[r.category || 'Other'] || []).push(r); });
+    var catNames = Object.keys(cats).sort(function (a, b) { return cats[b].length - cats[a].length || a.localeCompare(b); });
+    var h = '<p class="label gl-kind">Country · ' + esc(cc) + '</p><h2 class="gl-hw" id="gl-hw" tabindex="-1">' + esc(c.name) + '</h2>' +
+      '<p class="gl-meta">' + esc(F.meta) + '</p>' + (c.role ? '<p class="gl-def">' + xl(c.role, used) + '.</p>' : '');
+    if (segs.length) {
+      var topV = Math.max.apply(null, big.map(function (s) { return s.v; }));
+      h += '<section class="gl-part" aria-labelledby="gl-sh"><h3 class="gl-h" id="gl-sh">Share of each segment</h3><ul class="gl-shares">' + big.map(function (s) {
+        var m = [s.rank === 1 ? 'largest share' : 'rank ' + s.rank, s.basis, s.year].filter(Boolean).join(' · ');
+        return '<li class="gl-share' + (s.v === topV ? ' is-top' : '') + '"' + (s.method ? ' title="' + esc(s.method) + '"' : '') + '><span class="gl-share-k">' + esc(s.seg) + '</span><span class="gl-share-bar" style="--w:' + Math.min(100, s.v) + '%" aria-hidden="true"></span><span class="gl-share-v">' + num(s.v) + '%</span><span class="gl-share-m">' + esc(m) + '</span></li>';
+      }).join('') + '</ul>' + (small.length ? '<p class="gl-small">Under 1%: ' + esc(small.map(function (s) { return s.seg; }).join(', ')) + '.</p>' : '') + '</section>';
+    }
+    if (named.length) {
+      h += '<section class="gl-part" aria-labelledby="gl-cd"><h3 class="gl-h" id="gl-cd">On the chokepoint cards</h3><ul class="gl-cards">' + named.map(function (ch) {
+        var note = ((ch.countries || []).filter(function (x) { return x.code === cc; })[0] || {}).note || '';
+        return '<li><a href="' + esc(chHref(ch.id)) + '"><span class="gl-card-t">' + esc(ch.title) + '</span>' + (ch.band ? '<span class="gl-card-b gl-card-b--' + esc(String(ch.band).toLowerCase()) + '">' + esc(ch.band) + '</span>' : '') + (note ? '<span class="gl-card-n">' + esc(note) + '</span>' : '') + '</a></li>';
+      }).join('') + '</ul></section>';
+    }
+    if (firms.length) {
+      h += '<section class="gl-part" aria-labelledby="gl-fl"><h3 class="gl-h" id="gl-fl"><span>In the supplier list</span><span class="gl-n">' + firms.length + ' across ' + catNames.length + (catNames.length === 1 ? ' category' : ' categories') + '</span></h3><ul class="gl-cats">' + catNames.map(function (cat) {
+        var rows = cats[cat], crit = rows.filter(function (r) { return r.chokepoint === 'Critical'; });
+        return '<li><span>' + esc(cat) + '</span><span class="gl-cat-c">' + rows.length + '</span>' + (crit.length ? '<span class="gl-cat-f">' + crit.map(function (r) { var x = firmItem[r.name]; return x ? '<a href="#' + esc(x.id) + '" data-id="' + esc(x.id) + '">' + esc(r.name) + '</a>' : esc(r.name); }).join(' ') + '</span>' : '') + '</li>';
+      }).join('') + '</ul>';
+      // a member of the EU-27: the bloc's firms counted together, as the Suppliers firm list can filter them (the member list is app.js's)
+      var EU27 = (CP.Suppliers && CP.Suppliers.EU27) || [];
+      if (EU27.indexOf(cc) >= 0) {
+        var eu = (DATA.suppliers || []).filter(function (r) { return EU27.indexOf(r.country) >= 0; }), euCrit = eu.filter(function (r) { return r.chokepoint === 'Critical'; }).length;
+        h += '<p class="gl-small">Across the EU-27, the supplier list has ' + eu.length + ' firms' + (euCrit ? ', ' + euCrit + ' of them Critical' : '') + '. <a href="#/suppliers?group=eu">See them together on the Suppliers page →</a></p>';
+      }
+      h += '</section>';
+    }
+    // how the numbers give a firm its country: shares of a market's revenue go by parent company, capacity by plant, the
+    // supplier list by each firm's own headquarters (data/chokepoint-matrix-notes.md, "Converting firm shares to country shares")
+    if (segs.length) {
+      var rev = segs.some(function (s) { return !s.capacity; }), cap = segs.some(function (s) { return s.capacity; }), note = [];
+      if (rev) note.push('Country shares of a market\'s revenue count most firms under their parent company\'s home country' + (firms.length ? ', and the supplier list counts each firm under the country of its own headquarters.' : '.'));
+      if (cap) note.push('Shares of manufacturing capacity count each plant under the country where it stands.');
+      if (!rev && firms.length) note.push('The supplier list counts each firm under the country of its own headquarters.');
+      (SPLIT_BY[cc] || []).forEach(function (k) { note.push(SPLITS[k]); });
+      h += '<p class="gl-note">' + esc(note.join(' ')) + '</p>';
+    }
+    h += '<p class="gl-links">' + (c.panel ? '<a href="#/suppliers?country=' + esc(cc) + '">See what it makes on the Suppliers page →</a>' : '') + (firms.length ? '<a href="#/suppliers" data-supcc="' + esc(cc) + '">Its firms in the supplier list →</a>' : '') + '</p>';
+    return h;
+  }
+
+  /* ---------- where the site uses it ---------- */
+  /* every chapter's paragraphs and list items, as glossary.js carries them (build/build.js reads them from the chapters by
+     the rules of domCorpus): each chapter has its own page since 28 Oct 2026, so the home page holds none of them. k is a
+     passage's place among its chapter's, for the chapter's page to find it (flash) */
+  function corpus() {
+    if (L.paras) return L.paras;
+    var G = window.CP_GLOSSARY && window.CP_GLOSSARY.passages; if (!G) return (L.paras = domCorpus());
+    var out = [], at = {};
+    G.paras.forEach(function (p) { var c = G.chapters[p[0]] || [p[0], '']; at[p[0]] = at[p[0]] || 0; out.push({ chapter: p[0], title: c[0], num: c[1], text: p[1], k: at[p[0]]++ }); });
+    return (L.paras = out);
+  }
+  var textOf = function (node) { // like textContent, but an element boundary counts as a space
+    var s = ''; for (var i = 0; i < node.childNodes.length; i++) { var n = node.childNodes[i]; if (n.nodeType === 3) s += n.nodeValue; else if (n.nodeType === 1) s += ' ' + textOf(n) + ' '; } return s;
+  };
+  // the passages of the chapters on this page, read from the page itself
+  function domCorpus() {
+    var out = [];
+    $$('.view[data-view="stack"] article.chapter').forEach(function (ch) {
+      var id = ch.id, title = ch.getAttribute('data-title') || id, num = ch.getAttribute('data-number') || '', k = 0;
+      $$('p, li', ch).forEach(function (el) {
+        // the chapter head's facts line (.ch-meta) and its citation line (.ch-cite) are not passages (correctness P1-4)
+        if (el.closest('.chapter-sources, .plate-head, .ch-meta, .ch-cite, .chain, figure, .chapter-nav, nav')) return;
+        // a card's marks (and the comma between two of them) are not the passage's words
+        var clone = el.cloneNode(true); $$('sup.cite, sup.cite-sep, .gl-tip, .chip', clone).forEach(function (s) { s.parentNode.removeChild(s); });
+        var text = textOf(clone).replace(/\s+/g, ' ').replace(/\s+([.,;:])/g, '$1').trim();
+        if (text.length > 40) out.push({ chapter: id, title: title, num: num, el: el, text: text, k: k++ });
+      });
+    });
+    return out;
+  }
+  /* a passage followed from the Glossary to its chapter's page (src/app.js go, Router.after): found by its words, or else by its
+     place, it lands under the masthead and flashes */
+  function flash(para) {
+    var mine = domCorpus().filter(function (p) { return p.chapter === para.chapter; });
+    var p = mine.filter(function (x) { return x.text === para.text; })[0] || mine[para.k]; if (!p) return;
+    CP.scrollToEl(p.el, false); if (CP.Router && CP.Router.settle) CP.Router.settle(p.el);
+    p.el.classList.add('lk-flash'); setTimeout(function () { p.el.classList.remove('lk-flash'); }, 2600);
+  }
+  function regex(patterns, loose) { // loose: a typed query matches as a prefix, so "NXT:1980" finds "NXT:1980i"
+    var parts = patterns.map(function (p) {
+      p = String(p).trim(); if (!p) return null;
+      var e = p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), bounded = /^[A-Za-z0-9]/.test(p) && /[A-Za-z0-9)]$/.test(p);
+      // a short name like "Arm" or "ASE" keeps its capitals, or it matches "arm" and "ease"; longer names may be written either way
+      if (p.length <= 4 && /[A-Z]/.test(p) && !loose) e = e.split('').map(function (ch) { return /[a-z]/i.test(ch) ? (/[A-Z]/.test(ch) ? ch : '[' + ch + ch.toUpperCase() + ']') : ch; }).join('');
+      return bounded ? '\\b' + e + (loose ? '' : '(?![A-Za-z0-9])') : e;
+    }).filter(Boolean);
+    if (!parts.length) return null;
+    var short = patterns.some(function (p) { return String(p).trim().length <= 4 && /[A-Z]/.test(p); });
+    return new RegExp(parts.join('|'), short && !loose ? 'g' : 'gi');
+  }
+  function sentence(text, re) {
+    re.lastIndex = 0; var m = re.exec(text); if (!m) return null;
+    var start = text.lastIndexOf('. ', m.index); start = start < 0 ? 0 : start + 2;
+    var end = text.indexOf('. ', m.index + m[0].length); end = end < 0 ? text.length : end + 1;
+    var s = text.slice(start, end).trim();
+    if (s.length > 320) { var a = Math.max(0, m.index - start - 140); s = (a ? '… ' : '') + s.slice(a, a + 300).trim() + ' …'; }
+    return s;
+  }
+  var patternsOf = function (it) { var p = it.kind === 'chip' ? [] : [it.name]; it.alias.split('|').forEach(function (a) { if (a) p.push(a); }); if (it.kind === 'chip' && !p.length) p = [it.name]; return p; };
+  /* every place the site uses it, in the site's order: the chapters, the Export Controls entries, the board, AI Chips, Suppliers */
+  function mentions(patterns, kind, key) {
+    var re = regex(patterns, kind === 'raw'); if (!re) return [];
+    var hits = [], test = function (t) { re.lastIndex = 0; return re.test(t); };
+    var mark = function (s) { return esc(s).replace(re, function (x) { return '<mark>' + x + '</mark>'; }); };
+    corpus().forEach(function (p, i) { var s = sentence(p.text, re); if (s) hits.push({ src: 'Chapter ' + p.num, sub: p.title, html: mark(s), href: CP.addr('#' + p.chapter), para: i }); });
+    (Array.isArray(DATA.timeline) ? DATA.timeline : ((DATA.timeline || {}).events || [])).forEach(function (e) { var t = [e.gist || '', e.title || '', e.summary || ''].join(' '); if (!test(t)) return; var s = sentence(e.gist && test(e.gist) ? e.gist : (e.summary || e.title), re) || e.title; hits.push({ src: 'Export Controls', sub: e.date, html: mark(s), href: e.id ? '#/controls/' + encodeURIComponent(e.id) : '#/controls' }); }); // the entry's own address opens it
+    (Array.isArray(DATA.flows) ? DATA.flows : ((DATA.flows || {}).flows || [])).forEach(function (f) { (f.states || []).forEach(function (st) { if (st.label && test(st.label)) hits.push({ src: 'Export Controls', sub: f.name, html: mark(st.label), href: st.event ? '#/controls/' + encodeURIComponent(st.event) : '#/controls' }); }); }); // a board state links to the entry that set it
+    (DATA.landscape || []).forEach(function (c) { if (kind === 'chip' && c.id === key) return; var s = sentence([c.notes || '', c.exportStatus || ''].join(' '), re); if (s) hits.push({ src: 'AI Chips', sub: c.vendor + ' ' + c.name, html: mark(s), href: '#/landscape?pick=' + encodeURIComponent(c.id), chip: c.id }); });
+    (DATA.suppliers || []).forEach(function (r) { if (kind === 'firm' && r.name === key) return; var s = sentence([r.role || '', r.shareNote || '', r.aiRelevance || ''].join(' '), re); if (s) hits.push({ src: 'Suppliers', sub: r.name, html: mark(s), href: '#/suppliers', sup: r.name }); });
+    return hits;
+  }
+  var LIMIT = 6, lastHits = [];
+  var rowHTML = function (h) {
+    var attrs = h.para != null ? ' data-para="' + h.para + '"' : h.chip ? ' data-chip="' + esc(h.chip) + '"' : h.sup ? ' data-sup="' + esc(h.sup) + '"' : '';
+    return '<li><a href="' + esc(h.href) + '"' + attrs + '><span class="gl-src"><b>' + esc(h.src) + '</b> ' + esc(h.sub) + '</span><span class="gl-txt">' + h.html + '</span></a></li>';
+  };
+  function passagesHTML(hits, kind) {
+    lastHits = hits;
+    var n = hits.length;
+    var head = '<h3 class="gl-h" id="gl-wh"><span>Where it appears</span>' + (n ? '<span class="gl-n">' + n + (n === 1 ? ' place' : ' places') + '</span>' : '') + '</h3>';
+    if (!n) return '<section class="gl-part" aria-labelledby="gl-wh">' + head + '<p class="gl-nil">' + (kind === 'firm' ? 'Only in the supplier list.' : kind === 'chip' ? 'Only on the AI Chips page.' : kind === 'term' ? 'Only in this entry.' : 'Nowhere else.') + '</p></section>';
+    return '<section class="gl-part" aria-labelledby="gl-wh">' + head + '<ul class="gl-men">' + hits.slice(0, LIMIT).map(rowHTML).join('') + '</ul>' +
+      (n > LIMIT ? '<p class="gl-more"><button type="button" data-all>Show all ' + n + '</button></p>' : '') + '</section>';
+  }
+  function nearest(q) { // names a typo away: an edit distance of one or two against each word of each name
+    q = q.toLowerCase(); if (q.length < 4) return [];
+    var dist = function (a, b) { var m = a.length, n = b.length, prev = [], cur = [], i, j; for (j = 0; j <= n; j++) prev[j] = j; for (i = 1; i <= m; i++) { cur = [i]; for (j = 1; j <= n; j++) cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1)); prev = cur; } return prev[n]; };
+    var scored = [];
+    L.items.forEach(function (it) {
+      if (L.kind !== 'all' && it.kind !== L.kind) return;
+      var best = dist(q, it.lname);
+      it.lname.split(/[\s()\-]+/).forEach(function (w) { if (w.length >= 3) best = Math.min(best, dist(q, w)); });
+      if (best <= (q.length >= 8 ? 3 : 2)) scored.push({ it: it, d: best });
+    });
+    return scored.sort(function (a, b) { return a.d - b.d; }).slice(0, 5).map(function (x) { return x.it; });
+  }
+
+  /* ---------- showing an entry ---------- */
+  var neighbours = function (it) { var list = L.shown.indexOf(it) >= 0 ? L.shown : L.items, i = list.indexOf(it); return { prev: list[i - 1] || null, next: list[i + 1] || null }; };
+  function entryHTML(it) {
+    var used = {}; used[it.id] = 1;
+    var body = it.kind === 'term' ? termHTML(it, used) : it.kind === 'firm' ? firmHTML(it, used) : it.kind === 'chip' ? chipHTML(it, used) : countryHTML(it, used);
+    var nb = neighbours(it);
+    var pn = '<nav class="gl-pn" aria-label="Neighboring entries">' +
+      (nb.prev ? '<a class="gl-prev" href="#' + esc(anchorOf(nb.prev)) + '" data-id="' + esc(nb.prev.id) + '" rel="prev"><span class="label">Previous</span><span class="gl-pn-n">' + esc(nb.prev.title) + '</span></a>' : '') +
+      (nb.next ? '<a class="gl-next" href="#' + esc(anchorOf(nb.next)) + '" data-id="' + esc(nb.next.id) + '" rel="next"><span class="label">Next</span><span class="gl-pn-n">' + esc(nb.next.title) + '</span></a>' : '') + '</nav>';
+    var bar = '<div class="gl-ebar"><button type="button" class="gl-back" data-back>' + ARROW_L + 'Glossary</button><span class="gl-steps">' +
+      '<button type="button" data-step="-1" aria-label="Previous entry"' + (nb.prev ? '' : ' disabled') + '>' + ARROW_L + '</button><button type="button" data-step="1" aria-label="Next entry"' + (nb.next ? '' : ' disabled') + '>' + ARROW_R + '</button></span></div>';
+    return bar + '<div class="gl-e">' + body + passagesHTML(mentions(patternsOf(it), it.kind, it.key), it.kind) + pn + '</div>';
+  }
+  /* no entry, but the site may still use the words: names a typo away, and every place they appear */
+  function rawHTML(q) {
+    var near = nearest(q);
+    return '<div class="gl-ebar"><button type="button" class="gl-back" data-back>' + ARROW_L + 'Glossary</button></div><div class="gl-e"><p class="label gl-kind">No entry</p><h2 class="gl-hw" id="gl-hw" tabindex="-1">' + esc(q) + '</h2>' +
+      (near.length ? '<p class="gl-meta">Did you mean ' + near.map(function (it) { return '<a class="gl-x" href="#' + esc(anchorOf(it)) + '" data-id="' + esc(it.id) + '">' + esc(it.title) + '</a>'; }).join(', ') + '</p>' : '') +
+      passagesHTML(mentions([q], 'raw', q), 'raw') + '</div>';
+  }
+
+  function show(it, o) {
+    o = o || {};
+    if (!it) return;
+    // an entry outside the search or the kind shown brings the whole list back
+    if (L.searching && L.shown.indexOf(it) < 0) { inp.value = ''; L.q = ''; renderList(); }
+    if (!L.searching && L.kind !== 'all' && it.kind !== L.kind) setKind('all');
+    L.cur = it;
+    paneEl.innerHTML = entryHTML(it);
+    markRow();
+    if (o.hash) {
+      var h = '#' + anchorOf(it);
+      if (location.hash !== h) { if (o.hash === 'push') { history.pushState({ gl: 1 }, '', h); L.pushed = true; } else history.replaceState(history.state, '', h); }
+    }
+    if (wide()) {
+      if (o.top !== false && window.pageYOffset > 0) jump(0);
+      reveal(it, !!o.centre);
+    } else {
+      reveal(it, !!o.centre);
+      open();
+      paneEl.scrollTop = 0;
+    }
+    if (o.focus || (!wide() && o.focus !== false)) focusEl($('#gl-hw'));
+  }
+  function showRaw(q) {
+    L.cur = null; markRow();
+    paneEl.innerHTML = rawHTML(q);
+    if (wide() && window.pageYOffset > 0) jump(0);
+  }
+
+  /* on a phone the entry lies over the index as a dialog: the rest is inert, so Tab and a screen reader stay in it */
+  function open() {
+    if (wide() || root.classList.contains('gl-open')) return;
+    root.classList.add('gl-open');
+    paneEl.setAttribute('role', 'dialog'); paneEl.setAttribute('aria-modal', 'true');
+    [$('.masthead'), $('#gl-index'), $('.view[data-view="glossary"] > .site-footer'), $('.skip'), $('.to-top'), $('.stage')].forEach(function (el) { if (el && !el.inert) { el.inert = true; L.held.push(el); } });
+  }
+  function shut(focusRow) {
+    root.classList.remove('gl-open');
+    if (paneEl) { paneEl.removeAttribute('role'); paneEl.removeAttribute('aria-modal'); }
+    L.held.forEach(function (el) { el.inert = false; }); L.held = [];
+    if (focusRow) { var a = rowOf(L.cur); if (a) { focusEl(a); reveal(L.cur, false); } }
+  }
+  function back() {
+    if (L.pushed && history.state && history.state.gl) { history.back(); return; } // the router hears the address and shuts it (activate)
+    history.replaceState(null, '', location.pathname + location.search + '#/glossary');
+    shut(true);
+  }
+
+  /* ---------- the reader's moves ---------- */
+  function setKind(k) {
+    L.kind = k;
+    $$('#gl-kinds button').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-k') === k ? 'true' : 'false'); });
+    renderList();
+  }
+  function step(d, o) {
+    if (!L.shown.length) return;
+    var i = L.shown.indexOf(L.cur), n = i < 0 ? (d > 0 ? L.shown[0] : L.shown[L.shown.length - 1]) : L.shown[Math.max(0, Math.min(L.shown.length - 1, i + d))];
+    if (!n || n === L.cur) return;
+    show(n, { hash: 'replace', focus: false });
+    if (o && o.row) focusEl(rowOf(n));
+    else say(n.title + ', ' + KIND[n.kind].toLowerCase());
+  }
+  var clearSearch = function () { inp.value = ''; L.q = ''; renderList(); if (L.cur) reveal(L.cur, true); };
+
+  function wire() {
+    var view = $('.view[data-view="glossary"]'), typing = null;
+    var sync = function () { clearTimeout(typing); typing = null; if (inp.value !== L.q) { L.q = inp.value; renderList(); } };
+    inp.addEventListener('input', function () {
+      clearTimeout(typing);
+      typing = setTimeout(function () {
+        typing = null; L.q = inp.value; renderList();
+        // on a wide screen the first match shows as the reader types, as a desktop dictionary does
+        if (wide() && L.q.trim()) { if (L.shown.length) show(L.shown[0], { hash: 'replace' }); else showRaw(L.q.trim()); }
+        else if (wide() && L.cur) reveal(L.cur, true);
+      }, 110);
+    });
+    inp.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); sync(); step(e.key === 'ArrowDown' ? 1 : -1); }
+      else if (e.key === 'Enter') {
+        e.preventDefault(); sync();
+        var it = L.shown.indexOf(L.cur) >= 0 ? L.cur : L.shown[0];
+        if (it) show(it, { hash: 'push', focus: true });
+        else if (L.q.trim()) { showRaw(L.q.trim()); if (!wide()) open(); focusEl($('#gl-hw')); }
+      } else if (e.key === 'Escape' && inp.value) { e.preventDefault(); e.stopPropagation(); clearSearch(); }
+    });
+    $('#gl-clear').addEventListener('click', function () { clearSearch(); inp.focus(); });
+    $('#gl-kinds').addEventListener('click', function (e) { var b = e.target.closest('button[data-k]'); if (!b) return; setKind(b.getAttribute('data-k')); if (!L.searching && L.cur && wide()) reveal(L.cur, true); });
+    jumpEl.addEventListener('click', function (e) { var b = e.target.closest('button[data-l]'); if (b) toLetter(b.getAttribute('data-l')); });
+    // on a phone a finger can run down the letters
+    jumpEl.addEventListener('pointerdown', function (e) {
+      if (wide() || e.pointerType === 'mouse') return;
+      var go = function (ev) { var el = document.elementFromPoint(ev.clientX, ev.clientY), b = el && el.closest && el.closest('.gl-jump button[data-l]'); if (b) toLetter(b.getAttribute('data-l')); };
+      go(e);
+      var move = function (ev) { ev.preventDefault(); go(ev); }, up = function () { document.removeEventListener('pointermove', move); document.removeEventListener('pointerup', up); };
+      document.addEventListener('pointermove', move, { passive: false }); document.addEventListener('pointerup', up);
+    });
+
+    // a row, a link between entries, a neighbor or a suggestion opens its entry, and the address keeps it; the passages and
+    // the links out carry what the page they open should do (the supplier list's filter, a chip's card, a passage to flash)
+    view.addEventListener('click', function (e) {
+      if (e.defaultPrevented || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      var a = e.target.closest('a[data-id]');
+      if (a && L.byId[a.getAttribute('data-id')]) {
+        e.preventDefault();
+        var it = L.byId[a.getAttribute('data-id')], inRow = !!a.closest('.gl-r'), inNear = !!a.closest('.gl-near, .gl-meta');
+        if (inNear) { inp.value = ''; L.q = ''; renderList(); }
+        // a click keeps the focus on its row, so the arrows go on from there; Enter on a row moves it into the entry
+        show(it, { hash: 'push', focus: !wide() || !inRow || e.detail === 0, centre: !inRow });
+        return;
+      }
+      var p = e.target.closest('a[data-para]');
+      if (p) {
+        e.preventDefault(); var para = corpus()[+p.getAttribute('data-para')]; if (!para) return;
+        // on another page (the chapter's own): the passage goes with the reader, and that page lands on it (flash)
+        if (!para.el) { CP.go('#' + para.chapter, { para: { chapter: para.chapter, k: para.k, text: para.text } }); return; }
+        location.hash = '#' + para.chapter;
+        setTimeout(function () { CP.scrollToEl(para.el, false); if (CP.Router && CP.Router.settle) CP.Router.settle(para.el); para.el.classList.add('lk-flash'); setTimeout(function () { para.el.classList.remove('lk-flash'); }, 2600); }, 140);
+        return;
+      }
+      // the supplier list takes the whole filter from the link (a firm's name, or a country), so an older search cannot narrow it
+      var s = e.target.closest('a[data-sup]'); if (s) { var q = s.getAttribute('data-sup'); setTimeout(function () { if (CP.Suppliers && CP.Suppliers.show) CP.Suppliers.show({ q: q }); }, 60); return; }
+      var sc = e.target.closest('a[data-supcc]'); if (sc) { var cc = sc.getAttribute('data-supcc'); setTimeout(function () { if (CP.Suppliers && CP.Suppliers.show) CP.Suppliers.show({ country: cc }); }, 60); return; }
+      // a chip opens its card on the chart, adding nothing
+      var ch = e.target.closest('a[data-chip]'); if (ch) { var id = ch.getAttribute('data-chip'); setTimeout(function () { if (CP.Landscape && CP.Landscape.openCard) CP.Landscape.openCard(id, { show: true }); }, 60); return; }
+      if (e.target.closest('[data-back]')) { back(); return; }
+      var st = e.target.closest('[data-step]'); if (st) { step(+st.getAttribute('data-step')); return; }
+      var more = e.target.closest('[data-rest]');
+      if (more) { var rest = more.parentNode.querySelector('.gl-rest'); rest.hidden = false; more.parentNode.removeChild(more); focusEl(rest.querySelector('a')); return; }
+      var all = e.target.closest('[data-all]');
+      if (all) { var ul = all.closest('.gl-part').querySelector('.gl-men'), n = ul.children.length; ul.innerHTML = lastHits.map(rowHTML).join(''); all.parentNode.parentNode.removeChild(all.parentNode); var nx = ul.children[n] && ul.children[n].querySelector('a'); if (nx) focusEl(nx); }
+    });
+    listEl.addEventListener('keydown', function (e) {
+      var a = e.target.closest && e.target.closest('.gl-r a'); if (!a) return;
+      var it = L.byId[a.getAttribute('data-id')], i = L.shown.indexOf(it), go = null;
+      if (e.key === 'ArrowDown') go = L.shown[i + 1]; else if (e.key === 'ArrowUp') go = L.shown[i - 1];
+      else if (e.key === 'PageDown') go = L.shown[Math.min(L.shown.length - 1, i + 10)]; else if (e.key === 'PageUp') go = L.shown[Math.max(0, i - 10)];
+      else if (e.key === 'Home') go = L.shown[0]; else if (e.key === 'End') go = L.shown[L.shown.length - 1];
+      else if (e.key.length === 1 && !e.metaKey && !e.ctrlKey && !e.altKey && /\S/.test(e.key) && e.key !== '/') { inp.focus(); return; } // typing goes to the search
+      else return;
+      e.preventDefault(); if (!go) return;
+      if (wide()) show(go, { hash: 'replace', focus: false });
+      var r = rowOf(go); if (r) { focusEl(r); reveal(go, false); }
+    });
+    // "/" goes to this search while the Glossary shows (the site search keeps Ctrl+K); it is heard before the site's own "/"
+    window.addEventListener('keydown', function (e) {
+      if (e.key !== '/' || !here() || e.ctrlKey || e.metaKey || e.altKey || root.classList.contains('gl-open')) return;
+      var a = document.activeElement || document.body, box = $('#cp-search');
+      if (/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName || '') || a.isContentEditable || (box && !box.hidden)) return;
+      e.preventDefault(); e.stopPropagation(); inp.focus(); inp.select();
+    }, true);
+    // Escape closes an entry open over the list (the site search and a pop-up close first)
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'Escape' || e.defaultPrevented || !here() || !root.classList.contains('gl-open')) return;
+      var box = $('#cp-search'), tip = $('#gl-tip'); if ((box && !box.hidden) || (tip && !tip.hidden)) return;
+      e.preventDefault(); back();
+    });
+    listEl.addEventListener('scroll', function () { spy(); }, { passive: true });
+    window.addEventListener('scroll', function () { if (!wide()) spy(); }, { passive: true });
+    // a link in the entry that leaves the Glossary leaves nothing held
+    window.addEventListener('hashchange', function () { if (!here()) shut(false); });
+    var wasWide = wide(), rs = null;
+    window.addEventListener('resize', function () {
+      clearTimeout(rs); rs = setTimeout(function () {
+        measure();
+        var w = wide(); if (w === wasWide) return; wasWide = w;
+        if (!here()) return;
+        if (w) { shut(false); if (!L.cur) show(L.byId[DEFAULT], { hash: false, centre: true, focus: false }); else reveal(L.cur, true); }
+        else if (fromHash()) open();
+        spy(true);
+      }, 120);
+    });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { measure(); if (L.cur && wide() && here()) reveal(L.cur, true); spy(true); });
+    // the browser keeps an address's row in view a moment past load, so the entry's top is set again until the reader moves
+    var moved = false;
+    ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach(function (ev) { window.addEventListener(ev, function () { moved = true; }, { passive: true, once: true }); });
+    var settle = function () { if (moved || !here() || !L.cur || !fromHash()) return; if (wide()) { if (window.pageYOffset) jump(0); } else if (!root.classList.contains('gl-open')) return; reveal(L.cur, true); spy(true); };
+    [60, 250, 700].forEach(function (ms) { setTimeout(settle, ms); });
+    window.addEventListener('load', function () { settle(); setTimeout(settle, 250); });
+  }
+
+  /* each route to the Glossary: the address decides the entry. From another view or page (a pop-up's Look it up, a search
+     result) the entry's name takes focus; on a phone an entry is a dialog, so its name always does */
+  function activate() {
+    init(); if (!L.built) return;
+    measure();
+    // first: the page's first route (the router has no view before it); came: that first route is a move from another page of the site
+    var it = fromHash(), R = CP.Router || {}, first = !R.from;
+    var came = first && !L.arrived && /^https?:/.test(document.referrer) && document.referrer.indexOf(location.origin + '/') === 0 && document.referrer !== location.href;
+    L.arrived = true;
+    if (it) {
+      L.pushed = !!(history.state && history.state.gl);
+      show(it, { hash: false, centre: true, focus: wide() ? (came || !first) : true });
+    } else if (wide()) {
+      if (L.searching) { inp.value = ''; L.q = ''; renderList(); }
+      show(L.byId[DEFAULT], { hash: false, centre: true, focus: false });
+    } else {
+      var wasOpen = root.classList.contains('gl-open');
+      shut(wasOpen);
+    }
+    spy(true);
+  }
+
+  CP.Lookup = L;
+  L.show = function (id) { var it = L.byId[id] || L.byKey[id]; if (it) show(it, { hash: 'replace', centre: true }); };
+  L.search = function (s) { inp.value = s; L.q = s; renderList(); if (wide() && L.shown.length) show(L.shown[0], { hash: 'replace' }); else if (wide() && s.trim()) showRaw(s.trim()); };
+  L.flash = flash; L.domCorpus = domCorpus; L.corpus = corpus;
+  /* The rows and the passages come with glossary.js (build/build.js), fetched when the Glossary first opens (CP.need); the index
+     head paints at once, and the parts the list fills wait hidden until it is in (lookup.css, .gl-wait) */
+  L.load = function (fn) {
+    var az = $('#lk-items');
+    if (!az || az.children.length || !CP.need) { fn(); return; }
+    CP.need('glossary.js', function () { fn(); var v = $('.view[data-view="glossary"]'); if (v && !v.hasAttribute('data-gl')) v.setAttribute('data-gl', 'empty'); });
+  };
+  CP.register('glossary', { activate: function () { L.load(activate); }, stage: false });
 })();

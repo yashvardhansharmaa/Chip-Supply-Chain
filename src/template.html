@@ -76,10 +76,10 @@ html:not(.booted)[data-sub="exposure"] .view[data-view="controls"] .sub[data-sub
 html:not(.booted)[data-sub="country"] .view[data-view="suppliers"] #sup-ladder { display: none !important; }
 html:not(.booted)[data-sub="exposure"] .view[data-view="controls"] .sub[data-sub="exposure"] { display: block !important; }
 /* the views whose bodies boot() builds show only their heads until then, so nothing painted early moves when it does:
-   the Export Controls board and timeline, the Glossary, AI Chips (whose #aic holds its title and standfirst), and the
-   Suppliers atlas when the address picks a country */
+   the Export Controls board and timeline, AI Chips (whose #aic holds its title and standfirst), and the Suppliers atlas
+   when the address picks a country. The Glossary paints its index head at once and keeps the parts its list fills hidden
+   until the list is in (src/modules/lookup.css, .gl-wait) */
 html:not(.booted)[data-route="controls"]:not([data-sub="exposure"]) .view[data-view="controls"] > :not(.view-head):not(#controls-subtabs),
-html:not(.booted)[data-route="glossary"] .view[data-view="glossary"] > :not(.view-head),
 html:not(.booted)[data-route="landscape"] .view[data-view="landscape"] > :not(.aic),
 html:not(.booted)[data-pick] .view[data-view="suppliers"] > :not(.view-head) { display: none !important; }
 </style>
@@ -279,31 +279,31 @@ html:not(.booted)[data-pick] .view[data-view="suppliers"] > :not(.view-head) { d
 
     <!--home-->
     <section class="view column wide" data-view="glossary">
-      <!-- The Glossary as a dictionary (redesign option B, src/modules/lookup.js): every entry in columns, A to Z, under a sticky
-           bar with the search, the kinds and the letters; an entry opens in the sheet. #lk-items and #glossary are the entries as
-           data, read by the dictionary, the look-up popovers and the site search, and their ids are the entries' addresses -->
-      <div class="view-head vh gl-head">
-        <p class="vt" role="heading" aria-level="1">Glossary</p>
-        <p class="dek">Every term, firm, chip and country, with the passages that mention them.</p>
-        <p class="gl-try" id="gl-try"><span class="gl-try-k">Try</span></p>
-      </div>
-      <div class="gl-bar-at" id="gl-bar-at" aria-hidden="true"></div>
-      <div class="gl-bar" id="gl-bar">
-        <div class="gl-bar-row">
-          <label class="gl-field"><span class="sr-only">Find a term, a firm, a chip or a country</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="gl-search" type="search" placeholder="A term, a firm, a chip, a country" autocomplete="off" spellcheck="false"><button type="button" class="gl-clear" id="gl-clear" aria-label="Clear the search" hidden>×</button></label>
-          <div class="gl-bar-r"><div class="gl-kinds" id="gl-kinds" role="group" aria-label="Kind of entry"></div><p class="gl-count" id="lk-count" role="status"></p></div>
+      <!-- The Glossary as an index and one entry (Index and entry, the owner's choice of 29 Oct 2026; src/modules/lookup.js).
+           The index: the title and count, the search, the kinds, and every entry A to Z, which glossary.js brings into
+           #lk-items with each entry's addresses (a row's lk- id, a term's link its gl- id). The entry: one at a time, whole.
+           On a phone the index is the page and an entry opens over it. The parts marked gl-wait show once the list is in -->
+      <div class="gl">
+        <div class="gl-index" id="gl-index">
+          <div class="gl-top">
+            <p class="gl-title vt" role="heading" aria-level="1">Glossary</p>
+            <p class="gl-count" id="gl-count" role="status" aria-live="polite">{{GL_ENTRIES}} entries</p>
+          </div>
+          <div class="sr-only"><p class="dek">Every term, firm, chip and country, with the passages that mention them.</p></div>
+          <div class="gl-bar" id="gl-bar">
+            <label class="gl-field"><span class="sr-only">Search the glossary by name or text</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="gl-search" type="search" placeholder="Search {{GL_ENTRIES}} entries" autocomplete="off" spellcheck="false" aria-describedby="gl-keys" aria-controls="gl-list"><button type="button" class="gl-clear" id="gl-clear" aria-label="Clear the search" hidden>×</button></label>
+            <div class="gl-kinds" id="gl-kinds" role="group" aria-label="Kind of entry"><button type="button" data-k="all" aria-pressed="true">All</button><button type="button" data-k="term" aria-pressed="false">Terms</button><button type="button" data-k="firm" aria-pressed="false">Firms</button><button type="button" data-k="chip" aria-pressed="false">AI chips</button><button type="button" data-k="country" aria-pressed="false">Countries</button></div>
+          </div>
+          <p class="sr-only" id="gl-keys">The up and down arrows move through the entries.</p>
+          <div class="gl-lists">
+            <nav class="gl-list gl-wait" id="gl-list" aria-label="Entries"><ul class="gl-az" id="lk-items"></ul><div class="gl-res" id="gl-res" hidden></div></nav>
+            <div class="gl-jump gl-wait" id="gl-jump" role="group" aria-label="Go to a letter"></div>
+          </div>
         </div>
-        <nav class="gl-letters-nav" aria-label="Entries by letter"><ul class="gl-letters" id="gl-letters"></ul></nav>
+        <article class="gl-pane gl-wait" id="gl-pane" aria-labelledby="gl-hw" tabindex="-1"></article>
       </div>
-      <div class="gl-none" id="gl-none" hidden></div>
-      <div class="gl-dict" id="gl-dict"></div>
-      <ul class="gl-data" id="lk-items" hidden>{{LOOKUP_LIST}}</ul>
-      <dl class="glossary gl-data" id="glossary" hidden>{{GLOSSARY}}</dl>
-      <aside class="gl-sheet" id="gl-sheet" aria-labelledby="gl-sheet-t" hidden>
-        <div class="gl-sheet-bar"><p class="gl-sheet-k" id="gl-sheet-k"></p><div class="gl-sheet-nav"><button type="button" id="gl-prev" aria-label="Previous entry"><span aria-hidden="true">←</span></button><button type="button" id="gl-next" aria-label="Next entry"><span aria-hidden="true">→</span></button><button type="button" class="gl-close" id="gl-close">Close</button></div></div>
-        <div class="gl-sheet-body" id="gl-sheet-body"></div>
-      </aside>
-      <footer class="site-footer">{{FOOTER}}</footer>
+      <p class="sr-only" id="gl-say" aria-live="polite"></p>
+      <footer class="site-footer gl-wait">{{FOOTER}}</footer>
     </section>
     <!--/home-->
 
