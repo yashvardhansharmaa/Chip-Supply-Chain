@@ -217,8 +217,9 @@
     /* The model's view matrix for a slot at the current turn (as draw() sets it), so the balloons can find a part on the screen */
     model: function (slot, extraRot, sc) {
       var t = slot.tilt, idle = this.spin + slot.spinBase;
+      // a turntable specimen makes every turn about its own axis, so it never leans (the HBM stack, 29 Oct 2026); t[1] is where it starts
       var M = slot.turntable
-        ? mul(rotZ(t[2]), mul(rotY(t[1] + this.scrollAngle + extraRot), mul(rotX(t[0]), rotY(idle))))
+        ? mul(rotZ(t[2]), mul(rotX(t[0]), rotY(t[1] + idle + this.scrollAngle + extraRot)))
         : mul(rotZ(t[2]), mul(rotY(t[1] + idle + this.scrollAngle + extraRot), rotX(t[0])));
       M = mul(M, scale(sc));
       if (this.userYaw || this.userPitch) M = mul(rotX(this.userPitch), mul(rotY(this.userYaw), M));
@@ -238,7 +239,7 @@
       var P = this.proj(w / h), t = slot.tilt, smp = slot.sample, bottom = 0, top = h, side = 0;
       for (var a = 0; a < 24; a++) {
         var yaw = a * Math.PI / 12;
-        var M = slot.turntable ? mul(rotZ(t[2]), mul(rotY(t[1]), mul(rotX(t[0]), rotY(yaw)))) : mul(rotZ(t[2]), mul(rotY(t[1] + yaw), rotX(t[0])));
+        var M = slot.turntable ? mul(rotZ(t[2]), mul(rotX(t[0]), rotY(t[1] + yaw))) : mul(rotZ(t[2]), mul(rotY(t[1] + yaw), rotX(t[0])));
         var A = mul(P, M);
         for (var i = 0; i < smp.length; i += 3) {
           var x = smp[i], y = smp[i + 1], z = smp[i + 2];
@@ -405,8 +406,8 @@
     draw: function (slot, op, extraRot, sc) {
       var gl = this.gl, aspect = this.w / this.h;
       // proj(): the perspective, and the camera pulled back on narrow (portrait) stages so the bounding sphere fits the width too
-      // (3.8 keeps the unit sphere inside 89% of the canvas height, including perspective). model(): turntable specimens spin
-      // about their own vertical axis before the tilt (a plan view rotating in its plane), the rest about the world axis, and the
+      // (3.8 keeps the unit sphere inside 89% of the canvas height, including perspective). model(): turntable specimens turn
+      // about their own vertical axis before the tilt (a stack that never leans), the rest about the world axis, and the
       // reader's own turn about the world axes
       var MVP = mul(this.proj(aspect), this.model(slot, extraRot, sc));
       gl.uniformMatrix4fv(this.loc.uMVP, false, new Float32Array(MVP));

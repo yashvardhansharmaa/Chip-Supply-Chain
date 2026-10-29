@@ -1,8 +1,4 @@
 {
- "advanced-packaging": [
-  1089,
-  752
- ],
  "chemicals-gases-and-photoresist": [
   745,
   872
@@ -31,10 +27,6 @@
   628,
   651
  ],
- "memory-and-hbm": [
-  1039,
-  891
- ],
  "metrology-and-inspection": [
   585,
   1035
@@ -42,10 +34,6 @@
  "photomasks-and-pellicles": [
   873,
   737
- ],
- "silicon-and-wafers": [
-  405,
-  1043
  ],
  "substrates-and-pcbs": [
   1094,

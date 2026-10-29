@@ -27,7 +27,7 @@ const BALLOONS = `(function(){var s=document.querySelector('.ch-balloons');if(!s
           const t = await open(chrome, url, { width, theme: theme === 'dark' ? 'dark' : '', wait: 2500 });
           const f = `${name}-${width}-${theme}-${TAG}`;
           if (width >= 900) {
-            await t.ev(`(function(){var s=document.querySelector('.ch-spec');document.documentElement.style.scrollBehavior='auto';window.scrollTo(0,s.getBoundingClientRect().top+scrollY-90);return 1;})()`);
+            await t.ev(`(function(){var s=document.querySelector('.ch-spec');document.documentElement.style.scrollBehavior='auto';var c=s.querySelector('canvas'),r=(c||s).getBoundingClientRect();window.scrollTo(0,Math.min(s.getBoundingClientRect().top,r.top)+scrollY-80);return 1;})()`);
             await sleep(2600);
             const r = await t.ev(`(function(){var s=document.querySelector('.ch-spec'),c=s.querySelector('canvas'),b=s.getBoundingClientRect(),cb=c?c.getBoundingClientRect():b,top=Math.min(b.top,cb.top);return {x:b.left-40,y:top+scrollY-10,w:b.width+80,h:b.bottom-top+20};})()`);
             const shot = await t.s('Page.captureScreenshot', { format: 'png', clip: { x: r.x, y: r.y, width: r.w, height: r.h, scale: 1 } });

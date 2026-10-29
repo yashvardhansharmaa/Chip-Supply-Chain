@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 /* The specimen stills the readable chapter pages show where the app draws the live specimen (stage 3, from the stage 2 review:
-   a readable page opened on a lone caption). For each chapter but Lithography, which has its own annotated still, it opens the
+   a readable page opened on a lone caption). For each chapter but those with an annotated still of their own (data/specimen-parts.json
+   "still": Lithography, and since 29 Oct 2026 Silicon and Wafers, Memory and HBM and Advanced Packaging, made by
+   qa/redesign/stills-parts.js), it opens the
    chapter in The Chain on the local preview, waits for the drawing to land in the chapter's slot, and shoots the slot at twice
    the pixels, with motion reduced so the drawing holds the angle it opens on. Chapters 16 and 17 are shot on their night ground,
    as the app sets them. Then each shot is trimmed to the drawing with a margin and written as build/assets/specimens/<id>.webp
@@ -17,9 +19,10 @@ const BASE = args[0] && !args[0].startsWith('--') ? args[0] : 'http://127.0.0.1:
 const ONLY = args.includes('--only') ? args[args.indexOf('--only') + 1].split(',') : [];
 const ROOT = path.resolve(__dirname, '..', '..');
 const OUT = path.join(ROOT, 'build', 'assets', 'specimens');
+const PARTS = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'specimen-parts.json'), 'utf8'));
 const ids = fs.readdirSync(path.join(ROOT, 'content')).filter((f) => /^\d\d-.*\.md$/.test(f)).sort()
   .map((f) => { const m = fs.readFileSync(path.join(ROOT, 'content', f), 'utf8').match(/"id":\s*"([^"]+)"/); return m ? m[1] : f.replace(/^\d\d-|\.md$/g, ''); })
-  .filter((id) => id !== 'lithography' && id !== 'introduction-and-goals' && (!ONLY.length || ONLY.includes(id)));
+  .filter((id) => !((PARTS[id] || {}).still) && id !== 'introduction-and-goals' && (!ONLY.length || ONLY.includes(id)));
 const TRIM = `
 import sys
 from PIL import Image, ImageChops
