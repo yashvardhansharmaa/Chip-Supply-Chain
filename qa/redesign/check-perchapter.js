@@ -224,7 +224,7 @@ const kb = (b) => (b / 1024).toFixed(0) + ' KB';
     }
 
     /* ---------- 4. search finds a chapter, from any page, and opens its page ---------- */
-    for (const [from, q, to] of [['/#/', 'Memory and HBM', 'memory-and-hbm'], ['/lithography/', 'Advanced Packaging', 'advanced-packaging'], ['/#/glossary', 'Who Controls the Chain', 'geopolitics']]) {
+    for (const [from, q, to] of [['/#/', 'Memory and HBM', 'memory-and-hbm'], ['/lithography/', 'Advanced Packaging', 'advanced-packaging'], ['/glossary/', 'Who Controls the Chain', 'geopolitics']]) {
       const t = await open(chrome, BASE + from, { width: 1440, wait: 2000 });
       await t.ev('(CP.Tools.open(), 1)');
       await t.s('Input.insertText', { text: q }); await sleep(1500);

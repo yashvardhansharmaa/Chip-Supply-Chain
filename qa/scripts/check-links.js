@@ -40,9 +40,9 @@ if (LOCAL) {
       if (!frag || !r.html) continue;
       // a route belongs to the home page; the book serves The Chain's own (#/chain), its contents
       if (frag.startsWith('/')) { if (u.pathname !== '/' && !(u.pathname === '/book/' && /^\/(chain|stack)$/.test(frag))) bad.push(`#${frag} is a route on ${u.pathname}, which has none (linked from ${where})`); continue; }
-      // the Glossary's entries come with glossary.js, and its A to Z index has addresses with no element behind them (#a-z, a
-      // kind's #a-z/firms, a letter's #a-z/s; src/modules/lookup.js)
-      if (!ids(r.html).has(frag) && !(u.pathname === '/' && (/^(gl|lk)-/.test(frag) || /^a-z(\/(terms|firms|ai-chips|countries|0-9|[a-z]))?$/.test(frag)))) bad.push(`${u.pathname}#${frag}: no such id (linked from ${where})`);
+      // the Glossary's page holds every entry's row (since 30 Oct 2026), and its A to Z index has addresses with no element
+      // behind them (#a-z, a kind's #a-z/firms, a letter's #a-z/s; src/modules/lookup.js)
+      if (!ids(r.html).has(frag) && !(u.pathname === '/glossary/' && /^a-z(\/(terms|firms|ai-chips|countries|0-9|[a-z]))?$/.test(frag))) bad.push(`${u.pathname}#${frag}: no such id (linked from ${where})`);
     }
     console.log(`check-links --local: ${pages.length} pages, ${links.size} addresses, ${got.size} fetched from ${LOCAL}`);
     bad.forEach((b) => console.log('BROKEN ' + b));

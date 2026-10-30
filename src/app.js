@@ -553,8 +553,9 @@
   var ALIAS = { chain: 'stack', home: 'walk', intro: 'walk', briefing: 'walk', geopolitics: 'stack', thresholds: 'controls', sources: 'stack', 'export-controls': 'controls', 'ai-chips': 'landscape' }; // the tab names typed as routes land on their pages // the Sources page was retired; its sources sit at the end of each chapter // the licence-thresholds tab was retired; its route lands on the board
   var MODULE_VIEWS = {}; // modules register { activate(), stage: bool } per view through window.CP.register
   /* Each chapter has a page of its own since 28 Oct 2026 (build/build.js), and so do The Chain's contents: PAGE says which page
-     this is, the home page (the views), the contents page (/supply-chain/), a chapter's page (that chapter alone) or the
-     book (the contents and every chapter, for print), and where the site's root is from here. away(hash) is the address a hash belongs at when this page does not serve it, and ''
+     this is, the home page (the views), the contents page (/supply-chain/), a chapter's page (that chapter alone), the
+     Glossary's page (/glossary/, since 30 Oct 2026) or the book (the contents and every chapter, for print), and where the
+     site's root is from here. away(hash) is the address a hash belongs at when this page does not serve it, and ''
      when it does (src/preroute.js away()); addr(hash) is the address a link the app writes should carry: the hash itself
      where this page serves it, else that page's address, so a link to a chapter is a real link */
   var PAGE = (window.CP_PRE && window.CP_PRE.page) || { kind: 'book', chapter: '', root: '' };
@@ -621,6 +622,7 @@
     after: function (act) {
       if (act.chip) Landscape.openCard(act.chip, { show: true });
       if (act.q) Suppliers.show({ q: act.q });
+      if (act.country) Suppliers.show({ country: act.country }); // a Glossary country's firms (src/modules/lookup.js)
       if (act.card && Tools.openCard) Tools.openCard(act.card.id, act.card.i);
       if (act.para && window.CP.Lookup && window.CP.Lookup.flash) window.CP.Lookup.flash(act.para);
       if (act.land) Keys.land(act.land); // a search result's place takes focus, as it did on one page
@@ -637,6 +639,7 @@
       var atHome = bare === '' || bare === '/' || bare.indexOf('/?') === 0; // '#/?country=JP' is the home page with a query
       var v = (atHome || m) ? 'walk' : 'stack'; // the site opens on the walk (trial, 11 Sept 2026); an unknown #/route goes home; a bare chapter anchor opens the chain
       if (PAGE.kind !== 'home' && v === 'walk') { v = 'stack'; m = null; bare = ''; } // a chapter's page and the book hold The Chain alone (their own top)
+      if (PAGE.kind === 'glossary') { v = 'glossary'; m = null; bare = ''; } // the Glossary's page holds the Glossary alone, and every address it serves is the Glossary's
       if (m && VIEWS.indexOf(m[1]) >= 0) v = m[1];
       var anchor = v === 'geopolitics' ? 'geopolitics' : ((!m && bare && !atHome) ? dec(bare) : null);
       if (anchor && !m) { // a bare anchor belongs to whichever view holds it; one that sits outside them all (the skip link's #app) leaves the view alone

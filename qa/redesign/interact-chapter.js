@@ -127,7 +127,7 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8766';
       const lp = await open(chrome, BASE + '/book/#/chain', { width: 1440, wait: 2000 });
       const onCard = await lp.ev("JSON.stringify(CP.Lookup.domCorpus().filter(function (p) { return p.el.closest('.prose > .plate'); }).map(function (p) { return p.chapter + '|' + p.text; }))");
       await lp.close();
-      const t = await open(chrome, BASE + '/#/glossary', { width: 1440, wait: 3000 });
+      const t = await open(chrome, BASE + '/glossary/', { width: 1440, wait: 3000 }); // the Glossary's own page (30 Oct 2026)
       // the Glossary is search first (Kinds and letters, 30 Oct 2026): "euv" typed and Enter open EUV's entry, the top match,
       // and Show all lists every place it appears
       await t.ev("(document.getElementById('gl-search').focus(), 1)"); await t.s('Input.insertText', { text: 'euv' }); await sleep(400);
