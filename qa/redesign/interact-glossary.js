@@ -8,12 +8,15 @@
    Critical mark, a country's shares and EU-27 line, a chip's card on AI Chips, Browse A to Z (#a-z, a kind, a letter, the
    strip, Back to the same place), the addresses (#gl-, #lk-term-, #lk-firm-, #lk-chip-, #lk-country-, #a-z, #a-z/<kind>,
    #a-z/<letter>), a passage out to its chapter's page and Back, the ways in (a chapter's pop-up, the masthead search, the
-   Export Controls board, the static page /glossary/), the phone at 390 and 320 (44 px targets, the field rising, the finger
-   on the letters), focus, and dark mode.
+   Export Controls board, the masthead's tab), the phone at 390 and 320 (44 px targets, the field rising, the finger on the
+   letters), focus, and dark mode. Since 30 Oct 2026 the Glossary is its own page, /glossary/, and every case runs there;
+   the page as delivered (no script) holds every entry's words, and the old addresses on the home page (/#/glossary, /#gl-,
+   /#lk-, /#a-z) and the static copy's anchors (#euv, #letter-s, #list-firms) land on the same entries.
    usage: node qa/redesign/interact-glossary.js [base] (default http://127.0.0.1:8798) */
 'use strict';
 const { launch, open, sleep } = require('./cdp.js');
 const BASE = process.argv[2] || 'http://127.0.0.1:8798';
+const G = BASE + '/glossary/'; // the Glossary's own page (30 Oct 2026)
 (async () => {
   const chrome = launch(); const out = []; let bad = 0;
   const check = (name, ok, detail) => { out.push(`${ok ? 'ok  ' : 'FAIL'} ${name}${detail !== undefined && detail !== '' ? ': ' + (typeof detail === 'string' ? detail : JSON.stringify(detail)) : ''}`); if (!ok) bad++; };
@@ -36,9 +39,9 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8798';
   const sideways = 'document.documentElement.scrollWidth <= innerWidth';
   try {
     /* ---------- 1440: the first screen ---------- */
-    let t = await open(chrome, BASE + '/#/glossary', { width: 1440, wait: 1500 });
+    let t = await open(chrome, G, { width: 1440, wait: 1500 });
     check('1440: the rows are in', await ready(t));
-    check('1440: it opens at rest', (await t.ev(state)) === 'home' && (await t.ev('location.hash')) === '#/glossary');
+    check('1440: it opens at rest, at its own address', (await t.ev(state)) === 'home' && (await t.ev('location.pathname + location.hash')) === '/glossary/');
     check('1440: every entry has its row in the page, with its lk- id, and each term its gl- id', (await t.ev("document.querySelectorAll('#lk-items li.gl-r[id^=\"lk-\"]').length")) === 487 && (await t.ev("document.querySelectorAll('#lk-items li[id^=\"lk-term-\"] > a[id^=\"gl-\"]').length")) === 208);
     check('1440: the name, a level-one heading', (await t.ev("document.getElementById('gl-title').textContent")) === 'Glossary' && (await t.ev("document.getElementById('gl-title').getAttribute('aria-level')")) === '1');
     check('1440: the search is labeled and counts the entries', (await t.ev("document.querySelector('label[for=\"gl-search\"]').textContent")).length > 10 && (await t.ev("document.getElementById('gl-search').placeholder")) === 'Search 487 entries' && (await t.ev("document.getElementById('gl-search').getAttribute('role')")) === 'combobox');
@@ -90,7 +93,7 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8798';
     await t.ev('(history.back(),1)'); await sleep(700);
     check('Back returns to the words looked for', (await t.ev(hw)) === 'nvidai' && (await t.ev(state)) === 'entry');
     await t.ev('(history.back(),1)'); await sleep(700);
-    check('Back again returns to rest', (await t.ev(state)) === 'home' && (await t.ev('location.hash')) === '#/glossary');
+    check('Back again returns to rest', (await t.ev(state)) === 'home' && (await t.ev('location.pathname + location.hash')) === '/glossary/');
     // Enter opens the top match, with no button: the field moves into the bar
     await typeIn(t, 'hbm'); await key(t, 'Enter', 'Enter', 13, '\r'); await sleep(500);
     check('Enter opens the top match, and its name takes focus', (await t.ev(state)) === 'entry' && (await t.ev(hw)) === 'HBM' && (await t.ev('location.hash')) === '#gl-hbm' && (await t.ev(act)) === 'gl-hw');
@@ -105,7 +108,11 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8798';
     await key(t, 'Escape', 'Escape', 27); await sleep(150);
     // the title goes back to rest
     await t.ev("(document.querySelector('#gl-title a').click(),1)"); await sleep(400);
-    check('the name of the Glossary returns to rest', (await t.ev(state)) === 'home' && (await t.ev('location.hash')) === '#/glossary');
+    check('the name of the Glossary returns to rest', (await t.ev(state)) === 'home' && (await t.ev('location.pathname + location.hash')) === '/glossary/');
+    // the masthead's Glossary tab, from an entry, returns to rest in place
+    await t.ev("(document.getElementById('gl-rand').click(),1)"); await sleep(500);
+    await t.ev("(document.querySelector('.tabs a[data-view=\"glossary\"]').click(),1)"); await sleep(400);
+    check("the masthead's Glossary tab is current, links to /glossary/ and returns to rest in place", (await t.ev("document.querySelector('.tabs a[aria-current=\"page\"]').textContent")) === 'Glossary' && (await t.ev("document.querySelector('.tabs a[data-view=\"glossary\"]').getAttribute('href')")) === '../glossary/' && (await t.ev(state)) === 'home' && (await t.ev('location.pathname + location.hash')) === '/glossary/');
     // Random entry
     await t.ev("(document.getElementById('gl-rand').click(),1)"); await sleep(500);
     check('Random entry opens an entry and the address names it', (await t.ev(state)) === 'entry' && /^#(gl-|lk-)/.test(await t.ev('location.hash')) && (await t.ev(hw)).length > 0, await t.ev(hw));
@@ -113,7 +120,7 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8798';
     await t.close();
 
     /* ---------- an entry's parts ---------- */
-    t = await open(chrome, BASE + '/#lk-term-chip', { width: 1440, wait: 1500 }); await ready(t); await sleep(300);
+    t = await open(chrome, G + '#lk-term-chip', { width: 1440, wait: 1500 }); await ready(t); await sleep(300);
     check('#lk-term-chip opens chip, at the top', (await t.ev(hw)) === 'chip' && (await t.ev(state)) === 'entry' && (await t.ev('scrollY')) === 0);
     check('chip reads it in its chapters, four named and the rest behind a button', /^Read it in/.test(await t.ev("document.querySelector('.gl-reads').innerText")) && /^and \d+ more$/.test(await t.ev("document.querySelector('.gl-reads [data-rest]').textContent")) && (await t.ev("document.querySelectorAll('.gl-also > a').length")) === 4);
     await t.ev("(document.querySelector('.gl-reads [data-rest]').click(),1)"); await sleep(200);
@@ -123,7 +130,7 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8798';
     await t.ev("(document.querySelector('.gl-more button').click(),1)"); await sleep(300);
     check('Show all shows every place', (await t.ev("document.querySelectorAll('.gl-men li').length")) === n0);
     await t.close();
-    t = await open(chrome, BASE + '/#lk-firm-asml', { width: 1440, wait: 1500 }); await ready(t); await sleep(300);
+    t = await open(chrome, G + '#lk-firm-asml', { width: 1440, wait: 1500 }); await ready(t); await sleep(300);
     check('#lk-firm-asml opens ASML', (await t.ev(hw)) === 'ASML' && (await t.ev(state)) === 'entry');
     check("a firm keeps its facts, its Critical mark, its revenue's filing link and its China chart", /Chokepoint level/.test(await t.ev("document.querySelector('.gl-facts').innerText")) && !!(await t.ev("document.querySelector('.gl-facts .gl-chk--critical')")) && !!(await t.ev("document.querySelector('.gl-facts a.rev-filed')")) && !!(await t.ev("document.querySelector('.gl-facts .sup-ex-mini svg')")));
     check('a firm links to its row in the supplier list', !!(await t.ev("document.querySelector('#gl-pane a[data-sup=\"ASML\"]')")));
@@ -139,7 +146,7 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8798';
     check('Previous goes back to it', (await t.ev(hw)) === 'ASML');
     check('entries: no script errors', !t.errors.length, t.errors.join(' | '));
     await t.close();
-    t = await open(chrome, BASE + '/#lk-country-nl', { width: 1440, wait: 1500 }); await ready(t); await sleep(300);
+    t = await open(chrome, G + '#lk-country-nl', { width: 1440, wait: 1500 }); await ready(t); await sleep(300);
     check('#lk-country-nl opens the Netherlands with its shares', (await t.ev(hw)) === 'Netherlands' && /Share of each segment/.test(await t.ev("document.getElementById('gl-pane').innerText")));
     check('the shares follow the chart rule: the largest wine, the rest the tint', (await t.ev("getComputedStyle(document.querySelector('.gl-share.is-top .gl-share-bar')).backgroundImage")).includes('rgb(122, 31, 43)') && (await t.ev("getComputedStyle(document.querySelector('.gl-share:not(.is-top) .gl-share-bar')).backgroundImage")).includes('rgb(210, 209, 204)'));
     check('the band marks on its chokepoint cards', !!(await t.ev("document.querySelector('.gl-cards .gl-card-b--extreme, .gl-cards .gl-card-b--high')")));
@@ -147,17 +154,17 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8798';
     await t.ev("(document.querySelector('.gl-cat-f a[data-id]').click(),1)"); await sleep(400);
     check("a Critical firm's name opens its entry", /^#lk-firm-/.test(await t.ev('location.hash')) && !!(await t.ev("document.querySelector('.gl-facts')")), await t.ev(hw));
     await t.close();
-    t = await open(chrome, BASE + '/#lk-chip-nvidia-b200', { width: 1440, wait: 1500 }); await ready(t); await sleep(300);
+    t = await open(chrome, G + '#lk-chip-nvidia-b200', { width: 1440, wait: 1500 }); await ready(t); await sleep(300);
     check('#lk-chip- opens the chip with its facts', (await t.ev(hw)) === 'Nvidia B200' && /Dense TFLOPS/i.test(await t.ev("document.getElementById('gl-pane').innerText")));
-    await t.ev("(document.querySelector('#gl-pane a[data-chip]').click(),1)"); await sleep(900);
-    check('On AI Chips opens the chip there', (await t.ev('location.hash')) === '#/landscape?pick=nvidia-b200' && (await t.ev("(document.querySelector('#aic-card h2')||{}).textContent")) === 'B200');
-    await t.ev('(history.back(),1)'); await sleep(1200);
+    await t.ev("(document.querySelector('#gl-pane a[data-chip]').click(),1)"); await sleep(2500);
+    check('On AI Chips opens the chip there, on the home page', (await t.ev('location.pathname + location.hash')) === '/#/landscape?pick=nvidia-b200' && (await t.ev("(document.querySelector('#aic-card h2')||{}).textContent")) === 'B200');
+    await t.ev('(history.back(),1)'); await sleep(2500); await ready(t);
     check('Back to the Glossary returns to the chip', (await t.ev(hw)) === 'Nvidia B200' && (await t.ev(state)) === 'entry');
     check('the addresses: no script errors', !t.errors.length, t.errors.join(' | '));
     await t.close();
 
     /* ---------- Browse A to Z ---------- */
-    t = await open(chrome, BASE + '/#/glossary', { width: 1440, wait: 1500 }); await ready(t);
+    t = await open(chrome, G, { width: 1440, wait: 1500 }); await ready(t);
     await t.ev("(document.querySelector('#gl-kindrow a[data-azk=\"firm\"]').click(),1)"); await sleep(500);
     check('a kind opens the index of that kind', (await t.ev(state)) === 'browse' && (await t.ev('location.hash')) === '#a-z/firms' && (await t.ev("document.getElementById('gl-count').textContent")) === '226 firms' && (await t.ev("document.querySelector('#gl-kinds [data-k=\"firm\"]').getAttribute('aria-pressed')")) === 'true');
     check('the firms only, and every row stays in the page', (await t.ev(`${shown}.every(function(r){return r.getAttribute('data-kind')==='firm';})`)) && (await t.ev(`${shown}.length`)) === 226 && (await t.ev("document.querySelectorAll('#lk-items li[id^=\"lk-\"]').length")) === 487);
@@ -165,7 +172,7 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8798';
     await t.ev("(document.querySelector('#gl-kinds [data-k=\"country\"]').click(),1)"); await sleep(300);
     check('another kind rewrites the address in place, and a letter with none is off', (await t.ev('location.hash')) === '#a-z/countries' && (await t.ev("document.getElementById('gl-count').textContent")) === '15 countries' && (await t.ev("document.querySelectorAll('#gl-jump span').length")) > 5);
     await t.ev('(history.back(),1)'); await sleep(600);
-    check('Back from the index returns to rest', (await t.ev(state)) === 'home' && (await t.ev('location.hash')) === '#/glossary');
+    check('Back from the index returns to rest', (await t.ev(state)) === 'home' && (await t.ev('location.pathname + location.hash')) === '/glossary/');
     await t.ev("(document.querySelector('#gl-abc a[data-azl=\"S\"]').click(),1)"); await sleep(600);
     check('a letter opens the index at that letter, all kinds, its head with focus', (await t.ev(state)) === 'browse' && (await t.ev('location.hash')) === '#a-z/s' && (await t.ev(act)) === 'gl-lh-S' && (await t.ev("document.getElementById('gl-count').textContent")) === '487 entries');
     check('the letter lands under the strip, and the strip marks it', Math.abs(await t.ev("document.getElementById('gl-lh-S').closest('.gl-g').getBoundingClientRect().top - document.getElementById('gl-jump').getBoundingClientRect().bottom")) < 4 && (await t.ev("(document.querySelector('#gl-jump [aria-current=\"true\"]')||{}).textContent")) === 'S');
@@ -184,29 +191,29 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8798';
     check('Browse A to Z: no script errors', !t.errors.length, t.errors.join(' | '));
     await t.close();
     for (const [h, want] of [['#a-z', { hash: '#a-z', count: '487 entries', top: 0 }], ['#a-z/ai-chips', { count: '38 AI chips', kind: 'chip' }], ['#a-z/x', { count: '487 entries', top: 0 }]]) {
-      t = await open(chrome, BASE + '/' + h, { width: 1440, wait: 1500 }); await ready(t); await sleep(400);
+      t = await open(chrome, G + h, { width: 1440, wait: 1500 }); await ready(t); await sleep(400);
       const st = await t.ev(`({ state: ${state}, count: document.getElementById('gl-count').textContent, kind: (document.querySelector('#gl-kinds [aria-pressed="true"]')||{}).getAttribute('data-k'), y: scrollY, errors: 0 })`);
       check(`${h} opens the index${want.kind ? ' of that kind' : ''}${h === '#a-z/x' ? ' (X has no entries: at its top)' : ''}`, st.state === 'browse' && st.count === want.count && (!want.kind || st.kind === want.kind) && (want.top === undefined || st.y === want.top) && !t.errors.length, st);
       await t.close();
     }
-    t = await open(chrome, BASE + '/#a-z/s', { width: 1440, wait: 2000 }); await ready(t); await sleep(400);
+    t = await open(chrome, G + '#a-z/s', { width: 1440, wait: 2000 }); await ready(t); await sleep(400);
     check('#a-z/s opens the index at S', (await t.ev(state)) === 'browse' && Math.abs(await t.ev("document.getElementById('gl-lh-S').closest('.gl-g').getBoundingClientRect().top - document.getElementById('gl-jump').getBoundingClientRect().bottom")) < 4);
     check('#a-z/s: no layout shift on load', (await t.ev(cls)) < 0.01, await t.ev(cls));
     await t.close();
 
     /* ---------- a deep link, a passage out to its chapter's page, and Back ---------- */
-    t = await open(chrome, BASE + '/#gl-euv', { width: 1440, wait: 1500 }); await ready(t); await sleep(600);
+    t = await open(chrome, G + '#gl-euv', { width: 1440, wait: 1500 }); await ready(t); await sleep(600);
     check('#gl-euv opens EUV at the top, its row marked in the index', (await t.ev(hw)) === 'EUV' && (await t.ev('scrollY')) === 0 && (await t.ev(curRow)) === 'EUV');
     check('#gl-euv: no layout shift on load', (await t.ev(cls)) < 0.01, await t.ev(cls));
     check('the term reads it in Lithography, and also elsewhere', /Read it in\s*Lithography/.test(await t.ev("document.querySelector('.gl-reads').innerText")) && /Also in/.test(await t.ev("document.querySelector('.gl-reads').innerText")));
     check('the term has its other names, definition and reason', await t.ev("!!document.querySelector('.gl-names') && !!document.querySelector('.gl-def') && !!document.querySelector('.gl-p')"));
     await t.ev("(document.querySelector('.gl-men a[data-para]').click(),1)");
     let flashed = 0; for (let k = 0; k < 24 && !flashed; k++) { await sleep(250); try { flashed = await t.ev("document.querySelectorAll('.lk-flash').length"); } catch (e) { } }
-    check("a passage opens its chapter's page and flashes there", /^\/[a-z-]+\/$/.test(await t.ev('location.pathname')) && flashed === 1, await t.ev('location.pathname'));
+    check("a passage opens its chapter's page and flashes there", /^\/[a-z-]+\/$/.test(await t.ev('location.pathname')) && (await t.ev('location.pathname')) !== '/glossary/' && flashed === 1, await t.ev('location.pathname'));
     await t.ev('(history.back(),1)'); await sleep(2500);
     check('Back returns to the entry', (await t.ev("document.documentElement.getAttribute('data-view')")) === 'glossary' && (await t.ev(hw)) === 'EUV', await t.ev('location.hash'));
     await t.close();
-    t = await open(chrome, BASE + '/#lk-term-euv', { width: 1440, wait: 1500 }); await ready(t); await sleep(300);
+    t = await open(chrome, G + '#lk-term-euv', { width: 1440, wait: 1500 }); await ready(t); await sleep(300);
     check('#lk-term-euv opens EUV too', (await t.ev(hw)) === 'EUV');
     await t.close();
 
@@ -216,7 +223,7 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8798';
     check('a pop-up opens over the chapter text with the same definition', (await t.ev("!document.getElementById('gl-tip').hidden")) && (await t.ev("document.getElementById('gl-tip').querySelector('p').textContent")) === (await t.ev(`(window.CP_TERMS.defs[${JSON.stringify(term)}] || [])[1]`)), term);
     const look = await t.ev("document.querySelector('#gl-tip a').getAttribute('href')");
     await t.ev("(document.querySelector('#gl-tip a').click(),1)"); await sleep(2500); await ready(t);
-    check("Look it up opens the entry in the home page's Glossary", look.indexOf('../#gl-') === 0 && (await t.ev("document.documentElement.getAttribute('data-view')")) === 'glossary' && (await t.ev(state)) === 'entry' && (await t.ev('location.pathname + location.hash')) === look.slice(2) && (await t.ev(curRow)) === (await t.ev(`document.getElementById(${JSON.stringify(look.slice(4))}).textContent`)), look + ' -> ' + (await t.ev(hw)));
+    check("Look it up opens the entry on the Glossary's page", look.indexOf('../glossary/#gl-') === 0 && (await t.ev("document.documentElement.getAttribute('data-view')")) === 'glossary' && (await t.ev(state)) === 'entry' && (await t.ev('location.pathname + location.hash')) === look.slice(2) && (await t.ev(curRow)) === (await t.ev(`document.getElementById(${JSON.stringify(look.split('#')[1])}).textContent`)), look + ' -> ' + (await t.ev(hw)));
     check("after a move from another page the entry's name takes focus", (await t.ev(act)) === 'gl-hw');
     await t.ev("(document.querySelector('.search-btn').click(),1)"); await sleep(300); await t.s('Input.insertText', { text: 'photoresist' }); await sleep(900);
     const res = await t.ev("(function(){var a=[...document.querySelectorAll('.cp-search-results a')].filter(function(a){return /^#gl-/.test(a.getAttribute('href'));})[0];return a?a.getAttribute('href'):null;})()");
@@ -233,7 +240,7 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8798';
     await t.close();
 
     /* ---------- 390: the phone ---------- */
-    t = await open(chrome, BASE + '/#/glossary', { width: 390, wait: 1500 }); await ready(t);
+    t = await open(chrome, G, { width: 390, wait: 1500 }); await ready(t);
     check('390: the same calm first screen', (await t.ev(state)) === 'home' && (await t.ev(sideways)) && parseFloat(await t.ev(smallest)) >= 11.5, await t.ev(smallest));
     const k390 = await t.ev("[...document.querySelectorAll('#gl-kindrow a, #gl-abc a, #gl-rand')].map(function(a){var r=a.getBoundingClientRect();return Math.min(Math.round(r.width),Math.round(r.height));})");
     check('390: the kinds, the letters and Random entry are 44 px targets', Math.min(...k390) >= 44, Math.min(...k390));
@@ -268,34 +275,58 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8798';
     await t.ev("(document.querySelector('#gl-tip a').click(),1)"); await sleep(2500); await ready(t); await sleep(300);
     check('390: Look it up opens the entry under the bar', (await t.ev("document.documentElement.getAttribute('data-view')")) === 'glossary' && (await t.ev(state)) === 'entry' && /^#gl-/.test(await t.ev('location.hash')) && (await t.ev('scrollY')) === 0);
     await t.close();
-    t = await open(chrome, BASE + '/#/glossary', { width: 320, wait: 1500 }); await ready(t);
+    t = await open(chrome, G, { width: 320, wait: 1500 }); await ready(t);
     check('320: the first screen fits, nothing under 11.5 px', (await t.ev(sideways)) && parseFloat(await t.ev(smallest)) >= 11.5, await t.ev(smallest));
     check('320: the letter keys stay 44 px', (await t.ev("Math.min.apply(null,[...document.querySelectorAll('#gl-abc a')].map(function(a){var r=a.getBoundingClientRect();return Math.min(r.width,r.height);}))")) >= 44);
     await t.close();
-    t = await open(chrome, BASE + '/#lk-country-us', { width: 320, wait: 1500 }); await ready(t); await sleep(300);
+    t = await open(chrome, G + '#lk-country-us', { width: 320, wait: 1500 }); await ready(t); await sleep(300);
     check('320: an entry fits, nothing sideways', (await t.ev(state)) === 'entry' && (await t.ev(sideways)) && parseFloat(await t.ev(smallest)) >= 11.5, await t.ev(smallest));
     await t.close();
 
     /* ---------- dark ---------- */
-    t = await open(chrome, BASE + '/#/glossary', { width: 1440, theme: 'dark', wait: 1500 }); await ready(t);
+    t = await open(chrome, G, { width: 1440, theme: 'dark', wait: 1500 }); await ready(t);
     check('dark: the ground, the name and the figures turn', (await t.ev("getComputedStyle(document.body).backgroundColor")) === 'rgb(18, 18, 17)' && (await t.ev("getComputedStyle(document.getElementById('gl-title')).color")) !== 'rgb(23, 23, 22)' && (await t.ev("getComputedStyle(document.querySelector('#gl-kindrow .n')).color")) !== 'rgb(23, 23, 22)' && (await t.ev("getComputedStyle(document.getElementById('gl-box')).backgroundColor")) === 'rgb(18, 18, 17)');
     await t.close();
-    t = await open(chrome, BASE + '/#gl-euv', { width: 1440, theme: 'dark', wait: 1500 }); await ready(t);
+    t = await open(chrome, G + '#gl-euv', { width: 1440, theme: 'dark', wait: 1500 }); await ready(t);
     check('dark: the bar and the entry turn dark', (await t.ev("getComputedStyle(document.getElementById('gl-head')).backgroundColor")) === 'rgb(18, 18, 17)' && (await t.ev("getComputedStyle(document.getElementById('gl-hw')).color")) !== 'rgb(23, 23, 22)');
     await t.ev("(document.querySelector('.gl-az-link').click(),1)"); await sleep(400);
     check('dark: the open entry keeps its wine mark in the index', (await t.ev("getComputedStyle(document.querySelector('#lk-items .gl-r a[aria-current]')).boxShadow")).includes('217, 138, 149'));
     await t.close();
 
-    /* ---------- the static page ---------- */
-    t = await open(chrome, BASE + '/glossary/', { width: 1440, wait: 1200 });
-    check('/glossary/: every term in the columns', (await t.ev("document.querySelectorAll('.gl-dict .gl-de').length")) === 208);
-    check("/glossary/: the dek, read from the Glossary view's own", (await t.ev("(document.querySelector('.ch-lede')||{}).textContent||''")).indexOf('Every term, firm, chip and country') === 0, await t.ev("(document.querySelector('.ch-lede')||{}).textContent||''"));
-    check('/glossary/: the letter jumps', (await t.ev("document.querySelectorAll('.gl-thumb a').length")) >= 24);
-    check('/glossary/: the JSON-LD set of terms', (await t.ev("JSON.parse(document.querySelector('script[type=\"application/ld+json\"]').textContent).hasDefinedTerm.length")) === 208);
-    check('/glossary/: the firm, chip and country lists', await t.ev("['list-firms','list-chips','list-countries'].every(function(id){return !!document.getElementById(id);})"));
-    check('/glossary/: Open the interactive page', (await t.ev("document.querySelector('.cta .btn').getAttribute('href')")) === '../#/glossary');
-    await t.ev("(document.querySelector('.cta .btn').click(),1)"); await sleep(2500); await ready(t);
-    check('/glossary/: its link lands on the first screen', (await t.ev('location.pathname + location.hash')) === '/#/glossary' && (await t.ev(state)) === 'home');
+    /* ---------- the page as delivered: every entry's words in the HTML, before any script runs ---------- */
+    {
+      const html = await (await fetch(G)).text();
+      const dec = (x) => String(x).replace(/&(#\d+|[a-z]+);/g, (m, e) => (e[0] === '#' ? String.fromCharCode(+e.slice(1)) : ({ amp: '&', lt: '<', gt: '>', quot: '"', apos: "'" })[e] || m));
+      const rows = html.match(/<li class="gl-r"[\s\S]*?<\/li>/g) || [];
+      // the words as the data has them: the page sets typographer's quotes and keeps a range on one line (build/keep-ranges.js)
+      const words = (r, c) => { const m = new RegExp('<p class="' + c + '">([\\s\\S]*?)</p>').exec(r); return m ? dec(m[1].replace(/<[^>]+>/g, '')).replace(/[‘’]/g, "'").replace(/[“”]/g, '"') : null; };
+      const terms = require('../../data/glossary.json');
+      const termRows = rows.filter((r) => /data-kind="term"/.test(r));
+      const byKey = new Map(termRows.map((r) => [(/ id="(gl-[^"]+)"/.exec(r) || [])[1], r]));
+      const slugOf = (t) => 'gl-' + String(t).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+      const whole = terms.filter((g) => { const r = byKey.get(slugOf(g.term)); return r && dec((/<a [^>]*>([^<]*)<\/a>/.exec(r) || [])[1]) === g.term && words(r, 'gl-rp') === g.plain && words(r, 'gl-rw') === (g.why || null) && words(r, 'gl-ra') === (g.aka || null); });
+      check('the HTML: every entry has its row, its name and its kind line', rows.length === 487 && rows.every((r) => /<a [^>]*>[^<]+<\/a>/.test(r) && /<p class="gl-rk">[^<]+<\/p>/.test(r)), rows.length);
+      check("the HTML: every term's name, other names, definition and reason, word for word", whole.length === terms.length && termRows.length === terms.length, whole.length + ' of ' + terms.length);
+      check('the HTML: the firms, chips and countries carry their definitions', rows.filter((r) => !/data-kind="term"/.test(r) && words(r, 'gl-rp')).length >= 270, rows.filter((r) => !/data-kind="term"/.test(r) && words(r, 'gl-rp')).length);
+      const ld = JSON.parse((/<script type="application\/ld\+json">([\s\S]*?)<\/script>/.exec(html) || [])[1] || '{}');
+      check('the HTML: the head, its canonical, the share card and the set of terms at their entries', /<link rel="canonical" href="https:\/\/chipsupplychain\.org\/glossary\/">/.test(html) && /<meta property="og:url" content="https:\/\/chipsupplychain\.org\/glossary\/">/.test(html) && ld['@type'] === 'DefinedTermSet' && (ld.hasDefinedTerm || []).length === terms.length && ld.hasDefinedTerm.every((x) => /\/glossary\/#gl-/.test(x.url)));
+      check('the HTML: no "Open the interactive page", and the home page holds no Glossary', !/Open the interactive page/.test(html) && !/<section class="view[^"]*" data-view="glossary"/.test(await (await fetch(BASE + '/')).text()));
+    }
+
+    /* ---------- the old addresses: the home page's, forwarded in place, and the static copy's anchors ---------- */
+    t = await open(chrome, G, { width: 1440, wait: 1200 }); await ready(t);
+    const len0 = await t.ev('history.length');
+    await t.close();
+    for (const [from, to, want] of [['/#/glossary', '/glossary/', 'home'], ['/#gl-euv', '/glossary/#gl-euv', 'EUV'], ['/#lk-firm-asml', '/glossary/#lk-firm-asml', 'ASML'], ['/#a-z/firms', '/glossary/#a-z/firms', '226 firms'],
+      ['/glossary/#euv', '/glossary/#gl-euv', 'EUV'], ['/glossary/#letter-s', '/glossary/#a-z/s', '487 entries'], ['/glossary/#list-firms', '/glossary/#a-z/firms', '226 firms']]) {
+      t = await open(chrome, BASE + from, { width: 1440, wait: 2000 }); await ready(t); await sleep(400);
+      const st = await t.ev(`({ at: location.pathname + location.hash, state: ${state}, hw: ${hw}, count: document.getElementById('gl-count').textContent, len: history.length })`);
+      const got = st.state === 'home' ? 'home' : st.state === 'entry' ? st.hw : st.count;
+      check(`${from} lands on ${to}${from.indexOf('/#') === 0 ? ', in place of the old address' : ''}`, st.at === to && got === want && st.len === len0 && !t.errors.length, st);
+      await t.close();
+    }
+    t = await open(chrome, BASE + '/lithography/', { width: 1440, wait: 1500 });
+    check("a chapter's masthead tab goes to /glossary/", (await t.ev("document.querySelector('.tabs a[data-view=\"glossary\"]').getAttribute('href')")) === '../glossary/');
     await t.close();
   } catch (e) { check('the run finished', false, e.message); }
   finally { await chrome.close(); }

@@ -1701,7 +1701,8 @@ fill('GL_ABC', LK_LETTERS.map((L) => {
   return n ? `<a href="#a-z/${L.toLowerCase()}" data-azl="${L}" aria-label="${L === '0-9' ? '0 to 9' : L}, ${n} ${n === 1 ? 'entry' : 'entries'}">${shown}</a>` : `<span aria-hidden="true">${shown}</span>`;
 }).join(''));
 fill('CONTROLS_DEK', controlsDek);
-fill('EXPOSURE_VIZ', exposureViz(exposure));
+const exposureVizHTML = exposureViz(exposure); // the China revenue panels, on Export Controls and, for its firms' entries, in glossary.js (below)
+fill('EXPOSURE_VIZ', exposureVizHTML);
 fill('EXPOSURE_NOTE', exposureNote);
 /* ---------------- search, the glossary's terms and its passages, as shared data ----------------
    While the home page held every chapter, the app read these from the page: the search index from the chapters, the
@@ -1710,8 +1711,9 @@ fill('EXPOSURE_NOTE', exposureNote);
    page, so the build reads the same parts of the same markup by the same rules (build/page-text.js) and ships them:
    - search.js, the whole index, in the order and words the app made it, fetched when the search opens (Tools.need);
    - terms.js, every glossary term's definition and the names the empty search suggests, on every page;
-   - glossary.js, every chapter's paragraphs, fetched when the Glossary opens (src/modules/lookup.js). Its rows and its
-     entries' words are in its own page's HTML since 30 Oct 2026, so they no longer come with it. */
+   - glossary.js, every chapter's paragraphs, fetched when the Glossary opens (src/modules/lookup.js), and the China revenue
+     panels its firms' entries copy their small charts from (src/app.js Suppliers.exMini), which on the home page are Export
+     Controls'. Its rows and its entries' words are in its own page's HTML since 30 Oct 2026, so they no longer come with it. */
 const PT = require('./page-text.js');
 // the app's own country names (src/app.js COUNTRY, "United Arab Emirates" where the build says "UAE"), as the index wrote them
 const APP_COUNTRY = (() => { const m = /var COUNTRY = (\{[^;]*\});/.exec(read(path.join(root, 'src', 'app.js')) || ''); try { return m ? new Function('return ' + m[1])() : COUNTRY; } catch (e) { warn('search: src/app.js COUNTRY could not be read, so the build\'s country names stand in'); return COUNTRY; } })();
@@ -1878,8 +1880,8 @@ function relink(h, page) {
   });
   return h.replace(/\u0000(\d+)\u0000/g, (m, i) => held[+i]);
 }
-// the chapters' passages (the shared data, above); the Glossary's rows and its entries' words are in its page
-writeAsset('glossary.js', `window.CP_GLOSSARY = ${JSON.stringify({ passages: passagesData })};\n`);
+// the chapters' passages (the shared data, above) and the China revenue panels; the Glossary's rows and its entries' words are in its page
+writeAsset('glossary.js', `window.CP_GLOSSARY = ${JSON.stringify({ passages: passagesData, charts: exposureVizHTML })};\n`);
 // the page from the template: the parts it does not hold cut, its own head, preroute line, chapters and scripts in
 function makePage(kind, o) {
   let h = html;

@@ -4487,16 +4487,18 @@ try {
       var a = li.firstElementChild, rd = $('.gl-rd', li);
       // the entry's own words, under its link (build/build.js lkWords): its other names, its definition, a term's reason and the chapter it is read in
       var w = function (c) { var e = rd ? $('.' + c, rd) : null; return e ? e.textContent : ''; }, rc = rd ? $('.gl-rc a', rd) : null;
+      // the page sets typographer's quotes in its text (build/keep-ranges.js); the search reads the words as the data has them
+      var plainQ = function (t) { return t.replace(/[‘’]/g, "'").replace(/[“”]/g, '"'); };
       var it = { id: li.id, kind: li.getAttribute('data-kind'), key: li.getAttribute('data-key') || '', name: a.textContent, label: li.getAttribute('data-label') || '',
         alias: li.getAttribute('data-alias') || '', text: li.getAttribute('data-text') || '', order: i, row: a, L: li.parentNode.parentNode.getAttribute('data-l') };
       a.setAttribute('data-id', it.id);
       it.lname = it.name.toLowerCase(); it.al = it.alias.toLowerCase().split('|').filter(Boolean);
       if (it.kind === 'term') {
         it.t = { term: it.name, aka: w('gl-ra'), plain: w('gl-rp'), why: w('gl-rw'), ch: rc ? rc.getAttribute('data-ch') : '', chTitle: rc ? rc.textContent : '' }; it.title = it.name;
-        if (!it.text) it.text = [it.t.term, it.t.aka, it.t.plain].join(' ').toLowerCase().replace(/\s+/g, ' '); // a term's search words: its name, other names and definition
+        if (!it.text) it.text = plainQ([it.t.term, it.t.aka, it.t.plain].join(' ').toLowerCase().replace(/\s+/g, ' ')); // a term's search words: its name, other names and definition
       } else {
         it.title = it.name; it.def = w('gl-rp');
-        if (it.def && (it.kind === 'firm' || it.kind === 'country')) it.text += ' ' + it.def.toLowerCase().replace(/\s+/g, ' '); // a firm's and a country's role is among its search words
+        if (it.def && (it.kind === 'firm' || it.kind === 'country')) it.text += ' ' + plainQ(it.def.toLowerCase().replace(/\s+/g, ' ')); // a firm's and a country's role is among its search words
       }
       it.data = it.kind === 'firm' ? sup[it.key] : it.kind === 'chip' ? chip[it.key] : it.kind === 'country' ? co[it.key] : null;
       azRow[it.id] = a; L.byId[it.id] = it; L.byKey[it.key] = it;
@@ -4506,6 +4508,10 @@ try {
     counts = { all: L.items.length, term: 0, firm: 0, chip: 0, country: 0 };
     L.items.forEach(function (it) { counts[it.kind]++; });
     $$('#lk-items > .gl-g').forEach(function (g) { groupEl[g.getAttribute('data-l')] = g; });
+    // a firm's small China chart is a copy of its panel on Export Controls (Suppliers.exMini), which is the home page's: the
+    // panels come with glossary.js and wait here, hidden
+    var G = window.CP_GLOSSARY || {};
+    if (G.charts && !$('#gl-ex')) { var hold = document.createElement('div'); hold.id = 'gl-ex'; hold.hidden = true; hold.innerHTML = G.charts; view.appendChild(hold); }
     wire();
     setKind('all');
     view.setAttribute('data-gl', 'ready');
