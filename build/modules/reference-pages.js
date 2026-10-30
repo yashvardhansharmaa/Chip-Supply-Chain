@@ -15,7 +15,11 @@
    the site's saved choice turns them dark, as the chapter pages do. Each has its own canonical, the view's Open Graph and
    Twitter tags and card, structured data (a Dataset, or a DefinedTermSet for the Glossary) and a link near the top to the
    interactive view. The page's "Updated" day is its content's own (build.js page dates), and build.js lists the four in
-   the sitemap (ctx.referencePages). This module runs before social.js, which skips the four views it writes. */
+   the sitemap (ctx.referencePages). This module runs before social.js, which skips the four views it writes.
+
+   Since 30 Oct 2026 /glossary/ is the interactive Glossary itself, with every entry's words in its HTML: build/build.js
+   writes it from src/template.html, as it writes the chapter pages, and this module gives it its head (ctx.glossaryHead)
+   and the chapters each term is read in (DATA.glossaryRefs). The static copy, its columns and its lists, went with it. */
 'use strict';
 const vm = require('vm');
 const S = require('./social.js');
@@ -63,7 +67,6 @@ module.exports = function (ctx) {
   // each view's own <section> (the template names the views earlier too, in its pre-boot CSS and the nav)
   const chipsDek = tmpl(/<section class="view[^"]*" data-view="landscape"[^>]*>[\s\S]*?<p class="dek">([\s\S]*?)<\/p>/, 'the AI Chips dek');
   const specsSub = esc(literal('Landscape.TFLOPS_SENTENCE', /\bTFLOPS_SENTENCE: ('[^']*')/) || ''); // the comparison's note on TFLOPS (src/app.js)
-  const glossaryDek = tmpl(/<section class="view[^"]*" data-view="glossary"[^>]*>[\s\S]*?<p class="dek">([\s\S]*?)<\/p>/, 'the Glossary dek');
   const ladderLabel = tmpl(/id="sup-ladder-h">([^<]*)</, 'the Suppliers ladder heading');
   const LEGEND = [];
   (tmpl(/<ul class="cf-legend"[^>]*>([\s\S]*?)<\/ul>/, 'the board key').match(/<li>[\s\S]*?<\/li>/g) || []).forEach((li) => {
@@ -508,9 +511,12 @@ ${body}
     });
   }
 
-  /* ================= /glossary/ ================= */
+  /* ================= /glossary/ =================
+     Since 30 Oct 2026 /glossary/ is the interactive Glossary itself, with every entry's words in its HTML (build/build.js
+     writes it from src/template.html, as it writes the chapter pages). This module gives it what the static copy had: the
+     chapters each term is read in (DATA.glossaryRefs, which the Glossary prints) and its head, with the approved title and
+     description, the canonical, the Glossary's share card and the DefinedTermSet of every term (ctx.glossaryHead) */
   function glossaryPage() {
-    const uid = idsFor();
     const glossary = (ctx.data.glossary || ctx.readJSON(path.join(root, 'data', 'glossary.json'), []) || []).filter((g) => g && g.term);
     const terms = glossary.slice().sort((a, b) => a.term.localeCompare(b.term));
     // the chapters each term appears in, found as the Glossary finds its passages (src/modules/lookup.js): the term and its other
@@ -536,70 +542,41 @@ ${body}
       return new RegExp(parts.join('|'), short ? '' : 'i');
     };
     const chapterOf = new Map(chapters.map((c) => [c.id, c]));
-    const chLink = (c) => `<a href="../${esc(c.id)}/">${esc(c.title)}</a>`;
-    const letterOf = (t) => (/^[A-Za-z]/.test(t) ? t.charAt(0).toUpperCase() : '0-9');
-    const groups = [];
-    terms.forEach((g) => { const L = letterOf(g.term); let k = groups.find((x) => x.L === L); if (!k) groups.push(k = { L, rows: [] }); k.rows.push(g); });
-    groups.sort((a, b) => (a.L === '0-9' ? -1 : b.L === '0-9' ? 1 : a.L.localeCompare(b.L)));
-    const termIds = new Map(terms.map((g) => [g, uid(slug(g.term), 'terms')]));
-    // the chapters each term is read in: its own chapter, then the others whose text uses it. The interactive Glossary prints
-    // the same lines (src/modules/lookup.js reads them from DATA.glossaryRefs, keyed by the term's own address)
-    const refs = new Map(terms.map((g) => {
-      // the other names the Glossary list searches by (build.js, LOOKUP_LIST): three letters or more, and not a plain lower-case word
+    // the chapters each term is read in: its own chapter, then the others whose text uses it. The Glossary prints these lines
+    // (src/modules/lookup.js reads them from DATA.glossaryRefs, keyed by the term's own address)
+    data.glossaryRefs = {};
+    terms.forEach((g) => {
+      // the other names the Glossary list searches by (build.js, the Glossary's rows): three letters or more, and not a plain lower-case word
       const akas = String(g.aka || '').split(/[;,]/).map((x) => x.trim()).filter((x) => x.length >= 3 && x.toLowerCase() !== g.term.toLowerCase() && !/^[a-z]+$/.test(x));
       const re = regex([g.term].concat(akas));
       const home = g.chapter && chapterOf.get(g.chapter);
       const used = re ? corpus.filter((k) => k.c !== home && k.paras.some((x) => re.test(x))).map((k) => k.c) : [];
-      return [g, { home, used }];
-    }));
-    data.glossaryRefs = {};
-    terms.forEach((g) => { const r = refs.get(g); if (r.home || r.used.length) data.glossaryRefs['gl-' + slug(g.term)] = [r.home ? r.home.id : '', r.used.map((c) => c.id)]; });
-    // one entry as the dictionary sets it (the interactive Glossary's columns, option B): the headword and its kind, its other
-    // names, the definition, the reason it matters, then the chapters that use it
-    const entry = (g) => {
-      const { home, used } = refs.get(g);
-      const ch = home || used.length ? `<p class="gl-refs">${home ? `Read it in ${chLink(home)}` : ''}${used.length ? `${home ? ' <span>Also in</span>' : 'In'} ${used.map(chLink).join(', ')}` : ''}</p>` : '';
-      return `<div class="gl-de" id="${termIds.get(g)}"><dt>${esc(g.term)} <i>${g.chapter === 'geopolitics' ? 'export control' : 'term'}</i></dt><dd>${g.aka ? `<p class="gl-aka">${esc(g.aka)}</p>` : ''}<p>${esc(g.plain)}</p>${g.why ? `<p class="gl-wy">${esc(g.why)}</p>` : ''}${ch}</dd></div>`;
-    };
-    const letterId = (L) => 'letter-' + (L === '0-9' ? '0-9' : L.toLowerCase());
-    const have = new Set(groups.map((g) => g.L));
-    const letters = ['0-9'].concat('ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')).filter((L) => L !== '0-9' || have.has(L));
-    // the thumb index of letters stays at the top of the window while the columns scroll under it
-    const jump = `<nav class="jump gl-other" aria-label="Other entries"><ul><li><a href="#list-firms">Firms</a><span class="n">${suppliers.length}</span></li><li><a href="#list-chips">AI chips</a><span class="n">${chips.length}</span></li>${countryIds.size ? `<li><a href="#list-countries">Countries</a><span class="n">${countryIds.size}</span></li>` : ''}</ul></nav>`
-      + `<nav class="gl-thumb" aria-label="Terms by letter"><ul>${letters.map((L) => `<li>${have.has(L) ? `<a href="#${letterId(L)}">${L === '0-9' ? '0–9' : L}</a>` : `<span aria-hidden="true">${L}</span>`}</li>`).join('')}</ul></nav>`;
-    // a letter's terms set as pages of nine, three to a column on a wide screen, so the eye goes down a column and back up to the
-    // next without a long scroll, as a printed dictionary turns its page (the interactive Glossary does the same, lookup.js paginate)
-    const pages = (rows) => { const out = []; for (let i = 0; i < rows.length; i += 9) out.push(`<dl class="gl-cols">${rows.slice(i, i + 9).map(entry).join('')}</dl>`); return out.join(''); };
-    // each letter heads its columns with its guide words, as a printed dictionary heads its page: the first and last term, and how many
-    const guide = (rows) => `<p class="gl-gw"><b>${esc(rows[0].term)}</b>${rows.length > 1 ? `<span>to</span><b>${esc(rows[rows.length - 1].term)}</b>` : ''}<span>${rows.length} ${rows.length === 1 ? 'entry' : 'entries'}</span></p>`;
-    const termsHTML = `<div class="gl-dict">${groups.map((k) => `<section class="gl-sec" aria-labelledby="${letterId(k.L)}"><div class="gl-sec-h"><h2 class="gl-L" id="${uid(letterId(k.L), 'letters')}">${k.L === '0-9' ? '0–9' : k.L}</h2>${guide(k.rows)}</div>${pages(k.rows)}</section>`).join('')}</div>`;
-
-    // firms, chips and countries: one line each, as the Glossary list names them, linked to their place on /suppliers/ and /chips/
-    const stageLabel = (c) => SHORT[c] || String(c || 'Firm').split(' ').map((w, i) => (i && !/[A-Z].*[A-Z]/.test(w) ? w.toLowerCase() : w)).join(' ');
-    const byName = (a, b) => a.name.localeCompare(b.name, 'en', { sensitivity: 'base' });
-    const firmList = suppliers.map((r) => ({ name: r.name, lab: stageLabel(r.category) + ' · ' + cname(r.country), href: '../suppliers/#' + (firmIds.get(r.name) || slug(r.name)) })).sort(byName);
-    const chipList = chips.map((c) => ({ name: `${c.vendor} ${c.name}`, lab: 'AI chip' + (c.announced ? ' · ' + String(c.announced).slice(0, 4) : ''), href: '../chips/#' + (chipIds.get(c.id) || slug(c.id)) })).sort(byName);
-    const countryList = [...countryIds.keys()].map((cc) => ({ name: cname(cc), lab: 'Country', href: '../suppliers/#' + countryIds.get(cc) })).sort(byName);
-    const idx = (id, title, list, sub) => (list.length ? `<section class="ref-sec" aria-labelledby="${id}"><h2 class="ref-h2" id="${id}">${title} <small>${list.length}</small></h2>${sub ? `<p class="ref-sub">${sub}</p>` : ''}<ul class="idx">${list.map((x) => `<li><a href="${esc(x.href)}">${esc(x.name)}</a><span class="lab">${esc(x.lab)}</span></li>`).join('')}</ul></section>` : '');
-    const others = idx('list-firms', 'Firms', firmList, 'Each firm links to its entry on the Suppliers page.') + idx('list-chips', 'AI chips', chipList, 'Each chip links to its row on the AI Chips page.') + idx('list-countries', 'Countries', countryList, 'Each country links to its line on the Suppliers page.');
-
+      if (home || used.length) data.glossaryRefs['gl-' + slug(g.term)] = [home ? home.id : '', used.map((c) => c.id)];
+    });
+    // the page's head: as the static copy had it, with each term's address now its entry's (#gl-<slug>)
     const firstWord = (terms.find((g) => /^[A-Za-z]/.test(g.term)) || terms[0] || { term: '' }).term, lastWord = (terms[terms.length - 1] || { term: '' }).term;
-    return page({
-      slug: 'glossary', route: '#/glossary', h1: 'Glossary',
-      ...titled('glossary', [[/(\d+) terms/, terms.length, 'terms']], `Plain definitions of ${terms.length} terms from the AI chip supply chain, from ${firstWord} to ${lastWord}.`),
-      dekHTML: glossaryDek,
-      facts: [`${terms.length} terms`, `${suppliers.length} firms`, `${chips.length} chips`],
-      ctaNote: 'The interactive page adds search and shows the passages that mention each entry.',
-      body: jump + termsHTML + others,
-      ld: (url) => ({
-        '@type': 'DefinedTermSet', '@id': url + '#terms', name: 'Glossary of the AI chip supply chain', description: `Plain definitions of ${terms.length} terms from the AI chip supply chain.`,
+    const t = titled('glossary', [[/(\d+) terms/, terms.length, 'terms']], `Plain definitions of ${terms.length} terms from the AI chip supply chain, from ${firstWord} to ${lastWord}.`);
+    const p0 = manifest.get('glossary') || { slug: 'glossary', kind: 'view', title: 'Glossary', eyebrow: S.SITE, line: t.description, description: t.description, route: '#/glossary' };
+    const p = Object.assign({}, p0, { seo: { title: t.shareTitle, description: t.description } }); // the share tags say what the search result says
+    const url = BASE + 'glossary/';
+    ctx.glossaryHead = (dates) => {
+      const ld = {
+        '@context': 'https://schema.org', '@type': 'DefinedTermSet', '@id': url + '#terms', name: 'Glossary of the AI chip supply chain', description: `Plain definitions of ${terms.length} terms from the AI chip supply chain.`,
         author: person, publisher: org, mainEntityOfPage: url,
         hasDefinedTerm: terms.map((g) => {
           const akas = String(g.aka || '').split(/[;,]/).map((x) => x.trim()).filter(Boolean);
-          return Object.assign({ '@type': 'DefinedTerm', name: g.term, description: g.plain, url: url + '#' + termIds.get(g) }, akas.length ? { alternateName: akas } : {}); // nested in the set, so each term needs no id or set of its own
+          return Object.assign({ '@type': 'DefinedTerm', name: g.term, description: g.plain, url: url + '#gl-' + slug(g.term) }, akas.length ? { alternateName: akas } : {}); // nested in the set, so each term needs no id or set of its own
         }),
-      }),
-    });
+        url, inLanguage: 'en', datePublished: dates.published, dateModified: dates.modified, isPartOf: { '@type': 'WebSite', name: S.SITE, url: BASE },
+      };
+      return `<title>${esc(t.title)}</title>
+<meta name="description" content="${esc(t.description)}">
+<link rel="canonical" href="${esc(url)}">
+<meta name="author" content="${esc(S.AUTHOR.name)}">
+${S.shareTags(p, versions)}
+<script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script>`;
+    };
+    return null; // build/build.js writes the page
   }
 
   /* ---------------- write ---------------- */
@@ -609,10 +586,11 @@ ${body}
   const sizes = [];
   for (const [s, make] of built) {
     const html = make();
+    ctx.referencePages.push('/' + s + '/');
+    if (html === null) continue; // the Glossary: build/build.js writes it (glossaryPage)
     const dir = path.join(root, 'dist', s);
     fs.mkdirSync(dir, { recursive: true });
     fs.writeFileSync(path.join(dir, 'index.html'), keepRanges(html));
-    ctx.referencePages.push('/' + s + '/');
     const kb = Buffer.byteLength(html) / 1024;
     sizes.push(`${s} ${kb.toFixed(0)} KB`);
     if (kb > 400) warn(`reference page /${s}/ weighs ${kb.toFixed(0)} KB, over the 400 KB budget`);

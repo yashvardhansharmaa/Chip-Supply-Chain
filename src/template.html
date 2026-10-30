@@ -4,11 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- the title and description come from build/page-titles.json (filled by build/modules/social.js), as every static page's do.
-     The markers below (head, home, chain, book, cover) mark the parts that differ by page (build/build.js, 28 Oct 2026). The
-     head is the home page's own: the other pages take their own in its place. The views marked home are the home page's
-     alone, and The Chain (marked chain) is the other pages': the contents page, /supply-chain/, holds its title and contents
-     (marked book); a chapter's page holds its one chapter; the book holds the cover (marked cover), the contents and every
-     chapter -->
+     The markers below (head, home, chain, book, cover, glossary) mark the parts that differ by page (build/build.js, 28 Oct
+     2026). The head is the home page's own: the other pages take their own in its place. The views marked home are the home
+     page's alone, and The Chain (marked chain) is the chapter pages', the contents page's and the book's: the contents page,
+     /supply-chain/, holds its title and contents (marked book); a chapter's page holds its one chapter; the book holds the
+     cover (marked cover), the contents and every chapter. The Glossary (marked glossary) is its own page's alone,
+     /glossary/ (30 Oct 2026) -->
 <meta name="cp-titles" content="{{VIEW_TITLES}}">
 <link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -277,16 +278,17 @@ html:not(.booted)[data-pick] .view[data-view="suppliers"] > :not(.view-head) { d
     </section>
     <!--/chain-->
 
-    <!--home-->
+    <!--glossary-->
     <section class="view column wide" data-view="glossary">
       <!-- The Glossary, search first, with what it holds under the field ("Kinds and letters", the owner's choice of 30 Oct 2026;
            src/modules/lookup.js; the mockup is qa/excellence/glossary-alt/sf-kinds/ in the main checkout). At rest: the name, one
            field, Random entry, then the kinds with their counts and the letters, each opening Browse A to Z. Typing drops
            suggestions inside the field's edge. An entry or the index moves the field into a slim bar under the masthead.
-           build/build.js writes the counts and the letters from the data; glossary.js brings the A to Z rows into #lk-items with
-           each entry's addresses (a row's lk- id, a term's link its gl- id). The script below names the state the address asks
-           for before the head paints, so a link to an entry or to the index never shows the first screen first. The parts
-           marked gl-wait show once the rows are in -->
+           build/build.js writes the counts and the letters from the data, and the A to Z rows into #lk-items (GL_ITEMS), each
+           with the entry's addresses (a row's lk- id, a term's link its gl- id) and the entry's own words, which the Glossary
+           reads them from, so every name and definition is in the page as delivered (30 Oct 2026). The script below names the
+           state the address asks for before the head paints, so a link to an entry or to the index never shows the first
+           screen first. The parts marked gl-wait show once the Glossary is ready -->
       <div class="gl" id="gl-view" data-state="home">
         <script>(function(){var e=document.getElementById('gl-view'),h=String(location.hash||'').replace(/^#/,'');if(e)e.setAttribute('data-state',/^(gl|lk)-/.test(h)?'entry':/^a-z(\/|$)/i.test(h)?'browse':'home');})();</script>
         <div class="gl-head" id="gl-head">
@@ -315,14 +317,14 @@ html:not(.booted)[data-pick] .view[data-view="suppliers"] > :not(.view-head) { d
           <div class="gl-bhead"><h2 class="gl-bh" id="gl-bh" tabindex="-1">A to Z</h2><p class="gl-bcount" id="gl-count" role="status">{{GL_ENTRIES}} entries</p></div>
           <div class="gl-kinds" id="gl-kinds" role="group" aria-label="Kind of entry"><button type="button" data-k="all" aria-pressed="true">All</button><button type="button" data-k="term" aria-pressed="false">Terms</button><button type="button" data-k="firm" aria-pressed="false">Firms</button><button type="button" data-k="chip" aria-pressed="false">AI chips</button><button type="button" data-k="country" aria-pressed="false">Countries</button></div>
           <nav class="gl-jump gl-wait" id="gl-jump" aria-label="Go to a letter"></nav>
-          <ul class="gl-az gl-wait" id="lk-items"></ul>
+          <ul class="gl-az gl-wait" id="lk-items">{{GL_ITEMS}}</ul>
         </section>
         <article class="gl-pane gl-wait" id="gl-pane" aria-labelledby="gl-hw"></article>
       </div>
       <p class="sr-only" id="gl-say" aria-live="polite"></p>
       <footer class="site-footer gl-foot gl-wait">{{FOOTER}}</footer>
     </section>
-    <!--/home-->
+    <!--/glossary-->
 
 
   </main>

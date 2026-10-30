@@ -1656,9 +1656,9 @@ const lkStage = (c) => LK_SHORT[c] || String(c || 'Firm').split(' ').map((w, i) 
 const LK_SUFFIX = /\s+(Holdings?|Inc\.?|Incorporated|Corporation|Corp\.?|Co\.?|Ltd\.?|Limited|Group|Technologies|Technology|Electronics|Semiconductors?|Industries|International|Systems|Design|Precision|Information|Chemical|Semi)$/i;
 const LK_NICK = { 'Hon Hai Precision': 'Foxconn', 'Carl Zeiss SMT': 'Zeiss', 'Hewlett Packard Enterprise': 'HPE', 'Tokyo Ohka Kogyo': 'TOK', 'Samsung Electronics': 'Samsung', 'Taiwan Semiconductor Manufacturing': 'TSMC', 'Semiconductor Manufacturing International': 'SMIC', 'Advanced Micro Devices': 'AMD', 'BE Semiconductor Industries': 'Besi', 'Yangtze Memory Technologies': 'YMTC', 'ChangXin Memory Technologies': 'CXMT', 'Shanghai Micro Electronics Equipment': 'SMEE', 'Alphawave Semi': 'Alphawave', 'Nippon Sanso Holdings': 'Nippon Sanso', 'Shin-Etsu Chemical': 'Shin-Etsu', 'Super Micro Computer': 'Supermicro' };
 const lkAliases = (name) => { const out = []; let n = name; for (let i = 0; i < 3; i++) { const m = n.replace(LK_SUFFIX, ''); if (m === n) break; n = m; if (n.length >= 3 && n !== name) out.push(n); } if (LK_NICK[name]) out.push(LK_NICK[name]); return out; };
-glossary.forEach((g) => { const akas = String(g.aka || '').split(/[;,]/).map((x) => x.trim()).filter((x) => x.length >= 3 && x.toLowerCase() !== g.term.toLowerCase() && !/^[a-z]+$/.test(x)); lkItems.push({ kind: 'term', id: 'lk-term-' + lkSlug(g.term), key: 'gl-' + lkSlug(g.term), name: g.term, alias: akas, label: g.chapter === 'geopolitics' ? 'Export control' : 'Term', text: [g.term, g.aka || '', g.plain].join(' ') }); });
-suppliers.forEach((r) => lkItems.push({ kind: 'firm', id: 'lk-firm-' + lkSlug(r.name), name: r.name, alias: lkAliases(r.name).concat(r.nativeName ? [r.nativeName] : []), label: lkStage(r.category), key: r.name, text: [r.name, r.nativeName || '', r.city || '', COUNTRY[r.country] || r.country || '', r.ticker || '', r.category || '', r.subcategory || '', r.role || '', LK_NICK[r.name] || ''].join(' ') }));
-landscape.forEach((c) => { const al = []; const bare = c.name.replace(/\s*\(.*\)$/, ''); al.push(bare); bare.split(/\s+/).forEach((t) => { if (/\d/.test(t) && t.length >= 3 && t !== bare) al.push(t); }); const paren = (c.name.match(/\(([^)]*)\)/) || [])[1] || ''; paren.split(/[\s,]+/).forEach((t) => { if ((/^[A-Z][a-z]{3,}$/.test(t) && !/variant|configuration|China|licensed|of|the/i.test(t)) || (/\d/.test(t) && t.length >= 4)) al.push(t); }); if (c.family && c.family.length >= 5 && !/^(TPU|Ascend|Siyuan|Pinghu)\b/.test(c.family) && !/\(/.test(c.family)) al.push(c.family); lkItems.push({ kind: 'chip', id: 'lk-chip-' + lkSlug(c.id), name: `${c.vendor} ${c.name}`, alias: al.filter((x, i, arr) => arr.indexOf(x) === i), label: 'AI chip', key: c.id, text: [c.vendor, c.name, c.family || '', (c.process || {}).node || '', (c.memory || {}).type || ''].join(' ') }); });
+glossary.forEach((g) => { const akas = String(g.aka || '').split(/[;,]/).map((x) => x.trim()).filter((x) => x.length >= 3 && x.toLowerCase() !== g.term.toLowerCase() && !/^[a-z]+$/.test(x)); lkItems.push({ kind: 'term', id: 'lk-term-' + lkSlug(g.term), key: 'gl-' + lkSlug(g.term), name: g.term, alias: akas, label: g.chapter === 'geopolitics' ? 'Export control' : 'Term', g, text: [g.term, g.aka || '', g.plain].join(' ') }); });
+suppliers.forEach((r) => lkItems.push({ kind: 'firm', id: 'lk-firm-' + lkSlug(r.name), name: r.name, alias: lkAliases(r.name).concat(r.nativeName ? [r.nativeName] : []), label: lkStage(r.category), key: r.name, native: r.nativeName || '', def: r.role || '', text: [r.name, r.nativeName || '', r.city || '', COUNTRY[r.country] || r.country || '', r.ticker || '', r.category || '', r.subcategory || '', LK_NICK[r.name] || ''].join(' ') })); // and its role, which its row holds under its link (lkWords, below)
+landscape.forEach((c) => { const al = []; const bare = c.name.replace(/\s*\(.*\)$/, ''); al.push(bare); bare.split(/\s+/).forEach((t) => { if (/\d/.test(t) && t.length >= 3 && t !== bare) al.push(t); }); const paren = (c.name.match(/\(([^)]*)\)/) || [])[1] || ''; paren.split(/[\s,]+/).forEach((t) => { if ((/^[A-Z][a-z]{3,}$/.test(t) && !/variant|configuration|China|licensed|of|the/i.test(t)) || (/\d/.test(t) && t.length >= 4)) al.push(t); }); if (c.family && c.family.length >= 5 && !/^(TPU|Ascend|Siyuan|Pinghu)\b/.test(c.family) && !/\(/.test(c.family)) al.push(c.family); lkItems.push({ kind: 'chip', id: 'lk-chip-' + lkSlug(c.id), name: `${c.vendor} ${c.name}`, alias: al.filter((x, i, arr) => arr.indexOf(x) === i), label: 'AI chip', key: c.id, def: c.notes || '', text: [c.vendor, c.name, c.family || '', (c.process || {}).node || '', (c.memory || {}).type || ''].join(' ') }); });
 // countries: any with three or more firms in the supplier list, a share in the country-share matrix, or a line on the home page's leverage table.
 // The role line is the home page's own (build/modules/summary-a.js exports ROLE), never retyped here; the card reads it from DATA.countries.
 const LK_CC_ALIAS = { US: ['US', 'USA', 'American'], CN: ['CN', 'PRC', 'Chinese'], TW: ['TW', 'Taiwanese'], KR: ['KR', 'ROK', 'Korea', 'Korean', 'South Korean'], JP: ['JP', 'Japanese'], NL: ['NL', 'Dutch', 'Holland'], DE: ['DE', 'German'], GB: ['GB', 'UK', 'Britain', 'British'], CA: ['CA', 'Canadian'], FR: ['FR', 'French'], CH: ['CH', 'Swiss'], AT: ['AT', 'Austrian'], IL: ['IL', 'Israeli'], SG: ['SG', 'Singaporean'], MY: ['MY', 'Malaysian'], IN: ['IN', 'Indian'], TH: ['TH', 'Thai'], IT: ['IT', 'Italian'], IE: ['IE', 'Irish'], DK: ['DK', 'Danish'] };
@@ -1668,21 +1668,27 @@ const lkSupByCC = {}; suppliers.forEach((r) => { lkSupByCC[r.country] = (lkSupBy
 const lkMatrixCC = new Set(); matrix.forEach((r) => Object.keys(r.shares || {}).forEach((c) => { if (/^[A-Z]{2}$/.test(c)) lkMatrixCC.add(c); }));
 data.countries = Object.keys(COUNTRY).filter((cc) => /^[A-Z]{2}$/.test(cc) && ((lkSupByCC[cc] || 0) >= 3 || lkMatrixCC.has(cc) || LK_ROLE[cc]))
   .map((cc) => ({ code: cc, name: COUNTRY[cc], role: LK_ROLE[cc] || '', panel: html.indexOf(`class="sa-panel" data-cc="${cc}"`) >= 0, aliases: LK_CC_ALIAS[cc] || [cc] }));
-data.countries.forEach((c) => lkItems.push({ kind: 'country', id: 'lk-country-' + c.code.toLowerCase(), key: c.code, name: c.name, alias: c.aliases, label: 'Country', text: [c.name, c.code, c.aliases.join(' '), 'country', c.role].join(' ') }));
+data.countries.forEach((c) => lkItems.push({ kind: 'country', id: 'lk-country-' + c.code.toLowerCase(), key: c.code, name: c.name, alias: c.aliases, label: 'Country', def: c.role || '', text: [c.name, c.code, c.aliases.join(' '), 'country'].join(' ') })); // and its role, as a firm's
 lkItems.sort((a, b) => a.name.localeCompare(b.name, 'en', { sensitivity: 'base' }));
 /* the Glossary's Browse A to Z ("Kinds and letters", the owner's choice of 30 Oct 2026; src/modules/lookup.js): every entry
-   under its letter, one link each, which glossary.js carries and the Glossary puts into its #lk-items. Each row keeps the
-   entry's addresses (the row's lk- id, and a term's link its gl- id, which the chapters' pop-ups and the site search link to)
-   and the data the Glossary's search reads: the kind, the key, the other names, the label and the words. A letter's head takes
-   focus when a letter is chosen */
+   under its letter, one link each, written into the Glossary's page (/glossary/, the pages below) in its #lk-items. Each row
+   keeps the entry's addresses (the row's lk- id, and a term's link its gl- id, which the chapters' pop-ups and the site
+   search link to) and the data the Glossary's search reads: the kind, the key, the other names, the label and the words.
+   Under its link, hidden until the entry opens, each row holds the entry's own words, which the Glossary reads them from
+   (30 Oct 2026), so every name and definition is in the page as delivered, for search engines: its kind; a term's other
+   names, definition, reason and the chapter it is read in, as data/glossary.json gives them; a firm's own name in its own
+   script and its role, a chip's notes, a country's role, as DATA has them. A term's search words are its name, other names
+   and definition, which the Glossary reads from these, so its row carries no data-text; a firm's and a country's are its
+   data-text and its role. A letter's head takes focus when a letter is chosen */
 const LK_LETTERS = ['0-9'].concat('ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''));
 const lkLetter = (n) => { const c = String(n).charAt(0).toUpperCase(); return /[A-Z]/.test(c) ? c : '0-9'; };
-const lkRow = (i) => `<li class="gl-r" id="${esc(i.id)}" data-kind="${i.kind}" data-key="${esc(i.key || i.name)}"${i.alias && i.alias.length ? ` data-alias="${esc(i.alias.join('|'))}"` : ''} data-label="${esc(i.label)}" data-text="${esc(i.text.toLowerCase().replace(/\s+/g, ' '))}"><a href="#${esc(i.kind === 'term' ? i.key : i.id)}"${i.kind === 'term' ? ` id="${esc(i.key)}"` : ''}>${esc(i.name)}</a></li>`;
+const lkPara = (cls, t) => (t ? `<p class="${cls}">${esc(t)}</p>` : '');
+const lkWords = (i) => {
+  if (i.kind === 'term') { const g = i.g, t = g.chapter ? chapterTitle(g.chapter) : null; return lkPara('gl-rk', i.label) + lkPara('gl-ra', g.aka) + lkPara('gl-rp', g.plain) + lkPara('gl-rw', g.why) + (t ? `<p class="gl-rc">Read it in <a href="${esc(g.chapter)}/" data-ch="${esc(g.chapter)}">${esc(t)}</a></p>` : ''); }
+  return lkPara('gl-rk', i.kind === 'firm' ? 'Firm · ' + i.label : i.label) + lkPara('gl-ra', i.native) + lkPara('gl-rp', i.def);
+};
+const lkRow = (i) => `<li class="gl-r" id="${esc(i.id)}" data-kind="${i.kind}" data-key="${esc(i.key || i.name)}"${i.alias && i.alias.length ? ` data-alias="${esc(i.alias.join('|'))}"` : ''} data-label="${esc(i.label)}"${i.kind === 'term' ? '' : ` data-text="${esc(i.text.toLowerCase().replace(/\s+/g, ' '))}"`}><a href="#${esc(i.kind === 'term' ? i.key : i.id)}"${i.kind === 'term' ? ` id="${esc(i.key)}"` : ''}>${esc(i.name)}</a><div class="gl-rd" hidden>${lkWords(i)}</div></li>`;
 const lookupListHTML = LK_LETTERS.map((L) => { const rows = lkItems.filter((i) => lkLetter(i.name) === L); return rows.length ? `<li class="gl-g" data-l="${L}"><h3 class="gl-lh" id="gl-lh-${L}" tabindex="-1">${L === '0-9' ? '0–9' : L}</h3><ul class="gl-rows">${rows.map(lkRow).join('')}</ul></li>` : ''; }).join('');
-// each term's own words for its entry, by its address: the term, its other names, the definition, the reason, and the chapter
-// it is read in (its id and title), as data/glossary.json gives them
-const lkTerms = {};
-glossary.forEach((g) => { const t = g.chapter ? chapterTitle(g.chapter) : null; lkTerms['gl-' + lkSlug(g.term)] = [g.term, g.aka || '', g.plain || '', g.why || '', t ? g.chapter : '', t || '']; });
 fill('GL_ENTRIES', String(lkItems.length)); // the Glossary's count and its search's hint, in the page before the list arrives
 // what the Glossary holds, under its field at rest (src/template.html): each kind with its count, then the letters, each a link
 // to Browse A to Z at that kind or letter (#a-z/firms, #a-z/s). The counts and the letters come from the entries, never typed;
@@ -1704,8 +1710,8 @@ fill('EXPOSURE_NOTE', exposureNote);
    page, so the build reads the same parts of the same markup by the same rules (build/page-text.js) and ships them:
    - search.js, the whole index, in the order and words the app made it, fetched when the search opens (Tools.need);
    - terms.js, every glossary term's definition and the names the empty search suggests, on every page;
-   - glossary.js, the Glossary's two lists (#lk-items and #glossary) and every chapter's paragraphs, fetched when the
-     Glossary opens (src/modules/lookup.js). */
+   - glossary.js, every chapter's paragraphs, fetched when the Glossary opens (src/modules/lookup.js). Its rows and its
+     entries' words are in its own page's HTML since 30 Oct 2026, so they no longer come with it. */
 const PT = require('./page-text.js');
 // the app's own country names (src/app.js COUNTRY, "United Arab Emirates" where the build says "UAE"), as the index wrote them
 const APP_COUNTRY = (() => { const m = /var COUNTRY = (\{[^;]*\});/.exec(read(path.join(root, 'src', 'app.js')) || ''); try { return m ? new Function('return ' + m[1])() : COUNTRY; } catch (e) { warn('search: src/app.js COUNTRY could not be read, so the build\'s country names stand in'); return COUNTRY; } })();
@@ -1829,11 +1835,14 @@ fill('STYLESHEET', `<link rel="stylesheet" href="${assetURL['site.css']}">`);
    - each chapter's own page, dist/<id>/index.html: The Chain with that chapter alone, under the chapter's own head
      (social.js chapterHead), so it is the full chapter at its own address, and the one page that carries its text;
    - the book, dist/book/index.html: The Chain's cover, contents and every chapter, which build/pdf.py prints. It is for
-     print only: noindex, linked from nowhere and disallowed in robots.txt.
+     print only: noindex, linked from nowhere and disallowed in robots.txt;
+   - the Glossary's page, dist/glossary/index.html (30 Oct 2026): the Glossary alone, with its rows and every entry's words
+     in the HTML, under its own head (reference-pages.js glossaryHead). Until 30 Oct 2026 the Glossary was the home page's,
+     and dist/glossary/ a static copy of it for search engines.
    Each page's preroute line says which page it is (src/preroute.js PAGE), and relink settles its links for where it sits.
    Until 28 Oct 2026 dist/index.html held every chapter and dist/<id>/ a static readable copy of it. */
 const pre = require(path.join(root, 'src', 'preroute.js'));
-const unmark = (h) => h.replace(/[ \t]*<!--\/?(head|home|chain|book|cover)-->\n?/g, '');
+const unmark = (h) => h.replace(/[ \t]*<!--\/?(head|home|chain|book|cover|glossary)-->\n?/g, '');
 const cutOut = (h, mark) => h.replace(new RegExp(`[ \\t]*<!--${mark}-->[\\s\\S]*?<!--/${mark}-->\\n?`, 'g'), '');
 // the page's scripts, in order, after the addresses of the two the app fetches when it needs them (src/app.js need())
 const scriptTags = (names, up) => `<script>window.CP_ASSETS = ${JSON.stringify({ 'search.js': up + assetURL['search.js'], 'glossary.js': up + assetURL['glossary.js'] })};</script>\n`
@@ -1854,6 +1863,7 @@ function relink(h, page) {
       if (v.length < 2 || ids.has(id)) return v;
       const to = pre.away(v.replace(/&amp;/g, '&'), '', page, chainIds);
       if (!to && page.kind === 'contents' && v.charAt(1) === '/') return page.root + pre.CONTENTS + '/'; // its own route (the Supply Chain tab): its own address
+      if (!to && page.kind === pre.GLOSSARY && /^#\/glossary\b/.test(v)) return page.root + pre.GLOSSARY + '/'; // and the Glossary's (its tab, its name)
       return to ? esc(to) : v;
     }
     if (routed && page.chapter && v === page.chapter + '/') return '#' + page.chapter; // the chapter's own page: its top, in place
@@ -1868,14 +1878,15 @@ function relink(h, page) {
   });
   return h.replace(/\u0000(\d+)\u0000/g, (m, i) => held[+i]);
 }
-// the Glossary's index of entries, each term's words, and the chapters' passages (the shared data, above)
-writeAsset('glossary.js', `window.CP_GLOSSARY = ${JSON.stringify({ items: lookupListHTML, terms: lkTerms, passages: passagesData })};\n`);
+// the chapters' passages (the shared data, above); the Glossary's rows and its entries' words are in its page
+writeAsset('glossary.js', `window.CP_GLOSSARY = ${JSON.stringify({ passages: passagesData })};\n`);
 // the page from the template: the parts it does not hold cut, its own head, preroute line, chapters and scripts in
 function makePage(kind, o) {
   let h = html;
   const put = (k, v) => { h = h.split(`{{${k}}}`).join(v); };
   if (kind !== 'home') h = cutOut(h, 'home');
-  else h = cutOut(h, 'chain'); // the home page holds no part of The Chain: its contents have their own page
+  if (kind === 'home' || kind === 'glossary') h = cutOut(h, 'chain'); // the home page holds no part of The Chain: its contents have their own page
+  if (kind !== 'glossary') h = cutOut(h, 'glossary'); // the Glossary is its own page's alone
   if (kind === 'chapter') h = cutOut(h, 'book');
   if (kind === 'contents') h = cutOut(h, 'cover'); // the cover is the book's
   if (o.head) h = h.replace(/<!--head-->[\s\S]*?<!--\/head-->/, () => o.head); // as a function: a head's "$6,400" is text
@@ -1883,7 +1894,7 @@ function makePage(kind, o) {
   const page = { kind, chapter: o.chapter || '', root: o.root };
   put('PREROUTE', preBase.replace(PRE_PAGE, `var PAGE = ${JSON.stringify(page)};`).replace(/<\/script/gi, '<\\/script'));
   put('CHAIN_ONE', chainOne(o.ids));
-  put('CHAPTERS', o.chapters); put('GEO_ARTICLE', '');
+  put('CHAPTERS', o.chapters); put('GEO_ARTICLE', ''); put('GL_ITEMS', o.items || '');
   put('SCRIPTS', scriptTags(o.scripts, o.root));
   // any placeholder no module filled is removed rather than shipped as braces
   h = h.replace(/\{\{[A-Z_]+\}\}/g, () => '');
@@ -1906,6 +1917,19 @@ if (pre.CONTENTS !== 'supply-chain') warn(`preroute: src/preroute.js names the c
   if (!head) warn('contents page: social.js gave it no head');
   writePage('supply-chain/index.html', relink(citeDays(x.split(DAY_TOKEN).join(dayStr(dates.modified)).replace('<!--contents-head-->', () => head)), page));
 }
+// the Glossary's page, /glossary/ (the Glossary with its rows and every entry's words; until 30 Oct 2026 the home page's
+// #/glossary): dated by its text, headed by reference-pages.js
+if (pre.GLOSSARY !== 'glossary') warn(`preroute: src/preroute.js names the Glossary's page ${pre.GLOSSARY}/, but the build writes glossary/`);
+let glossaryPageHTML = '';
+{
+  const { h, page } = makePage('glossary', { root: '../', chapters: '', ids: [], items: lookupListHTML, scripts: ['kit.js', 'data.js', 'terms.js', 'app.js'], head: '<!--glossary-head-->' });
+  const x = h.split(`Updated ${builtStr}`).join(`Updated ${DAY_TOKEN}`);
+  const dates = pageDate('/glossary/', x.slice(x.indexOf('<main'), x.indexOf('</main>')));
+  const head = ctx.glossaryHead ? ctx.glossaryHead(dates) : '';
+  if (!head) warn('glossary page: reference-pages.js gave it no head');
+  glossaryPageHTML = relink(citeDays(x.split(DAY_TOKEN).join(dayStr(dates.modified)).replace('<!--glossary-head-->', () => head)), page);
+  writePage('glossary/index.html', glossaryPageHTML);
+}
 // the home page: dated by its text and DATA, the data its views draw from
 let homeHTML;
 {
@@ -1915,7 +1939,7 @@ let homeHTML;
   // a view with a page of its own (build/modules/reference-pages.js, which runs first) gives its footer that page's day, so
   // #/controls and /export-controls/ say the same "Updated" day for the same data (28 Oct 2026; the views all said the home
   // page's); the rest say the home page's
-  const VIEW_PAGE = { landscape: '/chips/', suppliers: '/suppliers/', controls: '/export-controls/', glossary: '/glossary/' };
+  const VIEW_PAGE = { landscape: '/chips/', suppliers: '/suppliers/', controls: '/export-controls/' };
   const homeDay = dayStr(homeDates.modified);
   x = x.split(/(?=<section class="view\b)/).map((part) => {
     const v = (/^<section class="view\b[^"]*" data-view="([a-z-]+)"/.exec(part) || [])[1], e = v && VIEW_PAGE[v] ? pageDates[VIEW_PAGE[v]] : null;
@@ -1966,7 +1990,8 @@ for (const ch of all) {
 }
 if (SITE.cname) fs.writeFileSync(path.join(root, 'dist', 'CNAME'), SITE.cname + '\n'); else if (fs.existsSync(path.join(root, 'dist', 'CNAME'))) fs.unlinkSync(path.join(root, 'dist', 'CNAME'));
 // for search engines: everything may be crawled, and the sitemap lists the HTML pages that carry their own content
-// (the site itself, each chapter's page, the summary, and the four reference pages that reference-pages.js writes; the
+// (the site itself, each chapter's page, the summary, the three reference pages that reference-pages.js writes and the
+// Glossary's page, which it heads and lists (ctx.referencePages); the
 // other view share pages only forward to the site, and the book is for print, so they are left out). The PDFs are still dated
 // here, by their bytes. Each with the day its content last changed (page dates, above): a chapter's page hashes its article,
 // a PDF its bytes
@@ -2008,7 +2033,7 @@ fs.readdirSync(ASSET_DIR).forEach((f) => { if (!assetURL[f]) fs.unlinkSync(path.
 const tierTotal = tierCounts([].concat(...all.map((c) => c.cites)));
 const report = [`built ${new Date().toISOString()}`, `source tiers: A ${tierTotal.A} · B ${tierTotal.B} · disallowed ${tierTotal.C + tierTotal.D} · unclassified ${tierTotal['?']}`, `chapters: ${chapters.length}${geo ? ' + geopolitics' : ''}`, `words: ${totalWords}`, `sources: ${all.reduce((a, c) => a + c.cites.length, 0)}`,
   `landscape: ${landscape.length} chips · suppliers: ${suppliers.length} · timeline: ${timeline.length} · matrix: ${matrix.length} · glossary: ${glossary.length} · controls: ${controls.length} · exposure: ${exposure.length}`, `specimens: ${[...specNames].join(', ')}`,
-  `size: home ${(homeHTML.length / 1024).toFixed(0)} KB`, ...all.map((c) => { const tc = tierCounts(c.cites); return `  ${pad(c.number)} ${c.id}: ${c.words} words, ${c.cites.length} sources (D ${tc.D}, ? ${tc['?']}), ${(c.meta.figures || []).length} figures`; }), ...warnings.map((w) => 'WARN ' + w)].join('\n');
+  `size: home ${(homeHTML.length / 1024).toFixed(0)} KB · glossary ${(Buffer.byteLength(glossaryPageHTML) / 1024).toFixed(0)} KB`, ...all.map((c) => { const tc = tierCounts(c.cites); return `  ${pad(c.number)} ${c.id}: ${c.words} words, ${c.cites.length} sources (D ${tc.D}, ? ${tc['?']}), ${(c.meta.figures || []).length} figures`; }), ...warnings.map((w) => 'WARN ' + w)].join('\n');
 fs.writeFileSync(path.join(root, 'dist', 'build-report.txt'), report);
 console.log(report);
 if (fatal.length) { console.error(`build failed: ${fatal.length} problem${fatal.length === 1 ? '' : 's'}; dist/ is incomplete, do not deploy it`); fatal.forEach((p) => console.error('  ' + p)); process.exit(1); }

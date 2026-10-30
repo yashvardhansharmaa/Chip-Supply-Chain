@@ -1,4 +1,4 @@
-/* The Glossary (#/glossary), search first, with what it holds under the field: "Kinds and letters", the owner's choice of
+/* The Glossary (/glossary/, its own page since 30 Oct 2026; #/glossary on the home page until then), search first, with what it holds under the field: "Kinds and letters", the owner's choice of
    30 Oct 2026 (the mockup and its notes are qa/excellence/glossary-alt/sf-kinds/ and searchfirst/ in the main checkout; the
    entry and its passages are the code Index and entry had, unchanged).
    Three states share one field (#gl-view[data-state]). At rest: the name, the field, Random entry, then the kinds with their
@@ -10,11 +10,14 @@
    to Z: every name under its letter, with the kinds and a strip of letters.
    The address names what is shown: #gl-<slug> for a term (what the chapters' pop-ups and the site search link to),
    #lk-firm-, #lk-chip- and #lk-country- for the rest, and #lk-term-<slug> also opens a term; #a-z the index, #a-z/terms
-   (firms, ai-chips, countries) the index of one kind and #a-z/b the index at a letter; #/glossary the first screen. A move
-   within the Glossary makes a history entry, so Back returns to the index at its place, or to the first screen. The rows come
-   with glossary.js (build/build.js) when the Glossary first opens (load): each row's li carries the entry's lk- id and its
-   search data, and a term's link its gl- id. The firms, chips and countries are read from DATA; the passages from the
-   chapters' paragraphs (glossary.js), the Export Controls entries, the board, AI Chips and the supplier list. */
+   (firms, ai-chips, countries) the index of one kind and #a-z/b the index at a letter; the page with no hash (or #/glossary) the first screen. A move
+   within the Glossary makes a history entry, so Back returns to the index at its place, or to the first screen. The rows are
+   in the page's HTML (build/build.js): each row's li carries the entry's lk- id and its search data, a term's link its gl- id,
+   and, hidden under the link, the entry's own words (its kind, other names and definition, a term's reason and chapter),
+   which the entry reads them from, so every entry's text is in the page as delivered. A firm's, chip's and country's facts
+   are read from DATA; the passages from the chapters' paragraphs (glossary.js, fetched when the Glossary first opens), the
+   Export Controls entries, the board, AI Chips and the supplier list. The page holds no other view, so a link out to one
+   (the supplier list, a chip's card) goes to the home page with what it should do there (CP.go). */
 (function () {
   var CP = window.CP; if (!CP) return;
   var $ = CP.$, $$ = CP.$$, esc = CP.esc, DATA = CP.DATA || {}, cname = CP.cname;
@@ -40,18 +43,14 @@
   var jump = function (y) { var prev = root.style.scrollBehavior; root.style.scrollBehavior = 'auto'; window.scrollTo(0, Math.max(0, Math.round(y))); root.style.scrollBehavior = prev; }; // html glides; these are jumps
 
   var L = { built: false, items: [], byId: {}, byKey: {}, cur: null, paras: null, state: 'home', kind: 'all' };
-  var TERMS = {}, sup = {}, chip = {}, co = {}, chs = {}, azRow = {}, groupEl = {}, counts = {}, XL = null, az = [];
+  var sup = {}, chip = {}, co = {}, chs = {}, azRow = {}, groupEl = {}, counts = {}, XL = null, az = [];
   var view, main, head, field, box, inp, sugg, paneEl, browseEl, lettersEl, countEl;
 
   /* ---------- the entries ---------- */
   function init() {
     if (L.built) return;
-    var list = $('#lk-items'); if (!list) return;
-    var G = window.CP_GLOSSARY || {};
-    if (!list.children.length) list.innerHTML = G.items || '';
-    if (!list.children.length) return;
+    var list = $('#lk-items'); if (!list || !list.children.length) return;
     L.built = true;
-    TERMS = G.terms || {};
     (DATA.suppliers || []).forEach(function (r) { sup[r.name] = r; });
     (DATA.landscape || []).forEach(function (c) { chip[c.id] = c; });
     (DATA.countries || []).forEach(function (c) { co[c.code] = c; });
@@ -60,13 +59,20 @@
     paneEl = $('#gl-pane'); browseEl = $('#gl-browse'); lettersEl = $('#gl-jump'); countEl = $('#gl-count');
     L.state = main.getAttribute('data-state') || 'home';
     L.items = $$('#lk-items .gl-r').map(function (li, i) {
-      var a = li.firstElementChild;
+      var a = li.firstElementChild, rd = $('.gl-rd', li);
+      // the entry's own words, under its link (build/build.js lkWords): its other names, its definition, a term's reason and the chapter it is read in
+      var w = function (c) { var e = rd ? $('.' + c, rd) : null; return e ? e.textContent : ''; }, rc = rd ? $('.gl-rc a', rd) : null;
       var it = { id: li.id, kind: li.getAttribute('data-kind'), key: li.getAttribute('data-key') || '', name: a.textContent, label: li.getAttribute('data-label') || '',
         alias: li.getAttribute('data-alias') || '', text: li.getAttribute('data-text') || '', order: i, row: a, L: li.parentNode.parentNode.getAttribute('data-l') };
       a.setAttribute('data-id', it.id);
       it.lname = it.name.toLowerCase(); it.al = it.alias.toLowerCase().split('|').filter(Boolean);
-      if (it.kind === 'term') { var t = TERMS[it.key] || [it.name, '', '', '', '', '']; it.t = { term: t[0], aka: t[1], plain: t[2], why: t[3], ch: t[4], chTitle: t[5] }; it.title = t[0]; }
-      else it.title = it.name;
+      if (it.kind === 'term') {
+        it.t = { term: it.name, aka: w('gl-ra'), plain: w('gl-rp'), why: w('gl-rw'), ch: rc ? rc.getAttribute('data-ch') : '', chTitle: rc ? rc.textContent : '' }; it.title = it.name;
+        if (!it.text) it.text = [it.t.term, it.t.aka, it.t.plain].join(' ').toLowerCase().replace(/\s+/g, ' '); // a term's search words: its name, other names and definition
+      } else {
+        it.title = it.name; it.def = w('gl-rp');
+        if (it.def && (it.kind === 'firm' || it.kind === 'country')) it.text += ' ' + it.def.toLowerCase().replace(/\s+/g, ' '); // a firm's and a country's role is among its search words
+      }
       it.data = it.kind === 'firm' ? sup[it.key] : it.kind === 'chip' ? chip[it.key] : it.kind === 'country' ? co[it.key] : null;
       azRow[it.id] = a; L.byId[it.id] = it; L.byKey[it.key] = it;
       return it;
@@ -162,7 +168,7 @@
     return '<p class="label gl-kind">Firm' + (r.country ? ' · ' + esc(cname(r.country)) : '') + '</p>' +
       '<h2 class="gl-hw" id="gl-hw" tabindex="-1">' + esc(r.name || it.name) + (r.nativeName ? '<span class="gl-native">' + esc(r.nativeName) + '</span>' : '') + '</h2>' +
       (meta ? '<p class="gl-meta">' + esc(meta) + '</p>' : '') +
-      (r.role ? '<p class="gl-def">' + xl(r.role, used) + '</p>' : '') +
+      (it.def ? '<p class="gl-def">' + xl(it.def, used) + '</p>' : '') +
       (r.shareNote ? '<p class="gl-p">' + xl(r.shareNote, used) + '</p>' : '') +
       (r.aiRelevance ? '<p class="gl-p">' + xl(r.aiRelevance, used) + '</p>' : '') +
       facts(rows) +
@@ -183,7 +189,7 @@
     return '<p class="label gl-kind">AI chip · ' + esc(c.vendor) + (c.vendorCountry ? ', ' + esc(cname(c.vendorCountry)) : '') + '</p>' +
       '<h2 class="gl-hw" id="gl-hw" tabindex="-1">' + esc((c.vendor || '') + ' ' + (c.name || it.name)) + '</h2>' +
       (c.status ? '<p class="gl-meta">' + esc(c.status) + '</p>' : '') +
-      (c.notes ? '<p class="gl-def">' + xl(c.notes, used) + '</p>' : '') +
+      (it.def ? '<p class="gl-def">' + xl(it.def, used) + '</p>' : '') +
       (c.exportStatus ? '<p class="gl-p"><b>Export status.</b> ' + xl(c.exportStatus, used) + '</p>' : '') +
       facts(rows) + '<p class="gl-links"><a href="#/landscape?pick=' + esc(encodeURIComponent(c.id)) + '" data-chip="' + esc(c.id) + '">On AI Chips →</a></p>';
   }
@@ -224,7 +230,7 @@
     var cats = {}; firms.forEach(function (r) { (cats[r.category || 'Other'] = cats[r.category || 'Other'] || []).push(r); });
     var catNames = Object.keys(cats).sort(function (a, b) { return cats[b].length - cats[a].length || a.localeCompare(b); });
     var h = '<p class="label gl-kind">Country · ' + esc(cc) + '</p><h2 class="gl-hw" id="gl-hw" tabindex="-1">' + esc(c.name) + '</h2>' +
-      '<p class="gl-meta">' + esc(F.meta) + '</p>' + (c.role ? '<p class="gl-def">' + xl(c.role, used) + '.</p>' : '');
+      '<p class="gl-meta">' + esc(F.meta) + '</p>' + (it.def ? '<p class="gl-def">' + xl(it.def, used) + '.</p>' : '');
     if (segs.length) {
       var topV = Math.max.apply(null, big.map(function (s) { return s.v; }));
       h += '<section class="gl-part" aria-labelledby="gl-sh"><h3 class="gl-h" id="gl-sh">Share of each segment</h3><ul class="gl-shares">' + big.map(function (s) {
@@ -362,7 +368,7 @@
   }
 
   /* ---------- the first sentence of each definition, for the suggestions ---------- */
-  var defOf = function (it) { if (it.kind === 'term') return it.t.plain; var d = it.data || {}; return it.kind === 'firm' ? d.role : it.kind === 'chip' ? d.notes : d.role ? d.role + '.' : ''; };
+  var defOf = function (it) { if (it.kind === 'term') return it.t.plain; return it.kind === 'country' && it.def ? it.def + '.' : it.def; }; // the words under each row
   var ABBR = /(?:\b(?:e\.g|i\.e|Inc|Co|Corp|Ltd|No|Nos|St|vs|approx|Mr|Dr|Jr|Sr|cf|ca)|\b[A-Z])$/;
   function firstSentence(s) {
     s = String(s || '').trim(); var re = /[.!?](?=["”’)]?(?:\s+[A-Z0-9“"(]|\s*$))/g, m;
@@ -403,7 +409,7 @@
   }
   // a move within the Glossary makes a history entry (or replaces this one), so Back walks back through them
   var setHash = function (h, how, st) { if (how === 'push') history.pushState(st || { gl: 1 }, '', h); else if (how === 'replace') history.replaceState(st || history.state, '', h); };
-  var homeHash = function () { return location.pathname + location.search + '#/glossary'; };
+  var homeHash = function () { return location.pathname + location.search; }; // the first screen is the page's own address, with no hash
 
   function openEntry(it, o) {
     o = o || {}; if (!it) return;
@@ -640,15 +646,23 @@
         setTimeout(function () { CP.scrollToEl(para.el, false); if (CP.Router && CP.Router.settle) CP.Router.settle(para.el); para.el.classList.add('lk-flash'); setTimeout(function () { para.el.classList.remove('lk-flash'); }, 2600); }, 140);
         return;
       }
-      // the supplier list takes the whole filter from the link (a firm's name, or a country), so an older search cannot narrow it
-      var s = e.target.closest('a[data-sup]'); if (s) { var q = s.getAttribute('data-sup'); setTimeout(function () { if (CP.Suppliers && CP.Suppliers.show) CP.Suppliers.show({ q: q }); }, 60); return; }
-      var sc = e.target.closest('a[data-supcc]'); if (sc) { var cc = sc.getAttribute('data-supcc'); setTimeout(function () { if (CP.Suppliers && CP.Suppliers.show) CP.Suppliers.show({ country: cc }); }, 60); return; }
+      // the supplier list takes the whole filter from the link (a firm's name, or a country), so an older search cannot narrow it.
+      // The supplier list and AI Chips are the home page's: the link goes there with what it should do (CP.go, src/app.js Router.after)
+      var out = function (a, act) { if (CP.go && CP.go(a.getAttribute('href'), act)) { e.preventDefault(); return true; } return false; };
+      var s = e.target.closest('a[data-sup]'); if (s) { var q = s.getAttribute('data-sup'); if (!out(s, { q: q })) setTimeout(function () { if (CP.Suppliers && CP.Suppliers.show) CP.Suppliers.show({ q: q }); }, 60); return; }
+      var sc = e.target.closest('a[data-supcc]'); if (sc) { var cc = sc.getAttribute('data-supcc'); if (!out(sc, { country: cc })) setTimeout(function () { if (CP.Suppliers && CP.Suppliers.show) CP.Suppliers.show({ country: cc }); }, 60); return; }
       // a chip opens its card on the chart, adding nothing
-      var ch = e.target.closest('a[data-chip]'); if (ch) { var id = ch.getAttribute('data-chip'); setTimeout(function () { if (CP.Landscape && CP.Landscape.openCard) CP.Landscape.openCard(id, { show: true }); }, 60); return; }
+      var ch = e.target.closest('a[data-chip]'); if (ch) { var id = ch.getAttribute('data-chip'); if (!out(ch, { chip: id })) setTimeout(function () { if (CP.Landscape && CP.Landscape.openCard) CP.Landscape.openCard(id, { show: true }); }, 60); return; }
       var more = e.target.closest('[data-rest]');
       if (more) { var rest = more.parentNode.querySelector('.gl-rest'); rest.hidden = false; more.parentNode.removeChild(more); focusEl(rest.querySelector('a')); return; }
       var all = e.target.closest('[data-all]');
       if (all) { var ul = all.closest('.gl-part').querySelector('.gl-men'), n = ul.children.length; ul.innerHTML = lastHits.map(rowHTML).join(''); all.parentNode.parentNode.removeChild(all.parentNode); var nx = ul.children[n] && ul.children[n].querySelector('a'); if (nx) focusEl(nx); }
+    });
+    // the masthead's Glossary tab, on the Glossary's own page, returns to the first screen in place, as the Glossary's name does
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest ? e.target.closest('.tabs a[data-view="glossary"]') : null;
+      if (!a || !here() || e.defaultPrevented || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      e.preventDefault(); if (L.state !== 'home') goHome({ hash: 'push' });
     });
     // "/" goes to this search while the Glossary shows (the site search keeps Ctrl+K); it is heard before the site's own "/"
     window.addEventListener('keydown', function (e) {
@@ -666,8 +680,19 @@
 
   /* ---------- the address leads: Back and Forward, and a link from a chapter, a pop-up or the site search ---------- */
   var pendL = null; // a letter in the address on arrival, gone to again once the faces have set the rows' heights
+  /* the static copy's anchors (until 30 Oct 2026; shared links and search results may still carry them): a term (#euv), a
+     letter (#letter-s) and a list (#list-firms) take the Glossary's own address, in place */
+  var OLD = { 'list-firms': 'a-z/firms', 'list-chips': 'a-z/ai-chips', 'list-countries': 'a-z/countries' };
+  function oldAnchor(h) {
+    if (!h || /^(gl|lk)-|^a-z(\/|$)|^\//.test(h)) return '';
+    var m = /^letter-(0-9|[a-z])$/.exec(h);
+    var to = OLD[h] || (m ? 'a-z/' + m[1] : L.byKey['gl-' + h] ? 'gl-' + h : '');
+    if (to) history.replaceState(history.state, '', location.pathname + location.search + '#' + to);
+    return to;
+  }
   function route(o) {
     var h = (location.hash || '').replace(/^#/, ''); try { h = decodeURIComponent(h); } catch (e) { }
+    h = oldAnchor(h) || h;
     var it = fromHash();
     if (it) { openEntry(it, { hash: false, focus: o.focus }); return; }
     var A = parseAz(h); // a letter is gone to on arrival; Back to the index keeps the place left
@@ -696,11 +721,10 @@
   L.browse = function (k, l) { openBrowse({ hash: 'replace', kind: k || 'all', letter: l || null }); };
   L.first = firstOf;
   L.flash = flash; L.domCorpus = domCorpus; L.corpus = corpus;
-  /* The rows and the passages come with glossary.js (build/build.js), fetched when the Glossary first opens (CP.need); the head
-     paints at once, and the parts the rows fill wait hidden until they are in (lookup.css, .gl-wait) */
+  /* The passages come with glossary.js (build/build.js), fetched when the Glossary first opens (CP.need); the head paints at
+     once, and the parts that wait for them stay hidden until the Glossary is ready (lookup.css, .gl-wait) */
   L.load = function (fn) {
-    var list = $('#lk-items');
-    if (!list || list.children.length || !CP.need) { fn(); return; }
+    if (window.CP_GLOSSARY || !CP.need) { fn(); return; }
     CP.need('glossary.js', function () { fn(); var v = $('.view[data-view="glossary"]'); if (v && !v.hasAttribute('data-gl')) v.setAttribute('data-gl', 'empty'); });
   };
   CP.register('glossary', { activate: function () { L.load(activate); }, stage: false });
