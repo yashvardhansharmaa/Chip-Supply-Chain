@@ -242,7 +242,7 @@ const want = (n) => !ONLY.length || ONLY.includes(String(n));
       await t.forward(); await sleep(nav - 1200); st = await t.ev(STATE);
       pass = st.shown.join() === 'foundries-and-fabs' && Math.abs(st.y - 2200) <= 2;
       ok = ok && pass; out.push(`Forward: shows ${st.shown.join(',')} at y ${st.y}, the place left in it${pass ? '' : ' (FAIL)'}`);
-      // Back from another view: the Glossary tab (the home page's), then Back
+      // Back from another page: the Glossary tab (the Glossary's own page since 30 Oct 2026), then Back
       await t.click('.tabs a[data-view="glossary"]', false); await sleep(nav);
       const gv = (await t.ev(STATE)).view;
       await t.back(); await sleep(nav - 1200); st = await t.ev(STATE);

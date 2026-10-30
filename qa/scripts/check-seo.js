@@ -17,6 +17,10 @@
  * The contents page, /supply-chain/ (28 Oct 2026): one h1, Supply Chain; its title, description and canonical; the share tags
  * with the chain's card; a CollectionPage whose ItemList is the chapter pages in reading order; its sitemap entry and date.
  * /chain/ forwards to it, with its canonical.
+ * The Glossary's page, /glossary/ (the interactive Glossary since 30 Oct 2026): one level-one heading, Glossary; its title,
+ * description and canonical; the share tags with the Glossary's card; a DefinedTermSet of every term at its entry's address;
+ * every entry's row in the HTML before any script runs, and every term's definition and reason in it; its sitemap entry and
+ * date. The home page holds no Glossary.
  * And for the site: the sitemap lists each address once, leaves out the forwarding pages (a merged chapter's old address and the
  * view pages /home/, /intro/, /chain/), the book (/book/, for print) and the PDFs; robots.txt names the sitemap, blocks no
  * chapter and blocks the book, which is also noindex; the home page's JSON-LD parses, its HTML, before any script runs, links
@@ -206,6 +210,47 @@ chapters.forEach((c, i) => {
   }
   const stub = read(path.join(dist, 'chain', 'index.html')) || '';
   if (links(stub, 'canonical').join() !== url || !/location\.replace\("\.\.\/supply-chain\/"/.test(stub)) fail('/chain/', 'does not forward to /supply-chain/ with its canonical');
+}
+
+// the Glossary's page: the interactive Glossary, with every entry's words in its HTML (30 Oct 2026)
+{
+  const page = '/glossary/', url = BASE + 'glossary/';
+  const html = read(path.join(dist, 'glossary', 'index.html')) || '';
+  if (!html) fail(page, 'missing; run node build/build.js');
+  else {
+    const head = (html.match(/<head>([\s\S]*?)<\/head>/i) || [])[1] || '', body = ((html.match(/<body\b[^>]*>([\s\S]*)<\/body>/i) || [])[1] || '').replace(/<script\b[\s\S]*?<\/script>/gi, '');
+    const h1s = [...body.matchAll(/<h1\b[^>]*>([\s\S]*?)<\/h1>|<[a-z]+\b[^>]*role="heading"[^>]*aria-level="1"[^>]*>([\s\S]*?)<\/(?:p|div)>/gi)].map((m) => text(m[1] || m[2]));
+    if (h1s.join() !== 'Glossary') fail(page, `its level-one headings are ${JSON.stringify(h1s)}`);
+    const titles = [...head.matchAll(/<title>([\s\S]*?)<\/title>/gi)].map((m) => text(m[1])), descs = metas(head, 'name', 'description');
+    if (titles.length !== 1 || descs.length !== 1) fail(page, `has ${titles.length} titles and ${descs.length} descriptions`);
+    else { ranges(page, 'title', titles[0], [30, 70], [50, 60]); ranges(page, 'description', descs[0], [70, 170], [150, 160]); }
+    const canon = links(head, 'canonical');
+    if (canon.join() !== url) fail(page, `canonical is ${JSON.stringify(canon)}`);
+    const og = (k) => metas(head, 'property', 'og:' + k)[0] || '';
+    if (og('url') !== url) fail(page, `og:url is ${og('url')}`);
+    if (!/\/cards\/glossary\.png(\?v=\d+)?$/.test(og('image'))) fail(page, `og:image is ${og('image')}, not the Glossary's card`);
+    ['title', 'description', 'image:alt'].forEach((k) => { if (!og(k)) fail(page, `has no og:${k}`); });
+    if (/<meta\b[^>]*name="robots"[^>]*content="[^"]*noindex/i.test(head)) fail(page, 'is marked noindex');
+    const terms = JSON.parse(read(path.join(root, 'data', 'glossary.json')) || '[]');
+    const ids = new Set([...body.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1]));
+    let set = null; [...head.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/gi)].forEach((m) => { try { const j = JSON.parse(m[1]); if (j['@type'] === 'DefinedTermSet') set = j; } catch (e) { fail(page, 'JSON-LD does not parse'); } });
+    const defined = set ? set.hasDefinedTerm || [] : [];
+    if (!set || set.url !== url || defined.length !== terms.length) fail(page, `JSON-LD has no DefinedTermSet of the ${terms.length} terms at its address`);
+    const away = defined.filter((x) => !String(x.url || '').startsWith(url + '#') || !ids.has(String(x.url).slice(url.length + 1)));
+    if (away.length) fail(page, `${away.length} terms in the JSON-LD point at no entry on the page, as ${away.slice(0, 3).map((x) => x.url).join(', ')}`);
+    // what a search engine reads before any script runs: every entry's row, and every term's name, definition and reason
+    const rows = body.match(/<li class="gl-r"[\s\S]*?<\/li>/g) || [];
+    const termRows = rows.filter((r) => /data-kind="term"/.test(r));
+    const whole = termRows.filter((r) => /<a [^>]*>[^<]+<\/a>/.test(r) && /<p class="gl-rp">[\s\S]+?<\/p>/.test(r) && /<p class="gl-rw">[\s\S]+?<\/p>/.test(r));
+    if (termRows.length !== terms.length || whole.length !== terms.length) fail(page, `its HTML holds ${whole.length} of the ${terms.length} terms with their definition and reason`);
+    const n = +(/placeholder="Search (\d+) entries"/.exec(body) || [])[1];
+    if (!n || rows.length !== n) fail(page, `its HTML holds ${rows.length} rows for ${n || 'no'} entries`);
+    const d = dates[page] || {}, sm = byLoc.get(url);
+    if (!sm) fail(page, 'is not in the sitemap');
+    else if (sm.lastmod !== d.modified) fail(page, `sitemap lastmod is ${sm.lastmod}, but its date is ${d.modified}`);
+  }
+  const home = read(path.join(dist, 'index.html')) || '';
+  if (/<section class="view[^"]*" data-view="glossary"/.test(home) || /<li class="gl-r"/.test(home)) fail('/', 'holds the Glossary, which belongs on its own page');
 }
 
 // the book: every chapter, for print only, kept from search engines

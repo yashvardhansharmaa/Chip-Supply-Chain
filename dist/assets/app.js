@@ -4423,9 +4423,10 @@ try {
 
 /* module: lookup.js */
 try {
-/* The Glossary (/glossary/, its own page since 30 Oct 2026; #/glossary on the home page until then), search first, with what it holds under the field: "Kinds and letters", the owner's choice of
-   30 Oct 2026 (the mockup and its notes are qa/excellence/glossary-alt/sf-kinds/ and searchfirst/ in the main checkout; the
-   entry and its passages are the code Index and entry had, unchanged).
+/* The Glossary (/glossary/, its own page since 30 Oct 2026; #/glossary on the home page until then), search first, with
+   what it holds under the field: "Kinds and letters", the owner's choice of 30 Oct 2026 (the mockup and its notes are
+   qa/excellence/glossary-alt/sf-kinds/ and searchfirst/ in the main checkout; the entry and its passages are the code Index
+   and entry had, unchanged).
    Three states share one field (#gl-view[data-state]). At rest: the name, the field, Random entry, then the kinds with their
    counts and the letters, which build/build.js writes from the data, each opening Browse A to Z. Typing drops suggestions
    inside the field's edge: the names that match first, then "In the text", as many as the window holds and then "Show all N
@@ -4435,14 +4436,15 @@ try {
    to Z: every name under its letter, with the kinds and a strip of letters.
    The address names what is shown: #gl-<slug> for a term (what the chapters' pop-ups and the site search link to),
    #lk-firm-, #lk-chip- and #lk-country- for the rest, and #lk-term-<slug> also opens a term; #a-z the index, #a-z/terms
-   (firms, ai-chips, countries) the index of one kind and #a-z/b the index at a letter; the page with no hash (or #/glossary) the first screen. A move
-   within the Glossary makes a history entry, so Back returns to the index at its place, or to the first screen. The rows are
-   in the page's HTML (build/build.js): each row's li carries the entry's lk- id and its search data, a term's link its gl- id,
-   and, hidden under the link, the entry's own words (its kind, other names and definition, a term's reason and chapter),
-   which the entry reads them from, so every entry's text is in the page as delivered. A firm's, chip's and country's facts
-   are read from DATA; the passages from the chapters' paragraphs (glossary.js, fetched when the Glossary first opens), the
-   Export Controls entries, the board, AI Chips and the supplier list. The page holds no other view, so a link out to one
-   (the supplier list, a chip's card) goes to the home page with what it should do there (CP.go). */
+   (firms, ai-chips, countries) the index of one kind and #a-z/b the index at a letter; the page with no hash (or #/glossary)
+   the first screen. A move within the Glossary makes a history entry, so Back returns to the index at its place, or to the
+   first screen. The rows are in the page's HTML (build/build.js): each row's li carries the entry's lk- id and its search
+   data, a term's link its gl- id, and, hidden under the link, the entry's own words (its kind, other names and definition,
+   a term's reason and chapter), which the entry reads them from, so every entry's text is in the page as delivered. A
+   firm's, chip's and country's facts are read from DATA; the passages from the chapters' paragraphs (glossary.js, fetched
+   when the Glossary first opens), the Export Controls entries, the board, AI Chips and the supplier list. The page holds no
+   other view, so a link out to one (the supplier list, a chip's card) goes to the home page with what it should do there
+   (CP.go). */
 (function () {
   var CP = window.CP; if (!CP) return;
   var $ = CP.$, $$ = CP.$$, esc = CP.esc, DATA = CP.DATA || {}, cname = CP.cname;

@@ -6,13 +6,12 @@ process.chdir(require('path').resolve(__dirname, '..', '..')); // reads dist/, d
 const ALLOWED = {
   'exposure row for Veeco Instruments has no supplier entry': 'Veeco files a China share, so it has a China revenue panel, but it is not in the supplier list. data/exposure-notes.md classes it as Deposition & Etch.',
 };
-/* The pages: the home page (with the Glossary's two lists, which dist/assets/glossary.js puts into it when the Glossary opens),
-   the contents page, dist/supply-chain/, and each chapter's own page, dist/<id>/index.html (since 28 Oct 2026, when the
-   chapters and the contents left the home page). Each is read
-   as markup only: the scripts' own strings are not links */
+/* The pages: the home page, the Glossary's page, dist/glossary/ (since 30 Oct 2026, with its rows and every entry's words
+   in its HTML; until then the home page's, filled from dist/assets/glossary.js), the contents page, dist/supply-chain/,
+   and each chapter's own page, dist/<id>/index.html (since 28 Oct 2026, when the chapters and the contents left the home
+   page). Each is read as markup only: the scripts' own strings are not links */
 const markup = (f) => fs.readFileSync(f, 'utf8').replace(/<script[\s\S]*?<\/script>/g, '');
-const glData = (() => { try { const w = {}; new Function('window', fs.readFileSync('dist/assets/glossary.js', 'utf8'))(w); return w.CP_GLOSSARY || {}; } catch (e) { return {}; } })();
-const pages = [{ path: '/', html: markup('dist/index.html').replace(/(<ul\b[^>]*\bid="lk-items"[^>]*>)/, (m) => m + (glData.items || '')).replace(/(<dl\b[^>]*\bid="glossary"[^>]*>)/, (m) => m + (glData.terms || '')) }];
+const pages = [{ path: '/', html: markup('dist/index.html') }, { path: '/glossary/', html: markup('dist/glossary/index.html') }];
 fs.readdirSync('dist').filter((d) => fs.existsSync(`dist/${d}/index.html`) && /<article class="chapter[^"]*" id="|<div class="contents" id="contents"/.test(fs.readFileSync(`dist/${d}/index.html`, 'utf8')) && d !== 'book')
   .forEach((d) => pages.push({ path: `/${d}/`, html: markup(`dist/${d}/index.html`) }));
 pages.forEach((p) => { p.ids = new Set((p.html.match(/\sid="([^"]+)"/g) || []).map((m) => m.slice(5, -1))); });
@@ -40,8 +39,8 @@ pages.forEach((p) => {
     if (!frag || !target) return;
     if (frag.startsWith('/')) { if (target.path !== '/' || !routeOk(frag)) bad(p, h); return; }
     let id = frag; try { id = decodeURIComponent(frag); } catch (e) { }
-    // the Glossary's A to Z index: an address on the home page with no element behind it (#a-z, #a-z/firms, #a-z/s; src/modules/lookup.js)
-    if (target.path === '/' && /^a-z(\/(terms|firms|ai-chips|countries|0-9|[a-z]))?$/.test(id)) return;
+    // the Glossary's A to Z index: an address on its page with no element behind it (#a-z, #a-z/firms, #a-z/s; src/modules/lookup.js)
+    if (target.path === '/glossary/' && /^a-z(\/(terms|firms|ai-chips|countries|0-9|[a-z]))?$/.test(id)) return;
     if (!target.ids.has(id)) bad(p, h);
   });
 });

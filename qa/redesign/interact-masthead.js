@@ -2,7 +2,8 @@
 /* One masthead on every page (design round nine, revision 6, 28 Oct 2026): on a chapter's page (the app itself since 28 Oct), a reference page and
    /summary/, the bar is the app's: the wordmark at the page's margin (64 px at 1440, as the app's), Home first, the section the
    page belongs to on the wine rule, search and the theme as two 34 px round buttons; the theme button turns the page dark
-   and back and keeps the choice; search lands in the app with its dialog open and the flag gone from the address.
+   and back and keeps the choice; search lands in the app with its dialog open and the flag gone from the address. The
+   Glossary's page (the app itself since 30 Oct 2026) wears the same bar, and on every page the Glossary tab goes to /glossary/.
    usage: node qa/redesign/interact-masthead.js [base] (default http://127.0.0.1:8777) */
 'use strict';
 const { launch, open, sleep } = require('./cdp.js');
@@ -17,7 +18,7 @@ const BAR = `(function(){var m=document.querySelector('.masthead'),w=m.querySele
   try {
     const app = await open(chrome, BASE + '/#lithography', { width: 1440 });
     const a = await app.ev(BAR); await app.close();
-    for (const [name, url, cur] of [['chapter page', '/lithography/', 'Supply Chain'], ['reference page', '/suppliers/', 'Suppliers'], ['summary', '/summary/?print', '']]) {
+    for (const [name, url, cur] of [['chapter page', '/lithography/', 'Supply Chain'], ['Glossary page', '/glossary/', 'Glossary'], ['reference page', '/suppliers/', 'Suppliers'], ['summary', '/summary/?print', '']]) {
       const t = await open(chrome, BASE + url, { width: 1440 });
       const b = await t.ev(BAR);
       check(`${name}: the app's bar, at the app's margin and height, Home first`, b.x === a.x && b.h === a.h && b.first === 'Home' && b.name === a.name, JSON.stringify({ app: a, page: b }));
@@ -37,6 +38,16 @@ const BAR = `(function(){var m=document.querySelector('.masthead'),w=m.querySele
     await p.ev("document.querySelector('.masthead .search-btn').click(),1"); await sleep(400);
     check('chapter page: search opens its dialog in place', await p.ev("!!document.querySelector('#cp-search') && !document.querySelector('#cp-search').hidden && location.pathname === '/lithography/'"));
     await p.close();
+    // the Glossary is one address, /glossary/, from every page's masthead (30 Oct 2026)
+    const to = [];
+    for (const url of ['/', '/#/suppliers', '/lithography/', '/supply-chain/', '/glossary/#gl-euv', '/chips/', '/suppliers/', '/export-controls/', '/summary/?print', '/404.html']) { // not /intro/, which forwards to the live site
+      const t = await open(chrome, BASE + url, { width: 1440, wait: 800 });
+      let got = null;
+      for (let k = 0; k < 20 && !got; k++) { try { got = await t.ev("(function(){var a=document.querySelector('.masthead .tabs a[data-view=\"glossary\"]');return a?new URL(a.getAttribute('href'),location.href).pathname:null;})()"); } catch (e) { } if (!got) await sleep(200); }
+      to.push([url, got]);
+      await t.close();
+    }
+    check("every page's Glossary tab goes to /glossary/", to.every((x) => x[1] === '/glossary/'), JSON.stringify(to.filter((x) => x[1] !== '/glossary/')));
     // a static page's search is a link to the app with ?search=1
     const r = await open(chrome, BASE + '/suppliers/', { width: 1440 });
     const href = await r.ev("document.querySelector('.masthead .search-btn').getAttribute('href')"); await r.close();
