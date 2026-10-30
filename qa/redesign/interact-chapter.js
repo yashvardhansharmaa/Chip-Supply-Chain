@@ -219,7 +219,7 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8766';
       await enter(t);
       r = await t.ev(RS);
       check(`${where} 1440: Enter hides the rail, and focus moves to Show contents`, r.off && !r.body && !r.hide && r.show && r.focus === 'show' && r.showExp === 'false', JSON.stringify(r));
-      check(`${where} 1440: the text column moves to the middle at 666 px, the figures with it`, Math.abs(r.textX - r.mid) <= 2 && r.textW === 666 && r.figW === 666 && r.figX === r.textX, `text at ${r.textX} (middle ${r.mid}, was ${prevX}), ${r.textW} px; figure at ${r.figX}, ${r.figW} px`);
+      check(`${where} 1440: the text column moves to the middle at 666 px, the figures with it on its left edge at 720 px (owner, 30 Oct)`, Math.abs(r.textX - r.mid) <= 2 && r.textW === 666 && r.figW === 720 && r.figX === r.textX, `text at ${r.textX} (middle ${r.mid}, was ${prevX}), ${r.textW} px; figure at ${r.figX}, ${r.figW} px`);
       check(`${where} 1440: the choice is kept on this device`, r.stored === 'off', r.stored);
       await scrollTo(t, '#lithography--who-makes-it', 200);
       r = await t.ev(RS);

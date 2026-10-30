@@ -1,4 +1,4 @@
-/* A figure range ("$350-400M", "2023-2025") is one unit on the page: wrap it in .nw (src/styles.css) so no line breaks at its
+/* A figure range ("$350–400M", "2023–2025") is one unit on the page: wrap it in .nw (src/styles.css) so no line breaks at its
    hyphen (font check, 27 Oct 2026). Text only: tags, scripts, styles, the title, SVG drawings, select options, code and
    preformatted text stay as they are.
    The same pass sets typographer's quotes in the reading text (design10 chapter P1.3, 29 Oct 2026): the build's own strings were
@@ -18,13 +18,19 @@ const quotes = (t, prev) => {
   t = t.replace(/"/g, '”');
   return t;
 };
+// a range in the reading text takes an en dash, as the tables do ("40–70%"; owner, 30 Oct 2026). A source's title, the text of a
+// link out of the site, keeps the publisher's own hyphen
 module.exports = (html) => {
-  let prev = ' ';
+  let prev = ' ', out = 0;
   return String(html).split(SKIP).map((part, i) => {
     // a skipped block (a script, a drawing) or a block-level tag starts a new run; an inline tag (a link, a term button) does not
-    if (i % 2) { if (!/^<[^>]+>$/.test(part) || /^<\/?(p|div|li|ul|ol|h[1-6]|td|th|tr|table|section|article|header|footer|figure|figcaption|blockquote|dd|dt|dl|br|aside|nav|main)\b/i.test(part)) prev = ' '; return part; }
+    if (i % 2) {
+      if (/^<a\b[^>]*\bhref="https?:/i.test(part)) out++; else if (/^<\/a>/i.test(part) && out) out--;
+      if (!/^<[^>]+>$/.test(part) || /^<\/?(p|div|li|ul|ol|h[1-6]|td|th|tr|table|section|article|header|footer|figure|figcaption|blockquote|dd|dt|dl|br|aside|nav|main)\b/i.test(part)) prev = ' ';
+      return part;
+    }
     const q = quotes(part, prev);
     if (q.length) prev = q.slice(-1);
-    return q.replace(RANGE, (r) => `<span class="nw">${r}</span>`);
+    return q.replace(RANGE, (r) => `<span class="nw">${out ? r : r.replace('-', '–')}</span>`);
   }).join('');
 };

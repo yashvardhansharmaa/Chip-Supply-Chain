@@ -1501,6 +1501,10 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
    explainers, drawn at 760 px, were blown up past their size and blurred (owner, 26 Oct). Its frame is a hairline (the visual
    pass of 27 Oct 2026: lighter chrome), and its head is tight: the number small, the finding, then the title under it */
 .chapter .figure { margin: 34px 0 44px; padding: 0; border: 1px solid var(--line-2); background: var(--bg); max-width: 666px; }
+/* on screen a figure, its explainer animation and the section rule over them take the card's and flashcards' edge, 720 px, about
+   8 percent wider than the 666 px text (owner, 30 Oct 2026). The explainer films are 1520 px wide (760 px at 2x), so at 720 px
+   they are drawn smaller than their size and stay sharp. Paper sets its own widths (src/modules/print.css) */
+@media screen { .chapter .figure, .chapter > .prose > h2 { max-width: 720px; } }
 .chapter .fig-head { padding: 18px 24px 0; }
 .chapter .fig-k { display: inline-block; font-family: var(--font-code); font-size: 11.5px; line-height: 16px; color: var(--muted); text-decoration: none; }
 .chapter .fig-k:hover { color: var(--accent-ink); }
