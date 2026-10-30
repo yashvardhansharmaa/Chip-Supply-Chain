@@ -1,30 +1,34 @@
-/* The Glossary (#/glossary) as an index and one entry: "Index and entry", the owner's choice of 29 Oct 2026 (the mockup and its
-   notes are qa/excellence/glossary-alt/twopane/ in the main checkout).
-   The index: the title and count, a labeled search, the kinds, and every entry A to Z, names only, under sticky letter heads,
-   with a column of letters to jump by. The entry: one at a time, whole: its kind, its name and other names, what it is, the
-   reason, the chapters it is read in, a firm's, chip's or country's facts, then every place the site uses it, and the entries
-   on either side. On a wide screen (880 px and up) the index keeps its place under the masthead and scrolls on its own while
-   the entry scrolls with the page. Under 880 px the index is the page, and an entry opens over it as a dialog with
-   "‹ Glossary", previous and next; Back, that button or Escape return to the same row.
-   The address names the entry shown: #gl-<slug> for a term (what the chapters' pop-ups and the site search link to),
-   #lk-firm-, #lk-chip- and #lk-country- for the rest, and #lk-term-<slug> also opens a term; #/glossary opens chip on a wide
-   screen and the list on a phone. The rows come with glossary.js (build/build.js) when the Glossary first opens (load): each
-   row's li carries the entry's lk- id and its search data, and a term's link its gl- id, so every link the site writes lands
-   whatever the search or kind. The firms, chips and countries are read from DATA; the passages from the chapters' paragraphs
-   (glossary.js), the Export Controls entries, the board, AI Chips and the supplier list. */
+/* The Glossary (#/glossary), search first, with what it holds under the field: "Kinds and letters", the owner's choice of
+   30 Oct 2026 (the mockup and its notes are qa/excellence/glossary-alt/sf-kinds/ and searchfirst/ in the main checkout; the
+   entry and its passages are the code Index and entry had, unchanged).
+   Three states share one field (#gl-view[data-state]). At rest: the name, the field, Random entry, then the kinds with their
+   counts and the letters, which build/build.js writes from the data, each opening Browse A to Z. Typing drops suggestions
+   inside the field's edge: the names that match first, then "In the text", as many as the window holds and then "Show all N
+   matches"; with no match, "Did you mean" and every place the site uses the words. An entry: the field moves into a slim bar
+   under the masthead and the entry reads in one centered column, its kind, name and other names, what it is, the reason, the
+   chapters it is read in, a firm's, chip's or country's facts, every place the site uses it, and Previous and Next. Browse A
+   to Z: every name under its letter, with the kinds and a strip of letters.
+   The address names what is shown: #gl-<slug> for a term (what the chapters' pop-ups and the site search link to),
+   #lk-firm-, #lk-chip- and #lk-country- for the rest, and #lk-term-<slug> also opens a term; #a-z the index, #a-z/terms
+   (firms, ai-chips, countries) the index of one kind and #a-z/b the index at a letter; #/glossary the first screen. A move
+   within the Glossary makes a history entry, so Back returns to the index at its place, or to the first screen. The rows come
+   with glossary.js (build/build.js) when the Glossary first opens (load): each row's li carries the entry's lk- id and its
+   search data, and a term's link its gl- id. The firms, chips and countries are read from DATA; the passages from the
+   chapters' paragraphs (glossary.js), the Export Controls entries, the board, AI Chips and the supplier list. */
 (function () {
   var CP = window.CP; if (!CP) return;
   var $ = CP.$, $$ = CP.$$, esc = CP.esc, DATA = CP.DATA || {}, cname = CP.cname;
   var root = document.documentElement;
-  var MQ = window.matchMedia ? matchMedia('(min-width: 880px)') : null;
-  var wide = function () { return MQ ? MQ.matches : window.innerWidth >= 880; };
+  var MQ = window.matchMedia ? matchMedia('(max-width: 879px)') : null;
+  var narrow = function () { return MQ ? MQ.matches : window.innerWidth < 880; };
+  var reduce = function () { return !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches); };
   var here = function () { return !!CP.Router && CP.Router.current === 'glossary'; };
   var KIND = { term: 'Term', firm: 'Firm', chip: 'AI chip', country: 'Country' };
-  // each kind's button, its plural and its singular for the count line
-  var KINDS = { all: ['entries', 'entry'], term: ['terms', 'term'], firm: ['firms', 'firm'], chip: ['AI chips', 'AI chip'], country: ['countries', 'country'] };
+  // each kind: its key, its button in the index, its plural and its singular for the count line
+  var KINDS = [['all', 'All', 'entries', 'entry'], ['term', 'Terms', 'terms', 'term'], ['firm', 'Firms', 'firms', 'firm'], ['chip', 'AI chips', 'AI chips', 'AI chip'], ['country', 'Countries', 'countries', 'country']];
   var LETTERS = ['0-9'].concat('ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''));
-  var showL = function (L) { return L === '0-9' ? '0–9' : L; };
-  var DEFAULT = 'lk-term-chip'; // the opening entry: the word every chapter uses, defined from nothing (the mockup's notes)
+  var showL = function (l) { return l === '0-9' ? '0–9' : l; };
+  var DEFAULT = 'lk-term-chip'; // "chip": the word every chapter uses, defined from nothing, and never linked from another entry
   // an AI chip's facts in words, as AI Chips sets them: "2024-04" reads April 2024, "2024-Q4" Q4 2024; the node alone where it
   // already names the foundry ("TSMC 5 nm", not "TSMC TSMC 5 nm")
   var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -34,26 +38,27 @@
   var chHref = function (id) { return CP.addr(id === 'geopolitics' ? '#/geopolitics' : '#' + id); }; // each chapter's own page
   var focusEl = function (el) { if (!el) return; try { el.focus({ preventScroll: true }); } catch (e) { el.focus(); } };
   var jump = function (y) { var prev = root.style.scrollBehavior; root.style.scrollBehavior = 'auto'; window.scrollTo(0, Math.max(0, Math.round(y))); root.style.scrollBehavior = prev; }; // html glides; these are jumps
-  var ARROW_L = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>', ARROW_R = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>';
 
-  var L = { built: false, items: [], byId: {}, byKey: {}, kind: 'all', q: '', shown: [], cur: null, searching: false, paras: null, pushed: false, held: [] };
-  var TERMS = {}, sup = {}, chip = {}, co = {}, chs = {}, azRow = {}, resRow = {}, groupEl = {}, counts = {}, XL = null;
-  var listEl, jumpEl, paneEl, inp, countEl;
+  var L = { built: false, items: [], byId: {}, byKey: {}, cur: null, paras: null, state: 'home', kind: 'all' };
+  var TERMS = {}, sup = {}, chip = {}, co = {}, chs = {}, azRow = {}, groupEl = {}, counts = {}, XL = null, az = [];
+  var view, main, head, field, box, inp, sugg, paneEl, browseEl, lettersEl, countEl;
 
   /* ---------- the entries ---------- */
   function init() {
     if (L.built) return;
-    var az = $('#lk-items'); if (!az) return;
+    var list = $('#lk-items'); if (!list) return;
     var G = window.CP_GLOSSARY || {};
-    if (!az.children.length) az.innerHTML = G.items || '';
-    if (!az.children.length) return;
+    if (!list.children.length) list.innerHTML = G.items || '';
+    if (!list.children.length) return;
     L.built = true;
     TERMS = G.terms || {};
     (DATA.suppliers || []).forEach(function (r) { sup[r.name] = r; });
     (DATA.landscape || []).forEach(function (c) { chip[c.id] = c; });
     (DATA.countries || []).forEach(function (c) { co[c.code] = c; });
     (DATA.chapters || []).forEach(function (c) { chs[c.id] = c; });
-    listEl = $('#gl-list'); jumpEl = $('#gl-jump'); paneEl = $('#gl-pane'); inp = $('#gl-search'); countEl = $('#gl-count');
+    view = $('.view[data-view="glossary"]'); main = $('#gl-view'); head = $('#gl-head'); field = $('#gl-field'); box = $('#gl-box'); inp = $('#gl-search'); sugg = $('#gl-sugg');
+    paneEl = $('#gl-pane'); browseEl = $('#gl-browse'); lettersEl = $('#gl-jump'); countEl = $('#gl-count');
+    L.state = main.getAttribute('data-state') || 'home';
     L.items = $$('#lk-items .gl-r').map(function (li, i) {
       var a = li.firstElementChild;
       var it = { id: li.id, kind: li.getAttribute('data-kind'), key: li.getAttribute('data-key') || '', name: a.textContent, label: li.getAttribute('data-label') || '',
@@ -66,13 +71,13 @@
       azRow[it.id] = a; L.byId[it.id] = it; L.byKey[it.key] = it;
       return it;
     });
+    az = L.items; // the rows come A to Z, 0–9 first (build/build.js)
     counts = { all: L.items.length, term: 0, firm: 0, chip: 0, country: 0 };
     L.items.forEach(function (it) { counts[it.kind]++; });
     $$('#lk-items > .gl-g').forEach(function (g) { groupEl[g.getAttribute('data-l')] = g; });
     wire();
-    renderList();
-    measure();
-    $('.view[data-view="glossary"]').setAttribute('data-gl', 'ready');
+    setKind('all');
+    view.setAttribute('data-gl', 'ready');
   }
   var fromHash = function () {
     var h = (location.hash || '').replace(/^#/, ''); try { h = decodeURIComponent(h); } catch (e) { }
@@ -81,105 +86,7 @@
     return null;
   };
   var anchorOf = function (it) { return it.kind === 'term' ? it.key : it.id; };
-
-  /* ---------- the index ---------- */
   var say = function (s) { var e = $('#gl-say'); if (!e) return; e.textContent = ''; setTimeout(function () { e.textContent = s; }, 30); };
-  var barH = function () { var b = $('#gl-bar'); return b ? b.offsetHeight : 0; };
-  var measure = function () { root.style.setProperty('--gl-bar-h', (wide() ? 0 : barH()) + 'px'); };
-
-  function jumpLetters() {
-    jumpEl.innerHTML = LETTERS.map(function (l) {
-      var g = groupEl[l], on = g && !g.hidden;
-      return on ? '<button type="button" data-l="' + l + '" aria-label="' + (l === '0-9' ? 'Numbers' : l) + '">' + showL(l) + '</button>' : '<span aria-hidden="true">' + showL(l) + '</span>';
-    }).join('');
-    spy(true);
-  }
-
-  /* the list the reader sees: A to Z by kind, or a search's matches with the names first. Every word typed must be in the
-     entry's words; a name that contains the query, or another name that starts with it, is a name match ("dutch", "prc",
-     "foxconn"), and one that is exactly the query ("us", "tsmc") tops them */
-  function renderList() {
-    var lq = L.q.trim().toLowerCase(), words = lq.split(/\s+/).filter(Boolean), kind = L.kind, k = KINDS[kind];
-    L.searching = !!lq;
-    var res = L.items.filter(function (it) { return (kind === 'all' || it.kind === kind) && (!lq || words.every(function (w) { return it.text.indexOf(w) >= 0 || it.lname.indexOf(w) >= 0; })); });
-    var resEl = $('#gl-res'), azEl = $('#lk-items');
-    if (!lq) {
-      L.items.forEach(function (it) { it.row.parentNode.hidden = !(kind === 'all' || it.kind === kind); });
-      LETTERS.forEach(function (l) { var g = groupEl[l]; if (g) g.hidden = !res.some(function (it) { return it.L === l; }); });
-      azEl.hidden = false; resEl.hidden = true; resEl.innerHTML = ''; resRow = {};
-      L.shown = res; jumpEl.hidden = false; jumpLetters();
-      countEl.textContent = counts[kind] + ' ' + k[0];
-      inp.placeholder = 'Search ' + counts[kind] + ' ' + k[0];
-    } else {
-      res.forEach(function (it) {
-        it.isName = it.lname.indexOf(lq) >= 0 || it.al.some(function (a) { return a.indexOf(lq) === 0; });
-        it.isExact = it.lname === lq || it.al.indexOf(lq) >= 0;
-        it.starts = it.lname.indexOf(lq) === 0;
-      });
-      var names = res.filter(function (it) { return it.isName; }).sort(function (a, b) { return (b.isExact - a.isExact) || (b.starts - a.starts) || (a.order - b.order); });
-      var rest = res.filter(function (it) { return !it.isName; });
-      var row = function (it) { return '<li class="gl-r"><a href="#' + esc(anchorOf(it)) + '" data-id="' + esc(it.id) + '">' + esc(it.title) + '</a></li>'; };
-      var h = '';
-      if (names.length) h += '<div class="gl-g"><h2 class="gl-lh gl-lk">Name matches</h2><ul class="gl-rows">' + names.map(row).join('') + '</ul></div>';
-      if (rest.length) h += '<div class="gl-g"><h2 class="gl-lh gl-lk">Text matches</h2><ul class="gl-rows">' + rest.map(row).join('') + '</ul></div>';
-      if (!res.length) {
-        var near = nearest(lq);
-        h = '<p class="gl-none">No entry matches <b>' + esc(L.q.trim()) + '</b>' + (kind !== 'all' ? ' among the ' + esc(k[0]) : '') + '.</p>' +
-          (near.length ? '<p class="gl-near">Did you mean ' + near.map(function (it) { return '<a href="#' + esc(anchorOf(it)) + '" data-id="' + esc(it.id) + '">' + esc(it.title) + '</a>'; }).join(' ') + '</p>' : '') +
-          (wide() ? '' : passagesHTML(mentions([L.q.trim()], 'raw', L.q.trim()), 'raw'));
-      }
-      resEl.innerHTML = h; azEl.hidden = true; resEl.hidden = false;
-      resRow = {}; $$('.gl-r a[data-id]', resEl).forEach(function (a) { resRow[a.getAttribute('data-id')] = a; });
-      L.shown = names.concat(rest); jumpEl.hidden = true;
-      countEl.textContent = res.length ? res.length + (res.length === 1 ? ' match' : ' matches') : 'No match';
-      listEl.scrollTop = 0;
-      // on a phone the matches start under the bar, so each letter typed shows its first ones
-      if (!wide()) { var top = listEl.getBoundingClientRect().top + window.pageYOffset - CP.headerH() - barH(); if (window.pageYOffset > top) jump(top); }
-    }
-    $('#gl-clear').hidden = !L.q;
-    markRow();
-  }
-
-  var rowOf = function (it) { return it ? (L.searching ? resRow[it.id] : azRow[it.id]) : null; };
-  function markRow() {
-    $$('.gl-r a[aria-current]', listEl).forEach(function (a) { a.removeAttribute('aria-current'); });
-    var a = rowOf(L.cur); if (a) a.setAttribute('aria-current', 'true');
-  }
-  // the open entry's row in view: on a wide screen inside the index's own scroll, under its letter; on a phone in the page
-  function reveal(it, centre) {
-    var a = rowOf(it); if (!a || a.offsetParent === null) return;
-    if (wide()) {
-      var r = a.getBoundingClientRect(), c = listEl.getBoundingClientRect(), head = 42;
-      if (centre) listEl.scrollTop += r.top - c.top - Math.round(c.height * 0.3);
-      else if (r.top < c.top + head) listEl.scrollTop -= c.top + head - r.top + 6;
-      else if (r.bottom > c.bottom - 8) listEl.scrollTop += r.bottom - c.bottom + 14;
-    } else {
-      var under = CP.headerH() + barH() + 46, ar = a.getBoundingClientRect();
-      if (centre || ar.top < under || ar.bottom > window.innerHeight - 20) jump(ar.top + window.pageYOffset - under - (centre ? 80 : 0));
-    }
-  }
-
-  // the column of letters marks the letter at the top of the index, and on a phone keeps its place under the bar
-  var spyQ = false;
-  function spy(now) {
-    if (!L.built || (spyQ && !now)) return; spyQ = true;
-    requestAnimationFrame(function () {
-      spyQ = false;
-      if (!here()) return;
-      jumpEl.style.top = wide() ? '' : Math.round($('#gl-bar').getBoundingClientRect().bottom + 6) + 'px';
-      if (L.searching) return;
-      var line = wide() ? listEl.getBoundingClientRect().top + 30 : CP.headerH() + barH() + 30, curL = null;
-      LETTERS.forEach(function (l) { var g = groupEl[l]; if (g && !g.hidden && g.getBoundingClientRect().top <= line) curL = l; });
-      if (!curL) curL = LETTERS.filter(function (l) { return groupEl[l] && !groupEl[l].hidden; })[0];
-      $$('button', jumpEl).forEach(function (b) { if (b.getAttribute('data-l') === curL) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current'); });
-    });
-  }
-  function toLetter(l) {
-    var g = groupEl[l]; if (!g || g.hidden) return;
-    if (wide()) listEl.scrollTop = g.offsetTop;
-    else jump(g.getBoundingClientRect().top + window.pageYOffset - CP.headerH() - barH() + 1);
-    spy(true);
-  }
 
   /* ---------- an entry ---------- */
   /* the other entries named in an entry's own text link to them, the first time each is named and three to a paragraph at
@@ -447,7 +354,6 @@
     var dist = function (a, b) { var m = a.length, n = b.length, prev = [], cur = [], i, j; for (j = 0; j <= n; j++) prev[j] = j; for (i = 1; i <= m; i++) { cur = [i]; for (j = 1; j <= n; j++) cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1)); prev = cur; } return prev[n]; };
     var scored = [];
     L.items.forEach(function (it) {
-      if (L.kind !== 'all' && it.kind !== L.kind) return;
       var best = dist(q, it.lname);
       it.lname.split(/[\s()\-]+/).forEach(function (w) { if (w.length >= 3) best = Math.min(best, dist(q, w)); });
       if (best <= (q.length >= 8 ? 3 : 2)) scored.push({ it: it, d: best });
@@ -455,137 +361,276 @@
     return scored.sort(function (a, b) { return a.d - b.d; }).slice(0, 5).map(function (x) { return x.it; });
   }
 
-  /* ---------- showing an entry ---------- */
-  var neighbours = function (it) { var list = L.shown.indexOf(it) >= 0 ? L.shown : L.items, i = list.indexOf(it); return { prev: list[i - 1] || null, next: list[i + 1] || null }; };
+  /* ---------- the first sentence of each definition, for the suggestions ---------- */
+  var defOf = function (it) { if (it.kind === 'term') return it.t.plain; var d = it.data || {}; return it.kind === 'firm' ? d.role : it.kind === 'chip' ? d.notes : d.role ? d.role + '.' : ''; };
+  var ABBR = /(?:\b(?:e\.g|i\.e|Inc|Co|Corp|Ltd|No|Nos|St|vs|approx|Mr|Dr|Jr|Sr|cf|ca)|\b[A-Z])$/;
+  function firstSentence(s) {
+    s = String(s || '').trim(); var re = /[.!?](?=["”’)]?(?:\s+[A-Z0-9“"(]|\s*$))/g, m;
+    while ((m = re.exec(s))) { if (ABBR.test(s.slice(0, m.index))) continue; return s.slice(0, m.index + 1); }
+    return s;
+  }
+  var firstOf = function (it) { if (it.first == null) it.first = firstSentence(defOf(it)); return it.first; };
+
+  /* ---------- the three states; the field slides from the middle to the bar ---------- */
+  var mh = function () { return CP.headerH(); };
+  function measure() {
+    if (!L.built) return;
+    root.style.setProperty('--gl-bar-h', (L.state === 'home' ? 0 : Math.round(head.getBoundingClientRect().height)) + 'px');
+    root.style.setProperty('--gl-strip-h', (L.state === 'browse' && !narrow() ? Math.round(lettersEl.getBoundingClientRect().height) : 0) + 'px');
+  }
+  var browseY = 0;
+  function setState(s, animate) {
+    if (s === L.state) { measure(); return; }
+    var title = $('#gl-title');
+    var from = animate && L.state === 'home' && !reduce() ? [title.getBoundingClientRect(), box.getBoundingClientRect()] : null;
+    L.state = s; main.setAttribute('data-state', s);
+    $('.gl-az-link', head)[s === 'browse' ? 'setAttribute' : 'removeAttribute']('aria-current', 'page');
+    $('#gl-btns').inert = s !== 'home'; $('#gl-hold').inert = s !== 'home';
+    measure();
+    if (from) { // the name and the field glide from the middle of the first screen to their places in the bar
+      jump(0);
+      var to = [title.getBoundingClientRect(), box.getBoundingClientRect()], k = from[0].height / (to[0].height || 1);
+      title.style.transition = 'none'; box.style.transition = 'none';
+      if (!narrow()) title.style.transform = 'translate(' + (from[0].left - to[0].left) + 'px,' + (from[0].top - to[0].top) + 'px) scale(' + k + ')';
+      box.style.transform = 'translate(' + (from[1].left - to[1].left) + 'px,' + (from[1].top - to[1].top) + 'px)';
+      box.getBoundingClientRect();
+      requestAnimationFrame(function () {
+        title.style.transition = 'transform 0.28s cubic-bezier(.2,.7,.2,1)'; box.style.transition = 'transform 0.28s cubic-bezier(.2,.7,.2,1), border-color 0.15s';
+        title.style.transform = ''; box.style.transform = '';
+        setTimeout(function () { title.style.transition = ''; box.style.transition = ''; }, 320);
+      });
+    }
+  }
+  // a move within the Glossary makes a history entry (or replaces this one), so Back walks back through them
+  var setHash = function (h, how, st) { if (how === 'push') history.pushState(st || { gl: 1 }, '', h); else if (how === 'replace') history.replaceState(st || history.state, '', h); };
+  var homeHash = function () { return location.pathname + location.search + '#/glossary'; };
+
+  function openEntry(it, o) {
+    o = o || {}; if (!it) return;
+    L.cur = it; closeSugg();
+    paneEl.innerHTML = entryHTML(it);
+    if (o.hash) { var h = '#' + anchorOf(it); if (location.hash !== h) setHash(h, o.hash); }
+    setState('entry', o.animate);
+    jump(0);
+    markRow();
+    if (o.focus) focusEl($('#gl-hw'));
+  }
+  // no entry, but the site may still use the words: its own address, with the words kept in the history entry
+  function openRaw(q, o) {
+    o = o || {}; L.cur = null; closeSugg();
+    paneEl.innerHTML = rawHTML(q);
+    if (o.hash) setHash('#gl-find', location.hash === '#gl-find' ? 'replace' : o.hash, { gl: 1, q: q });
+    setState('entry', o.animate);
+    jump(0); markRow();
+    if (o.focus) focusEl($('#gl-hw'));
+  }
+  /* the index's addresses: #a-z, #a-z/terms (one kind), #a-z/b (all kinds, at a letter) */
+  var KSLUG = { term: 'terms', firm: 'firms', chip: 'ai-chips', country: 'countries' }, SLUGK = {};
+  Object.keys(KSLUG).forEach(function (k) { SLUGK[KSLUG[k]] = k; });
+  var azHash = function (k, l) { return '#a-z' + (l ? '/' + l.toLowerCase() : k && k !== 'all' ? '/' + KSLUG[k] : ''); };
+  function parseAz(h) {
+    var m = /^a-z(?:\/(.*))?$/i.exec(h); if (!m) return null;
+    var s = String(m[1] || '').toLowerCase(), l = s === '0-9' ? s : s.toUpperCase();
+    if (SLUGK[s]) return { kind: SLUGK[s] };
+    return { kind: 'all', letter: s && LETTERS.indexOf(l) >= 0 ? l : null };
+  }
+  function openBrowse(o) {
+    o = o || {}; closeSugg();
+    if (o.kind && o.kind !== L.kind) setKind(o.kind);
+    var h = azHash(L.kind, o.letter);
+    if (o.hash && location.hash !== h) setHash(h, o.hash);
+    setState('browse', o.animate);
+    markRow(); thumbs();
+    if (o.letter && groupEl[o.letter] && !groupEl[o.letter].hidden) toLetter(o.letter); else jump(o.restore ? browseY : 0);
+    var f = o.letter && groupEl[o.letter] && !groupEl[o.letter].hidden ? $('#gl-lh-' + o.letter) : $('#gl-bh');
+    if (o.focus) focusEl(f);
+    spy(true);
+  }
+  function goHome(o) {
+    o = o || {}; L.cur = null;
+    inp.value = ''; lastQ = null; closeSugg(); $('#gl-clear').hidden = true;
+    if (o.hash) setHash(homeHash(), o.hash, null);
+    setState('home');
+    jump(0);
+    if (o.focus) focusEl(inp);
+  }
+
+  /* ---------- an entry, with its neighbors A to Z (within the kind shown, when it came from the index of one kind) ---------- */
   function entryHTML(it) {
     var used = {}; used[it.id] = 1;
     var body = it.kind === 'term' ? termHTML(it, used) : it.kind === 'firm' ? firmHTML(it, used) : it.kind === 'chip' ? chipHTML(it, used) : countryHTML(it, used);
-    var nb = neighbours(it);
+    var list = L.state === 'browse' && L.kind !== 'all' ? az.filter(function (x) { return x.kind === L.kind; }) : az, i = list.indexOf(it);
+    if (i < 0) { list = az; i = az.indexOf(it); }
+    var prev = list[i - 1], next = list[i + 1];
     var pn = '<nav class="gl-pn" aria-label="Neighboring entries">' +
-      (nb.prev ? '<a class="gl-prev" href="#' + esc(anchorOf(nb.prev)) + '" data-id="' + esc(nb.prev.id) + '" rel="prev"><span class="label">Previous</span><span class="gl-pn-n">' + esc(nb.prev.title) + '</span></a>' : '') +
-      (nb.next ? '<a class="gl-next" href="#' + esc(anchorOf(nb.next)) + '" data-id="' + esc(nb.next.id) + '" rel="next"><span class="label">Next</span><span class="gl-pn-n">' + esc(nb.next.title) + '</span></a>' : '') + '</nav>';
-    var bar = '<div class="gl-ebar"><button type="button" class="gl-back" data-back>' + ARROW_L + 'Glossary</button><span class="gl-steps">' +
-      '<button type="button" data-step="-1" aria-label="Previous entry"' + (nb.prev ? '' : ' disabled') + '>' + ARROW_L + '</button><button type="button" data-step="1" aria-label="Next entry"' + (nb.next ? '' : ' disabled') + '>' + ARROW_R + '</button></span></div>';
-    return bar + '<div class="gl-e">' + body + passagesHTML(mentions(patternsOf(it), it.kind, it.key), it.kind) + pn + '</div>';
+      (prev ? '<a class="gl-prev" href="#' + esc(anchorOf(prev)) + '" data-id="' + esc(prev.id) + '" rel="prev"><span class="label">Previous</span><span class="gl-pn-n">' + esc(prev.title) + '</span></a>' : '') +
+      (next ? '<a class="gl-next" href="#' + esc(anchorOf(next)) + '" data-id="' + esc(next.id) + '" rel="next"><span class="label">Next</span><span class="gl-pn-n">' + esc(next.title) + '</span></a>' : '') + '</nav>';
+    return '<div class="gl-e">' + body + passagesHTML(mentions(patternsOf(it), it.kind, it.key), it.kind) + pn + '</div>';
   }
-  /* no entry, but the site may still use the words: names a typo away, and every place they appear */
   function rawHTML(q) {
     var near = nearest(q);
-    return '<div class="gl-ebar"><button type="button" class="gl-back" data-back>' + ARROW_L + 'Glossary</button></div><div class="gl-e"><p class="label gl-kind">No entry</p><h2 class="gl-hw" id="gl-hw" tabindex="-1">' + esc(q) + '</h2>' +
+    return '<div class="gl-e"><p class="label gl-kind">No entry</p><h2 class="gl-hw" id="gl-hw" tabindex="-1">' + esc(q) + '</h2>' +
       (near.length ? '<p class="gl-meta">Did you mean ' + near.map(function (it) { return '<a class="gl-x" href="#' + esc(anchorOf(it)) + '" data-id="' + esc(it.id) + '">' + esc(it.title) + '</a>'; }).join(', ') + '</p>' : '') +
       passagesHTML(mentions([q], 'raw', q), 'raw') + '</div>';
   }
 
-  function show(it, o) {
-    o = o || {};
-    if (!it) return;
-    // an entry outside the search or the kind shown brings the whole list back
-    if (L.searching && L.shown.indexOf(it) < 0) { inp.value = ''; L.q = ''; renderList(); }
-    if (!L.searching && L.kind !== 'all' && it.kind !== L.kind) setKind('all');
-    L.cur = it;
-    paneEl.innerHTML = entryHTML(it);
-    markRow();
-    if (o.hash) {
-      var h = '#' + anchorOf(it);
-      if (location.hash !== h) { if (o.hash === 'push') { history.pushState({ gl: 1 }, '', h); L.pushed = true; } else history.replaceState(history.state, '', h); }
-    }
-    if (wide()) {
-      if (o.top !== false && window.pageYOffset > 0) jump(0);
-      reveal(it, !!o.centre);
+  /* ---------- the suggestions: names first, then the entries whose words hold every word typed. A name that contains the
+     query, or another name that starts with it, is a name match ("dutch", "prc", "foxconn"), and one that is exactly the query
+     ("us", "tsmc") tops them ---------- */
+  var opts = [], act = -1, expanded = false, lastQ = null;
+  // as many suggestions as the window holds under the field, four to eight (six on a phone, whose keyboard takes the rest)
+  var rows = function () { var top = L.state === 'home' && narrow() ? mh() + 72 : box.getBoundingClientRect().top + 54; return Math.max(4, Math.min(narrow() ? 6 : 8, Math.floor((window.innerHeight - top - 100) / 61))); };
+  function matches(q) {
+    var lq = q.trim().toLowerCase(), words = lq.split(/\s+/).filter(Boolean);
+    var res = L.items.filter(function (it) { return words.every(function (w) { return it.text.indexOf(w) >= 0 || it.lname.indexOf(w) >= 0; }); });
+    res.forEach(function (it) {
+      it.isName = it.lname.indexOf(lq) >= 0 || it.al.some(function (a) { return a.indexOf(lq) === 0; });
+      it.isExact = it.lname === lq || it.al.indexOf(lq) >= 0;
+      it.starts = it.lname.indexOf(lq) === 0;
+      // a name match through another name shows that name, so "pellicle" under "euv" says why it is there
+      it.via = it.isName && it.lname.indexOf(lq) < 0 ? (it.alias.split('|').filter(function (a) { return a.toLowerCase().indexOf(lq) === 0; })[0] || '') : '';
+    });
+    var names = res.filter(function (it) { return it.isName; }).sort(function (a, b) { return (b.isExact - a.isExact) || (b.starts - a.starts) || (a.order - b.order); });
+    return { names: names, rest: res.filter(function (it) { return !it.isName; }) };
+  }
+  var optHTML = function (it, i) {
+    return '<li class="gl-opt" role="option" id="gl-o' + i + '" data-opt="' + i + '" aria-selected="false"><span class="gl-opt-h"><span class="gl-opt-n">' + esc(it.title) + '</span><span class="gl-opt-k">' + KIND[it.kind] + (it.via ? ' · ' + esc(it.via) : '') + '</span></span>' +
+      (firstOf(it) ? '<span class="gl-opt-d">' + esc(firstOf(it)) + '</span>' : '') + '</li>';
+  };
+  function renderSugg() {
+    var q = inp.value.trim();
+    $('#gl-clear').hidden = !inp.value;
+    if (!q) { closeSugg(); return; }
+    if (q !== lastQ) { expanded = false; act = -1; }
+    lastQ = q;
+    var m = matches(q), all = m.names.concat(m.rest), cap = expanded ? all.length : rows();
+    var n = m.names.slice(0, cap), r = m.rest.slice(0, Math.max(0, cap - n.length)), h = '';
+    opts = n.concat(r);
+    if (all.length) {
+      if (n.length) h += '<ul role="group" aria-label="Name matches">' + n.map(function (it, i) { return optHTML(it, i); }).join('') + '</ul>';
+      if (r.length) h += '<ul role="group" aria-labelledby="gl-g2"><li class="gl-grp" id="gl-g2" role="presentation">In the text</li>' + r.map(function (it, i) { return optHTML(it, n.length + i); }).join('') + '</ul>';
+      h = '<div role="listbox" id="gl-opts" aria-label="Suggestions">' + h + '</div>';
+      if (all.length > cap) h += '<button type="button" class="gl-all" data-more>Show all ' + all.length + ' matches</button>';
+      say(all.length + (all.length === 1 ? ' match' : ' matches'));
     } else {
-      reveal(it, !!o.centre);
-      open();
-      paneEl.scrollTop = 0;
+      var near = nearest(q);
+      opts = near.concat([{ raw: q }]);
+      h = '<p class="gl-none">No entry matches <b>' + esc(q) + '</b>.' + (near.length ? ' Did you mean' : '') + '</p><div role="listbox" id="gl-opts" aria-label="Suggestions"><ul role="group">' +
+        near.map(function (it, i) { return optHTML(it, i); }).join('') +
+        '<li class="gl-opt gl-opt-raw" role="option" id="gl-o' + near.length + '" data-opt="' + near.length + '" aria-selected="false"><span class="gl-opt-h"><span class="gl-opt-n">Every place the site uses “' + esc(q) + '”</span></span></li></ul></div>';
+      say('No entry matches. ' + (near.length ? near.length + ' near names.' : ''));
     }
-    if (o.focus || (!wide() && o.focus !== false)) focusEl($('#gl-hw'));
+    sugg.innerHTML = h; sugg.hidden = false; field.classList.add('is-open'); inp.setAttribute('aria-expanded', 'true');
+    markOpt();
   }
-  function showRaw(q) {
-    L.cur = null; markRow();
-    paneEl.innerHTML = rawHTML(q);
-    if (wide() && window.pageYOffset > 0) jump(0);
+  function closeSugg() { if (!sugg) return; sugg.hidden = true; sugg.innerHTML = ''; field.classList.remove('is-open'); inp.setAttribute('aria-expanded', 'false'); inp.removeAttribute('aria-activedescendant'); opts = []; act = -1; }
+  function markOpt() {
+    $$('.gl-opt', sugg).forEach(function (li) { li.setAttribute('aria-selected', +li.getAttribute('data-opt') === act ? 'true' : 'false'); });
+    if (act >= 0) { inp.setAttribute('aria-activedescendant', 'gl-o' + act); var li = $('#gl-o' + act); if (li) li.scrollIntoView({ block: 'nearest' }); }
+    else inp.removeAttribute('aria-activedescendant');
   }
+  function choose(o) {
+    if (!o) return;
+    var animate = L.state === 'home';
+    if (o.raw) openRaw(o.raw, { hash: 'push', focus: true, animate: animate });
+    else openEntry(o, { hash: 'push', focus: true, animate: animate });
+  }
+  // Enter opens the suggestion marked by the arrows, or else the top one
+  function lookUp() {
+    var q = inp.value.trim();
+    if (!q) return;
+    if (!opts.length || lastQ !== q) renderSugg();
+    choose(act >= 0 ? opts[act] : opts[0]);
+  }
+  // on a phone the field rises to the top of the window as the reader types, so the suggestions clear the keyboard
+  function lift() { if (L.state !== 'home' || !narrow()) return; var y = field.getBoundingClientRect().top + window.pageYOffset - mh() - 10; if (window.pageYOffset < y) jump(y); }
 
-  /* on a phone the entry lies over the index as a dialog: the rest is inert, so Tab and a screen reader stay in it */
-  function open() {
-    if (wide() || root.classList.contains('gl-open')) return;
-    root.classList.add('gl-open');
-    paneEl.setAttribute('role', 'dialog'); paneEl.setAttribute('aria-modal', 'true');
-    [$('.masthead'), $('#gl-index'), $('.view[data-view="glossary"] > .site-footer'), $('.skip'), $('.to-top'), $('.stage')].forEach(function (el) { if (el && !el.inert) { el.inert = true; L.held.push(el); } });
-  }
-  function shut(focusRow) {
-    root.classList.remove('gl-open');
-    if (paneEl) { paneEl.removeAttribute('role'); paneEl.removeAttribute('aria-modal'); }
-    L.held.forEach(function (el) { el.inert = false; }); L.held = [];
-    if (focusRow) { var a = rowOf(L.cur); if (a) { focusEl(a); reveal(L.cur, false); } }
-  }
-  function back() {
-    if (L.pushed && history.state && history.state.gl) { history.back(); return; } // the router hears the address and shuts it (activate)
-    history.replaceState(null, '', location.pathname + location.search + '#/glossary');
-    shut(true);
-  }
-
-  /* ---------- the reader's moves ---------- */
+  /* ---------- Browse A to Z: every name under its letter, one kind at a time ---------- */
   function setKind(k) {
     L.kind = k;
     $$('#gl-kinds button').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-k') === k ? 'true' : 'false'); });
-    renderList();
+    L.items.forEach(function (it) { it.row.parentNode.hidden = !(k === 'all' || it.kind === k); });
+    LETTERS.forEach(function (l) { var g = groupEl[l]; if (g) g.hidden = !$$('.gl-r:not([hidden])', g).length; });
+    var kk = KINDS.filter(function (x) { return x[0] === k; })[0];
+    countEl.textContent = counts[k] + ' ' + (counts[k] === 1 ? kk[3] : kk[2]);
+    thumbs();
   }
-  function step(d, o) {
-    if (!L.shown.length) return;
-    var i = L.shown.indexOf(L.cur), n = i < 0 ? (d > 0 ? L.shown[0] : L.shown[L.shown.length - 1]) : L.shown[Math.max(0, Math.min(L.shown.length - 1, i + d))];
-    if (!n || n === L.cur) return;
-    show(n, { hash: 'replace', focus: false });
-    if (o && o.row) focusEl(rowOf(n));
-    else say(n.title + ', ' + KIND[n.kind].toLowerCase());
+  function thumbs() {
+    lettersEl.innerHTML = LETTERS.map(function (l) {
+      var g = groupEl[l], on = g && !g.hidden;
+      return on ? '<button type="button" data-l="' + l + '" aria-label="' + (l === '0-9' ? 'Numbers' : l) + '">' + showL(l) + '</button>' : '<span aria-hidden="true">' + showL(l) + '</span>';
+    }).join('');
+    spy(true);
   }
-  var clearSearch = function () { inp.value = ''; L.q = ''; renderList(); if (L.cur) reveal(L.cur, true); };
+  function markRow() {
+    $$('.gl-r a[aria-current]', browseEl).forEach(function (a) { a.removeAttribute('aria-current'); });
+    var a = L.cur && azRow[L.cur.id]; if (a) a.setAttribute('aria-current', 'true');
+  }
+  // the strip of letters marks the letter at the top of the index
+  var spyQ = false;
+  function spy(now) {
+    if (!L.built || L.state !== 'browse' || !here() || (spyQ && !now)) return; spyQ = true;
+    requestAnimationFrame(function () {
+      spyQ = false;
+      var line = mh() + head.getBoundingClientRect().height + (narrow() ? 0 : lettersEl.getBoundingClientRect().height) + 40, curL = null;
+      LETTERS.forEach(function (l) { var g = groupEl[l]; if (g && !g.hidden && g.getBoundingClientRect().top <= line) curL = l; });
+      if (!curL) curL = LETTERS.filter(function (l) { return groupEl[l] && !groupEl[l].hidden; })[0];
+      $$('button', lettersEl).forEach(function (b) { if (b.getAttribute('data-l') === curL) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current'); });
+    });
+  }
+  function toLetter(l) {
+    var g = groupEl[l]; if (!g || g.hidden) return;
+    var off = mh() + head.getBoundingClientRect().height + (narrow() ? 0 : lettersEl.getBoundingClientRect().height);
+    jump(g.getBoundingClientRect().top + window.pageYOffset - off + 1);
+    spy(true);
+  }
 
+  /* ---------- the reader's moves ---------- */
   function wire() {
-    var view = $('.view[data-view="glossary"]'), typing = null;
-    var sync = function () { clearTimeout(typing); typing = null; if (inp.value !== L.q) { L.q = inp.value; renderList(); } };
-    inp.addEventListener('input', function () {
-      clearTimeout(typing);
-      typing = setTimeout(function () {
-        typing = null; L.q = inp.value; renderList();
-        // on a wide screen the first match shows as the reader types, as a desktop dictionary does
-        if (wide() && L.q.trim()) { if (L.shown.length) show(L.shown[0], { hash: 'replace' }); else showRaw(L.q.trim()); }
-        else if (wide() && L.cur) reveal(L.cur, true);
-      }, 110);
-    });
+    inp.addEventListener('input', function () { renderSugg(); if (inp.value.trim()) lift(); });
+    inp.addEventListener('focus', function () { if (inp.value.trim()) renderSugg(); });
+    inp.addEventListener('blur', function () { setTimeout(function () { if (!field.contains(document.activeElement)) closeSugg(); }, 120); });
     inp.addEventListener('keydown', function (e) {
-      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); sync(); step(e.key === 'ArrowDown' ? 1 : -1); }
-      else if (e.key === 'Enter') {
-        e.preventDefault(); sync();
-        var it = L.shown.indexOf(L.cur) >= 0 ? L.cur : L.shown[0];
-        if (it) show(it, { hash: 'push', focus: true });
-        else if (L.q.trim()) { showRaw(L.q.trim()); if (!wide()) open(); focusEl($('#gl-hw')); }
-      } else if (e.key === 'Escape' && inp.value) { e.preventDefault(); e.stopPropagation(); clearSearch(); }
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (sugg.hidden) { renderSugg(); if (sugg.hidden) return; }
+        if (e.key === 'ArrowDown') act = act + 1 >= opts.length ? opts.length - 1 : act + 1; else act = act - 1 < -1 ? -1 : act - 1;
+        markOpt();
+      } else if (e.key === 'Enter') { e.preventDefault(); lookUp(); }
+      else if (e.key === 'Escape') {
+        if (inp.value) { e.preventDefault(); e.stopPropagation(); inp.value = ''; lastQ = null; closeSugg(); $('#gl-clear').hidden = true; say('Search cleared'); }
+        else if (!sugg.hidden) { e.preventDefault(); closeSugg(); }
+      }
     });
-    $('#gl-clear').addEventListener('click', function () { clearSearch(); inp.focus(); });
-    $('#gl-kinds').addEventListener('click', function (e) { var b = e.target.closest('button[data-k]'); if (!b) return; setKind(b.getAttribute('data-k')); if (!L.searching && L.cur && wide()) reveal(L.cur, true); });
-    jumpEl.addEventListener('click', function (e) { var b = e.target.closest('button[data-l]'); if (b) toLetter(b.getAttribute('data-l')); });
-    // on a phone a finger can run down the letters
-    jumpEl.addEventListener('pointerdown', function (e) {
-      if (wide() || e.pointerType === 'mouse') return;
+    $('#gl-clear').addEventListener('click', function () { inp.value = ''; lastQ = null; closeSugg(); this.hidden = true; inp.focus(); });
+    sugg.addEventListener('mousedown', function (e) { if (e.target.closest('.gl-opt, [data-more]')) e.preventDefault(); }); // the field keeps the focus
+    sugg.addEventListener('click', function (e) {
+      var li = e.target.closest('.gl-opt'); if (li) { choose(opts[+li.getAttribute('data-opt')]); return; }
+      if (e.target.closest('[data-more]')) { expanded = true; renderSugg(); inp.focus(); }
+    });
+    sugg.addEventListener('mousemove', function (e) { var li = e.target.closest('.gl-opt'); if (li && +li.getAttribute('data-opt') !== act) { act = +li.getAttribute('data-opt'); markOpt(); } });
+    $('#gl-rand').addEventListener('click', function () { var it; do { it = L.items[Math.floor(Math.random() * L.items.length)]; } while (it === L.cur && L.items.length > 1); openEntry(it, { hash: 'push', focus: true, animate: true }); });
+    $('#gl-kinds').addEventListener('click', function (e) { var b = e.target.closest('button[data-k]'); if (!b) return; setKind(b.getAttribute('data-k')); if (L.state === 'browse') { setHash(azHash(L.kind), 'replace'); jump(0); } });
+    lettersEl.addEventListener('click', function (e) { var b = e.target.closest('button[data-l]'); if (b) toLetter(b.getAttribute('data-l')); });
+    lettersEl.addEventListener('pointerdown', function (e) { // on a phone a finger can run down the letters
+      if (!narrow() || e.pointerType === 'mouse') return;
       var go = function (ev) { var el = document.elementFromPoint(ev.clientX, ev.clientY), b = el && el.closest && el.closest('.gl-jump button[data-l]'); if (b) toLetter(b.getAttribute('data-l')); };
       go(e);
       var move = function (ev) { ev.preventDefault(); go(ev); }, up = function () { document.removeEventListener('pointermove', move); document.removeEventListener('pointerup', up); };
       document.addEventListener('pointermove', move, { passive: false }); document.addEventListener('pointerup', up);
     });
 
-    // a row, a link between entries, a neighbor or a suggestion opens its entry, and the address keeps it; the passages and
-    // the links out carry what the page they open should do (the supplier list's filter, a chip's card, a passage to flash)
+    /* a name opens its entry, the name of the Glossary goes back to the first screen, a kind, a letter or A to Z opens the index;
+       the passages and the links out carry what the page they open should do (the supplier list's filter, a chip's card, a
+       passage to flash) */
     view.addEventListener('click', function (e) {
       if (e.defaultPrevented || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
       var a = e.target.closest('a[data-id]');
-      if (a && L.byId[a.getAttribute('data-id')]) {
-        e.preventDefault();
-        var it = L.byId[a.getAttribute('data-id')], inRow = !!a.closest('.gl-r'), inNear = !!a.closest('.gl-near, .gl-meta');
-        if (inNear) { inp.value = ''; L.q = ''; renderList(); }
-        // a click keeps the focus on its row, so the arrows go on from there; Enter on a row moves it into the entry
-        show(it, { hash: 'push', focus: !wide() || !inRow || e.detail === 0, centre: !inRow });
-        return;
-      }
+      if (a && L.byId[a.getAttribute('data-id')]) { e.preventDefault(); openEntry(L.byId[a.getAttribute('data-id')], { hash: 'push', focus: true }); return; }
+      if (e.target.closest('[data-home]')) { e.preventDefault(); if (L.state !== 'home') goHome({ hash: 'push', focus: e.detail === 0 }); else inp.focus(); return; }
+      var ak = e.target.closest('[data-azk]'), al = e.target.closest('[data-azl]');
+      if (ak || al) { e.preventDefault(); openBrowse({ hash: 'push', focus: true, animate: L.state === 'home', kind: ak ? ak.getAttribute('data-azk') : 'all', letter: al ? al.getAttribute('data-azl') : null }); return; }
+      if (e.target.closest('[data-az]')) { e.preventDefault(); openBrowse({ hash: 'push', focus: true, animate: L.state === 'home' }); return; }
       var p = e.target.closest('a[data-para]');
       if (p) {
         e.preventDefault(); var para = corpus()[+p.getAttribute('data-para')]; if (!para) return;
@@ -600,93 +645,62 @@
       var sc = e.target.closest('a[data-supcc]'); if (sc) { var cc = sc.getAttribute('data-supcc'); setTimeout(function () { if (CP.Suppliers && CP.Suppliers.show) CP.Suppliers.show({ country: cc }); }, 60); return; }
       // a chip opens its card on the chart, adding nothing
       var ch = e.target.closest('a[data-chip]'); if (ch) { var id = ch.getAttribute('data-chip'); setTimeout(function () { if (CP.Landscape && CP.Landscape.openCard) CP.Landscape.openCard(id, { show: true }); }, 60); return; }
-      if (e.target.closest('[data-back]')) { back(); return; }
-      var st = e.target.closest('[data-step]'); if (st) { step(+st.getAttribute('data-step')); return; }
       var more = e.target.closest('[data-rest]');
       if (more) { var rest = more.parentNode.querySelector('.gl-rest'); rest.hidden = false; more.parentNode.removeChild(more); focusEl(rest.querySelector('a')); return; }
       var all = e.target.closest('[data-all]');
       if (all) { var ul = all.closest('.gl-part').querySelector('.gl-men'), n = ul.children.length; ul.innerHTML = lastHits.map(rowHTML).join(''); all.parentNode.parentNode.removeChild(all.parentNode); var nx = ul.children[n] && ul.children[n].querySelector('a'); if (nx) focusEl(nx); }
     });
-    listEl.addEventListener('keydown', function (e) {
-      var a = e.target.closest && e.target.closest('.gl-r a'); if (!a) return;
-      var it = L.byId[a.getAttribute('data-id')], i = L.shown.indexOf(it), go = null;
-      if (e.key === 'ArrowDown') go = L.shown[i + 1]; else if (e.key === 'ArrowUp') go = L.shown[i - 1];
-      else if (e.key === 'PageDown') go = L.shown[Math.min(L.shown.length - 1, i + 10)]; else if (e.key === 'PageUp') go = L.shown[Math.max(0, i - 10)];
-      else if (e.key === 'Home') go = L.shown[0]; else if (e.key === 'End') go = L.shown[L.shown.length - 1];
-      else if (e.key.length === 1 && !e.metaKey && !e.ctrlKey && !e.altKey && /\S/.test(e.key) && e.key !== '/') { inp.focus(); return; } // typing goes to the search
-      else return;
-      e.preventDefault(); if (!go) return;
-      if (wide()) show(go, { hash: 'replace', focus: false });
-      var r = rowOf(go); if (r) { focusEl(r); reveal(go, false); }
-    });
     // "/" goes to this search while the Glossary shows (the site search keeps Ctrl+K); it is heard before the site's own "/"
     window.addEventListener('keydown', function (e) {
-      if (e.key !== '/' || !here() || e.ctrlKey || e.metaKey || e.altKey || root.classList.contains('gl-open')) return;
-      var a = document.activeElement || document.body, box = $('#cp-search');
-      if (/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName || '') || a.isContentEditable || (box && !box.hidden)) return;
+      if (e.key !== '/' || !here() || e.ctrlKey || e.metaKey || e.altKey) return;
+      var a = document.activeElement || document.body, cps = $('#cp-search');
+      if (/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName || '') || a.isContentEditable || (cps && !cps.hidden)) return;
       e.preventDefault(); e.stopPropagation(); inp.focus(); inp.select();
     }, true);
-    // Escape closes an entry open over the list (the site search and a pop-up close first)
-    document.addEventListener('keydown', function (e) {
-      if (e.key !== 'Escape' || e.defaultPrevented || !here() || !root.classList.contains('gl-open')) return;
-      var box = $('#cp-search'), tip = $('#gl-tip'); if ((box && !box.hidden) || (tip && !tip.hidden)) return;
-      e.preventDefault(); back();
-    });
-    listEl.addEventListener('scroll', function () { spy(); }, { passive: true });
-    window.addEventListener('scroll', function () { if (!wide()) spy(); }, { passive: true });
-    // a link in the entry that leaves the Glossary leaves nothing held
-    window.addEventListener('hashchange', function () { if (!here()) shut(false); });
-    var wasWide = wide(), rs = null;
-    window.addEventListener('resize', function () {
-      clearTimeout(rs); rs = setTimeout(function () {
-        measure();
-        var w = wide(); if (w === wasWide) return; wasWide = w;
-        if (!here()) return;
-        if (w) { shut(false); if (!L.cur) show(L.byId[DEFAULT], { hash: false, centre: true, focus: false }); else reveal(L.cur, true); }
-        else if (fromHash()) open();
-        spy(true);
-      }, 120);
-    });
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { measure(); if (L.cur && wide() && here()) reveal(L.cur, true); spy(true); });
-    // the browser keeps an address's row in view a moment past load, so the entry's top is set again until the reader moves
-    var moved = false;
-    ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach(function (ev) { window.addEventListener(ev, function () { moved = true; }, { passive: true, once: true }); });
-    var settle = function () { if (moved || !here() || !L.cur || !fromHash()) return; if (wide()) { if (window.pageYOffset) jump(0); } else if (!root.classList.contains('gl-open')) return; reveal(L.cur, true); spy(true); };
-    [60, 250, 700].forEach(function (ms) { setTimeout(settle, ms); });
-    window.addEventListener('load', function () { settle(); setTimeout(settle, 250); });
+    // the index keeps the reader's place, so Back from an entry returns to it
+    window.addEventListener('scroll', function () { if (L.state === 'browse' && here()) { browseY = window.pageYOffset; spy(); } }, { passive: true });
+    var rs = null;
+    window.addEventListener('resize', function () { clearTimeout(rs); rs = setTimeout(function () { measure(); spy(true); }, 120); });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { measure(); if (pendL && L.state === 'browse' && here()) toLetter(pendL); pendL = null; spy(true); });
   }
 
-  /* each route to the Glossary: the address decides the entry. From another view or page (a pop-up's Look it up, a search
-     result) the entry's name takes focus; on a phone an entry is a dialog, so its name always does */
+  /* ---------- the address leads: Back and Forward, and a link from a chapter, a pop-up or the site search ---------- */
+  var pendL = null; // a letter in the address on arrival, gone to again once the faces have set the rows' heights
+  function route(o) {
+    var h = (location.hash || '').replace(/^#/, ''); try { h = decodeURIComponent(h); } catch (e) { }
+    var it = fromHash();
+    if (it) { openEntry(it, { hash: false, focus: o.focus }); return; }
+    var A = parseAz(h); // a letter is gone to on arrival; Back to the index keeps the place left
+    if (A) { var back = !o.first && !o.away && L.state !== 'home'; if (o.first) pendL = A.letter; openBrowse({ hash: false, kind: A.kind, letter: back ? null : A.letter, restore: back, focus: o.focus }); return; }
+    if (h === 'gl-find' && history.state && history.state.q) { openRaw(history.state.q, { hash: false, focus: o.focus }); return; }
+    goHome({ hash: false });
+  }
+  /* each route to the Glossary: the address decides what shows. From another view or page (a pop-up's Look it up, a search
+     result) the entry's name or the index's head takes focus */
   function activate() {
     init(); if (!L.built) return;
-    measure();
-    // first: the page's first route (the router has no view before it); came: that first route is a move from another page of the site
-    var it = fromHash(), R = CP.Router || {}, first = !R.from;
-    var came = first && !L.arrived && /^https?:/.test(document.referrer) && document.referrer.indexOf(location.origin + '/') === 0 && document.referrer !== location.href;
+    var R = CP.Router || {}, first = !L.arrived;
+    // came: the page's first route is a move from another page of the site; away: a move from another view of this page
+    var came = first && /^https?:/.test(document.referrer) && document.referrer.indexOf(location.origin + '/') === 0 && document.referrer !== location.href;
+    var away = !first && R.from && R.from !== 'glossary';
     L.arrived = true;
-    if (it) {
-      L.pushed = !!(history.state && history.state.gl);
-      show(it, { hash: false, centre: true, focus: wide() ? (came || !first) : true });
-    } else if (wide()) {
-      if (L.searching) { inp.value = ''; L.q = ''; renderList(); }
-      show(L.byId[DEFAULT], { hash: false, centre: true, focus: false });
-    } else {
-      var wasOpen = root.classList.contains('gl-open');
-      shut(wasOpen);
-    }
-    spy(true);
+    route({ first: first, away: away, focus: came || !!away || (!first && !!fromHash()) });
+    measure(); spy(true);
   }
+  // a load lands an entry at its top: the browser may keep an earlier place a moment past load, so the top is set again
+  window.addEventListener('load', function () { if (here() && L.state === 'entry' && window.pageYOffset) jump(0); });
 
   CP.Lookup = L;
-  L.show = function (id) { var it = L.byId[id] || L.byKey[id]; if (it) show(it, { hash: 'replace', centre: true }); };
-  L.search = function (s) { inp.value = s; L.q = s; renderList(); if (wide() && L.shown.length) show(L.shown[0], { hash: 'replace' }); else if (wide() && s.trim()) showRaw(s.trim()); };
+  L.show = function (id) { var it = L.byId[id] || L.byKey[id]; if (it) openEntry(it, { hash: 'replace' }); };
+  L.search = function (s) { inp.focus(); inp.value = s; renderSugg(); lift(); };
+  L.browse = function (k, l) { openBrowse({ hash: 'replace', kind: k || 'all', letter: l || null }); };
+  L.first = firstOf;
   L.flash = flash; L.domCorpus = domCorpus; L.corpus = corpus;
-  /* The rows and the passages come with glossary.js (build/build.js), fetched when the Glossary first opens (CP.need); the index
-     head paints at once, and the parts the list fills wait hidden until it is in (lookup.css, .gl-wait) */
+  /* The rows and the passages come with glossary.js (build/build.js), fetched when the Glossary first opens (CP.need); the head
+     paints at once, and the parts the rows fill wait hidden until they are in (lookup.css, .gl-wait) */
   L.load = function (fn) {
-    var az = $('#lk-items');
-    if (!az || az.children.length || !CP.need) { fn(); return; }
+    var list = $('#lk-items');
+    if (!list || list.children.length || !CP.need) { fn(); return; }
     CP.need('glossary.js', function () { fn(); var v = $('.view[data-view="glossary"]'); if (v && !v.hasAttribute('data-gl')) v.setAttribute('data-gl', 'empty'); });
   };
   CP.register('glossary', { activate: function () { L.load(activate); }, stage: false });

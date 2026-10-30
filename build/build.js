@@ -1670,22 +1670,30 @@ data.countries = Object.keys(COUNTRY).filter((cc) => /^[A-Z]{2}$/.test(cc) && ((
   .map((cc) => ({ code: cc, name: COUNTRY[cc], role: LK_ROLE[cc] || '', panel: html.indexOf(`class="sa-panel" data-cc="${cc}"`) >= 0, aliases: LK_CC_ALIAS[cc] || [cc] }));
 data.countries.forEach((c) => lkItems.push({ kind: 'country', id: 'lk-country-' + c.code.toLowerCase(), key: c.code, name: c.name, alias: c.aliases, label: 'Country', text: [c.name, c.code, c.aliases.join(' '), 'country', c.role].join(' ') }));
 lkItems.sort((a, b) => a.name.localeCompare(b.name, 'en', { sensitivity: 'base' }));
-/* the Glossary's index (Index and entry, the owner's choice of 29 Oct 2026; src/modules/lookup.js): every entry A to Z under
-   its letter, one link each, which glossary.js carries and the Glossary puts into its #lk-items. Each row keeps the entry's
-   addresses (the row's lk- id, and a term's link its gl- id, which the chapters' pop-ups and the site search link to) and the
-   data the Glossary's search reads: the kind, the key, the other names, the label and the words */
+/* the Glossary's Browse A to Z ("Kinds and letters", the owner's choice of 30 Oct 2026; src/modules/lookup.js): every entry
+   under its letter, one link each, which glossary.js carries and the Glossary puts into its #lk-items. Each row keeps the
+   entry's addresses (the row's lk- id, and a term's link its gl- id, which the chapters' pop-ups and the site search link to)
+   and the data the Glossary's search reads: the kind, the key, the other names, the label and the words. A letter's head takes
+   focus when a letter is chosen */
 const LK_LETTERS = ['0-9'].concat('ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''));
 const lkLetter = (n) => { const c = String(n).charAt(0).toUpperCase(); return /[A-Z]/.test(c) ? c : '0-9'; };
 const lkRow = (i) => `<li class="gl-r" id="${esc(i.id)}" data-kind="${i.kind}" data-key="${esc(i.key || i.name)}"${i.alias && i.alias.length ? ` data-alias="${esc(i.alias.join('|'))}"` : ''} data-label="${esc(i.label)}" data-text="${esc(i.text.toLowerCase().replace(/\s+/g, ' '))}"><a href="#${esc(i.kind === 'term' ? i.key : i.id)}"${i.kind === 'term' ? ` id="${esc(i.key)}"` : ''}>${esc(i.name)}</a></li>`;
-const lookupListHTML = LK_LETTERS.map((L) => { const rows = lkItems.filter((i) => lkLetter(i.name) === L); return rows.length ? `<li class="gl-g" data-l="${L}"><h2 class="gl-lh" id="gl-lh-${L}">${L === '0-9' ? '0–9' : L}</h2><ul class="gl-rows">${rows.map(lkRow).join('')}</ul></li>` : ''; }).join('');
+const lookupListHTML = LK_LETTERS.map((L) => { const rows = lkItems.filter((i) => lkLetter(i.name) === L); return rows.length ? `<li class="gl-g" data-l="${L}"><h3 class="gl-lh" id="gl-lh-${L}" tabindex="-1">${L === '0-9' ? '0–9' : L}</h3><ul class="gl-rows">${rows.map(lkRow).join('')}</ul></li>` : ''; }).join('');
 // each term's own words for its entry, by its address: the term, its other names, the definition, the reason, and the chapter
 // it is read in (its id and title), as data/glossary.json gives them
 const lkTerms = {};
 glossary.forEach((g) => { const t = g.chapter ? chapterTitle(g.chapter) : null; lkTerms['gl-' + lkSlug(g.term)] = [g.term, g.aka || '', g.plain || '', g.why || '', t ? g.chapter : '', t || '']; });
 fill('GL_ENTRIES', String(lkItems.length)); // the Glossary's count and its search's hint, in the page before the list arrives
-// the Glossary's head: how many entries of each kind the list holds (src/template.html, the Glossary view)
+// what the Glossary holds, under its field at rest (src/template.html): each kind with its count, then the letters, each a link
+// to Browse A to Z at that kind or letter (#a-z/firms, #a-z/s). The counts and the letters come from the entries, never typed;
+// a letter no entry starts with shows muted and opens nothing
 const lkKinds = (k) => lkItems.filter((i) => i.kind === k).length;
-// the Glossary's head no longer tallies its kinds: each kind's button carries its count (28 Oct 2026; the counts showed three times)
+const LK_KINDS = [['term', 'terms', 'term', 'terms'], ['firm', 'firms', 'firm', 'firms'], ['chip', 'AI chips', 'AI chip', 'ai-chips'], ['country', 'countries', 'country', 'countries']];
+fill('GL_KINDS', LK_KINDS.map(([k, many, one, slug]) => { const n = lkKinds(k); return `<li><a href="#a-z/${slug}" data-azk="${k}"><span class="n">${n}</span><span class="w">${n === 1 ? one : many}</span></a></li>`; }).join(''));
+fill('GL_ABC', LK_LETTERS.map((L) => {
+  const n = lkItems.filter((i) => lkLetter(i.name) === L).length, shown = L === '0-9' ? '0–9' : L;
+  return n ? `<a href="#a-z/${L.toLowerCase()}" data-azl="${L}" aria-label="${L === '0-9' ? '0 to 9' : L}, ${n} ${n === 1 ? 'entry' : 'entries'}">${shown}</a>` : `<span aria-hidden="true">${shown}</span>`;
+}).join(''));
 fill('CONTROLS_DEK', controlsDek);
 fill('EXPOSURE_VIZ', exposureViz(exposure));
 fill('EXPOSURE_NOTE', exposureNote);

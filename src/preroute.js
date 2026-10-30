@@ -22,8 +22,9 @@
     landscape: 'landscape', 'ai-chips': 'landscape', suppliers: 'suppliers', controls: 'controls', 'export-controls': 'controls', thresholds: 'controls',
     exposure: 'controls', glossary: 'glossary' };
   // a bare anchor (#lithography, #gl-euv) opens the view that holds the element; these are the ids of the views other than
-  // The Chain, and anything else opens The Chain, as the router does for a chapter, a section or an id it cannot find
-  var OWN = [[/^(gl|lk)-|^glossary$/, 'glossary'], [/^(sup-|atlas|the-route)/, 'suppliers'], [/^(aic|cx|picker)/, 'landscape'],
+  // The Chain, and anything else opens The Chain, as the router does for a chapter, a section or an id it cannot find. The
+  // Glossary's A to Z index has addresses of its own with no element behind them (#a-z, #a-z/firms, #a-z/s; src/modules/lookup.js)
+  var OWN = [[/^(gl|lk)-|^glossary$|^a-z(\/|$)/, 'glossary'], [/^(sup-|atlas|the-route)/, 'suppliers'], [/^(aic|cx|picker)/, 'landscape'],
     [/^(cf|tl-|ex-|exposure|controls|timeline)/, 'controls'], [/^(wk-|intro-)/, 'walk']];
   function own(id) { for (var i = 0; i < OWN.length; i++) if (OWN[i][0].test(id)) return OWN[i][1]; return 'stack'; }
   var CHAPTERS = []; // the chapters of The Chain, in order: build/build.js writes their ids here

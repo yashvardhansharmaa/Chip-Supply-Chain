@@ -3051,62 +3051,103 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
 
 
 /* module: lookup.css */
-/* The Glossary as an index and one entry ("Index and entry", the owner's choice of 29 Oct 2026; src/modules/lookup.js; the
-   mockup is qa/excellence/glossary-alt/twopane/ in the main checkout). On a wide screen the index stands in a narrow column that
-   keeps its place under the masthead while the entry beside it scrolls with the page; under 880 px the index is the page and
-   an entry opens over it as a dialog. Every color, face and size is a site token.
-   Color: wine marks the reader's place (the open entry's row, the letter in view, the pressed kind) and, in a country's
-   shares, the largest one (the chart rule: the largest wine, the rest the light tint). */
-.view[data-view="glossary"] { width: 100%; padding: 0 var(--margin); }
-/* the parts the list fills wait, hidden, until it is in, so nothing painted early moves (lookup.js sets data-gl) */
+/* The Glossary, search first, with what it holds under the field ("Kinds and letters", the owner's choice of 30 Oct 2026;
+   src/modules/lookup.js; the mockup is qa/excellence/glossary-alt/sf-kinds/ in the main checkout, with its designer's pass).
+   At rest the view holds the name, one field, Random entry and, under them, one row of kinds with their counts and one row of
+   letters, each opening Browse A to Z. Typing drops suggestions inside the field's rounded edge. An entry or the A to Z index
+   moves the same field into a slim bar under the masthead and shows one centered column. #gl-view[data-state] names the state:
+   home, entry or browse. Every color, face and size is a site token; wine marks focus and the current item only, and in a
+   country's shares the largest one (the chart rule: the largest wine, the rest the light tint). */
+:root { --gl-col: 700px; --gl-bar-h: 0px; --gl-strip-h: 0px; }
+.view[data-view="glossary"] { width: 100%; padding: 0; }
+/* the parts the rows fill wait, hidden, until they are in, so nothing painted early moves (lookup.js sets data-gl) */
 .view[data-view="glossary"]:not([data-gl]) .gl-wait { visibility: hidden; }
-.gl { --idx-w: clamp(272px, 23vw, 328px); display: grid; grid-template-columns: var(--idx-w) minmax(0, 1fr); column-gap: clamp(40px, 5.6vw, 96px); }
-.view[data-view="glossary"] > .site-footer { margin-top: 0; }
+.gl { min-height: calc(100vh - var(--masthead)); }
+.gl:not([data-state="browse"]) .gl-browse, .gl:not([data-state="entry"]) .gl-pane { display: none; }
+.view[data-view="glossary"] > .site-footer { margin: 0 var(--margin); }
 
-/* ---------- the index ---------- */
-.gl-index { position: sticky; top: var(--masthead); height: calc(100vh - var(--masthead)); height: calc(100dvh - var(--masthead)); display: flex; flex-direction: column; min-width: 0; padding-top: 30px; border-right: 1px solid var(--line); }
-.gl-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 0 22px 16px 0; }
-.gl-title { margin: 0; font-family: var(--font-display); font-weight: 400; font-size: 34px; line-height: 1; letter-spacing: -0.02em; color: var(--ink); }
-.gl-count { margin: 0; font-family: var(--font-ui); font-size: 13px; line-height: 1.3; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
-.gl-bar { margin-right: 22px; }
-.gl-field { position: relative; display: flex; align-items: center; height: 42px; margin: 0; border: 1px solid var(--control-edge); background: var(--bg); }
-.gl-field:focus-within { outline: 2px solid var(--accent); outline-offset: 1px; }
-.gl-field svg { position: absolute; left: 12px; top: 12px; width: 16px; height: 16px; fill: none; stroke: var(--muted); stroke-width: 2; stroke-linecap: round; pointer-events: none; }
-.gl-field input { flex: 1; min-width: 0; height: 100%; margin: 0; border: 0; border-radius: 0; background: none; padding: 0 38px 0 36px; font-family: var(--font-ui); font-size: 15px; color: var(--ink); outline: none; -webkit-appearance: none; appearance: none; }
-.gl-field input::-webkit-search-cancel-button { -webkit-appearance: none; display: none; }
-.gl-field input::placeholder { color: var(--muted); opacity: 1; }
-.gl-clear { position: absolute; right: 3px; top: 4px; width: 34px; height: 32px; font-family: var(--font-ui); font-size: 22px; line-height: 1; color: var(--muted); }
+/* ---------- the head: at rest, the calm first screen ---------- */
+.gl-head { display: flex; flex-direction: column; align-items: center; min-height: calc(100vh - var(--masthead)); min-height: calc(100dvh - var(--masthead)); padding: clamp(40px, 19vh, 200px) var(--margin) 72px; }
+.gl-title { margin: 0; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: clamp(56px, 13vw, 96px); line-height: 1; letter-spacing: -0.03em; color: var(--ink); transform-origin: 0 0; }
+.gl-title a { color: inherit; text-decoration: none; }
+.gl-title a:focus-visible { outline-offset: 6px; }
+.gl:not([data-state="home"]) .gl-title a:hover { text-decoration: underline; text-decoration-color: var(--line-2); text-decoration-thickness: 1px; text-underline-offset: 5px; }
+.gl-field { position: relative; width: min(640px, 100%); height: 54px; margin-top: clamp(26px, 4.4vh, 40px); }
+.gl-box { position: absolute; left: 0; right: 0; top: 0; z-index: 25; border: 1px solid var(--control-edge); border-radius: 27px; background: var(--bg); transition: border-color 0.15s; }
+.gl-box:hover { border-color: var(--ink-2); }
+.gl-box:focus-within { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.gl-field.is-open .gl-box { box-shadow: 0 0 0 1px var(--accent), var(--shadow); }
+.gl-frow { position: relative; display: flex; align-items: center; height: 52px; }
+.gl-frow svg { position: absolute; left: 20px; top: 50%; width: 18px; height: 18px; margin-top: -9px; fill: none; stroke: var(--muted); stroke-width: 1.8; stroke-linecap: round; pointer-events: none; }
+.gl-frow input { flex: 1; min-width: 0; height: 100%; margin: 0; padding: 0 52px 0 50px; border: 0; border-radius: 27px; background: none; font-family: var(--font-ui); font-size: 17px; color: var(--ink); outline: none; -webkit-appearance: none; appearance: none; }
+.gl-frow input::-webkit-search-cancel-button { -webkit-appearance: none; display: none; }
+.gl-frow input::placeholder { color: var(--muted); opacity: 1; }
+.gl-clear { position: absolute; right: 7px; top: 50%; width: 40px; height: 40px; margin-top: -20px; border-radius: 50%; font-family: var(--font-ui); font-size: 24px; line-height: 1; color: var(--muted); }
 .gl-clear:hover { color: var(--ink); }
-.gl-kinds { display: flex; flex-wrap: wrap; gap: 0 15px; margin: 8px 0 0; }
-.gl-kinds button { padding: 8px 0 5px; border-bottom: 2px solid transparent; font-family: var(--font-ui); font-size: 14px; line-height: 1.2; color: var(--muted); white-space: nowrap; }
-.gl-kinds button:hover { color: var(--ink); }
-.gl-kinds button[aria-pressed="true"] { color: var(--ink); border-bottom-color: var(--accent); }
-.gl-lists { position: relative; display: flex; flex: 1; min-height: 0; margin-top: 12px; border-top: 1px solid var(--line); }
-.gl-list { position: relative; flex: 1; min-width: 0; overflow-y: auto; overscroll-behavior: contain; padding: 0 0 48px; scrollbar-width: thin; scrollbar-color: var(--line-2) transparent; }
-.gl-az, .gl-rows, .gl-res ul { list-style: none; margin: 0; padding: 0; }
-.gl-g { margin: 0; padding: 0; }
-.gl-lh { position: sticky; top: 0; z-index: 1; margin: 0; padding: 14px 0 5px 12px; background: var(--bg); font-family: var(--font-display); font-weight: 400; font-size: 21px; line-height: 1; color: var(--ink); }
-.gl-lh.gl-lk { padding-top: 18px; font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); line-height: 1.4; color: var(--muted); }
-.gl-r a { display: block; padding: 3px 10px 3px 12px; font-family: var(--font-ui); font-size: 14.5px; line-height: 20px; color: var(--ink-2); text-decoration: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.gl-r a:hover { color: var(--ink); text-decoration: underline; text-decoration-color: var(--line-2); }
-.gl-r a[aria-current="true"] { color: var(--ink); font-weight: 600; box-shadow: inset 2px 0 0 var(--accent); }
-.gl-r a:focus-visible { outline-offset: -2px; }
-.gl-none { margin: 18px 12px 0; font-family: var(--font-ui); font-size: 14.5px; line-height: 1.5; color: var(--ink-2); }
-.gl-none b { font-weight: 600; color: var(--ink); }
-.gl-near { margin: 10px 12px 0; font-family: var(--font-ui); font-size: 14.5px; line-height: 1.7; color: var(--muted); }
-.gl-near a { color: var(--ink); margin-right: 10px; }
-.gl-jump { flex: none; display: flex; flex-direction: column; width: 26px; padding: 10px 0 14px; }
-.gl-jump[hidden] { display: none; }
-.gl-jump button, .gl-jump span { flex: 1 1 0; min-height: 0; max-height: 21px; display: flex; align-items: center; justify-content: center; font-family: var(--font-ui); font-size: 12px; line-height: 1; color: var(--muted); font-variant-numeric: tabular-nums; }
-.gl-jump span { color: var(--line-2); }
-.gl-jump button:hover { color: var(--ink); }
-.gl-jump button[aria-current="true"] { color: var(--accent-ink); font-weight: 700; }
-.gl-jump button:focus-visible { outline-offset: -2px; }
+.gl-btns { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 28px; }
+.gl-btns .btn { min-height: 40px; padding: 9px 20px; font-size: 14.5px; }
+.gl-az-link { display: none; color: var(--ink); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 3px; }
+.gl-az-link:hover { text-decoration-color: currentColor; }
 
-/* ---------- the entry ---------- */
-.gl-pane { min-width: 0; padding: 44px 0 64px; outline: none; }
-.gl-e { max-width: 700px; }
-.gl-ebar { display: none; }
+/* ---------- what is inside: the kinds with their counts, then the letters ---------- */
+/* the gap above them is about twice the 28 px between the field and the button, so the search and the contents read as two
+   tiers; the figures use the name-size optical cut; the letters sit on 27 equal-pitch cells with a wider first cell for 0–9,
+   so the row's ink runs edge to edge under the field and every gap reads the same (the designer's pass, 29 Oct 2026) */
+.gl-hold { width: min(640px, 100%); margin-top: 52px; }
+.gl-kindrow { display: flex; flex-wrap: wrap; justify-content: center; align-items: baseline; margin: 0; padding: 0; list-style: none; font-family: var(--font-ui); font-size: 14.5px; line-height: 1.4; color: var(--muted); }
+.gl-kindrow li { display: flex; align-items: baseline; }
+.gl-kindrow li + li::before { content: "·"; padding: 0 12px; color: var(--muted); }
+.gl-kindrow a { display: inline-flex; align-items: baseline; gap: 6px; padding: 4px 1px; color: var(--ink-2); text-decoration: none; }
+.gl-kindrow .n { font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-name); font-size: 21px; line-height: 1; letter-spacing: -0.01em; color: var(--ink); font-variant-numeric: lining-nums tabular-nums; }
+.gl-kindrow .w { text-decoration: underline; text-decoration-color: var(--line-2); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.gl-kindrow a:hover .w { color: var(--ink); text-decoration-color: currentColor; }
+.gl-abc { display: grid; grid-template-columns: minmax(0, 1.5fr) repeat(26, minmax(0, 1fr)); margin: 18px 0 0; padding: 6px 0 0; border-top: 1px solid var(--line); }
+.gl-abc a:focus-visible { outline-offset: 0; border-radius: 4px; } /* the ring keeps to its own cell and clears the rule */
+.gl-abc a, .gl-abc span { display: flex; align-items: center; justify-content: center; min-width: 0; height: 34px; font-family: var(--font-ui); font-size: 14px; line-height: 1; color: var(--ink-2); text-decoration: none; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.gl-abc span { color: var(--line-2); }
+.gl-abc a:hover { color: var(--ink); text-decoration: underline; text-decoration-color: currentColor; text-underline-offset: 4px; }
+.gl:not([data-state="home"]) .gl-hold { display: none; }
+
+/* ---------- the suggestions, inside the same rounded edge ---------- */
+.gl-sugg { margin: 0 20px; padding: 6px 0 12px; border-top: 1px solid var(--line); }
+.gl-sugg[hidden] { display: none; }
+.gl-sugg ul { list-style: none; margin: 0 -20px; padding: 0; }
+.gl-grp { margin: 0; padding: 12px 24px 4px 50px; font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); line-height: 1.4; color: var(--muted); }
+.gl-opt { position: relative; display: block; min-height: 44px; padding: 8px 24px 9px 50px; cursor: pointer; }
+.gl-opt::before { content: ""; position: absolute; left: 31px; top: 10px; width: 3px; height: 20px; border-radius: 2px; background: transparent; }
+.gl-opt[aria-selected="true"]::before { background: var(--accent); }
+.gl-opt-h { display: flex; align-items: baseline; gap: 10px; min-width: 0; }
+.gl-opt-n { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: var(--font-ui); font-size: 16px; font-weight: 500; line-height: 22px; color: var(--ink); }
+.gl-opt-k { flex: none; max-width: 60%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: var(--font-ui); font-size: 13px; line-height: 22px; color: var(--muted); }
+.gl-opt-d { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: var(--font-body); font-size: 15px; line-height: 21px; color: var(--ink-2); }
+.gl-opt:hover .gl-opt-n { text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 3px; }
+.gl-opt[aria-selected="true"] .gl-opt-n { color: var(--ink); text-decoration: none; }
+.gl-none { margin: 0; padding: 12px 24px 6px 30px; font-family: var(--font-ui); font-size: 15px; line-height: 1.5; color: var(--ink-2); }
+.gl-none b { font-weight: 600; color: var(--ink); }
+.gl-opt-raw .gl-opt-n { font-weight: 400; }
+.gl-all { display: block; margin: 6px 0 0 30px; padding: 8px 0; min-height: 40px; font-family: var(--font-ui); font-size: 14.5px; color: var(--ink); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 3px; }
+.gl-all:hover { text-decoration-color: currentColor; }
+
+/* ---------- an entry or the index: the head becomes a slim bar, the field in it ---------- */
+.gl:not([data-state="home"]) .gl-head { position: sticky; top: var(--masthead); z-index: 30; display: grid; grid-template-columns: minmax(max-content, 1fr) minmax(0, var(--gl-col)) minmax(max-content, 1fr); align-items: center; column-gap: 28px; min-height: 0; padding: 10px var(--margin); background: var(--bg); border-bottom: 1px solid var(--line); }
+.gl:not([data-state="home"]) .gl-title { justify-self: start; font-size: 27px; letter-spacing: -0.015em; }
+.gl:not([data-state="home"]) .gl-field { width: 100%; height: 44px; margin: 0; }
+.gl:not([data-state="home"]) .gl-box { border-radius: 22px; }
+.gl:not([data-state="home"]) .gl-frow { height: 42px; }
+.gl:not([data-state="home"]) .gl-frow svg { left: 16px; width: 16px; height: 16px; margin-top: -8px; }
+.gl:not([data-state="home"]) .gl-frow input { padding-left: 44px; font-size: 16px; border-radius: 22px; }
+.gl:not([data-state="home"]) .gl-clear { right: 3px; }
+.gl:not([data-state="home"]) .gl-sugg { max-height: calc(100vh - var(--masthead) - var(--gl-bar-h) - 24px); overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; }
+.gl:not([data-state="home"]) .gl-opt, .gl:not([data-state="home"]) .gl-grp { padding-left: 44px; }
+.gl:not([data-state="home"]) .gl-opt::before { left: 26px; }
+.gl:not([data-state="home"]) .gl-btns { display: none; }
+.gl:not([data-state="home"]) .gl-az-link { display: inline-flex; align-items: center; justify-self: end; min-height: 44px; font-family: var(--font-ui); font-size: 14.5px; white-space: nowrap; }
+.gl-az-link[aria-current="page"] { text-decoration-color: var(--accent); text-decoration-thickness: 2px; }
+.gl-az-link .s { display: none; }
+
+/* ---------- the entry: one centered column ---------- */
+.gl-pane { padding: 44px var(--margin) 72px; outline: none; }
+.gl-e { max-width: 700px; margin: 0 auto; }
 .gl-kind { margin: 0 0 14px; }
 .gl-hw { margin: 0; font-family: var(--font-display); font-weight: 400; font-size: clamp(44px, 4.3vw, 62px); line-height: 1.04; letter-spacing: -0.022em; color: var(--ink); overflow-wrap: anywhere; outline: none; }
 /* the name takes focus when an entry opens (a heading, never a control), so it carries no ring, as the old sheet's title did */
@@ -3117,14 +3158,13 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
 .gl-p { margin: 16px 0 0; font-family: var(--font-body); font-size: var(--t-text); line-height: 1.62; color: var(--ink-2); }
 .gl-p b { font-weight: 600; color: var(--ink); }
 .gl-x { color: inherit; text-decoration: underline; text-decoration-color: var(--line-2); text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
-.gl-x:hover { color: var(--accent-ink); text-decoration-color: currentColor; }
+.gl-x:hover { text-decoration-color: currentColor; }
 .gl-reads { margin: 24px 0 0; font-family: var(--font-ui); font-size: 14.5px; line-height: 1.65; color: var(--ink); }
 .gl-reads .gl-rr { display: block; }
 .gl-reads .k { margin-right: 8px; color: var(--muted); }
 .gl-reads a { color: var(--ink); text-underline-offset: 3px; }
 .gl-also a { color: var(--ink-2); text-decoration-color: var(--line-2); }
 .gl-reads .gl-tbtn { margin-left: 2px; font-size: 14.5px; color: var(--muted); }
-.gl-reads a:hover, .gl-links a:hover { color: var(--accent-ink); }
 .gl-facts { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 9px 28px; margin: 30px 0 0; padding: 18px 0 0; border-top: 1px solid var(--line); font-family: var(--font-ui); font-size: 14.5px; line-height: 1.5; }
 .gl-facts dt { color: var(--muted); }
 .gl-facts dd { margin: 0; color: var(--ink); overflow-wrap: anywhere; }
@@ -3152,10 +3192,8 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
 .gl-txt { font-family: var(--font-body); font-size: var(--t-small); line-height: 1.55; color: var(--ink-2); }
 .gl-txt mark { padding: 0 2px; border-radius: 2px; background: var(--accent-soft); color: var(--ink); }
 .gl-men a:hover .gl-txt { color: var(--ink); }
-.gl-men a:hover .gl-src { color: var(--accent-ink); }
 .gl-more { margin: 14px 0 0; }
 .gl-more button, .gl-tbtn { font-family: var(--font-ui); font-size: 14.5px; color: var(--ink); text-decoration: underline; text-decoration-color: var(--rule-ink); text-underline-offset: 3px; }
-.gl-more button:hover, .gl-tbtn:hover { color: var(--accent-ink); }
 .gl-nil { margin: 14px 0 0; font-family: var(--font-ui); font-size: 14.5px; color: var(--muted); }
 /* a country's shares: the largest in wine, the rest in the chart rule's tint (chart color rule, 21 Oct 2026) */
 .gl-shares, .gl-cards, .gl-cats { list-style: none; margin: 0; padding: 0; }
@@ -3176,7 +3214,7 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
 .gl-card-b::before { content: ""; display: inline-block; width: 5px; height: 12px; margin-bottom: 3px; background: var(--bar-5); }
 .gl-card-b--high::before { height: 6px; background: transparent; box-shadow: inset 0 0 0 1.25px var(--ink); }
 .gl-card-n { grid-column: 1 / -1; font-family: var(--font-ui); font-size: 13px; line-height: 1.5; color: var(--muted); }
-.gl-cards a:hover .gl-card-t { color: var(--accent-ink); text-decoration: underline; }
+.gl-cards a:hover .gl-card-t { text-decoration: underline; }
 .gl-cats li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 16px; padding: 10px 0 11px; border-bottom: 1px solid var(--line); font-family: var(--font-ui); font-size: 14.5px; line-height: 1.5; }
 .gl-cat-c { color: var(--ink-2); font-variant-numeric: tabular-nums; }
 .gl-cat-f { grid-column: 1 / -1; font-size: 13.5px; color: var(--muted); }
@@ -3185,39 +3223,68 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
 .gl-pn a { display: flex; flex-direction: column; gap: 4px; max-width: 48%; color: inherit; text-decoration: none; }
 .gl-pn a.gl-next { margin-left: auto; text-align: right; }
 .gl-pn .gl-pn-n { font-family: var(--font-display); font-size: 21px; line-height: 1.2; color: var(--ink); overflow-wrap: anywhere; }
-.gl-pn a:hover .gl-pn-n { color: var(--accent-ink); }
+/* wine marks focus and the current item only, so a pointer over a link turns it to full ink */
+.gl-x:hover, .gl-reads a:hover, .gl-links a:hover, .gl-more button:hover, .gl-tbtn:hover { color: var(--ink); }
+.gl-men a:hover .gl-src, .gl-cards a:hover .gl-card-t, .gl-pn a:hover .gl-pn-n { color: var(--ink); }
 /* the passage a link lands on, on its chapter's page, for a moment */
 .lk-flash { outline: 1.5px solid var(--accent); outline-offset: 6px; border-radius: 0; transition: outline-color 0.6s ease 1.6s; }
 
-/* ---------- a phone, and anything under 880 px: the index is the page, and an entry opens over it ---------- */
+/* ---------- Browse A to Z: every name, under its letter ---------- */
+.gl-browse { max-width: calc(var(--gl-col) + 2 * var(--margin)); margin: 0 auto; padding: 40px var(--margin) 80px; } /* the names stand in the field's column, the letters hang to its left */
+.gl-bhead { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 24px; }
+.gl-bh { margin: 0; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: 40px; line-height: 1.05; letter-spacing: -0.02em; color: var(--ink); outline: none; }
+.gl-bcount { margin: 0; font-family: var(--font-ui); font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.gl-kinds { display: flex; flex-wrap: wrap; gap: 0 18px; margin: 14px 0 0; }
+.gl-kinds button { padding: 8px 0 5px; border-bottom: 2px solid transparent; font-family: var(--font-ui); font-size: 14.5px; line-height: 1.2; color: var(--muted); white-space: nowrap; }
+.gl-kinds button:hover { color: var(--ink); }
+.gl-kinds button[aria-pressed="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+.gl-jump { position: sticky; top: calc(var(--masthead) + var(--gl-bar-h)); z-index: 6; display: flex; justify-content: space-between; margin: 18px 0 0; padding: 6px 0; background: var(--bg); border-bottom: 1px solid var(--line); }
+.gl-jump button, .gl-jump span { display: flex; align-items: center; justify-content: center; min-width: 26px; height: 32px; font-family: var(--font-ui); font-size: 14px; line-height: 1; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.gl-jump span { color: var(--line-2); }
+.gl-jump::before { content: ""; position: absolute; top: 0; bottom: -1px; right: 100%; width: 76px; background: var(--bg); } /* the strip's ground runs over the hanging letters, so the letter before slides under it */
+.gl-jump button:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+.gl-jump button[aria-current="true"] { color: var(--accent-ink); font-weight: 700; }
+.gl-az { list-style: none; margin: 0; padding: 0; }
+.gl-g { display: grid; grid-template-columns: 76px minmax(0, 1fr); margin-left: -76px; }
+.gl-g[hidden] { display: none; }
+.gl-lh { position: sticky; top: calc(var(--masthead) + var(--gl-bar-h) + var(--gl-strip-h)); align-self: start; margin: 0; padding-top: 22px; font-family: var(--font-display); font-weight: 400; font-size: 34px; line-height: 0.9; color: var(--ink); outline: none; }
+.gl-rows { list-style: none; margin: 0; padding: 20px 0 19px; border-bottom: 1px solid var(--line); columns: 3 190px; column-gap: 30px; }
+.gl-r { break-inside: avoid; }
+.gl-r[hidden] { display: none; }
+.gl-r a { display: block; padding: 3px 0 4px; font-family: var(--font-ui); font-size: 15px; line-height: 21px; color: var(--ink-2); text-decoration: none; }
+.gl-r a:hover { color: var(--ink); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 3px; }
+.gl-r a[aria-current="true"] { color: var(--ink); font-weight: 600; box-shadow: inset 2px 0 0 var(--accent); padding-left: 8px; }
+/* a control reached by Tab lands clear of the bar (and in the index, the letters) as well as the masthead (WCAG 2.4.11) */
+html.kb:has(.view[data-view="glossary"]:not([hidden]) .gl:not([data-state="home"])) { scroll-padding-top: calc(var(--masthead) + var(--gl-bar-h) + var(--gl-strip-h) + 12px); }
+
+/* ---------- narrower: the bar drops the name, a phone keeps the same calm screen ---------- */
+@media (max-width: 1099px) { :root { --gl-col: 640px; } }
 @media (max-width: 879px) {
-  .gl { display: block; }
-  .gl-index { position: static; height: auto; display: block; padding-top: 22px; border-right: 0; }
-  .gl-top { margin: 0 0 14px; }
-  .gl-bar { position: sticky; top: var(--masthead); z-index: 5; margin: 0 calc(-1 * var(--margin)); padding: 8px var(--margin) 0; background: var(--bg); border-bottom: 1px solid var(--line); }
-  .gl-field { height: 46px; }
-  .gl-field svg { top: 14px; }
-  .gl-field input { font-size: 16px; }
-  .gl-clear { top: 6px; }
-  .gl-kinds { gap: 0 17px; margin-top: 4px; }
-  .gl-kinds button { padding: 11px 0 8px; font-size: 14.5px; }
-  .gl-lists { display: block; margin-top: 0; border-top: 0; }
-  .gl-list { overflow: visible; padding: 0 30px 56px 0; }
-  .gl-lh { top: calc(var(--masthead) + var(--gl-bar-h, 0px)); padding: 16px 0 6px; font-size: 22px; }
-  .gl-r a { padding: 11px 0; font-size: 16.5px; line-height: 22px; border-bottom: 1px solid var(--line); white-space: normal; }
-  .gl-r a[aria-current="true"] { box-shadow: inset 2px 0 0 var(--accent); padding-left: 10px; }
-  .gl-none, .gl-near { margin-left: 0; margin-right: 0; font-size: 16px; }
-  .gl-jump { position: fixed; right: 0; top: calc(var(--masthead) + var(--gl-bar-h, 0px) + 4px); bottom: 50px; z-index: 6; width: 28px; padding: 0; touch-action: none; }
-  .gl-jump button, .gl-jump span { max-height: none; font-size: 12px; }
-  .gl-pane { display: none; }
-  html.gl-open { overflow: hidden; }
-  html.gl-open .gl-pane { display: block; position: fixed; inset: 0; z-index: 60; overflow-y: auto; overscroll-behavior: contain; padding: 0 var(--margin) 72px; background: var(--bg); }
-  .gl-ebar { position: sticky; top: 0; z-index: 2; display: flex; align-items: center; justify-content: space-between; height: 56px; margin: 0 calc(-1 * var(--margin)) 26px; padding: 0 calc(var(--margin) - 8px) 0 calc(var(--margin) - 4px); background: var(--bg); border-bottom: 1px solid var(--line); }
-  .gl-back { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 4px; font-family: var(--font-ui); font-size: 16px; font-weight: 500; color: var(--ink); }
-  .gl-back svg, .gl-steps svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  .gl-steps { display: flex; }
-  .gl-steps button { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; color: var(--ink); }
-  .gl-steps button:disabled { color: var(--line-2); cursor: default; }
+  .gl-head { padding-top: clamp(28px, 12vh, 150px); }
+  .gl-field { height: 52px; }
+  .gl-frow { height: 50px; }
+  .gl-frow svg { left: 17px; }
+  .gl-frow input { padding: 0 48px 0 44px; font-size: 17px; }
+  .gl-opt, .gl-grp { padding-left: 44px; padding-right: 18px; }
+  .gl-opt::before { left: 27px; }
+  .gl-none { padding-left: 26px; }
+  .gl-all { margin-left: 26px; }
+  .gl:not([data-state="home"]) .gl-head { grid-template-columns: minmax(0, 1fr) auto; column-gap: 14px; padding: 8px var(--margin); }
+  .gl:not([data-state="home"]) .gl-title { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .gl-az-link .l { display: none; }
+  .gl-az-link .s { display: inline; }
+  .gl-pane { padding-top: 30px; }
+  .gl-browse { padding-top: 28px; padding-right: calc(var(--margin) + 22px); }
+  .gl-bh { font-size: 34px; }
+  .gl-kinds button { padding: 11px 0 8px; }
+  .gl-jump { position: fixed; top: calc(var(--masthead) + var(--gl-bar-h) + 6px); bottom: 50px; right: 0; z-index: 6; flex-direction: column; justify-content: flex-start; width: 28px; margin: 0; padding: 0; border: 0; background: none; touch-action: none; }
+  .gl-jump button, .gl-jump span { flex: 1 1 0; min-width: 0; height: auto; max-height: 26px; font-size: 12px; }
+  .gl-jump::before { content: none; }
+  .gl-g { display: block; margin-left: 0; }
+  .gl-lh { position: sticky; top: calc(var(--masthead) + var(--gl-bar-h)); z-index: 2; padding: 18px 0 6px; background: var(--bg); font-size: 24px; line-height: 1; }
+  .gl-rows { columns: auto; padding: 0; border-bottom: 0; }
+  .gl-r a { padding: 11px 0; font-size: 16.5px; line-height: 22px; border-bottom: 1px solid var(--line); }
+  .gl-r a[aria-current="true"] { padding-left: 10px; }
   .gl-hw { font-size: clamp(36px, 10.5vw, 46px); }
   .gl-def { margin-top: 20px; font-size: 20px; }
   .gl-p { font-size: 17.5px; }
@@ -3226,18 +3293,22 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
   .gl-men a { grid-template-columns: minmax(0, 1fr); gap: 4px; }
   .gl-share { grid-template-columns: minmax(0, 1fr) 72px 48px; column-gap: 12px; }
   .gl-pn .gl-pn-n { font-size: 19px; }
-  .view[data-view="glossary"] > .site-footer { padding-right: 30px; }
-  /* a control reached by Tab lands clear of the sticky search bar as well as the masthead (WCAG 2.4.11) */
-  html.kb:has(.view[data-view="glossary"]:not([hidden])) { scroll-padding-top: calc(var(--masthead) + var(--gl-bar-h, 0px) + 12px); }
+  /* a phone: the kinds as a small table, two columns set as one centered block, the figures right-set so each column's words
+     share one edge; the letters as a grid of 44 px keys */
+  .gl-hold { margin-top: 40px; }
+  .gl-kindrow { display: grid; grid-template-columns: repeat(2, max-content); justify-content: center; column-gap: clamp(20px, 9vw, 44px); }
+  .gl-kindrow li { justify-content: flex-start; }
+  .gl-kindrow li + li::before { content: none; }
+  .gl-kindrow a { align-items: baseline; gap: 7px; min-height: 44px; padding: 11px 6px 10px; }
+  .gl-kindrow .n { display: inline-block; min-width: 1.8em; text-align: right; }
+  .gl-abc { display: grid; grid-template-columns: repeat(auto-fill, minmax(44px, 1fr)); margin-top: 12px; padding-top: 4px; }
+  .gl-abc a, .gl-abc span { min-width: 0; height: 44px; font-size: 15.5px; }
 }
-@media (min-width: 880px) and (max-width: 1199px) { .gl-kinds { gap: 0 11px; } }
 
 /* on paper: the entry alone */
 @media print {
-  .gl { display: block; }
-  .gl-index, .gl-ebar, .gl-pn, .gl-more { display: none !important; }
-  .gl-pane { display: block !important; position: static !important; padding: 0; }
-  html.gl-open { overflow: visible; }
+  .gl-head, .gl-browse, .gl-pn, .gl-more { display: none !important; }
+  .gl-pane { padding: 0; }
 }
 
 
