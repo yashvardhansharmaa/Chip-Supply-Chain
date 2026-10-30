@@ -36,7 +36,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..600,0,0&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,400&family=Hanken+Grotesk:wght@400..700&family=Fragment+Mono&display=swap">
 <!-- the site's styles, one sheet every page shares and caches (build/build.js writes dist/assets/site.css) -->
-<link rel="stylesheet" href="assets/site.css?v=b3eb252c88">
+<link rel="stylesheet" href="assets/site.css?v=f3bfab93ee">
 <style>
 /* the cite line under each chapter title, its actions: Link to chapter · Cite this chapter · Chapter PDF (build/build.js citeBlock) */
 .ch-cite { margin: 4px 0 0; }
@@ -82,8 +82,9 @@
     landscape: 'landscape', 'ai-chips': 'landscape', suppliers: 'suppliers', controls: 'controls', 'export-controls': 'controls', thresholds: 'controls',
     exposure: 'controls', glossary: 'glossary' };
   // a bare anchor (#lithography, #gl-euv) opens the view that holds the element; these are the ids of the views other than
-  // The Chain, and anything else opens The Chain, as the router does for a chapter, a section or an id it cannot find
-  var OWN = [[/^(gl|lk)-|^glossary$/, 'glossary'], [/^(sup-|atlas|the-route)/, 'suppliers'], [/^(aic|cx|picker)/, 'landscape'],
+  // The Chain, and anything else opens The Chain, as the router does for a chapter, a section or an id it cannot find. The
+  // Glossary's A to Z index has addresses of its own with no element behind them (#a-z, #a-z/firms, #a-z/s; src/modules/lookup.js)
+  var OWN = [[/^(gl|lk)-|^glossary$|^a-z(\/|$)/, 'glossary'], [/^(sup-|atlas|the-route)/, 'suppliers'], [/^(aic|cx|picker)/, 'landscape'],
     [/^(cf|tl-|ex-|exposure|controls|timeline)/, 'controls'], [/^(wk-|intro-)/, 'walk']];
   function own(id) { for (var i = 0; i < OWN.length; i++) if (OWN[i][0].test(id)) return OWN[i][1]; return 'stack'; }
   var CHAPTERS = ["design-and-eda","silicon-and-wafers","chemicals-gases-and-photoresist","lithography","photomasks-and-pellicles","deposition-and-etch","metrology-and-inspection","foundries-and-fabs","memory-and-hbm","advanced-packaging","substrates-and-pcbs","test-and-assembly","systems-and-networking","data-centers-and-power","component-costs","geopolitics"];
@@ -499,7 +500,7 @@ html[data-chain] .view[data-view="stack"] > article.chapter { content-visibility
 <a href="#/glossary"><b class="wk-tab">Glossary</b><span>Plain definitions of every term, plus every company, chip and country, with the passages that mention them.</span></a>
 </nav>
 </div>
-</div><footer class="site-footer"><span class="ft-mark" aria-hidden="true"><svg class="wm-tile" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect width="16" height="16" rx="3.2"/><path transform="translate(3.3324 11.8693) scale(0.009179 -0.009179)" d="M1011 683 Q1011 612 960 564 Q909 515 823 515 Q739 515 696 561 Q653 607 653 680 L653 720 Q653 786 623 823 Q594 861 544 861 Q502 861 468 831 Q433 801 412 741 Q391 682 391 594 Q391 474 431 393 Q470 312 540 270 Q609 229 697 229 Q769 229 825 251 Q880 273 924 326 Q946 348 959 356 Q971 363 983 363 Q1000 363 1007 347 Q1015 330 1015 307 Q1012 216 954 140 Q896 64 796 19 Q695 -26 563 -26 Q417 -26 301 33 Q185 91 118 198 Q51 305 51 450 Q51 602 118 721 Q184 840 305 909 Q425 978 588 978 Q720 978 815 938 Q909 898 960 832 Q1011 765 1011 683 Z"/></svg></span><p class="credits">Made by <b><a href="https://www.linkedin.com/in/yashvardhan07/" target="_blank" rel="noopener">Yashvardhan Sharma</a></b> with Claude. Corrections and questions: <a href="mailto:contact@chipsupplychain.org">contact@chipsupplychain.org</a>.<span class="updated">Updated 29 October 2026</span></p></footer></section>
+</div><footer class="site-footer"><span class="ft-mark" aria-hidden="true"><svg class="wm-tile" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect width="16" height="16" rx="3.2"/><path transform="translate(3.3324 11.8693) scale(0.009179 -0.009179)" d="M1011 683 Q1011 612 960 564 Q909 515 823 515 Q739 515 696 561 Q653 607 653 680 L653 720 Q653 786 623 823 Q594 861 544 861 Q502 861 468 831 Q433 801 412 741 Q391 682 391 594 Q391 474 431 393 Q470 312 540 270 Q609 229 697 229 Q769 229 825 251 Q880 273 924 326 Q946 348 959 356 Q971 363 983 363 Q1000 363 1007 347 Q1015 330 1015 307 Q1012 216 954 140 Q896 64 796 19 Q695 -26 563 -26 Q417 -26 301 33 Q185 91 118 198 Q51 305 51 450 Q51 602 118 721 Q184 840 305 909 Q425 978 588 978 Q720 978 815 938 Q909 898 960 832 Q1011 765 1011 683 Z"/></svg></span><p class="credits">Made by <b><a href="https://www.linkedin.com/in/yashvardhan07/" target="_blank" rel="noopener">Yashvardhan Sharma</a></b> with Claude. Corrections and questions: <a href="mailto:contact@chipsupplychain.org">contact@chipsupplychain.org</a>.<span class="updated">Updated 30 October 2026</span></p></footer></section>
 
     <section class="view column wide" data-view="landscape">
       <!-- AI Chips (design round seven, option B "the shelves", qa/design7/b/ in the main checkout, chosen 28 Oct 2026): the title
@@ -738,31 +739,48 @@ html[data-chain] .view[data-view="stack"] > article.chapter { content-visibility
 
 
     <section class="view column wide" data-view="glossary">
-      <!-- The Glossary as an index and one entry (Index and entry, the owner's choice of 29 Oct 2026; src/modules/lookup.js).
-           The index: the title and count, the search, the kinds, and every entry A to Z, which glossary.js brings into
-           #lk-items with each entry's addresses (a row's lk- id, a term's link its gl- id). The entry: one at a time, whole.
-           On a phone the index is the page and an entry opens over it. The parts marked gl-wait show once the list is in -->
-      <div class="gl">
-        <div class="gl-index" id="gl-index">
-          <div class="gl-top">
-            <p class="gl-title vt" role="heading" aria-level="1">Glossary</p>
-            <p class="gl-count" id="gl-count" role="status" aria-live="polite">487 entries</p>
-          </div>
+      <!-- The Glossary, search first, with what it holds under the field ("Kinds and letters", the owner's choice of 30 Oct 2026;
+           src/modules/lookup.js; the mockup is qa/excellence/glossary-alt/sf-kinds/ in the main checkout). At rest: the name, one
+           field, Random entry, then the kinds with their counts and the letters, each opening Browse A to Z. Typing drops
+           suggestions inside the field's edge. An entry or the index moves the field into a slim bar under the masthead.
+           build/build.js writes the counts and the letters from the data; glossary.js brings the A to Z rows into #lk-items with
+           each entry's addresses (a row's lk- id, a term's link its gl- id). The script below names the state the address asks
+           for before the head paints, so a link to an entry or to the index never shows the first screen first. The parts
+           marked gl-wait show once the rows are in -->
+      <div class="gl" id="gl-view" data-state="home">
+        <script>(function(){var e=document.getElementById('gl-view'),h=String(location.hash||'').replace(/^#/,'');if(e)e.setAttribute('data-state',/^(gl|lk)-/.test(h)?'entry':/^a-z(\/|$)/i.test(h)?'browse':'home');})();</script>
+        <div class="gl-head" id="gl-head">
+          <p class="gl-title vt" id="gl-title" role="heading" aria-level="1"><a href="#/glossary" data-home>Glossary</a></p>
           <div class="sr-only"><p class="dek">Every term, firm, chip and country, with the passages that mention them.</p></div>
-          <div class="gl-bar" id="gl-bar">
-            <label class="gl-field"><span class="sr-only">Search the glossary by name or text</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="gl-search" type="search" placeholder="Search 487 entries" autocomplete="off" spellcheck="false" aria-describedby="gl-keys" aria-controls="gl-list"><button type="button" class="gl-clear" id="gl-clear" aria-label="Clear the search" hidden>×</button></label>
-            <div class="gl-kinds" id="gl-kinds" role="group" aria-label="Kind of entry"><button type="button" data-k="all" aria-pressed="true">All</button><button type="button" data-k="term" aria-pressed="false">Terms</button><button type="button" data-k="firm" aria-pressed="false">Firms</button><button type="button" data-k="chip" aria-pressed="false">AI chips</button><button type="button" data-k="country" aria-pressed="false">Countries</button></div>
+          <div class="gl-field" id="gl-field">
+            <div class="gl-box" id="gl-box">
+              <div class="gl-frow">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+                <label class="sr-only" for="gl-search">Search the glossary by name or text</label>
+                <input id="gl-search" type="search" placeholder="Search 487 entries" autocomplete="off" spellcheck="false" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="gl-sugg" aria-describedby="gl-keys">
+                <button type="button" class="gl-clear" id="gl-clear" aria-label="Clear the search" hidden>×</button>
+              </div>
+              <div class="gl-sugg" id="gl-sugg" hidden></div>
+            </div>
           </div>
-          <p class="sr-only" id="gl-keys">The up and down arrows move through the entries.</p>
-          <div class="gl-lists">
-            <nav class="gl-list gl-wait" id="gl-list" aria-label="Entries"><ul class="gl-az" id="lk-items"></ul><div class="gl-res" id="gl-res" hidden></div></nav>
-            <div class="gl-jump gl-wait" id="gl-jump" role="group" aria-label="Go to a letter"></div>
+          <div class="gl-btns" id="gl-btns"><button type="button" class="btn ghost" id="gl-rand">Random entry</button></div>
+          <div class="gl-hold" id="gl-hold">
+            <nav aria-label="Browse by kind"><ul class="gl-kindrow" id="gl-kindrow"><li><a href="#a-z/terms" data-azk="term"><span class="n">208</span><span class="w">terms</span></a></li><li><a href="#a-z/firms" data-azk="firm"><span class="n">226</span><span class="w">firms</span></a></li><li><a href="#a-z/ai-chips" data-azk="chip"><span class="n">38</span><span class="w">AI chips</span></a></li><li><a href="#a-z/countries" data-azk="country"><span class="n">15</span><span class="w">countries</span></a></li></ul></nav>
+            <nav class="gl-abc" id="gl-abc" aria-label="Browse A to Z by letter"><a href="#a-z/0-9" data-azl="0-9" aria-label="0 to 9, 4 entries">0–9</a><a href="#a-z/a" data-azl="A" aria-label="A, 47 entries">A</a><a href="#a-z/b" data-azl="B" aria-label="B, 13 entries">B</a><a href="#a-z/c" data-azl="C" aria-label="C, 41 entries">C</a><a href="#a-z/d" data-azl="D" aria-label="D, 15 entries">D</a><a href="#a-z/e" data-azl="E" aria-label="E, 22 entries">E</a><a href="#a-z/f" data-azl="F" aria-label="F, 16 entries">F</a><a href="#a-z/g" data-azl="G" aria-label="G, 23 entries">G</a><a href="#a-z/h" data-azl="H" aria-label="H, 23 entries">H</a><a href="#a-z/i" data-azl="I" aria-label="I, 25 entries">I</a><a href="#a-z/j" data-azl="J" aria-label="J, 7 entries">J</a><a href="#a-z/k" data-azl="K" aria-label="K, 10 entries">K</a><a href="#a-z/l" data-azl="L" aria-label="L, 23 entries">L</a><a href="#a-z/m" data-azl="M" aria-label="M, 38 entries">M</a><a href="#a-z/n" data-azl="N" aria-label="N, 29 entries">N</a><a href="#a-z/o" data-azl="O" aria-label="O, 9 entries">O</a><a href="#a-z/p" data-azl="P" aria-label="P, 23 entries">P</a><a href="#a-z/q" data-azl="Q" aria-label="Q, 4 entries">Q</a><a href="#a-z/r" data-azl="R" aria-label="R, 13 entries">R</a><a href="#a-z/s" data-azl="S" aria-label="S, 49 entries">S</a><a href="#a-z/t" data-azl="T" aria-label="T, 24 entries">T</a><a href="#a-z/u" data-azl="U" aria-label="U, 9 entries">U</a><a href="#a-z/v" data-azl="V" aria-label="V, 6 entries">V</a><a href="#a-z/w" data-azl="W" aria-label="W, 11 entries">W</a><span aria-hidden="true">X</span><a href="#a-z/y" data-azl="Y" aria-label="Y, 2 entries">Y</a><a href="#a-z/z" data-azl="Z" aria-label="Z, 1 entry">Z</a></nav>
           </div>
+          <a class="gl-az-link" href="#a-z" data-az><span class="l">Browse A to Z</span><span class="s">A to Z</span></a>
+          <p class="sr-only" id="gl-keys">Suggestions appear with each letter typed. The up and down arrows move through them, and Enter opens one.</p>
         </div>
-        <article class="gl-pane gl-wait" id="gl-pane" aria-labelledby="gl-hw" tabindex="-1"></article>
+        <section class="gl-browse" id="gl-browse" aria-labelledby="gl-bh">
+          <div class="gl-bhead"><h2 class="gl-bh" id="gl-bh" tabindex="-1">A to Z</h2><p class="gl-bcount" id="gl-count" role="status">487 entries</p></div>
+          <div class="gl-kinds" id="gl-kinds" role="group" aria-label="Kind of entry"><button type="button" data-k="all" aria-pressed="true">All</button><button type="button" data-k="term" aria-pressed="false">Terms</button><button type="button" data-k="firm" aria-pressed="false">Firms</button><button type="button" data-k="chip" aria-pressed="false">AI chips</button><button type="button" data-k="country" aria-pressed="false">Countries</button></div>
+          <nav class="gl-jump gl-wait" id="gl-jump" aria-label="Go to a letter"></nav>
+          <ul class="gl-az gl-wait" id="lk-items"></ul>
+        </section>
+        <article class="gl-pane gl-wait" id="gl-pane" aria-labelledby="gl-hw"></article>
       </div>
       <p class="sr-only" id="gl-say" aria-live="polite"></p>
-      <footer class="site-footer gl-wait"><span class="ft-mark" aria-hidden="true"><svg class="wm-tile" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect width="16" height="16" rx="3.2"/><path transform="translate(3.3324 11.8693) scale(0.009179 -0.009179)" d="M1011 683 Q1011 612 960 564 Q909 515 823 515 Q739 515 696 561 Q653 607 653 680 L653 720 Q653 786 623 823 Q594 861 544 861 Q502 861 468 831 Q433 801 412 741 Q391 682 391 594 Q391 474 431 393 Q470 312 540 270 Q609 229 697 229 Q769 229 825 251 Q880 273 924 326 Q946 348 959 356 Q971 363 983 363 Q1000 363 1007 347 Q1015 330 1015 307 Q1012 216 954 140 Q896 64 796 19 Q695 -26 563 -26 Q417 -26 301 33 Q185 91 118 198 Q51 305 51 450 Q51 602 118 721 Q184 840 305 909 Q425 978 588 978 Q720 978 815 938 Q909 898 960 832 Q1011 765 1011 683 Z"/></svg></span><p class="credits">Made by <b><a href="https://www.linkedin.com/in/yashvardhan07/" target="_blank" rel="noopener">Yashvardhan Sharma</a></b> with Claude. Corrections and questions: <a href="mailto:contact@chipsupplychain.org">contact@chipsupplychain.org</a>.<span class="updated">Updated 28 October 2026</span></p></footer>
+      <footer class="site-footer gl-foot gl-wait"><span class="ft-mark" aria-hidden="true"><svg class="wm-tile" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect width="16" height="16" rx="3.2"/><path transform="translate(3.3324 11.8693) scale(0.009179 -0.009179)" d="M1011 683 Q1011 612 960 564 Q909 515 823 515 Q739 515 696 561 Q653 607 653 680 L653 720 Q653 786 623 823 Q594 861 544 861 Q502 861 468 831 Q433 801 412 741 Q391 682 391 594 Q391 474 431 393 Q470 312 540 270 Q609 229 697 229 Q769 229 825 251 Q880 273 924 326 Q946 348 959 356 Q971 363 983 363 Q1000 363 1007 347 Q1015 330 1015 307 Q1012 216 954 140 Q896 64 796 19 Q695 -26 563 -26 Q417 -26 301 33 Q185 91 118 198 Q51 305 51 450 Q51 602 118 721 Q184 840 305 909 Q425 978 588 978 Q720 978 815 938 Q909 898 960 832 Q1011 765 1011 683 Z"/></svg></span><p class="credits">Made by <b><a href="https://www.linkedin.com/in/yashvardhan07/" target="_blank" rel="noopener">Yashvardhan Sharma</a></b> with Claude. Corrections and questions: <a href="mailto:contact@chipsupplychain.org">contact@chipsupplychain.org</a>.<span class="updated">Updated 28 October 2026</span></p></footer>
     </section>
 
 
@@ -770,11 +788,11 @@ html[data-chain] .view[data-view="stack"] > article.chapter { content-visibility
 </div>
 <!-- the shared code and data (build/build.js writes them to dist/assets/): the specimen kit, the data this page's views draw
      from, the search index, and the app with the cite, figure and rail scripts, each run in this order as the page ends -->
-<script>window.CP_ASSETS = {"search.js":"assets/search.js?v=425ecd1e88","glossary.js":"assets/glossary.js?v=4de83c5ca0"};</script>
+<script>window.CP_ASSETS = {"search.js":"assets/search.js?v=425ecd1e88","glossary.js":"assets/glossary.js?v=3c89739ba2"};</script>
 <script src="assets/kit.js?v=05791ce791"></script>
 <script src="assets/data.js?v=d224301da7"></script>
 <script src="assets/terms.js?v=76ff7c3823"></script>
-<script src="assets/app.js?v=18a09f9af4"></script>
+<script src="assets/app.js?v=7e2f99d7d9"></script>
 <script>
 /* The printed cover's art (print-title.png, about 490 KB) is fetched only for print, never just because a page was read:
    when the reader points at or focuses "Print this page", before that button opens the dialog (it waits for the image,

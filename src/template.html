@@ -279,31 +279,48 @@ html:not(.booted)[data-pick] .view[data-view="suppliers"] > :not(.view-head) { d
 
     <!--home-->
     <section class="view column wide" data-view="glossary">
-      <!-- The Glossary as an index and one entry (Index and entry, the owner's choice of 29 Oct 2026; src/modules/lookup.js).
-           The index: the title and count, the search, the kinds, and every entry A to Z, which glossary.js brings into
-           #lk-items with each entry's addresses (a row's lk- id, a term's link its gl- id). The entry: one at a time, whole.
-           On a phone the index is the page and an entry opens over it. The parts marked gl-wait show once the list is in -->
-      <div class="gl">
-        <div class="gl-index" id="gl-index">
-          <div class="gl-top">
-            <p class="gl-title vt" role="heading" aria-level="1">Glossary</p>
-            <p class="gl-count" id="gl-count" role="status" aria-live="polite">{{GL_ENTRIES}} entries</p>
-          </div>
+      <!-- The Glossary, search first, with what it holds under the field ("Kinds and letters", the owner's choice of 30 Oct 2026;
+           src/modules/lookup.js; the mockup is qa/excellence/glossary-alt/sf-kinds/ in the main checkout). At rest: the name, one
+           field, Random entry, then the kinds with their counts and the letters, each opening Browse A to Z. Typing drops
+           suggestions inside the field's edge. An entry or the index moves the field into a slim bar under the masthead.
+           build/build.js writes the counts and the letters from the data; glossary.js brings the A to Z rows into #lk-items with
+           each entry's addresses (a row's lk- id, a term's link its gl- id). The script below names the state the address asks
+           for before the head paints, so a link to an entry or to the index never shows the first screen first. The parts
+           marked gl-wait show once the rows are in -->
+      <div class="gl" id="gl-view" data-state="home">
+        <script>(function(){var e=document.getElementById('gl-view'),h=String(location.hash||'').replace(/^#/,'');if(e)e.setAttribute('data-state',/^(gl|lk)-/.test(h)?'entry':/^a-z(\/|$)/i.test(h)?'browse':'home');})();</script>
+        <div class="gl-head" id="gl-head">
+          <p class="gl-title vt" id="gl-title" role="heading" aria-level="1"><a href="#/glossary" data-home>Glossary</a></p>
           <div class="sr-only"><p class="dek">Every term, firm, chip and country, with the passages that mention them.</p></div>
-          <div class="gl-bar" id="gl-bar">
-            <label class="gl-field"><span class="sr-only">Search the glossary by name or text</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="gl-search" type="search" placeholder="Search {{GL_ENTRIES}} entries" autocomplete="off" spellcheck="false" aria-describedby="gl-keys" aria-controls="gl-list"><button type="button" class="gl-clear" id="gl-clear" aria-label="Clear the search" hidden>×</button></label>
-            <div class="gl-kinds" id="gl-kinds" role="group" aria-label="Kind of entry"><button type="button" data-k="all" aria-pressed="true">All</button><button type="button" data-k="term" aria-pressed="false">Terms</button><button type="button" data-k="firm" aria-pressed="false">Firms</button><button type="button" data-k="chip" aria-pressed="false">AI chips</button><button type="button" data-k="country" aria-pressed="false">Countries</button></div>
+          <div class="gl-field" id="gl-field">
+            <div class="gl-box" id="gl-box">
+              <div class="gl-frow">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+                <label class="sr-only" for="gl-search">Search the glossary by name or text</label>
+                <input id="gl-search" type="search" placeholder="Search {{GL_ENTRIES}} entries" autocomplete="off" spellcheck="false" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="gl-sugg" aria-describedby="gl-keys">
+                <button type="button" class="gl-clear" id="gl-clear" aria-label="Clear the search" hidden>×</button>
+              </div>
+              <div class="gl-sugg" id="gl-sugg" hidden></div>
+            </div>
           </div>
-          <p class="sr-only" id="gl-keys">The up and down arrows move through the entries.</p>
-          <div class="gl-lists">
-            <nav class="gl-list gl-wait" id="gl-list" aria-label="Entries"><ul class="gl-az" id="lk-items"></ul><div class="gl-res" id="gl-res" hidden></div></nav>
-            <div class="gl-jump gl-wait" id="gl-jump" role="group" aria-label="Go to a letter"></div>
+          <div class="gl-btns" id="gl-btns"><button type="button" class="btn ghost" id="gl-rand">Random entry</button></div>
+          <div class="gl-hold" id="gl-hold">
+            <nav aria-label="Browse by kind"><ul class="gl-kindrow" id="gl-kindrow">{{GL_KINDS}}</ul></nav>
+            <nav class="gl-abc" id="gl-abc" aria-label="Browse A to Z by letter">{{GL_ABC}}</nav>
           </div>
+          <a class="gl-az-link" href="#a-z" data-az><span class="l">Browse A to Z</span><span class="s">A to Z</span></a>
+          <p class="sr-only" id="gl-keys">Suggestions appear with each letter typed. The up and down arrows move through them, and Enter opens one.</p>
         </div>
-        <article class="gl-pane gl-wait" id="gl-pane" aria-labelledby="gl-hw" tabindex="-1"></article>
+        <section class="gl-browse" id="gl-browse" aria-labelledby="gl-bh">
+          <div class="gl-bhead"><h2 class="gl-bh" id="gl-bh" tabindex="-1">A to Z</h2><p class="gl-bcount" id="gl-count" role="status">{{GL_ENTRIES}} entries</p></div>
+          <div class="gl-kinds" id="gl-kinds" role="group" aria-label="Kind of entry"><button type="button" data-k="all" aria-pressed="true">All</button><button type="button" data-k="term" aria-pressed="false">Terms</button><button type="button" data-k="firm" aria-pressed="false">Firms</button><button type="button" data-k="chip" aria-pressed="false">AI chips</button><button type="button" data-k="country" aria-pressed="false">Countries</button></div>
+          <nav class="gl-jump gl-wait" id="gl-jump" aria-label="Go to a letter"></nav>
+          <ul class="gl-az gl-wait" id="lk-items"></ul>
+        </section>
+        <article class="gl-pane gl-wait" id="gl-pane" aria-labelledby="gl-hw"></article>
       </div>
       <p class="sr-only" id="gl-say" aria-live="polite"></p>
-      <footer class="site-footer gl-wait">{{FOOTER}}</footer>
+      <footer class="site-footer gl-foot gl-wait">{{FOOTER}}</footer>
     </section>
     <!--/home-->
 

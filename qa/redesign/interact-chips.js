@@ -218,7 +218,9 @@ const audited = async (t, tag) => { const a = await t.ev(AUDIT); say(!a.overflow
       say(!s.errors.length, `search: console clean ${s.errors.join(' | ')}`);
       await s.close();
       s = await tab(chrome, '#/glossary', { width: 1440 });
-      await s.ev(`document.querySelector('#lk-items li[id$="nvidia-h100"] > a').click()`); await sleep(600); // the H100's row in the Glossary's index opens its entry
+      // the Glossary is search first (Kinds and letters, 30 Oct 2026): "H100" typed, the H100's suggestion opens its entry
+      await s.ev(`(document.getElementById('gl-search').focus(), 1)`); await s.s('Input.insertText', { text: 'H100' }); await sleep(500);
+      await s.click(`[].slice.call(document.querySelectorAll('#gl-sugg .gl-opt')).filter(function(o){return o.querySelector('.gl-opt-n').textContent===CP.Lookup.byId['lk-chip-nvidia-h100'].title;})[0]`); await sleep(600);
       await s.click(`document.querySelector('a[data-chip="nvidia-h100"]')`); await sleep(500);
       r = await s.ev(`({ hash: location.hash, h: (document.querySelector('#aic-card h2')||{}).textContent, top: document.getElementById('aic-card') ? Math.round(document.getElementById('aic-card').getBoundingClientRect().top) : -1 })`);
       say(r.hash === '#/landscape?pick=nvidia-h100' && r.h === 'H100' && r.top > 0 && r.top < 900, `Glossary: "On AI Chips" opens the H100's card, in view (${JSON.stringify(r)})`);
