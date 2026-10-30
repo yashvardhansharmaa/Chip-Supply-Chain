@@ -5104,7 +5104,7 @@ try {
     var R = CP.Router || {}, first = !L.arrived;
     // came: the page's first route is a move from another page of the site; away: a move from another view of this page
     var came = first && /^https?:/.test(document.referrer) && document.referrer.indexOf(location.origin + '/') === 0 && document.referrer !== location.href;
-    var away = !first && R.from && R.from !== 'glossary';
+    var away = !!R.from && R.from !== 'glossary';
     L.arrived = true;
     route({ first: first, away: away, focus: came || !!away || (!first && !!fromHash()) });
     measure(); spy(true);

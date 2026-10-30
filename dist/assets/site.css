@@ -3295,6 +3295,7 @@ html.kb:has(.view[data-view="glossary"]:not([hidden]) .gl:not([data-state="home"
   .gl-pn .gl-pn-n { font-size: 19px; }
   /* a phone: the kinds as a small table, two columns set as one centered block, the figures right-set so each column's words
      share one edge; the letters as a grid of 44 px keys */
+  .gl-btns .btn { min-height: 44px; } /* a phone's targets are 44 px */
   .gl-hold { margin-top: 40px; }
   .gl-kindrow { display: grid; grid-template-columns: repeat(2, max-content); justify-content: center; column-gap: clamp(20px, 9vw, 44px); }
   .gl-kindrow li { justify-content: flex-start; }

@@ -292,7 +292,7 @@ const want = (n) => !ONLY.length || ONLY.includes(String(n));
 
     // 5. a Glossary passage link
     if (want(5)) {
-      // the Glossary is Index and entry since 29 Oct 2026: EUV opens by its address, its passages in the entry pane
+      // the Glossary is search first since 30 Oct 2026 (Kinds and letters): EUV opens by its address, its passages in the entry's column
       const t = await tab(chrome, '/#gl-euv', { wait: 2500 });
       const term = 'EUV';
       const has = await t.until(`document.querySelector('#gl-pane a[data-para]')`, 4000);

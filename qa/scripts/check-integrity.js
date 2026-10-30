@@ -40,6 +40,8 @@ pages.forEach((p) => {
     if (!frag || !target) return;
     if (frag.startsWith('/')) { if (target.path !== '/' || !routeOk(frag)) bad(p, h); return; }
     let id = frag; try { id = decodeURIComponent(frag); } catch (e) { }
+    // the Glossary's A to Z index: an address on the home page with no element behind it (#a-z, #a-z/firms, #a-z/s; src/modules/lookup.js)
+    if (target.path === '/' && /^a-z(\/(terms|firms|ai-chips|countries|0-9|[a-z]))?$/.test(id)) return;
     if (!target.ids.has(id)) bad(p, h);
   });
 });

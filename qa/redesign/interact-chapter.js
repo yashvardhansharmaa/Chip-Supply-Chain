@@ -128,8 +128,12 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8766';
       const onCard = await lp.ev("JSON.stringify(CP.Lookup.domCorpus().filter(function (p) { return p.el.closest('.prose > .plate'); }).map(function (p) { return p.chapter + '|' + p.text; }))");
       await lp.close();
       const t = await open(chrome, BASE + '/#/glossary', { width: 1440, wait: 3000 });
-      // the Glossary's index and entry (29 Oct 2026): EUV's row opens its entry, and Show all lists every place it appears
-      await t.ev(`(function () { document.querySelector('#lk-term-euv > a').click(); var all = document.querySelector('#gl-pane .gl-more button'); if (all) all.click(); return 1; })()`); await sleep(1500);
+      // the Glossary is search first (Kinds and letters, 30 Oct 2026): "euv" typed and Enter open EUV's entry, the top match,
+      // and Show all lists every place it appears
+      await t.ev("(document.getElementById('gl-search').focus(), 1)"); await t.s('Input.insertText', { text: 'euv' }); await sleep(400);
+      await t.s('Input.dispatchKeyEvent', { type: 'keyDown', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13, text: '\r' }); await t.s('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13 }); await sleep(600);
+      check('1440: the Glossary opens EUV from its field', (await t.ev("(document.getElementById('gl-hw') || {}).textContent")) === 'EUV' && (await t.ev('location.hash')) === '#gl-euv');
+      await t.ev(`(function () { var all = document.querySelector('#gl-pane .gl-more button'); if (all) all.click(); return 1; })()`); await sleep(1500);
       const para = await t.ev(`(function () { var card = ${onCard}, as = document.querySelectorAll('#gl-pane .gl-men a[data-para]'); for (var i = 0; i < as.length; i++) { var p = CP.Lookup.paras[+as[i].getAttribute('data-para')]; if (p && card.indexOf(p.chapter + '|' + p.text) >= 0) { as[i].id = 'qa-card-pass'; return p.chapter + '|' + p.text; } } return null; })()`);
       let p = null;
       if (para != null) {
