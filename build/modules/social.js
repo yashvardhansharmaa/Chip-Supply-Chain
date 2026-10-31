@@ -295,8 +295,10 @@ a{color:#7a1f2b}
 // A reader without scripts stays, since this page has no meta refresh (it would send them to a main page that shows nothing
 // without scripts), and finds the deck that ends Start here as review questions, each answer linking to its chapter's
 // readable page. It takes the readable chapter pages' styles.
-function notFoundHTML(css) {
+function notFoundHTML(css, footerKey) {
   const root = (h) => h.replace(/(href|src)="\.\.\//g, '$1="/');
+  // the site's credits line, as the other pages have it, without the "Updated" date or the sources key (30 Oct 2026)
+  const credits = (String(footerKey || '').match(/<p class="credits">[\s\S]*?<\/p>/) || [''])[0].replace(/<span class="updated">[\s\S]*?<\/span>/, '');
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -321,6 +323,7 @@ ${root(MASTHEAD)}
 <p class="ch-lede">There is no page at this address. It may have moved when the chapters were renamed or merged.</p>
 <p><a href="/">Go to the home page</a> or <a href="/supply-chain/">see every chapter</a>.</p>
 </header>
+${credits ? `<footer class="site-footer">${credits}</footer>` : ''}
 </main>
 </body>
 </html>
@@ -564,7 +567,7 @@ module.exports = function (ctx) {
   }
   // a plain 404 page (GitHub Pages serves dist/404.html for an address it does not have): the masthead, one line and a link
   // home, with root-relative paths, since it is served at whatever address was asked for (28 Oct 2026)
-  fs.writeFileSync(path.join(dist, '404.html'), notFoundHTML(css));
+  fs.writeFileSync(path.join(dist, '404.html'), notFoundHTML(css, ctx.footerKey));
   // a chapter merged away keeps its address as a page that forwards to the merged chapter's (never listed in the sitemap)
   for (const [old, e] of Object.entries(RETIRED.chapters || {})) {
     const to = byId.get(e.to);
