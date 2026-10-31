@@ -369,11 +369,11 @@
     /* paper is white whatever the reader was using, and set in static fonts (printFonts, above) */
     document.documentElement.setAttribute('data-theme', 'light');
     printFonts();
-    /* the PDFs credit the author alone (owner, 28 Oct 2026): " with Claude" leaves the printed footer, while the screen's
-       footer keeps build.js's credits as written */
+    /* the PDFs credit the author alone (owner, 28 Oct 2026): " (with Claude)" leaves the printed footer, while the screen's
+       footer keeps build.js's credits as written (in parentheses since 31 Oct 2026) */
     Array.prototype.forEach.call(document.querySelectorAll('.credits'), function (p) {
       var w = document.createTreeWalker(p, NodeFilter.SHOW_TEXT), n;
-      while ((n = w.nextNode())) n.nodeValue = n.nodeValue.replace(' with Claude.', '.');
+      while ((n = w.nextNode())) n.nodeValue = n.nodeValue.replace(/ \(?with Claude\)?\./, '.');
     });
 
     /* explainer animations print as their last frame and the list of steps: drop the videos, load the stills now */
