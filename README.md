@@ -75,4 +75,4 @@ A firm's card gives what it makes, where it is based and its revenue, and for 24
 
 ## Credits
 
-Made by Yashvardhan Sharma (with Claude). Corrections and questions: contact@chipsupplychain.org.
+Made by Yashvardhan Sharma. Corrections and questions: contact@chipsupplychain.org.
