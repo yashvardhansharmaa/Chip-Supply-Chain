@@ -110,7 +110,7 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8766';
       const t = await open(chrome, BASE + '/' + id + '/', { width: 1440, wait: 3000 });
       check(`1440: the drawing is in ${id}'s slot`, await t.ev(`!!document.querySelector('#${id} .ch-spec-draw canvas')`));
       const night = await t.ev(`(function(){var d=document.querySelector('#${id} .ch-spec-draw'),c=document.querySelector('#${id} .ch-spec-cap');return {slot:getComputedStyle(d).backgroundColor,cap:getComputedStyle(c).backgroundColor,capInk:getComputedStyle(c.querySelector('p')).color,dark:CP.Stage.dark,inside:c.getBoundingClientRect().top>=d.getBoundingClientRect().bottom};})()`);
-      check(`1440: ${id} draws on the night ground, its caption under it on the page`, night.slot === 'rgb(18, 18, 17)' && night.dark === true && night.cap === 'rgba(0, 0, 0, 0)' && night.capInk === 'rgb(69, 68, 63)' && night.inside, JSON.stringify(night));
+      check(`1440: ${id} draws on the page's own ground like the stages, its caption on the page (owner, 20 Nov 2026)`, night.slot === 'rgba(0, 0, 0, 0)' && night.dark === false && night.cap === 'rgba(0, 0, 0, 0)' && night.capInk === 'rgb(69, 68, 63)', JSON.stringify(night)); // like a stage's, the caption may rise into the band under the drawing
       t.errors.forEach((e) => check(`1440 ${id}: page error`, false, e));
       await t.close();
     }

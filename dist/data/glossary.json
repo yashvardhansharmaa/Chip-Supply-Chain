@@ -93,8 +93,8 @@
   {
     "term": "compute threshold",
     "aka": "training compute threshold",
-    "plain": "A limit set on the amount of arithmetic used to train an AI model. It counts operations, whichever chips run them. The AI Diffusion rule of January 2025 made one an export control. ECCN 4E091 covers \"'Parameters' for an artificial intelligence model trained utilizing 10^26 or more 'operations'\". The rules require a license to send such parameters to every destination worldwide (15 CFR 742.6(a)(13)). Article 51(2) of the EU AI Act sets Europe's line ten times lower. It presumes a model has high-impact capabilities when the cumulative computation used for training is \"greater than 10^25\" floating point operations.",
-    "why": "Every other control threshold measures a chip, but this one measures the model the chips train. Article 51(3) of the AI Act lets the European Commission change the EU figure by delegated act. Such an act takes effect unless the European Parliament or the Council objects within three months (Article 97(6)). BIS said in May 2025 that it would not enforce the AI Diffusion rule, but 4E091 still stands in the regulations.",
+    "plain": "A limit set on the amount of arithmetic used to train an AI model. It counts operations, whichever chips run them. The AI Diffusion rule of January 2025 made one an export control. Its ECCN 4E091 covered \"'Parameters' for an artificial intelligence model trained utilizing 10^26 or more 'operations'\". The rule required a license to send such parameters to every destination worldwide. Article 51(2) of the EU AI Act sets Europe's line ten times lower. It presumes a model has high-impact capabilities when the cumulative computation used for training is \"greater than 10^25\" floating point operations.",
+    "why": "Every other control threshold measures a chip, but this one measures the model the chips train. Article 51(3) of the AI Act lets the European Commission change the EU figure by delegated act. Such an act takes effect unless the European Parliament or the Council objects within three months (Article 97(6)). BIS said in May 2025 that it would not enforce the AI Diffusion rule, and it removed 4E091 from the regulations on 19 November 2026 (91 FR 74970).",
     "chapter": "geopolitics"
   },
   {
@@ -108,7 +108,7 @@
     "term": "Country Groups",
     "aka": "Country Group, Country Group D:5, D:5, A:5, D:1, D:3, D:4, arms-embargoed countries",
     "plain": "The groups that US export rules sort the world's countries into, published as supplement no. 1 to 15 CFR part 740. A:5 and A:6 list close partners. D:1, D:4 and D:5 are the national security, missile technology and arms-embargoed groups. E:1 and E:2 are the most restricted. A country can be in several groups at once, and the license requirement usually depends on which.",
-    "why": "US license rules for AI chips are written in terms of these groups. Chips in the 3A090.b band, the band below the top one, need a license for D:1, D:4 and D:5 destinations not also in A:5 or A:6 (15 CFR 742.6(a)(6)(iii)(B)). The UAE moved from D:3 and D:4 into A:5 in July 2026. But the rule names the UAE, so these chips still need a license there, except for approved Emirati consignees (15 CFR 742.6(a)(6)(iii)(B)).",
+    "why": "US license rules for AI chips are written in terms of these groups. Advanced AI chips need a license for D:1, D:4 and D:5 destinations not also in A:5 or A:6 (15 CFR 742.6(a)(6)(iii)(A)(2)). The UAE moved from D:3 and D:4 into A:5 in July 2026. But the rule names the UAE, so these chips still need a license there, except for approved Emirati entities (15 CFR 742.6(a)(6)(iii)(A)(2)). Since 19 November 2026 the rule also names Indonesia, Malaysia, Singapore, Brazil and Thailand, whatever group they are in (15 CFR 742.6(a)(6)(iii)(A)(1)).",
     "chapter": "geopolitics"
   },
   {
@@ -213,14 +213,14 @@
     "term": "end-use and end-user controls",
     "aka": "end user, end users, end-user, end use, military end user",
     "plain": "Export rules that depend on who the buyer is and what they will do with the item, whatever the item is. The same tool can ship freely to one customer and need a license that will be refused for another.",
-    "why": "A company can lose access to US-controlled items because of who owns it or what its site produces. In September 2025 US rules were extended to firms at least 50 percent owned by listed entities, though the extension is suspended until 9 November 2026.",
+    "why": "A company can lose access to US-controlled items because of who owns it or what its site produces. In September 2025 US rules were extended to firms at least 50 percent owned by listed entities, though that extension was suspended in November 2025 and the suspension now runs to 10 January 2027.",
     "chapter": "geopolitics"
   },
   {
     "term": "Entity List",
     "aka": "entity-list, Entity-Listed, Entity List additions, listed entity, listed entities, listed firm, listed firms",
     "plain": "A published list of foreign companies, institutes and individuals. Anyone anywhere, American or foreign, needs a license to send them an item subject to the EAR. Each entry states its own license review policy. Most carry a presumption of denial, meaning the license will normally be refused. SMIC's entry, as amended in December 2024, is a presumption of denial for all items. The exception is tools designed for 200 mm wafer production and bound for a 200 mm plant, which are reviewed case by case. The list is supplement no. 4 to 15 CFR part 744, and the license requirement is in 15 CFR 744.11.",
-    "why": "It names an organization, so it is one of the simplest tools the US government has. In September 2025 the US extended each listing to companies at least 50 percent owned by listed firms, but that extension is suspended until 9 November 2026 (90 FR 50857).",
+    "why": "It names an organization, so it is one of the simplest tools the US government has. In September 2025 the US extended each listing to companies at least 50 percent owned by listed firms, but that extension was suspended in November 2025 (90 FR 50857). On 9 November 2026 BIS extended the suspension to 10 January 2027.",
     "chapter": "geopolitics"
   },
   {
@@ -373,8 +373,8 @@
   {
     "term": "license exception",
     "aka": "license exception",
-    "plain": "A written carve-out in export rules that lets a shipment go without an individual license, if it meets stated conditions. The ones that matter for AI chips and chipmaking tools are NAC and ACA (15 CFR 740.8), HBM (740.25), AIA and LPP (740.27 and 740.29), IEC (740.24) and RPL (740.10). AIA and LPP let the top band of accelerators ship to allies, and elsewhere in small volumes. IEC covers countries that adopt matching controls, and RPL covers servicing and spare parts.",
-    "why": "Exceptions let the US government adjust its controls without rewriting them and ease the rules for allies. License Exception IEC, added in September 2024, covers exports to and by countries that have put equivalent controls in place (89 FR 72926).",
+    "plain": "A written carve-out in export rules that lets a shipment go without an individual license, if it meets stated conditions. The ones that matter for AI chips and chipmaking tools are NAC and ACA (15 CFR 740.8), HBM (740.25), ACM (740.28), IEC (740.24) and RPL (740.10). ACM covers controlled AI chips going to firms that develop, make or store them. IEC covers countries that adopt matching controls, and RPL covers servicing and spare parts.",
+    "why": "Exceptions let the US government adjust its controls without rewriting them and ease the rules for allies. License Exception IEC, added in September 2024, covers exports to and by countries that have put equivalent controls in place (89 FR 72926). BIS can also remove an exception. On 19 November 2026 it removed AIA and LPP, the two that the AI Diffusion rule had created for the top band of accelerators (91 FR 74970).",
     "chapter": "geopolitics"
   },
   {
@@ -394,8 +394,8 @@
   {
     "term": "License Exception LPP",
     "aka": "LPP, Low Processing Performance",
-    "plain": "An export rule that lets a buyer almost anywhere receive a capped amount of top-band AI chips each year without a license. The cap is 26,900,000 TPP, the export rules' measure of computing power, per ultimate consignee per calendar year. Macau, Country Group D:5 and firms headquartered in either are excluded, and it does not cover transfers within a country. The AI Diffusion rule created it in January 2025, at 15 CFR 740.29.",
-    "why": "It lets buyers outside the nineteen destinations in supplement no. 5 to part 740 take top AI chips in small amounts with no license application. BIS said in May 2025 that it would not enforce the AI Diffusion rule, but it withdrew none of the text. So LPP still stands in the regulations beside the rule's other exceptions, AIA and ACM, and the nineteen-destination list.",
+    "plain": "An export rule, in the regulations from January 2025 to 19 November 2026, that let a buyer almost anywhere receive a capped amount of top-band AI chips each year without a license. The cap was 26,900,000 TPP, the export rules' measure of computing power, per ultimate consignee per calendar year. Macau, Country Group D:5 and firms headquartered in either were excluded, and it did not cover transfers within a country. The AI Diffusion rule created it at 15 CFR 740.29.",
+    "why": "It let buyers outside the nineteen destinations in supplement no. 5 to part 740 take top AI chips in small amounts with no license application. BIS said in May 2025 that it would not enforce the AI Diffusion rule. On 19 November 2026 it removed LPP, License Exception AIA and the nineteen-destination list from the regulations, and kept License Exception ACM (91 FR 74970).",
     "chapter": "geopolitics"
   },
   {
@@ -624,9 +624,9 @@
   },
   {
     "term": "TPP",
-    "aka": "total processing performance",
+    "aka": "total processing performance, aggregate TPP",
     "plain": "Total processing performance, the measure US export rules use for a chip's computing power. It starts from the number of multiply-accumulate operations, a multiply followed by an add, that the chip does each second. That number is doubled, multiplied by the number of bits in each operation, and added up across every processing unit on the chip. The definition is in ECCN 3A090, in supplement no. 1 to 15 CFR part 774.",
-    "why": "The export rules for chip sales to China draw their lines in TPP. The top band, 3A090.a, starts at 4,800 TPP, or at 1,600 TPP with a performance density of 5.92. Since 15 January 2026, export applications for chips below 21,000 TPP and 6,500 GB/s of total DRAM bandwidth, such as the H200, are reviewed case by case for end users in China and Macau (91 FR 1684).",
+    "why": "The export rules for chip sales to China draw their lines in TPP. The top band, 3A090.a, starts at 4,800 TPP, or at 1,600 TPP with a performance density of 5.92. Since 15 January 2026, export applications for chips below 21,000 TPP and 6,500 GB/s of total DRAM bandwidth, such as the H200, are reviewed case by case for end users in China and Macau (91 FR 1684). Since 19 November 2026 a control on data centers counts aggregate TPP, the sum of the TPP of all the controlled chips in a group, and applies above 12,000,000 (91 FR 74970).",
     "chapter": "geopolitics"
   },
   {
@@ -1249,7 +1249,7 @@
     "term": "model weights",
     "aka": "weights, frontier model weights, trained weights",
     "plain": "Model weights are the billions of numbers that make up a trained AI model. They are the file that runs on the chips, so copying the weights copies the model.",
-    "why": "A chip reads the model's weights from memory for each word it writes, so bigger models need more HBM. The AI Diffusion rule also made frontier model weights a controlled item, ECCN 4E091.",
+    "why": "A chip reads the model's weights from memory for each word it writes, so bigger models need more HBM. The AI Diffusion rule also made frontier model weights a controlled item, ECCN 4E091. BIS removed that control on 19 November 2026 (91 FR 74970).",
     "chapter": "geopolitics"
   },
   {
@@ -1262,7 +1262,7 @@
   {
     "term": "3A090",
     "aka": "3A090.a, 3A090.b, 3A090.c, 4A090, 4A090.a, ECCN 3A090, ECCN 4A090",
-    "plain": "3A090 is the entry in the US export control list that covers advanced AI chips, defined by their total processing performance and performance density. Its part c, added in December 2024, covers high bandwidth memory. 4A090 covers the computers built from the chips. A chip that falls under 3A090.a needs a license for China. The AI Diffusion rule of January 2025 extended that requirement to every destination. But BIS says it enforces the requirement only for Country Groups D:1, D:4 and D:5 and for firms headquartered in D:5 or Macau.",
+    "plain": "3A090 is the entry in the US export control list that covers advanced AI chips, defined by their total processing performance and performance density. Its part c, added in December 2024, covers high bandwidth memory. 4A090 covers the computers built from the chips. A chip that falls under 3A090.a needs a license for China. The AI Diffusion rule of January 2025 extended that requirement to every destination, and BIS removed the worldwide requirement on 19 November 2026 (91 FR 74970). The chips now need a license for destinations in Country Groups D:1, D:4 and D:5 that are not also in A:5 or A:6, for the United Arab Emirates, and for Indonesia, Malaysia, Singapore, Brazil and Thailand (91 FR 74970). They also need one anywhere when they are for firms headquartered in D:5 or Macau (91 FR 74970).",
     "why": "It decides which AI chips need a license for China, so designers now build chips around its thresholds.",
     "chapter": "geopolitics"
   },
@@ -1277,7 +1277,7 @@
     "term": "Affiliates Rule",
     "aka": "affiliates rule, 50 percent rule, affiliates of listed entities",
     "plain": "The Affiliates Rule extended the Entity List to any company anywhere in the world that is at least half owned by a listed firm. The aim was to stop a listed company from buying through a subsidiary. It took effect on 29 September 2025 and was suspended for a year six weeks later.",
-    "why": "It is suspended until 9 November 2026. If it returns, subsidiaries at least half owned by listed firms will again need licenses.",
+    "why": "On 9 November 2026 BIS extended the suspension to 10 January 2027. If the rule returns, subsidiaries at least half owned by listed firms will again need licenses.",
     "chapter": "geopolitics"
   },
   {
@@ -1311,22 +1311,22 @@
   {
     "term": "License Exception AIA",
     "aka": "AIA, Artificial Intelligence Authorization",
-    "plain": "License Exception AIA, for Artificial Intelligence Authorization, lets the top band of AI chips ship without a license to nineteen destinations. They are listed in supplement no. 5 to part 740, and the United States is among them. The AI Diffusion rule created it in January 2025 as the exception inside a worldwide license requirement.",
-    "why": "BIS said in May 2025 that it would not enforce the AI Diffusion rule. But the rule was never repealed, so AIA still stands in the regulations. BIS says it enforces the worldwide requirement only for Country Groups D:1, D:4 and D:5 and for firms headquartered in D:5 or Macau.",
+    "plain": "License Exception AIA, for Artificial Intelligence Authorization, let the top band of AI chips ship without a license to nineteen destinations. They were listed in supplement no. 5 to part 740, and the United States was among them. The AI Diffusion rule created it in January 2025 as the exception inside a worldwide license requirement.",
+    "why": "BIS said in May 2025 that it would not enforce the AI Diffusion rule. On 19 November 2026 it removed AIA, supplement no. 5 and the worldwide license requirement from the regulations (91 FR 74970).",
     "chapter": "geopolitics"
   },
   {
     "term": "License Exception ACM",
     "aka": "ACM, Advanced Compute Manufacturing",
     "plain": "License Exception ACM, for Advanced Compute Manufacturing, lets controlled AI chips and related items go without a license to private-sector firms that develop, make or store them. The items must be bound for customers outside Macau and Country Group D:5. It was created alongside License Exceptions AIA and LPP.",
-    "why": "It keeps the AI Diffusion rule's worldwide license requirement from catching chips that are only passing through factories and warehouses on their way to an eligible customer.",
+    "why": "It keeps license requirements from catching chips that are only passing through factories and warehouses on their way to an eligible customer. BIS kept it when it removed License Exceptions AIA and LPP on 19 November 2026 (91 FR 74970).",
     "chapter": "geopolitics"
   },
   {
     "term": "AI Diffusion rule",
     "aka": "AI Diffusion, diffusion rule, Framework for Artificial Intelligence Diffusion, AI Diffusion framework",
     "plain": "The AI Diffusion rule, published on 15 January 2025, required a license to ship the most capable AI chips anywhere in the world. Its exceptions allowed unlimited shipments to nineteen destinations, capped volumes elsewhere and none to China. It also controlled the weights of frontier AI models.",
-    "why": "Four months later BIS said it would not enforce the rule. But it withdrew none of the text, so the license requirement and exceptions still stand in the regulations. BIS says it enforces the requirement only for Country Groups D:1, D:4 and D:5 and for firms headquartered in D:5 or Macau.",
+    "why": "Four months later BIS said it would not enforce the rule. The text stayed in the regulations until 19 November 2026, when BIS removed the worldwide license requirement, License Exceptions AIA and LPP, the country tiers and the control on model weights (91 FR 74970). The rule that removed them says the AI Diffusion rule was never enforced (91 FR 74970).",
     "chapter": "geopolitics"
   },
   {
@@ -1339,8 +1339,8 @@
   {
     "term": "15 CFR",
     "aka": "CFR, Code of Federal Regulations, 15 CFR 742.6, part 742, part 740, part 734, supplement no. 5 to part 740, supplement no. 5",
-    "plain": "The Code of Federal Regulations is the standing text of US rules, sorted into titles and parts. Title 15 holds the Export Administration Regulations. Part 734 says what is subject to them. Part 740 lists the license exceptions, and its supplement no. 5 lists the nineteen destinations eligible for License Exception AIA. Part 742 sets the licensing policy for each control.",
-    "why": "A rule announced in the Federal Register stays in the CFR until it is removed, so the unenforced AI Diffusion rule still stands in the regulations.",
+    "plain": "The Code of Federal Regulations is the standing text of US rules, sorted into titles and parts. Title 15 holds the Export Administration Regulations. Part 734 says what is subject to them. Part 740 lists the license exceptions. Until 19 November 2026 its supplement no. 5 listed the nineteen destinations eligible for License Exception AIA. Part 742 sets the licensing policy for each control.",
+    "why": "A rule announced in the Federal Register stays in the CFR until it is removed. BIS stopped enforcing the AI Diffusion rule in May 2025, and its text stayed in the CFR until a rule of 19 November 2026 removed it (91 FR 74970).",
     "chapter": "geopolitics"
   },
   {
@@ -1424,7 +1424,7 @@
     "term": "rare earths",
     "aka": "rare earth, rare-earth, rare earth elements, medium and heavy rare earths",
     "plain": "The rare earths are a group of metals, including samarium and yttrium, that go into the strong magnets in motors, disk drives and wind turbines, and into some lasers and glass.",
-    "why": "Beijing put seven of them under export license in April 2025. In October 2025 it claimed jurisdiction over foreign goods containing Chinese rare earths worth 0.1 percent or more of their value. That rule is suspended until 10 November 2026.",
+    "why": "Beijing put seven of them under export license in April 2025. In October 2025 it claimed jurisdiction over foreign goods containing Chinese rare earths worth 0.1 percent or more of their value. That rule was suspended in November 2025, and on 9 November 2026 the suspension was extended to 10 January 2027.",
     "chapter": "geopolitics"
   },
   {

@@ -590,7 +590,7 @@
     "date": "2025-01-16",
     "actor": "US (BIS)",
     "title": "Foundry due-diligence rule and Approved IC Designer status",
-    "summary": "BIS required foundries and packaging houses to apply a due-diligence test before making advanced logic dies, the bare chips cut from a wafer. The rule presumes that such a die is a controlled 3A090.a chip. The presumption falls away if the designer is an approved or authorized IC designer, or if an approved outsourced assembly and test firm (OSAT) attests to the package's transistor count. Until 13 April 2026, designers headquartered in Taiwan or Country Groups A:1 and A:5 counted as authorized without applying. In April 2026 BIS extended that date to 31 December 2026.",
+    "summary": "BIS required foundries and packaging houses to apply a due-diligence test before making advanced logic dies, the bare chips cut from a wafer. The rule presumes that such a die is a controlled 3A090.a chip. The presumption falls away if the designer is an approved or authorized IC designer, or if an approved outsourced assembly and test firm (OSAT) attests to the package's transistor count. Until 13 April 2026, designers headquartered in Taiwan or Country Groups A:1 and A:5 counted as authorized without applying. In April 2026 BIS extended that date to 31 December 2026. Since 19 November 2026 the transistor-count route is closed when the designer is located in, or has an ultimate parent headquartered in, Country Groups D:1, D:4 or D:5 or Indonesia, Malaysia, Singapore, Brazil or Thailand (91 FR 74970).",
     "category": "US export control",
     "instrument": "rule",
     "frCitation": "90 FR 5298",
@@ -702,12 +702,12 @@
     "date": "2025-05-13",
     "actor": "US (BIS)",
     "title": "BIS stops enforcing the AI Diffusion Rule",
-    "summary": "Two days before the rule's compliance date, Commerce announced it would not enforce the AI Diffusion Rule and would issue a replacement rule. Nothing was withdrawn from the regulations. The Code of Federal Regulations still contains License Exceptions AIA, ACM and LPP at 15 CFR 740.27, 740.28 and 740.29, and the list of nineteen destinations in supplement no. 5 to part 740. It also still contains the worldwide license requirement at 742.6(a)(6)(iii)(A) and the 790 million TPP per-country allocation at 742.6(b)(10)(iii)(B). On 13 May 2025 BIS also issued three pieces of guidance. The first said that using Huawei Ascend 910B, 910C and 910D chips risks violating the EAR, because they were likely made with controlled US technology. The second warned that letting US AI chips train or run Chinese AI models could have consequences. The third set out how exporters should guard against diversion. The Ascend guidance originally said the chips were restricted \"anywhere in the world\", wording BIS softened after Chinese protests.",
+    "summary": "Two days before the rule's compliance date, Commerce announced it would not enforce the AI Diffusion Rule and would issue a replacement rule. Nothing was withdrawn from the regulations at the time. Until 19 November 2026 the Code of Federal Regulations still contained License Exceptions AIA and LPP at 15 CFR 740.27 and 740.29, and the list of nineteen destinations in supplement no. 5 to part 740. It also still contained the worldwide license requirement at 742.6(a)(6)(iii)(A) and the 790 million TPP per-country allocation at 742.6(b)(10)(iii)(B). A rule published on 19 November 2026 removed them and kept License Exception ACM at 740.28 (91 FR 74970). On 13 May 2025 BIS also issued three pieces of guidance. The first said that using Huawei Ascend 910B, 910C and 910D chips risks violating the EAR, because they were likely made with controlled US technology. The second warned that letting US AI chips train or run Chinese AI models could have consequences. The third set out how exporters should guard against diversion. The Ascend guidance originally said the chips were restricted \"anywhere in the world\", wording BIS softened after Chinese protests.",
     "category": "US export control",
     "instrument": "licence-policy",
     "cfr": "15 CFR 740.27, 740.28, 740.29; 742.6(a)(6)(iii)(A)",
     "source": "https://www.bis.gov/press-release/department-commerce-rescinds-biden-era-artificial-intelligence-diffusion-rule-strengthens-chip-related",
-    "gist": "The US stopped enforcing the rule and struck deals country by country, but every line of it stayed in the regulations.",
+    "gist": "The US stopped enforcing the rule and struck deals country by country, but every line of it stayed in the regulations until November 2026.",
     "id": "2025-05-13-diffusion-rescinded",
     "flows": [
       "diffusion"
@@ -907,12 +907,12 @@
     "date": "2025-11-07",
     "actor": "China (MOFCOM and Customs)",
     "title": "China suspends its October 2025 export controls for a year",
-    "summary": "MOFCOM and the General Administration of Customs suspended six export control announcements issued in October 2025, from 7 November 2025 until 10 November 2026. They are MOFCOM and Customs Announcements 2025 Nos. 55, 56, 57 and 58 and MOFCOM Announcements 2025 Nos. 61 and 62. No. 61 is the rule that claimed jurisdiction over foreign goods with 0.1 percent or more Chinese rare earths by value.",
+    "summary": "MOFCOM and the General Administration of Customs suspended six export control announcements issued in October 2025, from 7 November 2025, at first until 10 November 2026. They are MOFCOM and Customs Announcements 2025 Nos. 55, 56, 57 and 58 and MOFCOM Announcements 2025 Nos. 61 and 62. No. 61 is the rule that claimed jurisdiction over foreign goods with 0.1 percent or more Chinese rare earths by value. On 9 November 2026 the suspension was extended to 10 January 2027.",
     "category": "China",
     "instrument": "rule",
     "frCitation": "MOFCOM and GAC Announcement 2025 No. 70",
     "source": "https://www.mofcom.gov.cn/zwgk/zcfb/art/2025/art_b1ec77dd3f0d4762952904df7cdaadec.html",
-    "gist": "China paused its widest rare earth controls, including the 0.1 percent rule, until 10 November 2026.",
+    "gist": "China paused its widest rare earth controls, including the 0.1 percent rule, for a year.",
     "id": "2025-11-07-october-controls-suspended",
     "flows": [
       "minerals",
@@ -938,7 +938,7 @@
     "date": "2025-11-10",
     "actor": "US (BIS)",
     "title": "US suspends the affiliates rule for one year under the truce",
-    "summary": "After the Trump-Xi meeting in Busan on 30 October 2025, BIS suspended the affiliates rule from 10 November 2025 until 9 November 2026. The same rule brings the affiliates rule back on 10 November 2026 unless the suspension is extended. China had suspended its own October 2025 export controls on 7 November and its ban on mineral exports to the United States on 9 November. China also agreed to issue general licenses, which cover repeated exports without a separate approval for each, for US end users and their suppliers.",
+    "summary": "After the Trump-Xi meeting in Busan on 30 October 2025, BIS suspended the affiliates rule from 10 November 2025, at first until 9 November 2026. On 9 November 2026 BIS extended the suspension to 10 January 2027. China had suspended its own October 2025 export controls on 7 November and its ban on mineral exports to the United States on 9 November. China also agreed to issue general licenses, which cover repeated exports without a separate approval for each, for US end users and their suppliers.",
     "category": "US export control",
     "instrument": "rule",
     "frCitation": "90 FR 50857",
@@ -1131,6 +1131,56 @@
     "id": "2026-09-07-dichlorosilane-duties",
     "flows": [
       "china-market"
+    ]
+  },
+  {
+    "date": "2026-11-09",
+    "actor": "China (MOFCOM and Customs)",
+    "title": "China extends the suspension of its October 2025 export controls to 10 January 2027",
+    "summary": "MOFCOM and the General Administration of Customs continued the suspension of the six export control announcements issued in October 2025, from 11 November 2026 to 10 January 2027. They are MOFCOM and Customs Announcements 2025 Nos. 55, 56, 57 and 58 and MOFCOM Announcements 2025 Nos. 61 and 62. No. 61 is the rule that claimed jurisdiction over foreign goods with 0.1 percent or more Chinese rare earths by value.",
+    "category": "China",
+    "instrument": "rule",
+    "frCitation": "MOFCOM and GAC Announcement 2026 No. 58",
+    "source": "http://dltb.mofcom.gov.cn/swyw/art/2026/art_bab1f1be0cee4e4ab0b496f02e7cff0d.html",
+    "gist": "China's widest rare earth controls, including the 0.1 percent rule, stay paused until 10 January 2027.",
+    "id": "2026-11-09-october-controls-suspension-extended",
+    "flows": [
+      "minerals",
+      "minerals-world"
+    ]
+  },
+  {
+    "date": "2026-11-09",
+    "actor": "US (BIS)",
+    "title": "US extends the suspension of the affiliates rule to 10 January 2027",
+    "summary": "BIS published a final rule extending the suspension of the affiliates rule, which had been due to end on 9 November 2026. The rule says the amendments \"are further stayed until January 10, 2027.\"",
+    "category": "US export control",
+    "instrument": "rule",
+    "frCitation": "91 FR 70789",
+    "cfr": "15 CFR 744.11(a)(1)",
+    "source": "https://www.federalregister.gov/documents/2026/11/09/2026-22793/extension-of-the-suspension-of-expansion-of-end-user-controls-for-affiliates-of-certain-listed",
+    "gist": "The affiliates rule stays suspended until 10 January 2027.",
+    "id": "2026-11-09-affiliates-suspension-extended",
+    "flows": [
+      "entity"
+    ]
+  },
+  {
+    "date": "2026-11-19",
+    "actor": "US (BIS)",
+    "title": "Remote access rule covers data centers serving D:5 or Macau firms and adds five licensed countries",
+    "summary": "BIS published an interim final rule, effective the same day, that makes four changes. First, it requires a license to export, reexport or transfer advanced AI chips, and the computers that contain them, when the shipper knows they are bound for a data center in any country that gives certain companies access to more than 12,000,000 aggregate TPP. Those companies are the ones headquartered in Macau or in Country Group D:5, the US list of arms-embargoed countries that includes China, or with an ultimate parent headquartered there. Aggregate TPP is the sum of the total processing performance (TPP), a measure of computing power, of all the controlled chips in a group. The count covers one data center or several linked by networking so that they work as a unified whole. Applications are reviewed case by case. The control does not apply when the access is provided only for a commercial recommender system, a tool that ranks, filters or suggests products, services or content, and the provider submits the required information to BIS. A data center that was providing a significant volume of computing power to such companies before the rule was published must obtain a license within 90 days of the effective date to continue. Second, the rule requires a license for the same items to or within Indonesia, Malaysia, Singapore, Brazil and Thailand, with applications reviewed case by case. No license is needed there when the ultimate consignee or end user is headquartered in the United States, or its ultimate parent is, and the exporter files monthly reports with BIS. Third, the rule narrows the foundry due-diligence rule of January 2025. A foundry or packaging firm can no longer use a transistor-count attestation to show that a chip is outside ECCN 3A090.a when the chip's designer is located in, or has an ultimate parent headquartered in, Country Groups D:1, D:4 or D:5 or one of those five countries. Fourth, the rule removes the AI Diffusion Rule from the regulations. It removes the worldwide license requirement, License Exceptions AIA and LPP, supplement no. 5 to part 740, the data center validated end-user authorization and the control on model weights under ECCN 4E091. License Exception ACM stays. A license is still required for destinations in Country Groups D:1, D:4 and D:5 that are not also in A:5 or A:6, and for the United Arab Emirates. Shipments that were on a carrier on 19 November 2026 may proceed under the earlier terms if completed by 21 December 2026. Comments on the rule are due by 19 January 2027.",
+    "category": "US export control",
+    "instrument": "rule",
+    "frCitation": "91 FR 74970",
+    "cfr": "15 CFR 742.6(a)(6)(iii)(A); 743.10; 744.23(a)(3); 744.24; 772.1",
+    "source": "https://www.govinfo.gov/content/pkg/FR-2026-11-19/pdf/2026-23529.pdf",
+    "gist": "Advanced AI chips now need a US license for five more countries, and for data centers that give firms from Macau or D:5 countries such as China more than 12,000,000 aggregate TPP.",
+    "id": "2026-11-19-remote-access-rule",
+    "flows": [
+      "ai-chips",
+      "ai-chips-top",
+      "diffusion"
     ]
   }
 ]

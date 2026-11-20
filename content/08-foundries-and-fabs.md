@@ -223,7 +223,7 @@ Chip production in Taiwan faces three risks:
 
 - **Seismic.** Taiwan sits on an active plate boundary, and after an earthquake in January 2025 TSMC had to scrap some wafers in process ([source](https://pr.tsmc.com/english/news/3204)).
 - **Power.** TSMC says power outages, dips or surges caused by problems at its electricity supplier have at times interrupted its operations ([source](https://www.sec.gov/Archives/edgar/data/1046179/000162828026025362/tsm-20251231.htm)).
-- **Political.** In December 2025 SemiAnalysis put Taiwan's share of the world's advanced-node capacity at over 90 percent, though it did not say which node sizes count as advanced ([source](https://newsletter.semianalysis.com/p/tsmc-overseas-fabs-a-success)). So a blockade or conflict would cut most of that output off from the world market at once. See [Who Controls the Chain](#geopolitics).
+- **Political.** In December 2025 SemiAnalysis put Taiwan's share of the world's advanced-node capacity at over 90 percent, though it did not say which node sizes count as advanced ([source](https://newsletter.semianalysis.com/p/tsmc-overseas-fabs-a-success)). See [Who Controls the Chain](#geopolitics).
 
 Building capacity outside Taiwan is slow, and TSMC has yet to build a gigafab anywhere else ([source](https://www.tsmc.com/english/dedicatedFoundry/manufacturing/fab_capacity)). SemiAnalysis wrote in December 2025 that a foundry needs highly skilled engineers to get the most working chips from each wafer ([source](https://newsletter.semianalysis.com/p/tsmc-overseas-fabs-a-success)). It judged that finding enough workers remained a major challenge for TSMC in Arizona ([source](https://newsletter.semianalysis.com/p/tsmc-overseas-fabs-a-success)).
 

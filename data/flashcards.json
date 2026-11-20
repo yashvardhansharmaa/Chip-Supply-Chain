@@ -373,7 +373,7 @@
   "cards": [
    {
     "q": "What is an AI rack?",
-    "a": "A cabinet of 72 AI chips wired together to run as one computer.",
+    "a": "A cabinet of AI chips wired together to run as one computer. Nvidia's NVL72 racks hold 72.",
     "section": "How it works"
    },
    {
@@ -408,7 +408,7 @@
    },
    {
     "q": "Why are AI racks cooled with liquid?",
-    "a": "One rack can draw 142 kilowatts, and every watt comes back out as heat.",
+    "a": "One Nvidia GB300 NVL72 rack can draw up to 142 kilowatts, and every watt comes back out as heat.",
     "section": "How it works"
    },
    {
@@ -422,7 +422,7 @@
    }
   ],
   "takeaways": [
-   "One AI rack can draw 142 kilowatts, too much heat for air, so racks are cooled with liquid.",
+   "One Nvidia GB300 NVL72 rack can draw up to 142 kilowatts, too much heat for air, so racks are cooled with liquid.",
    "The newest AI sites are planned in gigawatts, and each gigawatt is the output of a large power station.",
    "Power equipment is one of the slow parts of building a data center. In 2024 lead times of 36 months were commonly quoted for a large transformer.",
    "The United States used 45 percent of the world's data center electricity in 2024 and China 25 percent, by the International Energy Agency's estimate."

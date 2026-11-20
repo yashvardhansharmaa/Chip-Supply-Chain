@@ -1,8 +1,8 @@
 {
   "/": {
     "published": "2026-10-01",
-    "modified": "2026-11-11",
-    "content": "17b43fea8aac15a6"
+    "modified": "2026-11-20",
+    "content": "fc4d22820a6ce526"
   },
   "/advanced-packaging/": {
     "published": "2026-09-09",
@@ -21,18 +21,18 @@
   },
   "/component-costs/": {
     "published": "2026-09-09",
-    "modified": "2026-10-29",
-    "content": "23a6510de0e0dd8a"
+    "modified": "2026-11-20",
+    "content": "7a1e265363e88365"
   },
   "/data-centers-and-power/": {
     "published": "2026-09-09",
-    "modified": "2026-10-29",
-    "content": "71f4b8b78333feda"
+    "modified": "2026-11-20",
+    "content": "f2f3b1e4fc23106b"
   },
   "/deposition-and-etch/": {
     "published": "2026-09-09",
-    "modified": "2026-10-29",
-    "content": "cc17880cee520a42"
+    "modified": "2026-11-20",
+    "content": "641f0d3ba3af331b"
   },
   "/design-and-eda/": {
     "published": "2026-09-09",
@@ -41,28 +41,28 @@
   },
   "/export-controls/": {
     "published": "2026-10-21",
-    "modified": "2026-11-11",
-    "content": "6e10f62e36d85f7e"
+    "modified": "2026-11-20",
+    "content": "706348e49c3fab96"
   },
   "/foundries-and-fabs/": {
     "published": "2026-09-09",
-    "modified": "2026-10-29",
-    "content": "3af46af77eba0e3f"
+    "modified": "2026-11-20",
+    "content": "7f61e0efd73b37f5"
   },
   "/geopolitics/": {
     "published": "2026-09-09",
-    "modified": "2026-10-29",
-    "content": "7952ab30a6099000"
+    "modified": "2026-11-20",
+    "content": "d68744f03beb2c63"
   },
   "/glossary/": {
     "published": "2026-10-21",
-    "modified": "2026-11-11",
-    "content": "7d3e881941e6bc71"
+    "modified": "2026-11-20",
+    "content": "5cd0c51835d3e06e"
   },
   "/lithography/": {
     "published": "2026-09-09",
-    "modified": "2026-10-29",
-    "content": "c99c3388f9ef9d4a"
+    "modified": "2026-11-20",
+    "content": "ddbe9e841a832bd1"
   },
   "/memory-and-hbm/": {
     "published": "2026-09-09",
@@ -76,93 +76,93 @@
   },
   "/pdf/advanced-packaging.pdf": {
     "published": "2026-10-20",
-    "modified": "2026-10-31",
-    "content": "edac3fc05559d29a"
+    "modified": "2026-11-20",
+    "content": "28490c907fd8e451"
   },
   "/pdf/chemicals-gases-and-photoresist.pdf": {
     "published": "2026-10-20",
-    "modified": "2026-10-31",
-    "content": "196dbef6f74e9734"
+    "modified": "2026-11-20",
+    "content": "6eaa48329a267ad4"
   },
   "/pdf/component-costs.pdf": {
     "published": "2026-10-20",
-    "modified": "2026-10-31",
-    "content": "44557bc81ebdf4f9"
+    "modified": "2026-11-20",
+    "content": "7117bf266dcbade4"
   },
   "/pdf/data-centers-and-power.pdf": {
     "published": "2026-10-20",
-    "modified": "2026-10-31",
-    "content": "d2eb6a774853c344"
+    "modified": "2026-11-20",
+    "content": "88f8cc3342c7dff5"
   },
   "/pdf/deposition-and-etch.pdf": {
     "published": "2026-10-20",
-    "modified": "2026-10-31",
-    "content": "8acb439800bcc381"
+    "modified": "2026-11-20",
+    "content": "37109bf4d13f27a3"
   },
   "/pdf/design-and-eda.pdf": {
     "published": "2026-10-20",
-    "modified": "2026-10-31",
-    "content": "799e2ab818346704"
+    "modified": "2026-11-20",
+    "content": "2760b8cdac075315"
   },
   "/pdf/foundries-and-fabs.pdf": {
     "published": "2026-10-20",
-    "modified": "2026-10-31",
-    "content": "92ee3fb0d9ab3c94"
+    "modified": "2026-11-20",
+    "content": "5f1f77ebe96ace46"
   },
   "/pdf/geopolitics.pdf": {
     "published": "2026-10-20",
-    "modified": "2026-10-31",
-    "content": "52ed2fa3875905fa"
+    "modified": "2026-11-20",
+    "content": "b27f3867bbfcdf45"
   },
   "/pdf/how-ai-chips-are-made.pdf": {
     "published": "2026-10-26",
-    "modified": "2026-10-31",
-    "content": "1135e90062f374e0"
+    "modified": "2026-11-20",
+    "content": "ab0aee7266e7b1aa"
   },
   "/pdf/lithography.pdf": {
     "published": "2026-10-20",
-    "modified": "2026-10-31",
-    "content": "0db6b4bb36d0c464"
+    "modified": "2026-11-20",
+    "content": "b30a26fa74e970ba"
   },
   "/pdf/memory-and-hbm.pdf": {
     "published": "2026-10-20",
-    "modified": "2026-10-31",
-    "content": "9bd0ca02c01c4498"
+    "modified": "2026-11-20",
+    "content": "e9c04ff998308e31"
   },
   "/pdf/metrology-and-inspection.pdf": {
     "published": "2026-10-20",
-    "modified": "2026-10-31",
-    "content": "dba28527b9c3706c"
+    "modified": "2026-11-20",
+    "content": "5bc5823e3f8d8056"
   },
   "/pdf/photomasks-and-pellicles.pdf": {
     "published": "2026-10-20",
-    "modified": "2026-10-31",
-    "content": "7f4f2f86280a0baf"
+    "modified": "2026-11-20",
+    "content": "0d96cdb81a0bcb28"
   },
   "/pdf/silicon-and-wafers.pdf": {
     "published": "2026-10-20",
-    "modified": "2026-10-31",
-    "content": "e89503d0349b16e7"
+    "modified": "2026-11-20",
+    "content": "3ab6aadd37616652"
   },
   "/pdf/substrates-and-pcbs.pdf": {
     "published": "2026-10-20",
-    "modified": "2026-10-31",
-    "content": "1cdd0a03f28b366b"
+    "modified": "2026-11-20",
+    "content": "7f0c3cbb49240521"
   },
   "/pdf/summary.pdf": {
     "published": "2026-10-26",
-    "modified": "2026-10-31",
-    "content": "48683b4e8e50ce96"
+    "modified": "2026-11-20",
+    "content": "b2dbe26f9aa09c22"
   },
   "/pdf/systems-and-networking.pdf": {
     "published": "2026-10-20",
-    "modified": "2026-10-31",
-    "content": "ebce610732a1d914"
+    "modified": "2026-11-20",
+    "content": "c51f6b9fea9e7307"
   },
   "/pdf/test-and-assembly.pdf": {
     "published": "2026-10-20",
-    "modified": "2026-10-31",
-    "content": "2e272399427c20ae"
+    "modified": "2026-11-20",
+    "content": "94ee0320fbee1102"
   },
   "/photomasks-and-pellicles/": {
     "published": "2026-09-09",
@@ -196,8 +196,8 @@
   },
   "/systems-and-networking/": {
     "published": "2026-09-09",
-    "modified": "2026-10-29",
-    "content": "231948e1c29a8a1a"
+    "modified": "2026-11-20",
+    "content": "c878deeb3e3b5845"
   },
   "/test-and-assembly/": {
     "published": "2026-09-09",

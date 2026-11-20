@@ -4,7 +4,7 @@
   "number": 15,
   "title": "The Economics of AI Chips",
   "oneLiner": "Epoch AI estimated in December 2025 that Nvidia's B200 AI chip cost about $6,400 to build, mostly for memory and packaging. Its processor silicon cost about $900.",
-  "plain": "Most of what it costs to build Nvidia's B200, an AI chip from its Blackwell line, goes to memory and packaging that a few firms supply. A bill of materials is the list of parts inside a product and what each one costs. Epoch AI estimated in December 2025 that the B200 cost about $6,400 to build ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). The two logic dies, the pieces of silicon that do the calculating, cost about $900 of that ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). The stacked memory beside them accounted for about half, and the packaging that wires the dies and memory together cost more than the dies ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Three firms, SK hynix, Samsung and Micron, dominate the world market for that memory ([source](https://www.csis.org/analysis/understanding-biden-administrations-updated-export-controls)). One Taiwanese firm, TSMC, does that packaging ([source](https://epoch.ai/data-insights/b200-cost-breakdown)).",
+  "plain": "Most of what it costs to build Nvidia's B200, an AI chip from its Blackwell line, goes to memory and packaging that a few firms supply. A bill of materials is the list of parts inside a product and what each one costs. Epoch AI estimated in December 2025 that the B200 cost about $6,400 to build ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). The two logic dies, the pieces of silicon that do the calculating, cost about $900 of that ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). The stacked memory beside them accounted for about half, and the packaging that wires the dies and memory together cost more than the dies ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Three firms, SK hynix, Samsung and Micron, dominate the world market for that memory ([source](https://www.csis.org/analysis/understanding-biden-administrations-updated-export-controls)). Epoch AI's estimate has TSMC, a Taiwanese firm, doing that packaging ([source](https://epoch.ai/data-insights/b200-cost-breakdown)).",
   "bridge": "The physical chain ends at a powered rack, and the next question is which part of it costs the most.",
   "specimen": "wafer-cost",
   "specimenCaption": "Epoch AI's December 2025 estimate of what it cost to build one B200, drawn as a column with each layer as tall as its share of the bill. From the bottom: $2,900 of memory in garnet, $1,100 of packaging, $1,000 of packaging yield loss drawn hollow, $900 of logic dies, $480 of power delivery, board and test. The total is about $6,400, against a selling price of $30,000 to $40,000 per chip reported in March 2024.",
@@ -76,7 +76,7 @@
         ]
       ],
       "source": {
-        "label": "Epoch AI B200 cost model, from a $17,000 4NP wafer, 40-70% die yield, $14-17 per GB of memory, and a packaging line derived from TSMC's advanced packaging revenue",
+        "label": "Epoch AI B200 cost model, from a $17,000 4NP wafer, a modeled 40-70% yield for the B200's dies, $14-17 per GB of memory, and a packaging line derived from TSMC's advanced packaging revenue",
         "url": "https://epoch.ai/data-insights/b200-cost-breakdown"
       }
     },
@@ -134,7 +134,7 @@
       "type": "within",
       "short": "One B200, its build cost inside its price",
       "title": "One B200, drawn to scale. Epoch AI's December 2025 estimate of what it cost to build, inside the selling price reported in March 2024",
-      "finding": "Memory, $2,900, is the largest cost of building a B200, which sells for $30,000 to $40,000",
+      "finding": "Epoch AI estimate: memory, $2,900, is the largest cost of building a B200, priced at $30,000 to $40,000 in a March 2024 report",
       "unit": "$",
       "mark": "Memory, HBM3E 192 GB",
       "parts": 5,
@@ -164,13 +164,13 @@ A B200, one of Nvidia's Blackwell AI chips, sells for far more than it costs to 
 
 ## How it works
 
-Most of what it costs to build Nvidia's B200, an AI chip from its Blackwell line, goes to memory and packaging that a few firms supply. A bill of materials is the list of parts inside a product and what each one costs. Epoch AI estimated in December 2025 that the B200 cost about $6,400 to build ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). The two logic dies, the pieces of silicon that do the calculating, cost about $900 of that ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). The stacked memory beside them accounted for about half, and the packaging that wires the dies and memory together cost more than the dies ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Three firms, SK hynix, Samsung and Micron, dominate the world market for that memory ([source](https://www.csis.org/analysis/understanding-biden-administrations-updated-export-controls)). One Taiwanese firm, TSMC, does that packaging ([source](https://epoch.ai/data-insights/b200-cost-breakdown)).
+Most of what it costs to build Nvidia's B200, an AI chip from its Blackwell line, goes to memory and packaging that a few firms supply. A bill of materials is the list of parts inside a product and what each one costs. Epoch AI estimated in December 2025 that the B200 cost about $6,400 to build ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). The two logic dies, the pieces of silicon that do the calculating, cost about $900 of that ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). The stacked memory beside them accounted for about half, and the packaging that wires the dies and memory together cost more than the dies ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Three firms, SK hynix, Samsung and Micron, dominate the world market for that memory ([source](https://www.csis.org/analysis/understanding-biden-administrations-updated-export-controls)). Epoch AI's estimate has TSMC, a Taiwanese firm, doing that packaging ([source](https://epoch.ai/data-insights/b200-cost-breakdown)).
 
 Three numbers set the cost of a die, the finished rectangle of circuitry cut out of a wafer.
 
 - **Wafer price.** TSMC does not publish it. TSMC makes Nvidia's Blackwell chips on a custom-built process called 4NP ([source](https://www.nvidia.com/en-us/data-center/technologies/blackwell-architecture/)). Epoch AI estimates $17,000 for a 12-inch (300 mm) wafer on that process ([source](https://epoch.ai/data-insights/b200-cost-breakdown)).
 - **Dies per wafer.** A wafer is a circle and dies are rectangles, so the edge of the wafer goes to waste. The bigger the die, the fewer fit. Each of the two logic dies in a B200 is about 800 mm² ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Nvidia calls them reticle-limited, meaning they are near the largest size a scanner can print in one shot ([source](https://www.nvidia.com/en-us/data-center/technologies/blackwell-architecture/)).
-- **Yield.** Yield is the share of dies that work. Defects land at random, so a bigger die is more likely to catch one. Epoch AI models Blackwell die yield at 40 to 70 percent, centered on 60 ([source](https://epoch.ai/data-insights/b200-cost-breakdown)).
+- **Yield.** Yield is the share of dies that work. Defects land at random, so a bigger die is more likely to catch one. Epoch AI's model puts the yield of Blackwell's near-maximum-size dies at 40 to 70 percent, centered on 60 ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). The figure is the model's estimate for this one chip.
 
 Together, those three numbers put the two dies inside a B200 at about $900 ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Epoch AI's estimate for the whole B200 counts only variable costs, which rise with each chip made ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). It leaves out fixed costs such as research and development ([source](https://epoch.ai/data-insights/b200-cost-breakdown)).
 

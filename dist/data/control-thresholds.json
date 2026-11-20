@@ -9,8 +9,8 @@
     "value": 4800,
     "unit": "TPP, defined as 2 × MacTOPS × bit length of the operation, aggregated over all processing units on the integrated circuit",
     "alternative": "or TPP >= 1600 together with performance density >= 5.92, where performance density is TPP divided by the die area in square millimeters of the logic dies",
-    "destinations": "License required to or within any destination worldwide under 742.6(a)(6)(iii)(A); BIS enforces it only for the United Arab Emirates, for Country Groups D:1, D:4 and D:5 not also specified in A:5 or A:6, and for entities headquartered in Macau or Country Group D:5 or with an ultimate parent there. China and Macau are the operative targets.",
-    "licensePolicy": "Presumption of denial for China and Macau. Since 15 January 2026 applications for parts below TPP 21,000 and total DRAM bandwidth 6,500 GB/s (H200 and MI325X class) are reviewed case by case.",
+    "destinations": "License required to or within Indonesia, Malaysia, Singapore, Brazil and Thailand, the United Arab Emirates, and Country Groups D:1, D:4 and D:5 not also specified in A:5 or A:6, under 742.6(a)(6)(iii)(A) as revised on 19 November 2026. Under 744.23(a)(3), a license is also required in any other destination for entities headquartered in Macau or Country Group D:5 or with an ultimate parent there.",
+    "licensePolicy": "Presumption of denial for China and Macau. Since 15 January 2026 applications for parts below TPP 21,000 and total DRAM bandwidth 6,500 GB/s (H200 and MI325X class) are reviewed case by case. Applications for Indonesia, Malaysia, Singapore, Brazil and Thailand are reviewed case by case. Other applications for Country Groups D:1 and D:4 and the United Arab Emirates are reviewed with a presumption of approval.",
     "effectiveDate": "2023-11-17",
     "status": "In force",
     "amendedBy": [
@@ -18,7 +18,8 @@
       "2023-11-17",
       "2024-12-02",
       "2025-01-16",
-      "2026-01-15"
+      "2026-01-15",
+      "2026-11-19"
     ],
     "chapter": "geopolitics",
     "frCitation": "88 FR 73458",
@@ -26,7 +27,8 @@
     "source": "https://www.federalregister.gov/documents/2023/10/25/2023-23055/implementation-of-additional-export-controls-certain-advanced-computing-items-supercomputer-and",
     "sourceTier": "A",
     "alsoSee": [
-      "https://cset.georgetown.edu/article/bis-2023-update-explainer/"
+      "https://cset.georgetown.edu/article/bis-2023-update-explainer/",
+      "https://www.govinfo.gov/content/pkg/FR-2026-11-19/pdf/2026-23529.pdf"
     ],
     "note": "The master line for AI chips. It catches every current training-class accelerator (H100, H200, B200, MI300 and their successors) because TPP scales with both throughput and the precision at which the part is quoted. It misses nothing at the top and quite a lot in the middle: a chip can be cut below 4800 by trimming clocks or disabling units while keeping most of its usefulness for inference, which is how the H20 was built.",
     "kind": "chips",
@@ -100,14 +102,15 @@
     "value": 2400,
     "unit": "TPP, where TPP is 2400 or more but below 4800 and performance density is 1.6 or more but below 5.92",
     "alternative": "or TPP of 1600 or more with performance density of 3.2 or more but below 5.92",
-    "destinations": "The United Arab Emirates and Country Groups D:1, D:4 and D:5 not also in A:5 or A:6",
+    "destinations": "Indonesia, Malaysia, Singapore, Brazil and Thailand, the United Arab Emirates, and Country Groups D:1, D:4 and D:5 not also in A:5 or A:6",
     "licensePolicy": "Eligible for the exceptions in 15 CFR 740.8. License Exception ACA covers destinations other than Macau and Country Group D:5; License Exception NAC covers Macau, Country Group D:5 and entities headquartered there, on advance notification to BIS. The January 2026 case-by-case band is a policy for 3A090.a items and does not reach this entry.",
     "effectiveDate": "2023-11-17",
     "status": "In force",
     "amendedBy": [
       "2024-12-02",
       "2025-01-13",
-      "2026-07-10"
+      "2026-07-10",
+      "2026-11-19"
     ],
     "chapter": "geopolitics",
     "frCitation": "88 FR 73458",
@@ -116,7 +119,8 @@
     "sourceTier": "A",
     "alsoSee": [
       "https://cset.georgetown.edu/article/bis-2023-update-explainer/",
-      "https://www.ecfr.gov/current/title-15/subtitle-B/chapter-VII/subchapter-C/part-742/section-742.6"
+      "https://www.ecfr.gov/current/title-15/subtitle-B/chapter-VII/subchapter-C/part-742/section-742.6",
+      "https://www.govinfo.gov/content/pkg/FR-2026-11-19/pdf/2026-23529.pdf"
     ],
     "note": "The gray band. It exists so that BIS learns about chips just under the main line while they keep shipping, and it is what turns the control from a ban into a notification regime for workstation and mid-range parts. It catches gaming and professional cards with real AI throughput; it misses anything a designer can push below TPP 1600. Until December 2024 one exception, NAC, did both jobs; the December 2024 rule split off ACA for the unrestricted destinations.",
     "kind": "chips",
@@ -188,14 +192,15 @@
     "value": 4800,
     "unit": "same TPP thresholds as 3A090.a (4800, or 1600 with performance density 5.92); 4A090.b mirrors 3A090.b",
     "alternative": "4A090.a tracks 3A090.a; 4A090.b tracks 3A090.b and inherits its NAC and ACA treatment",
-    "destinations": "4A090.a: license required worldwide under 742.6(a)(6)(iii)(A), enforced only for the United Arab Emirates, for Country Groups D:1, D:4 and D:5 not also in A:5 or A:6 and for entities headquartered in Macau or D:5 or with an ultimate parent there; 4A090.b follows 3A090.b",
+    "destinations": "4A090: license required to or within Indonesia, Malaysia, Singapore, Brazil and Thailand, the United Arab Emirates, and Country Groups D:1, D:4 and D:5 not also specified in A:5 or A:6, under 742.6(a)(6)(iii)(A) as revised on 19 November 2026. Under 744.23(a)(3), a license is also required in any other destination for entities headquartered in Macau or Country Group D:5 or with an ultimate parent there.",
     "licensePolicy": "Presumption of denial for China and Macau; follows the 3A090 policy of the chip inside",
     "effectiveDate": "2022-10-21",
     "status": "In force",
     "amendedBy": [
       "2023-11-17",
       "2024-12-02",
-      "2026-01-15"
+      "2026-01-15",
+      "2026-11-19"
     ],
     "chapter": "systems-and-networking",
     "frCitation": "87 FR 62186; 88 FR 73458",
@@ -205,7 +210,10 @@
     "note": "The system-level mirror of 3A090, and the entry most of the smuggling cases turn on, because chips move in servers. It catches assembled AI servers wherever they are built; it misses nothing technically, which is why enforcement against 4A090 is a transshipment problem.",
     "kind": "chips",
     "paramShort": "Server or rack",
-    "unitShort": "TPP chip"
+    "unitShort": "TPP chip",
+    "alsoSee": [
+      "https://www.govinfo.gov/content/pkg/FR-2026-11-19/pdf/2026-23529.pdf"
+    ]
   },
   {
     "id": "jan2026-review-band-tpp",
@@ -293,12 +301,13 @@
     "unit": "transistors on a logic die made at the 16/14 nm node or below, or with a non-planar transistor architecture",
     "alternative": "For packages without HBM, rises to 35 billion for shipments in 2027 and 40 billion from 2029; the earlier red-flag figure was 50 billion with HBM",
     "destinations": "Worldwide license presumption for front-end fabricators and OSATs, rebuttable by shipping to an approved IC designer, an approved OSAT, or on a designer attestation",
-    "licensePolicy": "Presumption that the die is a 3A090.a item unless overcome; until 31 December 2026, designers headquartered in Taiwan or Country Groups A:1 and A:5 that report to the foundry count as authorized IC designers, and after that date a designer meeting the same criteria that has applied for approved status stays authorized until 180 days after applying",
+    "licensePolicy": "Presumption that the die is a 3A090.a item unless overcome. Until 31 December 2026, designers headquartered in Taiwan or Country Groups A:1 and A:5 that report to the foundry count as authorized IC designers, and after that date a designer meeting the same criteria that has applied for approved status stays authorized until 180 days after applying. Since 19 November 2026 a transistor-count attestation by the foundry or an approved OSAT overcomes the presumption only when the designer is neither located in nor has an ultimate parent headquartered in Country Groups D:1, D:4 or D:5 or in Indonesia, Malaysia, Singapore, Brazil or Thailand",
     "effectiveDate": "2025-01-16",
     "status": "In force",
     "amendedBy": [
       "2025-01-31",
-      "2026-04-07"
+      "2026-04-07",
+      "2026-11-19"
     ],
     "chapter": "foundries-and-fabs",
     "frCitation": "90 FR 5298",
@@ -308,7 +317,10 @@
     "note": "The rule that pushed the control back one stage, from the chip designer to the foundry that prints the wafer. Instead of asking what a die does, it asks how many transistors it has, which a foundry always knows. It is the answer to shell-company design houses ordering Nvidia-class dies at TSMC; it misses dies below the transistor line and anything made on mature nodes.",
     "kind": "fabs",
     "paramShort": "Transistor count",
-    "unitShort": "transistors"
+    "unitShort": "transistors",
+    "alsoSee": [
+      "https://www.govinfo.gov/content/pkg/FR-2026-11-19/pdf/2026-23529.pdf"
+    ]
   },
   {
     "id": "advanced-node-logic-16-14nm",
@@ -692,7 +704,8 @@
     "effectiveDate": "2025-09-29",
     "status": "Suspended",
     "amendedBy": [
-      "2025-11-10"
+      "2025-11-10",
+      "2026-11-09"
     ],
     "chapter": "geopolitics",
     "frCitation": "90 FR 47201",
@@ -700,9 +713,10 @@
     "source": "https://www.federalregister.gov/documents/2025/09/30/2025-19001/expansion-of-end-user-controls-to-cover-affiliates-of-certain-listed-entities",
     "sourceTier": "A",
     "alsoSee": [
-      "https://www.federalregister.gov/documents/2025/11/12/2025-19846/one-year-suspension-of-expansion-of-end-user-controls-for-affiliates-of-certain-listed-entities"
+      "https://www.federalregister.gov/documents/2025/11/12/2025-19846/one-year-suspension-of-expansion-of-end-user-controls-for-affiliates-of-certain-listed-entities",
+      "https://www.federalregister.gov/documents/2026/11/09/2026-22793/extension-of-the-suspension-of-expansion-of-end-user-controls-for-affiliates-of-certain-listed"
     ],
-    "note": "A broad expansion of the Entity List's reach, stayed on 10 November 2025 as part of the one-year US-China arrangement and due to return on 10 November 2026 unless the stay is extended.",
+    "note": "A broad expansion of the Entity List's reach, stayed on 10 November 2025 as part of the one-year US-China arrangement. On 9 November 2026 BIS extended the stay to 10 January 2027.",
     "kind": "entities",
     "paramShort": "Ownership share",
     "unitShort": "%"
@@ -710,24 +724,29 @@
   {
     "id": "entity-list-affiliates-suspension",
     "regime": "US EAR",
-    "instrument": "One-year suspension of the affiliates rule",
+    "instrument": "Suspension of the affiliates rule, extended once",
     "scope": "The 50% ownership test above",
     "parameter": "Duration of the stay",
     "operator": "until",
     "value": 12,
-    "unit": "months. Amendments to 15 CFR parts 732, 734, 736, 744 and 748 stayed until 9 November 2026",
+    "unit": "months at first. Amendments to 15 CFR parts 732, 734, 736, 744 and 748 stayed for one year from 10 November 2025, then further stayed until 10 January 2027",
     "alternative": "Automatic reimposition on expiry unless BIS extends it",
     "destinations": "Worldwide",
     "licensePolicy": "During the stay, unlisted affiliates are treated as they were before 29 September 2025",
     "effectiveDate": "2025-11-10",
     "status": "In force",
-    "amendedBy": [],
+    "amendedBy": [
+      "2026-11-09"
+    ],
     "chapter": "geopolitics",
     "frCitation": "90 FR 50857",
     "cfr": "15 CFR 744.11(a)(1)",
     "source": "https://www.federalregister.gov/documents/2025/11/12/2025-19846/one-year-suspension-of-expansion-of-end-user-controls-for-affiliates-of-certain-listed-entities",
     "sourceTier": "A",
-    "note": "Listed as its own entry because the expiry date is itself a governing number. The White House announced it alongside China's suspension of its October 2025 export controls, which MOFCOM set to run until 10 November 2026.",
+    "alsoSee": [
+      "https://www.federalregister.gov/documents/2026/11/09/2026-22793/extension-of-the-suspension-of-expansion-of-end-user-controls-for-affiliates-of-certain-listed"
+    ],
+    "note": "Listed as its own entry because the expiry date is itself a governing number. The White House announced it alongside China's suspension of its October 2025 export controls. On 9 November 2026 both suspensions were extended to 10 January 2027.",
     "kind": "entities",
     "paramShort": "Duration of the stay",
     "unitShort": "months"
@@ -826,11 +845,12 @@
     "unit": "TPP, cumulative maximum per country",
     "alternative": "Presumption of approval up to the allocation; presumption of denial above it and for Macau and Country Group D:5",
     "destinations": "All destinations outside the 18 Tier 1 allies and outside D:5",
-    "licensePolicy": "Rescission announced; never enforced",
+    "licensePolicy": "Never enforced. Removed from the regulations on 19 November 2026",
     "effectiveDate": "2025-01-13",
     "status": "Rescinded",
     "amendedBy": [
-      "2025-05-13"
+      "2025-05-13",
+      "2026-11-19"
     ],
     "chapter": "geopolitics",
     "frCitation": "90 FR 4544",
@@ -840,7 +860,10 @@
     "note": "The most ambitious threshold ever written into the regime: a numeric compute quota for entire countries. Published 15 January 2025, never enforced: on 13 May 2025, before the 15 May compliance date, BIS told its enforcement officials not to enforce it. Kept in the map because the numbers define what a compute quota would look like if one returns.",
     "kind": "chips",
     "paramShort": "Country TPP allocation",
-    "unitShort": "TPP"
+    "unitShort": "TPP",
+    "alsoSee": [
+      "https://www.govinfo.gov/content/pkg/FR-2026-11-19/pdf/2026-23529.pdf"
+    ]
   },
   {
     "id": "ai-diffusion-nveu-allocation",
@@ -853,11 +876,12 @@
     "unit": "TPP by 2027, rising from 633,000,000 in Q1 2025 through 1,899,000,000 in Q1 2026",
     "alternative": "Eligibility limited to entities in Country Groups A, B and D:1 to D:4, excluding Macau and D:5",
     "destinations": "Outside the Tier 1 allies and outside D:5",
-    "licensePolicy": "Rescission announced; never enforced",
+    "licensePolicy": "Never enforced. Removed from the regulations on 19 November 2026",
     "effectiveDate": "2025-01-13",
     "status": "Rescinded",
     "amendedBy": [
-      "2025-05-13"
+      "2025-05-13",
+      "2026-11-19"
     ],
     "chapter": "data-centers-and-power",
     "frCitation": "90 FR 4544",
@@ -867,7 +891,10 @@
     "note": "Allocations rose eightfold over three years, an explicit assumption about how fast the world outside the allied core should be allowed to grow its compute. No later rule has replaced that assumption with another number.",
     "kind": "chips",
     "paramShort": "Company TPP allocation",
-    "unitShort": "TPP"
+    "unitShort": "TPP",
+    "alsoSee": [
+      "https://www.govinfo.gov/content/pkg/FR-2026-11-19/pdf/2026-23529.pdf"
+    ]
   },
   {
     "id": "ai-diffusion-uveu-shares",
@@ -880,11 +907,12 @@
     "unit": "% of total AI computing power outside the Tier 1 list, with no more than 7% in any single country outside it",
     "alternative": "US-headquartered UVEUs could not place more than 50% of their total AI computing power outside the United States",
     "destinations": "Anywhere except Macau and Country Group D:5",
-    "licensePolicy": "Rescission announced; never enforced",
+    "licensePolicy": "Never enforced. Removed from the regulations on 19 November 2026",
     "effectiveDate": "2025-01-13",
     "status": "Rescinded",
     "amendedBy": [
-      "2025-05-13"
+      "2025-05-13",
+      "2026-11-19"
     ],
     "chapter": "data-centers-and-power",
     "frCitation": "90 FR 4544",
@@ -894,7 +922,10 @@
     "note": "A control on where American compute physically sits. The 50 percent domestic-retention condition for US firms reappears in a different form in the January 2026 H200 rule, which suggests the idea survived even though the rule was set aside.",
     "kind": "chips",
     "paramShort": "Share outside Tier 1",
-    "unitShort": "%"
+    "unitShort": "%",
+    "alsoSee": [
+      "https://www.govinfo.gov/content/pkg/FR-2026-11-19/pdf/2026-23529.pdf"
+    ]
   },
   {
     "id": "ai-diffusion-lpp",
@@ -907,11 +938,12 @@
     "unit": "TPP of advanced computing ICs per calendar year to any individual ultimate consignee",
     "alternative": "Direct exports only, no distributors; not available for Macau or D:5",
     "destinations": "Outside Macau and Country Group D:5",
-    "licensePolicy": "Rescission announced; never enforced",
+    "licensePolicy": "Never enforced. Removed from the regulations on 19 November 2026",
     "effectiveDate": "2025-01-13",
     "status": "Rescinded",
     "amendedBy": [
-      "2025-05-13"
+      "2025-05-13",
+      "2026-11-19"
     ],
     "chapter": "geopolitics",
     "frCitation": "90 FR 4544",
@@ -921,7 +953,10 @@
     "note": "Roughly the compute of 1,700 H100-class accelerators a year: the line the rule drew between a research group and a national program. It is the only place the regime has ever tried to say how much AI compute an ordinary customer should be able to buy without a license.",
     "kind": "chips",
     "paramShort": "Annual TPP per buyer",
-    "unitShort": "TPP"
+    "unitShort": "TPP",
+    "alsoSee": [
+      "https://www.govinfo.gov/content/pkg/FR-2026-11-19/pdf/2026-23529.pdf"
+    ]
   },
   {
     "id": "ai-diffusion-model-weights",
@@ -934,11 +969,12 @@
     "unit": "computational operations used to train the model",
     "alternative": "Open-weight models were excluded",
     "destinations": "Worldwide license requirement",
-    "licensePolicy": "Presumption of denial outside the destinations in paragraph (a) of supplement no. 5 to part 740 and presumption of approval within them; rescission announced before the compliance date",
+    "licensePolicy": "Presumption of denial outside the destinations in paragraph (a) of supplement no. 5 to part 740 and presumption of approval within them. Rescission announced before the compliance date. ECCN 4E091 was removed from the regulations on 19 November 2026",
     "effectiveDate": "2025-01-13",
     "status": "Rescinded",
     "amendedBy": [
-      "2025-05-13"
+      "2025-05-13",
+      "2026-11-19"
     ],
     "chapter": "geopolitics",
     "frCitation": "90 FR 4544",
@@ -948,7 +984,10 @@
     "note": "The point where chip governance meets model governance, and the only time the two have been written into the same instrument. It borrowed the 10^26 figure from the 2023 executive order's reporting threshold, which shows how quickly a reporting number becomes a control number.",
     "kind": "models",
     "paramShort": "Training compute",
-    "unitShort": "operations"
+    "unitShort": "operations",
+    "alsoSee": [
+      "https://www.govinfo.gov/content/pkg/FR-2026-11-19/pdf/2026-23529.pdf"
+    ]
   },
   {
     "id": "uae-a5-2026",
@@ -974,6 +1013,56 @@
     "kind": "entities",
     "paramShort": "Moved into Country Group A:5",
     "unitShort": ""
+  },
+  {
+    "id": "remote-access-aggregate-tpp",
+    "regime": "US EAR",
+    "instrument": "Data center end-use control, 15 CFR 744.24, interim final rule of 19 November 2026",
+    "scope": "Advanced computing items bound for a data center that serves companies headquartered in Macau or Country Group D:5",
+    "parameter": "Aggregate TPP that the data center gives those companies access to",
+    "operator": ">",
+    "value": 12000000,
+    "unit": "aggregate TPP, defined in 15 CFR 772.1 as the sum of the total processing performance (TPP) of all the integrated circuits or commodities in a group that are specified in ECCNs 3A001.z, 3A090 (except 3A090.c), 4A003.z, 4A004.z, 4A005.z, 4A090, 5A002.z, 5A004.z and 5A992.z",
+    "alternative": "Counted at one data center or through linked data centers, which the rule defines as data centers joined by networking infrastructure so that physical and virtual facilities share resources, balance workloads and replicate data as a unified whole. The prohibition does not apply when the access is provided only for a commercial recommender system and the required information is submitted to BIS.",
+    "destinations": "Any destination worldwide, when the exporter, reexporter or transferor knows the data center is providing or will provide the access to or for companies headquartered in Macau or a Country Group D:5 destination, or whose ultimate parent company is headquartered there",
+    "licensePolicy": "Case-by-case review",
+    "effectiveDate": "2026-11-19",
+    "status": "In force",
+    "amendedBy": [],
+    "chapter": "geopolitics",
+    "frCitation": "91 FR 74970",
+    "cfr": "15 CFR 744.24; 772.1",
+    "source": "https://www.govinfo.gov/content/pkg/FR-2026-11-19/pdf/2026-23529.pdf",
+    "sourceTier": "A",
+    "note": "The control also covers a later change of use. An exporter that ships without a license must tell the recipient that BIS authorization is required if the items will be used to give those companies access above the line. The rule treats a change from a permitted end use to a prohibited one as an in-country transfer.",
+    "kind": "chips",
+    "paramShort": "Aggregate TPP",
+    "unitShort": "TPP"
+  },
+  {
+    "id": "remote-access-90-day-period",
+    "regime": "US EAR",
+    "instrument": "Data center end-use control, 15 CFR 744.24(b)(3), interim final rule of 19 November 2026",
+    "scope": "Data centers that were providing a significant volume of computing power to companies headquartered in Macau or Country Group D:5, or with an ultimate parent headquartered there, before the rule was published",
+    "parameter": "Period to obtain a license",
+    "operator": "<=",
+    "value": 90,
+    "unit": "days from the rule's effective date, 19 November 2026",
+    "alternative": "The rule gives the period and the effective date. It does not print the date on which the period ends.",
+    "destinations": "Any destination worldwide",
+    "licensePolicy": "A data center that wishes to continue providing these services must obtain a license within the period or face future export restrictions. Applications are reviewed case by case.",
+    "effectiveDate": "2026-11-19",
+    "status": "In force",
+    "amendedBy": [],
+    "chapter": "geopolitics",
+    "frCitation": "91 FR 74970",
+    "cfr": "15 CFR 744.24(b)(3)",
+    "source": "https://www.govinfo.gov/content/pkg/FR-2026-11-19/pdf/2026-23529.pdf",
+    "sourceTier": "A",
+    "note": "Listed as its own entry because the period is itself a governing number for data centers already serving these companies.",
+    "kind": "chips",
+    "paramShort": "Period to obtain a license",
+    "unitShort": "days"
   },
   {
     "id": "section232-25pct-tariff",
@@ -1091,17 +1180,21 @@
     "unit": "% of the value of the foreign-made item",
     "alternative": "A mirror of the US de minimis and foreign direct product logic, applied to materials",
     "destinations": "Worldwide, with a license requirement enforced against re-export to designated end uses including advanced semiconductors",
-    "licensePolicy": "License required; suspended from 7 November 2025 until 10 November 2026, before it took effect, alongside the US suspension of the affiliates rule",
+    "licensePolicy": "License required; suspended since 7 November 2025, before it took effect, alongside the US suspension of the affiliates rule, and extended on 9 November 2026 to 10 January 2027",
     "effectiveDate": "2025-12-01",
     "status": "Suspended",
     "amendedBy": [
-      "2025-11-07"
+      "2025-11-07",
+      "2026-11-09"
     ],
     "chapter": "chemicals-gases-and-photoresist",
     "frCitation": "MOFCOM Announcement 2025 No. 61",
     "source": "https://cset.georgetown.edu/publication/mofcom-notice-2025-61/",
     "sourceTier": "A",
-    "note": "Included because it is the only non-US threshold in the map that reaches outside its own jurisdiction, and because 0.1 percent sits far below the standard American de minimis levels of 25 and 10 percent. Its suspension ends on 10 November 2026, the day the affiliates rule returns unless its stay is extended, which is why the two must be read together.",
+    "alsoSee": [
+      "http://dltb.mofcom.gov.cn/swyw/art/2026/art_bab1f1be0cee4e4ab0b496f02e7cff0d.html"
+    ],
+    "note": "Included because it is the only non-US threshold in the map that reaches outside its own jurisdiction, and because 0.1 percent sits far below the standard American de minimis levels of 25 and 10 percent. Its suspension and the stay of the affiliates rule were both extended on 9 November 2026 and both now end on 10 January 2027, which is why the two must be read together.",
     "kind": "china",
     "paramShort": "Chinese content by value",
     "unitShort": "%"

@@ -788,7 +788,7 @@ function chapterDoor(ch, attrs, tag, media) {
   const go = (words) => `<span class="go">${words}<span class="circ" aria-hidden="true">→</span></span>`;
   // the drawing is the title's picture, so it has no words of its own; the two chapters that are not stages keep their night ground
   const st = next ? doorStill(next) : null;
-  const ex = st ? `<span class="ex"${!isStage(next) ? ' data-night="1"' : ''}><img src="${media || ''}${esc(st.file)}" width="${Math.round(st.w / 2)}" height="${Math.round(st.h / 2)}" alt="" loading="lazy" decoding="async"></span>` : '';
+  const ex = st ? `<span class="ex"><img src="${media || ''}${esc(st.file)}" width="${Math.round(st.w / 2)}" height="${Math.round(st.h / 2)}" alt="" loading="lazy" decoding="async"></span>` : '';
   const nx = next
     ? `<a class="pn next" ${attrs(next)}><span class="label">Next · ${where(next)}</span><span class="t">${esc(next.title)}</span>${next.meta.oneLiner ? `<span class="ol">${esc(next.meta.oneLiner)}</span>` : ''}${go('Continue reading')}${ex}</a>`
     : `<a class="pn next" href="#/chain"><span class="label">Contents</span><span class="t">All ${word(seq.length)} chapters</span><span class="ol">The ${word(stages.length)} stages run from chip design to the data center. The last ${word(seq.length - stages.length)} chapters cover what a chip costs and who controls the chain.</span>${go('Back to the contents')}</a>`;
@@ -1166,7 +1166,8 @@ function chapterHTML(ch) {
   const kick = `<p class="ch-kick">${stageIdx >= 0 ? `<span>Stage ${stageIdx + 1} of ${stages.length}</span>` : `<span>Chapter ${pad(ch.number)}</span><span>${esc(TILE_WORD[ch.id] || '')}</span>`}${bandMark(conc, ((m.card || {}).substitutability || {}).band)}</p>`;
   const facts = `<p class="ch-meta"><span class="label">${ch.words.toLocaleString('en-US')} words / ${mins} min</span><span class="label">Specimen: ${esc(SPECIMEN_NAME[specimen] || specimen.replace(/-/g, ' '))}</span><span class="label">Updated ${CITE_DAY(ch.id)}</span>${ch.cites.length ? `<span class="label">${ch.cites.length} sources</span>` : ''}</p>`;
   // the specimen's slot and its caption; the two chapters that are not stages set their drawing on the night ground (data-night)
-  const ps = partsOf(ch), night = !isStage(ch);
+  // since 20 Nov 2026 chapters 15 and 16 draw on the page's own ground like the stages (owner: "white as well, not black"), so no page sets data-night
+  const ps = partsOf(ch), night = false;
   const spec = `<figure class="ch-spec"${night ? ' data-night="1"' : ''}${ps.length ? ` data-parts="${esc(JSON.stringify(ps.map((p) => ({ n: +p.n, name: p.label || p.name, at: p.at || [] }))))}"` : ''}>`
     + `<div class="ch-spec-draw"></div>`
     + `<figcaption class="ch-spec-cap${ch.rendered.parts ? ' has-parts' : ''}"><span class="label">Specimen ${pad(ch.number)} · ${esc(ch.title)}</span>${m.specimenCaption ? `<p>${esc(m.specimenCaption)}</p>` : ''}${ch.rendered.parts}</figcaption>${printStill(ch)}</figure>`;

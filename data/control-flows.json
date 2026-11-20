@@ -1,5 +1,5 @@
 {
-  "checked": "2026-10-28",
+  "checked": "2026-11-20",
   "flows": [
     {
       "id": "ai-chips",
@@ -100,6 +100,17 @@
             "url": "https://www.govinfo.gov/content/pkg/FR-2026-01-15/html/2026-00789.htm"
           },
           "announced": "2026-01-13"
+        },
+        {
+          "date": "2026-11-19",
+          "status": "case",
+          "label": "Transistor-count route closed for chip designers in or owned from Country Groups D:1, D:4 and D:5 and five more countries",
+          "event": "2026-11-19-remote-access-rule",
+          "cite": {
+            "fr": "91 FR 74970",
+            "cfr": "15 CFR part 774, supplement no. 1, ECCN 3A090.a, Note 1",
+            "url": "https://www.govinfo.gov/content/pkg/FR-2026-11-19/pdf/2026-23529.pdf"
+          }
         }
       ],
       "short": "AI chips to H200"
@@ -171,6 +182,17 @@
             "url": "https://www.govinfo.gov/content/pkg/FR-2026-01-15/html/2026-00789.htm"
           },
           "announced": "2026-01-13"
+        },
+        {
+          "date": "2026-11-19",
+          "status": "denial",
+          "label": "Transistor-count route closed for chip designers in or owned from Country Groups D:1, D:4 and D:5 and five more countries",
+          "event": "2026-11-19-remote-access-rule",
+          "cite": {
+            "fr": "91 FR 74970",
+            "cfr": "15 CFR part 774, supplement no. 1, ECCN 3A090.a, Note 1",
+            "url": "https://www.govinfo.gov/content/pkg/FR-2026-11-19/pdf/2026-23529.pdf"
+          }
         }
       ],
       "short": "Above H200"
@@ -503,6 +525,19 @@
             "cfr": "15 CFR 744.11(a)(1)",
             "url": "https://www.govinfo.gov/content/pkg/FR-2025-11-12/html/2025-19846.htm"
           }
+        },
+        {
+          "date": "2026-11-09",
+          "status": "denial",
+          "suspendedUntil": "2027-01-10",
+          "suspends": "Affiliates rule",
+          "label": "Unlisted subsidiaries of listed firms stay outside the Entity List's license requirements",
+          "event": "2026-11-09-affiliates-suspension-extended",
+          "cite": {
+            "fr": "91 FR 70789",
+            "cfr": "15 CFR 744.11(a)(1)",
+            "url": "https://www.federalregister.gov/documents/2026/11/09/2026-22793/extension-of-the-suspension-of-expansion-of-end-user-controls-for-affiliates-of-certain-listed"
+          }
         }
       ],
       "short": "Entity List"
@@ -658,6 +693,19 @@
             "fr": "MOFCOM and GAC Announcement 2025 No. 70",
             "url": "https://www.mofcom.gov.cn/zwgk/zcfb/art/2025/art_b1ec77dd3f0d4762952904df7cdaadec.html"
           }
+        },
+        {
+          "date": "2026-11-11",
+          "announced": "2026-11-09",
+          "status": "case",
+          "suspendedUntil": "2027-01-10",
+          "suspends": "October 2025 rules",
+          "label": "Licensing from 2023 to April 2025 stays in force, and the 0.1 percent rule has still not taken effect",
+          "event": "2026-11-09-october-controls-suspension-extended",
+          "cite": {
+            "fr": "MOFCOM and GAC Announcement 2026 No. 58",
+            "url": "http://dltb.mofcom.gov.cn/swyw/art/2026/art_bab1f1be0cee4e4ab0b496f02e7cff0d.html"
+          }
         }
       ],
       "short": "Minerals elsewhere"
@@ -697,8 +745,8 @@
     {
       "id": "diffusion",
       "name": "AI chips to the rest of the world",
-      "route": "US → D:1, D:4 and D:5, the UAE, and D:5 or Macau firms",
-      "what": "The top band of accelerators, ECCNs 3A090.a and 4A090.a. The regulations still require a license for them to or within any destination, under 15 CFR 742.6(a)(6)(iii)(A). BIS said in July 2026 that it enforces that requirement only for destinations in Country Groups D:1, D:4 and D:5 that are not also in A:5 or A:6, for the United Arab Emirates, and for entities headquartered in Country Group D:5 or Macau, or whose ultimate parent is, wherever they are located. Shipments to UAE government agencies, and to the companies approved in supplement no. 8 to part 740, need no license. The requirement came from the AI Diffusion Rule of January 2025, which the Commerce Department said on 13 May 2025 it would rescind. That rule let exporters ship without a license to nineteen destinations, the United States and eighteen allies listed in supplement no. 5 to part 740, under License Exception AIA. License Exception LPP allowed up to 26,900,000 TPP a year per recipient elsewhere. The rule reviewed license applications for the nineteen with a presumption of approval, and counted the rest against a cap of 790,000,000 TPP per country through 2027.",
+      "route": "US → D:1, D:4 and D:5, the UAE, five more countries, and D:5 or Macau firms",
+      "what": "Advanced AI chips, ECCN 3A090 except its memory entry 3A090.c, and the computers built from them, ECCN 4A090. Since 19 November 2026 a license is required to or within Indonesia, Malaysia, Singapore, Brazil and Thailand, under 15 CFR 742.6(a)(6)(iii)(A)(1). Shipments there to a consignee or end user headquartered in the United States, or whose ultimate parent is, need no license if the exporter reports them to BIS each month. Under 742.6(a)(6)(iii)(A)(2), a license is also required for destinations in Country Groups D:1, D:4 and D:5 that are not also in A:5 or A:6, and for the United Arab Emirates. Shipments to the approved entities in the UAE listed in supplement no. 8 to part 740 need no license. Under 15 CFR 744.23(a)(3), a license is required in any other destination when the items are for an entity headquartered in Country Group D:5 or Macau, or whose ultimate parent is. Under 15 CFR 744.24, a license is required in any destination when the shipper knows the items are bound for a data center that gives such entities access to more than 12,000,000 aggregate TPP, the sum of the TPP of the chips. The rule of 19 November 2026 also removed the AI Diffusion Rule of January 2025 from the regulations. That rule had required a license for the top band of these chips to or within any destination, and the Commerce Department said on 13 May 2025 it would rescind it. It let exporters ship without a license to nineteen destinations, the United States and eighteen allies listed in supplement no. 5 to part 740, under License Exception AIA. License Exception LPP allowed up to 26,900,000 TPP a year per recipient elsewhere. The rule reviewed license applications for the nineteen with a presumption of approval, and counted the rest against a cap of 790,000,000 TPP per country through 2027.",
       "order": 10,
       "chapter": "geopolitics",
       "initial": "open",
@@ -746,6 +794,17 @@
             "fr": "91 FR 43034",
             "cfr": "15 CFR 742.6(a)(6)(iii)(A) and (B); supplement no. 8 to part 740",
             "url": "https://www.govinfo.gov/content/pkg/FR-2026-07-14/html/2026-14132.htm"
+          }
+        },
+        {
+          "date": "2026-11-19",
+          "status": "case",
+          "label": "License required for five more countries and for data centers serving D:5 or Macau firms, and the AI Diffusion Rule is removed",
+          "event": "2026-11-19-remote-access-rule",
+          "cite": {
+            "fr": "91 FR 74970",
+            "cfr": "15 CFR 742.6(a)(6)(iii)(A); 744.24",
+            "url": "https://www.govinfo.gov/content/pkg/FR-2026-11-19/pdf/2026-23529.pdf"
           }
         }
       ],
@@ -834,18 +893,6 @@
   ],
   "upcoming": [
     {
-      "date": "2026-11-09",
-      "label": "The US suspension of the affiliates rule ends unless extended, and the rule returns the next day",
-      "event": "2025-11-10-one-year-truce",
-      "source": "https://www.federalregister.gov/documents/2025/11/12/2025-19846/one-year-suspension-of-expansion-of-end-user-controls-for-affiliates-of-certain-listed-entities"
-    },
-    {
-      "date": "2026-11-10",
-      "label": "China's suspension of six October 2025 export control announcements, including the 0.1 percent rare earth rule, ends unless extended",
-      "event": "2025-11-07-october-controls-suspended",
-      "source": "https://www.mofcom.gov.cn/zwgk/zcfb/art/2025/art_b1ec77dd3f0d4762952904df7cdaadec.html"
-    },
-    {
       "date": "2026-11-27",
       "label": "China's suspension of its ban on gallium, germanium, antimony and superhard material exports to the US ends unless extended",
       "event": "2025-11-09-us-ban-suspended",
@@ -858,10 +905,34 @@
       "source": "https://www.federalregister.gov/documents/2026/08/11/2026-16400/adjusting-imports-of-polysilicon-and-its-derivatives-into-the-united-states"
     },
     {
+      "date": "2026-12-21",
+      "label": "Last day to complete shipments that were on a carrier on 19 November 2026 under the terms the US remote access rule removed",
+      "event": "2026-11-19-remote-access-rule",
+      "source": "https://www.govinfo.gov/content/pkg/FR-2026-11-19/pdf/2026-23529.pdf"
+    },
+    {
       "date": "2026-12-31",
       "label": "Last day for chip designers to apply for approved IC designer status under the US foundry rule",
       "event": "2025-01-16-foundry-diligence",
       "source": "https://www.federalregister.gov/documents/2026/04/09/2026-06851/extension-of-authorized-integrated-circuit-ic-designer-status-and-application-deadline-to-become-an"
+    },
+    {
+      "date": "2027-01-10",
+      "label": "The US suspension of the affiliates rule ends unless extended again",
+      "event": "2026-11-09-affiliates-suspension-extended",
+      "source": "https://www.federalregister.gov/documents/2026/11/09/2026-22793/extension-of-the-suspension-of-expansion-of-end-user-controls-for-affiliates-of-certain-listed"
+    },
+    {
+      "date": "2027-01-10",
+      "label": "China's suspension of six October 2025 export control announcements, including the 0.1 percent rare earth rule, ends unless extended again",
+      "event": "2026-11-09-october-controls-suspension-extended",
+      "source": "http://dltb.mofcom.gov.cn/swyw/art/2026/art_bab1f1be0cee4e4ab0b496f02e7cff0d.html"
+    },
+    {
+      "date": "2027-01-19",
+      "label": "Comments on the US remote access rule are due at BIS",
+      "event": "2026-11-19-remote-access-rule",
+      "source": "https://www.govinfo.gov/content/pkg/FR-2026-11-19/pdf/2026-23529.pdf"
     },
     {
       "date": "2027-12-23",
