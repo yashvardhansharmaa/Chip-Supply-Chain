@@ -26,10 +26,10 @@
 .sy-frame.held { stroke: var(--ink); stroke-width: 1.5; }
 .sy-ctray { fill: var(--bg-2); }
 .sy-gpu { fill: var(--rule-ink); transition: fill 500ms var(--ease); }
-.sy-gpu.on { fill: var(--accent); }
+.sy-gpu.on { fill: var(--accent-fill); } /* marks in wine (the wine for dark on dark), words in --accent-ink */
 .sy-stray { fill: var(--ink-2); }
 .sy-port { fill: var(--bg-3); }
-.sy-up { fill: none; stroke: var(--accent); stroke-linejoin: round; }
+.sy-up { fill: none; stroke: var(--accent-fill); stroke-linejoin: round; }
 .sy-up.ctx, .sy-out.ctx { stroke: var(--ctx); }
 .sy-out { fill: none; stroke: var(--ink-2); stroke-linejoin: round; }
 .sy-net { fill: none; stroke: var(--ink-2); }

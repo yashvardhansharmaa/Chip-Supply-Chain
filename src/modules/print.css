@@ -49,7 +49,7 @@
      dark-theme selector at equal weight (a system-dark block uses :root:not([data-theme="light"])). */
   :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
     --bg: #fff; --bg-2: #f4f4f2; --bg-3: #e4e3df;
-    --ink: #171716; --ink-2: #45443f; --muted: #56554f;
+    --ink: #171716; --ink-2: #45443f; --muted: #56554f; --read-ink: #171716; /* the dark screen's reading text (chapter.css) prints in ink */
     --line: #e1e0db; --line-2: #c4c3bd; --rule-ink: #8c8a84; --control-edge: #8c8a84;
     --accent: #7a1f2b; --accent-ink: #7a1f2b; --accent-soft: #f3e3e5; --accent-fill: #7a1f2b;
     --ctx: #d2d1cc; /* the chart rule: the values that are not the largest (the largest is wine) */

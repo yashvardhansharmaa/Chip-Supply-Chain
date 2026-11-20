@@ -145,6 +145,46 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 /* the phone's expanded strip: the numbers alone, over the strip's canvas (src/app.js Stage.stripBalloons) */
 .stage .ch-balloons.is-strip { right: auto; bottom: auto; z-index: 2; }
 .ch-balloons.is-strip .nm { display: none; }
+/* the drawing answers its parts (src/app.js Stage.entrance, Stage.setFocus; built 21 Nov 2026). Screen only: paper prints the
+   finished still. In the entrance each balloon waits (.intro) and comes in on its turn (.in): its leader draws out from the
+   balloon to the part, the balloon and its number grow in, the dot lands, the name follows */
+@media screen {
+  .ch-balloons.intro g { opacity: 0; }
+  .ch-balloons.intro g line { stroke-dasharray: 1 1; stroke-dashoffset: 1; }
+  .ch-balloons.intro g .dot { transform-box: fill-box; transform-origin: center; transform: scale(0); }
+  .ch-balloons.intro g .bal, .ch-balloons.intro g .num { transform-box: fill-box; transform-origin: center; transform: scale(0.4); }
+  .ch-balloons.intro g .nm { opacity: 0; }
+  .ch-balloons.intro g.in { opacity: 1; transition: opacity 0.18s; }
+  .ch-balloons.intro g.in .bal, .ch-balloons.intro g.in .num { transform: scale(1); transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  .ch-balloons.intro g.in line { stroke-dashoffset: 0; transition: stroke-dashoffset 0.5s 0.12s var(--ease); }
+  .ch-balloons.intro g.in .dot { transform: scale(1); transition: transform 0.26s 0.55s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  .ch-balloons.intro g.in .nm { opacity: 1; transition: opacity 0.35s 0.2s; }
+  /* a part pointed at, in the list or at its balloon: that balloon in wine, the others and the other rows step back. Each
+     balloon is a 44 px target (.hit) */
+  .ch-balloons g { transition: opacity 0.25s; }
+  .ch-balloons .bal, .ch-balloons .num, .ch-balloons .nm, .ch-balloons .hit { pointer-events: auto; cursor: pointer; }
+  .ch-balloons .hit { fill: transparent; stroke: none; }
+  .ch-balloons.has-on g:not(.on) { opacity: 0.22; }
+  .ch-balloons g.on line { stroke: var(--accent); stroke-width: 2; }
+  .ch-balloons g.on .bal { fill: var(--accent); stroke: var(--accent); }
+  .ch-balloons g.on .num { fill: var(--bg); }
+  .ch-balloons g.on .dot { fill: var(--accent); }
+  .ch-balloons g.on .nm { fill: var(--accent-ink); }
+  .ch-parts li[data-n] { transition: opacity 0.2s; }
+  .ch-parts li[data-n] b { transition: background-color 0.2s, border-color 0.2s, color 0.2s; }
+  .ch-parts li[tabindex], .stage .ch-parts li[data-n] { cursor: pointer; }
+  .ch-parts.has-on li:not(.on) { opacity: 0.42; }
+  .ch-parts li.on b, .ch-parts li[tabindex]:hover b { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+}
+/* on a touch screen each part is a 44 px target: in the phone's opened strip, and beside the drawing where a wide touch screen
+   sets it in the chapter's slot */
+@media screen and (hover: none), screen and (pointer: coarse) {
+  .stage .stage-parts .ch-parts li[data-n] { min-height: 44px; padding-top: 0; padding-bottom: 0; }
+}
+@media screen and (hover: none) and (min-width: 901px), screen and (pointer: coarse) and (min-width: 901px) {
+  .chapter .ch-spec-cap .ch-parts li[data-n] { min-height: 44px; padding-top: 0; padding-bottom: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .ch-balloons g, .ch-balloons g *, .ch-parts li[data-n], .ch-parts li[data-n] b { transition: none !important; } }
 /* the two chapters that are not stages set their drawing on the night ground (the hybrid's --night tokens): the ground fills the drawing's slot,
    which gives the plate its own edge, and the caption sits under it on the page's ground */
 .chapter .ch-spec[data-night] { --draw-h: 640px; --lift: 120px; --slack: 120px; margin-top: 36px; }
@@ -315,6 +355,11 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 .chapter > .prose > h2::before { content: counter(sec, decimal-leading-zero); display: block; margin: 0 0 14px; font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); line-height: 16px; color: var(--muted); }
 .chapter > .prose > h3 { margin: 40px 0 14px; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: var(--t-lead); line-height: 1.27; letter-spacing: -0.005em; }
 .chapter > .prose > p, .chapter > .prose > ul, .chapter > .prose > ol { font-size: var(--t-text); line-height: 1.55; }
+/* dark: light type on a dark ground blooms, so the reading text is a shade below white (--read-ink, the night edition); body
+   already draws it with grayscale smoothing (styles.css). The weights stay the site's own, so switching the theme never moves
+   a line break */
+:root[data-theme="dark"] .chapter > .prose > p, :root[data-theme="dark"] .chapter > .prose > ul, :root[data-theme="dark"] .chapter > .prose > ol,
+:root[data-theme="dark"] .chapter .plain p, :root[data-theme="dark"] .chapter .inshort p, :root[data-theme="dark"] .chapter .inshort li { color: var(--read-ink); }
 
 /* ---------- figures: one grammar for every chart ---------- */
 /* a figure keeps to the text's measure (666 px, --measure of the 20 px text). Wider, the bars stretched across the page and the
@@ -341,7 +386,7 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 .chapter .hb-r i { height: 22px; background: var(--ctx); border-radius: 0 2px 2px 0; }
 .chapter .hb-r b { font-family: var(--font-ui); font-size: 13.5px; font-weight: 400; color: var(--ink-2); font-variant-numeric: tabular-nums; }
 .chapter .hb.top .hb-l { color: var(--ink); font-weight: 600; }
-.chapter .hb.top .hb-r i { background: var(--accent); }
+.chapter .hb.top .hb-r i { background: var(--accent-fill); } /* the mark in wine, the wine for dark on dark (the night edition); its value in --accent-ink */
 .chapter .hb.top .hb-r b { font-family: var(--font-ui); font-size: 15px; font-weight: 700; color: var(--accent-ink); }
 .chapter .hb.rest .hb-r i { background: repeating-linear-gradient(135deg, var(--rule-ink) 0 1px, transparent 1px 5px); box-shadow: inset 0 0 0 1px var(--rule-ink); }
 @media (min-width: 641px) { .chapter .hbars { gap: 10px; } .chapter .hb { column-gap: 14px; } }
@@ -354,7 +399,7 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 .chapter .col > b { display: block; margin: 0 calc(-0.5 * var(--cg)) 6px; text-align: center; font-size: 13.5px; font-weight: 400; line-height: 1.25; color: var(--ink-2); white-space: nowrap; }
 .chapter .col > i { display: block; height: calc(var(--h) * var(--ch)); background: var(--ctx); border-radius: 2px 2px 0 0; }
 .chapter .col.top > b { font-size: 15px; font-weight: 700; color: var(--accent-ink); }
-.chapter .col.top > i { background: var(--accent); }
+.chapter .col.top > i { background: var(--accent-fill); }
 .chapter .col.rest > i { background: repeating-linear-gradient(135deg, var(--rule-ink) 0 1px, transparent 1px 5px); box-shadow: inset 0 0 0 1px var(--rule-ink); }
 .chapter .col-ref { position: absolute; left: -5px; right: -5px; height: 2px; margin-bottom: -1px; background: var(--ink); }
 .chapter .col-ref span { position: absolute; left: calc(100% + 6px); top: 50%; transform: translateY(-50%); white-space: nowrap; font-size: 12.5px; line-height: 1.2; color: var(--ink-2); }
@@ -366,7 +411,7 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
    its high end inside a 1.5 px outline; the solid part is the mark's wine, or the tint when the span alone is what the title
    names (.span), and a reference value inside it is a 2 px ink tick, named beside it */
 .chapter .hb.range .hb-r i, .chapter .col.range > i { --fill: var(--ctx); --edge: var(--rule-ink); position: relative; border-radius: 0; box-shadow: inset 0 0 0 1.5px var(--edge); }
-.chapter .hb.range.top .hb-r i, .chapter .col.range.top > i { --fill: var(--accent); --edge: var(--accent); }
+.chapter .hb.range.top .hb-r i, .chapter .col.range.top > i { --fill: var(--accent-fill); --edge: var(--accent-fill); } /* edge and hatching in the fill's own wine, so no second red outlines it */
 .chapter .hb.range.top.span .hb-r i, .chapter .col.range.top.span > i { --fill: var(--ctx); }
 .chapter .hb.range .hb-r i { background: linear-gradient(90deg, var(--fill) 0 var(--lo), transparent var(--lo)), repeating-linear-gradient(135deg, var(--edge) 0 2px, transparent 2px 6px); }
 .chapter .col.range > i { background: linear-gradient(0deg, var(--fill) 0 var(--lo), transparent var(--lo)), repeating-linear-gradient(135deg, var(--edge) 0 2px, transparent 2px 6px); }
@@ -392,8 +437,8 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 .chapter .cg-arrow::before { content: ""; position: absolute; top: 50%; width: 0; height: 0; border-style: solid; transform: translateY(-50%); }
 .chapter .cg-arrow[data-dir="down"]::before { left: -1px; border-width: var(--hw) var(--hl) var(--hw) 0; border-color: transparent var(--c) transparent transparent; }
 .chapter .cg-arrow[data-dir="up"]::before { right: -1px; border-width: var(--hw) 0 var(--hw) var(--hl); border-color: transparent transparent transparent var(--c); }
-.chapter .cg-row.top .cg-arrow { --c: var(--accent); --hl: 12px; --hw: 6.5px; height: 2.6px; margin-top: -1.3px; }
-.chapter .cg-row.top .cg-from { border-color: var(--accent); }
+.chapter .cg-row.top .cg-arrow { --c: var(--accent-fill); --hl: 12px; --hw: 6.5px; height: 2.6px; margin-top: -1.3px; }
+.chapter .cg-row.top .cg-from { border-color: var(--accent-fill); }
 .chapter .cg-v { font-size: 13.5px; font-weight: 400; color: var(--ink-2); white-space: nowrap; }
 .chapter .cg-row.top .cg-v { font-size: 15px; font-weight: 700; color: var(--accent-ink); }
 /* on a phone: narrower columns; a change row's name and years on one line over its axis */
@@ -430,7 +475,7 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 .chapter .pw-range { position: absolute; top: 0; bottom: 0; left: var(--lo); right: 0; border-left: 1.5px solid var(--rule-ink); background: repeating-linear-gradient(135deg, var(--rule-ink) 0 2px, transparent 2px 6px); }
 .chapter .pw-part { position: absolute; top: 1.5px; bottom: 1.5px; left: calc(var(--x0) + 0.6px); width: calc(var(--w) - 1.2px); background: var(--ctx); transition: opacity .15s; }
 .chapter .pw-part[data-k="0"] { left: 1.5px; width: calc(var(--w) - 2.1px); }
-.chapter .pw-part.top { background: var(--accent); }
+.chapter .pw-part.top { background: var(--accent-fill); }
 .chapter .pw-rows { margin-top: var(--g); }
 .chapter .pw-row { position: relative; height: var(--rh); padding-left: calc(var(--b) + var(--lx)); line-height: var(--rh); white-space: nowrap; transition: opacity .15s; }
 .chapter .pw-lead { position: absolute; box-sizing: border-box; left: var(--x); width: calc(var(--b) + var(--lx) - 6px - var(--x)); top: calc(2px - var(--g) - var(--i) * var(--rh)); height: calc(var(--g) - 2px + var(--i) * var(--rh) + var(--rh) / 2); margin-left: -0.5px; border: solid var(--rule-ink); border-width: 0 0 1px 1px; }
@@ -487,6 +532,9 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 /* an explainer animation: its steps above, the video, the caption under it */
 .chapter .figure--anim .anim-bar { margin: 0 0 12px; }
 .chapter .figure--anim .anim-cap { margin: 12px 0 0; font-family: var(--font-body); font-size: var(--t-small); }
+/* dark, where the film has no frame (styles.css, the night edition): the film's own margin is the frame, and the caption sits
+   8 px lower so the space above and below the film reads even */
+:root[data-theme="dark"] .chapter .figure--anim .anim-cap { margin-top: 20px; }
 /* a timeline: dates in mono on a hairline */
 .chapter .figure .tl li { font-family: var(--font-body); font-size: var(--t-small); }
 .chapter .figure .tl li::before { background: var(--ink); }

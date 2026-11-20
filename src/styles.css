@@ -107,9 +107,14 @@
   --accent-fill: #a8414b;
   --ctx: #45443f;
   --c1: #5b8ee6; --c2: #ef8140; --c3: #34b585; --c4: #d9b21e; --c5: #8676d8; --c6: #e0504a; --c7: #4f9c3a; --c8: #8a9099;
-  --stage-ink: 232, 231, 227; --stage-accent: 217, 138, 149;
+  /* the night edition (built 21 Nov 2026, qa/ideas-nov/visual, "Night edition"): a dark theme drawn for the dark. Marks are
+     in the wine for dark, words in its rose: the marked bar, range bar and meter fill with --accent-fill (#a8414b, the owner's
+     dark pick for bars of 27 Sept), their values stay --accent-ink. The stipple is a shade below white (232, 231, 227 until
+     then), and the reading text takes --read-ink (src/modules/chapter.css) */
+  --stage-ink: 214, 212, 206; --stage-accent: 217, 138, 149;
+  --read-ink: #dcdad4;
   --shadow: 0 0 0 1px rgba(0, 0, 0, 0.5), 0 18px 30px -18px rgba(0, 0, 0, 0.6);
-  --bar-5: var(--accent); --bar-4: #8c8a84; --bar-3: #45443f; /* Extreme the wine for dark, 7.2:1 on the ground; High mid gray */
+  --bar-5: var(--accent-fill); --bar-4: #8c8a84; --bar-3: #45443f; /* Extreme in the wine for dark marks, 3.1:1 on the ground (the rose, 7.2:1, until the night edition); High mid gray */
   --scrim: rgba(6, 6, 5, 0.72);
   color-scheme: dark;
 }
@@ -127,6 +132,10 @@ html.kb:has(.view[data-view="walk"]:not([hidden]) .wk-rail[data-show="1"]:not([h
   html.kb:has(.stage[data-hidden="1"]) { scroll-padding-bottom: 60px; }
 }
 @media (prefers-reduced-motion: reduce) { .stage { transition: none; } html { scroll-behavior: auto; } }
+/* the theme button crossfades the page between the themes in 0.28 s (the night edition; src/app.js Theme runs the switch inside
+   a view transition and marks it theme-fade, so no other transition takes this timing); none under reduced motion */
+html.theme-fade::view-transition-old(root), html.theme-fade::view-transition-new(root) { animation-duration: 280ms; animation-timing-function: ease; }
+@media (prefers-reduced-motion: reduce) { html.theme-fade::view-transition-old(root), html.theme-fade::view-transition-new(root) { animation: none; } }
 /* a phone's page titles: one size for the chapters and the views, as large as the width allows */
 @media (max-width: 900px) { :root { --t-title: min(68px, 15vw); } }
 body {
@@ -370,7 +379,7 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before, .gl-
 .hb-r { display: flex; align-items: center; gap: 8px; padding-right: var(--vw, 3.6em); }
 .hb-r i { display: block; flex: none; height: 12px; background: var(--ctx); }
 .hb-r b { flex: none; font-weight: 500; font-variant-numeric: tabular-nums; color: var(--ink); white-space: nowrap; margin-right: calc(-1 * var(--vw, 3.6em)); }
-.hb.top .hb-r i { background: var(--accent); } /* the chart rule: the largest value in wine with a bold wine value, the rest in the light tint */
+.hb.top .hb-r i { background: var(--accent-fill); } /* the chart rule: the largest value in wine with a bold wine value, the rest in the light tint */
 .hb.top .hb-r b { color: var(--accent-ink); font-weight: 700; }
 @media (min-width: 641px) { .hbars { gap: 7px; } .hb { grid-template-columns: min(var(--lw, 14em), 45%) minmax(0, 1fr); align-items: center; column-gap: 12px; } .hb-l { text-align: right; } }
 .stack-bar { display: flex; height: 26px; gap: 2px; border-radius: 0; overflow: hidden; }
@@ -752,17 +761,17 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before, .gl-
    garnet in light; dark already separates, 3.5:1 against the wine) */
 .ex-legend, .ex-panel { --ex-bar: var(--ctx); } /* the chart rule: each firm's peak year in wine, the other years in the light tint */
 .ex-legend .lg-bar { width: 10px; height: 12px; border-radius: 0; background: var(--ex-bar); }
-.ex-legend .lg-top { width: 10px; height: 12px; border-radius: 0; background: var(--accent); }
+.ex-legend .lg-top { width: 10px; height: 12px; border-radius: 0; background: var(--accent-fill); }
 .ex-legend .lg-rule { width: 1px; height: 12px; border-radius: 0; border-left: 1px solid var(--ink); background: none; opacity: 0.4; }
 .ex-cat { grid-column: 1 / -1; margin: 18px 0 0; padding-bottom: 6px; border-bottom: 1px solid var(--ink); font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: 0; color: var(--ink-2); }
 .ex-cat:first-child { margin-top: 4px; }
 .ex-panel .tick { font-family: var(--font-mono); font-size: 11px; fill: var(--muted); }
 .ex-pnote { margin: 4px 0 0; font-family: var(--font-ui); font-size: 12px; line-height: 1.4; color: var(--muted); } /* what the share measures, where it differs from the firm's other published share (final QA B10) */
 .ex-panel .bar { fill: var(--ex-bar); }
-.ex-panel .bar.top { fill: var(--accent); }
+.ex-panel .bar.top { fill: var(--accent-fill); }
 /* a hovered bar darkens; the peak keeps its wine */
 .ex-panel a:hover rect, .ex-panel a:hover circle { fill: var(--ink-2); stroke: none; }
-.ex-panel a:hover rect.top { fill: var(--accent); }
+.ex-panel a:hover rect.top { fill: var(--accent-fill); }
 .ex-panel .share { font-family: var(--font-mono); font-size: 11px; fill: var(--muted); paint-order: stroke; stroke: var(--bg); stroke-width: 3px; stroke-linejoin: round; }
 .ex-panel .share.top { fill: var(--accent-ink); font-weight: 700; }
 .ex-panel .val { font-family: var(--font-mono); font-size: 11px; font-weight: 500; fill: var(--ink); }
@@ -1126,7 +1135,7 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before, .gl-
 .fc-dots { display: flex; gap: 6px; }
 .fc-dots i { width: 9px; height: 9px; border: 1px solid var(--ink-2); }
 .fc-dots i.on { background: var(--ink); }
-.fc-dots i.k { background: var(--accent); border-color: var(--accent); }
+.fc-dots i.k { background: var(--accent-fill); border-color: var(--accent-fill); }
 .fc-dots i.m { background: repeating-linear-gradient(135deg, var(--ink-2) 0 1px, transparent 1px 3px); }
 .fc-end { margin-top: 10px; }
 .fc-score { display: flex; align-items: baseline; gap: 14px; margin: 8px 0 6px; }
@@ -1160,6 +1169,11 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before, .gl-
 .anim-stage { position: relative; width: 100%; background: var(--bg); border: 1px solid var(--line); box-sizing: border-box; cursor: pointer; }
 /* a hairline frame: browsers decode video colors a shade differently from the page, and a line hides that */
 .anim-stage video { display: block; width: 100%; height: 100%; }
+/* the night edition: in dark the films sit flush in the page. A film's ground, a cool rgb(20, 23, 28), is moved onto the
+   page's warm one (18, 18, 17) by a tone curve that moves only the darkest ninth of each channel and leaves every color above
+   it as it was (#night-ground, which src/app.js Anim adds to a page with films), so the hairline that hid the seam goes, and
+   the explainers drawn live lose theirs with it (src/modules/chapter.css moves the caption down to even the space) */
+@media screen { :root[data-theme="dark"] .anim-stage { border-color: transparent; } :root[data-theme="dark"] .anim-stage video { filter: url(#night-ground); } }
 .anim-print { display: none; }
 .anim-state { flex: none; font-family: var(--font-mono); font-size: var(--fs-cap-s); font-weight: 500; line-height: 1.4; letter-spacing: 0; color: var(--ink-2); background: var(--bg); border: 1px solid var(--line-2); padding: 2px 7px; opacity: 0; transition: opacity 0.2s; pointer-events: none; }
 .figure--anim.is-paused .anim-state { opacity: 1; }

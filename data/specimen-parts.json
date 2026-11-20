@@ -1,12 +1,12 @@
 {
-  "_about": "The numbered parts on a chapter's specimen drawing, keyed by chapter id (the owner's decisions of 25 Oct 2026, Lithography, and 29 Oct 2026, Silicon and Wafers, Memory and HBM and Advanced Packaging, from the labels mockup; add a chapter only from a sourced list). Each part has its number (n), its name, the shorter name its balloon carries where the list's name is long (label), and either its maker as the chapter's card and text source it (maker, with link: [href, words] where a section of the chapter covers it) or the chapter that covers it (stage, a chapter id, shown as 'see stage NN, Title'). Where a part has no maker of its own, maker is a short phrase from the chapter's text (approved by the owner, 29 Oct 2026). 'at' lists the points on the specimen its balloon points at, in the specimen's own units as specimens/<specimen>.js draws them; the runtime turns them with the drawing (src/app.js Stage.balloons). build/build.js draws the list under the specimen's caption. 'still' is the drawing the chapter prints in place of the live one, and the door to the chapter shows (build/assets/specimens/): its file, its size in pixels, and each part's points on it, in the order of 'parts'. Lithography's is the hybrid mockup's annotated render; the others are rendered from the live drawing by qa/redesign/stills-parts.js, which writes their points.",
+  "_about": "The numbered parts on a chapter's specimen drawing, keyed by chapter id (the owner's decisions of 25 Oct 2026, Lithography, and 29 Oct 2026, Silicon and Wafers, Memory and HBM and Advanced Packaging, from the labels mockup; add a chapter only from a sourced list). Each part has its number (n), its name, the shorter name its balloon carries where the list's name is long (label), and either its maker as the chapter's card and text source it (maker, with link: [href, words] where a section of the chapter covers it) or the chapter that covers it (stage, a chapter id, shown as 'see stage NN, Title'). Where a part has no maker of its own, maker is a short phrase from the chapter's text (approved by the owner, 29 Oct 2026). 'at' lists the points on the specimen its balloon points at, in the specimen's own units as specimens/<specimen>.js draws them; the runtime turns them with the drawing (src/app.js Stage.balloons). 'light' lists the shapes of the drawing a part lights when the reader points at it in the list or at its balloon (src/app.js Stage.setFocus), in the same units: a rod from one point to another with its radius (r), a ball round a point (r), or a box between two corners; soft is the width of the edge over which the light falls off; only keeps it to the ink or the accent points; layers [y, pitch, half] keeps it to thin layers at y, y + pitch and so on. build/build.js draws the list under the specimen's caption. 'still' is the drawing the chapter prints in place of the live one, and the door to the chapter shows (build/assets/specimens/): its file, its size in pixels, and each part's points on it, in the order of 'parts'. Lithography's is the hybrid mockup's annotated render; the others are rendered from the live drawing by qa/redesign/stills-parts.js, which writes their points.",
   "silicon-and-wafers": {
     "specimen": "boule-and-wafer",
     "parts": [
-      { "n": 1, "name": "Seed", "maker": "lowered to the melt and drawn slowly back up", "at": [[-0.2, 1.565, 0]] },
-      { "n": 2, "name": "Neck", "maker": "keeps the seed's first flaws out of the ingot", "at": [[-0.2, 1.465, 0]] },
-      { "n": 3, "name": "Ingot", "maker": "grown by Shin-Etsu Handotai (JP), SUMCO (JP), GlobalWafers (TW), SK Siltron (KR) and Siltronic (DE)", "at": [[-0.05, 0.3, 0]] },
-      { "n": 4, "name": "Wafers", "maker": "sawn from the ingot, then lapped, etched and polished", "at": [[0.28, -0.56, -0.06], [0.34, -0.708, 0.26]] }
+      { "n": 1, "name": "Seed", "maker": "lowered to the melt and drawn slowly back up", "at": [[-0.2, 1.565, 0]], "light": [{"box": [[-0.212, 1.528, -0.012], [-0.188, 1.602, 0.012]], "soft": 0.008}] },
+      { "n": 2, "name": "Neck", "maker": "keeps the seed's first flaws out of the ingot", "at": [[-0.2, 1.465, 0]], "light": [{"rod": [[-0.2, 1.405, 0], [-0.2, 1.528, 0]], "r": 0.009, "soft": 0.006}] },
+      { "n": 3, "name": "Ingot", "maker": "grown by Shin-Etsu Handotai (JP), SUMCO (JP), GlobalWafers (TW), SK Siltron (KR) and Siltronic (DE)", "at": [[-0.05, 0.3, 0]], "light": [{"rod": [[-0.2, -0.72, 0], [-0.2, 1.4, 0]], "r": 0.162, "soft": 0.02}] },
+      { "n": 4, "name": "Wafers", "maker": "sawn from the ingot, then lapped, etched and polished", "at": [[0.28, -0.56, -0.06], [0.34, -0.708, 0.26]], "light": [{"ball": [0.28, -0.5597, -0.06], "r": 0.16, "soft": 0.02}, {"ball": [0.34, -0.708, 0.26], "r": 0.16, "soft": 0.02}] }
     ],
     "still": {
       "file": "silicon-and-wafers-annotated.webp",
@@ -17,10 +17,10 @@
   "lithography": {
     "specimen": "euv-scanner",
     "parts": [
-      { "n": 1, "name": "Light source", "maker": "ASML San Diego (US), laser by Trumpf (DE)", "at": [[-1.14, -1.34, 0]] },
-      { "n": 2, "name": "Mirrors", "maker": "Zeiss SMT (DE)", "at": [[1.22, 0.6, 0], [1.06, -0.98, 0]] },
-      { "n": 3, "name": "Mask", "stage": "photomasks-and-pellicles", "at": [[0.06, 1.68, 0]] },
-      { "n": 4, "name": "Wafer", "stage": "silicon-and-wafers", "at": [[0.44, -1.74, 0]] }
+      { "n": 1, "name": "Light source", "maker": "ASML San Diego (US), laser by Trumpf (DE)", "at": [[-1.14, -1.34, 0]], "light": [{"rod": [[-2.16, -1.34, 0], [-0.5, -1.34, 0]], "r": 0.7, "soft": 0.07}, {"rod": [[-1.14, -0.9, 0], [-1.14, -0.45, 0]], "r": 0.1, "soft": 0.07}] },
+      { "n": 2, "name": "Mirrors", "maker": "Zeiss SMT (DE)", "at": [[1.22, 0.6, 0], [1.06, -0.98, 0]], "light": [{"ball": [-0.24, -0.82, 0], "r": 0.24, "soft": 0.05}, {"ball": [-0.98, -0.1, 0], "r": 0.34, "soft": 0.05}, {"ball": [-0.26, 0.66, 0], "r": 0.31, "soft": 0.05}, {"ball": [0.54, 1.02, 0], "r": 0.33, "soft": 0.05}, {"ball": [1.22, 0.6, 0], "r": 0.27, "soft": 0.05}, {"ball": [0.47, 0.2, 0], "r": 0.25, "soft": 0.05}, {"ball": [1.19, -0.18, 0], "r": 0.29, "soft": 0.05}, {"ball": [0.41, -0.58, 0], "r": 0.23, "soft": 0.05}, {"ball": [1.06, -0.98, 0], "r": 0.42, "soft": 0.05}] },
+      { "n": 3, "name": "Mask", "stage": "photomasks-and-pellicles", "at": [[0.06, 1.68, 0]], "light": [{"rod": [[-0.3, 1.73, 0], [0.42, 1.73, 0]], "r": 0.3, "soft": 0.07}] },
+      { "n": 4, "name": "Wafer", "stage": "silicon-and-wafers", "at": [[0.44, -1.74, 0]], "light": [{"rod": [[0.44, -1.83, 0], [0.44, -1.69, 0]], "r": 0.27, "soft": 0.07}] }
     ],
     "still": {
       "file": "lithography-annotated.webp",
@@ -31,10 +31,10 @@
   "memory-and-hbm": {
     "specimen": "hbm-stack",
     "parts": [
-      { "n": 1, "name": "Memory dies", "maker": "SK hynix (KR), Samsung (KR), Micron (US)", "at": [[0.4, 0.908, 0], [0.4, 0.686, 0]] },
-      { "n": 2, "name": "Base die", "maker": "SK hynix (KR) through HBM3E, TSMC (TW) for SK hynix's HBM4", "at": [[0.4, 0, 0]] },
-      { "n": 3, "name": "TSVs (through-silicon vias)", "label": "TSVs", "maker": "etched and filled with copper by the memory maker", "at": [[0.126, 0.464, 0]] },
-      { "n": 4, "name": "Microbumps", "maker": "joined by the memory maker", "link": ["#memory-and-hbm--how-a-stack-is-built", "see How a stack is built"], "at": [[0.315, 0.205, 0]] }
+      { "n": 1, "name": "Memory dies", "maker": "SK hynix (KR), Samsung (KR), Micron (US)", "at": [[0.4, 0.908, 0], [0.4, 0.686, 0]], "light": [{"box": [[-0.49, 0.07, -0.49], [0.49, 0.935, 0.49]], "soft": 0.01, "only": "ink"}] },
+      { "n": 2, "name": "Base die", "maker": "SK hynix (KR) through HBM3E, TSMC (TW) for SK hynix's HBM4", "at": [[0.4, 0, 0]], "light": [{"box": [[-0.5, -0.043, -0.5], [0.5, 0.046, 0.5]], "soft": 0.003}] },
+      { "n": 3, "name": "TSVs (through-silicon vias)", "label": "TSVs", "maker": "etched and filled with copper by the memory maker", "at": [[0.126, 0.464, 0]], "light": [{"box": [[-0.135, 0.046, -0.297], [0.135, 0.935, 0.297]], "soft": 0.006, "only": "accent"}] },
+      { "n": 4, "name": "Microbumps", "maker": "joined by the memory maker", "link": ["#memory-and-hbm--how-a-stack-is-built", "see How a stack is built"], "at": [[0.315, 0.205, 0]], "light": [{"box": [[-0.49, 0.046, -0.49], [0.49, 0.935, 0.49]], "soft": 0.003, "only": "accent", "layers": [0.057, 0.074, 0.007]}] }
     ],
     "still": {
       "file": "memory-and-hbm-annotated.webp",
@@ -45,10 +45,10 @@
   "advanced-packaging": {
     "specimen": "cowos-exploded",
     "parts": [
-      { "n": 1, "name": "Logic dies, two", "label": "Logic dies", "stage": "foundries-and-fabs", "at": [[-0.2217, 0.446, 0]] },
-      { "n": 2, "name": "HBM stacks, eight", "label": "HBM stacks", "stage": "memory-and-hbm", "at": [[0.5667, 0.46, 0.1067]] },
-      { "n": 3, "name": "Interposer", "maker": "TSMC (TW), as CoWoS", "at": [[0.6833, 0.229, 0]] },
-      { "n": 4, "name": "Substrate", "stage": "substrates-and-pcbs", "at": [[-0.8333, 0, 0.6]] }
+      { "n": 1, "name": "Logic dies, two", "label": "Logic dies", "stage": "foundries-and-fabs", "at": [[-0.2217, 0.446, 0]], "light": [{"box": [[-0.442, 0.374, -0.27], [-0.001, 0.452, 0.27]], "soft": 0.006}, {"box": [[0.001, 0.374, -0.27], [0.442, 0.452, 0.27]], "soft": 0.006}] },
+      { "n": 2, "name": "HBM stacks, eight", "label": "HBM stacks", "stage": "memory-and-hbm", "at": [[0.5667, 0.46, 0.1067]], "light": [{"box": [[-0.662, 0.374, -0.42], [-0.471, 0.464, 0.42]], "soft": 0.006}, {"box": [[0.471, 0.374, -0.42], [0.662, 0.464, 0.42]], "soft": 0.006}] },
+      { "n": 3, "name": "Interposer", "maker": "TSMC (TW), as CoWoS", "at": [[0.6833, 0.229, 0]], "light": [{"box": [[-0.687, 0.196, -0.446], [0.687, 0.266, 0.446]], "soft": 0.006}] },
+      { "n": 4, "name": "Substrate", "stage": "substrates-and-pcbs", "at": [[-0.8333, 0, 0.6]], "light": [{"box": [[-0.837, -0.09, -0.604], [0.837, 0.058, 0.604]], "soft": 0.006}] }
     ],
     "still": {
       "file": "advanced-packaging-annotated.webp",

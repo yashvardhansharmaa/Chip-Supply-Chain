@@ -107,9 +107,14 @@
   --accent-fill: #a8414b;
   --ctx: #45443f;
   --c1: #5b8ee6; --c2: #ef8140; --c3: #34b585; --c4: #d9b21e; --c5: #8676d8; --c6: #e0504a; --c7: #4f9c3a; --c8: #8a9099;
-  --stage-ink: 232, 231, 227; --stage-accent: 217, 138, 149;
+  /* the night edition (built 21 Nov 2026, qa/ideas-nov/visual, "Night edition"): a dark theme drawn for the dark. Marks are
+     in the wine for dark, words in its rose: the marked bar, range bar and meter fill with --accent-fill (#a8414b, the owner's
+     dark pick for bars of 27 Sept), their values stay --accent-ink. The stipple is a shade below white (232, 231, 227 until
+     then), and the reading text takes --read-ink (src/modules/chapter.css) */
+  --stage-ink: 214, 212, 206; --stage-accent: 217, 138, 149;
+  --read-ink: #dcdad4;
   --shadow: 0 0 0 1px rgba(0, 0, 0, 0.5), 0 18px 30px -18px rgba(0, 0, 0, 0.6);
-  --bar-5: var(--accent); --bar-4: #8c8a84; --bar-3: #45443f; /* Extreme the wine for dark, 7.2:1 on the ground; High mid gray */
+  --bar-5: var(--accent-fill); --bar-4: #8c8a84; --bar-3: #45443f; /* Extreme in the wine for dark marks, 3.1:1 on the ground (the rose, 7.2:1, until the night edition); High mid gray */
   --scrim: rgba(6, 6, 5, 0.72);
   color-scheme: dark;
 }
@@ -127,6 +132,10 @@ html.kb:has(.view[data-view="walk"]:not([hidden]) .wk-rail[data-show="1"]:not([h
   html.kb:has(.stage[data-hidden="1"]) { scroll-padding-bottom: 60px; }
 }
 @media (prefers-reduced-motion: reduce) { .stage { transition: none; } html { scroll-behavior: auto; } }
+/* the theme button crossfades the page between the themes in 0.28 s (the night edition; src/app.js Theme runs the switch inside
+   a view transition and marks it theme-fade, so no other transition takes this timing); none under reduced motion */
+html.theme-fade::view-transition-old(root), html.theme-fade::view-transition-new(root) { animation-duration: 280ms; animation-timing-function: ease; }
+@media (prefers-reduced-motion: reduce) { html.theme-fade::view-transition-old(root), html.theme-fade::view-transition-new(root) { animation: none; } }
 /* a phone's page titles: one size for the chapters and the views, as large as the width allows */
 @media (max-width: 900px) { :root { --t-title: min(68px, 15vw); } }
 body {
@@ -370,7 +379,7 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before, .gl-
 .hb-r { display: flex; align-items: center; gap: 8px; padding-right: var(--vw, 3.6em); }
 .hb-r i { display: block; flex: none; height: 12px; background: var(--ctx); }
 .hb-r b { flex: none; font-weight: 500; font-variant-numeric: tabular-nums; color: var(--ink); white-space: nowrap; margin-right: calc(-1 * var(--vw, 3.6em)); }
-.hb.top .hb-r i { background: var(--accent); } /* the chart rule: the largest value in wine with a bold wine value, the rest in the light tint */
+.hb.top .hb-r i { background: var(--accent-fill); } /* the chart rule: the largest value in wine with a bold wine value, the rest in the light tint */
 .hb.top .hb-r b { color: var(--accent-ink); font-weight: 700; }
 @media (min-width: 641px) { .hbars { gap: 7px; } .hb { grid-template-columns: min(var(--lw, 14em), 45%) minmax(0, 1fr); align-items: center; column-gap: 12px; } .hb-l { text-align: right; } }
 .stack-bar { display: flex; height: 26px; gap: 2px; border-radius: 0; overflow: hidden; }
@@ -752,17 +761,17 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before, .gl-
    garnet in light; dark already separates, 3.5:1 against the wine) */
 .ex-legend, .ex-panel { --ex-bar: var(--ctx); } /* the chart rule: each firm's peak year in wine, the other years in the light tint */
 .ex-legend .lg-bar { width: 10px; height: 12px; border-radius: 0; background: var(--ex-bar); }
-.ex-legend .lg-top { width: 10px; height: 12px; border-radius: 0; background: var(--accent); }
+.ex-legend .lg-top { width: 10px; height: 12px; border-radius: 0; background: var(--accent-fill); }
 .ex-legend .lg-rule { width: 1px; height: 12px; border-radius: 0; border-left: 1px solid var(--ink); background: none; opacity: 0.4; }
 .ex-cat { grid-column: 1 / -1; margin: 18px 0 0; padding-bottom: 6px; border-bottom: 1px solid var(--ink); font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: 0; color: var(--ink-2); }
 .ex-cat:first-child { margin-top: 4px; }
 .ex-panel .tick { font-family: var(--font-mono); font-size: 11px; fill: var(--muted); }
 .ex-pnote { margin: 4px 0 0; font-family: var(--font-ui); font-size: 12px; line-height: 1.4; color: var(--muted); } /* what the share measures, where it differs from the firm's other published share (final QA B10) */
 .ex-panel .bar { fill: var(--ex-bar); }
-.ex-panel .bar.top { fill: var(--accent); }
+.ex-panel .bar.top { fill: var(--accent-fill); }
 /* a hovered bar darkens; the peak keeps its wine */
 .ex-panel a:hover rect, .ex-panel a:hover circle { fill: var(--ink-2); stroke: none; }
-.ex-panel a:hover rect.top { fill: var(--accent); }
+.ex-panel a:hover rect.top { fill: var(--accent-fill); }
 .ex-panel .share { font-family: var(--font-mono); font-size: 11px; fill: var(--muted); paint-order: stroke; stroke: var(--bg); stroke-width: 3px; stroke-linejoin: round; }
 .ex-panel .share.top { fill: var(--accent-ink); font-weight: 700; }
 .ex-panel .val { font-family: var(--font-mono); font-size: 11px; font-weight: 500; fill: var(--ink); }
@@ -1126,7 +1135,7 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before, .gl-
 .fc-dots { display: flex; gap: 6px; }
 .fc-dots i { width: 9px; height: 9px; border: 1px solid var(--ink-2); }
 .fc-dots i.on { background: var(--ink); }
-.fc-dots i.k { background: var(--accent); border-color: var(--accent); }
+.fc-dots i.k { background: var(--accent-fill); border-color: var(--accent-fill); }
 .fc-dots i.m { background: repeating-linear-gradient(135deg, var(--ink-2) 0 1px, transparent 1px 3px); }
 .fc-end { margin-top: 10px; }
 .fc-score { display: flex; align-items: baseline; gap: 14px; margin: 8px 0 6px; }
@@ -1160,6 +1169,11 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before, .gl-
 .anim-stage { position: relative; width: 100%; background: var(--bg); border: 1px solid var(--line); box-sizing: border-box; cursor: pointer; }
 /* a hairline frame: browsers decode video colors a shade differently from the page, and a line hides that */
 .anim-stage video { display: block; width: 100%; height: 100%; }
+/* the night edition: in dark the films sit flush in the page. A film's ground, a cool rgb(20, 23, 28), is moved onto the
+   page's warm one (18, 18, 17) by a tone curve that moves only the darkest ninth of each channel and leaves every color above
+   it as it was (#night-ground, which src/app.js Anim adds to a page with films), so the hairline that hid the seam goes, and
+   the explainers drawn live lose theirs with it (src/modules/chapter.css moves the caption down to even the space) */
+@media screen { :root[data-theme="dark"] .anim-stage { border-color: transparent; } :root[data-theme="dark"] .anim-stage video { filter: url(#night-ground); } }
 .anim-print { display: none; }
 .anim-state { flex: none; font-family: var(--font-mono); font-size: var(--fs-cap-s); font-weight: 500; line-height: 1.4; letter-spacing: 0; color: var(--ink-2); background: var(--bg); border: 1px solid var(--line-2); padding: 2px 7px; opacity: 0; transition: opacity 0.2s; pointer-events: none; }
 .figure--anim.is-paused .anim-state { opacity: 1; }
@@ -1337,6 +1351,46 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 /* the phone's expanded strip: the numbers alone, over the strip's canvas (src/app.js Stage.stripBalloons) */
 .stage .ch-balloons.is-strip { right: auto; bottom: auto; z-index: 2; }
 .ch-balloons.is-strip .nm { display: none; }
+/* the drawing answers its parts (src/app.js Stage.entrance, Stage.setFocus; built 21 Nov 2026). Screen only: paper prints the
+   finished still. In the entrance each balloon waits (.intro) and comes in on its turn (.in): its leader draws out from the
+   balloon to the part, the balloon and its number grow in, the dot lands, the name follows */
+@media screen {
+  .ch-balloons.intro g { opacity: 0; }
+  .ch-balloons.intro g line { stroke-dasharray: 1 1; stroke-dashoffset: 1; }
+  .ch-balloons.intro g .dot { transform-box: fill-box; transform-origin: center; transform: scale(0); }
+  .ch-balloons.intro g .bal, .ch-balloons.intro g .num { transform-box: fill-box; transform-origin: center; transform: scale(0.4); }
+  .ch-balloons.intro g .nm { opacity: 0; }
+  .ch-balloons.intro g.in { opacity: 1; transition: opacity 0.18s; }
+  .ch-balloons.intro g.in .bal, .ch-balloons.intro g.in .num { transform: scale(1); transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  .ch-balloons.intro g.in line { stroke-dashoffset: 0; transition: stroke-dashoffset 0.5s 0.12s var(--ease); }
+  .ch-balloons.intro g.in .dot { transform: scale(1); transition: transform 0.26s 0.55s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  .ch-balloons.intro g.in .nm { opacity: 1; transition: opacity 0.35s 0.2s; }
+  /* a part pointed at, in the list or at its balloon: that balloon in wine, the others and the other rows step back. Each
+     balloon is a 44 px target (.hit) */
+  .ch-balloons g { transition: opacity 0.25s; }
+  .ch-balloons .bal, .ch-balloons .num, .ch-balloons .nm, .ch-balloons .hit { pointer-events: auto; cursor: pointer; }
+  .ch-balloons .hit { fill: transparent; stroke: none; }
+  .ch-balloons.has-on g:not(.on) { opacity: 0.22; }
+  .ch-balloons g.on line { stroke: var(--accent); stroke-width: 2; }
+  .ch-balloons g.on .bal { fill: var(--accent); stroke: var(--accent); }
+  .ch-balloons g.on .num { fill: var(--bg); }
+  .ch-balloons g.on .dot { fill: var(--accent); }
+  .ch-balloons g.on .nm { fill: var(--accent-ink); }
+  .ch-parts li[data-n] { transition: opacity 0.2s; }
+  .ch-parts li[data-n] b { transition: background-color 0.2s, border-color 0.2s, color 0.2s; }
+  .ch-parts li[tabindex], .stage .ch-parts li[data-n] { cursor: pointer; }
+  .ch-parts.has-on li:not(.on) { opacity: 0.42; }
+  .ch-parts li.on b, .ch-parts li[tabindex]:hover b { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+}
+/* on a touch screen each part is a 44 px target: in the phone's opened strip, and beside the drawing where a wide touch screen
+   sets it in the chapter's slot */
+@media screen and (hover: none), screen and (pointer: coarse) {
+  .stage .stage-parts .ch-parts li[data-n] { min-height: 44px; padding-top: 0; padding-bottom: 0; }
+}
+@media screen and (hover: none) and (min-width: 901px), screen and (pointer: coarse) and (min-width: 901px) {
+  .chapter .ch-spec-cap .ch-parts li[data-n] { min-height: 44px; padding-top: 0; padding-bottom: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .ch-balloons g, .ch-balloons g *, .ch-parts li[data-n], .ch-parts li[data-n] b { transition: none !important; } }
 /* the two chapters that are not stages set their drawing on the night ground (the hybrid's --night tokens): the ground fills the drawing's slot,
    which gives the plate its own edge, and the caption sits under it on the page's ground */
 .chapter .ch-spec[data-night] { --draw-h: 640px; --lift: 120px; --slack: 120px; margin-top: 36px; }
@@ -1507,6 +1561,11 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 .chapter > .prose > h2::before { content: counter(sec, decimal-leading-zero); display: block; margin: 0 0 14px; font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); line-height: 16px; color: var(--muted); }
 .chapter > .prose > h3 { margin: 40px 0 14px; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: var(--t-lead); line-height: 1.27; letter-spacing: -0.005em; }
 .chapter > .prose > p, .chapter > .prose > ul, .chapter > .prose > ol { font-size: var(--t-text); line-height: 1.55; }
+/* dark: light type on a dark ground blooms, so the reading text is a shade below white (--read-ink, the night edition); body
+   already draws it with grayscale smoothing (styles.css). The weights stay the site's own, so switching the theme never moves
+   a line break */
+:root[data-theme="dark"] .chapter > .prose > p, :root[data-theme="dark"] .chapter > .prose > ul, :root[data-theme="dark"] .chapter > .prose > ol,
+:root[data-theme="dark"] .chapter .plain p, :root[data-theme="dark"] .chapter .inshort p, :root[data-theme="dark"] .chapter .inshort li { color: var(--read-ink); }
 
 /* ---------- figures: one grammar for every chart ---------- */
 /* a figure keeps to the text's measure (666 px, --measure of the 20 px text). Wider, the bars stretched across the page and the
@@ -1533,7 +1592,7 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 .chapter .hb-r i { height: 22px; background: var(--ctx); border-radius: 0 2px 2px 0; }
 .chapter .hb-r b { font-family: var(--font-ui); font-size: 13.5px; font-weight: 400; color: var(--ink-2); font-variant-numeric: tabular-nums; }
 .chapter .hb.top .hb-l { color: var(--ink); font-weight: 600; }
-.chapter .hb.top .hb-r i { background: var(--accent); }
+.chapter .hb.top .hb-r i { background: var(--accent-fill); } /* the mark in wine, the wine for dark on dark (the night edition); its value in --accent-ink */
 .chapter .hb.top .hb-r b { font-family: var(--font-ui); font-size: 15px; font-weight: 700; color: var(--accent-ink); }
 .chapter .hb.rest .hb-r i { background: repeating-linear-gradient(135deg, var(--rule-ink) 0 1px, transparent 1px 5px); box-shadow: inset 0 0 0 1px var(--rule-ink); }
 @media (min-width: 641px) { .chapter .hbars { gap: 10px; } .chapter .hb { column-gap: 14px; } }
@@ -1546,7 +1605,7 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 .chapter .col > b { display: block; margin: 0 calc(-0.5 * var(--cg)) 6px; text-align: center; font-size: 13.5px; font-weight: 400; line-height: 1.25; color: var(--ink-2); white-space: nowrap; }
 .chapter .col > i { display: block; height: calc(var(--h) * var(--ch)); background: var(--ctx); border-radius: 2px 2px 0 0; }
 .chapter .col.top > b { font-size: 15px; font-weight: 700; color: var(--accent-ink); }
-.chapter .col.top > i { background: var(--accent); }
+.chapter .col.top > i { background: var(--accent-fill); }
 .chapter .col.rest > i { background: repeating-linear-gradient(135deg, var(--rule-ink) 0 1px, transparent 1px 5px); box-shadow: inset 0 0 0 1px var(--rule-ink); }
 .chapter .col-ref { position: absolute; left: -5px; right: -5px; height: 2px; margin-bottom: -1px; background: var(--ink); }
 .chapter .col-ref span { position: absolute; left: calc(100% + 6px); top: 50%; transform: translateY(-50%); white-space: nowrap; font-size: 12.5px; line-height: 1.2; color: var(--ink-2); }
@@ -1558,7 +1617,7 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
    its high end inside a 1.5 px outline; the solid part is the mark's wine, or the tint when the span alone is what the title
    names (.span), and a reference value inside it is a 2 px ink tick, named beside it */
 .chapter .hb.range .hb-r i, .chapter .col.range > i { --fill: var(--ctx); --edge: var(--rule-ink); position: relative; border-radius: 0; box-shadow: inset 0 0 0 1.5px var(--edge); }
-.chapter .hb.range.top .hb-r i, .chapter .col.range.top > i { --fill: var(--accent); --edge: var(--accent); }
+.chapter .hb.range.top .hb-r i, .chapter .col.range.top > i { --fill: var(--accent-fill); --edge: var(--accent-fill); } /* edge and hatching in the fill's own wine, so no second red outlines it */
 .chapter .hb.range.top.span .hb-r i, .chapter .col.range.top.span > i { --fill: var(--ctx); }
 .chapter .hb.range .hb-r i { background: linear-gradient(90deg, var(--fill) 0 var(--lo), transparent var(--lo)), repeating-linear-gradient(135deg, var(--edge) 0 2px, transparent 2px 6px); }
 .chapter .col.range > i { background: linear-gradient(0deg, var(--fill) 0 var(--lo), transparent var(--lo)), repeating-linear-gradient(135deg, var(--edge) 0 2px, transparent 2px 6px); }
@@ -1584,8 +1643,8 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 .chapter .cg-arrow::before { content: ""; position: absolute; top: 50%; width: 0; height: 0; border-style: solid; transform: translateY(-50%); }
 .chapter .cg-arrow[data-dir="down"]::before { left: -1px; border-width: var(--hw) var(--hl) var(--hw) 0; border-color: transparent var(--c) transparent transparent; }
 .chapter .cg-arrow[data-dir="up"]::before { right: -1px; border-width: var(--hw) 0 var(--hw) var(--hl); border-color: transparent transparent transparent var(--c); }
-.chapter .cg-row.top .cg-arrow { --c: var(--accent); --hl: 12px; --hw: 6.5px; height: 2.6px; margin-top: -1.3px; }
-.chapter .cg-row.top .cg-from { border-color: var(--accent); }
+.chapter .cg-row.top .cg-arrow { --c: var(--accent-fill); --hl: 12px; --hw: 6.5px; height: 2.6px; margin-top: -1.3px; }
+.chapter .cg-row.top .cg-from { border-color: var(--accent-fill); }
 .chapter .cg-v { font-size: 13.5px; font-weight: 400; color: var(--ink-2); white-space: nowrap; }
 .chapter .cg-row.top .cg-v { font-size: 15px; font-weight: 700; color: var(--accent-ink); }
 /* on a phone: narrower columns; a change row's name and years on one line over its axis */
@@ -1622,7 +1681,7 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 .chapter .pw-range { position: absolute; top: 0; bottom: 0; left: var(--lo); right: 0; border-left: 1.5px solid var(--rule-ink); background: repeating-linear-gradient(135deg, var(--rule-ink) 0 2px, transparent 2px 6px); }
 .chapter .pw-part { position: absolute; top: 1.5px; bottom: 1.5px; left: calc(var(--x0) + 0.6px); width: calc(var(--w) - 1.2px); background: var(--ctx); transition: opacity .15s; }
 .chapter .pw-part[data-k="0"] { left: 1.5px; width: calc(var(--w) - 2.1px); }
-.chapter .pw-part.top { background: var(--accent); }
+.chapter .pw-part.top { background: var(--accent-fill); }
 .chapter .pw-rows { margin-top: var(--g); }
 .chapter .pw-row { position: relative; height: var(--rh); padding-left: calc(var(--b) + var(--lx)); line-height: var(--rh); white-space: nowrap; transition: opacity .15s; }
 .chapter .pw-lead { position: absolute; box-sizing: border-box; left: var(--x); width: calc(var(--b) + var(--lx) - 6px - var(--x)); top: calc(2px - var(--g) - var(--i) * var(--rh)); height: calc(var(--g) - 2px + var(--i) * var(--rh) + var(--rh) / 2); margin-left: -0.5px; border: solid var(--rule-ink); border-width: 0 0 1px 1px; }
@@ -1679,6 +1738,9 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 /* an explainer animation: its steps above, the video, the caption under it */
 .chapter .figure--anim .anim-bar { margin: 0 0 12px; }
 .chapter .figure--anim .anim-cap { margin: 12px 0 0; font-family: var(--font-body); font-size: var(--t-small); }
+/* dark, where the film has no frame (styles.css, the night edition): the film's own margin is the frame, and the caption sits
+   8 px lower so the space above and below the film reads even */
+:root[data-theme="dark"] .chapter .figure--anim .anim-cap { margin-top: 20px; }
 /* a timeline: dates in mono on a hairline */
 .chapter .figure .tl li { font-family: var(--font-body); font-size: var(--t-small); }
 .chapter .figure .tl li::before { background: var(--ink); }
@@ -2924,10 +2986,10 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
 .sy-frame.held { stroke: var(--ink); stroke-width: 1.5; }
 .sy-ctray { fill: var(--bg-2); }
 .sy-gpu { fill: var(--rule-ink); transition: fill 500ms var(--ease); }
-.sy-gpu.on { fill: var(--accent); }
+.sy-gpu.on { fill: var(--accent-fill); } /* marks in wine (the wine for dark on dark), words in --accent-ink */
 .sy-stray { fill: var(--ink-2); }
 .sy-port { fill: var(--bg-3); }
-.sy-up { fill: none; stroke: var(--accent); stroke-linejoin: round; }
+.sy-up { fill: none; stroke: var(--accent-fill); stroke-linejoin: round; }
 .sy-up.ctx, .sy-out.ctx { stroke: var(--ctx); }
 .sy-out { fill: none; stroke: var(--ink-2); stroke-linejoin: round; }
 .sy-net { fill: none; stroke: var(--ink-2); }
@@ -3213,7 +3275,7 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
 .gl-share { display: grid; grid-template-columns: minmax(0, 1fr) minmax(110px, 34%) 52px; column-gap: 16px; align-items: center; padding: 10px 0 11px; border-bottom: 1px solid var(--line); }
 .gl-share-k { font-family: var(--font-body); font-size: var(--t-small); line-height: 1.3; color: var(--ink); }
 .gl-share-bar { height: 10px; background: linear-gradient(to right, var(--ctx) var(--w), transparent var(--w)); box-shadow: inset 0 -1px 0 var(--line-2); }
-.gl-share.is-top .gl-share-bar { background: linear-gradient(to right, var(--accent) var(--w), transparent var(--w)); }
+.gl-share.is-top .gl-share-bar { background: linear-gradient(to right, var(--accent-fill) var(--w), transparent var(--w)); }
 .gl-share-v { text-align: right; font-family: var(--font-ui); font-size: 14px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
 .gl-share.is-top .gl-share-v { font-weight: 700; color: var(--accent-ink); }
 .gl-share-m { grid-column: 1 / -1; margin-top: 3px; font-family: var(--font-ui); font-size: 12.5px; line-height: 1.5; color: var(--muted); }
@@ -3378,7 +3440,7 @@ html.kb:has(.view[data-view="glossary"]:not([hidden]) .gl:not([data-state="home"
      dark-theme selector at equal weight (a system-dark block uses :root:not([data-theme="light"])). */
   :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
     --bg: #fff; --bg-2: #f4f4f2; --bg-3: #e4e3df;
-    --ink: #171716; --ink-2: #45443f; --muted: #56554f;
+    --ink: #171716; --ink-2: #45443f; --muted: #56554f; --read-ink: #171716; /* the dark screen's reading text (chapter.css) prints in ink */
     --line: #e1e0db; --line-2: #c4c3bd; --rule-ink: #8c8a84; --control-edge: #8c8a84;
     --accent: #7a1f2b; --accent-ink: #7a1f2b; --accent-soft: #f3e3e5; --accent-fill: #7a1f2b;
     --ctx: #d2d1cc; /* the chart rule: the values that are not the largest (the largest is wine) */
@@ -4262,6 +4324,9 @@ html.kb:has(.view[data-view="glossary"]:not([hidden]) .gl:not([data-state="home"
 .atlas-key span { display: inline-flex; align-items: center; gap: 9px; }
 .sa-kstop { display: inline-grid; place-items: center; width: 20px; height: 20px; flex: none; border-radius: 50%; background: var(--bar-5); color: var(--bg); font-family: var(--font-ui); font-style: normal; font-weight: 600; font-size: 11px; line-height: 1; }
 .sa-kstop[data-band="High"] { background: var(--bg); color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--ink); }
+/* dark fills an Extreme stop with the wine for dark marks (--bar-5, the night edition), so its number takes the cream ink, 4.8:1
+   (the dark ground on the wine was 3.1:1) */
+:root[data-theme="dark"] .sa-stop:not([data-band="High"]), :root[data-theme="dark"] .sa-kstop:not([data-band="High"]) { color: var(--ink); }
 
 /* the strip: the stops in order, each with its band as a mark beside its number */
 .atlas .sa-strip-stops { grid-column: 1 / 10; grid-row: 2; list-style: none; margin: 18px 0 0; padding: 0; display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); column-gap: 14px; row-gap: 4px; border-top: 1px solid var(--ink); }
