@@ -3291,17 +3291,30 @@
       // deck that ends Start here): a reader who comes back finds the cards marked as they left them and "Last time: 3 of 4
       // known." in place of the instruction, and Start over forgets both. Every storage call is guarded, so without storage
       // the deck works the same and simply forgets.
+      // A chapter's deck also spaces its cards out (owner, 21 Nov 2026: the Review mockup, built "chapter wise, not on the main
+      // page"). Each mark sets the day its card comes back: the next day after "Didn't know", 3 days after "Knew it", then 7,
+      // then 21 for a card known again once it was due (known before it was due, it keeps its interval). The answer side says
+      // so over the two marks. A reader who finished the deck before and returns once a card is due finds the deck open on the
+      // due cards, those marked "Didn't know" first, under "1 of 4 cards due." and a Whole deck button; that round ends on the
+      // deck's squares in place of the score, and every finished round says when the next card is due. Start over clears the
+      // marks and the score and keeps each card's day back, which the next marks set again. Start here's deck (data-deck) is
+      // not spaced, and without working storage no deck is: it then behaves exactly as before.
+      var FC_DAYS = [3, 7, 21], FC_MONTH = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
       var FC = {
         parts: function (fc) { return { deck: $('.fc-deck', fc), cards: $$('.fc-card', fc), dots: $$('.fc-dots i', fc), nav: $('.fc-nav', fc), end: $('.fc-end', fc) }; },
         cur: function (p) { for (var j = 0; j < p.cards.length; j++) if (!p.cards[j].hidden) return j; return 0; },
         flip: function (card, back) { card.classList.toggle('is-flipped', back); $('.fc-front', card).inert = back; $('.fc-back', card).inert = !back; },
+        // the round's cards in order: the whole deck, or in a due round the due cards (fc._q)
+        queue: function (fc) { return fc._q || FC.parts(fc).cards.map(function (c, j) { return j; }); },
+        // a card Next may step past: one already marked, or in a due round one marked again in this round
+        done: function (fc, i) { return fc._due ? !!(fc._ans && fc._ans[i]) : FC.parts(fc).cards[i].hasAttribute('data-known'); },
         go: function (fc, i, focusShow, quiet) { // quiet: set the deck up without touching focus (a deck restored as the page loads)
           var p = FC.parts(fc);
           p.end.hidden = true; p.deck.hidden = false; p.nav.hidden = false;
           p.cards.forEach(function (c, j) { c.hidden = j !== i; FC.flip(c, false); });
           p.dots.forEach(function (d, j) { var kn = p.cards[j].getAttribute('data-known'); d.className = j === i ? 'on' : kn === '1' ? 'k' : kn === '0' ? 'm' : ''; });
           var prev = $('.fc-prev', fc), next = $('.fc-next', fc);
-          prev.disabled = i === 0; next.disabled = !p.cards[i].hasAttribute('data-known');
+          prev.disabled = FC.queue(fc).indexOf(i) <= 0; next.disabled = !FC.done(fc, i);
           if (quiet) return;
           var a = document.activeElement;
           if (focusShow || !a || a.disabled || !fc.contains(a) || a.closest('[hidden]')) { var f = $('.fc-show', p.cards[i]); if (f) f.focus({ preventScroll: true }); }
@@ -3317,34 +3330,111 @@
           try { s = JSON.parse(localStorage.getItem(FC.key(fc)) || 'null'); } catch (e) { return null; }
           return s && Array.isArray(s.marks) && s.marks.length === FC.parts(fc).cards.length && s.sig === FC.sig(fc) ? s : null;
         },
-        save: function (fc, done) { // done: the round is over, and its score becomes the last one
+        // done: the round is over, and its score becomes the last one; fresh: Start over, which drops the last score
+        save: function (fc, done, fresh) {
           var marks = FC.parts(fc).cards.map(function (c) { var k = c.getAttribute('data-known'); return k === '1' || k === '0' ? k : ''; });
-          var last = done ? { known: marks.filter(function (k) { return k === '1'; }).length, total: marks.length, day: localISO() } : (FC.read(fc) || {}).last;
+          var last = done ? { known: marks.filter(function (k) { return k === '1'; }).length, total: marks.length, day: localISO() } : fresh ? null : (FC.read(fc) || {}).last;
           var keep = { sig: FC.sig(fc), marks: marks }; if (last) keep.last = last;
+          if (fc._plan) { keep.due = fc._plan.due; keep.step = fc._plan.step; }
           try { localStorage.setItem(FC.key(fc), JSON.stringify(keep)); } catch (e) { }
         },
-        forget: function (fc) { try { localStorage.removeItem(FC.key(fc)); } catch (e) { } FC.lastLine(fc, null); },
-        // the quiet line beside the deck's title: the instruction, or for a reader who has finished the deck before, that score
-        lastLine: function (fc, last) {
-          var sub = $('.rv-sub', fc); if (!sub) return;
-          if (sub._intro == null) sub._intro = sub.textContent;
+        forget: function (fc) {
+          if (fc._plan) FC.save(fc, false, true); // a spaced deck keeps each card's day back
+          else try { localStorage.removeItem(FC.key(fc)); } catch (e) { }
+          FC.lastLine(fc, null);
+        },
+        // storage that takes a write, tried once per page: the spacing waits on it
+        ok: function () { if (FC._ok == null) { try { localStorage.setItem('cp-fc-try', '1'); localStorage.removeItem('cp-fc-try'); FC._ok = true; } catch (e) { FC._ok = false; } } return FC._ok; },
+        spaced: function (fc) { return !fc.hasAttribute('data-deck') && FC.ok(); },
+        plus: function (day, n) { var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(day || ''); return m ? localISO(new Date(+m[1], +m[2] - 1, +m[3] + n)) : ''; },
+        // "today" (a card already due, left unmarked in a round begun from a search result), "tomorrow", or the day and month
+        // ("23 November")
+        when: function (day) { if (day <= localISO()) return 'today'; if (day === FC.plus(localISO(), 1)) return 'tomorrow'; var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(day || ''); return m ? +m[3] + ' ' + FC_MONTH[+m[2] - 1] : ''; },
+        // each card's day back and its run of "Knew it" (s.due, s.step), checked; a deck kept before the spacing counts from the
+        // day of its last round
+        plan: function (fc, s) {
+          var n = FC.parts(fc).cards.length, iso = /^\d{4}-\d{2}-\d{2}$/, due = [], step = [];
+          var good = !!s && Array.isArray(s.due) && Array.isArray(s.step) && s.due.length === n && s.step.length === n
+            && s.due.every(function (d) { return d === '' || iso.test(d); }) && s.step.every(function (k) { return k === 0 || k === 1 || k === 2 || k === 3; });
+          var from = s && s.last && iso.test(s.last.day || '') ? s.last.day : '';
+          for (var j = 0; j < n; j++) {
+            if (good) { due.push(s.due[j]); step.push(s.step[j]); continue; }
+            var k = s ? s.marks[j] : '';
+            due.push(from && (k === '1' || k === '0') ? FC.plus(from, k === '1' ? FC_DAYS[0] : 1) : '');
+            step.push(from && k === '1' ? 1 : 0);
+          }
+          return { due: due, step: step };
+        },
+        // what a mark on card j sets, from the plan as the page opened (fc._was), so marking a card twice in one visit counts once
+        next: function (fc, j, known) {
+          var w = fc._was, today = localISO(), was = !w.due[j] || w.due[j] <= today;
+          var k = known ? (was ? Math.min(w.step[j] + 1, FC_DAYS.length) : Math.max(w.step[j], 1)) : 0;
+          return { step: k, due: FC.plus(today, known ? FC_DAYS[k - 1] : 1) };
+        },
+        soonest: function (fc) { return fc._plan ? fc._plan.due.filter(Boolean).sort()[0] || '' : ''; },
+        sub: function (fc) { var sub = $('.rv-sub', fc); if (sub && sub._intro == null) sub._intro = sub.textContent; return sub; },
+        // the quiet line beside the deck's title: the instruction, or for a reader who has finished the deck before, that score,
+        // and in a spaced deck with nothing due the day the next card is
+        lastLine: function (fc, last, back) {
+          var sub = FC.sub(fc); if (!sub) return;
           var n = FC.parts(fc).cards.length, ok = !!last && last.total === n && last.known >= 0 && last.known <= n && Math.floor(last.known) === last.known;
-          sub.textContent = ok ? 'Last time: ' + last.known + ' of ' + n + ' known.' : sub._intro;
+          sub.textContent = ok ? 'Last time: ' + last.known + ' of ' + n + ' known.' + (back ? ' Next card due ' + FC.when(back) + '.' : '') : sub._intro;
           sub.classList.toggle('fc-last', ok);
         },
-        // a reader coming back: the marks go back on the cards and the deck opens at the first card not yet marked, or at the
-        // first card when the round was finished, so the deck starts again with the dots showing last time's marks
-        restore: function (fc) {
-          var s = FC.read(fc); if (!s) return;
-          var p = FC.parts(fc), at = -1;
-          p.cards.forEach(function (c, j) { var k = s.marks[j]; if (k === '1' || k === '0') c.setAttribute('data-known', k); else if (at < 0) at = j; });
-          FC.go(fc, at < 0 ? 0 : at, false, true);
-          FC.lastLine(fc, s.last);
+        // a due round's line: how many cards are due, and the whole deck as the other way through
+        dueLine: function (fc) {
+          var sub = FC.sub(fc); if (!sub) return;
+          sub.textContent = fc._q.length + ' of ' + FC.parts(fc).cards.length + ' cards due. ';
+          var b = document.createElement('button'); b.type = 'button'; b.className = 'fc-link fc-whole'; b.textContent = 'Whole deck';
+          sub.appendChild(b); sub.classList.add('fc-last');
         },
+        // the answer side's line over the two marks: when each brings this card back (the marks are described by it)
+        hints: function (fc) {
+          FC.parts(fc).cards.forEach(function (c, j) {
+            var foot = $('.fc-back .fc-row--foot', c); if (!foot || $('.fc-when', c)) return;
+            var w = document.createElement('p'); w.className = 'fc-when'; w.id = fc.id + '-when-' + (j + 1);
+            w.textContent = 'Knew it: back in ' + FC_DAYS[FC.next(fc, j, true).step - 1] + ' days. Didn’t know: back tomorrow.';
+            foot.parentNode.insertBefore(w, foot);
+            $$('.fc-mark', foot).forEach(function (b) { b.setAttribute('aria-describedby', w.id); });
+          });
+        },
+        // a reader coming back: the marks go back on the cards and the deck opens at the first card not yet marked, or at the
+        // first card when the round was finished, so the deck starts again with the dots showing last time's marks; a spaced
+        // deck finished before opens on its due cards when it has any
+        restore: function (fc) {
+          var s = FC.read(fc), p = FC.parts(fc), at = -1;
+          fc._q = null; fc._due = false;
+          if (FC.spaced(fc)) { fc._plan = FC.plan(fc, s); fc._was = { due: fc._plan.due.slice(), step: fc._plan.step.slice() }; FC.hints(fc); }
+          if (!s) return;
+          p.cards.forEach(function (c, j) { var k = s.marks[j]; if (k === '1' || k === '0') c.setAttribute('data-known', k); else if (at < 0) at = j; });
+          var today = localISO(), d = fc._plan ? fc._plan.due : [];
+          var due = fc._plan && s.last ? p.cards.map(function (c, j) { return j; }).filter(function (j) { return d[j] && d[j] <= today; }) : [];
+          if (due.length) {
+            // those marked "Didn't know" first, then the longest due, then the deck's order
+            due.sort(function (a, b) { return (s.marks[b] === '0') - (s.marks[a] === '0') || (d[a] < d[b] ? -1 : d[a] > d[b] ? 1 : a - b); });
+            fc._q = due; fc._due = true; fc._ans = {};
+            FC.go(fc, due[0], false, true);
+            FC.dueLine(fc);
+            return;
+          }
+          FC.go(fc, at < 0 ? 0 : at, false, true);
+          FC.lastLine(fc, s.last, fc._plan && s.last ? FC.soonest(fc) : '');
+        },
+        // the whole deck in place of the due cards
+        whole: function (fc) { if (!fc._due) return; fc._due = false; fc._q = null; FC.lastLine(fc, (FC.read(fc) || {}).last); },
         finish: function (fc) {
-          var p = FC.parts(fc), k = p.cards.filter(function (x) { return x.getAttribute('data-known') === '1'; }).length;
+          var p = FC.parts(fc), k = p.cards.filter(function (x) { return x.getAttribute('data-known') === '1'; }).length, due = !!fc._due;
           p.deck.hidden = true; p.nav.hidden = true; p.end.hidden = false;
-          $('.fc-big', p.end).textContent = k + '/' + p.cards.length;
+          var big = $('.fc-big', p.end);
+          big.textContent = k + '/' + p.cards.length; big.hidden = due;
+          // a due round ends on the deck's squares as the reader left them, in place of the score
+          var tally = $('.fc-tally', p.end);
+          if (due && !tally) { tally = document.createElement('span'); tally.className = 'fc-dots fc-tally'; tally.setAttribute('role', 'img'); big.parentNode.insertBefore(tally, big); }
+          if (tally) {
+            tally.hidden = !due;
+            tally.innerHTML = p.cards.map(function (c) { var kn = c.getAttribute('data-known'); return kn === '1' ? '<i class="k"></i>' : kn === '0' ? '<i class="m"></i>' : '<i></i>'; }).join('');
+            tally.setAttribute('aria-label', k + ' of ' + p.cards.length + ' known');
+          }
           // an idea marked "Didn't know" stays at full strength and gains the link back to its section; the label says so
           var missed = 0;
           $$('.rv-keep li', p.end).forEach(function (li, j) {
@@ -3356,15 +3446,26 @@
             if (re) { missed++; li.appendChild(document.createTextNode(' ')); li.appendChild(re.cloneNode(true)); }
           });
           // a chapter's deck links back to a section, Start here's to a chapter (data-reread)
-          $('.fc-score-t', p.end).textContent = k === p.cards.length ? 'known.' : missed ? 'known. Each idea marked “Didn’t know” ends with a link to ' + (fc.getAttribute('data-reread') || 'reread its section') + '.' : 'known.';
-          var rs = $('.fc-reset', p.end); if (rs) rs.focus({ preventScroll: true });
+          var tail = missed ? 'Each idea marked “Didn’t know” ends with a link to ' + (fc.getAttribute('data-reread') || 'reread its section') + '.' : '';
           FC.save(fc, true);
-          if (window.goatcounter && window.goatcounter.count) try { window.goatcounter.count({ path: 'flashcards/' + FC.id(fc) + '/' + k, title: 'Flashcards finished', event: true }); } catch (err) {}
+          // a spaced deck says when its next card comes back: beside a due round's squares, on its own line under a score
+          var back = FC.soonest(fc), when = back ? 'Next card due ' + FC.when(back) + '.' : '';
+          $('.fc-score-t', p.end).textContent = due ? (tail && when ? tail + ' ' + when : tail || when) : k === p.cards.length ? 'known.' : missed ? 'known. ' + tail : 'known.';
+          p.end.classList.toggle('fc-end--due', due);
+          if (fc._plan) {
+            var nx = $('.fc-due-next', p.end);
+            if (!nx) { nx = document.createElement('p'); nx.className = 'fc-due-next'; big.parentNode.parentNode.insertBefore(nx, big.parentNode.nextSibling); }
+            nx.textContent = due ? '' : when; nx.hidden = due || !when;
+          }
+          if (due) FC.lastLine(fc, null); // the due line has done its work
+          var rs = $('.fc-reset', p.end); if (rs) rs.focus({ preventScroll: true });
+          // a due round counts apart from a whole deck finished, so "Flashcards finished" keeps meaning what it meant
+          if (window.goatcounter && window.goatcounter.count) try { window.goatcounter.count(due ? { path: 'flashcards/' + FC.id(fc) + '/review/' + k, title: 'Flashcards reviewed', event: true } : { path: 'flashcards/' + FC.id(fc) + '/' + k, title: 'Flashcards finished', event: true }); } catch (err) {}
         },
         step: function (fc, d) {
-          var p = FC.parts(fc), i = FC.cur(p);
-          if (d < 0 && i > 0) FC.go(fc, i - 1);
-          if (d > 0 && p.cards[i].hasAttribute('data-known')) { if (i + 1 < p.cards.length) FC.go(fc, i + 1); else FC.finish(fc); }
+          var p = FC.parts(fc), i = FC.cur(p), q = FC.queue(fc), at = q.indexOf(i);
+          if (d < 0 && at > 0) FC.go(fc, q[at - 1]);
+          if (d > 0 && FC.done(fc, i)) { if (at >= 0 && at + 1 < q.length) FC.go(fc, q[at + 1]); else FC.finish(fc); }
         }
       };
       document.addEventListener('click', function (e) {
@@ -3383,23 +3484,28 @@
         }
         var m = t.closest('.fc-mark');
         if (m) {
-          var i = +card.getAttribute('data-i'), n = FC.parts(fc).cards.length;
-          card.setAttribute('data-known', m.getAttribute('data-known') === '1' ? '1' : '0');
-          if (i + 1 < n) { FC.save(fc); FC.go(fc, i + 1, true); } else FC.finish(fc);
+          var i = +card.getAttribute('data-i'), q = FC.queue(fc), at = q.indexOf(i), known = m.getAttribute('data-known') === '1';
+          card.setAttribute('data-known', known ? '1' : '0');
+          if (fc._plan) { var nx = FC.next(fc, i, known); fc._plan.due[i] = nx.due; fc._plan.step[i] = nx.step; }
+          if (fc._due) fc._ans[i] = 1;
+          if (at >= 0 && at + 1 < q.length) { FC.save(fc); FC.go(fc, q[at + 1], true); } else FC.finish(fc);
           return;
         }
         if (t.closest('.fc-prev')) { FC.step(fc, -1); return; }
         if (t.closest('.fc-next')) { FC.step(fc, 1); return; }
-        if (t.closest('.fc-back-to-cards')) { FC.go(fc, FC.parts(fc).cards.length - 1, true); return; }
+        if (t.closest('.fc-whole')) { FC.whole(fc); FC.go(fc, 0, true); return; }
+        if (t.closest('.fc-back-to-cards')) { var qq = FC.queue(fc); FC.go(fc, qq[qq.length - 1], true); return; }
         if (t.closest('.fc-reset')) {
           FC.parts(fc).cards.forEach(function (c) { c.removeAttribute('data-known'); });
+          fc._due = false; fc._q = null;
           FC.forget(fc);
           FC.go(fc, 0, true);
         }
       });
       $$('.fc').forEach(function (fc) { FC.restore(fc); });
-      // a search result for one card: the deck opens at that card, question side up, with focus on "Show answer"
-      self.openCard = function (id, i) { var fc = document.getElementById(id); if (fc && fc.classList.contains('fc') && FC.parts(fc).cards[i]) FC.go(fc, i, true); };
+      // a search result for one card: the deck opens at that card, question side up, with focus on "Show answer" (a due round
+      // gives way to the whole deck)
+      self.openCard = function (id, i) { var fc = document.getElementById(id); if (fc && fc.classList.contains('fc') && FC.parts(fc).cards[i]) { FC.whole(fc); FC.go(fc, i, true); } };
       // the arrow keys step through a deck while focus is inside it
       document.addEventListener('keydown', function (e) {
         if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
