@@ -27,10 +27,12 @@ const SITE_CONFIG = require('../site.js');
 const keepRanges = require('../keep-ranges.js');
 const EXPOSURE = require('../exposure.js');
 const PAGE_TITLES = require('../page-titles.js');
+const LATEST = require('../latest-rule.js');
 
 const BASE = S.BASE;
 const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const DAY = '{{REF:DAY}}', ASOF = '{{REF:ASOF}}'; // filled after the page is hashed for its date, so neither moves the date
+const NEXT = '{{REF:NEXT}}'; // Export Controls' "Next date" row (build/latest-rule.js): it changes as days pass, so it goes in after the hash too
 const PAGES = [['suppliers', 'Suppliers'], ['export-controls', 'Export Controls'], ['chips', 'AI Chips'], ['glossary', 'Glossary']];
 
 const slug = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -98,7 +100,7 @@ module.exports = function (ctx) {
 <h1 class="ch-title">${esc(o.h1)}</h1>
 <p class="ch-lede">${o.dekHTML}</p>
 <p class="ch-meta">${o.facts.map((f) => `<span>${esc(f)}</span>`).join('')}<span>Updated ${DAY}</span></p>
-${cta('')}
+${o.headAfter ? `<div class="cta-rows">${cta('')}${o.headAfter}</div>` : cta('')}
 </header>
 ${o.body}
 <nav class="endnav" aria-label="After the page">${cta(' cta--end')}${nav}</nav>`;
@@ -107,7 +109,7 @@ ${o.body}
     const day = ctx.dayStr ? ctx.dayStr(dates.modified) : builtStr;
     const footer = String(ctx.footerKey || '').split(`Updated ${builtStr}`).join(`Updated ${day}`);
     const ld = Object.assign({ '@context': 'https://schema.org' }, o.ld(url), { url, inLanguage: 'en', datePublished: dates.published, dateModified: dates.modified, isPartOf: { '@type': 'WebSite', name: S.SITE, url: BASE } });
-    const body = main.split(DAY).join(esc(day)).split(ASOF).join(esc(ctx.dayStr ? ctx.dayStr(today) : today));
+    const body = main.split(DAY).join(esc(day)).split(ASOF).join(esc(ctx.dayStr ? ctx.dayStr(today) : today)).split(NEXT).join(o.next || '');
     return `<!doctype html>
 <html lang="en">
 <head>
@@ -333,8 +335,11 @@ ${body}
       + `<p class="tbl-cue" aria-hidden="true">Scroll the table sideways to see every year.</p><div class="tbl ex" role="region" aria-labelledby="china-revenue" tabindex="0"><table><thead><tr><th scope="col">Firm</th>${ys.map((y) => `<th scope="col">${esc(y)}</th>`).join('')}</tr></thead><tbody>${fOrder.map(exRow).join('')}</tbody></table></div>`
       + (exNote ? `<p class="ref-note">${esc(exNote)}</p>` : '') + '</section>' : '';
 
+    // the latest rule and the next date, under the button (build/latest-rule.js): each row links to its entry in the timeline below
+    const lr = LATEST.rows(LATEST.pick(data, today), { esc, safe, cls: 'latest', nextToken: NEXT, entryHref: (e) => '#' + esc(evIds.get(e)) });
     return page({
       slug: 'export-controls', route: '#/controls', h1: 'Export Controls',
+      headAfter: lr.html ? lr.html + LATEST.SCRIPT : '', next: lr.next,
       ...titled('export-controls', [[/since (\d{4})/g, +first, 'as the first year'], [/at (\d+) firms/, fOrder.length, 'firms']], ctx.controlsDek || ''),
       dekHTML: esc(ctx.controlsDek || ''),
       facts: [`${flows.length} rows on the board`, `${timeline.length} entries`, `${fOrder.length} firms`],

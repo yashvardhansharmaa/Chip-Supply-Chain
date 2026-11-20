@@ -704,7 +704,7 @@
       if (mv && mv.activate) { try { mv.activate(); } catch (err) { console.warn('view module failed', v, err); } }
       if (v === 'landscape') Landscape.activate();
       else if (v === 'suppliers') Suppliers.activate();
-      else if (v === 'controls') { Controls.activate(); if (!Geo.built) Geo.build(); Geo.renderUpcoming(); } // the countdown is redrawn each visit, from that day
+      else if (v === 'controls') { Controls.activate(); if (!Geo.built) Geo.build(); Geo.renderUpcoming(); Geo.renderLatest(); } // the countdowns are redrawn each visit, from that day
       // an entry's address (#/controls/<event-id>) opens and marks that entry; leaving it for the board's own address (the tab, a
       // link) is a new place too, so the mark goes, a By subject choice the entry set aside comes back, and the page starts at the top
       var leftEntry = v === 'controls' && !evId && !!this.evId, focused = false;
@@ -2466,6 +2466,31 @@
       if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(done, function () { window.prompt('Copy this link', url); });
       else window.prompt('Copy this link', url);
     },
+    /* how far off a deadline is, in the words Coming up and the next-date row under the head print (sentence case as written:
+       CSS sets no capitals); /export-controls/ counts in the same words (build/latest-rule.js SCRIPT) */
+    whenText: function (n) { return n < 0 ? 'Passed, outcome not confirmed' : n === 0 ? 'Today' : n === 1 ? 'Tomorrow' : 'In ' + n + ' days'; },
+    /* the latest rule and the next date under the head, which the build writes from the data (build/latest-rule.js): the next
+       date's countdown from the reader's own today, redrawn each visit as Coming up is, and its row hidden once that day has
+       passed for the reader, so a past date never reads as next before the site is rebuilt. Each row's link opens its entry */
+    renderLatest: function () {
+      var self = this, list = $('.cf-latest');
+      if (!list) return;
+      var today = new Date(); today = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+      $$('li[data-due]', list).forEach(function (li) {
+        var p = String(li.getAttribute('data-due') || '').split('-').map(Number), s = li.querySelector('small');
+        if (p.length !== 3 || !p[0]) return;
+        var n = Math.round((new Date(p[0], p[1] - 1, p[2]) - today) / 86400000);
+        li.hidden = n < 0;
+        if (s) s.textContent = n < 0 ? '' : self.whenText(n);
+      });
+      if (!list._wired) { // the address may already be that entry's, so no hashchange would come: go there anyway (as Coming up)
+        list._wired = true;
+        list.addEventListener('click', function (e) {
+          var a = e.target.closest ? e.target.closest('a.cf-latest-row') : null;
+          if (a && a.getAttribute('href') === location.hash && !(e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button)) { e.preventDefault(); Router.route(); }
+        });
+      }
+    },
     /* "Coming up": the dated deadlines ahead (DATA.flows.upcoming), counted down from the reader's own today;
        gone when there are none or every date has passed */
     renderUpcoming: function () {
@@ -2494,7 +2519,7 @@
       // the deadlines first (the page's own order): the date, how far off it is, what happens, and the entry or source behind it.
       // A deadline within a month is ink, the others muted; the accent never marks a data value (src/modules/controls.css .cf-up)
       host.innerHTML = '<h2 class="cf-up-h" id="cf-up-h">Coming up</h2><ol class="cf-up-list">' + list.map(function (x) {
-        var u = x.u, when = x.n < 0 ? 'Passed, outcome not confirmed' : x.n === 0 ? 'Today' : x.n === 1 ? 'Tomorrow' : 'In ' + x.n + ' days'; // sentence case as written: CSS sets no capitals
+        var u = x.u, when = self.whenText(x.n);
         var link = u.event ? '<a class="cf-up-link" href="' + esc('#/controls/' + encodeURIComponent(u.event)) + '" aria-label="Entry in the timeline">Entry <span aria-hidden="true">→</span></a>'
           : (u.source && safeUrl(u.source) !== '#' ? '<a class="cf-up-link" href="' + safeUrl(u.source) + '" target="_blank" rel="noopener">Source</a>' : '');
         return '<li class="cf-up-i' + (x.n < 0 ? ' is-passed' : x.n <= 30 ? ' is-soon' : '') + '"><span class="cf-up-d">' + esc(self.fmtDate(u.date)) + '</span>' +

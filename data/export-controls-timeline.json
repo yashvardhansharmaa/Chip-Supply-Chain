@@ -1176,6 +1176,7 @@
     "cfr": "15 CFR 742.6(a)(6)(iii)(A); 743.10; 744.23(a)(3); 744.24; 772.1",
     "source": "https://www.govinfo.gov/content/pkg/FR-2026-11-19/pdf/2026-23529.pdf",
     "gist": "Advanced AI chips now need a US license for five more countries, and for data centers that give firms from Macau or D:5 countries such as China more than 12,000,000 aggregate TPP.",
+    "plain": "Advanced AI chips now need a US license for Indonesia, Malaysia, Singapore, Brazil and Thailand, and for any data center giving firms from Macau or US arms-embargoed countries such as China more than a set amount of computing power.",
     "id": "2026-11-19-remote-access-rule",
     "flows": [
       "ai-chips",

@@ -363,6 +363,35 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
    ========================================================================== */
 .view[data-view="controls"] { width: 100%; padding: 0 var(--margin); }
 
+/* the latest rule and the next date under the title (build/latest-rule.js), as /export-controls/ has them under its button:
+   two hairline rows under the standfirst and as wide as it, each one link to its entry in the timeline. The kicker, the date
+   and the actor or the countdown stack in Coming up's date column, so the words start on Coming up's text edge below, at its
+   size. The countdown is counted on each visit, from the reader's day (Geo.renderLatest in src/app.js) */
+.view-head .cf-latest { grid-column: 1 / 8; max-width: 760px; margin: 28px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+.cf-latest > li[hidden] { display: none; }
+.cf-latest-row { display: grid; grid-template-columns: 110px minmax(0, 1fr); column-gap: 16px; align-items: start; padding: 12px 0 13px; border-bottom: 1px solid var(--line); color: inherit; text-decoration: none; }
+.cf-latest-h { display: flex; flex-direction: column; min-width: 0; }
+.cf-latest-k { font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); line-height: 20px; color: var(--muted); }
+.cf-latest-d { font-family: var(--font-ui); font-size: 12.5px; line-height: 20px; color: var(--ink); font-variant-numeric: tabular-nums; }
+.cf-latest-d small { display: block; font-size: 12.5px; line-height: 18px; color: var(--muted); }
+.cf-latest-d small:empty { display: none; }
+.cf-latest-t { min-width: 0; padding-top: 1px; font-family: var(--font-body); font-size: var(--t-small); line-height: 1.45; color: var(--ink-2); max-width: 36em; text-wrap: wrap; } /* the plain wrap of Coming up below, not the inherited "pretty" */
+.cf-latest-sp { word-spacing: 6px; } /* the gap before the link's words, a space that leaves no indent when they wrap */
+.cf-latest-go { display: inline-block; padding: 2px 0; font-family: var(--font-ui); font-size: 13px; line-height: 18px; white-space: nowrap; color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--rule-ink); text-underline-offset: 0.2em; }
+a.cf-latest-row:hover .cf-latest-t { color: var(--ink); }
+a.cf-latest-row:hover .cf-latest-go { color: var(--accent-ink); text-decoration-color: var(--accent); }
+.cf-latest-row:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+@media (max-width: 1199px) { .view-head .cf-latest { grid-column: 1 / -1; } }
+@media (max-width: 760px) {
+  .view-head .cf-latest { margin-top: 22px; }
+  .cf-latest-row { grid-template-columns: minmax(0, 1fr); row-gap: 4px; }
+  .cf-latest-h { flex-direction: row; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 0 12px; }
+  .cf-latest-d { text-align: right; }
+  .cf-latest-d small { display: inline; }
+  .cf-latest-d small::before { content: "\00a0\00b7\00a0"; }
+  .cf-latest-go { display: table; margin: 6px 0 0; padding: 4px 0; }
+}
+
 /* the countdown: the date, how far off it is, what happens, and its entry */
 .cf-up { margin: 40px 0 36px; }
 .cf-up-h { margin: 0; padding-bottom: 12px; border-bottom: 1px solid var(--ink); font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: var(--t-block); line-height: 1.2; letter-spacing: -0.01em; color: var(--ink); }
