@@ -68,7 +68,19 @@
     },
     init: function () {
       var self = this;
-      $('.theme-toggle').addEventListener('click', function () { self.apply(self.current() === 'dark' ? 'light' : 'dark'); });
+      $('.theme-toggle').addEventListener('click', function () {
+        var flip = function () { self.apply(self.current() === 'dark' ? 'light' : 'dark'); }, html = document.documentElement;
+        // the page crossfades between the themes in 0.28 s (the night edition, 21 Nov 2026; src/styles.css html.theme-fade), and
+        // switches at once under reduced motion or where the browser has no view transitions. A second press during the fade
+        // starts its own, and only the last one's end takes the mark off
+        var still = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!document.startViewTransition || still) { flip(); return; }
+        var my = self.fades = (self.fades || 0) + 1;
+        html.classList.add('theme-fade');
+        var end = function () { if (self.fades === my) html.classList.toggle('theme-fade', false); };
+        try { var vt = document.startViewTransition(flip); vt.finished.then(end, end); setTimeout(end, 1500); }
+        catch (e) { end(); flip(); }
+      });
       this.sync();
     }
   };
@@ -119,13 +131,28 @@
                this.canvas.getContext('webgl', { alpha: true, antialias: false, premultipliedAlpha: true });
       if (!gl || !window.PC) { this.fig.setAttribute('data-hidden', '1'); document.documentElement.classList.add('no-stage'); return; }
       this.gl = gl;
-      var vs = 'attribute vec4 aP;uniform mat4 uMVP;uniform float uSize;uniform float uOp;uniform vec3 uInk;uniform vec3 uAcc;uniform vec3 uAcc2;varying vec4 vC;' +
+      var vs = 'attribute vec4 aP;uniform mat4 uMVP;uniform float uSize;uniform float uOp;uniform vec3 uInk;uniform vec3 uAcc;uniform vec3 uAcc2;' +
+        'uniform float uIn;uniform float uFK;uniform vec4 uSA[10];uniform vec4 uSB[10];uniform vec4 uSC[10];varying vec4 vC;' +
         'void main(){vec4 p=uMVP*vec4(aP.xyz,1.0);gl_Position=p;float w=aP.w;vec3 c;float a;' +
         // three channels: ink w in [0,1], accent w in [2,3], second accent w in (3,4] (see src/kit.js)
         'if(w>3.0){c=uAcc2;a=clamp(w-3.0,0.0,1.0);}else if(w>=2.0){c=uAcc;a=clamp(w-2.0,0.0,1.0);}else{c=uInk;a=clamp(w,0.0,1.0);}' +
         'float j=fract(sin(dot(aP.xyz,vec3(12.9898,78.233,37.719)))*43758.5453);' + // per-point size jitter: hand-stippled, not screen-toned
         'float depth=clamp((p.w-2.4)/3.2,0.0,1.0);' + // far points fade a little, which reads as depth
-        'gl_PointSize=(uSize*(0.72+0.56*j))/max(p.w,0.5);vC=vec4(c,a*uOp*mix(1.0,0.62,depth));}';
+        // the entrance (Stage.entrance): as uIn runs from 0 to 1 each point lands at its own moment; uIn is 1 at rest
+        'float j2=fract(j*91.7+aP.y*1.37+aP.x*0.71);float rv=smoothstep(j2,j2+0.16,uIn*1.16);' +
+        // the part the reader points at (Stage.setFocus): f is how far inside one of its shapes the point lies, 1 inside, 0 outside.
+        // A shape is a rod from uSA.xyz to uSB.xyz of radius uSA.w, a ball where the two ends meet, or a box round uSA.xyz with the
+        // half sizes uSB.xyz (uSA.w below 0); uSB.w is its soft edge. uSC.x keeps it to the ink (1) or the accents (2), and uSC.yzw
+        // to thin layers (pitch, a layer's height, half its thickness)
+        'float f=0.0;if(uFK>0.0){for(int i=0;i<10;i++){vec4 A=uSA[i];vec4 B=uSB[i];vec4 C=uSC[i];if(B.w<=0.0)continue;' +
+        'if((C.x>0.5&&C.x<1.5&&w>=2.0)||(C.x>1.5&&w<2.0))continue;vec3 q=aP.xyz-A.xyz;float sd;' +
+        'if(A.w<0.0){vec3 d=abs(q)-B.xyz;sd=length(max(d,0.0))+min(max(d.x,max(d.y,d.z)),0.0);}' +
+        'else{vec3 ab=B.xyz-A.xyz;float L=length(ab);if(L>0.0001){vec3 u=ab/L;float t=dot(q,u);sd=max(length(q-u*t)-A.w,max(-t,t-L));}else{sd=length(q)-A.w;}}' +
+        'if(C.y>0.0){float m=mod(aP.y-C.z,C.y);sd=max(sd,min(m,C.y-m)-C.w);}' +
+        'f=max(f,1.0-smoothstep(0.0,B.w,sd));}}' +
+        // the rest of the drawing steps back, the ink to a fifth and the accents (a light path) to a little over a third
+        'float fo=mix(1.0,mix(w>=2.0?0.36:0.2,1.0,f),uFK);' +
+        'gl_PointSize=(uSize*(0.72+0.56*j)*(1.0+0.3*f*uFK)*(0.55+0.45*rv))/max(p.w,0.5);vC=vec4(c,a*uOp*rv*fo*mix(1.0,0.62,depth));}';
       var fs = 'precision mediump float;varying vec4 vC;void main(){vec2 d=gl_PointCoord-0.5;float r=dot(d,d);if(r>0.25)discard;float a=vC.a*smoothstep(0.25,0.10,r);gl_FragColor=vec4(vC.rgb*a,a);}';
       var prog = gl.createProgram();
       var sh = function (type, src) { var s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s)); return s; };
@@ -133,6 +160,7 @@
       catch (e) { this.fig.setAttribute('data-hidden', '1'); document.documentElement.classList.add('no-stage'); return; }
       gl.useProgram(prog);
       this.loc = { aP: gl.getAttribLocation(prog, 'aP'), uMVP: gl.getUniformLocation(prog, 'uMVP'), uSize: gl.getUniformLocation(prog, 'uSize'), uOp: gl.getUniformLocation(prog, 'uOp'), uInk: gl.getUniformLocation(prog, 'uInk'), uAcc: gl.getUniformLocation(prog, 'uAcc'), uAcc2: gl.getUniformLocation(prog, 'uAcc2') };
+      var loc = this.loc; ['uIn', 'uFK', 'uSA', 'uSB', 'uSC'].forEach(function (n) { loc[n] = gl.getUniformLocation(prog, n); });
       gl.enableVertexAttribArray(this.loc.aP);
       gl.enable(gl.BLEND); gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA); gl.disable(gl.DEPTH_TEST);
       this.ok = true;
@@ -142,6 +170,7 @@
       if (window.ResizeObserver) new ResizeObserver(function () { self.resize(); }).observe(this.canvas); // the caption below the canvas changes height per specimen
       document.addEventListener('visibilitychange', function () { self.hidden = document.hidden; });
       this.pointer();
+      this.answer();
       this.resize();
       requestAnimationFrame(function (t) { self.loop(t); });
     },
@@ -210,6 +239,8 @@
       if (tg && tag) tg.innerHTML = tag;
       if (this.cur && this.cur.key === slot.key) return;
       this.prev = this.cur; this.cur = slot; this.transStart = performance.now();
+      this.dropFocus();
+      if (this.hostEl) this.entrance(); // the chapter's own slot on a wide screen (the phone's strip makes it as it opens, Band.set)
       slot.spinBase = -this.spin; // each specimen starts from its own tilt
       this.scrollAngle = 0; this.userYaw = 0; this.userPitch = 0;
       this.fit();
@@ -288,12 +319,15 @@
       if (!this.canvas || el === this.hostEl) return;
       var pause = this.fig ? $('.stage-pause', this.fig) || (this.hostEl ? $('.stage-pause', this.hostEl.closest('.ch-spec')) : null) : null;
       if (this.balloonEl) { this.balloonEl.remove(); this.balloonEl = null; this.parts = null; }
+      this.dropFocus();
+      $$('.ch-spec .ch-parts li[tabindex]').forEach(function (li) { li.removeAttribute('tabindex'); });
       if (el) {
         el.appendChild(this.canvas);
         var lab = $('.ch-spec-cap .label', el.closest('.ch-spec'));
         if (pause && lab) lab.appendChild(pause);
         this.fig.setAttribute('data-hosted', '1');
-        this.balloons(el);
+        // the parts list beside the balloons answers the pointer and, item by item, the Tab key (Stage.answer)
+        if (this.balloons(el)) $$('.ch-parts li[data-n]', el.closest('.ch-spec')).forEach(function (li) { li.setAttribute('tabindex', '0'); });
       } else {
         this.fig.insertBefore(this.canvas, this.fig.firstChild);
         var tag = $('.stage-tag', this.fig);
@@ -317,9 +351,10 @@
       var NS = 'http://www.w3.org/2000/svg', svg = document.createElementNS(NS, 'svg');
       svg.setAttribute('class', 'ch-balloons'); svg.setAttribute('aria-hidden', 'true');
       parts.forEach(function (p) {
-        var g = document.createElementNS(NS, 'g');
-        p.lines = (p.at || []).map(function () { var l = document.createElementNS(NS, 'line'); g.appendChild(l); return l; });
+        var g = document.createElementNS(NS, 'g'); g.setAttribute('data-n', p.n); p.g = g;
+        p.lines = (p.at || []).map(function () { var l = document.createElementNS(NS, 'line'); l.setAttribute('pathLength', '1'); g.appendChild(l); return l; });
         p.dots = (p.at || []).map(function () { var d = document.createElementNS(NS, 'circle'); d.setAttribute('class', 'dot'); d.setAttribute('r', '3.5'); g.appendChild(d); return d; });
+        p.hit = document.createElementNS(NS, 'circle'); p.hit.setAttribute('class', 'hit'); p.hit.setAttribute('r', '22'); g.appendChild(p.hit); // a 44 px target round the balloon
         p.c = document.createElementNS(NS, 'circle'); p.c.setAttribute('class', 'bal'); p.c.setAttribute('r', '12'); g.appendChild(p.c);
         p.tn = document.createElementNS(NS, 'text'); p.tn.setAttribute('class', 'num'); p.tn.setAttribute('text-anchor', 'middle'); p.tn.textContent = p.n; g.appendChild(p.tn);
         p.tl = document.createElementNS(NS, 'text'); p.tl.setAttribute('class', 'nm'); p.tl.textContent = p.name; g.appendChild(p.tl);
@@ -336,7 +371,7 @@
     stripBalloons: function () {
       this._balCur = this.cur;
       var want = !this.hostEl && narrow() && Band.el && !Band.collapsed && this.cur, el = this.balloonEl;
-      if (el && el.classList.contains('is-strip') && (!want || this.partsFor !== this.cur.name)) { el.remove(); this.balloonEl = null; this.parts = null; }
+      if (el && el.classList.contains('is-strip') && (!want || this.partsFor !== this.cur.name)) { el.remove(); this.balloonEl = null; this.parts = null; this.dropFocus(); }
       if (!want || this.balloonEl) return;
       var art = $('.view[data-view="stack"] article.chapter[data-specimen="' + this.cur.name + '"]'), spec = art && $('.ch-spec[data-parts]', art);
       if (!spec) return;
@@ -383,11 +418,16 @@
         if (over > 0) list.forEach(function (p) { p.ty -= over; });
       });
       var snap = this.balloonsSnap; this.balloonsSnap = false;
+      if (this.inStart && this.balloonEl.classList.contains('intro')) {
+        var since = performance.now() - this.inStart;
+        parts.slice().sort(function (a, b) { return a.n - b.n; }).forEach(function (p, i) { if (since >= 750 + i * 200 && p.g) p.g.classList.add('in'); });
+      }
       parts.forEach(function (p) {
         if (!p.pts || !p.pts.length) return;
         var tx = p.side < 0 ? colL : colR, ty = Math.max(16, p.ty);
         if (p.x === null || snap || reduced) { p.x = tx; p.y = ty; } else { p.x += (tx - p.x) * 0.14; p.y += (ty - p.y) * 0.14; }
         p.c.setAttribute('cx', p.x.toFixed(1)); p.c.setAttribute('cy', p.y.toFixed(1));
+        if (p.hit) { p.hit.setAttribute('cx', p.x.toFixed(1)); p.hit.setAttribute('cy', p.y.toFixed(1)); }
         p.tn.setAttribute('x', p.x.toFixed(1)); p.tn.setAttribute('y', (p.y + 4.5).toFixed(1));
         var left = p.x < cx, tw = nameW(p);
         // the name beside its balloon, or under it where beside would run past the drawing's edge (the page clips there)
@@ -416,9 +456,110 @@
       gl.uniform1f(this.loc.uOp, op);
       var col = this.slotColors(slot);
       gl.uniform3fv(this.loc.uInk, this.ink); gl.uniform3fv(this.loc.uAcc, col.accent); gl.uniform3fv(this.loc.uAcc2, col.accent2);
+      this.fx(slot);
       gl.bindBuffer(gl.ARRAY_BUFFER, slot.vbo);
       gl.vertexAttribPointer(this.loc.aP, 4, gl.FLOAT, false, 0, 0);
       gl.drawArrays(gl.POINTS, 0, slot.n);
+    },
+    /* The drawing answers its parts (the visual lens's "specimen answers", built 21 Nov 2026). On a chapter's page the drawing
+       makes an entrance the first time it shows this session: the stipple lands at random over about 0.9 s and the numbered
+       leaders then reach out in the parts' order, done by about 1.9 s (sessionStorage cp-drawn lists the chapters it has
+       played on; none under reduced motion, which shows the finished drawing). Pointing at a part in the list under the
+       caption, or at its balloon, keeps that part at full ink and steps the rest of the drawing back, the balloon turns wine,
+       the other rows fade and the turn pauses; on a touch screen a tap does it (the phone's opened strip, its list and its
+       balloons), and a second tap lets go. What a part lights is its light table, the shapes data/specimen-parts.json lists
+       beside its points; a part with none lights a small ball round each point its balloon points at */
+    inPending: false, inStart: 0, focusN: null, fk: 0, focusSh: null, focusFor: null,
+    entrance: function () {
+      var id = PAGE.kind === 'chapter' ? PAGE.chapter : '';
+      if (reduced || !id) return;
+      var seen = ''; try { seen = sessionStorage.getItem('cp-drawn') || ''; } catch (e) { }
+      if ((' ' + seen + ' ').indexOf(' ' + id + ' ') >= 0) return;
+      try { sessionStorage.setItem('cp-drawn', (seen + ' ' + id).trim()); } catch (e) { }
+      this.inPending = true; this.inStart = 0; // loop() starts it on the drawing's first frame on screen
+      if (this.balloonEl) { this.balloonEl.classList.add('intro'); $$('g[data-n]', this.balloonEl).forEach(function (g) { g.classList.toggle('in', false); }); }
+    },
+    // the per-frame uniforms: how far the entrance has come (squared: so many points share each spot that a straight ramp looks
+    // finished in a quarter of its time) and how far the spotlight has come on or gone off
+    fx: function (slot) {
+      var gl = this.gl, L = this.loc, cur = slot === this.cur;
+      var k = cur && this.inStart ? Math.min(1, (performance.now() - this.inStart) / 900) : 1;
+      gl.uniform1f(L.uIn, k * k);
+      if (cur) {
+        var to = this.focusN ? 1 : 0;
+        this.fk = reduced ? to : this.fk + (to - this.fk) * 0.14;
+        if (!this.focusN && this.fk < 0.01) { this.fk = 0; this.focusSh = null; }
+        if (this.focusN && this.focusFor !== slot.key) this.shapes(slot);
+      }
+      var fk = cur && this.focusSh ? this.fk : 0;
+      if (fk) { gl.uniform4fv(L.uSA, this.focusSh[0]); gl.uniform4fv(L.uSB, this.focusSh[1]); gl.uniform4fv(L.uSC, this.focusSh[2]); }
+      gl.uniform1f(L.uFK, fk);
+    },
+    // the shapes the part being pointed at lights, carried from the specimen's own units into the drawing's (slot.norm)
+    shapes: function (slot) {
+      var n = this.focusN, p = (this.parts || []).filter(function (x) { return +x.n === n; })[0];
+      this.focusFor = slot.key;
+      if (!p || !slot.norm) { this.focusSh = null; return; }
+      var c = slot.norm.c, k = slot.norm.k, A = new Float32Array(40), B = new Float32Array(40), C = new Float32Array(40);
+      var at = function (q) { return [(q[0] - c[0]) * k, (q[1] - c[1]) * k, ((q[2] || 0) - c[2]) * k]; };
+      var list = p.light && p.light.length ? p.light : (p.at || []).map(function (q) { return { ball: q, r: 0.12 / k, soft: 0.08 / k }; });
+      list.slice(0, 10).forEach(function (h, i) {
+        var a, b, r;
+        if (h.box) { var lo = h.box[0], hi = h.box[1]; a = at([(lo[0] + hi[0]) / 2, (lo[1] + hi[1]) / 2, (lo[2] + hi[2]) / 2]); b = [0, 1, 2].map(function (j) { return Math.abs(hi[j] - lo[j]) / 2 * k; }); r = -1; }
+        else if (h.rod) { a = at(h.rod[0]); b = at(h.rod[1]); r = (h.r || 0) * k; }
+        else { a = at(h.ball || [0, 0, 0]); b = a; r = (h.r || 0) * k; }
+        A.set([a[0], a[1], a[2], r], i * 4); B.set([b[0], b[1], b[2], Math.max(0.0001, (h.soft || 0.05) * k)], i * 4);
+        var ly = h.layers;
+        C.set([h.only === 'ink' ? 1 : h.only === 'accent' ? 2 : 0, ly ? ly[1] * k : 0, ly ? (ly[0] - c[1]) * k : 0, ly ? ly[2] * k : 0], i * 4);
+      });
+      this.focusSh = [A, B, C];
+    },
+    // the lists that name the parts of the drawing on show: the chapter's own, under its caption, and the phone strip's copy
+    partLists: function () {
+      var name = this.partsFor;
+      return name ? $$('.view[data-view="stack"] article.chapter[data-specimen="' + name + '"] .ch-spec .ch-parts, #stage-caption .ch-parts') : [];
+    },
+    setFocus: function (n) {
+      n = n ? +n : null;
+      if (n && !(this.parts && this.cur && this.partsFor === this.cur.name && this.parts.some(function (p) { return +p.n === n; }))) n = null;
+      if (n !== this.focusN) { this.focusN = n; if (n) this.focusFor = null; } // the shapes are worked out on the next frame (fx)
+      if (this.balloonEl) {
+        this.balloonEl.classList.toggle('has-on', !!n);
+        $$('g[data-n]', this.balloonEl).forEach(function (g) { g.classList.toggle('on', +g.getAttribute('data-n') === n); });
+      }
+      this.partLists().forEach(function (ol) {
+        ol.classList.toggle('has-on', !!n);
+        $$('li[data-n]', ol).forEach(function (li) { li.classList.toggle('on', +li.getAttribute('data-n') === n); });
+      });
+    },
+    // the balloons went (a new specimen, the slot left, the strip closed): nothing is pointed at, at once
+    dropFocus: function () {
+      if (this.focusN) this.setFocus(null);
+      this.focusN = null; this.fk = 0; this.focusSh = null;
+    },
+    answer: function () {
+      var self = this, ptr = 'mouse', held = null;
+      // the number of the part an element belongs to, if it is a row of a list naming the drawing on show, or one of its balloons
+      var nOf = function (el) {
+        var x = el && el.closest ? el.closest('.ch-parts li[data-n], .ch-balloons g[data-n]') : null;
+        if (!x) return null;
+        if (x.tagName.toLowerCase() === 'li' ? self.partLists().indexOf(x.parentNode) < 0 : x.ownerSVGElement !== self.balloonEl) return null;
+        return +x.getAttribute('data-n') || null;
+      };
+      document.addEventListener('pointerdown', function (e) { ptr = e.pointerType || 'mouse'; }, true);
+      document.addEventListener('pointerover', function (e) { if (e.pointerType === 'touch') return; var n = nOf(e.target); if (n) self.setFocus(n); });
+      document.addEventListener('pointerout', function (e) { if (e.pointerType === 'touch' || !nOf(e.target) || nOf(e.relatedTarget)) return; self.setFocus(held); });
+      // a row reached by Tab lights its part while it holds the focus (a click's focus does not count: the pointer has it)
+      document.addEventListener('focusin', function (e) {
+        var n = nOf(e.target); if (!n || e.target.tagName.toLowerCase() !== 'li') return;
+        var kb = true; try { kb = e.target.matches(':focus-visible'); } catch (x) { }
+        if (kb) { held = n; self.setFocus(n); }
+      });
+      document.addEventListener('focusout', function (e) { if (held && e.target.matches && e.target.matches('.ch-parts li[data-n]')) { held = null; self.setFocus(null); } });
+      document.addEventListener('click', function (e) {
+        if (ptr !== 'touch' || e.defaultPrevented || (e.target.closest && e.target.closest('a'))) return; // a link in a row still leads where it says
+        var n = nOf(e.target); if (n) self.setFocus(self.focusN === n ? null : n);
+      });
     },
     // the specimen turns under the mouse: rest on it and the idle spin pauses, drag to turn it, arrow keys turn it from the keyboard
     pointer: function () {
@@ -457,7 +598,8 @@
       var gl = this.gl;
       gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
       if (!this.cur) return;
-      if (!reduced && !this.held && !this.still) this.spin += (this.cur.spin || 0.1) * dt; // the idle turn pauses while the pointer rests on the specimen, and stops while the reader has paused it (Band.init)
+      if (!reduced && !this.held && !this.still && !this.focusN) this.spin += (this.cur.spin || 0.1) * dt; // the idle turn pauses while the pointer rests on the specimen or a part is pointed at, and stops while the reader has paused it (Band.init)
+      if (this.inPending) { this.inPending = false; this.inStart = performance.now(); }
       var k = easeOut((t - this.transStart) / this.transDur);
       if (this.prev && k < 1) this.draw(this.prev, 1 - k, 0.35 * k, 1 + 0.04 * k);
       else this.prev = null;
@@ -545,6 +687,8 @@
       // name says what a tap opens; opened, it is the Collapse pill
       var t = $('.stage-toggle'); if (t) { t.textContent = collapsed ? 'Expand' : 'Collapse'; t.setAttribute('aria-expanded', collapsed ? 'false' : 'true'); if (collapsed) t.setAttribute('aria-label', 'Open the drawing'); else t.removeAttribute('aria-label'); }
       if (Stage.stripBalloons) Stage.stripBalloons(); // expanded, the strip numbers the parts of a drawing that has them
+      if (!Stage.ok) return;
+      if (collapsed) Stage.dropFocus(); else if (narrow() && !Stage.hostEl) Stage.entrance(); // opened, the drawing makes its entrance (once a session per chapter)
     }
   };
 
@@ -3635,6 +3779,13 @@
   var Anim = {
     init: function () {
       var figs = $$('.figure--anim').filter(function (f) { return !!$('video', f); }); if (!figs.length) return; // a live explainer draws itself (src/modules/live-*.js)
+      // the night edition's tone curve (src/styles.css): in dark each channel's darkest ninth is pulled onto the page's ground,
+      // so a film's cool ground, rgb(20, 23, 28), comes out as the page's 18, 18, 17, and every value above it stays as it was
+      if (!document.getElementById('night-ground')) {
+        var lift = function (lo) { return '0 ' + lo + ' 0.2222 0.3333 0.4444 0.5556 0.6667 0.7778 0.8889 1'; };
+        document.body.insertAdjacentHTML('beforeend', '<svg class="night-defs" width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute"><filter id="night-ground" color-interpolation-filters="sRGB"><feComponentTransfer>'
+          + '<feFuncR type="table" tableValues="' + lift(0.1) + '"/><feFuncG type="table" tableValues="' + lift(0.087) + '"/><feFuncB type="table" tableValues="' + lift(0.0675) + '"/></feComponentTransfer></filter></svg>');
+      }
       var theme = function () { return Theme.current() === 'dark' ? 'dark' : 'light'; };
       var still = function (fig) { return reduced || fig._user; };
       figs.forEach(function (fig) {

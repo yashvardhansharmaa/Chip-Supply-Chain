@@ -147,7 +147,7 @@
 .gl-share { display: grid; grid-template-columns: minmax(0, 1fr) minmax(110px, 34%) 52px; column-gap: 16px; align-items: center; padding: 10px 0 11px; border-bottom: 1px solid var(--line); }
 .gl-share-k { font-family: var(--font-body); font-size: var(--t-small); line-height: 1.3; color: var(--ink); }
 .gl-share-bar { height: 10px; background: linear-gradient(to right, var(--ctx) var(--w), transparent var(--w)); box-shadow: inset 0 -1px 0 var(--line-2); }
-.gl-share.is-top .gl-share-bar { background: linear-gradient(to right, var(--accent) var(--w), transparent var(--w)); }
+.gl-share.is-top .gl-share-bar { background: linear-gradient(to right, var(--accent-fill) var(--w), transparent var(--w)); }
 .gl-share-v { text-align: right; font-family: var(--font-ui); font-size: 14px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
 .gl-share.is-top .gl-share-v { font-weight: 700; color: var(--accent-ink); }
 .gl-share-m { grid-column: 1 / -1; margin-top: 3px; font-family: var(--font-ui); font-size: 12.5px; line-height: 1.5; color: var(--muted); }
