@@ -1184,10 +1184,9 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before, .gl-
 .ex-panel .dot.last { fill: var(--ink); }
 
 /* print keeps the scale the PDFs were set in (20 / 18.5 of the Literata sizes) */
-/* a phone's reading text one step smaller, 17 px where the desktop has 18 (owner, 20 Nov 2026: "slightly lower the font size in mobile") */
-@media screen and (max-width: 640px) { :root { --text-scale: calc(17 / 18.5); } }
-/* and the home page's a step under that, 16 px (owner, 20 Nov 2026: "make it 16 on home page and 17 everywhere else") */
-@media screen and (max-width: 640px) { html[data-view="walk"], html:not(.booted)[data-route="walk"] { --text-scale: calc(16 / 18.5); } }
+/* a phone's reading text at 16 px everywhere, where the desktop has 18: Source Serif's large lowercase reads at 16 px about as
+   large as a typical newsletter serif at 17 (owner, 20 Nov 2026, after comparing it with Substack on a phone) */
+@media screen and (max-width: 640px) { :root { --text-scale: calc(16 / 18.5); } }
 @media print { :root { --text-scale: calc(10 / 9.8); } } /* the book's text at 10 pt (28 Oct 2026; 20 / 18.5, about 10.6 pt, before) */
 
 /* module: chapter.css */
