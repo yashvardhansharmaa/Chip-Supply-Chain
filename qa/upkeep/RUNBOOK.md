@@ -27,6 +27,9 @@ the owner approves it.
    (government.nl, export of advanced semiconductor equipment), Japan's METI, Korea's MOTIE, Taiwan's MOEA, the EU's dual-use
    pages, then Reuters, the FT and Nikkei Asia for anything the primary sources point to. Add what will come due in the next
    three months to `upcoming`.
+   Export Controls opens, on both of its pages, with the newest timeline entry and the next `upcoming` date not yet passed
+   (`build/latest-rule.js`). When a new entry's `gist` needs codes such as "D:5" or a TPP figure, give that entry a `plain` field:
+   one sentence in plain words, using only facts already in the entry and its source.
 3. **AI chips.** New data center AI chips that are announced with specifications or have started shipping, from Nvidia, AMD,
    Google, Amazon, Microsoft, Meta, Broadcom, Intel, Huawei, Cambricon and Hygon (their newsrooms, filings and product
    pages). `data/landscape.json` lists widely used chips only: add a chip when its maker publishes specifications and at least
