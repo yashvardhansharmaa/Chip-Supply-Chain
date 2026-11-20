@@ -46,6 +46,34 @@
  ],
  "figures": [
     {"id": "litho-print", "type": "animation", "src": "litho", "title": "How lithography prints a chip", "note": "Simplified. The newest machines, which use extreme ultraviolet light, carry the image with mirrors in place of a lens."},
+    {"id": "pick-the-light", "type": "explore", "live": "light",
+      "title": "The light each kind of scanner uses, and the finest line it prints. Six lights, drawn to one scale in nanometers",
+      "print": 4,
+      "steps": [
+        {"k": "i-line", "wl": 365, "ft": 220, "ftU": "nm", "mech": "Mercury lamp · lenses · air", "g": "lamp",
+          "cap": "The i-line tools use 365 nm light from a mercury lamp, and ASML says they print features as small as 220 nm.",
+          "sources": [{"label": "ASML, All about light and lasers in lithography", "url": "https://www.asml.com/en/technology/lithography-principles/light-and-lasers"}]},
+        {"k": "KrF", "wl": 248, "ft": 80, "ftU": "nm", "mech": "Krypton fluoride laser · lenses · air", "g": "laser",
+          "cap": "Krypton fluoride (KrF) excimer lasers make deep ultraviolet light at 248 nm. ASML says modern KrF systems print features down to 80 nm.",
+          "sources": [{"label": "ASML, All about light and lasers in lithography", "url": "https://www.asml.com/en/technology/lithography-principles/light-and-lasers"}]},
+        {"k": "ArF dry", "wl": 193, "ft": 57, "ftU": "nm or less", "mech": "Argon fluoride laser · lenses · air", "g": "laser",
+          "cap": "Argon fluoride (ArF) excimer lasers make light at 193 nm, shone through air in a dry scanner. ASML rates its dry NXT:1470 at features of 57 nanometers or less.",
+          "sources": [{"label": "ASML, All about light and lasers in lithography", "url": "https://www.asml.com/en/technology/lithography-principles/light-and-lasers"}, {"label": "ASML, TWINSCAN NXT:1470", "url": "https://www.asml.com/en/products/duv-lithography-systems/twinscan-nxt1470"}]},
+        {"k": "ArF immersion", "wl": 193, "ft": 38, "ftU": "nm or less", "mech": "Argon fluoride laser · lenses · water", "g": "water",
+          "cap": "Immersion scanners shine the light through a layer of water between lens and wafer, which lets them print smaller features with the same light. ASML rates one of its immersion scanners, the NXT:2150i, at features of 38 nanometers or less.",
+          "sources": [{"label": "ASML, Lenses and mirrors", "url": "https://www.asml.com/en/technology/lithography-principles/lenses-and-mirrors"}, {"label": "ASML, TWINSCAN NXT:2150i", "url": "https://www.asml.com/en/products/duv-lithography-systems/twinscan-nxt-2150i"}]},
+        {"k": "EUV", "wl": 13.5, "ft": 13, "ftU": "nm", "mech": "Tin plasma · mirrors · vacuum, NA 0.33", "g": "euv",
+          "cap": "ASML’s NXE scanners print features of 13 nm with extreme ultraviolet light at 13.5 nm. Air and glass absorb that light, so it travels through a vacuum and reflects off mirrors.",
+          "sources": [{"label": "ASML, EUV lithography systems", "url": "https://www.asml.com/en/products/euv-lithography-systems"}]},
+        {"k": "High-NA EUV", "wl": 13.5, "ft": 8, "ftU": "nm", "mech": "Tin plasma · mirrors · vacuum, NA 0.55", "g": "hna",
+          "cap": "High-NA scanners raise the numerical aperture (NA), a measure of how well the optics collect and focus light, from 0.33 to 0.55. That cuts the smallest printable feature from 13 nm to 8 nm.",
+          "sources": [{"label": "ASML, 5 things you should know about High NA in EUV, 25 January 2024", "url": "https://www.asml.com/en/company/stories/2024/5-things-high-na-euv"}, {"label": "ASML, EUV lithography systems", "url": "https://www.asml.com/en/products/euv-lithography-systems"}]}
+      ],
+      "table": [["Light", "{k}"], ["Wavelength", "{wl} nm"], ["Finest line", "{ft} {ftU}"]],
+      "note": "Lines are drawn at the smallest feature ASML gives for each light, with gaps of the same width.",
+      "source": {"label": "ASML on light and lasers", "url": "https://www.asml.com/en/technology/lithography-principles/light-and-lasers"},
+      "sources": [{"label": "NXT:1470", "url": "https://www.asml.com/en/products/duv-lithography-systems/twinscan-nxt1470"}, {"label": "NXT:2150i", "url": "https://www.asml.com/en/products/duv-lithography-systems/twinscan-nxt-2150i"}, {"label": "lenses and mirrors", "url": "https://www.asml.com/en/technology/lithography-principles/lenses-and-mirrors"}, {"label": "EUV systems", "url": "https://www.asml.com/en/products/euv-lithography-systems"}, {"label": "High NA", "url": "https://www.asml.com/en/company/stories/2024/5-things-high-na-euv"}]
+    },
     {"id": "several-passes", "type": "animation", "live": "saqp", "seconds": 26, "title": "How several passes turn one line into four", "steps": [
       {"k": "Print", "cap": "A deep ultraviolet scanner shines light through a mask and prints a row of lines, called cores, in one exposure. The chip needs lines four times as dense, closer than one exposure can draw."},
       {"k": "Coat", "cap": "A thin film is deposited over everything, covering the top and both sides of every core."},
@@ -115,6 +143,8 @@ The image from one mask covers a patch of up to 26 by 33 mm ([source](https://ww
 
 Finer lines need shorter light. Glass and air both absorb the shortest light in use, at 13.5 nm ([source](https://www.asml.com/en/products/euv-lithography-systems)). So an EUV scanner works in a vacuum and uses mirrors instead of lenses, and its masks are mirrors too ([source](https://www.asml.com/en/products/euv-lithography-systems)). Deep ultraviolet (DUV) machines use light with a wavelength more than fourteen times longer ([source](https://www.asml.com/en/technology/lithography-principles/light-and-lasers)). ASML calls its immersion DUV scanners the workhorses of the industry, used in high-volume manufacturing of the most advanced logic and memory chips ([source](https://www.asml.com/en/products/duv-lithography-systems)).
 
+{{figure:pick-the-light}}
+
 When one exposure cannot draw a pattern finely enough, chipmakers use multipatterning. In the litho-etch kind, the pattern is split between two or more masks printed in turn ([source](https://www.imec-int.com/en/imec-magazine/imec-magazine-june-2019/euv-lithography-weighing-the-options-for-future-logic-and-memory-applications)). Each added mask brings more process steps, more cost and a risk that the parts of the pattern misalign ([source](https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-innovative-pattern-shaping-technology-reduces)). Self-aligned double and quadruple patterning (SADP and SAQP) print the lines with one exposure and then multiply them with deposition and etch steps ([source](https://www.imec-int.com/en/imec-magazine/imec-magazine-june-2019/euv-lithography-weighing-the-options-for-future-logic-and-memory-applications)). In SAQP each printed line ends up as four ([source](https://www.imec-int.com/en/imec-magazine/imec-magazine-june-2019/euv-lithography-weighing-the-options-for-future-logic-and-memory-applications)). Because one exposure places all those lines, they cannot misalign with each other ([source](https://www.imec-int.com/en/imec-magazine/imec-magazine-june-2019/euv-lithography-weighing-the-options-for-future-logic-and-memory-applications)). A later exposure still prints blocks that break them where the circuit needs gaps ([source](https://www.imec-int.com/en/imec-magazine/imec-magazine-june-2019/euv-lithography-weighing-the-options-for-future-logic-and-memory-applications)). ASML says one EUV exposure per layer cuts masks and process steps and lowers cost ([source](https://ourbrand.asml.com/m/8ab959d4926657b/original/asml-2025-annual-report-strategic-report-section.pdf#page=16)).
 
 {{figure:several-passes}}
@@ -129,7 +159,7 @@ Of the systems ASML sold in 2025, 131 were ArF immersion, 78 KrF and 16 ArF dry,
 
 Reuters gives one price for the whole DUV segment, with tools costing roughly $60 million each ([source](https://www.reuters.com/world/asia-pacific/250-million-asml-printer-behind-nvidias-chips-2026-07-28/)). ASML's own figures split its DUV sales by tool type. In 2025 the 131 ArF immersion tools it sold made up 42 percent of its system sales, and the 78 KrF tools only 4 percent ([source](https://ourbrand.asml.com/m/3136300aa4999bc1/original/2026_01_28_Presentation-Investor-Relations-Q4-2025.pdf#page=9)). In DUV, ASML competes with Nikon and Canon, and it still holds above 80 percent of that market ([source](https://www.reuters.com/world/asia-pacific/250-million-asml-printer-behind-nvidias-chips-2026-07-28/)).
 
-Chipmakers without EUV build their finest layers on immersion DUV scanners, in [several passes per layer](#fig-lithography-several-passes) (figure 04.2) ([source](https://ourbrand.asml.com/m/8ab959d4926657b/original/asml-2025-annual-report-strategic-report-section.pdf#page=16)). From 1 September 2023, Dutch export licensing covered the most advanced of these scanners, ASML's NXT:2000i and later models ([source](https://www.asml.com/en/news/press-releases/2023/statement-regarding-export-control-regulations-dutch-government)).
+Chipmakers without EUV build their finest layers on immersion DUV scanners, in [several passes per layer](#fig-lithography-several-passes) (figure 04.3) ([source](https://ourbrand.asml.com/m/8ab959d4926657b/original/asml-2025-annual-report-strategic-report-section.pdf#page=16)). From 1 September 2023, Dutch export licensing covered the most advanced of these scanners, ASML's NXT:2000i and later models ([source](https://www.asml.com/en/news/press-releases/2023/statement-regarding-export-control-regulations-dutch-government)).
 
 ### Extreme ultraviolet
 

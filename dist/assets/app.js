@@ -3839,9 +3839,351 @@ try {
 
 } catch (e) { console.warn('module figsteps.js failed', e); }
 
+/* module: live-light.js */
+try {
+/* Figure 04.2, "The light each kind of scanner uses, and the finest line it prints" (the owner's "Build it" of 20 Nov 2026 on
+   the explorables mockup pick-the-light, as the designer refined it, less its "Sold by ASML, 2025" facts, which the designer
+   judged off the figure's point). build/build.js and build/explore.js write the figure's shell from content/04: every light as
+   page text (.xp-list: its numbers in data-x, its sentence and its sources) and the Table. This module draws into the stage,
+   .xp-stage[data-live="light"]:
+   - on screen (.lv-screen), a tab for each light; under them one wave of the light and a row of printed lines standing on a
+     wafer strip, both on one scale in nanometers (800 nm across, 560 on a narrow screen) with a 100 nm ruler, and a faint
+     column one wavelength wide on both rows, so the lines that fit inside one wave can be counted. Lines are drawn at the
+     finest feature ASML gives for the light, with gaps of the same width. Changing the light eases the wave and the lines to
+     the new size (at once under reduced motion). Under the drawing: the wavelength, the finest line, a small drawing of the
+     source, optics and medium, the light's sentence and its source. ?light=1 to 6 opens on that light;
+   - for paper and the PDF (.xp-still), the light the figure's "print" names, whatever the reader last chose. */
+(function () {
+  'use strict';
+  var NS = 'http://www.w3.org/2000/svg', HW = 46, HL = 40;
+  var reduced = function () { return window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches; };
+  var h = function (tag, cls, html) { var e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; };
+  var nm = function (v) { return String(v); };
+  var ease = function (p) { return p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2; };
+  var logMix = function (a, b, e) { return Math.exp(Math.log(a) + (Math.log(b) - Math.log(a)) * e); };
+
+  // the source, the optics and the medium; the cone that lands on the wafer widens with the numerical aperture
+  function glyph(kind) {
+    var wafer = '<rect class="g-wafer" x="28" y="55" width="76" height="6"/><rect class="g-film" x="28" y="53" width="76" height="2"/>', s = '';
+    if (kind === 'euv' || kind === 'hna') {
+      var c = kind === 'hna' ? 14 : 7;   // half the landing cone: NA 0.55 against 0.33
+      s += '<circle class="g-src" cx="14" cy="44" r="3.2"/>';
+      s += '<path class="g-ray" d="M14 44 L46 12 L100 22 L' + (66 - c) + ' 53"/>';
+      s += '<path class="g-ray" d="M14 44 L54 12 L100 30 L' + (66 + c) + ' 53" opacity="0.7"/>';
+      s += '<path class="g-mirror" d="M38 13 Q50 7 62 13"/><path class="g-mirror" d="M100 14 Q108 26 100 38"/>';
+      return s + wafer;
+    }
+    if (kind === 'lamp') s += '<circle class="g-src" cx="66" cy="9" r="5"/>';
+    else s += '<rect class="g-src" x="56" y="4" width="20" height="8" rx="1"/>';
+    s += '<path class="g-ray" d="M58 12 L58 33 L66 53 M74 12 L74 33 L66 53"/>';
+    if (kind === 'water') s += '<rect class="g-water" x="46" y="41" width="40" height="12" opacity="0.85"/>';
+    s += '<ellipse class="g-lens" cx="66" cy="34" rx="22" ry="4.5"/>';
+    return s + wafer;
+  }
+
+  var ALL = {};
+  function mount(stage) {
+    var fig = stage.closest('.figure'); if (!fig || stage._live) return;
+    var L = Array.prototype.map.call(fig.querySelectorAll('.xp-list > li'), function (li) {
+      var o = {}; try { o = JSON.parse(li.getAttribute('data-x') || '{}'); } catch (e) { }
+      var cap = li.querySelector('.xp-li-cap');
+      o.cap = cap ? cap.textContent : '';
+      o.src = Array.prototype.map.call(li.querySelectorAll('.xp-li-src a'), function (a) { return { label: a.textContent, url: a.getAttribute('href') }; });
+      return o;
+    }).filter(function (o) { return o.wl > 0 && o.ft > 0; });
+    if (!L.length) return;
+    stage._live = true;
+    fig.classList.add('figure--live', 'lv-light');
+    var P = Math.max(1, Math.min(L.length, +stage.getAttribute('data-print') || L.length)) - 1;
+
+    function panel(live) {
+      var p = h('div', 'pl-panel ' + (live ? 'lv-screen' : 'xp-still'));
+      if (!live) p.setAttribute('aria-hidden', 'true');
+      var plot = function (row, svg, br) { return '<div class="pl-row ' + row + '"><span class="pl-lab">' + (row === 'pl-row-light' ? 'Light' : 'Finest line printed') + '</span><div class="pl-plot"><span class="pl-span" aria-hidden="true"></span>' + svg + '<span class="pl-br ' + br + '" aria-hidden="true"><i></i><em></em></span></div></div>'; };
+      p.innerHTML =
+        '<div class="pl-draw"' + (live ? ' role="img" aria-label="One wave of the light and the finest lines it prints, drawn to one scale in nanometers"' : '') + '>' +
+          plot('pl-row-light', '<svg class="pl-svg pl-wave" preserveAspectRatio="none" aria-hidden="true"><path class="pl-wave-p"/></svg>', 'pl-br-wave') +
+          plot('pl-row-lines', '<svg class="pl-svg pl-lines" preserveAspectRatio="none" aria-hidden="true"><rect class="pl-wafer" x="0" y="31" height="9"/><g class="pl-g"></g></svg>', 'pl-br-line') +
+          '<div class="pl-ruler" aria-hidden="true"><i></i><span>100 nm</span></div></div>' +
+        '<div class="pl-facts"><div class="pl-fact"><span class="pl-k">Wavelength</span><span class="pl-num pl-f-wl"></span></div><div class="pl-fact"><span class="pl-k">Finest line</span><span class="pl-num pl-f-ft"></span></div></div>' +
+        '<div class="pl-how"><svg class="pl-glyph" viewBox="0 0 132 64" aria-hidden="true"></svg><p class="pl-mech"></p><div class="pl-txt"><p class="pl-cap"></p><p class="pl-src"><span class="fs-k"></span> <span class="pl-src-a"></span></p></div></div>';
+      return p;
+    }
+    function pick(live, on) {
+      var g = h('div', 'pl-pick' + (live ? ' lv-screen' : ' xp-still'));
+      if (live) { g.setAttribute('role', 'radiogroup'); g.setAttribute('aria-label', 'Pick the light'); } else g.setAttribute('aria-hidden', 'true');
+      L.forEach(function (o, i) {
+        var b = h(live ? 'button' : 'span', 'pl-opt' + (!live && i === on ? ' on' : ''));
+        if (live) { b.type = 'button'; b.setAttribute('role', 'radio'); b.setAttribute('aria-checked', 'false'); b.tabIndex = -1; }
+        b.innerHTML = '<b></b><span></span>'; b.firstChild.textContent = o.k; b.lastChild.textContent = nm(o.wl) + ' nm';
+        g.appendChild(b);
+      });
+      return g;
+    }
+    // the drawing at a wavelength and a feature size (mid-change, between two lights), on a span of nm across; the labels name
+    // the light's own values (lw, lf), never a value mid-change
+    function paint(p, span, wl, ft, lw, lf) {
+      var wave = p.querySelector('.pl-wave'), lines = p.querySelector('.pl-lines'), d = [], A = 15;
+      var pc = function (v) { return (Math.min(v, span) / span * 100).toFixed(3) + '%'; };
+      wave.setAttribute('viewBox', '0 0 ' + span + ' ' + HW);
+      var step = Math.max(span / 3000, wl / 16);
+      for (var x = 0; x <= span + 1e-6; x += step) d.push((x ? 'L' : 'M') + x.toFixed(2) + ' ' + (HW / 2 - A * Math.sin(2 * Math.PI * x / wl)).toFixed(2));
+      p.querySelector('.pl-wave-p').setAttribute('d', d.join(''));
+      lines.setAttribute('viewBox', '0 0 ' + span + ' ' + HL);
+      p.querySelector('.pl-wafer').setAttribute('width', span);
+      var g = p.querySelector('.pl-g'), html = '';
+      for (var x0 = 0; x0 < span; x0 += 2 * ft) html += '<rect x="' + x0.toFixed(3) + '" y="4" width="' + Math.min(ft, span - x0).toFixed(3) + '" height="27"/>';
+      g.innerHTML = html;
+      Array.prototype.forEach.call(p.querySelectorAll('.pl-span'), function (s) { s.style.width = pc(wl); });
+      var bw = p.querySelector('.pl-br-wave'), bl = p.querySelector('.pl-br-line');
+      bw.style.width = pc(wl); bl.style.width = pc(ft);
+      bw.querySelector('em').textContent = 'One wavelength, ' + nm(lw) + ' nm';
+      bl.querySelector('em').textContent = 'One line, ' + nm(lf) + ' nm';
+      p.querySelector('.pl-ruler i').style.width = pc(100);
+      place(bw); place(bl);
+    }
+    // a bracket's label sits to its right, or under it from its left end where the right has no room
+    function place(br) {
+      var em = br.querySelector('em'), box = br.parentNode.clientWidth;
+      if (!box) { em.style.left = 'calc(100% + 8px)'; return; }
+      em.style.left = (br.offsetWidth + 8 + em.offsetWidth <= box) ? 'calc(100% + 8px)' : '0';
+      em.classList.toggle('under', em.style.left === '0px' || em.style.left === '0');
+    }
+    function say(p, o) {
+      var q = function (sel) { return p.querySelector(sel); };
+      q('.pl-f-wl').innerHTML = ''; q('.pl-f-wl').appendChild(document.createTextNode(nm(o.wl))); q('.pl-f-wl').appendChild(h('small', '', 'nm'));
+      q('.pl-f-ft').innerHTML = ''; q('.pl-f-ft').appendChild(document.createTextNode(nm(o.ft))); var u = h('small'); u.textContent = o.ftU || 'nm'; q('.pl-f-ft').appendChild(u);
+      q('.pl-mech').textContent = o.mech || ''; q('.pl-cap').textContent = o.cap;
+      q('.pl-src .fs-k').textContent = o.src.length > 1 ? 'Sources:' : 'Source:';
+      var a = q('.pl-src-a'); a.innerHTML = '';
+      o.src.forEach(function (x, i, all) { if (i) a.appendChild(document.createTextNode(i === all.length - 1 ? ' and ' : ', ')); var l = document.createElement('a'); l.href = x.url; l.target = '_blank'; l.rel = 'noopener'; l.textContent = x.label; a.appendChild(l); });
+      q('.pl-glyph').innerHTML = glyph(o.g);
+    }
+
+    var tabs = pick(true), live = panel(true), stillPick = pick(false, P), still = panel(false), sayEl = h('p', 'sr-only pl-say');
+    sayEl.setAttribute('aria-live', 'polite');
+    live.appendChild(sayEl);
+    stage.appendChild(tabs); stage.appendChild(live); stage.appendChild(stillPick); stage.appendChild(still);
+    var spanOf = function () { var w = live.querySelector('.pl-plot').clientWidth; return w && w < 480 ? 560 : 800; };
+    // the still: the light "print" names, on the wide scale
+    say(still, L[P]); paint(still, 800, L[P].wl, L[P].ft, L[P].wl, L[P].ft);
+
+    var cur = -1, raf = 0, swapT = 0, shown = { wl: L[0].wl, ft: L[0].ft };
+    var btns = Array.prototype.slice.call(tabs.children);
+    function set(i, quiet) {
+      i = Math.max(0, Math.min(L.length - 1, i));
+      if (i === cur) return;
+      var o = L[i], from = { wl: shown.wl, ft: shown.ft }; cur = i;
+      btns.forEach(function (b, k) { b.setAttribute('aria-checked', k === i ? 'true' : 'false'); b.tabIndex = k === i ? 0 : -1; });
+      cancelAnimationFrame(raf); clearTimeout(swapT);
+      if (!quiet) sayEl.textContent = o.k + ': light at ' + nm(o.wl) + ' nm, finest line ' + nm(o.ft) + ' ' + (o.ftU || 'nm') + '. ' + o.cap;
+      if (quiet || reduced()) { shown = { wl: o.wl, ft: o.ft }; live.classList.remove('swap'); paint(live, spanOf(), o.wl, o.ft, o.wl, o.ft); say(live, o); return; }
+      live.classList.add('swap'); swapT = setTimeout(function () { say(live, o); live.classList.remove('swap'); }, 170);
+      var t0 = performance.now(), D = 700;
+      (function tick(t) {
+        var p = Math.min(1, Math.max(0, (t - t0) / D)), e = ease(p);
+        shown = { wl: logMix(from.wl, o.wl, e), ft: logMix(from.ft, o.ft, e) };
+        paint(live, spanOf(), shown.wl, shown.ft, o.wl, o.ft);
+        if (p < 1) raf = requestAnimationFrame(tick); else shown = { wl: o.wl, ft: o.ft };
+      })(t0);
+    }
+    btns.forEach(function (b, i) {
+      b.addEventListener('click', function () { set(i); });
+      b.addEventListener('keydown', function (e) {
+        var to = e.key === 'ArrowRight' || e.key === 'ArrowDown' ? cur + 1 : e.key === 'ArrowLeft' || e.key === 'ArrowUp' ? cur - 1 : e.key === 'Home' ? 0 : e.key === 'End' ? L.length - 1 : null;
+        if (to == null) return;
+        e.preventDefault(); set(to); btns[cur].focus();
+      });
+    });
+    var redraw = function () { if (cur >= 0) paint(live, spanOf(), shown.wl, shown.ft, L[cur].wl, L[cur].ft); paint(still, 800, L[P].wl, L[P].ft, L[P].wl, L[P].ft); };
+    if (window.ResizeObserver) new ResizeObserver(redraw).observe(live); else window.addEventListener('resize', redraw);
+    // ?light=N opens on light N (1 to 6), else on the light that tells the most (the one paper prints); with no figure address
+    // in the link, it brings the figure into view
+    var q = /[?&]light=(\d+)/.exec(location.search), want = q ? +q[1] : 0;
+    set(want >= 1 && want <= L.length ? want - 1 : P, true);
+    if (want >= 1 && want <= L.length && !location.hash) setTimeout(function () { fig.scrollIntoView({ block: 'start' }); }, 60);
+    // for the checks (qa/redesign/check-explain.js, check-figs.js)
+    ALL[fig.id] = { steps: L, print: P, set: function (i) { set(i, true); return cur; }, go: function (i) { set(i); return cur; }, at: function () { return cur; }, shown: function () { return { wl: shown.wl, ft: shown.ft, span: spanOf() }; } };
+  }
+  function init() { Array.prototype.forEach.call(document.querySelectorAll('.xp-stage[data-live="light"]'), mount); }
+  window.CP_LIVE = window.CP_LIVE || {};
+  window.CP_LIVE.light = { figs: ALL };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+})();
+
+} catch (e) { console.warn('module live-light.js failed', e); }
+
+/* module: live-reticle.js */
+try {
+/* Figure 10.3, "How big a package gets, counted in reticle fields" (the owner's "Build it" of 20 Nov 2026 on the explorables
+   mockup reticle-fields, as the designer refined it). build/build.js and build/explore.js write the figure's shell from
+   content/10: every step as page text (.xp-list: its numbers in data-x, its sentence and its sources) and the Table. This
+   module draws into the stage, .xp-stage[data-live="reticle"]:
+   - on screen (.lv-screen), a 300 mm wafer drawn to scale with the faint grid of 26 x 33 mm exposure fields, the step's number,
+     sentence and source beside it, and a stepped slider with previous and next under it. Squares fill outward from the center
+     in a fixed order, so each step keeps the squares of the step before it; only the squares a step adds are wine, counted from
+     the step before it in the list, so ?step=N draws what clicking through to N draws. A part field fills from the side that
+     faces the center. The H100 step draws the die at its area, in the proportions of a field, inside one field's outline;
+   - for paper and the PDF (.xp-still), the step the figure's "print" names, whatever the reader last chose (live.css swaps them).
+   Under reduced motion the squares and the words change at once. ?step=1 to 8 opens on that step. */
+(function () {
+  'use strict';
+  var W = 26, H = 33, R = 150, NS = 'http://www.w3.org/2000/svg';
+  var reduced = function () { return window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches; };
+  var el = function (n, a) { var e = document.createElementNS(NS, n); for (var k in a) e.setAttribute(k, a[k]); return e; };
+  var h = function (tag, cls, html) { var e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; };
+
+  // the fields that sit wholly on the wafer, in the order they fill: rings outward from the center field; a ring that adds
+  // columns fills the left column then the right, one that adds rows fills the row above then the row below, each from its
+  // middle out, so every step stays a compact block
+  var CELLS = (function () {
+    var cells = [];
+    for (var j = -5; j <= 5; j++) for (var i = -6; i <= 6; i++) {
+      var cx = i * W, cy = j * H, ok = true;
+      [[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(function (c) { if (Math.hypot(cx + c[0] * W / 2, cy + c[1] * H / 2) > R - 3) ok = false; });
+      if (ok) cells.push({ i: i, j: j, m: Math.max(Math.abs(i) * W, Math.abs(j) * H), col: Math.abs(i) * W >= Math.abs(j) * H && i !== 0 });
+    }
+    cells.sort(function (p, q) {
+      if (p.m !== q.m) return p.m - q.m;
+      if (p.col !== q.col) return p.col ? -1 : 1;
+      if (p.col) return (p.i - q.i) || (Math.abs(p.j) - Math.abs(q.j)) || (p.j - q.j);
+      return (p.j - q.j) || (Math.abs(p.i) - Math.abs(q.i)) || (p.i - q.i);
+    });
+    return cells;
+  })();
+  function rectFor(c, frac) {
+    var x = c.i * W - W / 2, y = c.j * H - H / 2, w = W, hh = H;
+    if (frac < 1) {   // a part field fills from the side that faces the center
+      if (Math.abs(c.j) * H >= Math.abs(c.i) * W && c.j !== 0) { hh = H * frac; if (c.j < 0) y = y + H - hh; }
+      else { w = W * frac; if (c.i < 0) x = x + W - w; }
+    }
+    return { x: +x.toFixed(3), y: +y.toFixed(3), width: +w.toFixed(3), height: +hh.toFixed(3) };
+  }
+  // the squares a step draws: { full, frac, n, before } (before: the whole fields the step before it had, which stay neutral)
+  function count(S, k) {
+    var s = S[k], full = Math.floor(s.v + 1e-9), frac = Math.round((s.v - full) * 100) / 100;
+    return { full: full, frac: frac, n: full + (frac > 0 ? 1 : 0), before: k > 0 ? Math.floor(S[k - 1].v + 1e-9) : 0 };
+  }
+
+  var ALL = {};
+  function mount(stage) {
+    var fig = stage.closest('.figure'); if (!fig || stage._live) return;
+    var S = Array.prototype.map.call(fig.querySelectorAll('.xp-list > li'), function (li) {
+      var o = {}; try { o = JSON.parse(li.getAttribute('data-x') || '{}'); } catch (e) { }
+      var cap = li.querySelector('.xp-li-cap');
+      o.cap = cap ? cap.textContent : '';
+      o.src = Array.prototype.map.call(li.querySelectorAll('.xp-li-src a'), function (a) { return { label: a.textContent, url: a.getAttribute('href') }; });
+      return o;
+    }).filter(function (o) { return o.v > 0; });
+    if (!S.length) return;
+    stage._live = true;
+    fig.classList.add('figure--live', 'lv-reticle');
+    var uid = fig.id || 'xr', P = Math.max(1, Math.min(S.length, +stage.getAttribute('data-print') || S.length)) - 1;
+
+    function panel(live) {
+      var id = uid + (live ? '-l' : '-p');
+      var p = h('div', 'xr-panel ' + (live ? 'lv-screen' : 'xp-still'));
+      if (!live) p.setAttribute('aria-hidden', 'true');
+      p.innerHTML =
+        '<div class="xr-draw"><svg class="xr-svg" viewBox="-156 -156 312 312"' + (live ? ' role="img" aria-label="Reticle fields drawn to scale on a 300 mm wafer"' : ' aria-hidden="true"') + '>' +
+          '<defs><clipPath id="' + id + '-clip"><circle r="150"/></clipPath><radialGradient id="' + id + '-silver" cx="38%" cy="32%" r="80%"><stop offset="0" class="xr-s0"/><stop offset="1" class="xr-s1"/></radialGradient></defs>' +
+          '<circle class="xr-wafer" r="150" fill="url(#' + id + '-silver)"/><g class="xr-grid" clip-path="url(#' + id + '-clip)"></g><g class="xr-tiles"></g></svg>' +
+          '<div class="xr-dim" aria-hidden="true"><span>300 mm wafer</span></div>' +
+          '<div class="xr-key" aria-hidden="true"><span><i class="xr-sw"></i>One reticle field, 26 × 33 mm</span><span><i class="xr-sw xr-sw-new"></i><b class="xr-key-new">Added at this step</b></span></div></div>' +
+        '<div class="xr-top"><p class="xr-k">Area</p><p class="xr-big"><span class="xr-num"></span><span class="xr-unit"></span></p><p class="xr-what"></p></div>' +
+        '<div class="xr-more"><p class="xr-cap"></p><p class="xr-src"><span class="fs-k"></span> <span class="xr-src-a"></span></p></div>';
+      var grid = p.querySelector('.xr-grid');
+      for (var x = -W / 2 - W * 6; x <= R; x += W) grid.appendChild(el('line', { x1: x, y1: -R, x2: x, y2: R }));
+      for (var y = -H / 2 - H * 5; y <= R; y += H) grid.appendChild(el('line', { x1: -R, y1: y, x2: R, y2: y }));
+      return p;
+    }
+    function draw(p, k, grow) {
+      var g = p.querySelector('.xr-tiles'), s = S[k];
+      while (g.firstChild) g.removeChild(g.firstChild);
+      if (s.die) {
+        var sc = Math.sqrt(s.die / (W * H)), f = rectFor(CELLS[0], 1);
+        g.appendChild(el('rect', f)).setAttribute('class', 'field');
+        g.appendChild(el('rect', { x: +(-W * sc / 2).toFixed(3), y: +(-H * sc / 2).toFixed(3), width: +(W * sc).toFixed(3), height: +(H * sc).toFixed(3), 'class': 'die new' + (grow ? ' grow' : '') }));
+        return;
+      }
+      var c = count(S, k), added = Math.max(1, c.n - c.before), stagger = Math.min(70, 900 / added);
+      for (var t = 0; t < c.n; t++) {
+        var r = el('rect', rectFor(CELLS[t], t < c.full ? 1 : c.frac)), cls = t >= c.full ? 'part' : '';
+        if (t >= c.before) { cls += ' new'; if (grow) { cls += ' grow'; r.style.animationDelay = Math.round((t - c.before) * stagger) + 'ms'; } }
+        r.setAttribute('class', cls.trim());
+        g.appendChild(r);
+      }
+    }
+    function say(p, k) {
+      var s = S[k], q = function (sel) { return p.querySelector(sel); };
+      q('.xr-num').textContent = s.num; q('.xr-unit').textContent = s.unit; q('.xr-what').textContent = s.what; q('.xr-cap').textContent = s.cap;
+      q('.xr-src .fs-k').textContent = s.src.length > 1 ? 'Sources:' : 'Source:';
+      var a = q('.xr-src-a'); a.innerHTML = '';
+      s.src.forEach(function (x, i, all) { if (i) a.appendChild(document.createTextNode(i === all.length - 1 ? ' and ' : ', ')); var l = document.createElement('a'); l.href = x.url; l.target = '_blank'; l.rel = 'noopener'; l.textContent = x.label; a.appendChild(l); });
+    }
+
+    // the live panel and its controls
+    var live = panel(true), still = panel(false);
+    var ctl = h('div', 'xr-ctl');
+    ctl.innerHTML =
+      '<div class="xr-ctl-h"><span class="xr-ctl-k">Step through</span><span class="xr-step"><button type="button" class="xr-prev" aria-label="Previous step">‹</button><output class="xr-of" aria-hidden="true"></output><button type="button" class="xr-next" aria-label="Next step">›</button></span></div>' +
+      '<div class="xr-track"><input type="range" min="0" max="' + (S.length - 1) + '" step="1" value="0" aria-label="Package size, step through"></div>' +
+      '<div class="xr-ticks" aria-hidden="true"></div><p class="sr-only xr-say" aria-live="polite"></p>';
+    live.appendChild(ctl);
+    stage.appendChild(live); stage.appendChild(still);
+    var range = ctl.querySelector('input'), ticks = ctl.querySelector('.xr-ticks'), prev = ctl.querySelector('.xr-prev'), next = ctl.querySelector('.xr-next'), sayEl = ctl.querySelector('.xr-say');
+    S.forEach(function (s, i) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.tabIndex = -1; b.className = 'xr-tick' + (i === 0 ? ' start' : '') + (i === S.length - 1 ? ' end' : '');
+      b.style.left = (i / (S.length - 1) * 100) + '%';
+      b.innerHTML = '<b></b><small></small>'; b.firstChild.textContent = s.k; b.lastChild.textContent = s.sub || '';
+      b.addEventListener('click', function () { set(i); range.focus({ preventScroll: true }); });
+      ticks.appendChild(b);
+    });
+    // the still: the step "print" names, its new squares counted from the step before it, as on screen
+    draw(still, P, false); say(still, P);
+    if (P > 0 && !S[P].die) still.querySelector('.xr-key-new').textContent = 'Added beyond ' + S[P - 1].num + ' ' + S[P - 1].unit;
+
+    var cur = -1, swapT = 0;
+    function marks(k) {
+      var s = S[k];
+      live.querySelector('.xr-of').textContent = (k + 1) + ' of ' + S.length;
+      range.value = k;
+      range.setAttribute('aria-valuetext', s.num + ' ' + s.unit + ', ' + s.what);
+      prev.disabled = k === 0; next.disabled = k === S.length - 1;
+      Array.prototype.forEach.call(ticks.children, function (b, i) { b.classList.toggle('on', i === k); });
+    }
+    function set(k, quiet) {
+      k = Math.max(0, Math.min(S.length - 1, k));
+      if (k === cur) return;
+      var down = k < cur; cur = k; marks(k);
+      draw(live, k, !down && !quiet && !reduced());   // stepping back redraws without the fill-in
+      if (!quiet) sayEl.textContent = S[k].num + ' ' + S[k].unit + ', ' + S[k].what + '. ' + S[k].cap;
+      clearTimeout(swapT);
+      if (quiet || reduced()) { live.classList.remove('swap'); say(live, k); return; }
+      live.classList.add('swap'); swapT = setTimeout(function () { say(live, k); live.classList.remove('swap'); }, 160);
+    }
+    range.addEventListener('input', function () { set(+range.value); });
+    prev.addEventListener('click', function () { set(cur - 1); });
+    next.addEventListener('click', function () { set(cur + 1); });
+    // ?step=N opens on step N (1 to 8); with no figure address in the link, it brings the figure into view
+    var q = /[?&]step=(\d+)/.exec(location.search), want = q ? +q[1] : 0;
+    set(want >= 1 && want <= S.length ? want - 1 : 0, true);
+    if (want >= 1 && want <= S.length && !location.hash) setTimeout(function () { fig.scrollIntoView({ block: 'start' }); }, 60);
+    // for the checks (qa/redesign/check-explain.js, check-figs.js)
+    ALL[fig.id] = { steps: S, print: P, cells: CELLS, count: function (k) { return count(S, k); }, set: function (k) { set(k, true); return cur; }, at: function () { return cur; } };
+  }
+  function init() { Array.prototype.forEach.call(document.querySelectorAll('.xp-stage[data-live="reticle"]'), mount); }
+  window.CP_LIVE = window.CP_LIVE || {};
+  window.CP_LIVE.reticle = { figs: ALL };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+})();
+
+} catch (e) { console.warn('module live-reticle.js failed', e); }
+
 /* module: live-saqp.js */
 try {
-/* Figure 04.2, "How several passes turn one line into four" (owner approved the mockup on 29 Oct 2026, its latest version).
+/* Figure 04.3 (04.2 until 21 Nov 2026), "How several passes turn one line into four" (owner approved the mockup on 29 Oct 2026, its latest version).
    A live explainer in the grammar of animations/litho.html (film, light, mask and wafer colors; stepped scenes; one drawing
    that changes in place), with every label in HTML text. build/build.js draws the figure's shell from content/04 (the step
    names and captions, the print still and the note); this module draws into its stage, .anim-stage[data-live="saqp"].
@@ -7094,13 +7436,15 @@ save(cv,fig,k);
 }
 function add(acts){
 if(acts.getAttribute('data-ready'))return;acts.setAttribute('data-ready','1');
-var kind=acts.getAttribute('data-kind'),fig=acts.closest('.figure');if(!fig||['bars','stack','columns','change','timeline','within'].indexOf(kind)<0)return;
+var kind=acts.getAttribute('data-kind'),fig=acts.closest('.figure');if(!fig||['bars','stack','columns','change','timeline','within','explore'].indexOf(kind)<0)return;
 var tl=kind==='timeline'; /* a timeline takes a PNG but no Table: it is already its rows, each date beside its event (28 Oct 2026) */
 var tb=tl?null:el('button','fs-tab','Table');if(tb){tb.type='button';tb.setAttribute('aria-pressed','false');
 tb.addEventListener('click',function(){var on=!fig.classList.contains('is-table'),t=fig.querySelector('table.fig-table');fig.classList.toggle('is-table',on);if(t)t.classList.toggle('sr-only',!on);tb.setAttribute('aria-pressed',on?'true':'false');});}
+var cite=acts.querySelector('.ch-cite-btn');if(tb)acts.insertBefore(tb,cite?cite.nextSibling:acts.firstChild);
+if(kind==='explore')return; /* an explorable (21 Nov 2026) takes Cite and Table: its drawing is the step the reader chose, and a PNG of one step would leave the others out */
 var pb=el('button','fs-png','PNG');pb.type='button';pb.setAttribute('aria-label','Save the figure as a PNG picture');
 pb.addEventListener('click',function(){var go=function(){png(fig);};if(D.fonts&&D.fonts.ready)D.fonts.ready.then(go);else go();});
-var cite=acts.querySelector('.ch-cite-btn');if(tb)acts.insertBefore(tb,cite?cite.nextSibling:acts.firstChild);acts.appendChild(pb);
+acts.appendChild(pb);
 }
 [].forEach.call(D.querySelectorAll('.figure .fs-acts'),add);
 })();

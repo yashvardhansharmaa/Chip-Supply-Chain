@@ -2964,10 +2964,13 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
 
 
 /* module: live.css */
-/* Live explainers (29 Oct 2026, the owner's approved mockups): figure 04.2, several passes (src/modules/live-saqp.js), and
+/* Live explainers (29 Oct 2026, the owner's approved mockups): figure 04.3 (04.2 until 21 Nov 2026), several passes (src/modules/live-saqp.js), and
    figure 07.1, driven by its model (src/modules/live-yield.js). Each is a .figure--anim whose stage the module draws into;
    the module marks the figure .figure--live and .lv-saqp or .lv-yield. Every label is HTML text at 11.5 px or more. On paper
-   the live parts (.lv-screen) give way to the stage's still, .anim-print, above the list of steps, as the videos do. */
+   the live parts (.lv-screen) give way to the stage's still, .anim-print, above the list of steps, as the videos do.
+   The explorables of 21 Nov 2026 (build/explore.js), figure 10.3 (src/modules/live-reticle.js, .lv-reticle) and figure 04.2
+   (src/modules/live-light.js, .lv-light), share these rules: 07.1's slider and readout type, .lv-screen on screen, and on
+   paper a still the module draws (.xp-still) of the step the figure's "print" names. */
 
 /* labels drawn as text over a canvas */
 .lv-draw { position: relative; }
@@ -2977,7 +2980,7 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
 .lv-lab.lead::after { content: ""; position: absolute; left: 50%; top: calc(100% + 3px); width: 1px; height: var(--lead, 10px); background: currentColor; opacity: 0.7; }
 @media (prefers-reduced-motion: reduce) { .lv-lab { transition: none; } }
 
-/* ---------- 04.2, several passes ---------- */
+/* ---------- 04.3, several passes ---------- */
 /* the tally's three kinds of step, in the drawing's own colors: light, deposited film (first and second), etch */
 :root { --sq-violet: #5a4bb0; --sq-dep: #8a9bb0; --sq-gen2: #4f8a8b; --sq-etch: #45443f; }
 :root[data-theme="dark"] { --sq-violet: #a99cff; --sq-dep: #7d8ea3; --sq-gen2: #5fa3a4; --sq-etch: #c6c4be; }
@@ -3026,13 +3029,13 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
 .lv-yield .yd-ctl-h { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; font-family: var(--font-ui); }
 .lv-yield .yd-ctl-k { font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
 .lv-yield .yd-ctl output { font-size: 14px; font-weight: 500; color: var(--ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
-.lv-yield .yd-track { position: relative; --th: 20px; }
-.lv-yield input[type="range"] { -webkit-appearance: none; appearance: none; display: block; width: 100%; height: 32px; margin: 2px 0 0; background: none; cursor: pointer; }
-.lv-yield input[type="range"]::-webkit-slider-runnable-track { height: 2px; background: var(--control-edge); }
-.lv-yield input[type="range"]::-moz-range-track { height: 2px; background: var(--control-edge); }
-.lv-yield input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: var(--th); height: var(--th); margin-top: -9px; border-radius: 50%; background: var(--ink); border: 3px solid var(--bg); box-shadow: 0 0 0 1px var(--ink); }
-.lv-yield input[type="range"]::-moz-range-thumb { width: 14px; height: 14px; border-radius: 50%; background: var(--ink); border: 3px solid var(--bg); box-shadow: 0 0 0 1px var(--ink); }
-.lv-yield input[type="range"]:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.lv-yield .yd-track, .lv-reticle .xr-track { position: relative; --th: 20px; }
+.lv-yield input[type="range"], .lv-reticle input[type="range"] { -webkit-appearance: none; appearance: none; display: block; width: 100%; height: 32px; margin: 2px 0 0; background: none; cursor: pointer; }
+.lv-yield input[type="range"]::-webkit-slider-runnable-track, .lv-reticle input[type="range"]::-webkit-slider-runnable-track { height: 2px; background: var(--control-edge); }
+.lv-yield input[type="range"]::-moz-range-track, .lv-reticle input[type="range"]::-moz-range-track { height: 2px; background: var(--control-edge); }
+.lv-yield input[type="range"]::-webkit-slider-thumb, .lv-reticle input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: var(--th); height: var(--th); margin-top: -9px; border-radius: 50%; background: var(--ink); border: 3px solid var(--bg); box-shadow: 0 0 0 1px var(--ink); }
+.lv-yield input[type="range"]::-moz-range-thumb, .lv-reticle input[type="range"]::-moz-range-thumb { width: 14px; height: 14px; border-radius: 50%; background: var(--ink); border: 3px solid var(--bg); box-shadow: 0 0 0 1px var(--ink); }
+.lv-yield input[type="range"]:focus-visible, .lv-reticle input[type="range"]:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .lv-yield .yd-ticks { position: relative; height: 30px; margin: 0 calc(var(--th, 20px) / 2); font-family: var(--font-ui); font-size: 11.5px; color: var(--muted); }
 .lv-yield .yd-tick { position: absolute; top: 0; transform: translateX(-50%); text-align: center; white-space: nowrap; line-height: 1.3; }
 .lv-yield .yd-tick::before { content: ""; display: block; width: 1px; height: 5px; margin: 0 auto 2px; background: var(--control-edge); }
@@ -3054,11 +3057,213 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
 }
 @media (prefers-reduced-motion: reduce) { .lv-yield .yd-row, .lv-yield .yd-row::before { transition: none; } }
 
+/* ---------- the explorables (21 Nov 2026): what they share ---------- */
+.figure--explore .xp-stage:empty { min-height: 480px; }   /* the room the module fills, so the page does not jump when it does */
+@media screen { .figure--explore .xp-still { display: none !important; } }   /* the still is for paper */
+.figure--explore .xp-list { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.chapter .figure--explore.is-table .xp-stage { display: none; }
+.chapter .figure--explore.is-table table.fig-table thead th { font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.chapter .figure--explore.is-table table.fig-table thead th + th { text-align: right; }
+
+/* ---------- 10.3, reticle fields (the mockup reticle-fields as the designer refined it) ---------- */
+/* fields from earlier steps sit in the neutral, and only the fields a step adds take the wine */
+:root { --xr-s0: #f1f0ec; --xr-s1: #d9d8d2; --xr-grid: rgba(23,23,22,0.13); --xr-tile: rgba(23,23,22,0.09); --xr-tile-edge: rgba(23,23,22,0.42); --xr-tile-new: rgba(122,31,43,0.46); }
+:root[data-theme="dark"] { --xr-s0: #2a2a27; --xr-s1: #1e1e1c; --xr-grid: rgba(232,231,227,0.12); --xr-tile: rgba(232,231,227,0.10); --xr-tile-edge: rgba(232,231,227,0.42); --xr-tile-new: rgba(217,138,149,0.46); }
+.lv-reticle .xp-stage:empty { min-height: 590px; }
+.lv-reticle .xr-s0 { stop-color: var(--xr-s0); } .lv-reticle .xr-s1 { stop-color: var(--xr-s1); }
+.lv-reticle .xr-panel { display: grid; grid-template-columns: minmax(0, 330px) minmax(0, 1fr); grid-template-rows: 1fr auto auto 1fr auto; grid-template-areas: "draw ." "draw top" "draw more" "draw ." "ctl ctl"; gap: 0 30px; padding: 20px 22px 10px; border: 1px solid var(--line); background: var(--bg); }
+.lv-reticle .xp-still { grid-template-rows: auto auto auto auto; grid-template-areas: "draw ." "draw top" "draw more" "draw ."; padding-bottom: 20px; }
+.lv-reticle .xr-draw { grid-area: draw; align-self: center; }
+.lv-reticle .xr-top { grid-area: top; }
+.lv-reticle .xr-more { grid-area: more; align-self: start; min-height: 11.5em; }
+.lv-reticle .xr-ctl { grid-area: ctl; }
+.lv-reticle .xr-svg { display: block; width: 100%; height: auto; aspect-ratio: 1; overflow: visible; }
+.lv-reticle .xr-wafer { stroke: var(--line-2); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.lv-reticle .xr-grid line { stroke: var(--xr-grid); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.lv-reticle .xr-tiles rect { fill: var(--xr-tile); stroke: var(--xr-tile-edge); stroke-width: 1; vector-effect: non-scaling-stroke; transform-box: fill-box; transform-origin: center; }
+.lv-reticle .xr-tiles rect.new { fill: var(--xr-tile-new); stroke: var(--accent); }
+.lv-reticle .xr-tiles rect.grow { animation: xr-in 0.45s var(--ease) backwards; }
+.lv-reticle .xr-tiles rect.part { stroke-dasharray: 3 2; }
+.lv-reticle .xr-tiles rect.field { fill: none; stroke: var(--xr-tile-edge); stroke-dasharray: 3 2; }
+@keyframes xr-in { from { opacity: 0; transform: scale(0.6); } to { opacity: 1; transform: none; } }
+.lv-reticle .xr-key { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 18px; margin: 12px 0 0; font-family: var(--font-ui); font-size: 12px; color: var(--ink-2); }
+.lv-reticle .xr-key span { display: inline-flex; align-items: center; gap: 6px; }
+.lv-reticle .xr-key b { font-weight: inherit; }
+.lv-reticle .xr-sw { display: inline-block; width: 10px; height: 13px; background: var(--xr-tile); border: 1px solid var(--xr-tile-edge); }
+.lv-reticle .xr-sw-new { background: var(--xr-tile-new); border-color: var(--accent); }
+.lv-reticle .xr-dim { position: relative; width: 96.15%; height: 7px; margin: 6px auto 0; border: 1px solid var(--line-2); border-top: 0; }
+.lv-reticle .xr-dim span { position: absolute; left: 50%; top: -1px; transform: translate(-50%, 0); padding: 0 8px; background: var(--bg); font-family: var(--font-ui); font-size: 12px; line-height: 1; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.lv-reticle .xr-k { margin: 0 0 6px; font-family: var(--font-ui); font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.lv-reticle .xr-big { margin: 0; display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 10px; }
+.lv-reticle .xr-num { font-family: var(--font-display); font-variation-settings: var(--opsz-numeral); font-weight: 300; font-size: 64px; line-height: 1; color: var(--accent-ink); font-variant-numeric: tabular-nums; }
+.lv-reticle .xr-unit { font-family: var(--font-ui); font-size: 14px; font-weight: 500; color: var(--ink-2); }
+.lv-reticle .xr-what { margin: 10px 0 0; font-family: var(--font-ui); font-size: 14px; font-weight: 600; color: var(--ink); line-height: 1.35; }
+.lv-reticle .xr-cap { margin: 10px 0 0; font-family: var(--font-body); font-size: var(--t-small); line-height: 1.5; color: var(--ink-2); text-wrap: pretty; }
+.lv-reticle .xr-src { margin: 12px 0 0; font-family: var(--font-ui); font-size: 12.5px; color: var(--muted); }
+.lv-reticle .xr-src a { color: var(--ink-2); text-underline-offset: 3px; text-decoration-color: var(--line-2); }
+.lv-reticle .xr-top > *, .lv-reticle .xr-more > * { transition: opacity 0.2s; }
+.lv-reticle .xr-panel.swap .xr-top > *, .lv-reticle .xr-panel.swap .xr-more > * { opacity: 0; }
+/* the scrubber: 07.1's slider, stepped */
+.lv-reticle .xr-ctl { margin: 18px -22px 0; padding: 12px 22px 0; border-top: 1px solid var(--line); }
+.lv-reticle .xr-ctl-h { display: flex; justify-content: space-between; align-items: center; gap: 10px; font-family: var(--font-ui); }
+.lv-reticle .xr-ctl-k { font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.lv-reticle .xr-step { display: inline-flex; align-items: center; gap: 6px; }
+.lv-reticle .xr-step button { width: 30px; height: 30px; border: 1px solid var(--control-edge); border-radius: 50%; background: var(--bg); color: var(--ink); font: 500 17px/1 var(--font-ui); cursor: pointer; padding: 0 0 2px; }
+.lv-reticle .xr-step button:hover { border-color: var(--accent); color: var(--accent-ink); }
+.lv-reticle .xr-step button:disabled { opacity: 0.35; cursor: default; border-color: var(--control-edge); color: var(--ink); }
+.lv-reticle .xr-step button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.lv-reticle .xr-of { min-width: 4.4em; text-align: center; font-size: 13px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.lv-reticle input[type="range"] { height: 34px; }
+.lv-reticle .xr-ticks { position: relative; height: 36px; margin: 0 10px; font-family: var(--font-ui); font-size: 12px; color: var(--muted); }
+.lv-reticle .xr-tick { position: absolute; top: 0; transform: translateX(-50%); text-align: center; white-space: nowrap; line-height: 1.25; background: none; border: 0; padding: 0 2px; font: inherit; color: inherit; cursor: pointer; }
+.lv-reticle .xr-tick::before { content: ""; display: block; width: 1px; height: 5px; margin: 0 auto 3px; background: var(--control-edge); }
+.lv-reticle .xr-tick b { display: block; font-weight: 500; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.lv-reticle .xr-tick small { display: block; font-size: 11.5px; color: var(--muted); }
+.lv-reticle .xr-tick.start { transform: none; text-align: left; }
+.lv-reticle .xr-tick.start::before { margin: 0 auto 3px 0; }
+.lv-reticle .xr-tick.end { transform: translateX(-100%); text-align: right; }
+.lv-reticle .xr-tick.end::before { margin: 0 0 3px auto; }
+.lv-reticle .xr-tick.on b { color: var(--accent-ink); font-weight: 700; }
+.lv-reticle .xr-tick:hover b { color: var(--ink); }
+@media (max-width: 600px) {
+  .lv-reticle .xp-stage:empty { min-height: 760px; }
+  .lv-reticle .xr-panel { grid-template-columns: 1fr; grid-template-rows: auto; grid-template-areas: "draw" "top" "ctl" "more"; padding: 14px 12px 4px; gap: 0; }
+  .lv-reticle .xp-still { grid-template-areas: "draw" "top" "more"; }
+  .lv-reticle .xr-draw { width: 100%; margin: 0; }
+  .lv-reticle .xr-svg { width: 236px; margin: 0 auto; }
+  .lv-reticle .xr-dim { width: 227px; }
+  .lv-reticle .xr-key { gap: 2px 12px; font-size: 11.5px; }
+  .lv-reticle .xr-top { margin: 14px 0 0; }
+  .lv-reticle .xr-top .xr-k { display: none; }
+  .lv-reticle .xr-big { gap: 0 8px; }
+  .lv-reticle .xr-num { font-size: 44px; }
+  .lv-reticle .xr-unit { font-size: 13.5px; }
+  .lv-reticle .xr-what { margin: 6px 0 2px; font-size: 14px; min-height: 2.7em; }
+  .lv-reticle .xr-step { gap: 0; }
+  .lv-reticle .xr-step button, .lv-reticle .xr-step button:hover, .lv-reticle .xr-step button:disabled { width: 44px; height: 44px; border-color: transparent; background: none; position: relative; }
+  .lv-reticle .xr-step button::before { content: ""; position: absolute; inset: 6px; border: 1px solid var(--control-edge); border-radius: 50%; }
+  .lv-reticle .xr-step button:hover::before { border-color: var(--accent); }
+  .lv-reticle input[type="range"] { height: 44px; margin: 0; }
+  .lv-reticle .xr-tick { min-width: 44px; min-height: 44px; }
+  .lv-reticle .xr-tick.start::before { margin-left: 0; }
+  .lv-reticle .xr-ctl { margin: 10px -12px 0; padding: 8px 12px 0; }
+  .lv-reticle .xr-more { margin: 4px 0 12px; padding-top: 10px; border-top: 1px solid var(--line); min-height: 0; }
+  .lv-reticle .xr-ticks { margin: 0 8px; font-size: 11.5px; height: 46px; }
+  .lv-reticle .xr-tick small { display: none; }
+  .lv-reticle .xr-tick b { font-size: 11.5px; }
+}
+@media (prefers-reduced-motion: reduce) { .lv-reticle .xr-tiles rect.grow { animation: none; } .lv-reticle .xr-top > *, .lv-reticle .xr-more > * { transition: none; } }
+
+/* ---------- 04.2, pick the light (the mockup pick-the-light as the designer refined it) ---------- */
+:root { --pl-violet: #5a4bb0; --pl-wafer: #2b2b29; --pl-film: #c98f2e; --pl-water: #9cc3dd; }
+:root[data-theme="dark"] { --pl-violet: #a99cff; --pl-wafer: #3a3935; --pl-film: #d9a145; --pl-water: #3d6f8f; }
+.lv-light .xp-stage:empty { min-height: 560px; }
+.lv-light .pl-pick { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 0; margin: 2px 0 12px; border-bottom: 1px solid var(--line); }
+.lv-light .pl-opt { display: block; padding: 6px 4px 7px; margin: 0 0 -1px; background: none; border: 0; border-bottom: 2px solid transparent; text-align: left; cursor: pointer; font-family: var(--font-ui); color: var(--muted); }
+.lv-light .pl-opt b { display: block; font-size: 13px; font-weight: 600; color: var(--ink-2); white-space: nowrap; }
+.lv-light .pl-opt span { display: block; margin-top: 1px; font-size: 12px; font-variant-numeric: tabular-nums; }
+.lv-light .pl-opt:hover b { color: var(--ink); }
+.lv-light .pl-opt[aria-checked="true"], .lv-light .pl-opt.on { border-bottom-color: var(--accent); }
+.lv-light .pl-opt[aria-checked="true"] b, .lv-light .pl-opt[aria-checked="true"] span, .lv-light .pl-opt.on b, .lv-light .pl-opt.on span { color: var(--accent-ink); }
+.lv-light .pl-opt:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.lv-light .pl-panel { position: relative; padding: 18px 22px 16px; border: 1px solid var(--line); background: var(--bg); }
+.lv-light .pl-row { position: relative; margin: 0 0 30px; }
+.lv-light .pl-lab { display: block; margin: 0 0 6px; font-family: var(--font-ui); font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.lv-light .pl-plot { position: relative; }
+/* one wavelength, a faint column on both rows, so the lines that fit inside it can be counted */
+.lv-light .pl-span { position: absolute; left: 0; top: 0; bottom: 0; z-index: 0; background: color-mix(in srgb, var(--pl-violet) 9%, transparent); border-right: 1px dashed color-mix(in srgb, var(--pl-violet) 70%, transparent); pointer-events: none; }
+.lv-light .pl-row-lines .pl-span { bottom: 9px; }
+.lv-light .pl-svg { position: relative; z-index: 1; display: block; width: 100%; overflow: visible; }
+.lv-light .pl-wave { height: 46px; }
+.lv-light .pl-wave-p { fill: none; stroke: var(--pl-violet); stroke-width: 1.6; vector-effect: non-scaling-stroke; stroke-linejoin: round; }
+.lv-light .pl-lines { height: 40px; }
+.lv-light .pl-wafer { fill: var(--pl-wafer); }
+.lv-light .pl-g rect { fill: var(--pl-film); }
+/* a bracket that measures one wavelength, or one line; its label to its right, or under it where the right has no room */
+.lv-light .pl-br { position: absolute; left: 0; top: calc(100% + 2px); height: 9px; pointer-events: none; }
+.lv-light .pl-br i { position: absolute; left: 0; right: 0; top: 0; height: 6px; border: 1.5px solid var(--ink); border-top: 0; }
+.lv-light .pl-br em { position: absolute; top: -2px; left: calc(100% + 8px); font-style: normal; font-family: var(--font-ui); font-size: 12px; font-weight: 600; color: var(--ink); white-space: nowrap; }
+.lv-light .pl-br em.under { top: 9px; }
+.lv-light .pl-ruler { display: flex; align-items: center; gap: 8px; margin: -6px 0 0; font-family: var(--font-ui); font-size: 12px; color: var(--muted); }
+.lv-light .pl-ruler i { display: block; height: 7px; border: 1.5px solid var(--muted); border-top: 0; }
+.lv-light .pl-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 24px; margin: 16px 0 0; padding: 14px 0 0; border-top: 1px solid var(--line); }
+.lv-light .pl-fact { display: grid; row-gap: 6px; align-content: start; }
+.lv-light .pl-k { font-family: var(--font-ui); font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.lv-light .pl-num { font-family: var(--font-display); font-variation-settings: var(--opsz-numeral); font-weight: 300; font-size: 40px; line-height: 1; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.lv-light .pl-num small { margin-left: 6px; font-family: var(--font-ui); font-size: 13px; font-weight: 500; color: var(--ink-2); }
+.lv-light .pl-how { display: grid; grid-template-columns: 132px minmax(0, 1fr); gap: 4px 20px; align-items: start; margin: 18px 0 0; padding: 14px 0 0; border-top: 1px solid var(--line); }
+.lv-light .pl-glyph { width: 132px; height: 64px; display: block; margin-top: 2px; grid-row: 1 / 3; }
+.lv-light .pl-txt { grid-column: 2; }
+.lv-light .pl-mech { margin: 0; font-family: var(--font-ui); font-size: 14px; font-weight: 600; color: var(--ink); }
+.lv-light .pl-cap { margin: 6px 0 0; font-family: var(--font-body); font-size: var(--t-small); line-height: 1.5; color: var(--ink-2); text-wrap: pretty; }
+.lv-light .pl-src { margin: 8px 0 0; font-family: var(--font-ui); font-size: 12.5px; color: var(--muted); }
+.lv-light .pl-src a { color: var(--ink-2); text-underline-offset: 3px; text-decoration-color: var(--line-2); }
+.lv-light .pl-facts > *, .lv-light .pl-how > p, .lv-light .pl-txt > * { transition: opacity 0.18s; }
+.lv-light .pl-panel.swap .pl-facts > *, .lv-light .pl-panel.swap .pl-how > p, .lv-light .pl-panel.swap .pl-txt > * { opacity: 0.15; }
+/* the small drawing: source, optics, medium, wafer */
+.lv-light .g-lens { fill: color-mix(in srgb, var(--pl-water) 35%, transparent); stroke: var(--ink-2); stroke-width: 1; }
+.lv-light .g-mirror { fill: none; stroke: var(--ink); stroke-width: 2.4; stroke-linecap: round; }
+.lv-light .g-ray { fill: none; stroke: var(--pl-violet); stroke-width: 1.2; }
+.lv-light .g-water { fill: var(--pl-water); }
+.lv-light .g-wafer { fill: var(--pl-wafer); }
+.lv-light .g-film { fill: var(--pl-film); }
+.lv-light .g-src { fill: var(--pl-violet); }
+@media (max-width: 600px) {
+  .lv-light .xp-stage:empty { min-height: 760px; }
+  .lv-light .pl-pick { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 2px; }
+  .lv-light .pl-opt { min-height: 44px; }
+  .lv-light .pl-opt b { font-size: 12.5px; }
+  .lv-light .pl-panel { padding: 14px 12px 14px; }
+  .lv-light .pl-row-light { margin-bottom: 42px; }   /* room under the wave for its label, which drops under the bracket where the right has none (i-line) */
+  .lv-light .pl-facts { gap: 6px 12px; }
+  .lv-light .pl-num { font-size: 30px; }
+  .lv-light .pl-num small { display: block; margin: 4px 0 0; font-size: 12px; }
+  .lv-light .pl-k { letter-spacing: 0.02em; }
+  .lv-light .pl-how { grid-template-columns: 92px minmax(0, 1fr); gap: 4px 14px; align-items: center; }
+  .lv-light .pl-glyph { width: 92px; height: 45px; grid-row: auto; }
+  .lv-light .pl-mech { font-size: 13.5px; line-height: 1.35; }
+  .lv-light .pl-txt { grid-column: 1 / -1; }
+}
+@media (prefers-reduced-motion: reduce) { .lv-light .pl-facts > *, .lv-light .pl-how > p, .lv-light .pl-txt > * { transition: none; } }
+
 /* on paper and in the PDF: the still in place of the live parts (styles.css and print.css print the still and the steps) */
 @media print {
   .figure--live .lv-screen { display: none !important; }
+  /* an explorable prints the still of the step its "print" names, with that step's sentence and source (10.3 the 40 fields of
+     2029 with the 2028 plan's 14 inside them, 04.2 ArF immersion's 38 nm lines inside one 193 nm wave) */
+  .figure--explore .xp-list, .figure--explore .xp-stage:empty { display: none !important; }
+  .chapter .figure--explore .xp-stage { break-inside: avoid; }
+  .lv-reticle .xp-still { display: grid !important; grid-template-columns: 46mm minmax(0, 1fr); gap: 0 6mm; padding: 0; border: 0; background: none; }
+  .lv-reticle .xr-svg { width: 46mm; }
+  .lv-reticle .xr-dim span, .lv-reticle .xr-key { font-size: 6.6pt; }
+  .lv-reticle .xr-key { gap: 0.6mm 3mm; margin-top: 2mm; }
+  .lv-reticle .xr-k { margin-bottom: 1mm; font-size: 6.6pt; }
+  .lv-reticle .xr-num { font-size: 26pt; }
+  .lv-reticle .xr-unit { font-size: 8pt; }
+  .lv-reticle .xr-what { margin-top: 1.4mm; font-size: 8pt; }
+  .lv-reticle .xr-more { min-height: 0; }
+  .lv-reticle .xr-cap { margin-top: 1.6mm; font-size: calc(8.4pt * var(--text-scale)); line-height: 1.38; color: var(--ink); }
+  .lv-reticle .xr-src { margin-top: 1.6mm; font-family: var(--font-code); font-size: 6.8pt; }
+  .lv-reticle .xr-src a { color: var(--ink); text-decoration: none; }
+  .lv-light .xp-still.pl-pick { display: grid !important; margin: 0 0 2mm; }
+  .lv-light .pl-opt { padding: 0.6mm 0.6mm 1mm; }
+  .lv-light .pl-opt b { font-size: 7pt; }
+  .lv-light .pl-opt span { font-size: 6.6pt; }
+  .lv-light .xp-still.pl-panel { display: block !important; padding: 0; border: 0; background: none; }
+  .lv-light .pl-svg { max-width: none; width: 100%; }   /* the drawing spans the plot, as its wavelength column does (print.css caps a figure's svg at 134 mm) */
+  .lv-light .pl-lab, .lv-light .pl-k, .lv-light .pl-ruler, .lv-light .pl-br em { font-size: 6.6pt; }
+  .lv-light .pl-row { margin-bottom: 6mm; }
+  .lv-light .pl-facts { margin-top: 3mm; padding-top: 2.4mm; }
+  .lv-light .pl-num { font-size: 20pt; }
+  .lv-light .pl-num small { font-size: 7.4pt; }
+  .lv-light .pl-how { grid-template-columns: 26mm minmax(0, 1fr); margin-top: 3mm; padding-top: 2.4mm; gap: 1mm 4mm; }
+  .lv-light .pl-glyph { width: 26mm; height: 12.6mm; }
+  .lv-light .pl-mech { font-size: 8pt; }
+  .lv-light .pl-cap { font-size: calc(8.4pt * var(--text-scale)); line-height: 1.38; color: var(--ink); }
+  .lv-light .pl-src { font-family: var(--font-code); font-size: 6.8pt; }
+  .lv-light .pl-src a { color: var(--ink); text-decoration: none; }
   .figure--live .anim-stage { display: block !important; padding: 0 !important; cursor: auto; }
-  /* 04.2's still is near square: held to 100 mm tall (about 105 mm wide), so the figure and its first steps share a page */
+  /* 04.3's still is near square: held to 100 mm tall (about 105 mm wide), so the figure and its first steps share a page */
   .chapter .figure--live.figure--anim .anim-print { width: auto; max-width: 134mm; max-height: 100mm; }
 }
 

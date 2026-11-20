@@ -115,6 +115,7 @@ function host(url) { try { const m = String(url).match(/^https?:\/\/web\.archive
 function fmtNum(v) { if (typeof v !== 'number') return esc(v); return Math.abs(v) >= 1000 ? v.toLocaleString('en-US') : (Number.isInteger(v) ? String(v) : v.toFixed(1)); }
 const USED_MEDIA = new Set(); // animations placed in a chapter; only their files are copied to dist/media
 const FS = require('./figsteps.js')(esc); // a bars figure that steps, 13.2 and 16.2 (29 Oct 2026): build/figsteps.js, src/modules/figsteps.js
+const XP = require('./explore.js')(esc, safeUrl); // an explorable figure, 10.3 and 04.2 (21 Nov 2026): build/explore.js, src/modules/live-reticle.js and live-light.js
 /* A figure's unit (decision 11, 21 Oct 2026). A unit of eight characters or fewer travels with every value, and the tag after
    the title goes: "%" gives 56.8%, a currency unit puts its sign before the figure and the rest after it ($60M, $2,900,
    $1,187/kg), and a word follows the figure (48 tools, 1,200 GB/s). A longer unit ("million 8-inch-equivalent wafers per
@@ -164,7 +165,7 @@ function figCSV(f, data, meta) {
   return 'data:text/csv;charset=utf-8,' + encodeURIComponent('﻿' + all.map((r) => r.map(q).join(',')).join('\r\n') + '\r\n');
 }
 /* The marks a bars or columns figure draws, in the data's order (the owner's chart rule as amended on 28 Oct 2026, above).
-   A row is ["label", value], or ["label", low, high] for a value known only as a range (04.3's "$350–400M"). A figure's
+   A row is ["label", value], or ["label", low, high] for a value known only as a range (04.4's "$350–400M"). A figure's
    "range" joins rows that are the cases of one estimate into one mark ({ label, low, high, ref, refLabel }, each naming a
    row: 14.4's 2030 low, reference and high cases), drawn where its first row stood; the rows stay as they are in the Table
    and the CSV. Each mark is { label, v (its value or low end), hi (high end or null), ref (a reference value inside the
@@ -307,6 +308,13 @@ function figure(f, ctx) {
       + `<div class="pw-bar"><i class="pw-range"></i>${parts.map((p) => `<i class="pw-part${p.top ? ' top' : ''}" data-k="${p.k}" data-v="${p.v}" style="--x0:${pc(p.x0)};--w:${pc(p.v)}"></i>`).join('')}</div>`
       + `<div class="pw-rows">${parts.slice().reverse().map((p, i) => `<div class="pw-row${p.top ? ' top' : ''}" data-k="${p.k}" style="--i:${i};--x:${pc(p.x0 + p.v / 2)}"><i class="pw-lead"></i><span class="pw-nm">${esc(p.label)}</span> <b class="pw-v">${aboutOf(f, p.label)}${withUnit(p.v, f.unit)}</b></div>`).join('')}</div>`
       + `</div>` + tableFallback(data, f);
+  } else if (f.type === 'explore') {
+    // an explorable (21 Nov 2026): the reader steps through sourced values, each with its sentence and source; the module
+    // src/modules/live-<live>.js draws the stage, and paper prints the step "print" names (build/explore.js)
+    XP.problems(f).forEach((p) => warn(`${ctx.id}: figure ${f.id}: ${p}`));
+    if (!XP.steps(f).length) return '';
+    kick += ' · Interactive explainer';
+    body = XP.body(f);
   } else if (isAnim && f.live) {
     // a live explainer (29 Oct 2026): drawn in the page by src/modules/live-<live>.js into the stage, from the figure's own
     // steps. A timed one ("seconds") plays and pauses as the videos do; an interactive one opens on its last step. Paper and
@@ -353,7 +361,7 @@ function figure(f, ctx) {
   const head = `<div class="fig-head"><a class="fig-k" href="#${fid}">${esc(kick)}</a>`
     + `<p class="fig-title${finding ? ' fig-find' : ''}">${esc(big)}${small ? '' : unitTag}</p>${small ? `<p class="fig-sub">${esc(small)}${unitTag}</p>` : ''}</div>`;
   // the source line: Source (or a note) first, then the actions
-  const src = f.source && f.source.url ? `<span class="fs-src"><span class="fs-k">Source:</span> <a href="${safeUrl(f.source.url)}" target="_blank" rel="noopener">${esc(f.source.label || host(f.source.url))}</a>&nbsp;${srcMark}${FS.more(f, (u) => cite(u, ctx), safeUrl)}</span>`
+  const src = f.source && f.source.url ? `<span class="fs-src"><span class="fs-k">${f.type === 'explore' && Array.isArray(f.sources) && f.sources.length ? 'Sources:' : 'Source:'}</span> <a href="${safeUrl(f.source.url)}" target="_blank" rel="noopener">${esc(f.source.label || host(f.source.url))}</a>&nbsp;${srcMark}${FS.more(f, (u) => cite(u, ctx), safeUrl)}</span>`
     : (f.source && f.source.label ? `<span class="fs-src"><span class="fs-k">Source:</span> ${esc(f.source.label)}</span>` : '');
   const note = f.note ? `<span class="fs-note fig-source"><span class="fs-k">Note:</span> ${esc(f.note)}</span>` : '';
   const box = `cite-${fid}`;
@@ -371,7 +379,7 @@ function figure(f, ctx) {
   const dataLine = srcName ? ` Data: ${esc(srcName)}${srcWhen ? ', ' + esc(srcWhen) : ''}.` : '';
   const citeText = isAnim ? '' : `<div class="ch-cite-box fig-cite-box" id="${box}" role="region" aria-label="Citation for figure ${num}" hidden><p class="ch-cite-text">Sharma, Yashvardhan. “Figure ${num}: ${esc(figShort(f))}.” <i>${CITE_WORK}</i>. Updated ${CITE_DAY(ctx.id)}. <a href="${esc(figURL)}">${esc(figURL)}</a>.${dataLine}</p></div>`;
   const strip = `<div class="fig-strip">${src}${acts}${note}${citeText}</div>`;
-  return `<figure class="figure${isAnim ? ' figure--anim' : ''}${FS.figClass(f)}" id="${fid}" data-num="${num}"${FS.figAttrs(f)}>${head}<div class="fig-body">${body}</div>${strip}</figure>`;
+  return `<figure class="figure${isAnim ? ' figure--anim' : ''}${f.type === 'explore' ? ' figure--explore' : ''}${FS.figClass(f)}" id="${fid}" data-num="${num}"${FS.figAttrs(f)}>${head}<div class="fig-body">${body}</div>${strip}</figure>`;
 }
 // A date in a figure: { key, the day it sorts as; iso, for <time datetime>; label, what the reader sees }. A full day reads day
 // first, "16 May 2019" (final QA B8: never the data's ISO form); a month reads "March 2028"; a bare year reads "2028" and sorts as
@@ -1022,13 +1030,15 @@ save(cv,fig,k);
 }
 function add(acts){
 if(acts.getAttribute('data-ready'))return;acts.setAttribute('data-ready','1');
-var kind=acts.getAttribute('data-kind'),fig=acts.closest('.figure');if(!fig||['bars','stack','columns','change','timeline','within'].indexOf(kind)<0)return;
+var kind=acts.getAttribute('data-kind'),fig=acts.closest('.figure');if(!fig||['bars','stack','columns','change','timeline','within','explore'].indexOf(kind)<0)return;
 var tl=kind==='timeline'; /* a timeline takes a PNG but no Table: it is already its rows, each date beside its event (28 Oct 2026) */
 var tb=tl?null:el('button','fs-tab','Table');if(tb){tb.type='button';tb.setAttribute('aria-pressed','false');
 tb.addEventListener('click',function(){var on=!fig.classList.contains('is-table'),t=fig.querySelector('table.fig-table');fig.classList.toggle('is-table',on);if(t)t.classList.toggle('sr-only',!on);tb.setAttribute('aria-pressed',on?'true':'false');});}
+var cite=acts.querySelector('.ch-cite-btn');if(tb)acts.insertBefore(tb,cite?cite.nextSibling:acts.firstChild);
+if(kind==='explore')return; /* an explorable (21 Nov 2026) takes Cite and Table: its drawing is the step the reader chose, and a PNG of one step would leave the others out */
 var pb=el('button','fs-png','PNG');pb.type='button';pb.setAttribute('aria-label','Save the figure as a PNG picture');
 pb.addEventListener('click',function(){var go=function(){png(fig);};if(D.fonts&&D.fonts.ready)D.fonts.ready.then(go);else go();});
-var cite=acts.querySelector('.ch-cite-btn');if(tb)acts.insertBefore(tb,cite?cite.nextSibling:acts.firstChild);acts.appendChild(pb);
+acts.appendChild(pb);
 }
 [].forEach.call(D.querySelectorAll('.figure .fs-acts'),add);
 })();`;
