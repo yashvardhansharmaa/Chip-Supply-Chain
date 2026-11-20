@@ -13,6 +13,8 @@ One page for the weekly update of chipsupplychain.org. Every command runs from t
 | A section heading's words in one chapter | `data/section-headings.json`, keyed by the chapter's id and the heading as its Markdown writes it ("How it works"); the link to the section and the contents rail keep the Markdown's words |
 | A source's title | `data/bibliography.json` (by hand, never by `build/harvest-bibliography.js`, which erases the dates added in round two) |
 
+Export Controls opens, on both of its pages, with the newest timeline entry and the next `upcoming` date not yet passed (`build/latest-rule.js`). When the newest entry's `gist` needs codes such as "D:5" or a TPP figure, give that entry a `plain` field: one sentence in plain words, using only facts already in the entry and its source. The next date moves on by itself at each build.
+
 Never edit `dist/`. The build rewrites it. What the build refuses is listed at the top of `build/validate.js`. The card's rules are in `qa/round2/SCHEMA.md`, the other fields in `brief/DATA_SCHEMAS.md`, and the writing rules in `.claude/skills/writing-well/SKILL.md`.
 
 ## 2. Build and check

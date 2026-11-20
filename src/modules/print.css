@@ -502,6 +502,10 @@
   /* print.js makes each glossary term a span (a button never breaks across a line), the card's two ratings among them */
   .gl-term { display: inline; white-space: normal; line-height: inherit; letter-spacing: inherit; vertical-align: baseline; font: inherit; }
   .view-head { break-after: avoid; padding-top: 0; }
+  /* Export Controls' latest rule and next date (controls.css .cf-latest): the rows print as they stand, the countdown counted
+     on the day of printing, without the link's words, which lead nowhere on paper */
+  .cf-latest-go { display: none !important; }
+  .cf-latest-row { break-inside: avoid; }
   .plate, .figure, .brief-card, .gl-entry, .mt-note, .mt-log li, .ch-spec .cp-still { break-inside: avoid; }
   /* a box that runs on to the next page has its top rule on its first part only */
   .plain[data-split-from], .cp-sources[data-split-from] { border-top: 0; padding-top: 0; margin-top: 0; }

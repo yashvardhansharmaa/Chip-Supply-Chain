@@ -1704,6 +1704,12 @@ fill('GL_ABC', LK_LETTERS.map((L) => {
   return n ? `<a href="#a-z/${L.toLowerCase()}" data-azl="${L}" aria-label="${L === '0-9' ? '0 to 9' : L}, ${n} ${n === 1 ? 'entry' : 'entries'}">${shown}</a>` : `<span aria-hidden="true">${shown}</span>`;
 }).join(''));
 fill('CONTROLS_DEK', controlsDek);
+// the latest rule and the next date under the board's head (build/latest-rule.js), as /export-controls/ has them under its
+// button; each row opens its entry in the timeline (#/controls/<id>, Geo.focusEvent). The next date goes in after the home
+// page is dated (LATEST_NEXT, below): it changes as days pass, never as the data changes, so it must not move the day
+const LATEST_RULE = require('./latest-rule.js'), LATEST_NEXT = '{{LATEST:NEXT}}'; // a colon: the sweep of unfilled placeholders leaves it
+const latestRows = LATEST_RULE.rows(LATEST_RULE.pick(data, today), { esc, safe: safeUrl, cls: 'cf-latest', nextToken: LATEST_NEXT, entryHref: (e) => (e.id ? esc('#/controls/' + encodeURIComponent(e.id)) : '') });
+fill('CONTROLS_LATEST', latestRows.html);
 const exposureVizHTML = exposureViz(exposure); // the China revenue panels, on Export Controls and, for its firms' entries, in glossary.js (below)
 fill('EXPOSURE_VIZ', exposureVizHTML);
 fill('EXPOSURE_NOTE', exposureNote);
@@ -1941,6 +1947,7 @@ let homeHTML;
   const { h, page } = makePage('home', { root: '', chapters: '', ids: [], scripts: ['kit.js', 'data.js', 'terms.js', 'app.js'] });
   let x = h.split(`Updated ${builtStr}`).join(`Updated ${DAY_TOKEN}`);
   const homeDates = pageDate('/', x + JSON.stringify(data));
+  x = x.split(LATEST_NEXT).join(latestRows.next); // the board's next date, after the hash (above)
   // a view with a page of its own (build/modules/reference-pages.js, which runs first) gives its footer that page's day, so
   // #/controls and /export-controls/ say the same "Updated" day for the same data (28 Oct 2026; the views all said the home
   // page's); the rest say the home page's

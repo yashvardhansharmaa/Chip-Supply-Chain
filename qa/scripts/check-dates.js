@@ -13,6 +13,12 @@ const iso = (d, m, y) => `${y}-${String(M[m.toLowerCase()]).padStart(2, '0')}-${
 const found = [];
 const flows = JSON.parse(fs.readFileSync(path.join(root, 'data', 'control-flows.json'), 'utf8'));
 for (const u of flows.upcoming || []) if (u.date < today) found.push(`data/control-flows.json upcoming: ${u.date} has passed: "${u.label}"`);
+// Export Controls' "Next date" row (build/latest-rule.js) on both doors, as built: the date it shows as next must not have passed
+// (its page hides it in the reader's browser once it has, and the next build moves on to the date after it; 21 Nov 2026)
+for (const rel of ['dist/export-controls/index.html', 'dist/index.html']) {
+  const p = path.join(root, rel); if (!fs.existsSync(p)) continue;
+  for (const m of fs.readFileSync(p, 'utf8').matchAll(/data-due="(\d{4}-\d{2}-\d{2})"/g)) if (m[1] < today) found.push(`${rel}: the "Next date" row shows ${m[1]}, which has passed: rebuild the site`);
+}
 const RE = /\b(until|through|ends? on|ended on|expires? on|lapses? on|due(?: to end)?(?: on)?|suspended (?:it |them )?(?:until|through))\s+(\d{1,2}) (January|February|March|April|May|June|July|August|September|October|November|December)(?: (\d{4}))?/gi;
 for (const f of fs.readdirSync(path.join(root, 'content')).filter((n) => n.endsWith('.md'))) {
   fs.readFileSync(path.join(root, 'content', f), 'utf8').split('\n').forEach((line, n) => {

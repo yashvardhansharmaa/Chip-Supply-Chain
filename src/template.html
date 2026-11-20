@@ -185,6 +185,8 @@ html:not(.booted)[data-pick] .view[data-view="suppliers"] > :not(.view-head) { d
       <div class="view-head vh">
         <p class="vt" role="heading" aria-level="1">Export Controls</p>
         <p class="dek">{{CONTROLS_DEK}}</p>
+        <!-- the latest rule and the next date (build/latest-rule.js, filled by build/build.js; Geo.renderLatest in src/app.js counts the days) -->
+        {{CONTROLS_LATEST}}
       </div>
       <nav class="subtabs" id="controls-subtabs" aria-label="Controls sections"><a href="#/controls" data-sub="timeline" aria-current="true">What the rules did</a><a href="#/exposure" data-sub="exposure">China revenue share</a></nav>
       <script>/* before boot, #/exposure marks its own tab (Router.route keeps the marks from then on) */
