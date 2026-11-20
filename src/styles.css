@@ -1145,6 +1145,17 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before, .gl-
 @media print { .review .rv-head, .fc-deck, .fc-nav, .fc-score, .fc-end .fc-row { display: none !important; } .fc-end[hidden] { display: block !important; } .review { border-top-width: 1px; } }
 /* a returning reader's last score takes the place of the deck's instruction (app.js); the same quiet line */
 .review .rv-sub.fc-last { color: var(--ink-2); }
+/* a chapter's deck spaced out (app.js FC, 21 Nov 2026): over the two marks, when each brings the card back; the due line's
+   Whole deck, its hit area 44 px tall on a phone without growing the line; a due round's squares in place of the score; and
+   the day the next card comes back, under the score */
+.fc-when { margin: auto 0 -4px; font-family: var(--font-ui); font-size: 13px; line-height: 1.45; color: var(--muted); text-align: right; text-wrap: pretty; }
+.fc-when + .fc-row--foot { margin-top: 0; }
+.review .rv-sub .fc-whole { margin: -8px 0 -8px 2px; font-family: inherit; font-size: inherit; color: var(--ink-2); }
+.fc-tally[hidden] { display: none; }
+.fc-end--due .fc-score { margin: 20px 0 16px; }
+.fc-due-next { margin: 2px 0 14px; font-family: var(--font-ui); font-size: 14px; line-height: 1.45; color: var(--muted); }
+@media (max-width: 700px) { .fc-when { text-align: left; } .review .rv-sub .fc-whole { padding: 14px 2px; margin: -14px 0 -14px 2px; } }
+@media print { .fc-due-next { display: none !important; } }
 
 /* ---------- explainer animations: step names above, the video, the caption below ---------- */
 .figure--anim { max-width: var(--measure); }

@@ -193,6 +193,101 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8766';
       t.errors.forEach((e) => check(`page ${width}: page error`, false, e));
       await t.close();
     }
+    /* ---------- the flashcards spaced out (21 Nov 2026): a chapter's deck brings back the cards that are due ---------- */
+    {
+      const D = '#lithography--flashcards', K = 'cp-fc-lithography';
+      // the deck as a reader sees it, and what this device keeps for it
+      const ST = `(function(){var fc=document.querySelector('${D}'),cur=[].filter.call(fc.querySelectorAll('.fc-card'),function(c){return !c.hidden;})[0],s=null,q=function(sel){return fc.querySelector(sel);};
+        try{s=JSON.parse(localStorage.getItem('${K}'));}catch(e){}
+        var big=q('.fc-big'),tally=q('.fc-tally'),nx=q('.fc-due-next'),w=cur&&cur.querySelector('.fc-when'),dk=cur&&cur.querySelector('.fc-mark[data-known="1"]');
+        return {sub:q('.rv-sub').textContent,whole:!!q('.rv-sub .fc-whole'),cur:q('.fc-deck').hidden?-1:(cur?+cur.getAttribute('data-i'):-1),
+          dots:[].map.call(fc.querySelectorAll('.fc-nav .fc-dots i'),function(i){return i.className||'-';}).join(' '),
+          when:w?w.textContent:'',described:!!w&&!!dk&&dk.getAttribute('aria-describedby')===w.id,end:!q('.fc-end').hidden,
+          big:big&&!big.hidden?big.textContent:'',tally:tally&&!tally.hidden?[].map.call(tally.querySelectorAll('i'),function(i){return i.className||'-';}).join(' '):'',
+          next:nx&&!nx.hidden?nx.textContent:'',scoreT:q('.fc-score-t').textContent,focus:document.activeElement&&document.activeElement.className,s:s,gc:window.__gc||[]};})()`;
+      const GC = "(window.__gc=[],window.goatcounter={count:function(o){window.__gc.push(o.title+' '+o.path);}},1)";
+      const mark = (known) => t.ev(`(function(){var fc=document.querySelector('${D}'),cur=[].filter.call(fc.querySelectorAll('.fc-card'),function(c){return !c.hidden;})[0];cur.querySelector('.fc-show').click();cur.querySelector('.fc-mark[data-known="${known}"]').click();return 1;})()`);
+      // a day N days from the reader's today, as the deck writes it
+      const DAY = (n) => `(function(n){var d=new Date();d=new Date(d.getFullYear(),d.getMonth(),d.getDate()+n);return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2);})(${n})`;
+      const MON = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+      const reload = async () => { await t.ev('(location.reload(), 1)'); await sleep(3000); };
+      const t = await open(chrome, BASE + '/lithography/', { width: 1440, wait: 2500 });
+      await t.ev(`(function(){try{localStorage.removeItem('${K}');}catch(e){}return 1;})()`); await reload();
+      let r = await t.ev(ST);
+      check('flashcards: a first visit opens on card 1 under the instruction', r.cur === 0 && r.sub === 'Recall each answer, then turn the card.' && !r.whole, JSON.stringify({ cur: r.cur, sub: r.sub }));
+      check('flashcards: the answer side says when each mark brings the card back, and the marks are described by it', r.when === 'Knew it: back in 3 days. Didn’t know: back tomorrow.' && r.described, r.when);
+      await t.ev(GC);
+      await mark(1); await mark(1); await mark(0); await mark(1);
+      r = await t.ev(ST);
+      const d1 = await t.ev(DAY(1)), d3 = await t.ev(DAY(3));
+      check('flashcards: a whole round ends on the score, as before, and says when the next card is due', r.end && r.big === '3/4' && !r.tally && r.next === 'Next card due tomorrow.', JSON.stringify({ big: r.big, tally: r.tally, next: r.next }));
+      check('flashcards: each mark sets its card\'s day back (Didn\'t know: tomorrow; Knew it: in 3 days)', r.s && r.s.due.join() === [d3, d3, d1, d3].join() && r.s.step.join() === '1,1,0,1' && r.s.marks.join() === '1,1,0,1', JSON.stringify(r.s));
+      check('flashcards: a whole round still counts as "Flashcards finished"', r.gc.join('|') === 'Flashcards finished flashcards/lithography/3', r.gc.join('|'));
+      await reload(); r = await t.ev(ST);
+      check('flashcards: back the same day, nothing is due: the deck opens on card 1 with last time\'s marks and the day the next card is due', r.cur === 0 && r.dots === 'on k m k' && r.sub === 'Last time: 3 of 4 known. Next card due tomorrow.' && !r.whole, JSON.stringify({ cur: r.cur, dots: r.dots, sub: r.sub }));
+      // a day later: every day kept moves back one
+      await t.ev(`(function(){var s=JSON.parse(localStorage.getItem('${K}')),b=function(x){var m=/^(\\d+)-(\\d+)-(\\d+)$/.exec(x),d=new Date(+m[1],+m[2]-1,+m[3]-1);return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2);};s.due=s.due.map(b);s.last.day=b(s.last.day);localStorage.setItem('${K}',JSON.stringify(s));return 1;})()`);
+      await reload(); r = await t.ev(ST);
+      check('flashcards: a returning reader with a stored "Didn\'t know" card sees it first, under "1 of 4 cards due." and Whole deck', r.cur === 2 && r.sub === '1 of 4 cards due. Whole deck' && r.whole && r.dots === 'k k on k', JSON.stringify({ cur: r.cur, sub: r.sub, dots: r.dots }));
+      check('flashcards: Next waits until the due card is marked again', await t.ev(`document.querySelector('${D} .fc-next').disabled`));
+      await t.ev(GC); await mark(1);
+      r = await t.ev(ST);
+      const d2 = await t.ev(DAY(2));
+      check('flashcards: the due round ends on one row, the deck\'s squares in place of the score and the day the next card is due', r.end && !r.big && r.tally === 'k k k k' && r.scoreT === `Next card due ${+d2.slice(8)} ${MON[+d2.slice(5, 7) - 1]}.` && !r.next, JSON.stringify({ big: r.big, tally: r.tally, scoreT: r.scoreT, next: r.next }));
+      check('flashcards: the card known this time comes back in 3 days', r.s.due[2] === d3 && r.s.step[2] === 1, JSON.stringify(r.s));
+      check('flashcards: a due round counts apart, as "Flashcards reviewed"', r.gc.join('|') === 'Flashcards reviewed flashcards/lithography/review/4', r.gc.join('|'));
+      // every card due, the fourth marked "Didn't know": it comes first; a card known once and known again comes back in 7 days
+      const dm1 = await t.ev(DAY(-1)), dm2 = await t.ev(DAY(-2));
+      await t.ev(`(function(){var s=JSON.parse(localStorage.getItem('${K}'));s.marks=['1','1','1','0'];s.due=['${dm1}','${dm1}','${dm1}','${dm1}'];s.step=[1,1,1,0];s.last={known:3,total:4,day:'${dm2}'};localStorage.setItem('${K}',JSON.stringify(s));return 1;})()`);
+      await reload(); r = await t.ev(ST);
+      check('flashcards: with every card due, the one marked "Didn\'t know" comes first', r.cur === 3 && r.sub === '4 of 4 cards due. Whole deck' && r.when === 'Knew it: back in 3 days. Didn’t know: back tomorrow.', JSON.stringify({ cur: r.cur, sub: r.sub, when: r.when }));
+      await mark(0); r = await t.ev(ST);
+      check('flashcards: then the rest in the deck\'s order; a card known again says 7 days', r.cur === 0 && r.when === 'Knew it: back in 7 days. Didn’t know: back tomorrow.', JSON.stringify({ cur: r.cur, when: r.when }));
+      await t.ev(`document.querySelector('${D} .rv-sub .fc-whole').click(),1`); await sleep(200);
+      r = await t.ev(ST);
+      check('flashcards: Whole deck opens the deck on card 1 with focus on Show answer, under last time\'s score', r.cur === 0 && !r.whole && r.sub === 'Last time: 3 of 4 known.' && /fc-show/.test(r.focus || ''), JSON.stringify({ cur: r.cur, sub: r.sub, focus: r.focus }));
+      // a deck kept before the spacing: its days back count from its last round
+      await t.ev(`(function(){var s=JSON.parse(localStorage.getItem('${K}'));delete s.due;delete s.step;s.marks=['1','0','1','1'];s.last={known:3,total:4,day:'${dm2}'};localStorage.setItem('${K}',JSON.stringify(s));return 1;})()`);
+      await reload(); r = await t.ev(ST);
+      check('flashcards: a deck kept before the spacing brings back its "Didn\'t know" card', r.cur === 1 && r.sub === '1 of 4 cards due. Whole deck', JSON.stringify({ cur: r.cur, sub: r.sub }));
+      // Start over clears the marks and the score, and keeps each card's day back
+      await t.ev(`document.querySelector('${D} .rv-sub .fc-whole').click(),1`); await mark(1); await mark(1); await mark(1); await mark(1);
+      await t.ev(`document.querySelector('${D} .fc-reset').click(),1`); await sleep(200);
+      r = await t.ev(ST);
+      check('flashcards: Start over clears the marks and the score and keeps each card\'s day back', r.cur === 0 && r.dots === 'on - - -' && r.sub === 'Recall each answer, then turn the card.' && r.s && !r.s.last && r.s.marks.join('') === '' && r.s.due.every((x) => !!x), JSON.stringify({ dots: r.dots, sub: r.sub, s: r.s }));
+      t.errors.forEach((e) => check('flashcards: page error', false, e));
+      // on a phone: the due line and its Whole deck fit, the button a 44 px target, nothing wider than the screen
+      await t.ev(`(function(){var s=JSON.parse(localStorage.getItem('${K}'));s.marks=['1','0','1','1'];s.due=['${d3}','${dm1}','${d3}','${d3}'];s.step=[1,0,1,1];s.last={known:3,total:4,day:'${dm2}'};localStorage.setItem('${K}',JSON.stringify(s));return 1;})()`);
+      await t.close();
+      const p = await open(chrome, BASE + '/lithography/', { width: 390, wait: 2500 });
+      const ph = await p.ev(`(function(){var b=document.querySelector('${D} .rv-sub .fc-whole');if(!b)return null;var r=b.getBoundingClientRect(),c=[].filter.call(document.querySelectorAll('${D} .fc-card'),function(c){return !c.hidden;})[0];return {h:Math.round(r.height),right:Math.round(r.right),vw:innerWidth,sw:document.documentElement.scrollWidth,cur:+c.getAttribute('data-i')};})()`);
+      check('flashcards 390: the due card first, Whole deck a 44 px target, no sideways scroll', !!ph && ph.cur === 1 && ph.h >= 44 && ph.right <= ph.vw && ph.sw <= ph.vw, JSON.stringify(ph));
+      p.errors.forEach((e) => check('flashcards 390: page error', false, e));
+      await p.ev(`(function(){try{localStorage.removeItem('${K}');}catch(e){}return 1;})()`);
+      await p.close();
+    }
+    /* ---------- with storage blocked the deck behaves as before ---------- */
+    {
+      const D = '#lithography--flashcards';
+      const t = await open(chrome, BASE + '/lithography/', { width: 1440, wait: 1500 });
+      await t.s('Page.addScriptToEvaluateOnNewDocument', { source: "Object.defineProperty(window,'localStorage',{configurable:true,get:function(){throw new DOMException('The operation is insecure.','SecurityError');}});" });
+      await t.ev('(location.reload(), 1)'); await sleep(3000);
+      const blocked = await t.ev("(function(){try{return localStorage?'open':'none';}catch(e){return 'blocked';}})()");
+      const q = (sel) => t.ev(`(function(){var e=document.querySelector('${D} ${sel}');return e?(e.hidden?'hidden':e.textContent):null;})()`);
+      check('no storage: the deck opens on card 1 under the instruction, with no line about days', blocked === 'blocked' && await q('.rv-sub') === 'Recall each answer, then turn the card.' && await q('.fc-when') === null, blocked);
+      await t.ev("(window.__gc=[],window.goatcounter={count:function(o){window.__gc.push(o.title+' '+o.path);}},1)");
+      for (const k of [1, 0, 1, 1]) await t.ev(`(function(){var fc=document.querySelector('${D}'),cur=[].filter.call(fc.querySelectorAll('.fc-card'),function(c){return !c.hidden;})[0];cur.querySelector('.fc-show').click();cur.querySelector('.fc-mark[data-known="${k}"]').click();return 1;})()`);
+      check('no storage: the round ends on the score as before, with no squares and no day', await q('.fc-big') === '3/4' && [null, 'hidden'].includes(await q('.fc-tally')) && await q('.fc-due-next') === null, await q('.fc-big'));
+      check('no storage: "Flashcards finished" still counts', (await t.ev('window.__gc.join("|")')) === 'Flashcards finished flashcards/lithography/3', await t.ev('window.__gc.join("|")'));
+      await t.ev('(location.reload(), 1)'); await sleep(3000);
+      check('no storage: a reload forgets, and the deck starts on card 1 again', await t.ev(`(function(){var fc=document.querySelector('${D}');return !fc.querySelector('.fc-card').hidden&&!fc.querySelector('.fc-card[data-known]');})()`) && await q('.rv-sub') === 'Recall each answer, then turn the card.');
+      t.errors.forEach((e) => check('no storage: page error', false, e));
+      await t.close();
+      // Start here's deck on the home page is not spaced
+      const h = await open(chrome, BASE + '/', { width: 1440, wait: 2500 });
+      check('Start here\'s deck is not spaced: no line about days', await h.ev("!!document.querySelector('[data-deck=\"intro\"] .fc-card') && !document.querySelector('[data-deck=\"intro\"] .fc-when')"));
+      await h.close();
+    }
     /* ---------- Hide contents, on the chapter's page and through an old link to it ---------- */
     const enter = async (t) => { await t.s('Input.dispatchKeyEvent', { type: 'keyDown', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13, text: '\r' }); await t.s('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13 }); await sleep(500); };
     const tab = async (t) => { await t.s('Input.dispatchKeyEvent', { type: 'keyDown', key: 'Tab', code: 'Tab', windowsVirtualKeyCode: 9 }); await t.s('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Tab', code: 'Tab', windowsVirtualKeyCode: 9 }); await sleep(250); };
