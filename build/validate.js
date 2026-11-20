@@ -17,7 +17,7 @@ const STAGES = require('./stages.js');
 
 const BANDS = ['Extreme', 'High', 'Moderate', 'Low'];
 const SUB_BANDS = ['Very hard', 'Hard', 'Moderate', 'Easy'];
-const FIGURE_TYPES = ['bars', 'stack', 'columns', 'change', 'timeline', 'animation', 'within']; // columns and change: revision 5, 28 Oct 2026; within: 15.3, 29 Oct 2026
+const FIGURE_TYPES = ['bars', 'stack', 'columns', 'change', 'timeline', 'animation', 'within', 'explore']; // columns and change: revision 5, 28 Oct 2026; within: 15.3, 29 Oct 2026; explore: 10.3 and 04.2, 21 Nov 2026
 // the datasets the site cannot do without, and the shape each must have; every other data/*.json must still parse
 const DATASETS = {
   'bibliography.json': { kind: 'object', what: 'source titles' },
@@ -134,6 +134,13 @@ function checkChapters(root, problems) {
         // a live explainer (29 Oct 2026): drawn in the page by src/modules/live-<live>.js, its steps and captions here
         if (!fs.existsSync(path.join(root, 'src', 'modules', `live-${fig.live}.js`))) problems.push(`${rel}: ${name} is live, but src/modules/live-${fig.live}.js does not exist`);
         if (!(Array.isArray(fig.steps) && fig.steps.length && fig.steps.every((st) => st && st.k && st.cap))) problems.push(`${rel}: ${name} is live and needs "steps", each with "k" and "cap"`);
+        return;
+      }
+      if (fig.type === 'explore') {
+        // an explorable (21 Nov 2026): drawn in the page by src/modules/live-<live>.js from its steps, each with its sentence and
+        // source (build/explore.js, whose own list of problems this is)
+        if (fig.live && !fs.existsSync(path.join(root, 'src', 'modules', `live-${fig.live}.js`))) problems.push(`${rel}: ${name} is an explorable, but src/modules/live-${fig.live}.js does not exist`);
+        require('./explore.js')((x) => String(x), (x) => String(x)).problems(fig).forEach((p) => problems.push(`${rel}: ${name}: ${p}`));
         return;
       }
       if (fig.type === 'animation') {

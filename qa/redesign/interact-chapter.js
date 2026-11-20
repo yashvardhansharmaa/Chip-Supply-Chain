@@ -74,11 +74,14 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8766';
       await scrollTo(t, '#lithography--how-it-works', 200);
       check('1440: the rail marks How it works', await t.ev("(document.querySelector('#lithography .rail-toc a[aria-current]')||{}).textContent") === 'How it works', await t.ev("(document.querySelector('#lithography .rail-toc a[aria-current]')||{}).textContent"));
       check('1440: the rail stays in view (sticky)', await t.ev("(function(){var r=document.querySelector('#lithography .ch-rail').getBoundingClientRect();return r.top>=0&&r.top<200;})()"));
-      check('1440: the rail fits the window', await t.ev("(function(){var r=document.querySelector('#lithography .ch-rail');return r.scrollHeight<=r.clientHeight+1;})()"), await t.ev("(function(){var r=document.querySelector('#lithography .ch-rail');return r.scrollHeight+' in '+r.clientHeight;})()"));
+      // Lithography's seventh figure (04.2, 21 Nov 2026) took its rail 34 px past a 900 px window, as Foundries and Fabs' and Who
+      // Controls the Chain's rails already ran (877 and 959 px in 808): the rail scrolls inside itself (chapter.css, overflow-y
+      // auto), and its last row, the essay, scrolls into view within it
+      check('1440: the rail fits the window, or scrolls inside it to its last row', await t.ev("(function(){var r=document.querySelector('#lithography .ch-rail');if(r.scrollHeight<=r.clientHeight+1)return true;if(getComputedStyle(r).overflowY!=='auto')return false;var last=r.querySelector('.rail-across li:last-child');r.scrollTop=r.scrollHeight;var a=last.getBoundingClientRect(),b=r.getBoundingClientRect(),ok=a.bottom<=b.bottom+1&&a.top>=b.top;r.scrollTop=0;return ok;})()"), await t.ev("(function(){var r=document.querySelector('#lithography .ch-rail');return r.scrollHeight+' in '+r.clientHeight;})()"));
       // a figure: Cite, Table, CSV, PNG
       const F = '#fig-lithography-asml-region';
       await scrollTo(t, F, 140);
-      check('1440: the figure is numbered 04.6 (04.5 until the new 04.2 of 29 Oct 2026)', await t.ev(`document.querySelector('${F} .fig-k').textContent`) === 'Figure 04.6');
+      check('1440: the figure is numbered 04.7 (04.5 until the new 04.2 of 29 Oct 2026, 04.6 until the new 04.2 of 21 Nov 2026)', await t.ev(`document.querySelector('${F} .fig-k').textContent`) === 'Figure 04.7');
       check('1440: the chart rule, the largest bar wine, the rest the tint', await t.ev(`(function(){var b=[].map.call(document.querySelectorAll('${F} .hb-r i'),function(i){return getComputedStyle(i).backgroundColor});return b[0]==='rgb(122, 31, 43)'&&b.slice(1).every(function(c){return c==='rgb(210, 209, 204)'});})()`),
         await t.ev(`[].map.call(document.querySelectorAll('${F} .hb-r i'),function(i){return getComputedStyle(i).backgroundColor}).join(' ')`));
       // the chart rule as amended on 28 Oct 2026 (page revisions 4 and 5): wine on the marked value only (the value the title
@@ -86,7 +89,7 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8766';
       check('1440: in every chapter, wine on the marked bar, column or change only', await t.ev("(function(){var W='rgb(122, 31, 43)',wine=function(e){var c=getComputedStyle(e);return c.backgroundColor===W||c.backgroundImage.indexOf(W)>=0;};return [].every.call(document.querySelectorAll('.chapter .hb'),function(r){var i=r.querySelector('.hb-r i'),c=getComputedStyle(i).backgroundColor;return r.classList.contains('top')?wine(i):!wine(i)&&c!=='rgb(168, 65, 75)';})&&[].every.call(document.querySelectorAll('.chapter .cols-plot .col'),function(r){return r.classList.contains('top')===wine(r.querySelector('i'));})&&[].every.call(document.querySelectorAll('.chapter .cg-row:not(.cg-axis)'),function(r){return r.classList.contains('top')===(getComputedStyle(r.querySelector('.cg-arrow')).backgroundColor===W);});})()"));
       check('1440: the strip has Cite, Table, CSV and PNG', await t.ev(`[].map.call(document.querySelectorAll('${F} .fs-acts > *'),function(a){return a.textContent}).join(' ')`) === 'Cite Table CSV PNG', await t.ev(`[].map.call(document.querySelectorAll('${F} .fs-acts > *'),function(a){return a.textContent}).join(' ')`));
       await t.ev(`document.querySelector('${F} .fs-acts .ch-cite-btn').click(),1`); await sleep(200);
-      check('1440: Cite opens the figure\'s citation', await t.ev(`(function(){var b=document.getElementById('cite-fig-lithography-asml-region');return !b.hidden && /Figure 04.6: ASML net system sales/.test(b.textContent) && /Updated \\d+ [A-Z][a-z]+ 2026/.test(b.textContent);})()`), await t.ev("document.getElementById('cite-fig-lithography-asml-region').textContent.slice(0,140)"));
+      check('1440: Cite opens the figure\'s citation', await t.ev(`(function(){var b=document.getElementById('cite-fig-lithography-asml-region');return !b.hidden && /Figure 04.7: ASML net system sales/.test(b.textContent) && /Updated \\d+ [A-Z][a-z]+ 2026/.test(b.textContent);})()`), await t.ev("document.getElementById('cite-fig-lithography-asml-region').textContent.slice(0,140)"));
       await t.ev(`document.querySelector('${F} .fs-tab').click(),1`); await sleep(200);
       check('1440: Table shows the rows in place of the bars', await t.ev(`(function(){var f=document.querySelector('${F}');var t=f.querySelector('table.fig-table');return getComputedStyle(f.querySelector('.hbars')).display==='none'&&t.getBoundingClientRect().height>100&&t.querySelectorAll('tr').length===7;})()`));
       await t.ev(`document.querySelector('${F} .fs-tab').click(),1`); await sleep(200);
@@ -163,7 +166,10 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8766';
       check('390: scrolling down raises the masthead', await t.ev("document.documentElement.classList.contains('mast-up') && document.querySelector('.masthead').getBoundingClientRect().bottom <= 1"));
       check('390: the slim bar names the chapter and the section', await t.ev("document.documentElement.classList.contains('slim-on') && /04\\s*Lithography/.test(document.querySelector('.ch-slim').textContent)"), await t.ev("(document.querySelector('.ch-slim')||{}).textContent"));
       await t.ev("(window.scrollBy(0, -60), 1)"); await sleep(500);
-      check('390: scrolling up brings the masthead back, the slim bar under it', await t.ev("!document.documentElement.classList.contains('mast-up') && Math.abs(document.querySelector('.ch-slim').getBoundingClientRect().top - document.querySelector('.masthead').getBoundingClientRect().bottom) < 2"));
+      // (polled for up to 3 s: on a loaded machine the browser can hold a scroll event back past half a second, 21 Nov 2026)
+      const mastBack = "!document.documentElement.classList.contains('mast-up') && Math.abs(document.querySelector('.ch-slim').getBoundingClientRect().top - document.querySelector('.masthead').getBoundingClientRect().bottom) < 2";
+      for (let k = 0; k < 10 && !(await t.ev(mastBack)); k++) await sleep(250);
+      check('390: scrolling up brings the masthead back, the slim bar under it', await t.ev(mastBack), await t.ev("JSON.stringify({y:scrollY,up:document.documentElement.classList.contains('mast-up'),slim:Math.round(document.querySelector('.ch-slim').getBoundingClientRect().top),mast:Math.round(document.querySelector('.masthead').getBoundingClientRect().bottom)})"));
       // a tap on the strip's words opens it (the clear Expand button over the strip takes it)
       const tap = await t.ev("(function(){var r=document.querySelector('.stage .stage-tag').getBoundingClientRect(),e=document.elementFromPoint(r.left+20,r.top+r.height/2);if(e)e.click();return e&&e.className;})()"); await sleep(600);
       check('390: a tap on the strip opens it', await t.ev("document.querySelector('.stage').getAttribute('data-collapsed')==='0'"), tap);
@@ -173,7 +179,8 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8766';
       // the wine rule on the strip's top edge fills as the chapter is read
       const r0 = await t.ev("+getComputedStyle(document.querySelector('.stage')).getPropertyValue('--read')");
       await t.ev("(window.scrollBy(0, 3000), 1)"); await sleep(600);
-      const r1 = await t.ev("+getComputedStyle(document.querySelector('.stage')).getPropertyValue('--read')");
+      let r1 = await t.ev("+getComputedStyle(document.querySelector('.stage')).getPropertyValue('--read')");
+      for (let k = 0; k < 10 && !(r1 > r0); k++) { await sleep(250); r1 = await t.ev("+getComputedStyle(document.querySelector('.stage')).getPropertyValue('--read')"); }   // polled, as above
       check('390: the strip\'s wine rule fills with the share of the chapter read', r1 > r0 && r1 > 0 && r1 < 1, `${r0} -> ${r1}`);
       t.errors.forEach((e) => check('390: page error', false, e));
       await t.close();

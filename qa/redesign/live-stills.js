@@ -2,7 +2,7 @@
 /* The print stills of the live explainers (29 Oct 2026): media/<live>-print-end.jpg, which paper and the PDF show in place of
    the live drawing (build/build.js points img.anim-print at it; src/modules/live.css hides the live parts in print). For each
    live figure it opens the chapter on the local preview in the light theme with motion reduced, so the figure opens on its
-   last step (04.2 after the cut; 07.1 at the chapter's inputs, 49.2, 11.3 and 20.1), takes the page's ground to white so the
+   last step (04.3 after the cut; 07.1 at the chapter's inputs, 49.2, 11.3 and 20.1), takes the page's ground to white so the
    drawing sits on the paper and not in a grey panel (as build/animate.py does for the videos), and shoots the stage alone at
    twice the pixels. Rebuild afterwards (node build/build.js) so dist/media carries the new stills.
    usage: node qa/redesign/live-stills.js [base]   (base defaults to http://127.0.0.1:8789) */

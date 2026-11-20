@@ -132,10 +132,20 @@ const kb = (b) => (b / 1024).toFixed(0) + ' KB';
         const tab = await t.ev(`(function () { var f = document.querySelector('#${id} .figure.is-table'); if (!f) return null; var tb = f.querySelector('table.fig-table'); return { rows: tb.querySelectorAll('tr').length, h: Math.round(tb.getBoundingClientRect().height), bars: getComputedStyle(f.querySelector('.hbars')).display }; })()`);
         check(`${W}: a figure has Cite, Table, CSV and PNG, and Table opens its rows`, acts === 'Cite Table CSV PNG' && !!tab && tab.rows > 1 && tab.h > 40 && tab.bars === 'none', `${acts}; ${JSON.stringify(tab)}`);
       } else out.push(`     ${W}: no bar figure`);
+      // an explorable (21 Nov 2026, build/explore.js; qa/redesign/check-explain.js checks each one through): its stage drawn by
+      // its module, Cite and Table, and Table swapping the stage for a row per step
+      if (await t.ev(`!!document.querySelector('#${id} .figure--explore')`)) {
+        const xp = await t.ev(`(function () { var f = document.querySelector('#${id} .figure--explore'); document.documentElement.style.scrollBehavior = 'auto'; f.scrollIntoView({ block: 'center' });
+          var acts = [].map.call(f.querySelectorAll('.fs-acts > *'), function (a) { return a.textContent; }).join(' '), drawn = !!f.querySelector('.xp-stage .lv-screen');
+          f.querySelector('.fs-tab').click(); var tb = f.querySelector('table.fig-table');
+          var o = { acts: acts, drawn: drawn, rows: tb.querySelectorAll('tbody tr').length, steps: f.querySelectorAll('.xp-list > li').length, stage: getComputedStyle(f.querySelector('.xp-stage')).display, h: Math.round(tb.getBoundingClientRect().height) };
+          f.querySelector('.fs-tab').click(); o.back = getComputedStyle(f.querySelector('.xp-stage')).display !== 'none'; return o; })()`);
+        check(`${W}: an explorable draws its stage, has Cite and Table, and Table opens a row for each step`, xp.drawn && xp.acts === 'Cite Table' && xp.rows === xp.steps && xp.rows > 1 && xp.stage === 'none' && xp.h > 40 && xp.back, JSON.stringify(xp));
+      }
       // the cite line, and its PDF served
       const pdf = S.pdf ? await t.ev(`fetch(${JSON.stringify(S.pdf)}, { method: 'HEAD' }).then(function (r) { return r.status + ' ' + r.headers.get('content-type'); }, function () { return 'failed'; })`) : 'no link';
       check(`${W}: the cite line's Cite this chapter and Chapter PDF (served)`, S.cite && S.pdf === '../pdf/' + id + '.pdf' && /^200 application\/pdf/.test(pdf), `${S.pdf} ${pdf}`);
-      // an animation's step seeks the video (a video explainer: since 29 Oct 2026 a live explainer, 04.2 and 07.1, has none; qa/redesign/check-explain.js checks those)
+      // an animation's step seeks the video (a video explainer: since 29 Oct 2026 a live explainer, 04.3 and 07.1, has none; qa/redesign/check-explain.js checks those)
       if (S.anim) {
         const want = await t.ev(`(function () { var f = document.querySelector('#${id} .figure--anim video').closest('.figure'), b = f.querySelectorAll('.anim-steps button')[2] || f.querySelectorAll('.anim-steps button')[1]; document.documentElement.style.scrollBehavior = 'auto'; f.scrollIntoView({ block: 'center' }); b.id = 'qa-step'; return +b.getAttribute('data-t'); })()`);
         await sleep(800);

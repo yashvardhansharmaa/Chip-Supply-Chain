@@ -1,4 +1,4 @@
-/* Figure 04.2, "How several passes turn one line into four" (owner approved the mockup on 29 Oct 2026, its latest version).
+/* Figure 04.3 (04.2 until 21 Nov 2026), "How several passes turn one line into four" (owner approved the mockup on 29 Oct 2026, its latest version).
    A live explainer in the grammar of animations/litho.html (film, light, mask and wafer colors; stepped scenes; one drawing
    that changes in place), with every label in HTML text. build/build.js draws the figure's shell from content/04 (the step
    names and captions, the print still and the note); this module draws into its stage, .anim-stage[data-live="saqp"].

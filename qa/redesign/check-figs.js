@@ -17,9 +17,14 @@ const base = (process.argv[2] || 'http://127.0.0.1:8778').replace(/\/$/, '');
 const outdir = process.argv[3] || path.join(root, 'qa', 'redesign', 'shots', 'stage-pages');
 const FIGS = [['lithography', 'tool-price'], ['lithography', 'euv-shipments'], ['memory-and-hbm', 'hbm-bandwidth'], ['data-centers-and-power', 'us-dc-electricity'],
   ['geopolitics', 'china-tool-revenue'], ['chemicals-gases-and-photoresist', 'germanium-price'], ['deposition-and-etch', 'equipment-billings'], ['memory-and-hbm', 'hbm-revenue'],
-  ['advanced-packaging', 'cowos-reticles'], ['substrates-and-pcbs', 'abf-layers'], ['test-and-assembly', 'ase-testers'], ['systems-and-networking', 'scale-up-out'],
+  ['substrates-and-pcbs', 'abf-layers'], ['test-and-assembly', 'ase-testers'], ['systems-and-networking', 'scale-up-out'],
   ['geopolitics', 'ascend-memory'], ['data-centers-and-power', 'turbine-output'],
   ['component-costs', 'b200-price']]; // quick win A, 29 Oct 2026: 15.3, parts inside a whole (type "within")
+// 21 Nov 2026: 10.3, cowos-reticles, left the columns for an explorable (type "explore", build/explore.js), checked below with
+// the new 04.2, pick-the-light, in EXPLORE: each step's values against content/*.md, the Table against the figure's pattern,
+// the wine on the active thing only (10.3: the squares a step adds; 04.2: the chosen light's tab), the citation, and no CSV or
+// PNG (an explorable shows one step at a time; its Table holds them all)
+const EXPLORE = [['lithography', 'pick-the-light', 'light'], ['advanced-packaging', 'cowos-reticles', 'reticle']];
 // 29 Oct 2026 (the figures build): 13.2 and 13.3 (nvlink-bandwidth, switch-bandwidth) left the site for one 13.2, scale-up-out,
 // and 16.2, ascend-memory, is new; both are stepped bars figures (build/figsteps.js). A row the source words ("shown":
 // "1.6 million") is read back in those words, beside its bar and in the Table, and its number in the CSV
@@ -114,6 +119,51 @@ const num = (s) => (s == null || s === '' ? null : +s);
       const png = await t.ev(`new Promise(function(res){var orig=HTMLCanvasElement.prototype.toBlob;HTMLCanvasElement.prototype.toBlob=function(cb,type){HTMLCanvasElement.prototype.toBlob=orig;res({w:this.width,h:this.height,type:type,url:this.toDataURL('image/png')});};var b=document.querySelector('#${fid} .fs-png');if(!b)return res(null);b.click();setTimeout(function(){res(null)},4000);})`);
       check(`${tag}: PNG exports at 1,600 px wide`, png && png.w === 1600 && png.type === 'image/png', png ? `${png.w}x${png.h}` : 'no PNG');
       if (png && png.url) { fs.mkdirSync(outdir, { recursive: true }); fs.writeFileSync(path.join(outdir, `png-${id}.png`), Buffer.from(png.url.split(',')[1], 'base64')); }
+      check(`${tag}: no page errors`, !t.errors.length, t.errors.join(' | '));
+      await t.close();
+    }
+    for (const [ch, id, live] of EXPLORE) {
+      const f = figData(ch, id), fid = `fig-${ch}-${id}`, tag = `${id} (explore)`;
+      const t = await open(chrome, `${base}/#${ch}`, { width: 1440, wait: 2000 });
+      await t.ev(`(function(){var e=document.getElementById('${fid}');document.documentElement.style.scrollBehavior='auto';e.scrollIntoView({block:'center'});return 1;})()`); await sleep(500);
+      const T = (x) => String(x == null ? '' : x).replace(/[\u2018\u2019]/g, "'").replace(/\s+/g, ' ').trim();
+      const fill = (tpl, st) => String(tpl).replace(/\{(\w+)\}/g, (m, k) => (st[k] == null ? '' : String(st[k]))).replace(/\s+/g, ' ').trim();
+      const got = await t.ev(`(function(){var f=document.getElementById('${fid}'),L=(CP_LIVE['${live}']||{figs:{}}).figs['${fid}'];var T=function(n){return n?n.textContent.replace(/\\s+/g,' ').trim():''};
+        return {steps:L?L.steps.map(function(s){var o={};Object.keys(s).forEach(function(k){if(k!=='src')o[k]=s[k]});o.src=s.src.map(function(x){return x.label+' '+x.url}).join(' | ');return o}):null,print:L?L.print:null,
+          head:[].map.call(f.querySelectorAll('table.fig-table thead th'),T),rows:[].map.call(f.querySelectorAll('table.fig-table tbody tr'),function(r){return [].map.call(r.children,T)}),
+          acts:[].map.call(f.querySelectorAll('.fs-acts > *'),T).join(' '),csv:!!f.querySelector('.fs-csv'),png:!!f.querySelector('.fs-png'),cite:T(f.querySelector('.fig-cite-box .ch-cite-text')),k:T(f.querySelector('.fig-k'))};})()`);
+      check(`${tag}: drawn by its module, ${f.steps.length} steps`, !!got.steps && got.steps.length === f.steps.length, JSON.stringify(got.steps && got.steps.length));
+      if (!got.steps) { await t.close(); continue; }
+      const keys = live === 'light' ? ['k', 'wl', 'ft', 'ftU', 'mech'] : ['k', 'sub', 'v', 'num', 'unit', 'what', 'die'];
+      const mism = [];
+      f.steps.forEach((st, i) => {
+        const g = got.steps[i] || {};
+        keys.forEach((k) => { if (T(g[k]) !== T(st[k])) mism.push(`${st.k} ${k}: ${g[k]} vs ${st[k]}`); });
+        if (T(g.cap) !== T(st.cap)) mism.push(`${st.k} sentence`);
+        if (T(g.src) !== T(st.sources.map((x) => x.label + ' ' + x.url).join(' | '))) mism.push(`${st.k} sources: ${g.src}`);
+      });
+      check(`${tag}: every step's values, sentence and sources match content/*.md`, !mism.length, mism.join('; '));
+      check(`${tag}: it prints step ${f.print}`, got.print === f.print - 1, String(got.print));
+      const want = f.steps.map((st) => f.table.map((c) => fill(c[1], st)));
+      check(`${tag}: Table rows match the steps (${f.steps.length}), under its heads`, JSON.stringify(got.head) === JSON.stringify(f.table.map((c) => c[0])) && JSON.stringify(got.rows.map((r) => r.map(T))) === JSON.stringify(want.map((r) => r.map(T))), JSON.stringify(got.rows));
+      check(`${tag}: Cite and Table, no CSV or PNG`, got.acts === 'Cite Table' && !got.csv && !got.png, got.acts);
+      const num = got.k.replace(/^Figure ([0-9.]+).*$/, '$1'), first = f.title.split(/(?<=[a-z0-9)%])\.\s+(?=[A-Z])/)[0];
+      check(`${tag}: the citation names the figure by its title and its main source`, T(got.cite).includes(T(`Figure ${num}: ${first}.`)) && T(got.cite).includes(T(`Data: ${f.source.label}`)), got.cite);
+      // the wine: on the active thing only
+      const W = `function(e){var c=getComputedStyle(e),w='rgb(122, 31, 43)',w2='rgba(122, 31, 43, 0.46)';return c.color===w&&e.childElementCount===0&&e.textContent.trim()||c.fill===w2||c.backgroundColor===w||c.borderBottomColor===w&&c.borderBottomStyle!=='none'&&parseFloat(c.borderBottomWidth)>0;}`;
+      if (live === 'reticle') {
+        const bad2 = [];
+        for (let k = 0; k < f.steps.length; k++) {
+          const r = await t.ev(`(function(){var L=CP_LIVE.reticle.figs['${fid}'];L.set(${k});var p=document.querySelector('#${fid} .xr-panel.lv-screen'),w=${W};
+            return {sq:[].filter.call(p.querySelectorAll('.xr-tiles rect'),function(e){return getComputedStyle(e).fill==='rgba(122, 31, 43, 0.46)'}).length,n:L.count(${k}),other:[].filter.call(p.querySelectorAll('*'),function(e){return w(e)&&!e.closest('.xr-tiles')&&!e.closest('.xr-key')&&!e.closest('.xr-tick.on')&&!e.classList.contains('xr-num')}).map(function(e){return e.className.baseVal!=null?e.className.baseVal:e.className}).join(',')};})()`);
+          const st = f.steps[k], wantN = st.die ? 1 : r.n.n - r.n.before;
+          if (r.sq !== wantN || r.other) bad2.push(`${st.k}: ${r.sq} wine squares (want ${wantN}) ${r.other}`);
+        }
+        check(`${tag}: at every step the wine is on the squares the step adds (and its number and tick), nowhere else`, !bad2.length, bad2.join('; '));
+      } else {
+        const r = await t.ev(`(function(){var f=document.getElementById('${fid}'),w=${W};return [].filter.call(f.querySelectorAll('.xp-stage .lv-screen *'),function(e){return w(e)}).map(function(e){return (e.closest('.pl-opt')?'tab:'+e.closest('.pl-opt').getAttribute('aria-checked'):'')+' '+e.tagName}).join(',')})()`);
+        check(`${tag}: the wine is on the chosen light's tab only`, r.split(',').every((x) => /^tab:true /.test(x)) && r.length > 0, r);
+      }
       check(`${tag}: no page errors`, !t.errors.length, t.errors.join(' | '));
       await t.close();
     }
