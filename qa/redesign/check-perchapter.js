@@ -3,7 +3,8 @@
    held every chapter, switched by the hash (/#lithography), and /<id>/ was a static readable copy. Now /<id>/ is the full
    interactive chapter and the home page holds none. This checks, on a local preview and in the built dist/:
    1. every chapter's page is the whole chapter, driven as a reader would at 1440: the masthead's search and theme; the rail
-      with Hide contents, the chain with its four-bar meters and the figures list; the live specimen in its slot, which a drag
+      with Hide contents, the chain with its four-bar meters and the figures list (as many as the page's figures, the explainer
+      a chapter opens on, in its head since 21 Nov 2026, counted with the text's); the live specimen in its slot, which a drag
       turns; the card with its meter; a look-up pop-up; a figure's Cite, Table, CSV and PNG, and Table opening; the cite line's
       Cite this chapter and Chapter PDF (served); an animation's step seeking the video; a flashcard turning; the sources; and
       Next going to the next chapter's address. At 390 in dark mode: the theme, the strip's live drawing, no sideways scroll;
@@ -92,7 +93,7 @@ const kb = (b) => (b / 1024).toFixed(0) + ' KB';
       const t = await open(chrome, BASE + '/' + id + '/', { width: 1440, wait: 2500 });
       const S = await t.ev(`(function () {
         var a = document.getElementById(${JSON.stringify(id)}), q = function (s) { return a ? a.querySelector(s) : null; }, vis = function (e) { return !!e && e.getClientRects().length > 0; };
-        var figs = a ? a.querySelectorAll('.prose .figure').length : -1, meta = a ? [].map.call(a.querySelectorAll('.ch-meta .label'), function (l) { return l.textContent; }).join('|') : '';
+        var figs = a ? a.querySelectorAll('.prose .figure, .chapter-head > .figure').length : -1, meta = a ? [].map.call(a.querySelectorAll('.ch-meta .label'), function (l) { return l.textContent; }).join('|') : '';
         return { path: location.pathname, articles: [].map.call(document.querySelectorAll('article.chapter'), function (x) { return x.id; }).join(),
           search: vis(document.querySelector('.masthead .search-btn')), theme: vis(document.querySelector('.masthead .theme-toggle')),
           hide: vis(q('.ch-rail .rail-hide')), meters: a ? a.querySelectorAll('.ch-rail .rail-chain.chain-track .meter').length : 0, across: a ? a.querySelectorAll('.ch-rail .rail-across li').length : 0,

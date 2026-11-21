@@ -36,13 +36,13 @@
   },
   "/design-and-eda/": {
     "published": "2026-09-09",
-    "modified": "2026-10-29",
-    "content": "a6808b6d4c20ac69"
+    "modified": "2026-11-21",
+    "content": "8d78be6fb0048852"
   },
   "/export-controls/": {
     "published": "2026-10-21",
-    "modified": "2026-11-20",
-    "content": "406f2cb920217ec2"
+    "modified": "2026-11-21",
+    "content": "be7f2737a35c9892"
   },
   "/foundries-and-fabs/": {
     "published": "2026-09-09",
@@ -71,8 +71,8 @@
   },
   "/metrology-and-inspection/": {
     "published": "2026-09-09",
-    "modified": "2026-10-29",
-    "content": "9fb40979a995686d"
+    "modified": "2026-11-21",
+    "content": "901c18fa219ae405"
   },
   "/pdf/advanced-packaging.pdf": {
     "published": "2026-10-20",
@@ -166,18 +166,18 @@
   },
   "/photomasks-and-pellicles/": {
     "published": "2026-09-09",
-    "modified": "2026-10-29",
-    "content": "8682a392e85d228f"
+    "modified": "2026-11-21",
+    "content": "7eb4c3b60dc82998"
   },
   "/silicon-and-wafers/": {
     "published": "2026-09-09",
-    "modified": "2026-10-29",
-    "content": "5eefe85e06b45eb7"
+    "modified": "2026-11-21",
+    "content": "bc74b3b2fca1e8bd"
   },
   "/substrates-and-pcbs/": {
     "published": "2026-09-09",
-    "modified": "2026-10-29",
-    "content": "06ca9b6a80b7c9ab"
+    "modified": "2026-11-21",
+    "content": "251982709dffc49a"
   },
   "/summary/": {
     "published": "2026-10-21",
@@ -196,12 +196,12 @@
   },
   "/systems-and-networking/": {
     "published": "2026-09-09",
-    "modified": "2026-11-20",
-    "content": "c878deeb3e3b5845"
+    "modified": "2026-11-21",
+    "content": "7c496659b0ce9e99"
   },
   "/test-and-assembly/": {
     "published": "2026-09-09",
-    "modified": "2026-10-29",
-    "content": "1704e53e098dd7fc"
+    "modified": "2026-11-21",
+    "content": "02175176db6686dd"
   }
 }

@@ -5,6 +5,7 @@
  "title": "Metrology and Inspection",
  "oneLiner": "KLA, an American firm, held 56.8 percent of the market for tools that measure and inspect wafers in 2025, by CSET's count.",
  "plain": "Metrology (measurement) and inspection are a chip factory's quality control. Between the steps that build a chip, another machine looks the wafer over. It checks whether the lines are the right width, whether this layer landed squarely on the last one, and whether a speck of dirt has killed a circuit. The main chip in an AI accelerator, the one that does the calculating, is one of the largest cut from a wafer. A bigger chip is a bigger target for a speck. In a textbook example with the same density of specks, 49.2 percent of chips 1 centimeter on a side come out flawless, but only 11.3 percent of chips 2 centimeters on a side ([source](https://web.ece.ucsb.edu/~parhami/docs_folder/f33-book-dep-comp-pt2.pdf#page=8)). In 2025 one American firm, KLA, held 56.8 percent of the market for these tools, by CSET's count from TechInsights data ([source](https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60)). So most of the tools that a chip factory, or fab, uses to find faults come from KLA.",
+ "openOnExplainer": true,
  "bridge": "Every one of those films can be laid down wrong, and the fault is invisible until a tool looks for it.",
  "specimen": "sem-column",
  "specimenCaption": "An electron-beam inspection column, cut in half down its axis, standing over a 300 mm wafer. The column is about a meter tall, drawn to scale. The green line is the electron beam, running from the emitter at the top through the lenses to the spot where it lands on the wafer.",
@@ -53,7 +54,7 @@
       {"k": "Small chips", "cap": "Of chips 1 centimeter on a side, 49.2 percent miss every speck and come out flawless."},
       {"k": "Big chips", "cap": "Chips 2 centimeters on a side are bigger targets for the same specks. Only 11.3 percent come out flawless."},
       {"k": "The cost", "cap": "The big chip yields less and fits fewer times on a wafer, so it costs 20.1 times as much as the small one."}
-    ], "note": "Simulated wafer laid out like the textbook example: 120 chips 1 centimeter on a side, or 26 chips 2 centimeters on a side. Other sizes fill the same wafer with whole chips only. Specks land at random in loose clusters, at the density set. The share of flawless chips follows the formula above, with a clustering constant of 3, as closely as whole chips allow. The cost compares good chips per wafer, from the shares as shown."},
+    ], "note": "Simulated wafer laid out like the textbook example: 120 chips 1 centimeter on a side, or 26 chips 2 centimeters on a side. Other sizes fill the same wafer with whole chips only. Specks land at random in loose clusters, at the density set. The share of flawless chips follows the formula below, with a clustering constant of 3, as closely as whole chips allow. The cost compares good chips per wafer, from the shares as shown."},
  {
  "id": "pc-segments",
  "type": "bars",

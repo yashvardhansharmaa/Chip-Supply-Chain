@@ -10,6 +10,7 @@ One page for the weekly update of chipsupplychain.org. Every command runs from t
 | Suppliers, chips, the China revenue panels | `data/suppliers.json`, `data/landscape.json`, `data/exposure.json` |
 | Export Controls | `data/export-controls-timeline.json`, `data/control-flows.json` |
 | The Glossary and the flashcards | `data/glossary.json`, `data/flashcards.json` |
+| Which chapters open on their explainer | `"openOnExplainer": true` in the chapter's JSON block moves its first explainer up to follow In plain terms (seven chapters since 21 Nov 2026). Delete the line and the chapter keeps its order. Run `node qa/redesign/check-openings.js <base>` after a change |
 | A section heading's words in one chapter | `data/section-headings.json`, keyed by the chapter's id and the heading as its Markdown writes it ("How it works"); the link to the section and the contents rail keep the Markdown's words |
 | A source's title | `data/bibliography.json` (by hand, never by `build/harvest-bibliography.js`, which erases the dates added in round two) |
 

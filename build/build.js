@@ -448,6 +448,8 @@ function markdown(src, ctx) {
     let fm = t.match(/^\{\{\s*figure:\s*([\w-]+)\s*\}\}$/);
     if (fm) {
       flushPara();
+      // the explainer the chapter opens on is drawn in the head (openingExplainer), so its marker places nothing here
+      if (ctx.openFig && fm[1] === ctx.openFig) { i++; continue; }
       const f = (ctx.figures || []).find((x) => x.id === fm[1]);
       if (!f) warn(`${ctx.id}: figure ${fm[1]} not found in front matter`);
       out.push(figure(f, ctx));
@@ -576,8 +578,11 @@ function cardCites(card, ctx) {
 // head), the lead (the body's text before its first section), then the chokepoint card, which stands in the text after the
 // lead and before section 01 (chapterHTML). Their sources are numbered first, in that order, before markdown() numbers the
 // rest of the body as it reads it; a source met again keeps its number, and every mark looks its number up by its url (cite).
-function readingOrderCites(meta, body, ctx, hasCard) {
+// A chapter that opens on its explainer (openingExplainer, below) shows that figure right after In plain terms: afterPlain
+// draws it there, so its number and any source it cites come next in reading order.
+function readingOrderCites(meta, body, ctx, hasCard, afterPlain) {
   if (meta.plain) inline(String(meta.plain), ctx);
+  if (afterPlain) afterPlain();
   const lines = String(body || '').replace(/\r/g, '').split('\n');
   const at = lines.findIndex((l) => /^##\s+takeaways?\s*(\{#[^}]*\})?\s*$/i.test(l.trim().replace(/\*\*/g, '')));
   if (at >= 0) {
@@ -589,6 +594,27 @@ function readingOrderCites(meta, body, ctx, hasCard) {
   const first = lines.findIndex((l) => /^##\s/.test(l.trim()));
   inline((first < 0 ? [] : lines.slice(0, first)).filter((l) => !/^#\s/.test(l.trim())).join('\n'), ctx);
   cardCites(meta.card, ctx);
+}
+/* The chapters that open on their first explainer (the owner's choice of 21 Nov 2026, from round two of the ideas,
+   MAIN/qa/ideas-nov2/chapter-open "rule", in its simpler layout): seven chapters whose In plain terms already tells the
+   explainer's steps. "openOnExplainer": true in a chapter's front matter moves its first explainer, the first figure its text
+   places of type animation or explore, to the head, right after In plain terms, at the width and in the style of every
+   figure; a figure's id in place of true names another explainer. The figure leaves the text, so it shows once, and the
+   chapter's figures number in the order the page shows them. A chapter without the flag keeps its order. */
+const isExplainer = (f) => !!f && (f.type === 'animation' || f.type === 'explore');
+function openingExplainer(meta, body, id) {
+  const want = meta.openOnExplainer;
+  if (!want) return null;
+  const placed = [...String(body || '').matchAll(/^\s*\{\{\s*figure:\s*([\w-]+)\s*\}\}\s*$/gm)].map((m) => m[1]);
+  const byId = (x) => (meta.figures || []).find((f) => f.id === x);
+  const pick = typeof want === 'string' ? want : placed.find((x) => isExplainer(byId(x)));
+  const f = pick ? byId(pick) : null;
+  if (!f || !placed.includes(pick)) { warn(`${id}: openOnExplainer finds no ${typeof want === 'string' ? `placed figure "${want}"` : 'explainer placed in the text'}, so the chapter keeps its order`); return null; }
+  if (!isExplainer(f)) { warn(`${id}: openOnExplainer names ${pick}, which is no explainer (animation or explore), so the chapter keeps its order`); return null; }
+  if (!meta.plain) { warn(`${id}: openOnExplainer needs In plain terms (plain) to open after, so the chapter keeps its order`); return null; }
+  // the figure becomes the chapter's first: any placed before it number one higher, and the text's "figure NN.N" links must follow
+  if (placed.indexOf(pick) > 0) warn(`${id}: it opens on ${pick}, placed after ${placed.slice(0, placed.indexOf(pick)).join(', ')}, so those figures number one higher: check every "figure ${String(meta.number || 0).padStart(2, '0')}.n" in content/`);
+  return f;
 }
 // the card in the text: after the lead, before the first section heading (an <h2> since 29 Oct 2026, under the chapter's h1)
 const withCard = (prose, card, tag) => { if (!card) return prose; const i = prose.search(new RegExp('<' + (tag || 'h2') + '[\\s>]')); return i < 0 ? prose + card : prose.slice(0, i) + card + '\n' + prose.slice(i); };
@@ -660,12 +686,15 @@ for (const f of files) {
   const id = meta.id || f.replace(/^\d\d-/, '').replace(/\.md$/, '');
   // sectionLevel: the chapter's sections are h2 under its h1 title (markdown(), 29 Oct 2026)
   const ctx = { id, cites: [], figures: meta.figures || [], number: meta.number || chapters.length + 1, figList: [], sectionLevel: 2 };
-  readingOrderCites(meta, body, ctx, STAGES.isStage({ id, number: meta.number }));
+  // the explainer the chapter opens on, drawn after In plain terms (its number and sources in that place), then left out of the text
+  const open = openingExplainer(meta, body, id);
+  let openFig = '';
+  readingOrderCites(meta, body, ctx, STAGES.isStage({ id, number: meta.number }), open ? () => { openFig = figure(open, ctx).replace(/^<figure class="figure/, '<figure class="figure fig-open'); ctx.openFig = open.id; } : null);
   const { html, headings, named } = markdown(body, ctx);
   headingsOf.set(id, named);
   const words = wordCount(body);
-  // figList: the figures in the order they are placed, numbered "04.1" on, for the contents rail (chapterHTML)
-  const ch = { file: f, id, meta, html, headings, words, cites: ctx.cites, figList: ctx.figList, number: meta.number || chapters.length + 1, title: meta.title || id };
+  // figList: the figures in the order the page shows them, numbered "04.1" on, for the contents rail (chapterHTML)
+  const ch = { file: f, id, meta, html, openFig, headings, words, cites: ctx.cites, figList: ctx.figList, number: meta.number || chapters.length + 1, title: meta.title || id };
   (meta.figures || []).forEach((fig) => { if (!body.includes(`{{figure:${fig.id}}}`)) warn(`${id}: figure ${fig.id} defined but never placed`); });
   if (id === 'geopolitics') geo = ch; else chapters.push(ch);
 }
@@ -1076,7 +1105,7 @@ const LEDGER_KEY = (() => {
    2. the specimen, the chapter's first plate: a slot the live 3D drawing moves into while it is on screen (src/app.js
       Stage.host), and under it its plain caption (a mono label and the chapter's own specimenCaption) beside the parts list,
       where data/specimen-parts.json has one;
-   3. In plain terms and In short;
+   3. In plain terms, then in the chapters that open on their explainer that figure (openingExplainer), and In short;
    4. the prose: the lead, then the chokepoint card, the chapter's first table (withCard), then the sections, the flashcards,
       the sources and the door to the next chapter.
    The head keeps its class (.chapter-head) and the prose stays the article's own child, which the search index and the print
@@ -1187,12 +1216,13 @@ function chapterHTML(ch) {
   const fc = flashcards[ch.id], hasDeck = fc && Array.isArray(fc.cards) && fc.cards.length;
   const toc = (m.plain ? [[`${ch.id}--plain`, 'In plain terms']] : []).concat(plate ? [[`${ch.id}--card`, 'Chokepoint card']] : []).concat((ch.headings || []).map((h) => [h.id, inline(h.text, { id: ch.id, cites: [], figures: [] }).replace(/<sup[\s\S]*?<\/sup>/g, '')]))
     .concat(hasDeck ? [[`${ch.id}--flashcards`, 'Flashcards']] : []).concat(ch.cites.length ? [[`${ch.id}--sources`, 'Sources']] : []);
-  return `<article class="chapter" id="${esc(ch.id)}" data-specimen="${esc(specimen)}" data-number="${pad(ch.number)}" data-title="${esc(ch.title)}" data-caption="${esc(m.specimenCaption || '')}">
+  // data-open: the chapter opens on its explainer (openingExplainer), which follows In plain terms in the head (.fig-open)
+  return `<article class="chapter" id="${esc(ch.id)}" data-specimen="${esc(specimen)}" data-number="${pad(ch.number)}" data-title="${esc(ch.title)}" data-caption="${esc(m.specimenCaption || '')}"${ch.openFig ? ' data-open="explainer"' : ''}>
 <header class="chapter-head">
 <div class="ch-open">${kick}<h1 class="ch-title${ch.title.length > 16 ? ' is-long' : ''}"><span class="sr-only">Chapter ${ch.number}: </span>${esc(ch.title)}</h1>${m.oneLiner ? `<p class="ch-lede">${esc(m.oneLiner)}</p>` : ''}<div class="ch-omet">${facts}${citeBlock(ch, CITE_DAY(ch.id), copyLink(ch.id))}</div></div>
 ${spec}
 ${glPlain(pb.box)}
-${parts.inShort ? `<section class="inshort"><h2 class="label">In short</h2>${glossaryWrap(parts.inShort)}</section>` : ''}
+${ch.openFig ? ch.openFig + '\n' : ''}${parts.inShort ? `<section class="inshort"><h2 class="label">In short</h2>${glossaryWrap(parts.inShort)}</section>` : ''}
 </header>
 ${railHTML(ch, stageIdx, toc)}
 <div class="prose">${withCard(glossaryWrap(pb.html), plateGl)}${reviewHTML(ch)}${sources}${prevNext(ch)}</div>

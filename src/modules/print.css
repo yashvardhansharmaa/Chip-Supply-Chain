@@ -117,7 +117,8 @@
   article.chapter[data-split-from] { padding-top: 0; padding-left: 0; --pcol: 150mm; }
   .cp-alone article.chapter { padding-top: 0; }
   article.chapter > .chapter-head { display: block; margin: 0; }
-  .chapter .ch-open, .chapter .ch-spec, .chapter .plain, .chapter .inshort, .chapter > .prose { grid-column: auto; grid-row: auto; }
+  .chapter .ch-open, .chapter .ch-spec, .chapter .plain, .chapter .inshort, .chapter > .prose, .chapter .fig-open { grid-column: auto; grid-row: auto; }
+  /* a chapter that opens on its explainer prints it where the screen shows it, after In plain terms, as any figure prints */
 
   /* the margin column: print.js moves the rail to the head of the chapter, where it floats beside the opener. Its screen
      parts go (chapter.css); what prints is the chain (print.js stageIndex): each stage's number, its whole name and its
@@ -341,6 +342,9 @@
   .chapter .figure.figure--anim { break-inside: auto; }
   .chapter .figure--anim .anim-stage { break-inside: avoid; break-after: avoid; }
   .chapter .figure--anim .anim-transcript li { break-inside: avoid; }
+  /* the explainer a chapter opens on (chapter.css .fig-open) keeps whole: split, it left its top rule alone at the foot of the
+     chapter's first page, under In plain terms. Each of the seven fits a page with its steps */
+  .chapter .figure.fig-open { break-inside: avoid; }
   /* the source line: "Source", the source's name and its note number, any note */
   .chapter .fig-strip { display: block; margin: 0; padding: 1.6mm 0 1.8mm; background: none; border-top: 0.3pt solid var(--line-2); font-family: var(--font-code); font-size: 6.8pt; line-height: 1.4; color: var(--ink-2); }
   .chapter .fig-strip .fs-src, .chapter .fig-strip .fs-note { display: block; }

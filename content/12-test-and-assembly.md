@@ -5,6 +5,7 @@
   "title": "Test and Assembly",
   "oneLiner": "Testing finds bad chips before they go into an expensive package. Japan's Advantest took about 65 percent of 2025 spending on chip testers, by its own estimate.",
   "plain": "Before a chip can be sold, a machine called a tester has to check that it works. While the chips are still on the wafer, thousands of needles press onto small metal pads on each one. The tester sends signals through the needles and reads what comes back, and any chip that fails goes no further. A modern AI accelerator is a dozen expensive pieces bonded into one package, and if one piece is bad, all of them are thrown away. So the industry now tests chips earlier, at higher temperatures and for longer, to make weak ones fail during testing before they reach a finished product. Two firms, Advantest in Japan and Teradyne in the United States, sell most of the testers.",
+  "openOnExplainer": true,
   "bridge": "Nothing yet proves that any of it works, and a package this far along is worth too much to guess about.",
   "specimen": "probe-card",
   "specimenCaption": "A vertical probe card over a wafer. It is called vertical because its needles point straight down at the wafer. The card is round, about 305 mm across, a little wider than the 300 mm wafer beneath it. Thousands of needles under it land on four dies at once, and those four dies are picked out in blue-violet. The gap between card and wafer is exaggerated. The real gap is a millimeter or two.",

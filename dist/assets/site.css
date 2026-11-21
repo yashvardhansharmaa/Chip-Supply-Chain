@@ -1541,7 +1541,7 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
   html.rail-off article.chapter { grid-template-columns: minmax(0, 1fr) minmax(0, 666px) minmax(0, 1fr); column-gap: 0; }
   html.rail-off .chapter .ch-rail { grid-column: 1; }
   html.rail-off .chapter .ch-open, html.rail-off .chapter .ch-spec, html.rail-off .chapter .plain,
-  html.rail-off .chapter .inshort, html.rail-off .chapter > .prose { grid-column: 2 / 4; }
+  html.rail-off .chapter .inshort, html.rail-off .chapter > .prose, html.rail-off .chapter .fig-open { grid-column: 2 / 4; }
 }
 
 /* In plain terms and In short follow the specimen, then the prose; In plain terms' ink rule divides them from the opener.
@@ -1557,6 +1557,14 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 .chapter .inshort p, .chapter .inshort li { font-family: var(--font-body); font-size: var(--t-text); line-height: 1.55; color: var(--ink); }
 .chapter .inshort p { margin: 0 0 0.7em; }
 .chapter > .prose { grid-column: 4 / 13; grid-row: 5; max-width: none; min-width: 0; margin-top: 16px; counter-reset: sec; }
+/* a chapter that opens on its explainer (data-open, build/build.js openingExplainer; seven chapters since 21 Nov 2026): the
+   figure stands right after In plain terms, a figure as the text's are (same frame, width and margins), and In short, the
+   prose and the rail's span move down a row. Its foot leaves the gap a figure leaves in the text, In short's margin with it */
+.chapter .fig-open { grid-column: 4 / 13; grid-row: 4; }
+@media screen { .chapter .figure.fig-open { margin-bottom: 8px; } } /* paper keeps a figure's own margins (print.css) */
+article.chapter[data-open] .inshort { grid-row: 5; }
+article.chapter[data-open] > .prose { grid-row: 6; }
+article.chapter[data-open] .ch-rail { grid-row: 1 / span 6; }
 /* the measure: 33.3 em of the 20 px text, 666 px, the width of the figures. Written out rather than var(--measure), since the
    readable pages set --measure for their own narrower page (build/assets/chapter-page.css) */
 .chapter > .prose > * { max-width: calc(36em / var(--text-scale)); }
@@ -1833,6 +1841,10 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
   .chapter .plain { grid-column: 1 / -1; grid-row: 4; }
   .chapter .inshort { grid-column: 1 / -1; grid-row: 5; }
   .chapter > .prose { grid-column: 1 / -1; grid-row: 6; }
+  .chapter .fig-open { grid-column: 1 / -1; grid-row: 5; }
+  article.chapter[data-open] .inshort { grid-row: 6; }
+  article.chapter[data-open] > .prose { grid-row: 7; }
+  article.chapter[data-open] .ch-rail { grid-row: 2; }
   /* a readable page has no other way to the other stages (The Chain in the app has its contents and its sheet), so under 1200 px
      its rail keeps The chain, compact: one numbered cell a chapter with its band's mark, the chapter's name in the link's label */
   .page--chapter .chapter .ch-rail .rail-chain-w { display: block; margin-top: 18px; }
@@ -1857,6 +1869,7 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
   article.chapter > .chapter-head > *, article.chapter > .ch-rail, article.chapter > .prose { min-width: 0; }
   .chapter .ch-open { order: 1; } .chapter .ch-spec { order: 2; } .chapter .ch-rail { order: 3; }
   .chapter .plain { order: 4; } .chapter .inshort { order: 5; } article.chapter > .prose { order: 6; }
+  .chapter .fig-open { order: 4; } /* after In plain terms, which comes before it in the page */
   .chapter .ch-kick { gap: 4px 14px; }
   .chapter .ch-title, .chapter .ch-title.is-long { margin: 16px 0 0 -0.04em; font-size: var(--t-title); line-height: 0.98; }
   .chapter .ch-title.is-long { font-size: min(46px, 11vw); line-height: 1.02; }
@@ -1878,6 +1891,7 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
   .chapter .figure .fig-title { font-size: var(--t-text); line-height: 1.3; }
   /* as the card: in The Chain a figure stays in the column, since the chapter's paint containment would clip a bleed */
   .view[data-view="stack"] .chapter .figure { margin: 28px 0 36px; }
+  @media screen { .chapter .figure.fig-open, .view[data-view="stack"] .chapter .figure.fig-open { margin-bottom: 0; } } /* In short's margin is the gap under it */
   .view[data-view="stack"] .chapter .fig-head, .view[data-view="stack"] .chapter .fig-body { padding-left: 0; padding-right: 0; }
   .view[data-view="stack"] .chapter .fig-strip { margin: 0; }
   .chapter .fig-strip > .fs-acts { flex-wrap: wrap; }
@@ -3753,7 +3767,8 @@ html.kb:has(.view[data-view="glossary"]:not([hidden]) .gl:not([data-state="home"
   article.chapter[data-split-from] { padding-top: 0; padding-left: 0; --pcol: 150mm; }
   .cp-alone article.chapter { padding-top: 0; }
   article.chapter > .chapter-head { display: block; margin: 0; }
-  .chapter .ch-open, .chapter .ch-spec, .chapter .plain, .chapter .inshort, .chapter > .prose { grid-column: auto; grid-row: auto; }
+  .chapter .ch-open, .chapter .ch-spec, .chapter .plain, .chapter .inshort, .chapter > .prose, .chapter .fig-open { grid-column: auto; grid-row: auto; }
+  /* a chapter that opens on its explainer prints it where the screen shows it, after In plain terms, as any figure prints */
 
   /* the margin column: print.js moves the rail to the head of the chapter, where it floats beside the opener. Its screen
      parts go (chapter.css); what prints is the chain (print.js stageIndex): each stage's number, its whole name and its
@@ -3977,6 +3992,9 @@ html.kb:has(.view[data-view="glossary"]:not([hidden]) .gl:not([data-state="home"
   .chapter .figure.figure--anim { break-inside: auto; }
   .chapter .figure--anim .anim-stage { break-inside: avoid; break-after: avoid; }
   .chapter .figure--anim .anim-transcript li { break-inside: avoid; }
+  /* the explainer a chapter opens on (chapter.css .fig-open) keeps whole: split, it left its top rule alone at the foot of the
+     chapter's first page, under In plain terms. Each of the seven fits a page with its steps */
+  .chapter .figure.fig-open { break-inside: avoid; }
   /* the source line: "Source", the source's name and its note number, any note */
   .chapter .fig-strip { display: block; margin: 0; padding: 1.6mm 0 1.8mm; background: none; border-top: 0.3pt solid var(--line-2); font-family: var(--font-code); font-size: 6.8pt; line-height: 1.4; color: var(--ink-2); }
   .chapter .fig-strip .fs-src, .chapter .fig-strip .fs-note { display: block; }

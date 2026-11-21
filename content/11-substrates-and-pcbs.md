@@ -5,6 +5,7 @@
   "title": "Substrates and PCBs",
   "oneLiner": "Ajinomoto, a Japanese food company, told investors in June 2026 that its build-up film, the insulation inside high-end chip packages, has held over 95 percent of its market since its launch.",
   "plain": "A package substrate is the adapter between a chip and the circuit board under it. The chip's connections are finer than a human hair, but the board is wired in millimeters. The substrate is built in layers, like plywood, around a stiff core of glass cloth and resin. Thin sheets of epoxy film are pressed onto both faces of the core. A laser burns holes through each sheet, and copper plated into the holes carries signals from one layer to the next. Every added layer is another set of holes that can fail. A handful of firms build these substrates, and two of the materials inside them come mainly from Japanese makers. Ajinomoto dominates the film, and Nitto Boseki dominates the low-expansion glass cloth in the core.",
+  "openOnExplainer": true,
   "bridge": "Everything so far builds upward, and the base under the package now has to carry all of it down to an ordinary board.",
   "specimen": "substrate-layers",
   "specimenCaption": "A build-up substrate, the board a chip sits on, with a quarter cut away. It is about 100 by 72 mm and 1.5 mm thick, with eighteen copper layers inside. The olive-green bands are the build-up film between the copper layers. The footprint is to scale, but the thickness is exaggerated about twenty times.",
