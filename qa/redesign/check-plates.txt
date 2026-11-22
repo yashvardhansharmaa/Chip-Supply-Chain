@@ -1,0 +1,883 @@
+ok   design-and-eda 1440 light: the plate renders: die-floorplan, 10175 inked samples, 666x360
+ok   design-and-eda 1440 light: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   design-and-eda 1440 light: a drag turns the plate: yaw 0.60
+ok   design-and-eda 1440 light: its labels fade while it turns: labels at 0
+ok   design-and-eda 1440 light: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.60, tilt 0.12
+ok   design-and-eda 1440 light: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   design-and-eda 1440 light: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.52
+ok   design-and-eda 1440 light: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   design-and-eda 1440 light: pointing at a label lights its part: {"want":"Die-to-die link","focus":"Die-to-die link","on":""}
+ok   design-and-eda 1440 light: pointing at a part on the plate lights it: {"want":"Die-to-die link","focus":"Die-to-die link","on":""}
+ok   design-and-eda 1440 light: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":522,"label":"A GPU die based on Nvidia’s pu","draw":"none","still":"block"}
+ok   design-and-eda 1440 light: no sideways scroll
+ok   design-and-eda 1440 light: no page errors
+ok   silicon-and-wafers 1440 light: the plate renders: boule-and-wafer, 4379 inked samples, 666x470
+ok   silicon-and-wafers 1440 light: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   silicon-and-wafers 1440 light: a drag turns the plate: yaw 0.60
+ok   silicon-and-wafers 1440 light: its labels fade while it turns: labels at 0
+ok   silicon-and-wafers 1440 light: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.60, tilt 0.12
+ok   silicon-and-wafers 1440 light: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   silicon-and-wafers 1440 light: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   silicon-and-wafers 1440 light: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   silicon-and-wafers 1440 light: pointing at a label lights its part and the parts list: {"want":1,"focus":1,"on":"1,1"}
+ok   silicon-and-wafers 1440 light: pointing at a part on the plate lights it and the list: {"want":4,"focus":4,"on":"4,4"}
+ok   silicon-and-wafers 1440 light: a row of the parts list lights its part on the plate: {"focusN":2,"focus":2}
+ok   silicon-and-wafers 1440 light: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":1051,"label":"A silicon ingot, one crystal p","draw":"none","still":"block"}
+ok   silicon-and-wafers 1440 light: no sideways scroll
+ok   silicon-and-wafers 1440 light: no page errors
+ok   chemicals-gases-and-photoresist 1440 light: the plate renders: gas-cabinet, 9052 inked samples, 666x417
+ok   chemicals-gases-and-photoresist 1440 light: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   chemicals-gases-and-photoresist 1440 light: a drag turns the plate: yaw 0.60
+ok   chemicals-gases-and-photoresist 1440 light: its labels fade while it turns: labels at 0
+ok   chemicals-gases-and-photoresist 1440 light: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.60, tilt 0.12
+ok   chemicals-gases-and-photoresist 1440 light: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   chemicals-gases-and-photoresist 1440 light: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   chemicals-gases-and-photoresist 1440 light: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   chemicals-gases-and-photoresist 1440 light: pointing at a label lights its part: {"want":"Valves, regulator and gauges","focus":"Valves, regulator and gauges","on":""}
+ok   chemicals-gases-and-photoresist 1440 light: pointing at a part on the plate lights it: {"want":"Gas cylinders","focus":"Gas cylinders","on":""}
+ok   chemicals-gases-and-photoresist 1440 light: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":2416,"label":"A specialty gas cabinet with i","draw":"none","still":"block"}
+ok   chemicals-gases-and-photoresist 1440 light: no sideways scroll
+ok   chemicals-gases-and-photoresist 1440 light: no page errors
+ok   lithography 1440 light: the plate renders: euv-scanner, 14173 inked samples, 666x470
+ok   lithography 1440 light: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   lithography 1440 light: a drag turns the plate: yaw 0.60
+ok   lithography 1440 light: its labels fade while it turns: labels at 0
+ok   lithography 1440 light: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.60, tilt 0.12
+ok   lithography 1440 light: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   lithography 1440 light: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   lithography 1440 light: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   lithography 1440 light: pointing at a label lights its part and the parts list: {"want":1,"focus":1,"on":"1,1"}
+ok   lithography 1440 light: pointing at a part on the plate lights it and the list: {"want":3,"focus":3,"on":"3,3"}
+ok   lithography 1440 light: a row of the parts list lights its part on the plate: {"focusN":2,"focus":2}
+ok   lithography 1440 light: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":3152,"label":"An extreme ultraviolet scanner","draw":"none","still":"block"}
+ok   lithography 1440 light: no sideways scroll
+ok   lithography 1440 light: no page errors
+ok   photomasks-and-pellicles 1440 light: the plate renders: photomask, 15008 inked samples, 666x398
+ok   photomasks-and-pellicles 1440 light: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   photomasks-and-pellicles 1440 light: a drag turns the plate: yaw 0.60
+ok   photomasks-and-pellicles 1440 light: its labels fade while it turns: labels at 0
+ok   photomasks-and-pellicles 1440 light: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.60, tilt 0.12
+ok   photomasks-and-pellicles 1440 light: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   photomasks-and-pellicles 1440 light: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   photomasks-and-pellicles 1440 light: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   photomasks-and-pellicles 1440 light: pointing at a label lights its part: {"want":"Pellicle","focus":"Pellicle","on":""}
+ok   photomasks-and-pellicles 1440 light: pointing at a part on the plate lights it: {"want":"Glass plate","focus":"Glass plate","on":""}
+ok   photomasks-and-pellicles 1440 light: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":239,"label":"An EUV photomask, or reticle, ","draw":"none","still":"block"}
+ok   photomasks-and-pellicles 1440 light: no sideways scroll
+ok   photomasks-and-pellicles 1440 light: no page errors
+ok   deposition-and-etch 1440 light: the plate renders: process-chamber, 9602 inked samples, 666x470
+ok   deposition-and-etch 1440 light: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   deposition-and-etch 1440 light: a drag turns the plate: yaw 0.60
+ok   deposition-and-etch 1440 light: its labels fade while it turns: labels at 0
+ok   deposition-and-etch 1440 light: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.60, tilt 0.12
+ok   deposition-and-etch 1440 light: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   deposition-and-etch 1440 light: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   deposition-and-etch 1440 light: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   deposition-and-etch 1440 light: pointing at a label lights its part: {"want":"Plasma","focus":"Plasma","on":""}
+ok   deposition-and-etch 1440 light: pointing at a part on the plate lights it: {"want":"Plasma","focus":"Plasma","on":""}
+ok   deposition-and-etch 1440 light: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":1917,"label":"A plasma etch chamber cut in h","draw":"none","still":"block"}
+ok   deposition-and-etch 1440 light: no sideways scroll
+ok   deposition-and-etch 1440 light: no page errors
+ok   metrology-and-inspection 1440 light: the plate renders: sem-column, 4805 inked samples, 666x470
+ok   metrology-and-inspection 1440 light: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   metrology-and-inspection 1440 light: a drag turns the plate: yaw 0.60
+ok   metrology-and-inspection 1440 light: its labels fade while it turns: labels at 0
+ok   metrology-and-inspection 1440 light: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.60, tilt 0.12
+ok   metrology-and-inspection 1440 light: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   metrology-and-inspection 1440 light: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   metrology-and-inspection 1440 light: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   metrology-and-inspection 1440 light: pointing at a label lights its part: {"want":"Lenses","focus":"Lenses","on":""}
+ok   metrology-and-inspection 1440 light: pointing at a part on the plate lights it: {"want":"Emitter","focus":"Emitter","on":""}
+ok   metrology-and-inspection 1440 light: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":4278,"label":"An electron-beam inspection co","draw":"none","still":"block"}
+ok   metrology-and-inspection 1440 light: no sideways scroll
+ok   metrology-and-inspection 1440 light: no page errors
+ok   foundries-and-fabs 1440 light: the plate renders: gaa-transistor, 11482 inked samples, 666x374
+ok   foundries-and-fabs 1440 light: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   foundries-and-fabs 1440 light: a drag turns the plate: yaw 0.60
+ok   foundries-and-fabs 1440 light: its labels fade while it turns: labels at 0
+ok   foundries-and-fabs 1440 light: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.60, tilt 0.12
+ok   foundries-and-fabs 1440 light: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   foundries-and-fabs 1440 light: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   foundries-and-fabs 1440 light: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   foundries-and-fabs 1440 light: pointing at a label lights its part: {"want":"Silicon sheets, each 6 nm thick and 30 nm wide","focus":"Silicon sheets, each 6 nm thick and 30 nm wide","on":""}
+ok   foundries-and-fabs 1440 light: pointing at a part on the plate lights it: {"want":"Gate metal","focus":"Gate metal","on":""}
+ok   foundries-and-fabs 1440 light: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":255,"label":"A gate-all-around transistor, ","draw":"none","still":"block"}
+ok   foundries-and-fabs 1440 light: no sideways scroll
+ok   foundries-and-fabs 1440 light: no page errors
+ok   memory-and-hbm 1440 light: the plate renders: hbm-stack, 15131 inked samples, 666x386
+ok   memory-and-hbm 1440 light: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   memory-and-hbm 1440 light: a drag turns the plate: yaw 0.60
+ok   memory-and-hbm 1440 light: its labels fade while it turns: labels at 0
+ok   memory-and-hbm 1440 light: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.60, tilt 0.12
+ok   memory-and-hbm 1440 light: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   memory-and-hbm 1440 light: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   memory-and-hbm 1440 light: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   memory-and-hbm 1440 light: pointing at a label lights its part and the parts list: {"want":1,"focus":1,"on":"1,1"}
+ok   memory-and-hbm 1440 light: pointing at a part on the plate lights it and the list: {"want":4,"focus":4,"on":"4,4"}
+ok   memory-and-hbm 1440 light: a row of the parts list lights its part on the plate: {"focusN":2,"focus":2}
+ok   memory-and-hbm 1440 light: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":996,"label":"A twelve-high HBM stack, pulle","draw":"none","still":"block"}
+ok   memory-and-hbm 1440 light: no sideways scroll
+ok   memory-and-hbm 1440 light: no page errors
+ok   advanced-packaging 1440 light: the plate renders: cowos-exploded, 12913 inked samples, 666x441
+ok   advanced-packaging 1440 light: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   advanced-packaging 1440 light: a drag turns the plate: yaw 0.60
+ok   advanced-packaging 1440 light: its labels fade while it turns: labels at 0
+ok   advanced-packaging 1440 light: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.60, tilt 0.12
+ok   advanced-packaging 1440 light: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   advanced-packaging 1440 light: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   advanced-packaging 1440 light: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   advanced-packaging 1440 light: pointing at a label lights its part and the parts list: {"want":4,"focus":4,"on":"4,4"}
+ok   advanced-packaging 1440 light: pointing at a part on the plate lights it and the list: {"want":2,"focus":2,"on":"2,2"}
+ok   advanced-packaging 1440 light: a row of the parts list lights its part on the plate: {"focusN":2,"focus":2}
+ok   advanced-packaging 1440 light: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":645,"label":"A CoWoS-L package, pulled apar","draw":"none","still":"block"}
+ok   advanced-packaging 1440 light: no sideways scroll
+ok   advanced-packaging 1440 light: no page errors
+ok   substrates-and-pcbs 1440 light: the plate renders: substrate-layers, 13400 inked samples, 666x360
+ok   substrates-and-pcbs 1440 light: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   substrates-and-pcbs 1440 light: a drag turns the plate: yaw 0.60
+ok   substrates-and-pcbs 1440 light: its labels fade while it turns: labels at 0
+ok   substrates-and-pcbs 1440 light: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.60, tilt 0.12
+ok   substrates-and-pcbs 1440 light: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   substrates-and-pcbs 1440 light: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   substrates-and-pcbs 1440 light: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   substrates-and-pcbs 1440 light: pointing at a label lights its part: {"want":"Build-up film","focus":"Build-up film","on":""}
+ok   substrates-and-pcbs 1440 light: pointing at a part on the plate lights it: {"want":"Build-up film","focus":"Build-up film","on":""}
+ok   substrates-and-pcbs 1440 light: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":781,"label":"A build-up substrate, the boar","draw":"none","still":"block"}
+ok   substrates-and-pcbs 1440 light: no sideways scroll
+ok   substrates-and-pcbs 1440 light: no page errors
+ok   test-and-assembly 1440 light: the plate renders: probe-card, 17548 inked samples, 666x470
+ok   test-and-assembly 1440 light: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   test-and-assembly 1440 light: a drag turns the plate: yaw 0.60
+ok   test-and-assembly 1440 light: its labels fade while it turns: labels at 0
+ok   test-and-assembly 1440 light: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.60, tilt 0.12
+ok   test-and-assembly 1440 light: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   test-and-assembly 1440 light: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   test-and-assembly 1440 light: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   test-and-assembly 1440 light: pointing at a label lights its part: {"want":"Needles","focus":"Needles","on":""}
+ok   test-and-assembly 1440 light: pointing at a part on the plate lights it: {"want":"Probe card","focus":"Probe card","on":""}
+ok   test-and-assembly 1440 light: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":1217,"label":"A vertical probe card over a w","draw":"none","still":"block"}
+ok   test-and-assembly 1440 light: no sideways scroll
+ok   test-and-assembly 1440 light: no page errors
+ok   systems-and-networking 1440 light: the plate renders: gpu-baseboard, 10450 inked samples, 666x360
+ok   systems-and-networking 1440 light: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   systems-and-networking 1440 light: a drag turns the plate: yaw 0.60
+ok   systems-and-networking 1440 light: its labels fade while it turns: labels at 0
+ok   systems-and-networking 1440 light: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.60, tilt 0.12
+ok   systems-and-networking 1440 light: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   systems-and-networking 1440 light: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   systems-and-networking 1440 light: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   systems-and-networking 1440 light: pointing at a label lights its part: {"want":"Accelerator modules","focus":"Accelerator modules","on":""}
+ok   systems-and-networking 1440 light: pointing at a part on the plate lights it: {"want":"Accelerator modules","focus":"Accelerator modules","on":""}
+ok   systems-and-networking 1440 light: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":1639,"label":"An eight-GPU baseboard, the bo","draw":"none","still":"block"}
+ok   systems-and-networking 1440 light: no sideways scroll
+ok   systems-and-networking 1440 light: no page errors
+ok   data-centers-and-power 1440 light: the plate renders: rack, 8243 inked samples, 666x470
+ok   data-centers-and-power 1440 light: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   data-centers-and-power 1440 light: a drag turns the plate: yaw 0.60
+ok   data-centers-and-power 1440 light: its labels fade while it turns: labels at 0
+ok   data-centers-and-power 1440 light: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.60, tilt 0.12
+ok   data-centers-and-power 1440 light: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   data-centers-and-power 1440 light: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   data-centers-and-power 1440 light: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   data-centers-and-power 1440 light: pointing at a label lights its part: {"want":"Compute tray","focus":"Compute tray","on":""}
+ok   data-centers-and-power 1440 light: pointing at a part on the plate lights it: {"want":"Compute tray","focus":"Compute tray","on":""}
+ok   data-centers-and-power 1440 light: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":1020,"label":"A liquid-cooled rack of 72 GPU","draw":"none","still":"block"}
+ok   data-centers-and-power 1440 light: no sideways scroll
+ok   data-centers-and-power 1440 light: no page errors
+ok   component-costs 1440 light: the plate renders: wafer-cost, 11055 inked samples, 666x470
+ok   component-costs 1440 light: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   component-costs 1440 light: a drag turns the plate: yaw 0.60
+ok   component-costs 1440 light: its labels fade while it turns: labels at 0
+ok   component-costs 1440 light: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.60, tilt 0.12
+ok   component-costs 1440 light: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   component-costs 1440 light: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   component-costs 1440 light: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   component-costs 1440 light: pointing at a label lights its part: {"want":"$480 of power delivery, board and test","focus":"$480 of power delivery, board and test","on":""}
+ok   component-costs 1440 light: pointing at a part on the plate lights it: {"want":"$480 of power delivery, board and test","focus":"$480 of power delivery, board and test","on":""}
+ok   component-costs 1440 light: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":161,"label":"Epoch AI’s December 2025 estim","draw":"none","still":"block"}
+ok   component-costs 1440 light: no sideways scroll
+ok   component-costs 1440 light: no page errors
+ok   geopolitics 1440 light: the plate renders: globe, 15966 inked samples, 666x430
+ok   geopolitics 1440 light: the plate settles (the globe keeps turning): {"k":1,"labA":1,"raf":81}
+ok   geopolitics 1440 light: the globe keeps turning: 0.219 to 0.270
+ok   geopolitics 1440 light: a drag turns the plate: yaw 0.90
+ok   geopolitics 1440 light: its labels fade while it turns: labels at 0
+ok   geopolitics 1440 light: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.90, tilt 0.12
+ok   geopolitics 1440 light: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   geopolitics 1440 light: the arrow keys turn it: yaw 0.24, tilt 0.12, labels 0.00
+ok   geopolitics 1440 light: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   geopolitics 1440 light: pointing at a label lights its part: {"want":"Chokepoint towns","focus":"Chokepoint towns","on":""}
+ok   geopolitics 1440 light: pointing at a part on the plate lights it: {"want":"Chokepoint towns","focus":"Chokepoint towns","on":""}
+ok   geopolitics 1440 light: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":157,"label":"The world, with nineteen choke","draw":"none","still":"block"}
+ok   geopolitics 1440 light: no sideways scroll
+ok   geopolitics 1440 light: no page errors
+ok   design-and-eda 1440 dark: the plate renders: die-floorplan, 10161 inked samples, 666x360
+ok   design-and-eda 1440 dark: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   design-and-eda 1440 dark: a drag turns the plate: yaw 0.60
+ok   design-and-eda 1440 dark: its labels fade while it turns: labels at 0
+ok   design-and-eda 1440 dark: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.60, tilt 0.12
+ok   design-and-eda 1440 dark: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   design-and-eda 1440 dark: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   design-and-eda 1440 dark: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   design-and-eda 1440 dark: pointing at a label lights its part: {"want":"Die-to-die link","focus":"Die-to-die link","on":""}
+ok   design-and-eda 1440 dark: pointing at a part on the plate lights it: {"want":"Die-to-die link","focus":"Die-to-die link","on":""}
+ok   design-and-eda 1440 dark: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":522,"label":"A GPU die based on Nvidia’s pu","draw":"none","still":"block"}
+ok   design-and-eda 1440 dark: no sideways scroll
+ok   design-and-eda 1440 dark: no page errors
+ok   silicon-and-wafers 1440 dark: the plate renders: boule-and-wafer, 4370 inked samples, 666x470
+ok   silicon-and-wafers 1440 dark: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   silicon-and-wafers 1440 dark: a drag turns the plate: yaw 0.60
+ok   silicon-and-wafers 1440 dark: its labels fade while it turns: labels at 0
+ok   silicon-and-wafers 1440 dark: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.60, tilt 0.12
+ok   silicon-and-wafers 1440 dark: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   silicon-and-wafers 1440 dark: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   silicon-and-wafers 1440 dark: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   silicon-and-wafers 1440 dark: pointing at a label lights its part and the parts list: {"want":1,"focus":1,"on":"1,1"}
+ok   silicon-and-wafers 1440 dark: pointing at a part on the plate lights it and the list: {"want":4,"focus":4,"on":"4,4"}
+ok   silicon-and-wafers 1440 dark: a row of the parts list lights its part on the plate: {"focusN":2,"focus":2}
+ok   silicon-and-wafers 1440 dark: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":1051,"label":"A silicon ingot, one crystal p","draw":"none","still":"block"}
+ok   silicon-and-wafers 1440 dark: no sideways scroll
+ok   silicon-and-wafers 1440 dark: no page errors
+ok   chemicals-gases-and-photoresist 1440 dark: the plate renders: gas-cabinet, 8988 inked samples, 666x417
+ok   chemicals-gases-and-photoresist 1440 dark: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   chemicals-gases-and-photoresist 1440 dark: a drag turns the plate: yaw 0.60
+ok   chemicals-gases-and-photoresist 1440 dark: its labels fade while it turns: labels at 0
+ok   chemicals-gases-and-photoresist 1440 dark: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.60, tilt 0.12
+ok   chemicals-gases-and-photoresist 1440 dark: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   chemicals-gases-and-photoresist 1440 dark: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   chemicals-gases-and-photoresist 1440 dark: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   chemicals-gases-and-photoresist 1440 dark: pointing at a label lights its part: {"want":"Valves, regulator and gauges","focus":"Valves, regulator and gauges","on":""}
+ok   chemicals-gases-and-photoresist 1440 dark: pointing at a part on the plate lights it: {"want":"Gas cylinders","focus":"Gas cylinders","on":""}
+ok   chemicals-gases-and-photoresist 1440 dark: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":2416,"label":"A specialty gas cabinet with i","draw":"none","still":"block"}
+ok   chemicals-gases-and-photoresist 1440 dark: no sideways scroll
+ok   chemicals-gases-and-photoresist 1440 dark: no page errors
+ok   lithography 1440 dark: the plate renders: euv-scanner, 14113 inked samples, 666x470
+ok   lithography 1440 dark: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   lithography 1440 dark: a drag turns the plate: yaw 0.60
+ok   lithography 1440 dark: its labels fade while it turns: labels at 0
+ok   lithography 1440 dark: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.60, tilt 0.12
+ok   lithography 1440 dark: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   lithography 1440 dark: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   lithography 1440 dark: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   lithography 1440 dark: pointing at a label lights its part and the parts list: {"want":1,"focus":1,"on":"1,1"}
+ok   lithography 1440 dark: pointing at a part on the plate lights it and the list: {"want":3,"focus":3,"on":"3,3"}
+ok   lithography 1440 dark: a row of the parts list lights its part on the plate: {"focusN":2,"focus":2}
+ok   lithography 1440 dark: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":3152,"label":"An extreme ultraviolet scanner","draw":"none","still":"block"}
+ok   lithography 1440 dark: no sideways scroll
+ok   lithography 1440 dark: no page errors
+ok   photomasks-and-pellicles 1440 dark: the plate renders: photomask, 14988 inked samples, 666x398
+ok   photomasks-and-pellicles 1440 dark: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   photomasks-and-pellicles 1440 dark: a drag turns the plate: yaw 0.60
+ok   photomasks-and-pellicles 1440 dark: its labels fade while it turns: labels at 0
+ok   photomasks-and-pellicles 1440 dark: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.60, tilt 0.12
+ok   photomasks-and-pellicles 1440 dark: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   photomasks-and-pellicles 1440 dark: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   photomasks-and-pellicles 1440 dark: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   photomasks-and-pellicles 1440 dark: pointing at a label lights its part: {"want":"Pellicle","focus":"Pellicle","on":""}
+ok   photomasks-and-pellicles 1440 dark: pointing at a part on the plate lights it: {"want":"Glass plate","focus":"Glass plate","on":""}
+ok   photomasks-and-pellicles 1440 dark: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":239,"label":"An EUV photomask, or reticle, ","draw":"none","still":"block"}
+ok   photomasks-and-pellicles 1440 dark: no sideways scroll
+ok   photomasks-and-pellicles 1440 dark: no page errors
+ok   deposition-and-etch 1440 dark: the plate renders: process-chamber, 9542 inked samples, 666x470
+ok   deposition-and-etch 1440 dark: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   deposition-and-etch 1440 dark: a drag turns the plate: yaw 0.60
+ok   deposition-and-etch 1440 dark: its labels fade while it turns: labels at 0
+ok   deposition-and-etch 1440 dark: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.60, tilt 0.12
+ok   deposition-and-etch 1440 dark: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   deposition-and-etch 1440 dark: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   deposition-and-etch 1440 dark: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   deposition-and-etch 1440 dark: pointing at a label lights its part: {"want":"Plasma","focus":"Plasma","on":""}
+ok   deposition-and-etch 1440 dark: pointing at a part on the plate lights it: {"want":"Plasma","focus":"Plasma","on":""}
+ok   deposition-and-etch 1440 dark: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":1917,"label":"A plasma etch chamber cut in h","draw":"none","still":"block"}
+ok   deposition-and-etch 1440 dark: no sideways scroll
+ok   deposition-and-etch 1440 dark: no page errors
+ok   metrology-and-inspection 1440 dark: the plate renders: sem-column, 4776 inked samples, 666x470
+ok   metrology-and-inspection 1440 dark: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   metrology-and-inspection 1440 dark: a drag turns the plate: yaw 0.60
+ok   metrology-and-inspection 1440 dark: its labels fade while it turns: labels at 0
+ok   metrology-and-inspection 1440 dark: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.60, tilt 0.12
+ok   metrology-and-inspection 1440 dark: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   metrology-and-inspection 1440 dark: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   metrology-and-inspection 1440 dark: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   metrology-and-inspection 1440 dark: pointing at a label lights its part: {"want":"Lenses","focus":"Lenses","on":""}
+ok   metrology-and-inspection 1440 dark: pointing at a part on the plate lights it: {"want":"Emitter","focus":"Emitter","on":""}
+ok   metrology-and-inspection 1440 dark: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":4278,"label":"An electron-beam inspection co","draw":"none","still":"block"}
+ok   metrology-and-inspection 1440 dark: no sideways scroll
+ok   metrology-and-inspection 1440 dark: no page errors
+ok   foundries-and-fabs 1440 dark: the plate renders: gaa-transistor, 11455 inked samples, 666x374
+ok   foundries-and-fabs 1440 dark: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   foundries-and-fabs 1440 dark: a drag turns the plate: yaw 0.60
+ok   foundries-and-fabs 1440 dark: its labels fade while it turns: labels at 0
+ok   foundries-and-fabs 1440 dark: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.60, tilt 0.12
+ok   foundries-and-fabs 1440 dark: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   foundries-and-fabs 1440 dark: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   foundries-and-fabs 1440 dark: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   foundries-and-fabs 1440 dark: pointing at a label lights its part: {"want":"Silicon sheets, each 6 nm thick and 30 nm wide","focus":"Silicon sheets, each 6 nm thick and 30 nm wide","on":""}
+ok   foundries-and-fabs 1440 dark: pointing at a part on the plate lights it: {"want":"Gate metal","focus":"Gate metal","on":""}
+ok   foundries-and-fabs 1440 dark: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":255,"label":"A gate-all-around transistor, ","draw":"none","still":"block"}
+ok   foundries-and-fabs 1440 dark: no sideways scroll
+ok   foundries-and-fabs 1440 dark: no page errors
+ok   memory-and-hbm 1440 dark: the plate renders: hbm-stack, 15119 inked samples, 666x386
+ok   memory-and-hbm 1440 dark: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   memory-and-hbm 1440 dark: a drag turns the plate: yaw 0.60
+ok   memory-and-hbm 1440 dark: its labels fade while it turns: labels at 0
+ok   memory-and-hbm 1440 dark: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.60, tilt 0.12
+ok   memory-and-hbm 1440 dark: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   memory-and-hbm 1440 dark: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   memory-and-hbm 1440 dark: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   memory-and-hbm 1440 dark: pointing at a label lights its part and the parts list: {"want":1,"focus":1,"on":"1,1"}
+ok   memory-and-hbm 1440 dark: pointing at a part on the plate lights it and the list: {"want":4,"focus":4,"on":"4,4"}
+ok   memory-and-hbm 1440 dark: a row of the parts list lights its part on the plate: {"focusN":2,"focus":2}
+ok   memory-and-hbm 1440 dark: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":996,"label":"A twelve-high HBM stack, pulle","draw":"none","still":"block"}
+ok   memory-and-hbm 1440 dark: no sideways scroll
+ok   memory-and-hbm 1440 dark: no page errors
+ok   advanced-packaging 1440 dark: the plate renders: cowos-exploded, 12898 inked samples, 666x441
+ok   advanced-packaging 1440 dark: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   advanced-packaging 1440 dark: a drag turns the plate: yaw 0.60
+ok   advanced-packaging 1440 dark: its labels fade while it turns: labels at 0
+ok   advanced-packaging 1440 dark: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.60, tilt 0.12
+ok   advanced-packaging 1440 dark: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   advanced-packaging 1440 dark: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   advanced-packaging 1440 dark: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   advanced-packaging 1440 dark: pointing at a label lights its part and the parts list: {"want":4,"focus":4,"on":"4,4"}
+ok   advanced-packaging 1440 dark: pointing at a part on the plate lights it and the list: {"want":2,"focus":2,"on":"2,2"}
+ok   advanced-packaging 1440 dark: a row of the parts list lights its part on the plate: {"focusN":2,"focus":2}
+ok   advanced-packaging 1440 dark: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":645,"label":"A CoWoS-L package, pulled apar","draw":"none","still":"block"}
+ok   advanced-packaging 1440 dark: no sideways scroll
+ok   advanced-packaging 1440 dark: no page errors
+ok   substrates-and-pcbs 1440 dark: the plate renders: substrate-layers, 13393 inked samples, 666x360
+ok   substrates-and-pcbs 1440 dark: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   substrates-and-pcbs 1440 dark: a drag turns the plate: yaw 0.60
+ok   substrates-and-pcbs 1440 dark: its labels fade while it turns: labels at 0
+ok   substrates-and-pcbs 1440 dark: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.60, tilt 0.12
+ok   substrates-and-pcbs 1440 dark: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   substrates-and-pcbs 1440 dark: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   substrates-and-pcbs 1440 dark: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   substrates-and-pcbs 1440 dark: pointing at a label lights its part: {"want":"Build-up film","focus":"Build-up film","on":""}
+ok   substrates-and-pcbs 1440 dark: pointing at a part on the plate lights it: {"want":"Build-up film","focus":"Build-up film","on":""}
+ok   substrates-and-pcbs 1440 dark: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":781,"label":"A build-up substrate, the boar","draw":"none","still":"block"}
+ok   substrates-and-pcbs 1440 dark: no sideways scroll
+ok   substrates-and-pcbs 1440 dark: no page errors
+ok   test-and-assembly 1440 dark: the plate renders: probe-card, 17523 inked samples, 666x470
+ok   test-and-assembly 1440 dark: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   test-and-assembly 1440 dark: a drag turns the plate: yaw 0.60
+ok   test-and-assembly 1440 dark: its labels fade while it turns: labels at 0
+ok   test-and-assembly 1440 dark: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.60, tilt 0.12
+ok   test-and-assembly 1440 dark: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   test-and-assembly 1440 dark: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   test-and-assembly 1440 dark: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   test-and-assembly 1440 dark: pointing at a label lights its part: {"want":"Needles","focus":"Needles","on":""}
+ok   test-and-assembly 1440 dark: pointing at a part on the plate lights it: {"want":"Probe card","focus":"Probe card","on":""}
+ok   test-and-assembly 1440 dark: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":1217,"label":"A vertical probe card over a w","draw":"none","still":"block"}
+ok   test-and-assembly 1440 dark: no sideways scroll
+ok   test-and-assembly 1440 dark: no page errors
+ok   systems-and-networking 1440 dark: the plate renders: gpu-baseboard, 10432 inked samples, 666x360
+ok   systems-and-networking 1440 dark: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   systems-and-networking 1440 dark: a drag turns the plate: yaw 0.60
+ok   systems-and-networking 1440 dark: its labels fade while it turns: labels at 0
+ok   systems-and-networking 1440 dark: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.60, tilt 0.12
+ok   systems-and-networking 1440 dark: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   systems-and-networking 1440 dark: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   systems-and-networking 1440 dark: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   systems-and-networking 1440 dark: pointing at a label lights its part: {"want":"Accelerator modules","focus":"Accelerator modules","on":""}
+ok   systems-and-networking 1440 dark: pointing at a part on the plate lights it: {"want":"Accelerator modules","focus":"Accelerator modules","on":""}
+ok   systems-and-networking 1440 dark: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":1639,"label":"An eight-GPU baseboard, the bo","draw":"none","still":"block"}
+ok   systems-and-networking 1440 dark: no sideways scroll
+ok   systems-and-networking 1440 dark: no page errors
+ok   data-centers-and-power 1440 dark: the plate renders: rack, 8194 inked samples, 666x470
+ok   data-centers-and-power 1440 dark: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   data-centers-and-power 1440 dark: a drag turns the plate: yaw 0.60
+ok   data-centers-and-power 1440 dark: its labels fade while it turns: labels at 0
+ok   data-centers-and-power 1440 dark: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.60, tilt 0.12
+ok   data-centers-and-power 1440 dark: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   data-centers-and-power 1440 dark: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   data-centers-and-power 1440 dark: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   data-centers-and-power 1440 dark: pointing at a label lights its part: {"want":"Compute tray","focus":"Compute tray","on":""}
+ok   data-centers-and-power 1440 dark: pointing at a part on the plate lights it: {"want":"Compute tray","focus":"Compute tray","on":""}
+ok   data-centers-and-power 1440 dark: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":1020,"label":"A liquid-cooled rack of 72 GPU","draw":"none","still":"block"}
+ok   data-centers-and-power 1440 dark: no sideways scroll
+ok   data-centers-and-power 1440 dark: no page errors
+ok   component-costs 1440 dark: the plate renders: wafer-cost, 11046 inked samples, 666x470
+ok   component-costs 1440 dark: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   component-costs 1440 dark: a drag turns the plate: yaw 0.60
+ok   component-costs 1440 dark: its labels fade while it turns: labels at 0
+ok   component-costs 1440 dark: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.60, tilt 0.12
+ok   component-costs 1440 dark: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   component-costs 1440 dark: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   component-costs 1440 dark: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   component-costs 1440 dark: pointing at a label lights its part: {"want":"$480 of power delivery, board and test","focus":"$480 of power delivery, board and test","on":""}
+ok   component-costs 1440 dark: pointing at a part on the plate lights it: {"want":"$480 of power delivery, board and test","focus":"$480 of power delivery, board and test","on":""}
+ok   component-costs 1440 dark: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":161,"label":"Epoch AI’s December 2025 estim","draw":"none","still":"block"}
+ok   component-costs 1440 dark: no sideways scroll
+ok   component-costs 1440 dark: no page errors
+ok   geopolitics 1440 dark: the plate renders: globe, 15931 inked samples, 666x430
+ok   geopolitics 1440 dark: the plate settles (the globe keeps turning): {"k":1,"labA":1,"raf":72}
+ok   geopolitics 1440 dark: the globe keeps turning: 0.189 to 0.252
+ok   geopolitics 1440 dark: a drag turns the plate: yaw 0.90
+ok   geopolitics 1440 dark: its labels fade while it turns: labels at 0
+ok   geopolitics 1440 dark: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.90, tilt 0.12
+ok   geopolitics 1440 dark: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   geopolitics 1440 dark: the arrow keys turn it: yaw 0.24, tilt 0.12, labels 0.00
+ok   geopolitics 1440 dark: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   geopolitics 1440 dark: pointing at a label lights its part: {"want":"Chokepoint towns","focus":"Chokepoint towns","on":""}
+ok   geopolitics 1440 dark: pointing at a part on the plate lights it: {"want":"Chokepoint towns","focus":"Chokepoint towns","on":""}
+ok   geopolitics 1440 dark: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":157,"label":"The world, with nineteen choke","draw":"none","still":"block"}
+ok   geopolitics 1440 dark: no sideways scroll
+ok   geopolitics 1440 dark: no page errors
+ok   design-and-eda 390 light: the collapsed strip shows the plate's still, light: {"collapsed":"1","src":"../media/plate-design-and-eda-thumb.webp","shown":true,"canvasOut":true}
+ok   design-and-eda 390 light: the collapsed strip's canvas is out of reach, so the page keeps its scroll
+ok   design-and-eda 390 light: the plate renders: die-floorplan, 9227 inked samples, 366x334
+ok   design-and-eda 390 light: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   design-and-eda 390 light: a drag turns the plate (a finger, in the opened strip): yaw 0.56
+ok   design-and-eda 390 light: its labels fade while it turns: labels at 0
+ok   design-and-eda 390 light: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.56, tilt 0.12
+ok   design-and-eda 390 light: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   design-and-eda 390 light: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   design-and-eda 390 light: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   design-and-eda 390 light: a tap on a label in the opened strip lights its part: {"want":"Die-to-die link","focus":"Die-to-die link"}
+ok   design-and-eda 390 light: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":522,"label":"A GPU die based on Nvidia’s pu","draw":"none","still":"block"}
+ok   design-and-eda 390 light: no sideways scroll
+ok   design-and-eda 390 light: no page errors
+ok   silicon-and-wafers 390 light: the collapsed strip shows the plate's still, light: {"collapsed":"1","src":"../media/plate-silicon-and-wafers-thumb.webp","shown":true,"canvasOut":true}
+ok   silicon-and-wafers 390 light: the collapsed strip's canvas is out of reach, so the page keeps its scroll
+ok   silicon-and-wafers 390 light: the plate renders: boule-and-wafer, 7270 inked samples, 366x304
+ok   silicon-and-wafers 390 light: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   silicon-and-wafers 390 light: a drag turns the plate (a finger, in the opened strip): yaw 0.56
+ok   silicon-and-wafers 390 light: its labels fade while it turns: labels at 0
+ok   silicon-and-wafers 390 light: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.56, tilt 0.12
+ok   silicon-and-wafers 390 light: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   silicon-and-wafers 390 light: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   silicon-and-wafers 390 light: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   silicon-and-wafers 390 light: a tap on a part in the opened strip's list lights it on the plate: {"focusN":1,"focus":1}
+ok   silicon-and-wafers 390 light: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":756,"label":"A silicon ingot, one crystal p","draw":"none","still":"block"}
+ok   silicon-and-wafers 390 light: no sideways scroll
+ok   silicon-and-wafers 390 light: no page errors
+ok   chemicals-gases-and-photoresist 390 light: the collapsed strip shows the plate's still, light: {"collapsed":"1","src":"../media/plate-chemicals-gases-and-photoresist-thumb.webp","shown":true,"canvasOut":true}
+ok   chemicals-gases-and-photoresist 390 light: the collapsed strip's canvas is out of reach, so the page keeps its scroll
+ok   chemicals-gases-and-photoresist 390 light: the plate renders: gas-cabinet, 8853 inked samples, 366x334
+ok   chemicals-gases-and-photoresist 390 light: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   chemicals-gases-and-photoresist 390 light: a drag turns the plate (a finger, in the opened strip): yaw 0.56
+ok   chemicals-gases-and-photoresist 390 light: its labels fade while it turns: labels at 0
+ok   chemicals-gases-and-photoresist 390 light: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.56, tilt 0.12
+ok   chemicals-gases-and-photoresist 390 light: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   chemicals-gases-and-photoresist 390 light: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   chemicals-gases-and-photoresist 390 light: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   chemicals-gases-and-photoresist 390 light: a tap on a label in the opened strip lights its part: {"want":"Valves, regulator and gauges","focus":"Valves, regulator and gauges"}
+ok   chemicals-gases-and-photoresist 390 light: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":1557,"label":"A specialty gas cabinet with i","draw":"none","still":"block"}
+ok   chemicals-gases-and-photoresist 390 light: no sideways scroll
+ok   chemicals-gases-and-photoresist 390 light: no page errors
+ok   lithography 390 light: the collapsed strip shows the plate's still, light: {"collapsed":"1","src":"../media/plate-lithography-thumb.webp","shown":true,"canvasOut":true}
+ok   lithography 390 light: the collapsed strip's canvas is out of reach, so the page keeps its scroll
+ok   lithography 390 light: the plate renders: euv-scanner, 22082 inked samples, 366x304
+ok   lithography 390 light: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   lithography 390 light: a drag turns the plate (a finger, in the opened strip): yaw 0.52
+ok   lithography 390 light: its labels fade while it turns: labels at 0
+ok   lithography 390 light: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.52, tilt 0.11
+ok   lithography 390 light: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   lithography 390 light: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   lithography 390 light: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   lithography 390 light: a tap on a part in the opened strip's list lights it on the plate: {"focusN":1,"focus":1}
+ok   lithography 390 light: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":2069,"label":"An extreme ultraviolet scanner","draw":"none","still":"block"}
+ok   lithography 390 light: no sideways scroll
+ok   lithography 390 light: no page errors
+ok   photomasks-and-pellicles 390 light: the collapsed strip shows the plate's still, light: {"collapsed":"1","src":"../media/plate-photomasks-and-pellicles-thumb.webp","shown":true,"canvasOut":true}
+ok   photomasks-and-pellicles 390 light: the collapsed strip's canvas is out of reach, so the page keeps its scroll
+ok   photomasks-and-pellicles 390 light: the plate renders: photomask, 14491 inked samples, 366x334
+ok   photomasks-and-pellicles 390 light: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   photomasks-and-pellicles 390 light: a drag turns the plate (a finger, in the opened strip): yaw 0.56
+ok   photomasks-and-pellicles 390 light: its labels fade while it turns: labels at 0
+ok   photomasks-and-pellicles 390 light: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.56, tilt 0.12
+ok   photomasks-and-pellicles 390 light: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   photomasks-and-pellicles 390 light: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   photomasks-and-pellicles 390 light: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   photomasks-and-pellicles 390 light: a tap on a label in the opened strip lights its part: {"want":"Pellicle","focus":"Pellicle"}
+ok   photomasks-and-pellicles 390 light: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":239,"label":"An EUV photomask, or reticle, ","draw":"none","still":"block"}
+ok   photomasks-and-pellicles 390 light: no sideways scroll
+ok   photomasks-and-pellicles 390 light: no page errors
+ok   deposition-and-etch 390 light: the collapsed strip shows the plate's still, light: {"collapsed":"1","src":"../media/plate-deposition-and-etch-thumb.webp","shown":true,"canvasOut":true}
+ok   deposition-and-etch 390 light: the collapsed strip's canvas is out of reach, so the page keeps its scroll
+ok   deposition-and-etch 390 light: the plate renders: process-chamber, 19316 inked samples, 366x334
+ok   deposition-and-etch 390 light: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   deposition-and-etch 390 light: a drag turns the plate (a finger, in the opened strip): yaw 0.56
+ok   deposition-and-etch 390 light: its labels fade while it turns: labels at 0
+ok   deposition-and-etch 390 light: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.56, tilt 0.12
+ok   deposition-and-etch 390 light: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   deposition-and-etch 390 light: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   deposition-and-etch 390 light: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   deposition-and-etch 390 light: a tap on a label in the opened strip lights its part: {"want":"Plasma","focus":"Plasma"}
+ok   deposition-and-etch 390 light: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":1265,"label":"A plasma etch chamber cut in h","draw":"none","still":"block"}
+ok   deposition-and-etch 390 light: no sideways scroll
+ok   deposition-and-etch 390 light: no page errors
+ok   metrology-and-inspection 390 light: the collapsed strip shows the plate's still, light: {"collapsed":"1","src":"../media/plate-metrology-and-inspection-thumb.webp","shown":true,"canvasOut":true}
+ok   metrology-and-inspection 390 light: the collapsed strip's canvas is out of reach, so the page keeps its scroll
+ok   metrology-and-inspection 390 light: the plate renders: sem-column, 9535 inked samples, 366x350
+ok   metrology-and-inspection 390 light: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   metrology-and-inspection 390 light: a drag turns the plate (a finger, in the opened strip): yaw 0.56
+ok   metrology-and-inspection 390 light: its labels fade while it turns: labels at 0
+ok   metrology-and-inspection 390 light: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.56, tilt 0.12
+ok   metrology-and-inspection 390 light: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   metrology-and-inspection 390 light: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   metrology-and-inspection 390 light: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   metrology-and-inspection 390 light: a tap on a label in the opened strip lights its part: {"want":"Lenses","focus":"Lenses"}
+ok   metrology-and-inspection 390 light: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":2697,"label":"An electron-beam inspection co","draw":"none","still":"block"}
+ok   metrology-and-inspection 390 light: no sideways scroll
+ok   metrology-and-inspection 390 light: no page errors
+ok   foundries-and-fabs 390 light: the collapsed strip shows the plate's still, light: {"collapsed":"1","src":"../media/plate-foundries-and-fabs-thumb.webp","shown":true,"canvasOut":true}
+ok   foundries-and-fabs 390 light: the collapsed strip's canvas is out of reach, so the page keeps its scroll
+ok   foundries-and-fabs 390 light: the plate renders: gaa-transistor, 9992 inked samples, 366x334
+ok   foundries-and-fabs 390 light: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   foundries-and-fabs 390 light: a drag turns the plate (a finger, in the opened strip): yaw 0.56
+ok   foundries-and-fabs 390 light: its labels fade while it turns: labels at 0
+ok   foundries-and-fabs 390 light: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.56, tilt 0.12
+ok   foundries-and-fabs 390 light: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   foundries-and-fabs 390 light: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   foundries-and-fabs 390 light: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   foundries-and-fabs 390 light: a tap on a label in the opened strip lights its part: {"want":"Silicon sheets, each 6 nm thick and 30 nm wide","focus":"Silicon sheets, each 6 nm thick and 30 nm wide"}
+ok   foundries-and-fabs 390 light: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":255,"label":"A gate-all-around transistor, ","draw":"none","still":"block"}
+ok   foundries-and-fabs 390 light: no sideways scroll
+ok   foundries-and-fabs 390 light: no page errors
+ok   memory-and-hbm 390 light: the collapsed strip shows the plate's still, light: {"collapsed":"1","src":"../media/plate-memory-and-hbm-thumb.webp","shown":true,"canvasOut":true}
+ok   memory-and-hbm 390 light: the collapsed strip's canvas is out of reach, so the page keeps its scroll
+ok   memory-and-hbm 390 light: the plate renders: hbm-stack, 24224 inked samples, 366x304
+ok   memory-and-hbm 390 light: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   memory-and-hbm 390 light: a drag turns the plate (a finger, in the opened strip): yaw 0.56
+ok   memory-and-hbm 390 light: its labels fade while it turns: labels at 0
+ok   memory-and-hbm 390 light: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.56, tilt 0.12
+ok   memory-and-hbm 390 light: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   memory-and-hbm 390 light: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   memory-and-hbm 390 light: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   memory-and-hbm 390 light: a tap on a part in the opened strip's list lights it on the plate: {"focusN":1,"focus":1}
+ok   memory-and-hbm 390 light: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":996,"label":"A twelve-high HBM stack, pulle","draw":"none","still":"block"}
+ok   memory-and-hbm 390 light: no sideways scroll
+ok   memory-and-hbm 390 light: no page errors
+ok   advanced-packaging 390 light: the collapsed strip shows the plate's still, light: {"collapsed":"1","src":"../media/plate-advanced-packaging-thumb.webp","shown":true,"canvasOut":true}
+ok   advanced-packaging 390 light: the collapsed strip's canvas is out of reach, so the page keeps its scroll
+ok   advanced-packaging 390 light: the plate renders: cowos-exploded, 18428 inked samples, 366x304
+ok   advanced-packaging 390 light: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   advanced-packaging 390 light: a drag turns the plate (a finger, in the opened strip): yaw 0.56
+ok   advanced-packaging 390 light: its labels fade while it turns: labels at 0
+ok   advanced-packaging 390 light: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.56, tilt 0.12
+ok   advanced-packaging 390 light: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   advanced-packaging 390 light: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   advanced-packaging 390 light: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   advanced-packaging 390 light: a tap on a part in the opened strip's list lights it on the plate: {"focusN":1,"focus":1}
+ok   advanced-packaging 390 light: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":645,"label":"A CoWoS-L package, pulled apar","draw":"none","still":"block"}
+ok   advanced-packaging 390 light: no sideways scroll
+ok   advanced-packaging 390 light: no page errors
+ok   substrates-and-pcbs 390 light: the collapsed strip shows the plate's still, light: {"collapsed":"1","src":"../media/plate-substrates-and-pcbs-thumb.webp","shown":true,"canvasOut":true}
+ok   substrates-and-pcbs 390 light: the collapsed strip's canvas is out of reach, so the page keeps its scroll
+ok   substrates-and-pcbs 390 light: the plate renders: substrate-layers, 12632 inked samples, 366x334
+ok   substrates-and-pcbs 390 light: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   substrates-and-pcbs 390 light: a drag turns the plate (a finger, in the opened strip): yaw 0.56
+ok   substrates-and-pcbs 390 light: its labels fade while it turns: labels at 0
+ok   substrates-and-pcbs 390 light: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.56, tilt 0.12
+ok   substrates-and-pcbs 390 light: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   substrates-and-pcbs 390 light: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   substrates-and-pcbs 390 light: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   substrates-and-pcbs 390 light: a tap on a label in the opened strip lights its part: {"want":"Build-up film","focus":"Build-up film"}
+ok   substrates-and-pcbs 390 light: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":781,"label":"A build-up substrate, the boar","draw":"none","still":"block"}
+ok   substrates-and-pcbs 390 light: no sideways scroll
+ok   substrates-and-pcbs 390 light: no page errors
+ok   test-and-assembly 390 light: the collapsed strip shows the plate's still, light: {"collapsed":"1","src":"../media/plate-test-and-assembly-thumb.webp","shown":true,"canvasOut":true}
+ok   test-and-assembly 390 light: the collapsed strip's canvas is out of reach, so the page keeps its scroll
+ok   test-and-assembly 390 light: the plate renders: probe-card, 20290 inked samples, 366x318
+ok   test-and-assembly 390 light: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   test-and-assembly 390 light: a drag turns the plate (a finger, in the opened strip): yaw 0.56
+ok   test-and-assembly 390 light: its labels fade while it turns: labels at 0
+ok   test-and-assembly 390 light: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.56, tilt 0.12
+ok   test-and-assembly 390 light: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   test-and-assembly 390 light: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   test-and-assembly 390 light: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   test-and-assembly 390 light: a tap on a label in the opened strip lights its part: {"want":"Needles","focus":"Needles"}
+ok   test-and-assembly 390 light: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":967,"label":"A vertical probe card over a w","draw":"none","still":"block"}
+ok   test-and-assembly 390 light: no sideways scroll
+ok   test-and-assembly 390 light: no page errors
+ok   systems-and-networking 390 light: the collapsed strip shows the plate's still, light: {"collapsed":"1","src":"../media/plate-systems-and-networking-thumb.webp","shown":true,"canvasOut":true}
+ok   systems-and-networking 390 light: the collapsed strip's canvas is out of reach, so the page keeps its scroll
+ok   systems-and-networking 390 light: the plate renders: gpu-baseboard, 11365 inked samples, 366x334
+ok   systems-and-networking 390 light: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   systems-and-networking 390 light: a drag turns the plate (a finger, in the opened strip): yaw 0.56
+ok   systems-and-networking 390 light: its labels fade while it turns: labels at 0
+ok   systems-and-networking 390 light: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.56, tilt 0.12
+ok   systems-and-networking 390 light: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   systems-and-networking 390 light: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   systems-and-networking 390 light: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   systems-and-networking 390 light: a tap on a label in the opened strip lights its part: {"want":"Accelerator modules","focus":"Accelerator modules"}
+ok   systems-and-networking 390 light: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":1639,"label":"An eight-GPU baseboard, the bo","draw":"none","still":"block"}
+ok   systems-and-networking 390 light: no sideways scroll
+ok   systems-and-networking 390 light: no page errors
+ok   data-centers-and-power 390 light: the collapsed strip shows the plate's still, light: {"collapsed":"1","src":"../media/plate-data-centers-and-power-thumb.webp","shown":true,"canvasOut":true}
+ok   data-centers-and-power 390 light: the collapsed strip's canvas is out of reach, so the page keeps its scroll
+ok   data-centers-and-power 390 light: the plate renders: rack, 11485 inked samples, 366x334
+ok   data-centers-and-power 390 light: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   data-centers-and-power 390 light: a drag turns the plate (a finger, in the opened strip): yaw 0.56
+ok   data-centers-and-power 390 light: its labels fade while it turns: labels at 0
+ok   data-centers-and-power 390 light: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.56, tilt 0.12
+ok   data-centers-and-power 390 light: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   data-centers-and-power 390 light: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   data-centers-and-power 390 light: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   data-centers-and-power 390 light: a tap on a label in the opened strip lights its part: {"want":"Compute tray","focus":"Compute tray"}
+ok   data-centers-and-power 390 light: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":1020,"label":"A liquid-cooled rack of 72 GPU","draw":"none","still":"block"}
+ok   data-centers-and-power 390 light: no sideways scroll
+ok   data-centers-and-power 390 light: no page errors
+ok   component-costs 390 light: the collapsed strip shows the plate's still, light: {"collapsed":"1","src":"../media/plate-component-costs-thumb.webp","shown":true,"canvasOut":true}
+ok   component-costs 390 light: the collapsed strip's canvas is out of reach, so the page keeps its scroll
+ok   component-costs 390 light: the plate renders: wafer-cost, 21232 inked samples, 366x318
+ok   component-costs 390 light: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   component-costs 390 light: a drag turns the plate (a finger, in the opened strip): yaw 0.56
+ok   component-costs 390 light: its labels fade while it turns: labels at 0
+ok   component-costs 390 light: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.56, tilt 0.12
+ok   component-costs 390 light: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   component-costs 390 light: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   component-costs 390 light: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   component-costs 390 light: a tap on a label in the opened strip lights its part: {"want":"$480 of power delivery, board and test","focus":"$480 of power delivery, board and test"}
+ok   component-costs 390 light: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":161,"label":"Epoch AI’s December 2025 estim","draw":"none","still":"block"}
+ok   component-costs 390 light: no sideways scroll
+ok   component-costs 390 light: no page errors
+ok   geopolitics 390 light: the collapsed strip shows the plate's still, light: {"collapsed":"1","src":"../media/plate-geopolitics-thumb.webp","shown":true,"canvasOut":true}
+ok   geopolitics 390 light: the collapsed strip's canvas is out of reach, so the page keeps its scroll
+ok   geopolitics 390 light: the plate renders: globe, 27523 inked samples, 366x318
+ok   geopolitics 390 light: the plate settles (the globe keeps turning): {"k":1,"labA":1,"raf":65}
+ok   geopolitics 390 light: the globe keeps turning: 0.146 to 0.195
+ok   geopolitics 390 light: a drag turns the plate (a finger, in the opened strip): yaw 0.77
+ok   geopolitics 390 light: its labels fade while it turns: labels at 0
+ok   geopolitics 390 light: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.77, tilt 0.12
+ok   geopolitics 390 light: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":181}
+ok   geopolitics 390 light: the arrow keys turn it: yaw 0.24, tilt 0.12, labels 0.17
+ok   geopolitics 390 light: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   geopolitics 390 light: a tap on a label in the opened strip lights its part: {"want":"Chokepoint towns","focus":"Chokepoint towns"}
+ok   geopolitics 390 light: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":157,"label":"The world, with nineteen choke","draw":"none","still":"block"}
+ok   geopolitics 390 light: no sideways scroll
+ok   geopolitics 390 light: no page errors
+ok   design-and-eda 390 dark: the collapsed strip shows the plate's still, dark: {"collapsed":"1","src":"../media/plate-design-and-eda-thumb-dark.webp","shown":true,"canvasOut":true}
+ok   design-and-eda 390 dark: the collapsed strip's canvas is out of reach, so the page keeps its scroll
+ok   design-and-eda 390 dark: the plate renders: die-floorplan, 9193 inked samples, 366x334
+ok   design-and-eda 390 dark: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   design-and-eda 390 dark: a drag turns the plate (a finger, in the opened strip): yaw 0.56
+ok   design-and-eda 390 dark: its labels fade while it turns: labels at 0
+ok   design-and-eda 390 dark: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.56, tilt 0.12
+ok   design-and-eda 390 dark: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   design-and-eda 390 dark: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   design-and-eda 390 dark: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   design-and-eda 390 dark: a tap on a label in the opened strip lights its part: {"want":"Die-to-die link","focus":"Die-to-die link"}
+ok   design-and-eda 390 dark: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":522,"label":"A GPU die based on Nvidia’s pu","draw":"none","still":"block"}
+ok   design-and-eda 390 dark: no sideways scroll
+ok   design-and-eda 390 dark: no page errors
+ok   silicon-and-wafers 390 dark: the collapsed strip shows the plate's still, dark: {"collapsed":"1","src":"../media/plate-silicon-and-wafers-thumb-dark.webp","shown":true,"canvasOut":true}
+ok   silicon-and-wafers 390 dark: the collapsed strip's canvas is out of reach, so the page keeps its scroll
+ok   silicon-and-wafers 390 dark: the plate renders: boule-and-wafer, 7202 inked samples, 366x304
+ok   silicon-and-wafers 390 dark: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   silicon-and-wafers 390 dark: a drag turns the plate (a finger, in the opened strip): yaw 0.56
+ok   silicon-and-wafers 390 dark: its labels fade while it turns: labels at 0
+ok   silicon-and-wafers 390 dark: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.56, tilt 0.12
+ok   silicon-and-wafers 390 dark: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   silicon-and-wafers 390 dark: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   silicon-and-wafers 390 dark: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   silicon-and-wafers 390 dark: a tap on a part in the opened strip's list lights it on the plate: {"focusN":1,"focus":1}
+ok   silicon-and-wafers 390 dark: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":756,"label":"A silicon ingot, one crystal p","draw":"none","still":"block"}
+ok   silicon-and-wafers 390 dark: no sideways scroll
+ok   silicon-and-wafers 390 dark: no page errors
+ok   chemicals-gases-and-photoresist 390 dark: the collapsed strip shows the plate's still, dark: {"collapsed":"1","src":"../media/plate-chemicals-gases-and-photoresist-thumb-dark.webp","shown":true,"canvasOut":true}
+ok   chemicals-gases-and-photoresist 390 dark: the collapsed strip's canvas is out of reach, so the page keeps its scroll
+ok   chemicals-gases-and-photoresist 390 dark: the plate renders: gas-cabinet, 8830 inked samples, 366x334
+ok   chemicals-gases-and-photoresist 390 dark: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   chemicals-gases-and-photoresist 390 dark: a drag turns the plate (a finger, in the opened strip): yaw 0.56
+ok   chemicals-gases-and-photoresist 390 dark: its labels fade while it turns: labels at 0
+ok   chemicals-gases-and-photoresist 390 dark: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.56, tilt 0.12
+ok   chemicals-gases-and-photoresist 390 dark: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   chemicals-gases-and-photoresist 390 dark: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   chemicals-gases-and-photoresist 390 dark: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   chemicals-gases-and-photoresist 390 dark: a tap on a label in the opened strip lights its part: {"want":"Valves, regulator and gauges","focus":"Valves, regulator and gauges"}
+ok   chemicals-gases-and-photoresist 390 dark: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":1557,"label":"A specialty gas cabinet with i","draw":"none","still":"block"}
+ok   chemicals-gases-and-photoresist 390 dark: no sideways scroll
+ok   chemicals-gases-and-photoresist 390 dark: no page errors
+ok   lithography 390 dark: the collapsed strip shows the plate's still, dark: {"collapsed":"1","src":"../media/plate-lithography-thumb-dark.webp","shown":true,"canvasOut":true}
+ok   lithography 390 dark: the collapsed strip's canvas is out of reach, so the page keeps its scroll
+ok   lithography 390 dark: the plate renders: euv-scanner, 21980 inked samples, 366x304
+ok   lithography 390 dark: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   lithography 390 dark: a drag turns the plate (a finger, in the opened strip): yaw 0.56
+ok   lithography 390 dark: its labels fade while it turns: labels at 0
+ok   lithography 390 dark: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.56, tilt 0.12
+ok   lithography 390 dark: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   lithography 390 dark: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   lithography 390 dark: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   lithography 390 dark: a tap on a part in the opened strip's list lights it on the plate: {"focusN":1,"focus":1}
+ok   lithography 390 dark: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":2069,"label":"An extreme ultraviolet scanner","draw":"none","still":"block"}
+ok   lithography 390 dark: no sideways scroll
+ok   lithography 390 dark: no page errors
+ok   photomasks-and-pellicles 390 dark: the collapsed strip shows the plate's still, dark: {"collapsed":"1","src":"../media/plate-photomasks-and-pellicles-thumb-dark.webp","shown":true,"canvasOut":true}
+ok   photomasks-and-pellicles 390 dark: the collapsed strip's canvas is out of reach, so the page keeps its scroll
+ok   photomasks-and-pellicles 390 dark: the plate renders: photomask, 14452 inked samples, 366x334
+ok   photomasks-and-pellicles 390 dark: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   photomasks-and-pellicles 390 dark: a drag turns the plate (a finger, in the opened strip): yaw 0.56
+ok   photomasks-and-pellicles 390 dark: its labels fade while it turns: labels at 0
+ok   photomasks-and-pellicles 390 dark: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.56, tilt 0.12
+ok   photomasks-and-pellicles 390 dark: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   photomasks-and-pellicles 390 dark: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   photomasks-and-pellicles 390 dark: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   photomasks-and-pellicles 390 dark: a tap on a label in the opened strip lights its part: {"want":"Pellicle","focus":"Pellicle"}
+ok   photomasks-and-pellicles 390 dark: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":239,"label":"An EUV photomask, or reticle, ","draw":"none","still":"block"}
+ok   photomasks-and-pellicles 390 dark: no sideways scroll
+ok   photomasks-and-pellicles 390 dark: no page errors
+ok   deposition-and-etch 390 dark: the collapsed strip shows the plate's still, dark: {"collapsed":"1","src":"../media/plate-deposition-and-etch-thumb-dark.webp","shown":true,"canvasOut":true}
+ok   deposition-and-etch 390 dark: the collapsed strip's canvas is out of reach, so the page keeps its scroll
+ok   deposition-and-etch 390 dark: the plate renders: process-chamber, 19238 inked samples, 366x334
+ok   deposition-and-etch 390 dark: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   deposition-and-etch 390 dark: a drag turns the plate (a finger, in the opened strip): yaw 0.56
+ok   deposition-and-etch 390 dark: its labels fade while it turns: labels at 0
+ok   deposition-and-etch 390 dark: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.56, tilt 0.12
+ok   deposition-and-etch 390 dark: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   deposition-and-etch 390 dark: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   deposition-and-etch 390 dark: and it eases back after the keys: {"yaw":0,"labA":1}
+FAIL deposition-and-etch 390 dark: a tap on a label in the opened strip lights its part: {"want":"Plasma","focus":null}
+ok   deposition-and-etch 390 dark: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":1265,"label":"A plasma etch chamber cut in h","draw":"none","still":"block"}
+ok   deposition-and-etch 390 dark: no sideways scroll
+ok   deposition-and-etch 390 dark: no page errors
+ok   metrology-and-inspection 390 dark: the collapsed strip shows the plate's still, dark: {"collapsed":"1","src":"../media/plate-metrology-and-inspection-thumb-dark.webp","shown":true,"canvasOut":true}
+ok   metrology-and-inspection 390 dark: the collapsed strip's canvas is out of reach, so the page keeps its scroll
+ok   metrology-and-inspection 390 dark: the plate renders: sem-column, 9494 inked samples, 366x350
+ok   metrology-and-inspection 390 dark: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   metrology-and-inspection 390 dark: a drag turns the plate (a finger, in the opened strip): yaw 0.56
+ok   metrology-and-inspection 390 dark: its labels fade while it turns: labels at 0
+ok   metrology-and-inspection 390 dark: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.56, tilt 0.12
+ok   metrology-and-inspection 390 dark: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   metrology-and-inspection 390 dark: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   metrology-and-inspection 390 dark: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   metrology-and-inspection 390 dark: a tap on a label in the opened strip lights its part: {"want":"Lenses","focus":"Lenses"}
+ok   metrology-and-inspection 390 dark: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":2697,"label":"An electron-beam inspection co","draw":"none","still":"block"}
+ok   metrology-and-inspection 390 dark: no sideways scroll
+ok   metrology-and-inspection 390 dark: no page errors
+ok   foundries-and-fabs 390 dark: the collapsed strip shows the plate's still, dark: {"collapsed":"1","src":"../media/plate-foundries-and-fabs-thumb-dark.webp","shown":true,"canvasOut":true}
+ok   foundries-and-fabs 390 dark: the collapsed strip's canvas is out of reach, so the page keeps its scroll
+ok   foundries-and-fabs 390 dark: the plate renders: gaa-transistor, 9969 inked samples, 366x334
+ok   foundries-and-fabs 390 dark: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   foundries-and-fabs 390 dark: a drag turns the plate (a finger, in the opened strip): yaw 0.56
+ok   foundries-and-fabs 390 dark: its labels fade while it turns: labels at 0
+ok   foundries-and-fabs 390 dark: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.56, tilt 0.12
+ok   foundries-and-fabs 390 dark: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   foundries-and-fabs 390 dark: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   foundries-and-fabs 390 dark: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   foundries-and-fabs 390 dark: a tap on a label in the opened strip lights its part: {"want":"Silicon sheets, each 6 nm thick and 30 nm wide","focus":"Silicon sheets, each 6 nm thick and 30 nm wide"}
+ok   foundries-and-fabs 390 dark: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":255,"label":"A gate-all-around transistor, ","draw":"none","still":"block"}
+ok   foundries-and-fabs 390 dark: no sideways scroll
+ok   foundries-and-fabs 390 dark: no page errors
+ok   memory-and-hbm 390 dark: the collapsed strip shows the plate's still, dark: {"collapsed":"1","src":"../media/plate-memory-and-hbm-thumb-dark.webp","shown":true,"canvasOut":true}
+ok   memory-and-hbm 390 dark: the collapsed strip's canvas is out of reach, so the page keeps its scroll
+ok   memory-and-hbm 390 dark: the plate renders: hbm-stack, 24195 inked samples, 366x304
+ok   memory-and-hbm 390 dark: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   memory-and-hbm 390 dark: a drag turns the plate (a finger, in the opened strip): yaw 0.56
+ok   memory-and-hbm 390 dark: its labels fade while it turns: labels at 0
+ok   memory-and-hbm 390 dark: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.56, tilt 0.12
+ok   memory-and-hbm 390 dark: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   memory-and-hbm 390 dark: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   memory-and-hbm 390 dark: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   memory-and-hbm 390 dark: a tap on a part in the opened strip's list lights it on the plate: {"focusN":1,"focus":1}
+ok   memory-and-hbm 390 dark: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":996,"label":"A twelve-high HBM stack, pulle","draw":"none","still":"block"}
+ok   memory-and-hbm 390 dark: no sideways scroll
+ok   memory-and-hbm 390 dark: no page errors
+ok   advanced-packaging 390 dark: the collapsed strip shows the plate's still, dark: {"collapsed":"1","src":"../media/plate-advanced-packaging-thumb-dark.webp","shown":true,"canvasOut":true}
+ok   advanced-packaging 390 dark: the collapsed strip's canvas is out of reach, so the page keeps its scroll
+ok   advanced-packaging 390 dark: the plate renders: cowos-exploded, 18406 inked samples, 366x304
+ok   advanced-packaging 390 dark: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   advanced-packaging 390 dark: a drag turns the plate (a finger, in the opened strip): yaw 0.56
+ok   advanced-packaging 390 dark: its labels fade while it turns: labels at 0
+ok   advanced-packaging 390 dark: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.56, tilt 0.12
+ok   advanced-packaging 390 dark: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   advanced-packaging 390 dark: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   advanced-packaging 390 dark: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   advanced-packaging 390 dark: a tap on a part in the opened strip's list lights it on the plate: {"focusN":1,"focus":1}
+ok   advanced-packaging 390 dark: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":645,"label":"A CoWoS-L package, pulled apar","draw":"none","still":"block"}
+ok   advanced-packaging 390 dark: no sideways scroll
+ok   advanced-packaging 390 dark: no page errors
+ok   substrates-and-pcbs 390 dark: the collapsed strip shows the plate's still, dark: {"collapsed":"1","src":"../media/plate-substrates-and-pcbs-thumb-dark.webp","shown":true,"canvasOut":true}
+ok   substrates-and-pcbs 390 dark: the collapsed strip's canvas is out of reach, so the page keeps its scroll
+ok   substrates-and-pcbs 390 dark: the plate renders: substrate-layers, 12601 inked samples, 366x334
+ok   substrates-and-pcbs 390 dark: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   substrates-and-pcbs 390 dark: a drag turns the plate (a finger, in the opened strip): yaw 0.56
+ok   substrates-and-pcbs 390 dark: its labels fade while it turns: labels at 0
+ok   substrates-and-pcbs 390 dark: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.56, tilt 0.12
+ok   substrates-and-pcbs 390 dark: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   substrates-and-pcbs 390 dark: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   substrates-and-pcbs 390 dark: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   substrates-and-pcbs 390 dark: a tap on a label in the opened strip lights its part: {"want":"Build-up film","focus":"Build-up film"}
+ok   substrates-and-pcbs 390 dark: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":781,"label":"A build-up substrate, the boar","draw":"none","still":"block"}
+ok   substrates-and-pcbs 390 dark: no sideways scroll
+ok   substrates-and-pcbs 390 dark: no page errors
+ok   test-and-assembly 390 dark: the collapsed strip shows the plate's still, dark: {"collapsed":"1","src":"../media/plate-test-and-assembly-thumb-dark.webp","shown":true,"canvasOut":true}
+ok   test-and-assembly 390 dark: the collapsed strip's canvas is out of reach, so the page keeps its scroll
+ok   test-and-assembly 390 dark: the plate renders: probe-card, 20255 inked samples, 366x318
+ok   test-and-assembly 390 dark: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   test-and-assembly 390 dark: a drag turns the plate (a finger, in the opened strip): yaw 0.56
+ok   test-and-assembly 390 dark: its labels fade while it turns: labels at 0
+ok   test-and-assembly 390 dark: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.56, tilt 0.12
+ok   test-and-assembly 390 dark: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   test-and-assembly 390 dark: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   test-and-assembly 390 dark: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   test-and-assembly 390 dark: a tap on a label in the opened strip lights its part: {"want":"Needles","focus":"Needles"}
+ok   test-and-assembly 390 dark: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":967,"label":"A vertical probe card over a w","draw":"none","still":"block"}
+ok   test-and-assembly 390 dark: no sideways scroll
+ok   test-and-assembly 390 dark: no page errors
+ok   systems-and-networking 390 dark: the collapsed strip shows the plate's still, dark: {"collapsed":"1","src":"../media/plate-systems-and-networking-thumb-dark.webp","shown":true,"canvasOut":true}
+ok   systems-and-networking 390 dark: the collapsed strip's canvas is out of reach, so the page keeps its scroll
+ok   systems-and-networking 390 dark: the plate renders: gpu-baseboard, 11339 inked samples, 366x334
+ok   systems-and-networking 390 dark: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   systems-and-networking 390 dark: a drag turns the plate (a finger, in the opened strip): yaw 0.56
+ok   systems-and-networking 390 dark: its labels fade while it turns: labels at 0
+ok   systems-and-networking 390 dark: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.56, tilt 0.12
+ok   systems-and-networking 390 dark: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   systems-and-networking 390 dark: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   systems-and-networking 390 dark: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   systems-and-networking 390 dark: a tap on a label in the opened strip lights its part: {"want":"Accelerator modules","focus":"Accelerator modules"}
+ok   systems-and-networking 390 dark: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":1639,"label":"An eight-GPU baseboard, the bo","draw":"none","still":"block"}
+ok   systems-and-networking 390 dark: no sideways scroll
+ok   systems-and-networking 390 dark: no page errors
+ok   data-centers-and-power 390 dark: the collapsed strip shows the plate's still, dark: {"collapsed":"1","src":"../media/plate-data-centers-and-power-thumb-dark.webp","shown":true,"canvasOut":true}
+ok   data-centers-and-power 390 dark: the collapsed strip's canvas is out of reach, so the page keeps its scroll
+ok   data-centers-and-power 390 dark: the plate renders: rack, 11467 inked samples, 366x334
+ok   data-centers-and-power 390 dark: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   data-centers-and-power 390 dark: a drag turns the plate (a finger, in the opened strip): yaw 0.56
+ok   data-centers-and-power 390 dark: its labels fade while it turns: labels at 0
+ok   data-centers-and-power 390 dark: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.56, tilt 0.12
+ok   data-centers-and-power 390 dark: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   data-centers-and-power 390 dark: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   data-centers-and-power 390 dark: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   data-centers-and-power 390 dark: a tap on a label in the opened strip lights its part: {"want":"Compute tray","focus":"Compute tray"}
+ok   data-centers-and-power 390 dark: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":1020,"label":"A liquid-cooled rack of 72 GPU","draw":"none","still":"block"}
+ok   data-centers-and-power 390 dark: no sideways scroll
+ok   data-centers-and-power 390 dark: no page errors
+ok   component-costs 390 dark: the collapsed strip shows the plate's still, dark: {"collapsed":"1","src":"../media/plate-component-costs-thumb-dark.webp","shown":true,"canvasOut":true}
+ok   component-costs 390 dark: the collapsed strip's canvas is out of reach, so the page keeps its scroll
+ok   component-costs 390 dark: the plate renders: wafer-cost, 21146 inked samples, 366x318
+ok   component-costs 390 dark: the plate settles: {"k":1,"labA":1,"raf":0}
+ok   component-costs 390 dark: a drag turns the plate (a finger, in the opened strip): yaw 0.56
+ok   component-costs 390 dark: its labels fade while it turns: labels at 0
+ok   component-costs 390 dark: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.56, tilt 0.12
+ok   component-costs 390 dark: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":0}
+ok   component-costs 390 dark: the arrow keys turn it: yaw 0.23, tilt 0.12, labels 0.00
+ok   component-costs 390 dark: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   component-costs 390 dark: a tap on a label in the opened strip lights its part: {"want":"$480 of power delivery, board and test","focus":"$480 of power delivery, board and test"}
+ok   component-costs 390 dark: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":161,"label":"Epoch AI’s December 2025 estim","draw":"none","still":"block"}
+ok   component-costs 390 dark: no sideways scroll
+ok   component-costs 390 dark: no page errors
+ok   geopolitics 390 dark: the collapsed strip shows the plate's still, dark: {"collapsed":"1","src":"../media/plate-geopolitics-thumb-dark.webp","shown":true,"canvasOut":true}
+ok   geopolitics 390 dark: the collapsed strip's canvas is out of reach, so the page keeps its scroll
+ok   geopolitics 390 dark: the plate renders: globe, 27481 inked samples, 366x318
+ok   geopolitics 390 dark: the plate settles (the globe keeps turning): {"k":1,"labA":1,"raf":61}
+ok   geopolitics 390 dark: the globe keeps turning: 0.133 to 0.186
+ok   geopolitics 390 dark: a drag turns the plate (a finger, in the opened strip): yaw 0.77
+ok   geopolitics 390 dark: its labels fade while it turns: labels at 0
+ok   geopolitics 390 dark: the turn stays in range (40 degrees of yaw, 20 of tilt): yaw 0.77, tilt 0.12
+ok   geopolitics 390 dark: on release it eases back to its drawn view and the labels return: {"yaw":0,"labA":1,"raf":178}
+ok   geopolitics 390 dark: the arrow keys turn it: yaw 0.24, tilt 0.12, labels 0.17
+ok   geopolitics 390 dark: and it eases back after the keys: {"yaw":0,"labA":1}
+ok   geopolitics 390 dark: a tap on a label in the opened strip lights its part: {"want":"Chokepoint towns","focus":"Chokepoint towns"}
+ok   geopolitics 390 dark: print shows the plate as a vector still, and not the live canvas: {"svg":true,"items":157,"label":"The world, with nineteen choke","draw":"none","still":"block"}
+ok   geopolitics 390 dark: no sideways scroll
+ok   geopolitics 390 dark: no page errors
+ok   lithography reduced motion: drawn at rest at once, nothing moving: {"k":1,"raf":0}
+ok   lithography reduced motion: a drag turns it, and the release snaps back with no easing: {"mid":0.5406602903811675,"after":0,"labA":1}
+ok   lithography reduced motion: no page errors
+
+878 of 879 checks pass; 1 fail
+
+rerun of the one failing case after the check re-reads a tap (node qa/redesign/check-plates.js --only deposition-and-etch,component-costs --widths 390 --themes dark): 31 of 31 checks pass

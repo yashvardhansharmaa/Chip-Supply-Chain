@@ -467,10 +467,11 @@ const want = (n) => !ONLY.length || ONLY.includes(String(n));
           && dl[0].href === '../pdf/how-ai-chips-are-made.pdf' && dl[0].dl && dl[0].type === 'application/pdf'
           && dl[1].href === '../pdf/summary.pdf' && dl[1].dl && dl[1].type === 'application/pdf';
         ok = ok && dpass; out.push(`${width}: downloads ${dl.map((d) => `"${d.text}" ${d.href} ${d.status} ${d.type} at y ${d.y}`).join('; ')}${dpass ? '' : ' (FAIL)'}`);
-        if (width === 1440) { // each row's drawing, served as a picture
+        if (width === 1440) { // each row's drawing, served as a picture: since 21 Nov 2026 the plate's still in both themes, light and dark
           const pics = await t.ev(`(async function () { var out = []; for (var i of document.querySelectorAll('#contents .item .ct-tile img')) { var r = await ${HEAD}(i.src); out.push(i.getAttribute('src') + ' ' + r.status + ' ' + r.type); } return out; })()`);
           const pbad = pics.filter((p) => !/ 200 image\/webp$/.test(p));
-          ok = ok && !pbad.length && pics.length === D.length; out.push(`${width}: the ${pics.length} drawings: ${pbad.length ? pbad.join(', ') + ' (FAIL)' : 'all served as webp'}`);
+          const pair = pics.length === 2 * D.length && D.every((c) => pics.some((p) => p.indexOf(`plate-${c.id}-line.webp `) >= 0) && pics.some((p) => p.indexOf(`plate-${c.id}-line-dark.webp `) >= 0));
+          ok = ok && !pbad.length && pair; out.push(`${width}: the ${pics.length} drawings, each row's light and dark: ${pbad.length ? pbad.join(', ') + ' (FAIL)' : pair ? 'all served as webp' : 'not one light and one dark per row (FAIL)'}`);
         }
         if (t.errors.length) { ok = false; out.push(`${width}: errors: ` + t.errors.join(' | ')); }
         await t.close();

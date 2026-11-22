@@ -12,16 +12,18 @@
      page keeps its scroll; opened, the plate draws and a finger turns it;
    - print shows the plate as a vector still (src/modules/print.js stills), and the live canvas does not print;
    - no page errors and no sideways scroll.
-   usage: node qa/redesign/check-plates.js [base]   (base http://127.0.0.1:8802). Exits 1 on any failure.
+   usage: node qa/redesign/check-plates.js [base] [--only id,id] [--widths 1440,390] [--themes light,dark]   (base http://127.0.0.1:8802).
+   Exits 1 on any failure.
    Nothing leaves this machine but the font requests (qa/redesign/cdp.js resolves every other host to nothing). */
 'use strict';
 const path = require('path');
 const { launch, open, sleep } = require('./cdp.js');
 const STAGES = require('../../build/stages.js');
-const BASE = (process.argv[2] || 'http://127.0.0.1:8802').replace(/\/$/, '');
+const opt = (k) => { const i = process.argv.indexOf('--' + k); return i > 0 ? String(process.argv[i + 1] || '').split(',').filter(Boolean) : null; };
+const BASE = (process.argv[2] && !/^--/.test(process.argv[2]) ? process.argv[2] : 'http://127.0.0.1:8802').replace(/\/$/, '');
 const root = path.resolve(__dirname, '..', '..');
 const parts = require(path.join(root, 'data', 'specimen-parts.json'));
-const chapters = STAGES.fromContent(root);
+const chapters = STAGES.fromContent(root).filter((c) => !opt('only') || opt('only').includes(c.id));
 const out = []; let bad = 0, n = 0;
 // the lit rows: the chapter's list and, where the page has one, the phone strip's copy of it, all on the one part
 const sameN = (on, n) => !!on && on.split(',').every((x) => x === String(n));
@@ -37,7 +39,7 @@ const STATE = `(function () { var S = CP.Stage, c = S.canvas, x = c.getContext('
 (async () => {
   const chrome = launch();
   try {
-    for (const width of [1440, 390]) for (const theme of ['light', 'dark']) for (const c of chapters) {
+    for (const width of (opt('widths') || ['1440', '390']).map(Number)) for (const theme of opt('themes') || ['light', 'dark']) for (const c of chapters) {
       const id = c.id, W = `${id} ${width} ${theme}`, phone = width < 900, hasParts = !!(parts[id] && (parts[id].parts || []).length);
       const t = await open(chrome, `${BASE}/${id}/`, { width, theme, motion: true, wait: 600 });
       const s = t.s;
@@ -117,8 +119,10 @@ const STATE = `(function () { var S = CP.Stage, c = S.canvas, x = c.getContext('
         const h = await t.ev(STATE);
         check(`${W}: a tap on a part in the opened strip's list lights it on the plate`, !!li && h.focusN === 1 && h.focus === 1, JSON.stringify({ focusN: h.focusN, focus: h.focus }));
       } else if (tgt.lab) {
+        // a tap on a label; read again after a moment if the first read comes before the frame that lights it
         await touch('touchStart', tgt.lab.x, tgt.lab.y); await touch('touchEnd'); await sleep(250);
-        const h = await t.ev(STATE);
+        let h = await t.ev(STATE);
+        if (h.focus !== tgt.lab.text) { await sleep(400); h = await t.ev(STATE); }
         check(`${W}: a tap on a label in the opened strip lights its part`, h.focus === tgt.lab.text, JSON.stringify({ want: tgt.lab.text, focus: h.focus }));
       }
       // print: the vector still, and no live canvas
