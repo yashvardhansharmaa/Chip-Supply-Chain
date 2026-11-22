@@ -1,8 +1,8 @@
 {
   "/": {
     "published": "2026-10-01",
-    "modified": "2026-11-20",
-    "content": "0ec3dbcbcf5a291c"
+    "modified": "2026-11-21",
+    "content": "0d33dc07fd82bf73"
   },
   "/advanced-packaging/": {
     "published": "2026-09-09",
@@ -76,8 +76,8 @@
   },
   "/pdf/advanced-packaging.pdf": {
     "published": "2026-10-20",
-    "modified": "2026-11-20",
-    "content": "28490c907fd8e451"
+    "modified": "2026-11-21",
+    "content": "c0590010ce634811"
   },
   "/pdf/chemicals-gases-and-photoresist.pdf": {
     "published": "2026-10-20",
@@ -101,23 +101,23 @@
   },
   "/pdf/design-and-eda.pdf": {
     "published": "2026-10-20",
-    "modified": "2026-11-20",
-    "content": "2760b8cdac075315"
+    "modified": "2026-11-21",
+    "content": "4b29e6d0c5db412e"
   },
   "/pdf/foundries-and-fabs.pdf": {
     "published": "2026-10-20",
-    "modified": "2026-11-20",
-    "content": "5f1f77ebe96ace46"
+    "modified": "2026-11-21",
+    "content": "5e2c3ea50b7bc914"
   },
   "/pdf/geopolitics.pdf": {
     "published": "2026-10-20",
-    "modified": "2026-11-20",
-    "content": "b27f3867bbfcdf45"
+    "modified": "2026-11-21",
+    "content": "5c20d8d794652bfe"
   },
   "/pdf/how-ai-chips-are-made.pdf": {
     "published": "2026-10-26",
-    "modified": "2026-11-20",
-    "content": "ab0aee7266e7b1aa"
+    "modified": "2026-11-21",
+    "content": "c09cfa1c9f33883a"
   },
   "/pdf/lithography.pdf": {
     "published": "2026-10-20",
@@ -131,23 +131,23 @@
   },
   "/pdf/metrology-and-inspection.pdf": {
     "published": "2026-10-20",
-    "modified": "2026-11-20",
-    "content": "5bc5823e3f8d8056"
+    "modified": "2026-11-21",
+    "content": "38f319343662af25"
   },
   "/pdf/photomasks-and-pellicles.pdf": {
     "published": "2026-10-20",
-    "modified": "2026-11-20",
-    "content": "0d96cdb81a0bcb28"
+    "modified": "2026-11-21",
+    "content": "8f1c1e876253b33c"
   },
   "/pdf/silicon-and-wafers.pdf": {
     "published": "2026-10-20",
-    "modified": "2026-11-20",
-    "content": "3ab6aadd37616652"
+    "modified": "2026-11-21",
+    "content": "106b90d6c3f5d24d"
   },
   "/pdf/substrates-and-pcbs.pdf": {
     "published": "2026-10-20",
-    "modified": "2026-11-20",
-    "content": "7f0c3cbb49240521"
+    "modified": "2026-11-21",
+    "content": "56398a66a032be12"
   },
   "/pdf/summary.pdf": {
     "published": "2026-10-26",
@@ -156,13 +156,13 @@
   },
   "/pdf/systems-and-networking.pdf": {
     "published": "2026-10-20",
-    "modified": "2026-11-20",
-    "content": "c51f6b9fea9e7307"
+    "modified": "2026-11-21",
+    "content": "3ab4d438e91c36a0"
   },
   "/pdf/test-and-assembly.pdf": {
     "published": "2026-10-20",
-    "modified": "2026-11-20",
-    "content": "94ee0320fbee1102"
+    "modified": "2026-11-21",
+    "content": "3130eafd90d60d12"
   },
   "/photomasks-and-pellicles/": {
     "published": "2026-09-09",
