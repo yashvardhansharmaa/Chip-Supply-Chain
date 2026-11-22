@@ -1016,8 +1016,10 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before, .gl-
   /* the strip names the specimen (its name), where a laptop's label names the chapter */
   .stage .stage-tag .tag-ch { display: none; }
   .stage .stage-tag .tag-sp { display: inline; }
-  .stage[data-collapsed="0"] { height: min(58vh, 480px); grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: 44px minmax(0, 1fr) auto; padding: 0 12px 8px; }
-  .stage[data-collapsed="0"] canvas { grid-column: 1 / -1; grid-row: 2; width: 100%; height: 100%; touch-action: none; outline: none; } /* the opened strip turns under a finger; the page behind keeps its scroll */
+  /* opened, the canvas is as tall as the plate needs at the strip's width (--strip-draw-h, src/app.js Stage.fit, 22 Nov 2026),
+     and the strip grows to hold the whole parts list under it */
+  .stage[data-collapsed="0"] { height: auto; max-height: calc(100dvh - var(--masthead, 56px)); grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: 44px var(--strip-draw-h, 300px) auto; padding: 0 12px 8px; }
+  .stage[data-collapsed="0"] canvas { grid-column: 1 / -1; grid-row: 2; width: 100%; height: var(--strip-draw-h, 300px); touch-action: none; outline: none; } /* the opened strip turns under a finger; the page behind keeps its scroll */
   .stage[data-collapsed="0"] canvas:focus-visible { box-shadow: inset 0 0 0 2px var(--accent); }
   .stage[data-collapsed="0"] .stage-tag { grid-column: 1; grid-row: 1; padding-top: 14px; }
   .stage[data-collapsed="0"] .stage-actions { grid-column: 2; grid-row: 1; align-self: center; }
@@ -1061,6 +1063,11 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before, .gl-
   .stage[data-hidden="1"] canvas, .stage[data-hidden="1"] figcaption, .stage[data-hidden="1"] .stage-tag, .stage[data-hidden="1"] .stage-toggle { display: none; }
   .stage[data-hidden="1"] .stage-actions { grid-column: 2; grid-row: 1; align-self: center; }
   body:has(.stage[data-hidden="1"]) { padding-bottom: 64px; }
+  /* from 640 px a chapter's plate stands in its slot in the page (src/app.js Stage.host), so the strip keeps Contents alone */
+  .stage[data-hosted="1"]:not([data-hidden="1"]) { display: grid; height: 48px; grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: 1fr; padding: 0 12px; }
+  .stage[data-hosted="1"] .stage-thumb, .stage[data-hosted="1"] figcaption, .stage[data-hosted="1"] .stage-tag, .stage[data-hosted="1"] .stage-toggle { display: none !important; }
+  .stage[data-hosted="1"]:not([data-hidden="1"]) .stage-actions { grid-column: 2; grid-row: 1; align-self: center; position: static; }
+  .stage[data-hosted="1"]:not([data-hidden="1"]) .stage-menu { position: static; }
   .stage[data-route="none"] { display: none !important; }
   /* the chapter on a phone: one column, the number as a plain block above the title */
   .chapter { display: block; padding-top: 44px; }

@@ -1016,8 +1016,10 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before, .gl-
   /* the strip names the specimen (its name), where a laptop's label names the chapter */
   .stage .stage-tag .tag-ch { display: none; }
   .stage .stage-tag .tag-sp { display: inline; }
-  .stage[data-collapsed="0"] { height: min(58vh, 480px); grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: 44px minmax(0, 1fr) auto; padding: 0 12px 8px; }
-  .stage[data-collapsed="0"] canvas { grid-column: 1 / -1; grid-row: 2; width: 100%; height: 100%; touch-action: none; outline: none; } /* the opened strip turns under a finger; the page behind keeps its scroll */
+  /* opened, the canvas is as tall as the plate needs at the strip's width (--strip-draw-h, src/app.js Stage.fit, 22 Nov 2026),
+     and the strip grows to hold the whole parts list under it */
+  .stage[data-collapsed="0"] { height: auto; max-height: calc(100dvh - var(--masthead, 56px)); grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: 44px var(--strip-draw-h, 300px) auto; padding: 0 12px 8px; }
+  .stage[data-collapsed="0"] canvas { grid-column: 1 / -1; grid-row: 2; width: 100%; height: var(--strip-draw-h, 300px); touch-action: none; outline: none; } /* the opened strip turns under a finger; the page behind keeps its scroll */
   .stage[data-collapsed="0"] canvas:focus-visible { box-shadow: inset 0 0 0 2px var(--accent); }
   .stage[data-collapsed="0"] .stage-tag { grid-column: 1; grid-row: 1; padding-top: 14px; }
   .stage[data-collapsed="0"] .stage-actions { grid-column: 2; grid-row: 1; align-self: center; }
@@ -1061,6 +1063,11 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before, .gl-
   .stage[data-hidden="1"] canvas, .stage[data-hidden="1"] figcaption, .stage[data-hidden="1"] .stage-tag, .stage[data-hidden="1"] .stage-toggle { display: none; }
   .stage[data-hidden="1"] .stage-actions { grid-column: 2; grid-row: 1; align-self: center; }
   body:has(.stage[data-hidden="1"]) { padding-bottom: 64px; }
+  /* from 640 px a chapter's plate stands in its slot in the page (src/app.js Stage.host), so the strip keeps Contents alone */
+  .stage[data-hosted="1"]:not([data-hidden="1"]) { display: grid; height: 48px; grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: 1fr; padding: 0 12px; }
+  .stage[data-hosted="1"] .stage-thumb, .stage[data-hosted="1"] figcaption, .stage[data-hosted="1"] .stage-tag, .stage[data-hosted="1"] .stage-toggle { display: none !important; }
+  .stage[data-hosted="1"]:not([data-hidden="1"]) .stage-actions { grid-column: 2; grid-row: 1; align-self: center; position: static; }
+  .stage[data-hosted="1"]:not([data-hidden="1"]) .stage-menu { position: static; }
   .stage[data-route="none"] { display: none !important; }
   /* the chapter on a phone: one column, the number as a plain block above the title */
   .chapter { display: block; padding-top: 44px; }
@@ -1311,11 +1318,13 @@ article.chapter > .chapter-head > * { min-width: 0; }
 
 /* ---------- 2. the specimen, the chapter's first plate: the drawing at the measure on the open ground (no box: the box is for
    data figures), its caption and its parts side by side under it ---------- */
-/* The canvas is --draw-h tall: the height at which the plate and its two columns of labels fill the slot's width, between 360
-   and 470 px (build/build.js writes it for a 666 px column, src/app.js Stage.fit for the slot's own width). The plate rests in
-   its drawn view; a drag or the arrow keys turn it, and it eases back (Stage.pointer). A touch screen wide enough to show the
-   slot turns it with a sideways drag, and keeps the page's scroll for an upright one */
-.chapter .ch-spec { --draw-h: 460px; grid-column: 4 / 13; grid-row: 2; display: block; max-width: 666px; margin: 44px 0 0; padding: 0; }
+/* The canvas is --draw-h tall: the height at which the plate and its two columns of labels fill the slot's width, up to 470 px,
+   trimmed to the drawing (build/build.js writes it for a 666 px column, src/app.js Stage.fit for the slot's own width). The
+   drawing's ink stands 8 px inside the canvas's top and foot (src/plate.js PAD_Y), so one rhythm holds on every chapter: 40 px
+   from the opener's links to the drawing, 24 px from its lowest ink to the caption (22 Nov 2026). The plate rests in its drawn
+   view; a drag or the arrow keys turn it, and it eases back (Stage.pointer). A touch screen wide enough to show the slot (640 px
+   and up) turns it with a sideways drag, and keeps the page's scroll for an upright one */
+.chapter .ch-spec { --draw-h: 460px; grid-column: 4 / 13; grid-row: 2; display: block; max-width: 666px; margin: 32px 0 0; padding: 0; }
 .chapter .ch-spec-draw { position: relative; height: var(--draw-h); min-width: 0; }
 .chapter .ch-spec-draw canvas { position: absolute; left: 0; top: 0; display: block; width: 100%; height: var(--draw-h); touch-action: pan-y; outline: none; }
 .chapter .ch-spec-draw canvas:focus-visible { box-shadow: inset 0 0 0 2px var(--accent); }
@@ -1323,7 +1332,12 @@ article.chapter > .chapter-head > * { min-width: 0; }
   .chapter .ch-spec-draw canvas { cursor: grab; touch-action: none; }
   .chapter .ch-spec-draw canvas.is-dragging { cursor: grabbing; }
 }
-.chapter .ch-spec-cap { position: relative; min-width: 0; margin: 14px 0 0; max-width: none; }
+.chapter .ch-spec-cap { position: relative; min-width: 0; margin: 16px 0 0; max-width: none; }
+/* the labels of a plate with no parts list, for the keyboard (src/app.js Stage.a11y): out of sight, and the one with the focus
+   shows as a chip in the drawing's top corner while its part lights */
+.plate-keys { position: absolute; left: 0; top: 0; width: 1px; height: 1px; margin: 0; padding: 0; list-style: none; overflow: visible; }
+.plate-keys li { position: absolute; left: 8px; top: 8px; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.plate-keys li:focus { width: auto; height: auto; clip-path: none; padding: 4px 10px; font-family: var(--font-ui); font-size: 13px; font-weight: 500; line-height: 18px; color: var(--ink); background: var(--bg); border: 1px solid var(--accent); border-radius: 999px; outline: none; z-index: 2; }
 /* with no 2D canvas or no kit (src/app.js Stage.init) the slot would frame nothing: the caption stands alone */
 html.no-stage .chapter .ch-spec-draw { display: none; }
 html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
@@ -1824,7 +1838,9 @@ article.chapter[data-open] .ch-rail { grid-row: 1 / span 6; }
   .page--chapter .chapter .ch-rail .rail-across::before { content: ""; display: block; flex: 0 0 100%; height: 0; }
 }
 
-/* ---------- the app's phone (under 900 px): one column; the specimen is the strip at the foot of the screen ---------- */
+/* ---------- under 640 px, a phone: the specimen is the strip at the foot of the screen; from 640 px it stays in the page ---------- */
+@media (max-width: 639px) { .view[data-view="stack"] .chapter .ch-spec { display: none; } }
+/* ---------- the app under 900 px: one column ---------- */
 @media (max-width: 900px) {
   /* one column in reading order: the opener, On this page, then In plain terms, In short and the text, the card in it after the
      lead; nothing stands between the opener and the text (the specimen is the strip; a readable page shows its still after the
@@ -1840,8 +1856,7 @@ article.chapter[data-open] .ch-rail { grid-row: 1 / span 6; }
   .chapter .ch-lede { margin-top: 16px; font-size: var(--t-lead); line-height: 1.38; }
   .chapter .ch-omet { margin-top: 14px; }
   .chapter .ch-omet .ch-cite-line { gap: 4px 22px; }
-  .view[data-view="stack"] .chapter .ch-spec { display: none; }
-  .chapter .ch-spec { margin-top: 28px; }
+  .chapter .ch-spec { margin-top: 32px; }
   .chapter .ch-rail { margin-top: 36px; }
   .chapter .plain { margin-top: 32px; }
   .chapter .plain p { font-size: var(--t-text); line-height: 1.55; }
@@ -1899,7 +1914,8 @@ article.chapter[data-open] .ch-rail { grid-row: 1 / span 6; }
 /* the parts list rides in the phone strip's caption on The Chain, shown once the strip is expanded */
 .stage .stage-parts { display: none; }
 @media (max-width: 900px) {
-  .stage[data-collapsed="0"] figcaption { display: block; -webkit-line-clamp: unset; max-height: 9.5em; overflow-y: auto; }
+  /* the opened strip shows the whole parts list, then the caption, and scrolls only if the window is too short for both */
+  .stage[data-collapsed="0"] figcaption { display: block; -webkit-line-clamp: unset; max-height: calc(100dvh - var(--masthead, 56px) - 44px - var(--strip-draw-h, 300px) - 24px); overflow-y: auto; }
   .stage[data-collapsed="0"] .stage-parts { display: block; }
   .stage .stage-parts .ch-parts-k { margin-top: 0; }
   .stage[data-collapsed="0"] .stage-parts + .stage-cap-t { display: block; margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--line); }

@@ -8,6 +8,9 @@
   // under 900 px wide, read from a media query: reading window.innerWidth made the browser lay the page out first
   var wideMQ = window.matchMedia ? matchMedia('(min-width: 900px)') : null;
   var narrow = function () { return wideMQ ? !wideMQ.matches : window.innerWidth < 900; };
+  // from 640 px up a chapter shows its plate in the page, as on a laptop; a phone keeps the strip at the foot (22 Nov 2026)
+  var slotMQ = window.matchMedia ? matchMedia('(min-width: 640px)') : null;
+  var slotWide = function () { return slotMQ ? slotMQ.matches : window.innerWidth >= 640; };
   var safeUrl = function (u) { var v = String(u == null ? '' : u).trim(); return /^(https?:|mailto:|#|\/|(\.\.\/)+|[a-z0-9-]+\/)/i.test(v) ? esc(v) : '#'; }; // data-fed link targets may only be web links, mail, fragments or site paths (a page's own, as ../#/suppliers or lithography/#…, since 28 Oct 2026)
   var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
   var dec = function (s) { try { return decodeURIComponent(s); } catch (e) { return s; } }; // a hand-typed "#%" is not valid escaping and must not throw the router
@@ -104,7 +107,7 @@
     // checks), the turn easing back (back), how much of the labels shows (labA), the globe's own turn (spinYaw)
     userYaw: 0, userPitch: 0, rawYaw: 0, rawPitch: 0, turnMax: 0, dragging: false, keyTurn: false, back: null, labA: 1, spinYaw: 0,
     raf: 0, lastT: 0, inStart: 0, inPending: false, resting: false, seen: true, parts: null, partsFor: '', focusN: null, hoverC: null,
-    TURN: { yaw: 40 * Math.PI / 180, pitch: 20 * Math.PI / 180 }, IN_MS: 2600,
+    TURN: { yaw: 40 * Math.PI / 180, pitch: 20 * Math.PI / 180 }, IN_MS: 2600, CUE_MS: 900, CUE_YAW: 12 * Math.PI / 180, BACK_MS: 450,
     queue: [], idling: false,
     // plates to build while the browser is idle, before the reader reaches them, and only while the stage is showing
     soon: function (names) { var self = this; (names || []).forEach(function (n) { if (n && self.queue.indexOf(n) < 0) self.queue.push(n); }); this.idle(); },
@@ -145,7 +148,7 @@
     // numbers alone and no dimensions (the list under it names the parts); beside the home page's hero, the drawing alone
     mode: function () {
       if (this.hostEl) return {};
-      if (narrow()) return { numbersOnly: true, noDims: true };
+      if (narrow()) return { numbersOnly: true, oneDim: true }; // the phone's opened strip: the numbers, and the one main size
       return { noLabels: true, noDims: true, pad: 0.07 };
     },
     resize: function () {
@@ -181,6 +184,7 @@
       this.release(true);
       this.spinYaw = 0;
       this.readParts();
+      this.a11y();
       this.thumb();
       // the pause button is for the one plate that moves on its own (WCAG 2.2.2)
       var pb = $('.stage-pause'); if (pb) pb.hidden = !slot.spin;
@@ -209,14 +213,38 @@
       this.cur.pl.names(this.parts);
     },
     /* The slot's height (--draw-h, which build/build.js writes for a 666 px column) follows the plate and the slot's width: the
-       height at which the drawing and its label columns fill the width, between 360 and 470 px */
+       height at which the drawing and its label columns fill the width, up to 470 px, trimmed to the drawing (22 Nov 2026: a
+       360 px floor left flat plates floating in empty bands), so the space round every plate is the page's own. The phone's
+       opened strip sizes its canvas the same way (--strip-draw-h), and its parts list takes the height that frees */
     fit: function () {
-      if (!this.ok || !this.cur || !this.hostEl) return;
+      if (!this.ok || !this.cur) return;
+      var pl = this.cur.pl;
+      if (!this.hostEl) {
+        if (!narrow() || !this.fig || Band.collapsed) return;
+        var cw = this.canvas.getBoundingClientRect().width; if (!cw || cw < 120) return;
+        pl.mode(this.mode());
+        var hi = Math.round(Math.min(420, window.innerHeight * 0.48));
+        this.dry(pl, cw, pl.heightFor(cw, 150, hi));
+        var hs = pl.heightFor(cw, 150, hi) + 'px';
+        if (this.fig.style.getPropertyValue('--strip-draw-h') !== hs) this.fig.style.setProperty('--strip-draw-h', hs);
+        return;
+      }
       var spec = this.hostEl.closest('.ch-spec'), art = this.hostEl.closest('article.chapter');
       if (!spec || !art || art.getAttribute('data-specimen') !== this.cur.name) return;
       var w = this.hostEl.getBoundingClientRect().width; if (!w) return;
-      var want = this.cur.pl.heightFor(w, 360, 470) + 'px';
+      pl.mode(this.mode());
+      this.dry(pl, w, pl.heightFor(w, 160, 470));
+      var want = pl.heightFor(w, 160, 470) + 'px';
       if (spec.style.getPropertyValue('--draw-h') !== want) spec.style.setProperty('--draw-h', want);
+    },
+    // the plate laid out once, off screen, at rest, before its slot is sized: a label the layout moves to the other column
+    // (src/plate.js layCols) changes the height the plate needs, and the slot must not jump once the labels draw
+    dry: function (pl, w, h) {
+      var key = this.mode() && pl.mode(this.mode()) + '|' + Math.round(w);
+      if (pl._dryKey === key || !w || !h) return;
+      pl._dryKey = key;
+      try { var oc = document.createElement('canvas'); oc.width = Math.max(1, Math.round(w)); oc.height = Math.max(1, Math.round(h)); pl.render(oc.getContext('2d'), w, h, 1, { k: 1, mode: this.mode(), dark: this.dark, el: this.canvas }); pl.wantsFrame = false; } catch (e) { }
+      pl.refit();
     },
     /* Where the stage sits in the page's order (it is fixed, so only the Tab order sees it): on the home, right after the
        hero, so Tab reaches the chain at a glance, whose rows pick the specimen, before the specimen itself; elsewhere, its place
@@ -251,12 +279,31 @@
       this.hostEl = el;
       this.snap = null;
       this.release(true);
-      if (this.cur) this.readParts();
+      if (this.cur) { this.readParts(); this.a11y(); }
       this.refreshColors();
       this.resize();
     },
     // the phone's strip opened or closed (Band.set): the canvas shows in the opened strip only
-    strip: function () { this.dropFocus(); this.release(true); this.resize(); },
+    strip: function () { this.dropFocus(); this.release(true); this.a11y(); this.resize(); },
+    /* The canvas's name and description, and on a plate with no parts list a list of its labels for the keyboard (22 Nov 2026,
+       system 7). The name is the specimen's (the one the meta line and the phone's strip give, build/build.js SPECIMEN_NAME) and
+       its labels; the caption describes it. The list stands after the canvas, out of sight until an item has the focus, and an
+       item with the focus lights its part, as a row of a parts list does */
+    a11y: function () {
+      if (!this.ok || !this.cur) return;
+      var self = this, pl = this.cur.pl, c = this.canvas, names = DATA.specimenNames || (window.CP_TERMS || {}).specimenNames || {}, nm = names[this.cur.name] || this.cur.name.replace(/-/g, ' ');
+      var labs = pl.m.callouts.map(function (x) { return x.text.replace(/ /g, ' '); });
+      c.setAttribute('aria-label', nm.charAt(0).toUpperCase() + nm.slice(1) + '.' + (labs.length ? ' Parts labelled: ' + labs.join(', ') + '.' : '') + ' The arrow keys turn it.');
+      var cap = this.hostEl ? $('.ch-spec-cap > p:not(.ch-parts-k)', this.hostEl.closest('.ch-spec')) : $('#stage-caption');
+      if (cap) { if (!cap.id) cap.id = 'spec-cap-' + this.cur.name; c.setAttribute('aria-describedby', cap.id); } else c.removeAttribute('aria-describedby');
+      $$('.plate-keys').forEach(function (u) { if (u.parentNode) u.parentNode.removeChild(u); });
+      if (this.parts || !labs.length || this.mode().noLabels || (!this.hostEl && narrow() && Band.collapsed)) return;
+      var ul = document.createElement('ul'); ul.className = 'plate-keys'; ul.setAttribute('aria-label', 'Parts on the drawing');
+      labs.forEach(function (t, i) { var li = document.createElement('li'); li.tabIndex = 0; li.textContent = t; li.setAttribute('data-ci', String(i)); ul.appendChild(li); });
+      c.parentNode.insertBefore(ul, c.nextSibling);
+      ul.addEventListener('focusin', function (e) { var x = self.cur && self.cur.pl.m.callouts[+e.target.getAttribute('data-ci')]; if (x) self.focusLabel(x); });
+      ul.addEventListener('focusout', function (e) { if (!ul.contains(e.relatedTarget)) self.focusLabel(self.pinned || null); });
+    },
     // with no 2D canvas or no kit there is nothing to draw, so the figure stays hidden rather than framing an empty canvas
     setVisible: function (v) { var self = this; this.active = v; if (!this.fig) return; var show = v && this.ok; this.fig.setAttribute('data-hidden', show ? '0' : '1'); this.fig.setAttribute('data-route', v ? 'spec' : 'none'); /* a page with no specimen has no strip on a phone (page revision 2, src/styles.css) */ if (show) { this.resize(); requestAnimationFrame(function () { self.resize(); }); this.idle(); } },
     // the entrance plays the first time a chapter's plate shows in a session (sessionStorage cp-drawn lists the chapters it has
@@ -268,10 +315,26 @@
       if ((' ' + seen + ' ').indexOf(' ' + id + ' ') >= 0) return;
       try { sessionStorage.setItem('cp-drawn', (seen + ' ' + id).trim()); } catch (e) { }
       this.inPending = true; this.inStart = 0; this.snap = null; // the clock starts on the plate's first frame on screen
+      // and it ends, once the parts have settled and before the labels draw, with one slow turn and back: the cue that the
+      // plate turns (22 Nov 2026, system 4; no words). The globe turns on its own and needs none
+      this.cue = !(this.cur && this.cur.spin);
       this.wake();
     },
-    // the entrance's progress, 1 at rest
-    inK: function () { return this.inStart ? Math.min(1, (performance.now() - this.inStart) / ((this.cur && this.cur.pl.m.spec.dur) || this.IN_MS)) : (this.inPending ? 0 : 1); },
+    // the entrance's progress, 1 at rest; it holds at CUE_K through the cue
+    CUE_K: 0.83,
+    inK: function () {
+      if (!this.inStart) return this.inPending ? 0 : 1;
+      var D = (this.cur && this.cur.pl.m.spec.dur) || this.IN_MS, C = this.cue ? this.CUE_MS : 0, t = performance.now() - this.inStart, k0 = this.CUE_K * D;
+      if (t < k0) return t / D;
+      if (t < k0 + C) return this.CUE_K;
+      return Math.min(1, (t - C) / D);
+    },
+    // the cue's turn: 0 to CUE_YAW and back, with no jolt at either end
+    cueYaw: function () {
+      if (!this.inStart || !this.cue) return 0;
+      var D = (this.cur && this.cur.pl.m.spec.dur) || this.IN_MS, u = (performance.now() - this.inStart - this.CUE_K * D) / this.CUE_MS;
+      return u <= 0 || u >= 1 ? 0 : this.CUE_YAW * (1 - Math.cos(2 * Math.PI * u)) / 2;
+    },
     // is the plate showing at all: the phone's collapsed strip shows its still, and a slot out of view draws nothing
     showing: function () {
       if (!this.ok || !this.cur || this.hidden || !this.active || !this.seen || !this.w || !this.h) return false;
@@ -292,16 +355,19 @@
         this.userYaw = b.yaw * (1 - e); this.userPitch = b.pitch * (1 - e);
         if (u >= 1) { this.back = null; this.userYaw = 0; this.userPitch = 0; this.rawYaw = 0; this.rawPitch = 0; } else more = true;
       }
-      // the labels fade out while the plate is turned and come back once it is at rest
-      var turned = this.dragging || this.keyTurn || !!this.back || Math.abs(this.userYaw) > 1e-4 || Math.abs(this.userPitch) > 1e-4;
+      // the labels fade out while the plate is turned, and start back once it is within about 4 degrees of its drawn view
+      var near = 4 * Math.PI / 180, cue = this.cueYaw();
+      var turned = (this.dragging && this.dragMoved) || this.keyTurn || Math.abs(this.userYaw) > near || Math.abs(this.userPitch) > near || cue > 1e-4;
       var want = turned ? 0 : 1;
       if (reduced) this.labA = want;
       else if (this.labA !== want) { this.labA = want ? Math.min(1, this.labA + dt / 0.28) : Math.max(0, this.labA - dt / 0.14); more = true; }
       // the globe turns on its own, unless the reader holds it or rests the pointer on it (so a pin can be pointed at), has paused
       // it, or asks for less motion
       if (slot.spin && !reduced && !this.still && !this.dragging && !this.keyTurn && !this.resting) { this.spinYaw += slot.spin * dt; more = true; }
-      var st = { k: k, mode: this.mode(), dark: this.dark, el: this.canvas, dyaw: this.spinYaw + this.userYaw, delev: this.userPitch, labA: this.labA, lite: narrow() && (turned || k < 1), pick: !turned && k >= 1 };
+      var st = { k: k, mode: this.mode(), dark: this.dark, el: this.canvas, dyaw: this.spinYaw + this.userYaw + cue, delev: this.userPitch, labA: this.labA, lite: narrow() && (turned || k < 1), pick: !turned && k >= 1 && !this.back };
       pl.render(this.ctx, this.w, this.h, this.dpr, st);
+      // the plate moved a label to its other column: its slot is sized again and it draws once more
+      if (pl.wantsFrame) { pl.wantsFrame = false; this.fit(); more = true; }
       // beside the home page's hero the caption stands on the drawing's foot: the empty band under it goes to the stage (--slack)
       if (!this.hostEl && !narrow()) { var ft = pl.foot(), sl = ft == null ? 0 : Math.max(0, Math.round(this.h - ft - 12)) + 'px'; if (this.fig.style.getPropertyValue('--slack') !== sl) this.fig.style.setProperty('--slack', sl); }
       if (this.snap) {
@@ -311,8 +377,9 @@
       }
       if (more) this.wake();
     },
-    // the turn: a soft limit, so the plate slows into the end of its range rather than hitting a wall
-    soft: function (v, lim) { return lim * Math.tanh(v / lim); },
+    // the turn follows the hand one for one up to three quarters of its range, then slows into the end of it (22 Nov 2026: a
+    // tanh over the whole range used it up in a fifth of the canvas)
+    soft: function (v, lim) { var a = Math.abs(v), k0 = 0.75 * lim, r = lim - k0; return a <= k0 ? v : (v < 0 ? -1 : 1) * (k0 + r * Math.tanh((a - k0) / r)); },
     limits: function () { var t = (this.cur && this.cur.pl.m.spec.turn) || {}; return { yaw: t.yaw == null ? this.TURN.yaw : t.yaw, pitch: t.pitch == null ? this.TURN.pitch : t.pitch }; },
     turnBy: function (dyaw, dpitch) {
       var L = this.limits(), spin = this.cur && this.cur.spin;
@@ -329,7 +396,7 @@
       clearTimeout(this.keyT); this.keyTurn = false;
       if (this.cur && this.cur.spin) { this.spinYaw += this.userYaw; this.userYaw = 0; this.rawYaw = 0; }
       if (now || reduced || (!this.userYaw && !this.userPitch)) { this.back = null; this.userYaw = 0; this.userPitch = 0; this.rawYaw = 0; this.rawPitch = 0; if (now) this.labA = 1; this.wake(); return; }
-      this.back = { t0: performance.now(), dur: 520, yaw: this.userYaw, pitch: this.userPitch };
+      this.back = { t0: performance.now(), dur: this.BACK_MS, yaw: this.userYaw, pitch: this.userPitch };
       this.wake();
     },
     // the lists that name the parts of the drawing on show: the chapter's own, under its caption, and the phone strip's copy
@@ -358,7 +425,7 @@
     // the plate went (a new plate, the slot left, the strip closed): nothing is pointed at, at once
     dropFocus: function () {
       if (this.focusN) this.setFocus(null);
-      this.focusN = null; this.hoverC = null;
+      this.focusN = null; this.hoverC = null; this.pinned = null;
       if (this.cur) this.cur.pl.setFocus(null);
     },
     answer: function () {
@@ -371,7 +438,7 @@
       };
       document.addEventListener('pointerdown', function (e) { ptr = e.pointerType || 'mouse'; }, true);
       document.addEventListener('pointerover', function (e) { if (e.pointerType === 'touch') return; var n = nOf(e.target); if (n) self.setFocus(n); });
-      document.addEventListener('pointerout', function (e) { if (e.pointerType === 'touch' || !nOf(e.target) || nOf(e.relatedTarget)) return; self.setFocus(held); });
+      document.addEventListener('pointerout', function (e) { if (e.pointerType === 'touch' || !nOf(e.target) || nOf(e.relatedTarget)) return; self.setFocus(held); if (!held && self.pinned) self.focusLabel(self.pinned); });
       // a row reached by Tab lights its part while it holds the focus (a click's focus does not count: the pointer has it)
       document.addEventListener('focusin', function (e) {
         var n = nOf(e.target); if (!n || e.target.tagName.toLowerCase() !== 'li') return;
@@ -384,15 +451,16 @@
         var n = nOf(e.target); if (n) self.setFocus(self.focusN === n ? null : n);
       });
     },
-    // the plate under the pointer and the keys: drag to turn it, point at a label or a part to light it, arrows to turn it
+    // the plate under the pointer and the keys: drag to turn it, point at a label or a part to light it, arrows to turn it.
+    // A turn follows the hand at about 0.16 degrees a pixel, so the whole range takes about 250 px (22 Nov 2026, system 3). A
+    // click or a tap that does not move (under 3 px) pins the part under it and its row, and a second one, or Escape, lets go
     pointer: function () {
-      var self = this, c = this.canvas, sx = 0, sy = 0, moved = false, id = null, K = 0.008;
-      c.setAttribute('tabindex', '0'); c.setAttribute('aria-label', '3D specimen. Drag it or use the arrow keys to turn it.');
+      var self = this, c = this.canvas, sx = 0, sy = 0, ox = 0, oy = 0, moved = false, id = null, K = 0.0028;
+      c.setAttribute('tabindex', '0'); c.setAttribute('role', 'img'); c.setAttribute('aria-label', 'Drawing of the specimen. The arrow keys turn it.');
       var at = function (e) { var r = c.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
       c.addEventListener('pointerdown', function (e) {
         if ((e.pointerType === 'mouse' && e.button !== 0) || !self.showing()) return;
-        self.dragging = true; moved = false; id = e.pointerId; sx = e.clientX; sy = e.clientY;
-        if (e.pointerType === 'mouse') self.focusLabel(null); // a turn starts with nothing lit: the labels fade with it
+        self.dragging = true; self.dragMoved = false; moved = false; id = e.pointerId; sx = ox = e.clientX; sy = oy = e.clientY;
         self.rawYaw = self.userYaw; self.rawPitch = self.userPitch; self.back = null; self.turnMax = 0;
         try { c.setPointerCapture(e.pointerId); } catch (x) { }
         c.classList.add('is-dragging');
@@ -402,34 +470,47 @@
       c.addEventListener('pointermove', function (e) {
         if (self.dragging && e.pointerId === id) {
           var dx = e.clientX - sx, dy = e.clientY - sy; sx = e.clientX; sy = e.clientY;
-          if (Math.abs(dx) + Math.abs(dy) > 0) moved = moved || Math.abs(dx) + Math.abs(dy) > 2;
-          self.turnBy(dx * K, dy * K);
+          if (!moved && Math.hypot(e.clientX - ox, e.clientY - oy) > 3) {
+            // a turn starts with nothing lit: the labels fade with it
+            moved = true; self.dragMoved = true; self.pinned = null; self.focusLabel(null);
+            dx = e.clientX - ox; dy = e.clientY - oy;
+          }
+          if (moved) self.turnBy(dx * K, dy * K);
           return;
         }
         if (e.pointerType === 'touch' || self.labA < 1 || !self.cur) return;
         var p = at(e), hit = self.cur.pl.hitAt(p[0], p[1]);
         c.style.cursor = hit ? 'pointer' : '';
-        self.focusLabel(hit);
+        if (!self.pinned) self.focusLabel(hit);
       });
       var up = function (e) {
         if (!self.dragging || (e && e.pointerId !== id)) return;
-        self.dragging = false; c.classList.remove('is-dragging');
-        // a tap on a touch screen lights the part under it, and a second tap lets go
-        if (!moved && e && e.pointerType !== 'mouse' && self.cur) {
+        self.dragging = false; self.dragMoved = false; c.classList.remove('is-dragging');
+        // a click or tap that did not move pins the part under it; on the part already pinned, or on nothing, it lets go
+        if (!moved && e && e.type === 'pointerup' && self.cur) {
           var p = at(e), hit = self.cur.pl.hitAt(p[0], p[1]);
-          if (hit && ((hit.n && self.focusN === hit.n) || self.hoverC === hit)) hit = null;
-          self.focusLabel(hit);
+          if (hit && self.pinned && (self.pinned === hit || (hit.n && self.pinned.n === hit.n))) hit = null;
+          self.pinned = hit || null; self.focusLabel(hit || null);
+          self.release();
+          return;
         }
         self.release();
       };
       c.addEventListener('pointerup', up); c.addEventListener('pointercancel', up);
       c.addEventListener('pointerenter', function (e) { if (e.pointerType !== 'touch') self.resting = true; });
-      c.addEventListener('pointerleave', function (e) { self.resting = false; if (!self.dragging && e.pointerType !== 'touch') { c.style.cursor = ''; self.focusLabel(null); } self.wake(); });
-      // the arrow keys turn it a step at a time; let go, and after a moment it eases back. Home or Escape puts it back at once
+      c.addEventListener('pointerleave', function (e) { self.resting = false; if (!self.dragging && e.pointerType !== 'touch') { c.style.cursor = ''; if (!self.pinned) self.focusLabel(null); } self.wake(); });
+      // the arrow keys turn it a step at a time; let go, and after a moment it eases back. Home or Escape puts it back at once;
+      // Escape also lets a pinned part go
       c.addEventListener('keydown', function (e) {
         var step = 0.12, k = e.key, dx = 0, dy = 0;
         if (k === 'ArrowLeft') dx = -step; else if (k === 'ArrowRight') dx = step; else if (k === 'ArrowUp') dy = -step; else if (k === 'ArrowDown') dy = step;
-        else if (k === 'Home' || k === 'Escape') { if (self.keyTurn || self.userYaw || self.userPitch) { self.release(); e.preventDefault(); } return; }
+        else if (k === 'Home' || k === 'Escape') {
+          var did = false;
+          if (k === 'Escape' && self.pinned) { self.pinned = null; self.focusLabel(null); did = true; }
+          if (self.keyTurn || self.userYaw || self.userPitch) { self.release(); did = true; }
+          if (did) e.preventDefault();
+          return;
+        }
         else return;
         e.preventDefault();
         if (!self.keyTurn) { self.rawYaw = self.userYaw; self.rawPitch = self.userPitch; self.turnMax = 0; }
@@ -817,7 +898,7 @@
       void p; // the point drawings turned as the chapter scrolled; a plate holds its drawn view
       // on a wide screen The Chain's drawing stands in the chapter's own slot under its opener, whichever slot is in view
       // (src/modules/chapter.css .ch-spec-draw); on a phone it stays in the strip and follows the chapter, as before
-      var inSlot = Router.current === 'stack' && !narrow();
+      var inSlot = Router.current === 'stack' && slotWide(); // from 640 px up (22 Nov 2026: a tablet held upright had only the strip)
       if (inSlot) this.hostSpec(); else if (Stage.hostEl) Stage.host(null);
       var id = none ? null : best.id || best.getAttribute('data-specimen');
       // the home hero keeps one id while the reader picks its specimen (src/modules/walk.js), so the specimen it names counts too

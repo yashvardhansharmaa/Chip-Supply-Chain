@@ -542,7 +542,10 @@ const SUBWORD = { 'Very hard': 'Very hard to substitute', Hard: 'Hard to substit
 // one sentence per band, shown when a reader hovers the tag on the card (the full definitions stay in the Index)
 const BAND_NOTE = { Extreme: 'Three or fewer firms could supply this stage today, or one firm holds more than half of it.', High: 'Four to six firms could supply this stage today, and the top two take most of the revenue.', Moderate: 'Seven or more firms could supply this stage today, none of them dominant.', Low: 'Many firms could supply this stage today, and the scarce input is something another industry sells at volume.' };
 const SUB_NOTE = { 'Very hard': 'No second supplier exists at the leading node, and the path to one depends on physics, decades of unwritten know-how or protected intellectual property. No one has yet repeated what the leaders did, and closing the gap takes ten years or more.', Hard: 'No second supplier exists at the leading node. The path to one is known, and closing the gap takes five to ten years.', Moderate: 'A second supplier exists but is not yet qualified at the leading node. Closing the gap takes two to five years.', Easy: 'A qualified second supplier ships today at the leading node.' };
-const SPECIMEN_NAME = { 'boule-and-wafer': 'boule and wafer', 'cowos-exploded': 'CoWoS package, exploded', 'die-floorplan': 'die floorplan', 'euv-scanner': 'EUV scanner', foup: 'wafer carrier (FOUP)', 'gaa-transistor': 'gate-all-around transistor', 'gas-cabinet': 'gas cabinet', globe: 'globe', 'gpu-baseboard': 'GPU baseboard', 'hbm-stack': 'HBM stack', package: 'chip package', photomask: 'photomask', 'probe-card': 'probe card', 'process-chamber': 'process chamber', rack: 'server rack', 'sem-column': 'electron microscope column', 'substrate-layers': 'substrate layers', 'wafer-cost': 'wafer cost', wafer: 'wafer' };
+// each plate's one name (22 Nov 2026, plates critique system 8): the subject its caption opens with, on the chapter's meta line,
+// the phone strip's tag and the canvas's accessible name alike (src/app.js Stage.a11y). A caption that changes its subject
+// changes its name here
+const SPECIMEN_NAME = { 'boule-and-wafer': 'silicon ingot', 'cowos-exploded': 'CoWoS-L package', 'die-floorplan': 'GPU die', 'euv-scanner': 'EUV scanner', foup: 'wafer carrier (FOUP)', 'gaa-transistor': 'gate-all-around transistor', 'gas-cabinet': 'specialty gas cabinet', globe: 'globe', 'gpu-baseboard': 'eight-GPU baseboard', 'hbm-stack': 'HBM stack', package: 'chip package', photomask: 'EUV photomask', 'probe-card': 'vertical probe card', 'process-chamber': 'plasma etch chamber', rack: 'liquid-cooled rack', 'sem-column': 'electron-beam inspection column', 'substrate-layers': 'build-up substrate', 'wafer-cost': 'cost of one B200', wafer: 'wafer' };
 /* The card's footnote marks (qa/round2/SCHEMA.md §1). The card's text carries no citations. Beside each text sits a list of
    urls, one per sentence, each one also cited in the chapter's body, so a mark is the chapter's own footnote number and a
    url cited on the card and in the body has one number. The chapter loop numbers sources in the order a reader meets them
@@ -1121,12 +1124,13 @@ const specimenParts = readJSON(path.join(root, 'data', 'specimen-parts.json'), {
 // kit, src/kit.js, with every specimens/<name>.js; those files stay for the tools that still read them (the globe's coast,
 // the PDF cover's wafer) and as the sources of the plates' sizes, and no page loads them
 const platesKit = require('./plates.js')(root, warn);
-// each plate's slot height in a 666 px column (src/app.js Stage.fit sets it again for the width the slot has), worked out by
-// running the kit here, so a chapter's page lays out at its final height before the plate draws
+// each plate's slot height in a 666 px column, trimmed to the drawing (src/app.js Stage.fit sets it again for the width the slot
+// has), worked out by running the kit here, so a chapter's page lays out at its final height before the plate draws
 const plateH = {};
 try {
   const PL = platesKit.load();
-  platesKit.names.forEach((n) => { try { plateH[n] = new PL.Plate(n, {}).heightFor(666, 360, 470); } catch (e) { warn(`plates: ${n} does not draw in Node: ${e.message}`); } });
+  // laid out once first (a still at that size), so a label the layout moves to its other column counts in the height
+  platesKit.names.forEach((n) => { try { const pl = new PL.Plate(n, {}); pl.svg(666, pl.heightFor(666, 160, 470)); plateH[n] = pl.heightFor(666, 160, 470); } catch (e) { warn(`plates: ${n} does not draw in Node: ${e.message}`); } });
 } catch (e) { warn(`plates: the kit does not run in Node: ${e.message}`); }
 // each chapter's stills of its plate (build/plate-stills.js writes build/assets/plates/: <id>-thumb, -line and -door, each light
 // and dark, and plates.json with their sizes, at twice the pixels shown, and a hash of the plate's code they were drawn from),
