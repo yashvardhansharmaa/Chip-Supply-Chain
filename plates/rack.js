@@ -47,13 +47,17 @@ R('rack', function (m) {
   // the busbar, copper, with a clip at every tray, pulled back out of the rear
   var bb = m.part('busbar', { ex: [0, 0, -2.25], seq: 4 });
   m.box({ c: [0, syc, zS + 0.02], s: [0.052, sh + 0.10, 0.03] }, 'acc');
-  m.dim([W / 2, 0, back], [W / 2, Ht, back], [0.1, 0, 0], '2,236 mm', { part: cab.idx, t: 0.62 });
+  // its trace lines back to its place at the rear, top and foot, so the bar reads as pulled from the rack (designer pass)
+  [syc + (sh + 0.10) / 2, syc - (sh + 0.10) / 2].forEach(function (yy) { m.guide([[0, yy, zS + 0.035, cab.idx], [0, yy, zS + 0.035, bb.idx]], { alpha: 0.7 }); });
+  // (designer pass, 22 Nov 2026: the figure stands low on its line, under the busbar's foot; at 0.62 it ran into the bar)
+  m.dim([W / 2, 0, back], [W / 2, Ht, back], [0.1, 0, 0], '2,236 mm', { part: cab.idx, t: 0.3 });
   // designer pass (21 Nov 2026): the width taken further out in front, so its figure clears the rack's foot
   m.dim([-W / 2, 0, front], [W / 2, 0, front], [0, 0, 0.2], '600 mm', { part: cab.idx });
   var pp = {}; pulled.forEach(function (q) { pp[q[0]] = q[1]; });
   m.callout([-tW * 0.3, slots[6].y, fz, pp[6].idx], 'Power shelf', { side: 'l' });
   m.callout([-tW * 0.3, slots[20].y, fz, pp[20].idx], 'NVLink switch tray', { side: 'l' });
-  m.callout([-tW * 0.3, slots[30].y, fz, pp[30].idx], 'Compute tray', { side: 'l' });
+  // (on a phone, where the labels stand in rows, the compute tray is named from the top row, clear of the trays under it)
+  m.callout([-tW * 0.3, slots[30].y, fz, pp[30].idx], 'Compute tray', { side: 'l', row: 't' });
   m.callout([0.026, syc + 0.35, zS + 0.02, bb.idx], 'Copper busbar', { side: 'r' });
   return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, accent: [176, 102, 44], accentDark: [224, 154, 92], accent2: [117, 132, 144], accent2Dark: [198, 206, 213] };
 });

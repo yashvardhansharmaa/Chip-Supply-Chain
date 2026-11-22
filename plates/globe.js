@@ -37,24 +37,31 @@ R('globe', function (m) {
     'Taiwan': [[23.4, 120.6], [24.4, 121.2]], 'South Korea': [[36.4, 127.9]], 'China': [[34.5, 104.0]] };
   var HMAX = 0.24, used = {}, PINS = {};
   ROWS.forEach(function (r, i) { var k = used[r[1]] || 0; used[r[1]] = k + 1; var at = AT[r[1]][k]; (PINS[r[1]] || (PINS[r[1]] = [])).push({ i: i, lat: at[0], lon: at[1], h: HMAX * r[2] / 100 }); });
-  function pin(lat, lon, hgt, col, i) {
+  /* a pin: a foot ring on the surface, a stem as long as the share, a head. Where a country leads several segments its pins lean
+     a little apart, about 9 degrees each way, so each one shows (designer pass, 22 Nov 2026: the Netherlands' two and Taiwan's
+     two stood one over the other and read as one); the lean shortens a pin's rise by about one percent */
+  function pin(lat, lon, hgt, col, i, k, nk) {
     var n = ll(lat, lon, 1), p = m.part('pin' + i, { ex: [n[0] * 0.35, n[1] * 0.35, n[2] * 0.35], seq: 1 + (i % 6), pri: 1 });
-    var a = ll(lat, lon, 1), b = ll(lat, lon, 1 + hgt), foot = [], u = Math.abs(n[1]) < 0.9 ? [0, 1, 0] : [1, 0, 0];
+    var a = ll(lat, lon, 1), foot = [], u = Math.abs(n[1]) < 0.9 ? [0, 1, 0] : [1, 0, 0];
     var e1 = [n[1] * u[2] - n[2] * u[1], n[2] * u[0] - n[0] * u[2], n[0] * u[1] - n[1] * u[0]], L1 = Math.hypot(e1[0], e1[1], e1[2]); e1 = [e1[0] / L1, e1[1] / L1, e1[2] / L1];
     var e2 = [n[1] * e1[2] - n[2] * e1[1], n[2] * e1[0] - n[0] * e1[2], n[0] * e1[1] - n[1] * e1[0]];
-    for (var k = 0; k <= 16; k++) { var t = k * TAU / 16; foot.push([a[0] + 0.02 * (e1[0] * Math.cos(t) + e2[0] * Math.sin(t)), a[1] + 0.02 * (e1[1] * Math.cos(t) + e2[1] * Math.sin(t)), a[2] + 0.02 * (e1[2] * Math.cos(t) + e2[2] * Math.sin(t))]); }
+    var ph = nk > 1 ? k * TAU / nk + 0.6 : 0, lean = nk > 1 ? Math.tan(9 * RAD) : 0, d = [n[0] + lean * (e1[0] * Math.cos(ph) + e2[0] * Math.sin(ph)), n[1] + lean * (e1[1] * Math.cos(ph) + e2[1] * Math.sin(ph)), n[2] + lean * (e1[2] * Math.cos(ph) + e2[2] * Math.sin(ph))], dl = Math.hypot(d[0], d[1], d[2]);
+    var b = [a[0] + d[0] / dl * hgt, a[1] + d[1] / dl * hgt, a[2] + d[2] / dl * hgt];
+    for (var q = 0; q <= 16; q++) { var t = q * TAU / 16; foot.push([a[0] + 0.016 * (e1[0] * Math.cos(t) + e2[0] * Math.sin(t)), a[1] + 0.016 * (e1[1] * Math.cos(t) + e2[1] * Math.sin(t)), a[2] + 0.016 * (e1[2] * Math.cos(t) + e2[2] * Math.sin(t))]); }
     m.wire(foot, { col: col, lw: 0.8, vis: a, c: a });
-    m.wire([a, b], { col: col, lw: 2.5, vis: a, c: b });
-    m.dots([b], { col: col, r: 3.5, front: false, c: b });
+    m.wire([a, b], { col: col, lw: 1.7, vis: a, c: b });
+    m.dots([b], { col: col, r: 3, front: false, c: b });
     m.cur.items[m.cur.items.length - 1].vis = a;
+    HEAD[i] = b;
   }
-  Object.keys(PINS).forEach(function (cn) { PINS[cn].forEach(function (q) { pin(q.lat, q.lon, q.h, 'acc', q.i); }); });
+  var HEAD = {};
+  Object.keys(PINS).forEach(function (cn) { PINS[cn].forEach(function (q, k) { pin(q.lat, q.lon, q.h, 'acc', q.i, k, PINS[cn].length); }); });
   // the Earth's axis as a centre line, and one label for each country, with leaders to its pins
   m.use(g);
   m.guide([[0, 1, 0, g.idx], [0, 1.3, 0, g.idx]], { style: 'axis', alpha: 0.9, front: true });
   m.guide([[0, -1.3, 0, g.idx], [0, -1, 0, g.idx]], { style: 'axis', alpha: 0.9 });
   var partOf = function (i) { return m.parts.filter(function (p) { return p.name === 'pin' + i; })[0].idx; };
-  var head = function (q) { var v = ll(q.lat, q.lon, 1 + q.h); return [v[0], v[1], v[2], partOf(q.i)]; };
+  var head = function (q) { var v = HEAD[q.i]; return [v[0], v[1], v[2], partOf(q.i)]; };
   // the globe turns, so each label carries its country's pins (track): a leader fades in as a pin comes round to the label's
   // side and out as it nears the rim. The first pin sets the label's height in the drawn view
   [['Netherlands', 'l'], ['United States', 'l'], ['China', 'r'], ['South Korea', 'r'], ['Japan', 'r'], ['Taiwan', 'r']].forEach(function (c) {

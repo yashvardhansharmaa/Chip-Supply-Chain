@@ -58,30 +58,52 @@ R('process-chamber', function (m) {
   m.guide([[0, yFlo, 0, ves.idx], [0, yFlo - 0.36, 0, pump.idx]], { style: 'axis', alpha: 0.85 });
   var cu = [Math.cos(a0), Math.sin(a0)], cw = [Math.cos(a1), Math.sin(a1)];
   m.callout([0.03 * cw[0], yLid + 0.13, 0.03 * cw[1], lid.idx], 'Gas in', { side: 'r' });
-  m.callout([0.15 * cu[0], 0.035, 0.15 * cu[1], plp.idx], 'Plasma', { side: 'l' });
+  // (designer pass, 22 Nov 2026: the plasma is named from the right, on the lens's own cut face, and the loupe takes the wafer's
+  // left side, so neither the plasma's leader nor the loupe's cone runs across the whole chamber)
+  m.callout([0.1 * cw[0], 0.03, 0.1 * cw[1], plp.idx], 'Plasma', { side: 'r' });
   m.callout([0.148 * cw[0], yPed + WT, 0.148 * cw[1], wfp.idx], 'Wafer', { side: 'r' });
   m.callout([0.168 * cu[0], yPed - 0.05, 0.168 * cu[1], chk.idx], 'Chuck', { side: 'l' });
   m.callout([0.146 * cw[0], yFlo - 0.2, 0.146 * cw[1], pump.idx], 'Pump', { side: 'r' });
-  var loupe = { model: 'etch-loupe', at: [0.06 * cw[0], yPed + WT, 0.06 * cw[1]], part: 'wafer', side: 'l', r: 0.15, rMax: 92, scale: 0.78, caption: ['A hole ten times', 'deeper than it is wide'] };
+  var lt = a0 + 0.55, loupe = { model: 'etch-loupe', at: [0.1 * Math.cos(lt), yPed + WT, 0.1 * Math.sin(lt)], part: 'wafer', side: 'l', r: 0.15, rMax: 92, scale: 0.8, dx: -0.12, caption: ['A hole ten times', 'deeper than it is wide'] };
   return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, loupe: loupe, accent: [109, 92, 201], accentDark: [176, 164, 240], accent2: [111, 139, 166], accent2Dark: [195, 211, 226] };
 });
 
 /* The loupe's plate: a cut through the wafer's surface with one hole etched into it, ten times deeper than it is wide, the
    ratio in the US rule of December 2024 that chapter 6 cites. The hole's real size depends on the chip, so it carries no
-   figure; the ratio is the point. A mask of photoresist lies on top, opened over the hole. */
+   figure; the ratio is the point. A mask of photoresist lies on top, opened over the hole.
+   22 Nov 2026 designer pass: one block of silicon, cut down the hole's axis and seen a little from above, so the hole reads as
+   a round hole, its far half a curved wall and its mouth a half circle in the top face (it was three separate boxes, which read
+   as two pillars with a slot between them). The names stand beside the block, each with a short leader. */
 R('etch-loupe', function (m) {
   var tag = PLATE.loupeTag;
-  function bx(x0, y0, x1, y1, mat, fmat) { return m.box({ c: [(x0 + x1) / 2, (y0 + y1) / 2, 0], s: [x1 - x0, y1 - y0, 8], fmat: fmat }, mat); }
   m.part('st', { mode: 'stack' });
-  var W = 1, Dp = 10, X0 = -5.5, X1 = 5.5, Y0 = -Dp - 1.6;
-  // the silicon, cut through the hole's middle: left and right of the hole, and the floor beneath it
-  bx(X0, Y0, -W / 2, 0, 'acc2Light', { pz: 'cutAcc2' });
-  bx(W / 2, Y0, X1, 0, 'acc2Light', { pz: 'cutAcc2' });
-  bx(-W / 2, Y0, W / 2, -Dp, 'acc2Light', { pz: 'cutAcc2' });
-  // the resist mask, opened over the hole
-  bx(X0, 0, -W / 2, 0.6, 'mid', { pz: 'cutDense' });
-  bx(W / 2, 0, X1, 0.6, 'mid', { pz: 'cutDense' });
-  tag(m, [-3.1, -5, 4.2], 'Silicon', {});
-  tag(m, [3.0, 1.35, 4.2], 'Resist', {});
-  return { elev: 0.05, yaw: -0.04, accent: [109, 92, 201], accentDark: [176, 164, 240], accent2: [111, 139, 166], accent2Dark: [195, 211, 226] };
+  var W = 1, Dp = 10, X0 = -3.1, X1 = 3.1, Y0 = -Dp - 1.5, RT = 0.7, Dz = 2.6, N = 14;
+  /* a block x X0..X1, y ya..yb, z -Dz..0 (its cut face toward the reader at z = 0), with the far half of a round hole of
+     radius r down its axis from its top to y = yh (a blind hole has a floor there; yh = ya runs it through) */
+  // the hole's wall a shade deeper than the block's faces, so it reads as a hollow
+  var wallMat = { d: 0.42, c: 'acc2', even: true };
+  function holeBlock(ya, yb, yh, r, mat, cutMat, blind) {
+    var s = m.begin(mat, { sortFaces: true }), v = function (x, y, z) { return m.v([x, y, z]); };
+    var th = []; for (var j = 0; j <= N; j++) th.push(Math.PI + Math.PI * j / N);
+    var At = th.map(function (t) { return v(r * Math.cos(t), yb, r * Math.sin(t)); }), Ab = th.map(function (t) { return v(r * Math.cos(t), yh, r * Math.sin(t)); });
+    var T0 = v(X0, yb, 0), T1 = v(X1, yb, 0), T2 = v(X1, yb, -Dz), T3 = v(X0, yb, -Dz), B0 = v(X0, ya, 0), B1 = v(X1, ya, 0), B2 = v(X1, ya, -Dz), B3 = v(X0, ya, -Dz);
+    var cut = { mat: cutMat };
+    if (blind) m.face([B0, B1, T1, At[N], Ab[N], Ab[0], At[0], T0], [0, 0, 1], cut);
+    else { m.face([B0, Ab[0], At[0], T0], [0, 0, 1], cut); m.face([Ab[N], B1, T1, At[N]], [0, 0, 1], cut); }
+    m.face([T0, At[0]].concat(At.slice(1, N), [At[N], T1, T2, T3]), [0, 1, 0]);
+    m.face([B1, B2, T2, T1], [1, 0, 0]); m.face([B0, T0, T3, B3], [-1, 0, 0]); m.face([B3, T3, T2, B2], [0, 0, -1]);
+    if (blind) m.face([B0, B3, B2, B1], [0, -1, 0]); else m.face([B0, B3, B2, B1, Ab[N]].concat(Ab.slice(1, N).reverse(), [Ab[0]]), [0, -1, 0]);
+    for (j = 0; j < N; j++) {
+      var tm = (th[j] + th[j + 1]) / 2;
+      m.face([Ab[j], Ab[j + 1], At[j + 1], At[j]], [-Math.cos(tm), 0, -Math.sin(tm)], { curve: true, mj: j, mat: wallMat });
+      if (j > 0) m.ecls(Ab[j], At[j], 0);
+    }
+    if (blind) m.face(Ab.slice(), [0, 1, 0]);
+    return m.end();
+  }
+  holeBlock(Y0, 0, -Dp, W / 2, 'acc2Light', 'cutAcc2', true);
+  holeBlock(0, RT, 0, W / 2, 'mid', { d: 0.08, hatch: 1, ang: 45, gap: 2.2 }, false);
+  tag(m, [X1 + 1.5, RT + 1.1, 0], 'Resist', { align: 'left', lead: [X1 - 0.6, RT, -0.9] });
+  tag(m, [X1 + 1.5, -6.2, 0], 'Silicon', { align: 'left', lead: [X1, -5.2, -1.1] });
+  return { elev: 0.3, yaw: -0.32, accent: [109, 92, 201], accentDark: [176, 164, 240], accent2: [111, 139, 166], accent2Dark: [195, 211, 226] };
 });

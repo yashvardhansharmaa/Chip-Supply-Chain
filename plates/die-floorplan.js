@@ -50,11 +50,13 @@ R('die-floorplan', function (m) {
   var LX = 11.6, Lz0 = -16.1, Lz1 = -14.3;
   blk(-LX, Lz0, LX, Lz1, 'dark', 'd2d');
   m.dim([-W / 2, -yT, Dd / 2], [W / 2, -yT, Dd / 2], [0, 0, 4.2], '26 mm');
-  m.dim([W / 2, -yT, Dd / 2], [W / 2, -yT, -Dd / 2], [4.2, 0, 0], '33 mm');
-  // labels, each lighting its own group (tag)
-  m.callout([-6.5, yT + bh, -8.5], 'Compute units', { side: 'l', tag: 'sm' });
-  m.callout([-4.5, yT + bh, 0], 'Cache', { side: 'l', tag: 'l2' });
-  m.callout([-11.4, yT + bh, -6.6], 'Memory controllers', { side: 'l', tag: 'mem' });
-  m.callout([-LX * 0.35, yT + bh, (Lz0 + Lz1) / 2], 'Die-to-die link', { side: 'l', tag: 'd2d' });
+  // the 33 mm along the far long edge (designer pass, 22 Nov 2026): along the near one it fenced off the die from its labels,
+  // so the cache's leader ran 149 px across the compute units to reach it from below
+  m.dim([-W / 2, -yT, -Dd / 2], [-W / 2, -yT, Dd / 2], [-4.2, 0, 0], '33 mm');
+  // labels, each lighting its own group (tag), each leader entering the die over the long edge nearest its column
+  m.callout([11.4, yT + bh, 10.5], 'Memory controllers', { side: 'l', tag: 'mem' });
+  m.callout([6.8, yT + bh, 5.6], 'Compute units', { side: 'l', tag: 'sm' });
+  m.callout([6.4, yT + bh, -0.6], 'Cache', { side: 'l', tag: 'l2' });
+  m.callout([LX * 0.62, yT + bh, (Lz0 + Lz1) / 2], 'Die-to-die link', { side: 'l', tag: 'd2d' });
   return { elev: PLATE.ISO.elev, yaw: 3 * Math.PI / 4, sortAxis: [0, 1, 0], start: 2.2, thumbX: 0.5, accent: [111, 139, 166], accentDark: [195, 211, 226] };
 });

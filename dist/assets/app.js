@@ -223,7 +223,9 @@
         if (!narrow() || !this.fig || Band.collapsed) return;
         var cw = this.canvas.getBoundingClientRect().width; if (!cw || cw < 120) return;
         pl.mode(this.mode());
-        var hi = Math.round(Math.min(420, window.innerHeight * 0.48));
+        // a plate with a loupe and no parts list under it may take more of the screen, so the disc does not shrink the drawing
+        // (22 Nov 2026 designer pass)
+        var hi = pl.m.loupe && !this.parts ? Math.round(Math.min(560, window.innerHeight * 0.64)) : Math.round(Math.min(420, window.innerHeight * 0.48));
         this.dry(pl, cw, pl.heightFor(cw, 150, hi));
         var hs = pl.heightFor(cw, 150, hi) + 'px';
         if (this.fig.style.getPropertyValue('--strip-draw-h') !== hs) this.fig.style.setProperty('--strip-draw-h', hs);

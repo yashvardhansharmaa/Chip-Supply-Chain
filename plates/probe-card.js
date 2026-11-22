@@ -18,7 +18,7 @@ R('probe-card', function (m) {
   for (var gx = -6; gx <= 5; gx++) for (var gz = -5; gz <= 4; gz++) {
     var cx = (gx + 0.5) * dw, cz = (gz + 0.5) * dh, cor = [[cx - dw / 2, cz - dh / 2], [cx + dw / 2, cz - dh / 2], [cx - dw / 2, cz + dh / 2], [cx + dw / 2, cz + dh / 2]];
     if (!cor.every(function (c) { return c[0] * c[0] + c[1] * c[1] < 0.96; })) continue;
-    if (gx >= -1 && gx <= 0 && gz >= -1 && gz <= 0) { probed.push(D.rect(cx - dw / 2, cz - dh / 2, cx + dw / 2, cz + dh / 2, wT, { fill: 'acc', lw: 0.6, col: 'acc', keep: true, tag: 'dies' })); continue; }
+    if (gx >= -1 && gx <= 0 && gz >= -1 && gz <= 0) { probed.push(D.rect(cx - dw / 2, cz - dh / 2, cx + dw / 2, cz + dh / 2, wT, { fill: 'accDark', lw: 0.6, col: 'acc', keep: true, tag: 'dies' })); continue; }
     dies.push(D.rect(cx - dw / 2, cz - dh / 2, cx + dw / 2, cz + dh / 2, wT, { lw: 0.4, alpha: 0.7 }));
   }
   m.prism(shape, -wT, wT, 'accLight', { smooth: true, top: dies.concat(probed) });

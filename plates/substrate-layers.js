@@ -22,11 +22,13 @@ R('substrate-layers', function (m) {
       it.push(poly(0, -lay[k], L, -lay[k - 1], { fill: k % 2 ? FILM_A : FILM_B, lw: 0, keep: true, tag: 'film' }));
     }
     [1, -1].forEach(function (sg) { it.push(poly(0, sg > 0 ? lay[nb] : -top, L, sg > 0 ? top : -lay[nb], { fill: 'dark', lw: 0 })); });
-    // copper on every conductor plane, as traces in section
+    // copper on every conductor plane, as traces in section: longer runs with short breaks, and every third plane nearly whole
+    // (a power or ground plane), so the bands read as layers (designer pass, 22 Nov 2026: short random dashes on every plane
+    // read as a brick wall)
     [1, -1].forEach(function (sg) {
       for (k = 0; k <= nb; k++) {
-        var y = sg * lay[k]; u = 0.4;
-        while (u < L - 0.4) { var w = 0.4 + rnd() * (k === 0 ? 5 : 2.8); if (u + w > L - 0.4) break; it.push({ pts: [toP(u, y), toP(u + w, y)], col: 'acc2', lw: 1.3, tag: 'cu' }); u += w + 0.4 + rnd() * 2; }
+        var y = sg * lay[k], plane = k % 3 === 0; u = 0.4 + rnd() * 1.2;
+        while (u < L - 0.4) { var w = plane ? 6 + rnd() * 9 : 2.2 + rnd() * 3.8; if (u + w > L - 0.4) w = L - 0.4 - u; if (w < 0.8) break; it.push({ pts: [toP(u, y), toP(u + w, y)], col: 'acc2', lw: plane ? 1.2 : 1.05, tag: 'cu' }); u += w + (plane ? 0.5 + rnd() * 0.5 : 0.7 + rnd() * 1.1); }
       }
     });
     // plated through-holes and their pads

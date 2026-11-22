@@ -272,7 +272,7 @@
     o = o || {};
     var pts = at[0] && at[0].length ? at : [at], own = null;
     pts.forEach(function (q) { if (own == null && q[3] != null) own = q[3]; });
-    this.callouts.push({ pts: pts.map(function (q) { return [q[0], q[1], q[2], q[3] == null ? null : q[3]]; }), text: text, n: o.n || 0, part: o.part != null ? o.part : own != null ? own : this.cur.idx, side: o.side || null, tag: o.tag || null, dy: o.dy || 0, focus: o.focus || null, strong: !!o.strong, col: o.col || null, only: o.only || null, track: o.track || null });
+    this.callouts.push({ pts: pts.map(function (q) { return [q[0], q[1], q[2], q[3] == null ? null : q[3]]; }), text: text, n: o.n || 0, part: o.part != null ? o.part : own != null ? own : this.cur.idx, side: o.side || null, tag: o.tag || null, dy: o.dy || 0, focus: o.focus || null, strong: !!o.strong, col: o.col || null, only: o.only || null, track: o.track || null, row: o.row || null, rowAt: o.rowAt ? (o.rowAt[0] && o.rowAt[0].length ? o.rowAt : [o.rowAt]) : null });
   };
   function centroid(pts) { var c = [0, 0, 0]; pts.forEach(function (p) { c[0] += p[0]; c[1] += p[1]; c[2] += p[2]; }); return [c[0] / pts.length, c[1] / pts.length, c[2] / pts.length]; }
   function mapItems(items, fn) {
@@ -529,7 +529,7 @@
       var pts = (an.at[0] && an.at[0].length ? an.at : [an.at]).map(function (q) { return [q[0], q[1], q[2], an.part]; });
       if (an.multi) an.multi.forEach(function (mq) { pts.push([mq[1][0], mq[1][1], mq[1][2], mq[0]]); });
       var o = (spec.calloutOpts && spec.calloutOpts[an.n]) || {};
-      m.callouts.push({ pts: pts, text: an.name, n: an.n, part: an.part, side: o.side || null, tag: o.tag || null, dy: o.dy || 0, focus: o.focus || null, only: o.only || null });
+      m.callouts.push({ pts: pts, text: an.name, n: an.n, part: an.part, side: o.side || null, tag: o.tag || null, dy: o.dy || 0, focus: o.focus || null, only: o.only || null, row: o.row || null });
     });
     m.callouts.sort(function (a, b) { return (a.n || 99) - (b.n || 99); });
     m.loupe = spec.loupe || null;
@@ -562,8 +562,11 @@
      in the top corner of a label column, joined by a faint cone to a ring on the spot it magnifies, with scale bars in the
      site's figures (P.loupeBar) and names (P.loupeTag), and its caption under the disc. It shows where the plate shows its
      dimensions (a chapter's slot and print), and fades with the labels. Memory and HBM's is behind a flag in its model file. */
-  P.loupeBar = function (m, a, b, text, o) { o = o || {}; (m.bars || (m.bars = [])).push({ a: a, b: b, text: text, side: o.side, tx: o.tx, ty: o.ty }); };
-  P.loupeTag = function (m, at, text, o) { o = o || {}; (m.tags || (m.tags = [])).push({ at: at, text: text, dx: o.dx, dy: o.dy, align: o.align, col: o.col }); };
+  // a name or a figure may run to two lines ('\n'); a name may carry a short leader to the point it names (o.lead, in the loupe
+  // model's units), so it can stand in the disc's clear ground beside the drawing (22 Nov 2026 designer pass: names laid over
+  // the layers they named collided with them)
+  P.loupeBar = function (m, a, b, text, o) { o = o || {}; (m.bars || (m.bars = [])).push({ a: a, b: b, text: text, side: o.side, tx: o.tx, ty: o.ty, align: o.align }); };
+  P.loupeTag = function (m, at, text, o) { o = o || {}; (m.tags || (m.tags = [])).push({ at: at, text: text, dx: o.dx, dy: o.dy, align: o.align, col: o.col, lead: o.lead || null }); };
 
   /* ---------------- drawing back-ends ---------------- */
   var FONT = '"Hanken Grotesk", "Helvetica Neue", Arial, sans-serif';
@@ -771,12 +774,14 @@
     var ls = this.labelStyle(w), e = this.ext || (this.ext = this.extent()), R = viewM(m.yaw0, m.elev), off = this.offsets(1).o, mid = (e.minx + e.maxx) / 2, midY = (e.miny + e.maxy) / 2;
     var room = { l: 0, r: 0, t: 0, b: 0 }, rows = this.rowsOn(w);
     m.callouts.forEach(function (c) {
-      var mx = 0, my = 0; c.pts.forEach(function (q) { var o = off[q[3] == null ? c.part : q[3]] || [0, 0, 0], x = q[0] + o[0], y = q[1] + o[1], z = q[2] + o[2]; mx += R[0] * x + R[1] * y + R[2] * z; my += R[3] * x + R[4] * y + R[5] * z; }); mx /= c.pts.length; my /= c.pts.length;
+      // (in rows a label may point at another spot on its part, c.rowAt, where an upright leader runs clear)
+      var mx = 0, my = 0, src = rows && c.rowAt ? c.rowAt : c.pts; src.forEach(function (q) { var o = off[q[3] == null ? c.part : q[3]] || [0, 0, 0], x = q[0] + o[0], y = q[1] + o[1], z = q[2] + o[2]; mx += R[0] * x + R[1] * y + R[2] * z; my += R[3] * x + R[4] * y + R[5] * z; }); mx /= src.length; my /= src.length;
       var lines = ls.numbersOnly && c.n ? [] : self.wrap(c.text, ls, g), tw = 0;
       lines.forEach(function (s) { tw = Math.max(tw, g ? g.measure(s, { size: ls.fs, weight: 500 }) : s.length * ls.fs * 0.53); });
       c._lines = lines;
       if (rows) {
-        var row = my > midY ? 't' : 'b'; c._side = row;
+        // (a label may keep to one row, c.row, where the other would set it over a loupe's cone)
+        var row = c.row || (my > midY ? 't' : 'b'); c._side = row;
         var hh = Math.max(1, lines.length) * ls.fs * 1.18 + 18;
         if (hh > room[row]) room[row] = hh;
         return;
@@ -787,9 +792,10 @@
     });
     // the loupe takes the top of its label column, which is then at least as wide as the disc; on a narrow plate it sits under
     // the drawing
-    var LG = this.loupeOn() ? this.loupeGeom(w) : null;
-    if (LG && LG.side === 'b') room.b = Math.max(room.b, LG.need);
-    else if (LG) room[LG.side] = Math.max(room[LG.side], 2 * LG.r + LG.mg + 14);
+    var LG = this.loupeOn() ? this.loupeGeom(w, 0, g) : null;
+    // under 560 px the disc stands under the row of labels, so the foot takes both
+    if (LG && LG.side === 'b') room.b = (room.b || 0) + LG.need;
+    else if (LG) room[LG.side] = Math.max(room[LG.side], 2 * LG.r + LG.mg + 14 - LG.inset);
     return room;
   };
   // the canvas's top and foot pads: the drawing's ink stands this far inside them, so the page sets the space round the plate
@@ -809,11 +815,24 @@
   PL.loupeOn = function () { return !!(this.m.loupe && this.lod === 'full' && (!this.o.noDims || this.o.oneDim) && !this.o.noLabels && P.loupes !== false); };
   // its disc: the top corner of its label column, a radius that grows with the width, and the caption's lines under it; under
   // 560 px, the foot's right corner, under the drawing (h, the canvas's height, places it there)
-  PL.loupeGeom = function (w, h) {
+  /* Under 560 px (22 Nov 2026 designer pass) the disc keeps a radius its drawing and names can be read at, about a quarter of
+     the width, in the foot's right corner under the label row, and its caption stands to its left, wrapped to the room there
+     (it was a 58 px disc whose names ran into one another, its caption cut off at the screen's edge, over the row of labels).
+     On a wide plate a loupe may set its disc into the drawing's empty top corner by L.inset px, so its column takes less of
+     the width from the drawing. */
+  PL.loupeGeom = function (w, h, g) {
     var L = this.m.loupe, r = Math.round(Math.max(56, Math.min(L.rMax || 104, (L.r || 0.155) * w))), mg = 10, side = L.side || 'r';
     var cap = L.caption || [], capH = cap.length ? 15 + cap.length * 16 : 0;
-    if (w < 560) { var hh = h || 0; return { side: 'b', r: r, mg: mg, x: w - mg - r, y: hh - mg - capH - r, cap: cap, bottom: hh, need: 2 * r + capH + mg + 6 }; }
-    return { side: side, r: r, mg: mg, x: side === 'r' ? w - mg - r : mg + r, y: mg + r, cap: cap, bottom: mg + 2 * r + capH + 14 };
+    if (w < 560) {
+      // (in the foot's corner on the loupe's own side, so its cone keeps to that side of the drawing; the caption beside it)
+      var hh = h || 0, rp = Math.round(Math.max(64, Math.min(L.rMax || 104, 0.23 * w))), lf = side === 'l', xp = lf ? mg + rp + 4 : w - mg - rp - 4, room = (lf ? w - xp : xp) - rp - 14 - mg;
+      // the caption's words, wrapped to the room left of the disc
+      var meas = function (s) { return g ? g.measure(s, { size: 12, weight: 500 }) : s.length * 12 * 0.53; }, words = cap.join(' ').split(' '), out = [], ln = '';
+      words.forEach(function (wd) { var t = ln ? ln + ' ' + wd : wd; if (ln && meas(t) > room) { out.push(ln); ln = wd; } else ln = t; });
+      if (ln) out.push(ln);
+      return { side: 'b', capSide: lf ? 'r' : 'l', r: rp, mg: mg, x: xp, y: hh - mg - rp - 4, cap: out, bottom: hh, need: 2 * rp + 2 * mg + 8 };
+    }
+    return { side: side, r: r, mg: mg, x: side === 'r' ? w - mg - r : mg + r, y: mg + r, cap: cap, bottom: mg + 2 * r + capH + 14, inset: L.inset || 0 };
   };
   PL.loupePlate = function () { var L = this.m.loupe; if (!this._lp && L && L.model) this._lp = new Plate(L.model, {}); return this._lp; };
   // the canvas's height for a width: the drawing at the scale its width allows, its pads, and the rows or loupe it carries, kept
@@ -828,9 +847,12 @@
       lo = Math.max(lo, need + 2 * ls.fs);
     });
     if (this.loupeOn() && w >= 560) {
-      var LG = this.loupeGeom(w), n = 0;
-      this.m.callouts.forEach(function (c) { if ((c._side || c.side) === LG.side) n++; });
-      lo = Math.max(lo, LG.bottom + n * ls.fs * 2.4 + 8);
+      // the labels under the disc, one under another, as the layout sets them (22 Nov 2026: it kept 2.4 lines a label, which
+      // left an empty band under the photomask)
+      var LG = this.loupeGeom(w), n = 0, need = 0;
+      this.m.callouts.forEach(function (c) { if ((c._side || c.side) === LG.side) { need += Math.max(1, (c._lines || [c.text]).length) * ls.fs * 1.18; n++; } });
+      if (n) need += (n - 1) * ls.fs * 0.85 + ls.fs + 1;
+      lo = Math.max(lo, LG.bottom + need);
     }
     var out = Math.round(Math.max(lo, Math.min(hi, h)));
     // the labels were wrapped with a guess at the faces' widths: the next frame lays them out again with the real ones
@@ -928,8 +950,9 @@
       if (curve) return 0.38 + 0.95 * Math.round((1 - lam) * 5) / 5;
       return lam > 0.72 ? 0.36 : lam > 0.15 ? 0.74 : 1.3;
     };
+    // (a material may keep one tone whatever way its faces turn, mat.even: the inside of a hole, which no light reaches)
     var fillOf = function (mat, nvw, curve, tint) {
-      var d = Math.min(pal.dark ? 0.66 : 0.92, mat.d * toneF(curve ? lamC(nvw) : lamOf(nvw), curve) * (pal.dark ? 0.8 : 1) * (thumb ? Math.min(1.6, ik) : 1));
+      var d = Math.min(pal.dark ? 0.66 : 0.92, mat.d * (mat.even ? 1 : toneF(curve ? lamC(nvw) : lamOf(nvw), curve)) * (pal.dark ? 0.8 : 1) * (thumb ? Math.min(1.6, ik) : 1));
       var c = mix(pal.bg, colOf(mat.c), d);
       if (tint) c = mix(c, pal.hl, pal.dark ? 0.22 : 0.12);
       return css(c);
@@ -943,7 +966,7 @@
     var labelsOn = !thumb && !st.noLabels && !this.o.noLabels && m.callouts.length > 0 && LA > 0.01 && K > 0.86;
     var layKey = [Math.round(w), Math.round(h), Math.round(fit.s * 1e4), Math.round(fit.cx), Math.round(fit.cy), this.o.numbersOnly ? 1 : 0, st.noDims ? 1 : 0, st.oneDim ? 1 : 0, this.loupeOn() ? 1 : 0].join(',');
     var settled = !turned && K >= 0.999 || (!turned && K > 0.86 && (st.scale || 1) === 1);
-    var occ = labelsOn && settled && this._layKey !== layKey ? [] : null, dimObs = [];
+    var occ = labelsOn && settled && this._layKey !== layKey ? [] : null, dimObs = [], rowsMode = !thumb && this.rowsOn(w);
 
     var parts = m.parts.slice(), axis = m.sortAxis, toward = axis ? (R[6] * axis[0] + R[7] * axis[1] + R[8] * axis[2]) : 0;
     var pc = parts.map(function (p) { var c = [0, 0, 0], n = 0; p.items.forEach(function (it) { c[0] += it.c[0]; c[1] += it.c[1]; c[2] += it.c[2]; n++; }); return n ? [c[0] / n, c[1] / n, c[2] / n] : [0, 0, 0]; });
@@ -988,6 +1011,9 @@
         return true;
       });
       gh.forEach(function (s) { ghostEdges(s, false, a * dimF(s)); });
+      // under 560 px, where leaders find their way out of the drawing to a row of labels, an outline-only part still counts as
+      // drawing (the cost column's yield loss), so no leader runs down its face
+      if (occ && rowsMode) gh.forEach(function (s) { for (var fi = s.f0; fi < s.f1; fi++) if (front[fi]) occ.push({ pts: F[fi].v.map(P2), it: s }); });
       var dep = items.map(function (it) { if (p.mode === 'stack' && it.kind === 'solid') return it.ymin * 1000 + depthOf(it.c, p.idx); return depthOf(it.c, p.idx); });
       var ord = items.map(function (it, i) { return i; }).sort(function (x, y) { return dep[x] - dep[y]; });
       if (p.mode === 'fixed') ord = items.map(function (it, i) { return i; });
@@ -1182,7 +1208,7 @@
       var p = proj(L.at, L.part), c = L.col === 'muted' ? css(pal.muted) : css(colOf(L.col));
       g.text(L.text, p[0] + L.dx * k, p[1] + L.dy * k, { size: Math.round(L.size * Math.max(0.85, Math.min(1.1, k))), weight: L.weight, fill: c, align: L.align, halo: bgC, haloW: 4, alpha: labT * LA });
     });
-    if (!thumb && this.loupeOn() && labT > 0 && LA > 0.01) drawLoupe(this.loupeGeom(w, h), labT * LA);
+    if (!thumb && this.loupeOn() && labT > 0 && LA > 0.01) drawLoupe(this.loupeGeom(w, h, g), labT * LA);
     this._hit = [];
     if (!thumb && !st.noLabels && !this.o.noLabels && labT > 0 && LA > 0.01 && m.callouts.length) callouts();
 
@@ -1212,24 +1238,43 @@
       g.clip(G.x, G.y, G.r - 0.5);
       lp.paint({ k: 1, w: S2, h: S2, g: g, pal: pal, fit: f2, noDims: true, noLabels: true });
       var R1 = viewM(lp.m.yaw0, lp.m.elev), pj = function (q) { return [f2.cx + f2.s * (R1[0] * q[0] + R1[1] * q[1] + R1[2] * q[2]), f2.cy - f2.s * (R1[3] * q[0] + R1[4] * q[1] + R1[5] * q[2])]; };
-      var size = 11.5, txt = css(pal.ink);
+      var size = 11.5, txt = css(pal.ink), lh = Math.round(size * 1.2);
+      // a block of one or two lines, centred on (x, y), its lines set to the side the block's align names
+      var block = function (text, x, y, al, wt, haloW) {
+        var lines = String(text).split('\n'), n = lines.length;
+        lines.forEach(function (ln, i) { g.text(ln, x, y + (i - (n - 1) / 2) * lh, { size: size, weight: wt, fill: txt, align: al, halo: bgC, haloW: haloW }); });
+      };
+      var widthOf = function (text, wt) { return Math.max.apply(null, String(text).split('\n').map(function (ln) { return g.measure(ln, { size: size, weight: wt }); })); };
       (lp.m.bars || []).forEach(function (b) {
-        var a = pj(b.a), c = pj(b.b), bx = c[0] - a[0], by = c[1] - a[1], Ln = Math.hypot(bx, by) || 1, nx = -by / Ln, ny = bx / Ln, tk = 4.5;
-        g.lines([[a, c]], bgC, 4.2, null, 1, 'butt'); g.lines([[a, c]], txt, 1.3, null, 1, 'butt');
+        var a = pj(b.a), c = pj(b.b), bx = c[0] - a[0], by = c[1] - a[1], Ln = Math.hypot(bx, by) || 1, nx = -by / Ln, ny = bx / Ln, tk = 4;
+        g.lines([[a, c]], bgC, 4.2, null, 1, 'butt'); g.lines([[a, c]], txt, 1.2, null, 1, 'butt');
         g.lines([[[a[0] + nx * tk, a[1] + ny * tk], [a[0] - nx * tk, a[1] - ny * tk]], [[c[0] + nx * tk, c[1] + ny * tk], [c[0] - nx * tk, c[1] - ny * tk]]], txt, 1.1, null, 1, 'butt');
-        var sd = b.side || 1, tw = g.measure(b.text, { size: size, weight: 600 }), tx = (a[0] + c[0]) / 2 + (b.tx || 0), ty = (a[1] + c[1]) / 2 + (b.ty || 0);
-        if (Math.abs(bx) >= Math.abs(by)) ty += sd * -12; else tx += sd * (tw / 2 + 8);
+        var sd = b.side || 1, tw = widthOf(b.text, 600), nl = String(b.text).split('\n').length, th = nl * lh, tx = (a[0] + c[0]) / 2 + (b.tx || 0), ty = (a[1] + c[1]) / 2 + (b.ty || 0), al = 'center';
+        if (Math.abs(bx) >= Math.abs(by)) ty += sd * -(6 + th / 2);
+        // a standing bar's figure starts beside it, set to the bar's side (a long figure no longer reaches back over the bar)
+        else { tx += sd * 8; al = sd > 0 ? 'left' : 'right'; }
         // the figure stays inside the disc
-        var Rl = G.r - 7, dyc = Math.max(-Rl + 8, Math.min(Rl - 8, ty - G.y)), ey = Math.min(Rl, Math.abs(dyc) + 6), half = Math.sqrt(Math.max(0, Rl * Rl - ey * ey));
-        ty = G.y + dyc; tx = Math.max(G.x - half + tw / 2, Math.min(G.x + half - tw / 2, tx));
-        g.text(b.text, tx, ty, { size: size, weight: 600, fill: txt, align: 'center', halo: bgC, haloW: 4 });
+        var Rl = G.r - 7, dyc = Math.max(-Rl + th / 2 + 2, Math.min(Rl - th / 2 - 2, ty - G.y)), ey = Math.min(Rl, Math.abs(dyc) + th / 2), half = Math.sqrt(Math.max(0, Rl * Rl - ey * ey));
+        ty = G.y + dyc;
+        var lft = al === 'left' ? tx : al === 'right' ? tx - tw : tx - tw / 2, sh = Math.max(G.x - half - lft, Math.min(0, G.x + half - (lft + tw)));
+        block(b.text, tx + sh, ty, al, 600, 4);
       });
-      (lp.m.tags || []).forEach(function (t2) { var q = pj(t2.at); g.text(t2.text, q[0] + (t2.dx || 0), q[1] + (t2.dy || 0), { size: size, weight: 600, fill: txt, align: t2.align || 'center', halo: bgC, haloW: 3.5 }); });
+      (lp.m.tags || []).forEach(function (t2) {
+        var q = pj(t2.at), x = q[0] + (t2.dx || 0), y = q[1] + (t2.dy || 0), al = t2.align || 'center';
+        if (t2.lead) {
+          // the leader runs from the name's near edge to the point it names, and ends on a small dot there
+          var e = pj(t2.lead), sx = al === 'left' ? x - 4 : al === 'right' ? x + 4 : x, sy = al === 'center' ? y + (e[1] > y ? 1 : -1) * (String(t2.text).split('\n').length * lh / 2 + 2) : y;
+          g.lines([[[sx, sy], e]], bgC, 3, null, 0.9, 'round'); g.lines([[[sx, sy], e]], txt, 0.75, null, 1, 'round');
+          g.circle(e[0], e[1], 1.9, txt, bgC, 0.9);
+        }
+        block(t2.text, x, y, al, 600, 3.5);
+      });
       g.unclip();
       g.circle(G.x, G.y, G.r, null, css(mix(pal.bg, pal.ink, 0.86)), 1.25 * k);
       g.circle(G.x, G.y, G.r + 3.5, null, css(mix(pal.bg, pal.ink, pal.dark ? 0.3 : 0.22)), 0.6 * k);
-      // the caption under the disc, in the label's muted ink
-      G.cap.forEach(function (ln, i) { g.text(ln, G.x, G.y + G.r + 16 + i * 16, { size: 12, weight: 500, fill: css(pal.muted), align: 'center', halo: bgC, haloW: 3 }); });
+      // the caption under the disc (or, on a phone, beside it), in the label's muted ink
+      if (G.capSide) G.cap.forEach(function (ln, i) { var lf = G.capSide === 'l'; g.text(ln, G.x + (lf ? -1 : 1) * (G.r + 14), G.y + (i - (G.cap.length - 1) / 2) * 16, { size: 12, weight: 500, fill: css(pal.muted), align: lf ? 'right' : 'left', halo: bgC, haloW: 3 }); });
+      else G.cap.forEach(function (ln, i) { g.text(ln, G.x, G.y + G.r + 16 + i * 16, { size: 12, weight: 500, fill: css(pal.muted), align: 'center', halo: bgC, haloW: 3 }); });
       g.ga = ga0;
     }
 
@@ -1299,9 +1344,9 @@
       var rows = self.rowsOn(w);
       // a point as the drawn view puts it: a tracking label (the globe's) keeps the height it has there as the globe turns
       var proj0 = function (q, part) { var o = O[part], x = q[0] + o[0], y = q[1] + o[1], z = q[2] + o[2]; return [cx + sc * (R0[0] * x + R0[1] * y + R0[2] * z), cy - sc * (R0[3] * x + R0[4] * y + R0[5] * z)]; };
-      var LGc = self.loupeOn() ? self.loupeGeom(w, h) : null;
+      var LGc = self.loupeOn() ? self.loupeGeom(w, h, g) : null;
       var ents = m.callouts.map(function (c, ci) {
-        var pts, wts = null, my = 0, mx = 0, base = c.pts.map(function (q) { return proj(q, q[3] == null ? c.part : q[3]); });
+        var pts, wts = null, my = 0, mx = 0, base = (rows && c.rowAt ? c.rowAt : c.pts).map(function (q) { return proj(q, q[3] == null ? c.part : q[3]); });
         if (c.track) {
           // the globe's labels point at whichever of their towns face the reader: a leader fades in as its town comes round
           // and out as it nears the rim, and the label stays where it is
@@ -1326,13 +1371,13 @@
         var r = c.n ? (ls.numbersOnly ? ls.num : ls.num * Math.max(0.9, Math.min(1.1, k))) : 0;
         return { c: c, ci: ci, pts: pts, wts: wts, x: mx, y0: my + (c.dy || 0) * k, hh: Math.max(hh, r * 2), lines: lines, tw: tw, r: r, side: side };
       });
-      if (occ) { self._lay = rows ? { rows: true } : layCols(ents); self._layKey = layKey; self._layStats = self._lay.stats || null; }
+      if (occ) { self._lay = rows ? layRows(ents) : layCols(ents); self._layKey = layKey; self._layStats = self._lay.stats || null; }
       var lay = self._layKey === layKey ? self._lay : null;
-      if (rows) drawRows(ents); else drawCols(ents, lay && !lay.rows ? lay : null);
+      if (rows) drawRows(ents, lay && lay.rows ? lay : null); else drawCols(ents, lay && !lay.rows ? lay : null);
 
       function colX(sd) { return sd === 'l' ? dl - 8 * k : dr + 8 * k; }
       function colTop(sd) { return LGc && LGc.side === sd ? LGc.bottom : ls.fs; }
-      function colBot(sd) { var b = h - ls.fs; if (LGc && LGc.side === 'b' && sd === 'r') b = Math.min(b, LGc.y - LGc.r - 8); return b; }
+      function colBot(sd) { var b = h - ls.fs; if (LGc && LGc.side === 'b' && sd === (LGc.capSide === 'r' ? 'l' : 'r')) b = Math.min(b, LGc.y - LGc.r - 8); return b; }
       // the column's labels at the heights they want, pushed apart and kept in the canvas; returns their heights in list order
       function resolve(list, want, top, bot) {
         var minGap = ls.fs * 0.85, idx = list.map(function (L, i) { return i; }).sort(function (a, b) { return (want[a] - want[b]) || (a - b); }), ys = new Array(list.length);
@@ -1350,9 +1395,8 @@
         if (shape === 'A') { var K2 = A[0] + sg * kx; if (sg * (xs - K2) < 0) return null; return [[A[0], A[1]], [K2, y], [Sx, y]]; }
         return [[A[0], A[1]], [xs, y], [Sx, y]];
       }
-      function layCols(ents) {
-        var out = { y: {}, shape: {}, snap: {}, stats: { cross: 0, dims: 0, foreign: 0, labels: [] } };
-        // the drawing as a map of which item is on top at each 2 px cell (the loupe's disc as -2)
+      // the drawing as a map of which item is on top at each 2 px cell (the loupe's disc as -2), from the faces drawn at rest
+      function buildMap() {
         var cs = 2, gw = Math.ceil(w / cs) + 1, gh = Math.ceil(h / cs) + 1, map = new Int32Array(gw * gh); map.fill(-1);
         occ.forEach(function (o) {
           var id = o.it._id;
@@ -1368,6 +1412,66 @@
         });
         if (LGc) for (var j = 0; j < gh; j++) for (var i = 0; i < gw; i++) if (Math.hypot((i + 0.5) * cs - LGc.x, (j + 0.5) * cs - LGc.y) < LGc.r + 6) map[j * gw + i] = -2;
         var at = function (x, y) { var i = Math.floor(x / cs), j = Math.floor(y / cs); return i < 0 || j < 0 || i >= gw || j >= gh ? -1 : map[j * gw + i]; };
+        return at;
+      }
+      // what each label lights: its leaders may cross those items freely
+      function litOf(c) { var f = P.focusOf(c), lit = {}; m.S.forEach(function (it) { if (P.lit(f, it) || (it.kind === 'solid' && it.decals.some(function (d) { return d.items.some(function (q) { return P.lit(f, q, it); }); }))) lit[it._id] = 1; }); return lit; }
+      /* Under 560 px the labels stand in rows, their leaders running up or down to them. A leader whose upright run would cross
+         parts it does not name may leave its part sideways instead, to just clear of the drawing at that height, then run up or
+         down outside it (22 Nov 2026 designer pass: the column's lenses and the rack's trays were named through every part
+         between them and the row) */
+      function layRows(ents) {
+        var at = buildMap(), out = { rows: true, route: {} }, segs = dimObs.filter(function (o) { return o.seg; }).map(function (o) { return o.seg; }), boxes = dimObs.filter(function (o) { return o.box; }).map(function (o) { return o.box; });
+        ents.forEach(function (L) {
+          if (L.c.track || L.side !== 't' && L.side !== 'b') return;
+          var lit = litOf(L.c), edge = L.side === 't' ? dt - 9 * k : db + 9 * k;
+          out.route[L.ci] = L.pts.map(function (q) {
+            var cost = function (Pp) {
+              var bad = 0, len = 0;
+              for (var s2 = 0; s2 < Pp.length - 1; s2++) {
+                var a = Pp[s2], b = Pp[s2 + 1], Ls = Math.hypot(b[0] - a[0], b[1] - a[1]), n = Math.max(1, Math.ceil(Ls / 1.5));
+                len += Ls;
+                for (var u = 0; u <= n; u++) { var x = a[0] + (b[0] - a[0]) * u / n, y = a[1] + (b[1] - a[1]) * u / n; if (Math.hypot(x - q[0], y - q[1]) < 5) continue; var id = at(x, y); if (id === -2 || (id >= 0 && !lit[id])) bad++; }
+                for (var z = 0; z < segs.length; z++) if (segX(a, b, segs[z][0], segs[z][1])) bad += 40;
+                for (z = 0; z < boxes.length; z++) if (segBox(a, b, boxes[z])) bad += 40;
+              }
+              return bad * 1.5 + len * 0.01;
+            };
+            var best = { P: [[q[0], q[1]], [q[0], edge]] }; best.v = cost(best.P);
+            [-1, 1].forEach(function (sg) {
+              var last = q[0];
+              for (var xx = q[0]; xx >= 0 && xx <= w; xx += sg * 2) { var id = at(xx, q[1]); if (id >= 0 || id === -2) last = xx; }
+              var xe = last + sg * 9;
+              if (xe < 6 || xe > w - 6) return;
+              var Pp = [[q[0], q[1]], [xe, q[1]], [xe, edge]], v = cost(Pp) + 5;
+              if (v < best.v - 2) best = { P: Pp, v: v, xe: xe, sg: sg };
+            });
+            return best.xe == null ? null : { x: best.xe, sg: best.sg, y: q[1] };
+          });
+        });
+        // more than two labels leaving one side for one row would have to run along the row's edge past one another's leaders:
+        // those keep their upright runs
+        ['t', 'b'].forEach(function (rw) { [-1, 1].forEach(function (sg) {
+          var ls2 = ents.filter(function (L) { var r = out.route[L.ci]; return L.side === rw && r && r.some(function (o) { return o && o.sg === sg; }); });
+          if (ls2.length > 2) ls2.forEach(function (L) { out.route[L.ci] = out.route[L.ci].map(function (o) { return o && o.sg === sg ? null : o; }); });
+        }); });
+        // upright runs that would lie along one another step outward, the dot nearest the row first, so no run crosses another
+        var runs = [];
+        ents.forEach(function (L) { var r = out.route[L.ci]; if (!r) return; L.pts.forEach(function (q, qi) { runs.push({ L: L, qi: qi, q: q, r: r[qi], edge: L.side === 't' ? dt - 9 * k : db + 9 * k }); }); });
+        runs.sort(function (a, b) { return Math.abs(a.q[1] - a.edge) - Math.abs(b.q[1] - b.edge); });
+        var used = [];
+        runs.forEach(function (u) {
+          var x = u.r ? u.r.x : u.q[0], y0 = Math.min(u.q[1], u.edge), y1 = Math.max(u.q[1], u.edge), sg = u.r ? u.r.sg : 0;
+          for (var t2 = 0; t2 < 6 && used.some(function (o) { return Math.abs(o.x - x) < 6 && o.y0 < y1 && o.y1 > y0; }); t2++) { if (!sg) break; x += sg * 7; }
+          if (u.r) u.r.x = x;
+          used.push({ x: x, y0: y0, y1: y1 });
+        });
+        ents.forEach(function (L) { var r = out.route[L.ci]; if (r) out.route[L.ci] = r.map(function (o) { return o ? o.x : null; }); });
+        return out;
+      }
+      function layCols(ents) {
+        var out = { y: {}, shape: {}, snap: {}, stats: { cross: 0, dims: 0, foreign: 0, labels: [] } };
+        var at = buildMap(), cs = 2;
         // the steep angle: the one in 45 to 80 degrees that keeps furthest from the directions the view's own edges take
         var ad = function (a, b) { var d = Math.abs(a - b) % 180; return Math.min(d, 180 - d); };
         var edges = [[R0[0], R0[3]], [R0[1], R0[4]], [R0[2], R0[5]]].filter(function (v) { return Math.hypot(v[0], v[1]) > 0.2; }).map(function (v) { return Math.atan2(v[1], v[0]) * 180 / Math.PI; });
@@ -1376,8 +1480,6 @@
         var th = out.th = thD * Math.PI / 180;
         var nearEdge = function (a, b) { var an = Math.atan2(-(b[1] - a[1]), b[0] - a[0]) * 180 / Math.PI; return edges.some(function (e2) { return ad(an, e2) < 10; }) ? 20 : 0; };
         var segs = dimObs.filter(function (o) { return o.seg; }).map(function (o) { return o.seg; }), boxes = dimObs.filter(function (o) { return o.box; }).map(function (o) { return o.box; });
-        // what each label lights: its leaders may cross those items freely
-        var litOf = function (c) { var f = P.focusOf(c), lit = {}; m.S.forEach(function (it) { if (P.lit(f, it) || (it.kind === 'solid' && it.decals.some(function (d) { return d.items.some(function (q) { return P.lit(f, q, it); }); }))) lit[it._id] = 1; }); return lit; };
         var cost = function (Pp, lit, A, shape) {
           var bad = 0, hits = 0, near = 0, len = 0;
           for (var s2 = 0; s2 < Pp.length - 1; s2++) {
@@ -1571,9 +1673,12 @@
             var sn = lay && !c.track && lay.snap[L.ci], shp = lay && !c.track && lay.shape[L.ci];
             L.pts.forEach(function (q, qi) {
               var wq = L.wts ? L.wts[qi] : 1, A = sn && sn[qi] ? [q[0] + sn[qi][0], q[1] + sn[qi][1]] : [q[0], q[1]];
-              var Pp = shapePath(A, y, sd, shp ? shp[qi] : 'D', th) || shapePath(A, y, sd, 'D', th), path = partial(Pp, la);
+              var Pp = shapePath(A, y, sd, shp ? shp[qi] : 'D', th) || shapePath(A, y, sd, 'D', th);
+              // a leader to a globe's pin ends at the pin's head, which marks the spot itself: no dot of its own over it
+              if (c.track && Pp.length > 1) { var hx = Pp[1][0] - Pp[0][0], hy = Pp[1][1] - Pp[0][1], hL = Math.hypot(hx, hy) || 1, hs = Math.min(4.5 * k, hL * 0.5); Pp = [[Pp[0][0] + hx / hL * hs, Pp[0][1] + hy / hL * hs]].concat(Pp.slice(1)); }
+              var path = partial(Pp, la);
               if (path.length > 1) { g.lines([path], bgC, 3.2 * k, null, 0.85 * ta * wq, 'round'); g.lines([path], lc, (fo ? 1 : ls.numbersOnly ? 0.85 : 0.7) * k, null, Math.max(ta, la * 0.9) * wq, 'round'); }
-              g.circle(A[0], A[1], 2.3 * k, col, bgC, 1.1 * k, la * wq);
+              if (!c.track) g.circle(A[0], A[1], 2.3 * k, col, bgC, 1.1 * k, la * wq);
             });
             var tx = Sx + sg * 5 * k, x0, x1;
             if (c.n) {
@@ -1593,8 +1698,10 @@
       }
       // a row of labels over the drawing and a row under it: each label centred over its dots where it can be, its leaders
       // running straight up or down to the row, then along its edge to the label
-      function drawRows(ents) {
-        var lineC = css(mix(pal.bg, pal.ink, pal.dark ? 0.7 : 0.78));
+      function drawRows(ents, lay) {
+        var lineC = css(mix(pal.bg, pal.ink, pal.dark ? 0.7 : 0.78)), rt = lay && lay.route || {};
+        // a label whose leaders leave sideways stands over (or under) the place they turn
+        ents.forEach(function (L) { var r = rt[L.ci]; if (!r || !r.some(function (x) { return x != null; })) return; var sx = 0; L.pts.forEach(function (q, qi) { sx += r[qi] != null ? r[qi] : q[0]; }); L.x = sx / L.pts.length; });
         ['t', 'b'].forEach(function (rw) {
           var list = ents.filter(function (L) { return L.side === rw; }).sort(function (a, b) { return a.x - b.x; }); if (!list.length) return;
           var edge = rw === 't' ? dt - 9 * k : db + 9 * k, bw = list.map(function (L) { return (L.c.n && ls.numbersOnly ? 0 : L.tw) + (L.r ? 2 * L.r + (L.c.n && ls.numbersOnly ? 0 : 6) : 0); });
@@ -1606,8 +1713,9 @@
             var c = L.c, lx = xs[li], fo = foc && foc.n === c.n && foc.text === c.text, col = fo ? hlC : inkC, lc = fo ? hlC : lineC;
             var la = clamp01(labT * 1.5) * LA, ta = clamp01((labT - 0.3) / 0.7) * (foc && !fo ? 0.45 : 1) * LA;
             var yc = rw === 't' ? edge - 4 - L.hh / 2 : edge + 4 + L.hh / 2, x0 = lx - bw[li] / 2, x1 = lx + bw[li] / 2;
-            L.pts.forEach(function (q) {
-              var cxl = Math.max(x0 + 3, Math.min(x1 - 3, q[0])), Pp = cxl === q[0] ? [[q[0], q[1]], [q[0], edge]] : [[q[0], q[1]], [q[0], edge], [cxl, edge]], path = partial(Pp, la);
+            L.pts.forEach(function (q, qi) {
+              var xe = rt[L.ci] ? rt[L.ci][qi] : null, ux = xe != null ? xe : q[0], head = xe != null ? [[q[0], q[1]], [xe, q[1]]] : [[q[0], q[1]]];
+              var cxl = Math.max(x0 + 3, Math.min(x1 - 3, ux)), Pp = head.concat(cxl === ux ? [[ux, edge]] : [[ux, edge], [cxl, edge]]), path = partial(Pp, la);
               if (path.length > 1) { g.lines([path], bgC, 3.2 * k, null, 0.85 * ta, 'round'); g.lines([path], lc, (fo ? 1 : 0.7) * k, null, Math.max(ta, la * 0.9), 'round'); }
               g.circle(q[0], q[1], 2.3 * k, col, bgC, 1.1 * k, la);
             });
@@ -1940,12 +2048,14 @@ R('die-floorplan', function (m) {
   var LX = 11.6, Lz0 = -16.1, Lz1 = -14.3;
   blk(-LX, Lz0, LX, Lz1, 'dark', 'd2d');
   m.dim([-W / 2, -yT, Dd / 2], [W / 2, -yT, Dd / 2], [0, 0, 4.2], '26 mm');
-  m.dim([W / 2, -yT, Dd / 2], [W / 2, -yT, -Dd / 2], [4.2, 0, 0], '33 mm');
-  // labels, each lighting its own group (tag)
-  m.callout([-6.5, yT + bh, -8.5], 'Compute units', { side: 'l', tag: 'sm' });
-  m.callout([-4.5, yT + bh, 0], 'Cache', { side: 'l', tag: 'l2' });
-  m.callout([-11.4, yT + bh, -6.6], 'Memory controllers', { side: 'l', tag: 'mem' });
-  m.callout([-LX * 0.35, yT + bh, (Lz0 + Lz1) / 2], 'Die-to-die link', { side: 'l', tag: 'd2d' });
+  // the 33 mm along the far long edge (designer pass, 22 Nov 2026): along the near one it fenced off the die from its labels,
+  // so the cache's leader ran 149 px across the compute units to reach it from below
+  m.dim([-W / 2, -yT, -Dd / 2], [-W / 2, -yT, Dd / 2], [-4.2, 0, 0], '33 mm');
+  // labels, each lighting its own group (tag), each leader entering the die over the long edge nearest its column
+  m.callout([11.4, yT + bh, 10.5], 'Memory controllers', { side: 'l', tag: 'mem' });
+  m.callout([6.8, yT + bh, 5.6], 'Compute units', { side: 'l', tag: 'sm' });
+  m.callout([6.4, yT + bh, -0.6], 'Cache', { side: 'l', tag: 'l2' });
+  m.callout([LX * 0.62, yT + bh, (Lz0 + Lz1) / 2], 'Die-to-die link', { side: 'l', tag: 'd2d' });
   return { elev: PLATE.ISO.elev, yaw: 3 * Math.PI / 4, sortAxis: [0, 1, 0], start: 2.2, thumbX: 0.5, accent: [111, 139, 166], accentDark: [195, 211, 226] };
 });
 
@@ -2084,7 +2194,8 @@ R('gaa-transistor', function (m) {
   m.tag('src');
   m.prism(epiShape.map(function (q) { return [-q[0], q[1]]; }), -2, 40, 'light', {});
   m.tag('spacer');
-  [[sT, 16], [22, 32]].forEach(function (b) { bx(-spX, b[0], -sW / 2, -gX, b[1], sW / 2, 'dark'); });
+  // (the spacers a pale grey, so they read apart from the gate metal, in ink, round them: designer pass, 22 Nov 2026)
+  [[sT, 16], [22, 32]].forEach(function (b) { bx(-spX, b[0], -sW / 2, -gX, b[1], sW / 2, 'steel'); });
   m.tag('sheet');
   y0.forEach(function (yb) { bx(-spX, yb, -sW / 2, -gX, yb + sT, sW / 2, 'acc'); });
   m.tag('gate');
@@ -2102,26 +2213,32 @@ R('gaa-transistor', function (m) {
   m.tag('gate');
   bx(0, gY0, -gZ, gX, gY1, gZ, GATE);
   m.tag('spacer');
-  [[sT, 16], [22, 32]].forEach(function (b) { bx(gX, b[0], -sW / 2, spX, b[1], sW / 2, 'dark'); });
+  [[sT, 16], [22, 32]].forEach(function (b) { bx(gX, b[0], -sW / 2, spX, b[1], sW / 2, 'steel'); });
   m.tag('sheet');
   y0.forEach(function (yb) { bx(gX, yb, -sW / 2, spX, yb + sT, sW / 2, 'acc'); });
+  m.tag(null);
+  bx(0, gY1, -8, 5, 51, 8, 'dark');
+  // the drain itself pulled a little further along the channel (designer pass, 22 Nov 2026), so the sheets' ends and the inner
+  // spacers between them face the reader in the gap it leaves; at the half's own pull they showed only as slivers
+  var DG = 26, Re = m.part('drainEpi', { mode: 'fixed', ex: [PULL + DG, 0, 0], seq: 2 });
   m.tag('drn');
   m.prism(epiShape, -2, 40, 'light', {});
   m.tag(null);
-  bx(0, gY1, -8, 5, 51, 8, 'dark');
-  var cR = m.part('contactD', { ex: [PULL, 10, 0], seq: 3 });
+  var cR = m.part('contactD', { ex: [PULL + DG, 10, 0], seq: 4 });
   bx(14.5, 40, -10, 23, 48, 10, 'dark');
-  m.guide([[-34, 19, 0, L.idx], [0, 19, 0, L.idx], [0, 19, 0, Rr.idx], [34, 19, 0, Rr.idx]], { style: 'axis', alpha: 0.8 });
+  [[38, -13], [38, 13], [-2, 13]].forEach(function (q) { m.guide([[spX, q[0], q[1], Rr.idx], [spX, q[0], q[1], Re.idx]], { alpha: 0.8 }); });
+  m.guide([[-34, 19, 0, L.idx], [0, 19, 0, L.idx], [0, 19, 0, Rr.idx], [34, 19, 0, Re.idx]], { style: 'axis', alpha: 0.8 });
   [[-gZ, gY1], [gZ, gY1], [gZ, gY0], [-gZ, gY0]].forEach(function (c) { m.guide([[0, c[1], c[0], L.idx], [0, c[1], c[0], Rr.idx]], { alpha: 0.8 }); });
   m.guide([[-18.75, 40, 0, L.idx], [-18.75, 40, 0, cL.idx]], { alpha: 0.8 });
-  m.guide([[18.75, 40, 0, Rr.idx], [18.75, 40, 0, cR.idx]], { alpha: 0.8 });
+  m.guide([[18.75, 40, 0, Re.idx], [18.75, 40, 0, cR.idx]], { alpha: 0.8 });
   // the five numbered parts, as chapter 8 names them (names from data/specimen-parts.json)
   m.anchor(1, 'Source', [-18.2, 30, 17], L.idx);
-  m.anchor(2, 'Drain', [24, 30, 0], Rr.idx);
-  m.anchor(3, 'Silicon sheets', [-10, 19, sW / 2], L.idx);
+  m.anchor(2, 'Drain', [24, 30, 0], Re.idx);
+  // the sheets and the spacers named where their ends face the reader, in the drain's gap
+  m.anchor(3, 'Silicon sheets', [spX, 16 + sT / 2, 7], Rr.idx);
   m.anchor(4, 'Gate metal', [0.05, -6.5, 9], L.idx);
-  m.anchor(5, 'Inner spacers', [-10, 27, sW / 2], L.idx);
-  return { elev: PLATE.ISO.elev, yaw: PLATE.ISO.yaw, calloutOpts: { 1: { tag: 'src', side: 'l' }, 2: { tag: 'drn', side: 'r' }, 3: { tag: 'sheet', side: 'l' }, 4: { tag: 'gate', side: 'l' }, 5: { tag: 'spacer', side: 'l' } }, accent: [111, 139, 166], accentDark: [195, 211, 226] };
+  m.anchor(5, 'Inner spacers', [spX, 27, -5], Rr.idx);
+  return { elev: PLATE.ISO.elev, yaw: PLATE.ISO.yaw, calloutOpts: { 1: { tag: 'src', side: 'l' }, 2: { tag: 'drn', side: 'r' }, 3: { tag: 'sheet', side: 'r', dy: 16 }, 4: { tag: 'gate', side: 'l' }, 5: { tag: 'spacer', side: 'r' } }, accent: [111, 139, 166], accentDark: [195, 211, 226] };
 });
 
 })(window.PLATE);}catch(e){console.warn('plate gaa-transistor.js failed to load', e);}
@@ -2270,24 +2387,31 @@ R('globe', function (m) {
     'Taiwan': [[23.4, 120.6], [24.4, 121.2]], 'South Korea': [[36.4, 127.9]], 'China': [[34.5, 104.0]] };
   var HMAX = 0.24, used = {}, PINS = {};
   ROWS.forEach(function (r, i) { var k = used[r[1]] || 0; used[r[1]] = k + 1; var at = AT[r[1]][k]; (PINS[r[1]] || (PINS[r[1]] = [])).push({ i: i, lat: at[0], lon: at[1], h: HMAX * r[2] / 100 }); });
-  function pin(lat, lon, hgt, col, i) {
+  /* a pin: a foot ring on the surface, a stem as long as the share, a head. Where a country leads several segments its pins lean
+     a little apart, about 9 degrees each way, so each one shows (designer pass, 22 Nov 2026: the Netherlands' two and Taiwan's
+     two stood one over the other and read as one); the lean shortens a pin's rise by about one percent */
+  function pin(lat, lon, hgt, col, i, k, nk) {
     var n = ll(lat, lon, 1), p = m.part('pin' + i, { ex: [n[0] * 0.35, n[1] * 0.35, n[2] * 0.35], seq: 1 + (i % 6), pri: 1 });
-    var a = ll(lat, lon, 1), b = ll(lat, lon, 1 + hgt), foot = [], u = Math.abs(n[1]) < 0.9 ? [0, 1, 0] : [1, 0, 0];
+    var a = ll(lat, lon, 1), foot = [], u = Math.abs(n[1]) < 0.9 ? [0, 1, 0] : [1, 0, 0];
     var e1 = [n[1] * u[2] - n[2] * u[1], n[2] * u[0] - n[0] * u[2], n[0] * u[1] - n[1] * u[0]], L1 = Math.hypot(e1[0], e1[1], e1[2]); e1 = [e1[0] / L1, e1[1] / L1, e1[2] / L1];
     var e2 = [n[1] * e1[2] - n[2] * e1[1], n[2] * e1[0] - n[0] * e1[2], n[0] * e1[1] - n[1] * e1[0]];
-    for (var k = 0; k <= 16; k++) { var t = k * TAU / 16; foot.push([a[0] + 0.02 * (e1[0] * Math.cos(t) + e2[0] * Math.sin(t)), a[1] + 0.02 * (e1[1] * Math.cos(t) + e2[1] * Math.sin(t)), a[2] + 0.02 * (e1[2] * Math.cos(t) + e2[2] * Math.sin(t))]); }
+    var ph = nk > 1 ? k * TAU / nk + 0.6 : 0, lean = nk > 1 ? Math.tan(9 * RAD) : 0, d = [n[0] + lean * (e1[0] * Math.cos(ph) + e2[0] * Math.sin(ph)), n[1] + lean * (e1[1] * Math.cos(ph) + e2[1] * Math.sin(ph)), n[2] + lean * (e1[2] * Math.cos(ph) + e2[2] * Math.sin(ph))], dl = Math.hypot(d[0], d[1], d[2]);
+    var b = [a[0] + d[0] / dl * hgt, a[1] + d[1] / dl * hgt, a[2] + d[2] / dl * hgt];
+    for (var q = 0; q <= 16; q++) { var t = q * TAU / 16; foot.push([a[0] + 0.016 * (e1[0] * Math.cos(t) + e2[0] * Math.sin(t)), a[1] + 0.016 * (e1[1] * Math.cos(t) + e2[1] * Math.sin(t)), a[2] + 0.016 * (e1[2] * Math.cos(t) + e2[2] * Math.sin(t))]); }
     m.wire(foot, { col: col, lw: 0.8, vis: a, c: a });
-    m.wire([a, b], { col: col, lw: 2.5, vis: a, c: b });
-    m.dots([b], { col: col, r: 3.5, front: false, c: b });
+    m.wire([a, b], { col: col, lw: 1.7, vis: a, c: b });
+    m.dots([b], { col: col, r: 3, front: false, c: b });
     m.cur.items[m.cur.items.length - 1].vis = a;
+    HEAD[i] = b;
   }
-  Object.keys(PINS).forEach(function (cn) { PINS[cn].forEach(function (q) { pin(q.lat, q.lon, q.h, 'acc', q.i); }); });
+  var HEAD = {};
+  Object.keys(PINS).forEach(function (cn) { PINS[cn].forEach(function (q, k) { pin(q.lat, q.lon, q.h, 'acc', q.i, k, PINS[cn].length); }); });
   // the Earth's axis as a centre line, and one label for each country, with leaders to its pins
   m.use(g);
   m.guide([[0, 1, 0, g.idx], [0, 1.3, 0, g.idx]], { style: 'axis', alpha: 0.9, front: true });
   m.guide([[0, -1.3, 0, g.idx], [0, -1, 0, g.idx]], { style: 'axis', alpha: 0.9 });
   var partOf = function (i) { return m.parts.filter(function (p) { return p.name === 'pin' + i; })[0].idx; };
-  var head = function (q) { var v = ll(q.lat, q.lon, 1 + q.h); return [v[0], v[1], v[2], partOf(q.i)]; };
+  var head = function (q) { var v = HEAD[q.i]; return [v[0], v[1], v[2], partOf(q.i)]; };
   // the globe turns, so each label carries its country's pins (track): a leader fades in as a pin comes round to the label's
   // side and out as it nears the rim. The first pin sets the label's height in the drawn view
   [['Netherlands', 'l'], ['United States', 'l'], ['China', 'r'], ['South Korea', 'r'], ['Japan', 'r'], ['Taiwan', 'r']].forEach(function (c) {
@@ -2356,10 +2480,13 @@ R('gpu-baseboard', function (m) {
   m.tag(null);
   m.use(mp);
   [mods[0], mods[6]].forEach(function (md) { [[-1, -1], [1, 1], [1, -1], [-1, 1]].forEach(function (c) { m.guide([[md[0] + c[0] * (LW / 2 + 0.012), top, md[1] + c[1] * (LD / 2 + 0.01), board.idx], [md[0] + c[0] * (LW / 2 + 0.012), top + MH - 0.033, md[1] + c[1] * (LD / 2 + 0.01), mp.idx]], { alpha: 0.75 }); }); });
-  m.callout([[mods[4][0] + 0.03, top + MH - 0.005, mods[4][1] + 0.06, mp.idx], [mods[7][0] + 0.03, top + MH - 0.005, mods[7][1] - 0.06, mpS.idx]], 'Accelerator modules', { side: 'r', tag: 'modules' });
-  m.callout([mods[6][0] + MW / 2, top + MH * 0.6, mods[6][1] - MD * 0.1, board.idx], 'Module frames', { side: 'r', tag: 'frames' });
-  // one leader to each chip, on the part the lifted modules leave in view
-  m.callout([0.175 + 0.09, top + 0.05, 0.06, board.idx], 'NVLink switch chips', { side: 'r', tag: 'switch' });
+  // (designer pass, 22 Nov 2026: one leader, to the lifted module nearest the labels, which crosses nothing; the second ran
+  // 93 px across the board to a seated one. Pointing at the label still lights all eight, by their tag)
+  m.callout([mods[6][0] + 0.075, top + MH + 0.017, mods[6][1] - 0.045, mp.idx], 'Accelerator modules', { side: 'r', tag: 'modules' });
+  // (on the empty frame's rim, by its right corner: on its side face the dot fell on the connector in front of it)
+  m.callout([mods[6][0] + MW / 2 - kerb / 2, top + MH, mods[6][1] - MD * 0.3, board.idx], 'Module frames', { side: 'r', tag: 'frames' });
+  // the nearer chip's top, its leader dropping steeply past the seated modules to a label under the others
+  m.callout([0.175 + 0.095, top + 0.05, 0.07, board.idx], 'NVLink switch chips', { side: 'r', tag: 'switch' });
   return { elev: PLATE.ISO.elev, yaw: PLATE.ISO.yaw, sortAxis: [0, 1, 0], accent: [111, 139, 166], accentDark: [195, 211, 226] };
 });
 
@@ -2432,7 +2559,7 @@ R('hbm-stack', function (m) {
   [[-hw, -hw], [hw, -hw], [-hw, hw]].forEach(function (c) { m.guide([[c[0], 0, c[1], base.idx], [c[0], gap0 + pitch * 11, c[1], prev.idx]], { alpha: 0.6 }); });
   // what each numbered part lights, as its light table in data/specimen-parts.json does: every memory die in ink, every via and
   // every microbump in copper
-  var loupe = LOUPE ? { model: 'hbm-loupe', at: [TX * 2.5, gap0 + pitch * 9 + t / 2, hw * 0.55], part: 'die10', side: 'r', r: 0.155, rMax: 100, scale: 0.86, caption: ['Microbumps about 20\u00a0\u00b5m apart', 'in a 7\u00a0\u00b5m gap'] } : null;
+  var loupe = LOUPE ? { model: 'hbm-loupe', at: [TX * 2.5, gap0 + pitch * 9 + t / 2, hw * 0.55], part: 'die10', side: 'r', r: 0.155, rMax: 100, scale: 0.6, dx: -0.1, dy: 0.04, caption: ['Microbumps about 20\u00a0\u00b5m apart', 'in a 7\u00a0\u00b5m gap'] } : null;
   return { elev: PLATE.ISO.elev, yaw: PLATE.ISO.yaw, sortAxis: [0, 1, 0], loupe: loupe, calloutOpts: { 1: { tag: 'dies', only: 'ink' }, 3: { tag: 'tsv', only: 'accent' }, 4: { tag: 'bumps', only: 'accent' } }, accent: [176, 102, 44], accentDark: [224, 154, 92] };
 });
 
@@ -2444,16 +2571,18 @@ R('hbm-loupe', function (m) {
   var bar = PLATE.loupeBar, tag = PLATE.loupeTag;
   function bx(x0, y0, z0, x1, y1, z1, mat, fmat) { return m.box({ c: [(x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2], s: [x1 - x0, y1 - y0, z1 - z0], fmat: fmat }, mat); }
   m.part('st', { mode: 'stack' });
-  var t = 30, g = 7, Z = 40, x0 = -70, x1 = 70, n = 3, P = 20;
+  // (designer pass, 22 Nov 2026: the section is narrower and stands left of the disc's middle, so the gap's figure sits in
+  // clear ground beside it and the die's name over the stack, neither on the cut faces nor past the disc's edge)
+  var t = 30, g = 7, Z = 40, x0 = -50, x1 = 50, n = 3, P = 20;
   for (var i = 0; i < n; i++) {
     var y0 = i * (t + g);
     bx(x0, y0, -Z, x1, y0 + t, Z, 'light', { pz: 'cut' });
     if (i < n - 1) for (var bp = x0 + 10; bp < x1 - 5; bp += P) bx(bp - 4.5, y0 + t, -2, bp + 4.5, y0 + t + g, Z, 'acc', { pz: 'cutAcc' });
-    [x0 + 30, x0 + 110].forEach(function (vx) { bx(vx - 2.2, y0, -2, vx + 2.2, y0 + t, Z + 0.02, 'acc', { pz: 'cutAcc' }); });
+    [x0 + 10, x0 + 70].forEach(function (vx) { bx(vx - 2.2, y0, -2, vx + 2.2, y0 + t, Z + 0.02, 'acc', { pz: 'cutAcc' }); });
   }
-  bar(m, [x0 + 10, -7, Z], [x0 + 30, -7, Z], '20 \u00b5m', { side: -1 });
-  bar(m, [x1 + 6, t, Z + 1], [x1 + 6, t + g, Z + 1], '7 \u00b5m', { side: 1 });
-  tag(m, [x0 + 52, t + g + t / 2, Z + 10], 'Memory die', {});
+  bar(m, [x0 + 30, -8, Z], [x0 + 50, -8, Z], '20 \u00b5m', { side: -1 });
+  bar(m, [x1 + 22, t, Z + 1], [x1 + 22, t + g, Z + 1], '7 \u00b5m', { side: 1 });
+  tag(m, [-6, n * t + (n - 1) * g + 17, -Z], 'Memory die', {});
   return { elev: 0.16, yaw: -0.14, accent: [176, 102, 44], accentDark: [224, 154, 92] };
 });
 
@@ -2516,30 +2645,35 @@ R('photomask', function (m) {
   m.guide([[0, -T / 2 - 6, 0, blank.idx], [0, yM + 4, 0, mem.idx]], { style: 'axis', alpha: 0.8 });
   m.callout([B / 2, -T / 2 + 1.6, -B * 0.22, blank.idx], 'Glass plate', { side: 'r' });
   m.dim([B / 2, -T / 2, B / 2], [B / 2, T / 2, B / 2], [10, 0, 0], '6.35 mm', { t: 0.5, part: blank.idx });
-  m.callout([-B * 0.18, yTop - ml / 2, B / 2, blank.idx], 'Mirror coating', { side: 'l' });
+  // (on a phone, in rows, the coating is named on the right face, by the corner, where its upright leader crosses nothing: on
+  // the left face it ran through the 152.4 mm figure)
+  m.callout([-B * 0.18, yTop - ml / 2, B / 2, blank.idx], 'Mirror coating', { side: 'l', rowAt: [B / 2, yTop - ml / 2, -B * 0.34, blank.idx] });
   m.callout([-FW * 0.28, yM, FD * 0.22, mem.idx], 'Pellicle', { side: 'l' });
-  var loupe = { model: 'mask-loupe', at: [B / 2, yTop - ml / 2, B * 0.18], part: 'blank', side: 'r', r: 0.15, rMax: 96, scale: 0.8, caption: ['The coating\u2019s edge,', 'at true thickness'] };
+  var loupe = { model: 'mask-loupe', at: [B / 2, yTop - ml / 2, B * 0.18], part: 'blank', side: 'r', r: 0.15, rMax: 96, scale: 0.74, dx: -0.15, inset: 26, caption: ['The coating\u2019s edge,', 'at true thickness'] };
   return { elev: PLATE.ISO.elev, yaw: PLATE.ISO.yaw, sortAxis: [0, 1, 0], loupe: loupe, accent: [111, 139, 166], accentDark: [195, 211, 226] };
 });
 
 /* The loupe's plate, in nanometres, seen almost face on so its cut face reads as a section: the glass, about forty pairs of
    layers (each pair 7 nm, drawn as a silicon layer and a molybdenum layer of half a pair each; the paper gives the pair, not
    the split), the 3 nm ruthenium cap, and two lines of absorber 60 nm tall (58 nm TaBN and 2 nm TaBO), all from the imec and
-   PTB paper chapter 5 cites. Only the absorber's height and the pair count carry figures. */
+   PTB paper chapter 5 cites. Only the absorber's height and the pair count carry figures.
+   22 Nov 2026 designer pass: the section stands left of the disc's middle and its names stand in the clear ground to its
+   right, so none is laid over the layers it names: the absorber's name over the line it names with its height beside it, the
+   pairs named by a bar the height of the stack, the glass by a short leader. The heights keep their true proportion. */
 R('mask-loupe', function (m) {
   var bar = PLATE.loupeBar, tag = PLATE.loupeTag;
   function bx(x0, y0, x1, y1, mat, fmat) { return m.box({ c: [(x0 + x1) / 2, (y0 + y1) / 2, 0], s: [x1 - x0, y1 - y0, 60], fmat: fmat }, mat); }
   m.part('st', { mode: 'stack' });
-  var X0 = -120, X1 = 120, NP = 40, PR = 7, g0 = -40;
-  bx(X0, g0 - 45, X1, g0, 'light', { pz: 'cut' });
+  var X0 = -130, X1 = 90, NP = 40, PR = 7, g0 = -40, gB = g0 - 40;
+  bx(X0, gB, X1, g0, 'light', { pz: 'cut' });
   for (var i = 0; i < NP; i++) { var y = g0 + i * PR; bx(X0, y, X1, y + PR / 2, 'acc'); bx(X0, y + PR / 2, X1, y + PR, 'dark'); }
   var yc = g0 + NP * PR;
   bx(X0, yc, X1, yc + 3, 'mid');
-  [[-100, -30], [15, 85]].forEach(function (a) { bx(a[0], yc + 3, a[1], yc + 3 + 60, 'dark', { pz: 'cutDense' }); });
-  bar(m, [96, yc + 3, 30], [96, yc + 63, 30], '58 nm', { side: 1 });
-  tag(m, [-65, yc + 78, 30], 'Absorber', {});
-  tag(m, [0, g0 + NP * PR / 2, 30], 'About 40 layer pairs', {});
-  tag(m, [0, g0 - 24, 30], 'Glass', {});
+  [[-120, -80], [-48, -8]].forEach(function (a) { bx(a[0], yc + 3, a[1], yc + 3 + 60, 'dark', { pz: 'cutDense' }); });
+  bar(m, [14, yc + 3, 30], [14, yc + 63, 30], '58 nm', { side: 1 });
+  tag(m, [-28, yc + 63 + 26, 30], 'Absorber', {});
+  bar(m, [X1 + 18, g0, 30], [X1 + 18, yc, 30], 'About 40\nlayer pairs', { side: 1 });
+  tag(m, [X1 + 16, gB - 22, 30], 'Glass', { align: 'left', lead: [X1 - 30, (gB + g0) / 2, 30] });
   return { elev: 0.06, yaw: -0.05, accent: [111, 139, 166], accentDark: [195, 211, 226] };
 });
 
@@ -2566,7 +2700,7 @@ R('probe-card', function (m) {
   for (var gx = -6; gx <= 5; gx++) for (var gz = -5; gz <= 4; gz++) {
     var cx = (gx + 0.5) * dw, cz = (gz + 0.5) * dh, cor = [[cx - dw / 2, cz - dh / 2], [cx + dw / 2, cz - dh / 2], [cx - dw / 2, cz + dh / 2], [cx + dw / 2, cz + dh / 2]];
     if (!cor.every(function (c) { return c[0] * c[0] + c[1] * c[1] < 0.96; })) continue;
-    if (gx >= -1 && gx <= 0 && gz >= -1 && gz <= 0) { probed.push(D.rect(cx - dw / 2, cz - dh / 2, cx + dw / 2, cz + dh / 2, wT, { fill: 'acc', lw: 0.6, col: 'acc', keep: true, tag: 'dies' })); continue; }
+    if (gx >= -1 && gx <= 0 && gz >= -1 && gz <= 0) { probed.push(D.rect(cx - dw / 2, cz - dh / 2, cx + dw / 2, cz + dh / 2, wT, { fill: 'accDark', lw: 0.6, col: 'acc', keep: true, tag: 'dies' })); continue; }
     dies.push(D.rect(cx - dw / 2, cz - dh / 2, cx + dw / 2, cz + dh / 2, wT, { lw: 0.4, alpha: 0.7 }));
   }
   m.prism(shape, -wT, wT, 'accLight', { smooth: true, top: dies.concat(probed) });
@@ -2675,32 +2809,54 @@ R('process-chamber', function (m) {
   m.guide([[0, yFlo, 0, ves.idx], [0, yFlo - 0.36, 0, pump.idx]], { style: 'axis', alpha: 0.85 });
   var cu = [Math.cos(a0), Math.sin(a0)], cw = [Math.cos(a1), Math.sin(a1)];
   m.callout([0.03 * cw[0], yLid + 0.13, 0.03 * cw[1], lid.idx], 'Gas in', { side: 'r' });
-  m.callout([0.15 * cu[0], 0.035, 0.15 * cu[1], plp.idx], 'Plasma', { side: 'l' });
+  // (designer pass, 22 Nov 2026: the plasma is named from the right, on the lens's own cut face, and the loupe takes the wafer's
+  // left side, so neither the plasma's leader nor the loupe's cone runs across the whole chamber)
+  m.callout([0.1 * cw[0], 0.03, 0.1 * cw[1], plp.idx], 'Plasma', { side: 'r' });
   m.callout([0.148 * cw[0], yPed + WT, 0.148 * cw[1], wfp.idx], 'Wafer', { side: 'r' });
   m.callout([0.168 * cu[0], yPed - 0.05, 0.168 * cu[1], chk.idx], 'Chuck', { side: 'l' });
   m.callout([0.146 * cw[0], yFlo - 0.2, 0.146 * cw[1], pump.idx], 'Pump', { side: 'r' });
-  var loupe = { model: 'etch-loupe', at: [0.06 * cw[0], yPed + WT, 0.06 * cw[1]], part: 'wafer', side: 'l', r: 0.15, rMax: 92, scale: 0.78, caption: ['A hole ten times', 'deeper than it is wide'] };
+  var lt = a0 + 0.55, loupe = { model: 'etch-loupe', at: [0.1 * Math.cos(lt), yPed + WT, 0.1 * Math.sin(lt)], part: 'wafer', side: 'l', r: 0.15, rMax: 92, scale: 0.8, dx: -0.12, caption: ['A hole ten times', 'deeper than it is wide'] };
   return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, loupe: loupe, accent: [109, 92, 201], accentDark: [176, 164, 240], accent2: [111, 139, 166], accent2Dark: [195, 211, 226] };
 });
 
 /* The loupe's plate: a cut through the wafer's surface with one hole etched into it, ten times deeper than it is wide, the
    ratio in the US rule of December 2024 that chapter 6 cites. The hole's real size depends on the chip, so it carries no
-   figure; the ratio is the point. A mask of photoresist lies on top, opened over the hole. */
+   figure; the ratio is the point. A mask of photoresist lies on top, opened over the hole.
+   22 Nov 2026 designer pass: one block of silicon, cut down the hole's axis and seen a little from above, so the hole reads as
+   a round hole, its far half a curved wall and its mouth a half circle in the top face (it was three separate boxes, which read
+   as two pillars with a slot between them). The names stand beside the block, each with a short leader. */
 R('etch-loupe', function (m) {
   var tag = PLATE.loupeTag;
-  function bx(x0, y0, x1, y1, mat, fmat) { return m.box({ c: [(x0 + x1) / 2, (y0 + y1) / 2, 0], s: [x1 - x0, y1 - y0, 8], fmat: fmat }, mat); }
   m.part('st', { mode: 'stack' });
-  var W = 1, Dp = 10, X0 = -5.5, X1 = 5.5, Y0 = -Dp - 1.6;
-  // the silicon, cut through the hole's middle: left and right of the hole, and the floor beneath it
-  bx(X0, Y0, -W / 2, 0, 'acc2Light', { pz: 'cutAcc2' });
-  bx(W / 2, Y0, X1, 0, 'acc2Light', { pz: 'cutAcc2' });
-  bx(-W / 2, Y0, W / 2, -Dp, 'acc2Light', { pz: 'cutAcc2' });
-  // the resist mask, opened over the hole
-  bx(X0, 0, -W / 2, 0.6, 'mid', { pz: 'cutDense' });
-  bx(W / 2, 0, X1, 0.6, 'mid', { pz: 'cutDense' });
-  tag(m, [-3.1, -5, 4.2], 'Silicon', {});
-  tag(m, [3.0, 1.35, 4.2], 'Resist', {});
-  return { elev: 0.05, yaw: -0.04, accent: [109, 92, 201], accentDark: [176, 164, 240], accent2: [111, 139, 166], accent2Dark: [195, 211, 226] };
+  var W = 1, Dp = 10, X0 = -3.1, X1 = 3.1, Y0 = -Dp - 1.5, RT = 0.7, Dz = 2.6, N = 14;
+  /* a block x X0..X1, y ya..yb, z -Dz..0 (its cut face toward the reader at z = 0), with the far half of a round hole of
+     radius r down its axis from its top to y = yh (a blind hole has a floor there; yh = ya runs it through) */
+  // the hole's wall a shade deeper than the block's faces, so it reads as a hollow
+  var wallMat = { d: 0.42, c: 'acc2', even: true };
+  function holeBlock(ya, yb, yh, r, mat, cutMat, blind) {
+    var s = m.begin(mat, { sortFaces: true }), v = function (x, y, z) { return m.v([x, y, z]); };
+    var th = []; for (var j = 0; j <= N; j++) th.push(Math.PI + Math.PI * j / N);
+    var At = th.map(function (t) { return v(r * Math.cos(t), yb, r * Math.sin(t)); }), Ab = th.map(function (t) { return v(r * Math.cos(t), yh, r * Math.sin(t)); });
+    var T0 = v(X0, yb, 0), T1 = v(X1, yb, 0), T2 = v(X1, yb, -Dz), T3 = v(X0, yb, -Dz), B0 = v(X0, ya, 0), B1 = v(X1, ya, 0), B2 = v(X1, ya, -Dz), B3 = v(X0, ya, -Dz);
+    var cut = { mat: cutMat };
+    if (blind) m.face([B0, B1, T1, At[N], Ab[N], Ab[0], At[0], T0], [0, 0, 1], cut);
+    else { m.face([B0, Ab[0], At[0], T0], [0, 0, 1], cut); m.face([Ab[N], B1, T1, At[N]], [0, 0, 1], cut); }
+    m.face([T0, At[0]].concat(At.slice(1, N), [At[N], T1, T2, T3]), [0, 1, 0]);
+    m.face([B1, B2, T2, T1], [1, 0, 0]); m.face([B0, T0, T3, B3], [-1, 0, 0]); m.face([B3, T3, T2, B2], [0, 0, -1]);
+    if (blind) m.face([B0, B3, B2, B1], [0, -1, 0]); else m.face([B0, B3, B2, B1, Ab[N]].concat(Ab.slice(1, N).reverse(), [Ab[0]]), [0, -1, 0]);
+    for (j = 0; j < N; j++) {
+      var tm = (th[j] + th[j + 1]) / 2;
+      m.face([Ab[j], Ab[j + 1], At[j + 1], At[j]], [-Math.cos(tm), 0, -Math.sin(tm)], { curve: true, mj: j, mat: wallMat });
+      if (j > 0) m.ecls(Ab[j], At[j], 0);
+    }
+    if (blind) m.face(Ab.slice(), [0, 1, 0]);
+    return m.end();
+  }
+  holeBlock(Y0, 0, -Dp, W / 2, 'acc2Light', 'cutAcc2', true);
+  holeBlock(0, RT, 0, W / 2, 'mid', { d: 0.08, hatch: 1, ang: 45, gap: 2.2 }, false);
+  tag(m, [X1 + 1.5, RT + 1.1, 0], 'Resist', { align: 'left', lead: [X1 - 0.6, RT, -0.9] });
+  tag(m, [X1 + 1.5, -6.2, 0], 'Silicon', { align: 'left', lead: [X1, -5.2, -1.1] });
+  return { elev: 0.3, yaw: -0.32, accent: [109, 92, 201], accentDark: [176, 164, 240], accent2: [111, 139, 166], accent2Dark: [195, 211, 226] };
 });
 
 })(window.PLATE);}catch(e){console.warn('plate process-chamber.js failed to load', e);}
@@ -2755,13 +2911,17 @@ R('rack', function (m) {
   // the busbar, copper, with a clip at every tray, pulled back out of the rear
   var bb = m.part('busbar', { ex: [0, 0, -2.25], seq: 4 });
   m.box({ c: [0, syc, zS + 0.02], s: [0.052, sh + 0.10, 0.03] }, 'acc');
-  m.dim([W / 2, 0, back], [W / 2, Ht, back], [0.1, 0, 0], '2,236 mm', { part: cab.idx, t: 0.62 });
+  // its trace lines back to its place at the rear, top and foot, so the bar reads as pulled from the rack (designer pass)
+  [syc + (sh + 0.10) / 2, syc - (sh + 0.10) / 2].forEach(function (yy) { m.guide([[0, yy, zS + 0.035, cab.idx], [0, yy, zS + 0.035, bb.idx]], { alpha: 0.7 }); });
+  // (designer pass, 22 Nov 2026: the figure stands low on its line, under the busbar's foot; at 0.62 it ran into the bar)
+  m.dim([W / 2, 0, back], [W / 2, Ht, back], [0.1, 0, 0], '2,236 mm', { part: cab.idx, t: 0.3 });
   // designer pass (21 Nov 2026): the width taken further out in front, so its figure clears the rack's foot
   m.dim([-W / 2, 0, front], [W / 2, 0, front], [0, 0, 0.2], '600 mm', { part: cab.idx });
   var pp = {}; pulled.forEach(function (q) { pp[q[0]] = q[1]; });
   m.callout([-tW * 0.3, slots[6].y, fz, pp[6].idx], 'Power shelf', { side: 'l' });
   m.callout([-tW * 0.3, slots[20].y, fz, pp[20].idx], 'NVLink switch tray', { side: 'l' });
-  m.callout([-tW * 0.3, slots[30].y, fz, pp[30].idx], 'Compute tray', { side: 'l' });
+  // (on a phone, where the labels stand in rows, the compute tray is named from the top row, clear of the trays under it)
+  m.callout([-tW * 0.3, slots[30].y, fz, pp[30].idx], 'Compute tray', { side: 'l', row: 't' });
   m.callout([0.026, syc + 0.35, zS + 0.02, bb.idx], 'Copper busbar', { side: 'r' });
   return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, accent: [176, 102, 44], accentDark: [224, 154, 92], accent2: [117, 132, 144], accent2Dark: [198, 206, 213] };
 });
@@ -2846,8 +3006,9 @@ R('sem-column', function (m) {
   m.guide([[0, 1.268, 0, parts.gun.idx], [0, 1.10, 0, parts.gun.idx], [0, 1.10, 0, parts.c1.idx], [0, 0.48, 0, parts.c1.idx], [0, 0.48, 0, parts.c2.idx], [0, 0.12, 0, parts.c2.idx], [0, 0.12, 0, parts.sc.idx], [0, -0.30, 0, parts.sc.idx], [0, -0.30, 0, parts.ob.idx], [0, -0.815, 0, parts.ob.idx], [0, -0.815, 0, parts.det.idx], [0, -0.86, 0, parts.det.idx], [0, -0.86, 0, parts.st.idx], [0, yW, 0, parts.st.idx]], { style: 'beam', col: 'acc', lw: 1.3 });
   var w2 = [Math.cos(a1), Math.sin(a1)];
   m.callout([0, 1.27, 0, parts.gun.idx], 'Emitter', { side: 'r' });
-  m.callout([[0.27 * u[0], 0.60, 0.27 * u[1], parts.c1.idx], [0.3 * u[0], -0.43, 0.3 * u[1], parts.ob.idx]], 'Lenses', { side: 'l' });
-  m.callout([0, 0.03, 0, parts.sc.idx], 'Electron beam', { side: 'r' });
+  m.callout([[0.27 * u[0], 0.60, 0.27 * u[1], parts.c1.idx], [0.3 * u[0], -0.43, 0.3 * u[1], parts.ob.idx]], 'Lenses', { side: 'l', row: 't' });
+  // (on a phone the lenses and the beam are named from the top row, so their leaders rise beside the narrow column)
+  m.callout([0, 0.03, 0, parts.sc.idx], 'Electron beam', { side: 'r', row: 't' });
   m.callout([-0.3 * du[0], yW + 0.004, -0.3 * du[1], parts.st.idx], 'Wafer', { side: 'l', tag: 'wafer' });
   m.callout([0.15 * u[0], -0.855, 0.15 * u[1], parts.det.idx], 'Detector', { side: 'l', tag: 'detector' });
   return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, sortAxis: [0, 1, 0], accent: [107, 127, 209], accentDark: [167, 180, 245], accent2: [111, 139, 166], accent2Dark: [195, 211, 226] };
@@ -2880,11 +3041,13 @@ R('substrate-layers', function (m) {
       it.push(poly(0, -lay[k], L, -lay[k - 1], { fill: k % 2 ? FILM_A : FILM_B, lw: 0, keep: true, tag: 'film' }));
     }
     [1, -1].forEach(function (sg) { it.push(poly(0, sg > 0 ? lay[nb] : -top, L, sg > 0 ? top : -lay[nb], { fill: 'dark', lw: 0 })); });
-    // copper on every conductor plane, as traces in section
+    // copper on every conductor plane, as traces in section: longer runs with short breaks, and every third plane nearly whole
+    // (a power or ground plane), so the bands read as layers (designer pass, 22 Nov 2026: short random dashes on every plane
+    // read as a brick wall)
     [1, -1].forEach(function (sg) {
       for (k = 0; k <= nb; k++) {
-        var y = sg * lay[k]; u = 0.4;
-        while (u < L - 0.4) { var w = 0.4 + rnd() * (k === 0 ? 5 : 2.8); if (u + w > L - 0.4) break; it.push({ pts: [toP(u, y), toP(u + w, y)], col: 'acc2', lw: 1.3, tag: 'cu' }); u += w + 0.4 + rnd() * 2; }
+        var y = sg * lay[k], plane = k % 3 === 0; u = 0.4 + rnd() * 1.2;
+        while (u < L - 0.4) { var w = plane ? 6 + rnd() * 9 : 2.2 + rnd() * 3.8; if (u + w > L - 0.4) w = L - 0.4 - u; if (w < 0.8) break; it.push({ pts: [toP(u, y), toP(u + w, y)], col: 'acc2', lw: plane ? 1.2 : 1.05, tag: 'cu' }); u += w + (plane ? 0.5 + rnd() * 0.5 : 0.7 + rnd() * 1.1); }
       }
     });
     // plated through-holes and their pads
@@ -2961,7 +3124,9 @@ R('wafer-cost', function (m) {
       m.box({ c: [0, yc, 0], s: [CW, h, CW] }, 'ghost');
       ['pz', 'px', 'nz', 'nx'].forEach(function (f) { m.wire([at(f, -CW / 2, -h / 2), at(f, CW / 2, h / 2)].map(function (p) { return [p[0], p[1] + yc, p[2]]; }), { lw: 0.6, alpha: 0.7, c: [0, yc, 0] }); m.wire([at(f, CW / 2, -h / 2), at(f, -CW / 2, h / 2)].map(function (p) { return [p[0], p[1] + yc, p[2]]; }), { lw: 0.6, alpha: 0.7, c: [0, yc, 0] }); });
     } else m.box({ c: [0, yc, 0], s: [CW, h, CW], decals: dec }, b[2]);
-    m.callout([CW / 2, yc, CW * 0.2], b[0], { side: 'r', col: i === 0 ? 'acc' : null, strong: i === 0 });
+    // (on a phone, where the labels stand in rows, the three lower layers are named from under the column and the two upper from
+    // over it, so no leader rises across a layer it does not name: designer pass, 22 Nov 2026)
+    m.callout([CW / 2, yc, CW * 0.2], b[0], { side: 'r', col: i === 0 ? 'acc' : null, strong: i === 0, row: i <= 2 ? 'b' : 't' });
     y += h;
   });
   var TOP = y;

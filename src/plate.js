@@ -272,7 +272,7 @@
     o = o || {};
     var pts = at[0] && at[0].length ? at : [at], own = null;
     pts.forEach(function (q) { if (own == null && q[3] != null) own = q[3]; });
-    this.callouts.push({ pts: pts.map(function (q) { return [q[0], q[1], q[2], q[3] == null ? null : q[3]]; }), text: text, n: o.n || 0, part: o.part != null ? o.part : own != null ? own : this.cur.idx, side: o.side || null, tag: o.tag || null, dy: o.dy || 0, focus: o.focus || null, strong: !!o.strong, col: o.col || null, only: o.only || null, track: o.track || null });
+    this.callouts.push({ pts: pts.map(function (q) { return [q[0], q[1], q[2], q[3] == null ? null : q[3]]; }), text: text, n: o.n || 0, part: o.part != null ? o.part : own != null ? own : this.cur.idx, side: o.side || null, tag: o.tag || null, dy: o.dy || 0, focus: o.focus || null, strong: !!o.strong, col: o.col || null, only: o.only || null, track: o.track || null, row: o.row || null, rowAt: o.rowAt ? (o.rowAt[0] && o.rowAt[0].length ? o.rowAt : [o.rowAt]) : null });
   };
   function centroid(pts) { var c = [0, 0, 0]; pts.forEach(function (p) { c[0] += p[0]; c[1] += p[1]; c[2] += p[2]; }); return [c[0] / pts.length, c[1] / pts.length, c[2] / pts.length]; }
   function mapItems(items, fn) {
@@ -529,7 +529,7 @@
       var pts = (an.at[0] && an.at[0].length ? an.at : [an.at]).map(function (q) { return [q[0], q[1], q[2], an.part]; });
       if (an.multi) an.multi.forEach(function (mq) { pts.push([mq[1][0], mq[1][1], mq[1][2], mq[0]]); });
       var o = (spec.calloutOpts && spec.calloutOpts[an.n]) || {};
-      m.callouts.push({ pts: pts, text: an.name, n: an.n, part: an.part, side: o.side || null, tag: o.tag || null, dy: o.dy || 0, focus: o.focus || null, only: o.only || null });
+      m.callouts.push({ pts: pts, text: an.name, n: an.n, part: an.part, side: o.side || null, tag: o.tag || null, dy: o.dy || 0, focus: o.focus || null, only: o.only || null, row: o.row || null });
     });
     m.callouts.sort(function (a, b) { return (a.n || 99) - (b.n || 99); });
     m.loupe = spec.loupe || null;
@@ -562,8 +562,11 @@
      in the top corner of a label column, joined by a faint cone to a ring on the spot it magnifies, with scale bars in the
      site's figures (P.loupeBar) and names (P.loupeTag), and its caption under the disc. It shows where the plate shows its
      dimensions (a chapter's slot and print), and fades with the labels. Memory and HBM's is behind a flag in its model file. */
-  P.loupeBar = function (m, a, b, text, o) { o = o || {}; (m.bars || (m.bars = [])).push({ a: a, b: b, text: text, side: o.side, tx: o.tx, ty: o.ty }); };
-  P.loupeTag = function (m, at, text, o) { o = o || {}; (m.tags || (m.tags = [])).push({ at: at, text: text, dx: o.dx, dy: o.dy, align: o.align, col: o.col }); };
+  // a name or a figure may run to two lines ('\n'); a name may carry a short leader to the point it names (o.lead, in the loupe
+  // model's units), so it can stand in the disc's clear ground beside the drawing (22 Nov 2026 designer pass: names laid over
+  // the layers they named collided with them)
+  P.loupeBar = function (m, a, b, text, o) { o = o || {}; (m.bars || (m.bars = [])).push({ a: a, b: b, text: text, side: o.side, tx: o.tx, ty: o.ty, align: o.align }); };
+  P.loupeTag = function (m, at, text, o) { o = o || {}; (m.tags || (m.tags = [])).push({ at: at, text: text, dx: o.dx, dy: o.dy, align: o.align, col: o.col, lead: o.lead || null }); };
 
   /* ---------------- drawing back-ends ---------------- */
   var FONT = '"Hanken Grotesk", "Helvetica Neue", Arial, sans-serif';
@@ -771,12 +774,14 @@
     var ls = this.labelStyle(w), e = this.ext || (this.ext = this.extent()), R = viewM(m.yaw0, m.elev), off = this.offsets(1).o, mid = (e.minx + e.maxx) / 2, midY = (e.miny + e.maxy) / 2;
     var room = { l: 0, r: 0, t: 0, b: 0 }, rows = this.rowsOn(w);
     m.callouts.forEach(function (c) {
-      var mx = 0, my = 0; c.pts.forEach(function (q) { var o = off[q[3] == null ? c.part : q[3]] || [0, 0, 0], x = q[0] + o[0], y = q[1] + o[1], z = q[2] + o[2]; mx += R[0] * x + R[1] * y + R[2] * z; my += R[3] * x + R[4] * y + R[5] * z; }); mx /= c.pts.length; my /= c.pts.length;
+      // (in rows a label may point at another spot on its part, c.rowAt, where an upright leader runs clear)
+      var mx = 0, my = 0, src = rows && c.rowAt ? c.rowAt : c.pts; src.forEach(function (q) { var o = off[q[3] == null ? c.part : q[3]] || [0, 0, 0], x = q[0] + o[0], y = q[1] + o[1], z = q[2] + o[2]; mx += R[0] * x + R[1] * y + R[2] * z; my += R[3] * x + R[4] * y + R[5] * z; }); mx /= src.length; my /= src.length;
       var lines = ls.numbersOnly && c.n ? [] : self.wrap(c.text, ls, g), tw = 0;
       lines.forEach(function (s) { tw = Math.max(tw, g ? g.measure(s, { size: ls.fs, weight: 500 }) : s.length * ls.fs * 0.53); });
       c._lines = lines;
       if (rows) {
-        var row = my > midY ? 't' : 'b'; c._side = row;
+        // (a label may keep to one row, c.row, where the other would set it over a loupe's cone)
+        var row = c.row || (my > midY ? 't' : 'b'); c._side = row;
         var hh = Math.max(1, lines.length) * ls.fs * 1.18 + 18;
         if (hh > room[row]) room[row] = hh;
         return;
@@ -787,9 +792,10 @@
     });
     // the loupe takes the top of its label column, which is then at least as wide as the disc; on a narrow plate it sits under
     // the drawing
-    var LG = this.loupeOn() ? this.loupeGeom(w) : null;
-    if (LG && LG.side === 'b') room.b = Math.max(room.b, LG.need);
-    else if (LG) room[LG.side] = Math.max(room[LG.side], 2 * LG.r + LG.mg + 14);
+    var LG = this.loupeOn() ? this.loupeGeom(w, 0, g) : null;
+    // under 560 px the disc stands under the row of labels, so the foot takes both
+    if (LG && LG.side === 'b') room.b = (room.b || 0) + LG.need;
+    else if (LG) room[LG.side] = Math.max(room[LG.side], 2 * LG.r + LG.mg + 14 - LG.inset);
     return room;
   };
   // the canvas's top and foot pads: the drawing's ink stands this far inside them, so the page sets the space round the plate
@@ -809,11 +815,24 @@
   PL.loupeOn = function () { return !!(this.m.loupe && this.lod === 'full' && (!this.o.noDims || this.o.oneDim) && !this.o.noLabels && P.loupes !== false); };
   // its disc: the top corner of its label column, a radius that grows with the width, and the caption's lines under it; under
   // 560 px, the foot's right corner, under the drawing (h, the canvas's height, places it there)
-  PL.loupeGeom = function (w, h) {
+  /* Under 560 px (22 Nov 2026 designer pass) the disc keeps a radius its drawing and names can be read at, about a quarter of
+     the width, in the foot's right corner under the label row, and its caption stands to its left, wrapped to the room there
+     (it was a 58 px disc whose names ran into one another, its caption cut off at the screen's edge, over the row of labels).
+     On a wide plate a loupe may set its disc into the drawing's empty top corner by L.inset px, so its column takes less of
+     the width from the drawing. */
+  PL.loupeGeom = function (w, h, g) {
     var L = this.m.loupe, r = Math.round(Math.max(56, Math.min(L.rMax || 104, (L.r || 0.155) * w))), mg = 10, side = L.side || 'r';
     var cap = L.caption || [], capH = cap.length ? 15 + cap.length * 16 : 0;
-    if (w < 560) { var hh = h || 0; return { side: 'b', r: r, mg: mg, x: w - mg - r, y: hh - mg - capH - r, cap: cap, bottom: hh, need: 2 * r + capH + mg + 6 }; }
-    return { side: side, r: r, mg: mg, x: side === 'r' ? w - mg - r : mg + r, y: mg + r, cap: cap, bottom: mg + 2 * r + capH + 14 };
+    if (w < 560) {
+      // (in the foot's corner on the loupe's own side, so its cone keeps to that side of the drawing; the caption beside it)
+      var hh = h || 0, rp = Math.round(Math.max(64, Math.min(L.rMax || 104, 0.23 * w))), lf = side === 'l', xp = lf ? mg + rp + 4 : w - mg - rp - 4, room = (lf ? w - xp : xp) - rp - 14 - mg;
+      // the caption's words, wrapped to the room left of the disc
+      var meas = function (s) { return g ? g.measure(s, { size: 12, weight: 500 }) : s.length * 12 * 0.53; }, words = cap.join(' ').split(' '), out = [], ln = '';
+      words.forEach(function (wd) { var t = ln ? ln + ' ' + wd : wd; if (ln && meas(t) > room) { out.push(ln); ln = wd; } else ln = t; });
+      if (ln) out.push(ln);
+      return { side: 'b', capSide: lf ? 'r' : 'l', r: rp, mg: mg, x: xp, y: hh - mg - rp - 4, cap: out, bottom: hh, need: 2 * rp + 2 * mg + 8 };
+    }
+    return { side: side, r: r, mg: mg, x: side === 'r' ? w - mg - r : mg + r, y: mg + r, cap: cap, bottom: mg + 2 * r + capH + 14, inset: L.inset || 0 };
   };
   PL.loupePlate = function () { var L = this.m.loupe; if (!this._lp && L && L.model) this._lp = new Plate(L.model, {}); return this._lp; };
   // the canvas's height for a width: the drawing at the scale its width allows, its pads, and the rows or loupe it carries, kept
@@ -828,9 +847,12 @@
       lo = Math.max(lo, need + 2 * ls.fs);
     });
     if (this.loupeOn() && w >= 560) {
-      var LG = this.loupeGeom(w), n = 0;
-      this.m.callouts.forEach(function (c) { if ((c._side || c.side) === LG.side) n++; });
-      lo = Math.max(lo, LG.bottom + n * ls.fs * 2.4 + 8);
+      // the labels under the disc, one under another, as the layout sets them (22 Nov 2026: it kept 2.4 lines a label, which
+      // left an empty band under the photomask)
+      var LG = this.loupeGeom(w), n = 0, need = 0;
+      this.m.callouts.forEach(function (c) { if ((c._side || c.side) === LG.side) { need += Math.max(1, (c._lines || [c.text]).length) * ls.fs * 1.18; n++; } });
+      if (n) need += (n - 1) * ls.fs * 0.85 + ls.fs + 1;
+      lo = Math.max(lo, LG.bottom + need);
     }
     var out = Math.round(Math.max(lo, Math.min(hi, h)));
     // the labels were wrapped with a guess at the faces' widths: the next frame lays them out again with the real ones
@@ -928,8 +950,9 @@
       if (curve) return 0.38 + 0.95 * Math.round((1 - lam) * 5) / 5;
       return lam > 0.72 ? 0.36 : lam > 0.15 ? 0.74 : 1.3;
     };
+    // (a material may keep one tone whatever way its faces turn, mat.even: the inside of a hole, which no light reaches)
     var fillOf = function (mat, nvw, curve, tint) {
-      var d = Math.min(pal.dark ? 0.66 : 0.92, mat.d * toneF(curve ? lamC(nvw) : lamOf(nvw), curve) * (pal.dark ? 0.8 : 1) * (thumb ? Math.min(1.6, ik) : 1));
+      var d = Math.min(pal.dark ? 0.66 : 0.92, mat.d * (mat.even ? 1 : toneF(curve ? lamC(nvw) : lamOf(nvw), curve)) * (pal.dark ? 0.8 : 1) * (thumb ? Math.min(1.6, ik) : 1));
       var c = mix(pal.bg, colOf(mat.c), d);
       if (tint) c = mix(c, pal.hl, pal.dark ? 0.22 : 0.12);
       return css(c);
@@ -943,7 +966,7 @@
     var labelsOn = !thumb && !st.noLabels && !this.o.noLabels && m.callouts.length > 0 && LA > 0.01 && K > 0.86;
     var layKey = [Math.round(w), Math.round(h), Math.round(fit.s * 1e4), Math.round(fit.cx), Math.round(fit.cy), this.o.numbersOnly ? 1 : 0, st.noDims ? 1 : 0, st.oneDim ? 1 : 0, this.loupeOn() ? 1 : 0].join(',');
     var settled = !turned && K >= 0.999 || (!turned && K > 0.86 && (st.scale || 1) === 1);
-    var occ = labelsOn && settled && this._layKey !== layKey ? [] : null, dimObs = [];
+    var occ = labelsOn && settled && this._layKey !== layKey ? [] : null, dimObs = [], rowsMode = !thumb && this.rowsOn(w);
 
     var parts = m.parts.slice(), axis = m.sortAxis, toward = axis ? (R[6] * axis[0] + R[7] * axis[1] + R[8] * axis[2]) : 0;
     var pc = parts.map(function (p) { var c = [0, 0, 0], n = 0; p.items.forEach(function (it) { c[0] += it.c[0]; c[1] += it.c[1]; c[2] += it.c[2]; n++; }); return n ? [c[0] / n, c[1] / n, c[2] / n] : [0, 0, 0]; });
@@ -988,6 +1011,9 @@
         return true;
       });
       gh.forEach(function (s) { ghostEdges(s, false, a * dimF(s)); });
+      // under 560 px, where leaders find their way out of the drawing to a row of labels, an outline-only part still counts as
+      // drawing (the cost column's yield loss), so no leader runs down its face
+      if (occ && rowsMode) gh.forEach(function (s) { for (var fi = s.f0; fi < s.f1; fi++) if (front[fi]) occ.push({ pts: F[fi].v.map(P2), it: s }); });
       var dep = items.map(function (it) { if (p.mode === 'stack' && it.kind === 'solid') return it.ymin * 1000 + depthOf(it.c, p.idx); return depthOf(it.c, p.idx); });
       var ord = items.map(function (it, i) { return i; }).sort(function (x, y) { return dep[x] - dep[y]; });
       if (p.mode === 'fixed') ord = items.map(function (it, i) { return i; });
@@ -1182,7 +1208,7 @@
       var p = proj(L.at, L.part), c = L.col === 'muted' ? css(pal.muted) : css(colOf(L.col));
       g.text(L.text, p[0] + L.dx * k, p[1] + L.dy * k, { size: Math.round(L.size * Math.max(0.85, Math.min(1.1, k))), weight: L.weight, fill: c, align: L.align, halo: bgC, haloW: 4, alpha: labT * LA });
     });
-    if (!thumb && this.loupeOn() && labT > 0 && LA > 0.01) drawLoupe(this.loupeGeom(w, h), labT * LA);
+    if (!thumb && this.loupeOn() && labT > 0 && LA > 0.01) drawLoupe(this.loupeGeom(w, h, g), labT * LA);
     this._hit = [];
     if (!thumb && !st.noLabels && !this.o.noLabels && labT > 0 && LA > 0.01 && m.callouts.length) callouts();
 
@@ -1212,24 +1238,43 @@
       g.clip(G.x, G.y, G.r - 0.5);
       lp.paint({ k: 1, w: S2, h: S2, g: g, pal: pal, fit: f2, noDims: true, noLabels: true });
       var R1 = viewM(lp.m.yaw0, lp.m.elev), pj = function (q) { return [f2.cx + f2.s * (R1[0] * q[0] + R1[1] * q[1] + R1[2] * q[2]), f2.cy - f2.s * (R1[3] * q[0] + R1[4] * q[1] + R1[5] * q[2])]; };
-      var size = 11.5, txt = css(pal.ink);
+      var size = 11.5, txt = css(pal.ink), lh = Math.round(size * 1.2);
+      // a block of one or two lines, centred on (x, y), its lines set to the side the block's align names
+      var block = function (text, x, y, al, wt, haloW) {
+        var lines = String(text).split('\n'), n = lines.length;
+        lines.forEach(function (ln, i) { g.text(ln, x, y + (i - (n - 1) / 2) * lh, { size: size, weight: wt, fill: txt, align: al, halo: bgC, haloW: haloW }); });
+      };
+      var widthOf = function (text, wt) { return Math.max.apply(null, String(text).split('\n').map(function (ln) { return g.measure(ln, { size: size, weight: wt }); })); };
       (lp.m.bars || []).forEach(function (b) {
-        var a = pj(b.a), c = pj(b.b), bx = c[0] - a[0], by = c[1] - a[1], Ln = Math.hypot(bx, by) || 1, nx = -by / Ln, ny = bx / Ln, tk = 4.5;
-        g.lines([[a, c]], bgC, 4.2, null, 1, 'butt'); g.lines([[a, c]], txt, 1.3, null, 1, 'butt');
+        var a = pj(b.a), c = pj(b.b), bx = c[0] - a[0], by = c[1] - a[1], Ln = Math.hypot(bx, by) || 1, nx = -by / Ln, ny = bx / Ln, tk = 4;
+        g.lines([[a, c]], bgC, 4.2, null, 1, 'butt'); g.lines([[a, c]], txt, 1.2, null, 1, 'butt');
         g.lines([[[a[0] + nx * tk, a[1] + ny * tk], [a[0] - nx * tk, a[1] - ny * tk]], [[c[0] + nx * tk, c[1] + ny * tk], [c[0] - nx * tk, c[1] - ny * tk]]], txt, 1.1, null, 1, 'butt');
-        var sd = b.side || 1, tw = g.measure(b.text, { size: size, weight: 600 }), tx = (a[0] + c[0]) / 2 + (b.tx || 0), ty = (a[1] + c[1]) / 2 + (b.ty || 0);
-        if (Math.abs(bx) >= Math.abs(by)) ty += sd * -12; else tx += sd * (tw / 2 + 8);
+        var sd = b.side || 1, tw = widthOf(b.text, 600), nl = String(b.text).split('\n').length, th = nl * lh, tx = (a[0] + c[0]) / 2 + (b.tx || 0), ty = (a[1] + c[1]) / 2 + (b.ty || 0), al = 'center';
+        if (Math.abs(bx) >= Math.abs(by)) ty += sd * -(6 + th / 2);
+        // a standing bar's figure starts beside it, set to the bar's side (a long figure no longer reaches back over the bar)
+        else { tx += sd * 8; al = sd > 0 ? 'left' : 'right'; }
         // the figure stays inside the disc
-        var Rl = G.r - 7, dyc = Math.max(-Rl + 8, Math.min(Rl - 8, ty - G.y)), ey = Math.min(Rl, Math.abs(dyc) + 6), half = Math.sqrt(Math.max(0, Rl * Rl - ey * ey));
-        ty = G.y + dyc; tx = Math.max(G.x - half + tw / 2, Math.min(G.x + half - tw / 2, tx));
-        g.text(b.text, tx, ty, { size: size, weight: 600, fill: txt, align: 'center', halo: bgC, haloW: 4 });
+        var Rl = G.r - 7, dyc = Math.max(-Rl + th / 2 + 2, Math.min(Rl - th / 2 - 2, ty - G.y)), ey = Math.min(Rl, Math.abs(dyc) + th / 2), half = Math.sqrt(Math.max(0, Rl * Rl - ey * ey));
+        ty = G.y + dyc;
+        var lft = al === 'left' ? tx : al === 'right' ? tx - tw : tx - tw / 2, sh = Math.max(G.x - half - lft, Math.min(0, G.x + half - (lft + tw)));
+        block(b.text, tx + sh, ty, al, 600, 4);
       });
-      (lp.m.tags || []).forEach(function (t2) { var q = pj(t2.at); g.text(t2.text, q[0] + (t2.dx || 0), q[1] + (t2.dy || 0), { size: size, weight: 600, fill: txt, align: t2.align || 'center', halo: bgC, haloW: 3.5 }); });
+      (lp.m.tags || []).forEach(function (t2) {
+        var q = pj(t2.at), x = q[0] + (t2.dx || 0), y = q[1] + (t2.dy || 0), al = t2.align || 'center';
+        if (t2.lead) {
+          // the leader runs from the name's near edge to the point it names, and ends on a small dot there
+          var e = pj(t2.lead), sx = al === 'left' ? x - 4 : al === 'right' ? x + 4 : x, sy = al === 'center' ? y + (e[1] > y ? 1 : -1) * (String(t2.text).split('\n').length * lh / 2 + 2) : y;
+          g.lines([[[sx, sy], e]], bgC, 3, null, 0.9, 'round'); g.lines([[[sx, sy], e]], txt, 0.75, null, 1, 'round');
+          g.circle(e[0], e[1], 1.9, txt, bgC, 0.9);
+        }
+        block(t2.text, x, y, al, 600, 3.5);
+      });
       g.unclip();
       g.circle(G.x, G.y, G.r, null, css(mix(pal.bg, pal.ink, 0.86)), 1.25 * k);
       g.circle(G.x, G.y, G.r + 3.5, null, css(mix(pal.bg, pal.ink, pal.dark ? 0.3 : 0.22)), 0.6 * k);
-      // the caption under the disc, in the label's muted ink
-      G.cap.forEach(function (ln, i) { g.text(ln, G.x, G.y + G.r + 16 + i * 16, { size: 12, weight: 500, fill: css(pal.muted), align: 'center', halo: bgC, haloW: 3 }); });
+      // the caption under the disc (or, on a phone, beside it), in the label's muted ink
+      if (G.capSide) G.cap.forEach(function (ln, i) { var lf = G.capSide === 'l'; g.text(ln, G.x + (lf ? -1 : 1) * (G.r + 14), G.y + (i - (G.cap.length - 1) / 2) * 16, { size: 12, weight: 500, fill: css(pal.muted), align: lf ? 'right' : 'left', halo: bgC, haloW: 3 }); });
+      else G.cap.forEach(function (ln, i) { g.text(ln, G.x, G.y + G.r + 16 + i * 16, { size: 12, weight: 500, fill: css(pal.muted), align: 'center', halo: bgC, haloW: 3 }); });
       g.ga = ga0;
     }
 
@@ -1299,9 +1344,9 @@
       var rows = self.rowsOn(w);
       // a point as the drawn view puts it: a tracking label (the globe's) keeps the height it has there as the globe turns
       var proj0 = function (q, part) { var o = O[part], x = q[0] + o[0], y = q[1] + o[1], z = q[2] + o[2]; return [cx + sc * (R0[0] * x + R0[1] * y + R0[2] * z), cy - sc * (R0[3] * x + R0[4] * y + R0[5] * z)]; };
-      var LGc = self.loupeOn() ? self.loupeGeom(w, h) : null;
+      var LGc = self.loupeOn() ? self.loupeGeom(w, h, g) : null;
       var ents = m.callouts.map(function (c, ci) {
-        var pts, wts = null, my = 0, mx = 0, base = c.pts.map(function (q) { return proj(q, q[3] == null ? c.part : q[3]); });
+        var pts, wts = null, my = 0, mx = 0, base = (rows && c.rowAt ? c.rowAt : c.pts).map(function (q) { return proj(q, q[3] == null ? c.part : q[3]); });
         if (c.track) {
           // the globe's labels point at whichever of their towns face the reader: a leader fades in as its town comes round
           // and out as it nears the rim, and the label stays where it is
@@ -1326,13 +1371,13 @@
         var r = c.n ? (ls.numbersOnly ? ls.num : ls.num * Math.max(0.9, Math.min(1.1, k))) : 0;
         return { c: c, ci: ci, pts: pts, wts: wts, x: mx, y0: my + (c.dy || 0) * k, hh: Math.max(hh, r * 2), lines: lines, tw: tw, r: r, side: side };
       });
-      if (occ) { self._lay = rows ? { rows: true } : layCols(ents); self._layKey = layKey; self._layStats = self._lay.stats || null; }
+      if (occ) { self._lay = rows ? layRows(ents) : layCols(ents); self._layKey = layKey; self._layStats = self._lay.stats || null; }
       var lay = self._layKey === layKey ? self._lay : null;
-      if (rows) drawRows(ents); else drawCols(ents, lay && !lay.rows ? lay : null);
+      if (rows) drawRows(ents, lay && lay.rows ? lay : null); else drawCols(ents, lay && !lay.rows ? lay : null);
 
       function colX(sd) { return sd === 'l' ? dl - 8 * k : dr + 8 * k; }
       function colTop(sd) { return LGc && LGc.side === sd ? LGc.bottom : ls.fs; }
-      function colBot(sd) { var b = h - ls.fs; if (LGc && LGc.side === 'b' && sd === 'r') b = Math.min(b, LGc.y - LGc.r - 8); return b; }
+      function colBot(sd) { var b = h - ls.fs; if (LGc && LGc.side === 'b' && sd === (LGc.capSide === 'r' ? 'l' : 'r')) b = Math.min(b, LGc.y - LGc.r - 8); return b; }
       // the column's labels at the heights they want, pushed apart and kept in the canvas; returns their heights in list order
       function resolve(list, want, top, bot) {
         var minGap = ls.fs * 0.85, idx = list.map(function (L, i) { return i; }).sort(function (a, b) { return (want[a] - want[b]) || (a - b); }), ys = new Array(list.length);
@@ -1350,9 +1395,8 @@
         if (shape === 'A') { var K2 = A[0] + sg * kx; if (sg * (xs - K2) < 0) return null; return [[A[0], A[1]], [K2, y], [Sx, y]]; }
         return [[A[0], A[1]], [xs, y], [Sx, y]];
       }
-      function layCols(ents) {
-        var out = { y: {}, shape: {}, snap: {}, stats: { cross: 0, dims: 0, foreign: 0, labels: [] } };
-        // the drawing as a map of which item is on top at each 2 px cell (the loupe's disc as -2)
+      // the drawing as a map of which item is on top at each 2 px cell (the loupe's disc as -2), from the faces drawn at rest
+      function buildMap() {
         var cs = 2, gw = Math.ceil(w / cs) + 1, gh = Math.ceil(h / cs) + 1, map = new Int32Array(gw * gh); map.fill(-1);
         occ.forEach(function (o) {
           var id = o.it._id;
@@ -1368,6 +1412,66 @@
         });
         if (LGc) for (var j = 0; j < gh; j++) for (var i = 0; i < gw; i++) if (Math.hypot((i + 0.5) * cs - LGc.x, (j + 0.5) * cs - LGc.y) < LGc.r + 6) map[j * gw + i] = -2;
         var at = function (x, y) { var i = Math.floor(x / cs), j = Math.floor(y / cs); return i < 0 || j < 0 || i >= gw || j >= gh ? -1 : map[j * gw + i]; };
+        return at;
+      }
+      // what each label lights: its leaders may cross those items freely
+      function litOf(c) { var f = P.focusOf(c), lit = {}; m.S.forEach(function (it) { if (P.lit(f, it) || (it.kind === 'solid' && it.decals.some(function (d) { return d.items.some(function (q) { return P.lit(f, q, it); }); }))) lit[it._id] = 1; }); return lit; }
+      /* Under 560 px the labels stand in rows, their leaders running up or down to them. A leader whose upright run would cross
+         parts it does not name may leave its part sideways instead, to just clear of the drawing at that height, then run up or
+         down outside it (22 Nov 2026 designer pass: the column's lenses and the rack's trays were named through every part
+         between them and the row) */
+      function layRows(ents) {
+        var at = buildMap(), out = { rows: true, route: {} }, segs = dimObs.filter(function (o) { return o.seg; }).map(function (o) { return o.seg; }), boxes = dimObs.filter(function (o) { return o.box; }).map(function (o) { return o.box; });
+        ents.forEach(function (L) {
+          if (L.c.track || L.side !== 't' && L.side !== 'b') return;
+          var lit = litOf(L.c), edge = L.side === 't' ? dt - 9 * k : db + 9 * k;
+          out.route[L.ci] = L.pts.map(function (q) {
+            var cost = function (Pp) {
+              var bad = 0, len = 0;
+              for (var s2 = 0; s2 < Pp.length - 1; s2++) {
+                var a = Pp[s2], b = Pp[s2 + 1], Ls = Math.hypot(b[0] - a[0], b[1] - a[1]), n = Math.max(1, Math.ceil(Ls / 1.5));
+                len += Ls;
+                for (var u = 0; u <= n; u++) { var x = a[0] + (b[0] - a[0]) * u / n, y = a[1] + (b[1] - a[1]) * u / n; if (Math.hypot(x - q[0], y - q[1]) < 5) continue; var id = at(x, y); if (id === -2 || (id >= 0 && !lit[id])) bad++; }
+                for (var z = 0; z < segs.length; z++) if (segX(a, b, segs[z][0], segs[z][1])) bad += 40;
+                for (z = 0; z < boxes.length; z++) if (segBox(a, b, boxes[z])) bad += 40;
+              }
+              return bad * 1.5 + len * 0.01;
+            };
+            var best = { P: [[q[0], q[1]], [q[0], edge]] }; best.v = cost(best.P);
+            [-1, 1].forEach(function (sg) {
+              var last = q[0];
+              for (var xx = q[0]; xx >= 0 && xx <= w; xx += sg * 2) { var id = at(xx, q[1]); if (id >= 0 || id === -2) last = xx; }
+              var xe = last + sg * 9;
+              if (xe < 6 || xe > w - 6) return;
+              var Pp = [[q[0], q[1]], [xe, q[1]], [xe, edge]], v = cost(Pp) + 5;
+              if (v < best.v - 2) best = { P: Pp, v: v, xe: xe, sg: sg };
+            });
+            return best.xe == null ? null : { x: best.xe, sg: best.sg, y: q[1] };
+          });
+        });
+        // more than two labels leaving one side for one row would have to run along the row's edge past one another's leaders:
+        // those keep their upright runs
+        ['t', 'b'].forEach(function (rw) { [-1, 1].forEach(function (sg) {
+          var ls2 = ents.filter(function (L) { var r = out.route[L.ci]; return L.side === rw && r && r.some(function (o) { return o && o.sg === sg; }); });
+          if (ls2.length > 2) ls2.forEach(function (L) { out.route[L.ci] = out.route[L.ci].map(function (o) { return o && o.sg === sg ? null : o; }); });
+        }); });
+        // upright runs that would lie along one another step outward, the dot nearest the row first, so no run crosses another
+        var runs = [];
+        ents.forEach(function (L) { var r = out.route[L.ci]; if (!r) return; L.pts.forEach(function (q, qi) { runs.push({ L: L, qi: qi, q: q, r: r[qi], edge: L.side === 't' ? dt - 9 * k : db + 9 * k }); }); });
+        runs.sort(function (a, b) { return Math.abs(a.q[1] - a.edge) - Math.abs(b.q[1] - b.edge); });
+        var used = [];
+        runs.forEach(function (u) {
+          var x = u.r ? u.r.x : u.q[0], y0 = Math.min(u.q[1], u.edge), y1 = Math.max(u.q[1], u.edge), sg = u.r ? u.r.sg : 0;
+          for (var t2 = 0; t2 < 6 && used.some(function (o) { return Math.abs(o.x - x) < 6 && o.y0 < y1 && o.y1 > y0; }); t2++) { if (!sg) break; x += sg * 7; }
+          if (u.r) u.r.x = x;
+          used.push({ x: x, y0: y0, y1: y1 });
+        });
+        ents.forEach(function (L) { var r = out.route[L.ci]; if (r) out.route[L.ci] = r.map(function (o) { return o ? o.x : null; }); });
+        return out;
+      }
+      function layCols(ents) {
+        var out = { y: {}, shape: {}, snap: {}, stats: { cross: 0, dims: 0, foreign: 0, labels: [] } };
+        var at = buildMap(), cs = 2;
         // the steep angle: the one in 45 to 80 degrees that keeps furthest from the directions the view's own edges take
         var ad = function (a, b) { var d = Math.abs(a - b) % 180; return Math.min(d, 180 - d); };
         var edges = [[R0[0], R0[3]], [R0[1], R0[4]], [R0[2], R0[5]]].filter(function (v) { return Math.hypot(v[0], v[1]) > 0.2; }).map(function (v) { return Math.atan2(v[1], v[0]) * 180 / Math.PI; });
@@ -1376,8 +1480,6 @@
         var th = out.th = thD * Math.PI / 180;
         var nearEdge = function (a, b) { var an = Math.atan2(-(b[1] - a[1]), b[0] - a[0]) * 180 / Math.PI; return edges.some(function (e2) { return ad(an, e2) < 10; }) ? 20 : 0; };
         var segs = dimObs.filter(function (o) { return o.seg; }).map(function (o) { return o.seg; }), boxes = dimObs.filter(function (o) { return o.box; }).map(function (o) { return o.box; });
-        // what each label lights: its leaders may cross those items freely
-        var litOf = function (c) { var f = P.focusOf(c), lit = {}; m.S.forEach(function (it) { if (P.lit(f, it) || (it.kind === 'solid' && it.decals.some(function (d) { return d.items.some(function (q) { return P.lit(f, q, it); }); }))) lit[it._id] = 1; }); return lit; };
         var cost = function (Pp, lit, A, shape) {
           var bad = 0, hits = 0, near = 0, len = 0;
           for (var s2 = 0; s2 < Pp.length - 1; s2++) {
@@ -1571,9 +1673,12 @@
             var sn = lay && !c.track && lay.snap[L.ci], shp = lay && !c.track && lay.shape[L.ci];
             L.pts.forEach(function (q, qi) {
               var wq = L.wts ? L.wts[qi] : 1, A = sn && sn[qi] ? [q[0] + sn[qi][0], q[1] + sn[qi][1]] : [q[0], q[1]];
-              var Pp = shapePath(A, y, sd, shp ? shp[qi] : 'D', th) || shapePath(A, y, sd, 'D', th), path = partial(Pp, la);
+              var Pp = shapePath(A, y, sd, shp ? shp[qi] : 'D', th) || shapePath(A, y, sd, 'D', th);
+              // a leader to a globe's pin ends at the pin's head, which marks the spot itself: no dot of its own over it
+              if (c.track && Pp.length > 1) { var hx = Pp[1][0] - Pp[0][0], hy = Pp[1][1] - Pp[0][1], hL = Math.hypot(hx, hy) || 1, hs = Math.min(4.5 * k, hL * 0.5); Pp = [[Pp[0][0] + hx / hL * hs, Pp[0][1] + hy / hL * hs]].concat(Pp.slice(1)); }
+              var path = partial(Pp, la);
               if (path.length > 1) { g.lines([path], bgC, 3.2 * k, null, 0.85 * ta * wq, 'round'); g.lines([path], lc, (fo ? 1 : ls.numbersOnly ? 0.85 : 0.7) * k, null, Math.max(ta, la * 0.9) * wq, 'round'); }
-              g.circle(A[0], A[1], 2.3 * k, col, bgC, 1.1 * k, la * wq);
+              if (!c.track) g.circle(A[0], A[1], 2.3 * k, col, bgC, 1.1 * k, la * wq);
             });
             var tx = Sx + sg * 5 * k, x0, x1;
             if (c.n) {
@@ -1593,8 +1698,10 @@
       }
       // a row of labels over the drawing and a row under it: each label centred over its dots where it can be, its leaders
       // running straight up or down to the row, then along its edge to the label
-      function drawRows(ents) {
-        var lineC = css(mix(pal.bg, pal.ink, pal.dark ? 0.7 : 0.78));
+      function drawRows(ents, lay) {
+        var lineC = css(mix(pal.bg, pal.ink, pal.dark ? 0.7 : 0.78)), rt = lay && lay.route || {};
+        // a label whose leaders leave sideways stands over (or under) the place they turn
+        ents.forEach(function (L) { var r = rt[L.ci]; if (!r || !r.some(function (x) { return x != null; })) return; var sx = 0; L.pts.forEach(function (q, qi) { sx += r[qi] != null ? r[qi] : q[0]; }); L.x = sx / L.pts.length; });
         ['t', 'b'].forEach(function (rw) {
           var list = ents.filter(function (L) { return L.side === rw; }).sort(function (a, b) { return a.x - b.x; }); if (!list.length) return;
           var edge = rw === 't' ? dt - 9 * k : db + 9 * k, bw = list.map(function (L) { return (L.c.n && ls.numbersOnly ? 0 : L.tw) + (L.r ? 2 * L.r + (L.c.n && ls.numbersOnly ? 0 : 6) : 0); });
@@ -1606,8 +1713,9 @@
             var c = L.c, lx = xs[li], fo = foc && foc.n === c.n && foc.text === c.text, col = fo ? hlC : inkC, lc = fo ? hlC : lineC;
             var la = clamp01(labT * 1.5) * LA, ta = clamp01((labT - 0.3) / 0.7) * (foc && !fo ? 0.45 : 1) * LA;
             var yc = rw === 't' ? edge - 4 - L.hh / 2 : edge + 4 + L.hh / 2, x0 = lx - bw[li] / 2, x1 = lx + bw[li] / 2;
-            L.pts.forEach(function (q) {
-              var cxl = Math.max(x0 + 3, Math.min(x1 - 3, q[0])), Pp = cxl === q[0] ? [[q[0], q[1]], [q[0], edge]] : [[q[0], q[1]], [q[0], edge], [cxl, edge]], path = partial(Pp, la);
+            L.pts.forEach(function (q, qi) {
+              var xe = rt[L.ci] ? rt[L.ci][qi] : null, ux = xe != null ? xe : q[0], head = xe != null ? [[q[0], q[1]], [xe, q[1]]] : [[q[0], q[1]]];
+              var cxl = Math.max(x0 + 3, Math.min(x1 - 3, ux)), Pp = head.concat(cxl === ux ? [[ux, edge]] : [[ux, edge], [cxl, edge]]), path = partial(Pp, la);
               if (path.length > 1) { g.lines([path], bgC, 3.2 * k, null, 0.85 * ta, 'round'); g.lines([path], lc, (fo ? 1 : 0.7) * k, null, Math.max(ta, la * 0.9), 'round'); }
               g.circle(q[0], q[1], 2.3 * k, col, bgC, 1.1 * k, la);
             });

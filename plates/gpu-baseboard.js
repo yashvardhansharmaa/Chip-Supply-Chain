@@ -51,9 +51,12 @@ R('gpu-baseboard', function (m) {
   m.tag(null);
   m.use(mp);
   [mods[0], mods[6]].forEach(function (md) { [[-1, -1], [1, 1], [1, -1], [-1, 1]].forEach(function (c) { m.guide([[md[0] + c[0] * (LW / 2 + 0.012), top, md[1] + c[1] * (LD / 2 + 0.01), board.idx], [md[0] + c[0] * (LW / 2 + 0.012), top + MH - 0.033, md[1] + c[1] * (LD / 2 + 0.01), mp.idx]], { alpha: 0.75 }); }); });
-  m.callout([[mods[4][0] + 0.03, top + MH - 0.005, mods[4][1] + 0.06, mp.idx], [mods[7][0] + 0.03, top + MH - 0.005, mods[7][1] - 0.06, mpS.idx]], 'Accelerator modules', { side: 'r', tag: 'modules' });
-  m.callout([mods[6][0] + MW / 2, top + MH * 0.6, mods[6][1] - MD * 0.1, board.idx], 'Module frames', { side: 'r', tag: 'frames' });
-  // one leader to each chip, on the part the lifted modules leave in view
-  m.callout([0.175 + 0.09, top + 0.05, 0.06, board.idx], 'NVLink switch chips', { side: 'r', tag: 'switch' });
+  // (designer pass, 22 Nov 2026: one leader, to the lifted module nearest the labels, which crosses nothing; the second ran
+  // 93 px across the board to a seated one. Pointing at the label still lights all eight, by their tag)
+  m.callout([mods[6][0] + 0.075, top + MH + 0.017, mods[6][1] - 0.045, mp.idx], 'Accelerator modules', { side: 'r', tag: 'modules' });
+  // (on the empty frame's rim, by its right corner: on its side face the dot fell on the connector in front of it)
+  m.callout([mods[6][0] + MW / 2 - kerb / 2, top + MH, mods[6][1] - MD * 0.3, board.idx], 'Module frames', { side: 'r', tag: 'frames' });
+  // the nearer chip's top, its leader dropping steeply past the seated modules to a label under the others
+  m.callout([0.175 + 0.095, top + 0.05, 0.07, board.idx], 'NVLink switch chips', { side: 'r', tag: 'switch' });
   return { elev: PLATE.ISO.elev, yaw: PLATE.ISO.yaw, sortAxis: [0, 1, 0], accent: [111, 139, 166], accentDark: [195, 211, 226] };
 });
