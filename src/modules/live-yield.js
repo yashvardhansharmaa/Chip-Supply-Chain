@@ -161,7 +161,7 @@
       var vals = [[pct(R.y1), 'Small chips, 1 × 1 cm'], [pct(R.y), 'Chips, ' + dims(state.v)], [times(R.cost), 'Per good chip, against 1 × 1 cm']];
       rows.forEach(function (r, i) {
         r.querySelector('.yd-num').textContent = vals[i][0];
-        r.querySelector('.yd-name').textContent = vals[i][1];
+        r.querySelector('.yd-name').textContent = vals[i][1].replace(/(\d) × (\d)/g, '$1\u00a0×\u00a0$2').replace(/(\d) (mm|cm)\b/g, '$1\u00a0$2');
         r.classList.toggle('off', view.rows[i] < 0.5);
         r.classList.toggle('on', view.on === i);
       });
