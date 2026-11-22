@@ -808,13 +808,7 @@ const chapterHref = (c) => '#' + esc(c.id); // the essay is the last chapter ins
    contents. prevNext passes how a chapter is linked (attrs), the element the door is (tag) and where the media folder is
    (media); the readable pages, which drew it too until 28 Oct 2026, passed their own. The last two chapters are not stages, and the site groups them as "Across the chain" (the
    contents, the phone's sheet), so their doors say so. */
-// the still of a chapter's specimen: Lithography's is the one its numbered parts are drawn over (data/specimen-parts.json)
-function doorStill(c) {
-  const pe = specimenParts[c.id];
-  if (pe && pe.still && pe.still.file) { const S = +pe.still.size || 772; return { file: pe.still.file, w: S, h: S }; }
-  const sz = stillSizes[c.id];
-  return sz ? { file: `spec-${c.id}.webp`, w: sz[0], h: sz[1] } : null;
-}
+// the still of a chapter's plate, with no labels or dimensions (build/plate-stills.js)
 function chapterDoor(ch, attrs, tag, media) {
   const seq = chapters.concat(geo ? [geo] : []);
   const i = seq.findIndex((c) => c.id === ch.id);
@@ -824,8 +818,8 @@ function chapterDoor(ch, attrs, tag, media) {
   const where = (c) => { const si = stages.findIndex((x) => x.id === c.id); return si >= 0 ? `Stage ${si + 1} of ${stages.length}` : 'Across the chain'; };
   const go = (words) => `<span class="go">${words}<span class="circ" aria-hidden="true">→</span></span>`;
   // the drawing is the title's picture, so it has no words of its own; the two chapters that are not stages keep their night ground
-  const st = next ? doorStill(next) : null;
-  const ex = st ? `<span class="ex"><img src="${media || ''}${esc(st.file)}" width="${Math.round(st.w / 2)}" height="${Math.round(st.h / 2)}" alt="" loading="lazy" decoding="async"></span>` : '';
+  const st = next ? plateImg(next.id, 'door') : '';
+  const ex = st ? `<span class="ex">${media ? st.replace(/src="media\//g, `src="${media}`) : st}</span>` : '';
   const nx = next
     ? `<a class="pn next" ${attrs(next)}><span class="label">Next · ${where(next)}</span><span class="t">${esc(next.title)}</span>${next.meta.oneLiner ? `<span class="ol">${esc(next.meta.oneLiner)}</span>` : ''}${go('Continue reading')}${ex}</a>`
     : `<a class="pn next" href="#/chain"><span class="label">Contents</span><span class="t">All ${word(seq.length)} chapters</span><span class="ol">The ${word(stages.length)} stages run from chip design to the data center. The last ${word(seq.length - stages.length)} chapters cover what a chip costs and who controls the chain.</span>${go('Back to the contents')}</a>`;
@@ -1122,9 +1116,32 @@ const LEDGER_KEY = (() => {
 // points at it ("light", in the same units; src/app.js Stage.setFocus). Each list item carries its number (data-n), which the
 // drawing answers
 const specimenParts = readJSON(path.join(root, 'data', 'specimen-parts.json'), {});
-// each chapter's still of its specimen (qa/redesign/stills.js; [width, height] at twice the pixels shown), for the door that
+// the specimens are plates since 21 Nov 2026: the plate kit (build/plates.js: src/plate.js, the globe's data and every
+// plates/<name>.js) is the one file every page shares for them (dist/assets/kit.js, below). Until then it was the point-cloud
+// kit, src/kit.js, with every specimens/<name>.js; those files stay for the tools that still read them (the globe's coast,
+// the PDF cover's wafer) and as the sources of the plates' sizes, and no page loads them
+const platesKit = require('./plates.js')(root, warn);
+// each plate's slot height in a 666 px column (src/app.js Stage.fit sets it again for the width the slot has), worked out by
+// running the kit here, so a chapter's page lays out at its final height before the plate draws
+const plateH = {};
+try {
+  const PL = platesKit.load();
+  platesKit.names.forEach((n) => { try { plateH[n] = new PL.Plate(n, {}).heightFor(666, 360, 470); } catch (e) { warn(`plates: ${n} does not draw in Node: ${e.message}`); } });
+} catch (e) { warn(`plates: the kit does not run in Node: ${e.message}`); }
+// each chapter's stills of its plate (build/plate-stills.js writes build/assets/plates/: <id>-thumb, -line and -door, each light
+// and dark, and plates.json with their sizes, at twice the pixels shown, and a hash of the plate's code they were drawn from),
+// copied to dist/media/plate-<id>-<kind>[-dark].webp: the phone strip's thumbnail, The Chain's contents and the door that
 // leads to the chapter
-const stillSizes = readJSON(path.join(root, 'build', 'assets', 'specimens', 'stills.json'), {});
+const PLATE_DIR = path.join(root, 'build', 'assets', 'plates');
+const plateStills = readJSON(path.join(PLATE_DIR, 'plates.json'), {});
+const plateHash = (spec) => require('crypto').createHash('sha256').update((read(path.join(root, 'src', 'plate.js')) || '') + (read(path.join(root, 'plates', spec + '.js')) || '')).digest('hex').slice(0, 16);
+// a still in both themes: the light one, and the dark one the night edition shows (src/styles.css .pl-dk)
+const plateImg = (id, kind, extra) => {
+  const s = plateStills[id], sz = s && s[kind];
+  if (!sz) return '';
+  const a = `width="${Math.round(sz[0] / 2)}" height="${Math.round(sz[1] / 2)}" alt="" loading="lazy" decoding="async"${extra || ''}`;
+  return `<img class="pl-lt" src="media/plate-${esc(id)}-${kind}.webp" ${a}><img class="pl-dk" src="media/plate-${esc(id)}-${kind}-dark.webp" ${a}>`;
+};
 const partsOf = (ch) => { const e = specimenParts[ch.id]; return e && Array.isArray(e.parts) ? e.parts : []; };
 const chapterById = (id) => chapters.find((c) => c.id === id) || (geo && geo.id === id ? geo : null);
 function partsHTML(ch) {
@@ -1171,15 +1188,8 @@ function railHTML(ch, stageIdx, toc) {
     + `<ol class="chain-track rail-chain">${stages.map((c, i) => item(c, i)).join('')}</ol>`
     + (across.length ? `<ol class="rail-chain rail-across">${across.map((c) => item(c, null)).join('')}</ol>` : '') + `</div></div></nav>`;
 }
-// The annotated still a chapter whose drawing carries numbered parts prints in place of the live drawing (src/modules/print.js
-// stills): the picture with its balloons, drawn by build/modules/social.js stillSVG as the readable page drew it. It waits in a
-// <template>, which the screen never shows or fetches, since 28 Oct 2026, when the readable page it was fetched from went
-const stillSVG = require('./modules/social.js').stillSVG;
-function printStill(ch) {
-  const pe = specimenParts[ch.id], ps = partsOf(ch), m = ch.meta;
-  if (!pe || !pe.still || !ps.length) return '';
-  return `<template class="cp-still-src">${stillSVG(pe.still, ps, m.specimenCaption ? m.specimenCaption.split('. ')[0] : ch.title)}</template>`;
-}
+// Every plate prints as a vector still in place of the live one: src/modules/print.js draws it from the kit at print time (since
+// 21 Nov 2026; until then only the chapters with numbered parts printed an annotated still, from a <template> the build wrote)
 function chapterHTML(ch) {
   const m = ch.meta, mins = Math.max(1, Math.round(ch.words / 230));
   const specimen = m.specimen || (ch.id === 'geopolitics' ? 'globe' : 'wafer');
@@ -1209,9 +1219,9 @@ function chapterHTML(ch) {
   // the specimen's slot and its caption; the two chapters that are not stages set their drawing on the night ground (data-night)
   // since 20 Nov 2026 chapters 15 and 16 draw on the page's own ground like the stages (owner: "white as well, not black"), so no page sets data-night
   const ps = partsOf(ch), night = false;
-  const spec = `<figure class="ch-spec"${night ? ' data-night="1"' : ''}${ps.length ? ` data-parts="${esc(JSON.stringify(ps.map((p) => Object.assign({ n: +p.n, name: p.label || p.name, at: p.at || [] }, Array.isArray(p.light) && p.light.length ? { light: p.light } : {}))))}"` : ''}>`
+  const spec = `<figure class="ch-spec"${plateH[specimen] ? ` style="--draw-h:${plateH[specimen]}px"` : ''}${night ? ' data-night="1"' : ''}${ps.length ? ` data-parts="${esc(JSON.stringify(ps.map((p) => Object.assign({ n: +p.n, name: p.label || p.name, at: p.at || [] }, Array.isArray(p.light) && p.light.length ? { light: p.light } : {}))))}"` : ''}>`
     + `<div class="ch-spec-draw"></div>`
-    + `<figcaption class="ch-spec-cap${ch.rendered.parts ? ' has-parts' : ''}"><span class="label">Specimen ${pad(ch.number)} · ${esc(ch.title)}</span>${m.specimenCaption ? `<p>${esc(m.specimenCaption)}</p>` : ''}${ch.rendered.parts}</figcaption>${printStill(ch)}</figure>`;
+    + `<figcaption class="ch-spec-cap${ch.rendered.parts ? ' has-parts' : ''}"><span class="label">Specimen ${pad(ch.number)} · ${esc(ch.title)}</span>${m.specimenCaption ? `<p>${esc(m.specimenCaption)}</p>` : ''}${ch.rendered.parts}</figcaption></figure>`;
   // On this page: In plain terms, the chokepoint card, the chapter's own sections, the flashcards and the sources
   const fc = flashcards[ch.id], hasDeck = fc && Array.isArray(fc.cards) && fc.cards.length;
   const toc = (m.plain ? [[`${ch.id}--plain`, 'In plain terms']] : []).concat(plate ? [[`${ch.id}--card`, 'Chokepoint card']] : []).concat((ch.headings || []).map((h) => [h.id, inline(h.text, { id: ch.id, cites: [], figures: [] }).replace(/<sup[\s\S]*?<\/sup>/g, '')]))
@@ -1246,29 +1256,25 @@ const bandOf = (ch) => ((ch.meta && ch.meta.card) || {}).concentration || '';
 const contentsMark = (band) => (band === 'Extreme' || band === 'High' ? `<i class="ct-bmk${band === 'High' ? ' h' : ''}" aria-hidden="true"></i>` : '');
 const stageIds = new Set(stages.map((c) => c.id));
 const acrossChapters = chapters.filter((c) => !stageIds.has(c.id)).concat(geo ? [geo] : []);
-// the drawings: each stage's still, trimmed, evened in size and tone, and the two chapters across the chain turned to the
-// day side (python3 build/line-stills.py writes build/assets/line/), copied to dist/media/line-<id>.webp. wt is the share
-// of the row's box a drawing fills
-const LINE_DIR = path.join(root, 'build', 'assets', 'line');
-const lineStills = readJSON(path.join(LINE_DIR, 'line.json'), {});
+// the drawings: each chapter's plate, small and with no labels, light and dark (build/plate-stills.js), copied with the strip's
+// thumbnail and the door's still to dist/media/plate-<id>-<kind>[-dark].webp; the build warns when a plate's code has changed
+// since its stills were drawn (until 21 Nov 2026 the rows showed line drawings made from the point clouds' stills)
 {
-  const parts = readJSON(path.join(root, 'data', 'specimen-parts.json'), {});
   const stale = [], missing = [];
+  fs.mkdirSync(path.join(root, 'dist', 'media'), { recursive: true });
   stages.concat(acrossChapters).forEach((c) => {
-    const s = lineStills[c.id], file = path.join(LINE_DIR, c.id + '.webp');
-    if (!s || !fs.existsSync(file)) { missing.push(c.id); return; }
-    const from = path.join(root, 'build', 'assets', 'specimens', (((parts[c.id] || {}).still || {}).file) || c.id + '.webp');
-    if (fs.existsSync(from) && require('crypto').createHash('sha256').update(fs.readFileSync(from)).digest('hex').slice(0, 16) !== s.src) stale.push(c.id);
-    fs.mkdirSync(path.join(root, 'dist', 'media'), { recursive: true });
-    fs.copyFileSync(file, path.join(root, 'dist', 'media', `line-${c.id}.webp`));
+    const s = plateStills[c.id], spec = c.meta.specimen;
+    const files = ['thumb', 'line', 'door'].reduce((a, k) => a.concat([`${c.id}-${k}.webp`, `${c.id}-${k}-dark.webp`]), []);
+    if (!s || files.some((f) => !fs.existsSync(path.join(PLATE_DIR, f)))) { missing.push(c.id); return; }
+    if (spec && s.src !== plateHash(spec)) stale.push(c.id);
+    files.forEach((f) => fs.copyFileSync(path.join(PLATE_DIR, f), path.join(root, 'dist', 'media', 'plate-' + f)));
   });
-  if (missing.length) warn(`The Chain's contents: no drawing for ${missing.join(', ')} in build/assets/line/ (run python3 build/line-stills.py)`);
-  if (stale.length) warn(`The Chain's contents: the specimen still of ${stale.join(', ')} changed since its drawing was made (run python3 build/line-stills.py)`);
+  if (missing.length) warn(`plate stills: none for ${missing.join(', ')} in build/assets/plates/ (build, serve dist/, then run node build/plate-stills.js and build again)`);
+  if (stale.length) warn(`plate stills: the plate of ${stale.join(', ')} changed since its stills were drawn (run node build/plate-stills.js)`);
 }
 // a row: the drawing, the number with the mark, the title (the link, which covers the row) and the chapter's one line
 const contentsItem = (ch) => {
-  const b = bandOf(ch), s = lineStills[ch.id];
-  const img = s ? `<img src="media/line-${esc(ch.id)}.webp" width="${s.w}" height="${s.h}" alt="" loading="lazy" decoding="async" style="--w:${s.wt}%">` : '';
+  const b = bandOf(ch), img = plateImg(ch.id, 'line');
   return `<li class="item" data-ch="${esc(ch.id)}"><span class="ct-tile">${img}</span><span class="n">${pad(ch.number)}${contentsMark(b)}</span>`
     + `<a class="t" href="#${esc(ch.id)}" aria-label="${pad(ch.number)} ${esc(ch.title)}${b ? `, ${esc(b)} concentration` : ''}">${esc(ch.title)}</a>`
     + `${ch.meta.oneLiner ? `<p class="ol">${esc(ch.meta.oneLiner)}</p>` : ''}</li>`;
@@ -1525,19 +1531,8 @@ const exposureFirms = new Set(exposure.map((r) => r.firm)).size;
 const controlsDek = `The main rules since 2018, what can still be sold to China, and China's share of revenue at ${exposureFirms} firms, from their filings.`;
 const exposureNote = exposure.length ? `The charts cover ${exposureFirms} firms, each of which gives a figure for China in its own filings. Other firms are not shown, and some, such as Lasertec, AGC and Axcelis, give no China figure. Each share is computed from the revenue amounts the firm filed, except Nova's, which its filings give only as a rounded percentage. Firms count China differently, for example by where the goods ship, where they are billed, or where the customer is based. Fiscal years are labeled by the calendar year in which they end.` : '';
 
-const kit = read(path.join(root, 'src', 'kit.js')) || '';
-const specDir = path.join(root, 'specimens');
-// the specimens share one file with the kit (dist/assets/kit.js, below). Each keeps its own try, so one that throws as it
-// loads leaves the others drawing; and each is parsed here first, so one with a syntax error, which a try cannot catch in a
-// shared file, is left out with a warning rather than stopping the file (each had a <script> of its own until 28 Oct 2026)
-const specimens = fs.existsSync(specDir) ? fs.readdirSync(specDir).filter((f) => f.endsWith('.js')).sort().map((f) => {
-  const code = `/* ${f} */\ntry{(function(PC){\n${read(path.join(specDir, f))}\n})(window.PC);}catch(e){console.warn('specimen ${f} failed to load', e);}`;
-  try { new (require('vm').Script)(code, { filename: f }); } catch (e) { warn(`specimen ${f} does not parse, so it is left out: ${e.message}`); return ''; }
-  return code;
-}).filter(Boolean).join('\n') : '';
-const specNames = new Set((specimens.match(/PC\.register\('([\w-]+)'/g) || []).map((s) => s.match(/'([\w-]+)'/)[1]));
-all.forEach((ch) => { const s = ch.meta.specimen; if (s && !specNames.has(s)) warn(`${ch.id}: specimen "${s}" is not built yet`); });
-['package', 'globe'].forEach((s) => { if (!specNames.has(s)) warn(`specimen "${s}" (used by hero/geopolitics) is not built yet`); });
+const specNames = new Set(platesKit.names);
+all.forEach((ch) => { const s = ch.meta.specimen; if (s && !specNames.has(s)) warn(`${ch.id}: specimen "${s}" has no plate in plates/`); });
 
 /* ---------------- supplier revenue: as filed, and about how much in dollars (qa/round3/SPEC.md section 2) ----------------
    A supplier's revenue object (data/suppliers.json) holds its latest annual revenue exactly as its filing prints it. Here, in
@@ -1648,7 +1643,7 @@ const ctx = { root, fs, path, all, chapters, geo, stages, data, esc, pad, word, 
   // the flashcard deck, for the one that ends Start here (build/modules/walk.js), and the glossary (the home search field that showed its count went on 27 Oct 2026)
   deckHTML, glossary,
   // the numbered parts of a specimen and the stills of the others, which social.js copies to dist/media
-  specimenParts, stillSizes,
+  specimenParts,
   // for the reference pages (build/modules/reference-pages.js): the views' own words and helpers, as the main page uses them
   suppliersIntro, suppliersRevenueNote, controlsDek, exposureNote, safeUrl, COUNTRY };
 for (const f of modDir(path.join(root, 'build', 'modules')).filter((x) => x.endsWith('.js'))) {
@@ -1836,9 +1831,9 @@ const termsData = (() => {
   const chipName = {}; landscape.forEach((c) => { chipName[c.id] = c.name; });
   const of = (k) => lkItems.filter((i) => i.kind === k);
   // ...and each specimen's own name, which the phone's strip shows ("EUV scanner"), since a chapter's page loads no data.js
-  // ...and the chapter whose line drawing stands for each specimen in the phone's collapsed strip (media/line-<id>.webp), a
-  // still at 52 px where the live drawing was a dark blob (28 Oct 2026)
-  const specimenChapter = {}; all.forEach((c) => { if (c.meta.specimen && lineStills[c.id] && !specimenChapter[c.meta.specimen]) specimenChapter[c.meta.specimen] = c.id; });
+  // ...and the chapter whose plate's thumbnail stands for each specimen in the phone's collapsed strip
+  // (media/plate-<id>-thumb[-dark].webp), a still at 52 px, as the line drawing was from 28 Oct 2026
+  const specimenChapter = {}; all.forEach((c) => { if (c.meta.specimen && plateStills[c.id] && !specimenChapter[c.meta.specimen]) specimenChapter[c.meta.specimen] = c.id; });
   return { defs, specimenNames: SPECIMEN_NAME, specimenChapter, try: { term: of('term').map((i) => i.name.trim()).filter((n) => n.length <= 22), firm: of('firm').filter((i) => big.has(i.key)).map((i) => i.name.trim()),
     chip: of('chip').map((i) => chipName[i.key] || i.name.trim()), country: of('country').map((i) => i.name.trim()) } };
 })();
@@ -1873,7 +1868,7 @@ const assetHash = (s) => require('crypto').createHash('sha256').update(s).digest
 const writeAsset = (name, text) => { fs.mkdirSync(ASSET_DIR, { recursive: true }); fs.writeFileSync(path.join(ASSET_DIR, name), text); assetURL[name] = `assets/${name}?v=${assetHash(text)}`; return assetURL[name]; };
 const tryPart = (name, code) => `/* ${name} */\ntry {\n${code}\n} catch (e) { console.warn('${name} failed', e); }\n`;
 writeAsset('site.css', siteCSS);
-writeAsset('kit.js', kit + '\n' + specimens + '\n');
+writeAsset('kit.js', platesKit.code);
 writeAsset('data.js', `window.CP_DATA = ${JSON.stringify(data)};\n`);
 writeAsset('terms.js', `window.CP_TERMS = ${JSON.stringify(termsData)};\n`);
 writeAsset('search.js', `window.CP_SEARCH = ${JSON.stringify(searchData)};\n`);

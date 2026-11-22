@@ -49,11 +49,9 @@
     position: relative; display: grid; grid-template-columns: calc(var(--tw, 112px) + 24px) 44px minmax(0, 1fr); column-gap: 0;
     grid-template-rows: auto 1fr; align-items: start; padding: 0 24px 32px 0; border: 0;
   } /* a drawing taller than the title and a short one line together leaves its room under the one line */
-  /* the stills are rendered on white: on the light ground they multiply into it, on dark they turn light on dark, as the
-     chapter's own stills do */
+  /* each chapter's plate, small and with no labels, on a clear ground: a light still and a dark one (.pl-lt, .pl-dk) */
   .ct-tile { grid-column: 1; grid-row: 1 / span 2; display: flex; align-items: center; justify-content: center; box-sizing: border-box; width: var(--tw, 112px); height: var(--th, 84px); padding: 9px; background: var(--bg); isolation: isolate; }
-  .ct-tile img { display: block; width: var(--w); height: auto; max-width: 100%; max-height: 100%; mix-blend-mode: multiply; }
-  :root[data-theme="dark"] .ct-tile img { filter: invert(1) hue-rotate(180deg); mix-blend-mode: screen; }
+  .ct-tile img { display: block; width: auto; height: auto; max-width: 100%; max-height: 100%; }
   .contents .ct-col .n {
     grid-column: 2; grid-row: 1; align-self: baseline; display: flex; align-items: center; gap: 7px; padding: 0;
     font-family: var(--font-code); font-size: 12px; font-weight: 400; line-height: 16px; letter-spacing: 0; color: var(--muted);

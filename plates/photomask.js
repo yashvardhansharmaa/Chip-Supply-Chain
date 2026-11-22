@@ -1,0 +1,55 @@
+/* =====================================================================================================
+   05 Photomasks: an EUV reticle and its pellicle, in millimetres: the 152 mm square blank, 6.35 mm thick, with the
+   mirror coating as a dark blue band round its top edge (drawn far thicker than its 280 nm), and the pellicle frame,
+   its four pads and its membrane lifted off it in turn. */
+R('photomask', function (m) {
+  var B = 152.4, T = 6.35, ml = 1.05, PW = 132, PD = 104, yTop = T / 2;
+  var blank = m.part('blank', { ex: [0, 0, 0], seq: 0 });
+  var pat = [];
+  var top = ml / 2;
+  pat.push(D.rect(-71, -71, 71, 71, top, { lw: 0.45, alpha: 0.6 }));
+  pat.push(D.rect(-PW / 2 - 5, -PD / 2 - 5, PW / 2 + 5, PD / 2 + 5, top, { lw: 0.7 }));
+  pat.push(D.rect(-PW / 2, -PD / 2, PW / 2, PD / 2, top, { lw: 0.7 }));
+  // the black border, a filled frame
+  pat.push(D.poly([[-PW / 2 - 5, top, -PD / 2 - 5], [PW / 2 + 5, top, -PD / 2 - 5], [PW / 2 + 5, top, PD / 2 + 5], [-PW / 2 - 5, top, PD / 2 + 5]], { fill: 'black', lw: 0, alpha: 0.85 }));
+  pat.push(D.poly([[-PW / 2, top, -PD / 2], [PW / 2, top, -PD / 2], [PW / 2, top, PD / 2], [-PW / 2, top, PD / 2]], { fill: 'paper', lw: 0.6 }));
+  var COLS = 7, ROWS = 5, cw = PW / COLS, cd = PD / ROWS, MAP = ['AABBCCD', 'AABBCCD', 'EEFFGGD', 'HHIIGGJ', 'HHKKLLJ'], seen = {}, keys = [];
+  for (var r = 0; r < ROWS; r++) for (var c = 0; c < COLS; c++) { var ch = MAP[r][c]; if (!seen[ch]) { seen[ch] = { c0: c, c1: c, r0: r, r1: r }; keys.push(ch); } else { seen[ch].c1 = Math.max(seen[ch].c1, c); seen[ch].r1 = Math.max(seen[ch].r1, r); } }
+  keys.forEach(function (key, bi) {
+    var bk = seen[key], w = (bk.c1 - bk.c0 + 1) * cw - 4, d = (bk.r1 - bk.r0 + 1) * cd - 4;
+    var x0 = ((bk.c0 + bk.c1) / 2 - (COLS - 1) / 2) * cw, z0 = ((bk.r0 + bk.r1) / 2 - (ROWS - 1) / 2) * cd, st = bi % 4;
+    pat.push(D.rect(x0 - w / 2, z0 - d / 2, x0 + w / 2, z0 + d / 2, top, { lw: 0.6 }));
+    if (st === 0) { var horiz = bi % 8 < 4, nl = Math.max(6, Math.round((horiz ? d : w) / 2.7)); for (var k = 0; k < nl; k++) { var tt = (k / (nl - 1) - 0.5) * 0.88; pat.push(horiz ? D.line([x0 - w * 0.44, top, z0 + tt * d], [x0 + w * 0.44, top, z0 + tt * d], { lw: 0.35, alpha: 0.8 }) : D.line([x0 + tt * w, top, z0 - d * 0.44], [x0 + tt * w, top, z0 + d * 0.44], { lw: 0.35, alpha: 0.8 })); } }
+    else if (st === 1) { pat.push(D.rect(x0 - w * 0.47, z0 - d * 0.47, x0 + w * 0.47, z0 + d * 0.47, top, { fill: 'mid', lw: 0.3 })); pat.push(D.rect(x0 - w * 0.27, z0 - d * 0.27, x0 + w * 0.27, z0 + d * 0.27, top, { lw: 0.4 })); }
+    else if (st === 2) { for (var qq = 1; qq <= 3; qq++) pat.push(D.rect(x0 - w * qq / 7.2, z0 - d * qq / 7.2, x0 + w * qq / 7.2, z0 + d * qq / 7.2, top, { lw: 0.4 })); }
+    else { var nb = Math.max(3, Math.round(d / 9)); for (var b = 0; b < nb; b++) { var zz = z0 + (b / (nb - 1) - 0.5) * d * 0.76; pat.push(D.rect(x0 - w * 0.44, zz - d * 0.025, x0 + w * 0.44, zz + d * 0.025, top, { fill: 'dark', lw: 0.25 })); } }
+  });
+  [-1, 1].forEach(function (sx) { [-1, 1].forEach(function (sz) { var fx = sx * (PW / 2 + 9), fz = sz * (PD / 2 + 9); pat.push(D.rect(fx - 4.5, fz - 4.5, fx + 4.5, fz + 4.5, top, { lw: 0.5 })); pat.push(D.rect(fx - 2, fz - 2, fx + 2, fz + 2, top, { lw: 0.5 })); }); });
+  m.box({ c: [0, (T - ml) / 2 - T / 2, 0], s: [B, T - ml, B] }, 'light');
+  var band = [];
+  for (var q = 1; q < 8; q++) { var yy = -ml / 2 + ml * q / 8; band.push(D.line([-B / 2, yy, B / 2], [B / 2, yy, B / 2], { lw: 0.3, col: 'acc', alpha: 0.9 })); }
+  var bandX = band.map(function (it) { return { pts: [[B / 2, it.pts[0][1], B / 2], [B / 2, it.pts[0][1], -B / 2]], lw: 0.3, col: 'acc', alpha: 0.9 }; });
+  m.box({ c: [0, yTop - ml / 2, 0], s: [B, ml, B], decals: { py: pat, pz: band, px: bandX } }, 'accDark');
+  m.dim([-B / 2, -T / 2, B / 2], [B / 2, -T / 2, B / 2], [0, 0, 12], '152 mm');
+  // pads, frame, membrane
+  var FW = 145, FD = 117, bar = 4.5, fh = 2.6, stand = 2.5;
+  var pads = m.part('pads', { ex: [0, 15, 0], seq: 1 });
+  [-1, 1].forEach(function (sx) { [-1, 1].forEach(function (sz) { m.box({ c: [sx * (FW / 2 - bar / 2), yTop + stand / 2, sz * (FD / 2 - bar / 2)], s: [5.5, stand, 5.5] }, 'dark'); }); });
+  var fr = m.part('frame', { ex: [0, 30, 0], seq: 2 });
+  H.frame(m, [0, 0, 0], FW, FD, FW - 2 * bar, FD - 2 * bar, yTop + stand, yTop + stand + fh, 'steel');
+  m.box({ c: [FW * 0.22, yTop + stand + fh / 2, -(FD / 2 + 1.6)], s: [9, fh * 0.8, 4] }, 'mid');
+  var mem = m.part('membrane', { ex: [0, 48, 0], seq: 3 });
+  var yM = yTop + stand + fh;
+  m.sheet([[-FW / 2 + bar, yM, -FD / 2 + bar], [FW / 2 - bar, yM, -FD / 2 + bar], [FW / 2 - bar, yM, FD / 2 - bar], [-FW / 2 + bar, yM, FD / 2 - bar]], 'glass');
+  [[-1, -1], [1, -1], [1, 1], [-1, 1]].forEach(function (c) {
+    m.guide([[c[0] * (FW / 2 - bar / 2), yTop, c[1] * (FD / 2 - bar / 2), blank.idx], [c[0] * (FW / 2 - bar / 2), yTop, c[1] * (FD / 2 - bar / 2), pads.idx]], { alpha: 0.85 });
+    m.guide([[c[0] * FW / 2, yTop + stand, c[1] * FD / 2, pads.idx], [c[0] * FW / 2, yTop + stand, c[1] * FD / 2, fr.idx]], { alpha: 0.85 });
+    m.guide([[c[0] * (FW / 2 - bar), yM, c[1] * (FD / 2 - bar), fr.idx], [c[0] * (FW / 2 - bar), yM, c[1] * (FD / 2 - bar), mem.idx]], { alpha: 0.85 });
+  });
+  m.guide([[0, -T / 2 - 6, 0, blank.idx], [0, yM + 4, 0, mem.idx]], { style: 'axis', alpha: 0.8 });
+  m.callout([-B * 0.32, -T / 2 + 1.4, B / 2, blank.idx], 'Glass plate', { side: 'l' });
+  m.dim([B / 2, -T / 2, B / 2], [B / 2, T / 2, B / 2], [10, 0, 0], '6.35 mm', { t: 0.5, part: blank.idx });
+  m.callout([-B * 0.18, yTop - ml / 2, B / 2, blank.idx], 'Mirror coating', { side: 'l' });
+  m.callout([-FW * 0.28, yM, FD * 0.22, mem.idx], 'Pellicle', { side: 'l' });
+  return { elev: PLATE.ISO.elev, yaw: PLATE.ISO.yaw, sortAxis: [0, 1, 0], accent: [62, 84, 104], accentDark: [142, 167, 192] };
+});

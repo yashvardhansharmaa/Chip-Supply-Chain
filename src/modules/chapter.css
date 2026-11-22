@@ -46,7 +46,7 @@ article.chapter > .chapter-head > * { min-width: 0; }
 
 /* ---------- 1. the opener, in the text column ---------- */
 .chapter .ch-open { grid-column: 4 / 13; grid-row: 1; display: block; padding: 0; border: 0; }
-/* the opener stands over the drawing's canvas, which rides up under it by the empty band over the drawing (--lift, below) */
+/* the opener stands over the plate's canvas */
 @media screen { .chapter .ch-open { position: relative; z-index: 1; } }
 .chapter .ch-kick {
   display: flex; flex-wrap: wrap; align-items: center; gap: 6px 22px; margin: 0;
@@ -90,24 +90,20 @@ article.chapter > .chapter-head > * { min-width: 0; }
 
 /* ---------- 2. the specimen, the chapter's first plate: the drawing at the measure on the open ground (no box: the box is for
    data figures), its caption and its parts side by side under it ---------- */
-/* The canvas is --draw-h tall, and the drawing turns inside the sphere that fits it. src/app.js Stage.fit measures the drawing as
-   it turns and fits the plate to it: the canvas takes the height at which the drawing stands about 340 px tall, the slot is
-   shorter by the empty band over the drawing (--lift), the canvas riding up into the space under the opener, and the caption
-   rises into the band under it (--slack, the caption's rule below). The defaults are a typical drawing's, so the page barely
-   moves when the drawing arrives */
-.chapter .ch-spec { --draw-h: 460px; --lift: 52px; --slack: 46px; grid-column: 4 / 13; grid-row: 2; display: block; max-width: 666px; margin: 44px 0 0; padding: 0; }
-.chapter .ch-spec-draw { position: relative; height: calc(var(--draw-h) - var(--lift, 0px)); min-width: 0; }
-.chapter .ch-spec-draw canvas { position: absolute; left: 0; top: calc(-1 * var(--lift, 0px)); display: block; width: 100%; height: var(--draw-h); }
-.chapter .ch-spec-draw > .ch-balloons { top: calc(-1 * var(--lift, 0px)); height: var(--draw-h); }
+/* The canvas is --draw-h tall: the height at which the plate and its two columns of labels fill the slot's width, between 360
+   and 470 px (build/build.js writes it for a 666 px column, src/app.js Stage.fit for the slot's own width). The plate rests in
+   its drawn view; a drag or the arrow keys turn it, and it eases back (Stage.pointer). A touch screen wide enough to show the
+   slot turns it with a sideways drag, and keeps the page's scroll for an upright one */
+.chapter .ch-spec { --draw-h: 460px; grid-column: 4 / 13; grid-row: 2; display: block; max-width: 666px; margin: 44px 0 0; padding: 0; }
+.chapter .ch-spec-draw { position: relative; height: var(--draw-h); min-width: 0; }
+.chapter .ch-spec-draw canvas { position: absolute; left: 0; top: 0; display: block; width: 100%; height: var(--draw-h); touch-action: pan-y; outline: none; }
+.chapter .ch-spec-draw canvas:focus-visible { box-shadow: inset 0 0 0 2px var(--accent); }
 @media (hover: hover) and (pointer: fine) {
-  .chapter .ch-spec-draw canvas { cursor: grab; touch-action: none; outline: none; }
+  .chapter .ch-spec-draw canvas { cursor: grab; touch-action: none; }
   .chapter .ch-spec-draw canvas.is-dragging { cursor: grabbing; }
-  .chapter .ch-spec-draw canvas:focus-visible { box-shadow: inset 0 0 0 2px var(--accent); }
 }
-/* the caption stands on the drawing's own foot: --slack is the empty band under the drawing (src/app.js Stage.fit), which the
-   caption rises into; it sits above the canvas, so its links stay in reach */
-.chapter .ch-spec-cap { position: relative; min-width: 0; margin: calc(14px - var(--slack, 0px)) 0 0; max-width: none; transition: margin-top 0.3s var(--ease, ease); }
-/* with no WebGL (src/app.js Stage.init) the slot would frame nothing: the caption stands alone */
+.chapter .ch-spec-cap { position: relative; min-width: 0; margin: 14px 0 0; max-width: none; }
+/* with no 2D canvas or no kit (src/app.js Stage.init) the slot would frame nothing: the caption stands alone */
 html.no-stage .chapter .ch-spec-draw { display: none; }
 html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 .chapter .ch-spec-cap .label { display: flex; align-items: center; gap: 10px; margin: 0 0 6px; font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); line-height: 16px; color: var(--muted); }
@@ -135,41 +131,9 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 .ch-parts b { display: grid; place-items: center; width: 20px; height: 20px; border: 1.25px solid var(--ink); border-radius: 50%; font-family: var(--font-ui); font-size: 11px; font-weight: 600; line-height: 1; }
 .ch-parts a { color: var(--accent-ink); text-underline-offset: 3px; text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent); }
 .ch-parts a:hover { text-decoration-color: var(--accent); }
-/* the balloons over the live drawing (src/app.js Stage.balloons): numbered circles, their names, leader lines to the parts */
-.ch-balloons { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
-.ch-balloons line { stroke: var(--ink); stroke-width: 1.4; }
-.ch-balloons .dot { fill: var(--ink); stroke: var(--bg); stroke-width: 1.5; }
-.ch-balloons .bal { fill: var(--bg); stroke: var(--ink); stroke-width: 1.6; }
-.ch-balloons .num { font-family: var(--font-ui); font-size: 13px; font-weight: 700; fill: var(--ink); }
-.ch-balloons .nm { font-family: var(--font-ui); font-size: 14px; font-weight: 600; fill: var(--ink); paint-order: stroke; stroke: var(--bg); stroke-width: 4px; stroke-linejoin: round; }
-/* the phone's expanded strip: the numbers alone, over the strip's canvas (src/app.js Stage.stripBalloons) */
-.stage .ch-balloons.is-strip { right: auto; bottom: auto; z-index: 2; }
-.ch-balloons.is-strip .nm { display: none; }
-/* the drawing answers its parts (src/app.js Stage.entrance, Stage.setFocus; built 21 Nov 2026). Screen only: paper prints the
-   finished still. In the entrance each balloon waits (.intro) and comes in on its turn (.in): its leader draws out from the
-   balloon to the part, the balloon and its number grow in, the dot lands, the name follows */
+/* the plate answers its parts (src/app.js Stage.setFocus): a part pointed at, in the list or on the plate, lights in wine on the
+   plate, and the other rows step back. Screen only: paper prints the finished still */
 @media screen {
-  .ch-balloons.intro g { opacity: 0; }
-  .ch-balloons.intro g line { stroke-dasharray: 1 1; stroke-dashoffset: 1; }
-  .ch-balloons.intro g .dot { transform-box: fill-box; transform-origin: center; transform: scale(0); }
-  .ch-balloons.intro g .bal, .ch-balloons.intro g .num { transform-box: fill-box; transform-origin: center; transform: scale(0.4); }
-  .ch-balloons.intro g .nm { opacity: 0; }
-  .ch-balloons.intro g.in { opacity: 1; transition: opacity 0.18s; }
-  .ch-balloons.intro g.in .bal, .ch-balloons.intro g.in .num { transform: scale(1); transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1); }
-  .ch-balloons.intro g.in line { stroke-dashoffset: 0; transition: stroke-dashoffset 0.5s 0.12s var(--ease); }
-  .ch-balloons.intro g.in .dot { transform: scale(1); transition: transform 0.26s 0.55s cubic-bezier(0.34, 1.56, 0.64, 1); }
-  .ch-balloons.intro g.in .nm { opacity: 1; transition: opacity 0.35s 0.2s; }
-  /* a part pointed at, in the list or at its balloon: that balloon in wine, the others and the other rows step back. Each
-     balloon is a 44 px target (.hit) */
-  .ch-balloons g { transition: opacity 0.25s; }
-  .ch-balloons .bal, .ch-balloons .num, .ch-balloons .nm, .ch-balloons .hit { pointer-events: auto; cursor: pointer; }
-  .ch-balloons .hit { fill: transparent; stroke: none; }
-  .ch-balloons.has-on g:not(.on) { opacity: 0.22; }
-  .ch-balloons g.on line { stroke: var(--accent); stroke-width: 2; }
-  .ch-balloons g.on .bal { fill: var(--accent); stroke: var(--accent); }
-  .ch-balloons g.on .num { fill: var(--bg); }
-  .ch-balloons g.on .dot { fill: var(--accent); }
-  .ch-balloons g.on .nm { fill: var(--accent-ink); }
   .ch-parts li[data-n] { transition: opacity 0.2s; }
   .ch-parts li[data-n] b { transition: background-color 0.2s, border-color 0.2s, color 0.2s; }
   .ch-parts li[tabindex], .stage .ch-parts li[data-n] { cursor: pointer; }
@@ -184,7 +148,7 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 @media screen and (hover: none) and (min-width: 901px), screen and (pointer: coarse) and (min-width: 901px) {
   .chapter .ch-spec-cap .ch-parts li[data-n] { min-height: 44px; padding-top: 0; padding-bottom: 0; }
 }
-@media (prefers-reduced-motion: reduce) { .ch-balloons g, .ch-balloons g *, .ch-parts li[data-n], .ch-parts li[data-n] b { transition: none !important; } }
+@media (prefers-reduced-motion: reduce) { .ch-parts li[data-n], .ch-parts li[data-n] b { transition: none !important; } }
 /* the two chapters that are not stages set their drawing on the night ground (the hybrid's --night tokens): the ground fills the drawing's slot,
    which gives the plate its own edge, and the caption sits under it on the page's ground */
 .chapter .ch-spec[data-night] { --draw-h: 640px; --lift: 120px; --slack: 120px; margin-top: 36px; }
@@ -587,12 +551,8 @@ article.chapter[data-open] .ch-rail { grid-row: 1 / span 6; }
 .chapter .prevnext .next { grid-column: 2; grid-row: 1; display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); column-gap: var(--g); align-items: start; }
 .chapter .prevnext .next > * { grid-column: 1; }
 .chapter .prevnext .next > .ex { grid-column: 2; grid-row: 1 / span 4; align-self: start; display: flex; justify-content: center; padding-top: 28px; }
+/* the next chapter's plate, with no labels, on a clear ground: a light still and a dark one, the theme showing one (.pl-lt, .pl-dk) */
 .chapter .prevnext .ex img { display: block; width: auto; height: auto; max-width: 100%; max-height: 180px; }
-.chapter .prevnext .ex[data-night] img { border-radius: 2px; }
-/* the still is a light render, turned light-on-dark as the readable page turns it; its box carries the ground, so the screen
-   blend has the ground to work on inside the app's own layer (#app stacks above the page's ground) */
-:root[data-theme="dark"] .chapter .prevnext .ex:not([data-night]) { isolation: isolate; background: var(--bg); }
-:root[data-theme="dark"] .chapter .prevnext .ex:not([data-night]) img { filter: invert(1) hue-rotate(180deg); mix-blend-mode: screen; }
 .chapter .prevnext .prev { grid-column: 1; grid-row: 1; }
 .chapter .prevnext .pn .label { display: block; margin: 0 0 12px; font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); line-height: 16px; color: var(--muted); }
 .chapter .prevnext .prev .label { margin-bottom: 6px; }
@@ -711,7 +671,7 @@ article.chapter[data-open] .ch-rail { grid-row: 1 / span 6; }
   html[data-view="stack"] .stage { display: none; }
   /* with no stage beside the page, Back to top returns to the window's foot */
   html[data-view="stack"] body:has(.stage[data-hidden]) .to-top { top: auto; bottom: 20px; }
-  /* the caption stands right under the drawing: the empty band the drawing leaves at the canvas's foot (--slack, Stage.fit) */
+  /* the caption stands right under the drawing: the empty band the plate leaves at the canvas's foot (--slack, Stage.slack) */
   .stage .stage-tag { margin-top: calc(-1 * var(--slack, 0px)); transition: margin-top 0.3s var(--ease, ease); }
 }
 @media (min-width: 901px) and (prefers-reduced-motion: reduce) { .stage .stage-tag, .chapter .ch-spec-cap { transition: none; } }
@@ -804,8 +764,6 @@ article.ch-page { padding-top: 56px; border-top: 0; }
 
 /* the specimen stills and explainer videos are rendered on white; on the barely off-white ground they multiply into it, so no
    white box shows round them (27 Oct). Each sits in a box that carries the ground, so the blend has the ground to work on. */
-:root:not([data-theme="dark"]) .chapter .prevnext .ex:not([data-night]) { isolation: isolate; background: var(--bg); }
-:root:not([data-theme="dark"]) .chapter .prevnext .ex:not([data-night]) img,
 :root:not([data-theme="dark"]) .ch-page .ch-spec:not([data-night]) .ch-still-img,
 :root:not([data-theme="dark"]) .ch-still image,
 :root:not([data-theme="dark"]) .anim-stage video, :root:not([data-theme="dark"]) .anim-stage img { mix-blend-mode: multiply; }

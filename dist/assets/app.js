@@ -1,4 +1,4 @@
-/* CHIP SUPPLY CHAIN runtime: theme, router, WebGL specimen stage, section tracking, landscape / suppliers / geopolitics views. */
+/* CHIP SUPPLY CHAIN runtime: theme, router, the specimen stage (the chapters' plates, src/plate.js), section tracking, landscape / suppliers / geopolitics views. */
 (function () {
   'use strict';
   var $ = function (s, r) { return (r || document).querySelector(s); };
@@ -85,225 +85,139 @@
     }
   };
 
-  /* ---------------- tiny matrix lib ---------------- */
-  function perspective(fov, aspect, near, far) {
-    var f = 1 / Math.tan(fov / 2), nf = 1 / (near - far);
-    return [f / aspect, 0, 0, 0, 0, f, 0, 0, 0, 0, (far + near) * nf, -1, 0, 0, 2 * far * near * nf, 0];
-  }
-  function mul(a, b) { // column-major 4x4
-    var o = new Array(16);
-    for (var c = 0; c < 4; c++) for (var r = 0; r < 4; r++) {
-      o[c * 4 + r] = a[r] * b[c * 4] + a[4 + r] * b[c * 4 + 1] + a[8 + r] * b[c * 4 + 2] + a[12 + r] * b[c * 4 + 3];
-    }
-    return o;
-  }
-  function rotX(a) { var c = Math.cos(a), s = Math.sin(a); return [1, 0, 0, 0, 0, c, s, 0, 0, -s, c, 0, 0, 0, 0, 1]; }
-  function rotY(a) { var c = Math.cos(a), s = Math.sin(a); return [c, 0, -s, 0, 0, 1, 0, 0, s, 0, c, 0, 0, 0, 0, 1]; }
-  function rotZ(a) { var c = Math.cos(a), s = Math.sin(a); return [c, s, 0, 0, -s, c, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]; }
-  function scale(s) { return [s, 0, 0, 0, 0, s, 0, 0, 0, 0, s, 0, 0, 0, 0, 1]; }
-  function translate(x, y, z) { return [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x, y, z, 1]; }
-  function easeOut(t) { t = Math.max(0, Math.min(1, t)); return 1 - Math.pow(1 - t, 3); }
-
-  /* ---------------- the stage (WebGL point renderer) ---------------- */
+  /* ---------------- the stage: the chapter's plate ----------------
+     Since 21 Nov 2026 a chapter's specimen is an exploded technical plate (src/plate.js, the models in plates/<name>.js; the
+     owner's choice of "exploded plates, refined"): one canvas, drawn in 2D, that moves between the chapter's slot on a wide
+     screen (Stage.host), the phone's strip at the foot of the screen and the stage beside the home page's hero. Each plate
+     assembles the first time it shows in a session on a chapter's page, then opens and settles exploded, with its leader
+     labels and dimensions, and holds still: a settled plate costs nothing, since a frame is drawn only while something moves
+     (wake). The globe (16) keeps turning slowly, because a still globe hides the four American towns.
+     The reader can turn any plate: drag it, or use the arrow keys once it has the focus. The labels, leaders and dimensions
+     fade while it turns, within a range that keeps every plate's paint order right (TURN, or the plate's own spec.turn), and
+     on release it eases back to its drawn view and the labels return (it snaps back under reduced motion). On a phone the
+     page keeps its scroll: only the opened strip turns, never the collapsed one. Pointing at a label or at a part lights that
+     part, and in the four chapters with a parts list the list lights with it (setFocus), as the list lights the plate. */
   var Stage = {
-    ok: false, gl: null, canvas: null, cache: {}, cur: null, prev: null, transStart: 0, transDur: reduced ? 1 : 1100,
-    spin: 0, scrollAngle: 0, lastT: 0, userYaw: 0, userPitch: 0, held: false, dragging: false, ink: [0.07, 0.09, 0.1], accent: [0.79, 0.54, 0.07], dpr: 1, w: 0, h: 0, hidden: false, active: true,
-    /* Clouds are sized to the canvas they are drawn on. The phone strip's 116 px thumbnail ("thumb", any canvas under 200 px
-       on its short side) takes THUMB of the points a full-size stage gets, and a specimen is built again at full size when the
-       strip expands. lvl is the size of the canvas now; null until it has been laid out. */
-    lvl: null, THUMB: 0.4, queue: [], idling: false,
-    level: function (r) { r = r || this.canvas.getBoundingClientRect(); return !r.width || !r.height ? null : Math.min(r.width, r.height) < 200 ? 'thumb' : 'full'; },
-    density: function (lvl) { return (narrow() ? 0.55 : (window.devicePixelRatio > 1.5 ? 0.85 : 1)) * (lvl === 'thumb' ? this.THUMB : 1); },
-    // specimens to build while the browser is idle, before the reader reaches them, and only while the stage is showing
+    ok: false, canvas: null, ctx: null, fig: null, cache: {}, cur: null, snap: null, transStart: 0, transDur: reduced ? 1 : 320,
+    hostEl: null, hidden: false, active: true, still: false, dpr: 1, w: 0, h: 0, dark: false, scrollAngle: 0, balloonsSnap: false,
+    // the reader's turn off the drawn view, in radians (userYaw, userPitch), the largest yaw of the last turn (turnMax, for the
+    // checks), the turn easing back (back), how much of the labels shows (labA), the globe's own turn (spinYaw)
+    userYaw: 0, userPitch: 0, rawYaw: 0, rawPitch: 0, turnMax: 0, dragging: false, keyTurn: false, back: null, labA: 1, spinYaw: 0,
+    raf: 0, lastT: 0, inStart: 0, inPending: false, seen: true, parts: null, partsFor: '', focusN: null, hoverC: null,
+    TURN: { yaw: 40 * Math.PI / 180, pitch: 20 * Math.PI / 180 }, IN_MS: 2600,
+    queue: [], idling: false,
+    // plates to build while the browser is idle, before the reader reaches them, and only while the stage is showing
     soon: function (names) { var self = this; (names || []).forEach(function (n) { if (n && self.queue.indexOf(n) < 0) self.queue.push(n); }); this.idle(); },
     idle: function () {
       var self = this;
       if (this.idling || !this.queue.length || !this.ok || !this.active) return; // setVisible(true) picks the queue up again
       this.idling = true;
-      var go = function () { self.idling = false; if (!self.active) return; var n = self.queue.shift(); if (n) self.build(n, null); self.idle(); };
+      var go = function () { self.idling = false; if (!self.active) return; var n = self.queue.shift(); if (n) self.build(n); self.idle(); };
       if (window.requestIdleCallback) requestIdleCallback(go, { timeout: 2000 }); else setTimeout(go, 300);
     },
     init: function () {
       this.canvas = $('#stage-canvas');
       this.fig = $('.stage');
       if (!this.canvas || !this.fig) return;
-      var gl = this.canvas.getContext('webgl2', { alpha: true, antialias: false, premultipliedAlpha: true, powerPreference: 'high-performance' }) ||
-               this.canvas.getContext('webgl', { alpha: true, antialias: false, premultipliedAlpha: true });
-      if (!gl || !window.PC) { this.fig.setAttribute('data-hidden', '1'); document.documentElement.classList.add('no-stage'); return; }
-      this.gl = gl;
-      var vs = 'attribute vec4 aP;uniform mat4 uMVP;uniform float uSize;uniform float uOp;uniform vec3 uInk;uniform vec3 uAcc;uniform vec3 uAcc2;' +
-        'uniform float uIn;uniform float uFK;uniform vec4 uSA[10];uniform vec4 uSB[10];uniform vec4 uSC[10];varying vec4 vC;' +
-        'void main(){vec4 p=uMVP*vec4(aP.xyz,1.0);gl_Position=p;float w=aP.w;vec3 c;float a;' +
-        // three channels: ink w in [0,1], accent w in [2,3], second accent w in (3,4] (see src/kit.js)
-        'if(w>3.0){c=uAcc2;a=clamp(w-3.0,0.0,1.0);}else if(w>=2.0){c=uAcc;a=clamp(w-2.0,0.0,1.0);}else{c=uInk;a=clamp(w,0.0,1.0);}' +
-        'float j=fract(sin(dot(aP.xyz,vec3(12.9898,78.233,37.719)))*43758.5453);' + // per-point size jitter: hand-stippled, not screen-toned
-        'float depth=clamp((p.w-2.4)/3.2,0.0,1.0);' + // far points fade a little, which reads as depth
-        // the entrance (Stage.entrance): as uIn runs from 0 to 1 each point lands at its own moment; uIn is 1 at rest
-        'float j2=fract(j*91.7+aP.y*1.37+aP.x*0.71);float rv=smoothstep(j2,j2+0.16,uIn*1.16);' +
-        // the part the reader points at (Stage.setFocus): f is how far inside one of its shapes the point lies, 1 inside, 0 outside.
-        // A shape is a rod from uSA.xyz to uSB.xyz of radius uSA.w, a ball where the two ends meet, or a box round uSA.xyz with the
-        // half sizes uSB.xyz (uSA.w below 0); uSB.w is its soft edge. uSC.x keeps it to the ink (1) or the accents (2), and uSC.yzw
-        // to thin layers (pitch, a layer's height, half its thickness)
-        'float f=0.0;if(uFK>0.0){for(int i=0;i<10;i++){vec4 A=uSA[i];vec4 B=uSB[i];vec4 C=uSC[i];if(B.w<=0.0)continue;' +
-        'if((C.x>0.5&&C.x<1.5&&w>=2.0)||(C.x>1.5&&w<2.0))continue;vec3 q=aP.xyz-A.xyz;float sd;' +
-        'if(A.w<0.0){vec3 d=abs(q)-B.xyz;sd=length(max(d,0.0))+min(max(d.x,max(d.y,d.z)),0.0);}' +
-        'else{vec3 ab=B.xyz-A.xyz;float L=length(ab);if(L>0.0001){vec3 u=ab/L;float t=dot(q,u);sd=max(length(q-u*t)-A.w,max(-t,t-L));}else{sd=length(q)-A.w;}}' +
-        'if(C.y>0.0){float m=mod(aP.y-C.z,C.y);sd=max(sd,min(m,C.y-m)-C.w);}' +
-        'f=max(f,1.0-smoothstep(0.0,B.w,sd));}}' +
-        // the rest of the drawing steps back, the ink to a fifth and the accents (a light path) to a little over a third
-        'float fo=mix(1.0,mix(w>=2.0?0.36:0.2,1.0,f),uFK);' +
-        'gl_PointSize=(uSize*(0.72+0.56*j)*(1.0+0.3*f*uFK)*(0.55+0.45*rv))/max(p.w,0.5);vC=vec4(c,a*uOp*rv*fo*mix(1.0,0.62,depth));}';
-      var fs = 'precision mediump float;varying vec4 vC;void main(){vec2 d=gl_PointCoord-0.5;float r=dot(d,d);if(r>0.25)discard;float a=vC.a*smoothstep(0.25,0.10,r);gl_FragColor=vec4(vC.rgb*a,a);}';
-      var prog = gl.createProgram();
-      var sh = function (type, src) { var s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s)); return s; };
-      try { gl.attachShader(prog, sh(gl.VERTEX_SHADER, vs)); gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, fs)); gl.linkProgram(prog); }
-      catch (e) { this.fig.setAttribute('data-hidden', '1'); document.documentElement.classList.add('no-stage'); return; }
-      gl.useProgram(prog);
-      this.loc = { aP: gl.getAttribLocation(prog, 'aP'), uMVP: gl.getUniformLocation(prog, 'uMVP'), uSize: gl.getUniformLocation(prog, 'uSize'), uOp: gl.getUniformLocation(prog, 'uOp'), uInk: gl.getUniformLocation(prog, 'uInk'), uAcc: gl.getUniformLocation(prog, 'uAcc'), uAcc2: gl.getUniformLocation(prog, 'uAcc2') };
-      var loc = this.loc; ['uIn', 'uFK', 'uSA', 'uSB', 'uSC'].forEach(function (n) { loc[n] = gl.getUniformLocation(prog, n); });
-      gl.enableVertexAttribArray(this.loc.aP);
-      gl.enable(gl.BLEND); gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA); gl.disable(gl.DEPTH_TEST);
-      this.ok = true;
-      this.refreshColors();
+      var ctx = this.canvas.getContext && this.canvas.getContext('2d');
+      if (!ctx || !window.PLATE) { this.fig.setAttribute('data-hidden', '1'); document.documentElement.classList.add('no-stage'); return; }
+      this.ctx = ctx; this.ok = true;
       var self = this;
+      this.refreshColors();
       window.addEventListener('resize', function () { self.resize(); });
-      if (window.ResizeObserver) new ResizeObserver(function () { self.resize(); }).observe(this.canvas); // the caption below the canvas changes height per specimen
-      document.addEventListener('visibilitychange', function () { self.hidden = document.hidden; });
+      if (window.ResizeObserver) new ResizeObserver(function () { self.resize(); }).observe(this.canvas);
+      // a slot scrolled out of view draws nothing; back in view, it draws again (the globe goes on turning)
+      if (window.IntersectionObserver) new IntersectionObserver(function (es) { es.forEach(function (e) { self.seen = e.isIntersecting; if (self.seen) self.wake(); }); }).observe(this.canvas);
+      document.addEventListener('visibilitychange', function () { self.hidden = document.hidden; if (!self.hidden) self.wake(); });
+      // the labels are measured in the page's faces, so once they are in, every plate is laid out again
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { for (var k in self.cache) if (self.cache.hasOwnProperty(k)) self.cache[k].pl.refit(); self.fit(); self.wake(); });
       this.pointer();
       this.answer();
       this.resize();
-      requestAnimationFrame(function (t) { self.loop(t); });
     },
     refreshColors: function () {
-      // read where the canvas sits: a chapter's night slot (the two chapters that are not stages) sets its own ink and accent (src/modules/chapter.css)
-      var cs = getComputedStyle(this.canvas && this.canvas.isConnected ? this.canvas : document.documentElement);
-      var p = function (v, d) { var m = (cs.getPropertyValue(v) || '').split(','); if (m.length < 3) return d; return [parseFloat(m[0]) / 255, parseFloat(m[1]) / 255, parseFloat(m[2]) / 255]; };
-      this.ink = p('--stage-ink', this.ink); this.accent = p('--stage-accent', this.accent);
-      // a specimen's own colours are picked per theme: accentDark/accent2Dark when data-theme="dark", else the light
-      // colour lifted by PC.lift (HSL lightness raised to at least 0.62, hue and saturation kept); see src/kit.js
-      this.dark = document.documentElement.getAttribute('data-theme') === 'dark' || !!(this.canvas && this.canvas.closest && this.canvas.closest('[data-night]'));
-      for (var k in this.cache) if (this.cache.hasOwnProperty(k)) this.cache[k].colors = null;
+      this.dark = document.documentElement.getAttribute('data-theme') === 'dark';
+      for (var k in this.cache) if (this.cache.hasOwnProperty(k)) this.cache[k].pl.recolor();
+      this.thumb();
+      this.wake();
     },
-    // the two accent colours a slot draws with, as 0..1 triplets: its own if it declares any, else the CSS accent for both
-    slotColors: function (slot) {
-      if (slot.colors) return slot.colors;
-      var r = PC.resolveColors(slot.spec, this.dark), f = function (c) { return [c[0] / 255, c[1] / 255, c[2] / 255]; };
-      slot.colors = r ? { accent: f(r.accent), accent2: f(r.accent2) } : { accent: this.accent, accent2: this.accent };
-      return slot.colors;
+    // what the canvas shows the plate with: in a chapter's slot, every label and dimension; in the phone's opened strip, the
+    // numbers alone and no dimensions (the list under it names the parts); beside the home page's hero, the drawing alone
+    mode: function () {
+      if (this.hostEl) return {};
+      if (narrow()) return { numbersOnly: true, noDims: true };
+      return { noLabels: true, noDims: true };
     },
     resize: function () {
       if (!this.ok) return;
       this.dpr = Math.min(window.devicePixelRatio || 1, 2);
       var r = this.canvas.getBoundingClientRect();
-      this.w = Math.max(1, Math.round(r.width * this.dpr)); this.h = Math.max(1, Math.round(r.height * this.dpr));
-      if (this.canvas.width !== this.w || this.canvas.height !== this.h) { this.canvas.width = this.w; this.canvas.height = this.h; }
-      this.gl.viewport(0, 0, this.w, this.h);
-      var l = this.level(r);
-      if (l) this.lvl = l;
-      // the strip expanded (or the window grew): the specimen on show is built again for the bigger canvas, in place
-      if (this.cur && this.lvl && this.cur.lvl !== this.lvl) {
-        var s = this.build(this.cur.name, this.cur.params);
-        if (s && s !== this.cur) { s.spinBase = this.cur.spinBase; if (this.prev === this.cur) this.prev = null; this.cur = s; }
-      }
+      this.w = r.width; this.h = r.height;
+      var W = Math.max(1, Math.round(r.width * this.dpr)), H = Math.max(1, Math.round(r.height * this.dpr));
+      if (this.canvas.width !== W || this.canvas.height !== H) { this.canvas.width = W; this.canvas.height = H; }
       this.fit();
+      this.wake();
     },
-    build: function (name, params) {
-      if (!this.ok || !name) return null; // no context: building the cloud would cost the work and then throw at the buffer
-      var lvl = this.lvl || (narrow() ? 'thumb' : 'full'); // before the canvas is laid out: a phone shows the strip
-      var key = name + '|' + JSON.stringify(params || {}) + '|' + lvl;
-      if (this.cache[key]) return this.cache[key];
-      var spec;
-      PC.density = this.density(lvl);
-      try { spec = PC.build(name, params); } catch (e) { console.warn('specimen failed:', name, e.message); return null; }
-      var gl = this.gl, vbo = gl.createBuffer();
-      gl.bindBuffer(gl.ARRAY_BUFFER, vbo); gl.bufferData(gl.ARRAY_BUFFER, spec.cloud, gl.STATIC_DRAW);
-      // every k-th point, about 1,500 in all: enough to find how far down the drawing reaches as it turns (fit)
-      var cl = spec.cloud, np = cl.length / 4, k = Math.max(1, Math.floor(np / 1500)), smp = [];
-      for (var q = 0; q < np; q += k) smp.push(cl[q * 4], cl[q * 4 + 1], cl[q * 4 + 2]);
-      var slot = { key: key, name: name, params: params || null, lvl: lvl, vbo: vbo, n: PC.count(spec.cloud), spin: spec.spin, tilt: spec.tilt, turntable: !!spec.turntable, caption: spec.caption, spinBase: 0,
-        sample: smp, norm: spec.norm || null, extent: {},
-        spec: { accent: spec.accent, accent2: spec.accent2, accentDark: spec.accentDark, accent2Dark: spec.accent2Dark }, colors: null };
-      this.cache[key] = slot;
-      return slot;
+    build: function (name) {
+      if (!this.ok || !name) return null;
+      if (this.cache[name]) return this.cache[name];
+      var pl;
+      try { pl = new PLATE.Plate(name, {}); } catch (e) { console.warn('plate failed:', name, e.message); return null; }
+      return (this.cache[name] = { name: name, pl: pl, spin: pl.spins ? (pl.m.spec.spin || 0.06) : 0 });
     },
     show: function (name, params, caption, tag) {
       if (!this.ok || !name) return;
-      var slot = this.build(name, params);
+      var slot = this.build(name);
       if (!slot) return;
       var cap = $('#stage-caption'), tg = $('#stage-tag-text');
-      if (cap) cap.innerHTML = caption ? caption : (slot.caption ? esc(slot.caption) : '');
-      // the phone's collapsed strip shows the specimen's line drawing (the still /supply-chain/ shows), where the live drawing
-      // at 52 px was a dark blob; a specimen with no still keeps the live one (src/styles.css .stage-thumb)
-      var th = $('.stage-thumb', this.fig), cid = ((window.CP_TERMS || {}).specimenChapter || {})[name];
-      if (th) { if (cid) { var u = (PAGE.root || '') + 'media/line-' + cid + '.webp'; if (th.getAttribute('src') !== u) th.setAttribute('src', u); th.hidden = false; this.fig.setAttribute('data-thumb', '1'); } else { th.hidden = true; this.fig.removeAttribute('data-thumb'); } }
+      if (cap) cap.innerHTML = caption || '';
       if (tg && tag) tg.innerHTML = tag;
-      if (this.cur && this.cur.key === slot.key) return;
-      this.prev = this.cur; this.cur = slot; this.transStart = performance.now();
+      if (this.cur && this.cur.name === slot.name) { this.thumb(); return; }
+      // the plate on show fades out over the new one (the home page's rows pick them): a copy of the canvas as it stands
+      this.snap = null;
+      if (this.cur && this.seen && this.showing() && !reduced && this.canvas.width > 1) { var sn = document.createElement('canvas'); sn.width = this.canvas.width; sn.height = this.canvas.height; sn.getContext('2d').drawImage(this.canvas, 0, 0); this.snap = sn; }
+      this.cur = slot; this.transStart = performance.now();
       this.dropFocus();
+      this.release(true);
+      this.spinYaw = 0;
+      this.readParts();
+      this.thumb();
+      // the pause button is for the one plate that moves on its own (WCAG 2.2.2)
+      var pb = $('.stage-pause'); if (pb) pb.hidden = !slot.spin;
       if (this.hostEl) this.entrance(); // the chapter's own slot on a wide screen (the phone's strip makes it as it opens, Band.set)
-      slot.spinBase = -this.spin; // each specimen starts from its own tilt
-      this.scrollAngle = 0; this.userYaw = 0; this.userPitch = 0;
       this.fit();
+      this.wake();
     },
-    /* The model's view matrix for a slot at the current turn (as draw() sets it), so the balloons can find a part on the screen */
-    model: function (slot, extraRot, sc) {
-      var t = slot.tilt, idle = this.spin + slot.spinBase;
-      // a turntable specimen makes every turn about its own axis, so it never leans (the HBM stack, 29 Oct 2026); t[1] is where it starts
-      var M = slot.turntable
-        ? mul(rotZ(t[2]), mul(rotX(t[0]), rotY(t[1] + idle + this.scrollAngle + extraRot)))
-        : mul(rotZ(t[2]), mul(rotY(t[1] + idle + this.scrollAngle + extraRot), rotX(t[0])));
-      M = mul(M, scale(sc));
-      if (this.userYaw || this.userPitch) M = mul(rotX(this.userPitch), mul(rotY(this.userYaw), M));
-      return M;
+    // the phone's collapsed strip shows a still of the plate (build/plate-stills.js, media/plate-<chapter>-thumb.webp), light or
+    // dark with the page; a plate with no still keeps the live one (src/styles.css .stage-thumb)
+    thumb: function () {
+      if (!this.fig || !this.cur) return;
+      var th = $('.stage-thumb', this.fig), cid = ((window.CP_TERMS || {}).specimenChapter || {})[this.cur.name];
+      if (!th) return;
+      if (cid) { var u = (PAGE.root || '') + 'media/plate-' + cid + '-thumb' + (this.dark ? '-dark' : '') + '.webp'; if (th.getAttribute('src') !== u) th.setAttribute('src', u); th.hidden = false; this.fig.setAttribute('data-thumb', '1'); }
+      else { th.hidden = true; this.fig.removeAttribute('data-thumb'); }
     },
-    proj: function (aspect) {
-      return mul(perspective(34 * Math.PI / 180, aspect, 0.1, 40), translate(0, 0, -3.8 * Math.max(1, 0.98 / aspect)));
+    // the parts list of the chapter whose plate this is (data/specimen-parts.json, carried on its slot as data-parts): its
+    // names go on the plate's numbered labels, and its light tables keep a part to the ink or the accents
+    readParts: function () {
+      this.parts = null; this.partsFor = '';
+      var name = this.cur && this.cur.name, art = this.hostEl ? this.hostEl.closest('article.chapter') : $('.view[data-view="stack"] article.chapter[data-specimen="' + name + '"]');
+      var fig = art && art.getAttribute('data-specimen') === name ? $('.ch-spec[data-parts]', art) : null, raw = fig && fig.getAttribute('data-parts');
+      if (!raw) return;
+      try { this.parts = JSON.parse(raw); } catch (e) { this.parts = null; return; }
+      this.partsFor = name;
+      this.cur.pl.names(this.parts);
     },
-    /* How far the drawing reaches across a turn, in CSS pixels of this canvas: the lowest point and the widest either side of
-       the centre, over 24 steps of the idle turn. fit() puts the caption right under the drawing with it (the stage's empty
-       band under a drawing, --slack), and the balloons keep clear of the drawing with it. */
-    reach: function (slot) {
-      var r = this.canvas.getBoundingClientRect(), w = r.width, h = r.height;
-      if (!w || !h || !slot || !slot.sample) return null;
-      var key = Math.round(w) + 'x' + Math.round(h);
-      if (slot.extent[key]) return slot.extent[key];
-      var P = this.proj(w / h), t = slot.tilt, smp = slot.sample, bottom = 0, top = h, side = 0;
-      for (var a = 0; a < 24; a++) {
-        var yaw = a * Math.PI / 12;
-        var M = slot.turntable ? mul(rotZ(t[2]), mul(rotX(t[0]), rotY(t[1] + yaw))) : mul(rotZ(t[2]), mul(rotY(t[1] + yaw), rotX(t[0])));
-        var A = mul(P, M);
-        for (var i = 0; i < smp.length; i += 3) {
-          var x = smp[i], y = smp[i + 1], z = smp[i + 2];
-          var cw = A[3] * x + A[7] * y + A[11] * z + A[15]; if (cw <= 0) continue;
-          var sx = (A[0] * x + A[4] * y + A[8] * z + A[12]) / cw, sy = (A[1] * x + A[5] * y + A[9] * z + A[13]) / cw;
-          var py = (1 - sy) / 2 * h, px = Math.abs(sx) / 2 * w;
-          if (py > bottom) bottom = py; if (py < top) top = py; if (px > side) side = px;
-        }
-      }
-      return (slot.extent[key] = { bottom: bottom, top: top, side: side, w: w, h: h });
-    },
-    // the caption stands on the drawing's foot: the empty band under the drawing goes to the stage (or the chapter's slot) as --slack.
-    // A chapter's plate (the column, src/modules/chapter.css) is fitted to its drawing, which turns inside the sphere that holds it,
-    // so a flat board and a tall rack leave different bands: the canvas takes the height (--draw-h, 380 to 640 px) at which the
-    // drawing stands about 340 px tall as it turns, the band over the drawing goes (--lift: the slot is that much shorter and the
-    // canvas rides up under the opener) and the caption rises into the band under it (--slack). The night plate of chapters 16 and
-    // 17 keeps 28 px of its ground round the drawing, and its caption stands under it
+    /* The slot's height (--draw-h, which build/build.js writes for a 666 px column) follows the plate and the slot's width: the
+       height at which the drawing and its label columns fill the width, between 360 and 470 px */
     fit: function () {
-      if (!this.ok || !this.cur) return;
-      var e = this.reach(this.cur), host = this.hostEl || this.fig;
-      if (!e || !host) return;
-      var spec = this.hostEl ? this.hostEl.closest('.ch-spec') : this.fig, art = this.hostEl ? this.hostEl.closest('article.chapter') : null;
-      if (!art) { spec.style.setProperty('--slack', Math.max(0, Math.round(e.h - e.bottom - 10)) + 'px'); return; }
-      if (art.getAttribute('data-specimen') !== this.cur.name) return; // the drawing has moved here, its specimen not yet (show() fits it)
-      var want = Math.round(Math.max(380, Math.min(640, 340 * e.h / Math.max(1, e.bottom - e.top))));
-      if (Math.abs(want - e.h) > 2 && this.fitting !== want) { this.fitting = want; spec.style.setProperty('--draw-h', want + 'px'); this.resize(); return; }
-      this.fitting = 0; // (a height the slot did not take is not asked for twice in a row)
-      var night = spec.hasAttribute('data-night');
-      spec.style.setProperty('--lift', Math.max(0, Math.round(e.top - (night ? 28 : 12))) + 'px');
-      spec.style.setProperty('--slack', Math.max(0, Math.round(e.h - e.bottom - (night ? 28 : 10))) + 'px');
+      if (!this.ok || !this.cur || !this.hostEl) return;
+      var spec = this.hostEl.closest('.ch-spec'), art = this.hostEl.closest('article.chapter');
+      if (!spec || !art || art.getAttribute('data-specimen') !== this.cur.name) return;
+      var w = this.hostEl.getBoundingClientRect().width; if (!w) return;
+      var want = this.cur.pl.heightFor(w, 360, 470) + 'px';
+      if (spec.style.getPropertyValue('--draw-h') !== want) spec.style.setProperty('--draw-h', want);
     },
-    /* The chapter's slot the drawing sits in on The Chain (src/modules/chapter.css .ch-spec-draw), or null for the stage beside
-       the page (the home, AI Chips) and the phone's strip. The canvas and its pause button move; the canvas keeps its context. */
     /* Where the stage sits in the page's order (it is fixed, so only the Tab order sees it): on the home, right after the
        hero, so Tab reaches the chain at a glance, whose rows pick the specimen, before the specimen itself; elsewhere, its place
        in src/template.html, before the views */
@@ -314,11 +228,11 @@
       if (ev) { if (this.fig.previousElementSibling !== ev) ev.parentNode.insertBefore(this.fig, ev.nextSibling); }
       else if (this.fig.parentNode !== this.homeParent && this.homeBefore) this.homeParent.insertBefore(this.fig, this.homeBefore);
     },
-    hostEl: null,
+    /* The chapter's slot the plate sits in on a wide screen (src/modules/chapter.css .ch-spec-draw), or null for the stage beside
+       the page (the home) and the phone's strip. The canvas and its pause button move. */
     host: function (el) {
       if (!this.canvas || el === this.hostEl) return;
       var pause = this.fig ? $('.stage-pause', this.fig) || (this.hostEl ? $('.stage-pause', this.hostEl.closest('.ch-spec')) : null) : null;
-      if (this.balloonEl) { this.balloonEl.remove(); this.balloonEl = null; this.parts = null; }
       this.dropFocus();
       $$('.ch-spec .ch-parts li[tabindex]').forEach(function (li) { li.removeAttribute('tabindex'); });
       if (el) {
@@ -326,8 +240,8 @@
         var lab = $('.ch-spec-cap .label', el.closest('.ch-spec'));
         if (pause && lab) lab.appendChild(pause);
         this.fig.setAttribute('data-hosted', '1');
-        // the parts list beside the balloons answers the pointer and, item by item, the Tab key (Stage.answer)
-        if (this.balloons(el)) $$('.ch-parts li[data-n]', el.closest('.ch-spec')).forEach(function (li) { li.setAttribute('tabindex', '0'); });
+        // the parts list beside the plate answers the pointer and, item by item, the Tab key (Stage.answer)
+        $$('.ch-parts li[data-n]', el.closest('.ch-spec')).forEach(function (li) { li.setAttribute('tabindex', '0'); });
       } else {
         this.fig.insertBefore(this.canvas, this.fig.firstChild);
         var tag = $('.stage-tag', this.fig);
@@ -335,184 +249,85 @@
         this.fig.removeAttribute('data-hosted');
       }
       this.hostEl = el;
+      this.snap = null;
+      this.release(true);
+      if (this.cur) this.readParts();
       this.refreshColors();
       this.resize();
     },
-    /* The numbered balloons over the live drawing, where the chapter's slot lists parts (data/specimen-parts.json, carried on the
-       slot as data-parts): each part's points are turned with the drawing every frame and projected; its balloon stands in a
-       column clear of the drawing on the side the part is on, at the part's height, with a leader to each point. A part that
-       crosses to the other side as the drawing turns moves its balloon across. The phone's strip and the home show none. */
-    balloonEl: null, parts: null,
-    balloons: function (el, from) {
-      var fig = from || el.closest('.ch-spec'), raw = fig && fig.getAttribute('data-parts');
-      if (!raw) return;
-      var parts; try { parts = JSON.parse(raw); } catch (e) { return; }
-      if (!parts || !parts.length) return;
-      var NS = 'http://www.w3.org/2000/svg', svg = document.createElementNS(NS, 'svg');
-      svg.setAttribute('class', 'ch-balloons'); svg.setAttribute('aria-hidden', 'true');
-      parts.forEach(function (p) {
-        var g = document.createElementNS(NS, 'g'); g.setAttribute('data-n', p.n); p.g = g;
-        p.lines = (p.at || []).map(function () { var l = document.createElementNS(NS, 'line'); l.setAttribute('pathLength', '1'); g.appendChild(l); return l; });
-        p.dots = (p.at || []).map(function () { var d = document.createElementNS(NS, 'circle'); d.setAttribute('class', 'dot'); d.setAttribute('r', '3.5'); g.appendChild(d); return d; });
-        p.hit = document.createElementNS(NS, 'circle'); p.hit.setAttribute('class', 'hit'); p.hit.setAttribute('r', '22'); g.appendChild(p.hit); // a 44 px target round the balloon
-        p.c = document.createElementNS(NS, 'circle'); p.c.setAttribute('class', 'bal'); p.c.setAttribute('r', '12'); g.appendChild(p.c);
-        p.tn = document.createElementNS(NS, 'text'); p.tn.setAttribute('class', 'num'); p.tn.setAttribute('text-anchor', 'middle'); p.tn.textContent = p.n; g.appendChild(p.tn);
-        p.tl = document.createElementNS(NS, 'text'); p.tl.setAttribute('class', 'nm'); p.tl.textContent = p.name; g.appendChild(p.tl);
-        svg.appendChild(g);
-        p.x = null; p.y = null; p.side = 0;
-      });
-      el.appendChild(svg);
-      this.balloonEl = svg; this.parts = parts; this.partsFor = (fig.closest('article.chapter') || {}).getAttribute ? fig.closest('article.chapter').getAttribute('data-specimen') : '';
-      return svg;
-    },
-    /* On a phone the drawing stays in the strip at the foot of the screen; expanded, the strip numbers the parts too, with the
-       numbers only, as the readable page does on a phone, since the list under the caption names them (stage 2 review, item 2).
-       Called when the strip opens or closes and when the specimen changes (loop) */
-    stripBalloons: function () {
-      this._balCur = this.cur;
-      var want = !this.hostEl && narrow() && Band.el && !Band.collapsed && this.cur, el = this.balloonEl;
-      if (el && el.classList.contains('is-strip') && (!want || this.partsFor !== this.cur.name)) { el.remove(); this.balloonEl = null; this.parts = null; this.dropFocus(); }
-      if (!want || this.balloonEl) return;
-      var art = $('.view[data-view="stack"] article.chapter[data-specimen="' + this.cur.name + '"]'), spec = art && $('.ch-spec[data-parts]', art);
-      if (!spec) return;
-      var svg = this.balloons(this.fig, spec);
-      if (svg) { svg.classList.add('is-strip'); this.balloonsSnap = true; }
-    },
-    drawBalloons: function () {
-      var parts = this.parts, slot = this.cur;
-      if (!parts || !slot || slot.name !== this.partsFor || !slot.norm) { if (this.balloonEl) this.balloonEl.style.display = 'none'; return; }
-      var r = this.canvas.getBoundingClientRect(), w = r.width, h = r.height;
-      if (!w || !h) return;
-      this.balloonEl.style.display = '';
-      var strip = this.balloonEl.classList.contains('is-strip');
-      if (strip) { var bs = this.balloonEl.style; bs.left = this.canvas.offsetLeft + 'px'; bs.top = this.canvas.offsetTop + 'px'; bs.width = w + 'px'; bs.height = h + 'px'; } // over the strip's canvas
-      var k = easeOut((performance.now() - this.transStart) / this.transDur);
-      var A = mul(this.proj(w / h), this.model(slot, -0.45 * (1 - k), 0.94 + 0.06 * k));
-      var nc = slot.norm.c, nk = slot.norm.k, e = this.reach(slot) || { side: w * 0.3 };
-      var pr = function (q) {
-        var x = (q[0] - nc[0]) * nk, y = (q[1] - nc[1]) * nk, z = ((q[2] || 0) - nc[2]) * nk;
-        var cw = A[3] * x + A[7] * y + A[11] * z + A[15];
-        return [((A[0] * x + A[4] * y + A[8] * z + A[12]) / cw + 1) / 2 * w, (1 - (A[1] * x + A[5] * y + A[9] * z + A[13]) / cw) / 2 * h];
-      };
-      var cx = w / 2, gap = Math.max(26, Math.min(56, w * 0.05)), colL = Math.max(18, cx - e.side - gap), colR = Math.min(w - 18, cx + e.side + gap);
-      var sides = [[], []];
-      parts.forEach(function (p) {
-        p.pts = (p.at || []).map(pr);
-        if (!p.pts.length) return;
-        var mx = 0, my = 0; p.pts.forEach(function (q) { mx += q[0]; my += q[1]; }); mx /= p.pts.length; my /= p.pts.length;
-        // the side a part's balloon stands on changes only once the part is well past the middle, so it never flickers
-        var want = mx < cx ? -1 : 1; if (!p.side || (want !== p.side && Math.abs(mx - cx) > w * 0.04)) p.side = want;
-        p.ty = my; sides[p.side < 0 ? 0 : 1].push(p);
-      });
-      // a name's width, measured once the faces are in
-      var nameW = function (p) { var t = p.tw || 0; if (!t) { t = p.tl.getComputedTextLength ? p.tl.getComputedTextLength() : 0; if (t > 0) p.tw = t; else t = String(p.name).length * 8; } return t; };
-      // on each side, the balloons keep 34 px apart, in the order of the parts' heights. Where a name has no room beside its
-      // balloon it stands under it (below), and the balloons on that side then keep 58 px apart, so a name never runs into the
-      // next balloon (a drawing as wide as its slot, CoWoS; labels mockup of 29 Oct 2026). The strip shows no names
-      sides.forEach(function (list, si) {
-        var x = si ? colR : colL, under = !strip && list.some(function (p) { return si ? x + 18 + nameW(p) > w - 2 : x - 18 - nameW(p) < 2; });
-        var step = under ? 58 : 34;
-        list.sort(function (a, b) { return a.ty - b.ty; });
-        for (var i = 1; i < list.length; i++) if (list[i].ty - list[i - 1].ty < step) list[i].ty = list[i - 1].ty + step;
-        var over = list.length ? list[list.length - 1].ty - (h - (under ? 40 : 18)) : 0;
-        if (over > 0) list.forEach(function (p) { p.ty -= over; });
-      });
-      var snap = this.balloonsSnap; this.balloonsSnap = false;
-      if (this.inStart && this.balloonEl.classList.contains('intro')) {
-        var since = performance.now() - this.inStart;
-        parts.slice().sort(function (a, b) { return a.n - b.n; }).forEach(function (p, i) { if (since >= 750 + i * 200 && p.g) p.g.classList.add('in'); });
-      }
-      parts.forEach(function (p) {
-        if (!p.pts || !p.pts.length) return;
-        var tx = p.side < 0 ? colL : colR, ty = Math.max(16, p.ty);
-        if (p.x === null || snap || reduced) { p.x = tx; p.y = ty; } else { p.x += (tx - p.x) * 0.14; p.y += (ty - p.y) * 0.14; }
-        p.c.setAttribute('cx', p.x.toFixed(1)); p.c.setAttribute('cy', p.y.toFixed(1));
-        if (p.hit) { p.hit.setAttribute('cx', p.x.toFixed(1)); p.hit.setAttribute('cy', p.y.toFixed(1)); }
-        p.tn.setAttribute('x', p.x.toFixed(1)); p.tn.setAttribute('y', (p.y + 4.5).toFixed(1));
-        var left = p.x < cx, tw = nameW(p);
-        // the name beside its balloon, or under it where beside would run past the drawing's edge (the page clips there)
-        var under = left ? p.x - 18 - tw < 2 : p.x + 18 + tw > w - 2;
-        p.tl.setAttribute('x', (under ? p.x : left ? p.x - 18 : p.x + 18).toFixed(1)); p.tl.setAttribute('y', (under ? p.y + 32 : p.y + 5).toFixed(1));
-        p.tl.setAttribute('text-anchor', under ? 'middle' : left ? 'end' : 'start');
-        p.pts.forEach(function (q, i) {
-          var dx = q[0] - p.x, dy = q[1] - p.y, L = Math.sqrt(dx * dx + dy * dy) || 1;
-          var l = p.lines[i]; l.setAttribute('x1', (p.x + dx / L * 12).toFixed(1)); l.setAttribute('y1', (p.y + dy / L * 12).toFixed(1)); l.setAttribute('x2', q[0].toFixed(1)); l.setAttribute('y2', q[1].toFixed(1));
-          p.dots[i].setAttribute('cx', q[0].toFixed(1)); p.dots[i].setAttribute('cy', q[1].toFixed(1));
-        });
-      });
-    },
-    // with no WebGL there is nothing to draw, so the figure stays hidden rather than framing an empty canvas under a stale tag
+    // the phone's strip opened or closed (Band.set): the canvas shows in the opened strip only
+    strip: function () { this.dropFocus(); this.release(true); this.resize(); },
+    // with no 2D canvas or no kit there is nothing to draw, so the figure stays hidden rather than framing an empty canvas
     setVisible: function (v) { var self = this; this.active = v; if (!this.fig) return; var show = v && this.ok; this.fig.setAttribute('data-hidden', show ? '0' : '1'); this.fig.setAttribute('data-route', v ? 'spec' : 'none'); /* a page with no specimen has no strip on a phone (page revision 2, src/styles.css) */ if (show) { this.resize(); requestAnimationFrame(function () { self.resize(); }); this.idle(); } },
-    draw: function (slot, op, extraRot, sc) {
-      var gl = this.gl, aspect = this.w / this.h;
-      // proj(): the perspective, and the camera pulled back on narrow (portrait) stages so the bounding sphere fits the width too
-      // (3.8 keeps the unit sphere inside 89% of the canvas height, including perspective). model(): turntable specimens turn
-      // about their own vertical axis before the tilt (a stack that never leans), the rest about the world axis, and the
-      // reader's own turn about the world axes
-      var MVP = mul(this.proj(aspect), this.model(slot, extraRot, sc));
-      gl.uniformMatrix4fv(this.loc.uMVP, false, new Float32Array(MVP));
-      var size = 6.6 * this.dpr * Math.min(1.05, Math.max(0.6, this.h / (900 * this.dpr))) * Math.max(1, 0.98 / aspect);
-      gl.uniform1f(this.loc.uSize, size);
-      gl.uniform1f(this.loc.uOp, op);
-      var col = this.slotColors(slot);
-      gl.uniform3fv(this.loc.uInk, this.ink); gl.uniform3fv(this.loc.uAcc, col.accent); gl.uniform3fv(this.loc.uAcc2, col.accent2);
-      this.fx(slot);
-      gl.bindBuffer(gl.ARRAY_BUFFER, slot.vbo);
-      gl.vertexAttribPointer(this.loc.aP, 4, gl.FLOAT, false, 0, 0);
-      gl.drawArrays(gl.POINTS, 0, slot.n);
-    },
-    /* The drawing answers its parts (the visual lens's "specimen answers", built 21 Nov 2026). On a chapter's page the drawing
-       makes an entrance the first time it shows this session: the stipple lands at random over about 0.9 s and the numbered
-       leaders then reach out in the parts' order, done by about 1.9 s (sessionStorage cp-drawn lists the chapters it has
-       played on; none under reduced motion, which shows the finished drawing). Pointing at a part in the list under the
-       caption, or at its balloon, keeps that part at full ink and steps the rest of the drawing back, the balloon turns wine,
-       the other rows fade and the turn pauses; on a touch screen a tap does it (the phone's opened strip, its list and its
-       balloons), and a second tap lets go. What a part lights is its light table, the shapes data/specimen-parts.json lists
-       beside its points; a part with none lights a small ball round each point its balloon points at */
-    inPending: false, inStart: 0, focusN: null, fk: 0, focusSh: null, focusFor: null,
+    // the entrance plays the first time a chapter's plate shows in a session (sessionStorage cp-drawn lists the chapters it has
+    // played on); none under reduced motion, which shows the finished plate
     entrance: function () {
       var id = PAGE.kind === 'chapter' ? PAGE.chapter : '';
       if (reduced || !id) return;
       var seen = ''; try { seen = sessionStorage.getItem('cp-drawn') || ''; } catch (e) { }
       if ((' ' + seen + ' ').indexOf(' ' + id + ' ') >= 0) return;
       try { sessionStorage.setItem('cp-drawn', (seen + ' ' + id).trim()); } catch (e) { }
-      this.inPending = true; this.inStart = 0; // loop() starts it on the drawing's first frame on screen
-      if (this.balloonEl) { this.balloonEl.classList.add('intro'); $$('g[data-n]', this.balloonEl).forEach(function (g) { g.classList.toggle('in', false); }); }
+      this.inPending = true; this.inStart = 0; this.snap = null; // the clock starts on the plate's first frame on screen
+      this.wake();
     },
-    // the per-frame uniforms: how far the entrance has come (squared: so many points share each spot that a straight ramp looks
-    // finished in a quarter of its time) and how far the spotlight has come on or gone off
-    fx: function (slot) {
-      var gl = this.gl, L = this.loc, cur = slot === this.cur;
-      var k = cur && this.inStart ? Math.min(1, (performance.now() - this.inStart) / 900) : 1;
-      gl.uniform1f(L.uIn, k * k);
-      if (cur) {
-        var to = this.focusN ? 1 : 0;
-        this.fk = reduced ? to : this.fk + (to - this.fk) * 0.14;
-        if (!this.focusN && this.fk < 0.01) { this.fk = 0; this.focusSh = null; }
-        if (this.focusN && this.focusFor !== slot.key) this.shapes(slot);
+    // the entrance's progress, 1 at rest
+    inK: function () { return this.inStart ? Math.min(1, (performance.now() - this.inStart) / ((this.cur && this.cur.pl.m.spec.dur) || this.IN_MS)) : (this.inPending ? 0 : 1); },
+    // is the plate showing at all: the phone's collapsed strip shows its still, and a slot out of view draws nothing
+    showing: function () {
+      if (!this.ok || !this.cur || this.hidden || !this.active || !this.seen || !this.w || !this.h) return false;
+      if (!this.hostEl && narrow() && Band.collapsed) return false;
+      return true;
+    },
+    wake: function () { var self = this; if (!this.raf && this.ok) this.raf = requestAnimationFrame(function (t) { self.frame(t); }); },
+    frame: function (t) {
+      this.raf = 0;
+      var dt = Math.min(0.05, (t - this.lastT) / 1000 || 0); this.lastT = t;
+      if (!this.showing()) return;
+      var more = false, now = performance.now(), slot = this.cur, pl = slot.pl;
+      if (this.inPending) { this.inPending = false; this.inStart = now; }
+      var k = this.inK(); if (k < 1) more = true;
+      // the turn easing back to the drawn view after a release
+      if (this.back) {
+        var b = this.back, u = Math.min(1, (now - b.t0) / b.dur), e = 1 - Math.pow(1 - u, 3);
+        this.userYaw = b.yaw * (1 - e); this.userPitch = b.pitch * (1 - e);
+        if (u >= 1) { this.back = null; this.userYaw = 0; this.userPitch = 0; this.rawYaw = 0; this.rawPitch = 0; } else more = true;
       }
-      var fk = cur && this.focusSh ? this.fk : 0;
-      if (fk) { gl.uniform4fv(L.uSA, this.focusSh[0]); gl.uniform4fv(L.uSB, this.focusSh[1]); gl.uniform4fv(L.uSC, this.focusSh[2]); }
-      gl.uniform1f(L.uFK, fk);
+      // the labels fade out while the plate is turned and come back once it is at rest
+      var turned = this.dragging || this.keyTurn || !!this.back || Math.abs(this.userYaw) > 1e-4 || Math.abs(this.userPitch) > 1e-4;
+      var want = turned ? 0 : 1;
+      if (reduced) this.labA = want;
+      else if (this.labA !== want) { this.labA = want ? Math.min(1, this.labA + dt / 0.28) : Math.max(0, this.labA - dt / 0.14); more = true; }
+      // the globe turns on its own, unless the reader holds it, has paused it, or asks for less motion
+      if (slot.spin && !reduced && !this.still && !this.dragging && !this.keyTurn) { this.spinYaw += slot.spin * dt; more = true; }
+      var st = { k: k, mode: this.mode(), dark: this.dark, el: this.canvas, dyaw: this.spinYaw + this.userYaw, delev: this.userPitch, labA: this.labA, lite: narrow() && (turned || k < 1), pick: !turned && k >= 1 };
+      pl.render(this.ctx, this.w, this.h, this.dpr, st);
+      if (this.snap) {
+        var fade = Math.min(1, (now - this.transStart) / this.transDur), ctx = this.ctx;
+        if (fade < 1 && this.snap.width === this.canvas.width && this.snap.height === this.canvas.height) { ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = 1 - fade; ctx.drawImage(this.snap, 0, 0); ctx.globalAlpha = 1; more = true; }
+        else this.snap = null;
+      }
+      if (more) this.wake();
     },
-    // the shapes the part being pointed at lights, carried from the specimen's own units into the drawing's (slot.norm)
-    shapes: function (slot) {
-      var n = this.focusN, p = (this.parts || []).filter(function (x) { return +x.n === n; })[0];
-      this.focusFor = slot.key;
-      if (!p || !slot.norm) { this.focusSh = null; return; }
-      var c = slot.norm.c, k = slot.norm.k, A = new Float32Array(40), B = new Float32Array(40), C = new Float32Array(40);
-      var at = function (q) { return [(q[0] - c[0]) * k, (q[1] - c[1]) * k, ((q[2] || 0) - c[2]) * k]; };
-      var list = p.light && p.light.length ? p.light : (p.at || []).map(function (q) { return { ball: q, r: 0.12 / k, soft: 0.08 / k }; });
-      list.slice(0, 10).forEach(function (h, i) {
-        var a, b, r;
-        if (h.box) { var lo = h.box[0], hi = h.box[1]; a = at([(lo[0] + hi[0]) / 2, (lo[1] + hi[1]) / 2, (lo[2] + hi[2]) / 2]); b = [0, 1, 2].map(function (j) { return Math.abs(hi[j] - lo[j]) / 2 * k; }); r = -1; }
-        else if (h.rod) { a = at(h.rod[0]); b = at(h.rod[1]); r = (h.r || 0) * k; }
-        else { a = at(h.ball || [0, 0, 0]); b = a; r = (h.r || 0) * k; }
-        A.set([a[0], a[1], a[2], r], i * 4); B.set([b[0], b[1], b[2], Math.max(0.0001, (h.soft || 0.05) * k)], i * 4);
-        var ly = h.layers;
-        C.set([h.only === 'ink' ? 1 : h.only === 'accent' ? 2 : 0, ly ? ly[1] * k : 0, ly ? (ly[0] - c[1]) * k : 0, ly ? ly[2] * k : 0], i * 4);
-      });
-      this.focusSh = [A, B, C];
+    // the turn: a soft limit, so the plate slows into the end of its range rather than hitting a wall
+    soft: function (v, lim) { return lim * Math.tanh(v / lim); },
+    limits: function () { var t = (this.cur && this.cur.pl.m.spec.turn) || {}; return { yaw: t.yaw == null ? this.TURN.yaw : t.yaw, pitch: t.pitch == null ? this.TURN.pitch : t.pitch }; },
+    turnBy: function (dyaw, dpitch) {
+      var L = this.limits(), spin = this.cur && this.cur.spin;
+      this.back = null;
+      this.rawYaw += dyaw; this.rawPitch += dpitch;
+      // the globe turns all the way round; the others keep inside their range
+      this.userYaw = spin ? this.rawYaw : this.soft(this.rawYaw, L.yaw);
+      this.userPitch = this.soft(this.rawPitch, L.pitch);
+      this.turnMax = Math.max(this.turnMax, Math.abs(this.userYaw));
+      this.wake();
+    },
+    // release: ease back to the drawn view (snap under reduced motion, or with now); the globe keeps the yaw it was left at
+    release: function (now) {
+      clearTimeout(this.keyT); this.keyTurn = false;
+      if (this.cur && this.cur.spin) { this.spinYaw += this.userYaw; this.userYaw = 0; this.rawYaw = 0; }
+      if (now || reduced || (!this.userYaw && !this.userPitch)) { this.back = null; this.userYaw = 0; this.userPitch = 0; this.rawYaw = 0; this.rawPitch = 0; if (now) this.labA = 1; this.wake(); return; }
+      this.back = { t0: performance.now(), dur: 520, yaw: this.userYaw, pitch: this.userPitch };
+      this.wake();
     },
     // the lists that name the parts of the drawing on show: the chapter's own, under its caption, and the phone strip's copy
     partLists: function () {
@@ -522,28 +337,33 @@
     setFocus: function (n) {
       n = n ? +n : null;
       if (n && !(this.parts && this.cur && this.partsFor === this.cur.name && this.parts.some(function (p) { return +p.n === n; }))) n = null;
-      if (n !== this.focusN) { this.focusN = n; if (n) this.focusFor = null; } // the shapes are worked out on the next frame (fx)
-      if (this.balloonEl) {
-        this.balloonEl.classList.toggle('has-on', !!n);
-        $$('g[data-n]', this.balloonEl).forEach(function (g) { g.classList.toggle('on', +g.getAttribute('data-n') === n); });
-      }
+      this.focusN = n; this.hoverC = null;
+      if (this.cur) { this.cur.pl.focusN(n); this.wake(); }
       this.partLists().forEach(function (ol) {
         ol.classList.toggle('has-on', !!n);
         $$('li[data-n]', ol).forEach(function (li) { li.classList.toggle('on', +li.getAttribute('data-n') === n); });
       });
     },
-    // the balloons went (a new specimen, the slot left, the strip closed): nothing is pointed at, at once
+    // a label with no number (a chapter with no parts list) lights its part on the plate alone
+    focusLabel: function (c) {
+      if (c && c.n && this.parts) { if (this.focusN !== c.n) this.setFocus(c.n); return; }
+      if (!c && this.focusN) { this.setFocus(null); return; }
+      if (c === this.hoverC) return;
+      this.hoverC = c || null;
+      if (this.cur) { this.cur.pl.setFocus(c ? PLATE.focusOf(c) : null); this.wake(); }
+    },
+    // the plate went (a new plate, the slot left, the strip closed): nothing is pointed at, at once
     dropFocus: function () {
       if (this.focusN) this.setFocus(null);
-      this.focusN = null; this.fk = 0; this.focusSh = null;
+      this.focusN = null; this.hoverC = null;
+      if (this.cur) this.cur.pl.setFocus(null);
     },
     answer: function () {
       var self = this, ptr = 'mouse', held = null;
-      // the number of the part an element belongs to, if it is a row of a list naming the drawing on show, or one of its balloons
+      // the number of the part an element belongs to, if it is a row of a list naming the drawing on show
       var nOf = function (el) {
-        var x = el && el.closest ? el.closest('.ch-parts li[data-n], .ch-balloons g[data-n]') : null;
-        if (!x) return null;
-        if (x.tagName.toLowerCase() === 'li' ? self.partLists().indexOf(x.parentNode) < 0 : x.ownerSVGElement !== self.balloonEl) return null;
+        var x = el && el.closest ? el.closest('.ch-parts li[data-n]') : null;
+        if (!x || self.partLists().indexOf(x.parentNode) < 0) return null;
         return +x.getAttribute('data-n') || null;
       };
       document.addEventListener('pointerdown', function (e) { ptr = e.pointerType || 'mouse'; }, true);
@@ -561,51 +381,61 @@
         var n = nOf(e.target); if (n) self.setFocus(self.focusN === n ? null : n);
       });
     },
-    // the specimen turns under the mouse: rest on it and the idle spin pauses, drag to turn it, arrow keys turn it from the keyboard
+    // the plate under the pointer and the keys: drag to turn it, point at a label or a part to light it, arrows to turn it
     pointer: function () {
-      var self = this, c = this.canvas, lx = 0, ly = 0, fine = window.matchMedia && matchMedia('(hover: hover) and (pointer: fine)').matches;
-      if (!fine) return;
+      var self = this, c = this.canvas, sx = 0, sy = 0, moved = false, id = null, K = 0.008;
       c.setAttribute('tabindex', '0'); c.setAttribute('aria-label', '3D specimen. Drag it or use the arrow keys to turn it.');
-      c.addEventListener('pointerenter', function (e) { if (e.pointerType !== 'touch') self.held = true; });
-      c.addEventListener('pointerleave', function () { if (!self.dragging) self.held = false; });
+      var at = function (e) { var r = c.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
       c.addEventListener('pointerdown', function (e) {
-        if (e.pointerType === 'touch' || e.button !== 0) return;
-        self.dragging = true; self.held = true; lx = e.clientX; ly = e.clientY; c.setPointerCapture(e.pointerId); c.classList.add('is-dragging'); e.preventDefault();
+        if ((e.pointerType === 'mouse' && e.button !== 0) || !self.showing()) return;
+        self.dragging = true; moved = false; id = e.pointerId; sx = e.clientX; sy = e.clientY;
+        self.rawYaw = self.userYaw; self.rawPitch = self.userPitch; self.back = null; self.turnMax = 0;
+        try { c.setPointerCapture(e.pointerId); } catch (x) { }
+        c.classList.add('is-dragging');
+        if (e.pointerType === 'mouse') e.preventDefault();
+        self.wake();
       });
       c.addEventListener('pointermove', function (e) {
-        if (!self.dragging) return;
-        self.userYaw += (e.clientX - lx) * 0.008; self.userPitch += (e.clientY - ly) * 0.008;
-        self.userPitch = Math.max(-1.2, Math.min(1.2, self.userPitch));
-        lx = e.clientX; ly = e.clientY;
+        if (self.dragging && e.pointerId === id) {
+          var dx = e.clientX - sx, dy = e.clientY - sy; sx = e.clientX; sy = e.clientY;
+          if (Math.abs(dx) + Math.abs(dy) > 0) moved = moved || Math.abs(dx) + Math.abs(dy) > 2;
+          self.turnBy(dx * K, dy * K);
+          return;
+        }
+        if (e.pointerType === 'touch' || self.labA < 1 || !self.cur) return;
+        var p = at(e), hit = self.cur.pl.hitAt(p[0], p[1]);
+        c.style.cursor = hit ? 'pointer' : '';
+        self.focusLabel(hit);
       });
-      var up = function (e) { if (!self.dragging) return; self.dragging = false; c.classList.remove('is-dragging'); if (e && e.type === 'pointercancel') self.held = false; };
+      var up = function (e) {
+        if (!self.dragging || (e && e.pointerId !== id)) return;
+        self.dragging = false; c.classList.remove('is-dragging');
+        // a tap on a touch screen lights the part under it, and a second tap lets go
+        if (!moved && e && e.pointerType !== 'mouse' && self.cur) {
+          var p = at(e), hit = self.cur.pl.hitAt(p[0], p[1]);
+          if (hit && ((hit.n && self.focusN === hit.n) || self.hoverC === hit)) hit = null;
+          self.focusLabel(hit);
+        }
+        self.release();
+      };
       c.addEventListener('pointerup', up); c.addEventListener('pointercancel', up);
+      c.addEventListener('pointerleave', function (e) { if (!self.dragging && e.pointerType !== 'touch') { c.style.cursor = ''; self.focusLabel(null); } });
+      // the arrow keys turn it a step at a time; let go, and after a moment it eases back. Home or Escape puts it back at once
       c.addEventListener('keydown', function (e) {
-        var step = 0.12, k = e.key;
-        if (k === 'ArrowLeft') self.userYaw -= step; else if (k === 'ArrowRight') self.userYaw += step;
-        else if (k === 'ArrowUp') self.userPitch = Math.max(-1.2, self.userPitch - step); else if (k === 'ArrowDown') self.userPitch = Math.min(1.2, self.userPitch + step);
-        else if (k === 'Home') { self.userYaw = 0; self.userPitch = 0; } else return;
+        var step = 0.12, k = e.key, dx = 0, dy = 0;
+        if (k === 'ArrowLeft') dx = -step; else if (k === 'ArrowRight') dx = step; else if (k === 'ArrowUp') dy = -step; else if (k === 'ArrowDown') dy = step;
+        else if (k === 'Home' || k === 'Escape') { if (self.keyTurn || self.userYaw || self.userPitch) { self.release(); e.preventDefault(); } return; }
+        else return;
         e.preventDefault();
+        if (!self.keyTurn) { self.rawYaw = self.userYaw; self.rawPitch = self.userPitch; self.turnMax = 0; }
+        self.keyTurn = true; clearTimeout(self.keyT);
+        self.turnBy(dx, dy);
       });
-      c.addEventListener('focus', function () { self.held = true; }); c.addEventListener('blur', function () { if (!self.dragging) self.held = false; });
-    },
-    loop: function (t) {
-      var self = this;
-      requestAnimationFrame(function (tt) { self.loop(tt); });
-      if (!this.ok || this.hidden || !this.active) { this.lastT = t; return; }
-      if (this.hostEl) { var hr = this.canvas.getBoundingClientRect(); if (hr.bottom < 0 || hr.top > window.innerHeight) { this.lastT = t; return; } } // a chapter's slot scrolled out of view
-      var dt = Math.min(0.05, (t - this.lastT) / 1000 || 0); this.lastT = t;
-      var gl = this.gl;
-      gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
-      if (!this.cur) return;
-      if (!reduced && !this.held && !this.still && !this.focusN) this.spin += (this.cur.spin || 0.1) * dt; // the idle turn pauses while the pointer rests on the specimen or a part is pointed at, and stops while the reader has paused it (Band.init)
-      if (this.inPending) { this.inPending = false; this.inStart = performance.now(); }
-      var k = easeOut((t - this.transStart) / this.transDur);
-      if (this.prev && k < 1) this.draw(this.prev, 1 - k, 0.35 * k, 1 + 0.04 * k);
-      else this.prev = null;
-      this.draw(this.cur, k, -0.45 * (1 - k), 0.94 + 0.06 * k);
-      if (this.cur !== this._balCur) this.stripBalloons();
-      if (this.balloonEl) this.drawBalloons();
+      c.addEventListener('keyup', function (e) {
+        if (!/^Arrow/.test(e.key) || !self.keyTurn) return;
+        clearTimeout(self.keyT); self.keyT = setTimeout(function () { self.release(); }, 900);
+      });
+      c.addEventListener('blur', function () { if (self.keyTurn) self.release(); });
     }
   };
 
@@ -663,9 +493,10 @@
         window.addEventListener('hashchange', function () { if (!sheet.hidden) open(false); });
       }
       window.addEventListener('resize', function () { if (!narrow()) { open(false); self.set(true); } });
-      // the turn's pause (WCAG 2.2.2: the specimen turns for as long as the page is open). One button, at the end of the plate
-      // tag on a laptop and over the thumbnail's corner on a phone (src/styles.css .stage-pause); Stage.loop holds the turn while
-      // Stage.still is set, and the choice is kept on this device. Reduced motion never turns the specimen, so it gets no button
+      // the turn's pause (WCAG 2.2.2: the globe, the one plate that moves on its own, turns for as long as the page is open). One
+      // button, at the end of the plate tag on a laptop and over the thumbnail's corner on a phone (src/styles.css .stage-pause);
+      // Stage.frame holds the turn while Stage.still is set, and the choice is kept on this device. Stage.show shows it for the
+      // globe alone. Reduced motion never turns a plate, so it gets no button
       var tag = $('.stage-tag', this.el);
       if (!reduced && tag) {
         var still = false; try { still = localStorage.getItem('cp-still') === '1'; } catch (e) { }
@@ -677,7 +508,8 @@
           pb.innerHTML = still ? '<svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 1.5v9l7.5-4.5z"/></svg>' : '<svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.5 1.5h2.5v9H2.5zM7 1.5h2.5v9H7z"/></svg>';
         };
         pb.addEventListener('click', function () { still = !still; try { localStorage.setItem('cp-still', still ? '1' : '0'); } catch (e) { } draw(); });
-        draw(); tag.appendChild(pb);
+        draw(); pb.hidden = !(Stage.cur && Stage.cur.spin); tag.appendChild(pb);
+        pb.addEventListener('click', function () { Stage.wake(); });
       }
     },
     set: function (collapsed) {
@@ -686,9 +518,9 @@
       // collapsed on a phone, Expand is the strip itself (a clear button over all of it but Contents, src/styles.css), so its
       // name says what a tap opens; opened, it is the Collapse pill
       var t = $('.stage-toggle'); if (t) { t.textContent = collapsed ? 'Expand' : 'Collapse'; t.setAttribute('aria-expanded', collapsed ? 'false' : 'true'); if (collapsed) t.setAttribute('aria-label', 'Open the drawing'); else t.removeAttribute('aria-label'); }
-      if (Stage.stripBalloons) Stage.stripBalloons(); // expanded, the strip numbers the parts of a drawing that has them
       if (!Stage.ok) return;
-      if (collapsed) Stage.dropFocus(); else if (narrow() && !Stage.hostEl) Stage.entrance(); // opened, the drawing makes its entrance (once a session per chapter)
+      Stage.strip(); // opened, the strip shows the live plate, numbered where the chapter lists its parts
+      if (!collapsed && narrow() && !Stage.hostEl) Stage.entrance(); // opened, the plate makes its entrance (once a session per chapter)
     }
   };
 
@@ -977,7 +809,7 @@
       var none = !first && Router.current === 'stack';
       var r2 = best.getBoundingClientRect();
       var p = r2.height > vh ? Math.max(0, Math.min(1, (probe - r2.top) / (r2.height - vh * 0.3))) : 0;
-      Stage.scrollAngle = (reduced ? 0 : p * 1.15);
+      void p; // the point drawings turned as the chapter scrolled; a plate holds its drawn view
       // on a wide screen The Chain's drawing stands in the chapter's own slot under its opener, whichever slot is in view
       // (src/modules/chapter.css .ch-spec-draw); on a phone it stays in the strip and follows the chapter, as before
       var inSlot = Router.current === 'stack' && !narrow();

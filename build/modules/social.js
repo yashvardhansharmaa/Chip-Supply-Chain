@@ -495,32 +495,6 @@ const EXTRA_CSS = minCSS(`
 .plate sup.cite-sep { font-family: var(--font-label); font-size: max(11px, 0.62em); line-height: 0; vertical-align: 0.55em; color: var(--accent); }
 `);
 
-// the annotated still of a chapter whose drawing carries numbered parts (data/specimen-parts.json "still"), which the chapter
-// prints in place of the live drawing (src/modules/print.js stills): the picture, and over it a balloon per part in a column clear
-// of the drawing on the part's side, each with its leader lines. Its picture's path is from the site's root (build.js relink adds
-// the way there). The readable pages drew it until 28 Oct 2026, so the print still keeps their wide and narrow forms
-function stillSVG(still, parts, title) {
-  const S = +still.size || 772, cx = S / 2;
-  const items = parts.map((p, i) => {
-    const pts = (still.points || [])[i] || [];
-    const mx = pts.reduce((a, q) => a + q[0], 0) / (pts.length || 1), my = pts.reduce((a, q) => a + q[1], 0) / (pts.length || 1);
-    return { p, pts, side: mx < cx ? -1 : 1, y: my };
-  }).filter((x) => x.pts.length);
-  [-1, 1].forEach((side) => { const l = items.filter((x) => x.side === side).sort((a, b) => a.y - b.y); for (let i = 1; i < l.length; i++) if (l[i].y - l[i - 1].y < 96) l[i].y = l[i - 1].y + 96; });
-  const f = (n) => n.toFixed(1);
-  // a part's name in the sentence: its first letter in lower case, unless it opens an acronym ("TSVs")
-  const lc = (s) => (/^[A-Z][A-Z]/.test(s) ? s : s.charAt(0).toLowerCase() + s.slice(1));
-  const label = `${esc(title)}, with ${parts.length} numbered parts: ${parts.map((p) => `${+p.n} ${esc(lc(String(p.label || p.name)))}`).join(', ')}.`;
-  // wide: each balloon named beside it; narrow (a phone), the numbers alone, larger, and the list under the caption names them
-  const draw = (o) => items.map((x) => {
-    const bx = x.side < 0 ? o.l : o.r, by = x.y;
-    const lines = x.pts.map((q) => { const dx = q[0] - bx, dy = q[1] - by, L = Math.hypot(dx, dy) || 1; return `<line x1="${f(bx + dx / L * o.r0)}" y1="${f(by + dy / L * o.r0)}" x2="${f(q[0])}" y2="${f(q[1])}" style="stroke-width:${o.sw}"/><circle class="dot" cx="${f(q[0])}" cy="${f(q[1])}" r="${o.dot}"/>`; }).join('');
-    return `<g>${lines}<circle class="bal" cx="${f(bx)}" cy="${f(by)}" r="${o.r0}" style="stroke-width:${o.sw}"/><text class="num" x="${f(bx)}" y="${f(by + o.fs * 0.36)}" text-anchor="middle" style="font-size:${o.fs}px">${+x.p.n}</text>${o.names ? `<text class="nm" x="${f(x.side < 0 ? bx - o.r0 - 12 : bx + o.r0 + 12)}" y="${f(by)}" dominant-baseline="central" text-anchor="${x.side < 0 ? 'end' : 'start'}" style="font-size:${o.fn}px">${esc(x.p.label || x.p.name)}</text>` : ''}</g>`;
-  }).join('');
-  const img = `<image href="media/${esc(still.file)}" x="0" y="0" width="${S}" height="${S}"/>`;
-  return `<svg class="ch-still ch-still--wide" viewBox="-300 -14 ${S + 560} ${S + 28}" role="img" aria-label="${label}">${img}${draw({ l: -64, r: S + 74, r0: 24, fs: 24, fn: 30, sw: 2.4, dot: 6, names: true })}</svg>`
-    + `<svg class="ch-still ch-still--narrow" viewBox="-96 -14 ${S + 192} ${S + 28}" aria-hidden="true">${img}${draw({ l: -46, r: S + 46, r0: 40, fs: 40, fn: 0, sw: 3.6, dot: 9, names: false })}</svg>`;
-}
 
 // A flashcard deck without scripts: review questions whose answers open in place, each reason ending with the link more(card)
 // returns. A chapter's page links back to its sections; Start here's page (introHTML) links to the chapters.
@@ -576,19 +550,7 @@ module.exports = function (ctx) {
     fs.mkdirSync(path.join(dist, old), { recursive: true });
     fs.writeFileSync(path.join(dist, old, 'index.html'), retiredHTML(old, e, e.title || old, to));
   }
-  // the plain stills of the other chapters (qa/redesign/stills.js), copied as spec-<id>.webp
-  for (const id of Object.keys(ctx.stillSizes || {})) {
-    const from = path.join(root, 'build', 'assets', 'specimens', id + '.webp');
-    if (fs.existsSync(from)) { fs.mkdirSync(path.join(dist, 'media'), { recursive: true }); fs.copyFileSync(from, path.join(dist, 'media', 'spec-' + id + '.webp')); }
-  }
-  // the annotated stills a chapter prints in place of its live specimen (data/specimen-parts.json "still"; the readable pages showed them)
-  for (const e of Object.values(ctx.specimenParts || {})) {
-    const f = e && e.still && e.still.file;
-    if (!f) continue;
-    const from = path.join(root, 'build', 'assets', 'specimens', f);
-    if (fs.existsSync(from)) { fs.mkdirSync(path.join(dist, 'media'), { recursive: true }); fs.copyFileSync(from, path.join(dist, 'media', f)); }
-    else warn(`specimen still ${f} is missing from build/assets/specimens/`);
-  }
+  // the chapters' stills (the door's, the contents', the strip's) are the plates', copied by build.js (21 Nov 2026)
   // the cards, rendered by build/cards.py into build/assets/cards/; the build only copies them
   const src = path.join(root, 'build', 'assets', 'cards');
   const out = path.join(dist, 'cards');
@@ -609,6 +571,5 @@ module.exports.manifest = manifest;
 module.exports.pageHTML = pageHTML;
 module.exports.BASE = BASE;
 module.exports.cardURLFor = (slug, root) => { const fs = require('fs'), path = require('path'); return cardURL(slug, cardVersions(root || path.resolve(__dirname, '..', '..'), fs, path)); }; // a card's address with its version, for the pages written elsewhere (summary-brief.js)
-module.exports.stillSVG = stillSVG; // for the print still in each chapter with numbered parts (build.js)
 // for the reference pages (build/modules/reference-pages.js): the same head, tags, card and masthead as the chapter pages
 Object.assign(module.exports, { SITE, AUTHOR, FONTS, ICONS, MASTHEAD, masthead, THEME_JS, minCSS, pageTitle, shareTags, cardVersions, cardURL, describe });
