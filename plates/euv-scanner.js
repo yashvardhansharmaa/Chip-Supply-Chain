@@ -19,7 +19,11 @@ R('euv-scanner', function (m) {
     var sag = r * 0.14, t = r * 0.24, prof = [[o.rIn || 0, -t], [r, -t], [r, sag, 1]];
     for (var k = 5; k >= 0; k--) { var rr = (o.rIn || 0) + (r - (o.rIn || 0)) * k / 6; prof.push([rr, sag * (rr / r) * (rr / r), 0]); }
     var th = Math.atan2(-nv[0], nv[1]);
-    return m.revolve(prof, mat || 'turnedDark', { seg: 28, rot: [0, 0, th], pos: [q[0], q[1], 0], sortFaces: true });
+    // the illuminator's and the projection optics' mirrors carry one tag, so Mirrors lights all of them (the collector is the source's)
+    if (!o.notag) m.tag('mirror');
+    var sv = m.revolve(prof, mat || 'turnedDark', { seg: 28, rot: [0, 0, th], pos: [q[0], q[1], 0], sortFaces: true });
+    m.tag(null);
+    return sv;
   }
   // a module's housing cut open on the optical plane (z = 0): back wall, floor, roof and side walls, cut edges hatched
   function housing(cx, cy, w, h, d, t) {
@@ -35,7 +39,7 @@ R('euv-scanner', function (m) {
   // the vessel, cut on the optical plane (z = 0) with the far half kept, as the other modules are (its cone to the focus
   // is left out: drawn as a half shell it read as a loose blade under the illuminator)
   m.revolve([[0.62, -0.61], [vesR, -0.61], [vesR, 0.61], [0.62, 0.61]], 'turned', { seg: 40, a0: Math.PI, a1: Math.PI * 2, rot: [0, 0, -Math.PI / 2], pos: [vc, PLASMA[1], 0], cut: 'cut', sortFaces: true });
-  mirror(COLL, [1, 0], 0.56, 'turned', { rIn: 0.075 });
+  mirror(COLL, [1, 0], 0.56, 'turned', { rIn: 0.075, notag: true });
   m.dots([[PLASMA[0], PLASMA[1], 0]], { r: 4.2, col: 'acc2', alpha: 0.35 });
   m.dots([[PLASMA[0], PLASMA[1], 0]], { r: 2.2, col: 'acc2', alpha: 1 });
   m.cyl([PLASMA[0], PLASMA[1] + 0.72, 0], 0.05, 0.30, 'turnedDark', { seg: 20 });
@@ -67,7 +71,9 @@ R('euv-scanner', function (m) {
   var Wp = NODE[11].p;
   [0, 0.78].forEach(function (dx, j) {
     m.cyl([Wp[0] + dx, Wp[1] - 0.042, 0], 0.235 * 1.08, 0.075, 'turnedDark', { seg: 32 });
+    if (!j) m.tag('wafer');
     m.cyl([Wp[0] + dx, Wp[1] + 0.003, 0], 0.235, 0.012, j ? 'turned' : 'acc2Light', { seg: 32, top: j ? [] : [D.rect(-0.041, -0.033, 0.041, 0.033, 0.006, { fill: 'acc', lw: 0.6, col: 'acc' })] });
+    m.tag(null);
   });
   m.box({ c: [Wp[0] + 0.39, Wp[1] - 0.135, 0], s: [1.66, 0.10, 0.66] }, 'mid');
   m.anchor(4, 'Wafer', [Wp[0], Wp[1] + 0.01, 0]);
@@ -80,5 +86,5 @@ R('euv-scanner', function (m) {
   m.guide(pts, { style: 'beam', col: 'acc', lw: 1.5 });
   // the collector's cone of light, from its rim to the plasma and on to the focus
   [0.27, -0.27, 0.5, -0.5].forEach(function (rr) { m.guide([[COLL[0] + 0.28 * (rr / 0.56) * (rr / 0.56), PLASMA[1] + rr, 0, src.idx], [NODE[0].p[0], NODE[0].p[1], 0, src.idx]], { style: 'beam', col: 'acc', lw: 0.7, alpha: 0.55 }); });
-  return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, accent: [107, 127, 209], accentDark: [167, 180, 245], accent2: [154, 126, 224], accent2Dark: [220, 208, 255] };
+  return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, calloutOpts: { 2: { tag: 'mirror' }, 4: { tag: 'wafer' } }, accent: [107, 127, 209], accentDark: [167, 180, 245], accent2: [154, 126, 224], accent2Dark: [220, 208, 255] };
 });

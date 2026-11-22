@@ -3706,10 +3706,10 @@
   /* ---------- the browser's own print: nothing folded ----------
      Paper cannot open a folded source list. Chrome opens a closed <details> from print.css (::details-content); other
      browsers do not, so each closed one is opened just before the browser prints and folded again after. build/pdf.py
-     opens them itself (CP_PRINT.prepare). */
+     opens them itself (CP_PRINT.prepare). Each chapter's plate prints as a vector still, drawn here just before printing. */
   (function () {
     var opened = [];
-    window.addEventListener('beforeprint', function () { $$('details:not([open])').forEach(function (d) { d.open = true; opened.push(d); }); });
+    window.addEventListener('beforeprint', function () { $$('details:not([open])').forEach(function (d) { d.open = true; opened.push(d); }); if (window.CP_PRINT && CP_PRINT.stills) CP_PRINT.stills(); }); // and each plate's vector still (src/modules/print.js)
     window.addEventListener('afterprint', function () { opened.forEach(function (d) { d.open = false; }); opened = []; });
   })();
 

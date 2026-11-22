@@ -389,6 +389,7 @@
       c.addEventListener('pointerdown', function (e) {
         if ((e.pointerType === 'mouse' && e.button !== 0) || !self.showing()) return;
         self.dragging = true; moved = false; id = e.pointerId; sx = e.clientX; sy = e.clientY;
+        if (e.pointerType === 'mouse') self.focusLabel(null); // a turn starts with nothing lit: the labels fade with it
         self.rawYaw = self.userYaw; self.rawPitch = self.userPitch; self.back = null; self.turnMax = 0;
         try { c.setPointerCapture(e.pointerId); } catch (x) { }
         c.classList.add('is-dragging');
@@ -3705,10 +3706,10 @@
   /* ---------- the browser's own print: nothing folded ----------
      Paper cannot open a folded source list. Chrome opens a closed <details> from print.css (::details-content); other
      browsers do not, so each closed one is opened just before the browser prints and folded again after. build/pdf.py
-     opens them itself (CP_PRINT.prepare). */
+     opens them itself (CP_PRINT.prepare). Each chapter's plate prints as a vector still, drawn here just before printing. */
   (function () {
     var opened = [];
-    window.addEventListener('beforeprint', function () { $$('details:not([open])').forEach(function (d) { d.open = true; opened.push(d); }); });
+    window.addEventListener('beforeprint', function () { $$('details:not([open])').forEach(function (d) { d.open = true; opened.push(d); }); if (window.CP_PRINT && CP_PRINT.stills) CP_PRINT.stills(); }); // and each plate's vector still (src/modules/print.js)
     window.addEventListener('afterprint', function () { opened.forEach(function (d) { d.open = false; }); opened = []; });
   })();
 
@@ -5700,7 +5701,6 @@ try {
       '400 10pt "Source Serif 4"', 'italic 400 10pt "Source Serif 4"',
       '400 7pt "Hanken Grotesk"', '500 7pt "Hanken Grotesk"', '600 7pt "Hanken Grotesk"', '700 7pt "Hanken Grotesk"',
       '400 7pt "Fragment Mono"'];
-    /* and Lithography's annotated drawing, fetched from its readable page (stills, below) */
     return Promise.all([fontsLoaded, stillsLoaded]).then(function () {
       return Promise.all(faces.map(function (f) { return document.fonts.load(f).catch(function () { return []; }); }));
     }).then(function () { return document.fonts.ready; }).then(function () {
@@ -5905,25 +5905,32 @@ try {
     each('.plate-head .label, .cp-sources .cp-sources-h, .review .cp-quiz h3.label, .review .rv-keep h3.label', document, function (el) { el.setAttribute('data-cp-run', el.textContent); });
   }
 
-  /* A chapter whose drawing carries numbered parts (data/specimen-parts.json: Lithography) prints its annotated still,
-     balloons and all, above its caption: the live drawing does not print. The build draws it (build/modules/social.js
-     stillSVG, as the readable page showed it until 28 Oct 2026) into a <template> in the specimen's figure, which the screen
-     never shows; its picture's path is already this page's. fontsReady() waits for it and its picture. */
-  var stillsLoaded = null;
+  /* Every chapter prints its plate as a vector still above its caption, in place of the live one (21 Nov 2026): the plate kit
+     (src/plate.js, dist/assets/kit.js, which every chapter's page and the book load) draws it as SVG at print time, at rest,
+     with its labels, its numbers and its dimensions, in ink on white, its labels measured in the print's own faces. Until then
+     only the chapters with numbered parts printed a still, an annotated picture the build wrote into a <template>. The
+     browser's own Print draws it too, just before it prints (src/app.js, beforeprint). */
+  var stillsLoaded = Promise.resolve();
   function stills() {
-    var jobs = [];
-    each('article.chapter .ch-spec[data-parts]', document, function (fig) {
-      var tpl = fig.querySelector('template.cp-still-src'), svg = tpl && tpl.content ? tpl.content.querySelector('svg.ch-still--wide') : null;
-      if (!svg || fig.querySelector('.cp-still')) return;
-      svg = document.importNode(svg, true);
-      var src = '';
-      each('image', svg, function (im) { src = im.getAttribute('href') || ''; });
-      var box = node('div', 'cp-still');
-      box.appendChild(svg);
-      fig.insertBefore(box, fig.querySelector('.ch-spec-cap'));
-      if (src) jobs.push(new Promise(function (done) { var im = new Image(); im.onload = done; im.onerror = done; im.src = src; }));
+    var P = window.PLATE;
+    if (!P || !P.Plate) return;
+    var mc = document.createElement('canvas').getContext('2d');
+    var measure = function (s, o) { mc.font = (o.weight || 500) + ' ' + o.size + 'px "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif'; return mc.measureText(s).width; };
+    each('article.chapter .ch-spec', document, function (fig) {
+      if (fig.querySelector('.cp-still')) return;
+      var art = fig.closest('article.chapter'), name = art && art.getAttribute('data-specimen');
+      if (!name || !P.specs[name]) return;
+      try {
+        var pl = new P.Plate(name, {}), parts = null;
+        try { parts = JSON.parse(fig.getAttribute('data-parts') || 'null'); } catch (e) { parts = null; }
+        if (parts) pl.names(parts);
+        var W = 666, H = pl.heightFor(W, 360, 470), box = node('div', 'cp-still');
+        box.innerHTML = pl.svg(W, H, { print: true, measure: measure });
+        var svg = box.querySelector('svg');
+        if (svg) { svg.setAttribute('role', 'img'); svg.setAttribute('aria-label', art.getAttribute('data-caption') || ''); svg.classList.add('pl-still'); }
+        fig.insertBefore(box, fig.querySelector('.ch-spec-cap'));
+      } catch (e) { console.warn('print still failed:', name, e && e.message); }
     });
-    stillsLoaded = Promise.all(jobs);
   }
 
   /* The card stands in the text after the lead and before section 01, on paper as on screen (build/build.js withCard), so
@@ -6098,7 +6105,7 @@ try {
       out.chapters = 1; out.chapter = alone.id;
     } else { printLede(); document.title = 'How AI chips are made · Chip Supply Chain'; } // the book's own title, which search results show, and never the chapter in view
 
-    stills(); // after the other chapters go, so a chapter printed alone fetches only its own drawing
+    stills(); // after the other chapters go, so a chapter printed alone draws only its own plate
 
     /* chapters whose card opened a page after a short one in an earlier layout (from pdf.py): the head and the card
        are set closer (print.css .cp-tight), so that the end of In short and the card share a page */
@@ -6473,7 +6480,7 @@ try {
     return out;
   }
 
-  window.CP_PRINT = { prepare: prepare, fontsReady: fontsReady, finish: finish };
+  window.CP_PRINT = { prepare: prepare, fontsReady: fontsReady, finish: finish, stills: stills };
 })();
 
 } catch (e) { console.warn('module print.js failed', e); }

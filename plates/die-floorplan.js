@@ -1,8 +1,10 @@
 /* =====================================================================================================
    01 Design: a GPU die after Nvidia's published H100 block diagram, at one reticle field, 26 x 33 mm, in millimetres.
    The floorplan is engraved on the die's face in three tones (compute tiles, the cache band, the memory edges). The
-   copper strip on the short edge is the die-to-die link; the neighbouring die, which the specimen file draws as a
-   sliver beyond it, is pulled away along that axis and ends in a break line, as a draughtsman shows a part cut short. */
+   caption's copper strip on one short edge, which stands for the die-to-die link, is a part of its own: a copper bar
+   slid out from its seat along the die's near edge, ruled with its contacts, with trace lines down to the seat it leaves.
+   (The mock pulled away a sliver of the neighbouring die, which the specimen file draws, cut short by a break line; the
+   review panel read it as broken silicon, so the drawing keeps to the caption's one copper strip.) */
 R('die-floorplan', function (m) {
   var W = 26, Dd = 33, T = 0.9, yT = T / 2;
   var die = m.part('die', { ex: [0, 0, 0], seq: 0 });
@@ -39,27 +41,22 @@ R('die-floorplan', function (m) {
   // the host interface and NVLink ports across the far short edge
   blk(-11.6, 14.2, 11.6, 16.1, { fill: 'steel' });
   for (var n = 0; n < 9; n++) { var nx = -10.8 + n * 2.62; top.push(D.rect(nx, 14.55, nx + 1.9, 15.75, yT, { lw: 0.3, fill: 'light' })); }
-  // the die-to-die link: a copper strip on the near short edge, ruled with its contacts
-  var cuTop = [D.rect(-11.9, -16.15, 11.9, -14.35, yT, { fill: 'accLight', col: 'acc', lw: 0.5 })];
-  for (var k2 = 0; k2 < 34; k2++) { var cx = -11.6 + k2 * (23.2 / 33); cuTop.push(D.line([cx, yT, -16.0], [cx, yT, -14.5], { col: 'acc', lw: 0.32, alpha: 0.9 })); }
-  m.box({ c: [0, 0, 0], s: [W, T, Dd], decals: { py: top.concat(cuTop) } }, 'light');
+  // the die-to-die link's seat: the strip's footprint on the near short edge, dashed, as an exploded drawing marks where a part sits
+  var LX = 11.9, Lz0 = -16.15, Lz1 = -14.35, LT = 0.6;
+  var seat = [D.rect(-LX, Lz0, LX, Lz1, yT, { dash: [1.4, 1], lw: 0.5, alpha: 0.85 })];
+  m.box({ c: [0, 0, 0], s: [W, T, Dd], decals: { py: top.concat(seat) } }, 'light');
   m.dim([-W / 2, -yT, Dd / 2], [W / 2, -yT, Dd / 2], [0, 0, 4.2], '26 mm');
   m.dim([W / 2, -yT, Dd / 2], [W / 2, -yT, -Dd / 2], [4.2, 0, 0], '33 mm');
-  m.callout([0, yT, -15.25], 'Die-to-die link', { side: 'l' });
-  // the neighbouring die: a sliver of it, with its own copper strip facing ours, cut short by a break line
-  // review: pulled 5 mm clear, was 7.5: the gap cost the die itself about a tenth of its size on the page
-  var nb = m.part('neighbour', { ex: [0, 0, -5], seq: 1 });
-  var L = 5.2, zN1 = -Dd / 2 - 0.4, zN0 = zN1 - L, brk = [];
-  // the break: a long, shallow zigzag across the die, as drawn on a part shown cut short
-  var nz = 7;
-  for (var b = 0; b <= nz; b++) { var bx = W / 2 - b * W / nz; brk.push([bx, zN0 + (b % 2 ? 0.55 : -0.55)]); }
-  var shape = [[-W / 2, zN1], [W / 2, zN1]].concat(brk);
-  var ntop = [D.rect(-11.9, zN1 - 1.8, 11.9, zN1, yT, { fill: 'accLight', col: 'acc', lw: 0.5 })];
-  for (k2 = 0; k2 < 34; k2++) { cx = -11.6 + k2 * (23.2 / 33); ntop.push(D.line([cx, yT, zN1 - 1.65], [cx, yT, zN1 - 0.15], { col: 'acc', lw: 0.32, alpha: 0.9 })); }
-  var gq = gcW; for (var g2 = 0; g2 < 4; g2++) { var gx0 = -8.6 + g2 * gq + 0.18; ntop.push({ pts: [[gx0, yT, zN1 - 2.6], [gx0, yT, zN0 + 0.8], [gx0 + gq - 0.36, yT, zN0 + 0.8], [gx0 + gq - 0.36, yT, zN1 - 2.6]], closed: true, lw: 0.45, alpha: 0.8 }); }
-  m.prism(shape.map(function (q) { return [q[0], q[1]]; }), -yT, yT, 'paper', { top: ntop });
-  // the link's axis through both dies, and trace lines from strip to strip
-  m.guide([[0, yT, 6, die.idx], [0, yT, zN0 - 3, nb.idx]], { style: 'axis', alpha: 0.9 });
-  [-W / 2, W / 2].forEach(function (x) { m.guide([[x, yT, -Dd / 2, die.idx], [x, yT, zN1, nb.idx]], { alpha: 0.9 }); });
-  return { elev: PLATE.ISO.elev, yaw: 3 * Math.PI / 4, sortAxis: [0, 0, 1], start: 2.2, thumbX: 0.5, accent: [176, 102, 44], accentDark: [224, 154, 92] };
+  // the link: a copper bar of its own, slid straight out from its seat over the near edge, its contacts ruled across its top
+  // and its ends square
+  var ln = m.part('link', { ex: [0, 0.9, -5.2], seq: 1 });
+  var cu = [];
+  for (var k2 = 0; k2 < 34; k2++) { var cx = -11.6 + k2 * (23.2 / 33); cu.push(D.line([cx, LT / 2, -0.75], [cx, LT / 2, 0.75], { col: 'acc', lw: 0.34, alpha: 0.95 })); }
+  cu.push(D.rect(-LX + 0.25, -0.82, LX - 0.25, 0.82, LT / 2, { col: 'acc', lw: 0.4, alpha: 0.7 }));
+  m.box({ c: [0, yT + LT / 2, (Lz0 + Lz1) / 2], s: [2 * LX, LT, Lz1 - Lz0], decals: { py: cu } }, 'acc');
+  m.callout([-LX * 0.2, yT + LT, Lz0 + 0.3], 'Die-to-die link', { side: 'l' });
+  // trace lines from the bar's corners down to its seat
+  [[-LX, Lz1], [LX, Lz1]].forEach(function (q) { m.guide([[q[0], yT, q[1], die.idx], [q[0], yT, q[1], ln.idx]], { alpha: 0.9 }); });
+  void Lz0;
+  return { elev: PLATE.ISO.elev, yaw: 3 * Math.PI / 4, sortAxis: [0, 1, 0], start: 2.2, thumbX: 0.5, accent: [176, 102, 44], accentDark: [224, 154, 92] };
 });

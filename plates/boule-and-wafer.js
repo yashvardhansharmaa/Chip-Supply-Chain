@@ -9,11 +9,18 @@ R('boule-and-wafer', function (m) {
   var cuts = [-0.30, -0.24];
   prof.push([Rb, yB1]); prof.push([Rc, yB1]); prof.push([Rc, yB1 + 0.018]);
   [[0.992, 1.105], [0.972, 1.145], [0.936, 1.185], [0.880, 1.225], [0.800, 1.265], [0.690, 1.303], [0.545, 1.338], [0.370, 1.368], [0.185, 1.390]].forEach(function (q) { prof.push([Rc * q[0], q[1], 0]); });
-  prof.push([0.0052, 1.40]); prof.push([0.0052, 1.53]); prof.push([0, 1.53]);
+  prof.push([0, 1.40]);
+  // the ingot, the neck and the seed are solids of their own, so each lights alone when its part is pointed at
+  m.tag('ingot');
   m.revolve(prof, 'turned', { seg: 48 });
+  m.tag('neck');
+  m.cyl([0, 1.465, 0], 0.0052, 0.13, 'turned', { seg: 12 });
   // the saw cuts: the slab the wafers came from, dashed round the body
+  m.tag('ingot');
   cuts.forEach(function (cy) { m.wire(H.ring(0, cy, 0, Rb * 1.004, 48), { lw: 0.6, dash: [3, 2], alpha: 0.85, c: [0, cy, 0.2] }); });
+  m.tag('seed');
   m.box({ c: [0, 1.565, 0], s: [0.015, 0.07, 0.015] }, 'mid');
+  m.tag(null);
   m.cyl([0, 1.6225, 0], 0.026, 0.045, 'turnedDark', { seg: 20 });
   m.dim([-Rb, yTip, 0], [-Rb, 1.40, 0], [-0.16, 0, 0], '2.1 m');
   m.anchor(1, 'Seed', [0, 1.565, 0]); m.anchor(2, 'Neck', [0, 1.465, 0]); m.anchor(3, 'Ingot', [-0.05, 0.3, Rb * 0.8]);
@@ -33,5 +40,5 @@ R('boule-and-wafer', function (m) {
   // review: the diameter is taken rim to rim across the wafer's centre (it was taken off the corners of the square round
   // the wafer, so its extension lines started in the air beside the disc)
   m.dim([-Rb, cuts[1] - 0.002, 0], [Rb, cuts[1] - 0.002, 0], [0, -0.1, 0], '300 mm', { part: w2.idx });
-  return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, sortAxis: [1, 0, 0], accent: [111, 139, 166], accentDark: [195, 211, 226] };
+  return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, sortAxis: [1, 0, 0], calloutOpts: { 1: { tag: 'seed' }, 2: { tag: 'neck' }, 3: { tag: 'ingot' } }, accent: [111, 139, 166], accentDark: [195, 211, 226] };
 });

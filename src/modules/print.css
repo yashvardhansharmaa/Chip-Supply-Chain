@@ -147,11 +147,13 @@
   .chapter .ch-lede { margin: 4mm 0 0; max-width: 118mm; font-family: var(--font-body); font-size: calc(11.6pt * var(--text-scale)); line-height: 1.4; color: var(--ink-2); }
   .chapter .ch-omet { display: none; } /* the facts line and the cite line are the screen's; the title block and the colophon carry both */
 
-  /* 2. the specimen: its caption, plain and flush left; Lithography's annotated drawing above it (print.js stills) */
+  /* 2. the specimen: its plate as a vector still (print.js stills) over its caption, plain and flush left; the live canvas
+     stays on screen */
   .chapter .ch-spec, .chapter .ch-spec[data-night] { display: block; margin: 0; padding: 4mm 0 0; background: none; color: var(--ink);
     --bg: #fff; --ink: #171716; --ink-2: #45443f; --muted: #56554f; --line-2: #c4c3bd; --rule-ink: #8c8a84; --accent: #7a1f2b; --accent-ink: #7a1f2b; }
   .chapter .ch-spec .cp-still { margin: 0 0 3mm; break-inside: avoid; }
   .chapter .ch-spec .cp-still svg { display: block; width: 122mm; max-width: 100%; height: auto; overflow: visible; }
+  .chapter .ch-spec .ch-spec-draw { display: none !important; }
   .chapter .ch-spec .ch-still--narrow { display: none; }
   .chapter .ch-spec-cap { margin: 0; max-width: 122mm; }
   .chapter .ch-spec-cap .label { display: block; margin: 0 0 1mm; font-family: var(--font-code); font-size: 7pt; line-height: 1.3; color: var(--muted); }

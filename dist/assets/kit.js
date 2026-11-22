@@ -336,6 +336,7 @@
       m.callouts.push({ pts: pts, text: an.name, n: an.n, part: an.part, side: o.side || null, tag: o.tag || null, dy: o.dy || 0, focus: o.focus || null, only: o.only || null });
     });
     m.callouts.sort(function (a, b) { return (a.n || 99) - (b.n || 99); });
+    m.loupe = spec.loupe || null;
     m.EX = [];
     m.S.forEach(function (it) {
       if (it.kind === 'globe') [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]].forEach(function (d) { m.EX.push([d[0] * it.r, d[1] * it.r, d[2] * it.r, it.part]); });
@@ -345,13 +346,21 @@
     return m;
   };
 
+  /* ---------------- the loupe ----------------
+     A plate may carry one loupe (spec.loupe: { model, at, part, side, caption }): a second, small plate drawn face on in a disc
+     in the top corner of a label column, joined by a faint cone to a ring on the spot it magnifies, with scale bars in the
+     site's figures (P.loupeBar) and names (P.loupeTag), and its caption under the disc. It shows where the plate shows its
+     dimensions (a chapter's slot and print), and fades with the labels. Memory and HBM's is behind a flag in its model file. */
+  P.loupeBar = function (m, a, b, text, o) { o = o || {}; (m.bars || (m.bars = [])).push({ a: a, b: b, text: text, side: o.side, tx: o.tx, ty: o.ty }); };
+  P.loupeTag = function (m, at, text, o) { o = o || {}; (m.tags || (m.tags = [])).push({ at: at, text: text, dx: o.dx, dy: o.dy, align: o.align, col: o.col }); };
+
   /* ---------------- drawing back-ends ---------------- */
   var FONT = '"Hanken Grotesk", "Helvetica Neue", Arial, sans-serif';
-  function CanvasG(ctx, dpr) { this.x = ctx; this.k = dpr; }
+  function CanvasG(ctx, dpr) { this.x = ctx; this.k = dpr; this.ga = 1; } // ga: an alpha over everything drawn (the loupe fades with the labels)
   CanvasG.prototype = {
     poly: function (pts, fill, alpha) {
       var x = this.x; x.beginPath(); x.moveTo(pts[0][0], pts[0][1]); for (var i = 1; i < pts.length; i++) x.lineTo(pts[i][0], pts[i][1]); x.closePath();
-      x.globalAlpha = alpha == null ? 1 : alpha; x.fillStyle = fill; x.fill(); x.globalAlpha = 1;
+      x.globalAlpha = (alpha == null ? 1 : alpha) * this.ga; x.fillStyle = fill; x.fill(); x.globalAlpha = 1;
     },
     hatch: function (pts, col, gap, lw, kind, alpha) {
       var x = this.x, minx = Infinity, maxx = -Infinity, miny = Infinity, maxy = -Infinity;
@@ -365,36 +374,39 @@
       for (var c = c0; c <= maxx + maxy + gap; c += gap) { x.moveTo(c - miny, miny); x.lineTo(c - maxy, maxy); }
       if (kind === 3) { var g2 = gap * 1.5, d0 = Math.floor((minx - maxy) / g2) * g2 - g2; for (c = d0; c <= maxx - miny + g2; c += g2) { x.moveTo(c + miny, miny); x.lineTo(c + maxy, maxy); } }
       void hgt;
-      x.globalAlpha = alpha == null ? 1 : alpha; x.strokeStyle = col; x.lineWidth = lw; x.setLineDash([]); x.lineCap = 'butt'; x.stroke(); x.restore();
+      x.globalAlpha = (alpha == null ? 1 : alpha) * this.ga; x.strokeStyle = col; x.lineWidth = lw; x.setLineDash([]); x.lineCap = 'butt'; x.stroke(); x.restore();
     },
     lines: function (segs, col, lw, dash, alpha, cap) {
       if (!segs.length) return;
       var x = this.x; x.beginPath();
       for (var i = 0; i < segs.length; i++) { var s = segs[i]; x.moveTo(s[0][0], s[0][1]); for (var k = 1; k < s.length; k++) x.lineTo(s[k][0], s[k][1]); }
-      x.globalAlpha = alpha == null ? 1 : alpha; x.strokeStyle = col; x.lineWidth = lw; x.lineCap = cap || 'round'; x.lineJoin = 'round';
+      x.globalAlpha = (alpha == null ? 1 : alpha) * this.ga; x.strokeStyle = col; x.lineWidth = lw; x.lineCap = cap || 'round'; x.lineJoin = 'round';
       x.setLineDash(dash || []); x.stroke(); x.setLineDash([]); x.globalAlpha = 1;
     },
     dots: function (pts, r, col, alpha, ring) {
       var x = this.x; x.beginPath();
-      if (!ring && r * (this.k || 1) < 2.4) { var d = r * 1.75; for (var j = 0; j < pts.length; j++) x.rect(pts[j][0] - d / 2, pts[j][1] - d / 2, d, d); x.globalAlpha = alpha == null ? 1 : alpha; x.fillStyle = col; x.fill(); x.globalAlpha = 1; return; }
+      if (!ring && r * (this.k || 1) < 2.4) { var d = r * 1.75; for (var j = 0; j < pts.length; j++) x.rect(pts[j][0] - d / 2, pts[j][1] - d / 2, d, d); x.globalAlpha = (alpha == null ? 1 : alpha) * this.ga; x.fillStyle = col; x.fill(); x.globalAlpha = 1; return; }
       for (var i = 0; i < pts.length; i++) { x.moveTo(pts[i][0] + r, pts[i][1]); x.arc(pts[i][0], pts[i][1], r, 0, Math.PI * 2); }
-      x.globalAlpha = alpha == null ? 1 : alpha;
+      x.globalAlpha = (alpha == null ? 1 : alpha) * this.ga;
       if (ring) { x.strokeStyle = col; x.lineWidth = Math.max(0.55, r * 0.42); x.stroke(); } else { x.fillStyle = col; x.fill(); }
       x.globalAlpha = 1;
     },
-    circle: function (cx, cy, r, fill, stroke, lw, alpha) { var x = this.x; x.globalAlpha = alpha == null ? 1 : alpha; x.beginPath(); x.arc(cx, cy, r, 0, Math.PI * 2); if (fill) { x.fillStyle = fill; x.fill(); } if (stroke) { x.strokeStyle = stroke; x.lineWidth = lw; x.setLineDash([]); x.stroke(); } x.globalAlpha = 1; },
+    circle: function (cx, cy, r, fill, stroke, lw, alpha) { var x = this.x; x.globalAlpha = (alpha == null ? 1 : alpha) * this.ga; x.beginPath(); x.arc(cx, cy, r, 0, Math.PI * 2); if (fill) { x.fillStyle = fill; x.fill(); } if (stroke) { x.strokeStyle = stroke; x.lineWidth = lw; x.setLineDash([]); x.stroke(); } x.globalAlpha = 1; },
     text: function (s, px, py, o) {
       var x = this.x; x.font = (o.weight || 500) + ' ' + o.size + 'px ' + (o.family || FONT);
       x.textAlign = o.align || 'left'; x.textBaseline = o.base || 'middle';
-      x.globalAlpha = o.alpha == null ? 1 : o.alpha;
+      x.globalAlpha = (o.alpha == null ? 1 : o.alpha) * this.ga;
       if (o.halo) { x.lineWidth = o.haloW || 4; x.strokeStyle = o.halo; x.lineJoin = 'round'; x.strokeText(s, px, py); }
       x.fillStyle = o.fill; x.fillText(s, px, py); x.globalAlpha = 1;
     },
+    // a circular clip, for the loupe's disc
+    clip: function (cx, cy, r) { var x = this.x; x.save(); x.beginPath(); x.arc(cx, cy, r, 0, Math.PI * 2); x.clip(); },
+    unclip: function () { this.x.restore(); },
     measure: function (s, o) { var x = this.x; x.font = (o.weight || 500) + ' ' + o.size + 'px ' + (o.family || FONT); return x.measureText(s).width; },
-    arrow: function (tip, dir, len, col, wid, alpha) { var x = this.x, n = [-dir[1], dir[0]], w = wid || len * 0.28; x.globalAlpha = alpha == null ? 1 : alpha; x.beginPath(); x.moveTo(tip[0], tip[1]); x.lineTo(tip[0] - dir[0] * len + n[0] * w, tip[1] - dir[1] * len + n[1] * w); x.lineTo(tip[0] - dir[0] * len - n[0] * w, tip[1] - dir[1] * len - n[1] * w); x.closePath(); x.fillStyle = col; x.fill(); x.globalAlpha = 1; }
+    arrow: function (tip, dir, len, col, wid, alpha) { var x = this.x, n = [-dir[1], dir[0]], w = wid || len * 0.28; x.globalAlpha = (alpha == null ? 1 : alpha) * this.ga; x.beginPath(); x.moveTo(tip[0], tip[1]); x.lineTo(tip[0] - dir[0] * len + n[0] * w, tip[1] - dir[1] * len + n[1] * w); x.lineTo(tip[0] - dir[0] * len - n[0] * w, tip[1] - dir[1] * len - n[1] * w); x.closePath(); x.fillStyle = col; x.fill(); x.globalAlpha = 1; }
   };
   // ids carry a prefix of their own, so several stills inline in one page (the book, printed) never share a clip
-  function SvgG(w, h, pre) { this.out = []; this.defs = {}; this.w = w; this.h = h; this.cid = 0; this.pre = pre || ''; this.mfn = null; }
+  function SvgG(w, h, pre) { this.out = []; this.defs = {}; this.w = w; this.h = h; this.cid = 0; this.pre = pre || ''; this.mfn = null; this.ga = 1; }
   function f1(v) { return Math.round(v * 10) / 10; }
   function ptsStr(pts) { return pts.map(function (p) { return f1(p[0]) + ',' + f1(p[1]); }).join(' '); }
   SvgG.prototype = {
@@ -422,6 +434,8 @@
       var esc = String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
       this.out.push('<text x="' + f1(px) + '" y="' + f1(py) + '" text-anchor="' + anchor + '" dominant-baseline="central" font-family="Hanken Grotesk, Helvetica Neue, Arial, sans-serif" font-size="' + o.size + '" font-weight="' + (o.weight || 500) + '" fill="' + o.fill + '"' + (o.halo ? ' stroke="' + o.halo + '" stroke-width="' + (o.haloW || 4) + '" paint-order="stroke" stroke-linejoin="round"' : '') + '>' + esc + '</text>');
     },
+    clip: function (cx, cy, r) { var id = this.pre + 'k' + (this.cid++); this.out.push('<clipPath id="' + id + '"><circle cx="' + f1(cx) + '" cy="' + f1(cy) + '" r="' + f1(r) + '"/></clipPath><g clip-path="url(#' + id + ')">'); },
+    unclip: function () { this.out.push('</g>'); },
     measure: function (s, o) { return this.mfn ? this.mfn(s, o) : String(s).length * o.size * (o.weight >= 600 ? 0.56 : 0.53); },
     arrow: function (tip, dir, len, col, wid) { var n = [-dir[1], dir[0]], w = wid || len * 0.28; this.poly([tip, [tip[0] - dir[0] * len + n[0] * w, tip[1] - dir[1] * len + n[1] * w], [tip[0] - dir[0] * len - n[0] * w, tip[1] - dir[1] * len - n[1] * w]], col); },
     svg: function (bg) {
@@ -543,6 +557,9 @@
       var need = tw + (c.n ? ls.num * 2 + 6 : 0) + 30;
       if (need > room[side]) room[side] = need;
     });
+    // the loupe takes the top of its label column, which is then at least as wide as the disc
+    var LG = this.loupeOn() ? this.loupeGeom(w) : null;
+    if (LG) room[LG.side] = Math.max(room[LG.side], 2 * LG.r + LG.mg + 14);
     return room;
   };
   PL.fit = function (w, h, g) {
@@ -555,11 +572,28 @@
     var used = rooms.l + rooms.r + sc * ew, x0 = (w - used) / 2 + rooms.l;
     return { s: sc, cx: x0 - sc * e.minx, cy: padY + (ah - sc * eh) / 2 + sc * e.maxy, e: e, rooms: rooms };
   };
+  // is the loupe drawn: a plate with one, in a mode that shows dimensions, unless the page turns loupes off (P.loupes)
+  PL.loupeOn = function () { return !!(this.m.loupe && this.lod === 'full' && !this.o.noDims && !this.o.noLabels && P.loupes !== false); };
+  // its disc: the top corner of its label column, a radius that grows with the width, and the caption's lines under it
+  PL.loupeGeom = function (w) {
+    var L = this.m.loupe, r = Math.round(Math.max(56, Math.min(L.rMax || 104, (L.r || 0.155) * w))), mg = 10, side = L.side || 'r';
+    var cap = L.caption || [], capH = cap.length ? 15 + cap.length * 16 : 0;
+    return { side: side, r: r, mg: mg, x: side === 'r' ? w - mg - r : mg + r, y: mg + r, cap: cap, bottom: mg + 2 * r + capH + 14 };
+  };
+  PL.loupePlate = function () { var L = this.m.loupe; if (!this._lp && L && L.model) this._lp = new Plate(L.model, {}); return this._lp; };
   PL.heightFor = function (w, lo, hi) {
     var e = this.ext || (this.ext = this.extent()), rooms = this.rooms(w), padX = Math.max(10, w * 0.025);
     var sc = (w - rooms.l - rooms.r - 2 * padX) / (e.maxx - e.minx), h = sc * (e.maxy - e.miny) / 0.94;
     if (this.m.spec.maxH) hi = Math.min(hi, this.m.spec.maxH);
-    return Math.round(Math.max(lo, Math.min(hi, h)));
+    if (this.loupeOn()) {
+      var LG = this.loupeGeom(w), ls = this.labelStyle(w), n = 0, self = this;
+      this.m.callouts.forEach(function (c) { if ((c._side || c.side) === LG.side) n++; });
+      lo = Math.max(lo, LG.bottom + n * ls.fs * 2.4 + 8); void self;
+    }
+    var out = Math.round(Math.max(lo, Math.min(hi, h)));
+    // the labels were wrapped with a guess at the faces' widths: the next frame lays them out again with the real ones
+    this.m.callouts.forEach(function (c) { c._lines = null; }); this._fitKey = null;
+    return out;
   };
 
   function partial(pts, t) { // the first t of a polyline, by length
@@ -860,8 +894,56 @@
       var p = proj(L.at, L.part), c = L.col === 'muted' ? css(pal.muted) : css(colOf(L.col));
       g.text(L.text, p[0] + L.dx * k, p[1] + L.dy * k, { size: Math.round(L.size * Math.max(0.85, Math.min(1.1, k))), weight: L.weight, fill: c, align: L.align, halo: bgC, haloW: 4, alpha: labT * LA });
     });
+    if (!thumb && this.loupeOn() && labT > 0 && LA > 0.01) drawLoupe(this.loupeGeom(w), labT * LA);
     this._hit = [];
     if (!thumb && !st.noLabels && !this.o.noLabels && labT > 0 && LA > 0.01 && m.callouts.length) callouts();
+
+    function drawLoupe(G, A) {
+      var L = m.loupe, lp = self.loupePlate(); if (!lp) return;
+      var pi = null; m.parts.forEach(function (p) { if (p.name === L.part) pi = p.idx; });
+      var T = L.at ? proj(L.at, pi) : null, rt = 6, ga0 = g.ga || 1;
+      g.ga = ga0 * A;
+      var line = css(mix(pal.bg, pal.ink, pal.dark ? 0.5 : 0.42));
+      if (T) {
+        // the cone: a faint wash of ink with two hairline edges, from the ring on the spot to the disc
+        var dx = G.x - T[0], dy = G.y - T[1], d = Math.hypot(dx, dy);
+        if (d > G.r + rt + 4) {
+          var th = Math.atan2(dy, dx), al = Math.acos(Math.max(-1, Math.min(1, (rt - G.r) / d)));
+          var p1a = [T[0] + rt * Math.cos(th + al), T[1] + rt * Math.sin(th + al)], p2a = [G.x + G.r * Math.cos(th + al), G.y + G.r * Math.sin(th + al)];
+          var p1b = [T[0] + rt * Math.cos(th - al), T[1] + rt * Math.sin(th - al)], p2b = [G.x + G.r * Math.cos(th - al), G.y + G.r * Math.sin(th - al)];
+          g.poly([p1a, p2a, [G.x, G.y], p2b, p1b, [T[0], T[1]]], inkC, pal.dark ? 0.05 : 0.032);
+          g.lines([[p1a, p2a], [p1b, p2b]], line, 0.7 * k, null, 0.85, 'butt');
+        }
+        g.circle(T[0], T[1], rt, null, bgC, 3.2);
+        g.circle(T[0], T[1], rt, null, css(mix(pal.bg, pal.ink, 0.8)), 1.1);
+      }
+      g.circle(G.x, G.y, G.r, bgC, null, 0);
+      // the small plate, fitted to the disc, then its scale bars and names
+      var S2 = G.r * 2, x0 = G.x - G.r, y0 = G.y - G.r, f0 = lp.fit(S2, S2), sk = L.scale || 1;
+      var f2 = { s: f0.s * sk, cx: x0 + G.r + (f0.cx - G.r) * sk + (L.dx || 0) * S2, cy: y0 + G.r + (f0.cy - G.r) * sk + (L.dy || 0) * S2, e: f0.e };
+      g.clip(G.x, G.y, G.r - 0.5);
+      lp.paint({ k: 1, w: S2, h: S2, g: g, pal: pal, fit: f2, noDims: true, noLabels: true });
+      var R1 = viewM(lp.m.yaw0, lp.m.elev), pj = function (q) { return [f2.cx + f2.s * (R1[0] * q[0] + R1[1] * q[1] + R1[2] * q[2]), f2.cy - f2.s * (R1[3] * q[0] + R1[4] * q[1] + R1[5] * q[2])]; };
+      var size = 11.5, txt = css(pal.ink);
+      (lp.m.bars || []).forEach(function (b) {
+        var a = pj(b.a), c = pj(b.b), bx = c[0] - a[0], by = c[1] - a[1], Ln = Math.hypot(bx, by) || 1, nx = -by / Ln, ny = bx / Ln, tk = 4.5;
+        g.lines([[a, c]], bgC, 4.2, null, 1, 'butt'); g.lines([[a, c]], txt, 1.3, null, 1, 'butt');
+        g.lines([[[a[0] + nx * tk, a[1] + ny * tk], [a[0] - nx * tk, a[1] - ny * tk]], [[c[0] + nx * tk, c[1] + ny * tk], [c[0] - nx * tk, c[1] - ny * tk]]], txt, 1.1, null, 1, 'butt');
+        var sd = b.side || 1, tw = g.measure(b.text, { size: size, weight: 600 }), tx = (a[0] + c[0]) / 2 + (b.tx || 0), ty = (a[1] + c[1]) / 2 + (b.ty || 0);
+        if (Math.abs(bx) >= Math.abs(by)) ty += sd * -12; else tx += sd * (tw / 2 + 8);
+        // the figure stays inside the disc
+        var Rl = G.r - 7, dyc = Math.max(-Rl + 8, Math.min(Rl - 8, ty - G.y)), ey = Math.min(Rl, Math.abs(dyc) + 6), half = Math.sqrt(Math.max(0, Rl * Rl - ey * ey));
+        ty = G.y + dyc; tx = Math.max(G.x - half + tw / 2, Math.min(G.x + half - tw / 2, tx));
+        g.text(b.text, tx, ty, { size: size, weight: 600, fill: txt, align: 'center', halo: bgC, haloW: 4 });
+      });
+      (lp.m.tags || []).forEach(function (t2) { var q = pj(t2.at); g.text(t2.text, q[0] + (t2.dx || 0), q[1] + (t2.dy || 0), { size: size, weight: 600, fill: txt, align: t2.align || 'center', halo: bgC, haloW: 3.5 }); });
+      g.unclip();
+      g.circle(G.x, G.y, G.r, null, css(mix(pal.bg, pal.ink, 0.86)), 1.25 * k);
+      g.circle(G.x, G.y, G.r + 3.5, null, css(mix(pal.bg, pal.ink, pal.dark ? 0.3 : 0.22)), 0.6 * k);
+      // the caption under the disc, in the label's muted ink
+      G.cap.forEach(function (ln, i) { g.text(ln, G.x, G.y + G.r + 16 + i * 16, { size: 12, weight: 500, fill: css(pal.muted), align: 'center', halo: bgC, haloW: 3 }); });
+      g.ga = ga0;
+    }
 
     function dimension(d) {
       var a3 = d.a, b3 = d.b, o = d.off, bp = d.bpart == null ? d.part : d.bpart;
@@ -897,7 +979,7 @@
       if (!m.callouts[0]._lines) self.rooms(w, g);
       // a point as the drawn view puts it: a tracking label (the globe's) keeps the height it has there as the globe turns
       var proj0 = function (q, part) { var o = O[part], x = q[0] + o[0], y = q[1] + o[1], z = q[2] + o[2]; return [cx + sc * (R0[0] * x + R0[1] * y + R0[2] * z), cy - sc * (R0[3] * x + R0[4] * y + R0[5] * z)]; };
-      var sides = { l: [], r: [] };
+      var sides = { l: [], r: [] }, LGc = self.loupeOn() ? self.loupeGeom(w) : null;
       m.callouts.forEach(function (c) {
         var pts, wts = null, my = 0, mx = 0, base = c.pts.map(function (q) { return proj(q, q[3] == null ? c.part : q[3]); });
         if (c.track) {
@@ -907,8 +989,8 @@
           c.track.forEach(function (q) {
             var o = O[q[3]], x = q[0] + o[0], y = q[1] + o[1], z = q[2] + o[2], L = Math.hypot(x, y, z) || 1;
             var f = (R[6] * x + R[7] * y + R[8] * z) / L, wt = clamp01((f - 0.3) / 0.25), pq = proj(q, q[3]), G0 = self._globe;
-            // and only from the half of the globe on the label's side, so a leader never crosses the drawing
-            if (G0 && c.side) { var u = (pq[0] - G0.x) / G0.r * (c.side === 'l' ? -1 : 1); wt *= clamp01((u + 0.1) / 0.35); }
+            // and not from the far side of the disc, so a leader never runs across the whole globe
+            if (G0 && c.side) { var u = (pq[0] - G0.x) / G0.r * (c.side === 'l' ? -1 : 1); wt *= clamp01((u + 0.5) / 0.35); }
             if (wt > 0.01) { pts.push(pq); wts.push(wt * wt * (3 - 2 * wt)); }
           });
           c.pts.forEach(function (q) { var p0 = proj0(q, q[3] == null ? c.part : q[3]); my += p0[1]; mx += p0[0]; }); my /= c.pts.length; mx /= c.pts.length;
@@ -924,7 +1006,7 @@
       ['l', 'r'].forEach(function (sd) {
         var list = sides[sd]; if (!list.length) return;
         list.sort(function (a, b) { return a.y - b.y; });
-        var minGap = ls.fs * 0.85, top = ls.fs, bot = h - ls.fs;
+        var minGap = ls.fs * 0.85, top = LGc && LGc.side === sd ? LGc.bottom : ls.fs, bot = h - ls.fs;
         for (var i = 0; i < list.length; i++) { var lo = i ? list[i - 1].y + (list[i - 1].hh + list[i].hh) / 2 + minGap : top + list[i].hh / 2; if (list[i].y < lo) list[i].y = lo; }
         var over = list[list.length - 1].y + list[list.length - 1].hh / 2 - bot;
         if (over > 0) { list[list.length - 1].y -= over; for (i = list.length - 2; i >= 0; i--) { var hi = list[i + 1].y - (list[i + 1].hh + list[i].hh) / 2 - minGap; if (list[i].y > hi) list[i].y = hi; } }
@@ -1064,11 +1146,18 @@ R('boule-and-wafer', function (m) {
   var cuts = [-0.30, -0.24];
   prof.push([Rb, yB1]); prof.push([Rc, yB1]); prof.push([Rc, yB1 + 0.018]);
   [[0.992, 1.105], [0.972, 1.145], [0.936, 1.185], [0.880, 1.225], [0.800, 1.265], [0.690, 1.303], [0.545, 1.338], [0.370, 1.368], [0.185, 1.390]].forEach(function (q) { prof.push([Rc * q[0], q[1], 0]); });
-  prof.push([0.0052, 1.40]); prof.push([0.0052, 1.53]); prof.push([0, 1.53]);
+  prof.push([0, 1.40]);
+  // the ingot, the neck and the seed are solids of their own, so each lights alone when its part is pointed at
+  m.tag('ingot');
   m.revolve(prof, 'turned', { seg: 48 });
+  m.tag('neck');
+  m.cyl([0, 1.465, 0], 0.0052, 0.13, 'turned', { seg: 12 });
   // the saw cuts: the slab the wafers came from, dashed round the body
+  m.tag('ingot');
   cuts.forEach(function (cy) { m.wire(H.ring(0, cy, 0, Rb * 1.004, 48), { lw: 0.6, dash: [3, 2], alpha: 0.85, c: [0, cy, 0.2] }); });
+  m.tag('seed');
   m.box({ c: [0, 1.565, 0], s: [0.015, 0.07, 0.015] }, 'mid');
+  m.tag(null);
   m.cyl([0, 1.6225, 0], 0.026, 0.045, 'turnedDark', { seg: 20 });
   m.dim([-Rb, yTip, 0], [-Rb, 1.40, 0], [-0.16, 0, 0], '2.1 m');
   m.anchor(1, 'Seed', [0, 1.565, 0]); m.anchor(2, 'Neck', [0, 1.465, 0]); m.anchor(3, 'Ingot', [-0.05, 0.3, Rb * 0.8]);
@@ -1088,7 +1177,7 @@ R('boule-and-wafer', function (m) {
   // review: the diameter is taken rim to rim across the wafer's centre (it was taken off the corners of the square round
   // the wafer, so its extension lines started in the air beside the disc)
   m.dim([-Rb, cuts[1] - 0.002, 0], [Rb, cuts[1] - 0.002, 0], [0, -0.1, 0], '300 mm', { part: w2.idx });
-  return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, sortAxis: [1, 0, 0], accent: [111, 139, 166], accentDark: [195, 211, 226] };
+  return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, sortAxis: [1, 0, 0], calloutOpts: { 1: { tag: 'seed' }, 2: { tag: 'neck' }, 3: { tag: 'ingot' } }, accent: [111, 139, 166], accentDark: [195, 211, 226] };
 });
 
 })(window.PLATE);}catch(e){console.warn('plate boule-and-wafer.js failed to load', e);}
@@ -1202,8 +1291,10 @@ try{(function(PLATE){'use strict';var R = PLATE.register, D = PLATE.D, H = PLATE
 /* =====================================================================================================
    01 Design: a GPU die after Nvidia's published H100 block diagram, at one reticle field, 26 x 33 mm, in millimetres.
    The floorplan is engraved on the die's face in three tones (compute tiles, the cache band, the memory edges). The
-   copper strip on the short edge is the die-to-die link; the neighbouring die, which the specimen file draws as a
-   sliver beyond it, is pulled away along that axis and ends in a break line, as a draughtsman shows a part cut short. */
+   caption's copper strip on one short edge, which stands for the die-to-die link, is a part of its own: a copper bar
+   slid out from its seat along the die's near edge, ruled with its contacts, with trace lines down to the seat it leaves.
+   (The mock pulled away a sliver of the neighbouring die, which the specimen file draws, cut short by a break line; the
+   review panel read it as broken silicon, so the drawing keeps to the caption's one copper strip.) */
 R('die-floorplan', function (m) {
   var W = 26, Dd = 33, T = 0.9, yT = T / 2;
   var die = m.part('die', { ex: [0, 0, 0], seq: 0 });
@@ -1240,29 +1331,24 @@ R('die-floorplan', function (m) {
   // the host interface and NVLink ports across the far short edge
   blk(-11.6, 14.2, 11.6, 16.1, { fill: 'steel' });
   for (var n = 0; n < 9; n++) { var nx = -10.8 + n * 2.62; top.push(D.rect(nx, 14.55, nx + 1.9, 15.75, yT, { lw: 0.3, fill: 'light' })); }
-  // the die-to-die link: a copper strip on the near short edge, ruled with its contacts
-  var cuTop = [D.rect(-11.9, -16.15, 11.9, -14.35, yT, { fill: 'accLight', col: 'acc', lw: 0.5 })];
-  for (var k2 = 0; k2 < 34; k2++) { var cx = -11.6 + k2 * (23.2 / 33); cuTop.push(D.line([cx, yT, -16.0], [cx, yT, -14.5], { col: 'acc', lw: 0.32, alpha: 0.9 })); }
-  m.box({ c: [0, 0, 0], s: [W, T, Dd], decals: { py: top.concat(cuTop) } }, 'light');
+  // the die-to-die link's seat: the strip's footprint on the near short edge, dashed, as an exploded drawing marks where a part sits
+  var LX = 11.9, Lz0 = -16.15, Lz1 = -14.35, LT = 0.6;
+  var seat = [D.rect(-LX, Lz0, LX, Lz1, yT, { dash: [1.4, 1], lw: 0.5, alpha: 0.85 })];
+  m.box({ c: [0, 0, 0], s: [W, T, Dd], decals: { py: top.concat(seat) } }, 'light');
   m.dim([-W / 2, -yT, Dd / 2], [W / 2, -yT, Dd / 2], [0, 0, 4.2], '26 mm');
   m.dim([W / 2, -yT, Dd / 2], [W / 2, -yT, -Dd / 2], [4.2, 0, 0], '33 mm');
-  m.callout([0, yT, -15.25], 'Die-to-die link', { side: 'l' });
-  // the neighbouring die: a sliver of it, with its own copper strip facing ours, cut short by a break line
-  // review: pulled 5 mm clear, was 7.5: the gap cost the die itself about a tenth of its size on the page
-  var nb = m.part('neighbour', { ex: [0, 0, -5], seq: 1 });
-  var L = 5.2, zN1 = -Dd / 2 - 0.4, zN0 = zN1 - L, brk = [];
-  // the break: a long, shallow zigzag across the die, as drawn on a part shown cut short
-  var nz = 7;
-  for (var b = 0; b <= nz; b++) { var bx = W / 2 - b * W / nz; brk.push([bx, zN0 + (b % 2 ? 0.55 : -0.55)]); }
-  var shape = [[-W / 2, zN1], [W / 2, zN1]].concat(brk);
-  var ntop = [D.rect(-11.9, zN1 - 1.8, 11.9, zN1, yT, { fill: 'accLight', col: 'acc', lw: 0.5 })];
-  for (k2 = 0; k2 < 34; k2++) { cx = -11.6 + k2 * (23.2 / 33); ntop.push(D.line([cx, yT, zN1 - 1.65], [cx, yT, zN1 - 0.15], { col: 'acc', lw: 0.32, alpha: 0.9 })); }
-  var gq = gcW; for (var g2 = 0; g2 < 4; g2++) { var gx0 = -8.6 + g2 * gq + 0.18; ntop.push({ pts: [[gx0, yT, zN1 - 2.6], [gx0, yT, zN0 + 0.8], [gx0 + gq - 0.36, yT, zN0 + 0.8], [gx0 + gq - 0.36, yT, zN1 - 2.6]], closed: true, lw: 0.45, alpha: 0.8 }); }
-  m.prism(shape.map(function (q) { return [q[0], q[1]]; }), -yT, yT, 'paper', { top: ntop });
-  // the link's axis through both dies, and trace lines from strip to strip
-  m.guide([[0, yT, 6, die.idx], [0, yT, zN0 - 3, nb.idx]], { style: 'axis', alpha: 0.9 });
-  [-W / 2, W / 2].forEach(function (x) { m.guide([[x, yT, -Dd / 2, die.idx], [x, yT, zN1, nb.idx]], { alpha: 0.9 }); });
-  return { elev: PLATE.ISO.elev, yaw: 3 * Math.PI / 4, sortAxis: [0, 0, 1], start: 2.2, thumbX: 0.5, accent: [176, 102, 44], accentDark: [224, 154, 92] };
+  // the link: a copper bar of its own, slid straight out from its seat over the near edge, its contacts ruled across its top
+  // and its ends square
+  var ln = m.part('link', { ex: [0, 0.9, -5.2], seq: 1 });
+  var cu = [];
+  for (var k2 = 0; k2 < 34; k2++) { var cx = -11.6 + k2 * (23.2 / 33); cu.push(D.line([cx, LT / 2, -0.75], [cx, LT / 2, 0.75], { col: 'acc', lw: 0.34, alpha: 0.95 })); }
+  cu.push(D.rect(-LX + 0.25, -0.82, LX - 0.25, 0.82, LT / 2, { col: 'acc', lw: 0.4, alpha: 0.7 }));
+  m.box({ c: [0, yT + LT / 2, (Lz0 + Lz1) / 2], s: [2 * LX, LT, Lz1 - Lz0], decals: { py: cu } }, 'acc');
+  m.callout([-LX * 0.2, yT + LT, Lz0 + 0.3], 'Die-to-die link', { side: 'l' });
+  // trace lines from the bar's corners down to its seat
+  [[-LX, Lz1], [LX, Lz1]].forEach(function (q) { m.guide([[q[0], yT, q[1], die.idx], [q[0], yT, q[1], ln.idx]], { alpha: 0.9 }); });
+  void Lz0;
+  return { elev: PLATE.ISO.elev, yaw: 3 * Math.PI / 4, sortAxis: [0, 1, 0], start: 2.2, thumbX: 0.5, accent: [176, 102, 44], accentDark: [224, 154, 92] };
 });
 
 })(window.PLATE);}catch(e){console.warn('plate die-floorplan.js failed to load', e);}
@@ -1289,7 +1375,11 @@ R('euv-scanner', function (m) {
     var sag = r * 0.14, t = r * 0.24, prof = [[o.rIn || 0, -t], [r, -t], [r, sag, 1]];
     for (var k = 5; k >= 0; k--) { var rr = (o.rIn || 0) + (r - (o.rIn || 0)) * k / 6; prof.push([rr, sag * (rr / r) * (rr / r), 0]); }
     var th = Math.atan2(-nv[0], nv[1]);
-    return m.revolve(prof, mat || 'turnedDark', { seg: 28, rot: [0, 0, th], pos: [q[0], q[1], 0], sortFaces: true });
+    // the illuminator's and the projection optics' mirrors carry one tag, so Mirrors lights all of them (the collector is the source's)
+    if (!o.notag) m.tag('mirror');
+    var sv = m.revolve(prof, mat || 'turnedDark', { seg: 28, rot: [0, 0, th], pos: [q[0], q[1], 0], sortFaces: true });
+    m.tag(null);
+    return sv;
   }
   // a module's housing cut open on the optical plane (z = 0): back wall, floor, roof and side walls, cut edges hatched
   function housing(cx, cy, w, h, d, t) {
@@ -1305,7 +1395,7 @@ R('euv-scanner', function (m) {
   // the vessel, cut on the optical plane (z = 0) with the far half kept, as the other modules are (its cone to the focus
   // is left out: drawn as a half shell it read as a loose blade under the illuminator)
   m.revolve([[0.62, -0.61], [vesR, -0.61], [vesR, 0.61], [0.62, 0.61]], 'turned', { seg: 40, a0: Math.PI, a1: Math.PI * 2, rot: [0, 0, -Math.PI / 2], pos: [vc, PLASMA[1], 0], cut: 'cut', sortFaces: true });
-  mirror(COLL, [1, 0], 0.56, 'turned', { rIn: 0.075 });
+  mirror(COLL, [1, 0], 0.56, 'turned', { rIn: 0.075, notag: true });
   m.dots([[PLASMA[0], PLASMA[1], 0]], { r: 4.2, col: 'acc2', alpha: 0.35 });
   m.dots([[PLASMA[0], PLASMA[1], 0]], { r: 2.2, col: 'acc2', alpha: 1 });
   m.cyl([PLASMA[0], PLASMA[1] + 0.72, 0], 0.05, 0.30, 'turnedDark', { seg: 20 });
@@ -1337,7 +1427,9 @@ R('euv-scanner', function (m) {
   var Wp = NODE[11].p;
   [0, 0.78].forEach(function (dx, j) {
     m.cyl([Wp[0] + dx, Wp[1] - 0.042, 0], 0.235 * 1.08, 0.075, 'turnedDark', { seg: 32 });
+    if (!j) m.tag('wafer');
     m.cyl([Wp[0] + dx, Wp[1] + 0.003, 0], 0.235, 0.012, j ? 'turned' : 'acc2Light', { seg: 32, top: j ? [] : [D.rect(-0.041, -0.033, 0.041, 0.033, 0.006, { fill: 'acc', lw: 0.6, col: 'acc' })] });
+    m.tag(null);
   });
   m.box({ c: [Wp[0] + 0.39, Wp[1] - 0.135, 0], s: [1.66, 0.10, 0.66] }, 'mid');
   m.anchor(4, 'Wafer', [Wp[0], Wp[1] + 0.01, 0]);
@@ -1350,7 +1442,7 @@ R('euv-scanner', function (m) {
   m.guide(pts, { style: 'beam', col: 'acc', lw: 1.5 });
   // the collector's cone of light, from its rim to the plasma and on to the focus
   [0.27, -0.27, 0.5, -0.5].forEach(function (rr) { m.guide([[COLL[0] + 0.28 * (rr / 0.56) * (rr / 0.56), PLASMA[1] + rr, 0, src.idx], [NODE[0].p[0], NODE[0].p[1], 0, src.idx]], { style: 'beam', col: 'acc', lw: 0.7, alpha: 0.55 }); });
-  return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, accent: [107, 127, 209], accentDark: [167, 180, 245], accent2: [154, 126, 224], accent2Dark: [220, 208, 255] };
+  return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, calloutOpts: { 2: { tag: 'mirror' }, 4: { tag: 'wafer' } }, accent: [107, 127, 209], accentDark: [167, 180, 245], accent2: [154, 126, 224], accent2Dark: [220, 208, 255] };
 });
 
 })(window.PLATE);}catch(e){console.warn('plate euv-scanner.js failed to load', e);}
@@ -1629,15 +1721,20 @@ try{(function(PLATE){'use strict';var R = PLATE.register, D = PLATE.D, H = PLATE
 /* =====================================================================================================
    09 Memory: a twelve-high HBM stack, pulled apart and cut open, in millimetres: an 11 x 11 mm footprint to scale,
    heights about fifteen times (a 30 micrometre die drawn 0.45 mm). The base die is copper; through-silicon vias and
-   micro-bumps show in copper where the quarter cut passes through them. */
+   micro-bumps show in copper where the quarter cut passes through them.
+   The loupe (LOUPE, below) shows four dies at true thickness, about 30 micrometres each (caption), beside a human hair about
+   80 micrometres across (chapter 11), both drawn in micrometres in one view, so their sizes compare directly. There is no
+   hair on the floor: the review panel found a true-size hair lying beside dies drawn fifteen times too thick made the dies
+   look thicker than a hair. Set LOUPE to false to drop it. */
+var LOUPE = true;
 R('hbm-stack', function (m) {
   var hw = 5.3, bw = 5.5, t = 0.45, bt = 0.9, gap0 = 0.105, pitch = t + gap0, EX = 0.62;
   var TX = 0.7, TZ = 0.8;
   function L(w) { return [[-w, -w], [w, -w], [w, 0], [0, 0], [0, w], [-w, w]]; }
-  function tsvLines(y0, y1, w) {
+  function tsvLines(y0, y1, w, tag) {
     var onZ = [], onX = [];
-    for (var x = 0; x <= w - 0.2; x += TX) onZ.push(D.line([x + 0.0001, y0, 0], [x + 0.0001, y1, 0], { col: 'acc', lw: 1.0 }));
-    for (var z = 0; z <= w - 0.2; z += TZ) onX.push(D.line([0, y0, z + 0.0001], [0, y1, z + 0.0001], { col: 'acc', lw: 1.0 }));
+    for (var x = 0; x <= w - 0.2; x += TX) onZ.push(D.line([x + 0.0001, y0, 0], [x + 0.0001, y1, 0], { col: 'acc', lw: 1.0, tag: tag }));
+    for (var z = 0; z <= w - 0.2; z += TZ) onX.push(D.line([0, y0, z + 0.0001], [0, y1, z + 0.0001], { col: 'acc', lw: 1.0, tag: tag }));
     return [onZ, onX];
   }
   function bumps(y, w) { var p = []; for (var x = 0; x <= w - 0.2; x += TX) p.push([x, y, 0]); for (var z = TZ; z <= w - 0.2; z += TZ) p.push([0, y, z]); return p; }
@@ -1660,18 +1757,22 @@ R('hbm-stack', function (m) {
   var prev = base;
   for (var i = 0; i < 12; i++) {
     var yb = gap0 + pitch * i, p = m.part('die' + (i + 1), { ex: [0, EX * (i + 1), 0], seq: i + 1 });
-    var tl = tsvLines(yb, yb + t, hw);
+    var tl = tsvLines(yb, yb + t, hw, 'tsv');
     var o = { sideMat: { 2: 'cutDense', 3: 'cutDense' }, sideDecals: { 2: tl[0], 3: tl[1] } };
     if (i === 11) {
       var bank = [];
       for (a = 0; a < 2; a++) for (b = 0; b < 4; b++) { var bx = (a - 0.5) * 10.6 * 0.44, bz = (b - 1.5) * 10.6 * 0.225; if (bx > 0 && bz > 0) continue; bank.push(D.rect(bx - 1.8, bz - 1.0, bx + 1.8, bz + 1.0, yb + t, { lw: 0.5, alpha: 0.75 })); }
       o.top = bank;
     }
+    m.tag('dies');
     m.prism(L(hw), yb, yb + t, 'light', o);
+    m.tag('bumps');
     m.dots(bumps(yb - gap0 / 2 - 0.08, hw), { col: 'acc', r: 1.6, alpha: 1 });
+    m.tag(null);
     if (i === 10) m.anchor(1, 'Memory dies', [-hw, yb + t / 2, hw * 0.6]);
-    if (i === 6) m.anchor(3, 'TSVs', [TX * 2, yb + t / 2, 0]);
-    if (i === 2) m.anchor(4, 'Microbumps', [TX * 4, yb - gap0 / 2 - 0.08, 0]);
+    // the vias' and the bumps' points sit low in the stack, so their leaders run short to labels under the loupe
+    if (i === 2) m.anchor(3, 'TSVs', [TX * 2, yb + t / 2, 0]);
+    if (i === 0) m.anchor(4, 'Microbumps', [TX * 4, yb - gap0 / 2 - 0.08, 0]);
     prev = p;
   }
   // memory dies anchor: two dies
@@ -1680,7 +1781,34 @@ R('hbm-stack', function (m) {
   md.multi = [[d8.idx, [-hw, gap0 + pitch * 7 + t / 2, hw * 0.6]]];
   m.guide([[0, -bt - 1.2, 0, base.idx], [0, gap0 + pitch * 11 + t + 1.5, 0, prev.idx]], { style: 'axis', alpha: 0.8 });
   [[-hw, -hw], [hw, -hw], [-hw, hw]].forEach(function (c) { m.guide([[c[0], 0, c[1], base.idx], [c[0], gap0 + pitch * 11, c[1], prev.idx]], { alpha: 0.6 }); });
-  return { elev: PLATE.ISO.elev, yaw: PLATE.ISO.yaw, sortAxis: [0, 1, 0], accent: [176, 102, 44], accentDark: [224, 154, 92] };
+  // what each numbered part lights, as its light table in data/specimen-parts.json does: every memory die in ink, every via and
+  // every microbump in copper
+  var loupe = LOUPE ? { model: 'hbm-loupe', at: [TX * 2.5, gap0 + pitch * 9 + t / 2, hw * 0.55], part: 'die10', side: 'r', r: 0.155, rMax: 100, scale: 0.84, dx: 0.04, caption: ['Dies at true thickness,', 'beside a human hair'] } : null;
+  return { elev: PLATE.ISO.elev, yaw: PLATE.ISO.yaw, sortAxis: [0, 1, 0], loupe: loupe, calloutOpts: { 1: { tag: 'dies', only: 'ink' }, 3: { tag: 'tsv', only: 'accent' }, 4: { tag: 'bumps', only: 'accent' } }, accent: [176, 102, 44], accentDark: [224, 154, 92] };
+});
+
+/* The loupe's own small plate, in micrometres, seen almost face on so its cut face reads as a section (from the spec-hybrid mock):
+   four dies about 30 um thick (caption), 7 um apart (the gap specimens/hbm-stack.js takes from Samsung's 12-high release, drawn
+   but not labelled), with microbumps between them and vias through them (their widths and spacing drawn, not sourced), and a
+   hair about 80 um across (chapter 11) seen end on, standing on the bottom die's baseline. Only the two sizes the site states
+   carry figures. */
+R('hbm-loupe', function (m) {
+  var bar = PLATE.loupeBar, tag = PLATE.loupeTag;
+  function bx(x0, y0, z0, x1, y1, z1, mat, fmat) { return m.box({ c: [(x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2], s: [x1 - x0, y1 - y0, z1 - z0], fmat: fmat }, mat); }
+  m.part('st', { mode: 'stack' });
+  var t = 30, g = 7, Z = 40, x0 = -95, x1 = 20, n = 4;
+  for (var i = 0; i < n; i++) {
+    var y0 = i * (t + g);
+    bx(x0, y0, -Z, x1, y0 + t, Z, 'light', { pz: 'cut' });
+    if (i < n - 1) for (var bp = x0 + 20; bp < x1 - 5; bp += 20) bx(bp - 4.5, y0 + t, -2, bp + 4.5, y0 + t + g, Z, 'acc', { pz: 'cutAcc' });
+    [x0 + 30, x0 + 90].forEach(function (vx) { bx(vx - 2.2, y0, -2, vx + 2.2, y0 + t, Z + 0.02, 'acc', { pz: 'cutAcc' }); });
+  }
+  m.part('hair', { mode: 'fixed', pri: 2 });
+  m.cyl([74, 40, 0], 40, 2 * Z, 'turnedDark', { seg: 40, rot: [Math.PI / 2, 0, 0], fixedSeg: true });
+  bar(m, [x0 - 7, t + g, Z + 1], [x0 - 7, t + g + t, Z + 1], '30 \u00b5m', { side: -1 });
+  bar(m, [34, -8, Z], [114, -8, Z], '80 \u00b5m', { side: -1 });
+  tag(m, [74, 40, Z + 10], 'Hair', {});
+  return { elev: 0.16, yaw: -0.14, accent: [176, 102, 44], accentDark: [224, 154, 92] };
 });
 
 })(window.PLATE);}catch(e){console.warn('plate hbm-stack.js failed to load', e);}

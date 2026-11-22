@@ -1,15 +1,20 @@
 /* =====================================================================================================
    09 Memory: a twelve-high HBM stack, pulled apart and cut open, in millimetres: an 11 x 11 mm footprint to scale,
    heights about fifteen times (a 30 micrometre die drawn 0.45 mm). The base die is copper; through-silicon vias and
-   micro-bumps show in copper where the quarter cut passes through them. */
+   micro-bumps show in copper where the quarter cut passes through them.
+   The loupe (LOUPE, below) shows four dies at true thickness, about 30 micrometres each (caption), beside a human hair about
+   80 micrometres across (chapter 11), both drawn in micrometres in one view, so their sizes compare directly. There is no
+   hair on the floor: the review panel found a true-size hair lying beside dies drawn fifteen times too thick made the dies
+   look thicker than a hair. Set LOUPE to false to drop it. */
+var LOUPE = true;
 R('hbm-stack', function (m) {
   var hw = 5.3, bw = 5.5, t = 0.45, bt = 0.9, gap0 = 0.105, pitch = t + gap0, EX = 0.62;
   var TX = 0.7, TZ = 0.8;
   function L(w) { return [[-w, -w], [w, -w], [w, 0], [0, 0], [0, w], [-w, w]]; }
-  function tsvLines(y0, y1, w) {
+  function tsvLines(y0, y1, w, tag) {
     var onZ = [], onX = [];
-    for (var x = 0; x <= w - 0.2; x += TX) onZ.push(D.line([x + 0.0001, y0, 0], [x + 0.0001, y1, 0], { col: 'acc', lw: 1.0 }));
-    for (var z = 0; z <= w - 0.2; z += TZ) onX.push(D.line([0, y0, z + 0.0001], [0, y1, z + 0.0001], { col: 'acc', lw: 1.0 }));
+    for (var x = 0; x <= w - 0.2; x += TX) onZ.push(D.line([x + 0.0001, y0, 0], [x + 0.0001, y1, 0], { col: 'acc', lw: 1.0, tag: tag }));
+    for (var z = 0; z <= w - 0.2; z += TZ) onX.push(D.line([0, y0, z + 0.0001], [0, y1, z + 0.0001], { col: 'acc', lw: 1.0, tag: tag }));
     return [onZ, onX];
   }
   function bumps(y, w) { var p = []; for (var x = 0; x <= w - 0.2; x += TX) p.push([x, y, 0]); for (var z = TZ; z <= w - 0.2; z += TZ) p.push([0, y, z]); return p; }
@@ -32,18 +37,22 @@ R('hbm-stack', function (m) {
   var prev = base;
   for (var i = 0; i < 12; i++) {
     var yb = gap0 + pitch * i, p = m.part('die' + (i + 1), { ex: [0, EX * (i + 1), 0], seq: i + 1 });
-    var tl = tsvLines(yb, yb + t, hw);
+    var tl = tsvLines(yb, yb + t, hw, 'tsv');
     var o = { sideMat: { 2: 'cutDense', 3: 'cutDense' }, sideDecals: { 2: tl[0], 3: tl[1] } };
     if (i === 11) {
       var bank = [];
       for (a = 0; a < 2; a++) for (b = 0; b < 4; b++) { var bx = (a - 0.5) * 10.6 * 0.44, bz = (b - 1.5) * 10.6 * 0.225; if (bx > 0 && bz > 0) continue; bank.push(D.rect(bx - 1.8, bz - 1.0, bx + 1.8, bz + 1.0, yb + t, { lw: 0.5, alpha: 0.75 })); }
       o.top = bank;
     }
+    m.tag('dies');
     m.prism(L(hw), yb, yb + t, 'light', o);
+    m.tag('bumps');
     m.dots(bumps(yb - gap0 / 2 - 0.08, hw), { col: 'acc', r: 1.6, alpha: 1 });
+    m.tag(null);
     if (i === 10) m.anchor(1, 'Memory dies', [-hw, yb + t / 2, hw * 0.6]);
-    if (i === 6) m.anchor(3, 'TSVs', [TX * 2, yb + t / 2, 0]);
-    if (i === 2) m.anchor(4, 'Microbumps', [TX * 4, yb - gap0 / 2 - 0.08, 0]);
+    // the vias' and the bumps' points sit low in the stack, so their leaders run short to labels under the loupe
+    if (i === 2) m.anchor(3, 'TSVs', [TX * 2, yb + t / 2, 0]);
+    if (i === 0) m.anchor(4, 'Microbumps', [TX * 4, yb - gap0 / 2 - 0.08, 0]);
     prev = p;
   }
   // memory dies anchor: two dies
@@ -52,5 +61,32 @@ R('hbm-stack', function (m) {
   md.multi = [[d8.idx, [-hw, gap0 + pitch * 7 + t / 2, hw * 0.6]]];
   m.guide([[0, -bt - 1.2, 0, base.idx], [0, gap0 + pitch * 11 + t + 1.5, 0, prev.idx]], { style: 'axis', alpha: 0.8 });
   [[-hw, -hw], [hw, -hw], [-hw, hw]].forEach(function (c) { m.guide([[c[0], 0, c[1], base.idx], [c[0], gap0 + pitch * 11, c[1], prev.idx]], { alpha: 0.6 }); });
-  return { elev: PLATE.ISO.elev, yaw: PLATE.ISO.yaw, sortAxis: [0, 1, 0], accent: [176, 102, 44], accentDark: [224, 154, 92] };
+  // what each numbered part lights, as its light table in data/specimen-parts.json does: every memory die in ink, every via and
+  // every microbump in copper
+  var loupe = LOUPE ? { model: 'hbm-loupe', at: [TX * 2.5, gap0 + pitch * 9 + t / 2, hw * 0.55], part: 'die10', side: 'r', r: 0.155, rMax: 100, scale: 0.84, dx: 0.04, caption: ['Dies at true thickness,', 'beside a human hair'] } : null;
+  return { elev: PLATE.ISO.elev, yaw: PLATE.ISO.yaw, sortAxis: [0, 1, 0], loupe: loupe, calloutOpts: { 1: { tag: 'dies', only: 'ink' }, 3: { tag: 'tsv', only: 'accent' }, 4: { tag: 'bumps', only: 'accent' } }, accent: [176, 102, 44], accentDark: [224, 154, 92] };
+});
+
+/* The loupe's own small plate, in micrometres, seen almost face on so its cut face reads as a section (from the spec-hybrid mock):
+   four dies about 30 um thick (caption), 7 um apart (the gap specimens/hbm-stack.js takes from Samsung's 12-high release, drawn
+   but not labelled), with microbumps between them and vias through them (their widths and spacing drawn, not sourced), and a
+   hair about 80 um across (chapter 11) seen end on, standing on the bottom die's baseline. Only the two sizes the site states
+   carry figures. */
+R('hbm-loupe', function (m) {
+  var bar = PLATE.loupeBar, tag = PLATE.loupeTag;
+  function bx(x0, y0, z0, x1, y1, z1, mat, fmat) { return m.box({ c: [(x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2], s: [x1 - x0, y1 - y0, z1 - z0], fmat: fmat }, mat); }
+  m.part('st', { mode: 'stack' });
+  var t = 30, g = 7, Z = 40, x0 = -95, x1 = 20, n = 4;
+  for (var i = 0; i < n; i++) {
+    var y0 = i * (t + g);
+    bx(x0, y0, -Z, x1, y0 + t, Z, 'light', { pz: 'cut' });
+    if (i < n - 1) for (var bp = x0 + 20; bp < x1 - 5; bp += 20) bx(bp - 4.5, y0 + t, -2, bp + 4.5, y0 + t + g, Z, 'acc', { pz: 'cutAcc' });
+    [x0 + 30, x0 + 90].forEach(function (vx) { bx(vx - 2.2, y0, -2, vx + 2.2, y0 + t, Z + 0.02, 'acc', { pz: 'cutAcc' }); });
+  }
+  m.part('hair', { mode: 'fixed', pri: 2 });
+  m.cyl([74, 40, 0], 40, 2 * Z, 'turnedDark', { seg: 40, rot: [Math.PI / 2, 0, 0], fixedSeg: true });
+  bar(m, [x0 - 7, t + g, Z + 1], [x0 - 7, t + g + t, Z + 1], '30 \u00b5m', { side: -1 });
+  bar(m, [34, -8, Z], [114, -8, Z], '80 \u00b5m', { side: -1 });
+  tag(m, [74, 40, Z + 10], 'Hair', {});
+  return { elev: 0.16, yaw: -0.14, accent: [176, 102, 44], accentDark: [224, 154, 92] };
 });
