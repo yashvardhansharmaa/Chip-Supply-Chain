@@ -8,7 +8,7 @@
   "openOnExplainer": true,
   "bridge": "Nothing yet proves that any of it works, and a package this far along is worth too much to guess about.",
   "specimen": "probe-card",
-  "specimenCaption": "A vertical probe card over a wafer. It is called vertical because its needles point straight down at the wafer. The card is round, about 305 mm across, a little wider than the 300 mm wafer beneath it. Thousands of needles under it land on four dies at once, and those four dies are picked out in blue-violet. The gap between card and wafer is exaggerated. The real gap is a millimeter or two.",
+  "specimenCaption": "A vertical probe card over a 300 mm wafer, pulled apart, its needles pointing straight down at four dies. The dies are drawn at 26 by 33 mm, the largest area a scanner can print. A real card has thousands of needles, and here a few rows stand for them. Each card is built for one chip design. Every needle must touch down in the same plane, again and again, while hot.",
   "card": {
     "concentration": "High",
     "chokepointScore": 4,

@@ -8,7 +8,7 @@
   "openOnExplainer": true,
   "bridge": "A tested package is still a single chip. Training a model takes a room full of them working as one machine.",
   "specimen": "gpu-baseboard",
-  "specimenCaption": "An eight-GPU baseboard, the board that carries eight accelerator modules and the switch chips joining them. It is about 510 by 400 mm and drawn to scale, with the module frames standing about 30 mm above the board. The two nickel-gray squares in the middle are the NVLink switch chips.",
+  "specimenCaption": "An eight-GPU baseboard, with four of its accelerator modules lifted out of their frames. On Nvidia's baseboard, switch chips pass data between any two modules at full speed. The parts are simplified and not to scale. The scarcest part at this stage sits elsewhere, in the lasers for optical links between racks. AI data centers were straining their supply in May 2026, Nikkei Asia reported.",
   "card": {
     "concentration": "High",
     "chokepointScore": 3,

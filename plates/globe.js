@@ -1,10 +1,15 @@
 /* =====================================================================================================
-   16 Who controls the chain: the world, with nineteen chokepoint towns pinned in garnet (the taller the pin, the tighter
-   the chokepoint at that town's stage) and five towns building alternatives pinned in ink. The pins drop into their
-   towns and stand there: a globe has no assembly to pull apart, so this plate rests closed. It is the one plate that keeps
-   turning (spin), slowly, about the Earth's axis: still, it would hide the four American towns. Its two labels stay where
-   they are and point at whichever of their towns face the reader on their side (track). The coast, the towns and their
-   pins' heights are read from specimens/globe.js by build/plates.js (window.PLATE_GLOBE). */
+   16 Who controls the chain: the world, with one garnet pin for each row of the chapter's own table, "Chokepoints and who
+   holds them" (content/16-geopolitics.md, 22 Nov 2026), standing in the country that leads that segment. A pin's height is
+   that country's share as the table gives it (revenue 2025 for equipment, 2023 for materials, capacity 2022 for logic, sales
+   2022 for design, market share 2025 for foundry), 0.24 of the globe's radius for all of a segment. Pins stand near the
+   middle of their country, spread a little where a country leads several segments: the table names countries, so the pins
+   claim no town. Each country's label lights its pins.
+   22 Nov 2026 review: the nineteen towns came from specimens/globe.js with no source, were mapped to chapter numbers from
+   before the merge, and pinned Yokkaichi, a NAND fab, at full height for memory; the heights were the retired chokepoint
+   score; the five ink pins for towns building alternatives are not in the table and are gone. The coast is still read from
+   specimens/globe.js by build/plates.js (window.PLATE_GLOBE); the towns there are no longer read here (the summary map's
+   own copy is unchanged). The globe rests closed and keeps turning, slowly, about the Earth's axis. */
 R('globe', function (m) {
   var RAD = Math.PI / 180, G = window.PLATE_GLOBE;
   function ll(lat, lon, r) { var a = lat * RAD, b = lon * RAD, c = Math.cos(a) * r; return [c * Math.sin(b), Math.sin(a) * r, c * Math.cos(b)]; }
@@ -23,8 +28,15 @@ R('globe', function (m) {
   m.globe(1, { fill: 'paper' }).rim = true; // replaced below: the rim
   m.cur.items.pop(); m.S.pop();
   var rim = { kind: 'rim', part: g.idx, c: [0, 0, 0] }; m.cur.items.push(rim); m.S.push(rim);
-  var SITES = G.SITES || [['Veldhoven', 51.42, 5.40, 5], ['Oberkochen', 48.78, 10.10, 5], ['Hsinchu', 24.80, 120.97, 5], ['Tainan', 22.99, 120.21, 5], ['Kaohsiung', 22.63, 120.30, 5], ['Icheon', 37.28, 127.44, 5], ['Pyeongtaek', 36.99, 127.11, 5], ['Kumamoto', 32.80, 130.71, 5], ['Yokkaichi', 34.97, 136.62, 5], ['Tokyo', 35.68, 139.69, 4], ['Shanghai', 31.23, 121.47, 5], ['Penang', 5.41, 100.34, 4], ['Singapore', 1.35, 103.82, 4], ['Bengaluru', 12.97, 77.59, 4], ['Abu Dhabi', 24.45, 54.38, 4], ['Hillsboro', 45.52, -122.99, 5], ['Phoenix', 33.45, -112.07, 5], ['Austin', 30.27, -97.74, 4], ['Boise', 43.62, -116.20, 5]];
-  var SUBS = G.SUBS || [['Beijing', 39.90, 116.40], ['Wuhan', 30.59, 114.31], ['Shenzhen', 22.54, 114.06], ['Hefei', 31.82, 117.23], ['Dresden', 51.05, 13.74]];
+  // the table's rows: [segment, leader, share in percent], and where each country's pins stand: [lat, lon] for each of its pins
+  var ROWS = [['EUV lithography', 'Netherlands', 100.0], ['Immersion DUV lithography', 'Netherlands', 99.3], ['Metrology and inspection', 'United States', 71.7],
+    ['Deposition', 'United States', 60.3], ['Etch and clean', 'United States', 52.6], ['Photoresist', 'Japan', 78], ['Silicon wafers', 'Japan', 53],
+    ['Leading-edge logic, below 10 nm', 'Taiwan', 69], ['Foundry, all nodes', 'Taiwan', 81.9], ['HBM', 'South Korea', 82.5], ['Logic chip design', 'United States', 65],
+    ['Mature logic, 28 nm and above', 'China', 33]];
+  var AT = { 'Netherlands': [[52.0, 4.6], [52.5, 6.4]], 'United States': [[39.0, -104.0], [40.0, -99.0], [39.0, -94.0], [36.0, -99.0]], 'Japan': [[36.0, 137.6], [37.6, 139.8]],
+    'Taiwan': [[23.4, 120.6], [24.4, 121.2]], 'South Korea': [[36.4, 127.9]], 'China': [[34.5, 104.0]] };
+  var HMAX = 0.24, used = {}, PINS = {};
+  ROWS.forEach(function (r, i) { var k = used[r[1]] || 0; used[r[1]] = k + 1; var at = AT[r[1]][k]; (PINS[r[1]] || (PINS[r[1]] = [])).push({ i: i, lat: at[0], lon: at[1], h: HMAX * r[2] / 100 }); });
   function pin(lat, lon, hgt, col, i) {
     var n = ll(lat, lon, 1), p = m.part('pin' + i, { ex: [n[0] * 0.35, n[1] * 0.35, n[2] * 0.35], seq: 1 + (i % 6), pri: 1 });
     var a = ll(lat, lon, 1), b = ll(lat, lon, 1 + hgt), foot = [], u = Math.abs(n[1]) < 0.9 ? [0, 1, 0] : [1, 0, 0];
@@ -36,34 +48,21 @@ R('globe', function (m) {
     m.dots([b], { col: col, r: 3.5, front: false, c: b });
     m.cur.items[m.cur.items.length - 1].vis = a;
   }
-  SITES.forEach(function (s, i) { pin(s[1], s[2], 0.032 * s[3], 'acc', i); });
-  SUBS.forEach(function (s, i) { pin(s[1], s[2], 0.064, 'ink', 20 + i); });
-  // the Earth's axis as a centre line, and labels in the caption's words, each with leaders to three of its pins
+  Object.keys(PINS).forEach(function (cn) { PINS[cn].forEach(function (q) { pin(q.lat, q.lon, q.h, 'acc', q.i); }); });
+  // the Earth's axis as a centre line, and one label for each country, with leaders to its pins
   m.use(g);
-  // review: with the north pole now in view, the axis's north end runs from the pole out past the rim, drawn over the
-  // globe, and its south end shows below the rim (at +-1.16 the whole axis fell inside the disc at this tilt)
   m.guide([[0, 1, 0, g.idx], [0, 1.3, 0, g.idx]], { style: 'axis', alpha: 0.9, front: true });
   m.guide([[0, -1.3, 0, g.idx], [0, -1, 0, g.idx]], { style: 'axis', alpha: 0.9 });
-  var head = function (lat, lon, hgt, i) { var q = ll(lat, lon, 1 + hgt); return [q[0], q[1], q[2], m.parts.filter(function (p) { return p.name === 'pin' + i; })[0].idx]; };
-  // review: 'Chokepoint towns' points at two of the tallest pins (Hsinchu, Yokkaichi) and the alternatives' label at
-  // Shenzhen's ink pin, just below them; before, the two labels pointed at Abu Dhabi and Bengaluru, two of the
-  // shortest pins, and at a Dresden pin lost among the garnet pins on the rim
-  // the globe turns, so each label carries the towns it may point at (track): a leader fades in as its town comes round to the
-  // label's side and out as it nears the rim. The two it points at in the drawn view set the label's height
-  var site = function (name) { for (var i = 0; i < SITES.length; i++) if (SITES[i][0] === name) return head(SITES[i][1], SITES[i][2], 0.032 * SITES[i][3], i); return null; };
-  var sub = function (name) { for (var i = 0; i < SUBS.length; i++) if (SUBS[i][0] === name) return head(SUBS[i][1], SUBS[i][2], 0.064, 20 + i); return null; };
-  var keep = function (a) { return a.filter(function (q) { return !!q; }); };
-  m.callout(keep([site('Hsinchu'), site('Yokkaichi')]), 'Chokepoint towns', { side: 'r', col: 'acc' });
-  m.callouts[m.callouts.length - 1].track = keep(['Hsinchu', 'Yokkaichi', 'Icheon', 'Veldhoven', 'Oberkochen', 'Phoenix', 'Boise'].map(site));
-  // pointing at the label, or at any of its pins, lights every pin of its kind
-  var pinsOf = function (from, to) { return m.parts.filter(function (p) { var k = /^pin(\d+)$/.exec(p.name); return k && +k[1] >= from && +k[1] < to; }).map(function (p) { return p.idx; }); };
-  m.callouts[m.callouts.length - 1].focus = pinsOf(0, 20);
-  m.callout(keep([sub('Shenzhen')]), 'Towns building alternatives', { side: 'r' });
-  m.callouts[m.callouts.length - 1].track = keep(['Shenzhen', 'Beijing', 'Dresden'].map(sub));
-  m.callouts[m.callouts.length - 1].focus = pinsOf(20, 30);
-  // review: the view looks down on 36N 72E. From over 23N 106E the East Asian pins pointed almost at the reader and
-  // stood at a quarter of their height, while Veldhoven's and Oberkochen's lay along the rim at full height, so the
-  // drawing showed Europe's chokepoints as the tallest. From here every five-point pin stands taller than every
-  // four-point pin, as the caption says ('the taller the garnet pin, the tighter the chokepoint')
+  var partOf = function (i) { return m.parts.filter(function (p) { return p.name === 'pin' + i; })[0].idx; };
+  var head = function (q) { var v = ll(q.lat, q.lon, 1 + q.h); return [v[0], v[1], v[2], partOf(q.i)]; };
+  // the globe turns, so each label carries its country's pins (track): a leader fades in as a pin comes round to the label's
+  // side and out as it nears the rim. The first pin sets the label's height in the drawn view
+  [['Netherlands', 'l'], ['United States', 'l'], ['China', 'r'], ['South Korea', 'r'], ['Japan', 'r'], ['Taiwan', 'r']].forEach(function (c) {
+    var ps = PINS[c[0]];
+    m.callout([head(ps[0])], c[0], { side: c[1] });
+    var co = m.callouts[m.callouts.length - 1];
+    co.track = ps.map(head);
+    co.focus = ps.map(function (q) { return partOf(q.i); });
+  });
   return { elev: 36 * RAD, yaw: -72 * RAD, spin: 0.06, start: 1, rest: 0, maxH: 430, accent: [122, 31, 43], accentDark: [201, 83, 106] };
 });

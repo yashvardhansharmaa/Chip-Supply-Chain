@@ -1,7 +1,12 @@
 /* =====================================================================================================
-   07 Metrology: an electron-beam inspection column cut in half down its axis, standing over a 300 mm wafer, in the
-   units of specimens/sem-column.js (the column about a metre tall). The column comes apart along the beam: gun,
-   condenser lenses, scan coils, objective, detector and stage, with the green beam running on through every gap. */
+   07 Metrology: an electron-beam inspection column cut in half down its axis, standing over a wafer, in the units of
+   specimens/sem-column.js. The column comes apart along the beam: gun, condenser lenses, scan coils, objective, detector and
+   stage, with the beam running on through every gap.
+   22 Nov 2026 review: the column's height (about a metre) had no allowed source, so the caption no longer calls it to scale
+   and says the column is simplified; the wafer is drawn 300 mm across (the stage's units) and labelled without its size.
+   The detector is labelled: chapter 7 says the picture is built from the electrons the beam knocks loose. Colours (the set's
+   legend): the beam in the beam hue the EUV light takes on plate 04, the wafer in silicon slate (acc2); the lens coils,
+   copper before, are ink, since a plate has two accents and the wafer's colour is the one kept the same everywhere. */
 R('sem-column', function (m) {
   var yaw = PLATE.DIM.yaw, h = farHalf(yaw), a0 = h[0], a1 = h[1], tv = h[2];
   var O = { a0: a0, a1: a1, cut: 'cut', seg: 48 };
@@ -9,7 +14,7 @@ R('sem-column', function (m) {
   function lens(y0, y1, rOut, rB) {
     var hh = y1 - y0, mid = (y0 + y1) / 2, c0 = rB + (rOut - rB) * 0.30, c1 = rOut - (rOut - rB) * 0.14, w0 = y0 + hh * 0.16, w1 = y1 - hh * 0.16, g = 0.028;
     m.revolve([[rB, y0], [rOut, y0], [rOut, y1], [rB, y1], [rB, mid + g], [c0, w1], [c1, w1], [c1, w0], [c0, w0], [rB, mid - g]], 'turned', o({}));
-    m.revolve([[c0 + 0.008, w0 + 0.008], [c1 - 0.008, w0 + 0.008], [c1 - 0.008, w1 - 0.008], [c0 + 0.008, w1 - 0.008]], 'acc2', o({ cut: 'cutAcc2' }));
+    m.revolve([[c0 + 0.008, w0 + 0.008], [c1 - 0.008, w0 + 0.008], [c1 - 0.008, w1 - 0.008], [c0 + 0.008, w1 - 0.008]], 'dark', o({ cut: 'cutDense' }));
   }
   function tube(y0, y1, r0, r1) { m.revolve([[r0, y0], [r1, y0], [r1, y1], [r0, y1]], 'turned', o({})); }
   function plate(y, r, hole) { m.revolve([[hole, y - 0.004], [r, y - 0.004], [r, y + 0.004], [hole, y + 0.004]], 'turnedDark', o({ cut: 'cutDense' })); }
@@ -36,24 +41,28 @@ R('sem-column', function (m) {
   tube(-0.06, 0.12, 0.084, 0.094);
   m.revolve([[0.10, -0.03], [0.142, -0.03], [0.142, 0.07], [0.10, 0.07]], 'turnedDark', o({}));
   m.revolve([[0.094, -0.26], [0.20, -0.26], [0.20, -0.10], [0.094, -0.10]], 'turned', o({}));
-  m.revolve([[0.118, -0.238], [0.184, -0.238], [0.184, -0.122], [0.118, -0.122]], 'acc2', o({ cut: 'cutAcc2' }));
+  m.revolve([[0.118, -0.238], [0.184, -0.238], [0.184, -0.122], [0.118, -0.122]], 'dark', o({ cut: 'cutDense' }));
   // the objective lens and its conical pole piece
   parts.ob = m.part('objective', { ex: [0, -0.12, 0], seq: 1 });
   lens(-0.56, -0.30, 0.44, 0.115);
   m.revolve([[0.105, -0.815], [0.145, -0.815], [0.145, -0.76], [0.44, -0.56], [0.105, -0.56]], 'turned', o({}));
   // the ring detector
   parts.det = m.part('detector', { ex: [0, -0.2, 0], seq: 1 });
+  m.tag('detector');
   m.revolve([[0.052, -0.859], [0.175, -0.859], [0.175, -0.851], [0.052, -0.851]], 'turnedDark', o({ cut: 'cutDense' }));
+  m.tag(null);
   // wafer and stage
   parts.st = m.part('stage', { ex: [0, -0.32, 0], seq: 0, pri: -1, mode: 'stack' });
-  var yW = -0.98, wr = 0.40, dies = [];
-  for (var gx = -4; gx <= 4; gx++) for (var gz = -4; gz <= 4; gz++) { var cx = gx * 0.092, cz = gz * 0.076; if (cx * cx + cz * cz > (wr - 0.055) * (wr - 0.055)) continue; dies.push(D.rect(cx - 0.044, cz - 0.036, cx + 0.044, cz + 0.036, 0.003, { lw: 0.35, alpha: 0.6 })); }
-  dies.push({ dots: [[0, 0.003, 0]], r: 2.4, col: 'acc', alpha: 1 });
+  var yW = -0.98, wr = 0.40, wt = wr * 0.775 / 150, dies = [];  // the wafer 300 mm across and 775 micrometres thick (SEMI M1)
+  for (var gx = -4; gx <= 4; gx++) for (var gz = -4; gz <= 4; gz++) { var cx = gx * 0.092, cz = gz * 0.076; if (cx * cx + cz * cz > (wr - 0.055) * (wr - 0.055)) continue; dies.push(D.rect(cx - 0.044, cz - 0.036, cx + 0.044, cz + 0.036, wt / 2, { lw: 0.35, alpha: 0.6 })); }
+  dies.push({ dots: [[0, wt / 2, 0]], r: 2.4, col: 'acc', alpha: 1 });
   m.box({ c: [0, yW - 0.21, 0], s: [1.42, 0.09, 1.10] }, 'steel');
   [-1, 1].forEach(function (i) { m.box({ c: [0, yW - 0.147, i * 0.33], s: [1.30, 0.034, 0.056] }, 'dark'); });
   m.box({ c: [0, yW - 0.088, 0], s: [0.98, 0.07, 0.86] }, 'light');
   m.cyl([0, yW - 0.027, 0], 0.428, 0.05, 'turned', { seg: 48 });
-  m.cyl([0, yW + 0.0, 0], wr, 0.006, 'turned', { seg: 56, top: dies });
+  m.tag('wafer');
+  m.cyl([0, yW - 0.003 + wt / 2, 0], wr, wt, 'acc2Light', { seg: 56, top: dies });
+  m.tag(null);
   m.box({ c: [-wr - 0.048, yW - 0.02, 0], s: [0.02, 0.055, 0.80] }, 'dark');
   m.box({ c: [0, yW - 0.02, -wr - 0.048], s: [0.80, 0.055, 0.02] }, 'dark');
   var du = [Math.cos(yaw), Math.sin(yaw)]; // the direction that runs straight across the page at the resting turn
@@ -68,6 +77,7 @@ R('sem-column', function (m) {
   m.callout([0, 1.27, 0, parts.gun.idx], 'Emitter', { side: 'r' });
   m.callout([[0.27 * u[0], 0.60, 0.27 * u[1], parts.c1.idx], [0.3 * u[0], -0.43, 0.3 * u[1], parts.ob.idx]], 'Lenses', { side: 'l' });
   m.callout([0, 0.03, 0, parts.sc.idx], 'Electron beam', { side: 'r' });
-  m.callout([-0.3 * du[0], yW + 0.004, -0.3 * du[1], parts.st.idx], '300 mm wafer', { side: 'l' });
-  return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, sortAxis: [0, 1, 0], accent: [58, 154, 95], accentDark: [134, 227, 168], accent2: [176, 102, 44], accent2Dark: [224, 154, 92] };
+  m.callout([-0.3 * du[0], yW + 0.004, -0.3 * du[1], parts.st.idx], 'Wafer', { side: 'l', tag: 'wafer' });
+  m.callout([0.15 * u[0], -0.855, 0.15 * u[1], parts.det.idx], 'Detector', { side: 'l', tag: 'detector' });
+  return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, sortAxis: [0, 1, 0], accent: [107, 127, 209], accentDark: [167, 180, 245], accent2: [111, 139, 166], accent2Dark: [195, 211, 226] };
 });

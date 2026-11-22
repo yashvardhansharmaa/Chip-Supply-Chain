@@ -1,7 +1,13 @@
 /* =====================================================================================================
-   14 Data centers: a liquid-cooled rack of 72 GPUs, the GB200 NVL72, to scale in metres (2.24 m tall, 600 mm wide).
-   Three trays slide out of the front the way they are serviced: a compute tray, a switch tray and one of the gray
-   steel power shelves. The copper busbar they plug into is drawn pulled back out of the rear. */
+   14 Data centers: a liquid-cooled rack of 72 GPUs, the GB200 NVL72, to scale in metres, as Supermicro's February 2025
+   datasheet gives it: 2,236 mm tall, 600 mm wide and 1,068 mm deep, eighteen 1U compute trays (ten above the nine NVLink
+   switch trays, eight below), eight 1U power shelves of 33 kW, and a 4U coolant unit. Three trays slide out of the front the
+   way they are serviced: a compute tray, a switch tray and one of the power shelves. The copper busbar they plug into is
+   drawn pulled back out of the rear.
+   22 Nov 2026 review: six power shelves became the datasheet's eight; the height reads 2,236 mm (it read 2.24 m, a rounding);
+   the busbar is plain, since its clips stood beside the height like a ruler's graduations, and its two centre lines,
+   which cut the height dimension, are gone. Colours (the set's legend): the
+   busbar in copper, the power shelves in the set's one steel colour. */
 R('rack', function (m) {
   var W = 0.60, Dp = 1.068, Ht = 2.236, U = 0.0445, post = 0.042, front = Dp / 2, back = -Dp / 2;
   var cab = m.part('cabinet', { ex: [0, 0, 0], seq: 0 });
@@ -11,9 +17,9 @@ R('rack', function (m) {
   [-1, 1].forEach(function (s) { m.box({ c: [s * (W / 2 - 0.004), 0.09 + (Ht - 0.22) / 2, 0], s: [0.008, Ht - 0.22, Dp - 0.10] }, 'ghost'); });
   // the trays, floor up: [kind, count, gap above]
   var y = 0.114, slots = [];
-  [['cdu', 4, 0.045], ['power', 3, 0.042], ['compute', 8, 0.026], ['switch', 9, 0.026], ['compute', 10, 0.042], ['power', 3, 0.038], ['mgmt', 1, 0]].forEach(function (s) { for (var i = 0; i < s[1]; i++) { slots.push({ k: s[0], y: y + U / 2 }); y += U; } y += s[2]; });
+  [['cdu', 4, 0.040], ['power', 4, 0.030], ['compute', 8, 0.020], ['switch', 9, 0.020], ['compute', 10, 0.030], ['power', 4, 0.026], ['mgmt', 1, 0]].forEach(function (s) { for (var i = 0; i < s[1]; i++) { slots.push({ k: s[0], y: y + U / 2 }); y += U; } y += s[2]; });
   var stackTop = y, tW = 0.522, tH = U * 0.9, fz = front - 0.012, tz0 = back + 0.10, tD = fz - tz0, tzc = (fz + tz0) / 2;
-  var pullIdx = { 5: 1, 18: 2, 28: 3 }; // a power shelf, a switch tray, a compute tray
+  var pullIdx = { 6: 1, 20: 2, 30: 3 }; // a power shelf, a switch tray, a compute tray
   function tray(sl, part) {
     var k = sl.k, d = [], f = tD / 2 + 0.0005;
     if (k === 'compute') { [-1, 1].forEach(function (s) { d.push(D.rectXY(s * 0.132 - 0.1025, -tH * 0.34, s * 0.132 + 0.1025, tH * 0.34, f, { lw: 0.45 })); }); }
@@ -40,18 +46,14 @@ R('rack', function (m) {
   });
   // the busbar, copper, with a clip at every tray, pulled back out of the rear
   var bb = m.part('busbar', { ex: [0, 0, -2.25], seq: 4 });
-  var clips = slots.filter(function (s) { return s.k !== 'cdu' && s.k !== 'mgmt'; }).map(function (s) { return D.rectXY(-0.043, s.y - syc - U * 0.25, 0.043, s.y - syc + U * 0.25, -0.0155, { lw: 0.45, col: 'acc' }); });
-  var clipsF = clips.map(function (it) { return { pts: it.pts.map(function (q) { return [q[0] * 0.5, q[1], 0.0155]; }), closed: true, lw: it.lw, col: it.col }; });
-  var clipsX = clips.map(function (it) { return { pts: it.pts.map(function (q) { return [0.0265, q[1], q[0] * 0.3]; }), closed: true, lw: it.lw, col: it.col }; });
-  m.box({ c: [0, syc, zS + 0.02], s: [0.052, sh + 0.10, 0.03], decals: { nz: clips, pz: clipsF, px: clipsX } }, 'acc');
-  [sy0 + 0.1, sy1 - 0.1].forEach(function (gy) { m.guide([[0, gy, zS + 0.02, cab.idx], [0, gy, zS + 0.02, bb.idx]], { style: 'axis', alpha: 0.8 }); });
-  m.dim([W / 2, 0, back], [W / 2, Ht, back], [0.1, 0, 0], '2.24 m', { part: cab.idx, t: 0.62 });
+  m.box({ c: [0, syc, zS + 0.02], s: [0.052, sh + 0.10, 0.03] }, 'acc');
+  m.dim([W / 2, 0, back], [W / 2, Ht, back], [0.1, 0, 0], '2,236 mm', { part: cab.idx, t: 0.62 });
   // designer pass (21 Nov 2026): the width taken further out in front, so its figure clears the rack's foot
   m.dim([-W / 2, 0, front], [W / 2, 0, front], [0, 0, 0.2], '600 mm', { part: cab.idx });
   var pp = {}; pulled.forEach(function (q) { pp[q[0]] = q[1]; });
-  m.callout([-tW * 0.3, slots[5].y, fz, pp[5].idx], 'Power shelf', { side: 'l' });
-  m.callout([-tW * 0.3, slots[18].y, fz, pp[18].idx], 'NVLink switch tray', { side: 'l' });
-  m.callout([-tW * 0.3, slots[28].y, fz, pp[28].idx], 'Compute tray', { side: 'l' });
+  m.callout([-tW * 0.3, slots[6].y, fz, pp[6].idx], 'Power shelf', { side: 'l' });
+  m.callout([-tW * 0.3, slots[20].y, fz, pp[20].idx], 'NVLink switch tray', { side: 'l' });
+  m.callout([-tW * 0.3, slots[30].y, fz, pp[30].idx], 'Compute tray', { side: 'l' });
   m.callout([0.026, syc + 0.35, zS + 0.02, bb.idx], 'Copper busbar', { side: 'r' });
-  return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, accent: [176, 102, 44], accentDark: [224, 154, 92], accent2: [110, 115, 120], accent2Dark: [185, 190, 195] };
+  return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, accent: [176, 102, 44], accentDark: [224, 154, 92], accent2: [117, 132, 144], accent2Dark: [198, 206, 213] };
 });

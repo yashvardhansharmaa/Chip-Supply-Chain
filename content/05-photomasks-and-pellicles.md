@@ -8,7 +8,7 @@
  "openOnExplainer": true,
  "bridge": "Look next at the stencil itself, because everything the machine prints is decided by what is written on that one plate.",
  "specimen": "photomask",
- "specimenCaption": "An EUV photomask, or reticle, with its pellicle dust cover. The glass plate is drawn to scale. It is a 152 mm square, 6.35 mm thick, about the size of a small floor tile. The dark blue band around the top edge is the mirror coating. The real coating is about forty pairs of layers, each pair 7 nm thick, far thinner than drawn.",
+ "specimenCaption": "An EUV photomask, or reticle, with its pellicle dust cover. The glass is 152.4 mm square and 6.35 mm thick, the size in a 2016 Hoya patent. Its pattern is drawn four times larger than the 26 by 33 mm area it prints on the wafer. The mirror coating is drawn far thicker than it is. Only three firms make the blank plates for these masks, AGC said in December 2024.",
  "card": {
  "concentration": "Extreme",
  "chokepointScore": 5,
