@@ -116,7 +116,9 @@ const kb = (b) => (b / 1024).toFixed(0) + ' KB';
       await t.s('Input.dispatchMouseEvent', { type: 'mousePressed', x: box.x, y: box.y, button: 'left', clickCount: 1 });
       for (let k = 1; k <= 6; k++) await t.s('Input.dispatchMouseEvent', { type: 'mouseMoved', x: box.x + k * 20, y: box.y, button: 'left', buttons: 1 });
       await t.s('Input.dispatchMouseEvent', { type: 'mouseReleased', x: box.x + 120, y: box.y, button: 'left', clickCount: 1 });
-      const yaw1 = await t.ev('CP.Stage.userYaw');
+      // the plate eases back to its drawn view on release (21 Nov 2026; it snaps back under reduced motion), so the turn is read
+      // as the largest yaw the drag reached (Stage.turnMax); qa/redesign/check-plates.js checks the turn, the labels and the return
+      const yaw1 = await t.ev('CP.Stage.turnMax');
       check(`${W}: a drag turns the specimen`, Math.abs(yaw1 - yaw0) > 0.1, `${yaw0.toFixed(2)} to ${yaw1.toFixed(2)}`);
       if (c.stage) check(`${W}: the chokepoint card with its meter`, S.card && S.cardMeter);
       // a look-up pop-up

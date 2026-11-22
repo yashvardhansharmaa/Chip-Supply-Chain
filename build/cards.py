@@ -22,8 +22,8 @@ merge of chapters 8 and 9 on 27 Oct 2026; the stages are social.js manifest()'s,
   the view's short title and one line centered over the stage drawings at the home card's size. The row is copied from
   build/assets/home-card/card.html, so it matches the home card to the pixel.
 
-The drawings come from build/assets/cards-art/<chapter-id>.png (made by qa/redesign/card-art.py from the redesign's
-specimen renders): each chapter's specimen as ink coverage, cropped. The small ones are drawn as qa/design3/cards/chain/
+The drawings come from build/assets/cards-art/<chapter-id>.png (made by node build/plate-card-art.js from the plates since
+21 Nov 2026; by qa/redesign/card-art.py from the point-cloud renders until then): each chapter's specimen as ink coverage, cropped. The small ones are drawn as qa/design3/cards/chain/
 build.py draws them (same area each, the lines kept crisp, the haze dropped, the weights evened out); the large one keeps
 its stipple. The fit script shrinks a long title until it takes at most two lines in its column, then drops the
 summary's last sentence while the text would run into the row of drawings. Every PNG is quantized to a palette and must
@@ -214,7 +214,7 @@ def load(cid):
     """The chapter's drawing as an 8-bit coverage image (L), already cropped to its ink."""
     p = os.path.join(ART, cid + '.png')
     if not os.path.exists(p):
-        sys.exit('missing %s: run python3 qa/redesign/card-art.py' % os.path.relpath(p, ROOT))
+        sys.exit('missing %s: run node build/plate-card-art.js' % os.path.relpath(p, ROOT))
     return Image.open(p).convert('L')
 
 

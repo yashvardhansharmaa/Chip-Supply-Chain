@@ -1111,10 +1111,10 @@ const LEDGER_KEY = (() => {
 // the chapters whose drawing carries numbered parts (the owner's decision of 25 Oct 2026: Lithography; 29 Oct 2026: Silicon and
 // Wafers, Memory and HBM, Advanced Packaging). The file is keyed by chapter id; each part has its number, its name, the shorter
 // name its balloon carries where the list's is long (label), either its maker (with a link to a section of the chapter that
-// covers it, link: [href, words]) or the stage that covers it, the points on the specimen its balloon points at ("at", in
-// the specimen's own units, as specimens/<name>.js draws it), and the shapes of the drawing the part lights when the reader
-// points at it ("light", in the same units; src/app.js Stage.setFocus). Each list item carries its number (data-n), which the
-// drawing answers
+// covers it, link: [href, words]) or the stage that covers it, and its light table ("light"). The slot carries each part's
+// number, the name its label on the plate takes and what its light table keeps it to (only: the ink or the accents), which the
+// plate reads (src/app.js Stage.readParts, src/plate.js names); the plate's model sets the shapes each part lights to match the
+// table. Each list item carries its number (data-n), which the plate answers
 const specimenParts = readJSON(path.join(root, 'data', 'specimen-parts.json'), {});
 // the specimens are plates since 21 Nov 2026: the plate kit (build/plates.js: src/plate.js, the globe's data and every
 // plates/<name>.js) is the one file every page shares for them (dist/assets/kit.js, below). Until then it was the point-cloud
@@ -1219,7 +1219,7 @@ function chapterHTML(ch) {
   // the specimen's slot and its caption; the two chapters that are not stages set their drawing on the night ground (data-night)
   // since 20 Nov 2026 chapters 15 and 16 draw on the page's own ground like the stages (owner: "white as well, not black"), so no page sets data-night
   const ps = partsOf(ch), night = false;
-  const spec = `<figure class="ch-spec"${plateH[specimen] ? ` style="--draw-h:${plateH[specimen]}px"` : ''}${night ? ' data-night="1"' : ''}${ps.length ? ` data-parts="${esc(JSON.stringify(ps.map((p) => Object.assign({ n: +p.n, name: p.label || p.name, at: p.at || [] }, Array.isArray(p.light) && p.light.length ? { light: p.light } : {}))))}"` : ''}>`
+  const spec = `<figure class="ch-spec"${plateH[specimen] ? ` style="--draw-h:${plateH[specimen]}px"` : ''}${night ? ' data-night="1"' : ''}${ps.length ? ` data-parts="${esc(JSON.stringify(ps.map((p) => Object.assign({ n: +p.n, name: p.label || p.name }, Array.isArray(p.light) && p.light.length ? { light: p.light.map((h) => (h.only ? { only: h.only } : {})) } : {}))))}"` : ''}>`
     + `<div class="ch-spec-draw"></div>`
     + `<figcaption class="ch-spec-cap${ch.rendered.parts ? ' has-parts' : ''}"><span class="label">Specimen ${pad(ch.number)} · ${esc(ch.title)}</span>${m.specimenCaption ? `<p>${esc(m.specimenCaption)}</p>` : ''}${ch.rendered.parts}</figcaption></figure>`;
   // On this page: In plain terms, the chokepoint card, the chapter's own sections, the flashcards and the sources

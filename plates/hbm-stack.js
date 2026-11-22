@@ -47,7 +47,8 @@ R('hbm-stack', function (m) {
     m.tag('dies');
     m.prism(L(hw), yb, yb + t, 'light', o);
     m.tag('bumps');
-    m.dots(bumps(yb - gap0 / 2 - 0.08, hw), { col: 'acc', r: 1.6, alpha: 1 });
+    // the bumps are left out of the small stills (lod 1): at 52 px their twelve rows ran together into a copper band
+    m.dots(bumps(yb - gap0 / 2 - 0.08, hw), { col: 'acc', r: 1.6, alpha: 1, lod: 1 });
     m.tag(null);
     if (i === 10) m.anchor(1, 'Memory dies', [-hw, yb + t / 2, hw * 0.6]);
     // the vias' and the bumps' points sit low in the stack, so their leaders run short to labels under the loupe

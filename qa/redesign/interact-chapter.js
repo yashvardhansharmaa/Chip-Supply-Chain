@@ -3,10 +3,10 @@
    interactive chapter at its own address, /<id>/ (until then it lived in The Chain at /#<id>, with a static readable copy at
    /<id>/), so the checks open the chapter's page, and an old /#<id> link to it:
    - the opener is the column (design round five, 27 Oct 2026): the rail beside the kicker from the top, the card's verdict in
-     the kicker, the specimen a plate at the measure fitted to its drawing (--draw-h, --lift), the card in the text after the
+     the kicker, the specimen a plate at the measure fitted to its drawing (--draw-h), the card in the text after the
      lead and before section 01, at the measure, and On this page lands on it;
-   - the live drawing moves into the slot of the chapter in view, Lithography's four balloons ride on it, and the caption
-     stands on the drawing's foot (--slack);
+   - the live plate moves into the slot of the chapter in view (since 21 Nov 2026 an exploded technical plate, src/plate.js),
+     Lithography's four numbered labels sit on it in the site's names, and the caption stands right under it;
    - the contents rail marks the section the reader is in, and its links land;
    - a figure's Cite opens its citation, Table swaps the bars for the rows and back, CSV is a download, PNG saves a picture;
    - chapters 15 and 16 (the two that are not stages) draw on the night ground, which fills the drawing's slot, the caption on the page under it (each
@@ -34,21 +34,24 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8766';
       check('1440: the drawing sits in Lithography\'s slot', await t.ev("!!document.querySelector('#lithography .ch-spec-draw canvas#stage-canvas')"));
       check('1440: the stage beside the page stands down', await t.ev("getComputedStyle(document.querySelector('.stage')).display === 'none'"));
       check('1440: the specimen shown is the EUV scanner', await t.ev("CP.Stage.cur && CP.Stage.cur.name") === 'euv-scanner', await t.ev("CP.Stage.cur && CP.Stage.cur.name"));
-      const bal = await t.ev(`(function(){var s=document.querySelector('#lithography .ch-balloons');if(!s)return null;var c=s.closest('.ch-spec-draw').getBoundingClientRect();return [].map.call(s.querySelectorAll('g'),function(g){var b=g.querySelector('.bal'),n=g.querySelector('.nm');var nb=n.getBoundingClientRect();return {n:g.querySelector('.num').textContent,name:n.textContent,x:+b.getAttribute('cx'),y:+b.getAttribute('cy'),inside:nb.left>=c.left-1&&nb.right<=c.right+1&&nb.top>=c.top-1&&nb.bottom<=c.bottom+40,fs:parseFloat(getComputedStyle(n).fontSize)};});})()`);
-      check('1440: four balloons on the drawing', bal && bal.length === 4, bal && bal.map((b) => `${b.n} ${b.name} (${Math.round(b.x)},${Math.round(b.y)})`).join(', '));
-      check('1440: every balloon name inside the drawing\'s box, at 11 px or more', bal && bal.every((b) => b.inside && b.fs >= 11));
-      const slack = await t.ev("getComputedStyle(document.querySelector('#lithography .ch-spec')).getPropertyValue('--slack')");
-      check('1440: the caption stands on the drawing\'s foot (--slack set)', /^\s*\d+px/.test(slack), slack);
+      // the plate's numbered labels (its hit boxes, laid out on its last frame) carry the parts list's names, inside the canvas
+      await sleep(1200);
+      const bal = await t.ev(`(function(){var S=CP.Stage,pl=S.cur&&S.cur.pl;if(!pl)return null;var w=S.w,h=S.h,names=[].map.call(document.querySelectorAll('#lithography .ch-parts li'),function(li){return li.querySelector('span').textContent.split(':')[0].trim();});
+        return (pl._hit||[]).filter(function(b){return b.c.n;}).map(function(b){return {n:b.c.n,name:b.c.text,list:names[b.c.n-1],inside:b.x0>=-1&&b.x1<=w+1&&b.y0>=-1&&b.y1<=h+1,fs:pl.labelStyle(w).fs};});})()`);
+      check('1440: four numbered labels on the plate, in the parts list\'s names', bal && bal.length === 4 && bal.every((b) => b.name === b.list), bal && bal.map((b) => `${b.n} ${b.name}`).join(', '));
+      check('1440: every label inside the plate\'s canvas, at 11 px or more', bal && bal.every((b) => b.inside && b.fs >= 11));
+      const gap = await t.ev("(function(){var d=document.querySelector('#lithography .ch-spec-draw').getBoundingClientRect(),c=document.querySelector('#lithography .ch-spec-cap').getBoundingClientRect();return Math.round(c.top-d.bottom);})()");
+      check('1440: the caption stands right under the plate', gap >= 0 && gap <= 30, `${gap} px`);
       // the column: the rail from the top, the verdict, the plate and the card at the measure, the card after the lead
       const col = await t.ev(`(function(){var a=document.getElementById('lithography'),q=function(s){return a.querySelector(s);},r=function(s){return q(s).getBoundingClientRect();};
         var card=q('.prose > .plate'),prev=card&&card.previousElementSibling,next=card&&card.nextElementSibling,sp=getComputedStyle(q('.ch-spec'));
         return {railTop:Math.round(r('.ch-rail .rail-on > .rail-k').top),kickTop:Math.round(r('.ch-kick').top),kick:q('.ch-kick').textContent,textX:Math.round(r('.ch-lede').left),specX:Math.round(r('.ch-spec').left),specW:Math.round(r('.ch-spec').width),
           cardW:card?Math.round(card.getBoundingClientRect().width):0,revW:q('.prose > .review')?Math.round(q('.prose > .review').getBoundingClientRect().width):-1,cardId:card&&card.id,prev:prev&&prev.tagName,next:next&&next.id,inHead:!!q('.chapter-head .plate'),
-          drawH:sp.getPropertyValue('--draw-h').trim(),lift:sp.getPropertyValue('--lift').trim(),toc:[].map.call(a.querySelectorAll('.rail-toc a'),function(x){return x.textContent;}).slice(0,3).join(' | ')};})()`);
+          drawH:sp.getPropertyValue('--draw-h').trim(),toc:[].map.call(a.querySelectorAll('.rail-toc a'),function(x){return x.textContent;}).slice(0,3).join(' | ')};})()`);
       check('1440: the rail starts beside the kicker (its first line, On this page)', Math.abs(col.railTop - col.kickTop) <= 4, `rail ${col.railTop}, kicker ${col.kickTop}`);
       check('1440: the kicker carries the card\'s verdict', /Extreme concentration\s*·\s*Very hard to substitute/.test(col.kick), col.kick);
       check('1440: the specimen is a plate at the measure, in the text column', col.specW === 666 && col.specX === col.textX, `${col.specW} px at x ${col.specX}, text at ${col.textX}`);
-      check('1440: the plate is fitted to its drawing (--draw-h, --lift)', /^\d+px$/.test(col.drawH) && /^\d+px$/.test(col.lift), `--draw-h ${col.drawH}, --lift ${col.lift}`);
+      check('1440: the plate is fitted to its drawing (--draw-h, 360 to 470 px)', /^\d+px$/.test(col.drawH) && parseInt(col.drawH, 10) >= 360 && parseInt(col.drawH, 10) <= 470, `--draw-h ${col.drawH}`);
       check('1440: the card is in the text after the lead, before section 01, as wide as the flashcards (owner, 27 Oct) and wider than the text', !col.inHead && col.prev === 'P' && col.next === 'lithography--how-it-works' && col.cardW === col.revW && col.cardW > 666 && col.cardId === 'lithography--card', JSON.stringify({ prev: col.prev, next: col.next, w: col.cardW, flashcards: col.revW }));
       check('1440: On this page lists the card after In plain terms', col.toc === 'In plain terms | Chokepoint card | How it works', col.toc);
       // the band's meter (28 Oct 2026, in place of the single mark): Extreme lights its four bars in wine in the kicker, the card
@@ -104,7 +107,7 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8766';
       // leaving The Chain gives the drawing back to the stage: a hash route on a chapter's page goes to the home page
       await t.ev("location.hash='#/',1"); await sleep(3000);
       check('1440: on the home the drawing is back on the stage', await t.ev("!!document.querySelector('.stage > canvas#stage-canvas') && getComputedStyle(document.querySelector('.stage')).display!=='none'"));
-      check('1440: the home shows no balloons', await t.ev("!document.querySelector('.stage .ch-balloons')"));
+      check('1440: the home shows the plate alone, with no labels or dimensions', await t.ev("(function(){var m=CP.Stage.mode();return !!m.noLabels&&!!m.noDims;})()"));
       t.errors.forEach((e) => check('1440: page error', false, e));
       await t.close();
     }
@@ -156,7 +159,7 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8766';
       const strip = await t.ev(`(function(){var s=document.querySelector('.stage'),r=s.getBoundingClientRect(),c=s.querySelector('canvas').getBoundingClientRect(),tag=s.querySelector('.stage-tag'),m=s.querySelector('.stage-menu').getBoundingClientRect(),hit=document.elementFromPoint(m.left+m.width/2,m.top+m.height/2),vis=function(sel){var e=s.querySelector(sel);return !!e&&getComputedStyle(e).display!=='none'&&e.getBoundingClientRect().height>0;};
         return {h:Math.round(r.height),bottom:Math.round(r.bottom),vh:innerHeight,thumb:Math.round(c.width)+'x'+Math.round(c.height),text:tag.innerText.replace(/\\s+/g,' ').trim(),font:getComputedStyle(tag).fontFamily.split(',')[0]+' '+getComputedStyle(tag).fontSize,cap:vis('figcaption'),top:vis('.stage-top'),hit:hit&&hit.className};})()`);
       check('390: the strip is 64 px at the foot of the screen', strip.h === 64 && strip.bottom === strip.vh, JSON.stringify(strip));
-      check('390: a 52 px live thumbnail', strip.thumb === '52x52', strip.thumb);
+      check('390: a 52 px thumbnail, the plate\'s still', strip.thumb === '52x52' && await t.ev("/media\\/plate-lithography-thumb\\.webp$/.test(document.querySelector('.stage .stage-thumb').getAttribute('src')||'')"), strip.thumb);
       check('390: the strip reads "Specimen 04 · EUV scanner" over "Tap for the drawing and its parts", in Hanken Grotesk 13 px', strip.text === 'Specimen 04 · EUV scanner Tap for the drawing and its parts' && /Hanken/.test(strip.font) && /13px/.test(strip.font), strip.text + ' / ' + strip.font);
       check('390: the caption and Top are not in the strip', !strip.cap && !strip.top);
       check('390: the strip\'s Contents takes a tap', /stage-menu/.test(strip.hit || ''), strip.hit);

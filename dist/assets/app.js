@@ -103,7 +103,7 @@
     // the reader's turn off the drawn view, in radians (userYaw, userPitch), the largest yaw of the last turn (turnMax, for the
     // checks), the turn easing back (back), how much of the labels shows (labA), the globe's own turn (spinYaw)
     userYaw: 0, userPitch: 0, rawYaw: 0, rawPitch: 0, turnMax: 0, dragging: false, keyTurn: false, back: null, labA: 1, spinYaw: 0,
-    raf: 0, lastT: 0, inStart: 0, inPending: false, seen: true, parts: null, partsFor: '', focusN: null, hoverC: null,
+    raf: 0, lastT: 0, inStart: 0, inPending: false, resting: false, seen: true, parts: null, partsFor: '', focusN: null, hoverC: null,
     TURN: { yaw: 40 * Math.PI / 180, pitch: 20 * Math.PI / 180 }, IN_MS: 2600,
     queue: [], idling: false,
     // plates to build while the browser is idle, before the reader reaches them, and only while the stage is showing
@@ -146,7 +146,7 @@
     mode: function () {
       if (this.hostEl) return {};
       if (narrow()) return { numbersOnly: true, noDims: true };
-      return { noLabels: true, noDims: true };
+      return { noLabels: true, noDims: true, pad: 0.07 };
     },
     resize: function () {
       if (!this.ok) return;
@@ -297,10 +297,13 @@
       var want = turned ? 0 : 1;
       if (reduced) this.labA = want;
       else if (this.labA !== want) { this.labA = want ? Math.min(1, this.labA + dt / 0.28) : Math.max(0, this.labA - dt / 0.14); more = true; }
-      // the globe turns on its own, unless the reader holds it, has paused it, or asks for less motion
-      if (slot.spin && !reduced && !this.still && !this.dragging && !this.keyTurn) { this.spinYaw += slot.spin * dt; more = true; }
+      // the globe turns on its own, unless the reader holds it or rests the pointer on it (so a pin can be pointed at), has paused
+      // it, or asks for less motion
+      if (slot.spin && !reduced && !this.still && !this.dragging && !this.keyTurn && !this.resting) { this.spinYaw += slot.spin * dt; more = true; }
       var st = { k: k, mode: this.mode(), dark: this.dark, el: this.canvas, dyaw: this.spinYaw + this.userYaw, delev: this.userPitch, labA: this.labA, lite: narrow() && (turned || k < 1), pick: !turned && k >= 1 };
       pl.render(this.ctx, this.w, this.h, this.dpr, st);
+      // beside the home page's hero the caption stands on the drawing's foot: the empty band under it goes to the stage (--slack)
+      if (!this.hostEl && !narrow()) { var ft = pl.foot(), sl = ft == null ? 0 : Math.max(0, Math.round(this.h - ft - 12)) + 'px'; if (this.fig.style.getPropertyValue('--slack') !== sl) this.fig.style.setProperty('--slack', sl); }
       if (this.snap) {
         var fade = Math.min(1, (now - this.transStart) / this.transDur), ctx = this.ctx;
         if (fade < 1 && this.snap.width === this.canvas.width && this.snap.height === this.canvas.height) { ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = 1 - fade; ctx.drawImage(this.snap, 0, 0); ctx.globalAlpha = 1; more = true; }
@@ -420,7 +423,8 @@
         self.release();
       };
       c.addEventListener('pointerup', up); c.addEventListener('pointercancel', up);
-      c.addEventListener('pointerleave', function (e) { if (!self.dragging && e.pointerType !== 'touch') { c.style.cursor = ''; self.focusLabel(null); } });
+      c.addEventListener('pointerenter', function (e) { if (e.pointerType !== 'touch') self.resting = true; });
+      c.addEventListener('pointerleave', function (e) { self.resting = false; if (!self.dragging && e.pointerType !== 'touch') { c.style.cursor = ''; self.focusLabel(null); } self.wake(); });
       // the arrow keys turn it a step at a time; let go, and after a moment it eases back. Home or Escape puts it back at once
       c.addEventListener('keydown', function (e) {
         var step = 0.12, k = e.key, dx = 0, dy = 0;

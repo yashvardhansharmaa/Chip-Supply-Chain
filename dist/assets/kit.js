@@ -340,7 +340,12 @@
     m.EX = [];
     m.S.forEach(function (it) {
       if (it.kind === 'globe') [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]].forEach(function (d) { m.EX.push([d[0] * it.r, d[1] * it.r, d[2] * it.r, it.part]); });
-      else if (it.pts && (it.kind === 'wire' || it.kind === 'dots')) { var st = Math.max(1, Math.floor(it.pts.length / 40)); for (var i = 0; i < it.pts.length; i += st) m.EX.push([it.pts[i][0], it.pts[i][1], it.pts[i][2], it.part]); }
+      else if (it.pts && (it.kind === 'wire' || it.kind === 'dots')) {
+        var st = Math.max(1, Math.floor(it.pts.length / 40)), lo = [Infinity, Infinity, Infinity], hi = [-Infinity, -Infinity, -Infinity];
+        for (var i = 0; i < it.pts.length; i++) { for (var j = 0; j < 3; j++) { lo[j] = Math.min(lo[j], it.pts[i][j]); hi[j] = Math.max(hi[j], it.pts[i][j]); } if (i % st === 0) m.EX.push([it.pts[i][0], it.pts[i][1], it.pts[i][2], it.part]); }
+        // and, for a field of dots, the corners of its box, so it is fitted by its far corners too
+        if (it.kind === 'dots' && it.pts.length > 1) for (var q = 0; q < 8; q++) m.EX.push([q & 1 ? hi[0] : lo[0], q & 2 ? hi[1] : lo[1], q & 4 ? hi[2] : lo[2], it.part]);
+      }
     });
     m.V = new Float32Array(m.V); m.VP = new Int16Array(m.VP);
     return m;
@@ -1070,7 +1075,9 @@
     });
   };
   // the mode a canvas shows the plate in: { numbersOnly, noDims, noLabels }
-  PL.mode = function (md) { md = md || {}; this.o.numbersOnly = !!md.numbersOnly; this.o.noDims = !!md.noDims; this.o.noLabels = !!md.noLabels; return (md.numbersOnly ? 'n' : '') + (md.noDims ? 'd' : '') + (md.noLabels ? 'l' : ''); };
+  PL.mode = function (md) { md = md || {}; this.o.numbersOnly = !!md.numbersOnly; this.o.noDims = !!md.noDims; this.o.noLabels = !!md.noLabels; this.o.pad = md.pad == null ? null : md.pad; return (md.numbersOnly ? 'n' : '') + (md.noDims ? 'd' : '') + (md.noLabels ? 'l' : '') + (md.pad == null ? '' : 'p' + md.pad); };
+  // where the drawing's foot is on its canvas, in css px (the page sets the caption under it)
+  PL.foot = function () { var f = this._fit; return f ? f.cy - f.s * f.e.miny : null; };
   /* one frame into a 2D context. st = { k (entrance, 1 at rest), dyaw, delev, labA, mode, dark, pick, lite, el (where the
      colours are read) } */
   PL.render = function (ctx, w, h, dpr, st) {
@@ -1647,8 +1654,12 @@ R('globe', function (m) {
   var keep = function (a) { return a.filter(function (q) { return !!q; }); };
   m.callout(keep([site('Hsinchu'), site('Yokkaichi')]), 'Chokepoint towns', { side: 'r', col: 'acc' });
   m.callouts[m.callouts.length - 1].track = keep(['Hsinchu', 'Yokkaichi', 'Icheon', 'Veldhoven', 'Oberkochen', 'Phoenix', 'Boise'].map(site));
+  // pointing at the label, or at any of its pins, lights every pin of its kind
+  var pinsOf = function (from, to) { return m.parts.filter(function (p) { var k = /^pin(\d+)$/.exec(p.name); return k && +k[1] >= from && +k[1] < to; }).map(function (p) { return p.idx; }); };
+  m.callouts[m.callouts.length - 1].focus = pinsOf(0, 20);
   m.callout(keep([sub('Shenzhen')]), 'Towns building alternatives', { side: 'r' });
   m.callouts[m.callouts.length - 1].track = keep(['Shenzhen', 'Beijing', 'Dresden'].map(sub));
+  m.callouts[m.callouts.length - 1].focus = pinsOf(20, 30);
   // review: the view looks down on 36N 72E. From over 23N 106E the East Asian pins pointed almost at the reader and
   // stood at a quarter of their height, while Veldhoven's and Oberkochen's lay along the rim at full height, so the
   // drawing showed Europe's chokepoints as the tallest. From here every five-point pin stands taller than every
@@ -1767,7 +1778,8 @@ R('hbm-stack', function (m) {
     m.tag('dies');
     m.prism(L(hw), yb, yb + t, 'light', o);
     m.tag('bumps');
-    m.dots(bumps(yb - gap0 / 2 - 0.08, hw), { col: 'acc', r: 1.6, alpha: 1 });
+    // the bumps are left out of the small stills (lod 1): at 52 px their twelve rows ran together into a copper band
+    m.dots(bumps(yb - gap0 / 2 - 0.08, hw), { col: 'acc', r: 1.6, alpha: 1, lod: 1 });
     m.tag(null);
     if (i === 10) m.anchor(1, 'Memory dies', [-hw, yb + t / 2, hw * 0.6]);
     // the vias' and the bumps' points sit low in the stack, so their leaders run short to labels under the loupe
@@ -2049,7 +2061,8 @@ R('rack', function (m) {
   m.box({ c: [0, syc, zS + 0.02], s: [0.052, sh + 0.10, 0.03], decals: { nz: clips, pz: clipsF, px: clipsX } }, 'acc');
   [sy0 + 0.1, sy1 - 0.1].forEach(function (gy) { m.guide([[0, gy, zS + 0.02, cab.idx], [0, gy, zS + 0.02, bb.idx]], { style: 'axis', alpha: 0.8 }); });
   m.dim([W / 2, 0, back], [W / 2, Ht, back], [0.1, 0, 0], '2.24 m', { part: cab.idx, t: 0.62 });
-  m.dim([-W / 2, 0, front], [W / 2, 0, front], [0, 0, 0.12], '600 mm', { part: cab.idx });
+  // designer pass (21 Nov 2026): the width taken further out in front, so its figure clears the rack's foot
+  m.dim([-W / 2, 0, front], [W / 2, 0, front], [0, 0, 0.2], '600 mm', { part: cab.idx });
   var pp = {}; pulled.forEach(function (q) { pp[q[0]] = q[1]; });
   m.callout([-tW * 0.3, slots[5].y, fz, pp[5].idx], 'Power shelf', { side: 'l' });
   m.callout([-tW * 0.3, slots[18].y, fz, pp[18].idx], 'NVLink switch tray', { side: 'l' });

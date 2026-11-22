@@ -51,7 +51,7 @@ const CHAIN_STATE = `(function () {
   var vis = function (el) { return !!(el && el.getClientRects().length); }, ids = function (l) { return l.map(function (r) { return r.getAttribute('data-ch'); }).join(); };
   var rows = [].slice.call(document.querySelectorAll('#contents .ct-col > li.item'));
   rows.forEach(function (r) { var i = r.querySelector('.ct-tile img'); if (i && i.loading === 'lazy') i.loading = 'eager'; });
-  var row = function (r) { var a = r.querySelector('a.t'), i = r.querySelector('.ct-tile img'); return a && vis(a) && vis(i) && i.getAttribute('src') === '../media/line-' + r.getAttribute('data-ch') + '.webp' ? a.getAttribute('href') : 'none'; };
+  var row = function (r) { var a = r.querySelector('a.t'), i = r.querySelector('.ct-tile img'); return a && vis(a) && vis(i) && i.getAttribute('src') === '../media/plate-' + r.getAttribute('data-ch') + '-line.webp' ? a.getAttribute('href') : 'none'; };
   var shownRows = rows.map(row);
   var drawn = rows.filter(function (r) { var i = r.querySelector('.ct-tile img'); return i && i.complete && i.naturalWidth > 0; }).length;
   var stRows = [].slice.call(document.querySelectorAll('#contents > .ct-st .item')), xRows = [].slice.call(document.querySelectorAll('#contents .ct-x .item'));

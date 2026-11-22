@@ -46,7 +46,8 @@ R('rack', function (m) {
   m.box({ c: [0, syc, zS + 0.02], s: [0.052, sh + 0.10, 0.03], decals: { nz: clips, pz: clipsF, px: clipsX } }, 'acc');
   [sy0 + 0.1, sy1 - 0.1].forEach(function (gy) { m.guide([[0, gy, zS + 0.02, cab.idx], [0, gy, zS + 0.02, bb.idx]], { style: 'axis', alpha: 0.8 }); });
   m.dim([W / 2, 0, back], [W / 2, Ht, back], [0.1, 0, 0], '2.24 m', { part: cab.idx, t: 0.62 });
-  m.dim([-W / 2, 0, front], [W / 2, 0, front], [0, 0, 0.12], '600 mm', { part: cab.idx });
+  // designer pass (21 Nov 2026): the width taken further out in front, so its figure clears the rack's foot
+  m.dim([-W / 2, 0, front], [W / 2, 0, front], [0, 0, 0.2], '600 mm', { part: cab.idx });
   var pp = {}; pulled.forEach(function (q) { pp[q[0]] = q[1]; });
   m.callout([-tW * 0.3, slots[5].y, fz, pp[5].idx], 'Power shelf', { side: 'l' });
   m.callout([-tW * 0.3, slots[18].y, fz, pp[18].idx], 'NVLink switch tray', { side: 'l' });

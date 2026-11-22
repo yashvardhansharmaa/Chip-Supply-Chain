@@ -55,8 +55,12 @@ R('globe', function (m) {
   var keep = function (a) { return a.filter(function (q) { return !!q; }); };
   m.callout(keep([site('Hsinchu'), site('Yokkaichi')]), 'Chokepoint towns', { side: 'r', col: 'acc' });
   m.callouts[m.callouts.length - 1].track = keep(['Hsinchu', 'Yokkaichi', 'Icheon', 'Veldhoven', 'Oberkochen', 'Phoenix', 'Boise'].map(site));
+  // pointing at the label, or at any of its pins, lights every pin of its kind
+  var pinsOf = function (from, to) { return m.parts.filter(function (p) { var k = /^pin(\d+)$/.exec(p.name); return k && +k[1] >= from && +k[1] < to; }).map(function (p) { return p.idx; }); };
+  m.callouts[m.callouts.length - 1].focus = pinsOf(0, 20);
   m.callout(keep([sub('Shenzhen')]), 'Towns building alternatives', { side: 'r' });
   m.callouts[m.callouts.length - 1].track = keep(['Shenzhen', 'Beijing', 'Dresden'].map(sub));
+  m.callouts[m.callouts.length - 1].focus = pinsOf(20, 30);
   // review: the view looks down on 36N 72E. From over 23N 106E the East Asian pins pointed almost at the reader and
   // stood at a quarter of their height, while Veldhoven's and Oberkochen's lay along the rim at full height, so the
   // drawing showed Europe's chokepoints as the tallest. From here every five-point pin stands taller than every

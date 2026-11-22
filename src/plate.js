@@ -340,7 +340,12 @@
     m.EX = [];
     m.S.forEach(function (it) {
       if (it.kind === 'globe') [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]].forEach(function (d) { m.EX.push([d[0] * it.r, d[1] * it.r, d[2] * it.r, it.part]); });
-      else if (it.pts && (it.kind === 'wire' || it.kind === 'dots')) { var st = Math.max(1, Math.floor(it.pts.length / 40)); for (var i = 0; i < it.pts.length; i += st) m.EX.push([it.pts[i][0], it.pts[i][1], it.pts[i][2], it.part]); }
+      else if (it.pts && (it.kind === 'wire' || it.kind === 'dots')) {
+        var st = Math.max(1, Math.floor(it.pts.length / 40)), lo = [Infinity, Infinity, Infinity], hi = [-Infinity, -Infinity, -Infinity];
+        for (var i = 0; i < it.pts.length; i++) { for (var j = 0; j < 3; j++) { lo[j] = Math.min(lo[j], it.pts[i][j]); hi[j] = Math.max(hi[j], it.pts[i][j]); } if (i % st === 0) m.EX.push([it.pts[i][0], it.pts[i][1], it.pts[i][2], it.part]); }
+        // and, for a field of dots, the corners of its box, so it is fitted by its far corners too
+        if (it.kind === 'dots' && it.pts.length > 1) for (var q = 0; q < 8; q++) m.EX.push([q & 1 ? hi[0] : lo[0], q & 2 ? hi[1] : lo[1], q & 4 ? hi[2] : lo[2], it.part]);
+      }
     });
     m.V = new Float32Array(m.V); m.VP = new Int16Array(m.VP);
     return m;
@@ -1070,7 +1075,9 @@
     });
   };
   // the mode a canvas shows the plate in: { numbersOnly, noDims, noLabels }
-  PL.mode = function (md) { md = md || {}; this.o.numbersOnly = !!md.numbersOnly; this.o.noDims = !!md.noDims; this.o.noLabels = !!md.noLabels; return (md.numbersOnly ? 'n' : '') + (md.noDims ? 'd' : '') + (md.noLabels ? 'l' : ''); };
+  PL.mode = function (md) { md = md || {}; this.o.numbersOnly = !!md.numbersOnly; this.o.noDims = !!md.noDims; this.o.noLabels = !!md.noLabels; this.o.pad = md.pad == null ? null : md.pad; return (md.numbersOnly ? 'n' : '') + (md.noDims ? 'd' : '') + (md.noLabels ? 'l' : '') + (md.pad == null ? '' : 'p' + md.pad); };
+  // where the drawing's foot is on its canvas, in css px (the page sets the caption under it)
+  PL.foot = function () { var f = this._fit; return f ? f.cy - f.s * f.e.miny : null; };
   /* one frame into a 2D context. st = { k (entrance, 1 at rest), dyaw, delev, labA, mode, dark, pick, lite, el (where the
      colours are read) } */
   PL.render = function (ctx, w, h, dpr, st) {
