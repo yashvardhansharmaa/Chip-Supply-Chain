@@ -8,7 +8,7 @@
   "openOnExplainer": true,
   "bridge": "Everything so far builds upward, and the base under the package now has to carry all of it down to an ordinary board.",
   "specimen": "substrate-layers",
-  "specimenCaption": "A build-up substrate, the board a chip sits on, with a quarter cut away. It is about 100 by 72 mm and 1.5 mm thick, with eighteen copper layers inside. The olive-green bands are the build-up film between the copper layers. The footprint is to scale, but the thickness is exaggerated about twenty times.",
+  "specimenCaption": "A build-up substrate, the board a chip package sits on, with a quarter cut away. It is drawn at 95 by 68 mm, this site's estimate for Nvidia's B200, with the layers far thicker than they are. Its 11 layers of film on each side of the core follow Ajinomoto's count for a 2026 AI substrate. Ajinomoto, a Japanese food company, told investors in June 2026 that its film has held over 95 percent of its market since its launch.",
   "card": {
     "concentration": "Extreme",
     "chokepointScore": 5,

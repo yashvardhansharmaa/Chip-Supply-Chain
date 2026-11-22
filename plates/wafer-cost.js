@@ -29,8 +29,9 @@ R('wafer-cost', function (m) {
     y += h;
   });
   var TOP = y;
+  // 22 Nov 2026 review: its offset runs along one model axis (x) only; it ran on two.
   // review: the total is a dimension up the whole column at its front-left corner. It was a label on the top face, which
   // read as a sixth layer worth $6,400, beside an unfigured rule ticked every $500
-  m.dim([-CW / 2, PH, CW / 2], [-CW / 2, TOP, CW / 2], [-0.12, 0, 0.12], 'about $6,400', { part: 0 });
+  m.dim([-CW / 2, PH, CW / 2], [-CW / 2, TOP, CW / 2], [-0.17, 0, 0], 'about $6,400', { part: 0 });
   return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, start: 1, rest: 0, sortAxis: [0, 1, 0], accent: [122, 31, 43], accentDark: [201, 83, 106] };
 });

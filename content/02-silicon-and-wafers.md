@@ -8,7 +8,7 @@
  "openOnExplainer": true,
  "bridge": "A chip design in a file does nothing until it is printed onto a disc of pure silicon.",
  "specimen": "boule-and-wafer",
- "specimenCaption": "A silicon ingot, one crystal pulled whole from a melt, with two wafers sawn from it. It is 2.1 m long, 300 mm across and about 265 kg, taller than a door and about as heavy as three grown men. It hangs from a neck about 10 mm wide. Drawn to scale.",
+ "specimenCaption": "A silicon ingot, one crystal pulled whole from molten silicon, with two wafers sawn from it. The 300 mm width and the wafers' thickness are true to scale. The length, the seed and the neck are drawn for illustration. Making smooth, pure 300 mm wafers takes know-how that is hard to write down, CSET found in 2021. The five largest wafer makers serve around 75 percent of the market, Siltronic said of 2025.",
  "card": {
  "concentration": "High",
  "chokepointScore": 4,

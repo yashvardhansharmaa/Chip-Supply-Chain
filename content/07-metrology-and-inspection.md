@@ -8,7 +8,7 @@
  "openOnExplainer": true,
  "bridge": "Every one of those films can be laid down wrong, and the fault is invisible until a tool looks for it.",
  "specimen": "sem-column",
- "specimenCaption": "An electron-beam inspection column, cut in half down its axis, standing over a 300 mm wafer. The column is about a meter tall, drawn to scale. The green line is the electron beam, running from the emitter at the top through the lenses to the spot where it lands on the wafer.",
+ "specimenCaption": "An electron-beam inspection column cut in half down its axis, over a 300 mm wafer, with its parts simplified. The beam scans a small patch, and the detector builds a picture from the electrons the beam knocks loose. That shows faults too small for light to find. KLA held 56.8 percent of the market for tools that measure and inspect wafers in 2025, by CSET's count.",
  "card": {
  "concentration": "High",
  "chokepointScore": 4,

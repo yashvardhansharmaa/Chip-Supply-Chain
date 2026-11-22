@@ -1,7 +1,12 @@
 /* =====================================================================================================
-   05 Photomasks: an EUV reticle and its pellicle, in millimetres: the 152 mm square blank, 6.35 mm thick, with the
-   mirror coating as a dark blue band round its top edge (drawn far thicker than its 280 nm), and the pellicle frame,
-   its four pads and its membrane lifted off it in turn. */
+   05 Photomasks: an EUV reticle and its pellicle, in millimetres: the glass 152.4 mm square and 6.35 mm thick (the SEMI 6025
+   size, as Hoya's US patent 9,494,851 gives it), its pattern area 132 x 104 mm, four times the scanner's 26 x 33 mm field
+   (ASML: the pattern is drawn four times larger than it prints), with the mirror coating as a band round its top edge,
+   drawn far thicker than it is, and the pellicle frame, its four pads and its membrane lifted off it in turn.
+   The loupe (mask-loupe, below) shows the coating's edge at true thickness, from the imec and PTB paper chapter 5 cites
+   (arxiv.org/abs/1912.09075): about 40 molybdenum and silicon layer pairs of 7 nm each, a 3 nm ruthenium cap, and the
+   absorber, 58 nm of TaBN under 2 nm of TaBO. Colours (the set's legend, 22 Nov 2026): the coating in silicon slate with dark
+   lines, as the loupe shows it, silicon layers between molybdenum ones. */
 R('photomask', function (m) {
   var B = 152.4, T = 6.35, ml = 1.05, PW = 132, PD = 104, yTop = T / 2;
   var blank = m.part('blank', { ex: [0, 0, 0], seq: 0 });
@@ -27,10 +32,10 @@ R('photomask', function (m) {
   [-1, 1].forEach(function (sx) { [-1, 1].forEach(function (sz) { var fx = sx * (PW / 2 + 9), fz = sz * (PD / 2 + 9); pat.push(D.rect(fx - 4.5, fz - 4.5, fx + 4.5, fz + 4.5, top, { lw: 0.5 })); pat.push(D.rect(fx - 2, fz - 2, fx + 2, fz + 2, top, { lw: 0.5 })); }); });
   m.box({ c: [0, (T - ml) / 2 - T / 2, 0], s: [B, T - ml, B] }, 'light');
   var band = [];
-  for (var q = 1; q < 8; q++) { var yy = -ml / 2 + ml * q / 8; band.push(D.line([-B / 2, yy, B / 2], [B / 2, yy, B / 2], { lw: 0.3, col: 'acc', alpha: 0.9 })); }
-  var bandX = band.map(function (it) { return { pts: [[B / 2, it.pts[0][1], B / 2], [B / 2, it.pts[0][1], -B / 2]], lw: 0.3, col: 'acc', alpha: 0.9 }; });
-  m.box({ c: [0, yTop - ml / 2, 0], s: [B, ml, B], decals: { py: pat, pz: band, px: bandX } }, 'accDark');
-  m.dim([-B / 2, -T / 2, B / 2], [B / 2, -T / 2, B / 2], [0, 0, 12], '152 mm');
+  for (var q = 1; q < 8; q++) { var yy = -ml / 2 + ml * q / 8; band.push(D.line([-B / 2, yy, B / 2], [B / 2, yy, B / 2], { lw: 0.3, alpha: 0.55 })); }
+  var bandX = band.map(function (it) { return { pts: [[B / 2, it.pts[0][1], B / 2], [B / 2, it.pts[0][1], -B / 2]], lw: 0.3, alpha: 0.55 }; });
+  m.box({ c: [0, yTop - ml / 2, 0], s: [B, ml, B], decals: { py: pat, pz: band, px: bandX } }, 'acc');
+  m.dim([-B / 2, -T / 2, B / 2], [B / 2, -T / 2, B / 2], [0, 0, 12], '152.4 mm');
   // pads, frame, membrane
   var FW = 145, FD = 117, bar = 4.5, fh = 2.6, stand = 2.5;
   var pads = m.part('pads', { ex: [0, 15, 0], seq: 1 });
@@ -47,9 +52,31 @@ R('photomask', function (m) {
     m.guide([[c[0] * (FW / 2 - bar), yM, c[1] * (FD / 2 - bar), fr.idx], [c[0] * (FW / 2 - bar), yM, c[1] * (FD / 2 - bar), mem.idx]], { alpha: 0.85 });
   });
   m.guide([[0, -T / 2 - 6, 0, blank.idx], [0, yM + 4, 0, mem.idx]], { style: 'axis', alpha: 0.8 });
-  m.callout([-B * 0.32, -T / 2 + 1.4, B / 2, blank.idx], 'Glass plate', { side: 'l' });
+  m.callout([B / 2, -T / 2 + 1.6, -B * 0.22, blank.idx], 'Glass plate', { side: 'r' });
   m.dim([B / 2, -T / 2, B / 2], [B / 2, T / 2, B / 2], [10, 0, 0], '6.35 mm', { t: 0.5, part: blank.idx });
   m.callout([-B * 0.18, yTop - ml / 2, B / 2, blank.idx], 'Mirror coating', { side: 'l' });
   m.callout([-FW * 0.28, yM, FD * 0.22, mem.idx], 'Pellicle', { side: 'l' });
-  return { elev: PLATE.ISO.elev, yaw: PLATE.ISO.yaw, sortAxis: [0, 1, 0], accent: [62, 84, 104], accentDark: [142, 167, 192] };
+  var loupe = { model: 'mask-loupe', at: [B / 2, yTop - ml / 2, B * 0.18], part: 'blank', side: 'r', r: 0.15, rMax: 96, scale: 0.8, caption: ['The coating\u2019s edge,', 'at true thickness'] };
+  return { elev: PLATE.ISO.elev, yaw: PLATE.ISO.yaw, sortAxis: [0, 1, 0], loupe: loupe, accent: [111, 139, 166], accentDark: [195, 211, 226] };
+});
+
+/* The loupe's plate, in nanometres, seen almost face on so its cut face reads as a section: the glass, about forty pairs of
+   layers (each pair 7 nm, drawn as a silicon layer and a molybdenum layer of half a pair each; the paper gives the pair, not
+   the split), the 3 nm ruthenium cap, and two lines of absorber 60 nm tall (58 nm TaBN and 2 nm TaBO), all from the imec and
+   PTB paper chapter 5 cites. Only the absorber's height and the pair count carry figures. */
+R('mask-loupe', function (m) {
+  var bar = PLATE.loupeBar, tag = PLATE.loupeTag;
+  function bx(x0, y0, x1, y1, mat, fmat) { return m.box({ c: [(x0 + x1) / 2, (y0 + y1) / 2, 0], s: [x1 - x0, y1 - y0, 60], fmat: fmat }, mat); }
+  m.part('st', { mode: 'stack' });
+  var X0 = -120, X1 = 120, NP = 40, PR = 7, g0 = -40;
+  bx(X0, g0 - 45, X1, g0, 'light', { pz: 'cut' });
+  for (var i = 0; i < NP; i++) { var y = g0 + i * PR; bx(X0, y, X1, y + PR / 2, 'acc'); bx(X0, y + PR / 2, X1, y + PR, 'dark'); }
+  var yc = g0 + NP * PR;
+  bx(X0, yc, X1, yc + 3, 'mid');
+  [[-100, -30], [15, 85]].forEach(function (a) { bx(a[0], yc + 3, a[1], yc + 3 + 60, 'dark', { pz: 'cutDense' }); });
+  bar(m, [96, yc + 3, 30], [96, yc + 63, 30], '58 nm', { side: 1 });
+  tag(m, [-65, yc + 78, 30], 'Absorber', {});
+  tag(m, [0, g0 + NP * PR / 2, 30], 'About 40 layer pairs', {});
+  tag(m, [0, g0 - 24, 30], 'Glass', {});
+  return { elev: 0.06, yaw: -0.05, accent: [111, 139, 166], accentDark: [195, 211, 226] };
 });
