@@ -1,11 +1,14 @@
 /* =====================================================================================================
    13 Systems: an eight-GPU baseboard in the units of specimens/gpu-baseboard.js, simplified and not to scale (the caption
    says so): its sizes, 510 x 400 mm and 30 mm frames in the old file, have no allowed source, so the plate carries no
-   dimension. The eight accelerator modules lift out of their frames, showing the land grids they press onto.
+   dimension. Four of the eight accelerator modules lift off the board, showing the land grids they press onto.
    22 Nov 2026 review: each module now carries its package, drawn at this site's estimate for the B200 (95 x 68 mm, with its
    78 x 50 interposer and two logic dies, data/landscape-layouts.json) in the board's units, so no module is smaller than the
    package it carries (they were 75 x 83 mm against a 100 x 72 package). The two NVLink switch chips are silicon slate, so
-   they show (they were a pale gray that almost disappeared). Colours (the set's legend): silicon slate only. */
+   they show (they were a pale gray that almost disappeared). Colours (the set's legend): silicon slate only.
+   22 Nov 2026 expert review: no source names a frame round each module (chapter 13 says the modules bolt onto a baseboard),
+   so the "Module frames" label is gone and the caption says the modules are lifted off the board. The rims round each seat
+   stay drawn, unlabelled. */
 R('gpu-baseboard', function (m) {
   var U = 1.52 / 510; // board units per millimetre, if the board were drawn 510 mm wide
   var BW = 1.52, BD = 1.18, BH = 0.046, top = BH / 2, PKW = 68 * U, PKD = 95 * U, MH = 0.066, LW = PKW + 0.035, LD = PKD + 0.025, kerb = 0.022;
@@ -33,7 +36,7 @@ R('gpu-baseboard', function (m) {
   for (var i2 = 0; i2 < 13; i2++) { var vx = (i2 - 6) * 0.085; [-1, 1].forEach(function (s) { m.box({ c: [vx, top + 0.013, s * (BD / 2 - 0.05)], s: [0.044, 0.026, 0.044] }, 'mid'); }); }
   [-1, 1].forEach(function (s) { m.box({ c: [-BW / 2 + 0.062, top + 0.029, s * 0.17], s: [0.084, 0.058, 0.20] }, 'dark'); });
   for (i2 = 0; i2 < 4; i2++) { var pins = []; for (var k2 = 0; k2 < 14; k2++) pins.push(D.line([0.026, -0.017, (k2 - 6.5) * 0.0118], [0.026, 0.015, (k2 - 6.5) * 0.0118], { lw: 0.35, alpha: 0.8 })); m.box({ c: [BW / 2 - 0.042, top + 0.025, (i2 - 1.5) * 0.245], s: [0.052, 0.05, 0.185], decals: { px: pins } }, 'mid'); }
-  // the modules, lifted out of their frames: each a small board carrying its package (the substrate, its interposer and two
+  // the modules, lifted off the board: each a small board carrying its package (the substrate, its interposer and two
   // logic dies, at this site's B200 estimate)
   // the back row lifts out; the front row stays seated, so the switch chips between the rows stay in view
   var mp = m.part('modules', { ex: [0, 0.26, 0], seq: 1, mode: 'stack' }), mpS = null;
@@ -54,8 +57,6 @@ R('gpu-baseboard', function (m) {
   // (designer pass, 22 Nov 2026: one leader, to the lifted module nearest the labels, which crosses nothing; the second ran
   // 93 px across the board to a seated one. Pointing at the label still lights all eight, by their tag)
   m.callout([mods[6][0] + 0.075, top + MH + 0.017, mods[6][1] - 0.045, mp.idx], 'Accelerator modules', { side: 'r', tag: 'modules' });
-  // (on the empty frame's rim, by its right corner: on its side face the dot fell on the connector in front of it)
-  m.callout([mods[6][0] + MW / 2 - kerb / 2, top + MH, mods[6][1] - MD * 0.3, board.idx], 'Module frames', { side: 'r', tag: 'frames' });
   // the nearer chip's top, its leader dropping steeply past the seated modules to a label under the others
   m.callout([0.175 + 0.095, top + 0.05, 0.07, board.idx], 'NVLink switch chips', { side: 'r', tag: 'switch' });
   return { elev: PLATE.ISO.elev, yaw: PLATE.ISO.yaw, sortAxis: [0, 1, 0], accent: [111, 139, 166], accentDark: [195, 211, 226] };

@@ -8,7 +8,7 @@
   "openOnExplainer": true,
   "bridge": "A tested package is still a single chip. Training a model takes a room full of them working as one machine.",
   "specimen": "gpu-baseboard",
-  "specimenCaption": "An eight-GPU baseboard, with four of its accelerator modules lifted out of their frames. On Nvidia's baseboard, switch chips pass data between any two modules at full speed. The parts are simplified and not to scale. The scarcest part at this stage sits elsewhere, in the lasers for optical links between racks. AI data centers were straining their supply in May 2026, Nikkei Asia reported.",
+  "specimenCaption": "An eight-GPU baseboard, with four of its accelerator modules lifted off the board. On Nvidia's baseboard, switch chips pass data between any two modules at full speed. The parts are simplified and not to scale. Lasers for the optical links between racks were in short supply in May 2026, strained by demand from AI data centers, Nikkei Asia reported.",
   "card": {
     "concentration": "High",
     "chokepointScore": 3,
@@ -80,7 +80,7 @@ One AI chip is not enough to train a model. So seventy-two of them are wired tog
 
 {{figure:racks-wired}}
 
-An accelerator (the AI chip) ships as a module, the chip package on a small board with the circuits that feed it power. Nvidia calls its version SXM, and the open-standards equivalent is the Open Compute Project's accelerator module. Eight modules bolt onto a baseboard that carries their power and the links between them. On Nvidia's baseboard, switch chips pass data between any two modules at full speed.
+An accelerator (the AI chip) ships as a module, the chip package on a small board with the circuits that feed it power. Nvidia calls its version SXM, and the open-standards equivalent is the Open Compute Project's accelerator module. Eight modules bolt onto a baseboard that carries their power and the links between them. On Nvidia's baseboard, switch chips pass data between any two modules at full speed ([source](https://www.nvidia.com/en-us/data-center/nvlink/)).
 
 Rack-scale systems drop the baseboard and put the chips on trays stacked in the rack. An Nvidia GB300 NVL72 holds 18 compute trays plus nine switch trays, 72 GPUs in all, and draws up to 142 kW ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)). The newer Vera Rubin NVL72 uses the same rack footprint ([source](https://blogs.nvidia.com/blog/gigawatt-ai-factories-ocp-vera-rubin)). The research firm SemiAnalysis estimated in August 2025 that a rack of the earlier GB200 NVL72 model cost a typical hyperscaler $3.1 million, or about $3.9 million with networking, storage and other items ([source](https://newsletter.semianalysis.com/p/h100-vs-gb200-nvl72-training-benchmarks)).
 

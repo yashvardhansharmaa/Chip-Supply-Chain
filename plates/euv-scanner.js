@@ -4,9 +4,13 @@
    the projection optics stand side by side. The 13.5 nm light runs on through every gap.
    22 Nov 2026 review, made true at rest (the plate rests exploded, so every node is placed and every mirror aimed in the rest
    positions, REST below):
-   - the light meets the mask and leaves it at the same angle, 5.4 degrees from the mask's normal, the chief-ray angle in the
-     imec and PTB paper chapter 5 cites (arxiv.org/abs/1912.09075); it was 17 degrees in and 36 out;
-   - the mask and the wafer are both drawn at twice their size, as the caption says: the mask 152.4 mm square and 6.35 mm thick
+   - the light meets the mask and leaves it at the same angle, 6 degrees from the mask's normal, the chief-ray angle of a
+     0.33-NA, 4x scanner (Lawrence Berkeley National Laboratory, "Upgrade to the SHARP EUV mask microscope", SPIE 10957,
+     26 Mar 2019, escholarship.org/uc/item/9vh7g4rm: the SHARP zoneplates match the scanners' chief-ray angle, 6 degrees). It
+     was 17 degrees in and 36 out, then 5.4 degrees, the angle the imec and PTB paper (arxiv.org/abs/1912.09075) uses for a
+     0.55-NA, High-NA scanner (22 Nov 2026 expert review);
+   - the mask and the wafer are both drawn at twice their size (the caption says they are drawn large, since the machine
+     they are measured against is itself simplified): the mask 152.4 mm square and 6.35 mm thick
      (Hoya's US patent 9,494,851), the wafer 300 mm across and 775 micrometres thick (SEMI M1); they were 4x and 1.6x;
    - the last mirror sits straight over the wafer, so the wafer stage drops along its beam.
    Colours (the set's legend): the light in the beam hue, the wafer in silicon slate (acc2), as on every plate. */
@@ -18,7 +22,7 @@ R('euv-scanner', function (m) {
   var PLASMA = [-1.14, -1.34], COLL = [-1.80, -1.34];
   // the mask stands over the seam between the illuminator and the projection optics; the illuminator's last mirror and the
   // optics' first stand level with each other, either side of it, so the light comes in and goes out at the same angle
-  var XM = 0.19, YM = 1.68, YS = 0.18, CRA = 5.4 * Math.PI / 180, DX = (YM + EXS.ret[1] - YS) * Math.tan(CRA);
+  var XM = 0.19, YM = 1.68, YS = 0.18, CRA = 6 * Math.PI / 180, DX = (YM + EXS.ret[1] - YS) * Math.tan(CRA);
   var NODE = [
     { p: [-0.56, -1.34], k: 'ap', o: 'ill' }, { p: [-0.24, -0.82], k: 'm', r: 0.20, o: 'ill' }, { p: [-0.98, -0.10], k: 'm', r: 0.30, o: 'ill' }, { p: [XM - DX, YS], k: 'm', r: 0.11, o: 'ill' },
     { p: [XM, YM], k: 'ret', o: 'ret' },

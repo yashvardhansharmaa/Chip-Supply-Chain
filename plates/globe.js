@@ -9,9 +9,19 @@
    before the merge, and pinned Yokkaichi, a NAND fab, at full height for memory; the heights were the retired chokepoint
    score; the five ink pins for towns building alternatives are not in the table and are gone. The coast is still read from
    specimens/globe.js by build/plates.js (window.PLATE_GLOBE); the towns there are no longer read here (the summary map's
-   own copy is unchanged). The globe rests closed and keeps turning, slowly, about the Earth's axis. */
+   own copy is unchanged). The globe rests closed and keeps turning, slowly, about the Earth's axis.
+   22 Nov 2026 expert review: at the old rest view (yaw -72, elevation 36 degrees) the four US pins stood behind the globe,
+   their label over nothing, in reduced motion and the stills too, and the pins facing the reader were drawn far shorter than
+   their shares. The rest view now looks down from above the North Pacific (yaw 165, elevation 60 degrees), where every pin
+   and its label shows and no pin is drawn shorter than about two thirds of its length (the caption says pins that point
+   toward the reader are drawn shorter). Higher views keep the lengths closer still, but from about 64 degrees the land's
+   fill (src/plate.js, land) spills over the sea. A country's pins lean apart
+   across the line of sight of the rest view only, so none tips toward the reader. The labels take the sides the countries
+   show on: the Netherlands and the United States right, the four in Asia left. */
 R('globe', function (m) {
-  var RAD = Math.PI / 180, G = window.PLATE_GLOBE;
+  var RAD = Math.PI / 180, G = window.PLATE_GLOBE, YAW = 165 * RAD, ELEV = 60 * RAD;
+  // the line of sight at rest, from the globe's centre toward the reader (src/plate.js viewM's third row)
+  var SIGHT = [-Math.sin(YAW) * Math.cos(ELEV), Math.sin(ELEV), Math.cos(YAW) * Math.cos(ELEV)];
   function ll(lat, lon, r) { var a = lat * RAD, b = lon * RAD, c = Math.cos(a) * r; return [c * Math.sin(b), Math.sin(a) * r, c * Math.cos(b)]; }
   function unwrap(list) { var pts = [[list[0][0], list[0][1]]], prev = list[0][1]; for (var i = 1; i < list.length; i++) { var lon = list[i][1]; while (lon - prev > 180) lon -= 360; while (lon - prev < -180) lon += 360; pts.push([list[i][0], lon]); prev = lon; } return pts; }
   function dens(pts, r, step) { var out = []; for (var i = 0; i < pts.length; i++) { var a = pts[i], b = pts[(i + 1) % pts.length], n = Math.max(1, Math.ceil(Math.hypot(b[0] - a[0], (b[1] - a[1]) * Math.cos((a[0] + b[0]) / 2 * RAD)) / step)); for (var k = 0; k < n; k++) out.push(ll(a[0] + (b[0] - a[0]) * k / n, a[1] + (b[1] - a[1]) * k / n, r)); } return out; }
@@ -39,13 +49,16 @@ R('globe', function (m) {
   ROWS.forEach(function (r, i) { var k = used[r[1]] || 0; used[r[1]] = k + 1; var at = AT[r[1]][k]; (PINS[r[1]] || (PINS[r[1]] = [])).push({ i: i, lat: at[0], lon: at[1], h: HMAX * r[2] / 100 }); });
   /* a pin: a foot ring on the surface, a stem as long as the share, a head. Where a country leads several segments its pins lean
      a little apart, about 9 degrees each way, so each one shows (designer pass, 22 Nov 2026: the Netherlands' two and Taiwan's
-     two stood one over the other and read as one); the lean shortens a pin's rise by about one percent */
+     two stood one over the other and read as one); the lean shortens a pin's rise by about one percent. The lean runs across
+     the rest view's line of sight (the surface's normal crossed with it), first one way, then the other, so no pin leans
+     toward or away from the reader at rest (expert review, 22 Nov 2026) */
   function pin(lat, lon, hgt, col, i, k, nk) {
     var n = ll(lat, lon, 1), p = m.part('pin' + i, { ex: [n[0] * 0.35, n[1] * 0.35, n[2] * 0.35], seq: 1 + (i % 6), pri: 1 });
     var a = ll(lat, lon, 1), foot = [], u = Math.abs(n[1]) < 0.9 ? [0, 1, 0] : [1, 0, 0];
     var e1 = [n[1] * u[2] - n[2] * u[1], n[2] * u[0] - n[0] * u[2], n[0] * u[1] - n[1] * u[0]], L1 = Math.hypot(e1[0], e1[1], e1[2]); e1 = [e1[0] / L1, e1[1] / L1, e1[2] / L1];
     var e2 = [n[1] * e1[2] - n[2] * e1[1], n[2] * e1[0] - n[0] * e1[2], n[0] * e1[1] - n[1] * e1[0]];
-    var ph = nk > 1 ? k * TAU / nk + 0.6 : 0, lean = nk > 1 ? Math.tan(9 * RAD) : 0, d = [n[0] + lean * (e1[0] * Math.cos(ph) + e2[0] * Math.sin(ph)), n[1] + lean * (e1[1] * Math.cos(ph) + e2[1] * Math.sin(ph)), n[2] + lean * (e1[2] * Math.cos(ph) + e2[2] * Math.sin(ph))], dl = Math.hypot(d[0], d[1], d[2]);
+    var ac = [n[1] * SIGHT[2] - n[2] * SIGHT[1], n[2] * SIGHT[0] - n[0] * SIGHT[2], n[0] * SIGHT[1] - n[1] * SIGHT[0]], al = Math.hypot(ac[0], ac[1], ac[2]) || 1;
+    var lean = nk > 1 ? Math.tan(9 * RAD) * (k % 2 ? -1 : 1) / al : 0, d = [n[0] + lean * ac[0], n[1] + lean * ac[1], n[2] + lean * ac[2]], dl = Math.hypot(d[0], d[1], d[2]);
     var b = [a[0] + d[0] / dl * hgt, a[1] + d[1] / dl * hgt, a[2] + d[2] / dl * hgt];
     for (var q = 0; q <= 16; q++) { var t = q * TAU / 16; foot.push([a[0] + 0.016 * (e1[0] * Math.cos(t) + e2[0] * Math.sin(t)), a[1] + 0.016 * (e1[1] * Math.cos(t) + e2[1] * Math.sin(t)), a[2] + 0.016 * (e1[2] * Math.cos(t) + e2[2] * Math.sin(t))]); }
     m.wire(foot, { col: col, lw: 0.8, vis: a, c: a });
@@ -64,12 +77,12 @@ R('globe', function (m) {
   var head = function (q) { var v = HEAD[q.i]; return [v[0], v[1], v[2], partOf(q.i)]; };
   // the globe turns, so each label carries its country's pins (track): a leader fades in as a pin comes round to the label's
   // side and out as it nears the rim. The first pin sets the label's height in the drawn view
-  [['Netherlands', 'l'], ['United States', 'l'], ['China', 'r'], ['South Korea', 'r'], ['Japan', 'r'], ['Taiwan', 'r']].forEach(function (c) {
+  [['Netherlands', 'r'], ['United States', 'r'], ['China', 'l'], ['South Korea', 'l'], ['Japan', 'l'], ['Taiwan', 'l']].forEach(function (c) {
     var ps = PINS[c[0]];
     m.callout([head(ps[0])], c[0], { side: c[1] });
     var co = m.callouts[m.callouts.length - 1];
     co.track = ps.map(head);
     co.focus = ps.map(function (q) { return partOf(q.i); });
   });
-  return { elev: 36 * RAD, yaw: -72 * RAD, spin: 0.06, start: 1, rest: 0, maxH: 430, accent: [122, 31, 43], accentDark: [201, 83, 106] };
+  return { elev: ELEV, yaw: YAW, spin: 0.06, start: 1, rest: 0, maxH: 430, accent: [122, 31, 43], accentDark: [201, 83, 106] };
 });

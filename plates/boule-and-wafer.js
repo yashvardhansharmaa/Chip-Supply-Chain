@@ -4,10 +4,15 @@
    the standard for polished 300 mm wafers; 22 Nov 2026 review: they were drawn 4 mm thick under "Drawn to scale").
    The length, the crown, the tail, the seed and the neck have no allowed source for their sizes, so they are drawn for
    illustration and carry no figures (the caption says so; the 2.1 m dimension is gone). Colours (the set's legend,
-   22 Nov 2026): the wafers in silicon slate, as on every plate. */
+   22 Nov 2026): the wafers in silicon slate, as on every plate.
+   22 Nov 2026 expert review: silicon is slate across the set, so the ingot is drawn in the wafers' slate, and with it the
+   neck and the seed, which are the same silicon crystal (they were gray, as if another material). The notch is drawn for
+   illustration too, and the caption says so. */
 R('boule-and-wafer', function (m) {
   var Rb = 0.15, wT = 0.000775 / 2, yTip = -0.71, yB0 = -0.45, yB1 = 1.05, Rc = Rb * 1.03;
   var ing = m.part('ingot', { ex: [0, 0, 0], seq: 0 });
+  // the crystal's slate: the wafers' tone, on a turned surface
+  var SI = { d: 0.17, c: 'acc', curve: true }, SI_FLAT = 'accLight';
   var prof = [[0, yTip], [0.038, yTip], [0.078, yTip + 0.045, 0], [0.110, yTip + 0.095, 0], [0.133, yTip + 0.16, 0], [0.146, yTip + 0.215, 0], [Rb, yB0]];
   // growth striations on the ground body, as fine rings, and the two saw cuts the wafers came from
   var cuts = [-0.30, -0.24];
@@ -16,14 +21,14 @@ R('boule-and-wafer', function (m) {
   prof.push([0, 1.40]);
   // the ingot, the neck and the seed are solids of their own, so each lights alone when its part is pointed at
   m.tag('ingot');
-  m.revolve(prof, 'turned', { seg: 48 });
+  m.revolve(prof, SI, { seg: 48 });
   m.tag('neck');
-  m.cyl([0, 1.465, 0], 0.0052, 0.13, 'turned', { seg: 12 });
+  m.cyl([0, 1.465, 0], 0.0052, 0.13, SI, { seg: 12 });
   // the saw cuts: the slab the wafers came from, dashed round the body
   m.tag('ingot');
   cuts.forEach(function (cy) { m.wire(H.ring(0, cy, 0, Rb * 1.004, 48), { lw: 0.6, dash: [3, 2], alpha: 0.85, c: [0, cy, 0.2] }); });
   m.tag('seed');
-  m.box({ c: [0, 1.565, 0], s: [0.015, 0.07, 0.015] }, 'mid');
+  m.box({ c: [0, 1.565, 0], s: [0.015, 0.07, 0.015] }, SI_FLAT);
   m.tag(null);
   m.cyl([0, 1.6225, 0], 0.026, 0.045, 'turnedDark', { seg: 20 });
   m.anchor(1, 'Seed', [0, 1.565, 0]); m.anchor(2, 'Neck', [0, 1.465, 0]); m.anchor(3, 'Ingot', [-0.05, 0.3, Rb * 0.8]);

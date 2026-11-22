@@ -3,9 +3,12 @@
    estimate, data/landscape-layouts.json; the caption says so), the heights drawn far taller than they are.
    22 Nov 2026 review: the base die is silicon, so it is drawn in ink and copper means copper: the through-silicon vias and
    the microbumps, where the quarter cut passes through them. The loupe (LOUPE, below) carries only figures with an allowed
-   source: microbumps about 20 micrometres apart (SK hynix, chapter 9) in a 7 micrometre gap between dies (Samsung's 12-high
-   HBM3E release, 27 Feb 2024). The hair and the 30 micrometre die figure had none and are gone. Set LOUPE to false to drop
-   it. Colours (the set's legend): copper only. */
+   source: microbumps about 20 micrometres apart (a tech note on SK hynix's newsroom, chapter 9) in a gap between dies as
+   small as 7 micrometres (Samsung's 12-high HBM3E release, 27 Feb 2024, a record gap). The hair and the 30 micrometre die
+   figure had none and are gone. Set LOUPE to false to drop it. Colours (the set's legend): copper only.
+   22 Nov 2026 expert review: the loupe's caption says the dies are not to scale and gives the gap as "as small as 7 um" (it
+   read as a typical gap); the 20 um bar has witness lines up to the bump row it measures; the gaps round the bumps are filled
+   with a pale neutral, as film or underfill fills them (chapter 9), where they were empty, as if air. */
 var LOUPE = true;
 R('hbm-stack', function (m) {
   var hw = 5.3, bw = 5.5, t = 0.45, bt = 0.9, gap0 = 0.105, pitch = t + gap0, EX = 0.62;
@@ -64,28 +67,33 @@ R('hbm-stack', function (m) {
   [[-hw, -hw], [hw, -hw], [-hw, hw]].forEach(function (c) { m.guide([[c[0], 0, c[1], base.idx], [c[0], gap0 + pitch * 11, c[1], prev.idx]], { alpha: 0.6 }); });
   // what each numbered part lights, as its light table in data/specimen-parts.json does: every memory die in ink, every via and
   // every microbump in copper
-  var loupe = LOUPE ? { model: 'hbm-loupe', at: [TX * 2.5, gap0 + pitch * 9 + t / 2, hw * 0.55], part: 'die10', side: 'r', r: 0.155, rMax: 100, scale: 0.6, dx: -0.1, dy: 0.04, caption: ['Microbumps about 20\u00a0\u00b5m apart', 'in a 7\u00a0\u00b5m gap'] } : null;
+  var loupe = LOUPE ? { model: 'hbm-loupe', at: [TX * 2.5, gap0 + pitch * 9 + t / 2, hw * 0.55], part: 'die10', side: 'r', r: 0.155, rMax: 100, scale: 0.6, dx: -0.1, dy: 0.04, caption: ['Microbumps about 20\u00a0\u00b5m apart', 'in a gap as small as 7\u00a0\u00b5m.', 'Dies not to scale'] } : null;
   return { elev: PLATE.ISO.elev, yaw: PLATE.ISO.yaw, sortAxis: [0, 1, 0], loupe: loupe, calloutOpts: { 1: { tag: 'dies', only: 'ink' }, 3: { tag: 'tsv', only: 'accent' }, 4: { tag: 'bumps', only: 'accent' } }, accent: [176, 102, 44], accentDark: [224, 154, 92] };
 });
 
 /* The loupe's own small plate, in micrometres, seen almost face on so its cut face reads as a section: three dies with the
-   microbumps between them, 20 um apart (SK hynix's typical microbump spacing, chapter 9), in a 7 um gap (Samsung's 12-high
-   HBM3E release), and a via through each die. The dies' thickness and the vias' width are drawn, not sourced, so they carry no
-   figure. */
+   microbumps between them, 20 um apart (the typical microbump spacing in a tech note on SK hynix's newsroom, chapter 9), in a
+   7 um gap (the smallest in Samsung's 12-high HBM3E release), and a via through each die. The dies' thickness and the vias'
+   width are drawn, not sourced, so they carry no figure, and the caption says the dies are not to scale. The gap round the
+   bumps is filled in a pale neutral (film or underfill, chapter 9). */
 R('hbm-loupe', function (m) {
   var bar = PLATE.loupeBar, tag = PLATE.loupeTag;
   function bx(x0, y0, z0, x1, y1, z1, mat, fmat) { return m.box({ c: [(x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2], s: [x1 - x0, y1 - y0, z1 - z0], fmat: fmat }, mat); }
   m.part('st', { mode: 'stack' });
   // (designer pass, 22 Nov 2026: the section is narrower and stands left of the disc's middle, so the gap's figure sits in
   // clear ground beside it and the die's name over the stack, neither on the cut faces nor past the disc's edge)
-  var t = 30, g = 7, Z = 40, x0 = -50, x1 = 50, n = 3, P = 20;
+  var t = 30, g = 7, Z = 40, x0 = -50, x1 = 50, n = 3, P = 20, FILL = { d: 0.08 }, FILL_CUT = { d: 0.12 };
   for (var i = 0; i < n; i++) {
     var y0 = i * (t + g);
     bx(x0, y0, -Z, x1, y0 + t, Z, 'light', { pz: 'cut' });
-    if (i < n - 1) for (var bp = x0 + 10; bp < x1 - 5; bp += P) bx(bp - 4.5, y0 + t, -2, bp + 4.5, y0 + t + g, Z, 'acc', { pz: 'cutAcc' });
+    if (i < n - 1) {
+      // the fill round the bumps, its cut face just behind theirs
+      bx(x0, y0 + t, -Z, x1, y0 + t + g - 0.05, Z - 0.4, FILL, { pz: FILL_CUT });
+      for (var bp = x0 + 10; bp < x1 - 5; bp += P) bx(bp - 4.5, y0 + t, -2, bp + 4.5, y0 + t + g, Z, 'acc', { pz: 'cutAcc' });
+    }
     [x0 + 10, x0 + 70].forEach(function (vx) { bx(vx - 2.2, y0, -2, vx + 2.2, y0 + t, Z + 0.02, 'acc', { pz: 'cutAcc' }); });
   }
-  bar(m, [x0 + 30, -8, Z], [x0 + 50, -8, Z], '20 \u00b5m', { side: -1 });
+  bar(m, [x0 + 30, -8, Z], [x0 + 50, -8, Z], '20 \u00b5m', { side: -1, wit: [[x0 + 30, t, Z], [x0 + 50, t, Z]] });
   bar(m, [x1 + 22, t, Z + 1], [x1 + 22, t + g, Z + 1], '7 \u00b5m', { side: 1 });
   tag(m, [-6, n * t + (n - 1) * g + 17, -Z], 'Memory die', {});
   return { elev: 0.16, yaw: -0.14, accent: [176, 102, 44], accentDark: [224, 154, 92] };

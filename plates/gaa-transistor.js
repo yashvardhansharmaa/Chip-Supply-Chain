@@ -6,21 +6,27 @@
    simplified and the label carries no figure. The five parts chapter 8's "How a transistor is built" names are numbered,
    from data/specimen-parts.json (source, drain, silicon sheets, gate metal, inner spacers). The drain was pulled along a
    diagonal (0.62, 0, -0.62), which ran its trace lines level across the page. Colours (the set's legend): the sheets in
-   silicon slate; the gate metal is ink (it is not gold). */
+   silicon slate; the gate metal is ink (it is not gold).
+   22 Nov 2026 expert review: an inner spacer stands at every level the gate fills between the source and drain, so a third
+   level sits under the bottom sheet, beside the gate below it, on both halves (arXiv 2201.04725; imec, "Entering the
+   nanosheet transistor era"); there were two levels for three sheets. Silicon is slate across the set: the substrate in the
+   sheets' slate, the source and drain, which are doped silicon, in a lighter slate tint, so the sheets read apart from them. */
 R('gaa-transistor', function (m) {
   var sT = 6, sW = 30, y0 = [0, 16, 32], gX = 7.5, spX = 12.5, gY0 = -11, gY1 = 45, gZ = 19, PULL = 62;
-  var GATE = { d: 0.25 }, GATECUT = { d: 0.06, hatch: 1 };
+  var GATE = { d: 0.25 }, GATECUT = { d: 0.06, hatch: 1 }, SUB = 'acc', SUBCUT = 'cutAcc', SD = { d: 0.11, c: 'acc' };
+  // the inner spacers' levels: under the bottom sheet, beside the gate below it, and between each pair of sheets
+  var SPL = [[gY0, 0], [sT, 16], [22, 32]];
   function bx(x0, ya, z0, x1, yb, z1, mat, fm, dec) { return m.box({ c: [(x0 + x1) / 2, (ya + yb) / 2, (z0 + z1) / 2], s: [x1 - x0, yb - ya, z1 - z0], fmat: fm, decals: dec }, mat); }
   var epiShape = [[12.5, -13], [16.3, -17], [20.2, -17], [24, -13], [24, 13], [20.2, 17], [16.3, 17], [12.5, 13]];
   // source half, cut at x = 0
   var L = m.part('source', { mode: 'fixed', ex: [0, 0, 0], seq: 0 });
-  bx(-30, -23, -25, 0, -16, 25, 'mid', { px: 'cut' });
+  bx(-30, -23, -25, 0, -16, 25, SUB, { px: SUBCUT });
   bx(-27, -16, -22, 0, -11, 22, 'steel', { px: 'cut' });
   m.tag('src');
-  m.prism(epiShape.map(function (q) { return [-q[0], q[1]]; }), -2, 40, 'light', {});
+  m.prism(epiShape.map(function (q) { return [-q[0], q[1]]; }), -2, 40, SD, {});
   m.tag('spacer');
   // (the spacers a pale grey, so they read apart from the gate metal, in ink, round them: designer pass, 22 Nov 2026)
-  [[sT, 16], [22, 32]].forEach(function (b) { bx(-spX, b[0], -sW / 2, -gX, b[1], sW / 2, 'steel'); });
+  SPL.forEach(function (b) { bx(-spX, b[0], -sW / 2, -gX, b[1], sW / 2, 'steel'); });
   m.tag('sheet');
   y0.forEach(function (yb) { bx(-spX, yb, -sW / 2, -gX, yb + sT, sW / 2, 'acc'); });
   m.tag('gate');
@@ -33,12 +39,12 @@ R('gaa-transistor', function (m) {
   bx(-23, 40, -10, -14.5, 48, 10, 'dark');
   // drain half, pulled away along the channel
   var Rr = m.part('drain', { mode: 'fixed', ex: [PULL, 0, 0], seq: 1 });
-  bx(0, -23, -25, 30, -16, 25, 'mid');
+  bx(0, -23, -25, 30, -16, 25, SUB);
   bx(0, -16, -22, 27, -11, 22, 'steel');
   m.tag('gate');
   bx(0, gY0, -gZ, gX, gY1, gZ, GATE);
   m.tag('spacer');
-  [[sT, 16], [22, 32]].forEach(function (b) { bx(gX, b[0], -sW / 2, spX, b[1], sW / 2, 'steel'); });
+  SPL.forEach(function (b) { bx(gX, b[0], -sW / 2, spX, b[1], sW / 2, 'steel'); });
   m.tag('sheet');
   y0.forEach(function (yb) { bx(gX, yb, -sW / 2, spX, yb + sT, sW / 2, 'acc'); });
   m.tag(null);
@@ -47,7 +53,7 @@ R('gaa-transistor', function (m) {
   // spacers between them face the reader in the gap it leaves; at the half's own pull they showed only as slivers
   var DG = 26, Re = m.part('drainEpi', { mode: 'fixed', ex: [PULL + DG, 0, 0], seq: 2 });
   m.tag('drn');
-  m.prism(epiShape, -2, 40, 'light', {});
+  m.prism(epiShape, -2, 40, SD, {});
   m.tag(null);
   var cR = m.part('contactD', { ex: [PULL + DG, 10, 0], seq: 4 });
   bx(14.5, 40, -10, 23, 48, 10, 'dark');

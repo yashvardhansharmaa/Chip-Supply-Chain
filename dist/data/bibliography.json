@@ -6916,11 +6916,31 @@
     "type": "regulation",
     "accessed": "2026-11-20"
   },
+  "https://www.formfactor.com/applications/high-volume-test-on-wafer/ai-processors/": {
+    "title": "AI Processor Testing - Wafer-Level Test Solutions",
+    "publisher": "FormFactor",
+    "date": "2025-01-24",
+    "type": "page",
+    "accessed": "2026-11-22"
+  },
+  "https://www.formfactor.com/company/accelerate-profitability/": {
+    "title": "Accelerating Profitability - Expertise & Infrastructure",
+    "publisher": "FormFactor",
+    "date": "2025-07-11",
+    "type": "page",
+    "accessed": "2026-11-22"
+  },
   "https://www.govinfo.gov/content/pkg/FR-2026-11-19/pdf/2026-23529.pdf": {
     "title": "Addressing Remote Access to Advanced Semiconductors",
     "publisher": "U.S. Government Publishing Office (Federal Register)",
     "date": "2026-11-19",
     "type": "pdf",
     "accessed": "2026-11-20"
+  },
+  "https://www.supermicro.com/datasheet/datasheet_SuperCluster_GB200_NVL72.pdf": {
+    "title": "SuperCluster GB200 NVL72 datasheet",
+    "publisher": "Supermicro",
+    "date": "2025-02",
+    "type": "pdf"
   }
 }

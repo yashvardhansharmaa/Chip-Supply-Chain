@@ -8,7 +8,7 @@
   "openOnExplainer": true,
   "bridge": "Nothing yet proves that any of it works, and a package this far along is worth too much to guess about.",
   "specimen": "probe-card",
-  "specimenCaption": "A vertical probe card over a 300 mm wafer, pulled apart, its needles pointing straight down at four dies. The dies are drawn at 26 by 33 mm, the largest area a scanner can print. A real card has thousands of needles, and here a few rows stand for them. Each card is built for one chip design. Every needle must touch down in the same plane, again and again, while hot.",
+  "specimenCaption": "A vertical probe card over a 300 mm wafer, pulled apart, its needles pointing straight down at four dies. The dies are drawn at 26 by 33 mm, the largest area a scanner prints in one exposure. A real card has thousands of needles, and here a few rows stand for them. Each card is built for one chip design. Every needle must touch down in the same plane, again and again, while hot.",
   "card": {
     "concentration": "High",
     "chokepointScore": 4,
@@ -92,7 +92,7 @@ Before a chip can be sold, a machine called a tester has to check that it works.
 
 Each round of test catches failures the round before it cannot see.
 
-- **Wafer sort.** Thousands of needles land on each die while it is still on the wafer. A tester sends in test patterns and checks the answers, and dies that fail go no further.
+- **Wafer sort.** Thousands of needles land on each die while it is still on the wafer ([source](https://www.formfactor.com/applications/high-volume-test-on-wafer/ai-processors/)). A tester sends in test patterns and checks the answers, and dies that fail go no further.
 - **Burn-in.** The part runs hot and at raised voltage for minutes to days, on the wafer or in the package, so that early-life failures happen in the factory, before the part ships ([source](https://www.sec.gov/Archives/edgar/data/1040470/000165495426006919/aehr_10k.htm)).
 - **Final test.** The tester checks the packaged part again, because packaging adds failures of its own.
 - **System-level test.** The finished part sits in a socket and runs something close to a real workload, because some failures appear only when everything runs at once.
@@ -103,7 +103,7 @@ As the parts in a package grow more valuable, finding a bad die before packaging
 
 ### Wafer sort and known-good die
 
-The hard part of wafer sort is the probe card, the circuit board that holds the needles. For a large logic die every needle must sit in the same plane, survive repeated touchdowns without drifting, and do it hot. Each card is built for one chip design, so every new design needs a new card and a new qualification. FormFactor, an American probe card maker, says its cards work at high enough frequencies to compete well in testing high-bandwidth memory, a stack of eight, twelve or sixteen memory dies ([source](https://www.sec.gov/Archives/edgar/data/1039399/000103939926000009/form-20251227.htm)).
+The hard part of wafer sort is the probe card, the circuit board that holds the needles. For a large logic die every needle must sit in the same plane, survive repeated touchdowns without drifting, and do it hot ([source](https://www.formfactor.com/applications/high-volume-test-on-wafer/ai-processors/)). Each card is built for one chip design, so every new design needs a new card and a new qualification ([source](https://www.formfactor.com/company/accelerate-profitability/)). FormFactor, an American probe card maker, says its cards work at high enough frequencies to compete well in testing high-bandwidth memory, a stack of eight, twelve or sixteen memory dies ([source](https://www.sec.gov/Archives/edgar/data/1039399/000103939926000009/form-20251227.htm)).
 
 ### Final test, burn-in and system-level test
 

@@ -565,7 +565,10 @@
   // a name or a figure may run to two lines ('\n'); a name may carry a short leader to the point it names (o.lead, in the loupe
   // model's units), so it can stand in the disc's clear ground beside the drawing (22 Nov 2026 designer pass: names laid over
   // the layers they named collided with them)
-  P.loupeBar = function (m, a, b, text, o) { o = o || {}; (m.bars || (m.bars = [])).push({ a: a, b: b, text: text, side: o.side, tx: o.tx, ty: o.ty, align: o.align }); };
+  // a bar may carry witness lines (o.wit: the two points its ends measure, in the loupe model's units), drawn from the
+  // points to just past the bar's ends, so a bar set beside a row reads as measuring that row (22 Nov 2026 expert review: the
+  // HBM loupe's 20 um bar sat under a die with nothing to say it measured the bumps above it)
+  P.loupeBar = function (m, a, b, text, o) { o = o || {}; (m.bars || (m.bars = [])).push({ a: a, b: b, text: text, side: o.side, tx: o.tx, ty: o.ty, align: o.align, wit: o.wit || null }); };
   P.loupeTag = function (m, at, text, o) { o = o || {}; (m.tags || (m.tags = [])).push({ at: at, text: text, dx: o.dx, dy: o.dy, align: o.align, col: o.col, lead: o.lead || null }); };
 
   /* ---------------- drawing back-ends ---------------- */
@@ -1247,6 +1250,11 @@
       var widthOf = function (text, wt) { return Math.max.apply(null, String(text).split('\n').map(function (ln) { return g.measure(ln, { size: size, weight: wt }); })); };
       (lp.m.bars || []).forEach(function (b) {
         var a = pj(b.a), c = pj(b.b), bx = c[0] - a[0], by = c[1] - a[1], Ln = Math.hypot(bx, by) || 1, nx = -by / Ln, ny = bx / Ln, tk = 4;
+        if (b.wit) [[b.wit[0], a], [b.wit[1], c]].forEach(function (pr) {
+          var w = pj(pr[0]), e = pr[1], ux = e[0] - w[0], uy = e[1] - w[1], ul = Math.hypot(ux, uy) || 1; ux /= ul; uy /= ul;
+          var seg = [[w[0] + ux * 2, w[1] + uy * 2], [e[0] + ux * 3.5, e[1] + uy * 3.5]];
+          g.lines([seg], bgC, 2.6, null, 0.9, 'butt'); g.lines([seg], txt, 0.75, null, 0.85, 'butt');
+        });
         g.lines([[a, c]], bgC, 4.2, null, 1, 'butt'); g.lines([[a, c]], txt, 1.2, null, 1, 'butt');
         g.lines([[[a[0] + nx * tk, a[1] + ny * tk], [a[0] - nx * tk, a[1] - ny * tk]], [[c[0] + nx * tk, c[1] + ny * tk], [c[0] - nx * tk, c[1] - ny * tk]]], txt, 1.1, null, 1, 'butt');
         var sd = b.side || 1, tw = widthOf(b.text, 600), nl = String(b.text).split('\n').length, th = nl * lh, tx = (a[0] + c[0]) / 2 + (b.tx || 0), ty = (a[1] + c[1]) / 2 + (b.ty || 0), al = 'center';
@@ -1349,11 +1357,13 @@
         var pts, wts = null, my = 0, mx = 0, base = (rows && c.rowAt ? c.rowAt : c.pts).map(function (q) { return proj(q, q[3] == null ? c.part : q[3]); });
         if (c.track) {
           // the globe's labels point at whichever of their towns face the reader: a leader fades in as its town comes round
-          // and out as it nears the rim, and the label stays where it is
+          // and out as it nears the rim, and the label stays where it is. (22 Nov 2026 expert review: the fade runs from 81 to
+          // 66 degrees off the line of sight, where it ran from 73 to 57, so a pin standing in full view on the rest view's
+          // upper rim, the Netherlands', keeps its label in full ink)
           pts = []; wts = [];
           c.track.forEach(function (q) {
             var o = O[q[3]], x = q[0] + o[0], y = q[1] + o[1], z = q[2] + o[2], L = Math.hypot(x, y, z) || 1;
-            var f = (R[6] * x + R[7] * y + R[8] * z) / L, wt = clamp01((f - 0.3) / 0.25), pq = proj(q, q[3]), G0 = self._globe;
+            var f = (R[6] * x + R[7] * y + R[8] * z) / L, wt = clamp01((f - 0.15) / 0.25), pq = proj(q, q[3]), G0 = self._globe;
             // and not from the far side of the disc, so a leader never runs across the whole globe
             if (G0 && c.side) { var u = (pq[0] - G0.x) / G0.r * (c.side === 'l' ? -1 : 1); wt *= clamp01((u + 0.5) / 0.35); }
             if (wt > 0.01) { pts.push(pq); wts.push(wt * wt * (3 - 2 * wt)); }
@@ -1674,6 +1684,14 @@
             L.pts.forEach(function (q, qi) {
               var wq = L.wts ? L.wts[qi] : 1, A = sn && sn[qi] ? [q[0] + sn[qi][0], q[1] + sn[qi][1]] : [q[0], q[1]];
               var Pp = shapePath(A, y, sd, shp ? shp[qi] : 'D', th) || shapePath(A, y, sd, 'D', th);
+              // a globe's leader that would run through another of its label's pin heads is left out, and the label points at
+              // the nearer pin (22 Nov 2026 expert review: on the new rest view the Netherlands' two heads stand level, and the
+              // leader to the far one ran through the near one); pointing at the label still lights both
+              if (c.track && Pp && Pp.length > 1 && L.pts.some(function (o, oi) {
+                if (oi === qi || (L.wts && L.wts[oi] < 0.3)) return false;
+                var sx = Pp[1][0] - A[0], sy = Pp[1][1] - A[1], s2 = sx * sx + sy * sy || 1, tt = ((o[0] - A[0]) * sx + (o[1] - A[1]) * sy) / s2;
+                return tt > 0.02 && tt < 1 && Math.hypot(A[0] + sx * tt - o[0], A[1] + sy * tt - o[1]) < 6 * k;
+              })) return;
               // a leader to a globe's pin ends at the pin's head, which marks the spot itself: no dot of its own over it
               if (c.track && Pp.length > 1) { var hx = Pp[1][0] - Pp[0][0], hy = Pp[1][1] - Pp[0][1], hL = Math.hypot(hx, hy) || 1, hs = Math.min(4.5 * k, hL * 0.5); Pp = [[Pp[0][0] + hx / hL * hs, Pp[0][1] + hy / hL * hs]].concat(Pp.slice(1)); }
               var path = partial(Pp, la);
@@ -1839,10 +1857,15 @@ try{(function(PLATE){'use strict';var R = PLATE.register, D = PLATE.D, H = PLATE
    the standard for polished 300 mm wafers; 22 Nov 2026 review: they were drawn 4 mm thick under "Drawn to scale").
    The length, the crown, the tail, the seed and the neck have no allowed source for their sizes, so they are drawn for
    illustration and carry no figures (the caption says so; the 2.1 m dimension is gone). Colours (the set's legend,
-   22 Nov 2026): the wafers in silicon slate, as on every plate. */
+   22 Nov 2026): the wafers in silicon slate, as on every plate.
+   22 Nov 2026 expert review: silicon is slate across the set, so the ingot is drawn in the wafers' slate, and with it the
+   neck and the seed, which are the same silicon crystal (they were gray, as if another material). The notch is drawn for
+   illustration too, and the caption says so. */
 R('boule-and-wafer', function (m) {
   var Rb = 0.15, wT = 0.000775 / 2, yTip = -0.71, yB0 = -0.45, yB1 = 1.05, Rc = Rb * 1.03;
   var ing = m.part('ingot', { ex: [0, 0, 0], seq: 0 });
+  // the crystal's slate: the wafers' tone, on a turned surface
+  var SI = { d: 0.17, c: 'acc', curve: true }, SI_FLAT = 'accLight';
   var prof = [[0, yTip], [0.038, yTip], [0.078, yTip + 0.045, 0], [0.110, yTip + 0.095, 0], [0.133, yTip + 0.16, 0], [0.146, yTip + 0.215, 0], [Rb, yB0]];
   // growth striations on the ground body, as fine rings, and the two saw cuts the wafers came from
   var cuts = [-0.30, -0.24];
@@ -1851,14 +1874,14 @@ R('boule-and-wafer', function (m) {
   prof.push([0, 1.40]);
   // the ingot, the neck and the seed are solids of their own, so each lights alone when its part is pointed at
   m.tag('ingot');
-  m.revolve(prof, 'turned', { seg: 48 });
+  m.revolve(prof, SI, { seg: 48 });
   m.tag('neck');
-  m.cyl([0, 1.465, 0], 0.0052, 0.13, 'turned', { seg: 12 });
+  m.cyl([0, 1.465, 0], 0.0052, 0.13, SI, { seg: 12 });
   // the saw cuts: the slab the wafers came from, dashed round the body
   m.tag('ingot');
   cuts.forEach(function (cy) { m.wire(H.ring(0, cy, 0, Rb * 1.004, 48), { lw: 0.6, dash: [3, 2], alpha: 0.85, c: [0, cy, 0.2] }); });
   m.tag('seed');
-  m.box({ c: [0, 1.565, 0], s: [0.015, 0.07, 0.015] }, 'mid');
+  m.box({ c: [0, 1.565, 0], s: [0.015, 0.07, 0.015] }, SI_FLAT);
   m.tag(null);
   m.cyl([0, 1.6225, 0], 0.026, 0.045, 'turnedDark', { seg: 20 });
   m.anchor(1, 'Seed', [0, 1.565, 0]); m.anchor(2, 'Neck', [0, 1.465, 0]); m.anchor(3, 'Ingot', [-0.05, 0.3, Rb * 0.8]);
@@ -2068,9 +2091,13 @@ try{(function(PLATE){'use strict';var R = PLATE.register, D = PLATE.D, H = PLATE
    the projection optics stand side by side. The 13.5 nm light runs on through every gap.
    22 Nov 2026 review, made true at rest (the plate rests exploded, so every node is placed and every mirror aimed in the rest
    positions, REST below):
-   - the light meets the mask and leaves it at the same angle, 5.4 degrees from the mask's normal, the chief-ray angle in the
-     imec and PTB paper chapter 5 cites (arxiv.org/abs/1912.09075); it was 17 degrees in and 36 out;
-   - the mask and the wafer are both drawn at twice their size, as the caption says: the mask 152.4 mm square and 6.35 mm thick
+   - the light meets the mask and leaves it at the same angle, 6 degrees from the mask's normal, the chief-ray angle of a
+     0.33-NA, 4x scanner (Lawrence Berkeley National Laboratory, "Upgrade to the SHARP EUV mask microscope", SPIE 10957,
+     26 Mar 2019, escholarship.org/uc/item/9vh7g4rm: the SHARP zoneplates match the scanners' chief-ray angle, 6 degrees). It
+     was 17 degrees in and 36 out, then 5.4 degrees, the angle the imec and PTB paper (arxiv.org/abs/1912.09075) uses for a
+     0.55-NA, High-NA scanner (22 Nov 2026 expert review);
+   - the mask and the wafer are both drawn at twice their size (the caption says they are drawn large, since the machine
+     they are measured against is itself simplified): the mask 152.4 mm square and 6.35 mm thick
      (Hoya's US patent 9,494,851), the wafer 300 mm across and 775 micrometres thick (SEMI M1); they were 4x and 1.6x;
    - the last mirror sits straight over the wafer, so the wafer stage drops along its beam.
    Colours (the set's legend): the light in the beam hue, the wafer in silicon slate (acc2), as on every plate. */
@@ -2082,7 +2109,7 @@ R('euv-scanner', function (m) {
   var PLASMA = [-1.14, -1.34], COLL = [-1.80, -1.34];
   // the mask stands over the seam between the illuminator and the projection optics; the illuminator's last mirror and the
   // optics' first stand level with each other, either side of it, so the light comes in and goes out at the same angle
-  var XM = 0.19, YM = 1.68, YS = 0.18, CRA = 5.4 * Math.PI / 180, DX = (YM + EXS.ret[1] - YS) * Math.tan(CRA);
+  var XM = 0.19, YM = 1.68, YS = 0.18, CRA = 6 * Math.PI / 180, DX = (YM + EXS.ret[1] - YS) * Math.tan(CRA);
   var NODE = [
     { p: [-0.56, -1.34], k: 'ap', o: 'ill' }, { p: [-0.24, -0.82], k: 'm', r: 0.20, o: 'ill' }, { p: [-0.98, -0.10], k: 'm', r: 0.30, o: 'ill' }, { p: [XM - DX, YS], k: 'm', r: 0.11, o: 'ill' },
     { p: [XM, YM], k: 'ret', o: 'ret' },
@@ -2181,21 +2208,27 @@ try{(function(PLATE){'use strict';var R = PLATE.register, D = PLATE.D, H = PLATE
    simplified and the label carries no figure. The five parts chapter 8's "How a transistor is built" names are numbered,
    from data/specimen-parts.json (source, drain, silicon sheets, gate metal, inner spacers). The drain was pulled along a
    diagonal (0.62, 0, -0.62), which ran its trace lines level across the page. Colours (the set's legend): the sheets in
-   silicon slate; the gate metal is ink (it is not gold). */
+   silicon slate; the gate metal is ink (it is not gold).
+   22 Nov 2026 expert review: an inner spacer stands at every level the gate fills between the source and drain, so a third
+   level sits under the bottom sheet, beside the gate below it, on both halves (arXiv 2201.04725; imec, "Entering the
+   nanosheet transistor era"); there were two levels for three sheets. Silicon is slate across the set: the substrate in the
+   sheets' slate, the source and drain, which are doped silicon, in a lighter slate tint, so the sheets read apart from them. */
 R('gaa-transistor', function (m) {
   var sT = 6, sW = 30, y0 = [0, 16, 32], gX = 7.5, spX = 12.5, gY0 = -11, gY1 = 45, gZ = 19, PULL = 62;
-  var GATE = { d: 0.25 }, GATECUT = { d: 0.06, hatch: 1 };
+  var GATE = { d: 0.25 }, GATECUT = { d: 0.06, hatch: 1 }, SUB = 'acc', SUBCUT = 'cutAcc', SD = { d: 0.11, c: 'acc' };
+  // the inner spacers' levels: under the bottom sheet, beside the gate below it, and between each pair of sheets
+  var SPL = [[gY0, 0], [sT, 16], [22, 32]];
   function bx(x0, ya, z0, x1, yb, z1, mat, fm, dec) { return m.box({ c: [(x0 + x1) / 2, (ya + yb) / 2, (z0 + z1) / 2], s: [x1 - x0, yb - ya, z1 - z0], fmat: fm, decals: dec }, mat); }
   var epiShape = [[12.5, -13], [16.3, -17], [20.2, -17], [24, -13], [24, 13], [20.2, 17], [16.3, 17], [12.5, 13]];
   // source half, cut at x = 0
   var L = m.part('source', { mode: 'fixed', ex: [0, 0, 0], seq: 0 });
-  bx(-30, -23, -25, 0, -16, 25, 'mid', { px: 'cut' });
+  bx(-30, -23, -25, 0, -16, 25, SUB, { px: SUBCUT });
   bx(-27, -16, -22, 0, -11, 22, 'steel', { px: 'cut' });
   m.tag('src');
-  m.prism(epiShape.map(function (q) { return [-q[0], q[1]]; }), -2, 40, 'light', {});
+  m.prism(epiShape.map(function (q) { return [-q[0], q[1]]; }), -2, 40, SD, {});
   m.tag('spacer');
   // (the spacers a pale grey, so they read apart from the gate metal, in ink, round them: designer pass, 22 Nov 2026)
-  [[sT, 16], [22, 32]].forEach(function (b) { bx(-spX, b[0], -sW / 2, -gX, b[1], sW / 2, 'steel'); });
+  SPL.forEach(function (b) { bx(-spX, b[0], -sW / 2, -gX, b[1], sW / 2, 'steel'); });
   m.tag('sheet');
   y0.forEach(function (yb) { bx(-spX, yb, -sW / 2, -gX, yb + sT, sW / 2, 'acc'); });
   m.tag('gate');
@@ -2208,12 +2241,12 @@ R('gaa-transistor', function (m) {
   bx(-23, 40, -10, -14.5, 48, 10, 'dark');
   // drain half, pulled away along the channel
   var Rr = m.part('drain', { mode: 'fixed', ex: [PULL, 0, 0], seq: 1 });
-  bx(0, -23, -25, 30, -16, 25, 'mid');
+  bx(0, -23, -25, 30, -16, 25, SUB);
   bx(0, -16, -22, 27, -11, 22, 'steel');
   m.tag('gate');
   bx(0, gY0, -gZ, gX, gY1, gZ, GATE);
   m.tag('spacer');
-  [[sT, 16], [22, 32]].forEach(function (b) { bx(gX, b[0], -sW / 2, spX, b[1], sW / 2, 'steel'); });
+  SPL.forEach(function (b) { bx(gX, b[0], -sW / 2, spX, b[1], sW / 2, 'steel'); });
   m.tag('sheet');
   y0.forEach(function (yb) { bx(gX, yb, -sW / 2, spX, yb + sT, sW / 2, 'acc'); });
   m.tag(null);
@@ -2222,7 +2255,7 @@ R('gaa-transistor', function (m) {
   // spacers between them face the reader in the gap it leaves; at the half's own pull they showed only as slivers
   var DG = 26, Re = m.part('drainEpi', { mode: 'fixed', ex: [PULL + DG, 0, 0], seq: 2 });
   m.tag('drn');
-  m.prism(epiShape, -2, 40, 'light', {});
+  m.prism(epiShape, -2, 40, SD, {});
   m.tag(null);
   var cR = m.part('contactD', { ex: [PULL + DG, 10, 0], seq: 4 });
   bx(14.5, 40, -10, 23, 48, 10, 'dark');
@@ -2359,9 +2392,19 @@ try{(function(PLATE){'use strict';var R = PLATE.register, D = PLATE.D, H = PLATE
    before the merge, and pinned Yokkaichi, a NAND fab, at full height for memory; the heights were the retired chokepoint
    score; the five ink pins for towns building alternatives are not in the table and are gone. The coast is still read from
    specimens/globe.js by build/plates.js (window.PLATE_GLOBE); the towns there are no longer read here (the summary map's
-   own copy is unchanged). The globe rests closed and keeps turning, slowly, about the Earth's axis. */
+   own copy is unchanged). The globe rests closed and keeps turning, slowly, about the Earth's axis.
+   22 Nov 2026 expert review: at the old rest view (yaw -72, elevation 36 degrees) the four US pins stood behind the globe,
+   their label over nothing, in reduced motion and the stills too, and the pins facing the reader were drawn far shorter than
+   their shares. The rest view now looks down from above the North Pacific (yaw 165, elevation 60 degrees), where every pin
+   and its label shows and no pin is drawn shorter than about two thirds of its length (the caption says pins that point
+   toward the reader are drawn shorter). Higher views keep the lengths closer still, but from about 64 degrees the land's
+   fill (src/plate.js, land) spills over the sea. A country's pins lean apart
+   across the line of sight of the rest view only, so none tips toward the reader. The labels take the sides the countries
+   show on: the Netherlands and the United States right, the four in Asia left. */
 R('globe', function (m) {
-  var RAD = Math.PI / 180, G = window.PLATE_GLOBE;
+  var RAD = Math.PI / 180, G = window.PLATE_GLOBE, YAW = 165 * RAD, ELEV = 60 * RAD;
+  // the line of sight at rest, from the globe's centre toward the reader (src/plate.js viewM's third row)
+  var SIGHT = [-Math.sin(YAW) * Math.cos(ELEV), Math.sin(ELEV), Math.cos(YAW) * Math.cos(ELEV)];
   function ll(lat, lon, r) { var a = lat * RAD, b = lon * RAD, c = Math.cos(a) * r; return [c * Math.sin(b), Math.sin(a) * r, c * Math.cos(b)]; }
   function unwrap(list) { var pts = [[list[0][0], list[0][1]]], prev = list[0][1]; for (var i = 1; i < list.length; i++) { var lon = list[i][1]; while (lon - prev > 180) lon -= 360; while (lon - prev < -180) lon += 360; pts.push([list[i][0], lon]); prev = lon; } return pts; }
   function dens(pts, r, step) { var out = []; for (var i = 0; i < pts.length; i++) { var a = pts[i], b = pts[(i + 1) % pts.length], n = Math.max(1, Math.ceil(Math.hypot(b[0] - a[0], (b[1] - a[1]) * Math.cos((a[0] + b[0]) / 2 * RAD)) / step)); for (var k = 0; k < n; k++) out.push(ll(a[0] + (b[0] - a[0]) * k / n, a[1] + (b[1] - a[1]) * k / n, r)); } return out; }
@@ -2389,13 +2432,16 @@ R('globe', function (m) {
   ROWS.forEach(function (r, i) { var k = used[r[1]] || 0; used[r[1]] = k + 1; var at = AT[r[1]][k]; (PINS[r[1]] || (PINS[r[1]] = [])).push({ i: i, lat: at[0], lon: at[1], h: HMAX * r[2] / 100 }); });
   /* a pin: a foot ring on the surface, a stem as long as the share, a head. Where a country leads several segments its pins lean
      a little apart, about 9 degrees each way, so each one shows (designer pass, 22 Nov 2026: the Netherlands' two and Taiwan's
-     two stood one over the other and read as one); the lean shortens a pin's rise by about one percent */
+     two stood one over the other and read as one); the lean shortens a pin's rise by about one percent. The lean runs across
+     the rest view's line of sight (the surface's normal crossed with it), first one way, then the other, so no pin leans
+     toward or away from the reader at rest (expert review, 22 Nov 2026) */
   function pin(lat, lon, hgt, col, i, k, nk) {
     var n = ll(lat, lon, 1), p = m.part('pin' + i, { ex: [n[0] * 0.35, n[1] * 0.35, n[2] * 0.35], seq: 1 + (i % 6), pri: 1 });
     var a = ll(lat, lon, 1), foot = [], u = Math.abs(n[1]) < 0.9 ? [0, 1, 0] : [1, 0, 0];
     var e1 = [n[1] * u[2] - n[2] * u[1], n[2] * u[0] - n[0] * u[2], n[0] * u[1] - n[1] * u[0]], L1 = Math.hypot(e1[0], e1[1], e1[2]); e1 = [e1[0] / L1, e1[1] / L1, e1[2] / L1];
     var e2 = [n[1] * e1[2] - n[2] * e1[1], n[2] * e1[0] - n[0] * e1[2], n[0] * e1[1] - n[1] * e1[0]];
-    var ph = nk > 1 ? k * TAU / nk + 0.6 : 0, lean = nk > 1 ? Math.tan(9 * RAD) : 0, d = [n[0] + lean * (e1[0] * Math.cos(ph) + e2[0] * Math.sin(ph)), n[1] + lean * (e1[1] * Math.cos(ph) + e2[1] * Math.sin(ph)), n[2] + lean * (e1[2] * Math.cos(ph) + e2[2] * Math.sin(ph))], dl = Math.hypot(d[0], d[1], d[2]);
+    var ac = [n[1] * SIGHT[2] - n[2] * SIGHT[1], n[2] * SIGHT[0] - n[0] * SIGHT[2], n[0] * SIGHT[1] - n[1] * SIGHT[0]], al = Math.hypot(ac[0], ac[1], ac[2]) || 1;
+    var lean = nk > 1 ? Math.tan(9 * RAD) * (k % 2 ? -1 : 1) / al : 0, d = [n[0] + lean * ac[0], n[1] + lean * ac[1], n[2] + lean * ac[2]], dl = Math.hypot(d[0], d[1], d[2]);
     var b = [a[0] + d[0] / dl * hgt, a[1] + d[1] / dl * hgt, a[2] + d[2] / dl * hgt];
     for (var q = 0; q <= 16; q++) { var t = q * TAU / 16; foot.push([a[0] + 0.016 * (e1[0] * Math.cos(t) + e2[0] * Math.sin(t)), a[1] + 0.016 * (e1[1] * Math.cos(t) + e2[1] * Math.sin(t)), a[2] + 0.016 * (e1[2] * Math.cos(t) + e2[2] * Math.sin(t))]); }
     m.wire(foot, { col: col, lw: 0.8, vis: a, c: a });
@@ -2414,14 +2460,14 @@ R('globe', function (m) {
   var head = function (q) { var v = HEAD[q.i]; return [v[0], v[1], v[2], partOf(q.i)]; };
   // the globe turns, so each label carries its country's pins (track): a leader fades in as a pin comes round to the label's
   // side and out as it nears the rim. The first pin sets the label's height in the drawn view
-  [['Netherlands', 'l'], ['United States', 'l'], ['China', 'r'], ['South Korea', 'r'], ['Japan', 'r'], ['Taiwan', 'r']].forEach(function (c) {
+  [['Netherlands', 'r'], ['United States', 'r'], ['China', 'l'], ['South Korea', 'l'], ['Japan', 'l'], ['Taiwan', 'l']].forEach(function (c) {
     var ps = PINS[c[0]];
     m.callout([head(ps[0])], c[0], { side: c[1] });
     var co = m.callouts[m.callouts.length - 1];
     co.track = ps.map(head);
     co.focus = ps.map(function (q) { return partOf(q.i); });
   });
-  return { elev: 36 * RAD, yaw: -72 * RAD, spin: 0.06, start: 1, rest: 0, maxH: 430, accent: [122, 31, 43], accentDark: [201, 83, 106] };
+  return { elev: ELEV, yaw: YAW, spin: 0.06, start: 1, rest: 0, maxH: 430, accent: [122, 31, 43], accentDark: [201, 83, 106] };
 });
 
 })(window.PLATE);}catch(e){console.warn('plate globe.js failed to load', e);}
@@ -2430,11 +2476,14 @@ try{(function(PLATE){'use strict';var R = PLATE.register, D = PLATE.D, H = PLATE
 /* =====================================================================================================
    13 Systems: an eight-GPU baseboard in the units of specimens/gpu-baseboard.js, simplified and not to scale (the caption
    says so): its sizes, 510 x 400 mm and 30 mm frames in the old file, have no allowed source, so the plate carries no
-   dimension. The eight accelerator modules lift out of their frames, showing the land grids they press onto.
+   dimension. Four of the eight accelerator modules lift off the board, showing the land grids they press onto.
    22 Nov 2026 review: each module now carries its package, drawn at this site's estimate for the B200 (95 x 68 mm, with its
    78 x 50 interposer and two logic dies, data/landscape-layouts.json) in the board's units, so no module is smaller than the
    package it carries (they were 75 x 83 mm against a 100 x 72 package). The two NVLink switch chips are silicon slate, so
-   they show (they were a pale gray that almost disappeared). Colours (the set's legend): silicon slate only. */
+   they show (they were a pale gray that almost disappeared). Colours (the set's legend): silicon slate only.
+   22 Nov 2026 expert review: no source names a frame round each module (chapter 13 says the modules bolt onto a baseboard),
+   so the "Module frames" label is gone and the caption says the modules are lifted off the board. The rims round each seat
+   stay drawn, unlabelled. */
 R('gpu-baseboard', function (m) {
   var U = 1.52 / 510; // board units per millimetre, if the board were drawn 510 mm wide
   var BW = 1.52, BD = 1.18, BH = 0.046, top = BH / 2, PKW = 68 * U, PKD = 95 * U, MH = 0.066, LW = PKW + 0.035, LD = PKD + 0.025, kerb = 0.022;
@@ -2462,7 +2511,7 @@ R('gpu-baseboard', function (m) {
   for (var i2 = 0; i2 < 13; i2++) { var vx = (i2 - 6) * 0.085; [-1, 1].forEach(function (s) { m.box({ c: [vx, top + 0.013, s * (BD / 2 - 0.05)], s: [0.044, 0.026, 0.044] }, 'mid'); }); }
   [-1, 1].forEach(function (s) { m.box({ c: [-BW / 2 + 0.062, top + 0.029, s * 0.17], s: [0.084, 0.058, 0.20] }, 'dark'); });
   for (i2 = 0; i2 < 4; i2++) { var pins = []; for (var k2 = 0; k2 < 14; k2++) pins.push(D.line([0.026, -0.017, (k2 - 6.5) * 0.0118], [0.026, 0.015, (k2 - 6.5) * 0.0118], { lw: 0.35, alpha: 0.8 })); m.box({ c: [BW / 2 - 0.042, top + 0.025, (i2 - 1.5) * 0.245], s: [0.052, 0.05, 0.185], decals: { px: pins } }, 'mid'); }
-  // the modules, lifted out of their frames: each a small board carrying its package (the substrate, its interposer and two
+  // the modules, lifted off the board: each a small board carrying its package (the substrate, its interposer and two
   // logic dies, at this site's B200 estimate)
   // the back row lifts out; the front row stays seated, so the switch chips between the rows stay in view
   var mp = m.part('modules', { ex: [0, 0.26, 0], seq: 1, mode: 'stack' }), mpS = null;
@@ -2483,8 +2532,6 @@ R('gpu-baseboard', function (m) {
   // (designer pass, 22 Nov 2026: one leader, to the lifted module nearest the labels, which crosses nothing; the second ran
   // 93 px across the board to a seated one. Pointing at the label still lights all eight, by their tag)
   m.callout([mods[6][0] + 0.075, top + MH + 0.017, mods[6][1] - 0.045, mp.idx], 'Accelerator modules', { side: 'r', tag: 'modules' });
-  // (on the empty frame's rim, by its right corner: on its side face the dot fell on the connector in front of it)
-  m.callout([mods[6][0] + MW / 2 - kerb / 2, top + MH, mods[6][1] - MD * 0.3, board.idx], 'Module frames', { side: 'r', tag: 'frames' });
   // the nearer chip's top, its leader dropping steeply past the seated modules to a label under the others
   m.callout([0.175 + 0.095, top + 0.05, 0.07, board.idx], 'NVLink switch chips', { side: 'r', tag: 'switch' });
   return { elev: PLATE.ISO.elev, yaw: PLATE.ISO.yaw, sortAxis: [0, 1, 0], accent: [111, 139, 166], accentDark: [195, 211, 226] };
@@ -2498,9 +2545,12 @@ try{(function(PLATE){'use strict';var R = PLATE.register, D = PLATE.D, H = PLATE
    estimate, data/landscape-layouts.json; the caption says so), the heights drawn far taller than they are.
    22 Nov 2026 review: the base die is silicon, so it is drawn in ink and copper means copper: the through-silicon vias and
    the microbumps, where the quarter cut passes through them. The loupe (LOUPE, below) carries only figures with an allowed
-   source: microbumps about 20 micrometres apart (SK hynix, chapter 9) in a 7 micrometre gap between dies (Samsung's 12-high
-   HBM3E release, 27 Feb 2024). The hair and the 30 micrometre die figure had none and are gone. Set LOUPE to false to drop
-   it. Colours (the set's legend): copper only. */
+   source: microbumps about 20 micrometres apart (a tech note on SK hynix's newsroom, chapter 9) in a gap between dies as
+   small as 7 micrometres (Samsung's 12-high HBM3E release, 27 Feb 2024, a record gap). The hair and the 30 micrometre die
+   figure had none and are gone. Set LOUPE to false to drop it. Colours (the set's legend): copper only.
+   22 Nov 2026 expert review: the loupe's caption says the dies are not to scale and gives the gap as "as small as 7 um" (it
+   read as a typical gap); the 20 um bar has witness lines up to the bump row it measures; the gaps round the bumps are filled
+   with a pale neutral, as film or underfill fills them (chapter 9), where they were empty, as if air. */
 var LOUPE = true;
 R('hbm-stack', function (m) {
   var hw = 5.3, bw = 5.5, t = 0.45, bt = 0.9, gap0 = 0.105, pitch = t + gap0, EX = 0.62;
@@ -2559,28 +2609,33 @@ R('hbm-stack', function (m) {
   [[-hw, -hw], [hw, -hw], [-hw, hw]].forEach(function (c) { m.guide([[c[0], 0, c[1], base.idx], [c[0], gap0 + pitch * 11, c[1], prev.idx]], { alpha: 0.6 }); });
   // what each numbered part lights, as its light table in data/specimen-parts.json does: every memory die in ink, every via and
   // every microbump in copper
-  var loupe = LOUPE ? { model: 'hbm-loupe', at: [TX * 2.5, gap0 + pitch * 9 + t / 2, hw * 0.55], part: 'die10', side: 'r', r: 0.155, rMax: 100, scale: 0.6, dx: -0.1, dy: 0.04, caption: ['Microbumps about 20\u00a0\u00b5m apart', 'in a 7\u00a0\u00b5m gap'] } : null;
+  var loupe = LOUPE ? { model: 'hbm-loupe', at: [TX * 2.5, gap0 + pitch * 9 + t / 2, hw * 0.55], part: 'die10', side: 'r', r: 0.155, rMax: 100, scale: 0.6, dx: -0.1, dy: 0.04, caption: ['Microbumps about 20\u00a0\u00b5m apart', 'in a gap as small as 7\u00a0\u00b5m.', 'Dies not to scale'] } : null;
   return { elev: PLATE.ISO.elev, yaw: PLATE.ISO.yaw, sortAxis: [0, 1, 0], loupe: loupe, calloutOpts: { 1: { tag: 'dies', only: 'ink' }, 3: { tag: 'tsv', only: 'accent' }, 4: { tag: 'bumps', only: 'accent' } }, accent: [176, 102, 44], accentDark: [224, 154, 92] };
 });
 
 /* The loupe's own small plate, in micrometres, seen almost face on so its cut face reads as a section: three dies with the
-   microbumps between them, 20 um apart (SK hynix's typical microbump spacing, chapter 9), in a 7 um gap (Samsung's 12-high
-   HBM3E release), and a via through each die. The dies' thickness and the vias' width are drawn, not sourced, so they carry no
-   figure. */
+   microbumps between them, 20 um apart (the typical microbump spacing in a tech note on SK hynix's newsroom, chapter 9), in a
+   7 um gap (the smallest in Samsung's 12-high HBM3E release), and a via through each die. The dies' thickness and the vias'
+   width are drawn, not sourced, so they carry no figure, and the caption says the dies are not to scale. The gap round the
+   bumps is filled in a pale neutral (film or underfill, chapter 9). */
 R('hbm-loupe', function (m) {
   var bar = PLATE.loupeBar, tag = PLATE.loupeTag;
   function bx(x0, y0, z0, x1, y1, z1, mat, fmat) { return m.box({ c: [(x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2], s: [x1 - x0, y1 - y0, z1 - z0], fmat: fmat }, mat); }
   m.part('st', { mode: 'stack' });
   // (designer pass, 22 Nov 2026: the section is narrower and stands left of the disc's middle, so the gap's figure sits in
   // clear ground beside it and the die's name over the stack, neither on the cut faces nor past the disc's edge)
-  var t = 30, g = 7, Z = 40, x0 = -50, x1 = 50, n = 3, P = 20;
+  var t = 30, g = 7, Z = 40, x0 = -50, x1 = 50, n = 3, P = 20, FILL = { d: 0.08 }, FILL_CUT = { d: 0.12 };
   for (var i = 0; i < n; i++) {
     var y0 = i * (t + g);
     bx(x0, y0, -Z, x1, y0 + t, Z, 'light', { pz: 'cut' });
-    if (i < n - 1) for (var bp = x0 + 10; bp < x1 - 5; bp += P) bx(bp - 4.5, y0 + t, -2, bp + 4.5, y0 + t + g, Z, 'acc', { pz: 'cutAcc' });
+    if (i < n - 1) {
+      // the fill round the bumps, its cut face just behind theirs
+      bx(x0, y0 + t, -Z, x1, y0 + t + g - 0.05, Z - 0.4, FILL, { pz: FILL_CUT });
+      for (var bp = x0 + 10; bp < x1 - 5; bp += P) bx(bp - 4.5, y0 + t, -2, bp + 4.5, y0 + t + g, Z, 'acc', { pz: 'cutAcc' });
+    }
     [x0 + 10, x0 + 70].forEach(function (vx) { bx(vx - 2.2, y0, -2, vx + 2.2, y0 + t, Z + 0.02, 'acc', { pz: 'cutAcc' }); });
   }
-  bar(m, [x0 + 30, -8, Z], [x0 + 50, -8, Z], '20 \u00b5m', { side: -1 });
+  bar(m, [x0 + 30, -8, Z], [x0 + 50, -8, Z], '20 \u00b5m', { side: -1, wit: [[x0 + 30, t, Z], [x0 + 50, t, Z]] });
   bar(m, [x1 + 22, t, Z + 1], [x1 + 22, t + g, Z + 1], '7 \u00b5m', { side: 1 });
   tag(m, [-6, n * t + (n - 1) * g + 17, -Z], 'Memory die', {});
   return { elev: 0.16, yaw: -0.14, accent: [176, 102, 44], accentDark: [224, 154, 92] };
@@ -2597,9 +2652,13 @@ try{(function(PLATE){'use strict';var R = PLATE.register, D = PLATE.D, H = PLATE
    The loupe (mask-loupe, below) shows the coating's edge at true thickness, from the imec and PTB paper chapter 5 cites
    (arxiv.org/abs/1912.09075): about 40 molybdenum and silicon layer pairs of 7 nm each, a 3 nm ruthenium cap, and the
    absorber, 58 nm of TaBN under 2 nm of TaBO. Colours (the set's legend, 22 Nov 2026): the coating in silicon slate with dark
-   lines, as the loupe shows it, silicon layers between molybdenum ones. */
+   lines, as the loupe shows it, silicon layers between molybdenum ones.
+   22 Nov 2026 expert review: the glass is drawn 6.35 mm thick with the coating band on top of it, so the 6.35 mm dimension
+   spans the glass alone (the glass was drawn 5.30 mm under the band, inside the 6.35); the loupe's ring sits in the pattern
+   area, on one of the dark absorber bars, where the loupe's absorber lines are (it sat on the outer edge, outside the
+   pattern). */
 R('photomask', function (m) {
-  var B = 152.4, T = 6.35, ml = 1.05, PW = 132, PD = 104, yTop = T / 2;
+  var B = 152.4, T = 6.35, ml = 1.05, PW = 132, PD = 104, yTop = T / 2 + ml; // yTop: the coating's top face, over the glass
   var blank = m.part('blank', { ex: [0, 0, 0], seq: 0 });
   var pat = [];
   var top = ml / 2;
@@ -2621,7 +2680,7 @@ R('photomask', function (m) {
     else { var nb = Math.max(3, Math.round(d / 9)); for (var b = 0; b < nb; b++) { var zz = z0 + (b / (nb - 1) - 0.5) * d * 0.76; pat.push(D.rect(x0 - w * 0.44, zz - d * 0.025, x0 + w * 0.44, zz + d * 0.025, top, { fill: 'dark', lw: 0.25 })); } }
   });
   [-1, 1].forEach(function (sx) { [-1, 1].forEach(function (sz) { var fx = sx * (PW / 2 + 9), fz = sz * (PD / 2 + 9); pat.push(D.rect(fx - 4.5, fz - 4.5, fx + 4.5, fz + 4.5, top, { lw: 0.5 })); pat.push(D.rect(fx - 2, fz - 2, fx + 2, fz + 2, top, { lw: 0.5 })); }); });
-  m.box({ c: [0, (T - ml) / 2 - T / 2, 0], s: [B, T - ml, B] }, 'light');
+  m.box({ c: [0, 0, 0], s: [B, T, B] }, 'light');
   var band = [];
   for (var q = 1; q < 8; q++) { var yy = -ml / 2 + ml * q / 8; band.push(D.line([-B / 2, yy, B / 2], [B / 2, yy, B / 2], { lw: 0.3, alpha: 0.55 })); }
   var bandX = band.map(function (it) { return { pts: [[B / 2, it.pts[0][1], B / 2], [B / 2, it.pts[0][1], -B / 2]], lw: 0.3, alpha: 0.55 }; });
@@ -2649,14 +2708,22 @@ R('photomask', function (m) {
   // the left face it ran through the 152.4 mm figure)
   m.callout([-B * 0.18, yTop - ml / 2, B / 2, blank.idx], 'Mirror coating', { side: 'l', rowAt: [B / 2, yTop - ml / 2, -B * 0.34, blank.idx] });
   m.callout([-FW * 0.28, yM, FD * 0.22, mem.idx], 'Pellicle', { side: 'l' });
-  var loupe = { model: 'mask-loupe', at: [B / 2, yTop - ml / 2, B * 0.18], part: 'blank', side: 'r', r: 0.15, rMax: 96, scale: 0.74, dx: -0.15, inset: 26, caption: ['The coating\u2019s edge,', 'at true thickness'] };
+  // the ring on the coating's top face, in the pattern area: on one of the dark bars of the block in the pattern's right-hand
+  // column (block D of MAP, its last bar, so the cone's lower edge passes clear of the glass plate's leader), the absorber
+  // lines the loupe cuts across
+  var ringAt = [3 * cw, yTop, -PD / 2 + 3 * cd / 2 + (5 / 5 - 0.5) * (3 * cd - 4) * 0.76];
+  var loupe = { model: 'mask-loupe', at: ringAt, part: 'blank', side: 'r', r: 0.15, rMax: 96, scale: 0.74, dx: -0.15, inset: 26, caption: ['A cut through the pattern,', 'at true thickness'] };
   return { elev: PLATE.ISO.elev, yaw: PLATE.ISO.yaw, sortAxis: [0, 1, 0], loupe: loupe, accent: [111, 139, 166], accentDark: [195, 211, 226] };
 });
 
 /* The loupe's plate, in nanometres, seen almost face on so its cut face reads as a section: the glass, about forty pairs of
-   layers (each pair 7 nm, drawn as a silicon layer and a molybdenum layer of half a pair each; the paper gives the pair, not
-   the split), the 3 nm ruthenium cap, and two lines of absorber 60 nm tall (58 nm TaBN and 2 nm TaBO), all from the imec and
-   PTB paper chapter 5 cites. Only the absorber's height and the pair count carry figures.
+   layers, the 3 nm ruthenium cap, and two lines of absorber 60 nm tall (58 nm TaBN and 2 nm TaBO, "nominally 60nm thick"),
+   all from the imec and PTB paper chapter 5 cites (arxiv.org/abs/1912.09075). Only the absorber's height and the pair count
+   carry figures.
+   22 Nov 2026 expert review: each pair is drawn as the paper's Table 1 gives its sublayers, top down: a silicon-like layer of
+   1.435 nm, an interlayer of 1.215, molybdenum 1.807, an interlayer of 1.422 and a silicon-like layer of 1.151, so silicon
+   sits directly under the ruthenium cap (molybdenum sat there, each pair drawn half and half). The absorber's bar reads
+   60 nm, the absorber's whole height (it read 58 nm, the TaBN alone, over both layers).
    22 Nov 2026 designer pass: the section stands left of the disc's middle and its names stand in the clear ground to its
    right, so none is laid over the layers it names: the absorber's name over the line it names with its height beside it, the
    pairs named by a bar the height of the stack, the glass by a short leader. The heights keep their true proportion. */
@@ -2664,13 +2731,21 @@ R('mask-loupe', function (m) {
   var bar = PLATE.loupeBar, tag = PLATE.loupeTag;
   function bx(x0, y0, x1, y1, mat, fmat) { return m.box({ c: [(x0 + x1) / 2, (y0 + y1) / 2, 0], s: [x1 - x0, y1 - y0, 60], fmat: fmat }, mat); }
   m.part('st', { mode: 'stack' });
-  var X0 = -130, X1 = 90, NP = 40, PR = 7, g0 = -40, gB = g0 - 40;
+  var X0 = -130, X1 = 90, NP = 40, g0 = -40, gB = g0 - 40;
   bx(X0, gB, X1, g0, 'light', { pz: 'cut' });
-  for (var i = 0; i < NP; i++) { var y = g0 + i * PR; bx(X0, y, X1, y + PR / 2, 'acc'); bx(X0, y + PR / 2, X1, y + PR, 'dark'); }
-  var yc = g0 + NP * PR;
+  // a pair's sublayers bottom up (Table 1 read from the glass): silicon-like, interlayer, molybdenum, interlayer, silicon-like.
+  // The stack is one block in silicon's slate, its interlayers and molybdenum laid on its cut face as bands with no outline
+  // (drawn as 160 blocks, their outlines turned the stack black)
+  // (the bands' tones: molybdenum near ink, so each pair shows as a fine dark line as the outlines showed it, the interlayers a
+  // middle gray between it and the silicon's slate)
+  var MO = { d: 0.9 }, IL = { d: 0.45 };
+  var SUBL = [[1.151, null], [1.422, IL], [1.807, MO], [1.215, IL], [1.435, null]], y = g0, bands = [];
+  for (var i = 0; i < NP; i++) SUBL.forEach(function (q) { if (q[1]) bands.push([y, y + q[0], q[1]]); y += q[0]; });
+  var yc = y, cyS = (g0 + yc) / 2, hx = (X1 - X0) / 2, ZF = 30;
+  m.box({ c: [(X0 + X1) / 2, cyS, 0], s: [X1 - X0, yc - g0, 60], decals: { pz: bands.map(function (q) { return D.poly([[-hx, q[0] - cyS, ZF], [hx, q[0] - cyS, ZF], [hx, q[1] - cyS, ZF], [-hx, q[1] - cyS, ZF]], { fill: q[2], lw: 0 }); }) } }, 'acc');
   bx(X0, yc, X1, yc + 3, 'mid');
   [[-120, -80], [-48, -8]].forEach(function (a) { bx(a[0], yc + 3, a[1], yc + 3 + 60, 'dark', { pz: 'cutDense' }); });
-  bar(m, [14, yc + 3, 30], [14, yc + 63, 30], '58 nm', { side: 1 });
+  bar(m, [14, yc + 3, 30], [14, yc + 63, 30], '60 nm', { side: 1 });
   tag(m, [-28, yc + 63 + 26, 30], 'Absorber', {});
   bar(m, [X1 + 18, g0, 30], [X1 + 18, yc, 30], 'About 40\nlayer pairs', { side: 1 });
   tag(m, [X1 + 16, gB - 22, 30], 'Glass', { align: 'left', lead: [X1 - 30, (gB + g0) / 2, 30] });

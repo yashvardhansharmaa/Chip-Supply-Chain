@@ -565,7 +565,10 @@
   // a name or a figure may run to two lines ('\n'); a name may carry a short leader to the point it names (o.lead, in the loupe
   // model's units), so it can stand in the disc's clear ground beside the drawing (22 Nov 2026 designer pass: names laid over
   // the layers they named collided with them)
-  P.loupeBar = function (m, a, b, text, o) { o = o || {}; (m.bars || (m.bars = [])).push({ a: a, b: b, text: text, side: o.side, tx: o.tx, ty: o.ty, align: o.align }); };
+  // a bar may carry witness lines (o.wit: the two points its ends measure, in the loupe model's units), drawn from the
+  // points to just past the bar's ends, so a bar set beside a row reads as measuring that row (22 Nov 2026 expert review: the
+  // HBM loupe's 20 um bar sat under a die with nothing to say it measured the bumps above it)
+  P.loupeBar = function (m, a, b, text, o) { o = o || {}; (m.bars || (m.bars = [])).push({ a: a, b: b, text: text, side: o.side, tx: o.tx, ty: o.ty, align: o.align, wit: o.wit || null }); };
   P.loupeTag = function (m, at, text, o) { o = o || {}; (m.tags || (m.tags = [])).push({ at: at, text: text, dx: o.dx, dy: o.dy, align: o.align, col: o.col, lead: o.lead || null }); };
 
   /* ---------------- drawing back-ends ---------------- */
@@ -1247,6 +1250,11 @@
       var widthOf = function (text, wt) { return Math.max.apply(null, String(text).split('\n').map(function (ln) { return g.measure(ln, { size: size, weight: wt }); })); };
       (lp.m.bars || []).forEach(function (b) {
         var a = pj(b.a), c = pj(b.b), bx = c[0] - a[0], by = c[1] - a[1], Ln = Math.hypot(bx, by) || 1, nx = -by / Ln, ny = bx / Ln, tk = 4;
+        if (b.wit) [[b.wit[0], a], [b.wit[1], c]].forEach(function (pr) {
+          var w = pj(pr[0]), e = pr[1], ux = e[0] - w[0], uy = e[1] - w[1], ul = Math.hypot(ux, uy) || 1; ux /= ul; uy /= ul;
+          var seg = [[w[0] + ux * 2, w[1] + uy * 2], [e[0] + ux * 3.5, e[1] + uy * 3.5]];
+          g.lines([seg], bgC, 2.6, null, 0.9, 'butt'); g.lines([seg], txt, 0.75, null, 0.85, 'butt');
+        });
         g.lines([[a, c]], bgC, 4.2, null, 1, 'butt'); g.lines([[a, c]], txt, 1.2, null, 1, 'butt');
         g.lines([[[a[0] + nx * tk, a[1] + ny * tk], [a[0] - nx * tk, a[1] - ny * tk]], [[c[0] + nx * tk, c[1] + ny * tk], [c[0] - nx * tk, c[1] - ny * tk]]], txt, 1.1, null, 1, 'butt');
         var sd = b.side || 1, tw = widthOf(b.text, 600), nl = String(b.text).split('\n').length, th = nl * lh, tx = (a[0] + c[0]) / 2 + (b.tx || 0), ty = (a[1] + c[1]) / 2 + (b.ty || 0), al = 'center';
@@ -1349,11 +1357,13 @@
         var pts, wts = null, my = 0, mx = 0, base = (rows && c.rowAt ? c.rowAt : c.pts).map(function (q) { return proj(q, q[3] == null ? c.part : q[3]); });
         if (c.track) {
           // the globe's labels point at whichever of their towns face the reader: a leader fades in as its town comes round
-          // and out as it nears the rim, and the label stays where it is
+          // and out as it nears the rim, and the label stays where it is. (22 Nov 2026 expert review: the fade runs from 81 to
+          // 66 degrees off the line of sight, where it ran from 73 to 57, so a pin standing in full view on the rest view's
+          // upper rim, the Netherlands', keeps its label in full ink)
           pts = []; wts = [];
           c.track.forEach(function (q) {
             var o = O[q[3]], x = q[0] + o[0], y = q[1] + o[1], z = q[2] + o[2], L = Math.hypot(x, y, z) || 1;
-            var f = (R[6] * x + R[7] * y + R[8] * z) / L, wt = clamp01((f - 0.3) / 0.25), pq = proj(q, q[3]), G0 = self._globe;
+            var f = (R[6] * x + R[7] * y + R[8] * z) / L, wt = clamp01((f - 0.15) / 0.25), pq = proj(q, q[3]), G0 = self._globe;
             // and not from the far side of the disc, so a leader never runs across the whole globe
             if (G0 && c.side) { var u = (pq[0] - G0.x) / G0.r * (c.side === 'l' ? -1 : 1); wt *= clamp01((u + 0.5) / 0.35); }
             if (wt > 0.01) { pts.push(pq); wts.push(wt * wt * (3 - 2 * wt)); }
@@ -1674,6 +1684,14 @@
             L.pts.forEach(function (q, qi) {
               var wq = L.wts ? L.wts[qi] : 1, A = sn && sn[qi] ? [q[0] + sn[qi][0], q[1] + sn[qi][1]] : [q[0], q[1]];
               var Pp = shapePath(A, y, sd, shp ? shp[qi] : 'D', th) || shapePath(A, y, sd, 'D', th);
+              // a globe's leader that would run through another of its label's pin heads is left out, and the label points at
+              // the nearer pin (22 Nov 2026 expert review: on the new rest view the Netherlands' two heads stand level, and the
+              // leader to the far one ran through the near one); pointing at the label still lights both
+              if (c.track && Pp && Pp.length > 1 && L.pts.some(function (o, oi) {
+                if (oi === qi || (L.wts && L.wts[oi] < 0.3)) return false;
+                var sx = Pp[1][0] - A[0], sy = Pp[1][1] - A[1], s2 = sx * sx + sy * sy || 1, tt = ((o[0] - A[0]) * sx + (o[1] - A[1]) * sy) / s2;
+                return tt > 0.02 && tt < 1 && Math.hypot(A[0] + sx * tt - o[0], A[1] + sy * tt - o[1]) < 6 * k;
+              })) return;
               // a leader to a globe's pin ends at the pin's head, which marks the spot itself: no dot of its own over it
               if (c.track && Pp.length > 1) { var hx = Pp[1][0] - Pp[0][0], hy = Pp[1][1] - Pp[0][1], hL = Math.hypot(hx, hy) || 1, hs = Math.min(4.5 * k, hL * 0.5); Pp = [[Pp[0][0] + hx / hL * hs, Pp[0][1] + hy / hL * hs]].concat(Pp.slice(1)); }
               var path = partial(Pp, la);
