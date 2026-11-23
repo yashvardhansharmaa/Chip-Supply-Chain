@@ -17,6 +17,8 @@
    are larger and deeper copper (0.56 mm, d 0.62). params.link 'flush' draws it flush on the die face instead, as a block of
    the die in its own slightly stronger slate with the same contacts as a symbol (an image only, for the owner to compare;
    the copper bar is gone).
+   23 Nov 2026: the owner chose flush, the more accurate drawing (the link is circuitry in each die's own silicon), so flush is
+   now the default and the caption's "drawn lifted" sentence is gone. params.link 'lifted' still draws the lifted strip.
    Colours (the set's legend): silicon slate, copper contacts. */
 R('die-floorplan', function (m, params) {
   var W = 26, Dd = 33, T = 0.9, yT = T / 2, bh = 0.06, yB = yT + bh / 2, bt = bh / 2;
@@ -27,7 +29,7 @@ R('die-floorplan', function (m, params) {
   var face = [D.rect(-11.6, 14.2, 11.6, 16.1, yT, { fill: 'steel', lw: 0.45 })];
   for (var n = 0; n < 9; n++) { var nx = -10.8 + n * 2.62; face.push(D.rect(nx, 14.55, nx + 1.9, 15.75, yT, { lw: 0.3, fill: 'light' })); }
   // the link's seat: its footprint on the near short edge, dashed, as an exploded drawing marks where a part sits
-  var LX = 11.6, Lz0 = -16.1, Lz1 = -14.3, LT = 0.6, flush = params && params.link === 'flush';
+  var LX = 11.6, Lz0 = -16.1, Lz1 = -14.3, LT = 0.6, flush = !(params && params.link === 'lifted');
   if (!flush) face.push(D.rect(-LX, Lz0, LX, Lz1, yT, { dash: [1.4, 1], lw: 0.5, alpha: 0.85 }));
   var die = m.box({ c: [0, 0, 0], s: [W, T, Dd], decals: { py: face } }, 'light');
   // memory interfaces down the long edges, the controllers inside them

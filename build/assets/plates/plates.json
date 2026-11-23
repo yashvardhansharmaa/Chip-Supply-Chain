@@ -1,21 +1,21 @@
 {
  "design-and-eda": {
   "specimen": "die-floorplan",
-  "src": "0644e0deb9fcc1e5",
+  "src": "9aaad3d545e9e07b",
   "thumb": [
    104,
    104
   ],
   "ink": {
-   "thumb": 0.179,
-   "line": 0.178
+   "thumb": 0.183,
+   "line": 0.182
   },
   "line": [
    184,
-   112
+   114
   ],
   "door": [
-   538,
+   510,
    308
   ]
  },

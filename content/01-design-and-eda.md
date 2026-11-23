@@ -8,7 +8,7 @@
  "openOnExplainer": true,
  "bridge": "The chain starts before any material does, when a company still has nothing but an idea for a processor.",
  "specimen": "die-floorplan",
- "specimenCaption": "A GPU die drawn from Nvidia's 2022 block diagram of its H100, which packs 80 billion transistors into 814 mm². It is drawn at 26 by 33 mm, the largest area a scanner prints in one shot, a little larger than the real die. H100 has one die, so the die-to-die link comes from two-die chips such as Blackwell. The link is drawn lifted off the die to show it. On a chip it is circuitry in each die's own silicon. Synopsys, Cadence and Siemens make the software that lays out and checks such designs. They held over 85 percent of its market in 2025, licensed blocks included, SemiAnalysis estimated.",
+ "specimenCaption": "A GPU die drawn from Nvidia's 2022 block diagram of its H100, which packs 80 billion transistors into 814 mm². It is drawn at 26 by 33 mm, the largest area a scanner prints in one shot, a little larger than the real die. H100 has one die, so the die-to-die link comes from two-die chips such as Blackwell. Synopsys, Cadence and Siemens make the software that lays out and checks such designs. They held over 85 percent of its market in 2025, licensed blocks included, SemiAnalysis estimated.",
  "card": {
  "concentration": "Extreme",
  "chokepointScore": 4,
