@@ -12,7 +12,7 @@
   "/chemicals-gases-and-photoresist/": {
     "published": "2026-09-09",
     "modified": "2026-11-23",
-    "content": "5531670fcef73ad3"
+    "content": "273b3d875d94f196"
   },
   "/chips/": {
     "published": "2026-10-21",
@@ -32,7 +32,7 @@
   "/deposition-and-etch/": {
     "published": "2026-09-09",
     "modified": "2026-11-23",
-    "content": "279a46a9f7581583"
+    "content": "a057cb1ec717c340"
   },
   "/design-and-eda/": {
     "published": "2026-09-09",
@@ -57,7 +57,7 @@
   "/glossary/": {
     "published": "2026-10-21",
     "modified": "2026-11-23",
-    "content": "7ff3505ae451e0e5"
+    "content": "23d87fd08e0ad9b3"
   },
   "/lithography/": {
     "published": "2026-09-09",
@@ -202,6 +202,6 @@
   "/test-and-assembly/": {
     "published": "2026-09-09",
     "modified": "2026-11-23",
-    "content": "9e385d1f56733e4d"
+    "content": "22e7e01908a7f674"
   }
 }

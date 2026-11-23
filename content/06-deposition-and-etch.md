@@ -162,7 +162,7 @@ Among deposition and etch tool segments, China-based suppliers have their larges
 
 ## The narrowest step
 
-The stage is judged by its two main kinds of tool, deposition and etch. In dry etch, Lam Research held 41.1 percent in 2025, Tokyo Electron 23.4 percent and Applied Materials 17.4 percent, by CSET's count ([source](https://chipexplorer.eto.tech/?parentNode=N46&selectedNode=N103)). In deposition tools as a whole, a $26.2 billion market, Applied Materials held 41.2 percent in 2025, by the same count ([source](https://chipexplorer.eto.tech/?parentNode=N35&selectedNode=N36)).
+In dry etch, Lam Research held 41.1 percent in 2025, Tokyo Electron 23.4 percent and Applied Materials 17.4 percent, by CSET's count ([source](https://chipexplorer.eto.tech/?parentNode=N46&selectedNode=N103)). In deposition tools as a whole, Applied Materials held 41.2 percent in 2025, by the same count ([source](https://chipexplorer.eto.tech/?parentNode=N35&selectedNode=N36)).
 
 ## Takeaways
 
