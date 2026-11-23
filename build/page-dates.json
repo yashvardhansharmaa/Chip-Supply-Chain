@@ -1,8 +1,8 @@
 {
   "/": {
     "published": "2026-10-01",
-    "modified": "2026-11-22",
-    "content": "fb9e597c327ea79a"
+    "modified": "2026-11-23",
+    "content": "52dcddd29a89a51b"
   },
   "/advanced-packaging/": {
     "published": "2026-09-09",
@@ -46,8 +46,8 @@
   },
   "/foundries-and-fabs/": {
     "published": "2026-09-09",
-    "modified": "2026-11-22",
-    "content": "f50989bed2a03922"
+    "modified": "2026-11-23",
+    "content": "b129ba369e085283"
   },
   "/geopolitics/": {
     "published": "2026-09-09",
@@ -61,8 +61,8 @@
   },
   "/lithography/": {
     "published": "2026-09-09",
-    "modified": "2026-11-22",
-    "content": "e1c101da2dab8419"
+    "modified": "2026-11-23",
+    "content": "559c4ddd98c461ea"
   },
   "/memory-and-hbm/": {
     "published": "2026-09-09",
@@ -181,8 +181,8 @@
   },
   "/summary/": {
     "published": "2026-10-21",
-    "modified": "2026-11-22",
-    "content": "e42c9d2431c4257d"
+    "modified": "2026-11-23",
+    "content": "480734e25cd28b25"
   },
   "/suppliers/": {
     "published": "2026-10-21",

@@ -6942,5 +6942,32 @@
     "publisher": "Supermicro",
     "date": "2025-02",
     "type": "pdf"
+  },
+  "https://www.asml.com/en/products/duv-lithography-systems/twinscan-nxt2100i": {
+    "title": "TWINSCAN NXT:2100i",
+    "publisher": "ASML",
+    "type": "page",
+    "accessed": "2026-11-23"
+  },
+  "https://www.nikon.com/company/news/2023/1206_01/": {
+    "title": "Nikon Releases the NSR-S636E ArF Immersion Scanner",
+    "publisher": "Nikon",
+    "date": "2023-12-06",
+    "type": "press release",
+    "accessed": "2026-11-23"
+  },
+  "https://asia.nikkei.com/business/tech/semiconductors/nikon-to-take-on-asml-with-low-priced-chipmaking-equipment-ceo": {
+    "title": "Nikon to take on ASML with low-priced chipmaking equipment: CEO",
+    "publisher": "Nikkei Asia",
+    "date": "2026-05-29",
+    "type": "article",
+    "accessed": "2026-11-23"
+  },
+  "https://ir.amd.com/financial-information/sec-filings/content/0000002488-26-000018/0000002488-26-000018.pdf": {
+    "title": "AMD, annual report on Form 10-K for the fiscal year ended 27 December 2025",
+    "publisher": "AMD",
+    "date": "2026-02-04",
+    "type": "filing",
+    "accessed": "2026-11-23"
   }
 }
