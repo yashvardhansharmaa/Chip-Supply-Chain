@@ -691,7 +691,12 @@
   /* the static copy's anchors (until 30 Oct 2026; shared links and search results may still carry them): a term (#euv), a
      letter (#letter-s) and a list (#list-firms) take the Glossary's own address, in place */
   var OLD = { 'list-firms': 'a-z/firms', 'list-chips': 'a-z/ai-chips', 'list-countries': 'a-z/countries' };
+  /* a term folded into another keeps its old addresses: its #gl-, its #lk-term- and the static copy's bare anchor open the term
+     that holds it now, in place (22 Nov 2026: Concentration into Chokepoint, when readers came to see one rating word) */
+  var RENAMED = { concentration: 'chokepoint' };
   function oldAnchor(h) {
+    var was = /^(?:gl-|lk-term-)?([a-z0-9-]+)$/.exec(h || ''), now = was && RENAMED[was[1]];
+    if (now && L.byKey['gl-' + now]) { history.replaceState(history.state, '', location.pathname + location.search + '#gl-' + now); return 'gl-' + now; }
     if (!h || /^(gl|lk)-|^a-z(\/|$)|^\//.test(h)) return '';
     var m = /^letter-(0-9|[a-z])$/.exec(h);
     var to = OLD[h] || (m ? 'a-z/' + m[1] : L.byKey['gl-' + h] ? 'gl-' + h : '');

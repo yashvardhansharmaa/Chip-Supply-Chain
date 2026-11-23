@@ -318,12 +318,15 @@ const G = BASE + '/glossary/'; // the Glossary's own page (30 Oct 2026)
       check('the HTML: no "Open the interactive page", and the home page holds no Glossary', !/Open the interactive page/.test(html) && !/<section class="view[^"]*" data-view="glossary"/.test(await (await fetch(BASE + '/')).text()));
     }
 
-    /* ---------- the old addresses: the home page's, forwarded in place, and the static copy's anchors ---------- */
+    /* ---------- the old addresses: the home page's, forwarded in place, and the static copy's anchors; and a term folded into
+       another (Concentration into Chokepoint, 22 Nov 2026), whose every old address opens the term that holds it now ---------- */
     t = await open(chrome, G, { width: 1440, wait: 1200 }); await ready(t);
     const len0 = await t.ev('history.length');
     await t.close();
     for (const [from, to, want] of [['/#/glossary', '/glossary/', 'home'], ['/#gl-euv', '/glossary/#gl-euv', 'EUV'], ['/#lk-firm-asml', '/glossary/#lk-firm-asml', 'ASML'], ['/#a-z/firms', '/glossary/#a-z/firms', '226 firms'],
-      ['/glossary/#euv', '/glossary/#gl-euv', 'EUV'], ['/glossary/#letter-s', '/glossary/#a-z/s', '486 entries'], ['/glossary/#list-firms', '/glossary/#a-z/firms', '226 firms']]) {
+      ['/glossary/#euv', '/glossary/#gl-euv', 'EUV'], ['/glossary/#letter-s', '/glossary/#a-z/s', '486 entries'], ['/glossary/#list-firms', '/glossary/#a-z/firms', '226 firms'],
+      ['/glossary/#gl-concentration', '/glossary/#gl-chokepoint', 'Chokepoint'], ['/glossary/#lk-term-concentration', '/glossary/#gl-chokepoint', 'Chokepoint'], ['/glossary/#concentration', '/glossary/#gl-chokepoint', 'Chokepoint'],
+      ['/#gl-concentration', '/glossary/#gl-chokepoint', 'Chokepoint']]) {
       t = await open(chrome, BASE + from, { width: 1440, wait: 2000 }); await ready(t); await sleep(400);
       const st = await t.ev(`({ at: location.pathname + location.hash, state: ${state}, hw: ${hw}, count: document.getElementById('gl-count').textContent, len: history.length })`);
       const got = st.state === 'home' ? 'home' : st.state === 'entry' ? st.hw : st.count;
