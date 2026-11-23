@@ -133,7 +133,7 @@
       "source": "https://www.energy.gov/documents/united-states-data-center-energy-usage-report-2025-update"
     },
     {
-      "fact": "Capital spending by Alphabet, Amazon, Meta, Microsoft and Oracle came to $448.2 billion in 2025, the sum of Epoch AI's quarterly figures",
+      "fact": "Capital spending by Alphabet, Amazon, Meta, Microsoft and Oracle was nearing half a trillion dollars in 2025, Epoch AI found",
       "source": "https://epoch.ai/data-insights/hyperscaler-capex-trend"
     },
     {
@@ -163,36 +163,36 @@
     {
       "id": "hyperscaler-capex",
       "type": "bars",
-      "title": "Capital spending by five large US data center operators, 2025",
-      "finding": "Amazon spent the most of five large operators, $134.7 billion in 2025",
-      "unit": "$B",
+      "title": "Capital spending by five large US data center operators, fourth quarter of 2025",
+      "finding": "Amazon spent the most of five large operators, $40,465 million in the fourth quarter of 2025",
+      "unit": "$M",
       "data": [
         [
           "Amazon",
-          134.7
+          40465
         ],
         [
           "Microsoft",
-          108.3
+          36206
         ],
         [
           "Alphabet",
-          93.1
+          28468
         ],
         [
           "Meta",
-          72.5
+          22463
         ],
         [
           "Oracle",
-          39.6
+          13046
         ]
       ],
       "source": {
-        "label": "Epoch AI, hyperscaler capex trend, February 2026, quarterly figures from company filings summed for 2025",
+        "label": "Epoch AI, hyperscaler capex trend, February 2026, table of capital spending by quarter, fourth quarter of 2025",
         "url": "https://epoch.ai/data-insights/hyperscaler-capex-trend"
       },
-      "note": "Each bar adds up Epoch AI's four quarterly figures for 2025, taken from company filings: cash spent on property and equipment plus new finance leases. The companies' own figures count capital spending in different ways, and Microsoft's and Oracle's fiscal years end in June and May."
+      "note": "Epoch AI's figures from company filings: cash spent on property and equipment plus new finance leases. The companies' own figures count capital spending in different ways. Microsoft's fiscal year ends in June and Oracle's in May, and Epoch counts Oracle's quarter from September to November 2025 as the fourth quarter of 2025."
     },
     {
       "id": "turbine-output",
@@ -283,7 +283,7 @@ The largest owners of AI chips are the hyperscalers, the companies with the most
 
 Besides Meta, the hyperscalers are cloud companies, which rent part of their computing power to other firms ([source](https://epoch.ai/latest/introducing-the-ai-chip-owners-explorer)). Meta has no cloud business and uses its chips for its own AI models and for the systems that choose the posts and ads its apps show ([source](https://epoch.ai/data/ai-chip-owners)).
 
-The five hyperscalers' capital spending came to $448.2 billion in 2025, the sum of quarterly figures compiled by Epoch AI ([source](https://epoch.ai/data-insights/hyperscaler-capex-trend)). The International Energy Agency expected worldwide investment in data centers to reach $580 billion in 2025 ([source](https://www.iea.org/reports/world-energy-outlook-2025/executive-summary)).
+The five hyperscalers' combined capital spending was nearing half a trillion dollars in 2025, Epoch AI found ([source](https://epoch.ai/data-insights/hyperscaler-capex-trend)). The International Energy Agency expected worldwide investment in data centers to reach $580 billion in 2025 ([source](https://www.iea.org/reports/world-energy-outlook-2025/executive-summary)).
 
 {{figure:hyperscaler-capex}}
 
