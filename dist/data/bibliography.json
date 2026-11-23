@@ -7051,5 +7051,12 @@
     "date": "2026-07-22",
     "type": "news",
     "accessed": "2026-11-23"
+  },
+  "https://www.micron.com/content/dam/micron/global/public/documents/products/product-flyer/hbm3e-product-brief.pdf": {
+    "title": "Product brief: Micron HBM3E",
+    "publisher": "Micron Technology",
+    "date": "2023-10",
+    "type": "pdf",
+    "accessed": "2026-11-23"
   }
 }
