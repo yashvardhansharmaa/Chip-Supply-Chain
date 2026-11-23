@@ -26,7 +26,8 @@ R('rack', function (m) {
     if (k === 'compute') { [-1, 1].forEach(function (s) { d.push(D.rectXY(s * 0.132 - 0.1025, -tH * 0.34, s * 0.132 + 0.1025, tH * 0.34, f, { lw: 0.45 })); }); }
     else if (k === 'switch') { d.push(D.rectXY(-tW * 0.4, -tH * 0.26, tW * 0.4, tH * 0.26, f, { lw: 0.45, fill: 'dark' })); }
     else if (k === 'power') { for (var q = 0; q < 6; q++) { var qx = (q - 2.5) * ((tW - 0.02) / 6); d.push(D.rectXY(qx - (tW - 0.05) / 12, -tH * 0.37, qx + (tW - 0.05) / 12, tH * 0.37, f, { lw: 0.45, col: 'acc2' })); } }
-    var mat = k === 'power' ? 'acc2Dark' : k === 'switch' ? 'mid' : k === 'cdu' ? 'steel' : 'light';
+    // (round two: the power shelves in the steel grey at the accent's middle weight; at acc2Dark they were the plate's heaviest mark)
+    var mat = k === 'power' ? 'acc2' : k === 'switch' ? 'mid' : k === 'cdu' ? 'steel' : 'light';
     m.box({ c: [0, sl.y, tzc], s: [tW, tH, tD], decals: { pz: d } }, mat);
   }
   slots.forEach(function (sl, i) { if (pullIdx[i] || sl.k === 'cdu') return; tray(sl); });
@@ -47,7 +48,9 @@ R('rack', function (m) {
   });
   // the busbar, copper, with a clip at every tray, pulled back out of the rear
   var bb = m.part('busbar', { ex: [0, 0, -2.25], seq: 4 });
-  m.box({ c: [0, syc, zS + 0.02], s: [0.052, sh + 0.10, 0.03] }, 'acc');
+  // (round two: a deeper copper fill, d 0.5, so the thin bar keeps its colour under its outline: src/plate.js draws a part under
+  // about 16 px across with its outline tinted, never the ink shade line, which swallowed it)
+  m.box({ c: [0, syc, zS + 0.02], s: [0.052, sh + 0.10, 0.03] }, { d: 0.5, c: 'acc' });
   // its trace lines back to its place at the rear, top and foot, so the bar reads as pulled from the rack (designer pass)
   [syc + (sh + 0.10) / 2, syc - (sh + 0.10) / 2].forEach(function (yy) { m.guide([[0, yy, zS + 0.035, cab.idx], [0, yy, zS + 0.035, bb.idx]], { alpha: 0.7 }); });
   // (designer pass, 22 Nov 2026: the figure stands low on its line, under the busbar's foot; at 0.62 it ran into the bar; plates

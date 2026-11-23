@@ -59,7 +59,9 @@ R('hbm-stack', function (m) {
     m.tag(null);
     if (i === 10) m.anchor(1, 'Memory dies', [-hw, yb + t / 2, hw * 0.6]);
     // the vias' and the bumps' points sit low in the stack, so their leaders run short to labels under the loupe
-    if (i === 2) m.anchor(3, 'TSVs', [TX * 2, yb + t / 2, 0]);
+    // (round two: the vias named in the second die's cut face, low enough that their label can stand level with its dot, under
+    // the loupe's caption, over the bumps' label)
+    if (i === 1) m.anchor(3, 'TSVs', [TX * 5, yb + t / 2, 0]);
     if (i === 0) m.anchor(4, 'Microbumps', [TX * 7, yb - gap0 / 2 - 0.08, 0]);
     prev = p;
   }
@@ -72,7 +74,7 @@ R('hbm-stack', function (m) {
   // what each numbered part lights, as its light table in data/specimen-parts.json does: every memory die in ink, every via and
   // every microbump in copper
   var loupe = LOUPE ? { model: 'hbm-loupe', at: [TX * 2.5, gap0 + pitch * 9 + t / 2, hw * 0.55], part: 'die10', side: 'r', r: 0.155, rMax: 100, scale: 0.6, dx: -0.1, dy: 0.04, caption: ['Microbumps about 20\u00a0\u00b5m apart', 'in a gap as small as 7\u00a0\u00b5m.', 'Dies not to scale'] } : null;
-  return { elev: PLATE.ISO.elev, yaw: PLATE.ISO.yaw, sortAxis: [0, 1, 0], loupe: loupe, calloutOpts: { 1: { tag: 'dies', only: 'ink' }, 2: { side: 'l' }, 3: { tag: 'tsv', only: 'accent' }, 4: { tag: 'bumps', only: 'accent', side: 'r' } }, order: { r: [3, 4] }, accent: [176, 102, 44], accentDark: [224, 154, 92] };
+  return { elev: PLATE.ISO.elev, yaw: PLATE.ISO.yaw, sortAxis: [0, 1, 0], loupe: loupe, calloutOpts: { 1: { tag: 'dies', only: 'ink' }, 2: { side: 'l' }, 3: { tag: 'tsv', only: 'accent', level: true }, 4: { tag: 'bumps', only: 'accent', side: 'r', level: true } }, order: { r: [3, 4] }, accent: [176, 102, 44], accentDark: [224, 154, 92] };
 });
 
 /* The loupe's own small plate, in micrometres, seen almost face on so its cut face reads as a section: three dies with the

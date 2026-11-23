@@ -263,7 +263,7 @@
     it.tag = this._tag; this.cur.items.push(it); this.S.push(it); return it;
   };
   // lines that are not parts: guides between parts (each point may name its part), the assembly axis, the light path
-  M.guide = function (pts, o) { o = o || {}; this.lines.push({ pts: pts, style: o.style || 'guide', col: o.col || 'ink', lw: o.lw, alpha: o.alpha, lod: o.lod || 0, front: !!o.front }); };
+  M.guide = function (pts, o) { o = o || {}; this.lines.push({ pts: pts, style: o.style || 'guide', col: o.col || 'ink', lw: o.lw, alpha: o.alpha, lod: o.lod || 0, front: !!o.front, knock: !!o.knock }); };
   // a sphere seen as a disc (the globe), lines on its surface (drawn on the near side only) and filled land
   M.globe = function (r, o) { o = o || {}; var it = { kind: 'globe', part: this.cur.idx, r: r, c: [0, 0, 0], fill: o.fill || 'paper' }; it.tag = this._tag; this.cur.items.push(it); this.S.push(it); return it; };
   M.swire = function (pts, o) { o = o || {}; var it = { kind: 'swire', part: this.cur.idx, pts: pts, c: [0, 0, 0], col: o.col || 'ink', lw: o.lw || 0.6, alpha: o.alpha == null ? 1 : o.alpha, back: o.back || 0, lod: o.lod || 0 }; it.tag = this._tag; this.cur.items.push(it); this.S.push(it); return it; };
@@ -1178,8 +1178,13 @@
       faces.forEach(function (fi) { var vv = F[fi].v; for (var q = 0; q < vv.length; q++) { var xx = X[vv[q] * 3], yy = X[vv[q] * 3 + 1]; if (xx < bx0) bx0 = xx; if (xx > bx1) bx1 = xx; if (yy < by0) by0 = yy; if (yy > by1) by1 = yy; } });
       var diag = Math.hypot(bx1 - bx0, by1 - by0), szK = thumb ? Math.max(0.4, Math.min(1, diag / 22)) : Math.max(0.62, Math.min(1, diag / 70));
       if (thumb && diag < 2.5) return;
-      // a part under about 60 px on the page draws its whole outline at outline weight: the shade line is for the object's form
-      var small = !thumb && diag < 60;
+      // a part under about 60 px on the page draws its whole outline at outline weight: the shade line is for the object's form.
+      // So does a thin part, under about 16 px across (its projected area over its length, 22 Nov 2026 plates refine round two:
+      // the rack's copper busbar, 8 px wide, was swallowed by its ink shade line); on paper a thin part in a colour takes its
+      // outline in its own tinted line, so the colour still shows
+      var area2 = 0; faces.forEach(function (fi) { var vv = F[fi].v, a2 = 0; for (var q = 0; q < vv.length; q++) { var q2 = (q + 1) % vv.length; a2 += X[vv[q] * 3] * X[vv[q2] * 3 + 1] - X[vv[q2] * 3] * X[vv[q] * 3 + 1]; } area2 += Math.abs(a2) / 2; });
+      var thin = !thumb && diag > 0 && area2 / diag < 16;
+      var small = !thumb && (diag < 60 || thin), thinTint = thin && !pal.dark && isAcc(mat.c);
       // a dished end of a turned part turned toward the reader (a mirror's face) takes two concentric rings, never shading lines,
       // which there read as the blades of a fan
       var rings = [], dish = !!(s.axisN && Math.abs(rotN(s.axisN)[2]) > 0.4);
@@ -1235,7 +1240,7 @@
         if (shl.length) g.lines(shl, hl ? hlC : strokeOf(lcK, 'shl'), LW.shadeLn * (pal.dark ? 1.2 : 1), null, (pal.dark ? 0.55 : 0.75) * alpha, 'butt');
         if (fine.length) g.lines(fine, hl ? hlC : strokeOf(lcK, 'fine'), LW.fine, null, 0.8 * alpha);
         if (crease.length) g.lines(crease, hl ? hlC : strokeOf(lcK, 'crease'), LW.crease, null, alpha);
-        if (out.length) g.lines(out, hl ? hlC : strokeOf(lcK, 'out'), (hl ? LW.out * 1.25 : LW.out) * (thumb ? szK : Math.max(0.8, szK)), null, alpha);
+        if (out.length) g.lines(out, hl ? hlC : thinTint ? lineCol(lcK) : strokeOf(lcK, 'out'), (hl ? LW.out * 1.25 : LW.out) * (thumb ? szK : Math.max(0.8, szK)), null, alpha);
         if (shade.length) g.lines(shade, hl ? hlC : strokeOf(lcK, 'shade'), (hl ? LW.shade * 1.1 : LW.shade) * szK, null, alpha);
         count.edges += out.length + shade.length + crease.length + fine.length;
       });
@@ -1298,13 +1303,18 @@
     }
 
     // ---- over the parts: the light paths, then dimensions, then the labels
-    m.lines.forEach(function (L) {
-      if (L.style !== 'beam') return;
-      var pts = L.pts.map(function (p) { return proj(p, p[3] == null ? null : p[3]).slice(0, 2); });
-      // a label on the light path (P.focusOf beam) lights the path
-      var col = css(colOf(L.col || 'acc')), lb = !!(foc && foc.beam), aa = (L.alpha == null ? 1 : L.alpha) * Math.min(1, K * 1.6) * (foc && !lb ? 0.35 : 1);
-      // (one line, no tinted halo along it: the halo read as glow, 22 Nov 2026 plates refine)
-      g.lines([pts], col, (L.lw || 1.4) * (thumb ? 0.8 : k) * (lb ? 1.5 : 1), null, aa);
+    // (one line, no tinted halo along it: the halo read as glow, 22 Nov 2026 plates refine; a path may lie over a knock-out in the
+    // paper's colour, L.knock, a drafting gap 2.4 times its width where it crosses the parts, round two: every knock-out first,
+    // then every path, so no knock-out cuts another path where they meet)
+    [true, false].forEach(function (knockPass) {
+      m.lines.forEach(function (L) {
+        if (L.style !== 'beam' || (knockPass && (!L.knock || thumb))) return;
+        var pts = L.pts.map(function (p) { return proj(p, p[3] == null ? null : p[3]).slice(0, 2); });
+        // a label on the light path (P.focusOf beam) lights the path
+        var col = css(colOf(L.col || 'acc')), lb = !!(foc && foc.beam), aa = (L.alpha == null ? 1 : L.alpha) * Math.min(1, K * 1.6) * (foc && !lb ? 0.35 : 1);
+        if (knockPass) g.lines([pts], bgC, (L.lw || 1.4) * k * 2.4, null, Math.min(1, K * 1.6) * (foc && !lb ? 0.35 : 1), 'butt');
+        else g.lines([pts], col, (L.lw || 1.4) * (thumb ? 0.8 : k) * (lb ? 1.5 : 1), null, aa);
+      });
     });
     // the dimensions: all of them in a chapter's slot, the plate's first (the size its caption leads with) in the phone's view
     if (!thumb && !st.noDims && LA > 0.01) (st.oneDim ? m.dims.slice(0, 1) : m.dims).forEach(function (d) { dimension(d); });
@@ -1330,7 +1340,7 @@
           var p1a = [T[0] + rt * Math.cos(th + al), T[1] + rt * Math.sin(th + al)], p2a = [G.x + G.r * Math.cos(th + al), G.y + G.r * Math.sin(th + al)];
           var p1b = [T[0] + rt * Math.cos(th - al), T[1] + rt * Math.sin(th - al)], p2b = [G.x + G.r * Math.cos(th - al), G.y + G.r * Math.sin(th - al)];
           // (two tangent hairlines and nothing between them, 22 Nov 2026 plates refine: the wash between them read as a beam)
-          g.lines([[p1a, p2a], [p1b, p2b]], line, 0.7 * k, null, 0.85, 'butt');
+          g.lines([[p1a, p2a], [p1b, p2b]], line, 0.7 * k, null, 0.5, 'butt');
         }
         g.circle(T[0], T[1], rt, null, bgC, 3.2);
         g.circle(T[0], T[1], rt, null, css(mix(pal.bg, pal.ink, 0.8)), 1.1);
@@ -1489,6 +1499,8 @@
         var r = c.n ? (ls.numbersOnly ? ls.num : ls.num * Math.max(0.9, Math.min(1.1, k))) : 0;
         // (a leader may run by a point of the drawing first, c.via, as the baseboard's runs down the aisle between the modules)
         var via = c.via && !rows ? proj(c.via, c.via[3] == null ? c.part : c.via[3]) : null;
+        // (a waypoint on a turning globe that has gone round the back is dropped)
+        if (via && c.track && via[2] < 0) via = null;
         return { c: c, ci: ci, pts: pts, wts: wts, x: mx, y0: (via ? via[1] : my) + (c.dy || 0) * k, hh: Math.max(hh, r * 2), lines: lines, tw: tw, r: r, side: side, via: via ? [via[0], via[1]] : null };
       });
       // (the tucked columns' state: colX, below)

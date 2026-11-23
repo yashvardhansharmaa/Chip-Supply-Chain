@@ -11,12 +11,16 @@
    22 Nov 2026 plates refine: the ingot is bulk silicon seen whole, so it is drawn near white with a cool tint and an ink
    silhouette, with the heavy ring of the ground band back at the crown's join; the wafers, cut faces of the crystal, are solid
    slate with ink rims, at their true thickness. The saw cuts are at about the middle of the body, so the wafers balance it
-   (they were near its foot). No length figure (none is sourced), and no 775 um dimension (chapter 2's text does not give it). */
-R('boule-and-wafer', function (m) {
+   (they were near its foot). No length figure (none is sourced), and no 775 um dimension (chapter 2's text does not give it).
+   Round two (expert FIX-2): the ingot, the neck and the seed are one crystal with the wafers, so they are drawn in the wafers'
+   slate again; under the refined renderer (a colour keeps itself on top faces, ink outlines) the slate body reads crisp, where
+   it read washed out under the old one. params.ingot 'white' draws the near-white body instead (an image only, to compare).
+   The Wafers label stands 40 px higher (dy), so its leaders run clear of the second wafer. */
+R('boule-and-wafer', function (m, params) {
   var Rb = 0.15, wT = 0.000775 / 2, yTip = -0.71, yB0 = -0.45, yB1 = 1.05, Rc = Rb * 1.03;
   var ing = m.part('ingot', { ex: [0, 0, 0], seq: 0 });
   // the crystal's slate: the wafers' tone, on a turned surface
-  var SI = { d: 0.08, c: 'acc', curve: true }, SI_FLAT = 'accLight';
+  var white = params && params.ingot === 'white', SI = white ? { d: 0.08, c: 'acc', curve: true } : 'accTurned', SI_FLAT = white ? 'accLight' : 'acc';
   var prof = [[0, yTip], [0.038, yTip], [0.078, yTip + 0.045, 0], [0.110, yTip + 0.095, 0], [0.133, yTip + 0.16, 0], [0.146, yTip + 0.215, 0], [Rb, yB0]];
   // growth striations on the ground body, as fine rings, and the two saw cuts the wafers came from
   var cuts = [0.22, 0.28];
@@ -53,5 +57,5 @@ R('boule-and-wafer', function (m) {
   // review: the diameter is taken rim to rim across the wafer's centre (it was taken off the corners of the square round
   // the wafer, so its extension lines started in the air beside the disc)
   m.dim([-Rb, cuts[1] - wT, 0], [Rb, cuts[1] - wT, 0], [0, -0.1, 0], '300 mm', { part: w2.idx });
-  return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, sortAxis: [1, 0, 0], calloutOpts: { 1: { tag: 'seed' }, 2: { tag: 'neck' }, 3: { tag: 'ingot' } }, accent: [111, 139, 166], accentDark: [195, 211, 226] };
+  return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, sortAxis: [1, 0, 0], calloutOpts: { 1: { tag: 'seed' }, 2: { tag: 'neck' }, 3: { tag: 'ingot' }, 4: { dy: -40 } }, accent: [111, 139, 166], accentDark: [195, 211, 226] };
 });

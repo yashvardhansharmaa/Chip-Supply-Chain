@@ -17,7 +17,7 @@
    toward the reader are drawn shorter). Higher views keep the lengths closer still, but from about 64 degrees the land's
    fill (src/plate.js, land) spills over the sea. A country's pins leaned apart
    across the line of sight of the rest view only, so none tipped toward the reader (until the refine below). The labels take the sides the countries
-   show on: the Netherlands and the United States right, the four in Asia left.
+   show on: the Netherlands and the United States right, the four in Asia left (round two: the Netherlands left, below).
    22 Nov 2026 plates refine: each pin is a spike standing straight up the page from its country's base (src/plate.js spike),
    so its drawn length is its share at every turn, at rest and as the globe goes round (a pin standing out of the surface was
    drawn shorter the more it pointed at the reader, which the caption had to warn of). A country that leads several segments
@@ -80,9 +80,12 @@ R('globe', function (m, params) {
   var head = function (q) { var v = HEAD[q.i]; return [v[0], v[1], v[2], partOf(q.i)]; };
   // the globe turns, so each label carries its country's pins (track): a leader fades in as a pin comes round to the label's
   // side and out as it nears the rim. The first pin sets the label's height in the drawn view
-  [['Netherlands', 'r'], ['United States', 'r'], ['China', 'l'], ['South Korea', 'l'], ['Japan', 'l'], ['Taiwan', 'l']].forEach(function (c) {
+  /* (round two: the Netherlands named from the left, its leader shorter, and on a phone from the top row; Japan's leader runs by a
+     point on the globe under Taiwan's base, so its label stands straight under Taiwan's rather than far below the others) */
+  var VIA = { 'Japan': ll(15, 124, 1).concat([g.idx]) };
+  [['Netherlands', 'l', 't'], ['United States', 'r'], ['China', 'l'], ['South Korea', 'l'], ['Japan', 'l'], ['Taiwan', 'l']].forEach(function (c) {
     var ps = PINS[c[0]];
-    m.callout([head(ps[0])], c[0], { side: c[1], row: 'b' });
+    m.callout([head(ps[0])], c[0], { side: c[1], row: c[2] || 'b', via: VIA[c[0]] || null });
     var co = m.callouts[m.callouts.length - 1];
     co.track = ps.map(head);
     co.spikes = ps.map(function (q) { return SPK[q.i]; });

@@ -65,7 +65,7 @@ R('process-chamber', function (m) {
   // (22 Nov 2026 plates refine: the chuck named straight across from its cut face, from the right, under the wafer, since the
   // loupe's caption fills the left column at its height; the pump half as far below; on a phone the loupe at most 60 percent
   // of the chamber's width)
-  m.callout([0.13 * cw[0], yPed - 0.076, 0.13 * cw[1], chk.idx], 'Chuck', { side: 'r', level: true });
+  m.callout([0.13 * cw[0], yPed - 0.084, 0.13 * cw[1], chk.idx], 'Chuck', { side: 'r', level: true });
   m.callout([0.146 * cw[0], yFlo - 0.2, 0.146 * cw[1], pump.idx], 'Pump', { side: 'r' });
   var lt = a0 + 0.55, loupe = { model: 'etch-loupe', at: [0.1 * Math.cos(lt), yPed + WT, 0.1 * Math.sin(lt)], part: 'wafer', side: 'l', r: 0.15, rMax: 92, scale: 0.8, dx: -0.12, rPhone: 52, caption: ['A hole ten times', 'deeper than it is wide'] };
   return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, loupe: loupe, accent: [109, 92, 201], accentDark: [176, 164, 240], accent2: [111, 139, 166], accent2Dark: [195, 211, 226] };

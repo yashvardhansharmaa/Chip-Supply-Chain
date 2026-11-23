@@ -29,7 +29,8 @@ R('gas-cabinet', function (m) {
   // the gas panel, steel-gray, on the back wall: plate, headers, valve blocks, gauges, regulator
   var PZ = -CD / 2 + 0.035, PY0 = 1.44, cylX = [-0.29, 0, 0.29];
   m.tag('panel');
-  m.box({ c: [CBX - 0.02, PY0 + 0.25, PZ - 0.008], s: [0.84, 0.46, 0.012] }, 'acc');
+  // (round two: the panel a step deeper, d 0.45, so it holds its place as the cabinet's one coloured part)
+  m.box({ c: [CBX - 0.02, PY0 + 0.25, PZ - 0.008], s: [0.84, 0.46, 0.012] }, { d: 0.45, c: 'acc' });
   m.wire([[CBX - 0.40, PY0 + 0.06, PZ + 0.03], [CBX + 0.40, PY0 + 0.06, PZ + 0.03]], { col: 'acc', lw: 1.6 });
   m.wire([[CBX - 0.40, PY0 + 0.44, PZ + 0.03], [CBX + 0.40, PY0 + 0.44, PZ + 0.03]], { col: 'acc', lw: 1.6 });
   cylX.forEach(function (cx) {

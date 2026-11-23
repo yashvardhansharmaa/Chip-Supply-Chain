@@ -6,7 +6,10 @@
    a 2026 AI package substrate, June 2026, chapter 11; the caption says the count is Ajinomoto's), plated through-holes and
    microvias. A cutaway: a quarter drawn pulled out of its corner sat over the board and read as a second object.
    22 Nov 2026 review: it was 100 x 72 with eight bands a side and a 1.5 mm thickness with no allowed source (the dimension,
-   whose offset ran on two axes, is gone). Colours (the set's legend): the film in its own olive, copper in copper. */
+   whose offset ran on two axes, is gone). Colours (the set's legend): the film in its own olive, copper in copper.
+   Round two (expert FIX 2): 95 x 68 mm is the same envelope plate 10 calls not to scale (the site's estimate, not published
+   dimensions), so the caption says the footprint is not drawn to scale and the 95 mm and 68 mm dimensions are gone. The copper
+   is finer (0.75, planes 0.85), the microvias are filled copper cones, and Copper layers is named on a build-up plane. */
 R('substrate-layers', function (m) {
   var W = 95, Dd = 68, tc = 7.5, tb = 1.0, nb = 11, tr = 1.0, top = tc / 2 + nb * tb + tr, cTop = tc / 2;
   var lay = []; for (var k = 0; k <= nb; k++) lay.push(cTop + k * tb);
@@ -46,16 +49,16 @@ R('substrate-layers', function (m) {
       }
     }
     [1, -1].forEach(function (sg) {
-      vias.forEach(function (v) { var yl = sg * lay[v[0] - 1], yh = sg * lay[v[0]], x = v[1]; it.push({ pts: [toP(x - 0.58, yh), toP(x - 0.3, yl), toP(x + 0.3, yl), toP(x + 0.58, yh)], col: 'acc2', lw: 0.8, tag: 'cu' }); });
+      vias.forEach(function (v) { var yl = sg * lay[v[0] - 1], yh = sg * lay[v[0]], x = v[1]; it.push({ pts: [toP(x - 0.58, yh), toP(x - 0.3, yl), toP(x + 0.3, yl), toP(x + 0.58, yh)], closed: true, fill: { d: 0.62, c: 'acc2' }, col: 'acc2', lw: 0.4, tag: 'cu' }); });
       for (k = 0; k <= nb; k++) {
-        var y = sg * lay[k], lw = k % 3 === 0 ? 1.2 : 1.05;
+        var y = sg * lay[k], lw = k % 3 === 0 ? 0.85 : 0.75;
         // the plane's pads, merged where they touch, then the copper between them, each run stopping 0.5 short of a pad
         var ps = pads[k].slice().sort(function (a, b) { return a[0] - b[0]; }), mg = [];
         ps.forEach(function (pq) { var l = mg[mg.length - 1]; if (l && pq[0] <= l[1] + 0.2) l[1] = Math.max(l[1], pq[1]); else mg.push([pq[0], pq[1]]); });
         var x0 = 0.4;
         mg.forEach(function (pq) {
           if (pq[0] - 0.5 > x0 + 0.3) it.push({ pts: [toP(x0, y), toP(pq[0] - 0.5, y)], col: 'acc2', lw: lw, tag: 'cu' });
-          it.push({ pts: [toP(Math.max(0.4, pq[0]), y), toP(Math.min(L - 0.4, pq[1]), y)], col: 'acc2', lw: k === 0 ? 1.6 : lw + 0.3, tag: 'cu' });
+          it.push({ pts: [toP(Math.max(0.4, pq[0]), y), toP(Math.min(L - 0.4, pq[1]), y)], col: 'acc2', lw: k === 0 ? 1.3 : lw + 0.3, tag: 'cu' });
           x0 = pq[1] + 0.5;
         });
         if (L - 0.4 > x0 + 0.3) it.push({ pts: [toP(x0, y), toP(L - 0.4, y)], col: 'acc2', lw: lw, tag: 'cu' });
@@ -76,11 +79,10 @@ R('substrate-layers', function (m) {
   tp.push({ dots: H.gridPts(30, 20, sw / 31, sd / 21, top, 0, 0, function (x, z) { return !(x > 0.5 && z > 0.5); }), r: 0.55, alpha: 0.6 });
   for (var q = 0; q < 30; q++) { var cu = (q - 14.5) * (W * 0.94 / 30); if (Math.abs(cu) > sw / 2 + 2) continue; [-1, 1].forEach(function (sg) { if (cu > 0 && sg > 0) return; tp.push(D.rect(cu - 0.9, sg * (sd / 2 + 4.2) - 1.4, cu + 0.9, sg * (sd / 2 + 4.2) + 1.4, top, { fill: 'dark', lw: 0.3 })); }); }
   m.prism(Lsh, -top, top, 'light', { sideMat: { 2: 'paper', 3: 'paper' }, sideDecals: { 2: secZ, 3: secX }, top: tp });
-  m.dim([-W / 2, top, -Dd / 2], [W / 2, top, -Dd / 2], [0, 0, -9], '95 mm');
-  m.dim([-W / 2, top, Dd / 2], [-W / 2, top, -Dd / 2], [-9, 0, 0], '68 mm');
   m.callout([W * 0.3, (lay[2] + lay[3]) / 2, 0.001, body.idx], 'Build-up film', { side: 'r', tag: 'film' });
-  // review: on a plated hole's copper pad at the near end of the right-hand cut (the leader ran right across the top)
-  m.callout([3.5 * (W / 2) / 4, cTop, 0.001, body.idx], 'Copper layers', { side: 'r', tag: 'cu' });
+  // review: on a plated hole's copper pad at the near end of the right-hand cut (the leader ran right across the top); round two:
+  // on the fifth build-up plane above the core, clear of the vias, so it names the layers rather than a hole
+  m.callout([13, lay[5], 0.001, body.idx], 'Copper layers', { side: 'r', tag: 'cu' });
   m.callout([W * 0.22, 0.4, 0.001, body.idx], 'Core of glass cloth and resin', { side: 'r', tag: 'core' });
   return { elev: PLATE.ISO.elev, yaw: PLATE.ISO.yaw, accent: [111, 122, 47], accentDark: [178, 189, 96], accent2: [176, 102, 44], accent2Dark: [224, 154, 92] };
 });

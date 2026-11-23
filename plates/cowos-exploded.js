@@ -13,7 +13,11 @@
    22 Nov 2026 plates refine: the layers stand as far apart as the first plates had them (interposer 32, chips 56), so the
    package fills its slot; each bridge stands over its pocket, the pocket dashed in ink with trace lines from the bridge's
    corners down to it; the wiring is straight parallel bundles of copper traces, die to memory across each bridge and a dense
-   bundle across the seam between the dies; the pad grids keep to the chips' footprints, thinner. */
+   bundle across the seam between the dies; the pad grids keep to the chips' footprints, thinner.
+   Round two (expert FIX 1): the bridges carry the die-to-die and die-to-memory wiring, so the traces lie on each bridge's top
+   face, a pad at each end (12 across the seam bridge at 2 mm, 4 across each memory bridge at 1 mm); the interposer's traces
+   stop at each pocket's edge and run on to pads under the chips. The pockets are a plain hairline, so nothing reads as a cut
+   face. The count is not a claim. */
 R('cowos-exploded', function (m) {
   var dieW = 26, dieD = 32.5, dieX = 13.5, hbmW = 11, hbmD = 11, hbmX = 33.5, hbmZ = [-17.7, -5.9, 5.9, 17.7];
   var ipW = 78, ipD = 50, subW = 95, subD = 68;
@@ -51,27 +55,38 @@ R('cowos-exploded', function (m) {
   // the bridges: one under the seam between the dies, one under each memory joint
   var BR = [[0, 0, 9, dieD * 0.82]];
   hbm.forEach(function (h) { var sg = h[0] < 0 ? -1 : 1; BR.push([sg * (dieX + dieW / 2 + 1.6), h[1] * 0.8, 6, 5]); });
-  // the wiring: a dense bundle of parallel traces across the seam, die to die, and a bundle die to memory across each memory
-  // bridge, straight and parallel
-  for (q = 0; q < 26; q++) { var rz = (q - 12.5) * (dieD * 0.78 / 25); wiring.push(D.line([-6.5, yT, rz], [6.5, yT, rz], { col: 'acc2', lw: 0.55 })); }
-  BR.slice(1).forEach(function (b) {
-    var sg = b[0] < 0 ? -1 : 1;
-    for (var i = 0; i < 6; i++) { var z0 = b[1] + (i - 2.5) * 0.62; wiring.push(D.line([sg * (hbmX - hbmW * 0.22), yT, z0], [sg * (dieX + dieW / 2 - 3.6), yT, z0], { col: 'acc2', lw: 0.5 })); }
+  // each bridge's traces, in (x, z) across it: 12 on the seam bridge at 2 mm, 4 on each memory bridge at 1 mm
+  var traces = function (b, i) { var n = i ? 4 : 12, pt = i ? 1 : 2, out = []; for (var t = 0; t < n; t++) out.push(b[1] + (t - (n - 1) / 2) * pt); return out; };
+  var pad = function (x, z, y, sz) { return D.rect(x - sz / 2, z - sz / 2, x + sz / 2, z + sz / 2, y, { fill: { d: 0.62, c: 'acc2' }, col: 'acc2', lw: 0.3 }); };
+  // the interposer's traces stop at each pocket's edge and run on to a pad under the chip: from the seam bridge out to 11 mm, from
+  // each memory bridge 1 mm on either side
+  BR.forEach(function (b, i) {
+    traces(b, i).forEach(function (z) {
+      [-1, 1].forEach(function (sd) {
+        var x0 = b[0] + sd * b[2] / 2, x1 = i ? x0 + sd * 1.2 : sd * 11;
+        wiring.push(D.line([x0, yT, z], [x1, yT, z], { col: 'acc2', lw: 0.6 }));
+        wiring.push(pad(x1, z, yT, i ? 0.7 : 0.9));
+      });
+    });
   });
-  // the chips' seats, each with its pad grid
   // (the pad grids keep inside each chip's footprint, clear of the bridges' pockets and the bundles, and thinner)
-  var clear = function (x, z) { return !BR.some(function (b) { return Math.abs(x - b[0]) < b[2] / 2 + 1.2 && Math.abs(z - b[1]) < b[3] / 2 + 1.2; }) && Math.abs(x) > 7.5; };
+  var clear = function (x, z) { return !BR.some(function (b) { return Math.abs(x - b[0]) < b[2] / 2 + 2 && Math.abs(z - b[1]) < b[3] / 2 + 1.2; }) && !(Math.abs(x) < 12.5 && Math.abs(z) < 12.5); };
   dies.forEach(function (d) { wiring.push(D.rect(d[0] - dieW / 2, d[1] - dieD / 2, d[0] + dieW / 2, d[1] + dieD / 2, yT, { lw: 0.5, alpha: 0.7, dash: [2, 1.6] })); wiring.push({ dots: gridPts(6, 8, 3.4, 3.6, yT, d[0], d[1], clear), r: 0.45, col: 'acc2', alpha: 0.8, tag: 'ubump' }); });
   hbm.forEach(function (h) { wiring.push(D.rect(h[0] - hbmW / 2, h[1] - hbmD / 2, h[0] + hbmW / 2, h[1] + hbmD / 2, yT, { lw: 0.5, alpha: 0.7, dash: [2, 1.6] })); wiring.push({ dots: gridPts(3, 3, 2.6, 2.6, yT, h[0] + (h[0] < 0 ? -1 : 1) * 1.2, h[1], clear), r: 0.45, col: 'acc2', alpha: 0.8, tag: 'ubump' }); });
-  // each bridge's pocket in the interposer's face, dashed in ink
-  BR.forEach(function (b) { wiring.push(D.rect(b[0] - b[2] / 2, b[1] - b[3] / 2, b[0] + b[2] / 2, b[1] + b[3] / 2, yT, { lw: 0.55, dash: [1.6, 1.2], alpha: 0.9 })); });
+  // each bridge's pocket in the interposer's face, a plain hairline
+  BR.forEach(function (b) { wiring.push(D.rect(b[0] - b[2] / 2, b[1] - b[3] / 2, b[0] + b[2] / 2, b[1] + b[3] / 2, yT, { lw: 0.5, alpha: 0.5 })); });
   m.tag('ip');
   m.box({ c: [0, y0 + ipH / 2, 0], s: [ipW, ipH, ipD], decals: { py: wiring } }, 'light');
   m.tag(null);
   m.anchor(3, 'Interposer', [ipW / 2, y0 + ipH, ipD / 4]);
   var pB = m.part('bridges', { ex: [0, 44, 0], seq: 2 });
   m.tag('bridge');
-  BR.forEach(function (b) { m.box({ c: [b[0], y0 + ipH - 0.6, b[1]], s: [b[2], 1.2, b[3]] }, 'acc'); });
+  // each bridge with its traces across its top face, a pad at each end
+  BR.forEach(function (b, i) {
+    var top = [];
+    traces(b, i).forEach(function (z) { var zz = z - b[1], xe = b[2] / 2 - 0.55; top.push(D.line([-xe, 0.6, zz], [xe, 0.6, zz], { col: 'acc2', lw: 0.6 })); top.push(pad(-xe, zz, 0.6, i ? 0.6 : 0.8), pad(xe, zz, 0.6, i ? 0.6 : 0.8)); });
+    m.box({ c: [b[0], y0 + ipH - 0.6, b[1]], s: [b[2], 1.2, b[3]], decals: { py: top } }, 'acc');
+  });
   m.tag(null);
   m.anchor(5, 'Silicon bridges', [BR[5][0] - BR[5][2] / 2, y0 + ipH - 0.6, BR[5][1]], pB.idx);
   // 3 the chips: two logic dies with a hint of their floorplan, eight HBM stacks with their twelve layers

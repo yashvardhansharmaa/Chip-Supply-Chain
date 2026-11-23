@@ -11,11 +11,11 @@
    level sits under the bottom sheet, beside the gate below it, on both halves (arXiv 2201.04725; imec, "Entering the
    nanosheet transistor era"); there were two levels for three sheets. Silicon is slate across the set: the substrate in the
    sheets' slate, the source and drain, which are doped silicon, in a lighter slate tint, so the sheets read apart from them.
-   22 Nov 2026 plates refine: the gate is the darkest block, a deep neutral metal with the metal ruling (45 degrees, open) on
+   22 Nov 2026 plates refine: the gate is the darkest block (d 0.42 since round two), a deep neutral metal with the metal ruling (45 degrees, open) on
    its cut face, so the slate sheets read against it (it was a pale grey, as light as the sheets). */
 R('gaa-transistor', function (m) {
   var sT = 6, sW = 30, y0 = [0, 16, 32], gX = 7.5, spX = 12.5, gY0 = -11, gY1 = 45, gZ = 19, PULL = 62;
-  var GATE = { d: 0.5 }, GATECUT = { d: 0.3, hatch: 1, ang: 45, gap: 3.6 }, SUB = 'acc', SUBCUT = 'cutAcc', SD = { d: 0.11, c: 'acc' };
+  var GATE = { d: 0.42 }, GATECUT = { d: 0.3, hatch: 1, ang: 45, gap: 3.6 }, SUB = 'acc', SUBCUT = 'cutAcc', SD = { d: 0.11, c: 'acc' };
   // the inner spacers' levels: under the bottom sheet, beside the gate below it, and between each pair of sheets
   var SPL = [[gY0, 0], [sT, 16], [22, 32]];
   function bx(x0, ya, z0, x1, yb, z1, mat, fm, dec) { return m.box({ c: [(x0 + x1) / 2, (ya + yb) / 2, (z0 + z1) / 2], s: [x1 - x0, yb - ya, z1 - z0], fmat: fm, decals: dec }, mat); }

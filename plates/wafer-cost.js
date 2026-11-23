@@ -27,7 +27,8 @@ R('wafer-cost', function (m) {
     } else m.box({ c: [0, yc, 0], s: [CW, h, CW], decals: dec }, b[2]);
     // (on a phone, where the labels stand in rows, the three lower layers are named from under the column and the two upper from
     // over it, so no leader rises across a layer it does not name: designer pass, 22 Nov 2026)
-    m.callout([CW / 2, yc, CW * 0.2], b[0], { side: 'r', col: i === 0 ? 'acc' : null, strong: i === 0, row: i <= 2 ? 'b' : 't' });
+    // (round two: the $1,000 and $480 labels level with their dots)
+    m.callout([CW / 2, yc, CW * 0.2], b[0], { side: 'r', col: i === 0 ? 'acc' : null, strong: i === 0, row: i <= 2 ? 'b' : 't', level: i === 2 || i === 4 });
     y += h;
   });
   var TOP = y;
