@@ -15,13 +15,19 @@
    their shares. The rest view now looks down from above the North Pacific (yaw 165, elevation 60 degrees), where every pin
    and its label shows and no pin is drawn shorter than about two thirds of its length (the caption says pins that point
    toward the reader are drawn shorter). Higher views keep the lengths closer still, but from about 64 degrees the land's
-   fill (src/plate.js, land) spills over the sea. A country's pins lean apart
-   across the line of sight of the rest view only, so none tips toward the reader. The labels take the sides the countries
-   show on: the Netherlands and the United States right, the four in Asia left. */
-R('globe', function (m) {
-  var RAD = Math.PI / 180, G = window.PLATE_GLOBE, YAW = 165 * RAD, ELEV = 60 * RAD;
-  // the line of sight at rest, from the globe's centre toward the reader (src/plate.js viewM's third row)
-  var SIGHT = [-Math.sin(YAW) * Math.cos(ELEV), Math.sin(ELEV), Math.cos(YAW) * Math.cos(ELEV)];
+   fill (src/plate.js, land) spills over the sea. A country's pins leaned apart
+   across the line of sight of the rest view only, so none tipped toward the reader (until the refine below). The labels take the sides the countries
+   show on: the Netherlands and the United States right, the four in Asia left.
+   22 Nov 2026 plates refine: each pin is a spike standing straight up the page from its country's base (src/plate.js spike),
+   so its drawn length is its share at every turn, at rest and as the globe goes round (a pin standing out of the surface was
+   drawn shorter the more it pointed at the reader, which the caption had to warn of). A country that leads several segments
+   has its spikes side by side on one base, the middle of the places it was pinned before. With no foreshortening to keep down,
+   the rest view is the lowest that still shows all twelve pins with every label in full ink (each foot within 64 degrees of
+   the line of sight): yaw -160, elevation 62 degrees, over the western Pacific, Asia to the left, North America to the right
+   and Europe over the pole. Under 560 px the labels stand in a row under the globe, which takes the full width. */
+R('globe', function (m, params) {
+  // (params.yaw and params.elev, in degrees, draw it from another view: the comparison with the old rest view, an image only)
+  var RAD = Math.PI / 180, G = window.PLATE_GLOBE, YAW = (params && params.yaw != null ? params.yaw : -160) * RAD, ELEV = (params && params.elev != null ? params.elev : 62) * RAD;
   function ll(lat, lon, r) { var a = lat * RAD, b = lon * RAD, c = Math.cos(a) * r; return [c * Math.sin(b), Math.sin(a) * r, c * Math.cos(b)]; }
   function unwrap(list) { var pts = [[list[0][0], list[0][1]]], prev = list[0][1]; for (var i = 1; i < list.length; i++) { var lon = list[i][1]; while (lon - prev > 180) lon -= 360; while (lon - prev < -180) lon += 360; pts.push([list[i][0], lon]); prev = lon; } return pts; }
   function dens(pts, r, step) { var out = []; for (var i = 0; i < pts.length; i++) { var a = pts[i], b = pts[(i + 1) % pts.length], n = Math.max(1, Math.ceil(Math.hypot(b[0] - a[0], (b[1] - a[1]) * Math.cos((a[0] + b[0]) / 2 * RAD)) / step)); for (var k = 0; k < n; k++) out.push(ll(a[0] + (b[0] - a[0]) * k / n, a[1] + (b[1] - a[1]) * k / n, r)); } return out; }
@@ -47,28 +53,25 @@ R('globe', function (m) {
     'Taiwan': [[23.4, 120.6], [24.4, 121.2]], 'South Korea': [[36.4, 127.9]], 'China': [[34.5, 104.0]] };
   var HMAX = 0.24, used = {}, PINS = {};
   ROWS.forEach(function (r, i) { var k = used[r[1]] || 0; used[r[1]] = k + 1; var at = AT[r[1]][k]; (PINS[r[1]] || (PINS[r[1]] = [])).push({ i: i, lat: at[0], lon: at[1], h: HMAX * r[2] / 100 }); });
-  /* a pin: a foot ring on the surface, a stem as long as the share, a head. Where a country leads several segments its pins lean
-     a little apart, about 9 degrees each way, so each one shows (designer pass, 22 Nov 2026: the Netherlands' two and Taiwan's
-     two stood one over the other and read as one); the lean shortens a pin's rise by about one percent. The lean runs across
-     the rest view's line of sight (the surface's normal crossed with it), first one way, then the other, so no pin leans
-     toward or away from the reader at rest (expert review, 22 Nov 2026) */
-  function pin(lat, lon, hgt, col, i, k, nk) {
-    var n = ll(lat, lon, 1), p = m.part('pin' + i, { ex: [n[0] * 0.35, n[1] * 0.35, n[2] * 0.35], seq: 1 + (i % 6), pri: 1 });
-    var a = ll(lat, lon, 1), foot = [], u = Math.abs(n[1]) < 0.9 ? [0, 1, 0] : [1, 0, 0];
+  /* a country's pins: a foot ring on the surface at the country's base, and for each pin a spike straight up the page, as long as
+     its share, side by side 8 px apart where the country leads several segments (each spike a part of its own, so a label lights
+     its own country's) */
+  var HEAD = {}, SPK = {};
+  Object.keys(PINS).forEach(function (cn) {
+    var ps = PINS[cn], lat = 0, lon = 0;
+    ps.forEach(function (q) { lat += q.lat; lon += q.lon; }); lat /= ps.length; lon /= ps.length;
+    var n = ll(lat, lon, 1), u = Math.abs(n[1]) < 0.9 ? [0, 1, 0] : [1, 0, 0], foot = [];
     var e1 = [n[1] * u[2] - n[2] * u[1], n[2] * u[0] - n[0] * u[2], n[0] * u[1] - n[1] * u[0]], L1 = Math.hypot(e1[0], e1[1], e1[2]); e1 = [e1[0] / L1, e1[1] / L1, e1[2] / L1];
     var e2 = [n[1] * e1[2] - n[2] * e1[1], n[2] * e1[0] - n[0] * e1[2], n[0] * e1[1] - n[1] * e1[0]];
-    var ac = [n[1] * SIGHT[2] - n[2] * SIGHT[1], n[2] * SIGHT[0] - n[0] * SIGHT[2], n[0] * SIGHT[1] - n[1] * SIGHT[0]], al = Math.hypot(ac[0], ac[1], ac[2]) || 1;
-    var lean = nk > 1 ? Math.tan(9 * RAD) * (k % 2 ? -1 : 1) / al : 0, d = [n[0] + lean * ac[0], n[1] + lean * ac[1], n[2] + lean * ac[2]], dl = Math.hypot(d[0], d[1], d[2]);
-    var b = [a[0] + d[0] / dl * hgt, a[1] + d[1] / dl * hgt, a[2] + d[2] / dl * hgt];
-    for (var q = 0; q <= 16; q++) { var t = q * TAU / 16; foot.push([a[0] + 0.016 * (e1[0] * Math.cos(t) + e2[0] * Math.sin(t)), a[1] + 0.016 * (e1[1] * Math.cos(t) + e2[1] * Math.sin(t)), a[2] + 0.016 * (e1[2] * Math.cos(t) + e2[2] * Math.sin(t))]); }
-    m.wire(foot, { col: col, lw: 0.8, vis: a, c: a });
-    m.wire([a, b], { col: col, lw: 1.7, vis: a, c: b });
-    m.dots([b], { col: col, r: 3, front: false, c: b });
-    m.cur.items[m.cur.items.length - 1].vis = a;
-    HEAD[i] = b;
-  }
-  var HEAD = {};
-  Object.keys(PINS).forEach(function (cn) { PINS[cn].forEach(function (q, k) { pin(q.lat, q.lon, q.h, 'acc', q.i, k, PINS[cn].length); }); });
+    for (var q = 0; q <= 16; q++) { var t = q * TAU / 16; foot.push([n[0] + 0.016 * (e1[0] * Math.cos(t) + e2[0] * Math.sin(t)), n[1] + 0.016 * (e1[1] * Math.cos(t) + e2[1] * Math.sin(t)), n[2] + 0.016 * (e1[2] * Math.cos(t) + e2[2] * Math.sin(t))]); }
+    ps.forEach(function (pq, k) {
+      var p = m.part('pin' + pq.i, { ex: [n[0] * 0.35, n[1] * 0.35, n[2] * 0.35], seq: 1 + (pq.i % 6), pri: 1 });
+      if (k === 0) m.wire(foot, { col: 'acc', lw: 0.8, vis: n, c: n });
+      SPK[pq.i] = m.spike(n, pq.h, { col: 'acc', lw: 1.7, r: 3, sx: (k - (ps.length - 1) / 2) * 8 });
+      HEAD[pq.i] = [n[0] * (1 + pq.h), n[1] * (1 + pq.h), n[2] * (1 + pq.h)];
+      void p;
+    });
+  });
   // the Earth's axis as a centre line, and one label for each country, with leaders to its pins
   m.use(g);
   m.guide([[0, 1, 0, g.idx], [0, 1.3, 0, g.idx]], { style: 'axis', alpha: 0.9, front: true });
@@ -79,10 +82,11 @@ R('globe', function (m) {
   // side and out as it nears the rim. The first pin sets the label's height in the drawn view
   [['Netherlands', 'r'], ['United States', 'r'], ['China', 'l'], ['South Korea', 'l'], ['Japan', 'l'], ['Taiwan', 'l']].forEach(function (c) {
     var ps = PINS[c[0]];
-    m.callout([head(ps[0])], c[0], { side: c[1] });
+    m.callout([head(ps[0])], c[0], { side: c[1], row: 'b' });
     var co = m.callouts[m.callouts.length - 1];
     co.track = ps.map(head);
+    co.spikes = ps.map(function (q) { return SPK[q.i]; });
     co.focus = ps.map(function (q) { return partOf(q.i); });
   });
-  return { elev: ELEV, yaw: YAW, spin: 0.06, start: 1, rest: 0, maxH: 430, accent: [122, 31, 43], accentDark: [201, 83, 106] };
+  return { elev: ELEV, yaw: YAW, spin: 0.06, start: 1, rest: 0, maxH: 430, trackRows: true, accent: [122, 31, 43], accentDark: [201, 83, 106] };
 });

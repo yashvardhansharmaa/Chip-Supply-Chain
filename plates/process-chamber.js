@@ -50,7 +50,7 @@ R('process-chamber', function (m) {
   m.revolve([[0, yLid + 0.10], [0.026, yLid + 0.10], [0.026, yLid + 0.152], [0, yLid + 0.152]], 'turned', o({}));
   m.guide([[0, yLid, 0, ves.idx], [0, yLid + 0.17, 0, lid.idx]], { style: 'axis', alpha: 0.85 });
   // the turbopump, dropped away below
-  var pump = m.part('pump', { pri: -2, ex: [0, -0.14, 0], seq: 3 });
+  var pump = m.part('pump', { pri: -2, ex: [0, -0.07, 0], seq: 3 });
   var bl = [];
   for (k = 0; k < 30; k++) { var ba = k * TAU / 30; bl.push(D.line([0.046 * Math.cos(ba), 0.074, 0.046 * Math.sin(ba)], [0.128 * Math.cos(ba + 0.3), 0.074, 0.128 * Math.sin(ba + 0.3)], { lw: 0.4, alpha: 0.75 })); }
   m.revolve([[0, -0.074], [0.146, -0.074], [0.146, 0.074], [0.13, 0.074], [0.13, 0.068], [0, 0.068]], 'turned', { seg: 40, pos: [0, yFlo - 0.2, 0], top: bl.map(function (it) { return { pts: it.pts.map(function (q) { return [q[0], q[1] - 0.006, q[2]]; }), lw: 0.4, alpha: 0.7 }; }) });
@@ -62,9 +62,12 @@ R('process-chamber', function (m) {
   // left side, so neither the plasma's leader nor the loupe's cone runs across the whole chamber)
   m.callout([0.1 * cw[0], 0.03, 0.1 * cw[1], plp.idx], 'Plasma', { side: 'r' });
   m.callout([0.148 * cw[0], yPed + WT, 0.148 * cw[1], wfp.idx], 'Wafer', { side: 'r' });
-  m.callout([0.168 * cu[0], yPed - 0.05, 0.168 * cu[1], chk.idx], 'Chuck', { side: 'l' });
+  // (22 Nov 2026 plates refine: the chuck named straight across from its cut face, from the right, under the wafer, since the
+  // loupe's caption fills the left column at its height; the pump half as far below; on a phone the loupe at most 60 percent
+  // of the chamber's width)
+  m.callout([0.13 * cw[0], yPed - 0.076, 0.13 * cw[1], chk.idx], 'Chuck', { side: 'r', level: true });
   m.callout([0.146 * cw[0], yFlo - 0.2, 0.146 * cw[1], pump.idx], 'Pump', { side: 'r' });
-  var lt = a0 + 0.55, loupe = { model: 'etch-loupe', at: [0.1 * Math.cos(lt), yPed + WT, 0.1 * Math.sin(lt)], part: 'wafer', side: 'l', r: 0.15, rMax: 92, scale: 0.8, dx: -0.12, caption: ['A hole ten times', 'deeper than it is wide'] };
+  var lt = a0 + 0.55, loupe = { model: 'etch-loupe', at: [0.1 * Math.cos(lt), yPed + WT, 0.1 * Math.sin(lt)], part: 'wafer', side: 'l', r: 0.15, rMax: 92, scale: 0.8, dx: -0.12, rPhone: 52, caption: ['A hole ten times', 'deeper than it is wide'] };
   return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, loupe: loupe, accent: [109, 92, 201], accentDark: [176, 164, 240], accent2: [111, 139, 166], accent2Dark: [195, 211, 226] };
 });
 

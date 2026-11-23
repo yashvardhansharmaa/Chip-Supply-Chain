@@ -10,7 +10,7 @@
 R('substrate-layers', function (m) {
   var W = 95, Dd = 68, tc = 7.5, tb = 1.0, nb = 11, tr = 1.0, top = tc / 2 + nb * tb + tr, cTop = tc / 2;
   var lay = []; for (var k = 0; k <= nb; k++) lay.push(cTop + k * tb);
-  var rnd = rng(11), FILM_A = { d: 0.24, c: 'acc' }, FILM_B = { d: 0.40, c: 'acc' };
+  var FILM_A = { d: 0.24, c: 'acc' }, FILM_B = { d: 0.40, c: 'acc' };
   // the section on a cut face, as decal items in (u, y), u running 0..L along the face
   function section(L, toP) {
     var it = [], i, u;
@@ -22,35 +22,45 @@ R('substrate-layers', function (m) {
       it.push(poly(0, -lay[k], L, -lay[k - 1], { fill: k % 2 ? FILM_A : FILM_B, lw: 0, keep: true, tag: 'film' }));
     }
     [1, -1].forEach(function (sg) { it.push(poly(0, sg > 0 ? lay[nb] : -top, L, sg > 0 ? top : -lay[nb], { fill: 'dark', lw: 0 })); });
-    // copper on every conductor plane, as traces in section: longer runs with short breaks, and every third plane nearly whole
-    // (a power or ground plane), so the bands read as layers (designer pass, 22 Nov 2026: short random dashes on every plane
-    // read as a brick wall)
+    /* 22 Nov 2026 plates refine: the copper on every conductor plane runs the whole cut, broken only round the vias that land on
+       it (each landing a pad of its own, with a clearance either side), so the eleven bands a side can be counted between the
+       twelve lines of copper (random runs and breaks read as a brick wall). Every microvia column climbs every band, stacked or
+       staggered; nothing is random */
+    var pads = []; for (k = 0; k <= nb; k++) pads.push([]);
+    // plated through-holes and their pads on the core's two faces
+    var np = Math.max(3, Math.round(L / 11)), hw = 0.62;
+    for (i = 0; i < np; i++) {
+      u = (i + 0.5) * L / np;
+      it.push({ pts: [toP(u - hw, -cTop), toP(u - hw, cTop)], col: 'acc2', lw: 1.1, tag: 'cu' }, { pts: [toP(u + hw, -cTop), toP(u + hw, cTop)], col: 'acc2', lw: 1.1, tag: 'cu' });
+      pads[0].push([u - hw * 2.6, u + hw * 2.6]);
+    }
+    // microvias, stacked in some columns and staggered in others, each column through every band
+    var nv = Math.max(4, Math.round(L / 12)), vias = [];
+    for (i = 0; i < nv; i++) {
+      var u0 = (i + 0.5) * L / nv + 2.2, stacked = i % 3 !== 0, uu = u0;
+      for (var q = 1; q <= nb; q++) {
+        if (!stacked) uu = u0 + (q % 2 ? 1.1 : 0);
+        vias.push([q, uu]);
+        // the via's foot lands on plane q - 1, its mouth on plane q: a pad on each
+        pads[q - 1].push([uu - 0.75, uu + 0.75]); pads[q].push([uu - 0.75, uu + 0.75]);
+      }
+    }
     [1, -1].forEach(function (sg) {
+      vias.forEach(function (v) { var yl = sg * lay[v[0] - 1], yh = sg * lay[v[0]], x = v[1]; it.push({ pts: [toP(x - 0.58, yh), toP(x - 0.3, yl), toP(x + 0.3, yl), toP(x + 0.58, yh)], col: 'acc2', lw: 0.8, tag: 'cu' }); });
       for (k = 0; k <= nb; k++) {
-        var y = sg * lay[k], plane = k % 3 === 0; u = 0.4 + rnd() * 1.2;
-        while (u < L - 0.4) { var w = plane ? 6 + rnd() * 9 : 2.2 + rnd() * 3.8; if (u + w > L - 0.4) w = L - 0.4 - u; if (w < 0.8) break; it.push({ pts: [toP(u, y), toP(u + w, y)], col: 'acc2', lw: plane ? 1.2 : 1.05, tag: 'cu' }); u += w + (plane ? 0.5 + rnd() * 0.5 : 0.7 + rnd() * 1.1); }
+        var y = sg * lay[k], lw = k % 3 === 0 ? 1.2 : 1.05;
+        // the plane's pads, merged where they touch, then the copper between them, each run stopping 0.5 short of a pad
+        var ps = pads[k].slice().sort(function (a, b) { return a[0] - b[0]; }), mg = [];
+        ps.forEach(function (pq) { var l = mg[mg.length - 1]; if (l && pq[0] <= l[1] + 0.2) l[1] = Math.max(l[1], pq[1]); else mg.push([pq[0], pq[1]]); });
+        var x0 = 0.4;
+        mg.forEach(function (pq) {
+          if (pq[0] - 0.5 > x0 + 0.3) it.push({ pts: [toP(x0, y), toP(pq[0] - 0.5, y)], col: 'acc2', lw: lw, tag: 'cu' });
+          it.push({ pts: [toP(Math.max(0.4, pq[0]), y), toP(Math.min(L - 0.4, pq[1]), y)], col: 'acc2', lw: k === 0 ? 1.6 : lw + 0.3, tag: 'cu' });
+          x0 = pq[1] + 0.5;
+        });
+        if (L - 0.4 > x0 + 0.3) it.push({ pts: [toP(x0, y), toP(L - 0.4, y)], col: 'acc2', lw: lw, tag: 'cu' });
       }
     });
-    // plated through-holes and their pads
-    var np = Math.max(3, Math.round(L / 11));
-    for (i = 0; i < np; i++) {
-      u = (i + 0.5) * L / np; var hw = 0.62;
-      it.push({ pts: [toP(u - hw, -cTop), toP(u - hw, cTop)], col: 'acc2', lw: 1.1, tag: 'cu' }, { pts: [toP(u + hw, -cTop), toP(u + hw, cTop)], col: 'acc2', lw: 1.1, tag: 'cu' });
-      it.push({ pts: [toP(u - hw * 2.6, cTop), toP(u + hw * 2.6, cTop)], col: 'acc2', lw: 1.6, tag: 'cu' }, { pts: [toP(u - hw * 2.6, -cTop), toP(u + hw * 2.6, -cTop)], col: 'acc2', lw: 1.6, tag: 'cu' });
-    }
-    // microvias, stacked in some columns and staggered in others
-    var nv = Math.max(4, Math.round(L / 12));
-    for (i = 0; i < nv; i++) {
-      var u0 = (i + 0.5) * L / nv + 2.2, stacked = i % 3 !== 0;
-      [1, -1].forEach(function (sg) {
-        var uu = u0, climb = 3 + Math.floor(rnd() * (nb - 3));
-        for (var q = 1; q <= climb; q++) {
-          if (!stacked) uu += (q % 2 ? 1 : -1) * 1.1;
-          var yl = sg * lay[q - 1], yh = sg * lay[q];
-          it.push({ pts: [toP(uu - 0.58, yh), toP(uu - 0.3, yl), toP(uu + 0.3, yl), toP(uu + 0.58, yh)], col: 'acc2', lw: 0.8, tag: 'cu' });
-        }
-      });
-    }
     // solder balls in section along the foot
     var nbz = Math.max(4, Math.round(L / 4.5));
     for (i = 0; i < nbz; i++) { u = (i + 0.5) * L / nbz; var arc = []; for (var a = 0; a <= 12; a++) { var th = Math.PI * a / 12; arc.push(toP(u - 1.1 * Math.cos(th), -top - 1.1 * Math.sin(th) * 0.85)); } it.push({ pts: arc, lw: 0.7, fill: 'mid' }); }

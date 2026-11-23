@@ -6,7 +6,9 @@
    and says the column is simplified; the wafer is drawn 300 mm across (the stage's units) and labelled without its size.
    The detector is labelled: chapter 7 says the picture is built from the electrons the beam knocks loose. Colours (the set's
    legend): the beam in the beam hue the EUV light takes on plate 04, the wafer in silicon slate (acc2); the lens coils,
-   copper before, are ink, since a plate has two accents and the wafer's colour is the one kept the same everywhere. */
+   copper before, are ink, since a plate has two accents and the wafer's colour is the one kept the same everywhere.
+   22 Nov 2026 plates refine: the beam hue is a deeper blue on paper (78, 96, 186; plate 04's light takes the same), so the
+   envelope reads against the lenses' shading. */
 R('sem-column', function (m) {
   var yaw = PLATE.DIM.yaw, h = farHalf(yaw), a0 = h[0], a1 = h[1], tv = h[2];
   var O = { a0: a0, a1: a1, cut: 'cut', seg: 48 };
@@ -71,14 +73,18 @@ R('sem-column', function (m) {
   // the beam: emitter to wafer, and its envelope on the cut plane, each point riding with the part it passes through
   var ENV = [[1.268, 0.008], [1.20, 0.028], [1.11, 0.038], [0.72, 0.060], [0.60, 0.070], [0.50, 0.032], [0.436, 0.004], [0.36, 0.024], [0.24, 0.060], [0.12, 0.034], [0.02, 0.028], [-0.18, 0.038], [-0.43, 0.096], [-0.60, 0.072], [-0.815, 0.036], [yW, 0.002]];
   var who = function (y) { return y > 1.1 ? parts.gun.idx : y > 0.48 ? parts.c1.idx : y > 0.12 ? parts.c2.idx : y > -0.3 ? parts.sc.idx : y > -0.84 ? parts.ob.idx : parts.st.idx; };
-  [-1, 1].forEach(function (s) { m.guide(ENV.map(function (q) { return [s * q[1] * u[0], q[0], s * q[1] * u[1], who(q[0])]; }), { style: 'beam', col: 'acc', lw: 0.8, alpha: 0.75 }); });
+  // (22 Nov 2026 plates refine: the envelope at lw 1.3, full strength, so the beam's shape reads through the lenses)
+  [-1, 1].forEach(function (s) { m.guide(ENV.map(function (q) { return [s * q[1] * u[0], q[0], s * q[1] * u[1], who(q[0])]; }), { style: 'beam', col: 'acc', lw: 1.3, alpha: 0.9 }); });
   m.guide([[0, 1.268, 0, parts.gun.idx], [0, 1.10, 0, parts.gun.idx], [0, 1.10, 0, parts.c1.idx], [0, 0.48, 0, parts.c1.idx], [0, 0.48, 0, parts.c2.idx], [0, 0.12, 0, parts.c2.idx], [0, 0.12, 0, parts.sc.idx], [0, -0.30, 0, parts.sc.idx], [0, -0.30, 0, parts.ob.idx], [0, -0.815, 0, parts.ob.idx], [0, -0.815, 0, parts.det.idx], [0, -0.86, 0, parts.det.idx], [0, -0.86, 0, parts.st.idx], [0, yW, 0, parts.st.idx]], { style: 'beam', col: 'acc', lw: 1.3 });
   var w2 = [Math.cos(a1), Math.sin(a1)];
-  m.callout([0, 1.27, 0, parts.gun.idx], 'Emitter', { side: 'r' });
+  // (the emitter named level with its tip, its leader straight out to the right; the wafer on its near rim, 22 Nov 2026 plates
+  // refine)
+  m.callout([0, 1.268, 0, parts.gun.idx], 'Emitter', { side: 'r', level: true });
   m.callout([[0.27 * u[0], 0.60, 0.27 * u[1], parts.c1.idx], [0.3 * u[0], -0.43, 0.3 * u[1], parts.ob.idx]], 'Lenses', { side: 'l', row: 't' });
   // (on a phone the lenses and the beam are named from the top row, so their leaders rise beside the narrow column)
   m.callout([0, 0.03, 0, parts.sc.idx], 'Electron beam', { side: 'r', row: 't' });
-  m.callout([-0.3 * du[0], yW + 0.004, -0.3 * du[1], parts.st.idx], 'Wafer', { side: 'l', tag: 'wafer' });
+  var nr = Math.atan2(Math.cos(yaw), -Math.sin(yaw)) + 0.35;
+  m.callout([wr * 0.95 * Math.cos(nr), yW + 0.004, wr * 0.95 * Math.sin(nr), parts.st.idx], 'Wafer', { side: 'l', tag: 'wafer' });
   m.callout([0.15 * u[0], -0.855, 0.15 * u[1], parts.det.idx], 'Detector', { side: 'l', tag: 'detector' });
-  return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, sortAxis: [0, 1, 0], accent: [107, 127, 209], accentDark: [167, 180, 245], accent2: [111, 139, 166], accent2Dark: [195, 211, 226] };
+  return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, sortAxis: [0, 1, 0], accent: [78, 96, 186], accentDark: [167, 180, 245], accent2: [111, 139, 166], accent2Dark: [195, 211, 226] };
 });

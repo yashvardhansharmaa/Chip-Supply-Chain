@@ -57,7 +57,8 @@ R('gpu-baseboard', function (m) {
   // (designer pass, 22 Nov 2026: one leader, to the lifted module nearest the labels, which crosses nothing; the second ran
   // 93 px across the board to a seated one. Pointing at the label still lights all eight, by their tag)
   m.callout([mods[6][0] + 0.075, top + MH + 0.017, mods[6][1] - 0.045, mp.idx], 'Accelerator modules', { side: 'r', tag: 'modules' });
-  // the nearer chip's top, its leader dropping steeply past the seated modules to a label under the others
-  m.callout([0.175 + 0.095, top + 0.05, 0.07, board.idx], 'NVLink switch chips', { side: 'r', tag: 'switch' });
+  // the nearer chip's top, its leader running down the aisle between the two rows of modules, by the board's right end, to its
+  // label (22 Nov 2026 plates refine: it dropped steeply across the seated modules)
+  m.callout([0.175 + 0.095, top + 0.05, 0.0, board.idx], 'NVLink switch chips', { side: 'r', tag: 'switch', via: [BW / 2 - 0.02, top + 0.05, 0.0, board.idx] });
   return { elev: PLATE.ISO.elev, yaw: PLATE.ISO.yaw, sortAxis: [0, 1, 0], accent: [111, 139, 166], accentDark: [195, 211, 226] };
 });

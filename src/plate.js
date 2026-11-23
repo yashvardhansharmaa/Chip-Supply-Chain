@@ -219,7 +219,7 @@
     if (o.top) this.decal(s, t.n([0, 1, 0]), mapItems(o.top, t.p));
     s.sortFaces = o.sortFaces !== false;
     // its axis, and the two profile rows where a dished end (a mirror's face, a dome) takes its concentric rings (paint)
-    s.axisN = t.n([0, 1, 0]);
+    s.axisN = t.n([0, 1, 0]); s.lip = !!o.lip;
     s.rings = curved.length >= 3 ? [curved[Math.floor(curved.length / 3)], curved[Math.floor(2 * curved.length / 3)]] : curved.length ? [curved[Math.floor(curved.length / 2)]] : [];
     return this.end();
   };
@@ -252,6 +252,16 @@
     var it = { kind: 'dots', part: this.cur.idx, pts: pts, c: o.c || centroid(pts), col: o.col || 'ink', r: o.r || 1, alpha: o.alpha == null ? 1 : o.alpha, lod: o.lod || 0, ring: !!o.ring, front: !!o.front, keepThumb: !!o.keepThumb };
     it.tag = this._tag; this.cur.items.push(it); this.S.push(it); return it;
   };
+  /* a spike: a pin that stands straight up the page from its foot, its drawn length len (model units, at the drawing's scale)
+     whatever way the model turns, sx css px to the side of the foot (the globe's pins, 22 Nov 2026 plates refine: a pin standing
+     out of the surface was drawn shorter the more it faced the reader). pts, the foot and a point len out along the surface's
+     normal, serve what a label lights */
+  M.spike = function (foot, len, o) {
+    o = o || {};
+    var L = Math.hypot(foot[0], foot[1], foot[2]) || 1, head = [foot[0] * (1 + len / L), foot[1] * (1 + len / L), foot[2] * (1 + len / L)];
+    var it = { kind: 'spike', part: this.cur.idx, foot: foot, len: len, sx: o.sx || 0, pts: [foot, head], c: foot, vis: foot, col: o.col || 'acc', lw: o.lw || 1.7, r: o.r || 3, alpha: 1, lod: 0 };
+    it.tag = this._tag; this.cur.items.push(it); this.S.push(it); return it;
+  };
   // lines that are not parts: guides between parts (each point may name its part), the assembly axis, the light path
   M.guide = function (pts, o) { o = o || {}; this.lines.push({ pts: pts, style: o.style || 'guide', col: o.col || 'ink', lw: o.lw, alpha: o.alpha, lod: o.lod || 0, front: !!o.front }); };
   // a sphere seen as a disc (the globe), lines on its surface (drawn on the near side only) and filled land
@@ -272,7 +282,7 @@
     o = o || {};
     var pts = at[0] && at[0].length ? at : [at], own = null;
     pts.forEach(function (q) { if (own == null && q[3] != null) own = q[3]; });
-    this.callouts.push({ pts: pts.map(function (q) { return [q[0], q[1], q[2], q[3] == null ? null : q[3]]; }), text: text, n: o.n || 0, part: o.part != null ? o.part : own != null ? own : this.cur.idx, side: o.side || null, tag: o.tag || null, dy: o.dy || 0, focus: o.focus || null, strong: !!o.strong, col: o.col || null, only: o.only || null, track: o.track || null, row: o.row || null, rowAt: o.rowAt ? (o.rowAt[0] && o.rowAt[0].length ? o.rowAt : [o.rowAt]) : null });
+    this.callouts.push({ pts: pts.map(function (q) { return [q[0], q[1], q[2], q[3] == null ? null : q[3]]; }), text: text, n: o.n || 0, part: o.part != null ? o.part : own != null ? own : this.cur.idx, side: o.side || null, tag: o.tag || null, dy: o.dy || 0, focus: o.focus || null, strong: !!o.strong, col: o.col || null, only: o.only || null, track: o.track || null, row: o.row || null, level: !!o.level, via: o.via || null, rowAt: o.rowAt ? (o.rowAt[0] && o.rowAt[0].length ? o.rowAt : [o.rowAt]) : null });
   };
   function centroid(pts) { var c = [0, 0, 0]; pts.forEach(function (p) { c[0] += p[0]; c[1] += p[1]; c[2] += p[2]; }); return [c[0] / pts.length, c[1] / pts.length, c[2] / pts.length]; }
   function mapItems(items, fn) {
@@ -460,7 +470,7 @@
       if (it.kind === 'solid') {
         if (!decalTags) for (var fi = it.f0; fi < it.f1; fi++) { var f = m.F[fi], P3 = f.v.map(V3); for (var k = 1; k < P3.length - 1; k++) d = Math.min(d, distTri(p, P3[0], P3[k], P3[k + 1])); }
         it.decals.forEach(function (dc) { dc.items.forEach(function (di) { if (decalTags && !(di.tag && decalTags.indexOf(di.tag) >= 0)) return; var pts = (di.pts || di.dots || []).map(function (q) { return [q[0] + o[0], q[1] + o[1], q[2] + o[2]]; }); if (pts.length) d = Math.min(d, di.dots ? Math.min.apply(null, pts.map(function (q) { return Math.hypot(p[0] - q[0], p[1] - q[1], p[2] - q[2]); })) : distPoly3(p, pts, di.closed, !!di.fill)); }); });
-      } else if ((it.kind === 'wire' || it.kind === 'dots') && it.pts) {
+      } else if ((it.kind === 'wire' || it.kind === 'dots' || it.kind === 'spike') && it.pts) {
         var pts = it.pts.map(function (q) { return [q[0] + o[0], q[1] + o[1], q[2] + o[2]]; });
         d = it.kind === 'dots' ? Math.min.apply(null, pts.map(function (q) { return Math.hypot(p[0] - q[0], p[1] - q[1], p[2] - q[2]); })) : distPoly3(p, pts, it.closed, false);
       }
@@ -501,7 +511,7 @@
       partsOf(c).forEach(function (pi) {
         var T = c._targets.filter(function (t) { return t.it && t.part === pi; }).map(function (t) { return t.it; });
         if (!T.length || !m.parts[pi]) return;
-        var all = m.parts[pi].items.filter(function (it) { return it.kind === 'solid' || it.kind === 'wire' || it.kind === 'dots'; });
+        var all = m.parts[pi].items.filter(function (it) { return it.kind === 'solid' || it.kind === 'wire' || it.kind === 'dots' || it.kind === 'spike'; });
         var shared = m.callouts.some(function (o) { return o !== c && partsOf(o).indexOf(pi) >= 0; });
         var keep;
         // a numbered part is the model's part, as the chapter's parts list names it
@@ -529,7 +539,7 @@
       var pts = (an.at[0] && an.at[0].length ? an.at : [an.at]).map(function (q) { return [q[0], q[1], q[2], an.part]; });
       if (an.multi) an.multi.forEach(function (mq) { pts.push([mq[1][0], mq[1][1], mq[1][2], mq[0]]); });
       var o = (spec.calloutOpts && spec.calloutOpts[an.n]) || {};
-      m.callouts.push({ pts: pts, text: an.name, n: an.n, part: an.part, side: o.side || null, tag: o.tag || null, dy: o.dy || 0, focus: o.focus || null, only: o.only || null, row: o.row || null });
+      m.callouts.push({ pts: pts, text: an.name, n: an.n, part: an.part, side: o.side || null, tag: o.tag || null, dy: o.dy || 0, focus: o.focus || null, only: o.only || null, row: o.row || null, level: !!o.level });
     });
     m.callouts.sort(function (a, b) { return (a.n || 99) - (b.n || 99); });
     m.loupe = spec.loupe || null;
@@ -750,6 +760,8 @@
     for (var i = 0; i < V.length / 3; i++) { var o = off[VP[i]]; add(V[i * 3] + o[0], V[i * 3 + 1] + o[1], V[i * 3 + 2] + o[2]); }
     m.EX.forEach(function (q) { var o = off[q[3]]; add(q[0] + o[0], q[1] + o[1], q[2] + o[2]); });
     m.S.forEach(function (it) { if (it.kind === 'globe') { minx = Math.min(minx, -it.r); maxx = Math.max(maxx, it.r); miny = Math.min(miny, -it.r); maxy = Math.max(maxy, it.r); } });
+    // (a spike's head stands len up the page from its foot)
+    m.S.forEach(function (it) { if (it.kind !== 'spike') return; var o = off[it.part], x = it.foot[0] + o[0], y = it.foot[1] + o[1], z = it.foot[2] + o[2], sy = R[3] * x + R[4] * y + R[5] * z; add(x, y, z); maxy = Math.max(maxy, sy + it.len); });
     if (!thumb) m.dims.forEach(function (d) { var oa = off[d.part] || [0, 0, 0], ob = off[d.bpart == null ? d.part : d.bpart] || [0, 0, 0]; add(d.a[0] + d.off[0] + oa[0], d.a[1] + d.off[1] + oa[1], d.a[2] + d.off[2] + oa[2]); add(d.b[0] + d.off[0] + ob[0], d.b[1] + d.off[1] + ob[1], d.b[2] + d.off[2] + ob[2]); });
     if (!thumb) m.lines.forEach(function (L) { if (L.style !== 'axis') return; L.pts.forEach(function (q) { var o = q[3] == null ? [0, 0, 0] : off[q[3]]; add(q[0] + o[0], q[1] + o[1], q[2] + o[2]); }); });
     return { minx: minx, maxx: maxx, miny: miny, maxy: maxy };
@@ -769,7 +781,8 @@
      labels follow its towns round, keeps its columns. */
   PL.rowsOn = function (w) {
     var m = this.m, ls = this.labelStyle(w);
-    return w < 560 && this.lod === 'full' && !this.o.noLabels && m.callouts.length > 0 && !m.callouts.some(function (c) { return c.track; }) && m.callouts.some(function (c) { return !(ls.numbersOnly && c.n); });
+    // (the globe's labels, which follow its pins round, stand in a row under it where the model asks, spec.trackRows)
+    return w < 560 && this.lod === 'full' && !this.o.noLabels && m.callouts.length > 0 && (m.spec.trackRows || !m.callouts.some(function (c) { return c.track; })) && m.callouts.some(function (c) { return !(ls.numbersOnly && c.n); });
   };
   PL.rooms = function (w, g) {
     var m = this.m, self = this;
@@ -793,12 +806,33 @@
       var need = tw + (c.n ? ls.num * 2 + 6 : 0) + 30;
       if (need > room[side]) room[side] = need;
     });
+    /* a row of labels keeps inside the width (22 Nov 2026 plates refine: the transistor's lower row ran off a phone's right edge,
+       "Inner spacers" cut off): while a row is wider than the plate, its widest label with a space in it is set on two lines,
+       and the row's height follows (drawRows closes the gaps if it is still too wide) */
+    if (rows) ['t', 'b'].forEach(function (rw) {
+      var list = m.callouts.filter(function (c) { return c._side === rw; }); if (!list.length) return;
+      var meas = function (s) { return g ? g.measure(s, { size: ls.fs, weight: 500 }) : s.length * ls.fs * 0.53; }, r0 = ls.num * 1.1;
+      var bwOf = function (c) { var tw = 0; (c._lines || []).forEach(function (s) { tw = Math.max(tw, meas(s)); }); return (ls.numbersOnly && c.n ? 0 : tw) + (c.n ? 2 * r0 + (ls.numbersOnly ? 0 : 6) : 0); };
+      var total = function () { return list.reduce(function (a, c) { return a + bwOf(c); }, 0) + 12 * (list.length - 1); };
+      for (var gd = 0; gd < list.length && total() > w - 8; gd++) {
+        var cand = list.filter(function (c) { return c._lines && c._lines.length === 1 && c._lines[0].indexOf(' ') > 0; }).sort(function (a, b) { return bwOf(b) - bwOf(a); })[0];
+        if (!cand) break;
+        var words = cand._lines[0].split(' '), best = null;
+        for (var i = 1; i < words.length; i++) { var a = words.slice(0, i).join(' '), b = words.slice(i).join(' '), m2 = Math.max(meas(a), meas(b)); if (!best || m2 < best[0]) best = [m2, a, b]; }
+        cand._lines = [best[1], best[2]];
+      }
+      list.forEach(function (c) { var hh = Math.max(1, c._lines.length) * ls.fs * 1.18 + 18; if (hh > room[rw]) room[rw] = hh; });
+    });
+    // a model may set a column's labels in toward the drawing, into its empty corner (spec.tuck, px: callouts, layCols), so the
+    // column keeps that much less of the width
+    if (m.spec.tuck && !rows) ['l', 'r'].forEach(function (sd) { if (m.spec.tuck[sd]) room[sd] = Math.max(0, room[sd] - m.spec.tuck[sd]); });
     // the loupe takes the top of its label column, which is then at least as wide as the disc; on a narrow plate it sits under
     // the drawing
-    var LG = this.loupeOn() ? this.loupeGeom(w, 0, g) : null;
-    // under 560 px the disc stands under the row of labels, so the foot takes both
+    var LG = this.loupeOn() && !(m.loupe.tuck && w >= 560) ? this.loupeGeom(w, 0, g) : null;
+    // under 560 px the disc stands under the row of labels, so the foot takes both; a disc tucked into the drawing's empty corner
+    // (L.tuck) takes no column (fit gives it room only where it would leave the canvas)
     if (LG && LG.side === 'b') room.b = (room.b || 0) + LG.need;
-    else if (LG) room[LG.side] = Math.max(room[LG.side], 2 * LG.r + LG.mg + 14 - LG.inset);
+    else if (LG && LG.side !== 'tuck') room[LG.side] = Math.max(room[LG.side], 2 * LG.r + LG.mg + 14 - LG.inset);
     return room;
   };
   // the canvas's top and foot pads: the drawing's ink stands this far inside them, so the page sets the space round the plate
@@ -807,12 +841,46 @@
   PL.fit = function (w, h, g) {
     var e = this.ext || (this.ext = this.extent(this.lod === 'thumb')), rooms = this.rooms(w, g);
     var padX = this.lod === 'thumb' ? w * 0.04 : Math.max(10, w * (this.o.pad == null ? 0.025 : this.o.pad)), padY = this.lod === 'thumb' ? h * 0.04 : this.o.pad != null ? Math.max(10, h * 0.03) : PAD_Y;
-    var ew = e.maxx - e.minx, eh = e.maxy - e.miny, aw = w - rooms.l - rooms.r - 2 * padX, ah = h - 2 * padY - (rooms.t || 0) - (rooms.b || 0);
-    var sc = Math.min(aw / ew, ah / eh);
-    if (this.o.maxScale) sc = Math.min(sc, this.o.maxScale);
-    // the drawing and its label columns are centred together
-    var used = rooms.l + rooms.r + sc * ew, x0 = (w - used) / 2 + rooms.l;
-    return { s: sc, cx: x0 - sc * e.minx, cy: padY + (rooms.t || 0) + (ah - sc * eh) / 2 + sc * e.maxy, e: e, rooms: rooms };
+    var ew = e.maxx - e.minx, eh = e.maxy - e.miny, out = null;
+    // (a loupe tucked into the drawing's corner: where its disc and caption would leave the canvas, the plate gives them that much
+    // room at the side or the top, and is fitted again)
+    for (var it = 0; it < 4; it++) {
+      var aw = w - rooms.l - rooms.r - 2 * padX, ah = h - 2 * padY - (rooms.t || 0) - (rooms.b || 0);
+      var sc = Math.min(aw / ew, ah / eh);
+      if (this.o.maxScale) sc = Math.min(sc, this.o.maxScale);
+      // the drawing and its label columns are centred together
+      var used = rooms.l + rooms.r + sc * ew, x0 = (w - used) / 2 + rooms.l;
+      out = { s: sc, cx: x0 - sc * e.minx, cy: padY + (rooms.t || 0) + (ah - sc * eh) / 2 + sc * e.maxy, e: e, rooms: rooms };
+      var TG = this.tuckGeom(w, out, g);
+      if (!TG) break;
+      var oR = TG.x1 + 4 - w, oT = 4 - TG.y0;
+      if (oR <= 0.5 && oT <= 0.5) break;
+      rooms = { l: rooms.l, r: rooms.r + Math.max(0, oR), t: (rooms.t || 0) + Math.max(0, oT), b: rooms.b || 0 };
+    }
+    return out;
+  };
+  /* a tucked loupe's disc for a fit: its centre where the drawn view puts L.tuck, moved by L.tdx and L.tdy px. L.tuck is a point
+     of the model (in the part L.part, at the parts' rest), or 'tr' or 'tl', the top corner of the drawing's box on that side (so
+     the disc keeps the same place in the drawing's empty corner at every width). Returns the box its disc and caption take; the
+     caption stands under the disc, over it ('t'), or beside it ('l' or 'r', its middle L.capDy px from the disc's) */
+  PL.tuckGeom = function (w, fit, g) {
+    var L = this.m.loupe;
+    if (!L || !L.tuck || w < 560 || !this.loupeOn()) return null;
+    var m = this.m, x, y, r = Math.round(Math.max(48, Math.min(L.rMax || 104, (L.r || 0.155) * w))), mg = 10;
+    if (typeof L.tuck === 'string') { var e = fit.e; x = fit.cx + fit.s * (L.tuck === 'tl' ? e.minx : e.maxx); y = fit.cy - fit.s * e.maxy; }
+    else {
+      var R = viewM(m.yaw0, m.elev), off = this.offsets(1).o, pi = 0;
+      m.parts.forEach(function (p) { if (p.name === L.part) pi = p.idx; });
+      var o = off[pi] || [0, 0, 0], q = [L.tuck[0] + o[0], L.tuck[1] + o[1], L.tuck[2] + o[2]];
+      x = fit.cx + fit.s * (R[0] * q[0] + R[1] * q[1] + R[2] * q[2]); y = fit.cy - fit.s * (R[3] * q[0] + R[4] * q[1] + R[5] * q[2]);
+    }
+    x += L.tdx || 0; y += L.tdy || 0;
+    var cap = L.caption || [], cw = 0, capSide = L.capSide || 'b', cdy = L.capDy || 0, n = cap.length;
+    cap.forEach(function (ln) { cw = Math.max(cw, g ? g.measure(ln, { size: 12, weight: 500 }) : ln.length * 12 * 0.53); });
+    var half = Math.sqrt(Math.max(0, r * r - cdy * cdy));
+    var x1 = Math.max(x + r + 2, capSide === 'r' ? x + half + 12 + cw : capSide === 'b' || capSide === 't' ? x + cw / 2 + 2 : 0);
+    var y0 = Math.min(y - r - 2 - (capSide === 't' ? 12 + n * 16 : 0), capSide === 'l' || capSide === 'r' ? y + cdy - n * 8 - 6 : Infinity);
+    return { side: 'tuck', r: r, mg: mg, x: x, y: y, cap: cap, capSide: capSide === 'b' ? null : capSide, capDy: cdy, bottom: 0, inset: 0, x1: x1, y0: y0 };
   };
   // is the loupe drawn: a plate with one, in a mode that shows dimensions (or the phone's one), unless the page turns loupes off
   PL.loupeOn = function () { return !!(this.m.loupe && this.lod === 'full' && (!this.o.noDims || this.o.oneDim) && !this.o.noLabels && P.loupes !== false); };
@@ -825,10 +893,12 @@
      the width from the drawing. */
   PL.loupeGeom = function (w, h, g) {
     var L = this.m.loupe, r = Math.round(Math.max(56, Math.min(L.rMax || 104, (L.r || 0.155) * w))), mg = 10, side = L.side || 'r';
+    if (L.tuck && w >= 560) { var TF = this._lfit || this.fit(w, h || 400, g), TG = this.tuckGeom(w, TF, g); if (TG) return TG; }
     var cap = L.caption || [], capH = cap.length ? 15 + cap.length * 16 : 0;
     if (w < 560) {
       // (in the foot's corner on the loupe's own side, so its cone keeps to that side of the drawing; the caption beside it)
-      var hh = h || 0, rp = Math.round(Math.max(64, Math.min(L.rMax || 104, 0.23 * w))), lf = side === 'l', xp = lf ? mg + rp + 4 : w - mg - rp - 4, room = (lf ? w - xp : xp) - rp - 14 - mg;
+      // (a loupe may cap its disc on a phone, L.rPhone px, so it stays smaller than the object it magnifies: the etch chamber's)
+      var hh = h || 0, rp = Math.round(Math.min(L.rPhone || Infinity, Math.max(64, Math.min(L.rMax || 104, 0.23 * w)))), lf = side === 'l', xp = lf ? mg + rp + 4 : w - mg - rp - 4, room = (lf ? w - xp : xp) - rp - 14 - mg;
       // the caption's words, wrapped to the room left of the disc
       var meas = function (s) { return g ? g.measure(s, { size: 12, weight: 500 }) : s.length * 12 * 0.53; }, words = cap.join(' ').split(' '), out = [], ln = '';
       words.forEach(function (wd) { var t = ln ? ln + ' ' + wd : wd; if (ln && meas(t) > room) { out.push(ln); ln = wd; } else ln = t; });
@@ -857,6 +927,13 @@
       if (n) need += (n - 1) * ls.fs * 0.85 + ls.fs + 1;
       lo = Math.max(lo, LG.bottom + need);
     }
+    // a tucked loupe whose disc stands over the drawing's top: the canvas grows by that much
+    if (this.loupeOn() && this.m.loupe.tuck && w >= 560) {
+      // (measured at the scale the width allows, the drawing's top PAD_Y under the canvas's top)
+      var x0f = (w - rooms.l - rooms.r - sc * (e.maxx - e.minx)) / 2 + rooms.l, F0 = { s: sc, cx: x0f - sc * e.minx, cy: PAD_Y + (rooms.t || 0) + sc * e.maxy, e: e };
+      var T0 = this.tuckGeom(w, F0);
+      if (T0 && T0.y0 < 4) h += 4 - T0.y0;
+    }
     var out = Math.round(Math.max(lo, Math.min(hi, h)));
     // the labels were wrapped with a guess at the faces' widths: the next frame lays them out again with the real ones
     this.m.callouts.forEach(function (c) { c._lines = null; }); this._fitKey = null;
@@ -882,6 +959,7 @@
     for (var i = 0; i < V.length / 3; i++) { var o = O[VP[i]]; add(V[i * 3] + o[0], V[i * 3 + 1] + o[1], V[i * 3 + 2] + o[2]); }
     m.EX.forEach(function (q) { var o = O[q[3]]; add(q[0] + o[0], q[1] + o[1], q[2] + o[2]); });
     m.S.forEach(function (it) { if (it.kind === 'globe') { minx = Math.min(minx, -it.r); maxx = Math.max(maxx, it.r); miny = Math.min(miny, -it.r); maxy = Math.max(maxy, it.r); } });
+    m.S.forEach(function (it) { if (it.kind !== 'spike') return; var o = O[it.part], x = it.foot[0] + o[0], y = it.foot[1] + o[1], z = it.foot[2] + o[2], sy = R[3] * x + R[4] * y + R[5] * z; add(x, y, z); maxy = Math.max(maxy, sy + it.len); });
     return { minx: minx, maxx: maxx, miny: miny, maxy: maxy };
   };
 
@@ -892,6 +970,7 @@
     var m = this.m, g = st.g, pal = st.pal, w = st.w, h = st.h, lod = st.lod || this.lod, thumb = lod === 'thumb';
     var dyaw = st.dyaw || 0, delev = st.delev || 0, turned = !!(dyaw || delev);
     var fit = st.fit || this.fit(w, h, g), sc = fit.s * (st.scale || 1), R = viewM(m.yaw0 + dyaw, m.elev + delev), K = st.k == null ? 1 : st.k;
+    this._lfit = fit;
     var R0 = turned ? viewM(m.yaw0, m.elev) : R, LA = st.labA == null ? 1 : st.labA;
     var offs = this.offsets(K, thumb), O = offs.o, A = offs.a;
     var V = m.V, VP = m.VP, nv = V.length / 3, X = this._X || (this._X = new Float32Array(nv * 3));
@@ -914,12 +993,14 @@
       X[i * 3 + 2] = R[6] * x + R[7] * y + R[8] * z;
     }
     var proj = function (p, part) { var o = part == null ? [0, 0, 0] : O[part], x = p[0] + o[0], y = p[1] + o[1], z = p[2] + o[2]; return [cx + sc * (R[0] * x + R[1] * y + R[2] * z), cy - sc * (R[3] * x + R[4] * y + R[5] * z), R[6] * x + R[7] * y + R[8] * z]; };
+    // a spike's head on the page: up the page from its foot, its sx to the side (M.spike)
+    var spikeXY = function (it, P) { var f = P(it.foot, it.part); return [f[0] + it.sx * (thumb ? 0.6 : k), f[1] - it.len * sc]; };
     var depthOf = function (c, part) { var o = O[part]; return R[6] * (c[0] + o[0]) + R[7] * (c[1] + o[1]) + R[8] * (c[2] + o[2]); };
     var rotN = function (n) { return [R[0] * n[0] + R[1] * n[1] + R[2] * n[2], R[3] * n[0] + R[4] * n[1] + R[5] * n[2], R[6] * n[0] + R[7] * n[1] + R[8] * n[2]]; };
 
     // the hierarchy of line weights, css px. One pen for the set: it follows the slot's width alone (22 Nov 2026; it followed the
     // height too, so plates in one 666 px slot drew 31 percent apart)
-    var lite = !!st.lite;
+    var lite = !!st.lite, jointW = thumb ? null : m.spec.joints || null;
     var k = thumb ? 1 : Math.max(0.8, Math.min(1.2, (st.penW || w) / 620));
     // a small still's ink (st.inkK, build/plate-stills.js): its lines and fills together, so every small still carries 10 to
     // 25 percent ink (22 Nov 2026: the HBM stack's was a black block at 41, the die's a ghost at 6)
@@ -935,8 +1016,11 @@
     // at about 60 percent, outlines and creases a little under full, and a turned surface's shading lines in the ground's own
     // colour over its lifted tone. On paper each stroke keeps its colour
     var strokeCache = {};
+    // (22 Nov 2026 plates refine: on paper a solid in a colour takes ink for its outlines, shade lines, creases and shading
+    // lines, as a draughtsman inks every edge with one pen; its tinted line, the colour mixed toward ink, read as a pale grey
+    // and lost the part's form. The tint stays for what is drawn in the colour itself: decals, wiring and light paths)
     var strokeOf = function (c, role) {
-      if (!pal.dark) return lineCol(c);
+      if (!pal.dark) return inkC;
       var key = c + '|' + role; if (strokeCache[key]) return strokeCache[key];
       var v = role === 'shl' ? css(pal.bg) : css(mix(pal.bg, lineRGB(c), role === 'shade' ? 0.6 : role === 'out' ? 0.88 : role === 'crease' ? 0.72 : 0.62));
       return (strokeCache[key] = v);
@@ -947,15 +1031,18 @@
     var Ls = [-0.78, 0.22, 0.58], Lsn = Math.hypot(Ls[0], Ls[1], Ls[2]); Ls = [Ls[0] / Lsn, Ls[1] / Lsn, Ls[2] / Lsn];
     var lamC = function (nvw) { return Math.max(0, nvw[0] * Ls[0] + nvw[1] * Ls[1] + nvw[2] * Ls[2]); };
     // three values on flat faces (top, lit side, shade side), banded values on turned ones
-    var toneF = function (lam, curve) {
+    var toneF = function (lam, curve, acc) {
       // the dark ramp is about twice the old one: a top face about 16 percent of the way to ink, the lit side 11, the shade side 5
       if (pal.dark) { if (curve) return 1.0 + 0.9 * Math.round(lam * 5) / 5; return lam > 0.72 ? 1.8 : lam > 0.15 ? 1.25 : 0.55; }
+      // on paper a material in a colour keeps it on its top face (22 Nov 2026 plates refine: at 0.36 a slate top read as white,
+      // so silicon seen from above lost its colour); a neutral one keeps the old ramp, its top nearly the paper
+      if (acc) { if (curve) return 0.7 + 0.45 * Math.round((1 - lam) * 5) / 5; return lam > 0.72 ? 0.7 : lam > 0.15 ? 0.9 : 1.15; }
       if (curve) return 0.38 + 0.95 * Math.round((1 - lam) * 5) / 5;
       return lam > 0.72 ? 0.36 : lam > 0.15 ? 0.74 : 1.3;
     };
     // (a material may keep one tone whatever way its faces turn, mat.even: the inside of a hole, which no light reaches)
     var fillOf = function (mat, nvw, curve, tint) {
-      var d = Math.min(pal.dark ? 0.66 : 0.92, mat.d * (mat.even ? 1 : toneF(curve ? lamC(nvw) : lamOf(nvw), curve)) * (pal.dark ? 0.8 : 1) * (thumb ? Math.min(1.6, ik) : 1));
+      var d = Math.min(pal.dark ? 0.66 : 0.92, mat.d * (mat.even ? 1 : toneF(curve ? lamC(nvw) : lamOf(nvw), curve, isAcc(mat.c))) * (pal.dark ? 0.8 : 1) * (thumb ? Math.min(1.6, ik) : 1));
       var c = mix(pal.bg, colOf(mat.c), d);
       if (tint) c = mix(c, pal.hl, pal.dark ? 0.22 : 0.12);
       return css(c);
@@ -1053,6 +1140,15 @@
           pp.forEach(function (q) { if (q[2] >= 0) run.push([q[0], q[1]]); else { if (run.length > 1) runs.push(run); run = []; } });
           if (run.length > 1) runs.push(run);
           g.lines(runs, it.col === 'ink' ? inkC : lineCol(it.col), (thumb ? Math.max(0.45, it.lw * 0.7) : it.lw * k), null, it.alpha * fa);
+        } else if (it.kind === 'spike') {
+          var sh = spikeXY(it, proj), sf = proj(it.foot, it.part), scol = hl ? hlC : lineCol(it.col), slw = thumb ? Math.max(0.6, it.lw * 0.6) * ik : it.lw * k;
+          if (it.sx) g.lines([[[sf[0], sf[1]], [sh[0], sf[1]]]], scol, slw * 0.7, null, fa, 'butt');
+          g.lines([[[sh[0], sf[1]], sh]], scol, slw, null, fa, 'butt');
+          var srr = Math.max(0.8, it.r * (thumb ? 0.6 : k));
+          g.dots([sh], srr, hl ? hlC : css(colOf(it.col)), fa);
+          if (pick) pick.push({ dots: [sh], r: Math.max(4, srr + 2), it: it });
+          // (the layout keeps other labels' leaders 6 px clear of a spike's head and its stem)
+          if (occ) { occ.push({ dots: [sh], r: srr + 6, it: it }); occ.push({ pts: [[sh[0] - 3, sh[1]], [sh[0] + 3, sh[1]], [sh[0] + 3, sf[1]], [sh[0] - 3, sf[1]]], it: it }); }
         } else if (it.kind === 'dots') {
           if (thumb && it.r < 1.2 && !it.keepThumb) return;
           var dp = it.pts.map(function (q) { return proj(q, it.part); });
@@ -1089,7 +1185,8 @@
       var rings = [], dish = !!(s.axisN && Math.abs(rotN(s.axisN)[2]) > 0.4);
       // an outline inside the part's own outline (the lip where a wider crown sits on the body) is not its silhouette: it keeps
       // outline weight, and the shade line is kept for the part's outer edge
-      var inner = s.axisN && !thumb && !lite ? faces.map(function (fi) { return F[fi].v.map(P2); }) : null;
+      // (a model may keep the shade line on such a lip, o.lip: the ingot's ground band, which stands proud of the body all round)
+      var inner = s.axisN && !s.lip && !thumb && !lite ? faces.map(function (fi) { return F[fi].v.map(P2); }) : null;
       faces.forEach(function (fi) {
         var f = F[fi], fm = f.mat || mat, pts = f.v.map(P2), nvw = rotN(f.n);
         if (f.two && nvw[2] < 0) nvw = [-nvw[0], -nvw[1], -nvw[2]];
@@ -1105,8 +1202,10 @@
         var gx = 0, gy = 0; for (var q = 0; q < pts.length; q++) { gx += pts[q][0]; gy += pts[q][1]; } gx /= pts.length; gy /= pts.length;
         for (q = 0; q < f.v.length; q++) {
           var e = f.e[q], nb = e[0], cls = e[1], A0 = pts[q], B0 = pts[(q + 1) % pts.length], seg = [A0, B0];
-          // a joint, where this solid sits on another (P.build joints), is a crease, never a shade line
-          if (s.joint) { var va = f.v[q], vb = f.v[(q + 1) % f.v.length]; if (s.joint[va < vb ? va + '_' + vb : vb + '_' + va]) { if (nb < 0 || !front[nb] || (stamp[nb] === frame && cls === 1)) crease.push(seg); continue; } }
+          // a joint, where this solid sits on another (P.build joints), is a crease, never a shade line; a model may draw its joints
+          // at outline or shade weight (spec.joints 'out' or 'shade': the cost column's layers, each a share of the bill, read as
+          // separate blocks only where the line between them is drawn as firmly as their edges, 22 Nov 2026 plates refine)
+          if (s.joint) { var va = f.v[q], vb = f.v[(q + 1) % f.v.length]; if (s.joint[va < vb ? va + '_' + vb : vb + '_' + va]) { if (nb < 0 || !front[nb] || (stamp[nb] === frame && cls === 1)) (jointW === 'shade' ? shade : jointW === 'out' ? out : crease).push(seg); continue; } }
           if (nb < 0 || !front[nb]) {
             // an outline: heavier where it faces away from the light (down and to the right on the page)
             var dx = B0[0] - A0[0], dy = B0[1] - A0[1], L = Math.hypot(dx, dy) || 1, nx = dy / L, ny = -dx / L;
@@ -1188,7 +1287,9 @@
     function ghostEdges(s, frontPass, a) {
       if (thumb && !frontPass) return;
       var col = lineCol(s.mat.c);
-      if (frontPass) g.lines(edgesOf(s, function (fa, fb) { return fa || fb; }), col, LW.crease * 1.1, null, 0.9 * a);
+      // (a model may draw an outline-only part's edges at outline weight, spec.ghostW 'out': the cost column's yield loss, a
+      // layer of the bill like the others, drawn hollow)
+      if (frontPass) g.lines(edgesOf(s, function (fa, fb) { return fa || fb; }), col, m.spec.ghostW === 'out' && !thumb ? LW.out : LW.crease * 1.1, null, 0.9 * a);
       else g.lines(edgesOf(s, function (fa, fb) { return !fa && !fb; }), col, LW.fine || 0.4, [3 * k, 2.5 * k], 0.55 * a);
     }
     function phantomEdges(s, a) {
@@ -1202,7 +1303,7 @@
       var pts = L.pts.map(function (p) { return proj(p, p[3] == null ? null : p[3]).slice(0, 2); });
       // a label on the light path (P.focusOf beam) lights the path
       var col = css(colOf(L.col || 'acc')), lb = !!(foc && foc.beam), aa = (L.alpha == null ? 1 : L.alpha) * Math.min(1, K * 1.6) * (foc && !lb ? 0.35 : 1);
-      if (!thumb) g.lines([pts], col, (L.lw || 1.4) * 3.2 * k, null, (lb ? 0.24 : 0.14) * aa);
+      // (one line, no tinted halo along it: the halo read as glow, 22 Nov 2026 plates refine)
       g.lines([pts], col, (L.lw || 1.4) * (thumb ? 0.8 : k) * (lb ? 1.5 : 1), null, aa);
     });
     // the dimensions: all of them in a chapter's slot, the plate's first (the size its caption leads with) in the phone's view
@@ -1222,13 +1323,13 @@
       g.ga = ga0 * A;
       var line = css(mix(pal.bg, pal.ink, pal.dark ? 0.5 : 0.42));
       if (T) {
-        // the cone: a faint wash of ink with two hairline edges, from the ring on the spot to the disc
+        // the cone: two hairlines tangent to the ring on the spot and to the disc
         var dx = G.x - T[0], dy = G.y - T[1], d = Math.hypot(dx, dy);
         if (d > G.r + rt + 4) {
           var th = Math.atan2(dy, dx), al = Math.acos(Math.max(-1, Math.min(1, (rt - G.r) / d)));
           var p1a = [T[0] + rt * Math.cos(th + al), T[1] + rt * Math.sin(th + al)], p2a = [G.x + G.r * Math.cos(th + al), G.y + G.r * Math.sin(th + al)];
           var p1b = [T[0] + rt * Math.cos(th - al), T[1] + rt * Math.sin(th - al)], p2b = [G.x + G.r * Math.cos(th - al), G.y + G.r * Math.sin(th - al)];
-          g.poly([p1a, p2a, [G.x, G.y], p2b, p1b, [T[0], T[1]]], inkC, pal.dark ? 0.05 : 0.032);
+          // (two tangent hairlines and nothing between them, 22 Nov 2026 plates refine: the wash between them read as a beam)
           g.lines([[p1a, p2a], [p1b, p2b]], line, 0.7 * k, null, 0.85, 'butt');
         }
         g.circle(T[0], T[1], rt, null, bgC, 3.2);
@@ -1278,10 +1379,13 @@
         block(t2.text, x, y, al, 600, 3.5);
       });
       g.unclip();
+      // one ring (a second, fainter ring outside it read as a lens's glint)
       g.circle(G.x, G.y, G.r, null, css(mix(pal.bg, pal.ink, 0.86)), 1.25 * k);
-      g.circle(G.x, G.y, G.r + 3.5, null, css(mix(pal.bg, pal.ink, pal.dark ? 0.3 : 0.22)), 0.6 * k);
       // the caption under the disc (or, on a phone, beside it), in the label's muted ink
-      if (G.capSide) G.cap.forEach(function (ln, i) { var lf = G.capSide === 'l'; g.text(ln, G.x + (lf ? -1 : 1) * (G.r + 14), G.y + (i - (G.cap.length - 1) / 2) * 16, { size: 12, weight: 500, fill: css(pal.muted), align: lf ? 'right' : 'left', halo: bgC, haloW: 3 }); });
+      // (a tucked disc may carry its caption over it, capSide 't': under it, the drawing's corner)
+      if (G.capSide === 't') G.cap.forEach(function (ln, i) { g.text(ln, G.x, G.y - G.r - 12 - (G.cap.length - 1 - i) * 16, { size: 12, weight: 500, fill: css(pal.muted), align: 'center', halo: bgC, haloW: 3 }); });
+      else if (G.capSide && G.capDy) G.cap.forEach(function (ln, i) { var lf = G.capSide === 'l', hf = Math.sqrt(Math.max(0, G.r * G.r - Math.pow(Math.abs(G.capDy) - 8, 2))); g.text(ln, G.x + (lf ? -1 : 1) * (hf + 14), G.y + G.capDy + (i - (G.cap.length - 1) / 2) * 16, { size: 12, weight: 500, fill: css(pal.muted), align: lf ? 'right' : 'left', halo: bgC, haloW: 3 }); });
+      else if (G.capSide) G.cap.forEach(function (ln, i) { var lf = G.capSide === 'l'; g.text(ln, G.x + (lf ? -1 : 1) * (G.r + 14), G.y + (i - (G.cap.length - 1) / 2) * 16, { size: 12, weight: 500, fill: css(pal.muted), align: lf ? 'right' : 'left', halo: bgC, haloW: 3 }); });
       else G.cap.forEach(function (ln, i) { g.text(ln, G.x, G.y + G.r + 16 + i * 16, { size: 12, weight: 500, fill: css(pal.muted), align: 'center', halo: bgC, haloW: 3 }); });
       g.ga = ga0;
     }
@@ -1361,14 +1465,18 @@
           // 66 degrees off the line of sight, where it ran from 73 to 57, so a pin standing in full view on the rest view's
           // upper rim, the Netherlands', keeps its label in full ink)
           pts = []; wts = [];
-          c.track.forEach(function (q) {
+          c.track.forEach(function (q, qi) {
             var o = O[q[3]], x = q[0] + o[0], y = q[1] + o[1], z = q[2] + o[2], L = Math.hypot(x, y, z) || 1;
-            var f = (R[6] * x + R[7] * y + R[8] * z) / L, wt = clamp01((f - 0.15) / 0.25), pq = proj(q, q[3]), G0 = self._globe;
+            // (a spike's head is up the page from its foot, M.spike)
+            var f = (R[6] * x + R[7] * y + R[8] * z) / L, wt = clamp01((f - 0.15) / 0.25), pq = c.spikes ? spikeXY(c.spikes[qi], proj) : proj(q, q[3]), G0 = self._globe;
             // and not from the far side of the disc, so a leader never runs across the whole globe
-            if (G0 && c.side) { var u = (pq[0] - G0.x) / G0.r * (c.side === 'l' ? -1 : 1); wt *= clamp01((u + 0.5) / 0.35); }
+            if (G0 && c.side && !rows) { var u = (pq[0] - G0.x) / G0.r * (c.side === 'l' ? -1 : 1); wt *= clamp01((u + 0.5) / 0.35); }
             if (wt > 0.01) { pts.push(pq); wts.push(wt * wt * (3 - 2 * wt)); }
           });
-          c.pts.forEach(function (q) { var p0 = proj0(q, q[3] == null ? c.part : q[3]); my += p0[1]; mx += p0[0]; }); my /= c.pts.length; mx /= c.pts.length;
+          c.pts.forEach(function (q, qi) { var p0 = c.spikes ? proj0(c.spikes[qi].foot, c.spikes[qi].part) : proj0(q, q[3] == null ? c.part : q[3]); my += p0[1]; mx += p0[0]; }); my /= c.pts.length; mx /= c.pts.length;
+          // one leader to the country's base, where its spikes stand, rather than one to every head (22 Nov 2026 plates refine: a
+          // leader to Japan's heads ran through Korea's spike, which stands between them and the labels)
+          if (c.spikes && pts.length) { var f0 = proj(c.spikes[0].foot, c.spikes[0].part); pts = [[f0[0], f0[1]]]; wts = [Math.max.apply(null, wts)]; }
         } else {
           pts = base;
           pts.forEach(function (q) { my += q[1]; mx += q[0]; }); my /= pts.length; mx /= pts.length;
@@ -1379,13 +1487,28 @@
         var lines = c._lines || [c.text], hh = Math.max(lines.length, 1) * ls.fs * 1.18, tw = 0;
         lines.forEach(function (s2) { tw = Math.max(tw, g.measure(s2, { size: ls.fs, weight: 500 })); });
         var r = c.n ? (ls.numbersOnly ? ls.num : ls.num * Math.max(0.9, Math.min(1.1, k))) : 0;
-        return { c: c, ci: ci, pts: pts, wts: wts, x: mx, y0: my + (c.dy || 0) * k, hh: Math.max(hh, r * 2), lines: lines, tw: tw, r: r, side: side };
+        // (a leader may run by a point of the drawing first, c.via, as the baseboard's runs down the aisle between the modules)
+        var via = c.via && !rows ? proj(c.via, c.via[3] == null ? c.part : c.via[3]) : null;
+        return { c: c, ci: ci, pts: pts, wts: wts, x: mx, y0: (via ? via[1] : my) + (c.dy || 0) * k, hh: Math.max(hh, r * 2), lines: lines, tw: tw, r: r, side: side, via: via ? [via[0], via[1]] : null };
       });
+      // (the tucked columns' state: colX, below)
+      var tuckX = { l: null, r: null }, maxW = { l: 0, r: 0 };
+      ents.forEach(function (L) { var sd = L.side; if (maxW[sd] == null) return; maxW[sd] = Math.max(maxW[sd], L.tw + (L.r ? 2 * L.r + 6 * k : 0)); });
       if (occ) { self._lay = rows ? layRows(ents) : layCols(ents); self._layKey = layKey; self._layStats = self._lay.stats || null; }
       var lay = self._layKey === layKey ? self._lay : null;
+      if (lay && lay.tuck) tuckX = { l: lay.tuck.l, r: lay.tuck.r };
       if (rows) drawRows(ents, lay && lay.rows ? lay : null); else drawCols(ents, lay && !lay.rows ? lay : null);
 
-      function colX(sd) { return sd === 'l' ? dl - 8 * k : dr + 8 * k; }
+      /* A column whose labels are set in toward the drawing (spec.tuck, 22 Nov 2026 plates refine: the die's labels stood out at
+         the width of its pulled-out link, their leaders running a third of the plate to the blocks they name): once the labels
+         have their heights, the column moves in to just clear the first ink the drawing has at those heights, and they are laid
+         out again there. Until then (and always) a column keeps its labels inside the canvas. */
+      function colX(sd) {
+        if (tuckX[sd] != null) return tuckX[sd];
+        var x = sd === 'l' ? dl - 8 * k : dr + 8 * k;
+        if (m.spec.tuck && m.spec.tuck[sd]) x = sd === 'l' ? Math.max(x, 4 + 17 * k + maxW.l) : Math.min(x, w - 4 - 17 * k - maxW.r);
+        return x;
+      }
       function colTop(sd) { return LGc && LGc.side === sd ? LGc.bottom : ls.fs; }
       function colBot(sd) { var b = h - ls.fs; if (LGc && LGc.side === 'b' && sd === (LGc.capSide === 'r' ? 'l' : 'r')) b = Math.min(b, LGc.y - LGc.r - 8); return b; }
       // the column's labels at the heights they want, pushed apart and kept in the canvas; returns their heights in list order
@@ -1530,7 +1653,7 @@
         // each dot on the part it names: a dot that lands on another part moves to the nearest cell of its own, within 14 px
         var lits = {};
         ents.forEach(function (L) {
-          var lit = lits[L.ci] = L.c.track ? {} : litOf(L.c);
+          var lit = lits[L.ci] = litOf(L.c);
           out.snap[L.ci] = L.pts.map(function (A) {
             if (L.c.track || L.c._beam || !Object.keys(lit).length) return [0, 0];
             var id = at(A[0], A[1]); if (id >= 0 && lit[id]) return [0, 0];
@@ -1556,16 +1679,24 @@
                 anchors(L).forEach(function (A) {
                   var best = null;
                   (L.c.track ? ['D'] : ['C', 'A', 'D']).forEach(function (shape) {
-                    var Pp = shapePath(A, ys[i], sd, shape, th); if (!Pp) return;
-                    var cc = cost(Pp, lits[L.ci], A, shape);
+                    var Pp = shapePath(L.via || A, ys[i], sd, shape, th); if (!Pp) return;
+                    var cc = cost(Pp, lits[L.ci], L.via || A, shape);
+                    if (L.via) Pp = [A].concat(Pp);
                     if (!best || cc.v < best.c.v) best = { shape: shape, P: Pp, c: cc };
                   });
                   sh.push(best.shape); ps.push(best.P); total += best.c.v; bad = Math.max(bad, best.c.bad); hits += best.c.hits;
                 });
-                shapes.push(sh); paths.push(L.c.track ? [] : ps); fans.push(ps); info.push({ text: L.c.text, foreign: bad, dims: hits });
-                total += Math.abs(ys[i] - L.y0) * 0.04 + boxCost(L, ys[i], sd);
+                // (a label that follows its pins round is laid out, like the others, so its leaders cross none at the drawn view: the
+                // rest the reader sees under reduced motion and in print; 22 Nov 2026 plates refine)
+                shapes.push(sh); paths.push(ps); fans.push(ps); info.push({ text: L.c.text, foreign: L.c.track ? 0 : bad, dims: hits });
+                // (a label that follows its pins round keeps near its first pin's height: it moves only to clear a crossing)
+                total += Math.abs(ys[i] - L.y0) * (L.c.track ? 0.4 : 0.04) + boxCost(L, ys[i], sd);
               });
               var cr = crossings(paths, placed);
+              // (a model may fix the order of a column's numbered labels, top to bottom, spec.order { l, r } on a wide plate and
+              // spec.orderNarrow under 560 px: the transistor's spacers over its sheets over its drain, 22 Nov 2026 plates refine)
+              var ord = (w < 560 ? m.spec.orderNarrow : m.spec.order) || null, oo = ord && ord[sd];
+              if (oo) { var yn = {}; list.forEach(function (L, i) { if (L.c.n) yn[L.c.n] = ys[i]; }); for (var q = 1; q < oo.length; q++) if (yn[oo[q - 1]] != null && yn[oo[q]] != null && yn[oo[q - 1]] > yn[oo[q]]) total += 600; }
               return { v: total + 90 * cr, ys: ys, shapes: shapes, paths: paths, cross: cr, info: info, fans: fans };
             };
             var want = list.map(function (L) { return L.y0; }), best = evalWant(want), step = ls.fs * 1.3;
@@ -1574,13 +1705,17 @@
               var sw = evalWant([want[1], want[0]]);
               if (crossings(sw.fans, []) < crossings(best.fans, [])) best = sw;
             }
-            if (!list.some(function (L) { return L.c.track; })) for (var pass = 0; pass < 2; pass++) {
+            for (var pass = 0; pass < 2; pass++) {
+              // (a label may keep level with its dot, c.level: its leader leaves the part straight across, 22 Nov 2026 plates refine:
+              // the column's emitter was named by a leader that dropped out of the gun's mouth)
               for (var i = 0; i < list.length; i++) [-1, 1, -2, 2, -3, 3, -4, 4, -5, 5].forEach(function (d) {
+                if (list[i].c.level) return;
                 var w2 = want.slice(); w2[i] = list[i].y0 + d * step; var r = evalWant(w2);
                 if (r.v < best.v - 0.5) { best = r; want = w2; }
               });
               // two labels trade places, each a step past the other's height
               for (var a = 0; a < list.length; a++) for (var b = a + 1; b < list.length; b++) [0, 1, 2].forEach(function (d) {
+                if (list[a].c.level || list[b].c.level) return;
                 var w2 = want.slice(), up = list[a].y0 < list[b].y0 ? b : a, dn = up === a ? b : a;
                 w2[up] = Math.min(list[a].y0, list[b].y0) - d * step; w2[dn] = Math.max(list[a].y0, list[b].y0) + d * step;
                 var r = evalWant(w2); if (r.v < best.v - 0.5) { best = r; want = w2; }
@@ -1599,7 +1734,7 @@
         // has the width for it
         var needOf = function (L) { return L.tw + (L.c.n ? ls.num * 2 + 6 : 0) + 30; };
         ents.forEach(function (L) {
-          if (L.c.track || L.c._flip) return;
+          if (L.c.track || L.c._flip || L.c.level || L.via) return;
           var mine = best.stats.labels.filter(function (x) { return x.text === L.c.text; })[0];
           if (!mine || (mine.dims === 0 && mine.foreign < 12)) return;
           var other = best.side[L.ci] === 'l' ? 'r' : 'l';
@@ -1611,7 +1746,7 @@
         // a leader that still crosses a dimension or another part tries other dots on its own part, nearby, and keeps the one
         // whose leader runs cleanest (a dot moved further costs a little more)
         var dotSearch = function () { ents.forEach(function (L) {
-          if (L.c.track || L.c._beam) return;
+          if (L.c.track || L.c._beam || L.c.level || L.via) return;
           var mine = best.stats.labels.filter(function (x) { return x.text === L.c.text; })[0];
           var lit = lits[L.ci], sd = best.side[L.ci], y = best.y[L.ci], others = [];
           for (var q in best.paths) if (+q !== L.ci && best.paths[q] && best.paths[q].length) others.push(best.paths[q]);
@@ -1657,7 +1792,7 @@
         // width yet: the plate is fitted again with it there (rooms reads c._flip) and laid out again, its dot free to move
         // anywhere on its part
         if (!ents.some(function (L) { return L.c._flip; })) ents.some(function (L) {
-          if (L.c.track || L.c._beam) return false;
+          if (L.c.track || L.c._beam || L.c.level || L.via) return false;
           var mine = best.stats.labels.filter(function (x) { return x.text === L.c.text; })[0], others = [];
           for (var q3 in best.paths) if (+q3 !== L.ci && best.paths[q3] && best.paths[q3].length) others.push(best.paths[q3]);
           if (!mine || (!mine.dims && !crossings([best.paths[L.ci] || []], others))) return false;
@@ -1665,6 +1800,32 @@
           if ((fit.rooms[other] || 0) >= needOf(L)) return false;
           L.c._flip = other; self._refit = true; return true;
         });
+        // the tucked columns: the first ink from the canvas's edge inward over each label's band, a dimension's figure included
+        var tk = m.spec.tuck;
+        if (tk) ['l', 'r'].forEach(function (sd) {
+          if (!tk[sd]) return;
+          var list = ents.filter(function (L) { return best.side[L.ci] === sd && !L.c.track; }); if (!list.length) return;
+          var edgeAt = function (y0, y1) {
+            var x = sd === 'l' ? w : 0;
+            for (var y = Math.max(0, y0); y <= Math.min(h, y1); y += cs) {
+              if (sd === 'l') { for (var xx = 0; xx < x; xx += cs) { var id = at(xx, y); if (id >= 0 || id === -2) { x = xx; break; } } }
+              else for (var xr = w; xr > x; xr -= cs) { var id2 = at(xr, y); if (id2 >= 0 || id2 === -2) { x = xr; break; } }
+            }
+            boxes.forEach(function (b) { if (b[1] < y1 && b[3] > y0) x = sd === 'l' ? Math.min(x, b[0]) : Math.max(x, b[2]); });
+            return x;
+          };
+          var lim = function (b) { var x = sd === 'l' ? Infinity : -Infinity; list.forEach(function (L) { var y = b.y[L.ci], e = edgeAt(y - L.hh / 2 - 6, y + L.hh / 2 + 6); x = sd === 'l' ? Math.min(x, e - 12 * k) : Math.max(x, e + 12 * k); }); return x; };
+          var cur = colX(sd), want = lim(best);
+          if (sd === 'l' ? want < cur + 4 : want > cur - 4) return;
+          tuckX[sd] = want;
+          var again = runSides(best.side);
+          again.stats.cross = crossAll(again);
+          if (again.stats.cross + again.stats.dims <= best.stats.cross + best.stats.dims) best = again;
+          // the labels may have moved: the column keeps clear of the ink at their new heights too
+          var w2 = lim(best);
+          tuckX[sd] = sd === 'l' ? Math.max(cur, Math.min(want, w2)) : Math.min(cur, Math.max(want, w2));
+        });
+        out.tuck = { l: tuckX.l, r: tuckX.r };
         out.y = best.y; out.shape = best.shape; out.side = best.side; out.stats = best.stats;
         return out;
       }
@@ -1683,7 +1844,8 @@
             var sn = lay && !c.track && lay.snap[L.ci], shp = lay && !c.track && lay.shape[L.ci];
             L.pts.forEach(function (q, qi) {
               var wq = L.wts ? L.wts[qi] : 1, A = sn && sn[qi] ? [q[0] + sn[qi][0], q[1] + sn[qi][1]] : [q[0], q[1]];
-              var Pp = shapePath(A, y, sd, shp ? shp[qi] : 'D', th) || shapePath(A, y, sd, 'D', th);
+              var Pp = shapePath(L.via || A, y, sd, shp ? shp[qi] : 'D', th) || shapePath(L.via || A, y, sd, 'D', th);
+              if (L.via) Pp = [A].concat(Pp);
               // a globe's leader that would run through another of its label's pin heads is left out, and the label points at
               // the nearer pin (22 Nov 2026 expert review: on the new rest view the Netherlands' two heads stand level, and the
               // leader to the far one ran through the near one); pointing at the label still lights both
@@ -1724,19 +1886,36 @@
           var list = ents.filter(function (L) { return L.side === rw; }).sort(function (a, b) { return a.x - b.x; }); if (!list.length) return;
           var edge = rw === 't' ? dt - 9 * k : db + 9 * k, bw = list.map(function (L) { return (L.c.n && ls.numbersOnly ? 0 : L.tw) + (L.r ? 2 * L.r + (L.c.n && ls.numbersOnly ? 0 : 6) : 0); });
           var xs = list.map(function (L, i) { return Math.max(bw[i] / 2 + 4, Math.min(w - bw[i] / 2 - 4, L.x)); });
-          for (var i = 1; i < list.length; i++) { var lo = xs[i - 1] + (bw[i - 1] + bw[i]) / 2 + 12; if (xs[i] < lo) xs[i] = lo; }
+          // (the gap between labels closes, down to 4 px, where the row would not fit the width with 12)
+          var sumW = bw.reduce(function (a, b) { return a + b; }, 0), gp = list.length > 1 ? Math.max(4, Math.min(12, (w - 8 - sumW) / (list.length - 1))) : 12;
+          for (var i = 1; i < list.length; i++) { var lo = xs[i - 1] + (bw[i - 1] + bw[i]) / 2 + gp; if (xs[i] < lo) xs[i] = lo; }
           var over = xs[list.length - 1] + bw[list.length - 1] / 2 - (w - 4);
-          if (over > 0) { xs[list.length - 1] -= over; for (i = list.length - 2; i >= 0; i--) { var hi = xs[i + 1] - (bw[i + 1] + bw[i]) / 2 - 12; if (xs[i] > hi) xs[i] = hi; } }
+          if (over > 0) { xs[list.length - 1] -= over; for (i = list.length - 2; i >= 0; i--) { var hi = xs[i + 1] - (bw[i + 1] + bw[i]) / 2 - gp; if (xs[i] > hi) xs[i] = hi; } }
+          // and a row that still does not fit starts at the left edge rather than leaving it
+          var under = 4 - (xs[0] - bw[0] / 2);
+          if (under > 0) for (i = 0; i < list.length; i++) xs[i] += under;
           list.forEach(function (L, li) {
             var c = L.c, lx = xs[li], fo = foc && foc.n === c.n && foc.text === c.text, col = fo ? hlC : inkC, lc = fo ? hlC : lineC;
             var la = clamp01(labT * 1.5) * LA, ta = clamp01((labT - 0.3) / 0.7) * (foc && !fo ? 0.45 : 1) * LA;
             var yc = rw === 't' ? edge - 4 - L.hh / 2 : edge + 4 + L.hh / 2, x0 = lx - bw[li] / 2, x1 = lx + bw[li] / 2;
+            // (a label that follows its pins round, the globe's, is set back with them, and runs one straight leader from each pin's
+            // head to its own top edge)
+            var tta = ta;
+            if (L.wts) tta *= 0.4 + 0.6 * L.wts.reduce(function (a, b) { return Math.max(a, b); }, 0);
             L.pts.forEach(function (q, qi) {
+              var wq = L.wts ? L.wts[qi] : 1;
+              if (c.track) {
+                var tx2 = Math.max(x0 + 3, Math.min(x1 - 3, q[0])), dx2 = tx2 - q[0], dy2 = edge - q[1], dl2 = Math.hypot(dx2, dy2) || 1, hs = Math.min(4.5 * k, dl2 * 0.5);
+                var tp = partial([[q[0] + dx2 / dl2 * hs, q[1] + dy2 / dl2 * hs], [tx2, edge]], la);
+                if (tp.length > 1) { g.lines([tp], bgC, 3.2 * k, null, 0.85 * tta * wq, 'round'); g.lines([tp], lc, (fo ? 1 : 0.7) * k, null, Math.max(tta, la * 0.9) * wq, 'round'); }
+                return;
+              }
               var xe = rt[L.ci] ? rt[L.ci][qi] : null, ux = xe != null ? xe : q[0], head = xe != null ? [[q[0], q[1]], [xe, q[1]]] : [[q[0], q[1]]];
               var cxl = Math.max(x0 + 3, Math.min(x1 - 3, ux)), Pp = head.concat(cxl === ux ? [[ux, edge]] : [[ux, edge], [cxl, edge]]), path = partial(Pp, la);
               if (path.length > 1) { g.lines([path], bgC, 3.2 * k, null, 0.85 * ta, 'round'); g.lines([path], lc, (fo ? 1 : 0.7) * k, null, Math.max(ta, la * 0.9), 'round'); }
               g.circle(q[0], q[1], 2.3 * k, col, bgC, 1.1 * k, la);
             });
+            ta = tta;
             var tx = x0;
             if (c.n) { var r = L.r; g.circle(x0 + r, yc, r, bgC, col, 1.2 * k, ta); g.text(String(c.n), x0 + r, yc + 0.5, { size: Math.round(r * 1.25), weight: 600, fill: col, align: 'center', alpha: ta }); tx = x0 + 2 * r + 6; }
             if (!(c.n && ls.numbersOnly)) L.lines.forEach(function (s2, li2) {

@@ -24,6 +24,8 @@
    - the drawing stands 40 px under the opener's links and 24 px over its caption; the small stills carry 10 to 25 percent ink;
    - from 640 px the plate shows in the page and the strip keeps Contents alone (768); on a phone the opened strip sizes its
      canvas to the plate, shows the whole parts list, and keeps the plate's first dimension and the HBM loupe.
+   Since 22 Nov 2026 (plates refine) also: every label stands inside the plate's width, and on a phone also with the names
+   spelled out in rows, as a page that shows the names rather than the numbers draws it.
    usage: node qa/redesign/check-plates.js [base] [--only id,id] [--widths 1440,390] [--themes light,dark]   (base http://127.0.0.1:8802).
    With no --widths or --themes: 1440 and 390 in both themes, and 768 in light.
    Exits 1 on any failure.
@@ -104,6 +106,17 @@ const STATE = `(function () { var S = CP.Stage, c = S.canvas, x = c.getContext('
         check(`${W}: no leader crosses another leader or a dimension`, !!lay.stats && lay.stats.cross === 0 && lay.stats.dims === 0, lay.stats ? `${lay.stats.cross} crossings, ${lay.stats.dims} over a dimension` : 'no layout');
         if (lay.stats && width === 1440 && theme === 'light') info(`${id}: leaders over parts they do not name: ${lay.stats.labels.join(', ')}`);
       }
+      // every label stands inside the plate's width (its hit box, 4 px round the label), on the stage; on a phone also with the
+      // names spelled out in rows (as a page that shows the names rather than the numbers draws it), laid out off screen at the
+      // strip's width (22 Nov 2026 plates refine: the transistor's lower row ran off a phone's right edge)
+      const fitW = await t.ev(`(function () { var S = CP.Stage, pl = S.cur.pl, w = S.w, out = function (hs, ww) { return (hs || []).filter(function (b) { return b.x0 < -4.5 || b.x1 > ww + 4.5; }).map(function (b) { return b.c.text + ' ' + Math.round(b.x0) + '..' + Math.round(b.x1); }); };
+        var r = { stage: out(pl._hit, w), w: Math.round(w), names: null };
+        if (${phone ? 'true' : 'false'}) { var p2 = new PLATE.Plate(S.cur.name, {}); if (S.parts) p2.names(S.parts); var h2 = p2.heightFor(w, 150, 560), c2 = document.createElement('canvas'); c2.width = Math.round(w); c2.height = h2;
+          var st = { k: 1, mode: { oneDim: true }, dark: false, el: S.canvas }; p2.render(c2.getContext('2d'), w, h2, 1, st); p2.render(c2.getContext('2d'), w, h2, 1, st); if (p2.wantsFrame) p2.render(c2.getContext('2d'), w, h2, 1, st);
+          r.names = out(p2._hit, w); r.rows = p2.rowsOn(w); r.n = (p2._hit || []).length; }
+        return r; })()`);
+      check(`${W}: every label stands inside the plate's width`, !fitW.stage.length, fitW.stage.join(', ') || `${fitW.w} px`);
+      if (phone) check(`${W}: with the names spelled out${fitW.rows ? ' in rows' : ''}, every label stands inside the width`, fitW.names && !fitW.names.length && fitW.n > 0, (fitW.names || []).join(', ') || `${fitW.n} labels in ${fitW.w} px`);
       // the canvas's name and description; the keyboard's list of labels on a plate with no parts list
       const a11y = await t.ev(`(function () { var S = CP.Stage, c = S.canvas, d = document.getElementById(c.getAttribute('aria-describedby') || ''), names = (window.CP_TERMS || {}).specimenNames || {}, nm = names[S.cur.name] || '';
         var keys = document.querySelectorAll('.plate-keys li'); return { label: c.getAttribute('aria-label') || '', role: c.getAttribute('role'), desc: d ? d.textContent.slice(0, 40) : '', name: nm, texts: S.cur.pl.m.callouts.map(function (x) { return x.text.replace(/\u00a0/g, ' '); }), keys: keys.length, parts: !!S.parts }; })()`);

@@ -10,10 +10,12 @@
    22 Nov 2026 expert review: an inner spacer stands at every level the gate fills between the source and drain, so a third
    level sits under the bottom sheet, beside the gate below it, on both halves (arXiv 2201.04725; imec, "Entering the
    nanosheet transistor era"); there were two levels for three sheets. Silicon is slate across the set: the substrate in the
-   sheets' slate, the source and drain, which are doped silicon, in a lighter slate tint, so the sheets read apart from them. */
+   sheets' slate, the source and drain, which are doped silicon, in a lighter slate tint, so the sheets read apart from them.
+   22 Nov 2026 plates refine: the gate is the darkest block, a deep neutral metal with the metal ruling (45 degrees, open) on
+   its cut face, so the slate sheets read against it (it was a pale grey, as light as the sheets). */
 R('gaa-transistor', function (m) {
   var sT = 6, sW = 30, y0 = [0, 16, 32], gX = 7.5, spX = 12.5, gY0 = -11, gY1 = 45, gZ = 19, PULL = 62;
-  var GATE = { d: 0.25 }, GATECUT = { d: 0.06, hatch: 1 }, SUB = 'acc', SUBCUT = 'cutAcc', SD = { d: 0.11, c: 'acc' };
+  var GATE = { d: 0.5 }, GATECUT = { d: 0.3, hatch: 1, ang: 45, gap: 3.6 }, SUB = 'acc', SUBCUT = 'cutAcc', SD = { d: 0.11, c: 'acc' };
   // the inner spacers' levels: under the bottom sheet, beside the gate below it, and between each pair of sheets
   var SPL = [[gY0, 0], [sT, 16], [22, 32]];
   function bx(x0, ya, z0, x1, yb, z1, mat, fm, dec) { return m.box({ c: [(x0 + x1) / 2, (ya + yb) / 2, (z0 + z1) / 2], s: [x1 - x0, yb - ya, z1 - z0], fmat: fm, decals: dec }, mat); }
@@ -65,9 +67,11 @@ R('gaa-transistor', function (m) {
   // the five numbered parts, as chapter 8 names them (names from data/specimen-parts.json)
   m.anchor(1, 'Source', [-18.2, 30, 17], L.idx);
   m.anchor(2, 'Drain', [24, 30, 0], Re.idx);
-  // the sheets and the spacers named where their ends face the reader, in the drain's gap
-  m.anchor(3, 'Silicon sheets', [spX, 16 + sT / 2, 7], Rr.idx);
+  // the sheets and the spacers named where their ends face the reader, in the drain's gap: the sheet's dot below and to the
+  // right of the spacer's, so their leaders rise side by side, the sheet's always right of the spacer's, to labels 5, 3 and 2 in
+  // that order down the right (spec.order; 22 Nov 2026 plates refine: the sheet's leader rose past the spacer's dot)
+  m.anchor(3, 'Silicon sheets', [spX, 16 + sT / 2, -8], Rr.idx);
   m.anchor(4, 'Gate metal', [0.05, -6.5, 9], L.idx);
-  m.anchor(5, 'Inner spacers', [spX, 27, -5], Rr.idx);
-  return { elev: PLATE.ISO.elev, yaw: PLATE.ISO.yaw, calloutOpts: { 1: { tag: 'src', side: 'l' }, 2: { tag: 'drn', side: 'r' }, 3: { tag: 'sheet', side: 'r', dy: 16 }, 4: { tag: 'gate', side: 'l' }, 5: { tag: 'spacer', side: 'r' } }, accent: [111, 139, 166], accentDark: [195, 211, 226] };
+  m.anchor(5, 'Inner spacers', [spX, 27, 4], Rr.idx);
+  return { elev: PLATE.ISO.elev, yaw: PLATE.ISO.yaw, order: { r: [5, 3, 2] }, calloutOpts: { 1: { tag: 'src', side: 'l' }, 2: { tag: 'drn', side: 'r' }, 3: { tag: 'sheet', side: 'r' }, 4: { tag: 'gate', side: 'l' }, 5: { tag: 'spacer', side: 'r' } }, accent: [111, 139, 166], accentDark: [195, 211, 226] };
 });

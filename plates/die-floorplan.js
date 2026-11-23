@@ -5,18 +5,26 @@
    The floorplan lies on the die's face in three tones: the compute units in eight clusters, the L2 cache band across the
    middle, the memory controllers and their interfaces down the long edges. Each group carries a tag, so its label lights it
    and nothing else.
-   The die-to-die link of two-die chips such as Blackwell (H100 has none; the caption says so) is a block of the die itself,
-   flush on its near short edge (22 Nov 2026 review: it was a copper bar slid off the die, ruled with contacts like a scale,
-   which read as a separate part and as copper). Colours (the set's legend, 22 Nov 2026): none here; the die is drawn in ink. */
-R('die-floorplan', function (m) {
+   The die-to-die link of two-die chips such as Blackwell (H100 has none; the caption says so) is a strip of silicon circuitry
+   on the die's near short edge.
+   22 Nov 2026 plates refine: the link is drawn again as a part of its own, lifted and slid out from its seat as the first plates
+   drew it (ex 0, 0.9, -5.2), with its seat dashed on the die's face and trace lines from its corners down to the seat (as a
+   flush block it was one more grey band). It is silicon, so slate, with one row of small copper contacts along its top (the
+   review's objection was to a bar all in copper, ruled like a scale). Its place on the near short edge is still the owner's
+   question (O1). params.link 'copper' draws the bar in copper instead, for the owner to compare (an image only).
+   Colours (the set's legend): silicon slate, copper contacts. */
+R('die-floorplan', function (m, params) {
   var W = 26, Dd = 33, T = 0.9, yT = T / 2, bh = 0.06, yB = yT + bh / 2, bt = bh / 2;
-  m.part('die', { ex: [0, 0, 0], seq: 0, mode: 'stack' });
+  var dieP = m.part('die', { ex: [0, 0, 0], seq: 0, mode: 'stack' }).idx;
   // a block of the floorplan: a thin solid lying on the die's face, so a pointer on it names its own group
   function blk(x0, z0, x1, z1, mat, tag, dec) { m.tag(tag || null); var s = m.box({ c: [(x0 + x1) / 2, yB, (z0 + z1) / 2], s: [x1 - x0, bh, z1 - z0], decals: dec ? { py: dec } : null }, mat); m.tag(null); return s; }
   // the host interface and NVLink ports across the far short edge, drawn on the die's face
   var face = [D.rect(-11.6, 14.2, 11.6, 16.1, yT, { fill: 'steel', lw: 0.45 })];
   for (var n = 0; n < 9; n++) { var nx = -10.8 + n * 2.62; face.push(D.rect(nx, 14.55, nx + 1.9, 15.75, yT, { lw: 0.3, fill: 'light' })); }
-  m.box({ c: [0, 0, 0], s: [W, T, Dd], decals: { py: face } }, 'light');
+  // the link's seat: its footprint on the near short edge, dashed, as an exploded drawing marks where a part sits
+  var LX = 11.6, Lz0 = -16.1, Lz1 = -14.3, LT = 0.6;
+  face.push(D.rect(-LX, Lz0, LX, Lz1, yT, { dash: [1.4, 1], lw: 0.5, alpha: 0.85 }));
+  var die = m.box({ c: [0, 0, 0], s: [W, T, Dd], decals: { py: face } }, 'light');
   // memory interfaces down the long edges, the controllers inside them
   [-1, 1].forEach(function (s) {
     for (var k = 0; k < 6; k++) {
@@ -46,9 +54,7 @@ R('die-floorplan', function (m) {
     blk(b[0], -2.8, b[1], 2.8, 'steel', 'l2', rule);
   });
   blk(-0.4, -2.8, 0.4, 2.8, 'dark', 'l2');
-  // the die-to-die link: one plain block of the die, flush along the near short edge
-  var LX = 11.6, Lz0 = -16.1, Lz1 = -14.3;
-  blk(-LX, Lz0, LX, Lz1, 'dark', 'd2d');
+  void die;
   m.dim([-W / 2, -yT, Dd / 2], [W / 2, -yT, Dd / 2], [0, 0, 4.2], '26 mm');
   // the 33 mm along the far long edge (designer pass, 22 Nov 2026): along the near one it fenced off the die from its labels,
   // so the cache's leader ran 149 px across the compute units to reach it from below
@@ -57,6 +63,19 @@ R('die-floorplan', function (m) {
   m.callout([11.4, yT + bh, 10.5], 'Memory controllers', { side: 'l', tag: 'mem' });
   m.callout([6.8, yT + bh, 5.6], 'Compute units', { side: 'l', tag: 'sm' });
   m.callout([6.4, yT + bh, -0.6], 'Cache', { side: 'l', tag: 'l2' });
-  m.callout([LX * 0.62, yT + bh, (Lz0 + Lz1) / 2], 'Die-to-die link', { side: 'l', tag: 'd2d' });
-  return { elev: PLATE.ISO.elev, yaw: 3 * Math.PI / 4, sortAxis: [0, 1, 0], start: 2.2, thumbX: 0.5, accent: [111, 139, 166], accentDark: [195, 211, 226] };
+  // the link: a slate strip of its own, lifted and slid straight out from its seat over the near edge, one row of small copper
+  // contacts along its top
+  var copper = params && params.link === 'copper';
+  var ln = m.part('link', { ex: [0, 0.9, -5.2], seq: 1 });
+  var pads = [], NP = 26, pw = 0.46;
+  for (var k2 = 0; k2 < NP; k2++) { var px = -LX + 0.75 + k2 * (2 * LX - 1.5) / (NP - 1); pads.push(D.rect(px - pw / 2, -pw / 2, px + pw / 2, pw / 2, LT / 2, { fill: { d: copper ? 0.62 : 0.5, c: copper ? 'acc' : 'acc2' }, col: copper ? 'acc' : 'acc2', lw: 0.3, tag: 'd2d' })); }
+  m.tag('d2d');
+  m.box({ c: [0, yT + LT / 2, (Lz0 + Lz1) / 2], s: [2 * LX, LT, Lz1 - Lz0], decals: { py: pads } }, copper ? { d: 0.34, c: 'acc' } : 'acc');
+  m.tag(null);
+  m.callout([-LX * 0.35, yT + LT, (Lz0 + Lz1) / 2 - 0.35], 'Die-to-die link', { side: 'l', tag: 'd2d' });
+  // trace lines from the strip's two far corners down to its seat
+  [[-LX, Lz1], [LX, Lz1]].forEach(function (q) { m.guide([[q[0], yT, q[1], dieP], [q[0], yT, q[1], ln.idx]], { alpha: 0.9 }); });
+  // (tuck: the labels' column set in toward the die, into the empty corner over its long edge, 22 Nov 2026 plates refine)
+  return { elev: PLATE.ISO.elev, yaw: 3 * Math.PI / 4, sortAxis: [0, 1, 0], start: 2.2, thumbX: 0.5, tuck: { l: 150 },
+    accent: copper ? [176, 102, 44] : [111, 139, 166], accentDark: copper ? [224, 154, 92] : [195, 211, 226], accent2: [176, 102, 44], accent2Dark: [224, 154, 92] };
 });

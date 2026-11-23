@@ -7,7 +7,8 @@
    22 Nov 2026 review: six power shelves became the datasheet's eight; the height reads 2,236 mm (it read 2.24 m, a rounding);
    the busbar is plain, since its clips stood beside the height like a ruler's graduations, and its two centre lines,
    which cut the height dimension, are gone. Colours (the set's legend): the
-   busbar in copper, the power shelves in the set's one steel colour. */
+   busbar in copper, the power shelves in the set's one steel colour, a grey with no hue (22 Nov 2026 plates refine: it was
+   a blue grey, which read as silicon's slate). */
 R('rack', function (m) {
   var W = 0.60, Dp = 1.068, Ht = 2.236, U = 0.0445, post = 0.042, front = Dp / 2, back = -Dp / 2;
   var cab = m.part('cabinet', { ex: [0, 0, 0], seq: 0 });
@@ -49,8 +50,9 @@ R('rack', function (m) {
   m.box({ c: [0, syc, zS + 0.02], s: [0.052, sh + 0.10, 0.03] }, 'acc');
   // its trace lines back to its place at the rear, top and foot, so the bar reads as pulled from the rack (designer pass)
   [syc + (sh + 0.10) / 2, syc - (sh + 0.10) / 2].forEach(function (yy) { m.guide([[0, yy, zS + 0.035, cab.idx], [0, yy, zS + 0.035, bb.idx]], { alpha: 0.7 }); });
-  // (designer pass, 22 Nov 2026: the figure stands low on its line, under the busbar's foot; at 0.62 it ran into the bar)
-  m.dim([W / 2, 0, back], [W / 2, Ht, back], [0.1, 0, 0], '2,236 mm', { part: cab.idx, t: 0.3 });
+  // (designer pass, 22 Nov 2026: the figure stands low on its line, under the busbar's foot; at 0.62 it ran into the bar; plates
+  // refine: at 0.3 the busbar's lower trace line ran through it, so it stands lower still)
+  m.dim([W / 2, 0, back], [W / 2, Ht, back], [0.1, 0, 0], '2,236 mm', { part: cab.idx, t: 0.13 });
   // designer pass (21 Nov 2026): the width taken further out in front, so its figure clears the rack's foot
   m.dim([-W / 2, 0, front], [W / 2, 0, front], [0, 0, 0.2], '600 mm', { part: cab.idx });
   var pp = {}; pulled.forEach(function (q) { pp[q[0]] = q[1]; });
@@ -59,5 +61,5 @@ R('rack', function (m) {
   // (on a phone, where the labels stand in rows, the compute tray is named from the top row, clear of the trays under it)
   m.callout([-tW * 0.3, slots[30].y, fz, pp[30].idx], 'Compute tray', { side: 'l', row: 't' });
   m.callout([0.026, syc + 0.35, zS + 0.02, bb.idx], 'Copper busbar', { side: 'r' });
-  return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, accent: [176, 102, 44], accentDark: [224, 154, 92], accent2: [117, 132, 144], accent2Dark: [198, 206, 213] };
+  return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, accent: [176, 102, 44], accentDark: [224, 154, 92], accent2: [122, 122, 122], accent2Dark: [200, 200, 200] };
 });

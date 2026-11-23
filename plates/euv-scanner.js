@@ -13,23 +13,32 @@
      they are measured against is itself simplified): the mask 152.4 mm square and 6.35 mm thick
      (Hoya's US patent 9,494,851), the wafer 300 mm across and 775 micrometres thick (SEMI M1); they were 4x and 1.6x;
    - the last mirror sits straight over the wafer, so the wafer stage drops along its beam.
-   Colours (the set's legend): the light in the beam hue, the wafer in silicon slate (acc2), as on every plate. */
+   Colours (the set's legend): the light in the beam hue, the wafer in silicon slate (acc2), as on every plate.
+   22 Nov 2026 plates refine: the illuminator and the projection optics stand apart again, each box 0.04 m off the seam under
+   the mask, so they read as two modules (they stood wall to wall); every node keeps its place at rest, so the light still
+   meets the mask and leaves it at 6 degrees (NODE gives the rest positions, each part's offset taken off where a node is
+   built in its part). The two mirrors either side of the mask are a little smaller (0.10 m), so they clear the walls. The
+   light takes the deeper beam hue plate 07 takes. */
 R('euv-scanner', function (m) {
   function unit(v) { var L = Math.hypot(v[0], v[1]) || 1; return [v[0] / L, v[1] / L]; }
   var X2 = 2, MASK = 0.1524 * X2, MASKT = 0.00635 * X2, WR = 0.15 * X2, WT = 0.000775 * X2;
   // how far each module stands from its assembled place at rest
-  var EXS = { src: [-0.5, 0], ill: [0, 0], ret: [0, 0.30], pob: [0, 0], waf: [0, -0.36] };
+  var EXS = { src: [-0.5, 0], ill: [-0.04, 0], ret: [0, 0.30], pob: [0.04, 0], waf: [0, -0.36] };
   var PLASMA = [-1.14, -1.34], COLL = [-1.80, -1.34];
   // the mask stands over the seam between the illuminator and the projection optics; the illuminator's last mirror and the
   // optics' first stand level with each other, either side of it, so the light comes in and goes out at the same angle
   var XM = 0.19, YM = 1.68, YS = 0.18, CRA = 6 * Math.PI / 180, DX = (YM + EXS.ret[1] - YS) * Math.tan(CRA);
   var NODE = [
-    { p: [-0.56, -1.34], k: 'ap', o: 'ill' }, { p: [-0.24, -0.82], k: 'm', r: 0.20, o: 'ill' }, { p: [-0.98, -0.10], k: 'm', r: 0.30, o: 'ill' }, { p: [XM - DX, YS], k: 'm', r: 0.11, o: 'ill' },
+    { p: [-0.56, -1.34], k: 'ap', o: 'ill' }, { p: [-0.24, -0.82], k: 'm', r: 0.20, o: 'ill' }, { p: [-0.98, -0.10], k: 'm', r: 0.30, o: 'ill' }, { p: [XM - DX, YS], k: 'm', r: 0.10, o: 'ill' },
     { p: [XM, YM], k: 'ret', o: 'ret' },
-    { p: [XM + DX, YS], k: 'm', r: 0.11, o: 'pob' }, { p: [1.30, 0.05], k: 'm', r: 0.24, o: 'pob' }, { p: [0.66, -0.30], k: 'm', r: 0.20, o: 'pob' },
+    { p: [XM + DX, YS], k: 'm', r: 0.10, o: 'pob' }, { p: [1.30, 0.05], k: 'm', r: 0.24, o: 'pob' }, { p: [0.66, -0.30], k: 'm', r: 0.20, o: 'pob' },
     { p: [1.32, -0.62], k: 'm', r: 0.23, o: 'pob' }, { p: [0.66, -0.92], k: 'm', r: 0.18, o: 'pob' }, { p: [1.12, -1.18], k: 'm', r: 0.26, o: 'pob' },
     { p: [1.12, -1.74], k: 'waf', o: 'waf' }];
-  var REST = function (q) { var e = EXS[q.o]; return [q.p[0] + e[0], q.p[1] + e[1]]; };
+  // (the illuminator's and the optics' nodes are given where they stand at rest; the mask's and the wafer's where they stand
+  // assembled; AT is where a node is built in its own part)
+  var ATREST = { ill: 1, pob: 1 };
+  var REST = function (q) { var e = EXS[q.o]; return ATREST[q.o] ? q.p : [q.p[0] + e[0], q.p[1] + e[1]]; };
+  var AT = function (q) { var e = EXS[q.o]; return ATREST[q.o] ? [q.p[0] - e[0], q.p[1] - e[1]] : q.p; };
   NODE.forEach(function (q, i) {
     if (q.k === 'ret') q.nv = [0, -1]; else if (q.k === 'waf') q.nv = [0, 1]; else if (i === 0) q.nv = unit([REST(NODE[1])[0] - REST(q)[0], REST(NODE[1])[1] - REST(q)[1]]);
     else { var r0 = REST(q), a = unit([REST(NODE[i - 1])[0] - r0[0], REST(NODE[i - 1])[1] - r0[1]]), b = unit([REST(NODE[i + 1])[0] - r0[0], REST(NODE[i + 1])[1] - r0[1]]); q.nv = unit([a[0] + b[0], a[1] + b[1]]); }
@@ -72,7 +81,7 @@ R('euv-scanner', function (m) {
   // illuminator: its housing, cut open, and three mirrors; its roof stops short of the mask, so the light crosses open air
   var ill = m.part('illuminator', { ex: [0, 0, 0], seq: 1 });
   housing(-0.57, -0.24, 1.52, 2.08, 0.575, 0.05);
-  [1, 2, 3].forEach(function (k) { mirror(NODE[k].p, NODE[k].nv, NODE[k].r); });
+  [1, 2, 3].forEach(function (k) { mirror(AT(NODE[k]), NODE[k].nv, NODE[k].r); });
   // the reticle stage on top, the mask hanging pattern-down beneath it
   var ret = m.part('reticle', { ex: [EXS.ret[0], EXS.ret[1], 0], seq: 3 });
   var Rp = NODE[4].p;
@@ -83,8 +92,8 @@ R('euv-scanner', function (m) {
   // the projection optics: six mirrors in their box
   var pob = m.part('optics', { ex: [EXS.pob[0], EXS.pob[1], 0], seq: 2 });
   housing(0.92, -0.415, 1.46, 2.43, 0.61, 0.05);
-  for (var k = 5; k <= 10; k++) mirror(NODE[k].p, NODE[k].nv, NODE[k].r);
-  m.anchor(2, 'Mirrors', [[NODE[6].p[0], NODE[6].p[1], NODE[6].r * 0.8], [NODE[8].p[0], NODE[8].p[1], NODE[8].r * 0.8]]);  // on the near rims of the two right-hand mirrors
+  for (var k = 5; k <= 10; k++) mirror(AT(NODE[k]), NODE[k].nv, NODE[k].r);
+  m.anchor(2, 'Mirrors', [[AT(NODE[6])[0], AT(NODE[6])[1], NODE[6].r * 0.8], [AT(NODE[8])[0], AT(NODE[8])[1], NODE[8].r * 0.8]]);  // on the near rims of the two right-hand mirrors
   // the wafer stage and the base frame: two wafer tables side by side, the light landing on the right-hand one
   // review: 'stack' paints the stage block before the chucks and wafers on it
   var waf = m.part('wafer', { ex: [EXS.waf[0], EXS.waf[1], 0], seq: 4, mode: 'stack' });
@@ -103,9 +112,9 @@ R('euv-scanner', function (m) {
   void base;
   // the light: through each module, attached to the part it is in at each end
   var idx = { ill: ill.idx, ret: ret.idx, pob: pob.idx, waf: waf.idx };
-  var pts = [[PLASMA[0], PLASMA[1], 0, src.idx]].concat(NODE.map(function (q) { return [q.p[0], q.p[1], 0, idx[q.o]]; }));
+  var pts = [[PLASMA[0], PLASMA[1], 0, src.idx]].concat(NODE.map(function (q) { var a = AT(q); return [a[0], a[1], 0, idx[q.o]]; }));
   m.guide(pts, { style: 'beam', col: 'acc', lw: 1.5 });
   // the collector's cone of light, from its rim to the plasma and on to the focus
   [0.27, -0.27, 0.5, -0.5].forEach(function (rr) { m.guide([[COLL[0] + 0.28 * (rr / 0.56) * (rr / 0.56), PLASMA[1] + rr, 0, src.idx], [NODE[0].p[0], NODE[0].p[1], 0, src.idx]], { style: 'beam', col: 'acc', lw: 0.7, alpha: 0.55 }); });
-  return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, calloutOpts: { 2: { tag: 'mirror' }, 4: { tag: 'wafer' } }, accent: [107, 127, 209], accentDark: [167, 180, 245], accent2: [111, 139, 166], accent2Dark: [195, 211, 226] };
+  return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, calloutOpts: { 2: { tag: 'mirror' }, 4: { tag: 'wafer' } }, accent: [78, 96, 186], accentDark: [167, 180, 245], accent2: [111, 139, 166], accent2Dark: [195, 211, 226] };
 });

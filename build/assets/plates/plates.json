@@ -1,34 +1,34 @@
 {
  "design-and-eda": {
   "specimen": "die-floorplan",
-  "src": "5233017ed654b72a",
+  "src": "55407dc1e203d56e",
   "thumb": [
    104,
    104
   ],
   "ink": {
-   "thumb": 0.183,
-   "line": 0.181
+   "thumb": 0.179,
+   "line": 0.178
   },
   "line": [
    184,
-   114
+   112
   ],
   "door": [
-   510,
+   538,
    308
   ]
  },
  "silicon-and-wafers": {
   "specimen": "boule-and-wafer",
-  "src": "7684e14117189d16",
+  "src": "f3dfbc80233d15ab",
   "thumb": [
    104,
    104
   ],
   "ink": {
-   "thumb": 0.162,
-   "line": 0.142
+   "thumb": 0.166,
+   "line": 0.177
   },
   "line": [
    54,
@@ -41,14 +41,14 @@
  },
  "chemicals-gases-and-photoresist": {
   "specimen": "gas-cabinet",
-  "src": "72240cfbbce0d07f",
+  "src": "6bca8c2859461e14",
   "thumb": [
    104,
    104
   ],
   "ink": {
-   "thumb": 0.172,
-   "line": 0.156
+   "thumb": 0.174,
+   "line": 0.158
   },
   "line": [
    108,
@@ -61,14 +61,14 @@
  },
  "lithography": {
   "specimen": "euv-scanner",
-  "src": "d3c620e0667786b0",
+  "src": "115c517304b6205b",
   "thumb": [
    104,
    104
   ],
   "ink": {
-   "thumb": 0.187,
-   "line": 0.164
+   "thumb": 0.197,
+   "line": 0.173
   },
   "line": [
    110,
@@ -81,14 +81,14 @@
  },
  "photomasks-and-pellicles": {
   "specimen": "photomask",
-  "src": "273fb5b20cf58808",
+  "src": "1dd6effa995d0820",
   "thumb": [
    104,
    104
   ],
   "ink": {
-   "thumb": 0.153,
-   "line": 0.147
+   "thumb": 0.167,
+   "line": 0.165
   },
   "line": [
    184,
@@ -101,34 +101,34 @@
  },
  "deposition-and-etch": {
   "specimen": "process-chamber",
-  "src": "32717d1e9c004eec",
+  "src": "a3b33c3861fb3cc2",
   "thumb": [
    104,
    104
   ],
   "ink": {
-   "thumb": 0.164,
-   "line": 0.179
+   "thumb": 0.168,
+   "line": 0.184
   },
   "line": [
-   82,
+   86,
    132
   ],
   "door": [
-   184,
+   194,
    336
   ]
  },
  "metrology-and-inspection": {
   "specimen": "sem-column",
-  "src": "ee5c50ddad92fcc7",
+  "src": "f586cfc752b50f47",
   "thumb": [
    104,
    104
   ],
   "ink": {
-   "thumb": 0.189,
-   "line": 0.164
+   "thumb": 0.199,
+   "line": 0.173
   },
   "line": [
    70,
@@ -141,14 +141,14 @@
  },
  "foundries-and-fabs": {
   "specimen": "gaa-transistor",
-  "src": "a2cdfc94dad1c5b7",
+  "src": "f16adc48942c959b",
   "thumb": [
    104,
    104
   ],
   "ink": {
-   "thumb": 0.154,
-   "line": 0.192
+   "thumb": 0.197,
+   "line": 0.175
   },
   "line": [
    122,
@@ -161,54 +161,54 @@
  },
  "memory-and-hbm": {
   "specimen": "hbm-stack",
-  "src": "1b6b5abfdecafe0a",
+  "src": "b98100a37ff6789f",
   "thumb": [
    104,
    104
   ],
   "ink": {
-   "thumb": 0.197,
-   "line": 0.174
+   "thumb": 0.194,
+   "line": 0.175
   },
   "line": [
-   112,
+   108,
    118
   ],
   "door": [
-   248,
+   238,
    328
   ]
  },
  "advanced-packaging": {
   "specimen": "cowos-exploded",
-  "src": "18f09478691ba524",
+  "src": "170cbe9092ad031b",
   "thumb": [
    104,
    104
   ],
   "ink": {
-   "thumb": 0.174,
-   "line": 0.198
+   "thumb": 0.165,
+   "line": 0.169
   },
   "line": [
-   164,
+   150,
    132
   ],
   "door": [
-   384,
+   346,
    340
   ]
  },
  "substrates-and-pcbs": {
   "specimen": "substrate-layers",
-  "src": "6110d150e745dd64",
+  "src": "a365240cb514b6ff",
   "thumb": [
    104,
    104
   ],
   "ink": {
-   "thumb": 0.2,
-   "line": 0.145
+   "thumb": 0.163,
+   "line": 0.146
   },
   "line": [
    186,
@@ -221,17 +221,17 @@
  },
  "test-and-assembly": {
   "specimen": "probe-card",
-  "src": "5e6ffa859be72c36",
+  "src": "66f0829007eca4ef",
   "thumb": [
    104,
    104
   ],
   "ink": {
-   "thumb": 0.162,
-   "line": 0.192
+   "thumb": 0.175,
+   "line": 0.15
   },
   "line": [
-   126,
+   124,
    132
   ],
   "door": [
@@ -241,14 +241,14 @@
  },
  "systems-and-networking": {
   "specimen": "gpu-baseboard",
-  "src": "bae25605770570f0",
+  "src": "c5b3f9929fdeed9c",
   "thumb": [
    104,
    104
   ],
   "ink": {
-   "thumb": 0.146,
-   "line": 0.166
+   "thumb": 0.148,
+   "line": 0.168
   },
   "line": [
    184,
@@ -261,14 +261,14 @@
  },
  "data-centers-and-power": {
   "specimen": "rack",
-  "src": "9a1342d26da4d96e",
+  "src": "9ebdf0224710f819",
   "thumb": [
    104,
    104
   ],
   "ink": {
-   "thumb": 0.223,
-   "line": 0.212
+   "thumb": 0.237,
+   "line": 0.225
   },
   "line": [
    64,
@@ -281,14 +281,14 @@
  },
  "component-costs": {
   "specimen": "wafer-cost",
-  "src": "f2c01792cd0441aa",
+  "src": "6bf33a8ad9d52018",
   "thumb": [
    104,
    104
   ],
   "ink": {
-   "thumb": 0.173,
-   "line": 0.151
+   "thumb": 0.179,
+   "line": 0.156
   },
   "line": [
    72,
@@ -301,21 +301,21 @@
  },
  "geopolitics": {
   "specimen": "globe",
-  "src": "ad13fa3620956224",
+  "src": "731c4d2b58f08726",
   "thumb": [
    104,
    104
   ],
   "ink": {
-   "thumb": 0.179,
-   "line": 0.153
+   "thumb": 0.175,
+   "line": 0.173
   },
   "line": [
    130,
    132
   ],
   "door": [
-   330,
+   324,
    344
   ]
  }

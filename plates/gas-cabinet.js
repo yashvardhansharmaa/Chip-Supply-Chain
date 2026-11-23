@@ -3,7 +3,8 @@
    cylinder slides out of the cabinet the way it is changed; the exhaust collar lifts off.
    22 Nov 2026 review: its sizes (0.97 x 0.48 x 1.93 m) came from a supplier's catalogue, not an allowed source, so the
    plate carries no dimensions and the caption makes no claim of scale. Each label lights its own group (tags: panel,
-   cylinders, bulk). Colours (the set's legend): the gas panel in the steel accent, the one steel colour of the set. */
+   cylinders, bulk). Colours (the set's legend): the gas panel in the set's one steel colour, a grey with no hue (22 Nov 2026
+   plates refine: it was a blue grey, which read as silicon's slate). */
 R('gas-cabinet', function (m) {
   var CBX = -0.30, CW = 0.97, CD = 0.48, CPL = 0.12, CTOP = 1.93, t = 0.022;
   // painted in layers: the back shell, then the cylinders inside, then the front of the cabinet. The plate rocks
@@ -96,5 +97,5 @@ R('gas-cabinet', function (m) {
   m.callout([CBX + cylX[0] - 0.09, 0.82, -0.055 + 0.07, out.idx], 'Gas cylinders', { side: 'l', tag: 'cyl' });
   m.callout([CBX - 0.25, PY0 + 0.25, PZ, shell.idx], 'Valves, regulator and gauges', { side: 'l', dy: -14, tag: 'panel' });
   m.callout([TX + TR * 0.5, 0.75, TZ + TR * 0.86, bulk.idx], 'Bulk liquid cylinder', { side: 'r', tag: 'bulk' });
-  return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, accent: [117, 132, 144], accentDark: [198, 206, 213] };
+  return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, accent: [122, 122, 122], accentDark: [200, 200, 200] };
 });

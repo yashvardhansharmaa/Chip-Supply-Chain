@@ -8,7 +8,10 @@
    figure had none and are gone. Set LOUPE to false to drop it. Colours (the set's legend): copper only.
    22 Nov 2026 expert review: the loupe's caption says the dies are not to scale and gives the gap as "as small as 7 um" (it
    read as a typical gap); the 20 um bar has witness lines up to the bump row it measures; the gaps round the bumps are filled
-   with a pale neutral, as film or underfill fills them (chapter 9), where they were empty, as if air. */
+   with a pale neutral, as film or underfill fills them (chapter 9), where they were empty, as if air.
+   22 Nov 2026 plates refine: the base die stands further off the stack, about two and a half times the gap between memory
+   dies, so it reads as a different part; the microbumps are named on the row under the lowest memory die, at its right
+   end, their leader running out to the right, under the vias' (3 over 4); the base die is named from the left. */
 var LOUPE = true;
 R('hbm-stack', function (m) {
   var hw = 5.3, bw = 5.5, t = 0.45, bt = 0.9, gap0 = 0.105, pitch = t + gap0, EX = 0.62;
@@ -22,14 +25,15 @@ R('hbm-stack', function (m) {
   }
   function bumps(y, w) { var p = []; for (var x = 0; x <= w - 0.2; x += TX) p.push([x, y, 0]); for (var z = TZ; z <= w - 0.2; z += TZ) p.push([0, y, z]); return p; }
   // base die, silicon, in ink
-  var base = m.part('base', { ex: [0, 0, 0], seq: 0 });
+  var base = m.part('base', { ex: [0, -1.15, 0], seq: 0 });
   var tb = tsvLines(-bt, 0, bw);
   var bl = [D.rect(-bw * 0.86, -bw * 0.43, bw * 0.86, -bw * 0.23, 0, { lw: 0.5 }), D.rect(-bw * 0.86, bw * 0.23, 0, bw * 0.43, 0, { lw: 0.5 })];
   m.prism(L(bw), -bt, 0, 'steel', { sideMat: { 2: 'cutDense', 3: 'cutDense' }, sideDecals: { 2: tb[0], 3: tb[1] }, top: bl });
   var under = [];
   for (var a = 0; a < 16; a++) for (var b = 0; b < 17; b++) { var ux = (a - 7.5) * 11 / 17, uz = (b - 8) * 11 / 18; if (!(ux > 0 && uz > 0)) under.push([ux, -bt - 0.12, uz]); }
   m.dots(under, { col: 'acc', r: 0.9, alpha: 0.5 });
-  m.anchor(2, 'Base die', [bw, -bt / 2, -bw * 0.4]);
+  // (22 Nov 2026 plates refine: named from the left, on its front face, so the microbumps' leader has the right to itself)
+  m.anchor(2, 'Base die', [-bw * 0.55, -bt / 2, bw]);
   // review: the quarter cut away is drawn as a phantom corner, so the 11 mm dimension ends on a drawn corner (it ended
   // in empty space where the cut had removed the corner)
   var ph = { lw: 0.55, dash: [4, 2.5], alpha: 0.7 };
@@ -56,7 +60,7 @@ R('hbm-stack', function (m) {
     if (i === 10) m.anchor(1, 'Memory dies', [-hw, yb + t / 2, hw * 0.6]);
     // the vias' and the bumps' points sit low in the stack, so their leaders run short to labels under the loupe
     if (i === 2) m.anchor(3, 'TSVs', [TX * 2, yb + t / 2, 0]);
-    if (i === 0) m.anchor(4, 'Microbumps', [TX * 4, yb - gap0 / 2 - 0.08, 0]);
+    if (i === 0) m.anchor(4, 'Microbumps', [TX * 7, yb - gap0 / 2 - 0.08, 0]);
     prev = p;
   }
   // memory dies anchor: two dies
@@ -68,7 +72,7 @@ R('hbm-stack', function (m) {
   // what each numbered part lights, as its light table in data/specimen-parts.json does: every memory die in ink, every via and
   // every microbump in copper
   var loupe = LOUPE ? { model: 'hbm-loupe', at: [TX * 2.5, gap0 + pitch * 9 + t / 2, hw * 0.55], part: 'die10', side: 'r', r: 0.155, rMax: 100, scale: 0.6, dx: -0.1, dy: 0.04, caption: ['Microbumps about 20\u00a0\u00b5m apart', 'in a gap as small as 7\u00a0\u00b5m.', 'Dies not to scale'] } : null;
-  return { elev: PLATE.ISO.elev, yaw: PLATE.ISO.yaw, sortAxis: [0, 1, 0], loupe: loupe, calloutOpts: { 1: { tag: 'dies', only: 'ink' }, 3: { tag: 'tsv', only: 'accent' }, 4: { tag: 'bumps', only: 'accent' } }, accent: [176, 102, 44], accentDark: [224, 154, 92] };
+  return { elev: PLATE.ISO.elev, yaw: PLATE.ISO.yaw, sortAxis: [0, 1, 0], loupe: loupe, calloutOpts: { 1: { tag: 'dies', only: 'ink' }, 2: { side: 'l' }, 3: { tag: 'tsv', only: 'accent' }, 4: { tag: 'bumps', only: 'accent', side: 'r' } }, order: { r: [3, 4] }, accent: [176, 102, 44], accentDark: [224, 154, 92] };
 });
 
 /* The loupe's own small plate, in micrometres, seen almost face on so its cut face reads as a section: three dies with the

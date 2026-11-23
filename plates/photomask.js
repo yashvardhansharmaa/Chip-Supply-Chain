@@ -10,7 +10,12 @@
    22 Nov 2026 expert review: the glass is drawn 6.35 mm thick with the coating band on top of it, so the 6.35 mm dimension
    spans the glass alone (the glass was drawn 5.30 mm under the band, inside the 6.35); the loupe's ring sits in the pattern
    area, on one of the dark absorber bars, where the loupe's absorber lines are (it sat on the outer edge, outside the
-   pattern). */
+   pattern).
+   22 Nov 2026 plates refine: the mask is drawn at the first plates' size again, its loupe a quarter smaller (72 px, from 96;
+   at 67 its four names no longer fitted inside the disc at 11.5 px) and tucked
+   into the empty corner over the pellicle's right corner, still aimed into the pattern area; the mirror coating and the glass
+   plate are named side by side in the left column, their dots on the band and on the glass just under it, by the plate's left
+   corner, where their leaders come in over the 152.4 mm dimension rather than across its figure. */
 R('photomask', function (m) {
   var B = 152.4, T = 6.35, ml = 1.05, PW = 132, PD = 104, yTop = T / 2 + ml; // yTop: the coating's top face, over the glass
   var blank = m.part('blank', { ex: [0, 0, 0], seq: 0 });
@@ -56,17 +61,19 @@ R('photomask', function (m) {
     m.guide([[c[0] * (FW / 2 - bar), yM, c[1] * (FD / 2 - bar), fr.idx], [c[0] * (FW / 2 - bar), yM, c[1] * (FD / 2 - bar), mem.idx]], { alpha: 0.85 });
   });
   m.guide([[0, -T / 2 - 6, 0, blank.idx], [0, yM + 4, 0, mem.idx]], { style: 'axis', alpha: 0.8 });
-  m.callout([B / 2, -T / 2 + 1.6, -B * 0.22, blank.idx], 'Glass plate', { side: 'r' });
+  m.callout([-B / 2 + 11, 1.2, B / 2, blank.idx], 'Glass plate', { side: 'l' });
   m.dim([B / 2, -T / 2, B / 2], [B / 2, T / 2, B / 2], [10, 0, 0], '6.35 mm', { t: 0.5, part: blank.idx });
   // (on a phone, in rows, the coating is named on the right face, by the corner, where its upright leader crosses nothing: on
   // the left face it ran through the 152.4 mm figure)
-  m.callout([-B * 0.18, yTop - ml / 2, B / 2, blank.idx], 'Mirror coating', { side: 'l', rowAt: [B / 2, yTop - ml / 2, -B * 0.34, blank.idx] });
+  m.callout([-B / 2 + 11, yTop - ml / 2, B / 2, blank.idx], 'Mirror coating', { side: 'l', rowAt: [B / 2, yTop - ml / 2, -B * 0.34, blank.idx] });
   m.callout([-FW * 0.28, yM, FD * 0.22, mem.idx], 'Pellicle', { side: 'l' });
   // the ring on the coating's top face, in the pattern area: on one of the dark bars of the block in the pattern's right-hand
   // column (block D of MAP, its last bar, so the cone's lower edge passes clear of the glass plate's leader), the absorber
   // lines the loupe cuts across
   var ringAt = [3 * cw, yTop, -PD / 2 + 3 * cd / 2 + (5 / 5 - 0.5) * (3 * cd - 4) * 0.76];
-  var loupe = { model: 'mask-loupe', at: ringAt, part: 'blank', side: 'r', r: 0.15, rMax: 96, scale: 0.74, dx: -0.15, inset: 26, caption: ['A cut through the pattern,', 'at true thickness'] };
+  // (tuck: the disc in the drawing's empty top right corner, over the pellicle's right corner, its caption beside its upper
+  // half, over the pellicle; under 560 px it stands in the foot's corner as before)
+  var loupe = { model: 'mask-loupe', at: ringAt, part: 'blank', side: 'r', r: 0.11, rMax: 72, scale: 0.615, dx: -0.2, dy: 0.03, inset: 26, tuck: 'tr', tdx: -58, tdy: 14, capSide: 'l', capDy: -46, caption: ['A cut through the pattern,', 'at true thickness'] };
   return { elev: PLATE.ISO.elev, yaw: PLATE.ISO.yaw, sortAxis: [0, 1, 0], loupe: loupe, accent: [111, 139, 166], accentDark: [195, 211, 226] };
 });
 
@@ -86,22 +93,25 @@ R('mask-loupe', function (m) {
   function bx(x0, y0, x1, y1, mat, fmat) { return m.box({ c: [(x0 + x1) / 2, (y0 + y1) / 2, 0], s: [x1 - x0, y1 - y0, 60], fmat: fmat }, mat); }
   m.part('st', { mode: 'stack' });
   var X0 = -130, X1 = 90, NP = 40, g0 = -40, gB = g0 - 40;
-  bx(X0, gB, X1, g0, 'light', { pz: 'cut' });
+  // (the glass ruled open at 45 degrees, the absorber close at 135: two materials, two rulings)
+  bx(X0, gB, X1, g0, 'light', { pz: { d: 0.03, hatch: 1, ang: 45, gap: 3.6 } });
   // a pair's sublayers bottom up (Table 1 read from the glass): silicon-like, interlayer, molybdenum, interlayer, silicon-like.
-  // The stack is one block in silicon's slate, its interlayers and molybdenum laid on its cut face as bands with no outline
-  // (drawn as 160 blocks, their outlines turned the stack black)
-  // (the bands' tones: molybdenum near ink, so each pair shows as a fine dark line as the outlines showed it, the interlayers a
-  // middle gray between it and the silicon's slate)
-  var MO = { d: 0.9 }, IL = { d: 0.45 };
-  var SUBL = [[1.151, null], [1.422, IL], [1.807, MO], [1.215, IL], [1.435, null]], y = g0, bands = [];
+  // The stack is one block in silicon's slate, the molybdenum laid on its cut face as bands with no outline (drawn as 160 blocks,
+  // their outlines turned the stack black). 22 Nov 2026 plates refine: two values, molybdenum darker and silicon lighter; the
+  // interlayers, where the two mix, are drawn with the silicon (three values, molybdenum near ink, read as a black block)
+  var MO = { d: 0.5 };
+  var SUBL = [[1.151, null], [1.422, null], [1.807, MO], [1.215, null], [1.435, null]], y = g0, bands = [];
   for (var i = 0; i < NP; i++) SUBL.forEach(function (q) { if (q[1]) bands.push([y, y + q[0], q[1]]); y += q[0]; });
   var yc = y, cyS = (g0 + yc) / 2, hx = (X1 - X0) / 2, ZF = 30;
   m.box({ c: [(X0 + X1) / 2, cyS, 0], s: [X1 - X0, yc - g0, 60], decals: { pz: bands.map(function (q) { return D.poly([[-hx, q[0] - cyS, ZF], [hx, q[0] - cyS, ZF], [hx, q[1] - cyS, ZF], [-hx, q[1] - cyS, ZF]], { fill: q[2], lw: 0 }); }) } }, 'acc');
   bx(X0, yc, X1, yc + 3, 'mid');
-  [[-120, -80], [-48, -8]].forEach(function (a) { bx(a[0], yc + 3, a[1], yc + 3 + 60, 'dark', { pz: 'cutDense' }); });
-  bar(m, [14, yc + 3, 30], [14, yc + 63, 30], '60 nm', { side: 1 });
-  tag(m, [-28, yc + 63 + 26, 30], 'Absorber', {});
-  bar(m, [X1 + 18, g0, 30], [X1 + 18, yc, 30], 'About 40\nlayer pairs', { side: 1 });
-  tag(m, [X1 + 16, gB - 22, 30], 'Glass', { align: 'left', lead: [X1 - 30, (gB + g0) / 2, 30] });
+  [[-104, -64], [8, 48]].forEach(function (a) { bx(a[0], yc + 3, a[1], yc + 3 + 60, 'dark', { pz: { d: 0.04, hatch: 2, ang: 135, gap: 1.9 } }); });
+  /* 22 Nov 2026 plates refine: the disc is a quarter smaller, tucked into the photomask's empty corner, so the names stand
+     in one column right of the section, each inside the disc: the absorber's name over its height, the pairs' bar under it,
+     the glass by a short leader (the absorber's name stood over the section, on the disc's rim) */
+  bar(m, [X1 + 20, yc + 3, 30], [X1 + 20, yc + 63, 30], '60 nm', { side: 1, wit: [[48, yc + 3, 30], [48, yc + 63, 30]] });
+  tag(m, [X1 + 10, yc + 63, 30], 'Absorber', { align: 'left', dy: -10 });
+  bar(m, [X1 + 20, g0, 30], [X1 + 20, yc, 30], 'About 40\nlayer\npairs', { side: 1 });
+  tag(m, [X1 + 30, gB - 30, 30], 'Glass', { align: 'left', lead: [X1 - 30, (gB + g0) / 2, 30] });
   return { elev: 0.06, yaw: -0.05, accent: [111, 139, 166], accentDark: [195, 211, 226] };
 });
