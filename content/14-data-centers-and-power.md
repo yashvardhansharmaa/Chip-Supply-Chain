@@ -133,7 +133,7 @@
       "source": "https://www.energy.gov/documents/united-states-data-center-energy-usage-report-2025-update"
     },
     {
-      "fact": "Capital spending by Alphabet, Amazon, Meta, Microsoft and Oracle was nearing half a trillion dollars in 2025, Epoch AI found",
+      "fact": "Capital spending by Alphabet, Amazon, Meta, Microsoft and Oracle came to $140,648 million in the fourth quarter of 2025, by Epoch AI's count",
       "source": "https://epoch.ai/data-insights/hyperscaler-capex-trend"
     },
     {
@@ -283,7 +283,7 @@ The largest owners of AI chips are the hyperscalers, the companies with the most
 
 Besides Meta, the hyperscalers are cloud companies, which rent part of their computing power to other firms ([source](https://epoch.ai/latest/introducing-the-ai-chip-owners-explorer)). Meta has no cloud business and uses its chips for its own AI models and for the systems that choose the posts and ads its apps show ([source](https://epoch.ai/data/ai-chip-owners)).
 
-The five hyperscalers' combined capital spending was nearing half a trillion dollars in 2025, Epoch AI found ([source](https://epoch.ai/data-insights/hyperscaler-capex-trend)). The International Energy Agency expected worldwide investment in data centers to reach $580 billion in 2025 ([source](https://www.iea.org/reports/world-energy-outlook-2025/executive-summary)).
+The five hyperscalers' combined capital spending came to $140,648 million in the fourth quarter of 2025, by Epoch AI's count ([source](https://epoch.ai/data-insights/hyperscaler-capex-trend)). It had grown an average of 72 percent a year since the second quarter of 2023, Epoch AI found ([source](https://epoch.ai/data-insights/hyperscaler-capex-trend)). The International Energy Agency expected worldwide investment in data centers to reach $580 billion in 2025 ([source](https://www.iea.org/reports/world-energy-outlook-2025/executive-summary)).
 
 {{figure:hyperscaler-capex}}
 
