@@ -3490,6 +3490,8 @@ a.cf-latest-row:hover .cf-latest-go { color: var(--accent-ink); text-decoration-
 .gl-chk--important::before { height: 10px; }
 .gl-chk--contested::before { height: 10px; background: none; box-shadow: inset 0 0 0 1.25px var(--ink); }
 .gl-chk--diversified::before { height: 5px; background: var(--muted); }
+.gl-chk + .gl-chk-def { display: inline-block; vertical-align: top; margin-left: 12px; color: var(--muted); } /* what the position means, after its word, on its baseline */
+.gl-chk:has(+ .gl-chk-def) { vertical-align: top; }
 .gl-note { margin: 16px 0 0; font-family: var(--font-ui); font-size: 13.5px; line-height: 1.55; color: var(--muted); overflow-wrap: anywhere; }
 .gl-note b { font-weight: 600; color: var(--ink-2); }
 .gl-links { display: flex; flex-wrap: wrap; gap: 6px 26px; margin: 22px 0 0; font-family: var(--font-ui); font-size: 14.5px; line-height: 1.5; }

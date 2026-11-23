@@ -1822,6 +1822,15 @@
     colOf: function (cc) { return this.CO.indexOf(cc) >= 0 ? cc : 'Other'; }, // the firm filter's "Other countries" are those outside CO
     LEVELS: ['Critical', 'Important', 'Contested', 'Diversified'],
     RANK: { Critical: 0, Important: 1, Contested: 2, Diversified: 3 },
+    /* each firm's market position as readers see it, and what each means (owner, 23 Nov 2026: the column "Market position";
+       "more than half for dominant"). The data keeps its four values (data/suppliers.json "chokepoint"), which the classes,
+       the filter's values and the sort use. build/build.js, build/modules/reference-pages.js and src/modules/lookup.js read
+       these two, so every page uses the same words */
+    POSITION: { Critical: 'Dominant', Important: 'Major', Contested: 'Challenger', Diversified: 'One of many' },
+    POSITION_DEF: { Critical: 'Holds more than half of its segment.', Important: 'A major supplier in its segment, with rivals.', Contested: 'A challenger in a segment that others lead.', Diversified: 'One of many firms that supply its segment.' },
+    pos: function (lv) { return this.POSITION[lv] || lv || ''; },
+    // a level's pill: the word readers see, and its meaning as the pill's title
+    pill: function (lv) { return lv ? '<span class="chk ' + esc(lv) + '" title="' + esc(this.POSITION_DEF[lv] || '') + '">' + esc(this.pos(lv)) + '</span>' : ''; },
     ORDER: ['Design and EDA', 'IP and architecture', 'Silicon and wafers', 'Photomasks', 'Lithography', 'Deposition and etch', 'Photoresist and materials', 'Chemicals and gases', 'Optics and photonics', 'Equipment subsystems and components', 'Metrology and inspection', 'Foundry', 'Memory', 'Advanced packaging and OSAT', 'Test', 'Substrates and PCBs', 'Interconnect and networking', 'Power and cooling', 'Systems and servers', 'AI accelerator vendors'], // chain order, design first
     /* the shorter names the ladder's jump list and /suppliers/ use for the long categories (build/modules/reference-pages.js reads them) */
     SHORT: {
@@ -1900,7 +1909,7 @@
       this.render();
     },
 
-    /* every stage carries its firms, its count by country and its Critical names; the drawing reads only this */
+    /* every stage carries its firms, its count by country and its dominant (Critical) names; the drawing reads only this */
     groupStages: function () {
       var self = this, by = {};
       this.rows.forEach(function (r, i) {
@@ -2004,7 +2013,7 @@
     render: function () {
       var rows = this.filtered();
       $('#sup-count').textContent = (rows.length === this.rows.length ? rows.length + ' suppliers' : rows.length + ' of ' + this.rows.length + ' suppliers') +
-        (this.stage ? ' · ' + this.stage : '') + (this.country ? ' · ' + this.countryLabel() : '') + (this.chk ? ' · ' + this.chk : '') +
+        (this.stage ? ' · ' + this.stage : '') + (this.country ? ' · ' + this.countryLabel() : '') + (this.chk ? ' · ' + this.pos(this.chk) : '') +
         (this.q ? ' · matching “' + this.q + '”' : ''); // the search narrows the list too, so the line names it
       // a polite status, so the new count is read out; set after the first count, so arriving on the page says nothing (accessibility #5)
       var cnt = $('#sup-count'); if (cnt && !cnt.hasAttribute('role')) setTimeout(function () { cnt.setAttribute('role', 'status'); }, 0);
@@ -2024,7 +2033,7 @@
         }).map(function (f) {
           return '<span class="sup-nw" data-r="' + f._ix + '"><button type="button" class="sup-name lv-' + esc(f.chokepoint || 'Important') +
             '" aria-expanded="false" aria-controls="' + s.id + '-p">' + esc(f.name) + '<i class="sup-cc">' + esc(f.country) + '</i>' +
-            (f.chokepoint === 'Critical' || f.chokepoint === 'Diversified' ? '<span class="sr-only">, ' + esc(f.chokepoint) + '</span>' : '') + // the name's color, said aloud
+            (f.chokepoint === 'Critical' || f.chokepoint === 'Diversified' ? '<span class="sr-only">, ' + esc(self.pos(f.chokepoint)) + '</span>' : '') + // the name's color, said aloud
             '</button></span>'; // the list stays names only: a firm's revenue and its China share open with the firm (detail, below)
         }).join(' '); // the lines break at these spaces, so a name never leaves its comma at the start of the next line
         // the numeral is the segment's number of firms
@@ -2051,7 +2060,7 @@
           }).map(function (f) {
             return '<span class="sup-nw" data-r="' + f._ix + '"><button type="button" class="sup-name lv-' + esc(f.chokepoint || 'Important') +
               '" aria-expanded="false" aria-controls="' + id + '-p">' + esc(f.name) + '<i class="sup-cc">' + esc(self.SHORT[f.category] || f.category) + '</i>' +
-              (f.chokepoint === 'Critical' || f.chokepoint === 'Diversified' ? '<span class="sr-only">, ' + esc(f.chokepoint) + '</span>' : '') + '</button></span>';
+              (f.chokepoint === 'Critical' || f.chokepoint === 'Diversified' ? '<span class="sr-only">, ' + esc(self.pos(f.chokepoint)) + '</span>' : '') + '</button></span>';
           }).join(' ');
           html += '<section class="sup-rung" id="' + id + '" data-crit="' + c.crit + '" aria-labelledby="' + id + '-h">' +
             '<span class="sup-rank" aria-hidden="true" data-unit="' + (c.rows.length === 1 ? 'firm' : 'firms') + '">' + c.rows.length + '</span>' +
@@ -2062,9 +2071,9 @@
         });
       $('#sup-ladder-cc').innerHTML = html;
     },
-    // beside a segment's or a country's name: its Critical firms, one red wine mark each (the numeral already shows the number of firms; a screen reader hears it here)
+    // beside a segment's or a country's name: its dominant firms, one red wine mark each (the numeral already shows the number of firms; a screen reader hears it here)
     rungCount: function (n, crit) {
-      return '<span class="sr-only">' + n + ' firms. </span>' + (crit ? '<span class="sup-crit-n"><span class="sup-crit-sq" aria-hidden="true">' + new Array(crit + 1).join('<i></i>') + '</span>' + crit + ' critical</span>' : '');
+      return '<span class="sr-only">' + n + ' firms. </span>' + (crit ? '<span class="sup-crit-n"><span class="sup-crit-sq" aria-hidden="true">' + new Array(crit + 1).join('<i></i>') + '</span>' + crit + ' ' + esc(this.pos('Critical').toLowerCase()) + '</span>' : '');
     },
     applyFilter: function () { // the rungs never move; the filters only hide names and change the count
       var self = this, on = this.filtering();
@@ -2114,7 +2123,7 @@
         '<span class="sr-only">. Opens the chart of every year</span> <span aria-hidden="true">→</span></a>' + this.exMini(r.china.href)]);
       var tag = [r.subcategory, cname(r.country) + (r.city ? ', ' + r.city : ''), /^private$/i.test(r.ticker || '') ? '' : r.ticker].filter(Boolean).join(' · ');
       return '<div class="sup-detail-body">' +
-        '<p class="sup-detail-h">' + esc(r.name) + (r.chokepoint ? ' <span class="chk ' + esc(r.chokepoint) + '">' + esc(r.chokepoint) + '</span>' : '') +
+        '<p class="sup-detail-h">' + esc(r.name) + (r.chokepoint ? ' ' + this.pill(r.chokepoint) : '') +
         (tag ? '<em>' + esc(tag) + '</em>' : '') + '</p>' +
         (r.role ? '<p class="sup-role">' + esc(r.role) + '</p>' : '') +
         (facts.length ? '<dl class="sup-facts">' + facts.map(function (f) { return '<dt>' + f[0] + '</dt><dd>' + f[1] + '</dd>'; }).join('') + '</dl>' : '') +
@@ -2145,26 +2154,27 @@
       var self = this;
       // aria-sort belongs on the column header, not on the button inside it (accessibility #12)
       var th = function (k, label) { return '<th' + (self.sortKey === k ? ' aria-sort="' + (self.sortDir > 0 ? 'ascending' : 'descending') + '"' : '') + '><button type="button" data-sort="' + k + '">' + label + '</button></th>'; };
-      var html = '<thead><tr>' + th('name', 'Supplier') + th('category', 'Segment') + th('country', 'Country') + th('founded', 'Founded') + th('chokepoint', 'How hard to replace') + '<th>What they make</th><th>Customers</th></tr></thead><tbody>';
+      var html = '<thead><tr>' + th('name', 'Supplier') + th('category', 'Segment') + th('country', 'Country') + th('founded', 'Founded') + th('chokepoint', 'Market position') + '<th>What they make</th><th>Customers</th></tr></thead><tbody>';
       rows.forEach(function (r) {
         html += '<tr><td class="name"><b>' + esc(r.name) + '</b><span>' + esc([r.nativeName, r.ticker].filter(Boolean).join(' · ')) + '</span>' +
           (r.china ? '<a class="sup-ex-a" href="' + safeUrl(r.china.href) + '">' + esc(r.china.label) + '</a>' : '') + '</td>' +
           '<td>' + esc(r.category) + (r.subcategory ? '<br><span class="cc" style="color:var(--muted)">' + esc(r.subcategory) + '</span>' : '') + '</td>' +
           '<td><span class="cc">' + esc(r.country) + '</span> ' + esc(r.city || '') + '</td>' +
           '<td class="num">' + (r.founded || '—') + '</td>' +
-          '<td><span class="chk ' + esc(r.chokepoint || '') + '">' + esc(r.chokepoint || '') + '</span>' + (r.shareNote ? '<br><span class="cc" style="color:var(--muted)">' + esc(r.shareNote) + '</span>' : '') + '</td>' +
+          '<td>' + self.pill(r.chokepoint) + (r.shareNote ? '<br><span class="cc" style="color:var(--muted)">' + esc(r.shareNote) + '</span>' : '') + '</td>' +
           '<td class="role">' + esc(r.role || '') + (r.source ? ' <a href="' + safeUrl(r.source) + '" target="_blank" rel="noopener" class="cc" aria-label="Source for ' + esc(r.name) + '">Source</a>' : '') + '</td>' +
           '<td style="font-size:13px;color:var(--ink-2)">' + esc((r.customers || []).join(', ')) + '</td></tr>';
       });
       $('#sup-table').innerHTML = html + '</tbody>';
     },
     copy: function () {
-      var rows = this.filtered(), cols = ['name', 'nativeName', 'category', 'subcategory', 'country', 'city', 'founded', 'ticker', 'ownership', 'chokepoint', 'shareNote', 'role', 'customers', 'revenueUSDb', 'revenueYear', 'source',
+      var rows = this.filtered(), cols = ['name', 'nativeName', 'category', 'subcategory', 'country', 'city', 'founded', 'ticker', 'ownership', 'marketPosition', 'shareNote', 'role', 'customers', 'revenueUSDb', 'revenueYear', 'source',
         'revenueAmount', 'revenueUnit', 'revenueCurrency', 'revenueFiscalYear', 'revenueFyEnd', 'revenueSource', 'revenueUSD', 'revenueUSDBasis'];
       // the filed revenue after the earlier columns: the amount as filed (without commas, so a spreadsheet reads it as a number) and the
       // revenue object's own fields, then the dollar figure build/build.js converted and the rates it used
       var REV = { revenueUnit: 'unit', revenueCurrency: 'currency', revenueFiscalYear: 'fiscalYear', revenueFyEnd: 'fyEnd', revenueSource: 'source' };
-      var val = function (r, c) { return c === 'revenueAmount' ? (r.revenueShown || {}).amount : REV[c] ? (r.revenue || {})[REV[c]] : r[c]; };
+      // the market position in the reader's word (the data's own value is "chokepoint")
+      var self = this, val = function (r, c) { return c === 'marketPosition' ? (r.chokepoint ? self.pos(r.chokepoint) : '') : c === 'revenueAmount' ? (r.revenueShown || {}).amount : REV[c] ? (r.revenue || {})[REV[c]] : r[c]; };
       var q = function (v) { if (v == null) return ''; if (Array.isArray(v)) v = v.join('; '); return String(v).replace(/[\t\n\r]+/g, ' '); }; // tab-separated: a spreadsheet splits it on paste
       var csv = cols.join('\t') + '\n' + rows.map(function (r) { return cols.map(function (c) { return q(val(r, c)); }).join('\t'); }).join('\n');
       var btn = $('#sup-copy');
@@ -3339,8 +3349,8 @@
        entries (the Glossary's #lk-items, as terms.js carries it to every page). A chip goes by its model ("Ascend 950PR", "Instinct MI300X"): the maker,
        a design house in brackets and a bracketed tail are dropped */
     tryNames: function () {
-      // the names come with terms.js on every page (build/build.js): terms of 22 letters or fewer, the firms rated Critical or
-      // Important, each chip by its own name and the countries, as the Glossary's list holds them
+      // the names come with terms.js on every page (build/build.js): terms of 22 letters or fewer, the firms in a dominant or
+      // major market position, each chip by its own name and the countries, as the Glossary's list holds them
       var P = (window.CP_TERMS || {}).try || {};
       var pick = function (arr, n) { var a = (arr || []).slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a.slice(0, n); };
       var chosen = pick(P.term, 2).concat(pick(P.firm, 2), pick(P.chip, 1), pick(P.country, 1));

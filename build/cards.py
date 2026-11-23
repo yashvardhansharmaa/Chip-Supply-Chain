@@ -58,7 +58,7 @@ if '--out' in args:
 VIEW_TITLE = {'intro': 'Start here', 'chain': 'Supply Chain', 'chips': 'AI Chips', 'suppliers': 'Suppliers',
               'export-controls': 'Export Controls', 'glossary': 'Glossary', 'summary': 'Summary'}
 VIEW_LINE = {
-    'suppliers': 'What each of the {firms} firms makes, where it is based and how hard it would be to replace.',
+    'suppliers': 'What each of the {firms} firms makes, where it is based and its position in its market.',
     'export-controls': 'A timeline of the main chip export rules since 2018 and what can still be sold to China.',
 }
 

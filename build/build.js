@@ -1534,14 +1534,21 @@ const pageDate = (key, content, file) => {
 // the source-tier key sits at the top of each chapter's Sources list (SOURCE_KEY), where the A and B marks are; the footer no longer
 // repeats it (owner, 11 Nov 2026: "i'd like for it to be shorter"). The name stays for the pages that take the footer from here
 const footerKey = footer;
-const suppliersIntro = suppliers.length ? `What each of the ${suppliers.length} firms makes, where it is based, and how hard it would be to replace.` : 'The supplier list is not compiled yet.';
+const suppliersIntro = suppliers.length ? `What each of the ${suppliers.length} firms makes, where it is based, and its position in its market.` : 'The supplier list is not compiled yet.';
+// each firm's market position as readers see it (owner, 23 Nov 2026), read from src/app.js Suppliers.POSITION so the page and
+// the app use the same words: the data keeps Critical, Important, Contested and Diversified, and readers see these
+const POSITION = (() => { const m = /\bPOSITION: (\{[^}]*\})/.exec(read(path.join(root, 'src', 'app.js')) || ''); try { if (m) return new Function('return ' + m[1])(); } catch (e) { /* reported below */ } warn('suppliers: src/app.js Suppliers.POSITION could not be read, so the data\'s level names show'); return { Critical: 'Critical', Important: 'Important', Contested: 'Contested', Diversified: 'Diversified' }; })();
 // the four counts beside the Suppliers title, from the list itself: firms, the countries they are based in, the segments (the
-// list's 20 categories) and the firms rated Critical, whose mark is the page's one red wine
+// list's 20 categories) and the dominant firms (data "Critical"), whose mark is the page's one red wine
 const suppliersFacts = suppliers.length ? `<dl class="sup-facts-row">${[
   // "home countries": where the firms are based (the Glossary counts its country entries, a different number; 28 Oct 2026)
   [suppliers.length, 'firms'], [new Set(suppliers.map((r) => r.country)).size, 'home countries'], [new Set(suppliers.map((r) => r.category)).size, 'segments'],
-  [suppliers.filter((r) => r.chokepoint === 'Critical').length, 'Critical']
-].map(([n, k], i) => `<div><dt>${i === 3 ? '<i class="sup-mk" aria-hidden="true"></i>' : ''}${k}</dt><dd>${n}</dd></div>`).join('')}</dl>` : '';
+  [suppliers.filter((r) => r.chokepoint === 'Critical').length, POSITION.Critical]
+].map(([n, k], i) => `<div><dt>${i === 3 ? '<i class="sup-mk" aria-hidden="true"></i>' : ''}${esc(k)}</dt><dd>${n}</dd></div>`).join('')}</dl>` : '';
+// the firm filter's market positions (the values stay the data's, which the app matches on) and the key to the names' colors
+// under the tab row: red wine for dominant, ink for major or challenger, gray for one of many (src/modules/suppliers.css)
+const suppliersPositionOptions = `<option value="">All market positions</option>${['Critical', 'Important', 'Contested', 'Diversified'].map((lv) => `<option value="${lv}">${esc(POSITION[lv])}</option>`).join('')}`;
+const suppliersKey = `<p class="sup-key" id="sup-key" aria-hidden="true"><b class="k-crit">${esc(POSITION.Critical)}</b><b>${esc(POSITION.Important)} or ${esc(POSITION.Contested.toLowerCase())}</b><b class="k-div">${esc(POSITION.Diversified)}</b></p>`;
 // the Export Controls dek and the note under the China revenue charts, printed by the main page and by /export-controls/ (build/modules/reference-pages.js)
 const exposureFirms = new Set(exposure.map((r) => r.firm)).size;
 const controlsDek = `The main rules since 2018, what can still be sold to China, and China's share of revenue at ${exposureFirms} firms, from their filings.`;
@@ -1685,7 +1692,7 @@ fill('CONTENTS', contentsHTML); fill('CHAIN_STANDFIRST', chainStandfirst); fill(
 const ftMark = (html.match(/<svg class="wm-tile"[\s\S]*?<\/svg>/) || [])[0] || '';
 const ftLead = ftMark ? `<span class="ft-mark" aria-hidden="true">${ftMark}</span>` : '';
 fill('FOOTER', ftLead + footer); fill('FOOTER_KEY', ftLead + footerKey);
-fill('SUPPLIERS_INTRO', suppliersIntro); fill('SUPPLIERS_FACTS', suppliersFacts); fill('SUPPLIERS_REVENUE_NOTE', suppliersRevenueNote); fill('BUILT', builtStr);
+fill('SUPPLIERS_INTRO', suppliersIntro); fill('SUPPLIERS_FACTS', suppliersFacts); fill('SUPPLIERS_POSITION_OPTIONS', suppliersPositionOptions); fill('SUPPLIERS_KEY', suppliersKey); fill('SUPPLIERS_REVENUE_NOTE', suppliersRevenueNote); fill('BUILT', builtStr);
 // the PDF title page's art ships beside the page
 // explainer animations: the rendered videos and stills go to dist/media
 { const md = path.join(root, 'media'); if (fs.existsSync(md)) { fs.mkdirSync(path.join(root, 'dist', 'media'), { recursive: true }); fs.readdirSync(md).filter((f) => /\.(mp4|jpg)$/.test(f) && [...USED_MEDIA].some((u) => f.startsWith(u + '-'))).forEach((f) => fs.copyFileSync(path.join(md, f), path.join(root, 'dist', 'media', f))); } }
@@ -1840,7 +1847,7 @@ const searchData = (() => {
   return idx;
 })();
 // the definitions the pop-ups show, by the term's key (its data-term), the specimens' names, and the names the empty search suggests: two short
-// terms, two firms that matter (Critical or Important), a chip by its own name and a country (src/app.js Tools.tryNames)
+// terms, two firms that matter (a dominant or major market position: data Critical or Important), a chip by its own name and a country (src/app.js Tools.tryNames)
 const termsData = (() => {
   const defs = {}; glEntries.forEach((g) => { defs[g.key] = [g.term.trim(), g.plain]; });
   const big = new Set(suppliers.filter((r) => r.chokepoint === 'Critical' || r.chokepoint === 'Important').map((r) => r.name));

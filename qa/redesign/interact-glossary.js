@@ -5,7 +5,7 @@
    text", "Show all N matches", "Did you mean" and every place the site uses the words), the keys (the arrows, Enter, Escape,
    "/"), an entry in the bar's column (kind line, other names, definition, reason, Read it in and Also in with "and N more",
    Where it appears with six then Show all, the links between entries, Previous and Next), a firm's revenue, China chart and
-   Critical mark, a country's shares and EU-27 line, a chip's card on AI Chips, Browse A to Z (#a-z, a kind, a letter, the
+   market position, a country's shares and EU-27 line, a chip's card on AI Chips, Browse A to Z (#a-z, a kind, a letter, the
    strip, Back to the same place), the addresses (#gl-, #lk-term-, #lk-firm-, #lk-chip-, #lk-country-, #a-z, #a-z/<kind>,
    #a-z/<letter>), a passage out to its chapter's page and Back, the ways in (a chapter's pop-up, the masthead search, the
    Export Controls board, the masthead's tab), the phone at 390 and 320 (44 px targets, the field rising, the finger on the
@@ -133,7 +133,11 @@ const G = BASE + '/glossary/'; // the Glossary's own page (30 Oct 2026)
     await t.close();
     t = await open(chrome, G + '#lk-firm-asml', { width: 1440, wait: 1500 }); await ready(t); await sleep(300);
     check('#lk-firm-asml opens ASML', (await t.ev(hw)) === 'ASML' && (await t.ev(state)) === 'entry');
-    check("a firm keeps its facts, its Critical mark, its revenue's filing link and its China chart", /How hard to replace/.test(await t.ev("document.querySelector('.gl-facts').innerText")) && !!(await t.ev("document.querySelector('.gl-facts .gl-chk--critical')")) && !!(await t.ev("document.querySelector('.gl-facts a.rev-filed')")) && !!(await t.ev("document.querySelector('.gl-facts .sup-ex-mini svg')")));
+    // its market position in the Suppliers page's word, with what that position means, both read from the app (Suppliers.POSITION
+    // and POSITION_DEF) and the level from the data (23 Nov 2026: "Market position", Dominant to One of many)
+    const pos = await t.ev("(function(){var S=window.CP.Suppliers,r=((window.CP.DATA||window.CP_DATA).suppliers||[]).filter(function(x){return x.name==='ASML';})[0];var dd=[].filter.call(document.querySelectorAll('.gl-facts dt'),function(d){return d.textContent==='Market position';})[0];return {lv:r.chokepoint,word:S.POSITION[r.chokepoint],def:S.POSITION_DEF[r.chokepoint],dd:dd?dd.nextElementSibling.textContent:''};})()");
+    check('a firm card names its market position and says what it means', !!pos.word && !!pos.def && pos.dd === pos.word + pos.def, JSON.stringify(pos));
+    check("a firm keeps its facts, its dominant mark, its revenue's filing link and its China chart", !!(await t.ev("document.querySelector('.gl-facts .gl-chk--' + " + JSON.stringify(String(pos.lv).toLowerCase()) + ")")) && !!(await t.ev("document.querySelector('.gl-facts a.rev-filed')")) && !!(await t.ev("document.querySelector('.gl-facts .sup-ex-mini svg')")));
     check('a firm links to its row in the supplier list', !!(await t.ev("document.querySelector('#gl-pane a[data-sup=\"ASML\"]')")));
     check('the links between entries keep the words and stop at three a paragraph', (await t.ev("[...document.querySelectorAll('.gl-e p')].every(function(p){return p.querySelectorAll('a.gl-x').length<=3;})")) && (await t.ev("document.querySelectorAll('.gl-def a.gl-x').length")) >= 1);
     check('each entry is linked once', await t.ev("(function(){var s={},ok=true;document.querySelectorAll('.gl-e a.gl-x').forEach(function(a){var k=a.getAttribute('data-id');if(s[k])ok=false;s[k]=1;});return ok;})()"));
@@ -149,6 +153,9 @@ const G = BASE + '/glossary/'; // the Glossary's own page (30 Oct 2026)
     await t.close();
     t = await open(chrome, G + '#lk-country-nl', { width: 1440, wait: 1500 }); await ready(t); await sleep(300);
     check('#lk-country-nl opens the Netherlands with its shares', (await t.ev(hw)) === 'Netherlands' && /Share of each segment/.test(await t.ev("document.getElementById('gl-pane').innerText")));
+    // the country line counts its firms and its dominant ones from the data, in the Suppliers page's word
+    const ccLine = await t.ev("(function(){var rows=((window.CP.DATA||window.CP_DATA).suppliers||[]).filter(function(r){return r.country==='NL';}),d=rows.filter(function(r){return r.chokepoint==='Critical';}).length;return {want:rows.length+' firms in the supplier list'+(d?', '+d+' '+window.CP.Suppliers.POSITION.Critical.toLowerCase():''),got:document.querySelector('.gl-meta').textContent};})()");
+    check('the country line counts its firms and its dominant firms from the data', ccLine.got.indexOf(ccLine.want) >= 0 && !/Critical/.test(ccLine.got), JSON.stringify(ccLine));
     check('the shares follow the chart rule: the largest wine, the rest the tint', (await t.ev("getComputedStyle(document.querySelector('.gl-share.is-top .gl-share-bar')).backgroundImage")).includes('rgb(122, 31, 43)') && (await t.ev("getComputedStyle(document.querySelector('.gl-share:not(.is-top) .gl-share-bar')).backgroundImage")).includes('rgb(210, 209, 204)'));
     // the chokepoint mark (22 Nov 2026): a chokepoint on the country's cards carries it, any other stage carries none, and no
     // concentration band is named ("1" a chokepoint by its card's band, then "1" the mark shown)
@@ -157,7 +164,7 @@ const G = BASE + '/glossary/'; // the Glossary's own page (30 Oct 2026)
     check('the country card names no concentration band', !/\b(Extreme|High|Moderate|Low) concentration\b|of extreme concentration|of them extreme/i.test(await t.ev("document.getElementById('gl-pane').innerText")), await t.ev("(document.querySelector('.gl-meta')||{}).textContent"));
     check('the EU-27 line and its link', /Across the EU-27/.test(await t.ev("document.getElementById('gl-pane').innerText")) && !!(await t.ev("document.querySelector('#gl-pane a[href=\"#/suppliers?group=eu\"]')")));
     await t.ev("(document.querySelector('.gl-cat-f a[data-id]').click(),1)"); await sleep(400);
-    check("a Critical firm's name opens its entry", /^#lk-firm-/.test(await t.ev('location.hash')) && !!(await t.ev("document.querySelector('.gl-facts')")), await t.ev(hw));
+    check("a dominant firm's name opens its entry", /^#lk-firm-/.test(await t.ev('location.hash')) && !!(await t.ev("document.querySelector('.gl-facts')")), await t.ev(hw));
     await t.close();
     t = await open(chrome, G + '#lk-chip-nvidia-b200', { width: 1440, wait: 1500 }); await ready(t); await sleep(300);
     check('#lk-chip- opens the chip with its facts', (await t.ev(hw)) === 'Nvidia B200' && /Dense TFLOPS/i.test(await t.ev("document.getElementById('gl-pane').innerText")));

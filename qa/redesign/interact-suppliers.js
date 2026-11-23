@@ -7,6 +7,9 @@
    before), a segment's tip (it filtered the firm list before), and the EU-27 address, which filters the firm list to the
    members (it drew them as one ribbon column before; shares cannot be summed). On a phone the ribbons are one share strip
    per segment, so the phone's ribbon checks read the strips. qa/redesign/check-shares.js checks every printed share.
+   23 Nov 2026: each firm's market position (Dominant, Major, Challenger, One of many, from the data's Critical, Important,
+   Contested and Diversified): the top figure, the filter, the key, a segment's count and the table's cells, every word read
+   from the app (Suppliers.POSITION) and every count from the data.
    usage: node qa/redesign/interact-suppliers.js [base] (default http://127.0.0.1:8766) */
 'use strict';
 const { launch, open, sleep } = require('./cdp.js');
@@ -29,6 +32,16 @@ const WINE = 'rgb(122, 31, 43)', GRAY = 'rgb(210, 209, 204)', INK = 'rgb(23, 23,
       const t = await open(chrome, BASE + '/#/suppliers', { width, wait: 2500 });
       check(`${width}: the page reads route, ribbons, then the firms`, await t.ev("(function(){var a=document.getElementById('the-route'),b=document.getElementById('sup-pipe'),c=document.getElementById('sup-reg');return !!(a.compareDocumentPosition(b)&Node.DOCUMENT_POSITION_FOLLOWING)&&!!(b.compareDocumentPosition(c)&Node.DOCUMENT_POSITION_FOLLOWING);})()"));
       check(`${width}: the four counts`, /226/.test(await t.ev("document.querySelector('.sup-facts-row').textContent")), await t.ev("document.querySelector('.sup-facts-row').innerText.replace(/\\s+/g,' ')"));
+      // the market positions (23 Nov 2026): every word and count from the app (Suppliers.POSITION, LEVELS) and the data, none typed here
+      const POS = await t.ev(`(function(){var S=window.CP.Suppliers,D=window.CP.DATA||window.CP_DATA,n={};S.LEVELS.forEach(function(l){n[l]=0;});(D.suppliers||[]).forEach(function(r){n[r.chokepoint]=(n[r.chokepoint]||0)+1;});return {levels:S.LEVELS,word:S.POSITION,def:S.POSITION_DEF,n:n};})()`);
+      const words = POS.levels.map((l) => POS.word[l]);
+      const fig = await t.ev("[].map.call(document.querySelectorAll('.sup-facts-row div'),function(d){return [d.querySelector('dt').textContent,d.querySelector('dd').textContent];})");
+      check(`${width}: the top figure counts the dominant firms from the data`, fig[3][0] === POS.word.Critical && +fig[3][1] === POS.n.Critical, JSON.stringify(fig[3]));
+      const sel = await t.ev("[].map.call(document.querySelectorAll('#sup-chk option'),function(o){return [o.value,o.textContent];})");
+      check(`${width}: the filter reads All market positions, then each position, filtering on the data's values`, JSON.stringify(sel) === JSON.stringify([['', 'All market positions']].concat(POS.levels.map((l) => [l, POS.word[l]]))) && (await t.ev("document.getElementById('sup-chk').getAttribute('aria-label')")) === 'Filter by market position', JSON.stringify(sel));
+      check(`${width}: the key names the positions`, (await t.ev("document.getElementById('sup-key').textContent")) === POS.word.Critical + POS.word.Important + ' or ' + POS.word.Contested.toLowerCase() + POS.word.Diversified, await t.ev("document.getElementById('sup-key').textContent"));
+      const rung = await t.ev("(function(){var r=document.querySelector('#sup-ladder .sup-rung'),cat=r.querySelector('.sup-rung-name').textContent,D=window.CP.DATA||window.CP_DATA;return {cat:cat,n:(D.suppliers||[]).filter(function(x){return x.category===cat&&x.chokepoint==='Critical';}).length,txt:(r.querySelector('.sup-crit-n')||{}).textContent||''};})()");
+      check(`${width}: a segment counts its dominant firms`, rung.txt === (rung.n ? rung.n + ' ' + POS.word.Critical.toLowerCase() : ''), JSON.stringify(rung));
       const phone = width < 600, part = phone ? '.ss-sl' : '.sup-rib', paint = (sel) => phone ? `(function(){var e=document.querySelector(${JSON.stringify(sel)});return e?getComputedStyle(e).backgroundColor:'none';})()` : fill(sel);
       if (phone) check(`${width}: one share strip for each of the 17 segments with a split, under 20 names`, (await t.ev("document.querySelectorAll('#sup-pipe .ss-strip').length")) === 17 && (await t.ev("document.querySelectorAll('#sup-pipe .ss-row').length")) === 20);
       else check(`${width}: the ribbons are drawn open on the page, one for each of the 83 shares`, (await t.ev("document.querySelectorAll('#sup-pipe .sup-rib').length")) === 83, await t.ev("document.querySelectorAll('#sup-pipe .sup-rib').length"));
@@ -63,6 +76,13 @@ const WINE = 'rgb(122, 31, 43)', GRAY = 'rgb(210, 209, 204)', INK = 'rgb(23, 23,
       check(`${width}: ...a name opens its panel`, await t.ev("document.querySelector('#sup-ladder-cc .sup-panel[data-open=\"1\"] .sup-detail-h') !== null"));
       await t.ev("(document.querySelector('.sup-tabs a[data-tab=\"table\"]').click(), 1)"); await sleep(400);
       check(`${width}: Table shows every firm`, (await t.ev("document.querySelectorAll('#sup-table tbody tr').length")) === 226 && /Segment/.test(await t.ev("document.querySelector('#sup-table thead').textContent")) && /tab=table/.test(await t.ev('location.hash')));
+      check(`${width}: ...its column is Market position`, (await t.ev("[].map.call(document.querySelectorAll('#sup-table thead th'),function(h){return h.textContent;}).join('|')")).split('|').includes('Market position'));
+      const cells = await t.ev("(function(){var c={};document.querySelectorAll('#sup-table tbody .chk').forEach(function(e){c[e.textContent]=(c[e.textContent]||0)+1;});return c;})()");
+      check(`${width}: ...each cell shows its position, as many of each as the data holds`, POS.levels.every((l) => (cells[POS.word[l]] || 0) === POS.n[l]) && Object.keys(cells).every((k) => words.includes(k)), JSON.stringify(cells));
+      check(`${width}: ...and a cell's title says what its position means`, (await t.ev("document.querySelector('#sup-table tbody .chk.Critical').getAttribute('title')")) === POS.def.Critical);
+      await t.ev("(function(){var k=document.getElementById('sup-chk');k.value='Contested';k.dispatchEvent(new Event('change'));return 1;})()"); await sleep(400);
+      check(`${width}: ...the filter leaves one position and the count line names it`, (await t.ev("document.querySelectorAll('#sup-table tbody tr').length")) === POS.n.Contested && (await t.ev("document.getElementById('sup-count').textContent")).endsWith(' · ' + POS.word.Contested), await t.ev("document.getElementById('sup-count').textContent"));
+      await t.ev("(function(){var k=document.getElementById('sup-chk');k.value='';k.dispatchEvent(new Event('change'));return 1;})()"); await sleep(300);
       // the filters reach every tab
       await t.ev("(function(){var s=document.getElementById('sup-search');s.value='Gigaphoton';s.dispatchEvent(new Event('input'));return 1;})()"); await sleep(500);
       check(`${width}: a search narrows the table`, (await t.ev("document.querySelectorAll('#sup-table tbody tr').length")) === 1, await t.ev("document.getElementById('sup-count').textContent"));

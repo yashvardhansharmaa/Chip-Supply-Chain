@@ -60,6 +60,10 @@ module.exports = function (ctx) {
   const cname = (c) => COUNTRY[c] || c;
   const ORDER = literal('Suppliers.ORDER', /\bORDER: (\[[^\]]*\])/) || [];
   const RANK = literal('Suppliers.RANK', /\bRANK: (\{[^}]*\})/) || { Critical: 0, Important: 1, Contested: 2, Diversified: 3 };
+  // each firm's market position as readers see it, and what each means (the data keeps its four values)
+  const POSITION = literal('Suppliers.POSITION', /\bPOSITION: (\{[^}]*\})/) || { Critical: 'Critical', Important: 'Important', Contested: 'Contested', Diversified: 'Diversified' };
+  const POSITION_DEF = literal('Suppliers.POSITION_DEF', /\bPOSITION_DEF: (\{[^}]*\})/) || {};
+  const pos = (lv) => POSITION[lv] || lv || '';
   const SHORT = literal('Suppliers.SHORT', /\bSHORT: (\{[^}]*\})/) || {};
   const STATE = literal('Geo.STATE', /\bSTATE: (\{[^}]*\})/) || { open: 'No license', restricted: 'Restricted', case: 'Case by case', denial: 'Presumption of denial', prohibited: 'Prohibited', policy: 'Policy' };
   const OLD_STATE = literal('Geo.OLD_STATE', /\bOLD_STATE: (\{[^}]*\})/) || {};
@@ -166,7 +170,7 @@ ${body}
   function suppliersPage() {
     const uid = idsFor();
     // the stages as the ladder groups and ranks them (Suppliers.groupStages and ladderOrder in src/app.js): fewest firms first,
-    // then the stage with more Critical firms, then chain order
+    // then the stage with more dominant (Critical) firms, then chain order
     const by = {};
     suppliers.forEach((r) => { const s = by[r.category] || (by[r.category] = { name: r.category, rows: [], crit: 0 }); s.rows.push(r); if (r.chokepoint === 'Critical') s.crit++; });
     const order = ORDER.filter((c) => by[c]);
@@ -199,15 +203,17 @@ ${body}
       const where = [cname(r.country) + (r.city ? ', ' + r.city : ''), /^private$/i.test(r.ticker || '') ? '' : r.ticker].filter(Boolean).join(' · ');
       const note = r.revenueShown && r.revenueShown.note ? `<p class="row-fine"><b>About the revenue figure.</b> ${esc(r.revenueShown.note)}</p>` : '';
       return `<li class="row" id="${firmIds.get(r.name)}"><div><h3 class="row-h">${esc(r.name)}${r.nativeName ? `<span class="native" lang="${/[\u3040-\u30ff]/.test(r.nativeName) ? 'ja' : /[\uac00-\ud7af]/.test(r.nativeName) ? 'ko' : /[\u4e00-\u9fff]/.test(r.nativeName) ? 'zh' : 'en'}">${esc(r.nativeName)}</span>` : ''}</h3>`
-        + `<p class="row-meta">${esc(where)}</p>${r.chokepoint ? `<p class="row-meta"><span class="sr-only">How hard to replace: </span><span class="lv lv-${esc(r.chokepoint)}">${esc(r.chokepoint)}</span></p>` : ''}</div>`
+        + `<p class="row-meta">${esc(where)}</p>${r.chokepoint ? `<p class="row-meta"><span class="sr-only">Market position: </span><span class="lv lv-${esc(r.chokepoint)}"${POSITION_DEF[r.chokepoint] ? ` title="${esc(POSITION_DEF[r.chokepoint])}"` : ''}>${esc(pos(r.chokepoint))}</span></p>` : ''}</div>`
         + `<div class="row-body">${r.subcategory ? `<p class="row-lead">${esc(r.subcategory)}</p>` : ''}${r.role ? `<p>${esc(r.role)}</p>` : ''}`
         + (facts.length ? `<dl class="facts">${facts.map((f) => `<dt>${f[0]}</dt><dd>${f[1]}</dd>`).join('')}</dl>` : '') + note
         + (r.source ? `<p class="row-src">${ext(r.source, 'Source', ` aria-label="Source for ${esc(r.name)}"`)}</p>` : '') + '</div></li>';
     };
     const stageHTML = (s) => {
       const rows = s.rows.slice().sort((a, b) => (rank(a) - rank(b)) || String(a.name).localeCompare(String(b.name)));
-      return `<section class="ref-sec" aria-labelledby="${s.id}-h"><h2 class="ref-h2" id="${s.id}">${esc(s.name)} <small id="${s.id}-h-n">${s.rows.length} ${s.rows.length === 1 ? 'firm' : 'firms'}${s.crit ? ` · ${s.crit} critical` : ''}</small></h2><span hidden id="${s.id}-h">${esc(s.name)}</span><ol class="ledger">${rows.map(firm).join('')}</ol></section>`;
+      return `<section class="ref-sec" aria-labelledby="${s.id}-h"><h2 class="ref-h2" id="${s.id}">${esc(s.name)} <small id="${s.id}-h-n">${s.rows.length} ${s.rows.length === 1 ? 'firm' : 'firms'}${s.crit ? ` · ${s.crit} ${esc(pos('Critical').toLowerCase())}` : ''}</small></h2><span hidden id="${s.id}-h">${esc(s.name)}</span><ol class="ledger">${rows.map(firm).join('')}</ol></section>`;
     };
+    // the four market positions and what each means, under the jump list, as Export Controls' page explains its states
+    const posKey = `<section class="ref-poskey" aria-labelledby="pos-k"><h2 class="label" id="pos-k">Market position</h2><ul class="key">${['Critical', 'Important', 'Contested', 'Diversified'].map((lv) => `<li><span class="lv lv-${lv}">${esc(pos(lv))}</span><span>${esc(POSITION_DEF[lv] || '')}</span></li>`).join('')}</ul></section>`;
     const jump = `<nav class="jump" aria-labelledby="stages-k"><span class="label" id="stages-k">${esc(ladderLabel || 'Segments from chip design to power')}</span><ol>${ladder.map((s) => `<li><a href="#${s.id}">${esc(SHORT[s.name] || s.name)}</a><span class="n">${s.rows.length}</span></li>`).join('')}<li><a href="#countries">What each country makes</a></li></ol></nav>`;
 
     // what each country makes: the Suppliers atlas's own lines (build/modules/summary-a.js HOME_MAP), in its order, with the
@@ -228,13 +234,13 @@ ${body}
     const withRev = suppliers.filter((r) => r.revenueShown && r.revenueShown.filed).length;
     return page({
       slug: 'suppliers', route: '#/suppliers', h1: 'Suppliers',
-      ...titled('suppliers', [[/(\d+) firms/, suppliers.length, 'firms']], `What each of the ${suppliers.length} firms in the AI chip supply chain makes, where it is based and how hard it would be to replace.`),
+      ...titled('suppliers', [[/(\d+) firms/, suppliers.length, 'firms']], `What each of the ${suppliers.length} firms in the AI chip supply chain makes, where it is based and its position in its market.`),
       dekHTML: esc(ctx.suppliersIntro || ''),
       facts: [`${suppliers.length} firms`, `${stages.length} segments`],
       ctaNote: 'The interactive page adds a map of the route one chip takes, a drawing of which countries supply which segments, search and filters.',
-      body: jump + revNote + ladder.map(stageHTML).join('') + countries,
-      ld: dataset('Suppliers to the AI chip supply chain', `The ${suppliers.length} firms in the AI chip supply chain across ${stages.length} segments: what each makes, where it is based, how hard it would be to replace, and the latest annual revenue of ${withRev} of them as filed, each with its source.`,
-        ['suppliers.json', 'fx-rates.json'], ['Segment', 'Country', 'How hard to replace', 'Revenue as filed', 'Revenue in US dollars', 'China share of revenue']),
+      body: jump + posKey + revNote + ladder.map(stageHTML).join('') + countries,
+      ld: dataset('Suppliers to the AI chip supply chain', `The ${suppliers.length} firms in the AI chip supply chain across ${stages.length} segments: what each makes, where it is based, its position in its market, and the latest annual revenue of ${withRev} of them as filed, each with its source.`,
+        ['suppliers.json', 'fx-rates.json'], ['Segment', 'Country', 'Market position', 'Revenue as filed', 'Revenue in US dollars', 'China share of revenue']),
     });
   }
 

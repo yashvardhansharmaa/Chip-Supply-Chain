@@ -2,7 +2,7 @@
   "/": {
     "published": "2026-10-01",
     "modified": "2026-11-23",
-    "content": "69dbd07ebbab9dc1"
+    "content": "d4312d40dee6a3cf"
   },
   "/advanced-packaging/": {
     "published": "2026-09-09",
@@ -57,7 +57,7 @@
   "/glossary/": {
     "published": "2026-10-21",
     "modified": "2026-11-23",
-    "content": "23d87fd08e0ad9b3"
+    "content": "a0f3d81e8e72bb64"
   },
   "/lithography/": {
     "published": "2026-09-09",
@@ -187,7 +187,7 @@
   "/suppliers/": {
     "published": "2026-10-21",
     "modified": "2026-11-23",
-    "content": "31a9bf1d3dd4c497"
+    "content": "cc89f0a58c84801d"
   },
   "/supply-chain/": {
     "published": "2026-10-28",
@@ -202,6 +202,6 @@
   "/test-and-assembly/": {
     "published": "2026-09-09",
     "modified": "2026-11-23",
-    "content": "7093aba208889825"
+    "content": "f8030fa1465527ee"
   }
 }

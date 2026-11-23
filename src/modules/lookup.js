@@ -29,6 +29,8 @@
   var reduce = function () { return !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches); };
   var here = function () { return !!CP.Router && CP.Router.current === 'glossary'; };
   var KIND = { term: 'Term', firm: 'Firm', chip: 'AI chip', country: 'Country' };
+  // a firm's market position in the reader's word (src/app.js Suppliers.POSITION; the data keeps Critical, Important, ...)
+  var posWord = function (lv) { var P = (CP.Suppliers || {}).POSITION || {}; return P[lv] || lv || ''; };
   // each kind: its key, its button in the index, its plural and its singular for the count line
   var KINDS = [['all', 'All', 'entries', 'entry'], ['term', 'Terms', 'terms', 'term'], ['firm', 'Firms', 'firms', 'firm'], ['chip', 'AI chips', 'AI chips', 'AI chip'], ['country', 'Countries', 'countries', 'country']];
   var LETTERS = ['0-9'].concat('ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''));
@@ -162,7 +164,9 @@
   function firmHTML(it, used) {
     var r = it.data || {}, rows = [], S = CP.Suppliers || {};
     var where = [r.city, cname(r.country)].filter(Boolean).join(', ');
-    if (r.chokepoint) rows.push(['How hard to replace', '<span class="gl-chk gl-chk--' + esc(String(r.chokepoint).toLowerCase()) + '">' + esc(r.chokepoint) + '</span>', true]);
+    // its market position, in the Suppliers page's word, and what that position means (Suppliers.POSITION and POSITION_DEF)
+    if (r.chokepoint) rows.push(['Market position', '<span class="gl-chk gl-chk--' + esc(String(r.chokepoint).toLowerCase()) + '">' + esc(posWord(r.chokepoint)) + '</span>' +
+      ((S.POSITION_DEF || {})[r.chokepoint] ? '<span class="gl-chk-def">' + esc(S.POSITION_DEF[r.chokepoint]) + '</span>' : ''), true]);
     if (where) rows.push(['Based in', where]);
     if (r.founded) rows.push(['Founded', String(r.founded)]);
     if (r.ownership || r.ticker) rows.push(['Ownership', [r.ownership, r.ticker ? 'ticker ' + r.ticker : ''].filter(Boolean).join(', ')]);
@@ -218,11 +222,11 @@
     var led = stages.filter(function (ch) { var f = (ch.countries || [])[0]; return f && f.code === cc; });
     var cp = led.filter(function (ch) { return ch.chokepoint; }).length; // the stages it leads that are chokepoints (build/build.js isChoke)
     var firms = (DATA.suppliers || []).filter(function (r) { return r.country === cc; });
-    var critical = firms.filter(function (r) { return r.chokepoint === 'Critical'; }).length, meta = [];
+    var critical = firms.filter(function (r) { return r.chokepoint === 'Critical'; }).length, meta = []; // the dominant firms
     if (led.length === 1) meta.push('leads 1 stage' + (cp ? ', a chokepoint' : ''));
     else if (led.length) meta.push('leads ' + led.length + ' stages' + (!cp ? '' : cp === led.length ? ', all of them chokepoints' : cp === 1 ? ', 1 of them a chokepoint' : ', ' + cp + ' of them chokepoints'));
     meta.push('named on ' + named.length + ' of ' + cardCount + ' stage cards');
-    if (firms.length) meta.push(firms.length + (firms.length === 1 ? ' firm' : ' firms') + ' in the supplier list' + (critical ? ', ' + critical + ' Critical' : ''));
+    if (firms.length) meta.push(firms.length + (firms.length === 1 ? ' firm' : ' firms') + ' in the supplier list' + (critical ? ', ' + critical + ' ' + posWord('Critical').toLowerCase() : ''));
     return { named: named, firms: firms, meta: meta.join(' · ') };
   }
   function countryHTML(it, used) {
@@ -261,7 +265,7 @@
       var EU27 = (CP.Suppliers && CP.Suppliers.EU27) || [];
       if (EU27.indexOf(cc) >= 0) {
         var eu = (DATA.suppliers || []).filter(function (r) { return EU27.indexOf(r.country) >= 0; }), euCrit = eu.filter(function (r) { return r.chokepoint === 'Critical'; }).length;
-        h += '<p class="gl-small">Across the EU-27, the supplier list has ' + eu.length + ' firms' + (euCrit ? ', ' + euCrit + ' of them Critical' : '') + '. <a href="#/suppliers?group=eu">See them together on the Suppliers page →</a></p>';
+        h += '<p class="gl-small">Across the EU-27, the supplier list has ' + eu.length + ' firms' + (euCrit ? ', ' + euCrit + ' of them ' + posWord('Critical').toLowerCase() : '') + '. <a href="#/suppliers?group=eu">See them together on the Suppliers page →</a></p>';
       }
       h += '</section>';
     }

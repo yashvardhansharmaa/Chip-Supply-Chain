@@ -45,7 +45,7 @@
     "ticker": "CDNS",
     "ownership": "Public",
     "role": "The second-largest of the three main makers of chip design (EDA) software, strong in analog and custom design, simulation and hardware emulation. Designers verify large AI chips on its Palladium and Protium emulation systems, which run a design in hardware before it goes to the fab.",
-    "chokepoint": "Critical",
+    "chokepoint": "Important",
     "shareNote": "About $5.30 billion of calendar 2025 EDA revenue, second behind Synopsys",
     "customers": [
       "Nvidia",
@@ -716,7 +716,7 @@
     "ticker": "2454.TW",
     "ownership": "Public",
     "role": "Best known for its smartphone chips, MediaTek also designs custom AI chips (ASICs) and works on Google's TPU program. It has experience designing high-volume chips on advanced nodes.",
-    "chokepoint": "Important",
+    "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
       "Google",
@@ -1499,7 +1499,7 @@
     "ticker": "010060.KS",
     "ownership": "Public",
     "role": "A Korean chemical group that makes polysilicon and fab chemicals, including high-purity hydrogen peroxide and phosphoric acid. Most of its polysilicon goes to solar customers.",
-    "chokepoint": "Diversified",
+    "chokepoint": "Important",
     "shareNote": null,
     "customers": [
       "Samsung",
@@ -1709,7 +1709,7 @@
     "ticker": "Private",
     "ownership": "Subsidiary of JSR Corporation",
     "role": "Developed tin-oxide EUV resists that absorb EUV photons far more efficiently than organic chemically amplified resists. Higher absorption cuts the light dose needed and sharpens resolution on High-NA EUV tools.",
-    "chokepoint": "Important",
+    "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
       "Intel",
@@ -1852,7 +1852,7 @@
     "ticker": "5016.T",
     "ownership": "Public, listed in Tokyo in 2025 after being spun out of ENEOS",
     "role": "Supplies the ultra-high-purity copper, tantalum and titanium sputtering targets used to deposit the metal interconnect on a chip, along with high-purity treated rolled copper foil for substrates.",
-    "chokepoint": "Important",
+    "chokepoint": "Critical",
     "shareNote": null,
     "customers": [
       "TSMC",
@@ -2141,8 +2141,8 @@
     "founded": 1916,
     "ticker": "4109.T",
     "ownership": "Public",
-    "role": "Refines hydrofluoric acid to the purity needed to etch and clean silicon without leaving metal contamination. Japan's 2019 decision to require export licenses for high-purity HF sent to Korea showed how few qualified sources exist.",
-    "chokepoint": "Critical",
+    "role": "Refines hydrofluoric acid to the purity needed to etch and clean silicon without leaving metal contamination. In July 2019 Japan put its hydrogen fluoride exports to South Korea under individual licenses. South Korea then bought more from the United States and Taiwan, and production rose inside South Korea.",
+    "chokepoint": "Important",
     "shareNote": null,
     "customers": [
       "Samsung",
@@ -2175,7 +2175,7 @@
     "ticker": "Private",
     "ownership": "Private",
     "role": "A Japanese maker of hydrofluoric acid and fluorine compounds. Its electronics grades are used to etch silicon oxide film and to clean semiconductor material.",
-    "chokepoint": "Critical",
+    "chokepoint": "Important",
     "shareNote": null,
     "customers": [
       "Samsung",
@@ -2267,7 +2267,7 @@
     "ticker": "7731.T",
     "ownership": "Public",
     "role": "Makes ArF immersion, ArF, KrF and i-line lithography systems. It now has a small share of the leading-edge market. But its tools are still used to make chips on older (mature-node) processes, and Nikon services them. Its current lineup includes no EUV system.",
-    "chokepoint": "Important",
+    "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
       "Intel",
@@ -2848,7 +2848,7 @@
     "ticker": "5201.T",
     "ownership": "Public",
     "role": "The main supplier of EUV mask blanks besides Hoya, and a major maker of synthetic quartz substrates and photomask glass. AGC says it is the only blank maker that produces EUV blanks in-house from the glass material through the coating. Its glass expertise comes from a much larger architectural and automotive glass business.",
-    "chokepoint": "Critical",
+    "chokepoint": "Important",
     "shareNote": null,
     "customers": [
       "TSMC",
@@ -2980,7 +2980,7 @@
     "ticker": "Private",
     "ownership": "Majority owned by Intel, with Bain Capital and TSMC holding minority stakes",
     "role": "Builds the multi-beam electron mask writers that pattern EUV masks with hundreds of thousands of parallel beamlets. On CSET's count it led the market for all electron-beam mask writers in 2025. NuFlare is the only other maker of multi-beam writers.",
-    "chokepoint": "Critical",
+    "chokepoint": "Important",
     "shareNote": "46.6 percent of the $994 million market for all electron-beam mask writers in 2025, ahead of NuFlare (39.2 percent) and JEOL (14.2 percent), on CSET's analysis of TechInsights data",
     "customers": [
       "TSMC",
@@ -3170,7 +3170,7 @@
     "ticker": "Private",
     "ownership": "Wholly owned subsidiary of Hitachi",
     "role": "The largest supplier of critical dimension scanning electron microscopes (CD-SEMs), which measure feature widths after lithography and etch. It also makes plasma etch systems and electron beam review tools.",
-    "chokepoint": "Important",
+    "chokepoint": "Critical",
     "shareNote": null,
     "customers": [
       "TSMC",
@@ -3489,7 +3489,7 @@
     "ticker": "ASM.AS",
     "ownership": "Public",
     "role": "Makes atomic layer deposition (ALD) tools, which grow films one atomic layer at a time. Chipmakers use ALD to build gate-all-around transistors and high-k dielectrics. ASM also makes epitaxy and plasma-enhanced ALD tools.",
-    "chokepoint": "Important",
+    "chokepoint": "Critical",
     "shareNote": null,
     "customers": [
       "TSMC",
@@ -3689,7 +3689,7 @@
     "ticker": "Private",
     "ownership": "Majority owned by Samsung Electronics",
     "role": "Supplies wafer cleaning, coater/developer track, etch and packaging systems, mainly to Samsung. By its own description it is Korea's largest maker of chip and display equipment, with sales of about KRW 2.46 trillion in 2025. Through SEMES, Samsung keeps some tool technology in house.",
-    "chokepoint": "Important",
+    "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
       "Samsung",
@@ -3780,7 +3780,7 @@
     "ticker": "Private",
     "ownership": "Division of Samsung Electronics (005930.KS)",
     "role": "A foundry running its 2 nm class SF2 process in Korea and building a fab in Taylor, Texas. Its gate-all-around transistors, introduced at 3 nm, are in production. Large AI customers keep qualifying it as a second source.",
-    "chokepoint": "Important",
+    "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
       "Tesla",
@@ -3861,7 +3861,7 @@
     "ticker": "1347.HK",
     "ownership": "Public (Hong Kong and Shanghai), state-backed",
     "role": "A foundry focused on mature-node specialty processes, including power management, embedded memory and analog. It is mainland China's second largest pure-play foundry and the world's fifth largest by 2025 sales. It does not make leading-edge logic.",
-    "chokepoint": "Contested",
+    "chokepoint": "Diversified",
     "shareNote": null,
     "customers": [
       "Chinese fabless firms",
@@ -4049,7 +4049,7 @@
     "ticker": "Private",
     "ownership": "Division of Samsung Electronics (005930.KS)",
     "role": "Samsung Electronics' memory business, supplying DRAM, NAND and HBM. It began mass production of HBM4 in 2026 and says it was the first to ship commercial HBM4, at 11.7 Gbps per pin.",
-    "chokepoint": "Critical",
+    "chokepoint": "Important",
     "shareNote": null,
     "customers": [
       "Nvidia",
@@ -4074,7 +4074,7 @@
     "ticker": "MU",
     "ownership": "Public",
     "role": "The only American maker of leading-edge DRAM and the third HBM supplier, with fabs in the US, Japan, Taiwan and Singapore. It has CHIPS Act support for new capacity in Idaho and New York.",
-    "chokepoint": "Critical",
+    "chokepoint": "Important",
     "shareNote": null,
     "customers": [
       "Nvidia",
@@ -4228,7 +4228,7 @@
     "ticker": "2408.TW",
     "ownership": "Public, part of the Formosa Plastics Group",
     "role": "Taiwan's DRAM maker, producing commodity and specialty DRAM at mature nodes. It does not make HBM and is a generation or more behind the three leading DRAM makers.",
-    "chokepoint": "Diversified",
+    "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
       "Taiwanese module makers",
@@ -4359,7 +4359,7 @@
     "ticker": "600584.SS",
     "ownership": "Public (Shanghai), with state-linked shareholders",
     "role": "A leading Chinese assembly and test firm, offering wire bond, flip chip, fan-out and system-in-package assembly. Its revenue reached a record RMB 38.87 billion in 2025. It acquired STATS ChipPAC in 2015 to gain advanced packaging capability.",
-    "chokepoint": "Contested",
+    "chokepoint": "Important",
     "shareNote": null,
     "customers": [
       "Chinese fabless firms",
@@ -4424,7 +4424,7 @@
     "ticker": "002156.SZ",
     "ownership": "Public (Shenzhen), with AMD holding a stake in its Suzhou and Penang plants",
     "role": "A Chinese OSAT that packages a large share of AMD's CPUs and GPUs through joint venture plants acquired from AMD in 2016. It is developing 2.5D chiplet packaging.",
-    "chokepoint": "Contested",
+    "chokepoint": "Important",
     "shareNote": null,
     "customers": [
       "AMD",
@@ -4642,7 +4642,7 @@
     "ticker": "042700.KS",
     "ownership": "Public",
     "role": "Makes the thermocompression bonders used to stack HBM dies, including dual-head models, and supplies SK hynix and Micron.",
-    "chokepoint": "Critical",
+    "chokepoint": "Important",
     "shareNote": null,
     "customers": [
       "SK hynix",
@@ -4699,7 +4699,7 @@
     "ticker": "KLIC",
     "ownership": "Public",
     "role": "Makes wire bonders, the standard tool of low-cost packaging, and is developing thermocompression and fluxless bonding systems for advanced packages.",
-    "chokepoint": "Important",
+    "chokepoint": "Critical",
     "shareNote": null,
     "customers": [
       "ASE",
@@ -5058,7 +5058,7 @@
     "ticker": "011070.KS",
     "ownership": "Public, part of the LG group",
     "role": "Entered high-end flip-chip BGA substrates in 2022 with a plant in Gumi, adding a third Korean source alongside Samsung Electro-Mechanics. Its larger business is optical modules for smartphones.",
-    "chokepoint": "Important",
+    "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
       "Intel",
@@ -5169,7 +5169,7 @@
     "ticker": "300476.SZ",
     "ownership": "Public (Shenzhen ChiNext)",
     "role": "Makes high-layer-count printed circuit boards and supplies AI accelerator baseboards and switch boards to the server ODMs.",
-    "chokepoint": "Contested",
+    "chokepoint": "Important",
     "shareNote": null,
     "customers": [
       "Nvidia",
@@ -5202,7 +5202,7 @@
     "ticker": "002463.SZ",
     "ownership": "Public (Shenzhen)",
     "role": "Makes high-speed multilayer printed circuit boards for servers, switches and AI accelerators, and is a main supplier to networking equipment makers.",
-    "chokepoint": "Contested",
+    "chokepoint": "Important",
     "shareNote": null,
     "customers": [
       "Nvidia",
@@ -5557,7 +5557,7 @@
     "ticker": "AEHR",
     "ownership": "Public",
     "role": "Makes wafer-level burn-in systems, which stress an entire wafer at high temperature and voltage to find early-life failures. They are used for silicon carbide, photonics and AI processors.",
-    "chokepoint": "Important",
+    "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
       "Silicon carbide makers",
@@ -6117,7 +6117,7 @@
     "ticker": "AXTI",
     "ownership": "Public",
     "role": "Makes the indium phosphide wafers that lasers for optical links are grown on. It is listed in the US but does all its manufacturing in China. China has required export permits for indium phosphide substrates since February 2025. In its filing for the quarter to June 2026, AXT called the permits the most significant challenge it faces.",
-    "chokepoint": "Contested",
+    "chokepoint": "Important",
     "shareNote": null,
     "customers": [
       "Laser and optical component makers"

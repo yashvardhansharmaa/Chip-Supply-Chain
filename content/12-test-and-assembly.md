@@ -20,7 +20,7 @@
       {"name": "Disco", "country": "JP", "share": "87 percent of the $1.9 billion market for dicing saws and grinders in 2025, on CSET's analysis of TechInsights data", "source": "https://chipexplorer.eto.tech/?parentNode=N69&selectedNode=N71"}
     ],
     "countries": [
-      {"code": "JP", "note": "Advantest is the main provider of test tools, with 62.7 percent of the 2025 market, by CSET's analysis of TechInsights data"},
+      {"code": "JP", "note": "Advantest, the main provider of test tools, plus probers from Accretech and Tokyo Electron, and dicing and grinding tools from Disco and Accretech"},
       {"code": "TW", "note": "Taiwanese firms such as ASE and Powertech lead outsourced assembly and test"},
       {"code": "US", "note": "Test equipment from Teradyne, FormFactor, Cohu and Aehr, and Amkor's planned Arizona packaging plant"},
       {"code": "CN", "note": "Four of the top ten assembly and test firms by 2024 revenue, in a TrendForce ranking cited by CSET"},

@@ -11,7 +11,7 @@
      others. The bands stay the method, in card.concentration. Checked in the chapters (front matter and body), the Glossary,
      the flashcards and the section headings;
    - "chokepoint" in a name that covers every stage ("chokepoint card", "chokepoint level"), in the same files: since 23 Nov
-     2026 the word names only the chokepoint stages (the stage card, the suppliers' "How hard to replace"); and a stage's
+     2026 the word names only the chokepoint stages (the stage card, the suppliers' "Market position"); and a stage's
      section "The chokepoint" in a stage that is not a chokepoint, or "The narrowest step" in one that is;
    - a {{...}} marker in a chapter's body that is not a {{figure:<id>}} line naming one of the chapter's figures;
    - a figure with no data: a bars, stack or timeline figure with no rows, an animation with no rendered steps in media/,
@@ -38,7 +38,7 @@ const CHOKE_AS_NAME = /\bchokepoint\s+(?:cards?|levels?|towns?)\b/i;
 function chokeNames(text, at, problems) {
   String(text).split('\n').forEach((line, i) => {
     const m = CHOKE_AS_NAME.exec(line);
-    if (m) problems.push(`${at(i)}: "${m[0]}" names something every stage has; "chokepoint" names only the chokepoint stages (the stage card, "How hard to replace")`);
+    if (m) problems.push(`${at(i)}: "${m[0]}" names something every stage has; "chokepoint" names only the chokepoint stages (the stage card, "Market position")`);
   });
 }
 const FIGURE_TYPES = ['bars', 'stack', 'columns', 'change', 'timeline', 'animation', 'within', 'explore']; // columns and change: revision 5, 28 Oct 2026; within: 15.3, 29 Oct 2026; explore: 10.3 and 04.2, 21 Nov 2026
