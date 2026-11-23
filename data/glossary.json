@@ -66,7 +66,7 @@
     "term": "capex",
     "aka": "capital expenditure, capital spending",
     "plain": "Money a company spends on long-lived physical assets such as buildings, machines and servers, as distinct from salaries and other running costs.",
-    "why": "The largest cloud companies' capex pays for the chips, racks and buildings of the AI buildout. Alphabet, Amazon, Meta, Microsoft and Oracle spent $448.2 billion of capital in 2025, the sum of Epoch AI's quarterly figures. Epoch AI says they will spend $770 billion in 2026 if the trend continues.",
+    "why": "The hyperscalers' capex pays for the chips, racks and buildings of the AI buildout. Capital spending by Alphabet, Amazon, Meta, Microsoft and Oracle came to $140,648 million in the fourth quarter of 2025, by Epoch AI's count.",
     "chapter": "data-centers-and-power"
   },
   {
@@ -324,8 +324,8 @@
   {
     "term": "hyperscaler",
     "aka": "hyperscalers",
-    "plain": "One of the handful of companies that run data centers at global scale, such as Amazon, Microsoft, Google, Meta and Oracle.",
-    "why": "They pay for the AI buildout. Alphabet, Amazon, Meta, Microsoft and Oracle spent $448.2 billion of capital in 2025, the sum of Epoch AI's quarterly figures.",
+    "plain": "One of the companies that run data centers on the largest scale. Among US firms, Epoch AI counts Amazon, Google, Meta, Microsoft and Oracle.",
+    "why": "Together they owned 71 percent of the world's AI computing power at the end of 2025, by Epoch AI's estimate. All but Meta are cloud companies, which rent part of that computing power to other firms.",
     "chapter": "data-centers-and-power"
   },
   {
@@ -439,6 +439,13 @@
     "plain": "Building one chip layer in several patterning steps, because a single exposure cannot print lines that close together. It comes in two kinds. Litho-etch multipatterning splits the layer's pattern across two or three masks, then prints and etches each part separately. Self-aligned double or quadruple patterning prints one coarser pattern, then deposits and etches thin spacer films along its edges to halve or quarter the line spacing. Cut masks then remove the parts of lines the circuit does not need.",
     "why": "SMIC makes its 7 nm-class chips without extreme ultraviolet machines by multipatterning on deep ultraviolet tools. TSMC's first 7 nm process and Intel 7 were also made without extreme ultraviolet light. Every extra mask or spacer step adds cost and machine time, and each extra litho-etch exposure adds a chance that parts of the layer misalign.",
     "chapter": "lithography"
+  },
+  {
+    "term": "neocloud",
+    "aka": "neoclouds",
+    "plain": "A smaller, newer cloud company that generally focuses on AI. It fills data centers with AI chips and rents their computing time to other firms. CoreWeave and Nebius are examples.",
+    "why": "Epoch AI judges that neoclouds are probably the most important owners of AI chips after the hyperscalers. Their customers include AI labs such as OpenAI and hyperscalers such as Microsoft and Meta. Microsoft supplied about 67 percent of CoreWeave's revenue in 2025.",
+    "chapter": "data-centers-and-power"
   },
   {
     "term": "node",
@@ -1199,8 +1206,8 @@
   {
     "term": "lead time",
     "aka": "lead times, delivery time",
-    "plain": "Lead time is the wait between placing an order and receiving it. A wafer clears a leading-edge fab in months, while in 2024 a large power transformer commonly took three years.",
-    "why": "Chip supply and power equipment are both constrained. Micron said in its report for the quarter to May 2026 that AI-driven memory and storage growth was outpacing industry supply. Waits for large power equipment run to years.",
+    "plain": "Lead time is the wait between placing an order and receiving it. In 2024 a large power transformer commonly took three years to arrive in the United States.",
+    "why": "Data center projects wait on power equipment. In the United States in 2024 the longest lead times for a large power transformer reached 60 months. Before the pandemic one could be ordered with a lead time of under a year.",
     "chapter": "data-centers-and-power"
   },
   {

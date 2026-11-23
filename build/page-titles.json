@@ -77,8 +77,8 @@
   },
   {
     "path": "/data-centers-and-power/",
-    "title": "How AI data centers get their power",
-    "description": "Why AI data centers take years to connect to the grid. One rack can draw 142 kilowatts, and large transformers commonly took three years to arrive in 2024."
+    "title": "Hyperscalers, neoclouds and power for AI compute",
+    "description": "Who owns the chips AI labs rent, and why new sites wait years for power. Epoch AI estimates five firms held 71 percent of AI computing power at the end of 2025."
   },
   {
     "path": "/component-costs/",
@@ -113,6 +113,6 @@
   {
     "path": "/glossary/",
     "title": "Semiconductor and AI chip glossary",
-    "description": "Plain definitions of 207 terms from the AI chip supply chain, such as CoWoS, EUV and HBM, each linked to the chapters that use it."
+    "description": "Plain definitions of 208 terms from the AI chip supply chain, such as CoWoS, EUV and HBM, each linked to the chapters that use it."
   }
 ]

@@ -91,8 +91,8 @@
   },
   "data-centers-and-power": {
     "How it works": "How AI data centers are powered and cooled",
+    "Who owns the compute": "Who owns the chips and who rents them",
     "Variants and trade-offs": "Cooling and power options",
-    "Who makes it": "Data center spending and power equipment makers",
     "Capacity and demand": "Data center electricity demand forecasts",
     "The narrowest step": "Long waits for grid power and equipment"
   },

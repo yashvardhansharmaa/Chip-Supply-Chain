@@ -1,0 +1,28 @@
+{
+ "duration": 20.8,
+ "fade": 0.8,
+ "width": 760,
+ "height": 420,
+ "steps": [
+  {
+   "k": "The building",
+   "t0": 0.4,
+   "cap": "A developer builds the data center and owns the building."
+  },
+  {
+   "k": "The chips",
+   "t0": 5,
+   "cap": "A cloud company leases the building and fills it with racks of AI chips that it owns."
+  },
+  {
+   "k": "The renter",
+   "t0": 9.8,
+   "cap": "An AI lab rents the computing time of those chips, on a contract that usually runs one to six years."
+  },
+  {
+   "k": "The money",
+   "t0": 14.6,
+   "cap": "The lab pays for all the time it booked, used or not. The cloud company pays the developer rent."
+  }
+ ]
+}

@@ -402,9 +402,19 @@
  "data-centers-and-power": {
   "cards": [
    {
-    "q": "What does a data center do for AI chips?",
-    "a": "It feeds them electricity and carries away the heat they give off.",
-    "section": "How it works"
+    "q": "Which five companies own most of the world's AI computing power?",
+    "a": "Amazon, Google, Meta, Microsoft and Oracle. Epoch AI estimates that they held 71 percent of it at the end of 2025.",
+    "section": "Who owns the compute"
+   },
+   {
+    "q": "Where do AI labs such as OpenAI and Anthropic get their computing power?",
+    "a": "Epoch AI found in April 2026 that they rented almost all of it from cloud companies. OpenAI rented mainly from Microsoft, Oracle and CoreWeave, and Anthropic mainly from Amazon and Google.",
+    "section": "Who owns the compute"
+   },
+   {
+    "q": "What is a neocloud?",
+    "a": "A smaller, newer cloud company that generally focuses on AI, such as CoreWeave or Nebius. It rents out the computing time of its AI chips.",
+    "section": "Who owns the compute"
    },
    {
     "q": "Why are AI racks cooled with liquid?",
@@ -412,18 +422,14 @@
     "section": "How it works"
    },
    {
-    "q": "How big are the newest AI data centers?",
-    "a": "They are planned in gigawatts, and each gigawatt is the output of a large power station.",
-    "section": "How it works"
-   },
-   {
     "q": "What slows down building an AI data center?",
-    "a": "The power equipment. Transformers and turbines come from a few suppliers and take years to arrive."
+    "a": "Power. In advanced economies a new transmission line can take four to eight years to build, and in 2024 a large power transformer commonly took three years to arrive in the United States.",
+    "section": "The narrowest step"
    }
   ],
   "takeaways": [
-   "One Nvidia GB300 NVL72 rack can draw up to 142 kilowatts, too much heat for air, so racks are cooled with liquid.",
-   "The newest AI sites are planned in gigawatts, and each gigawatt is the output of a large power station.",
+   "Amazon, Google, Meta, Microsoft and Oracle owned an estimated 71 percent of the world's AI computing power at the end of 2025.",
+   "OpenAI and Anthropic rented almost all of the computing power they used from cloud companies, Epoch AI found in April 2026.",
    "Power equipment is one of the slow parts of building a data center. In 2024 lead times of 36 months were commonly quoted for a large transformer.",
    "The United States used 45 percent of the world's data center electricity in 2024 and China 25 percent, by the International Energy Agency's estimate."
   ]
