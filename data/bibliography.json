@@ -7153,5 +7153,12 @@
     "date": "2026-09-23",
     "type": "article",
     "accessed": "2026-11-23"
+  },
+  "https://openai.com/index/building-the-compute-infrastructure-for-the-intelligence-age/": {
+    "title": "Building the compute infrastructure for the Intelligence Age",
+    "publisher": "OpenAI",
+    "date": "2026-04-29",
+    "type": "article",
+    "accessed": "2026-11-23"
   }
 }
