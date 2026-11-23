@@ -1229,8 +1229,9 @@
   "https://epoch.ai/data/ai-data-centers/directory/colossus-1": {
     "title": "Colossus 1, AI data centers directory",
     "publisher": "Epoch AI",
+    "date": "2026-06-16",
     "type": "page",
-    "accessed": "2026-09-09"
+    "accessed": "2026-11-23"
   },
   "https://epoch.ai/data/machine-learning-hardware": {
     "title": "Data on Machine Learning Hardware",
@@ -5837,13 +5838,6 @@
     "type": "filing",
     "accessed": "2026-09-09"
   },
-  "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm": {
-    "title": "GE Vernova, current report on Form 8-K dated 22 July 2026",
-    "publisher": "U.S. Securities and Exchange Commission (filing by GE Vernova)",
-    "date": "2026-07-22",
-    "type": "filing",
-    "accessed": "2026-09-09"
-  },
   "https://www.sec.gov/Archives/edgar/data/2058873/000205887326000010/q-20251231.htm": {
     "title": "Qnity Electronics, annual report on Form 10-K for the fiscal year ended 31 December 2025",
     "publisher": "U.S. Securities and Exchange Commission (filing by Qnity Electronics)",
@@ -6002,13 +5996,6 @@
     "title": "MICRON TECHNOLOGY INC, Form ARS for the period ended 2025-08-28 (ARS)",
     "publisher": "U.S. Securities and Exchange Commission (filing by Micron Technology)",
     "date": "2025-11-25",
-    "type": "filing",
-    "accessed": "2026-09-09"
-  },
-  "https://www.sec.gov/Archives/edgar/data/723125/000072312526000015/mu-20260528.htm": {
-    "title": "Micron Technology, quarterly report on Form 10-Q for the quarter ended 28 May 2026",
-    "publisher": "U.S. Securities and Exchange Commission (filing by Micron Technology)",
-    "date": "2026-06-25",
     "type": "filing",
     "accessed": "2026-09-09"
   },
@@ -7070,6 +7057,153 @@
     "publisher": "Micron Technology",
     "date": "2023-10",
     "type": "pdf",
+    "accessed": "2026-11-23"
+  },
+  "https://www.gevernova.com/sites/default/files/gevernova_2025_form10-k.pdf": {
+    "title": "GE Vernova, annual report on Form 10-K for the fiscal year ended 31 December 2025",
+    "publisher": "GE Vernova",
+    "date": "2026-01-29",
+    "type": "filing",
+    "accessed": "2026-11-23"
+  },
+  "https://www.gevernova.com/news/press-releases/ge-vernova-reports-second-quarter-2026-financial-results-raises-2026-financial": {
+    "title": "GE Vernova reports second quarter 2026 financial results and raises 2026 financial guidance",
+    "publisher": "GE Vernova",
+    "date": "2026-07-22",
+    "type": "press release",
+    "accessed": "2026-11-23"
+  },
+  "https://s25.q4cdn.com/621799436/files/doc_financials/2026/q3/0000723125-26-000015.pdf": {
+    "title": "Micron Technology, quarterly report on Form 10-Q for the quarter ended 28 May 2026",
+    "publisher": "Micron Technology",
+    "date": "2026-06-25",
+    "type": "filing",
+    "accessed": "2026-11-23"
+  },
+  "https://epoch.ai/data-insights/hyperscalers-control-most-compute": {
+    "title": "Five hyperscalers now own over two-thirds of global AI compute",
+    "publisher": "Epoch AI",
+    "date": "2026-04-14",
+    "type": "article",
+    "accessed": "2026-11-23"
+  },
+  "https://epoch.ai/latest/introducing-the-ai-chip-owners-explorer": {
+    "title": "Introducing the AI Chip Owners Explorer",
+    "publisher": "Epoch AI",
+    "date": "2026-04-06",
+    "type": "article",
+    "accessed": "2026-11-23"
+  },
+  "https://epoch.ai/data/ai-chip-owners": {
+    "title": "Data on AI chip owners",
+    "publisher": "Epoch AI",
+    "date": "2026-05-12",
+    "type": "dataset",
+    "accessed": "2026-11-23"
+  },
+  "https://epoch.ai/data/ai-data-centers/directory/openai-stargate-abilene": {
+    "title": "OpenAI Stargate Abilene, AI data centers directory",
+    "publisher": "Epoch AI",
+    "date": "2026-11-01",
+    "type": "page",
+    "accessed": "2026-11-23"
+  },
+  "https://www.oracle.com/news/announcement/q1fy27-earnings-release-2026-09-10/": {
+    "title": "Oracle Announces Q1 Results Driven by Triple Digit Growth in Cloud Infrastructure Revenues",
+    "publisher": "Oracle",
+    "date": "2026-09-10",
+    "type": "press release",
+    "accessed": "2026-11-23"
+  },
+  "https://www.oracle.com/news/announcement/q4fy26-earnings-release-2026-06-10/": {
+    "title": "Oracle Announces Record Q4 and FY 2026 Results Driven by Cloud Infrastructure & Cloud Applications",
+    "publisher": "Oracle",
+    "date": "2026-06-10",
+    "type": "press release",
+    "accessed": "2026-11-23"
+  },
+  "https://openai.com/index/five-new-stargate-sites/": {
+    "title": "OpenAI, Oracle, and SoftBank expand Stargate with five new AI data center sites",
+    "publisher": "OpenAI",
+    "date": "2025-09-23",
+    "type": "press release",
+    "accessed": "2026-11-23"
+  },
+  "https://openai.com/index/next-chapter-of-microsoft-openai-partnership/": {
+    "title": "The Next Chapter of the Microsoft–OpenAI Partnership",
+    "publisher": "OpenAI",
+    "date": "2025-10-28",
+    "type": "press release",
+    "accessed": "2026-11-23"
+  },
+  "https://s205.q4cdn.com/133937190/files/content_files/CoreWeave-3Q-2026-Infographic.pdf": {
+    "title": "3Q26 Results infographic",
+    "publisher": "CoreWeave",
+    "date": "2026-11-10",
+    "type": "pdf",
+    "accessed": "2026-11-23"
+  },
+  "https://s205.q4cdn.com/133937190/files/doc_financials/2025/ar/2025-Annual-Report.pdf": {
+    "title": "2025 Annual Report, with the annual report on Form 10-K",
+    "publisher": "CoreWeave",
+    "date": "2026-04-21",
+    "type": "filing",
+    "accessed": "2026-11-23"
+  },
+  "https://nebius.com/newsroom/nebius-signs-new-ai-infrastructure-agreement-with-meta": {
+    "title": "Nebius signs new AI infrastructure agreement with Meta",
+    "publisher": "Nebius",
+    "date": "2026-03-16",
+    "type": "press release",
+    "accessed": "2026-11-23"
+  },
+  "https://www.alibabagroup.com/en-US/document-1830678592242057216": {
+    "title": "Alibaba to Invest RMB380 billion in AI and Cloud Infrastructure Over Next Three Years",
+    "publisher": "Alibaba Group",
+    "date": "2025-02-24",
+    "type": "press release",
+    "accessed": "2026-11-23"
+  },
+  "https://www.mediaoffice.abudhabi/en/technology/global-tech-alliance-launches-stargate-uae/": {
+    "title": "Global Tech Alliance Launches Stargate UAE",
+    "publisher": "Abu Dhabi Media Office",
+    "date": "2025-05-22",
+    "type": "press release",
+    "accessed": "2026-11-23"
+  },
+  "https://newsletter.semianalysis.com/p/clustermax-20-the-industry-standard": {
+    "title": "ClusterMAX 2.0: The Industry Standard GPU Cloud Rating System",
+    "publisher": "SemiAnalysis",
+    "date": "2025-11-06",
+    "type": "article",
+    "accessed": "2026-11-23"
+  },
+  "https://x.ai/news/xai-joins-spacex": {
+    "title": "xAI joins SpaceX",
+    "publisher": "xAI",
+    "date": "2026-02-02",
+    "type": "press release",
+    "accessed": "2026-11-23"
+  },
+  "https://www.anthropic.com/news/higher-limits-spacex": {
+    "title": "Higher usage limits for Claude and a compute deal with SpaceX",
+    "publisher": "Anthropic",
+    "date": "2026-05-06",
+    "type": "press release",
+    "accessed": "2026-11-23"
+  },
+  "https://www.crusoe.ai/resources/newsroom/crusoe-expands-ai-data-center-campus-in-abilene-to-1-2-gigawatts": {
+    "title": "Crusoe expands AI data center campus in Abilene to 1.2 gigawatts",
+    "publisher": "Crusoe",
+    "date": "2025-03-18",
+    "type": "press release",
+    "accessed": "2026-11-23"
+  },
+  "https://openai.com/index/expanding-stargate-to-michigan/": {
+    "title": "Expanding Stargate to Michigan",
+    "publisher": "OpenAI",
+    "date": "2025-10-30",
+    "type": "press release",
     "accessed": "2026-11-23"
   }
 }
