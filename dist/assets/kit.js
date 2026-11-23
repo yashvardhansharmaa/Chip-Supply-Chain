@@ -2352,9 +2352,11 @@ try{(function(PLATE){'use strict';var R = PLATE.register, D = PLATE.D, H = PLATE
    - the last mirror sits straight over the wafer, so the wafer stage drops along its beam.
    Colours (the set's legend): the light in the beam hue, the wafer in silicon slate (acc2), as on every plate.
    22 Nov 2026 plates refine: the illuminator and the projection optics stand apart again, so they read as two modules (they
-   stood wall to wall). Round two: the boxes' inner walls stand 0.24 m apart, the two mirrors either side of the mask (0.08 m)
-   lower in their boxes so the light still meets the mask and leaves it at 6 degrees; NODE gives the rest positions. The light
-   takes the deeper beam hue plate 07 takes. */
+   stood wall to wall). Round two: the two mirrors either side of the mask (0.08 m) stand lower in their boxes, so the light
+   still meets the mask and leaves it at 6 degrees; NODE gives the rest positions. Round two fix (expert review): EUV light
+   crosses no solid (chapter 4, air and glass absorb it), so the boxes' inner walls stand 0.12 m apart between their outer
+   faces, each inner face clear of the 6 degree leg, which leaves its box through the roof at x = 0.19 -/+ 0.124 m, as before
+   (at 0.24 m apart both legs ran 0.43 m inside the walls). The light takes the deeper beam hue plate 07 takes. */
 R('euv-scanner', function (m) {
   function unit(v) { var L = Math.hypot(v[0], v[1]) || 1; return [v[0] / L, v[1] / L]; }
   var X2 = 2, MASK = 0.1524 * X2, MASKT = 0.00635 * X2, WR = 0.15 * X2, WT = 0.000775 * X2;
@@ -2364,9 +2366,9 @@ R('euv-scanner', function (m) {
   // the mask stands over the seam between the illuminator and the projection optics; the illuminator's last mirror and the
   // optics' first stand level with each other, either side of it, so the light comes in and goes out at the same angle
   // (round two: the two mirrors either side of the mask stand lower, at YS -0.49, so at 6 degrees they sit 0.26 m either side of
-  // the seam, clear of the boxes' inner walls, which stand 0.24 m apart; the optics' second mirror moves up to (0.70, -0.10) so
-  // the first leg passes it)
-  var XM = 0.19, YM = 1.68, YS = -0.49, CRA = 6 * Math.PI / 180, DX = (YM + EXS.ret[1] - YS) * Math.tan(CRA), GAP = 0.24;
+  // the seam, inside their boxes; the boxes' inner walls stand GAP apart, their inner faces 0.014 m clear of the legs where the
+  // legs leave through the roofs; the optics' second mirror moves up to (0.70, -0.10) so the first leg passes it)
+  var XM = 0.19, YM = 1.68, YS = -0.49, CRA = 6 * Math.PI / 180, DX = (YM + EXS.ret[1] - YS) * Math.tan(CRA), GAP = 0.12;
   var NODE = [
     { p: [-0.56, -1.34], k: 'ap', o: 'ill' }, { p: [-0.24, -0.82], k: 'm', r: 0.20, o: 'ill' }, { p: [-0.98, -0.10], k: 'm', r: 0.30, o: 'ill' }, { p: [XM - DX, YS], k: 'm', r: 0.08, o: 'ill' },
     { p: [XM, YM], k: 'ret', o: 'ret' },

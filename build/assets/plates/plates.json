@@ -61,14 +61,14 @@
  },
  "lithography": {
   "specimen": "euv-scanner",
-  "src": "eadc0cbfeca883cb",
+  "src": "af46522f356d8e77",
   "thumb": [
    104,
    104
   ],
   "ink": {
-   "thumb": 0.196,
-   "line": 0.173
+   "thumb": 0.2,
+   "line": 0.175
   },
   "line": [
    110,
