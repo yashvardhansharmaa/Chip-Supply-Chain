@@ -7034,5 +7034,19 @@
     "date": "2025-05-22",
     "type": "press release",
     "accessed": "2026-11-23"
+  },
+  "https://newsletter.semianalysis.com/p/clustermax-20-the-industry-standard": {
+    "title": "ClusterMAX 2.0: The Industry Standard GPU Cloud Rating System",
+    "publisher": "SemiAnalysis",
+    "date": "2025-11-06",
+    "type": "article",
+    "accessed": "2026-11-23"
+  },
+  "https://x.ai/news/xai-joins-spacex": {
+    "title": "xAI joins SpaceX",
+    "publisher": "xAI",
+    "date": "2026-02-02",
+    "type": "press release",
+    "accessed": "2026-11-23"
   }
 }

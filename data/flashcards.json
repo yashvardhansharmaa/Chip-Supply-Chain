@@ -408,7 +408,7 @@
    },
    {
     "q": "Where do AI labs such as OpenAI and Anthropic get their computing power?",
-    "a": "They rent almost all of it from cloud companies. OpenAI rents mainly from Microsoft, Oracle and CoreWeave, and Anthropic mainly from Amazon and Google.",
+    "a": "Epoch AI found in April 2026 that they rented almost all of it from cloud companies. OpenAI rented mainly from Microsoft, Oracle and CoreWeave, and Anthropic mainly from Amazon and Google.",
     "section": "Who owns the compute"
    },
    {
@@ -423,7 +423,7 @@
    },
    {
     "q": "What slows down building an AI data center?",
-    "a": "The power equipment. Transformers and turbines come from a few suppliers and take years to arrive.",
+    "a": "Power. Grid connections can take years, and in 2024 a large power transformer commonly took three years to arrive in the United States.",
     "section": "The narrowest step"
    }
   ],

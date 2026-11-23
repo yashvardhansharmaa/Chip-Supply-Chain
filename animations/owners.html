@@ -8,12 +8,13 @@ const { PAL, clamp, ease, mix, label, text } = A, dark = A.theme === 'dark';
 // Facts, from chapter 14: an AI data center has three layers, and a different firm can own each. At Stargate's Abilene site
 // Crusoe built the campus, Oracle owns the chips and OpenAI uses them (Epoch AI). CoreWeave leases all of its data centers and
 // rents out its chips on take-or-pay contracts of one to six years, which customers pay whether or not they use all the
-// capacity, and it borrows against those contracts (its 2025 annual report). A diagram of one common arrangement, not to scale.
+// capacity (its 2025 annual report). A diagram of the arrangement CoreWeave describes, not to scale. The expert review of
+// 23 Nov 2026 dropped the borrowing from step 4 and named the building (DATA CENTER) and the lab's part (RENTS COMPUTING TIME).
 const STEPS = [
   { k: 'The building', t0: 0.4, t1: 5.0, cap: 'A developer builds the data center and owns the building.' },
   { k: 'The chips', t0: 5.0, t1: 9.8, cap: 'A cloud company leases the building and fills it with racks of AI chips that it owns.' },
   { k: 'The renter', t0: 9.8, t1: 14.6, cap: 'An AI lab rents the computing time of those chips, on a contract that runs for years.' },
-  { k: 'The money', t0: 14.6, t1: 20.0, cap: 'The lab pays for all of that time, even the part it leaves unused. The cloud company pays the developer rent, and borrows against the lab\'s contract to pay for the chips.' },
+  { k: 'The money', t0: 14.6, t1: 20.0, cap: 'The lab pays for all the time it booked, used or not. The cloud company pays the developer rent.' },
 ];
 // one headline at a time; each fades out before the next fades in
 const HEADS = [
@@ -69,6 +70,7 @@ function render(ctx, t) {
     for (let k = 0; k < 5; k++) { const x = 248 + k * 48; ctx.fillStyle = C.box; ctx.fillRect(x, 150, 34, 18); ctx.strokeRect(x, 150, 34, 18); ctx.beginPath(); ctx.arc(x + 17, 159, 5.5, 0, 7); ctx.stroke(); }
     ctx.restore();
     box(ctx, HALL, aHall);
+    label('Data center', HALL[0] + HALL[2] / 2, HALL[1] + HALL[3] + 20, PAL.ink2, { align: 'center', alpha: aHall });
   }
   const tie = ease((q[0] - 0.35) / 0.35);
   if (tie > 0) line(ctx, grow(TIE[0], TIE[1], tie), C.line, 1.4, 1);
@@ -79,7 +81,7 @@ function render(ctx, t) {
     if (u <= 0) continue;
     const x = 244 + k * 24 + (row ? 6 : 0), y = (row ? 236 : 250) - (1 - u) * 14, h = row ? 24 : 66;
     ctx.save(); ctx.globalAlpha = u; ctx.fillStyle = row ? C.back : C.tray; ctx.fillRect(x, y, 16, h);
-    if (!row) { const w = 0.5 + 0.5 * Math.sin(t * 2 + k); ctx.fillStyle = `rgba(${C.amp},${0.35 + 0.35 * w})`; for (let j = 0; j < 6; j++) ctx.fillRect(x + 3, y + 6 + j * 10, 10, 2); }
+    if (!row) { ctx.fillStyle = `rgba(${C.amp},0.55)`; for (let j = 0; j < 6; j++) ctx.fillRect(x + 3, y + 6 + j * 10, 10, 2); }
     ctx.restore();
   }
   const aCloud = ease((q[1] - 0.15) / 0.25);
@@ -90,7 +92,9 @@ function render(ctx, t) {
   const aLab = ease(q[2] / 0.25);
   box(ctx, LAB, aLab);
   text('AI lab', LAB[0] + LAB[2] / 2, 282, '400 17px "Source Serif 4"', PAL.ink, { align: 'center', alpha: aLab });
-  label('Rents the chips', LAB[0] + LAB[2] / 2, 336, PAL.ink2, { align: 'center', alpha: aLab });
+  // on two lines: in one, the label would run to within 6 px of the frame's right edge
+  label('Rents', LAB[0] + LAB[2] / 2, 336, PAL.ink2, { align: 'center', alpha: aLab });
+  label('Computing time', LAB[0] + LAB[2] / 2, 350, PAL.ink2, { align: 'center', alpha: aLab });
   const run = ease((q[2] - 0.2) / 0.3), flow = ease((q[2] - 0.45) / 0.2);
   if (run > 0) line(ctx, grow(COMPUTE[0], COMPUTE[1], run), C.line, 1.4, 1);
   glowDots(ctx, COMPUTE, t, C.amp, 4, 0.45, flow, 5);
