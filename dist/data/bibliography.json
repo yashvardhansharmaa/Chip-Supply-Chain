@@ -6969,5 +6969,45 @@
     "date": "2026-02-04",
     "type": "filing",
     "accessed": "2026-11-23"
+  },
+  "https://www.iea.org/reports/rare-earth-elements/executive-summary": {
+    "title": "Rare Earth Elements: Executive summary",
+    "publisher": "International Energy Agency",
+    "date": "2026-04-08",
+    "type": "report",
+    "accessed": "2026-11-23"
+  },
+  "https://www.resonac.com/products/semi-frontend-process/75/022.html": {
+    "title": "Oxide-Selective Ceria Slurry, HS-8 Series",
+    "publisher": "Resonac",
+    "type": "page",
+    "accessed": "2026-11-23"
+  },
+  "https://www.agc.com/en/products/new_markets/detail/yttria-coating.html": {
+    "title": "Yttrium Coating (Y2O3/Y5O4F7)",
+    "publisher": "AGC",
+    "type": "page",
+    "accessed": "2026-11-23"
+  },
+  "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-yttrium.pdf": {
+    "title": "Mineral Commodity Summaries 2026: Yttrium",
+    "publisher": "U.S. Geological Survey",
+    "date": "2026-02-05",
+    "type": "pdf",
+    "accessed": "2026-11-23"
+  },
+  "https://asia.nikkei.com/business/materials/japan-struggles-to-secure-rare-earths-for-evs-chip-tools-under-china-pressure": {
+    "title": "Japan struggles to secure rare earths for EVs, chip tools under China pressure",
+    "publisher": "Nikkei Asia",
+    "date": "2026-08-15",
+    "type": "article",
+    "accessed": "2026-11-23"
+  },
+  "https://asia.nikkei.com/business/materials/rare-earth-yttrium-soars-9-fold-in-a-year-amid-china-curbs": {
+    "title": "Rare earth yttrium soars 9-fold in a year amid China curbs",
+    "publisher": "Nikkei Asia",
+    "date": "2026-11-12",
+    "type": "article",
+    "accessed": "2026-11-23"
   }
 }
