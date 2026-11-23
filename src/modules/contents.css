@@ -9,14 +9,13 @@
    short column of small links on the right (the owner's option 2 of 28 Oct 2026). Space under it, no rule.
    ---------- The rows: one per chapter, with no route. The drawing in a fixed box on the page's ground (no tint: the owner
    rejects gray blocks under drawings), centered, every drawing at the same area of it (build/line-stills.py); the number
-   with its band's single mark (a solid wine bar for Extreme, a hollow ink mark for High); the title, which links to the
+   with a chokepoint's dot (the site's one rating mark, src/styles.css .cpk; any other stage has none); the title, which links to the
    chapter and covers the row; and the chapter's one line in the quieter ink. The stages in two columns from 1300 px, the
    first half on the left; from 1000 to 1299 px one column, each title with its one line beside it; from 760 to 999 px one
    column as at 1440; under 760 px the drawing, number and title on one line with the one line under them, and the sentence
    at the foot under a hairline. The two chapters across the chain follow as the same rows, with no mark, under a small label.
    Screen only: on paper the head and the rows are the book's title and contents (src/modules/print.css), with no drawing. */
-.ct-bmk { display: inline-block; flex: none; width: 6px; height: 13px; background: var(--accent-fill); } /* Extreme, a wine bar (on dark #a8414b, 3.1:1 on the ground) */
-.ct-bmk.h { height: 7px; background: transparent; box-shadow: inset 0 0 0 1.25px var(--ink); } /* High, an ink outline */
+.ct-cpk { color: var(--ink); } /* a chokepoint's dot beside its number, in ink while the number turns wine under the pointer */
 .contents ol.contents-grid { list-style: none; margin: 0; padding: 0; } /* the rows are lists on screen and on paper */
 @media screen {
   /* the head */
@@ -35,10 +34,9 @@
   .howto .howto-dl a:hover { color: var(--accent-ink); text-decoration-color: var(--accent); }
   .howto .howto-r { grid-column: 9 / 13; align-self: start; min-width: 0; padding-top: 18px; }
   .howto .howto-std { max-width: 30em; margin: 22px 0 0; font-family: var(--font-body); font-size: var(--t-lead); line-height: 1.45; color: var(--ink-2); } /* a standfirst's step */
-  /* the key to the rows' marks, each mark before its band's word */
+  /* the key to the rows' one mark: the dot before its word */
   .howto .howto-key { display: flex; flex-wrap: wrap; gap: 4px 26px; margin: 14px 0 0; font-family: var(--font-ui); font-size: 13px; line-height: 20px; color: var(--muted); }
-  .howto-key .ct-bmk { margin: 0 7px 0 0; vertical-align: -1px; }
-  .howto-key .ct-bmk.h { vertical-align: 0; }
+  .howto-key .cpk { font-size: 13px; }
   .view[data-view="stack"] > .contents { margin: 0; padding: 0 0 24px; border: 0; }
   .contents > .contents-h { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; } /* for screen readers; the book prints it */
 

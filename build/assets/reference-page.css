@@ -73,6 +73,13 @@
 .key { list-style: none; margin: 14px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(19em, 100%), 1fr)); gap: 8px 32px; font-size: var(--fs-note); line-height: 1.45; color: var(--ink-2); }
 .key li { display: grid; grid-template-columns: 11.5em minmax(0, 1fr); gap: 10px; align-items: baseline; }
 .key .pill, .key .susp { justify-self: start; margin: 0; }
+/* /suppliers/: the four market positions in a band under the jump list, two to a row (one on a phone) */
+.ref-poskey { margin: 0 0 8px; padding: 12px 0 14px; border-bottom: 1px solid var(--line-2); }
+.ref-poskey .label { display: block; margin: 0 0 8px; }
+.ref-poskey .key { margin: 0; grid-template-columns: repeat(2, minmax(0, 30em)); gap: 6px 40px; }
+.ref-poskey .key li { grid-template-columns: 6em minmax(0, 1fr); }
+.key .lv { justify-self: start; }
+@media (max-width: 760px) { .ref-poskey .key { grid-template-columns: minmax(0, 1fr); } }
 
 /* the timeline */
 .ev .row-meta b { display: block; font-size: var(--fs-ui); font-weight: 600; color: var(--ink); }

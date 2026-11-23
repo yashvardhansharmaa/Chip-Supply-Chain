@@ -11,25 +11,14 @@
      row 2  the specimen, the chapter's first plate: the drawing on the open ground, its caption and its parts side by side
             under it, the caption standing on the drawing's foot
      row 3  In plain terms; row 4  In short
-     row 5  the prose: the lead, then the chokepoint card on the paper tint (the chapter's first table), then the sections
+     row 5  the prose: the lead, then the stage card on the paper tint (the chapter's first table), then the sections
    Under 1200 px the rail becomes a line of links over the specimen; under 900 px (the app's phone, where the specimen is the
    strip at the foot of the screen) everything is one column.
    ========================================================================== */
 
-/* ---------- the band's meter (28 Oct 2026, MAIN/qa/design9/BUILD-SYSTEM.md), one component for the chapter sidebar, the card
-   and the line above the title: the home page's four rising bars (src/modules/walk.css), at 36, 57, 79 and 100 percent of its
-   height. Extreme lights all four in wine, High three in the mid gray, Moderate and Low theirs in the light tint; unlit bars
-   take the hairline. Each place sets the height (--mh), the bar's width (--mw) and the gap (--mg). The meter is aria-hidden:
-   the link's label and the visible word carry the band. Bars are <b>, since some rules style i inside these parents ---------- */
-.meter { display: inline-flex; flex: none; align-items: flex-end; gap: var(--mg, 2px); height: var(--mh, 14px); margin: 0; padding: 0; vertical-align: baseline; }
-.meter > b { display: block; flex: none; width: var(--mw, 5px); margin: 0; padding: 0; border: 0; background: var(--line); }
-.meter > b:nth-child(1) { height: 36%; }
-.meter > b:nth-child(2) { height: 57%; }
-.meter > b:nth-child(3) { height: 79%; }
-.meter > b:nth-child(4) { height: 100%; }
-.meter > b.on { background: var(--bar-3); }
-.meter[data-level="4"] > b.on { background: var(--bar-5); }
-.meter[data-level="3"] > b.on { background: var(--bar-4); }
+/* ---------- the chokepoint mark (22 Nov 2026), in the chapter sidebar, the card and the line above the title: the site's one
+   rating mark, a solid dot and the word (src/styles.css .cpk). It replaced the four-bar meter of 28 Oct 2026, which showed the
+   concentration band; readers now see the Extreme band as "chokepoint" and the others not at all ---------- */
 
 /* ---------- the page ---------- */
 .view[data-view="stack"] { width: 100%; padding: 0 var(--margin); }
@@ -53,9 +42,10 @@ article.chapter > .chapter-head > * { min-width: 0; }
   font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); line-height: 16px; color: var(--muted);
 }
 .chapter .ch-band { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-ui); font-size: var(--ui-s); font-weight: 500; letter-spacing: 0; text-transform: none; color: var(--ink); } /* the verdict is the card's words, so it keeps their case beside the kicker's capitals */
-.chapter .ch-band .meter { --mh: 11px; --mw: 4px; --mg: 1.5px; margin: 0 -1px 0 0; } /* the band's meter, beside its word */
-/* the card's verdict, its two ratings in the card's own words, so both stand on the first screen while the card itself waits
-   before section 01. The two never part mid-phrase; on the narrowest phones the second takes a line of its own, without the dot */
+.chapter .ch-band .cpk { font-size: inherit; font-weight: 600; } /* the chokepoint mark, at the verdict's size */
+/* the card's verdict in the card's own words, so it stands on the first screen while the card itself waits before section 01:
+   a chokepoint's mark and the substitutability, or the substitutability alone. The two never part mid-phrase; on the narrowest
+   phones the second takes a line of its own, without the dot */
 .chapter .ch-verdict { flex-wrap: wrap; row-gap: 2px; }
 .chapter .ch-verdict > span { white-space: nowrap; }
 .chapter .ch-verdict .sep { margin: 0 2px; color: var(--muted); font-weight: 400; }
@@ -166,16 +156,20 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 }
 .chapter .ch-spec[data-night] .ch-spec-cap { margin-top: 14px; } /* the night ground ends the drawing: no slack to rise into */
 
-/* ---------- 3. the chokepoint card, the chapter's first table: in the text after the lead, before section 01 (build/build.js
-   withCard), at the measure on the paper tint; its three ratings in a row, then each field as a row, the label in a column of
-   its own (wide enough for "Why substitution is slow" on one line) and the answer beside it ---------- */
+/* ---------- 3. the stage card, the chapter's first table: in the text after the lead, before section 01 (build/build.js
+   withCard), at the measure on the paper tint; a chokepoint's line under the head (the mark and what the word means), its two
+   ratings in a row, then each field as a row, the label in a column of its own (wide enough for "Why substitution is slow" on
+   one line) and the answer beside it ---------- */
 .chapter .plate { max-width: 40em; margin: 44px 0 0; padding: 20px 26px 22px; background: var(--bg-2); border: 0; overflow: visible; }
 /* On this page lands the card clear of the masthead (and of the phone's slim bar) */
 .chapter .plate[id] { scroll-margin-top: calc(var(--masthead) + var(--band, 0px) + 16px); }
 .chapter .plate-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 20px; padding: 0 0 16px; border-bottom: 1px solid var(--ink); }
 .chapter .plate-head .label { font-family: var(--font-ui); font-size: var(--ui); font-weight: 500; line-height: 20px; color: var(--ink); letter-spacing: 0; text-transform: none; }
 .chapter .plate-where { font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); line-height: 16px; color: var(--muted); }
-.chapter .plate-kpis { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 44px; padding: 26px 0 30px; border-bottom: 1px solid var(--rule-ink); }
+.chapter .plate-cpk { display: block; margin: 0; padding: 16px 0 16px; border-bottom: 1px solid var(--line-2); }
+.chapter .plate-cpk .cpk { display: flex; width: fit-content; margin: 0 0 6px; font-size: 14px; font-weight: 600; line-height: 20px; }
+.chapter .plate-cpk .sub { display: block; margin: 0; font-family: var(--font-body); font-size: var(--t-small); line-height: 1.5; color: var(--ink-2); }
+.chapter .plate-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 44px; padding: 26px 0 30px; border-bottom: 1px solid var(--rule-ink); }
 .chapter .plate-kpis > div, .chapter .plate-kpis > div + div { padding: 0; border: 0; min-width: 0; }
 .chapter .plate-kpis .k { font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); line-height: 16px; color: var(--muted); margin: 0; }
 .chapter .plate-kpis .v {
@@ -183,7 +177,6 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
   font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title);
   font-size: var(--t-block); line-height: 1.15; letter-spacing: -0.01em; white-space: nowrap; overflow-wrap: normal; color: var(--ink); /* the ratings at the size of the price beside them (owner, 27 Oct) */
 }
-.chapter .plate-kpis .v .meter { --mh: 20px; --mw: 6px; --mg: 2px; margin: 0 1px 0.22em 0; } /* the band's meter, standing on the word's baseline */
 .chapter .plate-kpis .v .v-btn { text-underline-offset: 0.12em; text-decoration-thickness: 1.5px; }
 .chapter .plate-kpis .v.cost { display: block; margin: 12px 0 8px; font-weight: 400; font-size: var(--t-block); line-height: 1.15; letter-spacing: -0.01em; white-space: normal; }
 .chapter .plate-kpis .v.cost.long { font-family: var(--font-body); font-weight: 500; font-size: var(--t-small); line-height: 1.4; letter-spacing: 0; font-variation-settings: normal; }
@@ -211,7 +204,8 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 @media screen {
   .chapter > .prose > .plate { max-width: 40em; } /* as wide as the flashcards and sources (owner, 27 Oct): about 8 percent wider than the 666 px text, kept on 30 Oct after design10 P2.2 narrowed them without asking */
   .chapter .plate-head { padding: 0 0 12px; }
-  .chapter .plate-kpis { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 22px; padding: 16px 0 18px; }
+  .chapter .plate-cpk { padding: 12px 0 12px; }
+  .chapter .plate-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 22px; padding: 16px 0 18px; }
   .chapter .plate-kpis > div:last-child { grid-column: auto; padding-left: 0; border-top: 0; } /* the price stays in the row at every width */
   .chapter .plate-kpis .v { margin: 10px 0 6px; gap: 8px; font-size: var(--t-block); }
   .chapter .plate-kpis .v.cost { margin: 10px 0 6px; font-size: var(--t-block); }
@@ -249,16 +243,17 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 .chapter .rail-figs a { display: grid; grid-template-columns: 44px minmax(0, 1fr); padding: 2px 0; font-size: var(--ui-s); line-height: 16px; color: var(--ink-2); text-decoration: none; }
 .chapter .rail-figs a:hover { color: var(--ink); }
 .chapter .rail-figs .n { font-family: var(--font-code); font-size: 11.5px; color: var(--muted); }
-/* the rail's Extreme and High key was removed at the owner's request (28 Oct 2026): each stage's mark and its link's label carry the band */
-/* the chain: number, name, the band's meter at the line's end, right-aligned; the current stage's number in wine and its
-   name bold, its meter keeping its band's look */
+/* the rail's key was removed at the owner's request (28 Oct 2026): a chokepoint's dot carries a title, and its link's label says it */
+/* the chain: number, name, and a chokepoint's dot at the line's end, right-aligned (the mark's symbol, src/styles.css .cpk); the
+   current stage's number in wine and its name bold, its dot in ink */
 .chapter .ch-rail .chain-track { display: block; gap: 0; }
 .chapter .ch-rail .stage-cell { position: static; }
 .chapter .ch-rail .stage-cell::after { content: none; }
 .chapter .ch-rail .stage-cell a { display: grid; grid-template-columns: 24px minmax(0, 1fr) 17px; column-gap: 6px; align-items: center; height: auto; padding: 1.5px 0; border: 0; font-size: 13px; line-height: 16px; color: var(--ink-2); text-decoration: none; }
 .chapter .ch-rail .stage-cell .n { width: auto; font-family: var(--font-ui); font-size: 11.5px; line-height: 16px; color: var(--muted); font-variant-numeric: tabular-nums; }
 .chapter .ch-rail .stage-cell .t { display: block; visibility: visible; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: var(--font-ui); font-size: 13px; font-weight: 400; color: inherit; }
-.chapter .ch-rail .stage-cell .meter { --mh: 10px; --mw: 3px; --mg: 1.5px; justify-self: end; }
+.chapter .ch-rail .stage-cell .cpk { justify-self: end; margin-right: 2px; }
+.chapter .ch-rail .stage-cell .cpk > i { width: 6px; height: 6px; }
 .chapter .ch-rail .stage-cell a:hover { color: var(--ink); }
 .chapter .ch-rail .stage-cell[aria-current="true"] a { color: var(--ink); font-weight: 600; }
 .chapter .ch-rail .stage-cell[aria-current="true"] .t { font-weight: 600; }
@@ -596,7 +591,7 @@ article.chapter[data-open] .ch-rail { grid-row: 1 / span 6; }
   article.chapter[data-open] > .prose { grid-row: 7; }
   article.chapter[data-open] .ch-rail { grid-row: 2; }
   /* a readable page has no other way to the other stages (The Chain in the app has its contents and its sheet), so under 1200 px
-     its rail keeps The chain, compact: one numbered cell a chapter with its band's mark, the chapter's name in the link's label */
+     its rail keeps The chain, compact: one numbered cell a chapter with a chokepoint's dot, the chapter's name in the link's label */
   .page--chapter .chapter .ch-rail .rail-chain-w { display: block; margin-top: 18px; }
   .page--chapter .chapter .ch-rail .rail-chain, .page--chapter .chapter .ch-rail .rail-across { display: flex; flex-wrap: wrap; gap: 4px; }
   .page--chapter .chapter .ch-rail .rail-across { margin: 4px 0 0; padding: 0; border: 0; }
@@ -604,7 +599,7 @@ article.chapter[data-open] .ch-rail { grid-row: 1 / span 6; }
   .page--chapter .chapter .ch-rail .rail-across .stage-cell a { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-width: 44px; height: 36px; padding: 0 8px; border: 1px solid var(--line-2); border-radius: 3px; }
   .page--chapter .chapter .ch-rail .stage-cell .t { display: none; }
   .page--chapter .chapter .ch-rail .stage-cell .n { font-size: 12px; color: var(--ink-2); }
-  .page--chapter .chapter .ch-rail .stage-cell .meter { justify-self: auto; }
+  .page--chapter .chapter .ch-rail .stage-cell .cpk { justify-self: auto; margin: 0; }
   .page--chapter .chapter .ch-rail .stage-cell a:hover { border-color: var(--ink); }
   .page--chapter .chapter .ch-rail .stage-cell[aria-current="true"] a { border-color: var(--accent); }
   .page--chapter .chapter .ch-rail .rail-across::before { content: ""; display: block; flex: 0 0 100%; height: 0; }
@@ -663,6 +658,7 @@ article.chapter[data-open] .ch-rail { grid-row: 1 / span 6; }
    page is narrower than 900 px too, and paper sets the card its own way (src/modules/print.css) */
 @media screen and (max-width: 900px) {
   .chapter .plate { margin: 36px 0 0; padding: 18px 16px 10px; }
+  .chapter .plate-cpk { padding: 14px 0 14px; }
   .chapter .plate-kpis { grid-template-columns: 1fr; row-gap: 0; padding: 0; }
   .chapter .plate .plate-kpis > div { padding: 14px 0; border-top: 1px solid var(--line-2); }
   .chapter .plate .plate-kpis > div:first-child { border-top: 0; }

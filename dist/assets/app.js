@@ -1016,7 +1016,7 @@
      it was announced, against the figure its one select names, the largest in wine, and one line naming the chips with no
      figure. Under it one ruled shelf per maker (countries as they first appear, China last), each maker's packages drawn from
      above at one scale, oldest first. The WSE-3 Turbo is a whole wafer, so it is drawn at a smaller scale with its own scale
-     bar, inside its own row. A chip opens in place, under its maker's shelf, as a chip card set like the chokepoint card: the
+     bar, inside its own row. A chip opens in place, under its maker's shelf, as a chip card set like the stage card: the
      name and the plan with its numbered parts, the six figures in large type, then ruled rows (who makes it, where it stands
      on the chart, the attributes in words, how the speed is counted, the notes and the sources). "Compare with another chip"
      opens the picker (a bottom sheet on a phone) and widens the card into two to four columns, each headed by its package at
@@ -1284,7 +1284,7 @@
       }).join('');
       return { list: '<ol class="parts">' + li + '</ol>', said: npSentence(P.np) };
     };
-    // the rows a card ends on, as the chokepoint card sets its rows
+    // the rows a card ends on, as the stage card sets its rows
     var ABOUT = [
       { key: 'status', label: 'Availability', text: function (c) { return c.status ? esc(c.status) + (c.shipping ? '. First shipped ' + esc(when(c.shipping)) : '') + (c.shippingNote ? '. ' + esc(c.shippingNote) : '') : null; } },
       { key: 'target', label: 'Built for', text: function (c) { return c.target ? esc(c.target) : null; } },
@@ -1309,7 +1309,7 @@
     var speedNote = function (c) { var n = (c.compute || {}).precisionNote; return n ? esc(n) : ''; };
 
     /* ---- the comparison: one column per chip, each headed by its name and its package at one shared scale. o.side puts each
-       row's label in a column at the left, as the chokepoint card sets its rows ---- */
+       row's label in a column at the left, as the stage card sets its rows ---- */
     var cmpHTML = function (sel, o) {
       o = o || {}; var n = sel.length, width = o.width || 900, gap = o.gap == null ? 32 : o.gap, stack = !!o.stack, side = !!o.side && !stack, lw = side ? (o.labelW || 170) + gap : 0;
       var colW = stack ? Math.min(width, 520) : (width - lw - gap * (n - 1)) / n;
@@ -1811,7 +1811,7 @@
   /* ---------------- suppliers ----------------
      One list of firms, listed three ways: by segment (the ladder, from design to power), by country, or in a table, every
      name opening its own panel. Over it, the ribbons by share (src/modules/supshares.js, since 29 Oct 2026): which countries
-     hold each of the chokepoint matrix's twenty segments. Until then the ribbons counted the firms on this list. "Stages" are the
+     hold each of the country-share matrix's twenty segments. Until then the ribbons counted the firms on this list. "Stages" are the
      stage chapters of the chain (build/stages.js); the list's own categories are "segments". */
   var Suppliers = {
     rows: DATA.suppliers || [], built: false, stage: '', country: '', chk: '', q: '', sortKey: 'name', sortDir: 1,
@@ -1822,6 +1822,15 @@
     colOf: function (cc) { return this.CO.indexOf(cc) >= 0 ? cc : 'Other'; }, // the firm filter's "Other countries" are those outside CO
     LEVELS: ['Critical', 'Important', 'Contested', 'Diversified'],
     RANK: { Critical: 0, Important: 1, Contested: 2, Diversified: 3 },
+    /* each firm's market position as readers see it, and what each means (owner, 23 Nov 2026: the column "Market position";
+       "more than half for dominant"). The data keeps its four values (data/suppliers.json "chokepoint"), which the classes,
+       the filter's values and the sort use. build/build.js, build/modules/reference-pages.js and src/modules/lookup.js read
+       these two, so every page uses the same words */
+    POSITION: { Critical: 'Dominant', Important: 'Major', Contested: 'Challenger', Diversified: 'One of many' },
+    POSITION_DEF: { Critical: 'Holds more than half of the market for its main product.', Important: 'A leading supplier of its main product, with rivals.', Contested: 'A smaller supplier competing with the leaders.', Diversified: 'One of many firms that make its main product.' },
+    pos: function (lv) { return this.POSITION[lv] || lv || ''; },
+    // a level's pill: the word readers see, and its meaning as the pill's title
+    pill: function (lv) { return lv ? '<span class="chk ' + esc(lv) + '" title="' + esc(this.POSITION_DEF[lv] || '') + '">' + esc(this.pos(lv)) + '</span>' : ''; },
     ORDER: ['Design and EDA', 'IP and architecture', 'Silicon and wafers', 'Photomasks', 'Lithography', 'Deposition and etch', 'Photoresist and materials', 'Chemicals and gases', 'Optics and photonics', 'Equipment subsystems and components', 'Metrology and inspection', 'Foundry', 'Memory', 'Advanced packaging and OSAT', 'Test', 'Substrates and PCBs', 'Interconnect and networking', 'Power and cooling', 'Systems and servers', 'AI accelerator vendors'], // chain order, design first
     /* the shorter names the ladder's jump list and /suppliers/ use for the long categories (build/modules/reference-pages.js reads them) */
     SHORT: {
@@ -1900,7 +1909,7 @@
       this.render();
     },
 
-    /* every stage carries its firms, its count by country and its Critical names; the drawing reads only this */
+    /* every stage carries its firms, its count by country and its dominant (Critical) names; the drawing reads only this */
     groupStages: function () {
       var self = this, by = {};
       this.rows.forEach(function (r, i) {
@@ -2004,7 +2013,7 @@
     render: function () {
       var rows = this.filtered();
       $('#sup-count').textContent = (rows.length === this.rows.length ? rows.length + ' suppliers' : rows.length + ' of ' + this.rows.length + ' suppliers') +
-        (this.stage ? ' · ' + this.stage : '') + (this.country ? ' · ' + this.countryLabel() : '') + (this.chk ? ' · ' + this.chk : '') +
+        (this.stage ? ' · ' + this.stage : '') + (this.country ? ' · ' + this.countryLabel() : '') + (this.chk ? ' · ' + this.pos(this.chk) : '') +
         (this.q ? ' · matching “' + this.q + '”' : ''); // the search narrows the list too, so the line names it
       // a polite status, so the new count is read out; set after the first count, so arriving on the page says nothing (accessibility #5)
       var cnt = $('#sup-count'); if (cnt && !cnt.hasAttribute('role')) setTimeout(function () { cnt.setAttribute('role', 'status'); }, 0);
@@ -2024,7 +2033,7 @@
         }).map(function (f) {
           return '<span class="sup-nw" data-r="' + f._ix + '"><button type="button" class="sup-name lv-' + esc(f.chokepoint || 'Important') +
             '" aria-expanded="false" aria-controls="' + s.id + '-p">' + esc(f.name) + '<i class="sup-cc">' + esc(f.country) + '</i>' +
-            (f.chokepoint === 'Critical' || f.chokepoint === 'Diversified' ? '<span class="sr-only">, ' + esc(f.chokepoint) + '</span>' : '') + // the name's color, said aloud
+            (f.chokepoint === 'Critical' || f.chokepoint === 'Diversified' ? '<span class="sr-only">, ' + esc(self.pos(f.chokepoint)) + '</span>' : '') + // the name's color, said aloud
             '</button></span>'; // the list stays names only: a firm's revenue and its China share open with the firm (detail, below)
         }).join(' '); // the lines break at these spaces, so a name never leaves its comma at the start of the next line
         // the numeral is the segment's number of firms
@@ -2051,7 +2060,7 @@
           }).map(function (f) {
             return '<span class="sup-nw" data-r="' + f._ix + '"><button type="button" class="sup-name lv-' + esc(f.chokepoint || 'Important') +
               '" aria-expanded="false" aria-controls="' + id + '-p">' + esc(f.name) + '<i class="sup-cc">' + esc(self.SHORT[f.category] || f.category) + '</i>' +
-              (f.chokepoint === 'Critical' || f.chokepoint === 'Diversified' ? '<span class="sr-only">, ' + esc(f.chokepoint) + '</span>' : '') + '</button></span>';
+              (f.chokepoint === 'Critical' || f.chokepoint === 'Diversified' ? '<span class="sr-only">, ' + esc(self.pos(f.chokepoint)) + '</span>' : '') + '</button></span>';
           }).join(' ');
           html += '<section class="sup-rung" id="' + id + '" data-crit="' + c.crit + '" aria-labelledby="' + id + '-h">' +
             '<span class="sup-rank" aria-hidden="true" data-unit="' + (c.rows.length === 1 ? 'firm' : 'firms') + '">' + c.rows.length + '</span>' +
@@ -2062,9 +2071,9 @@
         });
       $('#sup-ladder-cc').innerHTML = html;
     },
-    // beside a segment's or a country's name: its Critical firms, one red wine mark each (the numeral already shows the number of firms; a screen reader hears it here)
+    // beside a segment's or a country's name: its dominant firms, one red wine mark each (the numeral already shows the number of firms; a screen reader hears it here)
     rungCount: function (n, crit) {
-      return '<span class="sr-only">' + n + ' firms. </span>' + (crit ? '<span class="sup-crit-n"><span class="sup-crit-sq" aria-hidden="true">' + new Array(crit + 1).join('<i></i>') + '</span>' + crit + ' critical</span>' : '');
+      return '<span class="sr-only">' + n + ' firms. </span>' + (crit ? '<span class="sup-crit-n"><span class="sup-crit-sq" aria-hidden="true">' + new Array(crit + 1).join('<i></i>') + '</span>' + crit + ' ' + esc(this.pos('Critical').toLowerCase()) + '</span>' : '');
     },
     applyFilter: function () { // the rungs never move; the filters only hide names and change the count
       var self = this, on = this.filtering();
@@ -2114,7 +2123,7 @@
         '<span class="sr-only">. Opens the chart of every year</span> <span aria-hidden="true">→</span></a>' + this.exMini(r.china.href)]);
       var tag = [r.subcategory, cname(r.country) + (r.city ? ', ' + r.city : ''), /^private$/i.test(r.ticker || '') ? '' : r.ticker].filter(Boolean).join(' · ');
       return '<div class="sup-detail-body">' +
-        '<p class="sup-detail-h">' + esc(r.name) + (r.chokepoint ? ' <span class="chk ' + esc(r.chokepoint) + '">' + esc(r.chokepoint) + '</span>' : '') +
+        '<p class="sup-detail-h">' + esc(r.name) + (r.chokepoint ? ' ' + this.pill(r.chokepoint) : '') +
         (tag ? '<em>' + esc(tag) + '</em>' : '') + '</p>' +
         (r.role ? '<p class="sup-role">' + esc(r.role) + '</p>' : '') +
         (facts.length ? '<dl class="sup-facts">' + facts.map(function (f) { return '<dt>' + f[0] + '</dt><dd>' + f[1] + '</dd>'; }).join('') + '</dl>' : '') +
@@ -2145,26 +2154,27 @@
       var self = this;
       // aria-sort belongs on the column header, not on the button inside it (accessibility #12)
       var th = function (k, label) { return '<th' + (self.sortKey === k ? ' aria-sort="' + (self.sortDir > 0 ? 'ascending' : 'descending') + '"' : '') + '><button type="button" data-sort="' + k + '">' + label + '</button></th>'; };
-      var html = '<thead><tr>' + th('name', 'Supplier') + th('category', 'Segment') + th('country', 'Country') + th('founded', 'Founded') + th('chokepoint', 'Chokepoint level') + '<th>What they make</th><th>Customers</th></tr></thead><tbody>';
+      var html = '<thead><tr>' + th('name', 'Supplier') + th('category', 'Segment') + th('country', 'Country') + th('founded', 'Founded') + th('chokepoint', 'Market position') + '<th>What they make</th><th>Customers</th></tr></thead><tbody>';
       rows.forEach(function (r) {
         html += '<tr><td class="name"><b>' + esc(r.name) + '</b><span>' + esc([r.nativeName, r.ticker].filter(Boolean).join(' · ')) + '</span>' +
           (r.china ? '<a class="sup-ex-a" href="' + safeUrl(r.china.href) + '">' + esc(r.china.label) + '</a>' : '') + '</td>' +
           '<td>' + esc(r.category) + (r.subcategory ? '<br><span class="cc" style="color:var(--muted)">' + esc(r.subcategory) + '</span>' : '') + '</td>' +
           '<td><span class="cc">' + esc(r.country) + '</span> ' + esc(r.city || '') + '</td>' +
           '<td class="num">' + (r.founded || '—') + '</td>' +
-          '<td><span class="chk ' + esc(r.chokepoint || '') + '">' + esc(r.chokepoint || '') + '</span>' + (r.shareNote ? '<br><span class="cc" style="color:var(--muted)">' + esc(r.shareNote) + '</span>' : '') + '</td>' +
+          '<td>' + self.pill(r.chokepoint) + (r.shareNote ? '<br><span class="cc" style="color:var(--muted)">' + esc(r.shareNote) + '</span>' : '') + '</td>' +
           '<td class="role">' + esc(r.role || '') + (r.source ? ' <a href="' + safeUrl(r.source) + '" target="_blank" rel="noopener" class="cc" aria-label="Source for ' + esc(r.name) + '">Source</a>' : '') + '</td>' +
           '<td style="font-size:13px;color:var(--ink-2)">' + esc((r.customers || []).join(', ')) + '</td></tr>';
       });
       $('#sup-table').innerHTML = html + '</tbody>';
     },
     copy: function () {
-      var rows = this.filtered(), cols = ['name', 'nativeName', 'category', 'subcategory', 'country', 'city', 'founded', 'ticker', 'ownership', 'chokepoint', 'shareNote', 'role', 'customers', 'revenueUSDb', 'revenueYear', 'source',
+      var rows = this.filtered(), cols = ['name', 'nativeName', 'category', 'subcategory', 'country', 'city', 'founded', 'ticker', 'ownership', 'marketPosition', 'shareNote', 'role', 'customers', 'revenueUSDb', 'revenueYear', 'source',
         'revenueAmount', 'revenueUnit', 'revenueCurrency', 'revenueFiscalYear', 'revenueFyEnd', 'revenueSource', 'revenueUSD', 'revenueUSDBasis'];
       // the filed revenue after the earlier columns: the amount as filed (without commas, so a spreadsheet reads it as a number) and the
       // revenue object's own fields, then the dollar figure build/build.js converted and the rates it used
       var REV = { revenueUnit: 'unit', revenueCurrency: 'currency', revenueFiscalYear: 'fiscalYear', revenueFyEnd: 'fyEnd', revenueSource: 'source' };
-      var val = function (r, c) { return c === 'revenueAmount' ? (r.revenueShown || {}).amount : REV[c] ? (r.revenue || {})[REV[c]] : r[c]; };
+      // the market position in the reader's word (the data's own value is "chokepoint")
+      var self = this, val = function (r, c) { return c === 'marketPosition' ? (r.chokepoint ? self.pos(r.chokepoint) : '') : c === 'revenueAmount' ? (r.revenueShown || {}).amount : REV[c] ? (r.revenue || {})[REV[c]] : r[c]; };
       var q = function (v) { if (v == null) return ''; if (Array.isArray(v)) v = v.join('; '); return String(v).replace(/[\t\n\r]+/g, ' '); }; // tab-separated: a spreadsheet splits it on paste
       var csv = cols.join('\t') + '\n' + rows.map(function (r) { return cols.map(function (c) { return q(val(r, c)); }).join('\t'); }).join('\n');
       var btn = $('#sup-copy');
@@ -3339,8 +3349,8 @@
        entries (the Glossary's #lk-items, as terms.js carries it to every page). A chip goes by its model ("Ascend 950PR", "Instinct MI300X"): the maker,
        a design house in brackets and a bracketed tail are dropped */
     tryNames: function () {
-      // the names come with terms.js on every page (build/build.js): terms of 22 letters or fewer, the firms rated Critical or
-      // Important, each chip by its own name and the countries, as the Glossary's list holds them
+      // the names come with terms.js on every page (build/build.js): terms of 22 letters or fewer, the firms in a dominant or
+      // major market position, each chip by its own name and the countries, as the Glossary's list holds them
       var P = (window.CP_TERMS || {}).try || {};
       var pick = function (arr, n) { var a = (arr || []).slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a.slice(0, n); };
       var chosen = pick(P.term, 2).concat(pick(P.firm, 2), pick(P.chip, 1), pick(P.country, 1));
@@ -4998,6 +5008,8 @@ try {
   var reduce = function () { return !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches); };
   var here = function () { return !!CP.Router && CP.Router.current === 'glossary'; };
   var KIND = { term: 'Term', firm: 'Firm', chip: 'AI chip', country: 'Country' };
+  // a firm's market position in the reader's word (src/app.js Suppliers.POSITION; the data keeps Critical, Important, ...)
+  var posWord = function (lv) { var P = (CP.Suppliers || {}).POSITION || {}; return P[lv] || lv || ''; };
   // each kind: its key, its button in the index, its plural and its singular for the count line
   var KINDS = [['all', 'All', 'entries', 'entry'], ['term', 'Terms', 'terms', 'term'], ['firm', 'Firms', 'firms', 'firm'], ['chip', 'AI chips', 'AI chips', 'AI chip'], ['country', 'Countries', 'countries', 'country']];
   var LETTERS = ['0-9'].concat('ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''));
@@ -5131,7 +5143,9 @@ try {
   function firmHTML(it, used) {
     var r = it.data || {}, rows = [], S = CP.Suppliers || {};
     var where = [r.city, cname(r.country)].filter(Boolean).join(', ');
-    if (r.chokepoint) rows.push(['Chokepoint level', '<span class="gl-chk gl-chk--' + esc(String(r.chokepoint).toLowerCase()) + '">' + esc(r.chokepoint) + '</span>', true]);
+    // its market position, in the Suppliers page's word, and what that position means (Suppliers.POSITION and POSITION_DEF)
+    if (r.chokepoint) rows.push(['Market position', '<span class="gl-chk gl-chk--' + esc(String(r.chokepoint).toLowerCase()) + '">' + esc(posWord(r.chokepoint)) + '</span>' +
+      ((S.POSITION_DEF || {})[r.chokepoint] ? '<span class="gl-chk-def">' + esc(S.POSITION_DEF[r.chokepoint]) + '</span>' : ''), true]);
     if (where) rows.push(['Based in', where]);
     if (r.founded) rows.push(['Founded', String(r.founded)]);
     if (r.ownership || r.ticker) rows.push(['Ownership', [r.ownership, r.ticker ? 'ticker ' + r.ticker : ''].filter(Boolean).join(', ')]);
@@ -5171,7 +5185,7 @@ try {
       facts(rows) + '<p class="gl-links"><a href="#/landscape?pick=' + esc(encodeURIComponent(c.id)) + '" data-chip="' + esc(c.id) + '">On AI Chips →</a></p>';
   }
 
-  /* a country: the stages it leads, the chokepoint cards that name it, its shares, its firms. The firms whose country differs
+  /* a country: the stages it leads, the stage cards that name it, its shares, its firms. The firms whose country differs
      between the shares and the supplier list, as data/chokepoint-matrix-notes.md gives them, are named on the cards they touch */
   var SPLITS = {
     siemens: 'Siemens EDA is run from Oregon but owned by Siemens AG, so the EDA software share counts it under Germany and the supplier list under the US.',
@@ -5182,16 +5196,16 @@ try {
   function countryFacts(cc) {
     var chapters = DATA.chapters || [];
     var stages = chapters.filter(function (ch) { return ch.stage; });
-    var cardCount = chapters.filter(function (ch) { return ch.concentration; }).length; // only the stage chapters carry a chokepoint card
+    var cardCount = chapters.filter(function (ch) { return ch.concentration; }).length; // only the stage chapters carry a stage card
     var named = chapters.filter(function (ch) { return (ch.countries || []).some(function (x) { return x.code === cc; }); }).sort(function (a, b) { return (b.bandRank || 0) - (a.bandRank || 0) || a.number - b.number; });
     var led = stages.filter(function (ch) { var f = (ch.countries || [])[0]; return f && f.code === cc; });
-    var extreme = led.filter(function (ch) { return ch.band === 'Extreme'; }).length;
+    var cp = led.filter(function (ch) { return ch.chokepoint; }).length; // the stages it leads that are chokepoints (build/build.js isChoke)
     var firms = (DATA.suppliers || []).filter(function (r) { return r.country === cc; });
-    var critical = firms.filter(function (r) { return r.chokepoint === 'Critical'; }).length, meta = [];
-    if (led.length === 1) meta.push('leads 1 stage' + (extreme ? ', of extreme concentration' : ''));
-    else if (led.length) meta.push('leads ' + led.length + ' stages' + (extreme ? ', ' + (extreme === led.length ? 'all' : extreme) + ' of them extreme' : ''));
-    meta.push('named on ' + named.length + ' of ' + cardCount + ' chokepoint cards');
-    if (firms.length) meta.push(firms.length + (firms.length === 1 ? ' firm' : ' firms') + ' in the supplier list' + (critical ? ', ' + critical + ' Critical' : ''));
+    var critical = firms.filter(function (r) { return r.chokepoint === 'Critical'; }).length, meta = []; // the dominant firms
+    if (led.length === 1) meta.push('leads 1 stage' + (cp ? ', a chokepoint' : ''));
+    else if (led.length) meta.push('leads ' + led.length + ' stages' + (!cp ? '' : cp === led.length ? ', all of them chokepoints' : cp === 1 ? ', 1 of them a chokepoint' : ', ' + cp + ' of them chokepoints'));
+    meta.push('named on ' + named.length + ' of ' + cardCount + ' stage cards');
+    if (firms.length) meta.push(firms.length + (firms.length === 1 ? ' firm' : ' firms') + ' in the supplier list' + (critical ? ', ' + critical + ' ' + posWord('Critical').toLowerCase() : ''));
     return { named: named, firms: firms, meta: meta.join(' · ') };
   }
   function countryHTML(it, used) {
@@ -5216,9 +5230,9 @@ try {
       }).join('') + '</ul>' + (small.length ? '<p class="gl-small">Under 1%: ' + esc(small.map(function (s) { return s.seg; }).join(', ')) + '.</p>' : '') + '</section>';
     }
     if (named.length) {
-      h += '<section class="gl-part" aria-labelledby="gl-cd"><h3 class="gl-h" id="gl-cd">On the chokepoint cards</h3><ul class="gl-cards">' + named.map(function (ch) {
+      h += '<section class="gl-part" aria-labelledby="gl-cd"><h3 class="gl-h" id="gl-cd">On the stage cards</h3><ul class="gl-cards">' + named.map(function (ch) {
         var note = ((ch.countries || []).filter(function (x) { return x.code === cc; })[0] || {}).note || '';
-        return '<li><a href="' + esc(chHref(ch.id)) + '"><span class="gl-card-t">' + esc(ch.title) + '</span>' + (ch.band ? '<span class="gl-card-b gl-card-b--' + esc(String(ch.band).toLowerCase()) + '">' + esc(ch.band) + '</span>' : '') + (note ? '<span class="gl-card-n">' + esc(note) + '</span>' : '') + '</a></li>';
+        return '<li><a href="' + esc(chHref(ch.id)) + '"><span class="gl-card-t">' + esc(ch.title) + '</span>' + (ch.chokepoint ? '<span class="cpk gl-card-b"><i aria-hidden="true"></i>Chokepoint</span>' : '') + (note ? '<span class="gl-card-n">' + esc(note) + '</span>' : '') + '</a></li>';
       }).join('') + '</ul></section>';
     }
     if (firms.length) {
@@ -5230,7 +5244,7 @@ try {
       var EU27 = (CP.Suppliers && CP.Suppliers.EU27) || [];
       if (EU27.indexOf(cc) >= 0) {
         var eu = (DATA.suppliers || []).filter(function (r) { return EU27.indexOf(r.country) >= 0; }), euCrit = eu.filter(function (r) { return r.chokepoint === 'Critical'; }).length;
-        h += '<p class="gl-small">Across the EU-27, the supplier list has ' + eu.length + ' firms' + (euCrit ? ', ' + euCrit + ' of them Critical' : '') + '. <a href="#/suppliers?group=eu">See them together on the Suppliers page →</a></p>';
+        h += '<p class="gl-small">Across the EU-27, the supplier list has ' + eu.length + ' firms' + (euCrit ? ', ' + euCrit + ' of them ' + posWord('Critical').toLowerCase() : '') + '. <a href="#/suppliers?group=eu">See them together on the Suppliers page →</a></p>';
       }
       h += '</section>';
     }
@@ -5660,7 +5674,12 @@ try {
   /* the static copy's anchors (until 30 Oct 2026; shared links and search results may still carry them): a term (#euv), a
      letter (#letter-s) and a list (#list-firms) take the Glossary's own address, in place */
   var OLD = { 'list-firms': 'a-z/firms', 'list-chips': 'a-z/ai-chips', 'list-countries': 'a-z/countries' };
+  /* a term folded into another keeps its old addresses: its #gl-, its #lk-term- and the static copy's bare anchor open the term
+     that holds it now, in place (22 Nov 2026: Concentration into Chokepoint, when readers came to see one rating word) */
+  var RENAMED = { concentration: 'chokepoint' };
   function oldAnchor(h) {
+    var was = /^(?:gl-|lk-term-)?([a-z0-9-]+)$/.exec(h || ''), now = was && RENAMED[was[1]];
+    if (now && L.byKey['gl-' + now]) { history.replaceState(history.state, '', location.pathname + location.search + '#gl-' + now); return 'gl-' + now; }
     if (!h || /^(gl|lk)-|^a-z(\/|$)|^\//.test(h)) return '';
     var m = /^letter-(0-9|[a-z])$/.exec(h);
     var to = OLD[h] || (m ? 'a-z/' + m[1] : L.byKey['gl-' + h] ? 'gl-' + h : '');
@@ -5944,7 +5963,7 @@ try {
   /* ---------- the chapter opener, the questions and the contents page, for paper ---------- */
 
   /* The chain in the margin column beside the chapter (print.css .cp-index), as the screen's rail shows it: each of the
-     stages with its number, its whole name and its band's meter (four bars, as the screen's rail draws them), then the
+     stages with its number, its whole name and, for a chokepoint, the mark's dot (as the screen's rail draws it), then the
      two chapters that look across them; the chapter's own line in bold. Built from the rail before its screen parts go,
      and the rail moves to the head of the chapter, where it floats beside the opener. */
   function stageIndex() {
@@ -5957,10 +5976,10 @@ try {
         each(':scope > li', src, function (li) {
           var n = li.querySelector('.n'), t = li.querySelector('.t');
           var item = node('li', li.getAttribute('aria-current') === 'true' ? 'is-here' : '');
-          item.setAttribute('data-band', li.getAttribute('data-band') || '0');
+          if (li.getAttribute('data-cpk')) item.setAttribute('data-cpk', '1');
           item.appendChild(node('span', 'n', n ? n.textContent : ''));
           item.appendChild(node('span', 't', t ? t.textContent.replace(/\u00ad/g, '') : ''));
-          var m = li.querySelector('.meter');
+          var m = li.querySelector('.cpk');
           if (m) item.appendChild(m.cloneNode(true));
           ol.appendChild(item);
         });
@@ -6410,7 +6429,7 @@ try {
      book: the answer is how many blocks to move the figure past, the paragraphs and lists that fit the gap with their
      notes and one more that can run on across the page's end, never past a heading, a table or another figure. pdf.py
      then lays the chapter out again with the figures moved (prepare({moves})). Figures carry no footnote marks, so the
-     notes keep their order. The chokepoint card moves the same way (cardsToText gives it an id at the head of the text),
+     notes keep their order. The stage card moves the same way (cardsToText gives it an id at the head of the text),
      but only past paragraphs that fit the gap whole: it then heads the next page as a plate. Its own marks come after the
      paragraph's in reading order either way. */
   var NOTE_LINE = 15; // px: one more note at the foot, as print.css sets them
@@ -6692,7 +6711,7 @@ try {
     root.addEventListener('scroll', function (e) { if (e.target.classList && e.target.classList.contains('sa-panel')) more(e.target); }, true);
     window.addEventListener('resize', function () { more($('.sa-panel:not([hidden])', root)); });
 
-    // the route's stops: a card on hover or focus with the stage, its town, who leads it and its concentration band
+    // the route's stops: a card on hover or focus with the stage, its town, who leads it and, for a chokepoint, the word
     // it stays while the pointer crosses onto it, and Escape closes it (WCAG 1.4.13; accessibility #10)
     var tip = null, tipT = null;
     var showStop = function (a) {
@@ -6703,7 +6722,7 @@ try {
         tip.addEventListener('mouseleave', function () { hideStop(); });
       }
       var d = a.dataset;
-      tip.innerHTML = '<b>' + a.querySelector('span').textContent + ' · ' + d.title + '</b><span>' + d.town + (d.lead ? ' · ' + d.lead : '') + '</span>' + (d.band ? '<span class="sa-stop-tip-s">' + d.band + ' concentration</span>' : '');
+      tip.innerHTML = '<b>' + a.querySelector('span').textContent + ' · ' + d.title + '</b><span>' + d.town + (d.lead ? ' · ' + d.lead : '') + '</span>' + (d.cpk ? '<span class="sa-stop-tip-s"><span class="cpk"><i aria-hidden="true"></i>Chokepoint</span></span>' : '');
       tip.hidden = false;
       var r = a.getBoundingClientRect(), w = tip.offsetWidth, h = tip.offsetHeight;
       var left = Math.max(8, Math.min(r.left + r.width / 2 - w / 2, window.innerWidth - w - 8)), top = r.top - h - 10;
@@ -7417,8 +7436,8 @@ try {
     if (el && CP.Router.settle) CP.Router.settle(el);
   }
 
-  /* The hero (27 Oct 2026: the home's structure before the redesign). Each row of the chain at a glance ends in a button, its
-     band's meter and word, that picks the stage's specimen: the button copies its stage's specimen, number, title and caption
+  /* The hero (27 Oct 2026: the home's structure before the redesign). Each row of the chain at a glance ends in a button, a
+     chokepoint's mark or, on any other stage's row, the same area unmarked, that picks the stage's specimen: the button copies its stage's specimen, number, title and caption
      onto the hero (#wk-hero, a [data-specimen] item that Sections in src/app.js tracks like a step), and a scroll event asks
      Sections to draw it; Sections.hold keeps the hero on the stage while any of it is on screen, so the row in wine is always
      the specimen shown. Hovering a button picks it once the pointer rests on it a moment, so a pointer crossing the list on

@@ -116,7 +116,7 @@
     root.addEventListener('scroll', function (e) { if (e.target.classList && e.target.classList.contains('sa-panel')) more(e.target); }, true);
     window.addEventListener('resize', function () { more($('.sa-panel:not([hidden])', root)); });
 
-    // the route's stops: a card on hover or focus with the stage, its town, who leads it and its concentration band
+    // the route's stops: a card on hover or focus with the stage, its town, who leads it and, for a chokepoint, the word
     // it stays while the pointer crosses onto it, and Escape closes it (WCAG 1.4.13; accessibility #10)
     var tip = null, tipT = null;
     var showStop = function (a) {
@@ -127,7 +127,7 @@
         tip.addEventListener('mouseleave', function () { hideStop(); });
       }
       var d = a.dataset;
-      tip.innerHTML = '<b>' + a.querySelector('span').textContent + ' · ' + d.title + '</b><span>' + d.town + (d.lead ? ' · ' + d.lead : '') + '</span>' + (d.band ? '<span class="sa-stop-tip-s">' + d.band + ' concentration</span>' : '');
+      tip.innerHTML = '<b>' + a.querySelector('span').textContent + ' · ' + d.title + '</b><span>' + d.town + (d.lead ? ' · ' + d.lead : '') + '</span>' + (d.cpk ? '<span class="sa-stop-tip-s"><span class="cpk"><i aria-hidden="true"></i>Chokepoint</span></span>' : '');
       tip.hidden = false;
       var r = a.getBoundingClientRect(), w = tip.offsetWidth, h = tip.offsetHeight;
       var left = Math.max(8, Math.min(r.left + r.width / 2 - w / 2, window.innerWidth - w - 8)), top = r.top - h - 10;

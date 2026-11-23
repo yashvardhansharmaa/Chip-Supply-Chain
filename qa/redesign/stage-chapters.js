@@ -377,7 +377,7 @@ const want = (n) => !ONLY.length || ONLY.includes(String(n));
       t = await tab(chrome, '/#lk-country-nl', { wait: 2500 });
       await t.until(`document.querySelector('#gl-pane .gl-cards a')`, 4000);
       const card = await t.ev(`(function () { var a = document.querySelector('#gl-pane .gl-cards a'); return a ? a.getAttribute('href').replace(/\\/$/, '').replace(/^.*\\//, '') : null; })()`);
-      if (card) await go(t, `a look-up card (the Netherlands, its chokepoint card ${card})`, '#gl-pane .gl-cards a', card);
+      if (card) await go(t, `a look-up card (the Netherlands, its stage card ${card})`, '#gl-pane .gl-cards a', card);
       else { ok = false; out.push('a look-up card: the Netherlands card listed no chapter (FAIL)'); }
       await t.close();
       t = await tab(chrome, '/#/controls', { wait: 2500 });

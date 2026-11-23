@@ -1,7 +1,7 @@
 /* AI Chips: the shelves (design round seven, option B, chosen 28 Oct 2026; qa/design7/b/ in the main checkout, built from
    qa/design7/BUILD-SHELVES.md). The head sets the title and the standfirst beside the field chart; under it one ruled shelf
    per maker holds that maker's packages, drawn from above at one scale; a chip opens in place under its shelf as a chip card
-   set like the chokepoint card, on the card's gray ground, and widens into two to four columns to compare. Wine marks the
+   set like the stage card, on the card's gray ground, and widens into two to four columns to compare. Wine marks the
    largest value, the reader's chip and links. Source Serif 4 sets the words and the large numbers, Hanken Grotesk the small
    labels. Nothing is under 11 px. src/app.js Landscape draws it; every rule is scoped to #aic (.aic), so the shared parts of
    the other views never reach it. */
@@ -106,7 +106,7 @@
 .aic .tbtn { font: 500 14px/20px var(--font-ui); color: var(--ink); text-decoration: underline; text-decoration-color: var(--rule-ink); text-decoration-thickness: 1px; text-underline-offset: .3em; padding: 4px 0; }
 .aic .tbtn:hover { color: var(--accent-ink); text-decoration-color: var(--accent); }
 
-/* ---------------------------------------------------------------- who makes it: lines like the chokepoint card */
+/* ---------------------------------------------------------------- who makes it: lines like the stage card */
 .aic .parts { list-style: none; margin: 0; padding: 0; }
 .aic .parts li { display: grid; grid-template-columns: 26px 120px minmax(0, 1fr); gap: 0 14px; padding: 0 0 14px; align-items: baseline; }
 .aic .parts li + li { padding-top: 12px; border-top: 1px solid var(--line-2); }
@@ -172,7 +172,7 @@
 .aic .mselect:hover { border-bottom-color: var(--accent); }
 .aic .mselect option { font-size: 16px; color: #171716; background: #fff; }
 
-/* ---------------------------------------------------------------- the chip card, set like the chokepoint card */
+/* ---------------------------------------------------------------- the chip card, set like the stage card */
 .aic .card-li { padding: 0 0 26px; border-bottom: 1px solid var(--line); }
 .aic .card { position: relative; background: var(--bg-2); padding: 22px 32px 34px; margin-top: 4px; }
 .aic .card .tact, .aic .card .tbtn { background: none; }

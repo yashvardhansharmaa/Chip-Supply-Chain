@@ -231,7 +231,7 @@
   /* ---------- the chapter opener, the questions and the contents page, for paper ---------- */
 
   /* The chain in the margin column beside the chapter (print.css .cp-index), as the screen's rail shows it: each of the
-     stages with its number, its whole name and its band's meter (four bars, as the screen's rail draws them), then the
+     stages with its number, its whole name and, for a chokepoint, the mark's dot (as the screen's rail draws it), then the
      two chapters that look across them; the chapter's own line in bold. Built from the rail before its screen parts go,
      and the rail moves to the head of the chapter, where it floats beside the opener. */
   function stageIndex() {
@@ -244,10 +244,10 @@
         each(':scope > li', src, function (li) {
           var n = li.querySelector('.n'), t = li.querySelector('.t');
           var item = node('li', li.getAttribute('aria-current') === 'true' ? 'is-here' : '');
-          item.setAttribute('data-band', li.getAttribute('data-band') || '0');
+          if (li.getAttribute('data-cpk')) item.setAttribute('data-cpk', '1');
           item.appendChild(node('span', 'n', n ? n.textContent : ''));
           item.appendChild(node('span', 't', t ? t.textContent.replace(/\u00ad/g, '') : ''));
-          var m = li.querySelector('.meter');
+          var m = li.querySelector('.cpk');
           if (m) item.appendChild(m.cloneNode(true));
           ol.appendChild(item);
         });
@@ -697,7 +697,7 @@
      book: the answer is how many blocks to move the figure past, the paragraphs and lists that fit the gap with their
      notes and one more that can run on across the page's end, never past a heading, a table or another figure. pdf.py
      then lays the chapter out again with the figures moved (prepare({moves})). Figures carry no footnote marks, so the
-     notes keep their order. The chokepoint card moves the same way (cardsToText gives it an id at the head of the text),
+     notes keep their order. The stage card moves the same way (cardsToText gives it an id at the head of the text),
      but only past paragraphs that fit the gap whole: it then heads the next page as a plate. Its own marks come after the
      paragraph's in reading order either way. */
   var NOTE_LINE = 15; // px: one more note at the foot, as print.css sets them

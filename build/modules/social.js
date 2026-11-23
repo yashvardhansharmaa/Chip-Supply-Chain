@@ -96,15 +96,16 @@ function manifest(root) {
       ? `${SITE} · Chapter ${pad(c.number)} · Stage ${si + 1} of ${stages.length}`
       : `${SITE} · Chapter ${pad(c.number)}${TILE[c.id] ? ' · ' + TILE[c.id] : ''}`;
     const card = c.card || {};
-    const conc = card.concentration || '';
+    // readers see one rating word (owner, 22 Nov 2026): a stage in the Extreme band is a chokepoint, any other none
+    const choke = card.concentration === 'Extreme';
     const sub = (card.substitutability || {}).band || '';
-    const band = conc ? `${conc} concentration${sub ? ' · ' + (SUBWORD[sub] || sub) : ''}` : '';
+    const band = [choke ? 'Chokepoint' : '', sub ? SUBWORD[sub] || sub : ''].filter(Boolean).join(' · ');
     pages.push({
       // stage: the stage's place in the chain, 1 on, or null for the two chapters that are not stages (build/cards.py marks it)
       slug: c.id, kind: 'chapter', number: c.number, stage: si >= 0 ? si + 1 : null, eyebrow, title: c.title,
       line: si >= 0 && band ? band : describe(c.plain, 140),
       // for the card: the chapter's lede and its two ratings as tags (none for the two chapters that are not stages)
-      lede: c.oneLiner || c.plain, tags: si >= 0 && conc ? [`${conc} concentration`, SUBWORD[sub] || sub].filter(Boolean) : [],
+      lede: c.oneLiner || c.plain, tags: si >= 0 ? [choke ? 'Chokepoint' : '', sub ? SUBWORD[sub] || sub : ''].filter(Boolean) : [],
       description: describe(c.plain), body: c.plain, route: '#' + c.id, linkText: 'Read the chapter',
       // the readable page's meta description (search results) and its og/twitter description (share previews), from the chapter's one-line summary
       metaDescription: searchDescription(c.oneLiner || c.plain),
@@ -129,7 +130,7 @@ function manifest(root) {
     // /chain/ forwards to the contents page's own address, /supply-chain/ (28 Oct 2026), and keeps its card
     { slug: 'chain', route: 'supply-chain/', eyebrow: `${SITE} · Supply Chain`, title: 'Supply Chain', line: 'Every stage of the supply chain, and who controls it.', description: `Every stage of the supply chain, and who controls it. ${chapters.length} chapters, from chip design to the data center.` },
     { slug: 'chips', route: '#/landscape', eyebrow: `${SITE} · AI Chips`, title: 'AI Chips', line: 'The chips that train and run AI models, from the A100 of 2020 to the parts shipping in 2026.', description: 'The chips that train and run AI models, from the A100 of 2020 to the parts shipping in 2026. Each entry names the foundry, process node, memory supplier and packaging plant behind the chip wherever the maker or a cited source has published them.' },
-    { slug: 'suppliers', route: '#/suppliers', eyebrow: `${SITE} · Suppliers`, title: 'Suppliers', line: `What each of the ${suppliers.length || 220} firms makes, where it sits, and how hard it would be to replace.` },
+    { slug: 'suppliers', route: '#/suppliers', eyebrow: `${SITE} · Suppliers`, title: 'Suppliers', line: `What each of the ${suppliers.length || 220} firms makes, where it sits, and its position in its market.` },
     { slug: 'export-controls', route: '#/controls', eyebrow: `${SITE} · Export Controls`, title: 'Export Controls', line: `The main rules since 2018, what can still be sold to China, and China's share of revenue at ${exposureFirms} firms, from their filings.` },
     { slug: 'glossary', route: '#/glossary', eyebrow: `${SITE} · Glossary`, title: 'Glossary', line: 'Every term, firm, chip and country, with the passages that use them.' },
     // /summary/ is written by build/modules/summary-brief.js (own: no page here); it is listed for its share card (28 Oct 2026)
@@ -139,7 +140,7 @@ function manifest(root) {
   const CARD_TITLE = { intro: 'Start here' };
   const CARD_LINE = {
     home: 'An introduction to the entire semiconductor supply chain.',
-    suppliers: `What each of the ${suppliers.length || 226} firms makes, where it is based and how hard it would be to replace.`,
+    suppliers: `What each of the ${suppliers.length || 226} firms makes, where it is based and its position in its market.`,
     'export-controls': 'A timeline of the main chip export rules since 2018 and what can still be sold to China.',
   };
   for (const v of views) v.alt = `${CARD_TITLE[v.slug] || v.title}. ${CARD_LINE[v.slug] || v.line} Small drawings of all ${stages.length} stages run along the bottom.`;

@@ -5,7 +5,7 @@
    <dir>`), B after (127.0.0.1:8771, the worktree). For each page it reports:
      1. the lines only before and only after, the citation marks as printed (a renumbered mark changes its line);
      2. the same with the marks taken out, which leaves only the words the change added (the kicker's verdict, On this page's
-        "Chokepoint card");
+        "Chokepoint card", "Stage card" since 23 Nov 2026);
      3. the order: the text with the marks taken out and the card's own lines set aside, line by line, which must be the same
         on both sides (the card moved and nothing else did); and where the card stands, the line before it and after it.
    The door and the drawing's balloons are set aside, as census-chapters.js sets them aside. Math.random is seeded as
@@ -78,7 +78,8 @@ const READ = (sel) => `(function () {
     const drop = (lines, card) => { if (!card.length) return { rest: lines, at: -1 }; for (let i = 0; i + card.length <= lines.length; i++) { if (card.every((c, k) => lines[i + k] === c)) return { rest: lines.slice(0, i).concat(lines.slice(i + card.length)), at: i }; } return { rest: lines, at: -2 }; };
     const da = drop(ba, ca), db = drop(bb, cb);
     // the verdict and On this page's new entry are the change's own words: they are checked by name, then set aside for the order
-    const own = (l) => /^(Extreme|High|Moderate|Low) concentration$|^(Very hard|Hard|Moderately hard|Easy) to substitute$|^·$|^Chokepoint card$/.test(l);
+    // the card's own labels: its ratings (the chokepoint mark since 22 Nov 2026, the band's words before), the dot between, its name
+    const own = (l) => /^(Extreme|High|Moderate|Low) concentration$|^(Very hard|Hard|Moderately hard|Easy) to substitute$|^·$|^Chokepoint card$|^Stage card$|^Chokepoint$/.test(l);
     const ra2 = da.rest.filter((l) => !own(l) && !/^(Extreme|High|Moderate|Low)$/.test(l)), rb2 = db.rest.filter((l) => !own(l) && !/^(Extreme|High|Moderate|Low)$/.test(l));
     let firstOff = -1;
     for (let i = 0; i < Math.max(ra2.length, rb2.length); i++) if (ra2[i] !== rb2[i]) { firstOff = i; break; }
@@ -112,7 +113,7 @@ const READ = (sel) => `(function () {
   } finally { await chrome.close(); }
   const head = [`Text census of the column: ${A} (before) against ${B} (after), each chapter in The Chain at its address and each readable page, the door and the balloons set aside.`,
     `As printed: lines only before ${rawA}, only after ${rawB} (a renumbered citation mark changes its line).`,
-    `With the citation marks out: lines only before ${bareA}, only after ${bareB} (the kicker's verdict and On this page's "Chokepoint card" only).`,
+    `With the citation marks out: lines only before ${bareA}, only after ${bareB} (the kicker's verdict and On this page's "Stage card" only).`,
     `Pages whose order differs once the card is set aside, or whose card's words differ: ${orderBad}.`, ''];
   fs.writeFileSync(OUT, head.concat(out).join('\n') + '\n');
   console.log(`\nas printed -${rawA} +${rawB}; marks out -${bareA} +${bareB}; order problems ${orderBad}; wrote ${OUT}`);

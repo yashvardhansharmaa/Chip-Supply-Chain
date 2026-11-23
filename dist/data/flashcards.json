@@ -50,12 +50,12 @@
    {
     "q": "Why can a chip factory not switch wafer suppliers quickly?",
     "a": "It has to test and approve a new wafer plant before it buys from it.",
-    "section": "Chokepoint card"
+    "section": "Stage card"
    },
    {
     "q": "Why do AI chips need especially good wafers?",
     "a": "Their dies are so large that one flaw ruins far more silicon. The newest printing also needs a disc that is flat at every point.",
-    "section": "The chokepoint"
+    "section": "The narrowest step"
    }
   ],
   "takeaways": [
@@ -85,7 +85,7 @@
    {
     "q": "What happened when Japan limited chemical sales to South Korea in 2019?",
     "a": "South Korea bought hydrogen fluoride elsewhere, and Japan's sales of it fell sharply. Japan's photoresist sales did not fall.",
-    "section": "The chokepoint"
+    "section": "The narrowest step"
    }
   ],
   "takeaways": [
@@ -330,7 +330,7 @@
    {
     "q": "Why is Ajinomoto's film hard to replace?",
     "a": "Chipmakers and device makers would first have to approve any rival film.",
-    "section": "Chokepoint card"
+    "section": "Stage card"
    }
   ],
   "takeaways": [
@@ -360,7 +360,7 @@
    {
     "q": "Why is it costly to switch tester makers?",
     "a": "The customer has to rebuild its whole test setup, Advantest says.",
-    "section": "The chokepoint"
+    "section": "The narrowest step"
    }
   ],
   "takeaways": [

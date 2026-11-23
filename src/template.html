@@ -163,7 +163,7 @@ html:not(.booted)[data-pick] .view[data-view="suppliers"] > :not(.view-head) { d
         <div class="filters">
           <input id="sup-search" type="search" placeholder="Search suppliers, cities, tickers…" aria-label="Search suppliers">
           <select id="sup-country" aria-label="Filter by country"><option value="">All countries</option></select>
-          <select id="sup-chk" aria-label="Filter by chokepoint level"><option value="">All chokepoint levels</option><option>Critical</option><option>Important</option><option>Contested</option><option>Diversified</option></select>
+          <select id="sup-chk" aria-label="Filter by market position">{{SUPPLIERS_POSITION_OPTIONS}}</select>
         </div>
       </div>
       <div class="sup-toolbar" id="sup-toolbar">
@@ -172,7 +172,7 @@ html:not(.booted)[data-pick] .view[data-view="suppliers"] > :not(.view-head) { d
         <button class="btn ghost" id="sup-copy" type="button">Copy table</button>
       </div>
       <div class="sup-lv"><h3 class="label sup-ladder-h" id="sup-ladder-h">Segments from chip design to power</h3>
-      <p class="sup-key" id="sup-key" aria-hidden="true"><b class="k-crit">Critical</b><b>Important or contested</b><b class="k-div">Diversified</b></p></div>
+      {{SUPPLIERS_KEY}}</div>
       <div class="sup-ladder" id="sup-ladder" aria-labelledby="sup-ladder-h"></div>
       <div class="sup-ladder sup-ladder-cc" id="sup-ladder-cc" aria-labelledby="sup-ladder-h" hidden></div>
       <div class="sup-wrap" id="sup-wrap" hidden><table class="sup" id="sup-table"></table></div>

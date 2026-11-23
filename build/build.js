@@ -533,14 +533,29 @@ function wordCount(body) {
 }
 
 /* ---------------- nameplate ---------------- */
+/* The concentration method: four bands by how many firms could credibly supply a stage today, judged by the whole market for
+   the stage's main tools or products and, where the most advanced AI chips need one particular tool or product, by that one too
+   (EUV). Sub-kinds of tools never qualify a stage. Extreme, the chokepoint band, is three or fewer firms or one firm above 65
+   percent (owner, 23 Nov 2026: "Let's stick with the 65% figure", which leaves Metrology and Test out; the Glossary's
+   "Chokepoint" entry; card.concentration in content/*.md, checked by build/validate.js; BAND_NOTE below defines each band). Where a
+   figure exists for the top country's share of the segment it is a second check, and when the two disagree the supplier
+   count wins (the Glossary's "Concentration" entry said so until 22 Nov 2026). Readers see one word of it (owner, 22 Nov 2026: "keep everything as unlabeled
+   and the seven as choke points", then "chokepoint is good, apply it site-wide"): a stage in the Extreme band is a
+   chokepoint, and a stage in any other band carries no rating word and no mark. The bands stay here for the logic only. */
 const BANDS = { Extreme: 4, High: 3, Moderate: 2, Low: 1 };
-// the band's meter (28 Oct 2026): four rising bars, as many lit as the band's rank, Extreme's in wine (src/modules/chapter.css .meter).
-// Hidden from assistive technology: the link's label or the visible word beside it carries the band
-const meterHTML = (b) => { const l = BANDS[b] || 0; return `<span class="meter" data-level="${l}" aria-hidden="true">${[1, 2, 3, 4].map((k) => `<b${k <= l ? ' class="on"' : ''}></b>`).join('')}</span>`; };
+const CHOKE_BAND = 'Extreme';
+const isChoke = (b) => b === CHOKE_BAND;
 const SUBS = { 'Very hard': 4, Hard: 3, Moderate: 2, Easy: 1 };
 const SUBWORD = { 'Very hard': 'Very hard to substitute', Hard: 'Hard to substitute', Moderate: 'Moderately hard to substitute', Easy: 'Easy to substitute' };
-// one sentence per band, shown when a reader hovers the tag on the card (the full definitions stay in the Index)
-const BAND_NOTE = { Extreme: 'Three or fewer firms could supply this stage today, or one firm holds more than half of it.', High: 'Four to six firms could supply this stage today, and the top two take most of the revenue.', Moderate: 'Seven or more firms could supply this stage today, none of them dominant.', Low: 'Many firms could supply this stage today, and the scarce input is something another industry sells at volume.' };
+// one sentence per band, the method's own definitions (data/glossary.json "chokepoint" gives the reader the Extreme one)
+const BAND_NOTE = { Extreme: 'Three or fewer firms can supply this stage, or one firm holds more than 65 percent of it.', High: 'Four to six firms could supply this stage today, and the top two take most of the revenue.', Moderate: 'Seven or more firms could supply this stage today, none of them dominant.', Low: 'Many firms could supply this stage today, and the scarce input is something another industry sells at volume.' };
+// what "chokepoint" means on this site, the Extreme band's sentence: on the chapter's card, beside the mark
+const CHOKE_NOTE = BAND_NOTE[CHOKE_BAND];
+/* The chokepoint mark, one component wherever a stage is listed (the home's list, the chapter's kicker and rail, the Supply
+   Chain page, the summary, the Glossary's country cards): a small solid dot, the Frontispiece home's solid balloon, then the
+   word in the interface type, in ink (.cpk in src/styles.css). The dot is decoration, the word says it. tag sets the element
+   (a span by default) and attrs any attributes of its own, so the mark can be a glossary button */
+const chokeMark = (o = {}) => `<${o.tag || 'span'} class="cpk${o.cls ? ' ' + o.cls : ''}"${o.attrs || ''}><i aria-hidden="true"></i>${o.word === false ? '' : 'Chokepoint'}</${o.tag || 'span'}>`;
 const SUB_NOTE = { 'Very hard': 'No second supplier exists at the leading node, and the path to one depends on physics, decades of unwritten know-how or protected intellectual property. No one has yet repeated what the leaders did, and closing the gap takes ten years or more.', Hard: 'No second supplier exists at the leading node. The path to one is known, and closing the gap takes five to ten years.', Moderate: 'A second supplier exists but is not yet qualified at the leading node. Closing the gap takes two to five years.', Easy: 'A qualified second supplier ships today at the leading node.' };
 // each plate's one name (22 Nov 2026, plates critique system 8): the subject its caption opens with, on the chapter's meta line,
 // the phone strip's tag and the canvas's accessible name alike (src/app.js Stage.a11y). A caption that changes its subject
@@ -578,7 +593,7 @@ function cardCites(card, ctx) {
 }
 // The chapter is numbered in the order the page shows it (the column, design round five, 27 Oct 2026): In plain terms
 // (meta.plain, the first paragraph of How it works), In short (the body's Takeaways section, which splitTakeaways moves to the
-// head), the lead (the body's text before its first section), then the chokepoint card, which stands in the text after the
+// head), the lead (the body's text before its first section), then the stage card, which stands in the text after the
 // lead and before section 01 (chapterHTML). Their sources are numbered first, in that order, before markdown() numbers the
 // rest of the body as it reads it; a source met again keeps its number, and every mark looks its number up by its url (cite).
 // A chapter that opens on its explainer (openingExplainer, below) shows that figure right after In plain terms: afterPlain
@@ -662,10 +677,10 @@ function nameplate(card, title, gl, ctx, where) {
   const costHeadHTML = lead ? esc(numLead[1]) : first ? esc(firstBody) + firstMarks + (costLong ? esc(firstStop) : '') : '—';
   const costSubHTML = lead ? esc(numLead[2]) + firstMarks + esc(firstStop) + (restHTML ? ' ' + restHTML : '') : restHTML;
   const costLabel = card.costLabel ? esc(card.costLabel) : 'Price or market size';
-  return `<section class="plate" aria-label="Chokepoint card${title ? ' for ' + esc(title) : ''}">
-<header class="plate-head"><span class="label">Chokepoint card</span>${where ? `<span class="plate-where">${esc(where)}</span>` : ''}</header>
+  return `<section class="plate" aria-label="Stage card${title ? ' for ' + esc(title) : ''}">
+<header class="plate-head"><span class="label">Stage card</span>${where ? `<span class="plate-where">${esc(where)}</span>` : ''}</header>
+${isChoke(conc) ? `<p class="plate-cpk">${chokeMark({ tag: 'button', cls: 'gl-term', attrs: ' type="button" data-term="chokepoint"' })}<span class="sub">${esc(CHOKE_NOTE)}</span></p>` : ''}
 <div class="plate-kpis">
-<div><span class="k">Concentration</span><b class="v ${esc(conc)}">${conc ? `${meterHTML(conc)}<button type="button" class="gl-term v-btn" data-band="${BANDS[conc] || 0}" data-term="concentration" data-head="${esc(conc)} concentration" data-note="${esc(BAND_NOTE[conc] || '')}">${esc(conc)}</button>` : '—'}</b>${BAND_NOTE[conc] ? `<span class="sub">${esc(BAND_NOTE[conc])}</span>` : ''}</div>
 ${sb ? `<div><span class="k">Substitutability</span><b class="v sub-${SUBS[sb.band] || 0}"><button type="button" class="gl-term v-btn" data-band="${SUBS[sb.band] || 0}" data-term="substitutability" data-head="${esc(SUBWORD[sb.band] || sb.band)}" data-note="${esc(SUB_NOTE[sb.band] || '')}" data-test="${esc(sb.test || '')}">${esc(sb.band)}</button></b>${sb.test ? `<span class="sub">${cardText(sb.test, F['substitutability test'], ctx, g)}</span>` : ''}</div>` : `<div><span class="k">Substitution time</span><b class="v">${esc(sub.years || '—')}${sub.years && !/year/i.test(sub.years) ? '<small>years</small>' : ''}</b></div>`}
 <div><span class="k">${costLabel}</span><b class="v cost${costLong ? ' long' : ''}">${costHeadHTML}</b>${costSubHTML ? `<span class="sub">${costSubHTML}</span>` : ''}</div>
 </div>
@@ -723,9 +738,6 @@ const word = (n) => WORDS[n] || String(n);
 const cap = (t) => t.charAt(0).toUpperCase() + t.slice(1);
 const isStage = (ch) => STAGES.isStage(ch); // every chapter but the economics chapter and the essay is a stage (build/stages.js)
 const stages = chapters.filter(isStage);
-function chainTrack(chs, currentId) {
-  return `<ol class="chain-track">${chs.map((c) => { const cb = (c.meta.card || {}).concentration || ''; return `<li class="stage-cell" data-band="${BANDS[cb] || 0}" data-id="${esc(c.id)}"${c.id === currentId ? ' aria-current="true"' : ''}><a href="${esc(c.id)}/" data-route="#${esc(c.id)}" title="${esc(c.title)}${cb ? ' · ' + esc(cb) + ' concentration' : ''}"><span class="n">${pad(c.number)}</span><span class="bar"><i></i></span><span class="t">${esc(SHORT[c.id] || c.title)}</span></a></li>`; }).join('')}</ol>`;
-}
 const textOf = (html) => String(html || '').replace(/<sup class="cite">[\s\S]*?<\/sup>/g, '').replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim();
 const norm = (t) => textOf(t).toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
 // Pull the Takeaways block out of the body so it can lead the chapter as "In short" (its heading is a section's, h2).
@@ -840,9 +852,10 @@ function reviewHTML(ch) {
   if (!fc || !Array.isArray(fc.cards) || !fc.cards.length) return '';
   // each card's reason ends with a link back to the section of the chapter that covers it
   // the deck's title is one of the chapter's sections, h2 (29 Oct 2026)
-  // a card whose idea is stated only on the chokepoint card names "Chokepoint card", which links to the card (29 Oct 2026)
+  // a card whose idea is stated only on the stage card names "Stage card", which links to the card (29 Oct 2026; "Chokepoint card"
+  // until 23 Nov 2026, when the owner kept the word for the chokepoint stages)
   return deckHTML(fc, { id: ch.id, title: ch.title, level: 2, more: (c, i) => {
-    if (c.section === 'Chokepoint card') return { href: `#${ch.id}--card`, text: 'Reread: Chokepoint card' };
+    if (c.section === 'Stage card') return { href: `#${ch.id}--card`, text: 'Reread: Stage card' };
     const anchor = c.section ? `${ch.id}--${slug(c.section)}` : '';
     if (anchor && !ch.html.includes(`id="${anchor}"`)) warn(`flashcards ${ch.id} #${i + 1}: no section "${c.section}"`);
     return anchor ? { href: '#' + anchor, text: 'Reread: ' + c.section } : null;
@@ -1088,22 +1101,17 @@ var off=b.classList.contains('rail-hide');H.classList.toggle('rail-off',off);try
 var n=b.closest('.ch-rail'),to=n&&n.querySelector(off?'.rail-show':'.rail-hide');if(to)try{to.focus({preventScroll:true});}catch(x){to.focus();}
 try{window.dispatchEvent(new Event('resize'));}catch(x){}});
 })();`;
-// the key under the ledger column's rows, one per stage: each band the stages hold, its bar drawn as the rows draw it
-const LEDGER_KEY = (() => {
-  const used = ['Extreme', 'High', 'Moderate', 'Low'].filter((b) => stages.some((c) => (c.meta.card || {}).concentration === b));
-  return used.length ? `<p class="ledger-key" aria-hidden="true">${used.map((b) => `<span class="lgk" data-band="${BANDS[b]}"><i></i>${b}</span>`).join('')}</p>` : '';
-})();
 /* ---------------- the chapter page (redesign stage 2, qa/redesign/BRIEF.md; its opener is "the column" of design round five,
    chosen 27 Oct 2026, MAIN/qa/design5/opener/b) ----------------
    The contents rail on the left (On this page, Figures, The chain) from the article's first line, beside one column of text:
-   1. the opener: a kicker (the chapter, the stage and the card's verdict in the card's own words, "Extreme concentration ·
-      Very hard to substitute"), the title, the standfirst (oneLiner), the facts line and the cite line (Link to chapter, Cite
+   1. the opener: a kicker (the chapter, the stage and the card's verdict in the card's own words, "Chokepoint · Very hard
+      to substitute", or the substitutability alone for a stage that is not a chokepoint), the title, the standfirst (oneLiner), the facts line and the cite line (Link to chapter, Cite
       this chapter, Chapter PDF);
    2. the specimen, the chapter's first plate: a slot the live 3D drawing moves into while it is on screen (src/app.js
       Stage.host), and under it its plain caption (a mono label and the chapter's own specimenCaption) beside the parts list,
       where data/specimen-parts.json has one;
    3. In plain terms, then in the chapters that open on their explainer that figure (openingExplainer), and In short;
-   4. the prose: the lead, then the chokepoint card, the chapter's first table (withCard), then the sections, the flashcards,
+   4. the prose: the lead, then the stage card, the chapter's first table (withCard), then the sections, the flashcards,
       the sources and the door to the next chapter.
    The head keeps its class (.chapter-head) and the prose stays the article's own child, which the search index and the print
    path read (src/app.js Tools, src/modules/print.js). The title is the page's h1 since each chapter has a page of its own (28
@@ -1168,17 +1176,22 @@ function partsHTML(ch) {
   };
   return `<p class="ch-parts-k">Parts, as numbered on the drawing</p><ol class="ch-parts">${ps.map((p) => `<li data-n="${+p.n}"><b aria-hidden="true">${+p.n}</b><span>${line(p)}</span></li>`).join('')}</ol>`;
 }
-// the card's verdict in the kicker: the band's meter (four bars, as the home's list draws it), then both ratings in the words
-// the card's look-up heads use, "Extreme concentration · Very hard to substitute"
-const bandMark = (b, sub) => (b ? `<span class="ch-band ch-verdict" data-band="${BANDS[b] || 0}">${meterHTML(b)}<span>${esc(b)} concentration</span>${sub ? `<span class="sep" aria-hidden="true">·</span><span>${esc(SUBWORD[sub] || sub)}</span>` : ''}</span>` : '');
+// the card's verdict in the kicker, in the words the card uses: a chokepoint's mark, then the substitutability rating
+// ("Chokepoint · Very hard to substitute"); a stage that is not a chokepoint shows its substitutability alone
+const verdictHTML = (b, sub) => {
+  const subW = sub ? `<span>${esc(SUBWORD[sub] || sub)}</span>` : '';
+  if (isChoke(b)) return `<span class="ch-band ch-verdict">${chokeMark()}${subW ? `<span class="sep" aria-hidden="true">·</span>${subW}` : ''}</span>`;
+  return subW ? `<span class="ch-band ch-verdict">${subW}</span>` : '';
+};
 const TILE_WORD = { 'component-costs': 'The economics', geopolitics: 'The contest' }; // the second item of the kicker for the two chapters that are not stages
-// the contents rail: the chapter's sections, its figures by number, and the chain (the stages with their meters, the
-// current one in wine, then the two chapters that look across them). Under 1200 px only On this page shows, as a line of links
+// the contents rail: the chapter's sections, its figures by number, and the chain (the stages, each chokepoint with the mark's
+// dot at its line's end, the current one in wine, then the two chapters that look across them). Under 1200 px only On this
+// page shows, as a line of links
 function railHTML(ch, stageIdx, toc) {
   const figs = ch.figList || [];
   const item = (c, i) => {
-    const b = (c.meta.card || {}).concentration || '', cur = c.id === ch.id;
-    return `<li class="stage-cell"${i != null ? ` data-band="${BANDS[b] || 0}"` : ''}${cur ? ' aria-current="true"' : ''}><a href="${esc(c.id)}/" data-route="#${esc(c.id)}" aria-label="${pad(c.number)} ${esc(c.title)}${b && i != null ? ', ' + esc(b) : ''}"${cur ? ' aria-current="page"' : ''}><span class="n">${pad(c.number)}</span><span class="t">${esc(c.title)}</span>${i != null ? meterHTML(b) : ''}</a></li>`;
+    const cp = i != null && isChoke((c.meta.card || {}).concentration), cur = c.id === ch.id;
+    return `<li class="stage-cell"${cp ? ' data-cpk="1"' : ''}${cur ? ' aria-current="true"' : ''}><a href="${esc(c.id)}/" data-route="#${esc(c.id)}" aria-label="${pad(c.number)} ${esc(c.title)}${cp ? ', chokepoint' : ''}"${cur ? ' aria-current="page"' : ''}><span class="n">${pad(c.number)}</span><span class="t">${esc(c.title)}</span>${cp ? chokeMark({ word: false, attrs: ' title="Chokepoint"' }) : ''}</a></li>`;
   };
   const across = chapters.filter((c) => !isStage(c)).concat(geo ? [geo] : []);
   return `<nav class="ch-rail ch-ledger" aria-label="${esc(ch.title)}: contents">`
@@ -1218,7 +1231,7 @@ function chapterHTML(ch) {
   const plateGl = isStage(ch) ? cardId(nameplate(m.card, ch.title, (h) => glossaryWrap(h, cardUsed), cardCtx, where)) : '';
   // one numbering (28 Oct 2026): a stage is "Stage 4 of 14" (its chapter number is the same, so "Chapter 04" went); the two
   // chapters across the chain keep their chapter number and their word
-  const kick = `<p class="ch-kick">${stageIdx >= 0 ? `<span>Stage ${stageIdx + 1} of ${stages.length}</span>` : `<span>Chapter ${pad(ch.number)}</span><span>${esc(TILE_WORD[ch.id] || '')}</span>`}${bandMark(conc, ((m.card || {}).substitutability || {}).band)}</p>`;
+  const kick = `<p class="ch-kick">${stageIdx >= 0 ? `<span>Stage ${stageIdx + 1} of ${stages.length}</span>` : `<span>Chapter ${pad(ch.number)}</span><span>${esc(TILE_WORD[ch.id] || '')}</span>`}${verdictHTML(conc, ((m.card || {}).substitutability || {}).band)}</p>`;
   const facts = `<p class="ch-meta"><span class="label">${ch.words.toLocaleString('en-US')} words / ${mins} min</span><span class="label">Specimen: ${esc(SPECIMEN_NAME[specimen] || specimen.replace(/-/g, ' '))}</span><span class="label">Updated ${CITE_DAY(ch.id)}</span>${ch.cites.length ? `<span class="label">${ch.cites.length} sources</span>` : ''}</p>`;
   // the specimen's slot and its caption; the two chapters that are not stages set their drawing on the night ground (data-night)
   // since 20 Nov 2026 chapters 15 and 16 draw on the page's own ground like the stages (owner: "white as well, not black"), so no page sets data-night
@@ -1226,9 +1239,9 @@ function chapterHTML(ch) {
   const spec = `<figure class="ch-spec"${plateH[specimen] ? ` style="--draw-h:${plateH[specimen]}px"` : ''}${night ? ' data-night="1"' : ''}${ps.length ? ` data-parts="${esc(JSON.stringify(ps.map((p) => Object.assign({ n: +p.n, name: p.label || p.name }, Array.isArray(p.light) && p.light.length ? { light: p.light.map((h) => (h.only ? { only: h.only } : {})) } : {}))))}"` : ''}>`
     + `<div class="ch-spec-draw"></div>`
     + `<figcaption class="ch-spec-cap${ch.rendered.parts ? ' has-parts' : ''}"><span class="label">Specimen ${pad(ch.number)} · ${esc(ch.title)}</span>${m.specimenCaption ? `<p>${esc(m.specimenCaption)}</p>` : ''}${ch.rendered.parts}</figcaption></figure>`;
-  // On this page: In plain terms, the chokepoint card, the chapter's own sections, the flashcards and the sources
+  // On this page: In plain terms, the stage card, the chapter's own sections, the flashcards and the sources
   const fc = flashcards[ch.id], hasDeck = fc && Array.isArray(fc.cards) && fc.cards.length;
-  const toc = (m.plain ? [[`${ch.id}--plain`, 'In plain terms']] : []).concat(plate ? [[`${ch.id}--card`, 'Chokepoint card']] : []).concat((ch.headings || []).map((h) => [h.id, inline(h.text, { id: ch.id, cites: [], figures: [] }).replace(/<sup[\s\S]*?<\/sup>/g, '')]))
+  const toc = (m.plain ? [[`${ch.id}--plain`, 'In plain terms']] : []).concat(plate ? [[`${ch.id}--card`, 'Stage card']] : []).concat((ch.headings || []).map((h) => [h.id, inline(h.text, { id: ch.id, cites: [], figures: [] }).replace(/<sup[\s\S]*?<\/sup>/g, '')]))
     .concat(hasDeck ? [[`${ch.id}--flashcards`, 'Flashcards']] : []).concat(ch.cites.length ? [[`${ch.id}--sources`, 'Sources']] : []);
   // data-open: the chapter opens on its explainer (openingExplainer), which follows In plain terms in the head (.fig-open)
   return `<article class="chapter" id="${esc(ch.id)}" data-specimen="${esc(specimen)}" data-number="${pad(ch.number)}" data-title="${esc(ch.title)}" data-caption="${esc(m.specimenCaption || '')}"${ch.openFig ? ' data-open="explainer"' : ''}>
@@ -1249,15 +1262,16 @@ const chaptersHTML = chapters.length ? chapters.map((c) => articleOf.get(c.id)).
 /* The Chain's contents page (design round eight, option 3 "clean", chosen by the owner on 28 Oct 2026; MAIN/qa/design8/b/
    b1-clean.html, its builder src/build_clean.py and the "B1 clean" section of its notes.md). Under the head (src/template.html
    .howto: the title with the three downloads, and one sentence that is also the key, chainStandfirst below) one row per
-   chapter: its drawing in a fixed box on the page's ground, its number with the band's mark, its title, and its one line in
+   chapter: its drawing in a fixed box on the page's ground, its number with the chokepoint dot, its title, and its one line in
    quieter ink. The stages run in two columns, the first half on the left (one column on a phone); the two chapters across
    the chain follow as the same rows under a small label. src/modules/contents.css lays it out.
    The rows are the list the book PDF reads (.contents-grid .item, .n and .t with href="#<id>", src/modules/print.css, which
    turns them into its contents with page numbers). The drawings and the label are not printed, and the group heads that only
    the book prints (.print-only) stand where the label is on screen. Every count comes from the chapters. */
-// the band's mark, one per stage: a solid bar for Extreme (wine), an outline for High
+// the chokepoint's mark beside a row's number: the mark's dot alone, which the standfirst's key names (a stage that is not a
+// chokepoint has none)
 const bandOf = (ch) => ((ch.meta && ch.meta.card) || {}).concentration || '';
-const contentsMark = (band) => (band === 'Extreme' || band === 'High' ? `<i class="ct-bmk${band === 'High' ? ' h' : ''}" aria-hidden="true"></i>` : '');
+const contentsMark = (band) => (isChoke(band) ? chokeMark({ word: false, cls: 'ct-cpk' }) : '');
 const stageIds = new Set(stages.map((c) => c.id));
 const acrossChapters = chapters.filter((c) => !stageIds.has(c.id)).concat(geo ? [geo] : []);
 // the drawings: each chapter's plate, small and with no labels, light and dark (build/plate-stills.js), copied with the strip's
@@ -1279,8 +1293,8 @@ const acrossChapters = chapters.filter((c) => !stageIds.has(c.id)).concat(geo ? 
 // a row: the drawing, the number with the mark, the title (the link, which covers the row) and the chapter's one line
 const contentsItem = (ch) => {
   const b = bandOf(ch), img = plateImg(ch.id, 'line');
-  return `<li class="item" data-ch="${esc(ch.id)}"><span class="ct-tile">${img}</span><span class="n">${pad(ch.number)}${contentsMark(b)}</span>`
-    + `<a class="t" href="#${esc(ch.id)}" aria-label="${pad(ch.number)} ${esc(ch.title)}${b ? `, ${esc(b)} concentration` : ''}">${esc(ch.title)}</a>`
+  return `<li class="item" data-ch="${esc(ch.id)}"${isChoke(b) ? ' data-cpk="1"' : ''}><span class="ct-tile">${img}</span><span class="n">${pad(ch.number)}${contentsMark(b)}</span>`
+    + `<a class="t" href="#${esc(ch.id)}" aria-label="${pad(ch.number)} ${esc(ch.title)}${isChoke(b) ? ', chokepoint' : ''}">${esc(ch.title)}</a>`
     + `${ch.meta.oneLiner ? `<p class="ol">${esc(ch.meta.oneLiner)}</p>` : ''}</li>`;
 };
 const contentsHTML = (() => {
@@ -1288,24 +1302,22 @@ const contentsHTML = (() => {
   const col = (list, from) => `<ol class="contents-grid ct-col"${from > 1 ? ` start="${from}"` : ''}>${list.map(contentsItem).join('')}</ol>`;
   const note = `These ${word(acrossChapters.length)} chapters are not stages. They look across all ${word(n)}, at what a chip costs and at the contest over who controls each stage.`;
   // the book's own heads (print only): the stages with the key, then Across the chain with its note
-  const bookK = `<div class="contents-kr print-only"><h3 class="contents-k">The ${word(n)} stages of the chain</h3><p class="ct-key"><span><i class="ct-bmk"></i>Extreme</span><span><i class="ct-bmk h"></i>High</span></p></div>`;
+  const bookK = `<div class="contents-kr print-only"><h3 class="contents-k">The ${word(n)} stages of the chain</h3>${stages.some((c) => isChoke(bandOf(c))) ? `<p class="ct-key">${chokeMark()}</p>` : ''}</div>`;
   const list = `<section class="ct-st" aria-label="The ${word(n)} stages">${col(stages.slice(0, half), 1)}${col(stages.slice(half), half + 1)}</section>`;
   const xlist = acrossChapters.length ? `<section class="ct-x" aria-labelledby="ct-xk"><h3 class="ct-xk" id="ct-xk">Across the chain</h3>`
     + `<div class="print-only"><h3 class="contents-k">Across the chain</h3><p class="contents-note">${note}</p></div>`
     + `<div class="ct-st">${acrossChapters.map((c, i) => col([c], n + i + 1)).join('')}</div></section>` : '';
   return bookK + list + xlist;
 })();
-/* The standfirst under the title: one finding, how many stages depend on three or fewer firms (the Extreme band), as the
-   card's note defines it (BAND_NOTE), with the count from the chapters' cards. Under it the key to the rows' two marks, each
-   band's mark before its word and a short form of its note (the owner's option 2 of 28 Oct 2026, in place of one long
-   sentence that was both). The printed contents keep their own standfirst (src/template.html .howto-lede) */
-const chainStandfirst = (() => {
-  const nX = stages.filter((c) => bandOf(c) === 'Extreme').length;
-  return nX ? `${cap(word(nX))} of the ${word(stages.length)} stages depend on three or fewer firms, or on one firm with more than half the market.` : '';
-})();
-const chainKey = [['Extreme', 'three or fewer firms, or one with more than half'], ['High', 'four to six firms']]
-  .filter(([b]) => stages.some((c) => bandOf(c) === b))
-  .map(([b, t]) => `<span>${contentsMark(b)}${b}, ${t}</span>`).join('');
+/* The standfirst under the title: one finding, how many stages are chokepoints, with what the word means (the Extreme band's
+   sentence, CHOKE_NOTE), the count from the chapters' cards. Under it the key to the rows' one mark, the chokepoint's dot
+   before its word (the owner's option 2 of 28 Oct 2026 kept the standfirst and the key apart; since 22 Nov 2026 the rows
+   carry one mark, so the key has one entry). The printed contents keep their own standfirst (src/template.html .howto-lede) */
+const nChoke = stages.filter((c) => isChoke(bandOf(c))).length;
+// "Three or fewer firms can supply this stage, or one firm holds more than 65 percent of it." as a clause after "chokepoints:"
+const chokeClause = /this stage/.test(CHOKE_NOTE) ? CHOKE_NOTE.replace('this stage', 'each').replace(/ of it\.$/, '.').replace(/^\w/, (m) => m.toLowerCase()) : '';
+const chainStandfirst = nChoke ? `${cap(word(nChoke))} of the ${word(stages.length)} stages are chokepoints${chokeClause ? `: ${chokeClause}` : '.'}` : '';
+const chainKey = nChoke ? chokeMark() : '';
 const thesisHTML = 'How AI chips are made';
 const subtitleHTML = 'Every stage of the supply chain, and who controls it.';
 
@@ -1432,7 +1444,7 @@ function exposureViz(rows) {
 
 
 /* ---------------- geopolitics view ---------------- */
-let geoArticle = '', geoDek = 'Who holds each chokepoint, how the export-control campaign has unfolded since 2018, and where the chips go.';
+let geoArticle = '', geoDek = 'Who leads each segment of the chain, how the export-control campaign has unfolded since 2018, and where the chips go.';
 // the essay, the last chapter, is drawn by the same chapterHTML as the others (redesign stage 2): the opener, its specimen on the night ground and
 // the rail; it has no card, being no stage
 if (geo) { geoDek = geo.meta.oneLiner || geoDek; geoArticle = chapterHTML(geo); articleOf.set(geo.id, geoArticle); }
@@ -1449,7 +1461,7 @@ const briefingHTML = all.map((ch) => {
   const href = ch.id === 'geopolitics' ? '#geopolitics' : `#${esc(ch.id)}`;
   return `<article class="brief-card" id="brief-${esc(ch.id)}">
 <div class="brief-head"><span class="n">${pad(ch.number)}</span><a href="${href}" class="t">${esc(ch.title)}</a>
-<span class="brief-meta">${c.concentration ? `<span class="conc ${esc(c.concentration)}">${esc(c.concentration)}</span>` : ''}</span></div>
+<span class="brief-meta">${isChoke(c.concentration) ? chokeMark() : ''}</span></div>
 ${ch.meta.oneLiner ? `<p class="brief-lede">${esc(ch.meta.oneLiner)}</p>` : ''}
 ${ch.inShort ? `<div class="brief-short">${ch.inShort.replace(/<sup class="cite">[\s\S]*?<\/sup>/g, '').replace(/\s+([.,;:])/g, '$1')}</div>` : ''}
 ${leaders ? `<p class="brief-leaders"><span class="label">Who leads</span> ${leaders}</p>` : ''}
@@ -1522,14 +1534,21 @@ const pageDate = (key, content, file) => {
 // the source-tier key sits at the top of each chapter's Sources list (SOURCE_KEY), where the A and B marks are; the footer no longer
 // repeats it (owner, 11 Nov 2026: "i'd like for it to be shorter"). The name stays for the pages that take the footer from here
 const footerKey = footer;
-const suppliersIntro = suppliers.length ? `What each of the ${suppliers.length} firms makes, where it is based, and how hard it would be to replace.` : 'The supplier list is not compiled yet.';
+const suppliersIntro = suppliers.length ? `What each of the ${suppliers.length} firms makes, where it is based, and its position in its market.` : 'The supplier list is not compiled yet.';
+// each firm's market position as readers see it (owner, 23 Nov 2026), read from src/app.js Suppliers.POSITION so the page and
+// the app use the same words: the data keeps Critical, Important, Contested and Diversified, and readers see these
+const POSITION = (() => { const m = /\bPOSITION: (\{[^}]*\})/.exec(read(path.join(root, 'src', 'app.js')) || ''); try { if (m) return new Function('return ' + m[1])(); } catch (e) { /* reported below */ } warn('suppliers: src/app.js Suppliers.POSITION could not be read, so the data\'s level names show'); return { Critical: 'Critical', Important: 'Important', Contested: 'Contested', Diversified: 'Diversified' }; })();
 // the four counts beside the Suppliers title, from the list itself: firms, the countries they are based in, the segments (the
-// list's 20 categories) and the firms rated Critical, whose mark is the page's one red wine
+// list's 20 categories) and the dominant firms (data "Critical"), whose mark is the page's one red wine
 const suppliersFacts = suppliers.length ? `<dl class="sup-facts-row">${[
   // "home countries": where the firms are based (the Glossary counts its country entries, a different number; 28 Oct 2026)
   [suppliers.length, 'firms'], [new Set(suppliers.map((r) => r.country)).size, 'home countries'], [new Set(suppliers.map((r) => r.category)).size, 'segments'],
-  [suppliers.filter((r) => r.chokepoint === 'Critical').length, 'Critical']
-].map(([n, k], i) => `<div><dt>${i === 3 ? '<i class="sup-mk" aria-hidden="true"></i>' : ''}${k}</dt><dd>${n}</dd></div>`).join('')}</dl>` : '';
+  [suppliers.filter((r) => r.chokepoint === 'Critical').length, POSITION.Critical]
+].map(([n, k], i) => `<div><dt>${i === 3 ? '<i class="sup-mk" aria-hidden="true"></i>' : ''}${esc(k)}</dt><dd>${n}</dd></div>`).join('')}</dl>` : '';
+// the firm filter's market positions (the values stay the data's, which the app matches on) and the key to the names' colors
+// under the tab row: red wine for dominant, ink for major or challenger, gray for one of many (src/modules/suppliers.css)
+const suppliersPositionOptions = `<option value="">All market positions</option>${['Critical', 'Important', 'Contested', 'Diversified'].map((lv) => `<option value="${lv}">${esc(POSITION[lv])}</option>`).join('')}`;
+const suppliersKey = `<p class="sup-key" id="sup-key" aria-hidden="true"><b class="k-crit">${esc(POSITION.Critical)}</b><b>${esc(POSITION.Important)} or ${esc(POSITION.Contested.toLowerCase())}</b><b class="k-div">${esc(POSITION.Diversified)}</b></p>`;
 // the Export Controls dek and the note under the China revenue charts, printed by the main page and by /export-controls/ (build/modules/reference-pages.js)
 const exposureFirms = new Set(exposure.map((r) => r.firm)).size;
 const controlsDek = `The main rules since 2018, what can still be sold to China, and China's share of revenue at ${exposureFirms} firms, from their filings.`;
@@ -1598,7 +1617,7 @@ const suppliersData = suppliers.map((r) => {
 });
 // each firm's chart address, for the search entries of the China revenue rows (the rows themselves stay as filed, since the page exports them)
 const exposureLinks = {}; Object.keys(exposureJoin.byFirm).forEach((f) => { exposureLinks[f] = exposureJoin.href(f); });
-const data = { specimenNames: SPECIMEN_NAME, landscape, landscapeNotes, landscapeCompare, suppliers: suppliersData, timeline, matrix, flows, exposure, exposureLinks, chapters: all.map((c) => { const card = c.meta.card || {}; return { id: c.id, number: c.number, stage: isStage(c), title: c.title, specimen: c.meta.specimen, oneLiner: c.meta.oneLiner || '', plain: String(c.meta.plain || '').replace(/\s*\(\[source\]\([^)\s]*\)\)/g, ''), score: +card.chokepointScore || 0, concentration: card.concentration || '', band: card.concentration || '', bandRank: BANDS[card.concentration] || 0, substitutability: card.substitutability || null, leaders: card.leaders || [], countries: card.countries || [], substitution: card.substitution || {}, chinaStatus: card.chinaStatus || '', usStatus: card.usStatus || '' }; }) };
+const data = { specimenNames: SPECIMEN_NAME, landscape, landscapeNotes, landscapeCompare, suppliers: suppliersData, timeline, matrix, flows, exposure, exposureLinks, chapters: all.map((c) => { const card = c.meta.card || {}; return { id: c.id, number: c.number, stage: isStage(c), title: c.title, specimen: c.meta.specimen, oneLiner: c.meta.oneLiner || '', plain: String(c.meta.plain || '').replace(/\s*\(\[source\]\([^)\s]*\)\)/g, ''), score: +card.chokepointScore || 0, concentration: card.concentration || '', band: card.concentration || '', bandRank: BANDS[card.concentration] || 0, chokepoint: isChoke(card.concentration), substitutability: card.substitutability || null, leaders: card.leaders || [], countries: card.countries || [], substitution: card.substitution || {}, chinaStatus: card.chinaStatus || '', usStatus: card.usStatus || '' }; }) };
 let html = read(path.join(root, 'src', 'template.html'));
 const fill = (k, v) => { html = html.split(`{{${k}}}`).join(v); };
 // the route before boot, inlined in <head>: it shows the routed view while the rest of the page arrives (src/preroute.js),
@@ -1641,7 +1660,7 @@ const modDir = (d) => (fs.existsSync(d) ? fs.readdirSync(d).filter((f) => !f.sta
 const moduleCSS = modDir(path.join(root, 'src', 'modules')).filter((f) => f.endsWith('.css')).map((f) => `\n/* module: ${f} */\n` + read(path.join(root, 'src', 'modules', f))).join('\n');
 const siteCSS = read(path.join(root, 'src', 'styles.css')) + moduleCSS; // dist/assets/site.css (the shared files, below)
 // build modules: build/modules/*.js each export a function (ctx) returning { PLACEHOLDER: html, ... }
-const ctx = { root, fs, path, all, chapters, geo, stages, data, esc, pad, word, cap, read, readJSON, markdown, inline, tierOf, wordCount, warn, glossaryWrap, BAND_NOTE, SUB_NOTE,
+const ctx = { root, fs, path, all, chapters, geo, stages, data, esc, pad, word, cap, read, readJSON, markdown, inline, tierOf, wordCount, warn, glossaryWrap, BAND_NOTE, SUB_NOTE, isChoke, chokeMark, CHOKE_NOTE,
   // the footer and the dates as the main page prints them, for the reference pages and the summary
   slug, footerKey, builtOn, builtStr, flashcards, pageDate, dayStr,
   // the flashcard deck, for the one that ends Start here (build/modules/walk.js), and the glossary (the home search field that showed its count went on 27 Oct 2026)
@@ -1660,7 +1679,7 @@ fill('N_STAGES', String(stages.length)); fill('STAGES_WORD', word(stages.length)
 // the counter: each hash route counts as its own page ("/lithography", "/suppliers"), and the query string is dropped;
 // the walk's step addresses (#/walk/<chapter>, replaced as the reader scrolls Start here) all count as the home page; a chapter's
 // own page counts as its address, /lithography/, whatever section it is at (as the readable pages counted until 28 Oct 2026)
-fill('ANALYTICS', SITE.analytics ? `<script>window.goatcounter={path:function(){var p=location.pathname.replace(/index\\.html$/,'');if(p!=='/')return p;return (location.hash||'').replace(/^#\\/?/,'/').replace(/\\?.*$/,'').replace(/^\\/walk\\/.*$/,'/')||'/';}};</script>\n<script async src="https://gc.zgo.at/count.js" data-goatcounter="${esc(SITE.analytics)}"></script>` : ''); fill('THESIS', thesisHTML); fill('SUBTITLE', subtitleHTML); fill('CHAIN', chainTrack(stages, null));
+fill('ANALYTICS', SITE.analytics ? `<script>window.goatcounter={path:function(){var p=location.pathname.replace(/index\\.html$/,'');if(p!=='/')return p;return (location.hash||'').replace(/^#\\/?/,'/').replace(/\\?.*$/,'').replace(/^\\/walk\\/.*$/,'/')||'/';}};</script>\n<script async src="https://gc.zgo.at/count.js" data-goatcounter="${esc(SITE.analytics)}"></script>` : ''); fill('THESIS', thesisHTML); fill('SUBTITLE', subtitleHTML);
 // Home is the Start here walk (#/ and #/intro open the same view), so it has one entry
 const sheetPages = [['#/', 'Home'], ['#/chain', 'Supply Chain'], ['#/landscape', 'AI Chips'], ['#/suppliers', 'Suppliers'], ['#/controls', 'Export Controls'], ['#/glossary', 'Glossary']].map((p) => `<a href="${p[0]}">${p[1]}</a>`).join('');
 const sheetItem = (ch) => `<li><a href="${ch.id === 'geopolitics' ? '#geopolitics' : '#' + esc(ch.id)}"><span class="n">${pad(ch.number)}</span><span class="t">${esc(ch.title)}</span></a></li>`;
@@ -1673,7 +1692,7 @@ fill('CONTENTS', contentsHTML); fill('CHAIN_STANDFIRST', chainStandfirst); fill(
 const ftMark = (html.match(/<svg class="wm-tile"[\s\S]*?<\/svg>/) || [])[0] || '';
 const ftLead = ftMark ? `<span class="ft-mark" aria-hidden="true">${ftMark}</span>` : '';
 fill('FOOTER', ftLead + footer); fill('FOOTER_KEY', ftLead + footerKey);
-fill('SUPPLIERS_INTRO', suppliersIntro); fill('SUPPLIERS_FACTS', suppliersFacts); fill('SUPPLIERS_REVENUE_NOTE', suppliersRevenueNote); fill('BUILT', builtStr);
+fill('SUPPLIERS_INTRO', suppliersIntro); fill('SUPPLIERS_FACTS', suppliersFacts); fill('SUPPLIERS_POSITION_OPTIONS', suppliersPositionOptions); fill('SUPPLIERS_KEY', suppliersKey); fill('SUPPLIERS_REVENUE_NOTE', suppliersRevenueNote); fill('BUILT', builtStr);
 // the PDF title page's art ships beside the page
 // explainer animations: the rendered videos and stills go to dist/media
 { const md = path.join(root, 'media'); if (fs.existsSync(md)) { fs.mkdirSync(path.join(root, 'dist', 'media'), { recursive: true }); fs.readdirSync(md).filter((f) => /\.(mp4|jpg)$/.test(f) && [...USED_MEDIA].some((u) => f.startsWith(u + '-'))).forEach((f) => fs.copyFileSync(path.join(md, f), path.join(root, 'dist', 'media', f))); } }
@@ -1828,7 +1847,7 @@ const searchData = (() => {
   return idx;
 })();
 // the definitions the pop-ups show, by the term's key (its data-term), the specimens' names, and the names the empty search suggests: two short
-// terms, two firms that matter (Critical or Important), a chip by its own name and a country (src/app.js Tools.tryNames)
+// terms, two firms that matter (a dominant or major market position: data Critical or Important), a chip by its own name and a country (src/app.js Tools.tryNames)
 const termsData = (() => {
   const defs = {}; glEntries.forEach((g) => { defs[g.key] = [g.term.trim(), g.plain]; });
   const big = new Set(suppliers.filter((r) => r.chokepoint === 'Critical' || r.chokepoint === 'Important').map((r) => r.name));

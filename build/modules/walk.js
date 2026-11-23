@@ -24,13 +24,13 @@ module.exports = function (ctx) {
   const stepId = (id) => '/walk/' + id;
   const stageIndex = (id) => stages.findIndex((s) => s.id === id);
 
-  /* the concentration band in the site's four-bar meter (src/modules/chapter.css .meter), as the chapters show it (28 Oct 2026) */
-  const RANK = { Extreme: '5', High: '4', Moderate: '3', Low: '3' };
-  const BAR = { Extreme: 4, High: 3, Moderate: 2, Low: 1 };
+  /* a chokepoint's mark at the foot of its step (build/build.js chokeMark), a button that opens the word's glossary entry; a
+     stage that is not a chokepoint shows none (owner, 22 Nov 2026) */
+  const isChoke = ctx.isChoke || ((band) => band === 'Extreme');
+  const mark = ctx.chokeMark || ((o = {}) => `<span class="cpk"><i aria-hidden="true"></i>Chokepoint</span>`);
   function bandHTML(c) {
-    if (!c.band) return '';
-    const l = BAR[c.band] || 0;
-    return `<span class="wk-score" data-rank="${RANK[c.band] || '3'}"><button type="button" class="gl-term label wk-score-term" data-term="concentration" data-note="${esc((ctx.BAND_NOTE || {})[c.band] || '')}" data-head="${esc(c.band)} concentration">Concentration</button><span class="wk-sc"><span class="meter" data-level="${l}" aria-hidden="true">${[1, 2, 3, 4].map((k) => `<b${k <= l ? ' class="on"' : ''}></b>`).join('')}</span><b>${esc(c.band)}</b></span></span>`;
+    if (!isChoke(c.band)) return '';
+    return mark({ tag: 'button', cls: 'gl-term wk-score-term', attrs: ' type="button" data-term="chokepoint"' });
   }
 
   /* who leads: at most three, name then country code, in the site's chip */
@@ -67,37 +67,35 @@ module.exports = function (ctx) {
 
   /* ---------------- the chain at a glance (the hero, under the title, the subtitle and the read's counts) ----------------
      The home's structure before the redesign, which the owner found more minimalist and straight to the point (27 Oct 2026),
-     in the redesign's type and colors. One sentence gives how many stages are rated Extreme and what that means (the card's
-     own note, ctx.BAND_NOTE); the stages follow in the order a chip is made, one row each: the number, the name (a link to
-     the chapter), and the stage's band from its card, a four-step meter and the plain word. The meter and the word are one
-     button, which puts the stage's specimen on the stage beside the hero (src/modules/walk.js): hovering, focusing or
-     clicking it picks it. The row whose specimen is showing is the reader's selection, on a paper tint with its number in
-     wine; Extreme is wine, its meter and its word (the visual pass of 27 Oct 2026), High the lighter tint. Chip design shows first, where the chain
-     starts (owner, 27 Oct). The rows carry the specimen as data-spec, not data-specimen, so the page's scroll tracking
-     (src/app.js Sections) follows the hero as one item. Nothing here is typed: the names, bands, specimens and captions are
-     the chapters' own, and every count is computed. */
-  const LEVEL = { Extreme: 4, High: 3, Moderate: 2, Low: 1 };
-  // the band's meter, the site's one component (src/modules/chapter.css .meter): four rising bars, as many lit as the band's rank
-  const meter = (band) => `<span class="meter wk-gl-m" data-level="${LEVEL[band] || 0}" aria-hidden="true">${[1, 2, 3, 4].map((k) => `<b${k <= (LEVEL[band] || 0) ? ' class="on"' : ''}></b>`).join('')}</span>`;
-  const nExtreme = stages.filter((s) => (card[s.id] || {}).band === 'Extreme').length;
-  // the card's note reads "Three or fewer firms could supply this stage today, or one firm holds more than half of it."; here it
-  // follows "7 of the 14 stages are rated Extreme, meaning". A changed note drops the clause.
-  const xNote = String((ctx.BAND_NOTE || {}).Extreme || '');
+     in the redesign's type and colors. One sentence gives how many stages are chokepoints and what the word means (the
+     card's own note, ctx.CHOKE_NOTE); the stages follow in the order a chip is made, one row each: the number, the name (a
+     link to the chapter), and at the row's end a button that puts the stage's specimen on the stage beside the hero
+     (src/modules/walk.js): hovering, focusing or clicking it picks it. A chokepoint's button carries the chokepoint mark
+     (build/build.js chokeMark), in ink; any other stage's is the same hit area with no mark (owner, 22 Nov 2026: "keep
+     everything as unlabeled and the seven as choke points"). The row whose specimen is showing is the reader's selection,
+     on a paper tint with its number in wine. Chip design shows first, where the chain starts (owner, 27 Oct). The rows carry
+     the specimen as data-spec, not data-specimen, so the page's scroll tracking (src/app.js Sections) follows the hero as
+     one item. Nothing here is typed: the names, ratings, specimens and captions are the chapters' own, and every count is
+     computed. */
+  const nChoke = stages.filter((s) => isChoke((card[s.id] || {}).band)).length;
+  // the note reads "Three or fewer firms can supply this stage, or one firm holds more than 65 percent of it."; here it
+  // follows "7 of the 14 stages are chokepoints:". A changed note drops the clause.
+  const xNote = String(ctx.CHOKE_NOTE || (ctx.BAND_NOTE || {}).Extreme || '');
   const xMeaning = /this stage/.test(xNote) ? xNote.replace('this stage', 'each').replace(/ of it\.$/, '.').replace(/\.$/, '').replace(/^\w/, (m) => m.toLowerCase()) : '';
   const SHOW_FIRST = Math.max(0, stages.findIndex((s) => s.id === 'design-and-eda'));
   const chOf = (id) => all.find((c) => c.id === id) || {};
   const specOf = (s) => { const m = chOf(s.id).meta || {}; return { spec: m.specimen || '', cap: m.specimenCaption || '' }; };
   const glanceRow = (s, i) => {
-    const b = (card[s.id] || {}).band || '', sp = specOf(s), on = i === SHOW_FIRST;
-    const pick = b ? `<button type="button" class="wk-gl-c" aria-pressed="${on}" tabindex="${on ? 0 : -1}" data-spec="${esc(sp.spec)}" data-n="${pad(i + 1)}" data-t="${esc(s.title)}" data-cap="${esc(sp.cap)}">${meter(b)}<span class="wk-gl-w">${esc(b)}<span class="sr-only"> concentration. Show its specimen</span></span></button>` : '';
+    const cp = isChoke((card[s.id] || {}).band), sp = specOf(s), on = i === SHOW_FIRST;
+    const pick = `<button type="button" class="wk-gl-c" aria-pressed="${on}" tabindex="${on ? 0 : -1}" data-spec="${esc(sp.spec)}" data-n="${pad(i + 1)}" data-t="${esc(s.title)}" data-cap="${esc(sp.cap)}">${cp ? mark({ cls: 'wk-gl-m' }) : ''}<span class="sr-only">${cp ? '. ' : ''}Show its specimen</span></button>`;
     // the first three firms on the stage's card, on a quiet line under its name (owner, 29 Oct 2026)
     const ls = ((card[s.id] || {}).leaders || []).slice(0, 3);
     const lead = ls.length ? `<span class="wk-gl-lead">${ls.map((l) => `<span class="f">${esc(l.name)}</span>`).join(', ')}</span>` : '';
-    return `<li data-level="${LEVEL[b] || 0}"${on ? ' class="is-shown"' : ''}><a class="wk-gl-a" ${pageLink(s.id)}><span class="wk-gl-n">${pad(i + 1)}</span><span class="wk-gl-t">${esc(s.title)}${lead}</span></a>${pick}</li>`;
+    return `<li${cp ? ' data-cpk="1"' : ''}${on ? ' class="is-shown"' : ''}><a class="wk-gl-a" ${pageLink(s.id)}><span class="wk-gl-n">${pad(i + 1)}</span><span class="wk-gl-t">${esc(s.title)}${lead}</span></a>${pick}</li>`;
   };
   const GLANCE = stages.length ? `<section class="wk-gl" aria-labelledby="wk-gl-h">
 <h2 class="label wk-gl-h" id="wk-gl-h">The chain at a glance</h2>
-${nExtreme ? `<p class="wk-gl-p"><b>${nExtreme} of the ${stages.length} stages</b> are rated Extreme${xMeaning ? `, meaning ${esc(xMeaning)}` : ' concentration'}.</p>` : ''}
+${nChoke ? `<p class="wk-gl-p"><b>${nChoke} of the ${stages.length} stages</b> are chokepoints${xMeaning ? `: ${esc(xMeaning)}` : ''}.</p>` : ''}
 <ol class="wk-gl-list">${stages.map(glanceRow).join('')}</ol>
 </section>` : '';
   const first = stages[SHOW_FIRST] || {}, firstSpec = first.id ? specOf(first) : { spec: '', cap: '' };

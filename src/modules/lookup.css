@@ -124,6 +124,8 @@
 .gl-chk--important::before { height: 10px; }
 .gl-chk--contested::before { height: 10px; background: none; box-shadow: inset 0 0 0 1.25px var(--ink); }
 .gl-chk--diversified::before { height: 5px; background: var(--muted); }
+.gl-chk + .gl-chk-def { display: inline-block; vertical-align: top; margin-left: 12px; color: var(--muted); } /* what the position means, after its word, on its baseline */
+.gl-chk:has(+ .gl-chk-def) { vertical-align: top; }
 .gl-note { margin: 16px 0 0; font-family: var(--font-ui); font-size: 13.5px; line-height: 1.55; color: var(--muted); overflow-wrap: anywhere; }
 .gl-note b { font-weight: 600; color: var(--ink-2); }
 .gl-links { display: flex; flex-wrap: wrap; gap: 6px 26px; margin: 22px 0 0; font-family: var(--font-ui); font-size: 14.5px; line-height: 1.5; }
@@ -156,10 +158,8 @@
 .gl-cards li { border-bottom: 1px solid var(--line); }
 .gl-cards a { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 16px; padding: 11px 0 12px; color: inherit; text-decoration: none; }
 .gl-card-t { font-family: var(--font-body); font-size: var(--t-small); color: var(--ink); }
-.gl-card-b { display: inline-flex; align-items: flex-end; gap: 7px; font-family: var(--font-ui); font-size: 13px; color: var(--ink-2); }
-/* each stage's band as the chain's mark: Extreme a wine bar, High an outlined one */
-.gl-card-b::before { content: ""; display: inline-block; width: 5px; height: 12px; margin-bottom: 3px; background: var(--bar-5); }
-.gl-card-b--high::before { height: 6px; background: transparent; box-shadow: inset 0 0 0 1.25px var(--ink); }
+/* a chokepoint's mark beside the stage's name (src/styles.css .cpk); any other stage has none (22 Nov 2026) */
+.gl-card-b { align-self: baseline; font-size: 13px; }
 .gl-card-n { grid-column: 1 / -1; font-family: var(--font-ui); font-size: 13px; line-height: 1.5; color: var(--muted); }
 .gl-cards a:hover .gl-card-t { text-decoration: underline; }
 .gl-cats li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 16px; padding: 10px 0 11px; border-bottom: 1px solid var(--line); font-family: var(--font-ui); font-size: 14.5px; line-height: 1.5; }

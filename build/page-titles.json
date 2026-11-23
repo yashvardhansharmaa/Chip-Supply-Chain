@@ -68,7 +68,7 @@
   {
     "path": "/test-and-assembly/",
     "title": "How chips are tested and assembled",
-    "description": "How chips are tested on the wafer and after packaging. Japan's Advantest took about 65 percent of 2025 spending on chip testers, by its own estimate."
+    "description": "How chips are tested on the wafer and after packaging. Japan's Advantest made 62.7 percent of 2025 sales of test tools, by CSET's count of TechInsights data."
   },
   {
     "path": "/systems-and-networking/",
@@ -103,7 +103,7 @@
   {
     "path": "/suppliers/",
     "title": "Who makes what in the AI chip supply chain",
-    "description": "What each of the 226 firms in the AI chip supply chain makes, where it is based and how hard it would be to replace. Revenue comes from company filings."
+    "description": "What each of the 226 firms in the AI chip supply chain makes, where it is based and its position in its market. Revenue figures come from company filings."
   },
   {
     "path": "/export-controls/",
@@ -113,6 +113,6 @@
   {
     "path": "/glossary/",
     "title": "Semiconductor and AI chip glossary",
-    "description": "Plain definitions of 208 terms from the AI chip supply chain, such as CoWoS, EUV and HBM, each linked to the chapters that use it."
+    "description": "Plain definitions of 207 terms from the AI chip supply chain, such as CoWoS, EUV and HBM, each linked to the chapters that use it."
   }
 ]

@@ -2,7 +2,7 @@
  *
  * A world map drawn from the same coastline rings the 3D globe specimen uses
  * (specimens/globe.js is parsed at build time, so the two never drift), the
- * chain's chokepoint towns pinned on it, and one panel per country built from
+ * chain's main sites pinned on it, and one panel per country built from
  * the chapter cards, the country-share matrix, the supplier list and the
  * China revenue series. Nothing here is typed from memory: every figure is
  * computed from ctx.data or the chapter front matter.
@@ -52,9 +52,10 @@ const SECONDARY = ['GB', 'IL', 'IN', 'FR', 'AT', 'CH', 'TH'];
  * the stage's chapter card (a leader's headquarters or main site). Editorial, like TOWN_CC. Since the merge of
  * 27 Oct 2026 Foundries and Fabs, led by TSMC, stands at Hsinchu, where the front end stood; Tainan, the old
  * foundry stop, is no longer on the route. Since 28 Oct 2026 each stop stands in its stage's leading country, so one list
- * drives a country's count, its cards and the stops it lights: Test and Assembly (led by Taiwan) at Kaohsiung, home of
- * ASE, in place of Penang, and Systems and Networking (led by the United States) at Santa Clara, home of Nvidia, in place
- * of Taipei (the cities as data/suppliers.json gives them). The build warns when a stop leaves its leading country. */
+ * drives a country's count, its cards and the stops it lights: Systems and Networking (led by the United States) at Santa
+ * Clara, home of Nvidia, in place of Taipei (the cities as data/suppliers.json gives them). Test and Assembly stood at
+ * Kaohsiung, home of ASE, in place of Penang, until 23 Nov 2026, when its card named Japan first (owner): it stands at
+ * Tokyo, home of Advantest, the main provider of test tools. The build warns when a stop leaves its leading country. */
 const STOPS = [
   ['design-and-eda', 'San Jose', 37.34, -121.89, 'US', -14, -8],
   ['silicon-and-wafers', 'Tokyo', 35.68, 139.69, 'JP', -16, -14],
@@ -67,7 +68,7 @@ const STOPS = [
   ['memory-and-hbm', 'Icheon', 37.28, 127.44, 'KR', 0, 0],
   ['advanced-packaging', 'Kaohsiung', 22.63, 120.30, 'TW', 10, 12],
   ['substrates-and-pcbs', 'Ogaki', 35.36, 136.62, 'JP', -22, 6],
-  ['test-and-assembly', 'Kaohsiung', 22.63, 120.30, 'TW', -10, 14],
+  ['test-and-assembly', 'Tokyo', 35.68, 139.69, 'JP', 18, -2],
   ['systems-and-networking', 'Santa Clara', 37.35, -121.95, 'US', -10, 14],
   ['data-centers-and-power', 'Ashburn', 39.04, -77.49, 'US', 0, 0]
 ];
@@ -84,7 +85,7 @@ const ROLE = {
   SG: 'Test, assembly and mature-node fabs',
   GB: 'Arm and the other processor designs that most chips license',
   IL: 'Metrology and inspection tools, and chip design centers',
-  AT: 'The mask writers and substrates that two extreme chokepoints depend on'
+  AT: 'The mask writers and substrates that two chokepoints depend on'
 };
 
 /* Which chapter each matrix segment belongs to. */
@@ -173,9 +174,11 @@ function labelSides(stops, VW, VH, warn) {
 
 module.exports = function (ctx) {
   const esc = ctx.esc, word = ctx.word, warn = ctx.warn, data = ctx.data;
+  // the chokepoint mark (build/build.js chokeMark): readers see one rating word, and a stage that is not a chokepoint none
+  const mark = ctx.chokeMark || ((o = {}) => `<span class="cpk${o.cls ? ' ' + o.cls : ''}"><i aria-hidden="true"></i>${o.word === false ? '' : 'Chokepoint'}</span>`);
   const chapters = data.chapters || [];
   const stages = chapters.filter((c) => c.stage); // the stages of the chain (build/stages.js); the economics chapter and the essay are not
-  const cardCount = chapters.filter((c) => c.concentration).length; // only the stage chapters carry a chokepoint card
+  const cardCount = chapters.filter((c) => c.concentration).length; // only the stage chapters carry a stage card
   const matrix = (data.matrix || []).filter((r) => r.shares);
   const suppliers = data.suppliers || [];
   const exposure = data.exposure || [];
@@ -221,7 +224,7 @@ module.exports = function (ctx) {
   sb = block('SUBS') || '';
   while ((m = subsRe.exec(sb))) towns.push({ name: m[1], lat: +m[2], lon: +m[3], score: 2, sub: true, note: m[4].trim(), ch: null, cc: TOWN_CC[m[1]] || '' });
   const sites = towns.filter((t) => !t.sub);
-  if (sites.length !== 19) warn('summary-a: expected 19 chokepoint towns in globe.js, found ' + sites.length);
+  if (sites.length !== 19) warn('summary-a: expected 19 main sites in globe.js, found ' + sites.length);
   towns.forEach((t) => { if (!t.cc) warn('summary-a: no country for the town ' + t.name); });
 
   /* ---------------- projection ---------------- */
@@ -309,11 +312,10 @@ module.exports = function (ctx) {
     const cats = {};
     firms.forEach((f) => { cats[f.category] = (cats[f.category] || 0) + 1; });
     const topCats = Object.keys(cats).sort((a, b) => cats[b] - cats[a]).slice(0, 3);
-    const own = towns.filter((t) => t.cc === cc);
     const lead = [];
     chapters.forEach((c) => (c.leaders || []).forEach((l) => { if (l.country === cc && lead.indexOf(l.name) < 0) lead.push(l.name); }));
     const top5 = named.filter((c) => c.band === 'Extreme').length;
-    return { cc, name, named, segs, firms, topCats, towns: own, leaders: lead, top5 };
+    return { cc, name, named, segs, firms, topCats, leaders: lead, top5 };
   }
   const info = {};
   PRIMARY.concat(SECONDARY).forEach((cc) => { info[cc] = country(cc); });
@@ -322,8 +324,9 @@ module.exports = function (ctx) {
   // the stages each country leads (its first-named on the card), for the panel's meta line and the order of the country buttons
   const ledBy = {}; stages.forEach((c) => { const first = (c.countries || [])[0]; if (first) (ledBy[first.code] = ledBy[first.code] || []).push(c); });
   const metaOf = (cc) => {
-    const led = ledBy[cc] || [], five = led.filter((c) => c.band === 'Extreme').length;
-    return led.length ? `leads ${word(led.length)} stage${led.length > 1 ? 's' : ''}${five ? `, ${word(five)} of them extreme` : ''}` : `named on ${word(info[cc].named.length)} chokepoint card${info[cc].named.length === 1 ? '' : 's'}`;
+    const led = ledBy[cc] || [], cp = led.filter((c) => c.chokepoint).length;
+    const of = !cp ? '' : led.length === 1 ? ', a chokepoint' : cp === 1 ? ', one of them a chokepoint' : cp === led.length ? `, ${led.length === 2 ? 'both' : 'all'} chokepoints` : `, ${word(cp)} of them chokepoints`;
+    return led.length ? `leads ${word(led.length)} stage${led.length > 1 ? 's' : ''}${of}` : `named on ${word(info[cc].named.length)} stage card${info[cc].named.length === 1 ? '' : 's'}`;
   };
 
   function panel(cc, open) {
@@ -331,8 +334,8 @@ module.exports = function (ctx) {
     const top = d.segs[0];
     const subject = theName(cc, true);
     const lede = top
-      ? `${subject} holds ${num(top.v)}% of ${lc(top.seg)}${top.rank === 1 ? ', more than any other country' : ''}, and is named on ${word(d.named.length)} of the ${word(cardCount)} chokepoint cards.`
-      : `${subject} is named on ${word(d.named.length)} of the ${word(cardCount)} chokepoint cards${d.firms.length ? `, and ${word(d.firms.length)} of the ${totalFirms} firms in the supplier list ${d.firms.length > 1 ? 'are' : 'is'} based there` : ''}.`;
+      ? `${subject} holds ${num(top.v)}% of ${lc(top.seg)}${top.rank === 1 ? ', more than any other country' : ''}, and is named on ${word(d.named.length)} of the ${word(cardCount)} stage cards.`
+      : `${subject} is named on ${word(d.named.length)} of the ${word(cardCount)} stage cards${d.firms.length ? `, and ${word(d.firms.length)} of the ${totalFirms} firms in the supplier list ${d.firms.length > 1 ? 'are' : 'is'} based there` : ''}.`;
 
     // up to three segment shares: anything it leads, or holds a tenth of
     const shares = d.segs.filter((s) => s.rank === 1 || s.v >= 10).slice(0, 3).map((s) => {
@@ -349,8 +352,8 @@ module.exports = function (ctx) {
     const led = ledBy[cc] || [];
     const cards = (led.length ? led.slice().sort((a, b) => a.number - b.number) : d.named.slice().sort((a, b) => (b.bandRank || 0) - (a.bandRank || 0) || a.number - b.number).slice(0, 3)).map((c) => {
       const note = (c.countries.find((x) => x.code === cc) || {}).note || '';
-      const l = { Extreme: 4, High: 3, Moderate: 2, Low: 1 }[c.band] || 0; // the band's four-bar meter (src/modules/chapter.css .meter)
-      return `<li class="sa-fact sa-fact--card"><a href="${href(c)}"><span class="sa-fact-k">${esc(c.title)}<b class="sa-sc" data-band="${c.bandRank || 0}"><span class="meter" data-level="${l}" aria-hidden="true">${[1, 2, 3, 4].map((k) => `<b${k <= l ? ' class="on"' : ''}></b>`).join('')}</span>${esc(c.band || '')}</b></span>${note ? `<span class="sa-fact-note">${esc(note)}</span>` : ''}</a></li>`;
+      // a chokepoint's mark beside its name; any other stage's name stands alone
+      return `<li class="sa-fact sa-fact--card"><a href="${href(c)}"><span class="sa-fact-k">${esc(c.title)}${c.chokepoint ? mark({ cls: 'sa-sc' }) : ''}</span>${note ? `<span class="sa-fact-note">${esc(note)}</span>` : ''}</a></li>`;
     });
 
     let china = '';
@@ -363,9 +366,8 @@ module.exports = function (ctx) {
       china = `<div class="sa-china"><span class="label">Where China stands</span>${rows.map((c) => `<p><a href="${href(c)}">${esc(c.title)}</a> ${esc(first(c.chinaStatus))}</p>`).join('')}</div>`;
     }
 
-    const townLine = d.towns.length
-      ? `<a href="#/geopolitics">${word(d.towns.length)} chokepoint town${d.towns.length > 1 ? 's' : ''}: ${d.towns.map((t) => esc(t.name)).join(', ')}</a>`
-      : '';
+    // the panel's foot names the firms only: its "N main sites" line came from the globe specimen's town list, which no source
+    // backs and which disagreed with the route map's stops (expert review, 23 Nov 2026); the route map keeps its own stops
     const firmLine = d.firms.length
       ? `<a href="#/suppliers">${d.firms.length} firm${d.firms.length > 1 ? 's' : ''} in the supplier list${d.topCats.length ? (d.firms.length > 1 ? `. Largest group${d.topCats.length > 1 ? 's' : ''}: ` : ', in ') + d.topCats.map((c) => esc(lcCat(c))).join('; ') : ''}</a>`
       : '<span>No firm in the supplier list</span>';
@@ -376,7 +378,7 @@ ${ROLE[cc] ? `<p class="sa-panel-meta">${metaOf(cc)}</p><p class="sa-panel-role"
 <p class="sa-panel-lede">${esc(lede)}</p>
 <ul class="sa-facts">${shares.join('')}${cards.join('')}</ul>
 ${china}
-<p class="sa-panel-foot">${firmLine}${townLine ? ' <span class="sa-dot-sep">·</span> ' + townLine : ''}</p>
+<p class="sa-panel-foot">${firmLine}</p>
 </article>`;
   }
 
@@ -387,10 +389,10 @@ ${china}
     if (!a) return '';
     const d = info[cc];
     const dia = Math.max(22, Math.round(8.25 * Math.sqrt(d.named.length)));
-    return `<button type="button" class="sa-marker" data-cc="${cc}" data-hard="${d.top5 ? 1 : 0}" style="left:${pctX(n[1])}%;top:${pctY(n[0])}%;--d0:${dia}px" aria-pressed="${cc === DEFAULT_CC}" aria-label="${esc(d.name)}: named on ${d.named.length} of the ${cardCount} chokepoint cards"><span class="sa-marker-dot"><span class="sa-marker-cc" aria-hidden="true">${cc}</span></span></button>`;
+    return `<button type="button" class="sa-marker" data-cc="${cc}" data-hard="${d.top5 ? 1 : 0}" style="left:${pctX(n[1])}%;top:${pctY(n[0])}%;--d0:${dia}px" aria-pressed="${cc === DEFAULT_CC}" aria-label="${esc(d.name)}: named on ${d.named.length} of the ${cardCount} stage cards"><span class="sa-marker-dot"><span class="sa-marker-cc" aria-hidden="true">${cc}</span></span></button>`;
   }).join('');
 
-  const chip = (cc) => `<button type="button" class="sa-chip${PRIMARY.indexOf(cc) < 0 ? ' sa-chip--minor' : ''}" data-cc="${cc}" aria-pressed="${cc === DEFAULT_CC}" title="${esc(info[cc].name)} is named on ${info[cc].named.length} of the ${cardCount} chokepoint cards">${esc(info[cc].name)}<small>${info[cc].named.length}</small></button>`;
+  const chip = (cc) => `<button type="button" class="sa-chip${PRIMARY.indexOf(cc) < 0 ? ' sa-chip--minor' : ''}" data-cc="${cc}" aria-pressed="${cc === DEFAULT_CC}" title="${esc(info[cc].name)} is named on ${info[cc].named.length} of the ${cardCount} stage cards">${esc(info[cc].name)}<small>${info[cc].named.length}</small></button>`;
   const chips = `<div class="sa-chiprow"><span class="label">Pinned on the map</span><div class="sa-chipset" role="group" aria-label="Countries pinned on the map">${PRIMARY.map(chip).join('')}</div></div>`
     + `<div class="sa-chiprow"><span class="label">Also in the chain</span><div class="sa-chipset" role="group" aria-label="Other countries in the chain">${SECONDARY.map(chip).join('')}</div></div>`;
 
@@ -440,7 +442,7 @@ ${led ? `<div class="sa-stage-leaders"><span class="label">Who leads</span><ul>$
   const numbers = [
     { n: word(hardest.length), s: `of the ${stages.length} stages are extreme chokepoints: the tallest bars in the strip above, from ${esc(hardest[0].title)} to ${esc(hardest[hardest.length - 1].title)}.`, href: '#chain', link: 'The chain' },
     euvMakers.length ? { n: word(euvMakers.length), s: `firm in the supplier list builds extreme ultraviolet scanners: ${euvMakers.map((s) => esc(s.name) + (s.city ? ' of ' + esc(s.city) : '')).join(' and ')}${euvNL != null ? `. The Netherlands holds ${num(euvNL)}% of that segment` : ''}.`, href: href(litho), link: 'Lithography' } : null,
-    { n: tkPct + '%', s: `of the chain's ${sites.length} chokepoint towns are on Taiwan or in South Korea: ${tkTW.map((t) => esc(t.name)).join(', ')}.`, href: '#/geopolitics', link: 'Geopolitics' },
+    { n: tkPct + '%', s: `of the chain's ${sites.length} main sites are on Taiwan or in South Korea: ${tkTW.map((t) => esc(t.name)).join(', ')}.`, href: '#/geopolitics', link: 'Geopolitics' },
     bigTool ? { n: num(bigTool.row.chinaShare) + '%', s: `of ${esc(bigTool.firm)}'s revenue came from China in ${esc(bigTool.row.fiscalYear)}. It is the largest equipment vendor in the supplier list, at ${esc(bigTool.revText)} a year.`, href: '#/exposure', link: 'China revenue share' } : null
   ].filter(Boolean).map((k) => `<li class="sa-num"><b>${k.n}</b><p>${k.s}</p><a href="${k.href}">${k.link} →</a></li>`).join('');
 
@@ -459,7 +461,7 @@ ${led ? `<div class="sa-stage-leaders"><span class="label">Who leads</span><ul>$
 <section class="sa-mapwrap" aria-label="The chain, country by country">
 <div class="sa-map-head">
 <h3 class="sa-h">Pick a country</h3>
-<p class="sa-sub">Copper pins mark the chain's ${word(sites.length)} chokepoint towns, taller where the stage is harder to replace; dark pins mark the ${word(towns.length - sites.length)} towns building substitutes. Where a coast is crowded, the marker sits offshore on a line back to its country.</p>
+<p class="sa-sub">Copper pins mark the chain's ${word(sites.length)} main sites, taller where the stage is harder to replace; dark pins mark the ${word(towns.length - sites.length)} towns building substitutes. Where a coast is crowded, the marker sits offshore on a line back to its country.</p>
 </div>
 <div class="sa-grid">
 <div class="sa-map"${DEFAULT_CC ? ` data-cc="${DEFAULT_CC}"` : ''}>
@@ -468,7 +470,7 @@ ${svg}
 </div>
 <div class="sa-panels" aria-live="polite">${panels}</div>
 <div class="sa-chips">${chips}</div>
-<p class="sa-legend"><span class="sa-lg sa-lg--big"></span>Marker area: how many of the ${cardCount} chokepoint cards name the country<span class="sa-lg sa-lg--hard"></span>Heavier ring: named by a stage of extreme concentration<span class="sa-lg sa-lg--pin"></span>Chokepoint town<span class="sa-lg sa-lg--sub"></span>Town building a substitute</p>
+<p class="sa-legend"><span class="sa-lg sa-lg--big"></span>Marker area: how many of the ${cardCount} stage cards name the country<span class="sa-lg sa-lg--hard"></span>Heavier ring: named by a stage of extreme concentration<span class="sa-lg sa-lg--pin"></span>Main site<span class="sa-lg sa-lg--sub"></span>Town building a substitute</p>
 </div>
 </section>
 
@@ -532,21 +534,20 @@ ${svg}
   const routeSvg = svg.replace(/<line [^>]*class="sa-leader"[^>]*\/>/g, '').replace('</svg>', `<g class="sa-routes">${route}${tails}</g></svg>`);
   // the chosen country's stops carry their town names; the label sides are solved so none covers a stop or another label
   const sides = labelSides(routeStops.map((x) => { const a = XY(x); return { key: x.c.id, cc: x.st[4], x: a[0], y: a[1], w: labW(x.st[1]) }; }), VW, VH, warn);
-  // a stop is solid ink for a stage rated Extreme and an ink ring for one rated High, as the key beside the map says
+  // a stop is a solid ink disc for a chokepoint, the Frontispiece home's solid balloon, as the key beside the map says, and an
+  // ink ring for any other stage, which the key leaves unnamed (owner, 22 Nov 2026)
   const stopBtns = routeStops.map((x) => {
     const a = XY(x), lead = ((x.c.leaders || [])[0] || {}).name || '', side = sides[x.c.id] || 'r';
-    return `<a class="sa-stop${x.st[4] === DEFAULT_CC ? ' is-on' : ''}" data-cc="${x.st[4]}" href="${href(x.c)}" style="left:${(a[0] / VW * 100).toFixed(2)}%;top:${(a[1] / VH * 100).toFixed(2)}%" data-place="${esc(x.st[1])}"${side === 'r' ? '' : ` data-lab="${side}"`} data-title="${esc(x.c.title)}" data-town="${esc(x.st[1])}, ${esc(COUNTRY[x.st[4]] || x.st[4])}" data-lead="${esc(lead)}" data-band="${esc(x.c.band || '')}" aria-label="Stop ${x.c.number}, ${esc(x.c.title)}: ${esc(x.st[1])}${lead ? ', led by ' + esc(lead) : ''}, ${x.c.band ? x.c.band.toLowerCase() + ' concentration' : ''}."><span>${x.c.number}</span></a>`;
+    return `<a class="sa-stop${x.st[4] === DEFAULT_CC ? ' is-on' : ''}" data-cc="${x.st[4]}" href="${href(x.c)}" style="left:${(a[0] / VW * 100).toFixed(2)}%;top:${(a[1] / VH * 100).toFixed(2)}%" data-place="${esc(x.st[1])}"${side === 'r' ? '' : ` data-lab="${side}"`} data-title="${esc(x.c.title)}" data-town="${esc(x.st[1])}, ${esc(COUNTRY[x.st[4]] || x.st[4])}" data-lead="${esc(lead)}"${x.c.chokepoint ? ' data-cpk="1"' : ''} aria-label="Stop ${x.c.number}, ${esc(x.c.title)}${x.c.chokepoint ? ', a chokepoint' : ''}: ${esc(x.st[1])}${lead ? ', led by ' + esc(lead) : ''}."><span>${x.c.number}</span></a>`;
   }).join('');
-  // each stop's band as the site's four-bar meter (src/modules/chapter.css .meter), as on the chapters and the summary (28 Oct 2026)
-  const LVL = { Extreme: 4, High: 3, Moderate: 2, Low: 1 };
-  const meter = (b) => `<span class="meter sa-bmk" data-level="${LVL[b] || 0}" aria-hidden="true">${[1, 2, 3, 4].map((k) => `<b${k <= (LVL[b] || 0) ? ' class="on"' : ''}></b>`).join('')}</span>`;
-  const strip = routeStops.map((x) => `<li><a class="sa-stopcard${x.st[4] === DEFAULT_CC ? ' is-on' : ''}" data-cc="${x.st[4]}" data-band="${esc(x.c.band || '')}" href="${href(x.c)}"><span class="sa-stopcard-n">${String(x.c.number).padStart(2, '0')}${meter(x.c.band)}</span><span class="sa-stopcard-t">${esc(x.c.title)}</span><span class="sa-stopcard-w">${esc(x.st[1])}&nbsp;·&nbsp;${x.st[4]}</span></a></li>`).join('');
+  // each chokepoint in the strip carries the mark's dot beside its number, as the stop above it is solid (the rail's mark)
+  const strip = routeStops.map((x) => `<li><a class="sa-stopcard${x.st[4] === DEFAULT_CC ? ' is-on' : ''}" data-cc="${x.st[4]}"${x.c.chokepoint ? ' data-cpk="1"' : ''} href="${href(x.c)}"><span class="sa-stopcard-n">${String(x.c.number).padStart(2, '0')}${x.c.chokepoint ? mark({ word: false, cls: 'sa-bmk' }) + '<span class="sr-only">, a chokepoint,</span>' : ''}</span><span class="sa-stopcard-t">${esc(x.c.title)}</span><span class="sa-stopcard-w">${esc(x.st[1])}&nbsp;·&nbsp;${x.st[4]}</span></a></li>`).join('');
   const roleOrder = Object.keys(ROLE).filter((cc) => info[cc]).sort((a, b) => ((ledBy[b] || []).length - (ledBy[a] || []).length) || (info[b].named.length - info[a].named.length));
   // the country buttons keep the meta and the role line in their markup (the reference page reads them); each country's
   // panel beside the map prints them
   const roles = roleOrder.map((cc) => `<li><button type="button" class="sa-role" data-cc="${cc}" aria-pressed="${cc === DEFAULT_CC}"><span class="sa-role-name">${esc(COUNTRY[cc] || cc)}</span><span class="sa-role-meta">${metaOf(cc)}</span><span class="sa-role-line">${esc(ROLE[cc])}</span></button></li>`).join('');
-  const ex = routeStops.find((x) => x.c.band === 'Extreme'), hi = routeStops.find((x) => x.c.band === 'High');
-  const key = `<p class="atlas-key">${ex ? `<span><i class="sa-kstop" data-band="Extreme" aria-hidden="true">${ex.c.number}</i>Stage rated Extreme</span>` : ''}${hi ? `<span><i class="sa-kstop" data-band="High" aria-hidden="true">${hi.c.number}</i>Stage rated High</span>` : ''}</p>`;
+  const ex = routeStops.find((x) => x.c.chokepoint);
+  const key = ex ? `<p class="atlas-key"><span><i class="sa-kstop" data-cpk="1" aria-hidden="true">${ex.c.number}</i>Chokepoint</span></p>` : '';
   const homeMap = `<div class="sa sa--home sa--atlas">
 <section class="atlas" id="the-route" aria-labelledby="atlas-h">
 <div class="sup-sec-h atlas-h"><h2 id="atlas-h">The route of one chip</h2><p class="sup-sec-sub">The ${routeStops.length} stages of the chain, each pinned at a main site in the country that leads it</p></div>

@@ -1,7 +1,7 @@
 /* The readable chapter page (dist/<chapter>/index.html, written by build/modules/social.js).
    A static copy of one chapter for search engines, citation and readers who arrive from a shared link.
    The tokens, type and rules are the site's own (src/styles.css, redesign of 25 Oct 2026): a white ground, warm ink and
-   red wine for links, the reader's place, Extreme and the largest value on a chart; Fraunces for display and Source Serif 4
+   red wine for links, the reader's place and the largest value on a chart; Fraunces for display and Source Serif 4
    for reading (the hybrid, 28 Oct 2026), Hanken Grotesk for labels, and for kickers in small
    spaced capitals (the visual pass of 27 Oct 2026), and Fragment Mono for figure numbers and codes.
    The page follows the reader's system theme, and ?theme= or the site's saved choice overrides it.
@@ -131,13 +131,18 @@ strong, b { font-weight: 600; }
 .inshort ul { padding-left: 1.2em; margin: 0; }
 .inshort li { margin-bottom: 0.45em; }
 
-/* the chokepoint card */
+/* the stage card */
 .plate { border-top: 2px solid var(--ink); border-bottom: 1px solid var(--ink); margin: 0 0 34px; }
 .plate-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; padding: 12px 0; border-bottom: 1px solid var(--line-2); }
 .plate-head .label { color: var(--ink); font-weight: 600; }
 /* each band said once, in its cell; the value carries the band's one-line definition as its title */
 .plate-kpis .v .v-btn { text-decoration: underline dotted; text-decoration-color: color-mix(in srgb, currentColor 45%, transparent); text-decoration-thickness: 1.5px; text-underline-offset: 6px; cursor: help; }
-.plate-kpis { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-bottom: 1px solid var(--line); }
+/* the chokepoint mark (src/styles.css .cpk) and a chokepoint's line under the card's head; two ratings in a row since 22 Nov 2026 */
+.cpk { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-label); font-size: 13px; font-weight: 600; line-height: 16px; color: var(--ink); white-space: nowrap; }
+.cpk > i { display: block; flex: none; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.plate-cpk { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; margin: 0; padding: 13px 0 14px; border-bottom: 1px solid var(--line); }
+.plate-cpk .sub { font-size: var(--fs-note); line-height: 1.45; color: var(--ink-2); }
+.plate-kpis { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-bottom: 1px solid var(--line); }
 .plate-kpis > div { padding: 15px 16px 16px 0; border-right: 1px solid var(--line); min-width: 0; }
 .plate-kpis > div + div { padding-left: 16px; }
 .plate-kpis > div:last-child { border-right: 0; }
@@ -146,7 +151,7 @@ strong, b { font-weight: 600; }
 .plate-kpis .v.cost { font-size: var(--t-block); }
 .plate-kpis .v.cost.long { font-family: var(--font-body); font-weight: 500; font-size: var(--fs-small); line-height: 1.35; font-variation-settings: normal; }
 .plate-kpis .v small { font-size: 14px; color: var(--muted); margin-left: 4px; }
-.plate-kpis .v.Extreme, .plate-kpis .v.sub-4 { color: var(--ink); }
+.plate-kpis .v.sub-4 { color: var(--ink); }
 .plate-kpis .sub { display: block; font-size: var(--fs-note); line-height: 1.45; color: var(--muted); margin-top: 8px; }
 .plate-rows { margin: 0; }
 .plate-rows .row { display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: 20px; padding: 13px 0; border-bottom: 1px solid var(--line); }

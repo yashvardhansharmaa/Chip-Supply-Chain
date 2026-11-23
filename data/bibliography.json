@@ -1220,6 +1220,12 @@
     "type": "page",
     "accessed": "2026-09-09"
   },
+  "https://epoch.ai/data/ai-chip-components-documentation/methodology": {
+    "title": "AI chip components documentation: Methodology",
+    "publisher": "Epoch AI",
+    "type": "page",
+    "accessed": "2026-11-23"
+  },
   "https://epoch.ai/data/ai-data-centers/directory/colossus-1": {
     "title": "Colossus 1, AI data centers directory",
     "publisher": "Epoch AI",
@@ -1988,6 +1994,13 @@
     "date": "2026-08-26",
     "type": "press release",
     "accessed": "2026-09-09"
+  },
+  "https://nvidianews.nvidia.com/news/nvidia-expands-commitments-with-supply-chain-partners-to-support-ai-infrastructure-buildout": {
+    "title": "NVIDIA Expands Commitments With Supply Chain Partners to Support AI Infrastructure Buildout",
+    "publisher": "Nvidia",
+    "date": "2026-11-17",
+    "type": "press release",
+    "accessed": "2026-11-23"
   },
   "https://nvidianews.nvidia.com/news/nvidia-announces-strategic-partnership-with-lumentum-to-develop-state-of-the-art-optics-technology": {
     "title": "NVIDIA Announces Strategic Partnership With Lumentum to Develop State-of-the-Art Optics Technology",

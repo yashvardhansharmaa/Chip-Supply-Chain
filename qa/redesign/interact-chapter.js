@@ -49,22 +49,31 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8766';
           cardW:card?Math.round(card.getBoundingClientRect().width):0,revW:q('.prose > .review')?Math.round(q('.prose > .review').getBoundingClientRect().width):-1,cardId:card&&card.id,prev:prev&&prev.tagName,next:next&&next.id,inHead:!!q('.chapter-head .plate'),
           drawH:sp.getPropertyValue('--draw-h').trim(),toc:[].map.call(a.querySelectorAll('.rail-toc a'),function(x){return x.textContent;}).slice(0,3).join(' | ')};})()`);
       check('1440: the rail starts beside the kicker (its first line, On this page)', Math.abs(col.railTop - col.kickTop) <= 4, `rail ${col.railTop}, kicker ${col.kickTop}`);
-      check('1440: the kicker carries the card\'s verdict', /Extreme concentration\s*·\s*Very hard to substitute/.test(col.kick), col.kick);
+      check('1440: the kicker carries the card\'s verdict, the chokepoint mark and the substitutability, no band word', /Chokepoint\s*·\s*Very hard to substitute/.test(col.kick) && !/Extreme|High|concentration/.test(col.kick), col.kick);
       check('1440: the specimen is a plate at the measure, in the text column', col.specW === 666 && col.specX === col.textX, `${col.specW} px at x ${col.specX}, text at ${col.textX}`);
       check('1440: the plate is fitted to its drawing (--draw-h, 360 to 470 px)', /^\d+px$/.test(col.drawH) && parseInt(col.drawH, 10) >= 360 && parseInt(col.drawH, 10) <= 470, `--draw-h ${col.drawH}`);
       check('1440: the card is in the text after the lead, before section 01, as wide as the flashcards (owner, 27 Oct) and wider than the text', !col.inHead && col.prev === 'P' && col.next === 'lithography--how-it-works' && col.cardW === col.revW && col.cardW > 666 && col.cardId === 'lithography--card', JSON.stringify({ prev: col.prev, next: col.next, w: col.cardW, flashcards: col.revW }));
-      check('1440: On this page lists the card after In plain terms', col.toc === 'In plain terms | Chokepoint card | How it works', col.toc);
-      // the band's meter (28 Oct 2026, in place of the single mark): Extreme lights its four bars in wine in the kicker, the card
-      // and the rail; High lights three in the mid gray, the fourth in the hairline; each meter is hidden from assistive technology
-      const marks = await t.ev(`(function(){var a=document.getElementById('lithography'),m=function(sel){var e=a.querySelector(sel);if(!e)return null;return [].map.call(e.querySelectorAll('b'),function(b){return getComputedStyle(b).backgroundColor;}).join(' ')+(e.getAttribute('aria-hidden')==='true'?'':' NOT HIDDEN');};
-        return {kick:m('.ch-band[data-band="4"] .meter'),card:m('.plate-kpis .meter[data-level="4"]'),rail:m('.ch-rail .stage-cell[data-band="4"] .meter'),
-          high:m('.ch-rail .stage-cell[data-band="3"] .meter'),meta:getComputedStyle(a.querySelector('.ch-meta .label')).fontFamily,kickT:getComputedStyle(a.querySelector('.ch-kick')).textTransform};})()`);
-      const W4 = 'rgb(122, 31, 43) rgb(122, 31, 43) rgb(122, 31, 43) rgb(122, 31, 43)', H3 = 'rgb(140, 138, 132) rgb(140, 138, 132) rgb(140, 138, 132) rgb(225, 224, 219)';
-      check('1440: Extreme lights all four bars of the meter in wine in the kicker, the card and the rail; High lights three in gray', marks.kick === W4 && marks.card === W4 && marks.rail === W4 && marks.high === H3, JSON.stringify(marks));
+      check('1440: On this page lists the card after In plain terms', col.toc === 'In plain terms | Stage card | How it works', col.toc);
+      // the chokepoint mark (22 Nov 2026, in place of the band's four-bar meter): a chokepoint carries one mark, a solid ink dot
+      // and the word in Hanken Grotesk, in the kicker and on the card (with what the word means); the rail gives each chokepoint
+      // the dot alone and its link's label says it; no meter is left anywhere on the page, and a stage that is not a chokepoint
+      // has no mark (Silicon and Wafers, below)
+      const marks = await t.ev(`(function(){var a=document.getElementById('lithography'),m=function(sel){var e=a.querySelector(sel);if(!e)return null;var d=e.querySelector('i');return {word:e.textContent.trim(),dot:d?getComputedStyle(d).backgroundColor+' '+getComputedStyle(d).borderRadius+(d.getAttribute('aria-hidden')==='true'?'':' NOT HIDDEN'):null,font:getComputedStyle(e).fontFamily.split(',')[0].replace(/"/g,''),color:getComputedStyle(e).color};};
+        var cps=[].map.call(a.querySelectorAll('.ch-rail .rail-chain.chain-track .stage-cell'),function(li){return (li.querySelector('.cpk')?'1':'0')+(/, chokepoint$/.test(li.querySelector('a').getAttribute('aria-label'))?'1':'0');}).join(' ');
+        return {kick:m('.ch-kick .ch-band .cpk'),card:m('.plate-cpk .cpk'),cardNote:(a.querySelector('.plate-cpk .sub')||{}).textContent,rail:m('.ch-rail .stage-cell[aria-current] .cpk'),railMarks:cps,want:((window.CP_DATA||{}).chapters||[]).filter(function(c){return c.stage;}).map(function(c){return c.concentration==='Extreme'?'11':'00';}).join(' '),
+          meters:document.querySelectorAll('.meter').length,kpis:a.querySelectorAll('.plate-kpis > div').length,meta:getComputedStyle(a.querySelector('.ch-meta .label')).fontFamily,kickT:getComputedStyle(a.querySelector('.ch-kick')).textTransform};})()`);
+      const INK = 'rgb(23, 23, 22)', DOT = INK + ' 50%';
+      check('1440: a chokepoint carries the mark, an ink dot and the word in Hanken Grotesk, in the kicker and the card, and the card says what the word means', !!marks.kick && marks.kick.word === 'Chokepoint' && marks.kick.dot === DOT && marks.kick.font === 'Hanken Grotesk' && marks.kick.color === INK
+        && !!marks.card && marks.card.word === 'Chokepoint' && marks.card.dot === DOT && marks.card.font === 'Hanken Grotesk' && marks.cardNote === 'Three or fewer firms can supply this stage, or one firm holds more than 65 percent of it.', JSON.stringify(marks));
+      // the seven chokepoints (the owner kept the 65 percent rule on 23 Nov 2026, so Metrology and Test, briefly marked that day,
+      // are not chokepoints), read from the cards' bands; the literal is the same seven
+      const RAIL7 = '11 00 00 11 11 00 00 11 11 11 11 00 00 00';
+      check('1440: the rail marks the seven chokepoints with the dot alone, each named in its link\'s label, and no other stage', !!marks.rail && marks.rail.word === '' && marks.rail.dot === DOT && marks.railMarks === RAIL7 && (!marks.want || marks.want === RAIL7), JSON.stringify({ rail: marks.rail, marks: marks.railMarks, want: marks.want }));
+      check('1440: no four-bar meter is left, and the card has two ratings in its row', marks.meters === 0 && marks.kpis === 2, JSON.stringify({ meters: marks.meters, kpis: marks.kpis }));
       check('1440: the kicker and the facts line are Hanken Grotesk capitals, not Fragment Mono', /^"?Hanken Grotesk/.test(marks.meta) && marks.kickT === 'uppercase', JSON.stringify(marks));
       await t.ev("document.querySelector('#lithography .rail-toc a[href=\"#lithography--card\"]').click(),1"); await sleep(1200);
       const land = await t.ev("(function(){var c=document.getElementById('lithography--card').getBoundingClientRect();return {top:Math.round(c.top),hash:location.hash,cur:(document.querySelector('#lithography .rail-toc a[aria-current]')||{}).textContent};})()");
-      check('1440: Chokepoint card in the rail lands on the card, clear of the masthead', land.top >= 64 && land.top <= 100 && land.cur === 'Chokepoint card', JSON.stringify(land));
+      check('1440: Stage card in the rail lands on the card, clear of the masthead', land.top >= 64 && land.top <= 100 && land.cur === 'Stage card', JSON.stringify(land));
       // the card's look-up cards: a term in its text, and a rating (its band's sentence and this stage's test)
       for (const [sel, what] of [['#lithography--card .gl-term:not([data-note])', 'a term'], ['#lithography--card .v-btn[data-term="substitutability"]', 'the substitutability rating']]) {
         const lab = await t.ev(`(function(){var b=document.querySelector(${JSON.stringify(sel)});if(!b)return null;document.documentElement.style.scrollBehavior='auto';b.scrollIntoView({block:'center'});b.focus();return b.textContent;})()`); await sleep(500);
@@ -192,7 +201,7 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8766';
     for (const width of [1440, 390]) {
       const t = await open(chrome, BASE + '/lithography/', { width, wait: 2500 });
       check(`page ${width}: the masthead's search and theme buttons`, await t.ev("!!document.querySelector('.masthead .search-btn') && !!document.querySelector('.masthead .theme-toggle')"));
-      check(`page ${width}: the opener's kicker, one numbering (fix-d D16)`, /^Stage 4 of 14\s*Extreme/.test(await t.ev("document.querySelector('.ch-kick').textContent")), await t.ev("document.querySelector('.ch-kick').textContent"));
+      check(`page ${width}: the opener's kicker, one numbering (fix-d D16)`, /^Stage 4 of 14\s*Chokepoint/.test(await t.ev("document.querySelector('.ch-kick').textContent")), await t.ev("document.querySelector('.ch-kick').textContent"));
       check(`page ${width}: the live drawing, in the slot (1440) or the strip (390)`, await t.ev(width < 900 ? "!!document.querySelector('.stage > canvas#stage-canvas')" : "!!document.querySelector('#lithography .ch-spec-draw canvas')"));
       check(`page ${width}: look-up buttons and the flashcards`, await t.ev("document.querySelectorAll('#lithography .prose button.gl-term').length > 5 && !!document.querySelector('#lithography--flashcards .fc-show')"));
       check(`page ${width}: the figure strip has Cite, Table, CSV and PNG`, await t.ev("[].map.call(document.querySelectorAll('#fig-lithography-asml-region .fs-acts > *'),function(a){return a.textContent}).join(' ')") === 'Cite Table CSV PNG');
@@ -201,6 +210,18 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8766';
       if (width === 1440) check('page 1440: the rail beside the text', await t.ev("(function(){var r=document.querySelector('.ch-rail').getBoundingClientRect();return r.left<200&&r.width>180;})()"));
       check(`page ${width}: a stage in the rail links to its page`, await t.ev("!!document.querySelector('.ch-rail a[href=\"../photomasks-and-pellicles/\"]')"));
       t.errors.forEach((e) => check(`page ${width}: page error`, false, e));
+      await t.close();
+    }
+    /* ---------- a stage that is not a chokepoint (22 Nov 2026): no rating word and no mark, in the kicker or on its card ---------- */
+    for (const width of [1440, 390]) {
+      const t = await open(chrome, BASE + '/silicon-and-wafers/', { width, wait: 2500 });
+      const nc = await t.ev(`(function(){var a=document.getElementById('silicon-and-wafers'),card=a.querySelector('.prose > .plate');
+        return {kick:a.querySelector('.ch-kick').textContent,kickMark:!!a.querySelector('.ch-kick .cpk'),cardLine:!!a.querySelector('.plate-cpk'),cardMark:!!(card&&card.querySelector('.cpk')),
+          kpis:card?[].map.call(card.querySelectorAll('.plate-kpis > div > .k'),function(k){return k.textContent;}).join(' | '):'',cardText:card?card.textContent:'',meters:document.querySelectorAll('.meter').length,
+          rail:(a.querySelector('.ch-rail .stage-cell[aria-current] .cpk')?'marked':'clear')};})()`);
+      check(`page ${width}: Silicon and Wafers, not a chokepoint: the kicker gives the substitutability alone`, /^Stage 2 of 14\s*Moderately hard to substitute$/.test(nc.kick.trim()) && !nc.kickMark, nc.kick);
+      check(`page ${width}: Silicon and Wafers: the card has no chokepoint line and no band, only its two ratings`, !nc.cardLine && !nc.cardMark && nc.kpis === 'Substitutability | Price or market size' && !/\b(Extreme|High|Moderate|Low) concentration\b|Concentration|concentration band/.test(nc.cardText) && nc.meters === 0 && nc.rail === 'clear', JSON.stringify({ line: nc.cardLine, mark: nc.cardMark, kpis: nc.kpis, meters: nc.meters, rail: nc.rail }));
+      t.errors.forEach((e) => check(`page ${width} (silicon): page error`, false, e));
       await t.close();
     }
     /* ---------- the flashcards spaced out (21 Nov 2026): a chapter's deck brings back the cards that are due ---------- */

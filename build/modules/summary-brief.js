@@ -25,7 +25,10 @@ module.exports = function (ctx) {
   const noCites = (h) => String(h || '').replace(/<sup class="cite">[\s\S]*?<\/sup>/g, '').replace(/\s+([.,;:])/g, '$1');
   const firstPara = (h) => (noCites(h).match(/<p>[\s\S]*?<\/p>/) || [''])[0];
   const COUNTRY = { US: 'United States', NL: 'Netherlands', JP: 'Japan', KR: 'South Korea', TW: 'Taiwan', CN: 'China', DE: 'Germany', GB: 'United Kingdom', FR: 'France', AT: 'Austria', IL: 'Israel', CH: 'Switzerland', MY: 'Malaysia', SG: 'Singapore', BE: 'Belgium', IT: 'Italy', IE: 'Ireland', IN: 'India', MX: 'Mexico' };
-  const LEVEL = { Extreme: 4, High: 3, Moderate: 2, Low: 1 };
+  // readers see one rating word (owner, 22 Nov 2026): a stage in the Extreme band is a chokepoint, and any other stage carries
+  // no word and no mark (build/build.js chokeMark draws the mark, a solid dot and the word)
+  const isChoke = ctx.isChoke || ((b) => b === 'Extreme');
+  const mark = (o = {}) => (ctx.chokeMark ? ctx.chokeMark(o) : `<span class="cpk${o.cls ? ' ' + o.cls : ''}"><i aria-hidden="true"></i>Chokepoint</span>`);
   const leaders = (c, n) => (c.leaders || []).slice(0, n);
   const card = (ch) => ch.meta.card || {};
   const sub = (ch) => (card(ch).substitutability || {}).band || '';
@@ -44,12 +47,11 @@ module.exports = function (ctx) {
   const dek = `The ${word(stages.length)} stages that turn sand and software into an AI accelerator: who leads each one, how concentrated it is, and where China and the United States stand.`;
 
   /* ---------- screen layout ---------- */
-  const meter = (band) => `<span class="meter" aria-hidden="true">${[1, 2, 3, 4].map((k) => `<b${k <= (LEVEL[band] || 0) ? ' class="on"' : ''}></b>`).join('')}</span>`;
   const ladder = stages.map((ch, i) => {
     const who = leaders(card(ch), 2).map((l) => `${esc(l.name)}${l.country ? ` <span class="cc">${esc(l.country)}</span>` : ''}`).join('<span class="sep">, </span>');
-    return `<li class="lv-${LEVEL[conc(ch)] || 0}"><a href="#s-${esc(ch.id)}"><span class="n">${pad(i + 1)}</span><span class="t">${esc(ch.title)}</span><span class="c">${meter(conc(ch))}<span class="w">${esc(conc(ch))}</span></span><span class="s">${esc(subShort(ch))}<span class="s-x"> to substitute</span></span><span class="who">${who}</span></a></li>`;
+    return `<li${isChoke(conc(ch)) ? ' data-cpk="1"' : ''}><a href="#s-${esc(ch.id)}"><span class="n">${pad(i + 1)}</span><span class="t">${esc(ch.title)}</span><span class="c">${isChoke(conc(ch)) ? mark() : ''}</span><span class="s">${esc(subShort(ch))}<span class="s-x"> to substitute</span></span><span class="who">${who}</span></a></li>`;
   }).join('');
-  const nExtreme = stages.filter((ch) => conc(ch) === 'Extreme').length;
+  const nChoke = stages.filter((ch) => isChoke(conc(ch))).length;
   // a sourced figure on a card links its source, as a chapter's marks do (final QA C13): a leader's share its own url, and the
   // lede's first percentage the key fact that carries the same figure, when one does
   const srcLink = (u) => (u ? ` <a class="src-l" href="${esc(u)}" target="_blank" rel="noopener">Source</a>` : '');
@@ -65,10 +67,10 @@ module.exports = function (ctx) {
     const c = card(ch), used = new Set();
     const who = leaders(c, 3).map((l) => `<li><b>${esc(l.name)}</b>${l.country ? ` <span class="cc" title="${esc(COUNTRY[l.country] || l.country)}">${esc(l.country)}</span>` : ''}${l.share ? `<span class="share">${esc(l.share)}${srcLink(l.source)}</span>` : ''}</li>`).join('');
     const sides = [['China', c.chinaStatus], ['United States', c.usStatus]].filter((x) => x[1]);
-    return `<article class="card lv-${LEVEL[conc(ch)] || 0}" id="s-${esc(ch.id)}">
+    return `<article class="card"${isChoke(conc(ch)) ? ' data-cpk="1"' : ''} id="s-${esc(ch.id)}">
 <p class="card-k"><span class="n">${pad(i + 1)}</span>Stage ${i + 1} of ${stages.length}</p>
 <h3><a href="${url(ch.id)}">${esc(ch.title)}</a></h3>
-<p class="pills"><span class="pill pill-c${LEVEL[conc(ch)] === 4 ? ' x' : ''}">${meter(conc(ch))}${esc(conc(ch))} concentration</span>${sub(ch) ? `<span class="pill">${esc(subWords(ch))}</span>` : ''}</p>
+${isChoke(conc(ch)) || sub(ch) ? `<p class="pills">${isChoke(conc(ch)) ? `<span class="pill pill-c">${mark()}</span>` : ''}${sub(ch) ? `<span class="pill">${esc(subWords(ch))}</span>` : ''}</p>` : ''}
 ${ch.meta.oneLiner ? `<p class="lede">${gw(esc(ch.meta.oneLiner), used)}${srcLink(ledeSrc(ch))}</p>` : ''}
 ${who ? `<div class="who-block"><p class="lbl">Who leads</p><ul>${who}</ul></div>` : ''}
 ${sides.length ? `<div class="sides">${sides.map(([k, v]) => `<div><p class="lbl">${k}</p><p>${gw(esc(v), used)}</p></div>`).join('')}</div>` : ''}
@@ -93,9 +95,9 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
 <p class="meta">Updated ${DAY} · Every figure is cited in the chapter each card links to</p>
 </section>
 <section class="glance" aria-labelledby="glance-h">
-<div class="sec-head"><h2 id="glance-h">The chain at a glance</h2><p><b>${nExtreme} of ${stages.length}</b> stages are rated Extreme concentration, meaning three or fewer firms could supply each of them today, or one firm holds more than half of it.</p></div>
-<p class="key"><b>Concentration</b> counts the firms that credibly supply a stage. Every stage rates Extreme or High. <b>Substitutability</b> rates how hard it would be for a well-funded state or firm to build an alternative: Very hard, Hard or Moderately hard.</p>
-<div class="ladder-head" aria-hidden="true"><span>Stage</span><span>Concentration</span><span>Substitutability</span><span>Who leads</span></div>
+<div class="sec-head"><h2 id="glance-h">The chain at a glance</h2><p><b>${nChoke} of ${stages.length}</b> stages are chokepoints: three or fewer firms can supply each one, or one firm holds more than 65 percent of it.</p></div>
+<p class="key"><b>Substitutability</b> rates how hard it would be for a well-funded state or firm to build an alternative: Very hard, Hard or Moderately hard.</p>
+<div class="ladder-head" aria-hidden="true"><span>Stage</span><span></span><span>Substitutability</span><span>Who leads</span></div>
 <ol class="ladder">${ladder}</ol>
 </section>
 <section class="stages-s" aria-labelledby="stages-h">
@@ -136,14 +138,14 @@ window.addEventListener('scroll',upd,{passive:true});upd();})();</script>`;
   const rows = stages.map((ch, i) => {
     const c = card(ch);
     const who = leaders(c, 2).map((l) => `${esc(l.name)}${l.country ? ` <span class="cc">${esc(l.country)}</span>` : ''}`).join(', ');
-    return `<tr><td class="n">${pad(i + 1)}</td><td class="t"><a href="${url(ch.id)}">${esc(ch.title)}</a></td><td>${who}</td><td class="band b-${esc(c.concentration || '')}">${meter(c.concentration)}${esc(c.concentration || '')}</td><td class="band">${esc(subShort(ch))}</td></tr>`;
+    return `<tr><td class="n">${pad(i + 1)}</td><td class="t"><a href="${url(ch.id)}">${esc(ch.title)}</a></td><td>${who}</td><td class="band cpk-cell">${isChoke(c.concentration) ? mark({ word: false }) + '<span class="sr">Chokepoint</span>' : ''}</td><td class="band">${esc(subShort(ch))}</td></tr>`;
   }).join('');
   const blocks = stages.map((ch, i) => {
     const c = card(ch);
     const who = leaders(c, 2).map((l) => `<li><b>${esc(l.name)}</b>${l.country ? ` <span class="cc">${esc(COUNTRY[l.country] || l.country)}</span>` : ''}${l.share ? `. ${esc(l.share)}` : ''}</li>`).join('');
     return `<section class="stage">
 <h3><span class="n">${pad(i + 1)}</span> ${esc(ch.title)}</h3>
-<p class="tags"><span class="b-${esc(c.concentration || '')}">${meter(c.concentration)}${esc(c.concentration || '')} concentration</span>${sub(ch) ? ` · ${esc(subWords(ch))}` : ''}</p>
+${isChoke(c.concentration) || sub(ch) ? `<p class="tags">${[isChoke(c.concentration) ? mark() : '', sub(ch) ? esc(subWords(ch)) : ''].filter(Boolean).join(' · ')}</p>` : ''}
 ${ch.meta.oneLiner ? `<p class="lede">${esc(ch.meta.oneLiner)}</p>` : ''}
 ${who ? `<ul class="who">${who}</ul>` : ''}
 ${c.chinaStatus ? `<p><span class="k">China</span> ${esc(c.chinaStatus)}</p>` : ''}
@@ -165,11 +167,11 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
 <p class="meta">Updated ${DAY} · <a href="${SITE.url}">${SITE.host}</a> · Every figure is cited in the chapter each section links to.</p>
 </header>
 <div class="key">
-<span><b>Concentration</b> counts the firms that credibly supply a stage. Every stage rates Extreme or High.</span>
+<span>${mark({ word: false })} ${word(nChoke).replace(/^\w/, (m) => m.toUpperCase())} of the ${word(stages.length)} stages are chokepoints: three or fewer firms can supply each one, or one firm holds more than 65 percent of it.</span>
 <span><b>Substitutability</b> rates how hard it would be for a well-funded state or firm to build an alternative: Very hard, Hard or Moderately hard.</span>
 </div>
 <table>
-<thead><tr><th>#</th><th>Stage</th><th>Who leads</th><th>Concentration</th><th>Substitutability</th></tr></thead>
+<thead><tr><th>#</th><th>Stage</th><th>Who leads</th><th>Chokepoint</th><th>Substitutability</th></tr></thead>
 <tbody>${rows}</tbody>
 </table>
 <h2>Across the chain</h2>
@@ -209,7 +211,8 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
   .eyebrow, .meta, .lbl, .card-k, .pill, .ladder, .ladder-head, .key, .more, .cc, .site-footer { font-family: var(--label); }
   .hero { padding: clamp(40px, 7vh, 72px) 0 36px; max-width: 760px; }
   /* the redesign (stage 3): the head as the views' (the display face at 400 over a standfirst in the text face), each section a display heading
-     over an ink rule, pill buttons in ink; Extreme is wine, its meter, mark and card rule (the visual pass of 27 Oct 2026; the mark since page revision 7), High a mid gray */
+     over an ink rule, pill buttons in ink; a chokepoint carries the site's one rating mark, a solid dot and the word in ink, and any other
+     stage none (owner, 22 Nov 2026; until then a four-bar meter, Extreme in wine) */
   .eyebrow { margin: 0 0 22px; font-family: var(--label); font-size: 11.5px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); } /* the site's label: small spaced capitals (the visual pass of 27 Oct 2026) */
   .eyebrow b { color: var(--ink); font-weight: 500; }
   h1 { font-family: var(--display); font-weight: 400; font-variation-settings: var(--opsz); font-size: var(--t-title); line-height: 0.95; letter-spacing: -0.03em; margin: 0 0 0 -0.04em; text-wrap: balance; }
@@ -226,7 +229,7 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
   h2 { font-family: var(--display); font-weight: 500; font-variation-settings: var(--opsz); font-size: var(--t-block); line-height: 1.2; letter-spacing: -0.01em; margin: 0; padding-bottom: 12px; border-bottom: 1px solid var(--ink); }
   .sec-head p { margin: 0; color: var(--ink-2); max-width: 46em; font-size: var(--t-small); text-wrap: pretty; }
   .sec-head p b { color: var(--ink); font-weight: 700; }
-  /* the chain at a glance: one row per stage, a four-step meter for concentration */
+  /* the chain at a glance: one row per stage, a chokepoint's mark in its own column */
   .ladder-head, .ladder a { display: grid; grid-template-columns: 34px minmax(170px, 1.35fr) 150px 120px minmax(0, 1.4fr); gap: 0 16px; align-items: baseline; }
   .ladder-head { font-size: 11.5px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); padding: 0 6px 8px; border-bottom: 1px solid var(--line-2); }
   .ladder-head span:first-child { grid-column: 1 / span 2; }
@@ -237,13 +240,9 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
   .ladder .n { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
   .ladder .t { font-family: var(--body); font-size: var(--t-small); color: var(--ink); font-weight: 600; }
   .ladder .c { display: inline-flex; align-items: center; gap: 9px; }
-  .ladder .lv-4 .w { color: var(--accent); font-weight: 600; }
-  .meter { display: inline-flex; flex: none; gap: var(--mg, 2px); align-items: flex-end; height: var(--mh, 14px); }
-  .meter b { display: block; width: var(--mw, 6px); background: var(--line); }
-  .meter b:nth-child(1) { height: 36%; } .meter b:nth-child(2) { height: 57%; } .meter b:nth-child(3) { height: 79%; } .meter b:nth-child(4) { height: 100%; }
-  .meter b.on { background: var(--bar-3); }
-  .lv-3 .meter b.on { background: var(--bar-4); }
-  .lv-4 .meter b.on { background: var(--accent); }
+  /* the chokepoint mark, as src/styles.css .cpk draws it on the site: a small solid dot, then the word in the label face, in ink */
+  .cpk { display: inline-flex; align-items: center; gap: 6px; font-family: var(--label); font-size: 13px; font-weight: 500; line-height: 16px; letter-spacing: 0; color: var(--ink); white-space: nowrap; }
+  .cpk > i { display: block; flex: none; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
   .cc { font-size: 11px; letter-spacing: 0.06em; color: var(--muted); }
   .ladder .who .sep { color: var(--muted); }
   .key { font-size: 12.5px; color: var(--muted); margin: 0 0 18px; max-width: 60em; } /* above the table, so a phone reads it before the fourteen rows (28 Oct 2026) */
@@ -252,19 +251,15 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
   /* stage cards */
   .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
   .card { background: var(--card); border: 0; border-top: 2px solid var(--line-2); padding: 20px 22px 18px; display: flex; flex-direction: column; scroll-margin-top: 16px; }
-  .card.lv-4 { border-top-color: var(--accent); }
-  .card.lv-3 { border-top-color: var(--bar-4); }
   .card-k { margin: 0 0 8px; font-family: var(--label); font-size: 11.5px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
   .card-k .n { color: var(--muted); font-weight: 500; margin-right: 10px; }
   h3 { font-family: var(--display); font-weight: 500; font-variation-settings: var(--opsz); font-size: var(--t-block); line-height: 1.15; margin: 0 0 12px; text-wrap: balance; }
   h3 a { text-decoration: none; }
   h3 a:hover { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
-  /* the card's band and substitutability as plain words, the band led by the site's four-bar meter, as on the chapters'
-     cards (28 Oct 2026; a single mark before it); substitutability plain ink-2 text */
+  /* a chokepoint's mark, then the substitutability in plain words, as the chapters' kicker reads; substitutability plain ink-2 text */
   .pills { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px; margin: 0 0 12px; }
   .pill { font-size: 13px; font-weight: 400; letter-spacing: 0; padding: 0; border: 0; color: var(--ink-2); }
   .pill-c { font-weight: 500; color: var(--ink); }
-  .pill-c .meter { --mh: 11px; --mw: 4px; --mg: 1.5px; margin: 0 7px 0 0; vertical-align: -1px; }
   .lede { margin: 0 0 14px; font-size: var(--t-small); line-height: 1.5; color: var(--ink); }
   .lbl { margin: 0 0 4px; font-size: 11.5px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
   .who-block { margin: 0 0 14px; }
@@ -357,13 +352,14 @@ td.n { width: 7mm; font: 400 7.4pt var(--kicker); color: var(--muted); }
 td.t { padding-right: 4mm; white-space: nowrap; } /* the stage on one line, clear of who leads it; a wrapped row tips the page */
 td.t a { font-family: var(--display); font-weight: 500; font-size: 9.2pt; }
 td.band { font: 400 8pt var(--label); white-space: nowrap; color: var(--ink-2); }
-/* the band as the site draws it (28 Oct 2026): the four-bar meter before the word, as many bars in ink as the band's rank, the
-   word of an Extreme stage in ink at 600 */
-.meter { display: inline-flex; align-items: flex-end; gap: 0.3mm; height: 2.4mm; margin-right: 1.4mm; vertical-align: -0.1mm; }
-.meter b { display: block; width: 0.7mm; background: var(--line-2); }
-.meter b:nth-child(1) { height: 36%; } .meter b:nth-child(2) { height: 57%; } .meter b:nth-child(3) { height: 79%; } .meter b:nth-child(4) { height: 100%; }
-.meter b.on { background: var(--ink); }
-.b-Extreme { font-weight: 600; color: var(--ink); }
+/* the chokepoint mark as the site draws it (22 Nov 2026): a solid ink dot, then the word at 600; a stage that is not a
+   chokepoint has an empty cell */
+.cpk { display: inline-flex; align-items: center; gap: 1.2mm; font-weight: 600; color: var(--ink); white-space: nowrap; }
+.cpk > i { display: inline-block; flex: none; width: 1.6mm; height: 1.6mm; border-radius: 50%; background: var(--ink); }
+.key .cpk { vertical-align: 0.2mm; margin-right: 0.6mm; }
+/* the table's column, headed Chokepoint: the dot alone in a chokepoint's row (the word stays in the text for search and copy) */
+td.cpk-cell { padding-left: 6mm; }
+td.cpk-cell .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .cc { font: 400 6.8pt var(--kicker); color: var(--muted); }
 h2 { margin: 16pt 0 1mm; padding-top: 2mm; border-top: 0.6pt solid var(--ink); font: 400 14pt/1.15 var(--display); letter-spacing: -0.012em; break-after: avoid; }
 .h2-note { margin: 0 0 3mm; font-size: 8.6pt; color: var(--ink-2); }
@@ -373,7 +369,6 @@ h2 { margin: 16pt 0 1mm; padding-top: 2mm; border-top: 0.6pt solid var(--ink); f
 .stage h3 { margin: 0 0 1mm; font: 500 10pt/1.25 var(--display); }
 .stage h3 .n { margin-right: 1.2mm; font: 400 7.2pt var(--kicker); color: var(--muted); }
 .tags { margin: 0 0 1.2mm; font: 400 7.4pt/1.35 var(--label); color: var(--ink-2); }
-.tags .meter { height: 2.2mm; }
 .stage p, .stage li, .short p { margin: 0 0 2.2pt; font-size: 8.1pt; line-height: 1.32; } /* 1.36 until 27 Oct: the longer China and US lines ran the brief onto a fifth page */
 .lede { color: var(--ink); }
 .who { margin: 0 0 2.5pt; padding-left: 4mm; }

@@ -40,10 +40,11 @@ const shownCount = (sel) => `[].filter.call(document.querySelectorAll(${JSON.str
 // The Chain's contents, measured against CP_DATA.chapters (design round eight, "clean", 28 Oct 2026): a row for every chapter
 // in order (shown, with its drawing and its link to the chapter's own page, ../<id>/; the book's copy keeps #<id>, which its PDF
 // reads), on the contents page's own address, /supply-chain/, to which /#/chain forwards, every drawing fetched and decoded (they
-// load lazily, so the check asks for them all at once), each stage with its band's single mark (Extreme a wine bar, High an
-// outline) and the chapters across the chain with none, under their label, the drawing's box on the page's ground (no tint),
-// two columns from 1300 px and one below, the standfirst holding both counts and both marks, the downloads, and How to read a
-// chapter gone
+// load lazily, so the check asks for them all at once), each chokepoint with the chokepoint mark's dot in ink beside its
+// number and every other stage and the chapters across the chain with none (22 Nov 2026; until then each band's mark, Extreme
+// a wine bar and High an outline), under their label, the drawing's box on the page's ground (no tint), two columns from
+// 1300 px and one below, the standfirst holding both counts and what "chokepoint" means, its key the one mark with no band
+// word, the downloads, and How to read a chapter gone
 // the chapters, as the build's data file holds them (the contents page, /supply-chain/ since 28 Oct 2026, loads no data)
 const CHAPTERS = (() => { try { const w = {}; new Function('window', fs.readFileSync(path.join(DIST, 'assets', 'data.js'), 'utf8'))(w); return w.CP_DATA.chapters.map((c) => ({ id: c.id, stage: c.stage, concentration: c.concentration })); } catch (e) { return []; } })();
 const CHAIN_STATE = `(function () {
@@ -55,35 +56,37 @@ const CHAIN_STATE = `(function () {
   var shownRows = rows.map(row);
   var drawn = rows.filter(function (r) { var i = r.querySelector('.ct-tile img'); return i && i.complete && i.naturalWidth > 0; }).length;
   var stRows = [].slice.call(document.querySelectorAll('#contents > .ct-st .item')), xRows = [].slice.call(document.querySelectorAll('#contents .ct-x .item'));
-  var mark = function (r) { var m = r.querySelectorAll('.n .ct-bmk'); return m.length > 1 ? 'two' : !m.length ? '' : m[0].classList.contains('h') ? 'High' : 'Extreme'; };
-  var wine = stRows.filter(function (r) { var m = r.querySelector('.n .ct-bmk:not(.h)'); return m && getComputedStyle(m).backgroundColor !== 'rgba(0, 0, 0, 0)'; }).map(function (r) { return r.getAttribute('data-ch'); });
-  var wantWine = st.filter(function (c) { return c.concentration === 'Extreme'; }).map(function (c) { return c.id; });
+  var mark = function (r) { var m = r.querySelectorAll('.n .cpk, .n .ct-bmk, .n .meter'); return m.length > 1 ? 'two' : !m.length ? '' : m[0].classList.contains('cpk') && !m[0].textContent.trim() ? 'cp' : 'other'; };
+  var inkC = getComputedStyle(document.body).color;
+  var inked = stRows.filter(function (r) { var d = r.querySelector('.n .cpk > i'); return d && getComputedStyle(d).backgroundColor === inkC && getComputedStyle(d).borderRadius === '50%'; }).map(function (r) { return r.getAttribute('data-ch'); });
+  var wantMarks = st.filter(function (c) { return c.concentration === 'Extreme'; }).map(function (c) { return c.id; });
   var ground = getComputedStyle(document.body).backgroundColor;
   var flat = rows.filter(function (r) { return getComputedStyle(r.querySelector('.ct-tile')).backgroundColor === ground; }).length;
   var lefts = stRows.filter(vis).map(function (r) { return Math.round(r.getBoundingClientRect().left); }).filter(function (v, i, a) { return a.indexOf(v) === i; }).length;
-  var sf = document.querySelector('#howto .howto-std'), sfText = sf ? sf.textContent.replace(/\\s+/g, ' ') : '', nH = st.filter(function (c) { return c.concentration === 'High'; }).length;
-  // the finding under the title, its count in words, and under it the key to the two marks (the owner's option 2, 28 Oct 2026)
+  var sf = document.querySelector('#howto .howto-std'), sfText = sf ? sf.textContent.replace(/\\s+/g, ' ') : '';
+  // the finding under the title, its count in words and what the word means, and under it the key to the rows' one mark (the
+  // owner's option 2 of 28 Oct 2026; one mark since 22 Nov 2026), with no band word in either
   var W = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen'], key = document.querySelector('#howto .howto-key');
-  var standfirst = vis(sf) && sfText.toLowerCase().indexOf(W[wantWine.length] + ' of the ' + W[st.length] + ' stages depend on three or fewer firms') === 0
-    && vis(key) && key.querySelectorAll('.ct-bmk:not(.h)').length === 1 && key.querySelectorAll('.ct-bmk.h').length === (nH ? 1 : 0);
+  var standfirst = vis(sf) && sfText.toLowerCase() === W[wantMarks.length] + ' of the ' + W[st.length] + ' stages are chokepoints: three or fewer firms can supply each, or one firm holds more than 65 percent.'
+    && vis(key) && key.querySelectorAll('.cpk').length === 1 && key.textContent.trim() === 'Chokepoint' && !/Extreme|High|concentration/.test(sfText + key.textContent);
   var list = [].map.call(document.querySelectorAll('#contents .contents-grid .item a.t'), function (a) { return a.getAttribute('href'); });
   var dl = [].filter.call(document.querySelectorAll('#howto .howto-dl a'), vis).map(function (a) { return a.getAttribute('href'); });
   return { at: location.pathname, rows: shownRows.join() === D.map(function (c) { return '../' + c.id + '/'; }).join(), chapters: D.length, rowsShown: shownRows.filter(function (v) { return v !== 'none'; }).length, drawn: drawn,
     groups: ids(stRows) === st.map(function (c) { return c.id; }).join() && ids(xRows) === x.map(function (c) { return c.id; }).join(), stages: st.length, across: xRows.length,
-    marks: stRows.map(mark).join() === st.map(function (c) { return c.concentration; }).join() && xRows.every(function (r) { return mark(r) === ''; }),
-    wine: wine.join() === wantWine.join(), extreme: wantWine.length, flat: flat === rows.length, cols: lefts === (innerWidth >= 1300 ? 2 : 1), columns: lefts,
+    marks: stRows.map(mark).join() === st.map(function (c) { return c.concentration === 'Extreme' ? 'cp' : ''; }).join() && xRows.every(function (r) { return mark(r) === ''; }),
+    ink: inked.join() === wantMarks.join(), chokes: wantMarks.length, flat: flat === rows.length, cols: lefts === (innerWidth >= 1300 ? 2 : 1), columns: lefts,
     label: !x.length || vis(document.querySelector('#contents .ct-xk')), standfirst: standfirst,
     list: list.join() === D.map(function (c) { return '../' + c.id + '/'; }).join(), listed: list.length,
     downloads: dl.join() === '../pdf/how-ai-chips-are-made.pdf,../pdf/summary.pdf', howToRead: !!document.querySelector('.howto-read, #howto-read') };
 })()`;
-const CHAIN_OK = `(function (s) { return s.at === '/supply-chain/' && s.stages >= 14 && s.rows && s.drawn === s.chapters && s.groups && s.across >= 2 && s.marks && s.wine && s.extreme > 0 && s.flat && s.cols && s.label && s.standfirst && s.list && s.downloads && !s.howToRead; })(${CHAIN_STATE})`;
+const CHAIN_OK = `(function (s) { return s.at === '/supply-chain/' && s.stages >= 14 && s.rows && s.drawn === s.chapters && s.groups && s.across >= 2 && s.marks && s.ink && s.chokes > 0 && s.flat && s.cols && s.label && s.standfirst && s.list && s.downloads && !s.howToRead; })(${CHAIN_STATE})`;
 // the counts below follow the chain since the merge of chapters 8 and 9 (27 Oct 2026): 14 stages, 16 chapters
 const ROUTES = [
   { name: 'walk', url: '/#/', ready: `${view('walk')} && ${count('.view[data-view="walk"] .wk-step')} >= 14`, detail: `'walk view shown: ' + ${view('walk')} + ', steps: ' + ${count('.view[data-view="walk"] .wk-step')}` },
   // The Chain's contents are on the home page (#/chain) and each chapter on a page of its own (28 Oct 2026): the home page holds
   // no chapter; a chapter's page shows that chapter alone, and an old link to a chapter on the home page lands there
   // The contents page is option 3 "clean" (design round eight, 28 Oct 2026): a row per chapter with its drawing, its number with
-  // the band's single mark, its title (href="#<id>", the list the book PDF reads) and its one line; the two chapters across
+  // a chokepoint's dot, its title (href="#<id>", the list the book PDF reads) and its one line; the two chapters across
   // the chain under their label; the standfirst that is also the key; the three downloads; and no How to read a chapter.
   // The counts come from the page's own data (CP_DATA.chapters), never typed here
   { name: 'chain', url: '/#/chain', ready: `${view('stack')} && ${count('article.chapter')} === 0 && ${shown('#contents')} && ${CHAIN_OK}`, detail: `'chapters held: ' + ${count('article.chapter')} + ', contents: ' + JSON.stringify(${CHAIN_STATE})` },

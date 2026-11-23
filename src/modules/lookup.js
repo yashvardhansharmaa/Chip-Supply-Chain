@@ -29,6 +29,8 @@
   var reduce = function () { return !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches); };
   var here = function () { return !!CP.Router && CP.Router.current === 'glossary'; };
   var KIND = { term: 'Term', firm: 'Firm', chip: 'AI chip', country: 'Country' };
+  // a firm's market position in the reader's word (src/app.js Suppliers.POSITION; the data keeps Critical, Important, ...)
+  var posWord = function (lv) { var P = (CP.Suppliers || {}).POSITION || {}; return P[lv] || lv || ''; };
   // each kind: its key, its button in the index, its plural and its singular for the count line
   var KINDS = [['all', 'All', 'entries', 'entry'], ['term', 'Terms', 'terms', 'term'], ['firm', 'Firms', 'firms', 'firm'], ['chip', 'AI chips', 'AI chips', 'AI chip'], ['country', 'Countries', 'countries', 'country']];
   var LETTERS = ['0-9'].concat('ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''));
@@ -162,7 +164,9 @@
   function firmHTML(it, used) {
     var r = it.data || {}, rows = [], S = CP.Suppliers || {};
     var where = [r.city, cname(r.country)].filter(Boolean).join(', ');
-    if (r.chokepoint) rows.push(['Chokepoint level', '<span class="gl-chk gl-chk--' + esc(String(r.chokepoint).toLowerCase()) + '">' + esc(r.chokepoint) + '</span>', true]);
+    // its market position, in the Suppliers page's word, and what that position means (Suppliers.POSITION and POSITION_DEF)
+    if (r.chokepoint) rows.push(['Market position', '<span class="gl-chk gl-chk--' + esc(String(r.chokepoint).toLowerCase()) + '">' + esc(posWord(r.chokepoint)) + '</span>' +
+      ((S.POSITION_DEF || {})[r.chokepoint] ? '<span class="gl-chk-def">' + esc(S.POSITION_DEF[r.chokepoint]) + '</span>' : ''), true]);
     if (where) rows.push(['Based in', where]);
     if (r.founded) rows.push(['Founded', String(r.founded)]);
     if (r.ownership || r.ticker) rows.push(['Ownership', [r.ownership, r.ticker ? 'ticker ' + r.ticker : ''].filter(Boolean).join(', ')]);
@@ -202,7 +206,7 @@
       facts(rows) + '<p class="gl-links"><a href="#/landscape?pick=' + esc(encodeURIComponent(c.id)) + '" data-chip="' + esc(c.id) + '">On AI Chips →</a></p>';
   }
 
-  /* a country: the stages it leads, the chokepoint cards that name it, its shares, its firms. The firms whose country differs
+  /* a country: the stages it leads, the stage cards that name it, its shares, its firms. The firms whose country differs
      between the shares and the supplier list, as data/chokepoint-matrix-notes.md gives them, are named on the cards they touch */
   var SPLITS = {
     siemens: 'Siemens EDA is run from Oregon but owned by Siemens AG, so the EDA software share counts it under Germany and the supplier list under the US.',
@@ -213,16 +217,16 @@
   function countryFacts(cc) {
     var chapters = DATA.chapters || [];
     var stages = chapters.filter(function (ch) { return ch.stage; });
-    var cardCount = chapters.filter(function (ch) { return ch.concentration; }).length; // only the stage chapters carry a chokepoint card
+    var cardCount = chapters.filter(function (ch) { return ch.concentration; }).length; // only the stage chapters carry a stage card
     var named = chapters.filter(function (ch) { return (ch.countries || []).some(function (x) { return x.code === cc; }); }).sort(function (a, b) { return (b.bandRank || 0) - (a.bandRank || 0) || a.number - b.number; });
     var led = stages.filter(function (ch) { var f = (ch.countries || [])[0]; return f && f.code === cc; });
-    var extreme = led.filter(function (ch) { return ch.band === 'Extreme'; }).length;
+    var cp = led.filter(function (ch) { return ch.chokepoint; }).length; // the stages it leads that are chokepoints (build/build.js isChoke)
     var firms = (DATA.suppliers || []).filter(function (r) { return r.country === cc; });
-    var critical = firms.filter(function (r) { return r.chokepoint === 'Critical'; }).length, meta = [];
-    if (led.length === 1) meta.push('leads 1 stage' + (extreme ? ', of extreme concentration' : ''));
-    else if (led.length) meta.push('leads ' + led.length + ' stages' + (extreme ? ', ' + (extreme === led.length ? 'all' : extreme) + ' of them extreme' : ''));
-    meta.push('named on ' + named.length + ' of ' + cardCount + ' chokepoint cards');
-    if (firms.length) meta.push(firms.length + (firms.length === 1 ? ' firm' : ' firms') + ' in the supplier list' + (critical ? ', ' + critical + ' Critical' : ''));
+    var critical = firms.filter(function (r) { return r.chokepoint === 'Critical'; }).length, meta = []; // the dominant firms
+    if (led.length === 1) meta.push('leads 1 stage' + (cp ? ', a chokepoint' : ''));
+    else if (led.length) meta.push('leads ' + led.length + ' stages' + (!cp ? '' : cp === led.length ? ', all of them chokepoints' : cp === 1 ? ', 1 of them a chokepoint' : ', ' + cp + ' of them chokepoints'));
+    meta.push('named on ' + named.length + ' of ' + cardCount + ' stage cards');
+    if (firms.length) meta.push(firms.length + (firms.length === 1 ? ' firm' : ' firms') + ' in the supplier list' + (critical ? ', ' + critical + ' ' + posWord('Critical').toLowerCase() : ''));
     return { named: named, firms: firms, meta: meta.join(' · ') };
   }
   function countryHTML(it, used) {
@@ -247,9 +251,9 @@
       }).join('') + '</ul>' + (small.length ? '<p class="gl-small">Under 1%: ' + esc(small.map(function (s) { return s.seg; }).join(', ')) + '.</p>' : '') + '</section>';
     }
     if (named.length) {
-      h += '<section class="gl-part" aria-labelledby="gl-cd"><h3 class="gl-h" id="gl-cd">On the chokepoint cards</h3><ul class="gl-cards">' + named.map(function (ch) {
+      h += '<section class="gl-part" aria-labelledby="gl-cd"><h3 class="gl-h" id="gl-cd">On the stage cards</h3><ul class="gl-cards">' + named.map(function (ch) {
         var note = ((ch.countries || []).filter(function (x) { return x.code === cc; })[0] || {}).note || '';
-        return '<li><a href="' + esc(chHref(ch.id)) + '"><span class="gl-card-t">' + esc(ch.title) + '</span>' + (ch.band ? '<span class="gl-card-b gl-card-b--' + esc(String(ch.band).toLowerCase()) + '">' + esc(ch.band) + '</span>' : '') + (note ? '<span class="gl-card-n">' + esc(note) + '</span>' : '') + '</a></li>';
+        return '<li><a href="' + esc(chHref(ch.id)) + '"><span class="gl-card-t">' + esc(ch.title) + '</span>' + (ch.chokepoint ? '<span class="cpk gl-card-b"><i aria-hidden="true"></i>Chokepoint</span>' : '') + (note ? '<span class="gl-card-n">' + esc(note) + '</span>' : '') + '</a></li>';
       }).join('') + '</ul></section>';
     }
     if (firms.length) {
@@ -261,7 +265,7 @@
       var EU27 = (CP.Suppliers && CP.Suppliers.EU27) || [];
       if (EU27.indexOf(cc) >= 0) {
         var eu = (DATA.suppliers || []).filter(function (r) { return EU27.indexOf(r.country) >= 0; }), euCrit = eu.filter(function (r) { return r.chokepoint === 'Critical'; }).length;
-        h += '<p class="gl-small">Across the EU-27, the supplier list has ' + eu.length + ' firms' + (euCrit ? ', ' + euCrit + ' of them Critical' : '') + '. <a href="#/suppliers?group=eu">See them together on the Suppliers page →</a></p>';
+        h += '<p class="gl-small">Across the EU-27, the supplier list has ' + eu.length + ' firms' + (euCrit ? ', ' + euCrit + ' of them ' + posWord('Critical').toLowerCase() : '') + '. <a href="#/suppliers?group=eu">See them together on the Suppliers page →</a></p>';
       }
       h += '</section>';
     }
@@ -691,7 +695,12 @@
   /* the static copy's anchors (until 30 Oct 2026; shared links and search results may still carry them): a term (#euv), a
      letter (#letter-s) and a list (#list-firms) take the Glossary's own address, in place */
   var OLD = { 'list-firms': 'a-z/firms', 'list-chips': 'a-z/ai-chips', 'list-countries': 'a-z/countries' };
+  /* a term folded into another keeps its old addresses: its #gl-, its #lk-term- and the static copy's bare anchor open the term
+     that holds it now, in place (22 Nov 2026: Concentration into Chokepoint, when readers came to see one rating word) */
+  var RENAMED = { concentration: 'chokepoint' };
   function oldAnchor(h) {
+    var was = /^(?:gl-|lk-term-)?([a-z0-9-]+)$/.exec(h || ''), now = was && RENAMED[was[1]];
+    if (now && L.byKey['gl-' + now]) { history.replaceState(history.state, '', location.pathname + location.search + '#gl-' + now); return 'gl-' + now; }
     if (!h || /^(gl|lk)-|^a-z(\/|$)|^\//.test(h)) return '';
     var m = /^letter-(0-9|[a-z])$/.exec(h);
     var to = OLD[h] || (m ? 'a-z/' + m[1] : L.byKey['gl-' + h] ? 'gl-' + h : '');

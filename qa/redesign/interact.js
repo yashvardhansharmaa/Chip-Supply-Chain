@@ -1,12 +1,15 @@
 #!/usr/bin/env node
 /* The home page's hero, driven as a reader would (27 Oct 2026: the hero set back to the home's structure before the
    redesign, qa/redesign/stage-home.md). The chain at a glance lists the stages, one row each: the name links to its
-   chapter, and the band's meter and word (one button) pick the stage's specimen for the stage beside it. Checked here, with
-   DevTools mouse and key events rather than script clicks:
-     - the counts and the sentence are the data's own (paragraphs = the walk's steps, the stage count, the Extreme count);
+   chapter, and the button at the row's end picks the stage's specimen for the stage beside it; a chokepoint's button carries the
+   chokepoint mark, any other stage's none (22 Nov 2026; until then the band's meter and word). Checked here, with DevTools
+   mouse and key events rather than script clicks:
+     - the counts and the sentence are the data's own (paragraphs = the walk's steps, the stage count, the chokepoint count);
+     - the chokepoints' rows (seven, counted from the cards' bands) carry the mark, an ink dot and the word, and no other row
+       carries a mark or a band word;
      - every row's link goes to its chapter (static href and data-route) and is named as that chapter is;
      - every row's button puts that chapter's specimen on the stage with its number and title, and marks that row alone;
-     - hovering a meter picks it after a moment; crossing a name does not;
+     - hovering a row's button picks it after a moment; crossing a name does not;
      - the keyboard: one button in the Tab order, Tab runs name, button, next name; the arrow keys, Home and End move and pick;
      - a click on a name opens the chapter, and Back returns to the home;
      - a pick while the walk's first step has crossed the probe still shows on the stage (Sections.hold);
@@ -39,14 +42,19 @@ const BASE = (process.argv[2] || 'http://127.0.0.1:8766').replace(/\/$/, '');
       // the hero as built
       const facts = await t.ev(`(function(){
         var rows = [...document.querySelectorAll('.wk-gl-list li')];
-        return { rows: rows.length, x: rows.filter(r => r.dataset.level === '4').length, steps: document.querySelectorAll('.wk-step').length,
+        var want = ((window.CP_DATA || {}).chapters || []).filter(c => c.stage).map(c => c.concentration === 'Extreme' ? '1' : '0').join('');
+        return { rows: rows.length, x: rows.filter(r => r.dataset.cpk === '1').length, want: want,
+          marks: rows.map(r => { var m = r.querySelector('.wk-gl-c .cpk'); return m && m.textContent.trim() === 'Chokepoint' && getComputedStyle(m.querySelector('i')).borderRadius === '50%' && getComputedStyle(m).color === getComputedStyle(document.body).color ? '1' : (r.querySelector('.wk-gl-c').textContent.replace('Show its specimen', '').trim() ? '?' : '0'); }).join(''),
+          pickers: rows.filter(r => r.querySelector('button.wk-gl-c')).length, meters: document.querySelectorAll('.wk-gl .meter').length,
+          bandWords: /Extreme|High|concentration/.test(document.querySelector('.wk-gl').textContent), steps: document.querySelectorAll('.wk-step').length,
           meta: document.querySelector('.wk-meta').textContent, sentence: document.querySelector('.wk-gl-p').textContent,
           kicker: document.querySelector('.wk-gl-h').textContent, title: document.querySelector('.wk-title').textContent,
           gone: ['.wk-ev', '.wk-stops', '.wk-stop', '#wk-q', '.wk-find', '.wk-way', '.wk-legend'].filter(s => document.querySelector(s)) };
       })()`);
       check(`${width}: the title, then the counts of the read`, facts.title === 'How AI chips are made' && new RegExp('^' + facts.steps + ' paragraphs[\\d,]+ wordsabout \\d+ min$').test(facts.meta), facts.meta);
-      check(`${width}: the kicker and the sentence, computed`, facts.kicker === 'The chain at a glance' && facts.sentence.startsWith(`${facts.x} of the ${facts.rows} stages are rated Extreme, meaning `), facts.sentence);
-      check(`${width}: fourteen rows, seven Extreme`, facts.rows === 14 && facts.x === 7, facts.rows + ' rows, ' + facts.x + ' Extreme');
+      check(`${width}: the kicker and the sentence, computed`, facts.kicker === 'The chain at a glance' && facts.sentence === `${facts.x} of the ${facts.rows} stages are chokepoints: three or fewer firms can supply each, or one firm holds more than 65 percent.`, facts.sentence);
+      check(`${width}: fourteen rows, the chokepoints counted from the data (seven since the owner kept the 65 percent rule, 23 Nov 2026), each the stage the data rates Extreme`, facts.rows === 14 && facts.x === facts.want.split('').filter((c) => c === '1').length && facts.x === 7 && facts.marks === facts.want, `${facts.rows} rows, ${facts.x} chokepoints, marks ${facts.marks}, want ${facts.want}`);
+      check(`${width}: every row keeps its specimen button, no meter and no band word is left`, facts.pickers === 14 && facts.meters === 0 && !facts.bandWords, JSON.stringify({ pickers: facts.pickers, meters: facts.meters, bandWords: facts.bandWords }));
       check(`${width}: the bar chart, the hero's search field and the two link blocks are gone`, !facts.gone.length, facts.gone.join(' '));
 
       // the stage opens on chip design, its row the one marked
@@ -74,15 +82,15 @@ const BASE = (process.argv[2] || 'http://127.0.0.1:8766').replace(/\/$/, '');
         const n = String(i + 1).padStart(2, '0'), tg = await tag(), cur = await t.ev("(CP.Stage.cur||{}).name||''"), rows = await shownRows();
         if (!tg.includes(n + ' · ' + links[i].t) || cur !== links[i].spec || rows !== n) wrong.push(`${n}: tag "${tg}", specimen ${cur} (want ${links[i].spec}), marked ${rows}`);
       }
-      check(`${width}: every row's meter puts its own specimen on the stage and marks that row alone`, !wrong.length, wrong.join('; '));
+      check(`${width}: every row's button puts its own specimen on the stage and marks that row alone`, !wrong.length, wrong.join('; '));
 
-      // hover (a laptop): resting on a meter picks it; crossing a name does not
+      // hover (a laptop): resting on a row's button picks it; crossing a name does not
       if (width > 900) {
         await t.ev('(window.scrollTo(0,0), 1)'); await sleep(300);
         await move(await at('.wk-gl-t', 5)); await sleep(400);
         check(`${width}: resting on a name does not pick`, /14 · Data Centers/.test(await tag()), await tag());
         await move(await at('.wk-gl-c', 4)); await sleep(60); await move(await at('.wk-gl-c', 5)); await sleep(400);
-        check(`${width}: resting on a meter picks it; passing over one does not`, /06 · Deposition/.test(await tag()) && (await shownRows()) === '06', await tag());
+        check(`${width}: resting on a row's button picks it; passing over one does not`, /06 · Deposition/.test(await tag()) && (await shownRows()) === '06', await tag());
       }
 
       // the keyboard
@@ -90,11 +98,11 @@ const BASE = (process.argv[2] || 'http://127.0.0.1:8766').replace(/\/$/, '');
       await key('Tab', 'Tab', 9);
       const after2 = await t.ev("document.activeElement.className + ' ' + (document.activeElement.textContent||'').trim().slice(0,30)");
       check(`${width}: Tab from a name goes to the next name when its row is not picked`, /wk-gl-a/.test(after2) && /03/.test(after2), after2);
-      check(`${width}: one meter in the Tab order, the picked one`, await t.ev("[...document.querySelectorAll('.wk-gl-c')].filter(b => b.tabIndex === 0).length === 1 && document.querySelector('.wk-gl-c[tabindex=\"0\"]').getAttribute('aria-pressed') === 'true'"));
+      check(`${width}: one button in the Tab order, the picked one`, await t.ev("[...document.querySelectorAll('.wk-gl-c')].filter(b => b.tabIndex === 0).length === 1 && document.querySelector('.wk-gl-c[tabindex=\"0\"]').getAttribute('aria-pressed') === 'true'"));
       const picked = await t.ev("[...document.querySelectorAll('.wk-gl-c')].findIndex(b => b.tabIndex === 0)");
       await t.ev(`(document.querySelectorAll('.wk-gl-a')[${picked}].focus(), 1)`);
       await key('Tab', 'Tab', 9);
-      check(`${width}: Tab from the picked row's name reaches its meter`, await t.ev(`document.activeElement === document.querySelectorAll('.wk-gl-c')[${picked}]`));
+      check(`${width}: Tab from the picked row's name reaches its button`, await t.ev(`document.activeElement === document.querySelectorAll('.wk-gl-c')[${picked}]`));
       await key('Home', 'Home', 36);
       check(`${width}: Home picks 01 and focuses it`, /01 · Chip Design/.test(await tag()) && await t.ev("document.activeElement === document.querySelectorAll('.wk-gl-c')[0]"), await tag());
       await key('ArrowDown', 'ArrowDown', 40);
@@ -104,7 +112,7 @@ const BASE = (process.argv[2] || 'http://127.0.0.1:8766').replace(/\/$/, '');
       await key('ArrowUp', 'ArrowUp', 38);
       check(`${width}: ArrowUp moves back to 13`, /13 · Systems/.test(await tag()), await tag());
       await key('Tab', 'Tab', 9);
-      check(`${width}: Tab from the meter goes on to the next name`, await t.ev("document.activeElement === document.querySelectorAll('.wk-gl-a')[13]"), await t.ev("document.activeElement.className"));
+      check(`${width}: Tab from the button goes on to the next name`, await t.ev("document.activeElement === document.querySelectorAll('.wk-gl-a')[13]"), await t.ev("document.activeElement.className"));
       await key('Enter', 'Enter', 13); await sleep(1500);
       check(`${width}: Enter on a name opens its chapter`, await t.ev("location.hash === '#data-centers-and-power' && !document.querySelector('.view[data-view=\"stack\"]').hidden"), await t.ev('location.hash'));
       await t.ev('(history.back(), 1)'); await sleep(1500);

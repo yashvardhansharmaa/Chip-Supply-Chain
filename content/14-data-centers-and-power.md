@@ -312,7 +312,7 @@ SemiAnalysis, a research firm, forecast in October 2026 that 50 GW of data cente
 
 Better chips do not by themselves cut total energy use. Google says its Ironwood TPU, an AI chip, delivers twice the performance per watt of Trillium, the TPU before it ([source](https://cloud.google.com/blog/products/compute/inside-the-ironwood-tpu-codesigned-ai-stack)). A token is the chunk of text a model reads or writes. Energy per token can fall while total energy use still rises, if the number of tokens rises faster.
 
-## The chokepoint
+## The narrowest step
 
 On the Texas grid, big power users have asked for far more electricity than is connected and running. ERCOT, the grid operator for most of Texas, was tracking about 474 GW of large loads (big power users) seeking a connection in June 2026, roughly 90 percent of it data centers ([source](https://www.ercot.com/files/docs/2026/07/29/ERCOT-Senate-July-29-Panel-1-Assessing-The-Grid.pdf#page=6)). In its operational overview for September 2026, ERCOT counted 9,456 MW of large loads approved to energize, that is, cleared to switch on ([source](https://www.ercot.com/files/docs/2026/10/16/ERCOT-Monthly-Operational-Overview-September.pdf#page=9)). Judging by peak monthly use in September, it believed only 4,132 MW of it was operating ([source](https://www.ercot.com/files/docs/2026/10/16/ERCOT-Monthly-Operational-Overview-September.pdf#page=9)).
 

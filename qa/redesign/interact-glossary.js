@@ -5,7 +5,7 @@
    text", "Show all N matches", "Did you mean" and every place the site uses the words), the keys (the arrows, Enter, Escape,
    "/"), an entry in the bar's column (kind line, other names, definition, reason, Read it in and Also in with "and N more",
    Where it appears with six then Show all, the links between entries, Previous and Next), a firm's revenue, China chart and
-   Critical mark, a country's shares and EU-27 line, a chip's card on AI Chips, Browse A to Z (#a-z, a kind, a letter, the
+   market position, a country's shares and EU-27 line, a chip's card on AI Chips, Browse A to Z (#a-z, a kind, a letter, the
    strip, Back to the same place), the addresses (#gl-, #lk-term-, #lk-firm-, #lk-chip-, #lk-country-, #a-z, #a-z/<kind>,
    #a-z/<letter>), a passage out to its chapter's page and Back, the ways in (a chapter's pop-up, the masthead search, the
    Export Controls board, the masthead's tab), the phone at 390 and 320 (44 px targets, the field rising, the finger on the
@@ -42,13 +42,14 @@ const G = BASE + '/glossary/'; // the Glossary's own page (30 Oct 2026)
     let t = await open(chrome, G, { width: 1440, wait: 1500 });
     check('1440: the rows are in', await ready(t));
     check('1440: it opens at rest, at its own address', (await t.ev(state)) === 'home' && (await t.ev('location.pathname + location.hash')) === '/glossary/');
-    check('1440: every entry has its row in the page, with its lk- id, and each term its gl- id', (await t.ev("document.querySelectorAll('#lk-items li.gl-r[id^=\"lk-\"]').length")) === 487 && (await t.ev("document.querySelectorAll('#lk-items li[id^=\"lk-term-\"] > a[id^=\"gl-\"]').length")) === 208);
+    // 486 entries and 207 terms since 22 Nov 2026, when the Concentration entry was folded into Chokepoint (one rating word for readers)
+    check('1440: every entry has its row in the page, with its lk- id, and each term its gl- id', (await t.ev("document.querySelectorAll('#lk-items li.gl-r[id^=\"lk-\"]').length")) === 486 && (await t.ev("document.querySelectorAll('#lk-items li[id^=\"lk-term-\"] > a[id^=\"gl-\"]').length")) === 207);
     check('1440: the name, a level-one heading', (await t.ev("document.getElementById('gl-title').textContent")) === 'Glossary' && (await t.ev("document.getElementById('gl-title').getAttribute('aria-level')")) === '1');
-    check('1440: the search is labeled and counts the entries', (await t.ev("document.querySelector('label[for=\"gl-search\"]').textContent")).length > 10 && (await t.ev("document.getElementById('gl-search').placeholder")) === 'Search 487 entries' && (await t.ev("document.getElementById('gl-search').getAttribute('role')")) === 'combobox');
+    check('1440: the search is labeled and counts the entries', (await t.ev("document.querySelector('label[for=\"gl-search\"]').textContent")).length > 10 && (await t.ev("document.getElementById('gl-search').placeholder")) === 'Search 486 entries' && (await t.ev("document.getElementById('gl-search').getAttribute('role')")) === 'combobox');
     check('1440: one button under the field, Random entry, and no Look up', (await t.ev("[...document.querySelectorAll('#gl-btns button')].map(function(b){return b.textContent;}).join('|')")) === 'Random entry' && !(await t.ev("[...document.querySelectorAll('.view[data-view=\"glossary\"] button, .view[data-view=\"glossary\"] a')].some(function(b){return /^\\s*look up\\s*$/i.test(b.textContent);})")));
     const kindsRead = await t.ev("[...document.querySelectorAll('#gl-kindrow a')].map(function(a){return a.querySelector('.n').textContent+' '+a.querySelector('.w').textContent;}).join(' · ')");
     const kindsData = await t.ev("['term','firm','chip','country'].map(function(k){return document.querySelectorAll('#lk-items .gl-r[data-kind=\"'+k+'\"]').length;}).join(',')");
-    check('1440: the kinds and their counts, as the rows have them', kindsRead === '208 terms · 226 firms · 38 AI chips · 15 countries' && kindsData === '208,226,38,15', kindsRead + ' / ' + kindsData);
+    check('1440: the kinds and their counts, as the rows have them', kindsRead === '207 terms · 226 firms · 38 AI chips · 15 countries' && kindsData === '207,226,38,15', kindsRead + ' / ' + kindsData);
     check('1440: each kind opens the index of that kind', (await t.ev("[...document.querySelectorAll('#gl-kindrow a')].map(function(a){return a.getAttribute('href');}).join(' ')")) === '#a-z/terms #a-z/firms #a-z/ai-chips #a-z/countries');
     const abc = await t.ev("(function(){var c=[...document.querySelectorAll('#gl-abc > *')];return {n:c.length,off:c.filter(function(e){return e.tagName==='SPAN';}).map(function(e){return e.textContent;}).join(','),agree:c.filter(function(e){return e.tagName==='A';}).every(function(a){var l=a.getAttribute('data-azl'),n=document.querySelectorAll('#lk-items .gl-g[data-l=\"'+l+'\"] .gl-r').length;return n>0&&a.getAttribute('aria-label').indexOf(', '+n+' ')>0;})};})()");
     check('1440: the letters, 0–9 and A to Z, X off as the data has it, each named with its count', abc.n === 27 && abc.off === 'X' && abc.agree, abc);
@@ -132,7 +133,11 @@ const G = BASE + '/glossary/'; // the Glossary's own page (30 Oct 2026)
     await t.close();
     t = await open(chrome, G + '#lk-firm-asml', { width: 1440, wait: 1500 }); await ready(t); await sleep(300);
     check('#lk-firm-asml opens ASML', (await t.ev(hw)) === 'ASML' && (await t.ev(state)) === 'entry');
-    check("a firm keeps its facts, its Critical mark, its revenue's filing link and its China chart", /Chokepoint level/.test(await t.ev("document.querySelector('.gl-facts').innerText")) && !!(await t.ev("document.querySelector('.gl-facts .gl-chk--critical')")) && !!(await t.ev("document.querySelector('.gl-facts a.rev-filed')")) && !!(await t.ev("document.querySelector('.gl-facts .sup-ex-mini svg')")));
+    // its market position in the Suppliers page's word, with what that position means, both read from the app (Suppliers.POSITION
+    // and POSITION_DEF) and the level from the data (23 Nov 2026: "Market position", Dominant to One of many)
+    const pos = await t.ev("(function(){var S=window.CP.Suppliers,r=((window.CP.DATA||window.CP_DATA).suppliers||[]).filter(function(x){return x.name==='ASML';})[0];var dd=[].filter.call(document.querySelectorAll('.gl-facts dt'),function(d){return d.textContent==='Market position';})[0];return {lv:r.chokepoint,word:S.POSITION[r.chokepoint],def:S.POSITION_DEF[r.chokepoint],dd:dd?dd.nextElementSibling.textContent:''};})()");
+    check('a firm card names its market position and says what it means', !!pos.word && !!pos.def && pos.dd === pos.word + pos.def, JSON.stringify(pos));
+    check("a firm keeps its facts, its dominant mark, its revenue's filing link and its China chart", !!(await t.ev("document.querySelector('.gl-facts .gl-chk--' + " + JSON.stringify(String(pos.lv).toLowerCase()) + ")")) && !!(await t.ev("document.querySelector('.gl-facts a.rev-filed')")) && !!(await t.ev("document.querySelector('.gl-facts .sup-ex-mini svg')")));
     check('a firm links to its row in the supplier list', !!(await t.ev("document.querySelector('#gl-pane a[data-sup=\"ASML\"]')")));
     check('the links between entries keep the words and stop at three a paragraph', (await t.ev("[...document.querySelectorAll('.gl-e p')].every(function(p){return p.querySelectorAll('a.gl-x').length<=3;})")) && (await t.ev("document.querySelectorAll('.gl-def a.gl-x').length")) >= 1);
     check('each entry is linked once', await t.ev("(function(){var s={},ok=true;document.querySelectorAll('.gl-e a.gl-x').forEach(function(a){var k=a.getAttribute('data-id');if(s[k])ok=false;s[k]=1;});return ok;})()"));
@@ -148,11 +153,18 @@ const G = BASE + '/glossary/'; // the Glossary's own page (30 Oct 2026)
     await t.close();
     t = await open(chrome, G + '#lk-country-nl', { width: 1440, wait: 1500 }); await ready(t); await sleep(300);
     check('#lk-country-nl opens the Netherlands with its shares', (await t.ev(hw)) === 'Netherlands' && /Share of each segment/.test(await t.ev("document.getElementById('gl-pane').innerText")));
+    // the country line counts its firms and its dominant ones from the data, in the Suppliers page's word
+    const ccLine = await t.ev("(function(){var rows=((window.CP.DATA||window.CP_DATA).suppliers||[]).filter(function(r){return r.country==='NL';}),d=rows.filter(function(r){return r.chokepoint==='Critical';}).length;return {want:rows.length+' firms in the supplier list'+(d?', '+d+' '+window.CP.Suppliers.POSITION.Critical.toLowerCase():''),got:document.querySelector('.gl-meta').textContent};})()");
+    check('the country line counts its firms and its dominant firms from the data', ccLine.got.indexOf(ccLine.want) >= 0 && !/Critical/.test(ccLine.got), JSON.stringify(ccLine));
     check('the shares follow the chart rule: the largest wine, the rest the tint', (await t.ev("getComputedStyle(document.querySelector('.gl-share.is-top .gl-share-bar')).backgroundImage")).includes('rgb(122, 31, 43)') && (await t.ev("getComputedStyle(document.querySelector('.gl-share:not(.is-top) .gl-share-bar')).backgroundImage")).includes('rgb(210, 209, 204)'));
-    check('the band marks on its chokepoint cards', !!(await t.ev("document.querySelector('.gl-cards .gl-card-b--extreme, .gl-cards .gl-card-b--high')")));
+    // the chokepoint mark (22 Nov 2026): a chokepoint on the country's cards carries it, any other stage carries none, and no
+    // concentration band is named ("1" a chokepoint by its card's band, then "1" the mark shown)
+    const gc = await t.ev("(function(){var by={};((window.CP_DATA||{}).chapters||[]).forEach(function(c){by[c.title]=c;});return [].map.call(document.querySelectorAll('.gl-cards li'),function(li){var c=by[li.querySelector('.gl-card-t').textContent]||{};return (c.concentration==='Extreme'?'1':'0')+(li.querySelector('.cpk')?'1':'0');}).join(' ');})()");
+    check('a chokepoint on its cards carries the chokepoint mark, and no other stage does', !!gc && gc.split(' ').every((x) => x === '11' || x === '00') && gc.includes('11'), gc);
+    check('the country card names no concentration band', !/\b(Extreme|High|Moderate|Low) concentration\b|of extreme concentration|of them extreme/i.test(await t.ev("document.getElementById('gl-pane').innerText")), await t.ev("(document.querySelector('.gl-meta')||{}).textContent"));
     check('the EU-27 line and its link', /Across the EU-27/.test(await t.ev("document.getElementById('gl-pane').innerText")) && !!(await t.ev("document.querySelector('#gl-pane a[href=\"#/suppliers?group=eu\"]')")));
     await t.ev("(document.querySelector('.gl-cat-f a[data-id]').click(),1)"); await sleep(400);
-    check("a Critical firm's name opens its entry", /^#lk-firm-/.test(await t.ev('location.hash')) && !!(await t.ev("document.querySelector('.gl-facts')")), await t.ev(hw));
+    check("a dominant firm's name opens its entry", /^#lk-firm-/.test(await t.ev('location.hash')) && !!(await t.ev("document.querySelector('.gl-facts')")), await t.ev(hw));
     await t.close();
     t = await open(chrome, G + '#lk-chip-nvidia-b200', { width: 1440, wait: 1500 }); await ready(t); await sleep(300);
     check('#lk-chip- opens the chip with its facts', (await t.ev(hw)) === 'Nvidia B200' && /Dense TFLOPS/i.test(await t.ev("document.getElementById('gl-pane').innerText")));
@@ -167,14 +179,14 @@ const G = BASE + '/glossary/'; // the Glossary's own page (30 Oct 2026)
     t = await open(chrome, G, { width: 1440, wait: 1500 }); await ready(t);
     await t.ev("(document.querySelector('#gl-kindrow a[data-azk=\"firm\"]').click(),1)"); await sleep(500);
     check('a kind opens the index of that kind', (await t.ev(state)) === 'browse' && (await t.ev('location.hash')) === '#a-z/firms' && (await t.ev("document.getElementById('gl-count').textContent")) === '226 firms' && (await t.ev("document.querySelector('#gl-kinds [data-k=\"firm\"]').getAttribute('aria-pressed')")) === 'true');
-    check('the firms only, and every row stays in the page', (await t.ev(`${shown}.every(function(r){return r.getAttribute('data-kind')==='firm';})`)) && (await t.ev(`${shown}.length`)) === 226 && (await t.ev("document.querySelectorAll('#lk-items li[id^=\"lk-\"]').length")) === 487);
+    check('the firms only, and every row stays in the page', (await t.ev(`${shown}.every(function(r){return r.getAttribute('data-kind')==='firm';})`)) && (await t.ev(`${shown}.length`)) === 226 && (await t.ev("document.querySelectorAll('#lk-items li[id^=\"lk-\"]').length")) === 486);
     check('the index: its head takes focus, Browse A to Z is marked', (await t.ev(act)) === 'gl-bh' && (await t.ev("document.querySelector('.gl-az-link').getAttribute('aria-current')")) === 'page');
     await t.ev("(document.querySelector('#gl-kinds [data-k=\"country\"]').click(),1)"); await sleep(300);
     check('another kind rewrites the address in place, and a letter with none is off', (await t.ev('location.hash')) === '#a-z/countries' && (await t.ev("document.getElementById('gl-count').textContent")) === '15 countries' && (await t.ev("document.querySelectorAll('#gl-jump span').length")) > 5);
     await t.ev('(history.back(),1)'); await sleep(600);
     check('Back from the index returns to rest', (await t.ev(state)) === 'home' && (await t.ev('location.pathname + location.hash')) === '/glossary/');
     await t.ev("(document.querySelector('#gl-abc a[data-azl=\"S\"]').click(),1)"); await sleep(600);
-    check('a letter opens the index at that letter, all kinds, its head with focus', (await t.ev(state)) === 'browse' && (await t.ev('location.hash')) === '#a-z/s' && (await t.ev(act)) === 'gl-lh-S' && (await t.ev("document.getElementById('gl-count').textContent")) === '487 entries');
+    check('a letter opens the index at that letter, all kinds, its head with focus', (await t.ev(state)) === 'browse' && (await t.ev('location.hash')) === '#a-z/s' && (await t.ev(act)) === 'gl-lh-S' && (await t.ev("document.getElementById('gl-count').textContent")) === '486 entries');
     check('the letter lands under the strip, and the strip marks it', Math.abs(await t.ev("document.getElementById('gl-lh-S').closest('.gl-g').getBoundingClientRect().top - document.getElementById('gl-jump').getBoundingClientRect().bottom")) < 4 && (await t.ev("(document.querySelector('#gl-jump [aria-current=\"true\"]')||{}).textContent")) === 'S');
     check('the strip and the letter heads stick', (await t.ev("getComputedStyle(document.getElementById('gl-jump')).position")) === 'sticky' && (await t.ev("getComputedStyle(document.getElementById('gl-lh-S')).position")) === 'sticky');
     check('the index: no sideways scroll, nothing under 11.5 px', (await t.ev(sideways)) && parseFloat(await t.ev(smallest)) >= 11.5, await t.ev(smallest));
@@ -190,7 +202,7 @@ const G = BASE + '/glossary/'; // the Glossary's own page (30 Oct 2026)
     check('Browse A to Z in the bar keeps the index', (await t.ev(state)) === 'browse');
     check('Browse A to Z: no script errors', !t.errors.length, t.errors.join(' | '));
     await t.close();
-    for (const [h, want] of [['#a-z', { hash: '#a-z', count: '487 entries', top: 0 }], ['#a-z/ai-chips', { count: '38 AI chips', kind: 'chip' }], ['#a-z/x', { count: '487 entries', top: 0 }]]) {
+    for (const [h, want] of [['#a-z', { hash: '#a-z', count: '486 entries', top: 0 }], ['#a-z/ai-chips', { count: '38 AI chips', kind: 'chip' }], ['#a-z/x', { count: '486 entries', top: 0 }]]) {
       t = await open(chrome, G + h, { width: 1440, wait: 1500 }); await ready(t); await sleep(400);
       const st = await t.ev(`({ state: ${state}, count: document.getElementById('gl-count').textContent, kind: (document.querySelector('#gl-kinds [aria-pressed="true"]')||{}).getAttribute('data-k'), y: scrollY, errors: 0 })`);
       check(`${h} opens the index${want.kind ? ' of that kind' : ''}${h === '#a-z/x' ? ' (X has no entries: at its top)' : ''}`, st.state === 'browse' && st.count === want.count && (!want.kind || st.kind === want.kind) && (want.top === undefined || st.y === want.top) && !t.errors.length, st);
@@ -305,7 +317,7 @@ const G = BASE + '/glossary/'; // the Glossary's own page (30 Oct 2026)
       const byKey = new Map(termRows.map((r) => [(/ id="(gl-[^"]+)"/.exec(r) || [])[1], r]));
       const slugOf = (t) => 'gl-' + String(t).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
       const whole = terms.filter((g) => { const r = byKey.get(slugOf(g.term)); return r && dec((/<a [^>]*>([^<]*)<\/a>/.exec(r) || [])[1]) === g.term && words(r, 'gl-rp') === g.plain && words(r, 'gl-rw') === (g.why || null) && words(r, 'gl-ra') === (g.aka || null); });
-      check('the HTML: every entry has its row, its name and its kind line', rows.length === 487 && rows.every((r) => /<a [^>]*>[^<]+<\/a>/.test(r) && /<p class="gl-rk">[^<]+<\/p>/.test(r)), rows.length);
+      check('the HTML: every entry has its row, its name and its kind line', rows.length === 486 && rows.every((r) => /<a [^>]*>[^<]+<\/a>/.test(r) && /<p class="gl-rk">[^<]+<\/p>/.test(r)), rows.length);
       check("the HTML: every term's name, other names, definition and reason, word for word", whole.length === terms.length && termRows.length === terms.length, whole.length + ' of ' + terms.length);
       check('the HTML: the firms, chips and countries carry their definitions', rows.filter((r) => !/data-kind="term"/.test(r) && words(r, 'gl-rp')).length >= 270, rows.filter((r) => !/data-kind="term"/.test(r) && words(r, 'gl-rp')).length);
       const ld = JSON.parse((/<script type="application\/ld\+json">([\s\S]*?)<\/script>/.exec(html) || [])[1] || '{}');
@@ -313,12 +325,15 @@ const G = BASE + '/glossary/'; // the Glossary's own page (30 Oct 2026)
       check('the HTML: no "Open the interactive page", and the home page holds no Glossary', !/Open the interactive page/.test(html) && !/<section class="view[^"]*" data-view="glossary"/.test(await (await fetch(BASE + '/')).text()));
     }
 
-    /* ---------- the old addresses: the home page's, forwarded in place, and the static copy's anchors ---------- */
+    /* ---------- the old addresses: the home page's, forwarded in place, and the static copy's anchors; and a term folded into
+       another (Concentration into Chokepoint, 22 Nov 2026), whose every old address opens the term that holds it now ---------- */
     t = await open(chrome, G, { width: 1440, wait: 1200 }); await ready(t);
     const len0 = await t.ev('history.length');
     await t.close();
     for (const [from, to, want] of [['/#/glossary', '/glossary/', 'home'], ['/#gl-euv', '/glossary/#gl-euv', 'EUV'], ['/#lk-firm-asml', '/glossary/#lk-firm-asml', 'ASML'], ['/#a-z/firms', '/glossary/#a-z/firms', '226 firms'],
-      ['/glossary/#euv', '/glossary/#gl-euv', 'EUV'], ['/glossary/#letter-s', '/glossary/#a-z/s', '487 entries'], ['/glossary/#list-firms', '/glossary/#a-z/firms', '226 firms']]) {
+      ['/glossary/#euv', '/glossary/#gl-euv', 'EUV'], ['/glossary/#letter-s', '/glossary/#a-z/s', '486 entries'], ['/glossary/#list-firms', '/glossary/#a-z/firms', '226 firms'],
+      ['/glossary/#gl-concentration', '/glossary/#gl-chokepoint', 'Chokepoint'], ['/glossary/#lk-term-concentration', '/glossary/#gl-chokepoint', 'Chokepoint'], ['/glossary/#concentration', '/glossary/#gl-chokepoint', 'Chokepoint'],
+      ['/#gl-concentration', '/glossary/#gl-chokepoint', 'Chokepoint']]) {
       t = await open(chrome, BASE + from, { width: 1440, wait: 2000 }); await ready(t); await sleep(400);
       const st = await t.ev(`({ at: location.pathname + location.hash, state: ${state}, hw: ${hw}, count: document.getElementById('gl-count').textContent, len: history.length })`);
       const got = st.state === 'home' ? 'home' : st.state === 'entry' ? st.hw : st.count;
