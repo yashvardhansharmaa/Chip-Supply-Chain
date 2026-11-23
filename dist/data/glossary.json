@@ -331,7 +331,7 @@
   {
     "term": "hyperscaler",
     "aka": "hyperscalers",
-    "plain": "One of the companies with the most data centers. Among US firms, Epoch AI counts Amazon, Google, Meta, Microsoft and Oracle.",
+    "plain": "One of the companies that run data centers on the largest scale. Among US firms, Epoch AI counts Amazon, Google, Meta, Microsoft and Oracle.",
     "why": "Together they owned 71 percent of the world's AI computing power at the end of 2025, by Epoch AI's estimate. All but Meta are cloud companies, which rent part of that computing power to other firms.",
     "chapter": "data-centers-and-power"
   },
