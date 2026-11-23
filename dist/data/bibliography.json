@@ -7048,5 +7048,26 @@
     "date": "2026-02-02",
     "type": "press release",
     "accessed": "2026-11-23"
+  },
+  "https://www.anthropic.com/news/higher-limits-spacex": {
+    "title": "Higher usage limits for Claude and a compute deal with SpaceX",
+    "publisher": "Anthropic",
+    "date": "2026-05-06",
+    "type": "press release",
+    "accessed": "2026-11-23"
+  },
+  "https://www.crusoe.ai/resources/newsroom/crusoe-expands-ai-data-center-campus-in-abilene-to-1-2-gigawatts": {
+    "title": "Crusoe expands AI data center campus in Abilene to 1.2 gigawatts",
+    "publisher": "Crusoe",
+    "date": "2025-03-18",
+    "type": "press release",
+    "accessed": "2026-11-23"
+  },
+  "https://openai.com/index/expanding-stargate-to-michigan/": {
+    "title": "Expanding Stargate to Michigan",
+    "publisher": "OpenAI",
+    "date": "2025-10-30",
+    "type": "press release",
+    "accessed": "2026-11-23"
   }
 }
