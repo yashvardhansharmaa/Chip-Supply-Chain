@@ -14,7 +14,7 @@
     "chokepointScore": 4,
     "leaders": [
       {"name": "Advantest", "country": "JP", "share": "62.7 percent of chip test tools in 2025, by CSET's analysis of TechInsights data", "source": "https://chipexplorer.eto.tech/?parentNode=N78&selectedNode=N120"},
-      {"name": "Teradyne", "country": "US", "share": "$2.52 billion of semiconductor test revenue in 2025, service included", "source": "https://www.sec.gov/Archives/edgar/data/97210/000119312526059002/ter-20251231.htm"},
+      {"name": "Teradyne", "country": "US", "share": "21.8 percent of chip test tools in 2025, by CSET's analysis of TechInsights data", "source": "https://chipexplorer.eto.tech/?parentNode=N78&selectedNode=N120"},
       {"name": "ASE", "country": "TW", "share": "Ran 8,348 testers in Q2 2026, up from 6,797 a year earlier", "source": "https://www.sec.gov/Archives/edgar/data/1122411/000095010326011351/dp250868_6k.htm"},
       {"name": "Amkor", "country": "US", "share": "$6.71 billion of 2025 revenue", "source": "https://www.sec.gov/Archives/edgar/data/1047127/000104712726000007/amkr123125erex-991.htm"},
       {"name": "Disco", "country": "JP", "share": "87 percent of the $1.9 billion market for dicing saws and grinders in 2025, on CSET's analysis of TechInsights data", "source": "https://chipexplorer.eto.tech/?parentNode=N69&selectedNode=N71"}
@@ -30,8 +30,8 @@
     "chinaSources": ["https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/", "https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/"],
     "usStatus": "American firms held 23.5 percent of the market for test tools in 2025 and Japanese firms 63.0 percent, by CSET's analysis of TechInsights data. Amkor raised its planned investment in an Arizona packaging and test campus to $7 billion in October 2025. In June 2026 it announced a long-term partnership with TSMC, which will buy packaging and test services from it in Arizona.",
     "usSources": ["https://chipexplorer.eto.tech/?parentNode=N78&selectedNode=N120", "https://ir.amkor.com/news-releases/news-release-details/amkor-technology-breaks-ground-new-semiconductor-advanced", "https://ir.amkor.com/news-releases/news-release-details/tsmc-and-amkor-technology-announce-long-term-partnership"],
-    "costSignal": "About $9.0 billion market for chip testers in 2025, by Advantest's estimate",
-    "costSources": ["https://www.advantest.com/document/en/investors/ir-library/result/JE_BIZ_260427_note.pdf#page=13"],
+    "costSignal": "$9.1 billion market for chip test tools in 2025, by CSET's analysis of TechInsights data",
+    "costSources": ["https://chipexplorer.eto.tech/?parentNode=N78&selectedNode=N120"],
     "substitutability": {"band": "Moderate", "test": "Rated on test tools, where Advantest held 62.7 percent of the market in 2025 and Teradyne 21.8 percent, by CSET's analysis of TechInsights data.", "testSources": ["https://chipexplorer.eto.tech/?parentNode=N78&selectedNode=N120"], "why": "Customers such as ASE already buy testers from both firms. The barrier is cost, because switching means rebuilding a customer's whole test setup, Advantest says.", "whySources": ["https://www.sec.gov/Archives/edgar/data/1122411/000119312526135585/d50802d20f.htm", "https://www.advantest.com/document/en/investors/ir-library/investors-guide/Investors_Guide_2607E.pdf#page=12"]}
   },
   "keyFacts": [
