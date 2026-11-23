@@ -8,7 +8,7 @@
   "openOnExplainer": true,
   "bridge": "Nothing yet proves that any of it works, and a package this far along is worth too much to guess about.",
   "specimen": "probe-card",
-  "specimenCaption": "A vertical probe card over a 300 mm wafer, pulled apart, its needles pointing straight down at four dies. The dies are drawn at 26 by 33 mm, the largest area a scanner prints in one exposure. A real card has thousands of needles, and here a few rows stand for them. Each card is built for one chip design. Every needle must touch down in the same plane, again and again, while hot.",
+  "specimenCaption": "A vertical probe card over a 300 mm wafer, pulled apart, its needles pointing straight down at four dies. The dies are drawn at 26 by 33 mm, the largest area a scanner prints in one exposure. A real card has thousands of needles, and here a few rows stand for them.",
   "card": {
     "concentration": "High",
     "chokepointScore": 4,

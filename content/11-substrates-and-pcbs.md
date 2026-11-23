@@ -8,7 +8,7 @@
   "openOnExplainer": true,
   "bridge": "Everything so far builds upward, and the base under the package now has to carry all of it down to an ordinary board.",
   "specimen": "substrate-layers",
-  "specimenCaption": "A build-up package substrate, the small board inside a chip package that carries the chips and connects them to the circuit board below, with a quarter cut away. Its footprint is not drawn to scale, and its layers are drawn far thicker than they are. Its 11 layers of film on each side of the core follow Ajinomoto's count for a 2026 AI substrate. Ajinomoto, a Japanese food company, told investors in June 2026 that its film has held over 95 percent of its market since its launch.",
+  "specimenCaption": "A build-up package substrate, the small board inside a chip package that carries the chips and connects them to the circuit board below, with a quarter cut away. Its footprint is not drawn to scale, and its layers are drawn far thicker than they are. Its 11 layers of film on each side of the core follow Ajinomoto's count for a 2026 AI substrate.",
   "card": {
     "concentration": "Extreme",
     "chokepointScore": 5,
