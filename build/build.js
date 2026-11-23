@@ -533,8 +533,9 @@ function wordCount(body) {
 }
 
 /* ---------------- nameplate ---------------- */
-/* The concentration method: four bands by how many firms could credibly supply a stage today, taken at the narrowest step
-   inside it (card.concentration in content/*.md, checked by build/validate.js; BAND_NOTE below defines each band). Where a
+/* The concentration method: four bands by how many firms could credibly supply a stage today, judged by the market for the
+   stage's main tools or products and, where the most advanced AI chips need one particular tool or product, by that one too
+   (the Glossary's "Chokepoint" entry, 23 Nov 2026; card.concentration in content/*.md, checked by build/validate.js; BAND_NOTE below defines each band). Where a
    figure exists for the top country's share of the segment it is a second check, and when the two disagree the supplier
    count wins (the Glossary's "Concentration" entry said so until 22 Nov 2026). Readers see one word of it (owner, 22 Nov 2026: "keep everything as unlabeled
    and the seven as choke points", then "chokepoint is good, apply it site-wide"): a stage in the Extreme band is a
@@ -590,7 +591,7 @@ function cardCites(card, ctx) {
 }
 // The chapter is numbered in the order the page shows it (the column, design round five, 27 Oct 2026): In plain terms
 // (meta.plain, the first paragraph of How it works), In short (the body's Takeaways section, which splitTakeaways moves to the
-// head), the lead (the body's text before its first section), then the chokepoint card, which stands in the text after the
+// head), the lead (the body's text before its first section), then the stage card, which stands in the text after the
 // lead and before section 01 (chapterHTML). Their sources are numbered first, in that order, before markdown() numbers the
 // rest of the body as it reads it; a source met again keeps its number, and every mark looks its number up by its url (cite).
 // A chapter that opens on its explainer (openingExplainer, below) shows that figure right after In plain terms: afterPlain
@@ -674,8 +675,8 @@ function nameplate(card, title, gl, ctx, where) {
   const costHeadHTML = lead ? esc(numLead[1]) : first ? esc(firstBody) + firstMarks + (costLong ? esc(firstStop) : '') : '—';
   const costSubHTML = lead ? esc(numLead[2]) + firstMarks + esc(firstStop) + (restHTML ? ' ' + restHTML : '') : restHTML;
   const costLabel = card.costLabel ? esc(card.costLabel) : 'Price or market size';
-  return `<section class="plate" aria-label="Chokepoint card${title ? ' for ' + esc(title) : ''}">
-<header class="plate-head"><span class="label">Chokepoint card</span>${where ? `<span class="plate-where">${esc(where)}</span>` : ''}</header>
+  return `<section class="plate" aria-label="Stage card${title ? ' for ' + esc(title) : ''}">
+<header class="plate-head"><span class="label">Stage card</span>${where ? `<span class="plate-where">${esc(where)}</span>` : ''}</header>
 ${isChoke(conc) ? `<p class="plate-cpk">${chokeMark({ tag: 'button', cls: 'gl-term', attrs: ' type="button" data-term="chokepoint"' })}<span class="sub">${esc(CHOKE_NOTE)}</span></p>` : ''}
 <div class="plate-kpis">
 ${sb ? `<div><span class="k">Substitutability</span><b class="v sub-${SUBS[sb.band] || 0}"><button type="button" class="gl-term v-btn" data-band="${SUBS[sb.band] || 0}" data-term="substitutability" data-head="${esc(SUBWORD[sb.band] || sb.band)}" data-note="${esc(SUB_NOTE[sb.band] || '')}" data-test="${esc(sb.test || '')}">${esc(sb.band)}</button></b>${sb.test ? `<span class="sub">${cardText(sb.test, F['substitutability test'], ctx, g)}</span>` : ''}</div>` : `<div><span class="k">Substitution time</span><b class="v">${esc(sub.years || '—')}${sub.years && !/year/i.test(sub.years) ? '<small>years</small>' : ''}</b></div>`}
@@ -849,9 +850,10 @@ function reviewHTML(ch) {
   if (!fc || !Array.isArray(fc.cards) || !fc.cards.length) return '';
   // each card's reason ends with a link back to the section of the chapter that covers it
   // the deck's title is one of the chapter's sections, h2 (29 Oct 2026)
-  // a card whose idea is stated only on the chokepoint card names "Chokepoint card", which links to the card (29 Oct 2026)
+  // a card whose idea is stated only on the stage card names "Stage card", which links to the card (29 Oct 2026; "Chokepoint card"
+  // until 23 Nov 2026, when the owner kept the word for the nine chokepoints)
   return deckHTML(fc, { id: ch.id, title: ch.title, level: 2, more: (c, i) => {
-    if (c.section === 'Chokepoint card') return { href: `#${ch.id}--card`, text: 'Reread: Chokepoint card' };
+    if (c.section === 'Stage card') return { href: `#${ch.id}--card`, text: 'Reread: Stage card' };
     const anchor = c.section ? `${ch.id}--${slug(c.section)}` : '';
     if (anchor && !ch.html.includes(`id="${anchor}"`)) warn(`flashcards ${ch.id} #${i + 1}: no section "${c.section}"`);
     return anchor ? { href: '#' + anchor, text: 'Reread: ' + c.section } : null;
@@ -1107,7 +1109,7 @@ try{window.dispatchEvent(new Event('resize'));}catch(x){}});
       Stage.host), and under it its plain caption (a mono label and the chapter's own specimenCaption) beside the parts list,
       where data/specimen-parts.json has one;
    3. In plain terms, then in the chapters that open on their explainer that figure (openingExplainer), and In short;
-   4. the prose: the lead, then the chokepoint card, the chapter's first table (withCard), then the sections, the flashcards,
+   4. the prose: the lead, then the stage card, the chapter's first table (withCard), then the sections, the flashcards,
       the sources and the door to the next chapter.
    The head keeps its class (.chapter-head) and the prose stays the article's own child, which the search index and the print
    path read (src/app.js Tools, src/modules/print.js). The title is the page's h1 since each chapter has a page of its own (28
@@ -1235,9 +1237,9 @@ function chapterHTML(ch) {
   const spec = `<figure class="ch-spec"${plateH[specimen] ? ` style="--draw-h:${plateH[specimen]}px"` : ''}${night ? ' data-night="1"' : ''}${ps.length ? ` data-parts="${esc(JSON.stringify(ps.map((p) => Object.assign({ n: +p.n, name: p.label || p.name }, Array.isArray(p.light) && p.light.length ? { light: p.light.map((h) => (h.only ? { only: h.only } : {})) } : {}))))}"` : ''}>`
     + `<div class="ch-spec-draw"></div>`
     + `<figcaption class="ch-spec-cap${ch.rendered.parts ? ' has-parts' : ''}"><span class="label">Specimen ${pad(ch.number)} · ${esc(ch.title)}</span>${m.specimenCaption ? `<p>${esc(m.specimenCaption)}</p>` : ''}${ch.rendered.parts}</figcaption></figure>`;
-  // On this page: In plain terms, the chokepoint card, the chapter's own sections, the flashcards and the sources
+  // On this page: In plain terms, the stage card, the chapter's own sections, the flashcards and the sources
   const fc = flashcards[ch.id], hasDeck = fc && Array.isArray(fc.cards) && fc.cards.length;
-  const toc = (m.plain ? [[`${ch.id}--plain`, 'In plain terms']] : []).concat(plate ? [[`${ch.id}--card`, 'Chokepoint card']] : []).concat((ch.headings || []).map((h) => [h.id, inline(h.text, { id: ch.id, cites: [], figures: [] }).replace(/<sup[\s\S]*?<\/sup>/g, '')]))
+  const toc = (m.plain ? [[`${ch.id}--plain`, 'In plain terms']] : []).concat(plate ? [[`${ch.id}--card`, 'Stage card']] : []).concat((ch.headings || []).map((h) => [h.id, inline(h.text, { id: ch.id, cites: [], figures: [] }).replace(/<sup[\s\S]*?<\/sup>/g, '')]))
     .concat(hasDeck ? [[`${ch.id}--flashcards`, 'Flashcards']] : []).concat(ch.cites.length ? [[`${ch.id}--sources`, 'Sources']] : []);
   // data-open: the chapter opens on its explainer (openingExplainer), which follows In plain terms in the head (.fig-open)
   return `<article class="chapter" id="${esc(ch.id)}" data-specimen="${esc(specimen)}" data-number="${pad(ch.number)}" data-title="${esc(ch.title)}" data-caption="${esc(m.specimenCaption || '')}"${ch.openFig ? ' data-open="explainer"' : ''}>
@@ -1440,7 +1442,7 @@ function exposureViz(rows) {
 
 
 /* ---------------- geopolitics view ---------------- */
-let geoArticle = '', geoDek = 'Who holds each chokepoint, how the export-control campaign has unfolded since 2018, and where the chips go.';
+let geoArticle = '', geoDek = 'Who leads each segment of the chain, how the export-control campaign has unfolded since 2018, and where the chips go.';
 // the essay, the last chapter, is drawn by the same chapterHTML as the others (redesign stage 2): the opener, its specimen on the night ground and
 // the rail; it has no card, being no stage
 if (geo) { geoDek = geo.meta.oneLiner || geoDek; geoArticle = chapterHTML(geo); articleOf.set(geo.id, geoArticle); }

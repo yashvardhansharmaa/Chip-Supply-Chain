@@ -79,7 +79,7 @@
   {
     "term": "Chokepoint",
     "aka": "chokepoints",
-    "plain": "A step in the supply chain where so few firms or countries can do the work that losing one of them stops everybody. A stage of the chain counts as a chokepoint when three or fewer firms could credibly supply it today, or one firm holds more than half of it, judged at the narrowest step inside the stage.",
+    "plain": "A step in the supply chain where so few firms or countries can do the work that losing one of them stops everybody. A stage of the chain counts as a chokepoint when three or fewer firms could credibly supply it today, or one firm holds more than half of it. Each stage is judged by the market for its main tools or products. Where the most advanced AI chips need one particular tool or product, that one is judged too. Only ASML makes the EUV scanners those chips need, for example.",
     "why": "One sanction or one factory fire at a chokepoint reaches the whole industry, and so does a government policy aimed at one.",
     "chapter": "introduction-and-goals"
   },

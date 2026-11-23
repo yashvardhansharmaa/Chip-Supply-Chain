@@ -697,7 +697,7 @@
      book: the answer is how many blocks to move the figure past, the paragraphs and lists that fit the gap with their
      notes and one more that can run on across the page's end, never past a heading, a table or another figure. pdf.py
      then lays the chapter out again with the figures moved (prepare({moves})). Figures carry no footnote marks, so the
-     notes keep their order. The chokepoint card moves the same way (cardsToText gives it an id at the head of the text),
+     notes keep their order. The stage card moves the same way (cardsToText gives it an id at the head of the text),
      but only past paragraphs that fit the gap whole: it then heads the next page as a plate. Its own marks come after the
      paragraph's in reading order either way. */
   var NOTE_LINE = 15; // px: one more note at the foot, as print.css sets them

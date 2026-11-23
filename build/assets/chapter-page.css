@@ -131,7 +131,7 @@ strong, b { font-weight: 600; }
 .inshort ul { padding-left: 1.2em; margin: 0; }
 .inshort li { margin-bottom: 0.45em; }
 
-/* the chokepoint card */
+/* the stage card */
 .plate { border-top: 2px solid var(--ink); border-bottom: 1px solid var(--ink); margin: 0 0 34px; }
 .plate-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; padding: 12px 0; border-bottom: 1px solid var(--line-2); }
 .plate-head .label { color: var(--ink); font-weight: 600; }

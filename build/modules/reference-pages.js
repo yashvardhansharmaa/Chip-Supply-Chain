@@ -199,7 +199,7 @@ ${body}
       const where = [cname(r.country) + (r.city ? ', ' + r.city : ''), /^private$/i.test(r.ticker || '') ? '' : r.ticker].filter(Boolean).join(' · ');
       const note = r.revenueShown && r.revenueShown.note ? `<p class="row-fine"><b>About the revenue figure.</b> ${esc(r.revenueShown.note)}</p>` : '';
       return `<li class="row" id="${firmIds.get(r.name)}"><div><h3 class="row-h">${esc(r.name)}${r.nativeName ? `<span class="native" lang="${/[\u3040-\u30ff]/.test(r.nativeName) ? 'ja' : /[\uac00-\ud7af]/.test(r.nativeName) ? 'ko' : /[\u4e00-\u9fff]/.test(r.nativeName) ? 'zh' : 'en'}">${esc(r.nativeName)}</span>` : ''}</h3>`
-        + `<p class="row-meta">${esc(where)}</p>${r.chokepoint ? `<p class="row-meta"><span class="sr-only">Chokepoint level: </span><span class="lv lv-${esc(r.chokepoint)}">${esc(r.chokepoint)}</span></p>` : ''}</div>`
+        + `<p class="row-meta">${esc(where)}</p>${r.chokepoint ? `<p class="row-meta"><span class="sr-only">How hard to replace: </span><span class="lv lv-${esc(r.chokepoint)}">${esc(r.chokepoint)}</span></p>` : ''}</div>`
         + `<div class="row-body">${r.subcategory ? `<p class="row-lead">${esc(r.subcategory)}</p>` : ''}${r.role ? `<p>${esc(r.role)}</p>` : ''}`
         + (facts.length ? `<dl class="facts">${facts.map((f) => `<dt>${f[0]}</dt><dd>${f[1]}</dd>`).join('')}</dl>` : '') + note
         + (r.source ? `<p class="row-src">${ext(r.source, 'Source', ` aria-label="Source for ${esc(r.name)}"`)}</p>` : '') + '</div></li>';
@@ -234,7 +234,7 @@ ${body}
       ctaNote: 'The interactive page adds a map of the route one chip takes, a drawing of which countries supply which segments, search and filters.',
       body: jump + revNote + ladder.map(stageHTML).join('') + countries,
       ld: dataset('Suppliers to the AI chip supply chain', `The ${suppliers.length} firms in the AI chip supply chain across ${stages.length} segments: what each makes, where it is based, how hard it would be to replace, and the latest annual revenue of ${withRev} of them as filed, each with its source.`,
-        ['suppliers.json', 'fx-rates.json'], ['Segment', 'Country', 'Chokepoint level', 'Revenue as filed', 'Revenue in US dollars', 'China share of revenue']),
+        ['suppliers.json', 'fx-rates.json'], ['Segment', 'Country', 'How hard to replace', 'Revenue as filed', 'Revenue in US dollars', 'China share of revenue']),
     });
   }
 

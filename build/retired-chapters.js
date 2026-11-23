@@ -35,5 +35,10 @@ module.exports = {
     // two figures retired without a chapter (29 Oct 2026): Systems and Networking's NVLink and Tomahawk columns, and their
     // citations, land on the one figure 13.2 that replaced them
     ...['nvlink-bandwidth', 'switch-bandwidth'].flatMap((x) => [[`fig-systems-and-networking-${x}`, 'fig-systems-and-networking-scale-up-out'], [`cite-fig-systems-and-networking-${x}`, 'fig-systems-and-networking-scale-up-out']]),
+    // two section names renamed in place (23 Nov 2026), so that "chokepoint" names only the nine chokepoint stages: "The
+    // chokepoint" in the five stages that are not chokepoints is now "The narrowest step", and the geopolitics essay's
+    // "Chokepoints and who holds them" is now "Who leads each segment". Their old addresses land on the renamed sections
+    ...['silicon-and-wafers', 'chemicals-gases-and-photoresist', 'deposition-and-etch', 'systems-and-networking', 'data-centers-and-power'].map((c) => [`${c}--the-chokepoint`, `${c}--the-narrowest-step`]),
+    ['geopolitics--chokepoints-and-who-holds-them', 'geopolitics--who-leads-each-segment'],
   ]),
 };

@@ -131,7 +131,7 @@ US import rules issued in 2026 on polysilicon products also cover the single-cry
 
 The US Commerce Department may approve plans to build US polysilicon, ingot, wafer or solar cell plants whose construction starts by 20 January 2029 ([source](https://www.federalregister.gov/documents/2026/08/11/2026-16400/adjusting-imports-of-polysilicon-and-its-derivatives-into-the-united-states)). Firms with approved plans can import production equipment, and polysilicon, ingots, wafers and solar cells in amounts the department sets to match their new investment, without the new duties ([source](https://www.federalregister.gov/documents/2026/08/11/2026-16400/adjusting-imports-of-polysilicon-and-its-derivatives-into-the-united-states)).
 
-## The chokepoint
+## The narrowest step
 
 Almost all fab capacity for advanced chips runs on 300 mm wafers ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf#page=57)). In 2025 the top five wafer makers served around 75 percent of the world market, and none of them is American or Chinese ([source](https://www.siltronic.com/fileadmin/investorrelations/2026/Q1/20260429_Siltronic_InvestorPresentation__.pdf#page=6)). Losing one of the top five would leave four, and a new wafer plant can still be built ([source](https://www.siltronic.com/fileadmin/investorrelations/2026/Q1/20260429_Siltronic_InvestorPresentation__.pdf#page=6)). But customers have to qualify a new plant before they buy from it, and Siltronic completed key customer qualifications at its new Singapore fab in July 2025 ([source](https://www.siltronic.com/fileadmin/investorrelations/2026/Q1/20260429_Siltronic_InvestorPresentation__.pdf#page=12)).
 

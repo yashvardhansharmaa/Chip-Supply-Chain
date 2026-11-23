@@ -1016,7 +1016,7 @@
      it was announced, against the figure its one select names, the largest in wine, and one line naming the chips with no
      figure. Under it one ruled shelf per maker (countries as they first appear, China last), each maker's packages drawn from
      above at one scale, oldest first. The WSE-3 Turbo is a whole wafer, so it is drawn at a smaller scale with its own scale
-     bar, inside its own row. A chip opens in place, under its maker's shelf, as a chip card set like the chokepoint card: the
+     bar, inside its own row. A chip opens in place, under its maker's shelf, as a chip card set like the stage card: the
      name and the plan with its numbered parts, the six figures in large type, then ruled rows (who makes it, where it stands
      on the chart, the attributes in words, how the speed is counted, the notes and the sources). "Compare with another chip"
      opens the picker (a bottom sheet on a phone) and widens the card into two to four columns, each headed by its package at
@@ -1284,7 +1284,7 @@
       }).join('');
       return { list: '<ol class="parts">' + li + '</ol>', said: npSentence(P.np) };
     };
-    // the rows a card ends on, as the chokepoint card sets its rows
+    // the rows a card ends on, as the stage card sets its rows
     var ABOUT = [
       { key: 'status', label: 'Availability', text: function (c) { return c.status ? esc(c.status) + (c.shipping ? '. First shipped ' + esc(when(c.shipping)) : '') + (c.shippingNote ? '. ' + esc(c.shippingNote) : '') : null; } },
       { key: 'target', label: 'Built for', text: function (c) { return c.target ? esc(c.target) : null; } },
@@ -1309,7 +1309,7 @@
     var speedNote = function (c) { var n = (c.compute || {}).precisionNote; return n ? esc(n) : ''; };
 
     /* ---- the comparison: one column per chip, each headed by its name and its package at one shared scale. o.side puts each
-       row's label in a column at the left, as the chokepoint card sets its rows ---- */
+       row's label in a column at the left, as the stage card sets its rows ---- */
     var cmpHTML = function (sel, o) {
       o = o || {}; var n = sel.length, width = o.width || 900, gap = o.gap == null ? 32 : o.gap, stack = !!o.stack, side = !!o.side && !stack, lw = side ? (o.labelW || 170) + gap : 0;
       var colW = stack ? Math.min(width, 520) : (width - lw - gap * (n - 1)) / n;
@@ -1811,7 +1811,7 @@
   /* ---------------- suppliers ----------------
      One list of firms, listed three ways: by segment (the ladder, from design to power), by country, or in a table, every
      name opening its own panel. Over it, the ribbons by share (src/modules/supshares.js, since 29 Oct 2026): which countries
-     hold each of the chokepoint matrix's twenty segments. Until then the ribbons counted the firms on this list. "Stages" are the
+     hold each of the country-share matrix's twenty segments. Until then the ribbons counted the firms on this list. "Stages" are the
      stage chapters of the chain (build/stages.js); the list's own categories are "segments". */
   var Suppliers = {
     rows: DATA.suppliers || [], built: false, stage: '', country: '', chk: '', q: '', sortKey: 'name', sortDir: 1,
@@ -2145,7 +2145,7 @@
       var self = this;
       // aria-sort belongs on the column header, not on the button inside it (accessibility #12)
       var th = function (k, label) { return '<th' + (self.sortKey === k ? ' aria-sort="' + (self.sortDir > 0 ? 'ascending' : 'descending') + '"' : '') + '><button type="button" data-sort="' + k + '">' + label + '</button></th>'; };
-      var html = '<thead><tr>' + th('name', 'Supplier') + th('category', 'Segment') + th('country', 'Country') + th('founded', 'Founded') + th('chokepoint', 'Chokepoint level') + '<th>What they make</th><th>Customers</th></tr></thead><tbody>';
+      var html = '<thead><tr>' + th('name', 'Supplier') + th('category', 'Segment') + th('country', 'Country') + th('founded', 'Founded') + th('chokepoint', 'How hard to replace') + '<th>What they make</th><th>Customers</th></tr></thead><tbody>';
       rows.forEach(function (r) {
         html += '<tr><td class="name"><b>' + esc(r.name) + '</b><span>' + esc([r.nativeName, r.ticker].filter(Boolean).join(' · ')) + '</span>' +
           (r.china ? '<a class="sup-ex-a" href="' + safeUrl(r.china.href) + '">' + esc(r.china.label) + '</a>' : '') + '</td>' +
@@ -5131,7 +5131,7 @@ try {
   function firmHTML(it, used) {
     var r = it.data || {}, rows = [], S = CP.Suppliers || {};
     var where = [r.city, cname(r.country)].filter(Boolean).join(', ');
-    if (r.chokepoint) rows.push(['Chokepoint level', '<span class="gl-chk gl-chk--' + esc(String(r.chokepoint).toLowerCase()) + '">' + esc(r.chokepoint) + '</span>', true]);
+    if (r.chokepoint) rows.push(['How hard to replace', '<span class="gl-chk gl-chk--' + esc(String(r.chokepoint).toLowerCase()) + '">' + esc(r.chokepoint) + '</span>', true]);
     if (where) rows.push(['Based in', where]);
     if (r.founded) rows.push(['Founded', String(r.founded)]);
     if (r.ownership || r.ticker) rows.push(['Ownership', [r.ownership, r.ticker ? 'ticker ' + r.ticker : ''].filter(Boolean).join(', ')]);
@@ -5171,7 +5171,7 @@ try {
       facts(rows) + '<p class="gl-links"><a href="#/landscape?pick=' + esc(encodeURIComponent(c.id)) + '" data-chip="' + esc(c.id) + '">On AI Chips →</a></p>';
   }
 
-  /* a country: the stages it leads, the chokepoint cards that name it, its shares, its firms. The firms whose country differs
+  /* a country: the stages it leads, the stage cards that name it, its shares, its firms. The firms whose country differs
      between the shares and the supplier list, as data/chokepoint-matrix-notes.md gives them, are named on the cards they touch */
   var SPLITS = {
     siemens: 'Siemens EDA is run from Oregon but owned by Siemens AG, so the EDA software share counts it under Germany and the supplier list under the US.',
@@ -5182,7 +5182,7 @@ try {
   function countryFacts(cc) {
     var chapters = DATA.chapters || [];
     var stages = chapters.filter(function (ch) { return ch.stage; });
-    var cardCount = chapters.filter(function (ch) { return ch.concentration; }).length; // only the stage chapters carry a chokepoint card
+    var cardCount = chapters.filter(function (ch) { return ch.concentration; }).length; // only the stage chapters carry a stage card
     var named = chapters.filter(function (ch) { return (ch.countries || []).some(function (x) { return x.code === cc; }); }).sort(function (a, b) { return (b.bandRank || 0) - (a.bandRank || 0) || a.number - b.number; });
     var led = stages.filter(function (ch) { var f = (ch.countries || [])[0]; return f && f.code === cc; });
     var cp = led.filter(function (ch) { return ch.chokepoint; }).length; // the stages it leads that are chokepoints (build/build.js isChoke)
@@ -5190,7 +5190,7 @@ try {
     var critical = firms.filter(function (r) { return r.chokepoint === 'Critical'; }).length, meta = [];
     if (led.length === 1) meta.push('leads 1 stage' + (cp ? ', a chokepoint' : ''));
     else if (led.length) meta.push('leads ' + led.length + ' stages' + (!cp ? '' : cp === led.length ? ', all of them chokepoints' : cp === 1 ? ', 1 of them a chokepoint' : ', ' + cp + ' of them chokepoints'));
-    meta.push('named on ' + named.length + ' of ' + cardCount + ' chokepoint cards');
+    meta.push('named on ' + named.length + ' of ' + cardCount + ' stage cards');
     if (firms.length) meta.push(firms.length + (firms.length === 1 ? ' firm' : ' firms') + ' in the supplier list' + (critical ? ', ' + critical + ' Critical' : ''));
     return { named: named, firms: firms, meta: meta.join(' · ') };
   }
@@ -5216,7 +5216,7 @@ try {
       }).join('') + '</ul>' + (small.length ? '<p class="gl-small">Under 1%: ' + esc(small.map(function (s) { return s.seg; }).join(', ')) + '.</p>' : '') + '</section>';
     }
     if (named.length) {
-      h += '<section class="gl-part" aria-labelledby="gl-cd"><h3 class="gl-h" id="gl-cd">On the chokepoint cards</h3><ul class="gl-cards">' + named.map(function (ch) {
+      h += '<section class="gl-part" aria-labelledby="gl-cd"><h3 class="gl-h" id="gl-cd">On the stage cards</h3><ul class="gl-cards">' + named.map(function (ch) {
         var note = ((ch.countries || []).filter(function (x) { return x.code === cc; })[0] || {}).note || '';
         return '<li><a href="' + esc(chHref(ch.id)) + '"><span class="gl-card-t">' + esc(ch.title) + '</span>' + (ch.chokepoint ? '<span class="cpk gl-card-b"><i aria-hidden="true"></i>Chokepoint</span>' : '') + (note ? '<span class="gl-card-n">' + esc(note) + '</span>' : '') + '</a></li>';
       }).join('') + '</ul></section>';
@@ -6415,7 +6415,7 @@ try {
      book: the answer is how many blocks to move the figure past, the paragraphs and lists that fit the gap with their
      notes and one more that can run on across the page's end, never past a heading, a table or another figure. pdf.py
      then lays the chapter out again with the figures moved (prepare({moves})). Figures carry no footnote marks, so the
-     notes keep their order. The chokepoint card moves the same way (cardsToText gives it an id at the head of the text),
+     notes keep their order. The stage card moves the same way (cardsToText gives it an id at the head of the text),
      but only past paragraphs that fit the gap whole: it then heads the next page as a plate. Its own marks come after the
      paragraph's in reading order either way. */
   var NOTE_LINE = 15; // px: one more note at the foot, as print.css sets them

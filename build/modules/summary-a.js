@@ -2,7 +2,7 @@
  *
  * A world map drawn from the same coastline rings the 3D globe specimen uses
  * (specimens/globe.js is parsed at build time, so the two never drift), the
- * chain's chokepoint towns pinned on it, and one panel per country built from
+ * chain's main sites pinned on it, and one panel per country built from
  * the chapter cards, the country-share matrix, the supplier list and the
  * China revenue series. Nothing here is typed from memory: every figure is
  * computed from ctx.data or the chapter front matter.
@@ -177,7 +177,7 @@ module.exports = function (ctx) {
   const mark = ctx.chokeMark || ((o = {}) => `<span class="cpk${o.cls ? ' ' + o.cls : ''}"><i aria-hidden="true"></i>${o.word === false ? '' : 'Chokepoint'}</span>`);
   const chapters = data.chapters || [];
   const stages = chapters.filter((c) => c.stage); // the stages of the chain (build/stages.js); the economics chapter and the essay are not
-  const cardCount = chapters.filter((c) => c.concentration).length; // only the stage chapters carry a chokepoint card
+  const cardCount = chapters.filter((c) => c.concentration).length; // only the stage chapters carry a stage card
   const matrix = (data.matrix || []).filter((r) => r.shares);
   const suppliers = data.suppliers || [];
   const exposure = data.exposure || [];
@@ -223,7 +223,7 @@ module.exports = function (ctx) {
   sb = block('SUBS') || '';
   while ((m = subsRe.exec(sb))) towns.push({ name: m[1], lat: +m[2], lon: +m[3], score: 2, sub: true, note: m[4].trim(), ch: null, cc: TOWN_CC[m[1]] || '' });
   const sites = towns.filter((t) => !t.sub);
-  if (sites.length !== 19) warn('summary-a: expected 19 chokepoint towns in globe.js, found ' + sites.length);
+  if (sites.length !== 19) warn('summary-a: expected 19 main sites in globe.js, found ' + sites.length);
   towns.forEach((t) => { if (!t.cc) warn('summary-a: no country for the town ' + t.name); });
 
   /* ---------------- projection ---------------- */
@@ -326,7 +326,7 @@ module.exports = function (ctx) {
   const metaOf = (cc) => {
     const led = ledBy[cc] || [], cp = led.filter((c) => c.chokepoint).length;
     const of = !cp ? '' : led.length === 1 ? ', a chokepoint' : cp === 1 ? ', one of them a chokepoint' : cp === led.length ? `, ${led.length === 2 ? 'both' : 'all'} chokepoints` : `, ${word(cp)} of them chokepoints`;
-    return led.length ? `leads ${word(led.length)} stage${led.length > 1 ? 's' : ''}${of}` : `named on ${word(info[cc].named.length)} chokepoint card${info[cc].named.length === 1 ? '' : 's'}`;
+    return led.length ? `leads ${word(led.length)} stage${led.length > 1 ? 's' : ''}${of}` : `named on ${word(info[cc].named.length)} stage card${info[cc].named.length === 1 ? '' : 's'}`;
   };
 
   function panel(cc, open) {
@@ -334,8 +334,8 @@ module.exports = function (ctx) {
     const top = d.segs[0];
     const subject = theName(cc, true);
     const lede = top
-      ? `${subject} holds ${num(top.v)}% of ${lc(top.seg)}${top.rank === 1 ? ', more than any other country' : ''}, and is named on ${word(d.named.length)} of the ${word(cardCount)} chokepoint cards.`
-      : `${subject} is named on ${word(d.named.length)} of the ${word(cardCount)} chokepoint cards${d.firms.length ? `, and ${word(d.firms.length)} of the ${totalFirms} firms in the supplier list ${d.firms.length > 1 ? 'are' : 'is'} based there` : ''}.`;
+      ? `${subject} holds ${num(top.v)}% of ${lc(top.seg)}${top.rank === 1 ? ', more than any other country' : ''}, and is named on ${word(d.named.length)} of the ${word(cardCount)} stage cards.`
+      : `${subject} is named on ${word(d.named.length)} of the ${word(cardCount)} stage cards${d.firms.length ? `, and ${word(d.firms.length)} of the ${totalFirms} firms in the supplier list ${d.firms.length > 1 ? 'are' : 'is'} based there` : ''}.`;
 
     // up to three segment shares: anything it leads, or holds a tenth of
     const shares = d.segs.filter((s) => s.rank === 1 || s.v >= 10).slice(0, 3).map((s) => {
@@ -367,7 +367,7 @@ module.exports = function (ctx) {
     }
 
     const townLine = d.towns.length
-      ? `<a href="#/geopolitics">${word(d.towns.length)} chokepoint town${d.towns.length > 1 ? 's' : ''}: ${d.towns.map((t) => esc(t.name)).join(', ')}</a>`
+      ? `<a href="#/geopolitics">${word(d.towns.length)} main site${d.towns.length > 1 ? 's' : ''}: ${d.towns.map((t) => esc(t.name)).join(', ')}</a>`
       : '';
     const firmLine = d.firms.length
       ? `<a href="#/suppliers">${d.firms.length} firm${d.firms.length > 1 ? 's' : ''} in the supplier list${d.topCats.length ? (d.firms.length > 1 ? `. Largest group${d.topCats.length > 1 ? 's' : ''}: ` : ', in ') + d.topCats.map((c) => esc(lcCat(c))).join('; ') : ''}</a>`
@@ -390,10 +390,10 @@ ${china}
     if (!a) return '';
     const d = info[cc];
     const dia = Math.max(22, Math.round(8.25 * Math.sqrt(d.named.length)));
-    return `<button type="button" class="sa-marker" data-cc="${cc}" data-hard="${d.top5 ? 1 : 0}" style="left:${pctX(n[1])}%;top:${pctY(n[0])}%;--d0:${dia}px" aria-pressed="${cc === DEFAULT_CC}" aria-label="${esc(d.name)}: named on ${d.named.length} of the ${cardCount} chokepoint cards"><span class="sa-marker-dot"><span class="sa-marker-cc" aria-hidden="true">${cc}</span></span></button>`;
+    return `<button type="button" class="sa-marker" data-cc="${cc}" data-hard="${d.top5 ? 1 : 0}" style="left:${pctX(n[1])}%;top:${pctY(n[0])}%;--d0:${dia}px" aria-pressed="${cc === DEFAULT_CC}" aria-label="${esc(d.name)}: named on ${d.named.length} of the ${cardCount} stage cards"><span class="sa-marker-dot"><span class="sa-marker-cc" aria-hidden="true">${cc}</span></span></button>`;
   }).join('');
 
-  const chip = (cc) => `<button type="button" class="sa-chip${PRIMARY.indexOf(cc) < 0 ? ' sa-chip--minor' : ''}" data-cc="${cc}" aria-pressed="${cc === DEFAULT_CC}" title="${esc(info[cc].name)} is named on ${info[cc].named.length} of the ${cardCount} chokepoint cards">${esc(info[cc].name)}<small>${info[cc].named.length}</small></button>`;
+  const chip = (cc) => `<button type="button" class="sa-chip${PRIMARY.indexOf(cc) < 0 ? ' sa-chip--minor' : ''}" data-cc="${cc}" aria-pressed="${cc === DEFAULT_CC}" title="${esc(info[cc].name)} is named on ${info[cc].named.length} of the ${cardCount} stage cards">${esc(info[cc].name)}<small>${info[cc].named.length}</small></button>`;
   const chips = `<div class="sa-chiprow"><span class="label">Pinned on the map</span><div class="sa-chipset" role="group" aria-label="Countries pinned on the map">${PRIMARY.map(chip).join('')}</div></div>`
     + `<div class="sa-chiprow"><span class="label">Also in the chain</span><div class="sa-chipset" role="group" aria-label="Other countries in the chain">${SECONDARY.map(chip).join('')}</div></div>`;
 
@@ -443,7 +443,7 @@ ${led ? `<div class="sa-stage-leaders"><span class="label">Who leads</span><ul>$
   const numbers = [
     { n: word(hardest.length), s: `of the ${stages.length} stages are extreme chokepoints: the tallest bars in the strip above, from ${esc(hardest[0].title)} to ${esc(hardest[hardest.length - 1].title)}.`, href: '#chain', link: 'The chain' },
     euvMakers.length ? { n: word(euvMakers.length), s: `firm in the supplier list builds extreme ultraviolet scanners: ${euvMakers.map((s) => esc(s.name) + (s.city ? ' of ' + esc(s.city) : '')).join(' and ')}${euvNL != null ? `. The Netherlands holds ${num(euvNL)}% of that segment` : ''}.`, href: href(litho), link: 'Lithography' } : null,
-    { n: tkPct + '%', s: `of the chain's ${sites.length} chokepoint towns are on Taiwan or in South Korea: ${tkTW.map((t) => esc(t.name)).join(', ')}.`, href: '#/geopolitics', link: 'Geopolitics' },
+    { n: tkPct + '%', s: `of the chain's ${sites.length} main sites are on Taiwan or in South Korea: ${tkTW.map((t) => esc(t.name)).join(', ')}.`, href: '#/geopolitics', link: 'Geopolitics' },
     bigTool ? { n: num(bigTool.row.chinaShare) + '%', s: `of ${esc(bigTool.firm)}'s revenue came from China in ${esc(bigTool.row.fiscalYear)}. It is the largest equipment vendor in the supplier list, at ${esc(bigTool.revText)} a year.`, href: '#/exposure', link: 'China revenue share' } : null
   ].filter(Boolean).map((k) => `<li class="sa-num"><b>${k.n}</b><p>${k.s}</p><a href="${k.href}">${k.link} →</a></li>`).join('');
 
@@ -462,7 +462,7 @@ ${led ? `<div class="sa-stage-leaders"><span class="label">Who leads</span><ul>$
 <section class="sa-mapwrap" aria-label="The chain, country by country">
 <div class="sa-map-head">
 <h3 class="sa-h">Pick a country</h3>
-<p class="sa-sub">Copper pins mark the chain's ${word(sites.length)} chokepoint towns, taller where the stage is harder to replace; dark pins mark the ${word(towns.length - sites.length)} towns building substitutes. Where a coast is crowded, the marker sits offshore on a line back to its country.</p>
+<p class="sa-sub">Copper pins mark the chain's ${word(sites.length)} main sites, taller where the stage is harder to replace; dark pins mark the ${word(towns.length - sites.length)} towns building substitutes. Where a coast is crowded, the marker sits offshore on a line back to its country.</p>
 </div>
 <div class="sa-grid">
 <div class="sa-map"${DEFAULT_CC ? ` data-cc="${DEFAULT_CC}"` : ''}>
@@ -471,7 +471,7 @@ ${svg}
 </div>
 <div class="sa-panels" aria-live="polite">${panels}</div>
 <div class="sa-chips">${chips}</div>
-<p class="sa-legend"><span class="sa-lg sa-lg--big"></span>Marker area: how many of the ${cardCount} chokepoint cards name the country<span class="sa-lg sa-lg--hard"></span>Heavier ring: named by a stage of extreme concentration<span class="sa-lg sa-lg--pin"></span>Chokepoint town<span class="sa-lg sa-lg--sub"></span>Town building a substitute</p>
+<p class="sa-legend"><span class="sa-lg sa-lg--big"></span>Marker area: how many of the ${cardCount} stage cards name the country<span class="sa-lg sa-lg--hard"></span>Heavier ring: named by a stage of extreme concentration<span class="sa-lg sa-lg--pin"></span>Main site<span class="sa-lg sa-lg--sub"></span>Town building a substitute</p>
 </div>
 </section>
 

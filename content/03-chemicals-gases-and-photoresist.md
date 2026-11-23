@@ -129,7 +129,7 @@ The slurry businesses of both leaders CSET named have since moved to other compa
 
 In sputtering targets for semiconductors, JX Advanced Metals puts its own share of the world market at about 65 percent as of fiscal 2026 ([source](https://www.jx-nmm.com/english/company/glance/)).
 
-## The chokepoint
+## The narrowest step
 
 Supply at this stage has been disrupted three times since 2019, twice by governments and once by a war.
 

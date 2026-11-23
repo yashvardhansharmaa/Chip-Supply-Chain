@@ -1,5 +1,5 @@
 /* CHIP SUPPLY CHAIN design system (the redesign of 25 Oct 2026, qa/redesign/BRIEF.md)
-   Ground: white. Ink: a warm near-black, with two secondary inks. Paper (#f4f4f2) is a tint only, for the chokepoint card,
+   Ground: white. Ink: a warm near-black, with two secondary inks. Paper (#f4f4f2) is a tint only, for the stage card,
    figure frames, source strips and flashcards.
    Accent: red wine, #7a1f2b on white and #d98a95 on dark. It marks links, the reader's place (the current menu item, the
    current item in a contents list), the logo tile, and the largest value on every chart, its bar and its value ("garnet on
@@ -56,7 +56,7 @@
   --text-scale: calc(18 / 18.5); /* 20 / 18.5 until 27 Oct, when the owner found the text too large throughout (18.5 px body in Source Serif 4); 18 / 18.5 from 28 Oct, the owner asking for it slightly smaller again: an 18 px body */
   --band: 0px; /* height of the sticky specimen band on phones; anchors add it to their offset */
   --measure: calc(36em / var(--text-scale)); /* 33.3 em: 666 px of the 20 px chapter text, about 71 characters */
-  --frame: 650px;   /* chapter header and chokepoint card keep their earlier width */
+  --frame: 650px;   /* chapter header and stage card keep their earlier width */
   --bar-5: var(--accent); --bar-4: #8c8a84; --bar-3: #c4c3bd; /* bands as marks: Extreme wine, High mid gray, below that a tint */
   --col: 63%;
   --margin: clamp(16px, 4.45vw, 64px); /* the page's outer margin, the masthead's and the column's */
@@ -856,7 +856,7 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before, .gl-
 /* ---------- chapter: the ledger column, then the head and the text ----------
    A two-track grid. The first track is the ledger column: the chapter number, and under it the stages of the
    chain as ruled rows of number plus bar, one per stage, the current one ticked in garnet and named beneath. The second track
-   holds the head (title, lede, meta, In plain terms, In short, the chokepoint card) and the prose. */
+   holds the head (title, lede, meta, In plain terms, In short, the stage card) and the prose. */
 .chapter {
   display: grid; grid-template-columns: var(--gutter) minmax(0, 1fr); column-gap: var(--gutter-gap); align-items: start;
   padding: 72px 0 24px; border-top: 1px solid var(--line-2); scroll-margin-top: calc(var(--masthead) + var(--band, 0px) + 12px);
@@ -924,7 +924,7 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before, .gl-
 .plain p { font-size: var(--t-lead); line-height: 1.55; color: var(--ink); max-width: var(--measure); margin: 0; }
 .prose .takeaways { display: none; }
 
-/* ---------- the chokepoint card: a ruled statement, no box, no shadow ---------- */
+/* ---------- the stage card: a ruled statement, no box, no shadow ---------- */
 .plate { max-width: var(--measure); border: 0; border-top: 2px solid var(--ink); border-bottom: 1px solid var(--ink); border-radius: 0; background: none; box-shadow: none; overflow: hidden; margin-bottom: 38px; }
 .plate-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 0; background: none; border-bottom: 1px solid var(--line-2); }
 .plate-head .label { color: var(--ink); font-weight: 600; }
@@ -1248,7 +1248,7 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before, .gl-
      row 2  the specimen, the chapter's first plate: the drawing on the open ground, its caption and its parts side by side
             under it, the caption standing on the drawing's foot
      row 3  In plain terms; row 4  In short
-     row 5  the prose: the lead, then the chokepoint card on the paper tint (the chapter's first table), then the sections
+     row 5  the prose: the lead, then the stage card on the paper tint (the chapter's first table), then the sections
    Under 1200 px the rail becomes a line of links over the specimen; under 900 px (the app's phone, where the specimen is the
    strip at the foot of the screen) everything is one column.
    ========================================================================== */
@@ -1393,7 +1393,7 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 }
 .chapter .ch-spec[data-night] .ch-spec-cap { margin-top: 14px; } /* the night ground ends the drawing: no slack to rise into */
 
-/* ---------- 3. the chokepoint card, the chapter's first table: in the text after the lead, before section 01 (build/build.js
+/* ---------- 3. the stage card, the chapter's first table: in the text after the lead, before section 01 (build/build.js
    withCard), at the measure on the paper tint; a chokepoint's line under the head (the mark and what the word means), its two
    ratings in a row, then each field as a row, the label in a column of its own (wide enough for "Why substitution is slow" on
    one line) and the answer beside it ---------- */
@@ -2016,7 +2016,7 @@ article.ch-page { padding-top: 56px; border-top: 0; }
 /* AI Chips: the shelves (design round seven, option B, chosen 28 Oct 2026; qa/design7/b/ in the main checkout, built from
    qa/design7/BUILD-SHELVES.md). The head sets the title and the standfirst beside the field chart; under it one ruled shelf
    per maker holds that maker's packages, drawn from above at one scale; a chip opens in place under its shelf as a chip card
-   set like the chokepoint card, on the card's gray ground, and widens into two to four columns to compare. Wine marks the
+   set like the stage card, on the card's gray ground, and widens into two to four columns to compare. Wine marks the
    largest value, the reader's chip and links. Source Serif 4 sets the words and the large numbers, Hanken Grotesk the small
    labels. Nothing is under 11 px. src/app.js Landscape draws it; every rule is scoped to #aic (.aic), so the shared parts of
    the other views never reach it. */
@@ -2121,7 +2121,7 @@ article.ch-page { padding-top: 56px; border-top: 0; }
 .aic .tbtn { font: 500 14px/20px var(--font-ui); color: var(--ink); text-decoration: underline; text-decoration-color: var(--rule-ink); text-decoration-thickness: 1px; text-underline-offset: .3em; padding: 4px 0; }
 .aic .tbtn:hover { color: var(--accent-ink); text-decoration-color: var(--accent); }
 
-/* ---------------------------------------------------------------- who makes it: lines like the chokepoint card */
+/* ---------------------------------------------------------------- who makes it: lines like the stage card */
 .aic .parts { list-style: none; margin: 0; padding: 0; }
 .aic .parts li { display: grid; grid-template-columns: 26px 120px minmax(0, 1fr); gap: 0 14px; padding: 0 0 14px; align-items: baseline; }
 .aic .parts li + li { padding-top: 12px; border-top: 1px solid var(--line-2); }
@@ -2187,7 +2187,7 @@ article.ch-page { padding-top: 56px; border-top: 0; }
 .aic .mselect:hover { border-bottom-color: var(--accent); }
 .aic .mselect option { font-size: 16px; color: #171716; background: #fff; }
 
-/* ---------------------------------------------------------------- the chip card, set like the chokepoint card */
+/* ---------------------------------------------------------------- the chip card, set like the stage card */
 .aic .card-li { padding: 0 0 26px; border-bottom: 1px solid var(--line); }
 .aic .card { position: relative; background: var(--bg-2); padding: 22px 32px 34px; margin-top: 4px; }
 .aic .card .tact, .aic .card .tbtn { background: none; }
@@ -3653,7 +3653,7 @@ html.kb:has(.view[data-view="glossary"]:not([hidden]) .gl:not([data-state="home"
      chapter head is left out there), and the type in each box is for that path.
      One string() to a box: Paged.js passes strings through a custom property, and two of them
      in one box cancel each other out. The left head is the chapter's own "Chapter 4: Lithography"; the right names the
-     section the page holds ("Chokepoint card", "Who makes it", "Sources (30)"; string-set, below), since the foot
+     section the page holds ("Stage card", "Who makes it", "Sources (30)"; string-set, below), since the foot
      already names the site. Chrome's own print drops the string() declaration and keeps the site's name. */
   @top-left { content: string(chapter); font: 500 7.5pt "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif; color: #45443f; }
   @top-right { content: "Chip Supply Chain"; content: string(section); font: 500 7.5pt "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif; color: #45443f; }
@@ -3827,7 +3827,7 @@ html.kb:has(.view[data-view="glossary"]:not([hidden]) .gl:not([data-state="home"
   .chapter > .prose > h3 { margin: 4.6mm 0 1.4mm; font-family: var(--font-display); font-weight: 500; font-size: 11.2pt; line-height: 1.25; letter-spacing: 0; color: var(--ink); }
   .chapter > .prose > h4 { margin: 4mm 0 1.2mm; font-family: var(--font-ui); font-weight: 600; font-size: 8pt; color: var(--ink); }
 
-  /* 3. the chokepoint card: in the text after the lead, before section 01, as on screen (print.js cardsToText). On paper it
+  /* 3. the stage card: in the text after the lead, before section 01, as on screen (print.js cardsToText). On paper it
      is ruled, not tinted: an ink rule over the head, a chokepoint's line (the mark and what it means), the two ratings large in
      the display face, then label and text in rows. */
   .chapter .plate { max-width: var(--pcol, none); margin: 6mm 0 0; padding: 0; background: none; border: 0; border-bottom: 0.6pt solid var(--ink); box-shadow: none; overflow: hidden; }

@@ -337,9 +337,9 @@ module.exports = function (ctx) {
   const page = SITE.url + '#/suppliers';
   const csvRows = [['Segment'].concat(COLS.map((c) => `${NAME[c]} (%)`), ['Measure', 'Year', 'Basis', 'Source', 'Source address', 'Firms'])]
     .concat(rows.map((r) => [r.segment].concat(COLS.map((c) => (r.sharesT && r.sharesT[c] != null ? r.sharesT[c] : '')), [r.shares ? r.metric : '', r.shares ? r.year : '', r.shares ? r.basisT : '', r.shares ? r.srcTitle : '', r.shares ? r.src : '', r.firms.slice(0, 3).map((f) => f.s).join(', ')])))
-    .concat([[], ['Title', TITLE], ['Source', 'The chokepoint matrix (data/chokepoint-matrix.json) and the supplier list (data/suppliers.json), each segment with its own source'], ['Figure address', page]]);
+    .concat([[], ['Title', TITLE], ['Source', 'The country-share matrix (data/chokepoint-matrix.json) and the supplier list (data/suppliers.json), each segment with its own source'], ['Figure address', page]]);
   const csv = 'data:text/csv;charset=utf-8,' + encodeURIComponent('﻿' + csvRows.map((r) => r.map(q).join(',')).join('\r\n') + '\r\n');
-  const cite = `<div class="ch-cite-box fig-cite-box" id="sup-pipe-cite" role="region" aria-label="Citation for the figure" hidden><p class="ch-cite-text">Sharma, Yashvardhan. “${esc(TITLE)}.” <i>Chip Supply Chain: How AI Chips Are Made</i>. Updated ${esc(ctx.builtStr)}. <a href="${esc(page)}">${esc(page)}</a>. Data: the chokepoint matrix and the supplier list, each segment's share with its own source and year.</p></div>`;
+  const cite = `<div class="ch-cite-box fig-cite-box" id="sup-pipe-cite" role="region" aria-label="Citation for the figure" hidden><p class="ch-cite-text">Sharma, Yashvardhan. “${esc(TITLE)}.” <i>Chip Supply Chain: How AI Chips Are Made</i>. Updated ${esc(ctx.builtStr)}. <a href="${esc(page)}">${esc(page)}</a>. Data: the country-share matrix and the supplier list, each segment's share with its own source and year.</p></div>`;
   const chips = COLS.map((c) => `<button type="button" class="sup-chip" data-c="${c}" aria-pressed="false">${esc(NAME[c])}</button>`).join('');
   const json = JSON.stringify(rows).replace(/</g, '\\u003c');
   const html = `<section class="sup-pipe ss" id="sup-pipe" aria-labelledby="sup-pipe-h">
@@ -351,7 +351,7 @@ module.exports = function (ctx) {
             <div class="sup-tip ss-tip" id="sup-tip" role="tooltip" hidden></div><span class="sr-only" id="sup-ss-hint">Left and right arrow keys step through the countries in this segment.</span></div>
           <div class="sup-note ss-side-note"><p>Each segment is drawn as one whole. Where a ribbon meets a segment, its width is that country’s share.</p>
             <p>The firms named for each segment come from the supplier list, ordered by their country’s share, then by any share the list gives the firm. A firm counts where the matrix counts its revenue, so Siemens EDA and Linde count under Germany. On the capacity segments, firms count under their headquarters, wherever their plants are.</p></div>
-          <div class="sup-note sup-pipe-note ss-src"><span class="fs-src">Source: the chokepoint matrix, <span class="ss-code">data/chokepoint-matrix.json</span>, and the supplier list, <span class="ss-code">data/suppliers.json</span>. The tip over a segment gives its year and links its source.</span>
+          <div class="sup-note sup-pipe-note ss-src"><span class="fs-src">Source: the country-share matrix, <span class="ss-code">data/chokepoint-matrix.json</span>, and the supplier list, <span class="ss-code">data/suppliers.json</span>. The tip over a segment gives its year and links its source.</span>
             <span class="fs-acts ss-acts"><button type="button" class="ch-cite-btn" aria-expanded="false" aria-controls="sup-pipe-cite">Cite</button><button type="button" class="fs-tab ss-tab" aria-pressed="false">Table</button><a class="fs-csv" href="${csv}" download="chip-supply-chain-suppliers-country-shares.csv">CSV</a></span>${cite}</div>
         </div>
         <script type="application/json" id="sup-shares-data">${json}</script>

@@ -10,7 +10,7 @@
  "specimen": "sem-column",
  "specimenCaption": "An electron-beam inspection column cut in half down its axis, over a 300 mm wafer, with its parts simplified. The beam scans a small patch, and the detector builds a picture from the electrons the beam knocks loose. That shows faults too small for light to find. KLA held 56.8 percent of the market for tools that measure and inspect wafers in 2025, by CSET's count.",
  "card": {
- "concentration": "High",
+ "concentration": "Extreme",
  "chokepointScore": 4,
  "leaders": [
  {"name": "KLA", "country": "US", "share": "56.8 percent of process control tools in 2025 by CSET's count", "source": "https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60"},
@@ -160,7 +160,7 @@ BIS, the US Commerce Department bureau that wrote the rule, placed all of these 
 
 ## The chokepoint
 
-A fab that can buy scanners and etchers but not sensitive inspection tools finds fewer of the defects that lower its yield, so its yield rises more slowly. Most of those tools come from one firm, KLA, which held more than half the process control market in 2025 ([source](https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60)). KLA led four kinds of process control tool that year, by CSET's count ([source](https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60)). It held 85.9 percent of defect inspection, the largest kind ([source](https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60)). Still, every kind of process control tool had a second maker that year, by CSET's count from TechInsights data ([source](https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60)). KLA says its share of the whole market grew from 2021 to 2025 ([source](https://d1io3yog0oux5.cloudfront.net/_a357bfc9113388e37f3bfcb2ea2f0b64/klatencor/db/1117/10655/letter_to_shareholders/KLA+Shareholder+Letter+-+Q3+FY26.pdf#page=3)).
+A fab that can buy scanners and etchers but not sensitive inspection tools finds fewer of the defects that lower its yield, so its yield rises more slowly. Most of those tools come from one firm, KLA, which held more than half the process control market in 2025 ([source](https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60)). In defect inspection, the largest kind, KLA alone held 85.9 percent ([source](https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N67)). KLA led four kinds of process control tool that year, by CSET's count ([source](https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60)). Still, every kind of process control tool had a second maker that year, by CSET's count from TechInsights data ([source](https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60)). KLA says its share of the whole market grew from 2021 to 2025 ([source](https://d1io3yog0oux5.cloudfront.net/_a357bfc9113388e37f3bfcb2ea2f0b64/klatencor/db/1117/10655/letter_to_shareholders/KLA+Shareholder+Letter+-+Q3+FY26.pdf#page=3)).
 
 ## Takeaways
 

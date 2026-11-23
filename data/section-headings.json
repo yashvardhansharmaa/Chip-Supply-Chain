@@ -9,13 +9,13 @@
     "How it works": "How silicon wafers are made",
     "Variants and trade-offs": "Types of silicon wafers",
     "Who makes it": "Who makes silicon wafers and polysilicon",
-    "The chokepoint": "The five firms behind most 300 mm wafers"
+    "The narrowest step": "The five firms behind most 300 mm wafers"
   },
   "chemicals-gases-and-photoresist": {
     "How it works": "How photoresist and chip chemicals work",
     "Variants and trade-offs": "Types of photoresist",
     "Who makes it": "Who makes photoresist, gases and chip chemicals",
-    "The chokepoint": "Supply risks for chip chemicals, gases and metals"
+    "The narrowest step": "Supply risks for chip chemicals, gases and metals"
   },
   "lithography": {
     "How it works": "How lithography prints a chip's pattern",
@@ -36,7 +36,7 @@
     "Variants and trade-offs": "Types of deposition and etching",
     "Who makes it": "Who makes deposition and etch tools",
     "China and the controls": "China's toolmakers and export controls",
-    "The chokepoint": "How many makers each tool has"
+    "The narrowest step": "How many makers each tool has"
   },
   "metrology-and-inspection": {
     "How it works": "How chipmakers measure and inspect wafers",
@@ -87,14 +87,14 @@
     "How it works": "How AI racks and clusters are wired",
     "Variants and trade-offs": "Types of links between AI chips",
     "Who makes it": "Who makes optics, switch chips and AI servers",
-    "The chokepoint": "Lasers and other hard-to-source parts"
+    "The narrowest step": "Lasers and other hard-to-source parts"
   },
   "data-centers-and-power": {
     "How it works": "How AI data centers are powered and cooled",
     "Variants and trade-offs": "Cooling and power options",
     "Who makes it": "Data center spending and power equipment makers",
     "Capacity and demand": "Data center electricity demand forecasts",
-    "The chokepoint": "Long waits for grid power and equipment"
+    "The narrowest step": "Long waits for grid power and equipment"
   },
   "component-costs": {
     "How it works": "What an Nvidia B200 costs to build",
@@ -104,7 +104,7 @@
   },
   "geopolitics": {
     "The shape of the contest": "How chip export controls work",
-    "Chokepoints and who holds them": "Which countries lead each segment",
+    "Who leads each segment": "Which countries lead each segment",
     "US export controls, 2018 to today": "How US chip export controls have changed",
     "Ways around the controls": "Renting compute abroad and chip smuggling",
     "Allies: the Netherlands, Japan, Korea and Europe": "The Netherlands, Japan, Korea and Europe",

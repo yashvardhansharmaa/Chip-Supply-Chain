@@ -133,7 +133,7 @@ const G = BASE + '/glossary/'; // the Glossary's own page (30 Oct 2026)
     await t.close();
     t = await open(chrome, G + '#lk-firm-asml', { width: 1440, wait: 1500 }); await ready(t); await sleep(300);
     check('#lk-firm-asml opens ASML', (await t.ev(hw)) === 'ASML' && (await t.ev(state)) === 'entry');
-    check("a firm keeps its facts, its Critical mark, its revenue's filing link and its China chart", /Chokepoint level/.test(await t.ev("document.querySelector('.gl-facts').innerText")) && !!(await t.ev("document.querySelector('.gl-facts .gl-chk--critical')")) && !!(await t.ev("document.querySelector('.gl-facts a.rev-filed')")) && !!(await t.ev("document.querySelector('.gl-facts .sup-ex-mini svg')")));
+    check("a firm keeps its facts, its Critical mark, its revenue's filing link and its China chart", /How hard to replace/.test(await t.ev("document.querySelector('.gl-facts').innerText")) && !!(await t.ev("document.querySelector('.gl-facts .gl-chk--critical')")) && !!(await t.ev("document.querySelector('.gl-facts a.rev-filed')")) && !!(await t.ev("document.querySelector('.gl-facts .sup-ex-mini svg')")));
     check('a firm links to its row in the supplier list', !!(await t.ev("document.querySelector('#gl-pane a[data-sup=\"ASML\"]')")));
     check('the links between entries keep the words and stop at three a paragraph', (await t.ev("[...document.querySelectorAll('.gl-e p')].every(function(p){return p.querySelectorAll('a.gl-x').length<=3;})")) && (await t.ev("document.querySelectorAll('.gl-def a.gl-x').length")) >= 1);
     check('each entry is linked once', await t.ev("(function(){var s={},ok=true;document.querySelectorAll('.gl-e a.gl-x').forEach(function(a){var k=a.getAttribute('data-id');if(s[k])ok=false;s[k]=1;});return ok;})()"));

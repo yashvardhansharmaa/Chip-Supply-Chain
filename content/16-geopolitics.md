@@ -239,7 +239,7 @@ In September 2022 US National Security Advisor Jake Sullivan said the United Sta
 
 US license rules can target a single buyer or a whole country, and in 2022 the rules on advanced AI chips and the tools for advanced fabs began to cover all of China. In October 2018, for example, the Bureau of Industry and Security (BIS), the US Commerce Department's export control office, put the Chinese chip company Fujian Jinhua Integrated Circuit on its Entity List ([source](https://www.federalregister.gov/documents/2018/10/30/2018-23693/addition-of-an-entity-to-the-entity-list)). From then on any item under US export rules needed a license to reach the company ([source](https://www.federalregister.gov/documents/2018/10/30/2018-23693/addition-of-an-entity-to-the-entity-list)). The 2022 rules went further and required a license for any advanced AI chip, and any tool for an advanced fab, bound for China ([source](https://www.federalregister.gov/documents/2022/10/13/2022-21658/implementation-of-additional-export-controls-certain-advanced-computing-and-semiconductor)). BIS reviewed most applications under a presumption of denial, meaning it would normally refuse them ([source](https://www.federalregister.gov/documents/2022/10/13/2022-21658/implementation-of-additional-export-controls-certain-advanced-computing-and-semiconductor)). It reviewed applications for equipment bound for the China fabs of firms headquartered in the United States or allied and partner countries case by case ([source](https://www.federalregister.gov/documents/2022/10/13/2022-21658/implementation-of-additional-export-controls-certain-advanced-computing-and-semiconductor)).
 
-## Chokepoints and who holds them
+## Who leads each segment
 
 | Segment | Leader | Share | Basis |
 |---|---|---|---|

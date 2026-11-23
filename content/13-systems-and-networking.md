@@ -128,7 +128,7 @@ Taiwanese firms do much of the physical assembly. Foxconn booked NT$8.1 trillion
 
 Some assembly is moving to the United States. In April 2025 Nvidia said it was building supercomputer manufacturing plants in Texas, with Foxconn in Houston and Wistron in Dallas ([source](https://blogs.nvidia.com/blog/nvidia-manufacture-american-made-ai-supercomputers-us/)). It expected mass production to ramp up in the following 12 to 15 months ([source](https://blogs.nvidia.com/blog/nvidia-manufacture-american-made-ai-supercomputers-us/)). In August 2026 Nvidia said Wistron's new plant in Fort Worth, Texas, near Dallas, was producing its GB300 superchips, which pair Nvidia's Grace processor with its Blackwell Ultra GPUs ([source](https://blogs.nvidia.com/blog/nvidia-and-partners-build-in-america-for-america/)). It said Foxconn was building a factory in Houston to make Nvidia's AI systems ([source](https://blogs.nvidia.com/blog/nvidia-and-partners-build-in-america-for-america/)).
 
-## The chokepoint
+## The narrowest step
 
 Many firms can build the racks. In October 2025 Nvidia said more than 50 makers of systems and components were gearing up for the Vera Rubin NVL72, which follows MGX, Nvidia's standard design for trays and racks ([source](https://blogs.nvidia.com/blog/gigawatt-ai-factories-ocp-vera-rubin)). But in its filing for the quarter to July 2026, Nvidia said the complexity of producing its data center systems had caused production delays ([source](https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm)).
 

@@ -10,6 +10,9 @@
      band"): readers see one rating word since 22 Nov 2026, "chokepoint" for a stage in the Extreme band, and nothing for the
      others. The bands stay the method, in card.concentration. Checked in the chapters (front matter and body), the Glossary,
      the flashcards and the section headings;
+   - "chokepoint" in a name that covers every stage ("chokepoint card", "chokepoint level"), in the same files: since 23 Nov
+     2026 the word names only the chokepoint stages (the stage card, the suppliers' "How hard to replace"); and a stage's
+     section "The chokepoint" in a stage that is not a chokepoint, or "The narrowest step" in one that is;
    - a {{...}} marker in a chapter's body that is not a {{figure:<id>}} line naming one of the chapter's figures;
    - a figure with no data: a bars, stack or timeline figure with no rows, an animation with no rendered steps in media/,
      or a figure of a type the build cannot draw.
@@ -28,6 +31,14 @@ function bandWords(text, at, problems) {
   String(text).split('\n').forEach((line, i) => {
     const m = BAND_AS_RATING.exec(line);
     if (m) problems.push(`${at(i)}: "${m[0]}" uses a concentration band as a rating; readers see "chokepoint" for the Extreme band and no rating word for the others`);
+  });
+}
+// "chokepoint" as the name of something every stage or firm has (23 Nov 2026: the owner keeps the word for the chokepoint stages)
+const CHOKE_AS_NAME = /\bchokepoint\s+(?:cards?|levels?|towns?)\b/i;
+function chokeNames(text, at, problems) {
+  String(text).split('\n').forEach((line, i) => {
+    const m = CHOKE_AS_NAME.exec(line);
+    if (m) problems.push(`${at(i)}: "${m[0]}" names something every stage has; "chokepoint" names only the chokepoint stages (the stage card, "How hard to replace")`);
   });
 }
 const FIGURE_TYPES = ['bars', 'stack', 'columns', 'change', 'timeline', 'animation', 'within', 'explore']; // columns and change: revision 5, 28 Oct 2026; within: 15.3, 29 Oct 2026; explore: 10.3 and 04.2, 21 Nov 2026
@@ -90,7 +101,7 @@ function checkData(root, problems) {
   // the reader-facing data: no concentration band as a rating
   ['glossary.json', 'flashcards.json', 'section-headings.json'].forEach((f) => {
     const file = path.join(dir, f);
-    if (fs.existsSync(file)) bandWords(fs.readFileSync(file, 'utf8'), (i) => `data/${f} line ${i + 1}`, problems);
+    if (fs.existsSync(file)) { const t = fs.readFileSync(file, 'utf8'); bandWords(t, (i) => `data/${f} line ${i + 1}`, problems); chokeNames(t, (i) => `data/${f} line ${i + 1}`, problems); }
   });
   const gl = safeParse(path.join(dir, 'glossary.json'));
   if (Array.isArray(gl)) {
@@ -119,18 +130,26 @@ function checkChapters(root, problems) {
     else (numbers[meta.number] = numbers[meta.number] || []).push(f);
     (ids[id] = ids[id] || []).push(f);
     ['title', 'oneLiner', 'plain'].forEach((k) => { if (typeof meta[k] !== 'string' || !meta[k].trim()) problems.push(`${rel}: "${k}" is ${meta[k] === undefined ? 'missing' : 'empty'}`); });
-    // the stages carry a chokepoint card (build/stages.js: every chapter but the economics chapter and the geopolitics essay)
+    // the stages carry a stage card (build/stages.js: every chapter but the economics chapter and the geopolitics essay)
     if (STAGES.isStage({ id, number: meta.number })) {
       const c = meta.card;
-      if (!c || typeof c !== 'object') problems.push(`${rel}: "card" is missing; every chapter but the economics chapter and the essay is a stage and needs a chokepoint card`);
+      if (!c || typeof c !== 'object') problems.push(`${rel}: "card" is missing; every chapter but the economics chapter and the essay is a stage and needs a stage card`);
       else {
         if (!BANDS.includes(c.concentration)) problems.push(`${rel}: card.concentration is ${show(c.concentration)}; it must be ${list(BANDS)}`);
         const band = c.substitutability && c.substitutability.band;
         if (!SUB_BANDS.includes(band)) problems.push(`${rel}: card.substitutability.band is ${show(band)}; it must be ${list(SUB_BANDS)}`);
+        // the section on the stage's narrowest point is "The chokepoint" in a chokepoint (the Extreme band) and "The narrowest
+        // step" in any other stage (23 Nov 2026); build/retired-chapters.js forwards a renamed section's old address
+        const choke = c.concentration === 'Extreme', secs = src.match(/^## (The chokepoint|The narrowest step)\s*$/gm) || [];
+        secs.forEach((h) => {
+          if (choke && /narrowest/.test(h)) problems.push(`${rel}: the stage is a chokepoint, so its section "${h.slice(3).trim()}" should be "The chokepoint" (and its old address forwarded in build/retired-chapters.js)`);
+          if (!choke && /chokepoint/.test(h)) problems.push(`${rel}: the stage is not a chokepoint, so its section "The chokepoint" should be "The narrowest step" (and its old address forwarded in build/retired-chapters.js)`);
+        });
       }
     }
     // the chapter's own words, front matter and body, never use a band as a rating (card.concentration itself is the method)
     bandWords(src, (i) => `${rel} line ${i + 1}`, problems);
+    chokeNames(src, (i) => `${rel} line ${i + 1}`, problems);
     // figures: every marker names a figure, and every figure has something to draw
     const figures = Array.isArray(meta.figures) ? meta.figures : [];
     if (meta.figures !== undefined && !Array.isArray(meta.figures)) problems.push(`${rel}: "figures" should be a list`);

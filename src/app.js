@@ -1016,7 +1016,7 @@
      it was announced, against the figure its one select names, the largest in wine, and one line naming the chips with no
      figure. Under it one ruled shelf per maker (countries as they first appear, China last), each maker's packages drawn from
      above at one scale, oldest first. The WSE-3 Turbo is a whole wafer, so it is drawn at a smaller scale with its own scale
-     bar, inside its own row. A chip opens in place, under its maker's shelf, as a chip card set like the chokepoint card: the
+     bar, inside its own row. A chip opens in place, under its maker's shelf, as a chip card set like the stage card: the
      name and the plan with its numbered parts, the six figures in large type, then ruled rows (who makes it, where it stands
      on the chart, the attributes in words, how the speed is counted, the notes and the sources). "Compare with another chip"
      opens the picker (a bottom sheet on a phone) and widens the card into two to four columns, each headed by its package at
@@ -1284,7 +1284,7 @@
       }).join('');
       return { list: '<ol class="parts">' + li + '</ol>', said: npSentence(P.np) };
     };
-    // the rows a card ends on, as the chokepoint card sets its rows
+    // the rows a card ends on, as the stage card sets its rows
     var ABOUT = [
       { key: 'status', label: 'Availability', text: function (c) { return c.status ? esc(c.status) + (c.shipping ? '. First shipped ' + esc(when(c.shipping)) : '') + (c.shippingNote ? '. ' + esc(c.shippingNote) : '') : null; } },
       { key: 'target', label: 'Built for', text: function (c) { return c.target ? esc(c.target) : null; } },
@@ -1309,7 +1309,7 @@
     var speedNote = function (c) { var n = (c.compute || {}).precisionNote; return n ? esc(n) : ''; };
 
     /* ---- the comparison: one column per chip, each headed by its name and its package at one shared scale. o.side puts each
-       row's label in a column at the left, as the chokepoint card sets its rows ---- */
+       row's label in a column at the left, as the stage card sets its rows ---- */
     var cmpHTML = function (sel, o) {
       o = o || {}; var n = sel.length, width = o.width || 900, gap = o.gap == null ? 32 : o.gap, stack = !!o.stack, side = !!o.side && !stack, lw = side ? (o.labelW || 170) + gap : 0;
       var colW = stack ? Math.min(width, 520) : (width - lw - gap * (n - 1)) / n;
@@ -1811,7 +1811,7 @@
   /* ---------------- suppliers ----------------
      One list of firms, listed three ways: by segment (the ladder, from design to power), by country, or in a table, every
      name opening its own panel. Over it, the ribbons by share (src/modules/supshares.js, since 29 Oct 2026): which countries
-     hold each of the chokepoint matrix's twenty segments. Until then the ribbons counted the firms on this list. "Stages" are the
+     hold each of the country-share matrix's twenty segments. Until then the ribbons counted the firms on this list. "Stages" are the
      stage chapters of the chain (build/stages.js); the list's own categories are "segments". */
   var Suppliers = {
     rows: DATA.suppliers || [], built: false, stage: '', country: '', chk: '', q: '', sortKey: 'name', sortDir: 1,
@@ -2145,7 +2145,7 @@
       var self = this;
       // aria-sort belongs on the column header, not on the button inside it (accessibility #12)
       var th = function (k, label) { return '<th' + (self.sortKey === k ? ' aria-sort="' + (self.sortDir > 0 ? 'ascending' : 'descending') + '"' : '') + '><button type="button" data-sort="' + k + '">' + label + '</button></th>'; };
-      var html = '<thead><tr>' + th('name', 'Supplier') + th('category', 'Segment') + th('country', 'Country') + th('founded', 'Founded') + th('chokepoint', 'Chokepoint level') + '<th>What they make</th><th>Customers</th></tr></thead><tbody>';
+      var html = '<thead><tr>' + th('name', 'Supplier') + th('category', 'Segment') + th('country', 'Country') + th('founded', 'Founded') + th('chokepoint', 'How hard to replace') + '<th>What they make</th><th>Customers</th></tr></thead><tbody>';
       rows.forEach(function (r) {
         html += '<tr><td class="name"><b>' + esc(r.name) + '</b><span>' + esc([r.nativeName, r.ticker].filter(Boolean).join(' · ')) + '</span>' +
           (r.china ? '<a class="sup-ex-a" href="' + safeUrl(r.china.href) + '">' + esc(r.china.label) + '</a>' : '') + '</td>' +
