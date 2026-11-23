@@ -77,9 +77,8 @@
   },
   {
     "path": "/data-centers-and-power/",
-    "title": "Hyperscalers, neoclouds and the power behind AI compute",
-    "description": "Who owns the chips AI labs rent, and why new sites wait years for power. Epoch AI estimates five firms held 71 percent of AI computing power at the end of 2025.",
-    "site": false
+    "title": "Hyperscalers, neoclouds and power for AI compute",
+    "description": "Who owns the chips AI labs rent, and why new sites wait years for power. Epoch AI estimates five firms held 71 percent of AI computing power at the end of 2025."
   },
   {
     "path": "/component-costs/",
