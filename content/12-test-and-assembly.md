@@ -13,8 +13,8 @@
     "concentration": "High",
     "chokepointScore": 4,
     "leaders": [
-      {"name": "Advantest", "country": "JP", "share": "62.7 percent of chip test tools in 2025, by CSET's analysis of TechInsights data", "source": "https://chipexplorer.eto.tech/?parentNode=N78&selectedNode=N120"},
-      {"name": "Teradyne", "country": "US", "share": "21.8 percent of chip test tools in 2025, by CSET's analysis of TechInsights data", "source": "https://chipexplorer.eto.tech/?parentNode=N78&selectedNode=N120"},
+      {"name": "Advantest", "country": "JP", "share": "62.7 percent of the market for chip test tools in 2025, by CSET's analysis of TechInsights data", "source": "https://chipexplorer.eto.tech/?parentNode=N78&selectedNode=N120"},
+      {"name": "Teradyne", "country": "US", "share": "21.8 percent of the market for chip test tools in 2025, by CSET's analysis of TechInsights data", "source": "https://chipexplorer.eto.tech/?parentNode=N78&selectedNode=N120"},
       {"name": "ASE", "country": "TW", "share": "Ran 8,348 testers in Q2 2026, up from 6,797 a year earlier", "source": "https://www.sec.gov/Archives/edgar/data/1122411/000095010326011351/dp250868_6k.htm"},
       {"name": "Amkor", "country": "US", "share": "$6.71 billion of 2025 revenue", "source": "https://www.sec.gov/Archives/edgar/data/1047127/000104712726000007/amkr123125erex-991.htm"},
       {"name": "Disco", "country": "JP", "share": "87 percent of the $1.9 billion market for dicing saws and grinders in 2025, on CSET's analysis of TechInsights data", "source": "https://chipexplorer.eto.tech/?parentNode=N69&selectedNode=N71"}

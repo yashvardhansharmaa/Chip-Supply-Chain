@@ -2,12 +2,12 @@
   "/": {
     "published": "2026-10-01",
     "modified": "2026-11-23",
-    "content": "d4312d40dee6a3cf"
+    "content": "9e130e88601e4a08"
   },
   "/advanced-packaging/": {
     "published": "2026-09-09",
     "modified": "2026-11-23",
-    "content": "8759ee71406ee224"
+    "content": "ef6c6c6306918655"
   },
   "/chemicals-gases-and-photoresist/": {
     "published": "2026-09-09",
@@ -52,7 +52,7 @@
   "/geopolitics/": {
     "published": "2026-09-09",
     "modified": "2026-11-23",
-    "content": "c35593fa4edbb0d4"
+    "content": "cb3bcdb94ecf635f"
   },
   "/glossary/": {
     "published": "2026-10-21",
@@ -172,17 +172,17 @@
   "/silicon-and-wafers/": {
     "published": "2026-09-09",
     "modified": "2026-11-23",
-    "content": "a83ad138828f80ea"
+    "content": "f796c1706d27521e"
   },
   "/substrates-and-pcbs/": {
     "published": "2026-09-09",
     "modified": "2026-11-23",
-    "content": "5892fab5456e7914"
+    "content": "27118f036062bae8"
   },
   "/summary/": {
     "published": "2026-10-21",
     "modified": "2026-11-23",
-    "content": "c220cafc447d58c5"
+    "content": "b3c7503e062c7965"
   },
   "/suppliers/": {
     "published": "2026-10-21",
@@ -202,6 +202,6 @@
   "/test-and-assembly/": {
     "published": "2026-09-09",
     "modified": "2026-11-23",
-    "content": "f8030fa1465527ee"
+    "content": "86e3e74d9cb004e6"
   }
 }
