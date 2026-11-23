@@ -72,7 +72,7 @@
       "https://epoch.ai/latest/introducing-the-ai-chip-owners-explorer",
       "https://www.iea.org/reports/energy-and-ai/executive-summary"
     ],
-    "usStatus": "The five US hyperscalers owned 71 percent of the world's AI computing power at the end of 2025, by Epoch AI's estimate. US factories supplied 29.2 percent of the large power transformers bought in the United States in 2023, measured by capacity.",
+    "usStatus": "The five US hyperscalers owned 71 percent of the world's AI computing power at the end of 2025, by Epoch AI's estimate. US factories supplied 29.2 percent of the large power transformers, those rated 60 MVA and above, bought in the United States in 2023, measured by capacity.",
     "usSources": [
       "https://epoch.ai/data-insights/hyperscalers-control-most-compute",
       "https://www.usitc.gov/publications/701_731/pub5531.pdf#page=90"
@@ -198,7 +198,7 @@
       "id": "turbine-output",
       "type": "columns",
       "title": "GE Vernova's planned annual gas turbine output",
-      "finding": "GE Vernova plans 30 GW of annual gas turbine output in 2030",
+      "finding": "GE Vernova is taking steps to reach 30 GW of annual gas turbine output in 2030",
       "unit": "GW/yr",
       "data": [
         [
