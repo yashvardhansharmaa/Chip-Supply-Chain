@@ -8,7 +8,7 @@
  "openOnExplainer": true,
  "bridge": "Look next at the stencil itself, because everything the machine prints is decided by what is written on that one plate.",
  "specimen": "photomask",
- "specimenCaption": "An EUV photomask, or reticle, with its pellicle dust cover. The glass is 152.4 mm square and 6.35 mm thick, the size in a 2016 Hoya patent. Its pattern is drawn four times larger than the 26 by 33 mm area it prints on the wafer. The mirror coating is drawn far thicker than it is. The loupe shows a cut through the pattern at true thickness.",
+ "specimenCaption": "An EUV photomask, or reticle, with its pellicle dust cover. The glass is 152.4 mm square and 6.35 mm thick, the size in a 2016 Hoya patent. Its pattern is drawn four times larger than the 26 by 33 mm area it prints on the wafer. The mirror coating is drawn far thicker than it is. The loupe shows a cut through the pattern and the mirror coating at true thickness.",
  "card": {
  "concentration": "Extreme",
  "chokepointScore": 5,
