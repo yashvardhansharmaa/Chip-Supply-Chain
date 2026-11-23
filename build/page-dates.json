@@ -2,12 +2,12 @@
   "/": {
     "published": "2026-10-01",
     "modified": "2026-11-23",
-    "content": "9e130e88601e4a08"
+    "content": "097a9bf9a479e7d3"
   },
   "/advanced-packaging/": {
     "published": "2026-09-09",
     "modified": "2026-11-23",
-    "content": "ef6c6c6306918655"
+    "content": "b766aa188c86f0d2"
   },
   "/chemicals-gases-and-photoresist/": {
     "published": "2026-09-09",
@@ -57,7 +57,7 @@
   "/glossary/": {
     "published": "2026-10-21",
     "modified": "2026-11-23",
-    "content": "a0f3d81e8e72bb64"
+    "content": "350873562731f840"
   },
   "/lithography/": {
     "published": "2026-09-09",
@@ -182,12 +182,12 @@
   "/summary/": {
     "published": "2026-10-21",
     "modified": "2026-11-23",
-    "content": "b3c7503e062c7965"
+    "content": "f1716f288db3783a"
   },
   "/suppliers/": {
     "published": "2026-10-21",
     "modified": "2026-11-23",
-    "content": "cc89f0a58c84801d"
+    "content": "da7ca021f9bc3827"
   },
   "/supply-chain/": {
     "published": "2026-10-28",
@@ -202,6 +202,6 @@
   "/test-and-assembly/": {
     "published": "2026-09-09",
     "modified": "2026-11-23",
-    "content": "86e3e74d9cb004e6"
+    "content": "d35c279d8ac74d16"
   }
 }

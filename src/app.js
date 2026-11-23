@@ -1827,7 +1827,7 @@
        the filter's values and the sort use. build/build.js, build/modules/reference-pages.js and src/modules/lookup.js read
        these two, so every page uses the same words */
     POSITION: { Critical: 'Dominant', Important: 'Major', Contested: 'Challenger', Diversified: 'One of many' },
-    POSITION_DEF: { Critical: 'Holds more than half of its segment.', Important: 'A major supplier in its segment, with rivals.', Contested: 'A challenger in a segment that others lead.', Diversified: 'One of many firms that supply its segment.' },
+    POSITION_DEF: { Critical: 'Holds more than half of the market for its main product.', Important: 'A leading supplier of its main product, with rivals.', Contested: 'A smaller supplier competing with the leaders.', Diversified: 'One of many firms that make its main product.' },
     pos: function (lv) { return this.POSITION[lv] || lv || ''; },
     // a level's pill: the word readers see, and its meaning as the pill's title
     pill: function (lv) { return lv ? '<span class="chk ' + esc(lv) + '" title="' + esc(this.POSITION_DEF[lv] || '') + '">' + esc(this.pos(lv)) + '</span>' : ''; },

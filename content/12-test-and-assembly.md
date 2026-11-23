@@ -20,7 +20,7 @@
       {"name": "Disco", "country": "JP", "share": "87 percent of the $1.9 billion market for dicing saws and grinders in 2025, on CSET's analysis of TechInsights data", "source": "https://chipexplorer.eto.tech/?parentNode=N69&selectedNode=N71"}
     ],
     "countries": [
-      {"code": "JP", "note": "Advantest, the main provider of test tools, plus probers from Accretech and Tokyo Electron, and dicing and grinding tools from Disco and Accretech"},
+      {"code": "JP", "note": "Advantest, the largest maker of test tools, plus probers from Accretech and Tokyo Electron, and dicing and grinding tools from Disco and Accretech"},
       {"code": "TW", "note": "Taiwanese firms such as ASE and Powertech lead outsourced assembly and test"},
       {"code": "US", "note": "Test equipment from Teradyne, FormFactor, Cohu and Aehr, and Amkor's planned Arizona packaging plant"},
       {"code": "CN", "note": "Four of the top ten assembly and test firms by 2024 revenue, in a TrendForce ranking cited by CSET"},
@@ -32,7 +32,7 @@
     "usSources": ["https://chipexplorer.eto.tech/?parentNode=N78&selectedNode=N120", "https://ir.amkor.com/news-releases/news-release-details/amkor-technology-breaks-ground-new-semiconductor-advanced", "https://ir.amkor.com/news-releases/news-release-details/tsmc-and-amkor-technology-announce-long-term-partnership"],
     "costSignal": "$9.1 billion market for chip test tools in 2025, by CSET's analysis of TechInsights data",
     "costSources": ["https://chipexplorer.eto.tech/?parentNode=N78&selectedNode=N120"],
-    "substitutability": {"band": "Moderate", "test": "Advantest held 62.7 percent of the market for test tools in 2025 and Teradyne 21.8 percent, by CSET's analysis of TechInsights data.", "testSources": ["https://chipexplorer.eto.tech/?parentNode=N78&selectedNode=N120"], "why": "Customers such as ASE already buy testers from both firms. The barrier is cost, because switching means rebuilding a customer's whole test setup, Advantest says.", "whySources": ["https://www.sec.gov/Archives/edgar/data/1122411/000119312526135585/d50802d20f.htm", "https://www.advantest.com/document/en/investors/ir-library/investors-guide/Investors_Guide_2607E.pdf#page=12"]}
+    "substitutability": {"band": "Moderate", "test": "Switching to another tester maker means rebuilding a customer's whole test setup, Advantest says.", "testSources": ["https://www.advantest.com/document/en/investors/ir-library/investors-guide/Investors_Guide_2607E.pdf#page=12"], "why": "Customers such as ASE already buy testers from both firms. The barrier is cost, because switching means rebuilding a customer's whole test setup, Advantest says.", "whySources": ["https://www.sec.gov/Archives/edgar/data/1122411/000119312526135585/d50802d20f.htm", "https://www.advantest.com/document/en/investors/ir-library/investors-guide/Investors_Guide_2607E.pdf#page=12"]}
   },
   "keyFacts": [
     {"fact": "CSET's analysis of TechInsights data puts Advantest at 62.7 percent of a $9.1 billion market for test tools in 2025, ahead of Teradyne at 21.8 percent", "source": "https://chipexplorer.eto.tech/?parentNode=N78&selectedNode=N120"},
