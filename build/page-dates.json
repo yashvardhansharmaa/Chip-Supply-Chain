@@ -32,7 +32,7 @@
   "/deposition-and-etch/": {
     "published": "2026-09-09",
     "modified": "2026-11-23",
-    "content": "93084662d0930845"
+    "content": "77db0b1004e9d08f"
   },
   "/design-and-eda/": {
     "published": "2026-09-09",
@@ -72,7 +72,7 @@
   "/metrology-and-inspection/": {
     "published": "2026-09-09",
     "modified": "2026-11-23",
-    "content": "e051527aca0f79e6"
+    "content": "568668ff53c1516f"
   },
   "/pdf/advanced-packaging.pdf": {
     "published": "2026-10-20",
@@ -202,6 +202,6 @@
   "/test-and-assembly/": {
     "published": "2026-09-09",
     "modified": "2026-11-23",
-    "content": "41cf8ae4629abd21"
+    "content": "bdc302dbe1dac3ad"
   }
 }
