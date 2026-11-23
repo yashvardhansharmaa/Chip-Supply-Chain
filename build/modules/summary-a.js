@@ -52,9 +52,10 @@ const SECONDARY = ['GB', 'IL', 'IN', 'FR', 'AT', 'CH', 'TH'];
  * the stage's chapter card (a leader's headquarters or main site). Editorial, like TOWN_CC. Since the merge of
  * 27 Oct 2026 Foundries and Fabs, led by TSMC, stands at Hsinchu, where the front end stood; Tainan, the old
  * foundry stop, is no longer on the route. Since 28 Oct 2026 each stop stands in its stage's leading country, so one list
- * drives a country's count, its cards and the stops it lights: Test and Assembly (led by Taiwan) at Kaohsiung, home of
- * ASE, in place of Penang, and Systems and Networking (led by the United States) at Santa Clara, home of Nvidia, in place
- * of Taipei (the cities as data/suppliers.json gives them). The build warns when a stop leaves its leading country. */
+ * drives a country's count, its cards and the stops it lights: Systems and Networking (led by the United States) at Santa
+ * Clara, home of Nvidia, in place of Taipei (the cities as data/suppliers.json gives them). Test and Assembly stood at
+ * Kaohsiung, home of ASE, in place of Penang, until 23 Nov 2026, when its card named Japan first (owner): it stands at
+ * Tokyo, home of Advantest, the main provider of test tools. The build warns when a stop leaves its leading country. */
 const STOPS = [
   ['design-and-eda', 'San Jose', 37.34, -121.89, 'US', -14, -8],
   ['silicon-and-wafers', 'Tokyo', 35.68, 139.69, 'JP', -16, -14],
@@ -67,7 +68,7 @@ const STOPS = [
   ['memory-and-hbm', 'Icheon', 37.28, 127.44, 'KR', 0, 0],
   ['advanced-packaging', 'Kaohsiung', 22.63, 120.30, 'TW', 10, 12],
   ['substrates-and-pcbs', 'Ogaki', 35.36, 136.62, 'JP', -22, 6],
-  ['test-and-assembly', 'Kaohsiung', 22.63, 120.30, 'TW', -10, 14],
+  ['test-and-assembly', 'Tokyo', 35.68, 139.69, 'JP', 18, -2],
   ['systems-and-networking', 'Santa Clara', 37.35, -121.95, 'US', -10, 14],
   ['data-centers-and-power', 'Ashburn', 39.04, -77.49, 'US', 0, 0]
 ];

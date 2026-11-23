@@ -2,17 +2,17 @@
   "/": {
     "published": "2026-10-01",
     "modified": "2026-11-23",
-    "content": "df37833a287467d1"
+    "content": "69dbd07ebbab9dc1"
   },
   "/advanced-packaging/": {
     "published": "2026-09-09",
     "modified": "2026-11-23",
-    "content": "a903e902d53c0f42"
+    "content": "8759ee71406ee224"
   },
   "/chemicals-gases-and-photoresist/": {
     "published": "2026-09-09",
     "modified": "2026-11-23",
-    "content": "273b3d875d94f196"
+    "content": "e0b719b22a0a8da1"
   },
   "/chips/": {
     "published": "2026-10-21",
@@ -72,7 +72,7 @@
   "/metrology-and-inspection/": {
     "published": "2026-09-09",
     "modified": "2026-11-23",
-    "content": "7454c2d824abac7f"
+    "content": "b439342dbb1a62db"
   },
   "/pdf/advanced-packaging.pdf": {
     "published": "2026-10-20",
@@ -177,17 +177,17 @@
   "/substrates-and-pcbs/": {
     "published": "2026-09-09",
     "modified": "2026-11-23",
-    "content": "a8e0c6c02a98bf56"
+    "content": "5892fab5456e7914"
   },
   "/summary/": {
     "published": "2026-10-21",
     "modified": "2026-11-23",
-    "content": "701df3407f449b6d"
+    "content": "c220cafc447d58c5"
   },
   "/suppliers/": {
     "published": "2026-10-21",
     "modified": "2026-11-23",
-    "content": "f5e6d93e737af64d"
+    "content": "31a9bf1d3dd4c497"
   },
   "/supply-chain/": {
     "published": "2026-10-28",
@@ -197,11 +197,11 @@
   "/systems-and-networking/": {
     "published": "2026-09-09",
     "modified": "2026-11-23",
-    "content": "250f477c250d9779"
+    "content": "1cf46deaf7fa1505"
   },
   "/test-and-assembly/": {
     "published": "2026-09-09",
     "modified": "2026-11-23",
-    "content": "22e7e01908a7f674"
+    "content": "7093aba208889825"
   }
 }
