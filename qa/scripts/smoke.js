@@ -67,7 +67,7 @@ const CHAIN_STATE = `(function () {
   // the finding under the title, its count in words and what the word means, and under it the key to the rows' one mark (the
   // owner's option 2 of 28 Oct 2026; one mark since 22 Nov 2026), with no band word in either
   var W = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen'], key = document.querySelector('#howto .howto-key');
-  var standfirst = vis(sf) && sfText.toLowerCase() === W[wantMarks.length] + ' of the ' + W[st.length] + ' stages are chokepoints: three or fewer firms could supply each today, or one firm holds more than half.'
+  var standfirst = vis(sf) && sfText.toLowerCase() === W[wantMarks.length] + ' of the ' + W[st.length] + ' stages are chokepoints: three or fewer firms can supply each, or one firm holds more than 65 percent.'
     && vis(key) && key.querySelectorAll('.cpk').length === 1 && key.textContent.trim() === 'Chokepoint' && !/Extreme|High|concentration/.test(sfText + key.textContent);
   var list = [].map.call(document.querySelectorAll('#contents .contents-grid .item a.t'), function (a) { return a.getAttribute('href'); });
   var dl = [].filter.call(document.querySelectorAll('#howto .howto-dl a'), vis).map(function (a) { return a.getAttribute('href'); });

@@ -5,7 +5,8 @@
    chokepoint mark, any other stage's none (22 Nov 2026; until then the band's meter and word). Checked here, with DevTools
    mouse and key events rather than script clicks:
      - the counts and the sentence are the data's own (paragraphs = the walk's steps, the stage count, the chokepoint count);
-     - the nine chokepoints' rows carry the mark, an ink dot and the word, and no other row carries a mark or a band word;
+     - the chokepoints' rows (seven, counted from the cards' bands) carry the mark, an ink dot and the word, and no other row
+       carries a mark or a band word;
      - every row's link goes to its chapter (static href and data-route) and is named as that chapter is;
      - every row's button puts that chapter's specimen on the stage with its number and title, and marks that row alone;
      - hovering a row's button picks it after a moment; crossing a name does not;
@@ -51,8 +52,8 @@ const BASE = (process.argv[2] || 'http://127.0.0.1:8766').replace(/\/$/, '');
           gone: ['.wk-ev', '.wk-stops', '.wk-stop', '#wk-q', '.wk-find', '.wk-way', '.wk-legend'].filter(s => document.querySelector(s)) };
       })()`);
       check(`${width}: the title, then the counts of the read`, facts.title === 'How AI chips are made' && new RegExp('^' + facts.steps + ' paragraphs[\\d,]+ wordsabout \\d+ min$').test(facts.meta), facts.meta);
-      check(`${width}: the kicker and the sentence, computed`, facts.kicker === 'The chain at a glance' && facts.sentence === `${facts.x} of the ${facts.rows} stages are chokepoints: three or fewer firms could supply each today, or one firm holds more than half.`, facts.sentence);
-      check(`${width}: fourteen rows, nine chokepoints (Metrology and Test joined on 23 Nov 2026), each the stage the data rates Extreme`, facts.rows === 14 && facts.x === 9 && facts.marks === facts.want, `${facts.rows} rows, ${facts.x} chokepoints, marks ${facts.marks}, want ${facts.want}`);
+      check(`${width}: the kicker and the sentence, computed`, facts.kicker === 'The chain at a glance' && facts.sentence === `${facts.x} of the ${facts.rows} stages are chokepoints: three or fewer firms can supply each, or one firm holds more than 65 percent.`, facts.sentence);
+      check(`${width}: fourteen rows, the chokepoints counted from the data (seven since the owner kept the 65 percent rule, 23 Nov 2026), each the stage the data rates Extreme`, facts.rows === 14 && facts.x === facts.want.split('').filter((c) => c === '1').length && facts.x === 7 && facts.marks === facts.want, `${facts.rows} rows, ${facts.x} chokepoints, marks ${facts.marks}, want ${facts.want}`);
       check(`${width}: every row keeps its specimen button, no meter and no band word is left`, facts.pickers === 14 && facts.meters === 0 && !facts.bandWords, JSON.stringify({ pickers: facts.pickers, meters: facts.meters, bandWords: facts.bandWords }));
       check(`${width}: the bar chart, the hero's search field and the two link blocks are gone`, !facts.gone.length, facts.gone.join(' '));
 

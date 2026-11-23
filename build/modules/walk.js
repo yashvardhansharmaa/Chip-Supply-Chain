@@ -78,7 +78,7 @@ module.exports = function (ctx) {
      one item. Nothing here is typed: the names, ratings, specimens and captions are the chapters' own, and every count is
      computed. */
   const nChoke = stages.filter((s) => isChoke((card[s.id] || {}).band)).length;
-  // the note reads "Three or fewer firms could supply this stage today, or one firm holds more than half of it."; here it
+  // the note reads "Three or fewer firms can supply this stage, or one firm holds more than 65 percent of it."; here it
   // follows "7 of the 14 stages are chokepoints:". A changed note drops the clause.
   const xNote = String(ctx.CHOKE_NOTE || (ctx.BAND_NOTE || {}).Extreme || '');
   const xMeaning = /this stage/.test(xNote) ? xNote.replace('this stage', 'each').replace(/ of it\.$/, '.').replace(/\.$/, '').replace(/^\w/, (m) => m.toLowerCase()) : '';

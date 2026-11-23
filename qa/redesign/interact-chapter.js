@@ -64,10 +64,11 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8766';
           meters:document.querySelectorAll('.meter').length,kpis:a.querySelectorAll('.plate-kpis > div').length,meta:getComputedStyle(a.querySelector('.ch-meta .label')).fontFamily,kickT:getComputedStyle(a.querySelector('.ch-kick')).textTransform};})()`);
       const INK = 'rgb(23, 23, 22)', DOT = INK + ' 50%';
       check('1440: a chokepoint carries the mark, an ink dot and the word in Hanken Grotesk, in the kicker and the card, and the card says what the word means', !!marks.kick && marks.kick.word === 'Chokepoint' && marks.kick.dot === DOT && marks.kick.font === 'Hanken Grotesk' && marks.kick.color === INK
-        && !!marks.card && marks.card.word === 'Chokepoint' && marks.card.dot === DOT && marks.card.font === 'Hanken Grotesk' && marks.cardNote === 'Three or fewer firms could supply this stage today, or one firm holds more than half of it.', JSON.stringify(marks));
-      // the nine chokepoints since 23 Nov 2026 (Metrology and Test joined), read from the cards' bands; the literal is the same nine
-      const RAIL9 = '11 00 00 11 11 00 11 11 11 11 11 11 00 00';
-      check('1440: the rail marks the nine chokepoints with the dot alone, each named in its link\'s label, and no other stage', !!marks.rail && marks.rail.word === '' && marks.rail.dot === DOT && marks.railMarks === RAIL9 && (!marks.want || marks.want === RAIL9), JSON.stringify({ rail: marks.rail, marks: marks.railMarks, want: marks.want }));
+        && !!marks.card && marks.card.word === 'Chokepoint' && marks.card.dot === DOT && marks.card.font === 'Hanken Grotesk' && marks.cardNote === 'Three or fewer firms can supply this stage, or one firm holds more than 65 percent of it.', JSON.stringify(marks));
+      // the seven chokepoints (the owner kept the 65 percent rule on 23 Nov 2026, so Metrology and Test, briefly marked that day,
+      // are not chokepoints), read from the cards' bands; the literal is the same seven
+      const RAIL7 = '11 00 00 11 11 00 00 11 11 11 11 00 00 00';
+      check('1440: the rail marks the seven chokepoints with the dot alone, each named in its link\'s label, and no other stage', !!marks.rail && marks.rail.word === '' && marks.rail.dot === DOT && marks.railMarks === RAIL7 && (!marks.want || marks.want === RAIL7), JSON.stringify({ rail: marks.rail, marks: marks.railMarks, want: marks.want }));
       check('1440: no four-bar meter is left, and the card has two ratings in its row', marks.meters === 0 && marks.kpis === 2, JSON.stringify({ meters: marks.meters, kpis: marks.kpis }));
       check('1440: the kicker and the facts line are Hanken Grotesk capitals, not Fragment Mono', /^"?Hanken Grotesk/.test(marks.meta) && marks.kickT === 'uppercase', JSON.stringify(marks));
       await t.ev("document.querySelector('#lithography .rail-toc a[href=\"#lithography--card\"]').click(),1"); await sleep(1200);

@@ -10,7 +10,7 @@
   "specimen": "probe-card",
   "specimenCaption": "A vertical probe card over a 300 mm wafer, pulled apart, its needles pointing straight down at four dies. The dies are drawn at 26 by 33 mm, the largest area a scanner prints in one exposure. A real card has thousands of needles, and here a few rows stand for them. Each card is built for one chip design. Every needle must touch down in the same plane, again and again, while hot.",
   "card": {
-    "concentration": "Extreme",
+    "concentration": "High",
     "chokepointScore": 4,
     "leaders": [
       {"name": "Advantest", "country": "JP", "share": "62.7 percent of chip test tools in 2025, by CSET's analysis of TechInsights data", "source": "https://chipexplorer.eto.tech/?parentNode=N78&selectedNode=N120"},
@@ -54,7 +54,7 @@
     {
       "id": "ate-share",
       "type": "stack",
-      "title": "Automated test equipment: share of the ~$9.0 billion tester market, 2025",
+      "title": "Advantest's own estimate: its share of the ~$9.0 billion tester market, 2025",
       "finding": "Advantest put its tester market share at about 65 percent in 2025",
       "unit": "%",
       "data": [["Advantest", 65], ["Teradyne and all others", 35]],
@@ -146,9 +146,9 @@ In October 2024 TSMC and Amkor signed a memorandum of understanding for TSMC to 
 
 {{figure:ase-testers}}
 
-## The chokepoint
+## The narrowest step
 
-The narrowest step is the tester itself. Advantest held 62.7 percent of the market for test tools in 2025 and Teradyne 21.8 percent, by CSET's analysis of TechInsights data ([source](https://chipexplorer.eto.tech/?parentNode=N78&selectedNode=N120)). Customers can switch tester makers, but at a cost. Advantest says that switching to another tester maker means rebuilding the whole test setup used for development, evaluation and mass production, at significant extra cost to the customer ([source](https://www.advantest.com/document/en/investors/ir-library/investors-guide/Investors_Guide_2607E.pdf#page=12)). Still, ASE says it buys testers with similar functions from different makers, including Teradyne and Advantest ([source](https://www.sec.gov/Archives/edgar/data/1122411/000119312526135585/d50802d20f.htm)).
+The stage is judged by its main tool, the tester. Advantest held 62.7 percent of the market for test tools in 2025 and Teradyne 21.8 percent, by CSET's analysis of TechInsights data ([source](https://chipexplorer.eto.tech/?parentNode=N78&selectedNode=N120)). Customers can switch tester makers, but at a cost. Advantest says that switching to another tester maker means rebuilding the whole test setup used for development, evaluation and mass production, at significant extra cost to the customer ([source](https://www.advantest.com/document/en/investors/ir-library/investors-guide/Investors_Guide_2607E.pdf#page=12)). Still, ASE says it buys testers with similar functions from different makers, including Teradyne and Advantest ([source](https://www.sec.gov/Archives/edgar/data/1122411/000119312526135585/d50802d20f.htm)).
 
 Chinese toolmakers are gaining share in test and advanced packaging tools, but CSET finds they still lag significantly behind foreign suppliers in market share ([source](https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/)). Between 2019 and 2024 they gained 5 percentage points of world market share in test tools and 4 points in fabrication tools built for advanced packaging, by CSET's analysis of TechInsights data ([source](https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/)). But they lost share in bonding and other conventional assembly and packaging tools ([source](https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/)).
 

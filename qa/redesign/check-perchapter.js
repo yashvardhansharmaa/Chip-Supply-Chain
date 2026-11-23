@@ -125,7 +125,7 @@ const kb = (b) => (b / 1024).toFixed(0) + ' KB';
       // as the largest yaw the drag reached (Stage.turnMax); qa/redesign/check-plates.js checks the turn, the labels and the return
       const yaw1 = await t.ev('CP.Stage.turnMax');
       check(`${W}: a drag turns the specimen`, Math.abs(yaw1 - yaw0) > 0.1, `${yaw0.toFixed(2)} to ${yaw1.toFixed(2)}`);
-      if (c.stage) check(`${W}: the stage card, ${c.choke ? 'with the chokepoint\'s line and the mark in the kicker' : 'with no chokepoint line and no mark in the kicker'}`, S.card && (c.choke ? S.cardLine === 'ChokepointThree or fewer firms could supply this stage today, or one firm holds more than half of it.' && /Chokepoint/.test(S.kick) : S.cardLine === '' && !/Chokepoint|Extreme|High|concentration/.test(S.kick)), JSON.stringify({ line: S.cardLine, kick: S.kick }));
+      if (c.stage) check(`${W}: the stage card, ${c.choke ? 'with the chokepoint\'s line and the mark in the kicker' : 'with no chokepoint line and no mark in the kicker'}`, S.card && (c.choke ? S.cardLine === 'ChokepointThree or fewer firms can supply this stage, or one firm holds more than 65 percent of it.' && /Chokepoint/.test(S.kick) : S.cardLine === '' && !/Chokepoint|Extreme|High|concentration/.test(S.kick)), JSON.stringify({ line: S.cardLine, kick: S.kick }));
       // a look-up pop-up
       const tip = await t.ev(`(function () { var b = document.querySelector('#${id} .prose .gl-term:not([data-note])'); if (!b) return null; document.documentElement.style.scrollBehavior = 'auto'; b.scrollIntoView({ block: 'center' }); b.focus(); return b.getAttribute('data-term'); })()`);
       await sleep(400);

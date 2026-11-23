@@ -533,9 +533,11 @@ function wordCount(body) {
 }
 
 /* ---------------- nameplate ---------------- */
-/* The concentration method: four bands by how many firms could credibly supply a stage today, judged by the market for the
-   stage's main tools or products and, where the most advanced AI chips need one particular tool or product, by that one too
-   (the Glossary's "Chokepoint" entry, 23 Nov 2026; card.concentration in content/*.md, checked by build/validate.js; BAND_NOTE below defines each band). Where a
+/* The concentration method: four bands by how many firms could credibly supply a stage today, judged by the whole market for
+   the stage's main tools or products and, where the most advanced AI chips need one particular tool or product, by that one too
+   (EUV). Sub-kinds of tools never qualify a stage. Extreme, the chokepoint band, is three or fewer firms or one firm above 65
+   percent (owner, 23 Nov 2026: "Let's stick with the 65% figure", which leaves Metrology and Test out; the Glossary's
+   "Chokepoint" entry; card.concentration in content/*.md, checked by build/validate.js; BAND_NOTE below defines each band). Where a
    figure exists for the top country's share of the segment it is a second check, and when the two disagree the supplier
    count wins (the Glossary's "Concentration" entry said so until 22 Nov 2026). Readers see one word of it (owner, 22 Nov 2026: "keep everything as unlabeled
    and the seven as choke points", then "chokepoint is good, apply it site-wide"): a stage in the Extreme band is a
@@ -546,7 +548,7 @@ const isChoke = (b) => b === CHOKE_BAND;
 const SUBS = { 'Very hard': 4, Hard: 3, Moderate: 2, Easy: 1 };
 const SUBWORD = { 'Very hard': 'Very hard to substitute', Hard: 'Hard to substitute', Moderate: 'Moderately hard to substitute', Easy: 'Easy to substitute' };
 // one sentence per band, the method's own definitions (data/glossary.json "chokepoint" gives the reader the Extreme one)
-const BAND_NOTE = { Extreme: 'Three or fewer firms could supply this stage today, or one firm holds more than half of it.', High: 'Four to six firms could supply this stage today, and the top two take most of the revenue.', Moderate: 'Seven or more firms could supply this stage today, none of them dominant.', Low: 'Many firms could supply this stage today, and the scarce input is something another industry sells at volume.' };
+const BAND_NOTE = { Extreme: 'Three or fewer firms can supply this stage, or one firm holds more than 65 percent of it.', High: 'Four to six firms could supply this stage today, and the top two take most of the revenue.', Moderate: 'Seven or more firms could supply this stage today, none of them dominant.', Low: 'Many firms could supply this stage today, and the scarce input is something another industry sells at volume.' };
 // what "chokepoint" means on this site, the Extreme band's sentence: on the chapter's card, beside the mark
 const CHOKE_NOTE = BAND_NOTE[CHOKE_BAND];
 /* The chokepoint mark, one component wherever a stage is listed (the home's list, the chapter's kicker and rail, the Supply
@@ -851,7 +853,7 @@ function reviewHTML(ch) {
   // each card's reason ends with a link back to the section of the chapter that covers it
   // the deck's title is one of the chapter's sections, h2 (29 Oct 2026)
   // a card whose idea is stated only on the stage card names "Stage card", which links to the card (29 Oct 2026; "Chokepoint card"
-  // until 23 Nov 2026, when the owner kept the word for the nine chokepoints)
+  // until 23 Nov 2026, when the owner kept the word for the chokepoint stages)
   return deckHTML(fc, { id: ch.id, title: ch.title, level: 2, more: (c, i) => {
     if (c.section === 'Stage card') return { href: `#${ch.id}--card`, text: 'Reread: Stage card' };
     const anchor = c.section ? `${ch.id}--${slug(c.section)}` : '';
@@ -1312,7 +1314,7 @@ const contentsHTML = (() => {
    before its word (the owner's option 2 of 28 Oct 2026 kept the standfirst and the key apart; since 22 Nov 2026 the rows
    carry one mark, so the key has one entry). The printed contents keep their own standfirst (src/template.html .howto-lede) */
 const nChoke = stages.filter((c) => isChoke(bandOf(c))).length;
-// "Three or fewer firms could supply this stage today, or one firm holds more than half of it." as a clause after "chokepoints:"
+// "Three or fewer firms can supply this stage, or one firm holds more than 65 percent of it." as a clause after "chokepoints:"
 const chokeClause = /this stage/.test(CHOKE_NOTE) ? CHOKE_NOTE.replace('this stage', 'each').replace(/ of it\.$/, '.').replace(/^\w/, (m) => m.toLowerCase()) : '';
 const chainStandfirst = nChoke ? `${cap(word(nChoke))} of the ${word(stages.length)} stages are chokepoints${chokeClause ? `: ${chokeClause}` : '.'}` : '';
 const chainKey = nChoke ? chokeMark() : '';

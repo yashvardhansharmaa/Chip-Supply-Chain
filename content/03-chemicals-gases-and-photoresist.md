@@ -131,6 +131,8 @@ In sputtering targets for semiconductors, JX Advanced Metals puts its own share 
 
 ## The narrowest step
 
+Photoresist is the hardest input to replace at this stage, because each resist has to pass the most rigorous qualification of any chemical a chipmaker uses ([source](https://www.semiconductors.org/wp-content/uploads/2023/06/FINAL-PAG-Case-Study.pdf#page=21)).
+
 Supply at this stage has been disrupted three times since 2019, twice by governments and once by a war.
 
 In July 2019 Japan put photoresist, hydrogen fluoride and fluorinated polyimide under individual export licenses for South Korea, so each export contract needed its own license ([source](https://www.rieti.go.jp/en/columns/v01_0201.html)). South Korea's chip industry depended heavily on Japan for all three chemicals, and Japanese firms supplied more than 90 percent of South Korea's imports of two of them ([source](https://www.rieti.go.jp/en/columns/v01_0201.html)). Japan's hydrogen fluoride exports to South Korea then fell 87.9 percent ([source](https://www.rieti.go.jp/en/columns/v01_0201.html)). Japanese photoresist exports to South Korea did not fall, possibly in part because Japan allowed three-year bulk licenses for some resist sales in December 2019 ([source](https://www.rieti.go.jp/en/columns/v01_0201.html)).

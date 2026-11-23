@@ -79,7 +79,7 @@
   {
     "term": "Chokepoint",
     "aka": "chokepoints",
-    "plain": "A step in the supply chain where so few firms or countries can do the work that losing one of them stops everybody. A stage of the chain counts as a chokepoint when three or fewer firms could credibly supply it today, or one firm holds more than half of it. Each stage is judged by the market for its main tools or products. Where the most advanced AI chips need one particular tool or product, that one is judged too. Only ASML makes the EUV scanners those chips need, for example.",
+    "plain": "A step in the supply chain where so few firms or countries can do the work that losing one of them stops everybody. A stage counts as a chokepoint when three or fewer firms can supply it, or one firm holds more than 65 percent of it. Each stage is judged by the whole market for its main tools or products, and by any one tool the newest AI chips cannot do without, such as ASML's EUV scanners.",
     "why": "One sanction or one factory fire at a chokepoint reaches the whole industry, and so does a government policy aimed at one.",
     "chapter": "introduction-and-goals"
   },
@@ -813,9 +813,9 @@
   },
   {
     "term": "coater/developer",
-    "aka": "coater-developer, coater and developer, coater/developer track, track tool, track tools",
+    "aka": "coater-developer, coater and developer, coater/developer track, track tool, track tools, tracks",
     "plain": "A coater/developer, or track, is the machine that spins a thin coat of photoresist onto the wafer before it enters the scanner. After the wafer comes out, the same machine washes away the exposed parts, so every printed layer passes through it twice.",
-    "why": "No pattern can be printed without it. Tokyo Electron's own results put its share of the market at 91 percent in 2025.",
+    "why": "No pattern can be printed without it. Tokyo Electron held 92.6 percent of the market in 2025, by CSET's count from TechInsights data.",
     "chapter": "deposition-and-etch"
   },
   {

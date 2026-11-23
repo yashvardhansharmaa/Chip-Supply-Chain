@@ -311,11 +311,10 @@ module.exports = function (ctx) {
     const cats = {};
     firms.forEach((f) => { cats[f.category] = (cats[f.category] || 0) + 1; });
     const topCats = Object.keys(cats).sort((a, b) => cats[b] - cats[a]).slice(0, 3);
-    const own = towns.filter((t) => t.cc === cc);
     const lead = [];
     chapters.forEach((c) => (c.leaders || []).forEach((l) => { if (l.country === cc && lead.indexOf(l.name) < 0) lead.push(l.name); }));
     const top5 = named.filter((c) => c.band === 'Extreme').length;
-    return { cc, name, named, segs, firms, topCats, towns: own, leaders: lead, top5 };
+    return { cc, name, named, segs, firms, topCats, leaders: lead, top5 };
   }
   const info = {};
   PRIMARY.concat(SECONDARY).forEach((cc) => { info[cc] = country(cc); });
@@ -366,9 +365,8 @@ module.exports = function (ctx) {
       china = `<div class="sa-china"><span class="label">Where China stands</span>${rows.map((c) => `<p><a href="${href(c)}">${esc(c.title)}</a> ${esc(first(c.chinaStatus))}</p>`).join('')}</div>`;
     }
 
-    const townLine = d.towns.length
-      ? `<a href="#/geopolitics">${word(d.towns.length)} main site${d.towns.length > 1 ? 's' : ''}: ${d.towns.map((t) => esc(t.name)).join(', ')}</a>`
-      : '';
+    // the panel's foot names the firms only: its "N main sites" line came from the globe specimen's town list, which no source
+    // backs and which disagreed with the route map's stops (expert review, 23 Nov 2026); the route map keeps its own stops
     const firmLine = d.firms.length
       ? `<a href="#/suppliers">${d.firms.length} firm${d.firms.length > 1 ? 's' : ''} in the supplier list${d.topCats.length ? (d.firms.length > 1 ? `. Largest group${d.topCats.length > 1 ? 's' : ''}: ` : ', in ') + d.topCats.map((c) => esc(lcCat(c))).join('; ') : ''}</a>`
       : '<span>No firm in the supplier list</span>';
@@ -379,7 +377,7 @@ ${ROLE[cc] ? `<p class="sa-panel-meta">${metaOf(cc)}</p><p class="sa-panel-role"
 <p class="sa-panel-lede">${esc(lede)}</p>
 <ul class="sa-facts">${shares.join('')}${cards.join('')}</ul>
 ${china}
-<p class="sa-panel-foot">${firmLine}${townLine ? ' <span class="sa-dot-sep">·</span> ' + townLine : ''}</p>
+<p class="sa-panel-foot">${firmLine}</p>
 </article>`;
   }
 

@@ -95,7 +95,7 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
 <p class="meta">Updated ${DAY} · Every figure is cited in the chapter each card links to</p>
 </section>
 <section class="glance" aria-labelledby="glance-h">
-<div class="sec-head"><h2 id="glance-h">The chain at a glance</h2><p><b>${nChoke} of ${stages.length}</b> stages are chokepoints: three or fewer firms could supply each of them today, or one firm holds more than half of it.</p></div>
+<div class="sec-head"><h2 id="glance-h">The chain at a glance</h2><p><b>${nChoke} of ${stages.length}</b> stages are chokepoints: three or fewer firms can supply each of them, or one firm holds more than 65 percent of it.</p></div>
 <p class="key"><b>Substitutability</b> rates how hard it would be for a well-funded state or firm to build an alternative: Very hard, Hard or Moderately hard.</p>
 <div class="ladder-head" aria-hidden="true"><span>Stage</span><span></span><span>Substitutability</span><span>Who leads</span></div>
 <ol class="ladder">${ladder}</ol>
@@ -167,7 +167,7 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
 <p class="meta">Updated ${DAY} · <a href="${SITE.url}">${SITE.host}</a> · Every figure is cited in the chapter each section links to.</p>
 </header>
 <div class="key">
-<span>${mark({ word: false })} ${word(nChoke).replace(/^\w/, (m) => m.toUpperCase())} of the ${word(stages.length)} stages are chokepoints: three or fewer firms could supply each of them today, or one firm holds more than half of it.</span>
+<span>${mark({ word: false })} ${word(nChoke).replace(/^\w/, (m) => m.toUpperCase())} of the ${word(stages.length)} stages are chokepoints: three or fewer firms can supply each of them, or one firm holds more than 65 percent of it.</span>
 <span><b>Substitutability</b> rates how hard it would be for a well-funded state or firm to build an alternative: Very hard, Hard or Moderately hard.</span>
 </div>
 <table>
