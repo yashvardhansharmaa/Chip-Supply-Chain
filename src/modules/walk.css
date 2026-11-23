@@ -2,8 +2,8 @@
    The home page (#/, the Start here walk) in the redesign of 25 Oct 2026 (qa/redesign/BRIEF.md), its hero set back to the
    home's structure before the redesign on 27 Oct 2026 (qa/redesign/stage-home.md), in the redesign's type and colors.
    Tokens only; every class is prefixed wk-.
-   The hero: the title and subtitle, the read's counts, then the chain at a glance (a sentence on how many stages are rated
-   Extreme and the stages one row each, whose meter picks the specimen on the stage beside it). Then the walk (one plain
+   The hero: the title and subtitle, the read's counts, then the chain at a glance (a sentence on how many stages are
+   chokepoints and the stages one row each, whose end picks the specimen on the stage beside it). Then the walk (one plain
    paragraph per chapter, each number in the ledger column), the flashcards and Other pages.
    ========================================================================== */
 
@@ -24,11 +24,12 @@
 .wk-meta .label::before { content: "\00b7"; display: inline-block; width: 18px; text-align: center; color: var(--muted); }
 
 /* ---------- the chain at a glance ----------
-   An ink rule, the kicker, the sentence, then a row per stage between hairlines: the name (a link) and, at the row's end,
-   the band's meter and word (a button that picks the specimen). The number hangs in the ledger column, right-set where
-   the walk's numbers are; it belongs to the link, so it takes the reader to the chapter too. Extreme is wine, its meter and
-   its word, as on the live site (the visual pass of 27 Oct 2026); High the lighter tint. The row whose specimen is showing
-   (.is-shown) is the reader's selection: a paper tint across the row, its hanging number included, the number in wine. */
+   An ink rule, the kicker, the sentence, then a row per stage between hairlines: the name (a link) and, at the row's end, a
+   button that picks the specimen, which carries the chokepoint mark (src/styles.css .cpk, in ink) on a chokepoint's row and
+   nothing on any other (owner, 22 Nov 2026; until then a four-bar meter and the band's word, Extreme in wine). The number
+   hangs in the ledger column, right-set where the walk's numbers are; it belongs to the link, so it takes the reader to the
+   chapter too. The row whose specimen is showing (.is-shown) is the reader's selection: a paper tint across the row, its
+   hanging number included, the number in wine. */
 .wk-gl { margin: 32px 0 0; }
 .wk-gl-h { display: block; margin: 0; padding: 12px 0 0; border-top: 1px solid var(--ink); }
 .wk-gl-p { margin: 6px 0 16px; font-family: var(--font-body); font-size: var(--fs-body); line-height: 1.5; color: var(--ink-2); max-width: 34em; }
@@ -49,12 +50,11 @@
 .wk-gl-lead .f { white-space: nowrap; }
 .wk-gl-a:hover .wk-gl-lead, .wk-gl-a:focus-visible .wk-gl-lead { color: var(--ink-2); }
 .wk-gl-a:focus-visible { outline-offset: -2px; }
-/* the button fills the row's height, so the whole end of the row picks; its meter and word sit on the name's first line */
-.wk-gl-c { display: inline-flex; align-items: center; align-content: flex-start; flex-wrap: wrap; gap: 9px; padding: 9px 0 0 12px; font-family: var(--font-ui); font-size: 13px; line-height: 16px; color: var(--muted); text-align: left; cursor: pointer; }
+/* the button fills the row's height and keeps one width on every row, so the end of each row picks, marked or not; the mark
+   sits on the name's first line */
+.wk-gl-c { display: inline-flex; align-items: center; align-content: flex-start; flex-wrap: wrap; gap: 9px; min-width: 104px; padding: 9px 0 0 12px; font-family: var(--font-ui); font-size: 13px; line-height: 16px; color: var(--muted); text-align: left; cursor: pointer; }
 .wk-gl-c:focus-visible { outline-offset: -2px; }
-.wk-gl-m { --mh: 14px; --mw: 5px; --mg: 2px; } /* the band's meter (src/modules/chapter.css .meter), at the size it was drawn here first */
-.wk-gl-w { min-width: 4.6em; }
-.wk-gl-list li[data-level="4"] .wk-gl-w { color: var(--accent-ink); font-weight: 600; }
+.wk-gl-m { font-size: 13px; font-weight: 600; } /* the chokepoint mark (src/styles.css .cpk) */
 .wk-gl-list li.is-shown { background: var(--bg-2); }
 @media (min-width: 901px) { .wk-gl-list li.is-shown { box-shadow: calc(-1 * (var(--gutter) + var(--gutter-gap))) 0 0 var(--bg-2); } } /* the tint reaches the number in the ledger column */
 .wk-gl-list li.is-shown .wk-gl-n { color: var(--accent-ink); font-weight: 600; }
@@ -108,20 +108,14 @@
   display: flex; align-items: center; flex-wrap: wrap; gap: 10px 20px;
   max-width: var(--measure); padding-top: 12px; border-top: 1px solid var(--line);
 }
-.wk-score {
-  display: inline-flex; align-items: center; gap: 10px;
-  font-family: var(--font-ui); font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums;
-}
-.wk-sc { display: inline-flex; align-items: center; gap: 8px; }
-.wk-sc .meter { --mh: 13px; --mw: 4px; --mg: 1.5px; } /* the band's meter, beside its word (src/modules/chapter.css .meter) */
-.wk-sc > b { color: var(--ink); font-weight: 500; font-size: 14px; }
+.wk-foot .wk-score-term { font-size: 13px; font-weight: 600; } /* a chokepoint's mark at its step's foot, a glossary button (src/styles.css .cpk) */
 .wk-read {
   margin-left: auto; font-family: var(--font-ui); font-weight: 500;
   font-size: 15px; letter-spacing: 0; white-space: nowrap; color: var(--ink);
   text-decoration: none; border-bottom: 1px solid var(--ink); padding: 3px 0 2px;
 }
 .wk-read::after { content: "\00a0\2192"; }
-/* Read the chapter, the Concentration tag and each source link take a fingertip: an invisible box at least 24 px tall,
+/* Read the chapter, the chokepoint mark and each source link take a fingertip: an invisible box at least 24 px tall,
    centered on the control */
 .wk-read, .wk-score-term, .wk-facts .wk-src { position: relative; }
 .wk-read::before, .wk-score-term::before, .wk-facts .wk-src::before {
@@ -218,8 +212,8 @@
   .wk-gl-n { padding-right: 8px; } /* right-set where the walk's numbers are */
   .wk-gl-t { font-size: var(--t-small); }
   .wk-gl-lead { font-size: 12.5px; }
-  .wk-gl-c { gap: 7px; padding: 10px 0 0 6px; font-size: 12.5px; }
-  .wk-gl-w { min-width: 4.3em; }
+  .wk-gl-c { gap: 7px; min-width: 92px; padding: 10px 0 0 6px; font-size: 12.5px; }
+  .wk-gl-m { font-size: 12.5px; }
 
   .wk-list { margin-top: 64px; }
   .wk-step { scroll-margin-top: calc(var(--masthead) + 60px); }
@@ -240,10 +234,9 @@
   .wk-pn .label { display: block; margin-bottom: 3px; }
   .wk-pn-t { display: block; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: var(--t-small); line-height: 1.25; overflow-wrap: anywhere; }
 }
-@media (max-width: 380px) { /* a 360 px phone: a narrower meter and word keep most names on one line */
-  .wk-gl-c { gap: 5px; font-size: 12px; }
-  .wk-gl-m { --mw: 4px; }
-  .wk-gl-w { min-width: 0; }
+@media (max-width: 380px) { /* a 360 px phone: a narrower mark keeps most names on one line */
+  .wk-gl-c { gap: 5px; min-width: 86px; font-size: 12px; }
+  .wk-gl-m { font-size: 12px; gap: 5px; }
 }
 @media (max-width: 420px) {
   .wk-t { font-size: var(--t-block); }

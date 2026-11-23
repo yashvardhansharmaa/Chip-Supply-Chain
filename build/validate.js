@@ -6,6 +6,10 @@
    - a chapter whose front matter is missing or not valid JSON, or that lacks number, title, oneLiner or plain;
    - a stage (every chapter but the two that look across the chain, build/stages.js) with no card, a card.concentration other than Extreme, High, Moderate or
      Low, or a card.substitutability.band other than Very hard, Hard, Moderate or Easy;
+   - reader-facing text that uses a concentration band as a rating ("rated Extreme", "High concentration", "concentration
+     band"): readers see one rating word since 22 Nov 2026, "chokepoint" for a stage in the Extreme band, and nothing for the
+     others. The bands stay the method, in card.concentration. Checked in the chapters (front matter and body), the Glossary,
+     the flashcards and the section headings;
    - a {{...}} marker in a chapter's body that is not a {{figure:<id>}} line naming one of the chapter's figures;
    - a figure with no data: a bars, stack or timeline figure with no rows, an animation with no rendered steps in media/,
      or a figure of a type the build cannot draw.
@@ -17,6 +21,15 @@ const STAGES = require('./stages.js');
 
 const BANDS = ['Extreme', 'High', 'Moderate', 'Low'];
 const SUB_BANDS = ['Very hard', 'Hard', 'Moderate', 'Easy'];
+// a band used as a rating in reader-facing text (22 Nov 2026: the reader sees "chokepoint" for the Extreme band and no word for
+// the others); "High NA", "high bandwidth" and the like never match
+const BAND_AS_RATING = /\b(?:rated|rates|rating|rate)\s+(?:as\s+)?(?:Extreme|High|Moderate|Low)\b|\b(?:Extreme|High|Moderate|Low)\s+concentration\b|\bconcentration\s+bands?\b|\b(?:Extreme|High)\s+(?:band|stages?)\b|\bfour-bar\b/i;
+function bandWords(text, at, problems) {
+  String(text).split('\n').forEach((line, i) => {
+    const m = BAND_AS_RATING.exec(line);
+    if (m) problems.push(`${at(i)}: "${m[0]}" uses a concentration band as a rating; readers see "chokepoint" for the Extreme band and no rating word for the others`);
+  });
+}
 const FIGURE_TYPES = ['bars', 'stack', 'columns', 'change', 'timeline', 'animation', 'within', 'explore']; // columns and change: revision 5, 28 Oct 2026; within: 15.3, 29 Oct 2026; explore: 10.3 and 04.2, 21 Nov 2026
 // the datasets the site cannot do without, and the shape each must have; every other data/*.json must still parse
 const DATASETS = {
@@ -74,6 +87,11 @@ function checkData(root, problems) {
   if (bib && typeof bib === 'object' && !Array.isArray(bib)) {
     Object.keys(bib).forEach((u) => { const b = bib[u]; if (!b || typeof b !== 'object' || !b.title) problems.push(`data/bibliography.json: the entry for ${u} has no "title"`); });
   }
+  // the reader-facing data: no concentration band as a rating
+  ['glossary.json', 'flashcards.json', 'section-headings.json'].forEach((f) => {
+    const file = path.join(dir, f);
+    if (fs.existsSync(file)) bandWords(fs.readFileSync(file, 'utf8'), (i) => `data/${f} line ${i + 1}`, problems);
+  });
   const gl = safeParse(path.join(dir, 'glossary.json'));
   if (Array.isArray(gl)) {
     const seen = new Set();
@@ -111,6 +129,8 @@ function checkChapters(root, problems) {
         if (!SUB_BANDS.includes(band)) problems.push(`${rel}: card.substitutability.band is ${show(band)}; it must be ${list(SUB_BANDS)}`);
       }
     }
+    // the chapter's own words, front matter and body, never use a band as a rating (card.concentration itself is the method)
+    bandWords(src, (i) => `${rel} line ${i + 1}`, problems);
     // figures: every marker names a figure, and every figure has something to draw
     const figures = Array.isArray(meta.figures) ? meta.figures : [];
     if (meta.figures !== undefined && !Array.isArray(meta.figures)) problems.push(`${rel}: "figures" should be a list`);

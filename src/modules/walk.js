@@ -118,8 +118,8 @@
     if (el && CP.Router.settle) CP.Router.settle(el);
   }
 
-  /* The hero (27 Oct 2026: the home's structure before the redesign). Each row of the chain at a glance ends in a button, its
-     band's meter and word, that picks the stage's specimen: the button copies its stage's specimen, number, title and caption
+  /* The hero (27 Oct 2026: the home's structure before the redesign). Each row of the chain at a glance ends in a button, a
+     chokepoint's mark or, on any other stage's row, the same area unmarked, that picks the stage's specimen: the button copies its stage's specimen, number, title and caption
      onto the hero (#wk-hero, a [data-specimen] item that Sections in src/app.js tracks like a step), and a scroll event asks
      Sections to draw it; Sections.hold keeps the hero on the stage while any of it is on screen, so the row in wine is always
      the specimen shown. Hovering a button picks it once the pointer rests on it a moment, so a pointer crossing the list on

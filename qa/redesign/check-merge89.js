@@ -60,7 +60,7 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8774';
       const ink = require('child_process').execFileSync('python3', ['-c', 'import sys\nfrom PIL import Image\nim=Image.open(sys.argv[1]).convert("L").crop(tuple(int(v) for v in sys.argv[2:6]))\nprint(sum(1 for v in im.getdata() if v<160))', process.argv[3] + '/live-spec-1440.png', ...sp.rect.map(String)]).toString().trim();
       sp.inked = +ink;
       check('live: the gate-all-around transistor draws in the merged chapter\'s slot', sp.name === 'gaa-transistor' && sp.inSlot && sp.inked > 500, sp);
-      check('the kicker reads Chapter 08, Stage 8 of 14', /Chapter 08\s*Stage 8 of 14\s*Extreme concentration/.test(sp.kick), sp.kick);
+      check('the kicker reads Chapter 08, Stage 8 of 14', /Chapter 08\s*Stage 8 of 14\s*Chokepoint/.test(sp.kick), sp.kick);
       await t.close();
       const r = await open(chrome, BASE + '/foundries-and-fabs/', { width: 1440, wait: 2500 });
       const st = await r.ev(`(function(){var i=document.querySelector('.ch-spec img.ch-still-img');return i?{src:i.getAttribute('src'),w:i.naturalWidth,h:i.naturalHeight,done:i.complete,alt:i.alt}:null;})()`);

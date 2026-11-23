@@ -3,9 +3,10 @@
    held every chapter, switched by the hash (/#lithography), and /<id>/ was a static readable copy. Now /<id>/ is the full
    interactive chapter and the home page holds none. This checks, on a local preview and in the built dist/:
    1. every chapter's page is the whole chapter, driven as a reader would at 1440: the masthead's search and theme; the rail
-      with Hide contents, the chain with its four-bar meters and the figures list (as many as the page's figures, the explainer
-      a chapter opens on, in its head since 21 Nov 2026, counted with the text's); the live specimen in its slot, which a drag
-      turns; the card with its meter; a look-up pop-up; a figure's Cite, Table, CSV and PNG, and Table opening; the cite line's
+      with Hide contents, the chain with a chokepoint's dot on each chokepoint and on no other stage, and no four-bar meter (22 Nov
+      2026), and the figures list (as many as the page's figures, the explainer a chapter opens on, in its head since 21 Nov 2026,
+      counted with the text's); the live specimen in its slot, which a drag turns; the card, with the chokepoint's line on a
+      chokepoint and none on any other stage; a look-up pop-up; a figure's Cite, Table, CSV and PNG, and Table opening; the cite line's
       Cite this chapter and Chapter PDF (served); an animation's step seeking the video; a flashcard turning; the sources; and
       Next going to the next chapter's address. At 390 in dark mode: the theme, the strip's live drawing, no sideways scroll;
    2. the home page, and every page but a chapter's own and the print-only book, carries none of that chapter's prose: no
@@ -37,6 +38,9 @@ const OLD_HOME = 4661341; // dist/index.html at 5428ddb, the last build with eve
 const out = []; let bad = 0, n = 0;
 const check = (name, ok, detail) => { n++; out.push(`${ok ? 'ok  ' : 'FAIL'} ${name}${detail != null && detail !== '' ? ': ' + detail : ''}`); if (!ok) bad++; };
 const chapters = STAGES.fromContent(root); // { id, number, stage }, in reading order
+// each stage's band from its card (the method, content/*.md); readers see "chokepoint" for the Extreme band and nothing for the others
+chapters.forEach((c) => { const f = fs.readdirSync(path.join(root, 'content')).find((x) => new RegExp('^\\d\\d-' + c.id + '\\.md$').test(x)); const m = f && /"concentration":\s*"(\w+)"/.exec(fs.readFileSync(path.join(root, 'content', f), 'utf8')); c.choke = !!(m && m[1] === 'Extreme'); });
+const CHOKES = chapters.filter((c) => c.stage && c.choke).map((c) => String(c.number).padStart(2, '0')); // their numbers, as the rail prints them
 const read = (f) => fs.readFileSync(f, 'utf8');
 const kb = (b) => (b / 1024).toFixed(0) + ' KB';
 
@@ -96,17 +100,18 @@ const kb = (b) => (b / 1024).toFixed(0) + ' KB';
         var figs = a ? a.querySelectorAll('.prose .figure, .chapter-head > .figure').length : -1, meta = a ? [].map.call(a.querySelectorAll('.ch-meta .label'), function (l) { return l.textContent; }).join('|') : '';
         return { path: location.pathname, articles: [].map.call(document.querySelectorAll('article.chapter'), function (x) { return x.id; }).join(),
           search: vis(document.querySelector('.masthead .search-btn')), theme: vis(document.querySelector('.masthead .theme-toggle')),
-          hide: vis(q('.ch-rail .rail-hide')), meters: a ? a.querySelectorAll('.ch-rail .rail-chain.chain-track .meter').length : 0, across: a ? a.querySelectorAll('.ch-rail .rail-across li').length : 0,
+          hide: vis(q('.ch-rail .rail-hide')), meters: document.querySelectorAll('.meter').length, across: a ? a.querySelectorAll('.ch-rail .rail-across li').length : 0,
+          dots: a ? [].map.call(a.querySelectorAll('.ch-rail .rail-chain.chain-track .stage-cell'), function (li) { return li.querySelector('.cpk') ? li.querySelector('.n').textContent : ''; }).filter(Boolean).join() : '',
           figs: figs, figList: a ? a.querySelectorAll('.ch-rail .rail-figs li').length : 0,
           canvas: !!q('.ch-spec-draw canvas#stage-canvas'), specimen: CP.Stage.cur && CP.Stage.cur.name, wants: a && a.getAttribute('data-specimen'),
-          card: vis(q('.prose > .plate')), cardMeter: !!q('.prose > .plate .meter'),
+          card: vis(q('.prose > .plate')), cardLine: (q('.prose > .plate .plate-cpk') || { textContent: '' }).textContent, kick: (q('.ch-kick') || { textContent: '' }).textContent,
           cite: !!q('.ch-cite-line .ch-cite-btn'), pdf: (q('.ch-cite-line .ch-cite-pdf') || { getAttribute: function () { return ''; } }).getAttribute('href'),
           sources: a ? a.querySelectorAll('#' + a.id + '--sources li').length : 0, said: +((/(?:^|\\|)(\\d+) sources(?:\\||$)/.exec(meta) || [])[1] || 0),
           deck: !!q('.fc .fc-show'), anim: !!q('.figure--anim video'), door: (q('.prevnext .next') || { getAttribute: function () { return ''; } }).getAttribute('href') };
       })()`);
       check(`${W}: the page is its chapter alone`, S.path === '/' + id + '/' && S.articles === id, `${S.path} ${S.articles}`);
       check(`${W}: the masthead with search and theme`, S.search && S.theme);
-      check(`${W}: the rail with Hide contents, the chain's ${chapters.filter((x) => x.stage).length} four-bar meters and the chapters across it, and the figures list`, S.hide && S.meters === chapters.filter((x) => x.stage).length && S.across === chapters.filter((x) => !x.stage).length && S.figList === S.figs, JSON.stringify({ hide: S.hide, meters: S.meters, across: S.across, figs: S.figs, listed: S.figList }));
+      check(`${W}: the rail with Hide contents, the chain with a dot on its ${CHOKES.length} chokepoints alone and no four-bar meter, the chapters across it, and the figures list`, S.hide && S.meters === 0 && S.dots === CHOKES.join() && S.across === chapters.filter((x) => !x.stage).length && S.figList === S.figs, JSON.stringify({ hide: S.hide, meters: S.meters, dots: S.dots, across: S.across, figs: S.figs, listed: S.figList }));
       check(`${W}: the live specimen in its slot`, S.canvas && S.specimen === S.wants, `${S.specimen} (wants ${S.wants})`);
       // a drag turns it
       const yaw0 = await t.ev('CP.Stage.userYaw');
@@ -120,7 +125,7 @@ const kb = (b) => (b / 1024).toFixed(0) + ' KB';
       // as the largest yaw the drag reached (Stage.turnMax); qa/redesign/check-plates.js checks the turn, the labels and the return
       const yaw1 = await t.ev('CP.Stage.turnMax');
       check(`${W}: a drag turns the specimen`, Math.abs(yaw1 - yaw0) > 0.1, `${yaw0.toFixed(2)} to ${yaw1.toFixed(2)}`);
-      if (c.stage) check(`${W}: the chokepoint card with its meter`, S.card && S.cardMeter);
+      if (c.stage) check(`${W}: the chokepoint card, ${c.choke ? 'with the chokepoint\'s line and the mark in the kicker' : 'with no chokepoint line and no mark in the kicker'}`, S.card && (c.choke ? S.cardLine === 'ChokepointThree or fewer firms could supply this stage today, or one firm holds more than half of it.' && /Chokepoint/.test(S.kick) : S.cardLine === '' && !/Chokepoint|Extreme|High|concentration/.test(S.kick)), JSON.stringify({ line: S.cardLine, kick: S.kick }));
       // a look-up pop-up
       const tip = await t.ev(`(function () { var b = document.querySelector('#${id} .prose .gl-term:not([data-note])'); if (!b) return null; document.documentElement.style.scrollBehavior = 'auto'; b.scrollIntoView({ block: 'center' }); b.focus(); return b.getAttribute('data-term'); })()`);
       await sleep(400);

@@ -77,9 +77,9 @@
     "chapter": "design-and-eda"
   },
   {
-    "term": "chokepoint",
+    "term": "Chokepoint",
     "aka": "chokepoints",
-    "plain": "A step in the supply chain where so few firms or countries can do the work that losing one of them stops everybody.",
+    "plain": "A step in the supply chain where so few firms or countries can do the work that losing one of them stops everybody. A stage of the chain counts as a chokepoint when three or fewer firms could credibly supply it today, or one firm holds more than half of it, judged at the narrowest step inside the stage.",
     "why": "One sanction or one factory fire at a chokepoint reaches the whole industry, and so does a government policy aimed at one.",
     "chapter": "introduction-and-goals"
   },
@@ -96,13 +96,6 @@
     "plain": "A limit set on the amount of arithmetic used to train an AI model. It counts operations, whichever chips run them. The AI Diffusion rule of January 2025 made one an export control. Its ECCN 4E091 covered \"'Parameters' for an artificial intelligence model trained utilizing 10^26 or more 'operations'\". The rule required a license to send such parameters to every destination worldwide. Article 51(2) of the EU AI Act sets Europe's line ten times lower. It presumes a model has high-impact capabilities when the cumulative computation used for training is \"greater than 10^25\" floating point operations.",
     "why": "Every other control threshold measures a chip, but this one measures the model the chips train. Article 51(3) of the AI Act lets the European Commission change the EU figure by delegated act. Such an act takes effect unless the European Parliament or the Council objects within three months (Article 97(6)). BIS said in May 2025 that it would not enforce the AI Diffusion rule, and it removed 4E091 from the regulations on 19 November 2026 (91 FR 74970).",
     "chapter": "geopolitics"
-  },
-  {
-    "term": "Concentration",
-    "aka": "concentration band",
-    "plain": "A four-band judgment of how many firms could credibly supply a stage today, taken at the narrowest step inside it. Extreme means three or fewer, or one firm holding more than half the stage. High means four to six, with the top two taking most of the revenue. Moderate means seven or more, none of them dominant. Low means many, with the scarce input something another industry sells at volume. Where a figure exists for the top country's share of the segment, it is a second check. When the two disagree, the supplier count wins.",
-    "why": "The fewer the firms that can do a stage, the more one accident or one license decision affects the whole chain.",
-    "chapter": null
   },
   {
     "term": "Country Groups",

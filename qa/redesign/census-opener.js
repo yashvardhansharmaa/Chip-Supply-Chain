@@ -78,7 +78,8 @@ const READ = (sel) => `(function () {
     const drop = (lines, card) => { if (!card.length) return { rest: lines, at: -1 }; for (let i = 0; i + card.length <= lines.length; i++) { if (card.every((c, k) => lines[i + k] === c)) return { rest: lines.slice(0, i).concat(lines.slice(i + card.length)), at: i }; } return { rest: lines, at: -2 }; };
     const da = drop(ba, ca), db = drop(bb, cb);
     // the verdict and On this page's new entry are the change's own words: they are checked by name, then set aside for the order
-    const own = (l) => /^(Extreme|High|Moderate|Low) concentration$|^(Very hard|Hard|Moderately hard|Easy) to substitute$|^·$|^Chokepoint card$/.test(l);
+    // the card's own labels: its ratings (the chokepoint mark since 22 Nov 2026, the band's words before), the dot between, its name
+    const own = (l) => /^(Extreme|High|Moderate|Low) concentration$|^(Very hard|Hard|Moderately hard|Easy) to substitute$|^·$|^Chokepoint card$|^Chokepoint$/.test(l);
     const ra2 = da.rest.filter((l) => !own(l) && !/^(Extreme|High|Moderate|Low)$/.test(l)), rb2 = db.rest.filter((l) => !own(l) && !/^(Extreme|High|Moderate|Low)$/.test(l));
     let firstOff = -1;
     for (let i = 0; i < Math.max(ra2.length, rb2.length); i++) if (ra2[i] !== rb2[i]) { firstOff = i; break; }

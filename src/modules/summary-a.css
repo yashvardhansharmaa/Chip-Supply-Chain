@@ -230,7 +230,7 @@
 /* ---------- the atlas on the Suppliers page: the route of one chip (redesign stage 3) ----------
    The hybrid mockup's route (qa/design3/directions/hybrid/suppliers.html): a section head over an ink rule, the country
    buttons as pills, the map on white with the land in a light tint, the stops, one per stage, as numbered discs (solid ink for a
-   stage rated Extreme, an ink ring for one rated High, as the key says), the chosen country's panel beside the map and the
+   chokepoint, the Frontispiece home's solid balloon, as the key says; an ink ring for any other stage), the chosen country's panel beside the map and the
    strip of stops under it. A chosen country keeps its stops as they are and names their towns; the other stops turn gray.
    No color marks a country: the accent marks only the reader's place (a stop or card under the pointer or in focus). */
 :root { --map-land: #ecebe7; --map-grat: #efeeea; --stop-off: #d6d5d0; }
@@ -259,13 +259,14 @@
 .atlas .sa-route { fill: none; stroke: var(--ink); stroke-width: 1; opacity: 0.32; vector-effect: non-scaling-stroke; }
 .atlas .sa-tail { stroke: var(--ink-2); stroke-width: 0.8; opacity: 0.8; vector-effect: non-scaling-stroke; }
 
-/* the stops: Extreme solid wine (the visual pass of 27 Oct 2026), High an ink ring, both on a white halo so they read over the routes */
+/* the stops: a chokepoint solid ink (22 Nov 2026; solid wine for Extreme from 27 Oct), any other stage an ink ring, both on a
+   white halo so they read over the routes */
 .sa-stop {
   position: absolute; width: 22px; height: 22px; margin: -11px 0 0 -11px; border-radius: 50%; z-index: 3;
-  display: grid; place-items: center; background: var(--bar-5); color: var(--bg); border: 0; box-shadow: 0 0 0 2px var(--bg);
+  display: grid; place-items: center; background: var(--bg); color: var(--ink); border: 0; box-shadow: 0 0 0 2px var(--bg), inset 0 0 0 1.5px var(--ink);
   font-family: var(--font-ui); font-weight: 600; font-size: 11.5px; line-height: 1; text-decoration: none; transition: background 0.15s, color 0.15s;
 }
-.sa-stop[data-band="High"] { background: var(--bg); color: var(--ink); box-shadow: 0 0 0 2px var(--bg), inset 0 0 0 1.5px var(--ink); }
+.sa-stop[data-cpk] { background: var(--ink); color: var(--bg); box-shadow: 0 0 0 2px var(--bg); }
 .sa-stop:hover, .sa-stop:focus-visible { z-index: 6; outline: 2px solid var(--accent); outline-offset: 2px; }
 /* a chosen country: its stops stay as they are and name their towns; the rest become small gray dots on the route, so every
    name sits beside its own stop (the strip under the map still lists them all) */
@@ -298,6 +299,7 @@
 .sa-stop-tip b { display: block; font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 500; font-size: var(--t-small); margin-bottom: 3px; }
 .sa-stop-tip span { display: block; color: var(--ink-2); }
 .sa-stop-tip .sa-stop-tip-s { margin-top: 4px; font-family: var(--font-ui); font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.sa-stop-tip .cpk { display: inline-flex; color: var(--ink); font-size: 12px; font-weight: 600; }
 
 /* beside the map: the chosen country's panel, then the key. The column runs as tall as the map and the strip under it, and a
    longer panel scrolls inside it, with a fade at its foot until the end is in view (src/modules/summary-a.js more()) */
@@ -322,9 +324,9 @@
 .atlas .sa-fact-v small { font-family: var(--font-ui); letter-spacing: 0; font-variant-numeric: tabular-nums; }
 .atlas .sa-fact-note { font-family: var(--font-body); font-size: var(--t-note); color: var(--muted); }
 .atlas .sa-est { display: block; margin: 2px 0 0; font-family: var(--font-ui); font-weight: 400; font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
-/* a stage's band beside its name, as the chapter's kicker marks it: a bar for Extreme, an outline for High */
+/* a chokepoint's mark beside its name, as the chapter's kicker marks it (src/styles.css .cpk); any other stage has none */
 .atlas .sa-sc { display: inline-flex; align-items: center; gap: 5px; margin-left: 8px; padding: 0; background: none; color: var(--ink); font-family: var(--font-ui); font-size: 12px; font-weight: 500; vertical-align: 1px; }
-.atlas .sa-sc .meter { --mh: 10px; --mw: 3px; --mg: 1.5px; } /* the band's meter, as the strip below draws it (28 Oct 2026; a single mark before) */
+.atlas .sa-sc > i { width: 6px; height: 6px; }
 :root[data-theme="dark"] .atlas .sa-sc { color: var(--ink); }
 .atlas .sa-china { margin: 14px 0 0; padding: 10px 0 2px; border-left: 0; border-top: 1px solid var(--line); }
 .atlas .sa-china a { color: var(--ink); text-decoration-color: var(--rule-ink); }
@@ -333,18 +335,16 @@
 .atlas .sa-panel-foot a { color: var(--ink-2); }
 .atlas-key { display: grid; gap: 8px; margin: 0 0 14px; padding-bottom: 14px; border-bottom: 1px solid var(--line); font-family: var(--font-ui); font-size: 13.5px; line-height: 20px; color: var(--ink-2); }
 .atlas-key span { display: inline-flex; align-items: center; gap: 9px; }
-.sa-kstop { display: inline-grid; place-items: center; width: 20px; height: 20px; flex: none; border-radius: 50%; background: var(--bar-5); color: var(--bg); font-family: var(--font-ui); font-style: normal; font-weight: 600; font-size: 11px; line-height: 1; }
-.sa-kstop[data-band="High"] { background: var(--bg); color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--ink); }
-/* dark fills an Extreme stop with the wine for dark marks (--bar-5, the night edition), so its number takes the cream ink, 4.8:1
-   (the dark ground on the wine was 3.1:1) */
-:root[data-theme="dark"] .sa-stop:not([data-band="High"]), :root[data-theme="dark"] .sa-kstop:not([data-band="High"]) { color: var(--ink); }
+/* the key's one entry: a chokepoint's solid stop, as the map draws it (the ring of any other stage goes unnamed) */
+.sa-kstop { display: inline-grid; place-items: center; width: 20px; height: 20px; flex: none; border-radius: 50%; background: var(--ink); color: var(--bg); font-family: var(--font-ui); font-style: normal; font-weight: 600; font-size: 11px; line-height: 1; }
 
-/* the strip: the stops in order, each with its band as a mark beside its number */
+/* the strip: the stops in order, a chokepoint with the mark's dot beside its number */
 .atlas .sa-strip-stops { grid-column: 1 / 10; grid-row: 2; list-style: none; margin: 18px 0 0; padding: 0; display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); column-gap: 14px; row-gap: 4px; border-top: 1px solid var(--ink); }
 .atlas .sa-strip-stops li { min-width: 0; }
 .sa-stopcard { display: flex; flex-direction: column; gap: 3px; padding: 10px 6px 8px 0; text-decoration: none; color: var(--ink); min-width: 0; border: 0; }
 .sa-stopcard-n { display: flex; align-items: flex-end; gap: 6px; font-family: var(--font-ui); font-size: 11.5px; line-height: 16px; color: var(--muted); font-variant-numeric: tabular-nums; }
-.sa-stopcard-n .sa-bmk { --mh: 11px; --mw: 3px; --mg: 1.5px; margin-bottom: 3px; } /* the band's meter (src/modules/chapter.css .meter), at the rail's size */
+.sa-stopcard-n .sa-bmk { align-self: center; } /* a chokepoint's dot (src/styles.css .cpk), as the chapter rail draws it */
+.sa-stopcard-n .sa-bmk > i { width: 6px; height: 6px; }
 .sa-stopcard-t { display: block; font-family: var(--font-ui); font-weight: 500; font-size: 13.5px; line-height: 1.25; margin: 0; overflow-wrap: break-word; hyphens: auto; }
 .sa-stopcard-w { display: block; font-family: var(--font-ui); font-size: 11px; line-height: 15px; color: var(--muted); font-variant-numeric: tabular-nums; }
 .sa-stopcard:hover .sa-stopcard-t, .sa-stopcard.is-hot .sa-stopcard-t, .sa-stopcard:focus-visible .sa-stopcard-t { color: var(--accent-ink); }
@@ -374,7 +374,7 @@
   .atlas .sa-role { padding: 7px 11px; font-size: 13.5px; white-space: nowrap; }
   .atlas .sa-map { margin-left: calc(-1 * var(--margin)); margin-right: calc(-1 * var(--margin)); }
   .sa-stop { width: 9px; height: 9px; margin: -4.5px 0 0 -4.5px; pointer-events: none; box-shadow: 0 0 0 1px var(--bg); }
-  .sa-stop[data-band="High"] { box-shadow: 0 0 0 1px var(--bg), inset 0 0 0 1.25px var(--ink); }
+  .sa-stop:not([data-cpk]) { box-shadow: 0 0 0 1px var(--bg), inset 0 0 0 1.25px var(--ink); }
   .sa-stop span { display: none; }
   .sa-stop::after, .atlas .sa-stop.is-on::after { display: none; }
   .atlas .sa-map[data-cc] .sa-stop:not(.is-on) { box-shadow: 0 0 0 1px var(--bg); }

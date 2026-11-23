@@ -5185,11 +5185,11 @@ try {
     var cardCount = chapters.filter(function (ch) { return ch.concentration; }).length; // only the stage chapters carry a chokepoint card
     var named = chapters.filter(function (ch) { return (ch.countries || []).some(function (x) { return x.code === cc; }); }).sort(function (a, b) { return (b.bandRank || 0) - (a.bandRank || 0) || a.number - b.number; });
     var led = stages.filter(function (ch) { var f = (ch.countries || [])[0]; return f && f.code === cc; });
-    var extreme = led.filter(function (ch) { return ch.band === 'Extreme'; }).length;
+    var cp = led.filter(function (ch) { return ch.chokepoint; }).length; // the stages it leads that are chokepoints (build/build.js isChoke)
     var firms = (DATA.suppliers || []).filter(function (r) { return r.country === cc; });
     var critical = firms.filter(function (r) { return r.chokepoint === 'Critical'; }).length, meta = [];
-    if (led.length === 1) meta.push('leads 1 stage' + (extreme ? ', of extreme concentration' : ''));
-    else if (led.length) meta.push('leads ' + led.length + ' stages' + (extreme ? ', ' + (extreme === led.length ? 'all' : extreme) + ' of them extreme' : ''));
+    if (led.length === 1) meta.push('leads 1 stage' + (cp ? ', a chokepoint' : ''));
+    else if (led.length) meta.push('leads ' + led.length + ' stages' + (!cp ? '' : cp === led.length ? ', all of them chokepoints' : cp === 1 ? ', 1 of them a chokepoint' : ', ' + cp + ' of them chokepoints'));
     meta.push('named on ' + named.length + ' of ' + cardCount + ' chokepoint cards');
     if (firms.length) meta.push(firms.length + (firms.length === 1 ? ' firm' : ' firms') + ' in the supplier list' + (critical ? ', ' + critical + ' Critical' : ''));
     return { named: named, firms: firms, meta: meta.join(' · ') };
@@ -5218,7 +5218,7 @@ try {
     if (named.length) {
       h += '<section class="gl-part" aria-labelledby="gl-cd"><h3 class="gl-h" id="gl-cd">On the chokepoint cards</h3><ul class="gl-cards">' + named.map(function (ch) {
         var note = ((ch.countries || []).filter(function (x) { return x.code === cc; })[0] || {}).note || '';
-        return '<li><a href="' + esc(chHref(ch.id)) + '"><span class="gl-card-t">' + esc(ch.title) + '</span>' + (ch.band ? '<span class="gl-card-b gl-card-b--' + esc(String(ch.band).toLowerCase()) + '">' + esc(ch.band) + '</span>' : '') + (note ? '<span class="gl-card-n">' + esc(note) + '</span>' : '') + '</a></li>';
+        return '<li><a href="' + esc(chHref(ch.id)) + '"><span class="gl-card-t">' + esc(ch.title) + '</span>' + (ch.chokepoint ? '<span class="cpk gl-card-b"><i aria-hidden="true"></i>Chokepoint</span>' : '') + (note ? '<span class="gl-card-n">' + esc(note) + '</span>' : '') + '</a></li>';
       }).join('') + '</ul></section>';
     }
     if (firms.length) {
@@ -5944,7 +5944,7 @@ try {
   /* ---------- the chapter opener, the questions and the contents page, for paper ---------- */
 
   /* The chain in the margin column beside the chapter (print.css .cp-index), as the screen's rail shows it: each of the
-     stages with its number, its whole name and its band's meter (four bars, as the screen's rail draws them), then the
+     stages with its number, its whole name and, for a chokepoint, the mark's dot (as the screen's rail draws it), then the
      two chapters that look across them; the chapter's own line in bold. Built from the rail before its screen parts go,
      and the rail moves to the head of the chapter, where it floats beside the opener. */
   function stageIndex() {
@@ -5957,10 +5957,10 @@ try {
         each(':scope > li', src, function (li) {
           var n = li.querySelector('.n'), t = li.querySelector('.t');
           var item = node('li', li.getAttribute('aria-current') === 'true' ? 'is-here' : '');
-          item.setAttribute('data-band', li.getAttribute('data-band') || '0');
+          if (li.getAttribute('data-cpk')) item.setAttribute('data-cpk', '1');
           item.appendChild(node('span', 'n', n ? n.textContent : ''));
           item.appendChild(node('span', 't', t ? t.textContent.replace(/\u00ad/g, '') : ''));
-          var m = li.querySelector('.meter');
+          var m = li.querySelector('.cpk');
           if (m) item.appendChild(m.cloneNode(true));
           ol.appendChild(item);
         });
@@ -6692,7 +6692,7 @@ try {
     root.addEventListener('scroll', function (e) { if (e.target.classList && e.target.classList.contains('sa-panel')) more(e.target); }, true);
     window.addEventListener('resize', function () { more($('.sa-panel:not([hidden])', root)); });
 
-    // the route's stops: a card on hover or focus with the stage, its town, who leads it and its concentration band
+    // the route's stops: a card on hover or focus with the stage, its town, who leads it and, for a chokepoint, the word
     // it stays while the pointer crosses onto it, and Escape closes it (WCAG 1.4.13; accessibility #10)
     var tip = null, tipT = null;
     var showStop = function (a) {
@@ -6703,7 +6703,7 @@ try {
         tip.addEventListener('mouseleave', function () { hideStop(); });
       }
       var d = a.dataset;
-      tip.innerHTML = '<b>' + a.querySelector('span').textContent + ' · ' + d.title + '</b><span>' + d.town + (d.lead ? ' · ' + d.lead : '') + '</span>' + (d.band ? '<span class="sa-stop-tip-s">' + d.band + ' concentration</span>' : '');
+      tip.innerHTML = '<b>' + a.querySelector('span').textContent + ' · ' + d.title + '</b><span>' + d.town + (d.lead ? ' · ' + d.lead : '') + '</span>' + (d.cpk ? '<span class="sa-stop-tip-s"><span class="cpk"><i aria-hidden="true"></i>Chokepoint</span></span>' : '');
       tip.hidden = false;
       var r = a.getBoundingClientRect(), w = tip.offsetWidth, h = tip.offsetHeight;
       var left = Math.max(8, Math.min(r.left + r.width / 2 - w / 2, window.innerWidth - w - 8)), top = r.top - h - 10;
@@ -7417,8 +7417,8 @@ try {
     if (el && CP.Router.settle) CP.Router.settle(el);
   }
 
-  /* The hero (27 Oct 2026: the home's structure before the redesign). Each row of the chain at a glance ends in a button, its
-     band's meter and word, that picks the stage's specimen: the button copies its stage's specimen, number, title and caption
+  /* The hero (27 Oct 2026: the home's structure before the redesign). Each row of the chain at a glance ends in a button, a
+     chokepoint's mark or, on any other stage's row, the same area unmarked, that picks the stage's specimen: the button copies its stage's specimen, number, title and caption
      onto the hero (#wk-hero, a [data-specimen] item that Sections in src/app.js tracks like a step), and a scroll event asks
      Sections to draw it; Sections.hold keeps the hero on the stage while any of it is on screen, so the row in wine is always
      the specimen shown. Hovering a button picks it once the pointer rests on it a moment, so a pointer crossing the list on

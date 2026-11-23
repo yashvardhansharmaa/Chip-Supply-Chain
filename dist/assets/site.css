@@ -2,10 +2,9 @@
    Ground: white. Ink: a warm near-black, with two secondary inks. Paper (#f4f4f2) is a tint only, for the chokepoint card,
    figure frames, source strips and flashcards.
    Accent: red wine, #7a1f2b on white and #d98a95 on dark. It marks links, the reader's place (the current menu item, the
-   current item in a contents list), the logo tile, and two signals in the data (the visual pass of 27 Oct 2026, as the
-   live site has them): Extreme, wherever a stage's band is shown (its mark, and its word on the home list), and the
-   largest value on every chart, its bar and its value ("garnet on the largest only", the owner's chart rule of 21 Oct).
-   Suppliers' Critical rating is wine too. High stays ink or gray, and the other bars the light tint.
+   current item in a contents list), the logo tile, and the largest value on every chart, its bar and its value ("garnet on
+   the largest only", the owner's chart rule of 21 Oct). Suppliers' Critical rating is wine too. A stage's one rating mark,
+   the chokepoint's (.cpk, 22 Nov 2026), is ink; until then Extreme was wine wherever a stage's band showed.
    Type (the hybrid, chosen 28 Oct 2026, MAIN/qa/design9/BUILD-SYSTEM.md): Fraunces for the display, at optical size 48 with
    SOFT and WONK at 0 (the name at 28), and Source Serif 4 for the text, its optical size following the size. Fraunces draws
    the name, page and chapter titles, section heads, card ratings and large numbers (400 for titles and section heads, 500
@@ -169,6 +168,14 @@ small { font-size: 0.85em; }
 
 /* ---------- labels: a kicker in Hanken Grotesk, small spaced capitals in the muted ink (the live site's, 27 Oct 2026) ---------- */
 .label { font-family: var(--font-kicker); font-size: var(--fs-label); line-height: 1.4; font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); color: var(--muted); }
+/* the chokepoint mark (22 Nov 2026), one component wherever a stage is listed (build/build.js chokeMark): a small solid dot, the
+   Frontispiece home's solid balloon, then the word in the interface type, in ink. Readers see this one rating word: a stage
+   in the method's Extreme band is a chokepoint, and a stage in any other band carries no mark. Where a row has room for a
+   symbol only (the chapter rail, the Supply Chain rows, the route's strip) the dot stands alone, and a key or the link's
+   label names it. Each place may set its size; the dot follows the word's color */
+.cpk { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-ui); font-size: var(--fs-cap); font-weight: 500; font-style: normal; line-height: 16px; letter-spacing: 0; text-transform: none; color: var(--ink); white-space: nowrap; }
+.cpk > i { display: block; flex: none; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+button.cpk { margin: 0; padding: 0; border: 0; background: none; text-align: left; }
 .num, .tabular { font-variant-numeric: tabular-nums; }
 
 /* ---------- display type: Source Serif 4, its optical size following the size, never bold ---------- */
@@ -431,6 +438,10 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before, .gl-
 .nw > .gl-term { white-space: normal; }
 .gl-term { font: inherit; color: inherit; background: none; border: 0; padding: 0; margin: 0; text-align: inherit; cursor: help; text-decoration: underline; text-decoration-style: dotted; text-decoration-color: color-mix(in srgb, var(--muted) 75%, var(--bg)); text-decoration-thickness: 1.5px; text-underline-offset: 0.24em; transition: text-decoration-color 0.15s; }
 .gl-term:hover, .gl-term[aria-describedby] { text-decoration-style: solid; text-decoration-color: var(--accent); }
+/* the chokepoint mark as a glossary button (the card, the walk's steps): the mark's own type, not the text's, and no underline;
+   it takes the wine while its definition is open */
+.gl-term.cpk { font-family: var(--font-ui); font-size: var(--fs-cap); font-weight: 500; font-style: normal; line-height: 16px; letter-spacing: 0; color: var(--ink); text-decoration: none; }
+.gl-term.cpk:hover, .gl-term.cpk[aria-describedby] { color: var(--accent-ink); }
 .site-footer .sources-key { margin: 8px 0 0; font-family: var(--font-ui); font-size: 12.5px; letter-spacing: 0; line-height: 1.6; color: var(--muted); }
 .site-footer .updated { display: block; margin-top: 6px; font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); color: var(--muted); }
 .gl-tip { position: fixed; z-index: 50; width: max-content; max-width: min(340px, calc(100vw - 16px)); background: var(--bg); border: 1px solid var(--line-2); border-top: 2px solid var(--ink); border-radius: 0; box-shadow: var(--shadow); padding: 12px 16px 13px; }
@@ -918,28 +929,26 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before, .gl-
 .plate-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 0; background: none; border-bottom: 1px solid var(--line-2); }
 .plate-head .label { color: var(--ink); font-weight: 600; }
 .plate-kpis .v.sub-4 { color: var(--ink); }
-/* each band is said once, in its cell: the value is the glossary button the head's tag used to be (its definition in a popover) */
+/* each rating is said once, in its cell: the value is the glossary button the head's tag used to be (its definition in a popover) */
 .plate-kpis .v .v-btn { font: inherit; color: inherit; letter-spacing: inherit; text-decoration: underline dotted; text-decoration-color: color-mix(in srgb, currentColor 45%, transparent); text-decoration-thickness: 1.5px; text-underline-offset: 6px; cursor: help; }
 .plate-kpis .v .v-btn:hover, .plate-kpis .v .v-btn[aria-describedby] { text-decoration-color: currentColor; }
 .pips { display: inline-flex; gap: 4px; }
 .pips i { width: 9px; height: 9px; border-radius: 0; border: 1.5px solid var(--ink-2); display: block; }
 .pips i.on { background: var(--ink); border-color: var(--ink); }
-.plate-kpis { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 1px solid var(--line); }
+/* a chokepoint's line under the head: the mark, then what the word means; a stage that is not a chokepoint has no line */
+.plate-cpk { margin: 0; padding: 13px 0 14px; border-bottom: 1px solid var(--line); }
+.plate-cpk .cpk { display: flex; width: fit-content; margin: 0 0 5px; font-size: var(--ui-s); font-weight: 600; }
+.plate-cpk .sub { display: block; font-family: var(--font-body); font-size: var(--fs-note); line-height: 1.45; color: var(--ink-2); }
+/* two ratings since 22 Nov 2026, substitutability and the price, side by side */
+.plate-kpis { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-bottom: 1px solid var(--line); }
 .plate-kpis > div { padding: 15px 18px 16px 0; border-right: 1px solid var(--line); min-width: 0; }
 .plate-kpis > div + div { padding-left: 18px; }
 .plate-kpis > div:last-child { border-right: 0; }
-/* between 901 and 1100 px the column is about 480 px: the two bands share a row and the price takes the width under them */
-@media (min-width: 901px) and (max-width: 1100px) {
-  .plate-kpis { grid-template-columns: 1fr 1fr; }
-  .plate-kpis > div:nth-child(2) { border-right: 0; }
-  .plate-kpis > div:last-child { grid-column: 1 / -1; padding-left: 0; border-top: 1px solid var(--line); }
-}
 .plate-kpis .k { display: block; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap-s); letter-spacing: 0; color: var(--muted); margin-bottom: 8px; }
 .plate-kpis .v { display: block; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: var(--t-block); line-height: 1.05; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
 .plate-kpis .v.cost { font-size: var(--t-block); }
 .plate-kpis .v.cost.long { font-family: var(--font-body); font-weight: 500; font-size: var(--fs-small); line-height: 1.35; letter-spacing: 0; font-variation-settings: normal; }
 .plate-kpis .v small { font-size: 14px; font-weight: 500; color: var(--muted); margin-left: 4px; }
-.plate-kpis .v.Extreme { color: var(--ink); }
 .plate-kpis .sub { display: block; font-family: var(--font-body); font-size: var(--fs-note); line-height: 1.45; letter-spacing: 0; color: var(--muted); margin-top: 8px; }
 .plate-rows { margin: 0; border-bottom: 1px solid var(--line); }
 .plate-rows .row { display: grid; grid-template-columns: 150px 1fr; gap: 20px; padding: 13px 0; border-bottom: 1px solid var(--line); }
@@ -967,7 +976,7 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before, .gl-
    figure's cap height; two marks in one place (a field with more urls than sentences) take a comma between them */
 .plate-kpis .v:not(.long) sup.cite { font-size: max(11px, 0.4em); vertical-align: 1.1em; margin-left: 0; }
 .plate sup.cite-sep { font-family: var(--font-mono); font-size: max(11px, 0.62em); line-height: 0; vertical-align: 0.55em; color: var(--accent); }
-.brief-meta .conc.Extreme, .plate-kpis .v.Extreme { color: var(--ink); }
+.brief-meta .conc.Extreme { color: var(--ink); }
 
 .dbg-only .hero, .dbg-only .contents, .dbg-only #chain, .dbg-only .chapter:not(.only) { display: none; }
 
@@ -1244,20 +1253,9 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before, .gl-
    strip at the foot of the screen) everything is one column.
    ========================================================================== */
 
-/* ---------- the band's meter (28 Oct 2026, MAIN/qa/design9/BUILD-SYSTEM.md), one component for the chapter sidebar, the card
-   and the line above the title: the home page's four rising bars (src/modules/walk.css), at 36, 57, 79 and 100 percent of its
-   height. Extreme lights all four in wine, High three in the mid gray, Moderate and Low theirs in the light tint; unlit bars
-   take the hairline. Each place sets the height (--mh), the bar's width (--mw) and the gap (--mg). The meter is aria-hidden:
-   the link's label and the visible word carry the band. Bars are <b>, since some rules style i inside these parents ---------- */
-.meter { display: inline-flex; flex: none; align-items: flex-end; gap: var(--mg, 2px); height: var(--mh, 14px); margin: 0; padding: 0; vertical-align: baseline; }
-.meter > b { display: block; flex: none; width: var(--mw, 5px); margin: 0; padding: 0; border: 0; background: var(--line); }
-.meter > b:nth-child(1) { height: 36%; }
-.meter > b:nth-child(2) { height: 57%; }
-.meter > b:nth-child(3) { height: 79%; }
-.meter > b:nth-child(4) { height: 100%; }
-.meter > b.on { background: var(--bar-3); }
-.meter[data-level="4"] > b.on { background: var(--bar-5); }
-.meter[data-level="3"] > b.on { background: var(--bar-4); }
+/* ---------- the chokepoint mark (22 Nov 2026), in the chapter sidebar, the card and the line above the title: the site's one
+   rating mark, a solid dot and the word (src/styles.css .cpk). It replaced the four-bar meter of 28 Oct 2026, which showed the
+   concentration band; readers now see the Extreme band as "chokepoint" and the others not at all ---------- */
 
 /* ---------- the page ---------- */
 .view[data-view="stack"] { width: 100%; padding: 0 var(--margin); }
@@ -1281,9 +1279,10 @@ article.chapter > .chapter-head > * { min-width: 0; }
   font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); line-height: 16px; color: var(--muted);
 }
 .chapter .ch-band { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-ui); font-size: var(--ui-s); font-weight: 500; letter-spacing: 0; text-transform: none; color: var(--ink); } /* the verdict is the card's words, so it keeps their case beside the kicker's capitals */
-.chapter .ch-band .meter { --mh: 11px; --mw: 4px; --mg: 1.5px; margin: 0 -1px 0 0; } /* the band's meter, beside its word */
-/* the card's verdict, its two ratings in the card's own words, so both stand on the first screen while the card itself waits
-   before section 01. The two never part mid-phrase; on the narrowest phones the second takes a line of its own, without the dot */
+.chapter .ch-band .cpk { font-size: inherit; font-weight: 600; } /* the chokepoint mark, at the verdict's size */
+/* the card's verdict in the card's own words, so it stands on the first screen while the card itself waits before section 01:
+   a chokepoint's mark and the substitutability, or the substitutability alone. The two never part mid-phrase; on the narrowest
+   phones the second takes a line of its own, without the dot */
 .chapter .ch-verdict { flex-wrap: wrap; row-gap: 2px; }
 .chapter .ch-verdict > span { white-space: nowrap; }
 .chapter .ch-verdict .sep { margin: 0 2px; color: var(--muted); font-weight: 400; }
@@ -1395,15 +1394,19 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 .chapter .ch-spec[data-night] .ch-spec-cap { margin-top: 14px; } /* the night ground ends the drawing: no slack to rise into */
 
 /* ---------- 3. the chokepoint card, the chapter's first table: in the text after the lead, before section 01 (build/build.js
-   withCard), at the measure on the paper tint; its three ratings in a row, then each field as a row, the label in a column of
-   its own (wide enough for "Why substitution is slow" on one line) and the answer beside it ---------- */
+   withCard), at the measure on the paper tint; a chokepoint's line under the head (the mark and what the word means), its two
+   ratings in a row, then each field as a row, the label in a column of its own (wide enough for "Why substitution is slow" on
+   one line) and the answer beside it ---------- */
 .chapter .plate { max-width: 40em; margin: 44px 0 0; padding: 20px 26px 22px; background: var(--bg-2); border: 0; overflow: visible; }
 /* On this page lands the card clear of the masthead (and of the phone's slim bar) */
 .chapter .plate[id] { scroll-margin-top: calc(var(--masthead) + var(--band, 0px) + 16px); }
 .chapter .plate-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 20px; padding: 0 0 16px; border-bottom: 1px solid var(--ink); }
 .chapter .plate-head .label { font-family: var(--font-ui); font-size: var(--ui); font-weight: 500; line-height: 20px; color: var(--ink); letter-spacing: 0; text-transform: none; }
 .chapter .plate-where { font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); line-height: 16px; color: var(--muted); }
-.chapter .plate-kpis { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 44px; padding: 26px 0 30px; border-bottom: 1px solid var(--rule-ink); }
+.chapter .plate-cpk { display: block; margin: 0; padding: 16px 0 16px; border-bottom: 1px solid var(--line-2); }
+.chapter .plate-cpk .cpk { display: flex; width: fit-content; margin: 0 0 6px; font-size: 14px; font-weight: 600; line-height: 20px; }
+.chapter .plate-cpk .sub { display: block; margin: 0; font-family: var(--font-body); font-size: var(--t-small); line-height: 1.5; color: var(--ink-2); }
+.chapter .plate-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 44px; padding: 26px 0 30px; border-bottom: 1px solid var(--rule-ink); }
 .chapter .plate-kpis > div, .chapter .plate-kpis > div + div { padding: 0; border: 0; min-width: 0; }
 .chapter .plate-kpis .k { font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); line-height: 16px; color: var(--muted); margin: 0; }
 .chapter .plate-kpis .v {
@@ -1411,7 +1414,6 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
   font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title);
   font-size: var(--t-block); line-height: 1.15; letter-spacing: -0.01em; white-space: nowrap; overflow-wrap: normal; color: var(--ink); /* the ratings at the size of the price beside them (owner, 27 Oct) */
 }
-.chapter .plate-kpis .v .meter { --mh: 20px; --mw: 6px; --mg: 2px; margin: 0 1px 0.22em 0; } /* the band's meter, standing on the word's baseline */
 .chapter .plate-kpis .v .v-btn { text-underline-offset: 0.12em; text-decoration-thickness: 1.5px; }
 .chapter .plate-kpis .v.cost { display: block; margin: 12px 0 8px; font-weight: 400; font-size: var(--t-block); line-height: 1.15; letter-spacing: -0.01em; white-space: normal; }
 .chapter .plate-kpis .v.cost.long { font-family: var(--font-body); font-weight: 500; font-size: var(--t-small); line-height: 1.4; letter-spacing: 0; font-variation-settings: normal; }
@@ -1439,7 +1441,8 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 @media screen {
   .chapter > .prose > .plate { max-width: 40em; } /* as wide as the flashcards and sources (owner, 27 Oct): about 8 percent wider than the 666 px text, kept on 30 Oct after design10 P2.2 narrowed them without asking */
   .chapter .plate-head { padding: 0 0 12px; }
-  .chapter .plate-kpis { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 22px; padding: 16px 0 18px; }
+  .chapter .plate-cpk { padding: 12px 0 12px; }
+  .chapter .plate-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 22px; padding: 16px 0 18px; }
   .chapter .plate-kpis > div:last-child { grid-column: auto; padding-left: 0; border-top: 0; } /* the price stays in the row at every width */
   .chapter .plate-kpis .v { margin: 10px 0 6px; gap: 8px; font-size: var(--t-block); }
   .chapter .plate-kpis .v.cost { margin: 10px 0 6px; font-size: var(--t-block); }
@@ -1477,16 +1480,17 @@ html.no-stage .chapter .ch-spec-cap { margin-top: 0; }
 .chapter .rail-figs a { display: grid; grid-template-columns: 44px minmax(0, 1fr); padding: 2px 0; font-size: var(--ui-s); line-height: 16px; color: var(--ink-2); text-decoration: none; }
 .chapter .rail-figs a:hover { color: var(--ink); }
 .chapter .rail-figs .n { font-family: var(--font-code); font-size: 11.5px; color: var(--muted); }
-/* the rail's Extreme and High key was removed at the owner's request (28 Oct 2026): each stage's mark and its link's label carry the band */
-/* the chain: number, name, the band's meter at the line's end, right-aligned; the current stage's number in wine and its
-   name bold, its meter keeping its band's look */
+/* the rail's key was removed at the owner's request (28 Oct 2026): a chokepoint's dot carries a title, and its link's label says it */
+/* the chain: number, name, and a chokepoint's dot at the line's end, right-aligned (the mark's symbol, src/styles.css .cpk); the
+   current stage's number in wine and its name bold, its dot in ink */
 .chapter .ch-rail .chain-track { display: block; gap: 0; }
 .chapter .ch-rail .stage-cell { position: static; }
 .chapter .ch-rail .stage-cell::after { content: none; }
 .chapter .ch-rail .stage-cell a { display: grid; grid-template-columns: 24px minmax(0, 1fr) 17px; column-gap: 6px; align-items: center; height: auto; padding: 1.5px 0; border: 0; font-size: 13px; line-height: 16px; color: var(--ink-2); text-decoration: none; }
 .chapter .ch-rail .stage-cell .n { width: auto; font-family: var(--font-ui); font-size: 11.5px; line-height: 16px; color: var(--muted); font-variant-numeric: tabular-nums; }
 .chapter .ch-rail .stage-cell .t { display: block; visibility: visible; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: var(--font-ui); font-size: 13px; font-weight: 400; color: inherit; }
-.chapter .ch-rail .stage-cell .meter { --mh: 10px; --mw: 3px; --mg: 1.5px; justify-self: end; }
+.chapter .ch-rail .stage-cell .cpk { justify-self: end; margin-right: 2px; }
+.chapter .ch-rail .stage-cell .cpk > i { width: 6px; height: 6px; }
 .chapter .ch-rail .stage-cell a:hover { color: var(--ink); }
 .chapter .ch-rail .stage-cell[aria-current="true"] a { color: var(--ink); font-weight: 600; }
 .chapter .ch-rail .stage-cell[aria-current="true"] .t { font-weight: 600; }
@@ -1824,7 +1828,7 @@ article.chapter[data-open] .ch-rail { grid-row: 1 / span 6; }
   article.chapter[data-open] > .prose { grid-row: 7; }
   article.chapter[data-open] .ch-rail { grid-row: 2; }
   /* a readable page has no other way to the other stages (The Chain in the app has its contents and its sheet), so under 1200 px
-     its rail keeps The chain, compact: one numbered cell a chapter with its band's mark, the chapter's name in the link's label */
+     its rail keeps The chain, compact: one numbered cell a chapter with a chokepoint's dot, the chapter's name in the link's label */
   .page--chapter .chapter .ch-rail .rail-chain-w { display: block; margin-top: 18px; }
   .page--chapter .chapter .ch-rail .rail-chain, .page--chapter .chapter .ch-rail .rail-across { display: flex; flex-wrap: wrap; gap: 4px; }
   .page--chapter .chapter .ch-rail .rail-across { margin: 4px 0 0; padding: 0; border: 0; }
@@ -1832,7 +1836,7 @@ article.chapter[data-open] .ch-rail { grid-row: 1 / span 6; }
   .page--chapter .chapter .ch-rail .rail-across .stage-cell a { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-width: 44px; height: 36px; padding: 0 8px; border: 1px solid var(--line-2); border-radius: 3px; }
   .page--chapter .chapter .ch-rail .stage-cell .t { display: none; }
   .page--chapter .chapter .ch-rail .stage-cell .n { font-size: 12px; color: var(--ink-2); }
-  .page--chapter .chapter .ch-rail .stage-cell .meter { justify-self: auto; }
+  .page--chapter .chapter .ch-rail .stage-cell .cpk { justify-self: auto; margin: 0; }
   .page--chapter .chapter .ch-rail .stage-cell a:hover { border-color: var(--ink); }
   .page--chapter .chapter .ch-rail .stage-cell[aria-current="true"] a { border-color: var(--accent); }
   .page--chapter .chapter .ch-rail .rail-across::before { content: ""; display: block; flex: 0 0 100%; height: 0; }
@@ -1891,6 +1895,7 @@ article.chapter[data-open] .ch-rail { grid-row: 1 / span 6; }
    page is narrower than 900 px too, and paper sets the card its own way (src/modules/print.css) */
 @media screen and (max-width: 900px) {
   .chapter .plate { margin: 36px 0 0; padding: 18px 16px 10px; }
+  .chapter .plate-cpk { padding: 14px 0 14px; }
   .chapter .plate-kpis { grid-template-columns: 1fr; row-gap: 0; padding: 0; }
   .chapter .plate .plate-kpis > div { padding: 14px 0; border-top: 1px solid var(--line-2); }
   .chapter .plate .plate-kpis > div:first-child { border-top: 0; }
@@ -2361,14 +2366,13 @@ article.ch-page { padding-top: 56px; border-top: 0; }
    short column of small links on the right (the owner's option 2 of 28 Oct 2026). Space under it, no rule.
    ---------- The rows: one per chapter, with no route. The drawing in a fixed box on the page's ground (no tint: the owner
    rejects gray blocks under drawings), centered, every drawing at the same area of it (build/line-stills.py); the number
-   with its band's single mark (a solid wine bar for Extreme, a hollow ink mark for High); the title, which links to the
+   with a chokepoint's dot (the site's one rating mark, src/styles.css .cpk; any other stage has none); the title, which links to the
    chapter and covers the row; and the chapter's one line in the quieter ink. The stages in two columns from 1300 px, the
    first half on the left; from 1000 to 1299 px one column, each title with its one line beside it; from 760 to 999 px one
    column as at 1440; under 760 px the drawing, number and title on one line with the one line under them, and the sentence
    at the foot under a hairline. The two chapters across the chain follow as the same rows, with no mark, under a small label.
    Screen only: on paper the head and the rows are the book's title and contents (src/modules/print.css), with no drawing. */
-.ct-bmk { display: inline-block; flex: none; width: 6px; height: 13px; background: var(--accent-fill); } /* Extreme, a wine bar (on dark #a8414b, 3.1:1 on the ground) */
-.ct-bmk.h { height: 7px; background: transparent; box-shadow: inset 0 0 0 1.25px var(--ink); } /* High, an ink outline */
+.ct-cpk { color: var(--ink); } /* a chokepoint's dot beside its number, in ink while the number turns wine under the pointer */
 .contents ol.contents-grid { list-style: none; margin: 0; padding: 0; } /* the rows are lists on screen and on paper */
 @media screen {
   /* the head */
@@ -2387,10 +2391,9 @@ article.ch-page { padding-top: 56px; border-top: 0; }
   .howto .howto-dl a:hover { color: var(--accent-ink); text-decoration-color: var(--accent); }
   .howto .howto-r { grid-column: 9 / 13; align-self: start; min-width: 0; padding-top: 18px; }
   .howto .howto-std { max-width: 30em; margin: 22px 0 0; font-family: var(--font-body); font-size: var(--t-lead); line-height: 1.45; color: var(--ink-2); } /* a standfirst's step */
-  /* the key to the rows' marks, each mark before its band's word */
+  /* the key to the rows' one mark: the dot before its word */
   .howto .howto-key { display: flex; flex-wrap: wrap; gap: 4px 26px; margin: 14px 0 0; font-family: var(--font-ui); font-size: 13px; line-height: 20px; color: var(--muted); }
-  .howto-key .ct-bmk { margin: 0 7px 0 0; vertical-align: -1px; }
-  .howto-key .ct-bmk.h { vertical-align: 0; }
+  .howto-key .cpk { font-size: 13px; }
   .view[data-view="stack"] > .contents { margin: 0; padding: 0 0 24px; border: 0; }
   .contents > .contents-h { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; } /* for screen readers; the book prints it */
 
@@ -3519,10 +3522,8 @@ a.cf-latest-row:hover .cf-latest-go { color: var(--accent-ink); text-decoration-
 .gl-cards li { border-bottom: 1px solid var(--line); }
 .gl-cards a { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 16px; padding: 11px 0 12px; color: inherit; text-decoration: none; }
 .gl-card-t { font-family: var(--font-body); font-size: var(--t-small); color: var(--ink); }
-.gl-card-b { display: inline-flex; align-items: flex-end; gap: 7px; font-family: var(--font-ui); font-size: 13px; color: var(--ink-2); }
-/* each stage's band as the chain's mark: Extreme a wine bar, High an outlined one */
-.gl-card-b::before { content: ""; display: inline-block; width: 5px; height: 12px; margin-bottom: 3px; background: var(--bar-5); }
-.gl-card-b--high::before { height: 6px; background: transparent; box-shadow: inset 0 0 0 1.25px var(--ink); }
+/* a chokepoint's mark beside the stage's name (src/styles.css .cpk); any other stage has none (22 Nov 2026) */
+.gl-card-b { align-self: baseline; font-size: 13px; }
 .gl-card-n { grid-column: 1 / -1; font-family: var(--font-ui); font-size: 13px; line-height: 1.5; color: var(--muted); }
 .gl-cards a:hover .gl-card-t { text-decoration: underline; }
 .gl-cats li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 16px; padding: 10px 0 11px; border-bottom: 1px solid var(--line); font-family: var(--font-ui); font-size: 14.5px; line-height: 1.5; }
@@ -3635,7 +3636,8 @@ html.kb:has(.view[data-view="glossary"]:not([hidden]) .gl:not([data-state="home"
    face at 400 and the wordmark in Fraunces at its own optical size (print.js: a weight between the named ones prints as
    Type 3 shapes, which do not copy or search), Hanken Grotesk for labels, Fragment Mono
    for kickers, codes and dates; ink on white, with the wine on links (the citation marks, the parts list's links), the logo
-   tile, the Extreme marks and the one value that matters on each chart (its bar and its bold value; the rest the light tint),
+   tile and the one value that matters on each chart (its bar and its bold value; the rest the light tint; the chokepoint mark
+   prints in ink, src/styles.css .cpk),
    as on screen since the visual pass of 27 Oct 2026 and the chart rule as amended on 28 Oct 2026.
    The chapter on screen is a 12-column grid (src/modules/chapter.css). On paper it is one column of text with the chain
    in a margin column at its left, so the rules below undo the grid; they carry the screen's selector weight (.chapter
@@ -3681,7 +3683,7 @@ html.kb:has(.view[data-view="glossary"]:not([hidden]) .gl:not([data-state="home"
     --ctx: #d2d1cc; /* the chart rule: the values that are not the largest (the largest is wine) */
     --c1: #2b63c4; --c2: #e06a1f; --c3: #1f9a6d; --c4: #c9a10c; --c5: #5a48b8; --c6: #c3302b; --c7: #2e7d1e; --c8: #8a9099;
     --stage-ink: 23, 23, 22; --stage-accent: 122, 31, 43;
-    --bar-5: #7a1f2b; --bar-4: #8c8a84; --bar-3: #c4c3bd; /* Extreme in wine, as on screen */
+    --bar-5: #7a1f2b; --bar-4: #8c8a84; --bar-3: #c4c3bd; /* the band tokens, as on screen */
     --shadow: none; --masthead: 0px; --band: 0px; --col: 100%; --measure: 128mm;
     /* the static print fonts (print.js printFonts), with Noto for Chinese and Japanese titles, so nothing falls back to a
        system font (those print as Type 3 shapes, which do not copy or search) */
@@ -3748,7 +3750,7 @@ html.kb:has(.view[data-view="glossary"]:not([hidden]) .gl:not([data-state="home"
 
   /* the margin column: print.js moves the rail to the head of the chapter, where it floats beside the opener. Its screen
      parts go (chapter.css); what prints is the chain (print.js stageIndex): each stage's number, its whole name and its
-     band's meter, as the screen's rail shows them, the chapter's own stage in bold. Long names take two lines. */
+     a chokepoint's dot, as the screen's rail shows them, the chapter's own stage in bold. Long names take two lines. */
   .chapter > .ch-ledger { float: left; width: 31mm; margin: 0.6mm 0 0 -36mm; padding: 0; position: static; max-height: none; overflow: visible; text-align: left; }
   .chapter .ch-tile { display: none !important; }
   .chapter .cp-index-k { margin: 0 0 1.4mm; font-family: var(--font-code); font-size: 6.6pt; line-height: 1.3; color: var(--muted); }
@@ -3757,8 +3759,9 @@ html.kb:has(.view[data-view="glossary"]:not([hidden]) .gl:not([data-state="home"
     border-bottom: 0.3pt solid var(--line); font-family: var(--font-ui); font-size: 6.4pt; line-height: 1.22; color: var(--ink-2); break-inside: avoid; }
   .chapter .cp-index .n { font-family: var(--font-code); font-size: 6pt; color: var(--muted); font-variant-numeric: tabular-nums; }
   .chapter .cp-index .t { min-width: 0; text-wrap: balance; }
-  /* the band's meter (chapter.css .meter), sized for paper: on the name's first line */
-  .chapter .cp-index .meter { --mh: 2.2mm; --mw: 0.6mm; --mg: 0.3mm; align-self: start; justify-self: end; margin-top: 0.3mm; }
+  /* a chokepoint's dot (src/styles.css .cpk), sized for paper: on the name's first line */
+  .chapter .cp-index .cpk { align-self: start; justify-self: end; margin-top: 0.7mm; }
+  .chapter .cp-index .cpk > i { width: 1.4mm; height: 1.4mm; background: var(--ink); }
   .chapter .cp-index li.is-here { color: var(--ink); font-weight: 600; }
   .chapter .cp-index li.is-here .n { color: var(--ink); }
   .chapter .cp-index.cp-across { margin-top: 2.4mm; border-top-width: 0.3pt; border-top-color: var(--line-2); }
@@ -3767,7 +3770,8 @@ html.kb:has(.view[data-view="glossary"]:not([hidden]) .gl:not([data-state="home"
   .chapter .ch-open { display: block; margin: 0; padding: 0 0 4.2mm; border-bottom: 0.6pt solid var(--ink); }
   .chapter .ch-kick { display: flex; flex-wrap: wrap; align-items: center; gap: 1mm 5mm; margin: 0; font-family: var(--font-code); font-size: 7.4pt; line-height: 1.3; color: var(--muted); }
   .chapter .ch-band { gap: 1.6mm; font-family: var(--font-ui); font-size: 7.6pt; font-weight: 500; color: var(--ink); }
-  .chapter .ch-band .meter { --mh: 2.6mm; --mw: 0.9mm; --mg: 0.35mm; margin: 0; }
+  .chapter .ch-band .cpk { gap: 1.2mm; font-size: inherit; font-weight: 600; color: var(--ink); }
+  .chapter .ch-band .cpk > i { width: 1.6mm; height: 1.6mm; }
   .chapter .ch-title, .chapter .ch-title.is-long { margin: 4.4mm 0 0 -0.04em; font-family: var(--font-display); font-weight: 400; font-size: 34pt; line-height: 0.98; letter-spacing: -0.02em; color: var(--ink); text-wrap: balance; }
   .chapter .ch-title.is-long { font-size: 27pt; line-height: 1.02; }
   .chapter .ch-lede { margin: 4mm 0 0; max-width: 118mm; font-family: var(--font-body); font-size: calc(11.6pt * var(--text-scale)); line-height: 1.4; color: var(--ink-2); }
@@ -3824,18 +3828,21 @@ html.kb:has(.view[data-view="glossary"]:not([hidden]) .gl:not([data-state="home"
   .chapter > .prose > h4 { margin: 4mm 0 1.2mm; font-family: var(--font-ui); font-weight: 600; font-size: 8pt; color: var(--ink); }
 
   /* 3. the chokepoint card: in the text after the lead, before section 01, as on screen (print.js cardsToText). On paper it
-     is ruled, not tinted: an ink rule over the head, the two ratings large in the display face with the band's meter, then label and
-     text in rows. */
+     is ruled, not tinted: an ink rule over the head, a chokepoint's line (the mark and what it means), the two ratings large in
+     the display face, then label and text in rows. */
   .chapter .plate { max-width: var(--pcol, none); margin: 6mm 0 0; padding: 0; background: none; border: 0; border-bottom: 0.6pt solid var(--ink); box-shadow: none; overflow: hidden; }
   .chapter .prose .plate li { margin-top: 0; }
   .chapter .plate-head { display: flex; justify-content: space-between; align-items: baseline; gap: 4mm; padding: 2mm 0 2mm; border-top: 0.6pt solid var(--ink); border-bottom: 0.4pt solid var(--rule-ink); }
   .chapter .plate-head .label { font-family: var(--font-ui); font-size: 8.4pt; font-weight: 600; line-height: 1.3; color: var(--ink); white-space: nowrap; }
   .chapter .plate-where { font-family: var(--font-code); font-size: 7pt; color: var(--muted); }
-  .chapter .plate-kpis { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 6mm; padding: 2.6mm 0 3mm; border-bottom: 0.4pt solid var(--rule-ink); }
+  .chapter .plate-cpk { display: block; margin: 0; padding: 1.8mm 0; border-bottom: 0.3pt solid var(--line-2); }
+  .chapter .plate-cpk .cpk { display: flex; width: fit-content; gap: 1.2mm; margin: 0 0 0.8mm; font-family: var(--font-ui); font-size: 8pt; font-weight: 600; line-height: 1.3; color: var(--ink); }
+  .chapter .plate-cpk .cpk > i { width: 1.6mm; height: 1.6mm; background: var(--ink); }
+  .chapter .plate-cpk .sub { font-family: var(--font-body); font-size: calc(8.2pt * var(--text-scale)); line-height: 1.38; color: var(--ink-2); }
+  .chapter .plate-kpis { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 6mm; padding: 2.6mm 0 3mm; border-bottom: 0.4pt solid var(--rule-ink); }
   .chapter .plate-kpis > div, .chapter .plate-kpis > div + div { padding: 0; border: 0; }
   .chapter .plate-kpis .k, .chapter .plate-status .k, .chapter .plate-rows dt { display: block; margin: 0 0 1mm; padding: 0; font-family: var(--font-code); font-size: 6.8pt; font-weight: 400; line-height: 1.3; letter-spacing: 0; color: var(--muted); }
   .chapter .plate-kpis .v { display: flex; align-items: flex-end; gap: 2mm; margin: 1.2mm 0 1.4mm; font-family: var(--font-display); font-weight: 400; font-size: 21pt; line-height: 0.95; letter-spacing: -0.02em; white-space: nowrap; color: var(--ink); }
-  .chapter .plate-kpis .v .meter { --mh: 0.72em; --mw: 1.5mm; --mg: 0.5mm; margin: 0 0.2mm 0.08em 0; }
   .chapter .plate-kpis .v.cost { display: block; margin: 1.2mm 0 1mm; font-size: 13pt; line-height: 1.1; white-space: normal; }
   .chapter .plate-kpis .v.cost.long { font-family: var(--font-body); font-weight: 600; font-size: calc(8.8pt * var(--text-scale)); line-height: 1.3; letter-spacing: 0; }
   .chapter .plate-kpis .v small { font-size: 8pt; }
@@ -4050,12 +4057,10 @@ html.kb:has(.view[data-view="glossary"]:not([hidden]) .gl:not([data-state="home"
   .contents .contents-k { margin: 3.5mm 0 2mm; padding-top: 0; border-top: 0; font-family: var(--font-code); font-size: 7.2pt; font-weight: 400; color: var(--muted); }
   .contents .contents-note { margin: 0 0 2mm; font-family: var(--font-body); font-size: calc(8.8pt * var(--text-scale)); line-height: 1.4; color: var(--ink-2); }
   .contents h2 { margin-bottom: 3mm; font-family: var(--font-display); font-weight: 400; font-size: 16pt; letter-spacing: -0.012em; }
-  /* the first group head with the key at its right: the band's mark beside each word, as beside each number below */
+  /* the first group head with the key at its right: the chokepoint's dot before its word, as beside each number below */
   .contents .contents-kr.print-only { display: flex !important; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 20px; margin: 26px 0 0; }
   .contents .ct-key { display: flex; gap: 16px; margin: 0; font-family: var(--font-ui); font-size: 13px; line-height: 16px; color: var(--ink-2); }
-  .contents .ct-key span { display: inline-flex; align-items: flex-end; gap: 6px; }
-  .contents .ct-bmk { width: 5px; height: 12px; margin-bottom: 2px; }
-  .contents .ct-bmk.h { height: 6px; }
+  .contents .ct-key .cpk { font-size: 13px; color: var(--ink-2); }
   .contents-grid { display: block; }
   .contents-grid .item { break-inside: avoid; display: flex; align-items: baseline; gap: 0; border-top: 0; border-bottom: 0.3pt solid var(--line-2); padding: 0.6mm 0; } /* close enough that the sixteen lines share the page with the title and standfirst */
   /* the number in a column of its own, so every title starts on one edge; the page number set in the text's figures, on
@@ -4464,7 +4469,7 @@ html.kb:has(.view[data-view="glossary"]:not([hidden]) .gl:not([data-state="home"
 /* ---------- the atlas on the Suppliers page: the route of one chip (redesign stage 3) ----------
    The hybrid mockup's route (qa/design3/directions/hybrid/suppliers.html): a section head over an ink rule, the country
    buttons as pills, the map on white with the land in a light tint, the stops, one per stage, as numbered discs (solid ink for a
-   stage rated Extreme, an ink ring for one rated High, as the key says), the chosen country's panel beside the map and the
+   chokepoint, the Frontispiece home's solid balloon, as the key says; an ink ring for any other stage), the chosen country's panel beside the map and the
    strip of stops under it. A chosen country keeps its stops as they are and names their towns; the other stops turn gray.
    No color marks a country: the accent marks only the reader's place (a stop or card under the pointer or in focus). */
 :root { --map-land: #ecebe7; --map-grat: #efeeea; --stop-off: #d6d5d0; }
@@ -4493,13 +4498,14 @@ html.kb:has(.view[data-view="glossary"]:not([hidden]) .gl:not([data-state="home"
 .atlas .sa-route { fill: none; stroke: var(--ink); stroke-width: 1; opacity: 0.32; vector-effect: non-scaling-stroke; }
 .atlas .sa-tail { stroke: var(--ink-2); stroke-width: 0.8; opacity: 0.8; vector-effect: non-scaling-stroke; }
 
-/* the stops: Extreme solid wine (the visual pass of 27 Oct 2026), High an ink ring, both on a white halo so they read over the routes */
+/* the stops: a chokepoint solid ink (22 Nov 2026; solid wine for Extreme from 27 Oct), any other stage an ink ring, both on a
+   white halo so they read over the routes */
 .sa-stop {
   position: absolute; width: 22px; height: 22px; margin: -11px 0 0 -11px; border-radius: 50%; z-index: 3;
-  display: grid; place-items: center; background: var(--bar-5); color: var(--bg); border: 0; box-shadow: 0 0 0 2px var(--bg);
+  display: grid; place-items: center; background: var(--bg); color: var(--ink); border: 0; box-shadow: 0 0 0 2px var(--bg), inset 0 0 0 1.5px var(--ink);
   font-family: var(--font-ui); font-weight: 600; font-size: 11.5px; line-height: 1; text-decoration: none; transition: background 0.15s, color 0.15s;
 }
-.sa-stop[data-band="High"] { background: var(--bg); color: var(--ink); box-shadow: 0 0 0 2px var(--bg), inset 0 0 0 1.5px var(--ink); }
+.sa-stop[data-cpk] { background: var(--ink); color: var(--bg); box-shadow: 0 0 0 2px var(--bg); }
 .sa-stop:hover, .sa-stop:focus-visible { z-index: 6; outline: 2px solid var(--accent); outline-offset: 2px; }
 /* a chosen country: its stops stay as they are and name their towns; the rest become small gray dots on the route, so every
    name sits beside its own stop (the strip under the map still lists them all) */
@@ -4532,6 +4538,7 @@ html.kb:has(.view[data-view="glossary"]:not([hidden]) .gl:not([data-state="home"
 .sa-stop-tip b { display: block; font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 500; font-size: var(--t-small); margin-bottom: 3px; }
 .sa-stop-tip span { display: block; color: var(--ink-2); }
 .sa-stop-tip .sa-stop-tip-s { margin-top: 4px; font-family: var(--font-ui); font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.sa-stop-tip .cpk { display: inline-flex; color: var(--ink); font-size: 12px; font-weight: 600; }
 
 /* beside the map: the chosen country's panel, then the key. The column runs as tall as the map and the strip under it, and a
    longer panel scrolls inside it, with a fade at its foot until the end is in view (src/modules/summary-a.js more()) */
@@ -4556,9 +4563,9 @@ html.kb:has(.view[data-view="glossary"]:not([hidden]) .gl:not([data-state="home"
 .atlas .sa-fact-v small { font-family: var(--font-ui); letter-spacing: 0; font-variant-numeric: tabular-nums; }
 .atlas .sa-fact-note { font-family: var(--font-body); font-size: var(--t-note); color: var(--muted); }
 .atlas .sa-est { display: block; margin: 2px 0 0; font-family: var(--font-ui); font-weight: 400; font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
-/* a stage's band beside its name, as the chapter's kicker marks it: a bar for Extreme, an outline for High */
+/* a chokepoint's mark beside its name, as the chapter's kicker marks it (src/styles.css .cpk); any other stage has none */
 .atlas .sa-sc { display: inline-flex; align-items: center; gap: 5px; margin-left: 8px; padding: 0; background: none; color: var(--ink); font-family: var(--font-ui); font-size: 12px; font-weight: 500; vertical-align: 1px; }
-.atlas .sa-sc .meter { --mh: 10px; --mw: 3px; --mg: 1.5px; } /* the band's meter, as the strip below draws it (28 Oct 2026; a single mark before) */
+.atlas .sa-sc > i { width: 6px; height: 6px; }
 :root[data-theme="dark"] .atlas .sa-sc { color: var(--ink); }
 .atlas .sa-china { margin: 14px 0 0; padding: 10px 0 2px; border-left: 0; border-top: 1px solid var(--line); }
 .atlas .sa-china a { color: var(--ink); text-decoration-color: var(--rule-ink); }
@@ -4567,18 +4574,16 @@ html.kb:has(.view[data-view="glossary"]:not([hidden]) .gl:not([data-state="home"
 .atlas .sa-panel-foot a { color: var(--ink-2); }
 .atlas-key { display: grid; gap: 8px; margin: 0 0 14px; padding-bottom: 14px; border-bottom: 1px solid var(--line); font-family: var(--font-ui); font-size: 13.5px; line-height: 20px; color: var(--ink-2); }
 .atlas-key span { display: inline-flex; align-items: center; gap: 9px; }
-.sa-kstop { display: inline-grid; place-items: center; width: 20px; height: 20px; flex: none; border-radius: 50%; background: var(--bar-5); color: var(--bg); font-family: var(--font-ui); font-style: normal; font-weight: 600; font-size: 11px; line-height: 1; }
-.sa-kstop[data-band="High"] { background: var(--bg); color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--ink); }
-/* dark fills an Extreme stop with the wine for dark marks (--bar-5, the night edition), so its number takes the cream ink, 4.8:1
-   (the dark ground on the wine was 3.1:1) */
-:root[data-theme="dark"] .sa-stop:not([data-band="High"]), :root[data-theme="dark"] .sa-kstop:not([data-band="High"]) { color: var(--ink); }
+/* the key's one entry: a chokepoint's solid stop, as the map draws it (the ring of any other stage goes unnamed) */
+.sa-kstop { display: inline-grid; place-items: center; width: 20px; height: 20px; flex: none; border-radius: 50%; background: var(--ink); color: var(--bg); font-family: var(--font-ui); font-style: normal; font-weight: 600; font-size: 11px; line-height: 1; }
 
-/* the strip: the stops in order, each with its band as a mark beside its number */
+/* the strip: the stops in order, a chokepoint with the mark's dot beside its number */
 .atlas .sa-strip-stops { grid-column: 1 / 10; grid-row: 2; list-style: none; margin: 18px 0 0; padding: 0; display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); column-gap: 14px; row-gap: 4px; border-top: 1px solid var(--ink); }
 .atlas .sa-strip-stops li { min-width: 0; }
 .sa-stopcard { display: flex; flex-direction: column; gap: 3px; padding: 10px 6px 8px 0; text-decoration: none; color: var(--ink); min-width: 0; border: 0; }
 .sa-stopcard-n { display: flex; align-items: flex-end; gap: 6px; font-family: var(--font-ui); font-size: 11.5px; line-height: 16px; color: var(--muted); font-variant-numeric: tabular-nums; }
-.sa-stopcard-n .sa-bmk { --mh: 11px; --mw: 3px; --mg: 1.5px; margin-bottom: 3px; } /* the band's meter (src/modules/chapter.css .meter), at the rail's size */
+.sa-stopcard-n .sa-bmk { align-self: center; } /* a chokepoint's dot (src/styles.css .cpk), as the chapter rail draws it */
+.sa-stopcard-n .sa-bmk > i { width: 6px; height: 6px; }
 .sa-stopcard-t { display: block; font-family: var(--font-ui); font-weight: 500; font-size: 13.5px; line-height: 1.25; margin: 0; overflow-wrap: break-word; hyphens: auto; }
 .sa-stopcard-w { display: block; font-family: var(--font-ui); font-size: 11px; line-height: 15px; color: var(--muted); font-variant-numeric: tabular-nums; }
 .sa-stopcard:hover .sa-stopcard-t, .sa-stopcard.is-hot .sa-stopcard-t, .sa-stopcard:focus-visible .sa-stopcard-t { color: var(--accent-ink); }
@@ -4608,7 +4613,7 @@ html.kb:has(.view[data-view="glossary"]:not([hidden]) .gl:not([data-state="home"
   .atlas .sa-role { padding: 7px 11px; font-size: 13.5px; white-space: nowrap; }
   .atlas .sa-map { margin-left: calc(-1 * var(--margin)); margin-right: calc(-1 * var(--margin)); }
   .sa-stop { width: 9px; height: 9px; margin: -4.5px 0 0 -4.5px; pointer-events: none; box-shadow: 0 0 0 1px var(--bg); }
-  .sa-stop[data-band="High"] { box-shadow: 0 0 0 1px var(--bg), inset 0 0 0 1.25px var(--ink); }
+  .sa-stop:not([data-cpk]) { box-shadow: 0 0 0 1px var(--bg), inset 0 0 0 1.25px var(--ink); }
   .sa-stop span { display: none; }
   .sa-stop::after, .atlas .sa-stop.is-on::after { display: none; }
   .atlas .sa-map[data-cc] .sa-stop:not(.is-on) { box-shadow: 0 0 0 1px var(--bg); }
@@ -5097,8 +5102,8 @@ html.kb:has(.view[data-view="glossary"]:not([hidden]) .gl:not([data-state="home"
    The home page (#/, the Start here walk) in the redesign of 25 Oct 2026 (qa/redesign/BRIEF.md), its hero set back to the
    home's structure before the redesign on 27 Oct 2026 (qa/redesign/stage-home.md), in the redesign's type and colors.
    Tokens only; every class is prefixed wk-.
-   The hero: the title and subtitle, the read's counts, then the chain at a glance (a sentence on how many stages are rated
-   Extreme and the stages one row each, whose meter picks the specimen on the stage beside it). Then the walk (one plain
+   The hero: the title and subtitle, the read's counts, then the chain at a glance (a sentence on how many stages are
+   chokepoints and the stages one row each, whose end picks the specimen on the stage beside it). Then the walk (one plain
    paragraph per chapter, each number in the ledger column), the flashcards and Other pages.
    ========================================================================== */
 
@@ -5119,11 +5124,12 @@ html.kb:has(.view[data-view="glossary"]:not([hidden]) .gl:not([data-state="home"
 .wk-meta .label::before { content: "\00b7"; display: inline-block; width: 18px; text-align: center; color: var(--muted); }
 
 /* ---------- the chain at a glance ----------
-   An ink rule, the kicker, the sentence, then a row per stage between hairlines: the name (a link) and, at the row's end,
-   the band's meter and word (a button that picks the specimen). The number hangs in the ledger column, right-set where
-   the walk's numbers are; it belongs to the link, so it takes the reader to the chapter too. Extreme is wine, its meter and
-   its word, as on the live site (the visual pass of 27 Oct 2026); High the lighter tint. The row whose specimen is showing
-   (.is-shown) is the reader's selection: a paper tint across the row, its hanging number included, the number in wine. */
+   An ink rule, the kicker, the sentence, then a row per stage between hairlines: the name (a link) and, at the row's end, a
+   button that picks the specimen, which carries the chokepoint mark (src/styles.css .cpk, in ink) on a chokepoint's row and
+   nothing on any other (owner, 22 Nov 2026; until then a four-bar meter and the band's word, Extreme in wine). The number
+   hangs in the ledger column, right-set where the walk's numbers are; it belongs to the link, so it takes the reader to the
+   chapter too. The row whose specimen is showing (.is-shown) is the reader's selection: a paper tint across the row, its
+   hanging number included, the number in wine. */
 .wk-gl { margin: 32px 0 0; }
 .wk-gl-h { display: block; margin: 0; padding: 12px 0 0; border-top: 1px solid var(--ink); }
 .wk-gl-p { margin: 6px 0 16px; font-family: var(--font-body); font-size: var(--fs-body); line-height: 1.5; color: var(--ink-2); max-width: 34em; }
@@ -5144,12 +5150,11 @@ html.kb:has(.view[data-view="glossary"]:not([hidden]) .gl:not([data-state="home"
 .wk-gl-lead .f { white-space: nowrap; }
 .wk-gl-a:hover .wk-gl-lead, .wk-gl-a:focus-visible .wk-gl-lead { color: var(--ink-2); }
 .wk-gl-a:focus-visible { outline-offset: -2px; }
-/* the button fills the row's height, so the whole end of the row picks; its meter and word sit on the name's first line */
-.wk-gl-c { display: inline-flex; align-items: center; align-content: flex-start; flex-wrap: wrap; gap: 9px; padding: 9px 0 0 12px; font-family: var(--font-ui); font-size: 13px; line-height: 16px; color: var(--muted); text-align: left; cursor: pointer; }
+/* the button fills the row's height and keeps one width on every row, so the end of each row picks, marked or not; the mark
+   sits on the name's first line */
+.wk-gl-c { display: inline-flex; align-items: center; align-content: flex-start; flex-wrap: wrap; gap: 9px; min-width: 104px; padding: 9px 0 0 12px; font-family: var(--font-ui); font-size: 13px; line-height: 16px; color: var(--muted); text-align: left; cursor: pointer; }
 .wk-gl-c:focus-visible { outline-offset: -2px; }
-.wk-gl-m { --mh: 14px; --mw: 5px; --mg: 2px; } /* the band's meter (src/modules/chapter.css .meter), at the size it was drawn here first */
-.wk-gl-w { min-width: 4.6em; }
-.wk-gl-list li[data-level="4"] .wk-gl-w { color: var(--accent-ink); font-weight: 600; }
+.wk-gl-m { font-size: 13px; font-weight: 600; } /* the chokepoint mark (src/styles.css .cpk) */
 .wk-gl-list li.is-shown { background: var(--bg-2); }
 @media (min-width: 901px) { .wk-gl-list li.is-shown { box-shadow: calc(-1 * (var(--gutter) + var(--gutter-gap))) 0 0 var(--bg-2); } } /* the tint reaches the number in the ledger column */
 .wk-gl-list li.is-shown .wk-gl-n { color: var(--accent-ink); font-weight: 600; }
@@ -5203,20 +5208,14 @@ html.kb:has(.view[data-view="glossary"]:not([hidden]) .gl:not([data-state="home"
   display: flex; align-items: center; flex-wrap: wrap; gap: 10px 20px;
   max-width: var(--measure); padding-top: 12px; border-top: 1px solid var(--line);
 }
-.wk-score {
-  display: inline-flex; align-items: center; gap: 10px;
-  font-family: var(--font-ui); font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums;
-}
-.wk-sc { display: inline-flex; align-items: center; gap: 8px; }
-.wk-sc .meter { --mh: 13px; --mw: 4px; --mg: 1.5px; } /* the band's meter, beside its word (src/modules/chapter.css .meter) */
-.wk-sc > b { color: var(--ink); font-weight: 500; font-size: 14px; }
+.wk-foot .wk-score-term { font-size: 13px; font-weight: 600; } /* a chokepoint's mark at its step's foot, a glossary button (src/styles.css .cpk) */
 .wk-read {
   margin-left: auto; font-family: var(--font-ui); font-weight: 500;
   font-size: 15px; letter-spacing: 0; white-space: nowrap; color: var(--ink);
   text-decoration: none; border-bottom: 1px solid var(--ink); padding: 3px 0 2px;
 }
 .wk-read::after { content: "\00a0\2192"; }
-/* Read the chapter, the Concentration tag and each source link take a fingertip: an invisible box at least 24 px tall,
+/* Read the chapter, the chokepoint mark and each source link take a fingertip: an invisible box at least 24 px tall,
    centered on the control */
 .wk-read, .wk-score-term, .wk-facts .wk-src { position: relative; }
 .wk-read::before, .wk-score-term::before, .wk-facts .wk-src::before {
@@ -5313,8 +5312,8 @@ html.kb:has(.view[data-view="glossary"]:not([hidden]) .gl:not([data-state="home"
   .wk-gl-n { padding-right: 8px; } /* right-set where the walk's numbers are */
   .wk-gl-t { font-size: var(--t-small); }
   .wk-gl-lead { font-size: 12.5px; }
-  .wk-gl-c { gap: 7px; padding: 10px 0 0 6px; font-size: 12.5px; }
-  .wk-gl-w { min-width: 4.3em; }
+  .wk-gl-c { gap: 7px; min-width: 92px; padding: 10px 0 0 6px; font-size: 12.5px; }
+  .wk-gl-m { font-size: 12.5px; }
 
   .wk-list { margin-top: 64px; }
   .wk-step { scroll-margin-top: calc(var(--masthead) + 60px); }
@@ -5335,10 +5334,9 @@ html.kb:has(.view[data-view="glossary"]:not([hidden]) .gl:not([data-state="home"
   .wk-pn .label { display: block; margin-bottom: 3px; }
   .wk-pn-t { display: block; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: var(--t-small); line-height: 1.25; overflow-wrap: anywhere; }
 }
-@media (max-width: 380px) { /* a 360 px phone: a narrower meter and word keep most names on one line */
-  .wk-gl-c { gap: 5px; font-size: 12px; }
-  .wk-gl-m { --mw: 4px; }
-  .wk-gl-w { min-width: 0; }
+@media (max-width: 380px) { /* a 360 px phone: a narrower mark keeps most names on one line */
+  .wk-gl-c { gap: 5px; min-width: 86px; font-size: 12px; }
+  .wk-gl-m { font-size: 12px; gap: 5px; }
 }
 @media (max-width: 420px) {
   .wk-t { font-size: var(--t-block); }

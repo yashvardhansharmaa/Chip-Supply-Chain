@@ -9,7 +9,7 @@
     "How it works": "How silicon wafers are made",
     "Variants and trade-offs": "Types of silicon wafers",
     "Who makes it": "Who makes silicon wafers and polysilicon",
-    "The chokepoint": "Why 300 mm wafers are a chokepoint"
+    "The chokepoint": "The five firms behind most 300 mm wafers"
   },
   "chemicals-gases-and-photoresist": {
     "How it works": "How photoresist and chip chemicals work",
@@ -36,14 +36,14 @@
     "Variants and trade-offs": "Types of deposition and etching",
     "Who makes it": "Who makes deposition and etch tools",
     "China and the controls": "China's toolmakers and export controls",
-    "The chokepoint": "Why deposition and etch are a weaker chokepoint"
+    "The chokepoint": "How many makers each tool has"
   },
   "metrology-and-inspection": {
     "How it works": "How chipmakers measure and inspect wafers",
     "Variants and trade-offs": "Types of inspection and measuring tools",
     "Who makes it": "KLA and its smaller rivals",
     "Packaging, AI and China": "Packaging inspection, China's toolmakers and export controls",
-    "The chokepoint": "Why KLA's inspection tools are a chokepoint"
+    "The chokepoint": "Inspection, yield and KLA's lead"
   },
   "foundries-and-fabs": {
     "How it works": "How a transistor works and why it leaks",

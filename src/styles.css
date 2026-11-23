@@ -2,10 +2,9 @@
    Ground: white. Ink: a warm near-black, with two secondary inks. Paper (#f4f4f2) is a tint only, for the chokepoint card,
    figure frames, source strips and flashcards.
    Accent: red wine, #7a1f2b on white and #d98a95 on dark. It marks links, the reader's place (the current menu item, the
-   current item in a contents list), the logo tile, and two signals in the data (the visual pass of 27 Oct 2026, as the
-   live site has them): Extreme, wherever a stage's band is shown (its mark, and its word on the home list), and the
-   largest value on every chart, its bar and its value ("garnet on the largest only", the owner's chart rule of 21 Oct).
-   Suppliers' Critical rating is wine too. High stays ink or gray, and the other bars the light tint.
+   current item in a contents list), the logo tile, and the largest value on every chart, its bar and its value ("garnet on
+   the largest only", the owner's chart rule of 21 Oct). Suppliers' Critical rating is wine too. A stage's one rating mark,
+   the chokepoint's (.cpk, 22 Nov 2026), is ink; until then Extreme was wine wherever a stage's band showed.
    Type (the hybrid, chosen 28 Oct 2026, MAIN/qa/design9/BUILD-SYSTEM.md): Fraunces for the display, at optical size 48 with
    SOFT and WONK at 0 (the name at 28), and Source Serif 4 for the text, its optical size following the size. Fraunces draws
    the name, page and chapter titles, section heads, card ratings and large numbers (400 for titles and section heads, 500
@@ -169,6 +168,14 @@ small { font-size: 0.85em; }
 
 /* ---------- labels: a kicker in Hanken Grotesk, small spaced capitals in the muted ink (the live site's, 27 Oct 2026) ---------- */
 .label { font-family: var(--font-kicker); font-size: var(--fs-label); line-height: 1.4; font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); color: var(--muted); }
+/* the chokepoint mark (22 Nov 2026), one component wherever a stage is listed (build/build.js chokeMark): a small solid dot, the
+   Frontispiece home's solid balloon, then the word in the interface type, in ink. Readers see this one rating word: a stage
+   in the method's Extreme band is a chokepoint, and a stage in any other band carries no mark. Where a row has room for a
+   symbol only (the chapter rail, the Supply Chain rows, the route's strip) the dot stands alone, and a key or the link's
+   label names it. Each place may set its size; the dot follows the word's color */
+.cpk { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-ui); font-size: var(--fs-cap); font-weight: 500; font-style: normal; line-height: 16px; letter-spacing: 0; text-transform: none; color: var(--ink); white-space: nowrap; }
+.cpk > i { display: block; flex: none; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+button.cpk { margin: 0; padding: 0; border: 0; background: none; text-align: left; }
 .num, .tabular { font-variant-numeric: tabular-nums; }
 
 /* ---------- display type: Source Serif 4, its optical size following the size, never bold ---------- */
@@ -431,6 +438,10 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before, .gl-
 .nw > .gl-term { white-space: normal; }
 .gl-term { font: inherit; color: inherit; background: none; border: 0; padding: 0; margin: 0; text-align: inherit; cursor: help; text-decoration: underline; text-decoration-style: dotted; text-decoration-color: color-mix(in srgb, var(--muted) 75%, var(--bg)); text-decoration-thickness: 1.5px; text-underline-offset: 0.24em; transition: text-decoration-color 0.15s; }
 .gl-term:hover, .gl-term[aria-describedby] { text-decoration-style: solid; text-decoration-color: var(--accent); }
+/* the chokepoint mark as a glossary button (the card, the walk's steps): the mark's own type, not the text's, and no underline;
+   it takes the wine while its definition is open */
+.gl-term.cpk { font-family: var(--font-ui); font-size: var(--fs-cap); font-weight: 500; font-style: normal; line-height: 16px; letter-spacing: 0; color: var(--ink); text-decoration: none; }
+.gl-term.cpk:hover, .gl-term.cpk[aria-describedby] { color: var(--accent-ink); }
 .site-footer .sources-key { margin: 8px 0 0; font-family: var(--font-ui); font-size: 12.5px; letter-spacing: 0; line-height: 1.6; color: var(--muted); }
 .site-footer .updated { display: block; margin-top: 6px; font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); color: var(--muted); }
 .gl-tip { position: fixed; z-index: 50; width: max-content; max-width: min(340px, calc(100vw - 16px)); background: var(--bg); border: 1px solid var(--line-2); border-top: 2px solid var(--ink); border-radius: 0; box-shadow: var(--shadow); padding: 12px 16px 13px; }
@@ -918,28 +929,26 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before, .gl-
 .plate-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 0; background: none; border-bottom: 1px solid var(--line-2); }
 .plate-head .label { color: var(--ink); font-weight: 600; }
 .plate-kpis .v.sub-4 { color: var(--ink); }
-/* each band is said once, in its cell: the value is the glossary button the head's tag used to be (its definition in a popover) */
+/* each rating is said once, in its cell: the value is the glossary button the head's tag used to be (its definition in a popover) */
 .plate-kpis .v .v-btn { font: inherit; color: inherit; letter-spacing: inherit; text-decoration: underline dotted; text-decoration-color: color-mix(in srgb, currentColor 45%, transparent); text-decoration-thickness: 1.5px; text-underline-offset: 6px; cursor: help; }
 .plate-kpis .v .v-btn:hover, .plate-kpis .v .v-btn[aria-describedby] { text-decoration-color: currentColor; }
 .pips { display: inline-flex; gap: 4px; }
 .pips i { width: 9px; height: 9px; border-radius: 0; border: 1.5px solid var(--ink-2); display: block; }
 .pips i.on { background: var(--ink); border-color: var(--ink); }
-.plate-kpis { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 1px solid var(--line); }
+/* a chokepoint's line under the head: the mark, then what the word means; a stage that is not a chokepoint has no line */
+.plate-cpk { margin: 0; padding: 13px 0 14px; border-bottom: 1px solid var(--line); }
+.plate-cpk .cpk { display: flex; width: fit-content; margin: 0 0 5px; font-size: var(--ui-s); font-weight: 600; }
+.plate-cpk .sub { display: block; font-family: var(--font-body); font-size: var(--fs-note); line-height: 1.45; color: var(--ink-2); }
+/* two ratings since 22 Nov 2026, substitutability and the price, side by side */
+.plate-kpis { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-bottom: 1px solid var(--line); }
 .plate-kpis > div { padding: 15px 18px 16px 0; border-right: 1px solid var(--line); min-width: 0; }
 .plate-kpis > div + div { padding-left: 18px; }
 .plate-kpis > div:last-child { border-right: 0; }
-/* between 901 and 1100 px the column is about 480 px: the two bands share a row and the price takes the width under them */
-@media (min-width: 901px) and (max-width: 1100px) {
-  .plate-kpis { grid-template-columns: 1fr 1fr; }
-  .plate-kpis > div:nth-child(2) { border-right: 0; }
-  .plate-kpis > div:last-child { grid-column: 1 / -1; padding-left: 0; border-top: 1px solid var(--line); }
-}
 .plate-kpis .k { display: block; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap-s); letter-spacing: 0; color: var(--muted); margin-bottom: 8px; }
 .plate-kpis .v { display: block; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: var(--t-block); line-height: 1.05; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
 .plate-kpis .v.cost { font-size: var(--t-block); }
 .plate-kpis .v.cost.long { font-family: var(--font-body); font-weight: 500; font-size: var(--fs-small); line-height: 1.35; letter-spacing: 0; font-variation-settings: normal; }
 .plate-kpis .v small { font-size: 14px; font-weight: 500; color: var(--muted); margin-left: 4px; }
-.plate-kpis .v.Extreme { color: var(--ink); }
 .plate-kpis .sub { display: block; font-family: var(--font-body); font-size: var(--fs-note); line-height: 1.45; letter-spacing: 0; color: var(--muted); margin-top: 8px; }
 .plate-rows { margin: 0; border-bottom: 1px solid var(--line); }
 .plate-rows .row { display: grid; grid-template-columns: 150px 1fr; gap: 20px; padding: 13px 0; border-bottom: 1px solid var(--line); }
@@ -967,7 +976,7 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before, .gl-
    figure's cap height; two marks in one place (a field with more urls than sentences) take a comma between them */
 .plate-kpis .v:not(.long) sup.cite { font-size: max(11px, 0.4em); vertical-align: 1.1em; margin-left: 0; }
 .plate sup.cite-sep { font-family: var(--font-mono); font-size: max(11px, 0.62em); line-height: 0; vertical-align: 0.55em; color: var(--accent); }
-.brief-meta .conc.Extreme, .plate-kpis .v.Extreme { color: var(--ink); }
+.brief-meta .conc.Extreme { color: var(--ink); }
 
 .dbg-only .hero, .dbg-only .contents, .dbg-only #chain, .dbg-only .chapter:not(.only) { display: none; }
 
