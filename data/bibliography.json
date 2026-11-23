@@ -1223,8 +1223,9 @@
   "https://epoch.ai/data/ai-data-centers/directory/colossus-1": {
     "title": "Colossus 1, AI data centers directory",
     "publisher": "Epoch AI",
+    "date": "2026-06-16",
     "type": "page",
-    "accessed": "2026-09-09"
+    "accessed": "2026-11-23"
   },
   "https://epoch.ai/data/machine-learning-hardware": {
     "title": "Data on Machine Learning Hardware",
@@ -6942,5 +6943,96 @@
     "publisher": "Supermicro",
     "date": "2025-02",
     "type": "pdf"
+  },
+  "https://epoch.ai/data-insights/hyperscalers-control-most-compute": {
+    "title": "Five hyperscalers now own over two-thirds of global AI compute",
+    "publisher": "Epoch AI",
+    "date": "2026-04-14",
+    "type": "article",
+    "accessed": "2026-11-23"
+  },
+  "https://epoch.ai/latest/introducing-the-ai-chip-owners-explorer": {
+    "title": "Introducing the AI Chip Owners Explorer",
+    "publisher": "Epoch AI",
+    "date": "2026-04-06",
+    "type": "article",
+    "accessed": "2026-11-23"
+  },
+  "https://epoch.ai/data/ai-chip-owners": {
+    "title": "Data on AI chip owners",
+    "publisher": "Epoch AI",
+    "date": "2026-05-12",
+    "type": "dataset",
+    "accessed": "2026-11-23"
+  },
+  "https://epoch.ai/data/ai-data-centers/directory/openai-stargate-abilene": {
+    "title": "OpenAI Stargate Abilene, AI data centers directory",
+    "publisher": "Epoch AI",
+    "date": "2026-11-01",
+    "type": "page",
+    "accessed": "2026-11-23"
+  },
+  "https://www.oracle.com/news/announcement/q1fy27-earnings-release-2026-09-10/": {
+    "title": "Oracle Announces Q1 Results Driven by Triple Digit Growth in Cloud Infrastructure Revenues",
+    "publisher": "Oracle",
+    "date": "2026-09-10",
+    "type": "press release",
+    "accessed": "2026-11-23"
+  },
+  "https://www.oracle.com/news/announcement/q4fy26-earnings-release-2026-06-10/": {
+    "title": "Oracle Announces Record Q4 and FY 2026 Results Driven by Cloud Infrastructure & Cloud Applications",
+    "publisher": "Oracle",
+    "date": "2026-06-10",
+    "type": "press release",
+    "accessed": "2026-11-23"
+  },
+  "https://openai.com/index/five-new-stargate-sites/": {
+    "title": "OpenAI, Oracle, and SoftBank expand Stargate with five new AI data center sites",
+    "publisher": "OpenAI",
+    "date": "2025-09-23",
+    "type": "press release",
+    "accessed": "2026-11-23"
+  },
+  "https://openai.com/index/next-chapter-of-microsoft-openai-partnership/": {
+    "title": "The Next Chapter of the Microsoft–OpenAI Partnership",
+    "publisher": "OpenAI",
+    "date": "2025-10-28",
+    "type": "press release",
+    "accessed": "2026-11-23"
+  },
+  "https://s205.q4cdn.com/133937190/files/content_files/CoreWeave-3Q-2026-Infographic.pdf": {
+    "title": "3Q26 Results infographic",
+    "publisher": "CoreWeave",
+    "date": "2026-11-10",
+    "type": "pdf",
+    "accessed": "2026-11-23"
+  },
+  "https://s205.q4cdn.com/133937190/files/doc_financials/2025/ar/2025-Annual-Report.pdf": {
+    "title": "2025 Annual Report, with the annual report on Form 10-K",
+    "publisher": "CoreWeave",
+    "date": "2026-04-21",
+    "type": "filing",
+    "accessed": "2026-11-23"
+  },
+  "https://nebius.com/newsroom/nebius-signs-new-ai-infrastructure-agreement-with-meta": {
+    "title": "Nebius signs new AI infrastructure agreement with Meta",
+    "publisher": "Nebius",
+    "date": "2026-03-16",
+    "type": "press release",
+    "accessed": "2026-11-23"
+  },
+  "https://www.alibabagroup.com/en-US/document-1830678592242057216": {
+    "title": "Alibaba to Invest RMB380 billion in AI and Cloud Infrastructure Over Next Three Years",
+    "publisher": "Alibaba Group",
+    "date": "2025-02-24",
+    "type": "press release",
+    "accessed": "2026-11-23"
+  },
+  "https://www.mediaoffice.abudhabi/en/technology/global-tech-alliance-launches-stargate-uae/": {
+    "title": "Global Tech Alliance Launches Stargate UAE",
+    "publisher": "Abu Dhabi Media Office",
+    "date": "2025-05-22",
+    "type": "press release",
+    "accessed": "2026-11-23"
   }
 }

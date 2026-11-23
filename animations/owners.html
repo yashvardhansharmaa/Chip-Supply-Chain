@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Who Owns What</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Instrument+Sans:wght@400;500;600&display=swap">
+</head><body>
+<script src="lib.js"></script>
+<script>
+const { PAL, clamp, ease, mix, label, text } = A, dark = A.theme === 'dark';
+// Facts, from chapter 14: an AI data center has three layers, and a different firm can own each. At Stargate's Abilene site
+// Crusoe built the campus, Oracle owns the chips and OpenAI uses them (Epoch AI). CoreWeave leases all of its data centers and
+// rents out its chips on take-or-pay contracts of one to six years, which customers pay whether or not they use all the
+// capacity, and it borrows against those contracts (its 2025 annual report). A diagram of one common arrangement, not to scale.
+const STEPS = [
+  { k: 'The building', t0: 0.4, t1: 5.0, cap: 'A developer builds the data center and owns the building.' },
+  { k: 'The chips', t0: 5.0, t1: 9.8, cap: 'A cloud company leases the building and fills it with racks of AI chips that it owns.' },
+  { k: 'The renter', t0: 9.8, t1: 14.6, cap: 'An AI lab rents the computing time of those chips, on a contract that runs for years.' },
+  { k: 'The money', t0: 14.6, t1: 20.0, cap: 'The lab pays for all of that time, even the part it leaves unused. The cloud company pays the developer rent, and borrows against the lab\'s contract to pay for the chips.' },
+];
+// one headline at a time; each fades out before the next fades in
+const HEADS = [
+  { t0: 0.4, t1: 4.7, h: 'The building', s: 'Owned by a developer' },
+  { t0: 4.7, t1: 9.5, h: 'The chips', s: 'Owned by a cloud company' },
+  { t0: 9.5, t1: 14.3, h: 'The computing time', s: 'Rented by an AI lab' },
+  { t0: 14.3, h: 'The money runs back', s: 'From the lab to the cloud company, and on to the developer', red: 1 },
+];
+function heads(ctx, t) {
+  HEADS.forEach(({ t0, t1, h, s, red }) => {
+    const a = Math.min(ease((t - t0) / 0.35), t1 == null ? 1 : ease((t1 - t) / 0.35));
+    if (a <= 0) return;
+    text(h, 40, 62, '500 20px Fraunces', red ? PAL.garnet : PAL.ink, { alpha: a });
+    text(s, 40, 86, '400 16px "Source Serif 4"', PAL.ink2, { alpha: a });
+  });
+}
+const pr = (i, t) => clamp((t - STEPS[i].t0) / (STEPS[i].t1 - STEPS[i].t0));
+const W = 760, H = 420;
+const C = {
+  line: dark ? '#6f7883' : '#9aa2ab', edge: dark ? '#4d545e' : '#aab1b9', box: dark ? '#1f242b' : '#ffffff', ink: dark ? '#b9c0c8' : '#39414c',
+  tray: dark ? '#363e49' : '#2f3845', back: dark ? '#2a3038' : '#c9ced4',
+  amp: dark ? '255,196,92' : '214,150,40', money: dark ? '226,92,87' : '122,31,43',
+};
+const at = (pts, u) => { const seg = []; let L = 0; for (let i = 1; i < pts.length; i++) { const l = Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]); seg.push(l); L += l; } let d = u * L; for (let i = 0; i < seg.length; i++) { if (d <= seg[i]) { const f = d / seg[i]; return [mix(pts[i][0], pts[i + 1][0], f), mix(pts[i][1], pts[i + 1][1], f)]; } d -= seg[i]; } return pts[pts.length - 1]; };
+function line(ctx, pts, col, lw, a) { if (a <= 0) return; ctx.save(); ctx.globalAlpha *= a; ctx.strokeStyle = col; ctx.lineWidth = lw; ctx.lineJoin = 'round'; ctx.lineCap = 'round'; ctx.beginPath(); pts.forEach((p, i) => (i ? ctx.lineTo(...p) : ctx.moveTo(...p))); ctx.stroke(); ctx.restore(); }
+function glowDots(ctx, pts, t, rgb, n, speed, a, r) {
+  if (a <= 0) return; ctx.save(); ctx.globalCompositeOperation = dark ? 'lighter' : 'source-over';
+  for (let k = 0; k < n; k++) { const [x, y] = at(pts, (t * speed + k / n) % 1); const g = ctx.createRadialGradient(x, y, 0, x, y, r); g.addColorStop(0, `rgba(${rgb},${a})`); g.addColorStop(1, `rgba(${rgb},0)`); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, r, 0, 7); ctx.fill(); }
+  ctx.restore();
+}
+function box(ctx, r, a) { if (a <= 0) return; ctx.save(); ctx.globalAlpha *= a; ctx.fillStyle = C.box; ctx.fillRect(...r); ctx.strokeStyle = C.edge; ctx.lineWidth = 1.2; ctx.strokeRect(...r); ctx.restore(); }
+function mark(ctx, r, a) { if (a <= 0) return; ctx.save(); ctx.globalAlpha *= a; ctx.strokeStyle = PAL.garnet; ctx.lineWidth = 2.4; ctx.strokeRect(r[0] - 4, r[1] - 4, r[2] + 8, r[3] + 8); ctx.restore(); }
+// the start of a line drawn out to u of its length
+const grow = (p, q, u) => [p, [mix(p[0], q[0], u), mix(p[1], q[1], u)]];
+
+// layout: the developer on the left, the data center in the middle with the cloud company's racks inside, the lab on the right
+const DEV = [40, 236, 120, 80], HALL = [236, 168, 252, 162], LAB = [616, 236, 120, 80], RACKS = [244, 232, 238, 86];
+const TIE = [[160, 276], [236, 276]], RENT = [[236, 276], [160, 276]];
+const COMPUTE = [[488, 262], [616, 262]], PAY = [[616, 296], [488, 296]];
+
+function render(ctx, t) {
+  ctx.fillStyle = PAL.bg; ctx.fillRect(0, 0, W, H);
+  heads(ctx, t);
+  ctx.save(); ctx.translate(0, 16); // the drawing sits a little lower, centered in the room under the headline
+  const q = [0, 1, 2, 3].map((i) => pr(i, t));
+  // 1. the building, and the developer who owns it
+  const aDev = ease(q[0] / 0.25), aHall = ease((q[0] - 0.1) / 0.3);
+  box(ctx, DEV, aDev);
+  text('Developer', DEV[0] + DEV[2] / 2, 282, '400 17px "Source Serif 4"', PAL.ink, { align: 'center', alpha: aDev });
+  label('Owns the building', DEV[0] + DEV[2] / 2, 336, PAL.ink2, { align: 'center', alpha: aDev });
+  if (aHall > 0) {
+    ctx.save(); ctx.globalAlpha = aHall; ctx.strokeStyle = C.edge; ctx.lineWidth = 1.2;
+    for (let k = 0; k < 5; k++) { const x = 248 + k * 48; ctx.fillStyle = C.box; ctx.fillRect(x, 150, 34, 18); ctx.strokeRect(x, 150, 34, 18); ctx.beginPath(); ctx.arc(x + 17, 159, 5.5, 0, 7); ctx.stroke(); }
+    ctx.restore();
+    box(ctx, HALL, aHall);
+  }
+  const tie = ease((q[0] - 0.35) / 0.35);
+  if (tie > 0) line(ctx, grow(TIE[0], TIE[1], tie), C.line, 1.4, 1);
+  mark(ctx, HALL, ease((q[0] - 0.3) / 0.2) * (1 - ease(q[1] / 0.15)));
+  // 2. the chips: racks set down one by one, owned by the cloud company; the back row first, so the front row stands before it
+  for (const row of [1, 0]) for (let k = 0; k < 10; k++) {
+    const i = (1 - row) * 10 + k, u = ease((q[1] - 0.05 - i * 0.022) / 0.18);
+    if (u <= 0) continue;
+    const x = 244 + k * 24 + (row ? 6 : 0), y = (row ? 236 : 250) - (1 - u) * 14, h = row ? 24 : 66;
+    ctx.save(); ctx.globalAlpha = u; ctx.fillStyle = row ? C.back : C.tray; ctx.fillRect(x, y, 16, h);
+    if (!row) { const w = 0.5 + 0.5 * Math.sin(t * 2 + k); ctx.fillStyle = `rgba(${C.amp},${0.35 + 0.35 * w})`; for (let j = 0; j < 6; j++) ctx.fillRect(x + 3, y + 6 + j * 10, 10, 2); }
+    ctx.restore();
+  }
+  const aCloud = ease((q[1] - 0.15) / 0.25);
+  text('Cloud company', HALL[0] + HALL[2] / 2, 198, '400 17px "Source Serif 4"', PAL.ink, { align: 'center', alpha: aCloud });
+  label('Owns the chips', HALL[0] + HALL[2] / 2, 217, PAL.ink2, { align: 'center', alpha: aCloud });
+  mark(ctx, RACKS, ease((q[1] - 0.55) / 0.2) * (1 - ease(q[2] / 0.15)));
+  // 3. the lab, and the computing time running out to it
+  const aLab = ease(q[2] / 0.25);
+  box(ctx, LAB, aLab);
+  text('AI lab', LAB[0] + LAB[2] / 2, 282, '400 17px "Source Serif 4"', PAL.ink, { align: 'center', alpha: aLab });
+  label('Rents the chips', LAB[0] + LAB[2] / 2, 336, PAL.ink2, { align: 'center', alpha: aLab });
+  const run = ease((q[2] - 0.2) / 0.3), flow = ease((q[2] - 0.45) / 0.2);
+  if (run > 0) line(ctx, grow(COMPUTE[0], COMPUTE[1], run), C.line, 1.4, 1);
+  glowDots(ctx, COMPUTE, t, C.amp, 4, 0.45, flow, 5);
+  text('Computing time', 552, 252, '400 14px "Source Serif 4"', PAL.ink2, { align: 'center', alpha: flow });
+  mark(ctx, LAB, ease((q[2] - 0.4) / 0.2) * (1 - ease(q[3] / 0.15)));
+  // 4. the money, the other way: the lab pays the cloud company, the cloud company pays the developer rent
+  const pay = ease(q[3] / 0.25), paid = ease((q[3] - 0.2) / 0.2), rent = ease((q[3] - 0.45) / 0.2);
+  if (pay > 0) line(ctx, grow(PAY[0], PAY[1], pay), `rgba(${C.money},0.55)`, 1.4, 1);
+  glowDots(ctx, PAY, t, C.money, 4, 0.45, paid, 5);
+  text('Payments', 552, 316, '400 14px "Source Serif 4"', PAL.ink2, { align: 'center', alpha: paid });
+  glowDots(ctx, RENT, t, C.money, 3, 0.45, rent, 5);
+  text('Rent', 198, 266, '400 14px "Source Serif 4"', PAL.ink2, { align: 'center', alpha: rent });
+  ctx.restore();
+}
+A.start({ W, H, duration: 20.8, fade: 0.8, steps: STEPS, render, fonts: ['400 17px "Source Serif 4"', '400 14px "Source Serif 4"'] });
+</script></body></html>

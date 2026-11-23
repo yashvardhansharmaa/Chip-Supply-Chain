@@ -3,8 +3,8 @@
   "id": "data-centers-and-power",
   "number": 14,
   "title": "Data Centers and Power",
-  "oneLiner": "SemiAnalysis forecast in October 2026 that 50 GW of data center capacity would be added in 2027, about as much as the world had built through 2024. The large transformers that connect such sites to the grid commonly took three years to arrive in 2024.",
-  "plain": "A data center feeds electricity to the machines inside it and carries away the heat they give off. One rack of AI chips, a cabinet taller than a door, can draw 142 kilowatts ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)). Every watt of it comes back out as heat, and liquid piped through the rack carries the heat away ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)). A large training site already holds more than a hundred thousand chips ([source](https://epoch.ai/data/ai-data-centers/directory/colossus-1)). The newest sites are planned in gigawatts ([source](https://epoch.ai/publications/openai-stargate-where-the-us-sites-stand)). One gigawatt is the whole output of a large power station, and Epoch AI projects that OpenAI's seven Stargate sites in the United States will add up to more than nine of them by 2029 ([source](https://epoch.ai/publications/openai-stargate-where-the-us-sites-stand)). Getting that much electricity to the site is harder than putting up the building. Transformers and heavy switches connect a site to the grid, and turbines make the power. All of them come from a few suppliers and take years to arrive.",
+  "oneLiner": "Amazon, Google, Meta, Microsoft and Oracle owned an estimated 71 percent of the world's AI computing power at the end of 2025. Power for new sites is the slowest part to add.",
+  "plain": "A data center is a building full of computers, and an AI data center holds racks of AI chips. One rack, a cabinet taller than a door, can draw 142 kilowatts ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)). Every watt of it comes back out as heat, and liquid piped through the rack carries the heat away ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)). Five companies own most of the world's AI computing power, and four of them rent part of it to other firms ([source](https://epoch.ai/latest/introducing-the-ai-chip-owners-explorer)). The newest sites are planned in gigawatts ([source](https://epoch.ai/publications/openai-stargate-where-the-us-sites-stand)). One gigawatt is the whole output of a large power station. Getting that much electricity to a site is harder than putting up the building.",
   "bridge": "Racks like that need a building designed around the power they draw and the heat they give off.",
   "specimen": "rack",
   "specimenCaption": "A liquid-cooled rack of 72 GPUs, Nvidia's GB200 NVL72, drawn to scale from Supermicro's February 2025 datasheet: 2,236 mm tall and 600 mm wide. Eight 33 kW power shelves feed the trays through a copper busbar at the back. In 2024 the large transformers that connect such sites to the grid commonly took three years to arrive in the United States, the US Department of Energy found.",
@@ -13,46 +13,46 @@
     "chokepointScore": 4,
     "leaders": [
       {
-        "name": "GE Vernova",
+        "name": "Google",
         "country": "US",
-        "share": "Gas equipment, transformers and switchgear, including through Prolec GE",
-        "source": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000015/gev-20251231.htm"
+        "share": "24.8 percent of the world's AI computing power at the end of 2025, Epoch AI estimates",
+        "source": "https://epoch.ai/data-insights/hyperscalers-control-most-compute"
       },
       {
-        "name": "Hitachi Energy",
-        "country": "CH",
-        "share": "Power transformers and switchgear",
-        "source": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000015/gev-20251231.htm"
-      },
-      {
-        "name": "Siemens Energy",
-        "country": "DE",
-        "share": "Grid technologies, transformers, turbines",
-        "source": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000015/gev-20251231.htm"
-      },
-      {
-        "name": "Mitsubishi Power",
-        "country": "JP",
-        "share": "Power generation equipment, including gas turbines",
-        "source": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000015/gev-20251231.htm"
-      },
-      {
-        "name": "Vertiv",
+        "name": "Microsoft",
         "country": "US",
-        "share": "Data center power systems",
-        "source": "https://blogs.nvidia.com/blog/gigawatt-ai-factories-ocp-vera-rubin"
+        "share": "16.8 percent of the world's AI computing power at the end of 2025, Epoch AI estimates",
+        "source": "https://epoch.ai/data-insights/hyperscalers-control-most-compute"
       },
       {
-        "name": "Schneider Electric",
-        "country": "FR",
-        "share": "Cooling, through its Motivair division",
-        "source": "https://blogs.nvidia.com/blog/liquid-cooling-ai-factories/"
+        "name": "Amazon",
+        "country": "US",
+        "share": "12.1 percent of the world's AI computing power at the end of 2025, Epoch AI estimates",
+        "source": "https://epoch.ai/data-insights/hyperscalers-control-most-compute"
+      },
+      {
+        "name": "Meta",
+        "country": "US",
+        "share": "11.3 percent of the world's AI computing power at the end of 2025, Epoch AI estimates",
+        "source": "https://epoch.ai/data-insights/hyperscalers-control-most-compute"
+      },
+      {
+        "name": "Oracle",
+        "country": "US",
+        "share": "5.6 percent of the world's AI computing power at the end of 2025, Epoch AI estimates",
+        "source": "https://epoch.ai/data-insights/hyperscalers-control-most-compute"
+      },
+      {
+        "name": "CoreWeave",
+        "country": "US",
+        "share": "$132.5 billion of revenue backlog, contracted revenue still to come, at the end of September 2026",
+        "source": "https://s205.q4cdn.com/133937190/files/content_files/CoreWeave-3Q-2026-Infographic.pdf#page=1"
       }
     ],
     "countries": [
       {
         "code": "US",
-        "note": "The largest data center operators, and GE Vernova turbines and grid equipment"
+        "note": "The five hyperscalers and CoreWeave, and GE Vernova turbines and grid equipment"
       },
       {
         "code": "CH",
@@ -67,16 +67,15 @@
         "note": "Mitsubishi Power equipment, including gas turbines"
       }
     ],
-    "chinaStatus": "China used 25 percent of the world's data center electricity in 2024, second to the United States, by the International Energy Agency's estimate. Data centers made up around 3 percent of the growth in China's electricity demand from 2022 to 2024.",
+    "chinaStatus": "Chinese companies together owned just over 5 percent of the world's AI computing power at the end of 2025, by Epoch AI's estimate. China used 25 percent of the world's data center electricity in 2024, second to the United States, by the International Energy Agency's estimate.",
     "chinaSources": [
-      "https://www.iea.org/reports/energy-and-ai/executive-summary",
-      "https://www.iea.org/reports/electricity-2025/executive-summary"
+      "https://epoch.ai/latest/introducing-the-ai-chip-owners-explorer",
+      "https://www.iea.org/reports/energy-and-ai/executive-summary"
     ],
-    "usStatus": "US factories supplied 29.2 percent of the large power transformers bought in the United States in 2023, measured by capacity. Constellation said in August 2026 that it expects to restart the Crane nuclear plant in 2027. Microsoft has agreed to buy the plant's power.",
+    "usStatus": "The five US hyperscalers owned an estimated 71 percent of the world's AI computing power at the end of 2025, by Epoch AI's estimate. US factories supplied 29.2 percent of the large power transformers bought in the United States in 2023, measured by capacity.",
     "usSources": [
-      "https://www.usitc.gov/publications/701_731/pub5531.pdf#page=90",
-      "https://www.constellationenergy.com/news/2026/08/constellation-reports-second-quarter-2026-results.html",
-      "https://www.constellationenergy.com/news/2025/constellation-ahead-of-schedule-for-launch-of-crane-clean-energy-center.html"
+      "https://epoch.ai/data-insights/hyperscalers-control-most-compute",
+      "https://www.usitc.gov/publications/701_731/pub5531.pdf#page=90"
     ],
     "costSignal": "$580 billion of data center investment expected worldwide in 2025, in the International Energy Agency's November 2025 outlook",
     "costSources": [
@@ -97,6 +96,18 @@
     }
   },
   "keyFacts": [
+    {
+      "fact": "Amazon, Google, Meta, Microsoft and Oracle owned an estimated 71 percent of the world's AI computing power at the end of 2025, up from 63 percent in the first quarter of 2024, by Epoch AI's estimate",
+      "source": "https://epoch.ai/data-insights/hyperscalers-control-most-compute"
+    },
+    {
+      "fact": "OpenAI and Anthropic do not own most of the computing power they use. Cloud companies provide it, mainly Microsoft, Oracle and CoreWeave for OpenAI and Amazon and Google for Anthropic, Epoch AI found",
+      "source": "https://epoch.ai/data/ai-chip-owners"
+    },
+    {
+      "fact": "Microsoft supplied about 67 percent of the revenue of CoreWeave, a neocloud, in 2025",
+      "source": "https://s205.q4cdn.com/133937190/files/doc_financials/2025/ar/2025-Annual-Report.pdf#page=26"
+    },
     {
       "fact": "In 2024, large power transformer lead times of 36 months were commonly quoted, and the longest reached 60 months. Before the pandemic an order took under a year, and 82 percent of the units put into US service in 2019 were imported",
       "source": "https://www.energy.gov/sites/default/files/2024-10/EXEC-2022-001242%20-%20Large%20Power%20Transformer%20Resilience%20Report%20signed%20by%20Secretary%20Granholm%20on%207-10-24.pdf"
@@ -148,6 +159,7 @@
   ],
   "figures": [
     {"id": "power-in-heat-out", "type": "animation", "src": "power", "title": "Power in, heat out", "note": "Simplified diagram, with illustrative sizes. An Nvidia GB300 NVL72 rack draws at most 142 kW. Nvidia gives 45 °C as the supply-water temperature for its Vera Rubin racks. The megawatt racks from 2027 are Nvidia's plan."},
+    {"id": "who-owns-what", "type": "animation", "src": "owners", "title": "Who owns what in an AI data center", "note": "Simplified diagram of one common arrangement, with illustrative sizes. A firm can hold more than one layer. Meta, which has no cloud business, uses the chips it owns."},
     {
       "id": "hyperscaler-capex",
       "type": "bars",
@@ -242,11 +254,11 @@
 ---
 # Data Centers and Power
 
-A wafer passes through a leading-edge fab in months, but in 2024 a large power transformer commonly took three years to arrive ([source](https://www.energy.gov/sites/default/files/2024-10/EXEC-2022-001242%20-%20Large%20Power%20Transformer%20Resilience%20Report%20signed%20by%20Secretary%20Granholm%20on%207-10-24.pdf#page=8)). Before the pandemic, the same order took under a year ([source](https://www.energy.gov/sites/default/files/2024-10/EXEC-2022-001242%20-%20Large%20Power%20Transformer%20Resilience%20Report%20signed%20by%20Secretary%20Granholm%20on%207-10-24.pdf#page=18)).
+Epoch AI, a research group, found in April 2026 that OpenAI and Anthropic, two leading AI labs, rent almost all of the computing power they use ([source](https://epoch.ai/latest/introducing-the-ai-chip-owners-explorer)). OpenAI's comes mainly from Microsoft, Oracle and CoreWeave, and Anthropic's mainly from Amazon and Google ([source](https://epoch.ai/data/ai-chip-owners)).
 
 ## How it works
 
-A data center feeds electricity to the machines inside it and carries away the heat they give off. One rack of AI chips, a cabinet taller than a door, can draw 142 kilowatts ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)). Every watt of it comes back out as heat, and liquid piped through the rack carries the heat away ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)). A large training site already holds more than a hundred thousand chips ([source](https://epoch.ai/data/ai-data-centers/directory/colossus-1)). The newest sites are planned in gigawatts ([source](https://epoch.ai/publications/openai-stargate-where-the-us-sites-stand)). One gigawatt is the whole output of a large power station, and Epoch AI projects that OpenAI's seven Stargate sites in the United States will add up to more than nine of them by 2029 ([source](https://epoch.ai/publications/openai-stargate-where-the-us-sites-stand)). Getting that much electricity to the site is harder than putting up the building. Transformers and heavy switches connect a site to the grid, and turbines make the power. All of them come from a few suppliers and take years to arrive.
+A data center is a building full of computers, and an AI data center holds racks of AI chips. One rack, a cabinet taller than a door, can draw 142 kilowatts ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)). Every watt of it comes back out as heat, and liquid piped through the rack carries the heat away ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)). Five companies own most of the world's AI computing power, and four of them rent part of it to other firms ([source](https://epoch.ai/latest/introducing-the-ai-chip-owners-explorer)). The newest sites are planned in gigawatts ([source](https://epoch.ai/publications/openai-stargate-where-the-us-sites-stand)). One gigawatt is the whole output of a large power station. Getting that much electricity to a site is harder than putting up the building.
 
 {{figure:power-in-heat-out}}
 
@@ -258,7 +270,33 @@ At the back of each rack, a busbar carries the current down to the server trays.
 
 Heat leaves in water. Cold plates, metal blocks with coolant running through them, sit on the GPU packages and pass the heat to the building's water loop, which releases it outdoors ([source](https://blogs.nvidia.com/blog/liquid-cooling-ai-factories/)). Nvidia's Rubin racks run coolant at up to 45 °C, warm enough that in many climates the loop can release its heat without turning on chillers, the refrigeration machines that cool water ([source](https://blogs.nvidia.com/blog/liquid-cooling-ai-factories/)).
 
-Nvidia is also moving the power that feeds its racks to 800 volts of direct current. Raising the voltage cuts the current needed for the same power, and the heat in copper comes from current. Nvidia said in October 2025 that at 800 volts the same wire can carry 157 percent more power than at 415 volts of alternating current ([source](https://developer.nvidia.com/blog/building-the-800-vdc-ecosystem-for-efficient-scalable-ai-factories/)). Inside racks such as the GB300 NVL72, power runs at 54 volts, and at that voltage a one-megawatt rack would need up to 200 kg of copper busbar ([source](https://developer.nvidia.com/blog/nvidia-800-v-hvdc-architecture-will-power-the-next-generation-of-ai-factories/)).
+Nvidia is also moving the power that feeds its racks to 800 volts of direct current. Raising the voltage cuts the current needed for the same power, and the heat in copper comes from current. Inside racks such as the GB300 NVL72, power runs at 54 volts, and at that voltage a one-megawatt rack would need up to 200 kg of copper busbar ([source](https://developer.nvidia.com/blog/nvidia-800-v-hvdc-architecture-will-power-the-next-generation-of-ai-factories/)).
+
+## Who owns the compute
+
+The building, the chips and their computing time can each belong to a different firm. At Abilene, Texas, the most complete site of OpenAI's Stargate data center program, the developer Crusoe built the campus ([source](https://epoch.ai/publications/openai-stargate-where-the-us-sites-stand)). Oracle owns the AI chips there, and OpenAI uses them ([source](https://epoch.ai/data/ai-data-centers/directory/openai-stargate-abilene)).
+
+{{figure:who-owns-what}}
+
+The largest owners of AI chips are the hyperscalers, the companies with the most data centers ([source](https://epoch.ai/latest/introducing-the-ai-chip-owners-explorer)). Amazon, Google, Meta, Microsoft and Oracle held 71 percent of the world's AI computing power at the end of 2025, Epoch AI estimates ([source](https://epoch.ai/data-insights/hyperscalers-control-most-compute)). Google held the most, 24.8 percent ([source](https://epoch.ai/data-insights/hyperscalers-control-most-compute)).
+
+Besides Meta, the hyperscalers are cloud companies, which rent part of their computing power to other firms ([source](https://epoch.ai/latest/introducing-the-ai-chip-owners-explorer)). Meta has no cloud business and uses its chips for its own AI models and for the systems that choose the posts and ads its apps show ([source](https://epoch.ai/data/ai-chip-owners)).
+
+The five hyperscalers' capital spending came to $448.2 billion in 2025, the sum of quarterly figures compiled by Epoch AI ([source](https://epoch.ai/data-insights/hyperscaler-capex-trend)). The International Energy Agency expected worldwide investment in data centers to reach $580 billion in 2025 ([source](https://www.iea.org/reports/world-energy-outlook-2025/executive-summary)).
+
+{{figure:hyperscaler-capex}}
+
+Oracle's AI chips are mainly used to rent computing power to others ([source](https://epoch.ai/data/ai-chip-owners)). OpenAI said in September 2025 that its partnership with Oracle exceeded $300 billion over the next five years ([source](https://openai.com/index/five-new-stargate-sites/)). Oracle's remaining performance obligations, revenue under contract that it has yet to earn, reached $664 billion at the end of August 2026 ([source](https://www.oracle.com/news/announcement/q1fy27-earnings-release-2026-09-10/)). Most of the growth in the six months to May 2026 came from large AI contracts in which the customer prepaid Oracle for the chips or supplied the chips itself ([source](https://www.oracle.com/news/announcement/q4fy26-earnings-release-2026-06-10/)).
+
+Epoch AI judges that neoclouds, smaller and newer cloud companies that focus on AI, are probably the most important owners of AI chips after the hyperscalers ([source](https://epoch.ai/data/ai-chip-owners)). CoreWeave, a neocloud, ran 52 data centers with more than 1.7 GW of active power at the end of September 2026 ([source](https://s205.q4cdn.com/133937190/files/content_files/CoreWeave-3Q-2026-Infographic.pdf#page=1)). CoreWeave's 2025 annual report says it leases all of its data centers ([source](https://s205.q4cdn.com/133937190/files/doc_financials/2025/ar/2025-Annual-Report.pdf#page=59)). It pays for its buildout mostly with debt backed by customer contracts ([source](https://s205.q4cdn.com/133937190/files/doc_financials/2025/ar/2025-Annual-Report.pdf#page=12)). Those contracts usually run one to six years, and customers pay for all the capacity even if they use less, often partly in advance ([source](https://s205.q4cdn.com/133937190/files/doc_financials/2025/ar/2025-Annual-Report.pdf#page=107)).
+
+Big cloud and internet companies rent from neoclouds too. Microsoft supplied about 67 percent of CoreWeave's revenue in 2025 ([source](https://s205.q4cdn.com/133937190/files/doc_financials/2025/ar/2025-Annual-Report.pdf#page=26)). Microsoft buys some computing power from neoclouds and rents it out again to its own customers, Epoch AI found ([source](https://epoch.ai/data/ai-chip-owners)). Nebius, a neocloud headquartered in Amsterdam, agreed in March 2026 to supply Meta with capacity worth up to about $27 billion over five years ([source](https://nebius.com/newsroom/nebius-signs-new-ai-infrastructure-agreement-with-meta)).
+
+AI labs sign large contracts for that computing power. In October 2025 OpenAI contracted to buy a further $250 billion of Azure cloud services from Microsoft ([source](https://openai.com/index/next-chapter-of-microsoft-openai-partnership/)). Its Stargate program with Oracle and the investment company SoftBank is building seven US sites that Epoch AI projects will exceed 9 GW by 2029 ([source](https://epoch.ai/publications/openai-stargate-where-the-us-sites-stand)).
+
+Before SpaceX bought it, xAI was the only major stand-alone AI lab that owned most of its compute, Epoch AI found ([source](https://epoch.ai/data/ai-chip-owners)). In May 2026 Anthropic agreed with SpaceX to use all of the computing capacity of Colossus 1, xAI's site in Memphis ([source](https://epoch.ai/data/ai-data-centers/directory/colossus-1)).
+
+Operators outside the United States are building too. Alibaba said in February 2025 that it would invest at least RMB 380 billion ($53 billion) in cloud computing and AI infrastructure over three years ([source](https://www.alibabagroup.com/en-US/document-1830678592242057216)). Chinese companies together owned just over 5 percent of the world's AI computing power at the end of 2025, by Epoch AI's estimate, which leaves out chips smuggled past US export controls ([source](https://epoch.ai/latest/introducing-the-ai-chip-owners-explorer)). G42 will build a 1 GW cluster in Abu Dhabi called Stargate UAE, which OpenAI and Oracle will operate, the emirate's media office said in May 2025 ([source](https://www.mediaoffice.abudhabi/en/technology/global-tech-alliance-launches-stargate-uae/)).
 
 ## Variants and trade-offs
 
@@ -268,7 +306,7 @@ Nvidia is also moving the power that feeds its racks to 800 volts of direct curr
 - **Direct-to-chip liquid.** Nvidia's Rubin platform is 100 percent liquid cooled, and Nvidia says every cloud provider and data center operator building for it is moving to liquid ([source](https://blogs.nvidia.com/blog/liquid-cooling-ai-factories/)).
 - **Immersion.** The servers sit in a bath of fluid, which makes them hard to service.
 
-Nvidia says the cooling supply chain is keeping pace with the move to liquid ([source](https://blogs.nvidia.com/blog/liquid-cooling-ai-factories/)). Motivair, Schneider Electric's cooling division, has worked with Nvidia for nearly a decade, following Nvidia's product roadmap ([source](https://blogs.nvidia.com/blog/liquid-cooling-ai-factories/)).
+Motivair, Schneider Electric's cooling division, has worked with Nvidia for nearly a decade, following Nvidia's product roadmap ([source](https://blogs.nvidia.com/blog/liquid-cooling-ai-factories/)).
 
 ### Rack power
 
@@ -282,27 +320,13 @@ A megawatt rack changes the busbar, the floor loading, the coolant flow, the lea
 
 - **Grid interconnection.** The slow path in the United States, where the queues to connect are long ([source](https://epoch.ai/publications/openai-stargate-where-the-us-sites-stand)).
 - **Behind-the-meter gas**, generation on the site itself. The fast path, which at least three of OpenAI's seven US Stargate sites will use to avoid grid queues ([source](https://epoch.ai/publications/openai-stargate-where-the-us-sites-stand)).
-- **Nuclear.** Existing plants already sell power to data centers ([source](https://www.sec.gov/Archives/edgar/data/1622536/000162828025030559/a20250611pressreleasebusin.htm)). Talen Energy supplies Amazon's data center campus next to the Susquehanna nuclear plant in Pennsylvania under a June 2025 contract expected to reach 1,920 MW no later than 2032 ([source](https://www.sec.gov/Archives/edgar/data/1622536/000162828025030559/a20250611pressreleasebusin.htm)). Restarts and new reactors are still to come. Constellation signed a power purchase agreement with Microsoft to restart Three Mile Island Unit 1 as the 835 MW Crane Clean Energy Center ([source](https://www.constellationenergy.com/news/2025/constellation-ahead-of-schedule-for-launch-of-crane-clean-energy-center.html)). The plant shut in 2019 ([source](https://www.energy.gov/articles/energy-department-closes-loan-restart-nuclear-power-plant-pennsylvania)). A $1 billion federal loan that closed in November 2025 partly finances its restart, which is subject to licensing approvals from the US Nuclear Regulatory Commission ([source](https://www.energy.gov/articles/energy-department-closes-loan-restart-nuclear-power-plant-pennsylvania)).
-
-## Who makes it
-
-The largest data center operators pay for the buildout. Capital spending by Alphabet, Amazon, Meta, Microsoft and Oracle came to $448.2 billion in 2025, the sum of quarterly figures compiled by Epoch AI, a research group ([source](https://epoch.ai/data-insights/hyperscaler-capex-trend)). If the trend continues, it will reach $770 billion in 2026 ([source](https://epoch.ai/data-insights/hyperscaler-capex-trend)). The International Energy Agency expected worldwide investment in data centers to reach $580 billion in 2025 ([source](https://www.iea.org/reports/world-energy-outlook-2025/executive-summary)).
-
-{{figure:hyperscaler-capex}}
-
-Epoch AI also projects that OpenAI's seven US Stargate sites will exceed 9 GW by 2029 ([source](https://epoch.ai/publications/openai-stargate-where-the-us-sites-stand)). It expects the site in Abilene, Texas, to grow from an estimated 0.3 GW in April 2026 to 1.2 GW in the fourth quarter of 2026 ([source](https://epoch.ai/publications/openai-stargate-where-the-us-sites-stand)).
-
-A few large firms make the turbines, transformers and switchgear. GE Vernova builds large gas turbines, and its 2025 annual report names Siemens Energy and Mitsubishi Power among the key competitors of its power generation business ([source](https://www.sec.gov/Archives/edgar/data/1996810/000199681026000015/gev-20251231.htm)). Its electrification business makes power transformers and switchgear, and the report names Hitachi Energy, Siemens Energy, Schneider Electric and ABB among that business's key competitors ([source](https://www.sec.gov/Archives/edgar/data/1996810/000199681026000015/gev-20251231.htm)).
-
-Equipment makers limit how fast the buildout can go. GE Vernova's gas equipment backlog and reserved factory slots grew from 100 GW to 116 GW in the second quarter of 2026 ([source](https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm)). In the first half of 2026, data center orders for its electrification business, which makes grid equipment, passed $5 billion, more than double that business's data center orders for all of 2025 ([source](https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm)). GE Vernova bought the remaining half of Prolec GE, a transformer maker, in the first half of 2026 ([source](https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm)).
-
-{{figure:turbine-output}}
+- **Nuclear.** Existing plants already sell power to data centers ([source](https://www.sec.gov/Archives/edgar/data/1622536/000162828025030559/a20250611pressreleasebusin.htm)). Talen Energy supplies Amazon's data center campus next to the Susquehanna nuclear plant in Pennsylvania under a June 2025 contract expected to reach 1,920 MW no later than 2032 ([source](https://www.sec.gov/Archives/edgar/data/1622536/000162828025030559/a20250611pressreleasebusin.htm)). Constellation signed a power purchase agreement with Microsoft to restart Three Mile Island Unit 1 as the 835 MW Crane Clean Energy Center ([source](https://www.constellationenergy.com/news/2025/constellation-ahead-of-schedule-for-launch-of-crane-clean-energy-center.html)). In August 2026 Constellation said it expects to restart the plant in 2027 ([source](https://www.constellationenergy.com/news/2026/08/constellation-reports-second-quarter-2026-results.html)).
 
 ## Capacity and demand
 
 US data center electricity use is projected to rise steeply by 2030. US data centers used 192 TWh in 2024, 4.7 percent of national electricity, according to a June 2026 estimate by Lawrence Berkeley National Laboratory that leaves out cryptocurrency mining ([source](https://www.energy.gov/documents/united-states-data-center-energy-usage-report-2025-update#page=10)). The lab's reference case, its main scenario, projects 464 TWh in 2028 and 649 TWh in 2030, which would be 11.8 percent of forecast US electricity use ([source](https://www.energy.gov/documents/united-states-data-center-energy-usage-report-2025-update#page=10)). Its scenarios for 2030 range from 521 to 843 TWh, or 9.5 percent to 15.3 percent ([source](https://www.energy.gov/documents/united-states-data-center-energy-usage-report-2025-update#page=11)).
 
-The US Energy Information Administration expects electricity demand to keep rising, but in September 2026 it cut its 2027 forecast for the region that includes Texas. In its October 2026 Short-Term Energy Outlook, it expects US electricity sales of 4,152.0 TWh in 2026 and 4,216.6 TWh in 2027 ([source](https://www.eia.gov/outlooks/steo/archives/oct26.pdf#page=46)). It expects electricity demand from the commercial sector, which includes data centers, to grow 2.8 percent in 2027 and demand from industry to grow 2.7 percent ([source](https://www.eia.gov/outlooks/steo/archives/oct26.pdf#page=12)). Its September outlook had lowered the 2027 electricity sales forecast for the region that includes Texas by 4.7 percent from August ([source](https://www.eia.gov/outlooks/steo/archives/sep26.pdf#page=4)). That outlook noted that Texas had paused connecting new data centers to the grid while the state audits proposed projects ([source](https://www.eia.gov/outlooks/steo/archives/sep26.pdf#page=10)). The pause, set by the grid operator for most of Texas, covers data centers and crypto mining sites of 75 MW or more ([source](https://www.ercot.com/files/docs/2026/09/11/14-Batch-Zero-Update.pdf)).
+The US Energy Information Administration expects electricity demand to keep rising, but in September 2026 it cut its 2027 forecast for the region that includes Texas. Its September outlook had lowered the 2027 electricity sales forecast for the region that includes Texas by 4.7 percent from August ([source](https://www.eia.gov/outlooks/steo/archives/sep26.pdf#page=4)).
 
 {{figure:us-dc-electricity}}
 
@@ -310,26 +334,24 @@ By the International Energy Agency's estimate, China accounted for 25 percent of
 
 SemiAnalysis, a research firm, forecast in October 2026 that 50 GW of data center capacity would be added in 2027, which it said was about as much as the world's data center market had built in total through 2024 ([source](https://newsletter.semianalysis.com/p/datacenters-2027-the-year-of-acceleration)). Just 40 campuses in an advanced stage of construction held more than 24 GW, most of it to be delivered in 2027, it found ([source](https://newsletter.semianalysis.com/p/datacenters-2027-the-year-of-acceleration)).
 
-Better chips do not by themselves cut total energy use. Google says its Ironwood TPU, an AI chip, delivers twice the performance per watt of Trillium, the TPU before it ([source](https://cloud.google.com/blog/products/compute/inside-the-ironwood-tpu-codesigned-ai-stack)). A token is the chunk of text a model reads or writes. Energy per token can fall while total energy use still rises, if the number of tokens rises faster.
-
-## The chokepoint
+## The narrowest step
 
 On the Texas grid, big power users have asked for far more electricity than is connected and running. ERCOT, the grid operator for most of Texas, was tracking about 474 GW of large loads (big power users) seeking a connection in June 2026, roughly 90 percent of it data centers ([source](https://www.ercot.com/files/docs/2026/07/29/ERCOT-Senate-July-29-Panel-1-Assessing-The-Grid.pdf#page=6)). In its operational overview for September 2026, ERCOT counted 9,456 MW of large loads approved to energize, that is, cleared to switch on ([source](https://www.ercot.com/files/docs/2026/10/16/ERCOT-Monthly-Operational-Overview-September.pdf#page=9)). Judging by peak monthly use in September, it believed only 4,132 MW of it was operating ([source](https://www.ercot.com/files/docs/2026/10/16/ERCOT-Monthly-Operational-Overview-September.pdf#page=9)).
 
-Before a big user can connect, engineers must study whether the nearby grid can carry its load. In a preliminary review in July 2026, ERCOT found that about 205 GW of the requests already had such a study, which made them eligible for Batch Zero, the first batch of requests it studies together ([source](https://www.ercot.com/files/docs/2026/07/29/ERCOT-Senate-July-29-Panel-1-Assessing-The-Grid.pdf#page=10)). In September 2026 ERCOT conditionally classed 66.4 GW of Batch Zero projects as base load and 127.9 GW as studied load, pending final decisions in December ([source](https://www.ercot.com/files/docs/2026/09/11/14-Batch-Zero-Update.pdf)). Under ERCOT's Batch Zero rules, base load is demand from projects already running or far enough along to be counted without further study ([source](https://www.ercot.com/mktrules/issues/PGRR145)). Studied load is demand that ERCOT will study before giving each project a share of the grid's capacity ([source](https://www.ercot.com/mktrules/issues/PGRR145)).
+Texas has paused new connections for large data centers while it audits them. On 3 August 2026 Texas Governor Greg Abbott ordered the state's Public Utility Commission and ERCOT to audit every data center waiting to connect to the grid before any data center project moves forward ([source](https://gov.texas.gov/news/post/governor-abbott-directs-comprehensive-data-center-audit)). ERCOT then paused approvals to energize data centers and crypto mining sites of 75 MW or more until the audit and a review of their impact on local communities are complete ([source](https://www.ercot.com/files/docs/2026/09/11/14-Batch-Zero-Update.pdf)).
 
-Texas has paused new connections for large data centers while it audits them. On 3 August 2026 Texas Governor Greg Abbott ordered the state's Public Utility Commission and ERCOT to audit every data center waiting to connect to the grid before any data center project moves forward ([source](https://gov.texas.gov/news/post/governor-abbott-directs-comprehensive-data-center-audit)). ERCOT then paused approvals to energize data centers and crypto mining sites of 75 MW or more until the audit and a review of their impact on local communities are complete ([source](https://www.ercot.com/files/docs/2026/09/11/14-Batch-Zero-Update.pdf)). It will report on the audit and the community review to the Public Utility Commission by 10 December 2026 ([source](https://www.ercot.com/files/docs/2026/09/11/14-Batch-Zero-Update.pdf)).
+Projects in that queue also wait on equipment from a few large firms. GE Vernova builds large gas turbines, and its 2025 annual report names Siemens Energy and Mitsubishi Power among the key competitors of its power generation business ([source](https://www.sec.gov/Archives/edgar/data/1996810/000199681026000015/gev-20251231.htm)). Its electrification business makes power transformers and switchgear, and the report names Hitachi Energy, Siemens Energy, Schneider Electric and ABB among that business's key competitors ([source](https://www.sec.gov/Archives/edgar/data/1996810/000199681026000015/gev-20251231.htm)).
 
-Projects in that queue also wait on equipment.
+- **Large power transformers.** In the United States in 2024, lead times of 36 months were commonly quoted and the longest reached 60 months, against under a year before the pandemic ([source](https://www.energy.gov/sites/default/files/2024-10/EXEC-2022-001242%20-%20Large%20Power%20Transformer%20Resilience%20Report%20signed%20by%20Secretary%20Granholm%20on%207-10-24.pdf#page=8)). By a US Commerce Department estimate, 82 percent of the units put into US service in 2019 were imported ([source](https://www.energy.gov/sites/default/files/2024-10/EXEC-2022-001242%20-%20Large%20Power%20Transformer%20Resilience%20Report%20signed%20by%20Secretary%20Granholm%20on%207-10-24.pdf#page=20)). In an industry survey published in 2025, the International Energy Agency found that large power transformers took up to four years to secure worldwide ([source](https://www.iea.org/reports/building-the-future-transmission-grid/executive-summary)). It also found that their average lead times had almost doubled since 2021 ([source](https://www.iea.org/reports/building-the-future-transmission-grid/executive-summary)). Measured by capacity, US factories supplied 29.2 percent of the large power transformers bought in the US in 2023, and imports supplied the rest ([source](https://www.usitc.gov/publications/701_731/pub5531.pdf#page=90)).
+- **Gas turbines.** GE Vernova's gas equipment backlog and reserved factory slots grew from 100 GW to 116 GW in the second quarter of 2026 ([source](https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm)). In July 2026 it expected to build gas turbines at a yearly rate of 20 GW in the third quarter of 2026, 24 GW in 2028 and 30 GW in 2030 ([source](https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm)).
+- **Grid equipment for data centers.** In the first half of 2026, data center orders for GE Vernova's electrification business passed $5 billion, more than double that business's data center orders for all of 2025 ([source](https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm)).
 
-- **Large power transformers.** In the United States in 2024, lead times of 36 months were commonly quoted and the longest reached 60 months, against under a year before the pandemic ([source](https://www.energy.gov/sites/default/files/2024-10/EXEC-2022-001242%20-%20Large%20Power%20Transformer%20Resilience%20Report%20signed%20by%20Secretary%20Granholm%20on%207-10-24.pdf#page=8)). By a US Commerce Department estimate, 82 percent of the units put into US service in 2019 were imported ([source](https://www.energy.gov/sites/default/files/2024-10/EXEC-2022-001242%20-%20Large%20Power%20Transformer%20Resilience%20Report%20signed%20by%20Secretary%20Granholm%20on%207-10-24.pdf#page=20)). In an industry survey published in 2025, the International Energy Agency found that large power transformers took up to four years to secure worldwide ([source](https://www.iea.org/reports/building-the-future-transmission-grid/executive-summary)). It also found that their average lead times had almost doubled since 2021 ([source](https://www.iea.org/reports/building-the-future-transmission-grid/executive-summary)). A transformer's size is given as a power rating in megavolt-amperes (MVA) ([source](https://www.energy.gov/sites/default/files/2024-10/EXEC-2022-001242%20-%20Large%20Power%20Transformer%20Resilience%20Report%20signed%20by%20Secretary%20Granholm%20on%207-10-24.pdf#page=8)). Measured by capacity, US factories supplied 29.2 percent of the transformers rated 60 MVA and above bought in the US in 2023, and imports supplied the rest ([source](https://www.usitc.gov/publications/701_731/pub5531.pdf#page=90)).
-- **Gas turbines.** GE Vernova's gas equipment backlog and reserved factory slots stood at 116 GW in mid-2026 ([source](https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm)). In July 2026 it expected to build gas turbines at a yearly rate of 20 GW in the third quarter of 2026, 24 GW in 2028 and 30 GW in 2030 ([source](https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm)).
-- **Firm generation**, the kind that runs whatever the weather. The Nuclear Regulatory Commission has approved a fuel license amendment for the Crane plant ([source](https://www.constellationenergy.com/news/2026/08/constellation-reports-second-quarter-2026-results.html)). Constellation called the approval a major milestone toward restarting the plant in 2027 ([source](https://www.constellationenergy.com/news/2026/08/constellation-reports-second-quarter-2026-results.html)).
+{{figure:turbine-output}}
 
 Memory chips are also in short supply. Micron's quarterly report for the period ended 28 May 2026 says AI-driven growth in demand for memory and storage is outpacing industry supply ([source](https://www.sec.gov/Archives/edgar/data/723125/000072312526000015/mu-20260528.htm)). The memory shortage and the wait for power equipment both limit how much of the 2026 capital spending turns into working compute.
 
 ## Takeaways
 
-Measured by capacity, US factories supplied 29.2 percent of the large power transformers bought in the US in 2023, and imports the rest ([source](https://www.usitc.gov/publications/701_731/pub5531.pdf#page=90)). GE Vernova's gas equipment backlog and reserved factory slots stood at 116 GW in mid-2026, against planned output of 20 GW a year from the third quarter ([source](https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm)).
+Oracle had $664 billion of revenue under contract that it had yet to earn at the end of August 2026 ([source](https://www.oracle.com/news/announcement/q1fy27-earnings-release-2026-09-10/)). Microsoft supplied about 67 percent of the revenue of CoreWeave, a neocloud, in 2025 ([source](https://s205.q4cdn.com/133937190/files/doc_financials/2025/ar/2025-Annual-Report.pdf#page=26)).
 
-ERCOT, the grid operator for most of Texas, counted 9,456 MW of big power users approved to energize in its overview for September 2026 ([source](https://www.ercot.com/files/docs/2026/10/16/ERCOT-Monthly-Operational-Overview-September.pdf#page=9)). Judging by peak monthly use in September, it believed 4,132 MW of that was operating ([source](https://www.ercot.com/files/docs/2026/10/16/ERCOT-Monthly-Operational-Overview-September.pdf#page=9)). On 3 August 2026 Governor Greg Abbott ordered an audit of every data center seeking a connection before any data center project moves forward ([source](https://gov.texas.gov/news/post/governor-abbott-directs-comprehensive-data-center-audit)). In September 2026 ERCOT said it had paused approvals to energize data centers of 75 MW or more until the audit and a review of their impact on local communities are complete ([source](https://www.ercot.com/files/docs/2026/09/11/14-Batch-Zero-Update.pdf)).
+ERCOT, the grid operator for most of Texas, counted 9,456 MW of big power users approved to energize in its overview for September 2026 ([source](https://www.ercot.com/files/docs/2026/10/16/ERCOT-Monthly-Operational-Overview-September.pdf#page=9)). In September 2026 ERCOT said it had paused approvals to energize data centers of 75 MW or more until a state audit and a review of their impact on local communities are complete ([source](https://www.ercot.com/files/docs/2026/09/11/14-Batch-Zero-Update.pdf)). GE Vernova's gas equipment backlog and reserved factory slots stood at 116 GW in mid-2026, against planned output of 20 GW a year from the third quarter ([source](https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm)).

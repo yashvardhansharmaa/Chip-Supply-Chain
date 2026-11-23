@@ -1,8 +1,8 @@
 {
   "/": {
     "published": "2026-10-01",
-    "modified": "2026-11-22",
-    "content": "fb9e597c327ea79a"
+    "modified": "2026-11-23",
+    "content": "23d66c03c3530cc4"
   },
   "/advanced-packaging/": {
     "published": "2026-09-09",
@@ -26,8 +26,8 @@
   },
   "/data-centers-and-power/": {
     "published": "2026-09-09",
-    "modified": "2026-11-22",
-    "content": "2502d0867845f47a"
+    "modified": "2026-11-23",
+    "content": "687cd2f4b027717c"
   },
   "/deposition-and-etch/": {
     "published": "2026-09-09",
@@ -56,8 +56,8 @@
   },
   "/glossary/": {
     "published": "2026-10-21",
-    "modified": "2026-11-20",
-    "content": "5cd0c51835d3e06e"
+    "modified": "2026-11-23",
+    "content": "b6b4a8aec5f6c071"
   },
   "/lithography/": {
     "published": "2026-09-09",
@@ -181,8 +181,8 @@
   },
   "/summary/": {
     "published": "2026-10-21",
-    "modified": "2026-11-22",
-    "content": "e42c9d2431c4257d"
+    "modified": "2026-11-23",
+    "content": "15121b10942b2c11"
   },
   "/suppliers/": {
     "published": "2026-10-21",
@@ -191,13 +191,13 @@
   },
   "/supply-chain/": {
     "published": "2026-10-28",
-    "modified": "2026-11-22",
-    "content": "7b03a05271c30411"
+    "modified": "2026-11-23",
+    "content": "21e374a00dfa998f"
   },
   "/systems-and-networking/": {
     "published": "2026-09-09",
-    "modified": "2026-11-22",
-    "content": "ce2469beb7798748"
+    "modified": "2026-11-23",
+    "content": "dd1c5cb6685a3706"
   },
   "/test-and-assembly/": {
     "published": "2026-09-09",
