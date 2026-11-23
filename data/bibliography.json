@@ -7069,47 +7069,5 @@
     "date": "2025-10-30",
     "type": "press release",
     "accessed": "2026-11-23"
-  },
-  "https://www.bis.gov/media/documents/section-232-ndfeb-magnets-report-appendices-combined.pdf": {
-    "title": "The Effect of Imports of Neodymium-Iron-Boron (NdFeB) Permanent Magnets on the National Security, appendices",
-    "publisher": "US Department of Commerce, Bureau of Industry and Security",
-    "date": "2022-09-21",
-    "type": "report",
-    "accessed": "2026-11-23"
-  },
-  "https://www.iea.org/files/19c60aa0-ee07-4a20-a138-33c967ac5008/GlobalCriticalMineralsOutlook2026.pdf": {
-    "title": "Global Critical Minerals Outlook 2026",
-    "publisher": "International Energy Agency",
-    "date": "2026-07-16",
-    "type": "report",
-    "accessed": "2026-11-23"
-  },
-  "https://natural-resources.canada.ca/minerals-mining/mining-data-statistics-analysis/minerals-metals-facts/rare-earth-elements-facts": {
-    "title": "Rare earth elements facts",
-    "publisher": "Natural Resources Canada",
-    "date": "2026-02-27",
-    "type": "web",
-    "accessed": "2026-11-23"
-  },
-  "https://journal.jogmec.go.jp/content/300601767.pdf": {
-    "title": "Mineral resources material flow 2024: rare earths (鉱物資源マテリアルフロー2024 レアアース)",
-    "publisher": "Japan Organization for Metals and Energy Security (JOGMEC)",
-    "date": "2025",
-    "type": "report",
-    "accessed": "2026-11-23"
-  },
-  "https://investor.lamresearch.com/content/dam/investor/image/Form%2010-Q%20for%20LAM%20Research%20Corp%20filed%2010_22_2026.pdf": {
-    "title": "Lam Research Form 10-Q for the quarter ended 27 September 2026",
-    "publisher": "Lam Research",
-    "date": "2026-10-22",
-    "type": "filing",
-    "accessed": "2026-11-23"
-  },
-  "https://asia.nikkei.com/spotlight/supply-chain/china-rare-earth-export-curbs-have-opened-up-a-huge-price-gap": {
-    "title": "China rare earth export curbs have opened up a huge price gap",
-    "publisher": "Nikkei Asia",
-    "date": "2026-07-22",
-    "type": "news",
-    "accessed": "2026-11-23"
   }
 }
