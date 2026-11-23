@@ -450,7 +450,7 @@
   {
     "term": "neocloud",
     "aka": "neoclouds",
-    "plain": "A smaller, newer cloud company that focuses on AI. It fills data centers with AI chips and rents their computing time to other firms. CoreWeave and Nebius are examples.",
+    "plain": "A smaller, newer cloud company that generally focuses on AI. It fills data centers with AI chips and rents their computing time to other firms. CoreWeave and Nebius are examples.",
     "why": "Epoch AI judges that neoclouds are probably the most important owners of AI chips after the hyperscalers. Their customers include AI labs such as OpenAI and hyperscalers such as Microsoft and Meta. Microsoft supplied about 67 percent of CoreWeave's revenue in 2025.",
     "chapter": "data-centers-and-power"
   },
@@ -1214,7 +1214,7 @@
     "term": "lead time",
     "aka": "lead times, delivery time",
     "plain": "Lead time is the wait between placing an order and receiving it. In 2024 a large power transformer commonly took three years to arrive in the United States.",
-    "why": "A shortage of memory chips and long waits for power equipment both limit how fast spending on AI data centers turns into working compute. Micron said in its report for the quarter to May 2026 that AI-driven memory and storage growth was outpacing industry supply.",
+    "why": "Data center projects wait on power equipment. In the United States in 2024 the longest lead times for a large power transformer reached 60 months. Before the pandemic one could be ordered with a lead time of under a year.",
     "chapter": "data-centers-and-power"
   },
   {

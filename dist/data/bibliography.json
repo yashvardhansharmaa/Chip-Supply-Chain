@@ -5825,12 +5825,19 @@
     "type": "filing",
     "accessed": "2026-09-09"
   },
-  "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm": {
-    "title": "GE Vernova, current report on Form 8-K dated 22 July 2026",
-    "publisher": "U.S. Securities and Exchange Commission (filing by GE Vernova)",
-    "date": "2026-07-22",
+  "https://www.gevernova.com/sites/default/files/gevernova_2025_form10-k.pdf": {
+    "title": "GE Vernova, annual report on Form 10-K for the fiscal year ended 31 December 2025",
+    "publisher": "GE Vernova",
+    "date": "2026-01-29",
     "type": "filing",
-    "accessed": "2026-09-09"
+    "accessed": "2026-11-23"
+  },
+  "https://www.gevernova.com/news/press-releases/ge-vernova-reports-second-quarter-2026-financial-results-raises-2026-financial": {
+    "title": "GE Vernova reports second quarter 2026 financial results and raises 2026 financial guidance",
+    "publisher": "GE Vernova",
+    "date": "2026-07-22",
+    "type": "press release",
+    "accessed": "2026-11-23"
   },
   "https://www.sec.gov/Archives/edgar/data/2058873/000205887326000010/q-20251231.htm": {
     "title": "Qnity Electronics, annual report on Form 10-K for the fiscal year ended 31 December 2025",
@@ -5993,12 +6000,12 @@
     "type": "filing",
     "accessed": "2026-09-09"
   },
-  "https://www.sec.gov/Archives/edgar/data/723125/000072312526000015/mu-20260528.htm": {
+  "https://s25.q4cdn.com/621799436/files/doc_financials/2026/q3/0000723125-26-000015.pdf": {
     "title": "Micron Technology, quarterly report on Form 10-Q for the quarter ended 28 May 2026",
-    "publisher": "U.S. Securities and Exchange Commission (filing by Micron Technology)",
+    "publisher": "Micron Technology",
     "date": "2026-06-25",
     "type": "filing",
-    "accessed": "2026-09-09"
+    "accessed": "2026-11-23"
   },
   "https://www.sec.gov/Archives/edgar/data/723125/000072312526000023/R85.htm": {
     "title": "Micron Technology, annual report on Form 10-K for the fiscal year ended 3 September 2026, financial statement table",

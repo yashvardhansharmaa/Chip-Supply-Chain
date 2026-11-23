@@ -413,7 +413,7 @@
    },
    {
     "q": "What is a neocloud?",
-    "a": "A smaller, newer cloud company that focuses on AI, such as CoreWeave or Nebius. It rents out the computing time of its AI chips.",
+    "a": "A smaller, newer cloud company that generally focuses on AI, such as CoreWeave or Nebius. It rents out the computing time of its AI chips.",
     "section": "Who owns the compute"
    },
    {
