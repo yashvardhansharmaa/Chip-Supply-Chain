@@ -229,3 +229,39 @@
   100% { background-color: transparent; box-shadow: 0 0 0 10px transparent; }
 }
 @media (prefers-reduced-motion: reduce) { .ex-panel.ex-flash { animation: none; } }
+
+/* Suppliers' own page, /suppliers/ (23 Nov 2026): the interactive page at its own address, the route map first under the title.
+   The four market positions and what each means (owner: "the new definition seems fine"): one calm band under the list's key,
+   in the interface type, each name in the key's own colour (build/modules/reference-pages.js SUPPLIERS_DEFS). The names keep
+   their hover definitions in the list and the table (Suppliers.pill) */
+.sup-defs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px 28px; margin: 12px 0 0; padding: 10px 0 0; border-top: 1px solid var(--line); font-family: var(--font-ui); font-size: 12.5px; line-height: 1.45; color: var(--muted); scroll-margin-top: calc(var(--masthead) + 14px); }
+.sup-defs div { min-width: 0; }
+.sup-defs dt { margin: 0 0 1px; font-weight: 500; color: var(--ink); }
+.sup-defs dd { margin: 0; }
+.sup-defs .k-Critical { color: var(--accent-ink); font-weight: 600; }
+.sup-defs .k-Diversified { color: var(--muted); font-weight: 400; }
+@media (max-width: 1100px) { .sup-defs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .sup-defs { grid-template-columns: minmax(0, 1fr); gap: 6px; } }
+/* every firm in the page's HTML, for search engines and for reading without scripts, after the interactive parts (build/modules/
+   reference-pages.js SUPPLIERS_STATIC); the app's own list stands in its place once built */
+html.booted .sup-static { display: none; }
+.sup-static { margin: 56px 0 0; }
+.sup-static .sup-x-h { margin: 0; padding: 12px 0 0; border-top: 1px solid var(--ink); }
+.sx-sec { margin: 28px 0 0; }
+.sx-seg { margin: 0 0 6px; font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-size: 22px; font-weight: 500; line-height: 1.2; }
+.sx-seg small { margin-left: 8px; font-family: var(--font-ui); font-size: 12.5px; font-weight: 400; color: var(--muted); }
+.sx-list { list-style: none; margin: 0; padding: 0; }
+.sx-row { display: grid; grid-template-columns: minmax(0, 15em) minmax(0, 1fr); gap: 4px 28px; padding: 12px 0; border-top: 1px solid var(--line); }
+.sx-h { margin: 0; font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-size: 17px; font-weight: 500; line-height: 1.3; }
+.sx-native { display: block; font-family: var(--font-ui); font-size: 13px; font-weight: 400; color: var(--muted); }
+.sx-meta { margin: 3px 0 0; font-family: var(--font-ui); font-size: 12.5px; line-height: 1.45; color: var(--muted); }
+.sx-body p { margin: 0 0 6px; font-size: var(--t-note); line-height: 1.5; }
+.sx-lead { font-weight: 500; color: var(--ink); }
+.sx-facts { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 2px 12px; margin: 6px 0; font-family: var(--font-ui); font-size: 12.5px; line-height: 1.45; }
+.sx-facts dt { color: var(--muted); }
+.sx-facts dd { margin: 0; }
+.sx-body .sx-fine, .sx-body .sx-src { font-family: var(--font-ui); font-size: 12.5px; color: var(--muted); }
+.sx-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px 28px; margin: 0; padding-top: 12px; border-top: 1px solid var(--line); }
+.sx-cards dt { font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-size: 17px; font-weight: 500; }
+.sx-cards dd { margin: 3px 0 0; font-size: var(--t-note); line-height: 1.5; }
+@media (max-width: 640px) { .sx-row { grid-template-columns: minmax(0, 1fr); } }

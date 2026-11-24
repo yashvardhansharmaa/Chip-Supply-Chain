@@ -21,10 +21,18 @@
  * description and canonical; the share tags with the Glossary's card; a DefinedTermSet of every term at its entry's address;
  * every entry's row in the HTML before any script runs, and every term's definition and reason in it; its sitemap entry and
  * date. The home page holds no Glossary.
+ * The Introduction's page, /introduction/ (23 Nov 2026, the walk that ran under the home's hero): one h1, Introduction; its
+ * title, description and canonical; the share tags with its card (Start here's until its own is drawn); a WebPage at its
+ * address; the walk's steps in the HTML before any script runs; its sitemap entry and date. /intro/ and /summary/ forward to it
+ * with its canonical, /home/ to the home page.
+ * Suppliers' page, /suppliers/ (the interactive Suppliers since 23 Nov 2026, with the route map first): one level-one heading,
+ * Suppliers; its title, description and canonical; the share tags with the Suppliers card; a Dataset at its address; every
+ * firm in the HTML before any script runs, after the route map; no "Open the interactive page"; its sitemap entry and date.
+ * The home page holds neither the walk nor Suppliers.
  * And for the site: the sitemap lists each address once, leaves out the forwarding pages (a merged chapter's old address and the
- * view pages /home/, /intro/, /chain/), the book (/book/, for print) and the PDFs; robots.txt names the sitemap, blocks no
- * chapter and blocks the book, which is also noindex; the home page's JSON-LD parses, its HTML, before any script runs, links
- * every chapter's page by href, and it holds no chapter.
+ * view pages /home/, /intro/, /chain/, and /summary/), the book (/book/, for print) and the PDFs; robots.txt names the sitemap,
+ * blocks no chapter and blocks the book, which is also noindex; the home page's JSON-LD parses, its HTML, before any script runs,
+ * links every chapter's page and the Introduction's by href, and it holds no chapter.
  * The length of each <title> (with " · Chip Supply Chain") and description is checked against a hard range (30 to 70 and 70 to
  * 170 characters, a failure outside it) and the range search results show whole (50 to 60 and 120 to 160, a note outside it;
  * --strict makes a note a failure). The words are the owner's (build/page-titles.json), so a note is a question for the owner.
@@ -70,7 +78,7 @@ entries.forEach((e) => {
   if (!ISO_DAY.test(e.lastmod)) fail('sitemap.xml', `${e.loc} has no lastmod day (${e.lastmod || 'none'})`);
   if (/\.pdf$/i.test(e.loc)) fail('sitemap.xml', `lists a PDF, ${e.loc}`);
 });
-const forwarding = Object.keys(RETIRED.chapters || {}).concat(['home', 'intro', 'chain', 'book']);
+const forwarding = Object.keys(RETIRED.chapters || {}).concat(['home', 'intro', 'chain', 'summary', 'book']);
 forwarding.forEach((id) => { if (byLoc.has(BASE + id + '/')) fail('sitemap.xml', `lists ${BASE + id}/, which only forwards`); });
 const robots = read(path.join(dist, 'robots.txt')) || '';
 if (!robots) fail('robots.txt', 'missing');
@@ -253,6 +261,72 @@ chapters.forEach((c, i) => {
   if (/<section class="view[^"]*" data-view="glossary"/.test(home) || /<li class="gl-r"/.test(home)) fail('/', 'holds the Glossary, which belongs on its own page');
 }
 
+// the Introduction's page and Suppliers' page (23 Nov 2026): heads, what a crawler reads before scripts, sitemap and date
+const pageHead = (html) => (html.match(/<head>([\s\S]*?)<\/head>/i) || [])[1] || '';
+const pageBody = (html) => ((html.match(/<body\b[^>]*>([\s\S]*)<\/body>/i) || [])[1] || '').replace(/<script\b[\s\S]*?<\/script>/gi, '');
+const level1 = (body) => [...body.matchAll(/<h1\b[^>]*>([\s\S]*?)<\/h1>|<[a-z]+\b[^>]*role="heading"[^>]*aria-level="1"[^>]*>([\s\S]*?)<\/(?:p|div)>/gi)].map((m) => text(m[1] || m[2]));
+const ldNodes = (page, head) => { const out = []; [...head.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/gi)].forEach((m) => { try { const j = JSON.parse(m[1]); (j['@graph'] || [j]).forEach((x) => out.push(x)); } catch (e) { fail(page, 'JSON-LD does not parse'); } }); return out; };
+const headCheck = (page, url, head, card, soft) => {
+  const titles = [...head.matchAll(/<title>([\s\S]*?)<\/title>/gi)].map((m) => text(m[1])), descs = metas(head, 'name', 'description');
+  if (titles.length !== 1 || descs.length !== 1) fail(page, `has ${titles.length} titles and ${descs.length} descriptions`);
+  else { ranges(page, 'title', titles[0], [30, 70], [50, 60]); ranges(page, 'description', descs[0], [70, 170], soft); }
+  const canon = links(head, 'canonical');
+  if (canon.join() !== url) fail(page, `canonical is ${JSON.stringify(canon)}`);
+  const og = (k) => metas(head, 'property', 'og:' + k)[0] || '';
+  if (og('url') !== url) fail(page, `og:url is ${og('url')}`);
+  if (!card.test(og('image'))) fail(page, `og:image is ${og('image')}, not its card`);
+  ['title', 'description', 'image:alt'].forEach((k) => { if (!og(k)) fail(page, `has no og:${k}`); });
+  if (/<meta\b[^>]*name="robots"[^>]*content="[^"]*noindex/i.test(head)) fail(page, 'is marked noindex');
+};
+const dated = (page, url) => { const d = dates[page] || {}, sm = byLoc.get(url); if (!sm) fail(page, 'is not in the sitemap'); else if (sm.lastmod !== d.modified) fail(page, `sitemap lastmod is ${sm.lastmod}, but its date is ${d.modified}`); };
+{
+  const page = '/introduction/', url = BASE + 'introduction/';
+  const html = read(path.join(dist, 'introduction', 'index.html')) || '';
+  if (!html) fail(page, 'missing; run node build/build.js');
+  else {
+    const head = pageHead(html), body = pageBody(html);
+    if (level1(body).join() !== 'Introduction') fail(page, `its level-one headings are ${JSON.stringify(level1(body))}`);
+    headCheck(page, url, head, /\/cards\/(introduction|intro)\.png(\?v=\d+)?$/, [120, 160]);
+    const wp = ldNodes(page, head).find((x) => x['@type'] === 'WebPage');
+    if (!wp || wp.url !== url) fail(page, 'JSON-LD has no WebPage at its address');
+    const steps = (body.match(/<li class="wk-step" id="\/walk\/[a-z-]+"/g) || []).length;
+    if (steps !== chapters.length) fail(page, `its HTML holds ${steps} steps of the walk, not ${chapters.length}`);
+    dated(page, url);
+  }
+  const fwd = (from, to, canon) => {
+    const h = read(path.join(dist, from, 'index.html')) || '';
+    if (links(h, 'canonical').join() !== canon || !new RegExp(`location\\.replace\\(["']${to.replace(/[./]/g, '\\$&')}`).test(h)) fail(`/${from}/`, `does not forward to ${to} with the canonical ${canon}`);
+  };
+  fwd('intro', '../introduction/', url);
+  fwd('summary', '../introduction/', url);
+  fwd('home', '../', BASE);
+  const home = read(path.join(dist, 'index.html')) || '';
+  if (/<li class="wk-step"/.test(home)) fail('/', 'holds the walk, which belongs on the Introduction\'s page');
+  if (!home.includes('href="introduction/"')) fail('/', 'its HTML has no href to the Introduction\'s page');
+}
+{
+  const page = '/suppliers/', url = BASE + 'suppliers/';
+  const html = read(path.join(dist, 'suppliers', 'index.html')) || '';
+  if (!html) fail(page, 'missing; run node build/build.js');
+  else {
+    const head = pageHead(html), body = pageBody(html);
+    if (!/<section class="view[^"]*" data-view="suppliers"/.test(body)) fail(page, 'is not the interactive Suppliers page');
+    if (level1(body).join() !== 'Suppliers') fail(page, `its level-one headings are ${JSON.stringify(level1(body))}`);
+    if (/interactive page/i.test(text(body))) fail(page, 'still offers an "interactive page"');
+    headCheck(page, url, head, /\/cards\/suppliers\.png(\?v=\d+)?$/, [120, 160]);
+    const ds = ldNodes(page, head).find((x) => x['@type'] === 'Dataset');
+    if (!ds || ds.url !== url) fail(page, 'JSON-LD has no Dataset at its address');
+    const firms = JSON.parse(read(path.join(root, 'data', 'suppliers.json')) || '[]').length;
+    const rows = (body.match(/<li class="sx-row"/g) || []).length;
+    if (rows !== firms) fail(page, `its HTML holds ${rows} of the ${firms} firms`);
+    const map = body.search(/class="atlas\b/), list = body.indexOf('class="sup-static"');
+    if (map < 0 || list < 0 || list < map) fail(page, 'the route map does not come first, before the firm list');
+    dated(page, url);
+  }
+  const home = read(path.join(dist, 'index.html')) || '';
+  if (/<section class="view[^"]*" data-view="suppliers"/.test(home)) fail('/', 'holds Suppliers, which belongs on its own page');
+}
+
 // the book: every chapter, for print only, kept from search engines
 {
   const html = read(path.join(dist, 'book', 'index.html')) || '';
@@ -296,4 +370,4 @@ if (errors.length) {
   errors.forEach((e) => console.error('  ' + e));
   process.exit(1);
 }
-console.log(`check-seo: ${chapters.length} chapter pages, ${entries.length} sitemap entries, no problems${notes.length ? ` (${notes.length} note${notes.length === 1 ? '' : 's'})` : ''}`);
+console.log(`check-seo: ${chapters.length} chapter pages, the Introduction, Suppliers, ${entries.length} sitemap entries, no problems${notes.length ? ` (${notes.length} note${notes.length === 1 ? '' : 's'})` : ''}`);

@@ -4,12 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- the title and description come from build/page-titles.json (filled by build/modules/social.js), as every static page's do.
-     The markers below (head, home, chain, book, cover, glossary) mark the parts that differ by page (build/build.js, 28 Oct
+     The markers below (head, home, intro, chain, book, cover, suppliers, glossary) mark the parts that differ by page (build/build.js, 28 Oct
      2026). The head is the home page's own: the other pages take their own in its place. The views marked home are the home
      page's alone, and The Chain (marked chain) is the chapter pages', the contents page's and the book's: the contents page,
      /supply-chain/, holds its title and contents (marked book); a chapter's page holds its one chapter; the book holds the
      cover (marked cover), the contents and every chapter. The Glossary (marked glossary) is its own page's alone,
-     /glossary/ (30 Oct 2026) -->
+     /glossary/ (30 Oct 2026), the walk marked intro the Introduction's, /introduction/, and Suppliers (marked suppliers)
+     its own page's, /suppliers/ (23 Nov 2026) -->
 <meta name="cp-titles" content="{{VIEW_TITLES}}">
 <link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -100,9 +101,9 @@ html:not(.booted)[data-pick] .view[data-view="suppliers"] > :not(.view-head) { d
 <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="Contents" hidden><div class="sheet-head"><b>Contents</b><button type="button" class="sheet-close" aria-label="Close">×</button></div><nav class="sheet-pages">{{SHEET_PAGES}}</nav><ol class="sheet-chapters">{{SHEET_CHAPTERS}}</ol></div>
 <div id="app">
   <header class="masthead">
-    <a class="wordmark" href="#/" aria-label="Chip Supply Chain"><svg class="wm-tile" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect width="16" height="16" rx="3.2"/><path transform="translate(3.3324 11.8693) scale(0.009179 -0.009179)" d="M1011 683 Q1011 612 960 564 Q909 515 823 515 Q739 515 696 561 Q653 607 653 680 L653 720 Q653 786 623 823 Q594 861 544 861 Q502 861 468 831 Q433 801 412 741 Q391 682 391 594 Q391 474 431 393 Q470 312 540 270 Q609 229 697 229 Q769 229 825 251 Q880 273 924 326 Q946 348 959 356 Q971 363 983 363 Q1000 363 1007 347 Q1015 330 1015 307 Q1012 216 954 140 Q896 64 796 19 Q695 -26 563 -26 Q417 -26 301 33 Q185 91 118 198 Q51 305 51 450 Q51 602 118 721 Q184 840 305 909 Q425 978 588 978 Q720 978 815 938 Q909 898 960 832 Q1011 765 1011 683 Z"/></svg><span class="wm-name">Chip Supply Chain</span></a>
+    <a class="wordmark" href="#/" aria-label="Chip Supply Chain, home"><svg class="wm-tile" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect width="16" height="16" rx="3.2"/><path transform="translate(3.3324 11.8693) scale(0.009179 -0.009179)" d="M1011 683 Q1011 612 960 564 Q909 515 823 515 Q739 515 696 561 Q653 607 653 680 L653 720 Q653 786 623 823 Q594 861 544 861 Q502 861 468 831 Q433 801 412 741 Q391 682 391 594 Q391 474 431 393 Q470 312 540 270 Q609 229 697 229 Q769 229 825 251 Q880 273 924 326 Q946 348 959 356 Q971 363 983 363 Q1000 363 1007 347 Q1015 330 1015 307 Q1012 216 954 140 Q896 64 796 19 Q695 -26 563 -26 Q417 -26 301 33 Q185 91 118 198 Q51 305 51 450 Q51 602 118 721 Q184 840 305 909 Q425 978 588 978 Q720 978 815 938 Q909 898 960 832 Q1011 765 1011 683 Z"/></svg><span class="wm-name">Chip Supply Chain</span></a>
     <nav class="tabs" aria-label="Sections">
-      <a href="#/" data-view="walk">Home</a>
+      <a href="#/intro" data-view="walk">Intro</a>
       <a href="#/chain" data-view="stack">Supply Chain</a>
       <a href="#/landscape" data-view="landscape">AI Chips</a>
       <a href="#/suppliers" data-view="suppliers">Suppliers</a>
@@ -130,8 +131,10 @@ html:not(.booted)[data-pick] .view[data-view="suppliers"] > :not(.view-head) { d
 
   <main id="main" tabindex="-1">
     <!--home-->
-    <!-- the views in the order a first visit needs them: home first, the three small views, The Chain, the Glossary -->
-    <section class="view column" data-view="walk">{{WALK}}<footer class="site-footer">{{FOOTER}}</footer></section>
+    <!-- the home page's views in the order a first visit needs them: home first, then AI Chips and Export Controls (Suppliers,
+         The Chain, the Glossary and the Introduction have pages of their own) -->
+    <!-- the home's walk view is the drawing alone (the owner's V, 23 Nov 2026; build/modules/walk.js WALK, src/modules/frontispiece.js) -->
+    <section class="view column" data-view="walk">{{WALK}}<footer class="site-footer ft-row">{{FOOTER}}</footer></section>
 
     <section class="view column wide" data-view="landscape">
       <!-- AI Chips (design round seven, option B "the shelves", qa/design7/b/ in the main checkout, chosen 28 Oct 2026): the title
@@ -143,42 +146,7 @@ html:not(.booted)[data-pick] .view[data-view="suppliers"] > :not(.view-head) { d
         <div id="aic-view"><header class="head"><div class="head-grid"><div class="head-l"><p class="vt" role="heading" aria-level="1">AI Chips</p><p class="dek">The chips that train and run AI models, from 2020 to 2026, and who makes each of their parts.</p></div></div></header></div>
       </div>
       <p class="sr-only" id="aic-live" aria-live="polite"></p>
-      <footer class="site-footer">{{FOOTER}}</footer>
-    </section>
-
-    <section class="view column wide" data-view="suppliers">
-      <!-- Suppliers (redesign stage 3): the title and its four counts, the route of one chip, the ribbons open on the page,
-           then every firm under three tabs: by segment (the ladder), by country, and as a table -->
-      <div class="view-head vh sup-head">
-        <p class="vt" role="heading" aria-level="1">Suppliers</p>
-        <p class="dek">{{SUPPLIERS_INTRO}}</p>
-        {{SUPPLIERS_FACTS}}
-      </div>
-      {{HOME_MAP}}
-      <!-- the ribbons by share (build/modules/supplier-shares.js, src/modules/supshares.js; 29 Oct 2026) -->
-      {{SUPPLIER_SHARES}}
-      <section class="sup-reg" id="sup-reg" aria-labelledby="sup-tab-segment">
-      <div class="sup-reg-h">
-        <nav class="sup-tabs" aria-label="Firms by segment, by country or in a table"><a href="#/suppliers" id="sup-tab-segment" data-tab="segment" aria-current="true">By segment</a><a href="#/suppliers?tab=country" data-tab="country">By country</a><a href="#/suppliers?tab=table" data-tab="table">Table</a></nav>
-        <div class="filters">
-          <input id="sup-search" type="search" placeholder="Search suppliers, cities, tickers…" aria-label="Search suppliers">
-          <select id="sup-country" aria-label="Filter by country"><option value="">All countries</option></select>
-          <select id="sup-chk" aria-label="Filter by market position">{{SUPPLIERS_POSITION_OPTIONS}}</select>
-        </div>
-      </div>
-      <div class="sup-toolbar" id="sup-toolbar">
-        <span class="count" id="sup-count"></span>
-        <button class="btn ghost sup-allstages" id="sup-allstages" type="button" hidden>All segments</button>
-        <button class="btn ghost" id="sup-copy" type="button">Copy table</button>
-      </div>
-      <div class="sup-lv"><h3 class="label sup-ladder-h" id="sup-ladder-h">Segments from chip design to power</h3>
-      {{SUPPLIERS_KEY}}</div>
-      <div class="sup-ladder" id="sup-ladder" aria-labelledby="sup-ladder-h"></div>
-      <div class="sup-ladder sup-ladder-cc" id="sup-ladder-cc" aria-labelledby="sup-ladder-h" hidden></div>
-      <div class="sup-wrap" id="sup-wrap" hidden><table class="sup" id="sup-table"></table></div>
-      <p class="sup-note sup-rev-note" id="sup-rev-note">{{SUPPLIERS_REVENUE_NOTE}}</p>
-      </section>
-      <footer class="site-footer">{{FOOTER}}</footer>
+      <footer class="site-footer ft-row">{{FOOTER}}</footer>
     </section>
 
     <section class="view column wide" data-view="controls">
@@ -229,9 +197,15 @@ html:not(.booted)[data-pick] .view[data-view="suppliers"] > :not(.view-head) { d
       <details class="table-view"><summary>The same figures as a table</summary><div class="matrix-wrap"><table class="matrix" id="exposure-table"></table></div></details>
       <p class="matrix-note" id="exposure-note">{{EXPOSURE_NOTE}}</p>
       </div>
-      <footer class="site-footer">{{FOOTER}}</footer>
+      <footer class="site-footer ft-row">{{FOOTER}}</footer>
     </section>
     <!--/home-->
+
+    <!--intro-->
+    <!-- the Introduction's page, introduction/ (23 Nov 2026): the walk through the stages, which ran under the home's hero until
+         then, its flashcards and Other pages (build/modules/walk.js WALK_INTRO). Its view is the walk, as the home's is -->
+    <section class="view column" data-view="walk">{{WALK_INTRO}}<footer class="site-footer ft-row">{{FOOTER}}</footer></section>
+    <!--/intro-->
 
     <!--chain-->
     <section class="view column" data-view="stack">
@@ -276,9 +250,52 @@ html:not(.booted)[data-pick] .view[data-view="suppliers"] > :not(.view-head) { d
       <!--/book-->
       {{CHAPTERS}}
       {{GEO_ARTICLE}}
-      <footer class="site-footer">{{FOOTER_KEY}}</footer>
+      <footer class="site-footer ft-row">{{FOOTER_KEY}}</footer>
     </section>
     <!--/chain-->
+
+    <!--suppliers-->
+    <section class="view column wide" data-view="suppliers">
+      <!-- Suppliers (redesign stage 3): the title and its four counts, the route of one chip, the ribbons open on the page,
+           then every firm under three tabs: by segment (the ladder), by country, and as a table. Its own page, /suppliers/,
+           since 23 Nov 2026, with the route map first under the title (owner: "It should not be optional") -->
+      <div class="view-head vh sup-head">
+        <p class="vt" role="heading" aria-level="1">Suppliers</p>
+        <p class="dek">{{SUPPLIERS_INTRO}}</p>
+        {{SUPPLIERS_FACTS}}
+      </div>
+      {{HOME_MAP}}
+      <!-- the ribbons by share (build/modules/supplier-shares.js, src/modules/supshares.js; 29 Oct 2026) -->
+      {{SUPPLIER_SHARES}}
+      <section class="sup-reg" id="sup-reg" aria-labelledby="sup-tab-segment">
+      <div class="sup-reg-h">
+        <nav class="sup-tabs" aria-label="Firms by segment, by country or in a table"><a href="#/suppliers" id="sup-tab-segment" data-tab="segment" aria-current="true">By segment</a><a href="#/suppliers?tab=country" data-tab="country">By country</a><a href="#/suppliers?tab=table" data-tab="table">Table</a></nav>
+        <div class="filters">
+          <input id="sup-search" type="search" placeholder="Search suppliers, cities, tickers…" aria-label="Search suppliers">
+          <select id="sup-country" aria-label="Filter by country"><option value="">All countries</option></select>
+          <select id="sup-chk" aria-label="Filter by market position">{{SUPPLIERS_POSITION_OPTIONS}}</select>
+        </div>
+      </div>
+      <div class="sup-toolbar" id="sup-toolbar">
+        <span class="count" id="sup-count"></span>
+        <button class="btn ghost sup-allstages" id="sup-allstages" type="button" hidden>All segments</button>
+        <button class="btn ghost" id="sup-copy" type="button">Copy table</button>
+      </div>
+      <div class="sup-lv"><h3 class="label sup-ladder-h" id="sup-ladder-h">Segments from chip design to power</h3>
+      {{SUPPLIERS_KEY}}</div>
+      <!-- the four market positions and what each means (build/modules/reference-pages.js SUPPLIERS_DEFS) -->
+      {{SUPPLIERS_DEFS}}
+      <div class="sup-ladder" id="sup-ladder" aria-labelledby="sup-ladder-h"></div>
+      <div class="sup-ladder sup-ladder-cc" id="sup-ladder-cc" aria-labelledby="sup-ladder-h" hidden></div>
+      <div class="sup-wrap" id="sup-wrap" hidden><table class="sup" id="sup-table"></table></div>
+      <p class="sup-note sup-rev-note" id="sup-rev-note">{{SUPPLIERS_REVENUE_NOTE}}</p>
+      </section>
+      <!-- every firm in the page's HTML, for search engines and reading without scripts, after the interactive parts; hidden
+           once the app has built its own list (build/modules/reference-pages.js SUPPLIERS_STATIC) -->
+      {{SUPPLIERS_STATIC}}
+      <footer class="site-footer ft-row">{{FOOTER}}</footer>
+    </section>
+    <!--/suppliers-->
 
     <!--glossary-->
     <section class="view column wide" data-view="glossary">
@@ -324,7 +341,7 @@ html:not(.booted)[data-pick] .view[data-view="suppliers"] > :not(.view-head) { d
         <article class="gl-pane gl-wait" id="gl-pane" aria-labelledby="gl-hw"></article>
       </div>
       <p class="sr-only" id="gl-say" aria-live="polite"></p>
-      <footer class="site-footer gl-foot gl-wait">{{FOOTER}}</footer>
+      <footer class="site-footer ft-row gl-foot gl-wait">{{FOOTER}}</footer>
     </section>
     <!--/glossary-->
 

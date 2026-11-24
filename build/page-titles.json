@@ -2,7 +2,12 @@
   {
     "path": "/",
     "title": "How AI chips are made · The semiconductor supply chain",
-    "description": "A free, sourced guide to the semiconductor supply chain. How AI chips are made and who controls each step, from ASML's EUV machines to TSMC's fabs."
+    "description": "A free, sourced guide to how AI chips are made: the {stages} stages of the semiconductor supply chain and the firms that control each one."
+  },
+  {
+    "path": "/introduction/",
+    "title": "Introduction",
+    "description": "The {stages} stages of making an AI chip, one plain paragraph each, from chip design to the data center, with the firms that lead each stage."
   },
   {
     "path": "/supply-chain/",

@@ -312,8 +312,9 @@ const want = (n) => !ONLY.length || ONLY.includes(String(n));
 
     // 6. a Suppliers link to a stage (a country's panel on the atlas names the stages it supplies)
     if (want(6)) {
-      const t = await tab(chrome, '/#/suppliers?country=JP', { wait: 2500 });
-      const a = await t.ev(`(function () { var ids = CP_DATA.chapters.map(function (c) { return c.id + '/'; }); var a = [].filter.call(document.querySelectorAll('.sa-panel a[href]'), function (a) { return a.getClientRects().length && ids.indexOf(a.getAttribute('href')) >= 0; })[0]; if (!a) return null; a.id = 'qa-sup'; return { href: a.getAttribute('href'), text: a.textContent.replace(/\\s+/g, ' ').slice(0, 60) }; })()`);
+      // (Suppliers is a page of its own since 23 Nov 2026, so its links to a chapter read ../<id>/: each is read as the page it opens)
+      const t = await tab(chrome, '/suppliers/#/suppliers?country=JP', { wait: 2500 });
+      const a = await t.ev(`(function () { var ids = CP_DATA.chapters.map(function (c) { return c.id + '/'; }), to = function (a) { return new URL(a.getAttribute('href'), location.href).pathname.replace(/^\\//, ''); }; var a = [].filter.call(document.querySelectorAll('.sa-panel a[href]'), function (a) { return a.getClientRects().length && ids.indexOf(to(a)) >= 0; })[0]; if (!a) return null; a.id = 'qa-sup'; return { href: to(a), text: a.textContent.replace(/\\s+/g, ' ').slice(0, 60) }; })()`);
       let pass = !!a, detail = 'no link from the Japan panel to a chapter';
       if (a) {
         await t.click('#qa-sup'); await sleep(2600);
@@ -371,8 +372,12 @@ const want = (n) => !ONLY.length || ONLY.includes(String(n));
         ok = ok && pass; out.push(`${label}: ${clicked ? `shows ${st.shown.join(',')} at y ${st.y}` : 'nothing to click'}${pass ? '' : ' (FAIL)'}`);
         return st;
       };
+      // the home page's drawing: a stage's callout (23 Nov 2026; its chain at a glance until then), and the Introduction's walk
       let t = await tab(chrome, '/#/');
-      await go(t, 'the home page, a stage in its chain', `document.querySelector('.view[data-view="walk"] a[href="memory-and-hbm/"]')`, 'memory-and-hbm');
+      await go(t, 'the home page, a stage in its drawing', `document.querySelector('.view[data-view="walk"] .fx-co a[href="memory-and-hbm/"]')`, 'memory-and-hbm');
+      await t.close();
+      t = await tab(chrome, '/introduction/');
+      await go(t, 'the Introduction, a step\'s Read the chapter', `document.querySelector('.view[data-view="walk"] .wk-step a.wk-read[href="../memory-and-hbm/"]')`, 'memory-and-hbm');
       await t.close();
       t = await tab(chrome, '/#lk-country-nl', { wait: 2500 });
       await t.until(`document.querySelector('#gl-pane .gl-cards a')`, 4000);

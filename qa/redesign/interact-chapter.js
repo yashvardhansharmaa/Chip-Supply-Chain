@@ -113,10 +113,11 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8766';
       // the rail's chain link goes to the chapter's own page, at its top
       await t.ev("document.querySelector('#lithography .rail-chain a[href=\"../photomasks-and-pellicles/\"]').click(),1"); await sleep(3000);
       check('1440: a stage in the rail opens its chapter\'s page', await t.ev("location.pathname==='/photomasks-and-pellicles/' && Math.abs(document.getElementById('photomasks-and-pellicles').getBoundingClientRect().top) < 140"), await t.ev("location.pathname"));
-      // leaving The Chain gives the drawing back to the stage: a hash route on a chapter's page goes to the home page
-      await t.ev("location.hash='#/',1"); await sleep(3000);
-      check('1440: on the home the drawing is back on the stage', await t.ev("!!document.querySelector('.stage > canvas#stage-canvas') && getComputedStyle(document.querySelector('.stage')).display!=='none'"));
-      check('1440: the home shows the plate alone, with no labels or dimensions', await t.ev("(function(){var m=CP.Stage.mode();return !!m.noLabels&&!!m.noDims;})()"));
+      // leaving The Chain gives the drawing back to the stage: a hash route of the walk on a chapter's page goes to the
+      // Introduction's page (23 Nov 2026; the home's walk until then), whose stage carries the chapter's labels
+      await t.ev("location.hash='#/intro',1"); await sleep(3000);
+      check('1440: on the Introduction the drawing is back on the stage', await t.ev("location.pathname==='/introduction/' && !!document.querySelector('.stage > canvas#stage-canvas') && getComputedStyle(document.querySelector('.stage')).display!=='none'"), await t.ev('location.pathname'));
+      check('1440: the Introduction shows the plate with its chapter\'s labels and dimensions', await t.ev("(function(){var m=CP.Stage.mode();return !m.noLabels&&!m.noDims&&CP.Stage.cur&&CP.Stage.cur.pl.m.callouts.length>0;})()"));
       t.errors.forEach((e) => check('1440: page error', false, e));
       await t.close();
     }
@@ -314,8 +315,8 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8766';
       check('no storage: a reload forgets, and the deck starts on card 1 again', await t.ev(`(function(){var fc=document.querySelector('${D}');return !fc.querySelector('.fc-card').hidden&&!fc.querySelector('.fc-card[data-known]');})()`) && await q('.rv-sub') === 'Recall each answer, then turn the card.');
       t.errors.forEach((e) => check('no storage: page error', false, e));
       await t.close();
-      // Start here's deck on the home page is not spaced
-      const h = await open(chrome, BASE + '/', { width: 1440, wait: 2500 });
+      // Start here's deck (the Introduction's page since 23 Nov 2026; the home page's until then) is not spaced
+      const h = await open(chrome, BASE + '/introduction/', { width: 1440, wait: 2500 });
       check('Start here\'s deck is not spaced: no line about days', await h.ev("!!document.querySelector('[data-deck=\"intro\"] .fc-card') && !document.querySelector('[data-deck=\"intro\"] .fc-when')"));
       await h.close();
     }

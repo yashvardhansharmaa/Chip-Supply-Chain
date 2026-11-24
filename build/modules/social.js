@@ -8,9 +8,12 @@
    (ctx.chapterPages).
 
    Views (/home/, /intro/, /chain/): a small static page with the title, description, canonical, Open Graph and
-   Twitter tags and one paragraph, then a meta refresh and a location.replace to the hash route on the main page.
-   Unfurlers read the tags; people are redirected. /chips/, /suppliers/, /export-controls/ and /glossary/ are real
-   pages with their own content, written by build/modules/reference-pages.js with these same tags and card.
+   Twitter tags and one paragraph, then a meta refresh and a location.replace to the page it names: /home/ to the home page,
+   /intro/ to the Introduction's page (23 Nov 2026; until then Start here, the home's walk at #/intro), /chain/ to the
+   contents page. Unfurlers read the tags; people are redirected, with any query and hash. /chips/, /suppliers/,
+   /export-controls/ and /glossary/ are real pages with their own content, written by build/modules/reference-pages.js with
+   these same tags and card, and the Introduction's page, /introduction/, is written by build.js from the template, with the
+   head this module gives it (introHead).
 
    The card images come from build/assets/cards/<slug>.png (rendered by `python3 build/cards.py`, not on
    every build) and are copied to dist/cards/ here.
@@ -123,27 +126,35 @@ function manifest(root) {
   const walkWords = chapters.reduce((a, c) => a + wordCount(c.plain), 0);
   const mins = Math.max(1, Math.round(walkWords / 230));
 
+  // the Introduction's card: its own once build/cards.py has drawn it (cards/introduction.png), until then Start here's, the card
+  // the walk wore when it was the home's (23 Nov 2026)
+  const introCard = fs.existsSync(path.join(root, 'build', 'assets', 'cards', 'introduction.png')) ? 'introduction' : 'intro';
   const views = [
     // the home title is the site's own hero ("How AI chips are made"); the unfurl <title> and og:title still carry the site name (pageHTML)
     { slug: 'home', route: '', eyebrow: 'The AI chip supply chain', title: 'How AI chips are made', line: 'The AI chip supply chain, stage by stage: who makes each part, how concentrated each stage is, and what a substitute would cost.', description: 'How AI chips are made, and who controls each stage. The supply chain stage by stage: who makes each part, how concentrated each stage is, and what a substitute would cost.' },
-    { slug: 'intro', route: '#/intro', eyebrow: `${SITE} · Start here`, title: 'How AI chips are made', line: `An introduction to the entire supply chain in ${mins} minutes.` },
+    // the Introduction's page, /introduction/, is written by build.js (own: no page here); its head comes from introHead, below
+    { slug: 'introduction', route: 'introduction/', own: true, card: introCard, eyebrow: `${SITE} · Introduction`, title: 'Introduction', line: `An introduction to the entire supply chain in ${mins} minutes.` },
+    // /intro/, Start here's address until 23 Nov 2026, forwards to the Introduction's page and wears its card
+    { slug: 'intro', route: 'introduction/', card: introCard, eyebrow: `${SITE} · Introduction`, title: 'Introduction', line: `An introduction to the entire supply chain in ${mins} minutes.` },
     // /chain/ forwards to the contents page's own address, /supply-chain/ (28 Oct 2026), and keeps its card
     { slug: 'chain', route: 'supply-chain/', eyebrow: `${SITE} · Supply Chain`, title: 'Supply Chain', line: 'Every stage of the supply chain, and who controls it.', description: `Every stage of the supply chain, and who controls it. ${chapters.length} chapters, from chip design to the data center.` },
     { slug: 'chips', route: '#/landscape', eyebrow: `${SITE} · AI Chips`, title: 'AI Chips', line: 'The chips that train and run AI models, from the A100 of 2020 to the parts shipping in 2026.', description: 'The chips that train and run AI models, from the A100 of 2020 to the parts shipping in 2026. Each entry names the foundry, process node, memory supplier and packaging plant behind the chip wherever the maker or a cited source has published them.' },
     { slug: 'suppliers', route: '#/suppliers', eyebrow: `${SITE} · Suppliers`, title: 'Suppliers', line: `What each of the ${suppliers.length || 220} firms makes, where it sits, and its position in its market.` },
     { slug: 'export-controls', route: '#/controls', eyebrow: `${SITE} · Export Controls`, title: 'Export Controls', line: `The main rules since 2018, what can still be sold to China, and China's share of revenue at ${exposureFirms} firms, from their filings.` },
     { slug: 'glossary', route: '#/glossary', eyebrow: `${SITE} · Glossary`, title: 'Glossary', line: 'Every term, firm, chip and country, with the passages that use them.' },
-    // /summary/ is written by build/modules/summary-brief.js (own: no page here); it is listed for its share card (28 Oct 2026)
+    // /summary/ is written by build/modules/summary-brief.js (own: no page here), the page the summary PDF prints, which sends a
+    // reader on to the Introduction's page; it is listed for its share card (28 Oct 2026)
     { slug: 'summary', route: 'summary/', own: true, eyebrow: `${SITE} · Summary`, title: 'Summary', line: `The ${stages.length} stages of the AI chip supply chain in one read, with who leads each and how concentrated it is.` },
   ];
   // the share image's alt text, from the words build/cards.py and build/home_card.py put on each card
-  const CARD_TITLE = { intro: 'Start here' };
+  const CARD_TITLE = { intro: 'Start here', introduction: 'Introduction' };
   const CARD_LINE = {
     home: 'An introduction to the entire semiconductor supply chain.',
     suppliers: `What each of the ${suppliers.length || 226} firms makes, where it is based and its position in its market.`,
     'export-controls': 'A timeline of the main chip export rules since 2018 and what can still be sold to China.',
   };
-  for (const v of views) v.alt = `${CARD_TITLE[v.slug] || v.title}. ${CARD_LINE[v.slug] || v.line} Small drawings of all ${stages.length} stages run along the bottom.`;
+  // (a page that wears another's card says what that card shows)
+  for (const v of views) { const c = v.card || v.slug; v.alt = `${CARD_TITLE[c] || v.title}. ${CARD_LINE[c] || v.line} Small drawings of all ${stages.length} stages run along the bottom.`; }
   for (const v of views) pages.push({ kind: 'view', body: v.description || v.line, linkText: 'Open the page', ...v, description: describe(v.description || v.line) });
   return pages;
 }
@@ -201,20 +212,27 @@ function shareTags(p, versions) {
 const ICONS = `<link rel="icon" href="../favicon.ico" sizes="16x16 32x32 48x48">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="../apple-touch-icon.png">`;
-// the static pages' masthead (the readable chapters, Start here's page and the reference pages in reference-pages.js): the app's
-// own bar (build/masthead.js, design round nine, revision 6): Home, The Chain on the main page and the four reference pages by
+// the static pages' masthead (the reference pages in reference-pages.js, the 404 page and the forwarding pages): the app's
+// own bar (build/masthead.js, design round nine, revision 6): Intro, Supply Chain and the four other pages (no Home: the wordmark) by
 // their real paths, so a crawler follows them (SEO review P1-1), then search and the theme; current is the link of the section
 // the page belongs to, marked as the current page
-const { masthead, mastheadCSS, NAV } = require('../masthead.js');
+const { masthead, mastheadCSS, NAV, TILE: MH_TILE } = require('../masthead.js');
+// the thin footer's tile (src/modules/footer.css), as build.js puts it first in the app's footers, for the static pages' footers
+const FT_MARK = `<span class="ft-mark" aria-hidden="true">${MH_TILE}</span>`;
+// a static page's footer: the thin row without the citation's toggle and place, which only the app fills (src/app.js)
+const staticFooter = (f) => String(f || '').replace(/<button type="button" class="ft-cite-btn"[^>]*><\/button>/, '').replace(/<div class="ft-cite" hidden><\/div>/, '');
+// the thin footer's sheet, for the static pages to inline after their own (the reference pages, the 404 page)
+const footerCSS = (root) => { try { return require('fs').readFileSync(require('path').join(root, 'src', 'modules', 'footer.css'), 'utf8'); } catch (e) { return ''; } };
 const MASTHEAD = masthead('');
 // the static pages open light; ?theme= or the site's saved choice sets the theme before the first paint, and a contents rail the
 // reader hid stays hidden (build/build.js RAIL_TOGGLE_JS)
 const THEME_JS = `<script>(function(){try{var q=/[?&]theme=(light|dark)/.exec(location.search);var t=q?q[1]:localStorage.getItem('cp-theme');if(t)document.documentElement.setAttribute('data-theme',t);if(localStorage.getItem('cp-rail')==='off')document.documentElement.classList.add('rail-off');}catch(e){}})();</script>`;
 
 // a view's page: the tags, one paragraph, and straight on to the view on the main page, or to a page of the site's own
-// (/chain/ goes on to /supply-chain/, a folder over, so the move works on any host)
+// (/chain/ goes on to /supply-chain/, /intro/ to /introduction/ and /home/ to the home page, a folder over, so the move works on
+// any host and keeps the query and the hash)
 function pageHTML(p, versions) {
-  const target = BASE + p.route, go = /^#|^$/.test(p.route) ? target : '../' + p.route;
+  const target = BASE + p.route, go = p.route === '' ? '../' : /^#/.test(p.route) ? target : '../' + p.route;
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -292,10 +310,8 @@ a{color:#7a1f2b}
 `;
 }
 
-// Start here's page (/intro/): the same tags, and a reader with scripts is sent on to Start here as from every view's page.
-// A reader without scripts stays, since this page has no meta refresh (it would send them to a main page that shows nothing
-// without scripts), and finds the deck that ends Start here as review questions, each answer linking to its chapter's
-// readable page. It takes the readable chapter pages' styles.
+// A plain 404 page, with root-relative paths, since it is served at whatever address was asked for: the masthead, one line,
+// a link home and the thin footer (the tile and the credits; it has no day and no citation)
 function notFoundHTML(css, footerKey) {
   const root = (h) => h.replace(/(href|src)="\.\.\//g, '$1="/');
   // the site's credits line, as the other pages have it, without the "Updated" date or the sources key (30 Oct 2026)
@@ -324,51 +340,12 @@ ${root(MASTHEAD)}
 <p class="ch-lede">There is no page at this address. It may have moved when the chapters were renamed or merged.</p>
 <p><a href="/">Go to the home page</a> or <a href="/supply-chain/">see every chapter</a>.</p>
 </header>
-${credits ? `<footer class="site-footer">${credits}</footer>` : ''}
 </main>
+${credits ? `<footer class="site-footer ft-row ft-static">${FT_MARK}${credits}</footer>` : ''}
 </body>
 </html>
 `;
 }
-function introHTML(p, versions, css, review) {
-  // #/intro is the home page itself (src/app.js ALIAS), so this page's canonical is the home page's address, and its title is
-  // its own, "Start here", where it repeated the home page's (28 Oct 2026)
-  const target = BASE + p.route;
-  return `<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Start here · ${SITE}</title>
-<meta name="description" content="${esc(p.description)}">
-<link rel="canonical" href="${esc(BASE)}">
-${shareTags(p, versions)}
-<!-- the tags above are what an unfurler reads; a person with scripts is sent on to the page itself -->
-<script>location.replace(${JSON.stringify(target)});</script>
-${ICONS}
-<meta name="color-scheme" content="light dark">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="${FONTS}">
-<style>${css}${EXTRA_CSS}</style>
-</head>
-<body>
-<a class="skip" href="#main">Skip to content</a>
-${MASTHEAD}
-<main id="main" class="page">
-<header class="ch-head">
-<p class="eyebrow"><b>Start here</b></p>
-<h1 class="ch-title">${esc(p.title)}</h1>
-<p class="ch-lede">${esc(p.body)}</p>
-<p><a href="${esc(target)}">${esc(p.linkText)}</a></p>
-</header>
-${review}
-</main>
-</body>
-</html>
-`;
-}
-
 /* ---------------- the chapter page's head ----------------
    Each chapter's own page, <site>/<id>/, is the full chapter since 28 Oct 2026: build.js writes it from src/template.html with
    that chapter alone in The Chain. Until then this module wrote a static, readable copy there and the chapter itself lived at
@@ -457,6 +434,31 @@ ${shareTags(p, versions)}
 <script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script>`;
 }
 
+/* The Introduction's page, <site>/introduction/ (23 Nov 2026; until then the walk ran under the home's hero, at #/intro): its
+   head, as the contents page's is made. The title and description are build/page-titles.json's; the share tags wear its card
+   (introCard in manifest(): Start here's until build/cards.py draws its own); the JSON-LD is a WebPage by the site's author,
+   with the trail Home › Introduction. dates is the page's own. */
+function introHead(ctx, versions, dates, view) {
+  const url = BASE + 'introduction/', seo = PAGE_TITLES('/introduction/') || {};
+  const title = seo.title ? (seo.site === false ? seo.title : `${seo.title} · ${SITE}`) : `Introduction · ${SITE}`, description = seo.description || view.description;
+  const p = Object.assign({}, view, { seo: { title: seo.title || 'Introduction', description } });
+  const ld = { '@context': 'https://schema.org', '@graph': [
+    { '@type': 'WebPage', '@id': url + '#page', url, name: seo.title || 'Introduction', description, inLanguage: 'en', datePublished: dates.published, dateModified: dates.modified,
+      isPartOf: { '@type': 'WebSite', '@id': BASE + '#website', name: SITE, url: BASE },
+      author: { '@type': 'Person', name: AUTHOR.name, url: AUTHOR.url },
+      publisher: { '@type': 'Organization', '@id': BASE + '#publisher', name: SITE, url: BASE },
+      breadcrumb: { '@id': url + '#breadcrumb' } },
+    { '@type': 'BreadcrumbList', '@id': url + '#breadcrumb', itemListElement: [['Home', BASE], ['Introduction', url]].map(([name, item], k) => ({ '@type': 'ListItem', position: k + 1, name, item })) },
+  ] };
+  return `<title>${esc(title)}</title>
+<meta name="description" content="${esc(description)}">
+<link rel="canonical" href="${esc(url)}">
+<meta name="robots" content="max-image-preview:large">
+<meta name="author" content="${AUTHOR.name}">
+${shareTags(p, versions)}
+<script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script>`;
+}
+
 const minCSS = (s) => s.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\s+/g, ' ').replace(/\s*([{};])\s*/g, '$1').replace(/;}/g, '}').trim();
 // the readable page's own additions to build/assets/chapter-page.css: the head's facts (words / minutes · Updated <day>) and,
 // under them, the cite line's actions (build.js citeBlock; the citation opens as the link's :target without scripts, and as
@@ -497,35 +499,21 @@ const EXTRA_CSS = minCSS(`
 `);
 
 
-// A flashcard deck without scripts: review questions whose answers open in place, each reason ending with the link more(card)
-// returns. A chapter's page links back to its sections; Start here's page (introHTML) links to the chapters.
-const reviewSection = (cards, more) => `<section class="review" aria-labelledby="review-questions"><h2 class="label" id="review-questions">Review questions</h2><p class="review-note">Open a question to see its answer.</p>${cards.map((c) => {
-  const link = more(c);
-  return `<details><summary>${esc(c.q)}</summary><div class="answer"><p><b>${esc(c.a)}</b></p>${c.why || link ? `<p class="why">${esc(c.why || '')}${link}</p>` : ''}</div></details>`;
-}).join('')}</section>`;
-
-
 module.exports = function (ctx) {
   const { root, fs, path, warn } = ctx;
   const pages = manifest(root);
   const dist = path.join(root, 'dist');
   const versions = cardVersions(root, fs, path);
   let css = '';
-  try { css = minCSS(fs.readFileSync(path.join(root, 'build', 'assets', 'chapter-page.css'), 'utf8') + mastheadCSS(root)); } catch (e) { warn('static pages: build/assets/chapter-page.css is missing, so /intro/ ships unstyled'); }
+  try { css = minCSS(fs.readFileSync(path.join(root, 'build', 'assets', 'chapter-page.css'), 'utf8') + mastheadCSS(root) + footerCSS(root)); } catch (e) { warn('static pages: build/assets/chapter-page.css is missing, so the 404 page ships unstyled'); }
   const byId = new Map((ctx.all || []).map((c) => [c.id, c]));
-  // the deck that ends Start here (data/flashcards.json "intro"), for /intro/: each answer links to its chapter's page
-  const introDeck = (ctx.flashcards || {}).intro;
-  const introCards = introDeck && Array.isArray(introDeck.cards) ? introDeck.cards.filter((c) => c.q && c.a) : [];
-  const introReview = introCards.length ? reviewSection(introCards, (c) => {
-    const ch = byId.get(c.chapter);
-    return ch ? ` <a href="../${esc(ch.id)}/">Read: ${esc(ch.title)}</a>` : '';
-  }) : '';
   // each chapter's own page is written by build.js (the full chapter, 28 Oct 2026); this module gives it its head, and build.js
   // lists the pages in the sitemap
   ctx.chapterPages = [];
   const chapterPage = new Map(pages.filter((p) => p.kind === 'chapter').map((p) => [p.slug, p]));
   ctx.chapterHead = (ch, dates) => chapterHead(chapterPage.get(ch.id), ch, ctx, versions, dates);
   ctx.contentsHead = (dates) => contentsHead(ctx, versions, dates, pages.find((p) => p.slug === 'chain'));
+  ctx.introHead = (dates) => introHead(ctx, versions, dates, pages.find((p) => p.slug === 'introduction'));
   // the four views that have a real page of their own (build/modules/reference-pages.js, which runs first, writes and lists them)
   const written = new Set((ctx.referencePages || []).map((k) => k.replace(/\//g, '')));
   for (const p of pages) {
@@ -537,11 +525,10 @@ module.exports = function (ctx) {
     if (written.has(p.slug) || p.own) continue;
     const dir = path.join(dist, p.slug);
     fs.mkdirSync(dir, { recursive: true });
-    const html = p.slug === 'intro' && introReview ? introHTML(p, versions, css, introReview) : pageHTML(p, versions);
-    fs.writeFileSync(path.join(dir, 'index.html'), keepRanges(html));
+    fs.writeFileSync(path.join(dir, 'index.html'), keepRanges(pageHTML(p, versions)));
   }
-  // a plain 404 page (GitHub Pages serves dist/404.html for an address it does not have): the masthead, one line and a link
-  // home, with root-relative paths, since it is served at whatever address was asked for (28 Oct 2026)
+  // a plain 404 page (GitHub Pages serves dist/404.html for an address it does not have): the masthead, one line, a link home
+  // and the thin footer, with root-relative paths, since it is served at whatever address was asked for (28 Oct 2026)
   fs.writeFileSync(path.join(dist, '404.html'), notFoundHTML(css, ctx.footerKey));
   // a chapter merged away keeps its address as a page that forwards to the merged chapter's (never listed in the sitemap)
   for (const [old, e] of Object.entries(RETIRED.chapters || {})) {
@@ -558,7 +545,8 @@ module.exports = function (ctx) {
   fs.mkdirSync(out, { recursive: true });
   const have = fs.existsSync(src) ? fs.readdirSync(src).filter((f) => f.endsWith('.png')) : [];
   for (const f of have) fs.copyFileSync(path.join(src, f), path.join(out, f));
-  const missing = pages.filter((p) => !have.includes(p.slug + '.png')).map((p) => p.slug);
+  // (a page that wears another's card until its own is drawn, the Introduction's, is not missing one)
+  const missing = pages.filter((p) => !have.includes((p.card || p.slug) + '.png')).map((p) => p.slug);
   if (missing.length) warn(`social cards missing (run python3 build/cards.py): ${missing.join(', ')}`);
   // the main page's own <title> and description (src/template.html), from the same approved list; its title already ends in the site name
   const home = PAGE_TITLES('/');
@@ -573,4 +561,4 @@ module.exports.pageHTML = pageHTML;
 module.exports.BASE = BASE;
 module.exports.cardURLFor = (slug, root) => { const fs = require('fs'), path = require('path'); return cardURL(slug, cardVersions(root || path.resolve(__dirname, '..', '..'), fs, path)); }; // a card's address with its version, for the pages written elsewhere (summary-brief.js)
 // for the reference pages (build/modules/reference-pages.js): the same head, tags, card and masthead as the chapter pages
-Object.assign(module.exports, { SITE, AUTHOR, FONTS, ICONS, MASTHEAD, masthead, THEME_JS, minCSS, pageTitle, shareTags, cardVersions, cardURL, describe });
+Object.assign(module.exports, { SITE, AUTHOR, FONTS, ICONS, MASTHEAD, masthead, THEME_JS, minCSS, pageTitle, shareTags, cardVersions, cardURL, describe, FT_MARK, footerCSS, staticFooter });

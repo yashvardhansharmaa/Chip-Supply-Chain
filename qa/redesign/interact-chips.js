@@ -210,11 +210,12 @@ const audited = async (t, tag) => { const a = await t.ev(AUDIT); say(!a.overflow
 
     /* ---------- a chip found elsewhere: a search result, and the Glossary's "On AI Chips" ---------- */
     {
-      let s = await tab(chrome, '#/suppliers', { width: 1440 });
+      // (Suppliers is a page of its own since 23 Nov 2026, so the result is a link to the home page's AI Chips, which opens the card)
+      let s = await tab(chrome, 'suppliers/', { width: 1440 });
       await s.click(`document.querySelector('.search-btn')`); await s.s('Input.insertText', { text: 'H20' }); await sleep(600);
-      await s.click(`[].slice.call(document.querySelectorAll('.cp-search-results a')).filter(function(a){return a.getAttribute('href')==='#/landscape?pick=nvidia-h20';})[0]`); await sleep(500);
-      let r = await s.ev(`({ hash: location.hash, h: (document.querySelector('#aic-card h2')||{}).textContent, top: document.getElementById('aic-card') ? Math.round(document.getElementById('aic-card').getBoundingClientRect().top) : -1 })`);
-      say(r.hash === '#/landscape?pick=nvidia-h20' && r.h === 'H20' && r.top > 0 && r.top < 900, `search: the H20's result opens its card on AI Chips, in view (${JSON.stringify(r)})`);
+      await s.click(`[].slice.call(document.querySelectorAll('.cp-search-results a')).filter(function(a){return new URL(a.getAttribute('href'),location.href).hash==='#/landscape?pick=nvidia-h20';})[0]`); await sleep(2800);
+      let r = await s.ev(`({ at: location.pathname, hash: location.hash, h: (document.querySelector('#aic-card h2')||{}).textContent, top: document.getElementById('aic-card') ? Math.round(document.getElementById('aic-card').getBoundingClientRect().top) : -1 })`);
+      say(r.at === '/' && r.hash === '#/landscape?pick=nvidia-h20' && r.h === 'H20' && r.top > 0 && r.top < 900, `search: from Suppliers' page, the H20's result opens its card on AI Chips, in view (${JSON.stringify(r)})`);
       say(!s.errors.length, `search: console clean ${s.errors.join(' | ')}`);
       await s.close();
       s = await tab(chrome, 'glossary/', { width: 1440 });

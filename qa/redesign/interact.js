@@ -1,19 +1,26 @@
 #!/usr/bin/env node
-/* The home page's hero, driven as a reader would (27 Oct 2026: the hero set back to the home's structure before the
-   redesign, qa/redesign/stage-home.md). The chain at a glance lists the stages, one row each: the name links to its
-   chapter, and the button at the row's end picks the stage's specimen for the stage beside it; a chokepoint's button carries the
-   chokepoint mark, any other stage's none (22 Nov 2026; until then the band's meter and word). Checked here, with DevTools
-   mouse and key events rather than script clicks:
-     - the counts and the sentence are the data's own (paragraphs = the walk's steps, the stage count, the chokepoint count);
-     - the chokepoints' rows (seven, counted from the cards' bands) carry the mark, an ink dot and the word, and no other row
-       carries a mark or a band word;
-     - every row's link goes to its chapter (static href and data-route) and is named as that chapter is;
-     - every row's button puts that chapter's specimen on the stage with its number and title, and marks that row alone;
-     - hovering a row's button picks it after a moment; crossing a name does not;
-     - the keyboard: one button in the Tab order, Tab runs name, button, next name; the arrow keys, Home and End move and pick;
-     - a click on a name opens the chapter, and Back returns to the home;
-     - a pick while the walk's first step has crossed the probe still shows on the stage (Sections.hold);
-     - the removed parts are gone (the bar chart, the hero's search field, the two link blocks) and the masthead search opens.
+/* The home page and the Introduction, driven as a reader would (23 Nov 2026: the home is the owner's "V", the drawing alone,
+   src/modules/frontispiece.js; the walk that ran under the old home's hero is the Introduction's page, /introduction/; until
+   then this script drove the old hero's chain at a glance). Checked with DevTools mouse, touch and key events rather than
+   script clicks:
+   The home (1440 and 390):
+     - the title, the subtitle and the one link to the Introduction, its minutes the walk's own;
+     - the menu: Intro first, no Home, no tab marked on the home, the wordmark named "Chip Supply Chain, home";
+     - fourteen objects drawn, a numbered callout for each stage and one for final test, each linking to its chapter; the solid
+       balloons are the stages the data rates Extreme (seven since the owner kept the 65 percent rule), and the key counts them
+       in the cards' own words;
+     - the two chapters across the chain, linked and named as the chapters are;
+     - the list of stages the drawing is made from (the page without scripts) stays out of sight, and no stage, rail or Back to
+       top shows beside the drawing;
+     - a laptop: pointing at a callout lights its stage (the object lifts, the lit row names it, marks a chokepoint, lists its
+       first three firms and one sentence its chapter states), the arrow keys walk the stages and turn the lit object, a drag
+       turns it and it eases back, a click opens the chapter;
+     - a phone: a first tap on a callout lights its stage and the lit row rides at the foot of the screen; the second opens it;
+     - the thin footer: one row, its "How to cite" toggle opens the citation and Escape closes it.
+   The Introduction (1440 and 390): its title and the read's length, the sixteen steps with the chokepoint mark on the
+   chokepoints alone, the flashcards and Other pages (no Home), Intro marked in the menu, the specimen beside the walk with its
+   chapter's labels and parts' names, and the old addresses: /#/walk/<chapter>, /#/intro, /intro/ and /summary/ land on it,
+   /home/ on the home.
    usage: node qa/redesign/interact.js [base] (default http://127.0.0.1:8766) */
 'use strict';
 const { launch, open, sleep } = require('./cdp.js');
@@ -23,128 +30,146 @@ const BASE = (process.argv[2] || 'http://127.0.0.1:8766').replace(/\/$/, '');
   const check = (name, ok, detail) => { out.push(`${ok ? 'ok  ' : 'FAIL'} ${name}${detail ? ': ' + detail : ''}`); if (!ok) bad++; };
   try {
     for (const width of [1440, 390]) {
-      const t = await open(chrome, BASE + '/#/', { width, wait: 2500 });
-      const tag = () => t.ev("(document.getElementById('stage-tag-text')||{}).textContent||''");
-      const key = async (k, code, vk, mods) => {
-        await t.s('Input.dispatchKeyEvent', { type: 'keyDown', key: k, code, windowsVirtualKeyCode: vk, modifiers: mods || 0 });
-        await t.s('Input.dispatchKeyEvent', { type: 'keyUp', key: k, code, windowsVirtualKeyCode: vk, modifiers: mods || 0 }); await sleep(250);
+      const phone = width < 900;
+      const t = await open(chrome, BASE + '/?shot=1', { width, wait: 3000 });
+      const key = async (k, code, vk) => {
+        await t.s('Input.dispatchKeyEvent', { type: 'keyDown', key: k, code, windowsVirtualKeyCode: vk });
+        await t.s('Input.dispatchKeyEvent', { type: 'keyUp', key: k, code, windowsVirtualKeyCode: vk }); await sleep(300);
       };
-      // the centre of an element, brought into view first if it is not on screen clear of the masthead and the phone's strip
-      const at = async (sel, i) => t.ev(`(function(){var e=document.querySelectorAll(${JSON.stringify(sel)})[${i || 0}],r=e.getBoundingClientRect(),top=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--masthead'))||64;if(r.top<top+8||r.bottom>innerHeight-170){e.scrollIntoView({block:'center'});r=e.getBoundingClientRect();}return {x:Math.round(r.left+r.width/2),y:Math.round(r.top+r.height/2)};})()`);
-      const move = async (p) => { await t.s('Input.dispatchMouseEvent', { type: 'mouseMoved', x: p.x, y: p.y }); };
-      const click = async (p) => {
-        await t.s('Input.dispatchMouseEvent', { type: 'mouseMoved', x: p.x, y: p.y });
-        await t.s('Input.dispatchMouseEvent', { type: 'mousePressed', x: p.x, y: p.y, button: 'left', clickCount: 1 });
-        await t.s('Input.dispatchMouseEvent', { type: 'mouseReleased', x: p.x, y: p.y, button: 'left', clickCount: 1 });
-      };
-      const shownRows = () => t.ev("[...document.querySelectorAll('.wk-gl-list li.is-shown')].map(li => li.querySelector('.wk-gl-n').textContent).join(',')");
+      const mouse = async (type, p, extra) => t.s('Input.dispatchMouseEvent', Object.assign({ type, x: p.x, y: p.y, button: type === 'mouseMoved' ? 'none' : 'left', clickCount: type === 'mouseMoved' ? 0 : 1 }, extra || {}));
+      const tap = async (p) => { await t.s('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x: p.x, y: p.y }] }); await sleep(60); await t.s('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] }); };
+      // the centre of a callout's balloon, brought on screen first
+      const ball = async (n) => t.ev(`(function(){var b=document.querySelector('.fx-co[data-n="${n}"] .fx-co-b'),r=b.getBoundingClientRect();if(r.top<120||r.bottom>innerHeight-200){b.scrollIntoView({block:'center'});r=b.getBoundingClientRect();}return {x:Math.round(r.left+r.width/2),y:Math.round(r.top+r.height/2)};})()`);
 
-      // the hero as built
+      // the home as built
       const facts = await t.ev(`(function(){
-        var rows = [...document.querySelectorAll('.wk-gl-list li')];
-        var want = ((window.CP_DATA || {}).chapters || []).filter(c => c.stage).map(c => c.concentration === 'Extreme' ? '1' : '0').join('');
-        return { rows: rows.length, x: rows.filter(r => r.dataset.cpk === '1').length, want: want,
-          marks: rows.map(r => { var m = r.querySelector('.wk-gl-c .cpk'); return m && m.textContent.trim() === 'Chokepoint' && getComputedStyle(m.querySelector('i')).borderRadius === '50%' && getComputedStyle(m).color === getComputedStyle(document.body).color ? '1' : (r.querySelector('.wk-gl-c').textContent.replace('Show its specimen', '').trim() ? '?' : '0'); }).join(''),
-          pickers: rows.filter(r => r.querySelector('button.wk-gl-c')).length, meters: document.querySelectorAll('.wk-gl .meter').length,
-          bandWords: /Extreme|High|concentration/.test(document.querySelector('.wk-gl').textContent), steps: document.querySelectorAll('.wk-step').length,
-          meta: document.querySelector('.wk-meta').textContent, sentence: document.querySelector('.wk-gl-p').textContent,
-          kicker: document.querySelector('.wk-gl-h').textContent, title: document.querySelector('.wk-title').textContent,
-          gone: ['.wk-ev', '.wk-stops', '.wk-stop', '#wk-q', '.wk-find', '.wk-way', '.wk-legend'].filter(s => document.querySelector(s)) };
+        var D = window.CP_DATA || {}, st = (D.chapters || []).filter(function (c) { return c.stage; });
+        var cos = [].slice.call(document.querySelectorAll('.fx-co')), solid = cos.filter(function (c) { return getComputedStyle(c.querySelector('.fx-co-b')).backgroundColor === getComputedStyle(document.body).color; });
+        var want = st.filter(function (c) { return c.concentration === 'Extreme'; }).map(function (c, i) { return c.id; });
+        var tabs = [].slice.call(document.querySelectorAll('.masthead .tabs a')).map(function (a) { return a.textContent.trim(); });
+        var intro = document.querySelector('.fx-intro a'), meta = null;
+        return { title: (document.querySelector('.fx-head .wk-title') || {}).textContent, dek: (document.querySelector('.fx-head .wk-dek') || {}).textContent,
+          intro: intro ? [intro.textContent, intro.getAttribute('href')] : null, tabs: tabs, current: document.querySelectorAll('.masthead .tabs a[aria-current]').length,
+          wordmark: document.querySelector('.wordmark').getAttribute('aria-label'), objs: document.querySelectorAll('.fx-objs canvas.fx-o').length,
+          objSized: [].slice.call(document.querySelectorAll('.fx-objs canvas.fx-o')).filter(function (c) { return c.width > 10 && c.height > 10; }).length,
+          cos: cos.length, links: cos.map(function (c) { return c.querySelector('a').getAttribute('href'); }),
+          solid: solid.map(function (c) { var a = c.querySelector('a').getAttribute('href'); return a.replace(/\\/$/, ''); }), want: want, stages: st.map(function (c) { return [c.id, c.title]; }),
+          key: (document.querySelector('.fx-key') || {}).textContent || '', across: [].slice.call(document.querySelectorAll('.fx-across a')).map(function (a) { return [a.getAttribute('href'), a.querySelector('.fx-ac-t').textContent]; }),
+          acrossWant: (D.chapters || []).filter(function (c) { return !c.stage; }).map(function (c) { return [c.id + '/', c.title]; }),
+          glance: getComputedStyle(document.querySelector('#wk-hero .wk-gl')).display, stage: getComputedStyle(document.querySelector('.stage')).display,
+          rail: !!document.querySelector('#wk-rail'), toTop: getComputedStyle(document.querySelector('.to-top')).display };
       })()`);
-      check(`${width}: the title, then the counts of the read`, facts.title === 'How AI chips are made' && new RegExp('^' + facts.steps + ' paragraphs[\\d,]+ wordsabout \\d+ min$').test(facts.meta), facts.meta);
-      check(`${width}: the kicker and the sentence, computed`, facts.kicker === 'The chain at a glance' && facts.sentence === `${facts.x} of the ${facts.rows} stages are chokepoints: three or fewer firms can supply each, or one firm holds more than 65 percent.`, facts.sentence);
-      check(`${width}: fourteen rows, the chokepoints counted from the data (seven since the owner kept the 65 percent rule, 23 Nov 2026), each the stage the data rates Extreme`, facts.rows === 14 && facts.x === facts.want.split('').filter((c) => c === '1').length && facts.x === 7 && facts.marks === facts.want, `${facts.rows} rows, ${facts.x} chokepoints, marks ${facts.marks}, want ${facts.want}`);
-      check(`${width}: every row keeps its specimen button, no meter and no band word is left`, facts.pickers === 14 && facts.meters === 0 && !facts.bandWords, JSON.stringify({ pickers: facts.pickers, meters: facts.meters, bandWords: facts.bandWords }));
-      check(`${width}: the bar chart, the hero's search field and the two link blocks are gone`, !facts.gone.length, facts.gone.join(' '));
+      check(`${width}: the title, the subtitle and the link to the Introduction`, facts.title === 'How AI chips are made' && facts.dek === 'An introduction to the entire semiconductor supply chain.' && !!facts.intro && /^Read the \d+-minute introduction$/.test(facts.intro[0]) && facts.intro[1] === 'introduction/', JSON.stringify(facts.intro));
+      check(`${width}: the menu has Intro first and no Home, nothing marked on the home, and the wordmark is the way home`, facts.tabs[0] === 'Intro' && facts.tabs.indexOf('Home') < 0 && facts.tabs.join('|') === 'Intro|Supply Chain|AI Chips|Suppliers|Export Controls|Glossary' && facts.current === 0 && facts.wordmark === 'Chip Supply Chain, home', JSON.stringify({ tabs: facts.tabs, current: facts.current, wordmark: facts.wordmark }));
+      check(`${width}: fourteen objects drawn`, facts.objs === 14 && facts.objSized === 14, `${facts.objs} canvases, ${facts.objSized} drawn`);
+      const wantLinks = facts.stages.map((s) => s[0] + '/'); wantLinks.splice(12, 0, 'test-and-assembly/');
+      check(`${width}: a callout for each stage and one for final test, each linking to its chapter`, facts.cos === 15 && JSON.stringify(facts.links) === JSON.stringify(wantLinks), facts.links.join(' '));
+      const solidIds = facts.solid.filter((h, i, a) => a.indexOf(h) === i);
+      check(`${width}: the solid balloons are the stages the data rates Extreme (seven)`, JSON.stringify(solidIds) === JSON.stringify(facts.want) && facts.want.length === 7, solidIds.join(' '));
+      check(`${width}: the key counts the chokepoints in the cards' own words`, facts.key.indexOf(`${facts.want.length} of the ${facts.stages.length} stages are chokepoints: three or fewer firms can supply each, or one firm holds more than 65 percent.`) === 0 && /Objects drawn at different scales\.$/.test(facts.key), facts.key);
+      check(`${width}: the two chapters across the chain, linked and named as the chapters are`, JSON.stringify(facts.across) === JSON.stringify(facts.acrossWant), JSON.stringify(facts.across));
+      check(`${width}: the list of stages stays out of sight, and no stage, rail or Back to top shows beside the drawing`, facts.glance === 'none' && facts.stage === 'none' && !facts.rail && facts.toTop === 'none', JSON.stringify({ glance: facts.glance, stage: facts.stage, rail: facts.rail, toTop: facts.toTop }));
 
-      // the stage opens on chip design, its row the one marked
-      check(`${width}: the stage opens on 01 Chip Design`, /01 · Chip Design/.test(await tag()), await tag());
-      check(`${width}: row 01 alone is marked`, (await shownRows()) === '01', await shownRows());
-      check(`${width}: Tab reaches the list before the specimen`, await t.ev("!!(document.querySelector('.wk-gl-list').compareDocumentPosition(document.getElementById('stage-canvas')) & Node.DOCUMENT_POSITION_FOLLOWING)"));
-      if (width > 900) {
-        const gap = await t.ev("(function(){var c=document.getElementById('stage-canvas').getBoundingClientRect(),e=CP.Stage.reach(CP.Stage.cur),g=document.querySelector('.stage .stage-tag').getBoundingClientRect();return Math.round(g.top-(c.top+e.bottom));})()");
-        check(`${width}: the caption sits right under the drawing`, gap >= 0 && gap <= 40, gap + ' px between the drawing\'s lowest point and the caption');
+      // lighting a stage: the object lifts, the lit row names it, marks a chokepoint, lists its firms and one sentence its chapter states
+      const lit = (i) => t.ev(`(function(){
+        var D = window.CP_DATA || {}, st = (D.chapters || []).filter(function (c) { return c.stage; }), c = st[${i}], f = document.querySelector('.fx-facts');
+        var line = (document.querySelector('.fx-f1-one') || {}).textContent || '', norm = function (s) { return String(s || '').replace(/[’‘]/g, "'"); };
+        return { n: f.getAttribute('data-n'), t: (document.querySelector('.fx-f1-t') || {}).textContent, href: (document.querySelector('.fx-f1-t') || { getAttribute: function () { return ''; } }).getAttribute('href'),
+          mark: !!document.querySelector('.fx-f1-m .fx-f1-w'), choke: c.concentration === 'Extreme', firms: (document.querySelector('.fx-f1-firms') || {}).textContent,
+          want: (c.leaders || []).slice(0, 3).map(function (l) { return l.name; }).join(', '), title: c.title, id: c.id, line: line,
+          stated: !!line && (norm(c.oneLiner).indexOf(norm(line)) >= 0 || norm(c.plain).indexOf(norm(line)) >= 0),
+          lift: window.FX ? window.FX.objs[${i}].lift : null, sticky: getComputedStyle(f).position, fb: Math.round(f.getBoundingClientRect().bottom), vh: innerHeight };
+      })()`);
+      if (!phone) {
+        const wrongLit = [];
+        for (let i = 0; i < 14; i++) {
+          const n = String(i + 1).padStart(2, '0');
+          await mouse('mouseMoved', await ball(n)); await sleep(i ? 300 : 900);
+          const L = await lit(i);
+          if (L.n !== n || L.t !== L.title || L.href !== L.id + '/' || L.mark !== L.choke || L.firms !== L.want || !L.stated) wrongLit.push(`${n} ${JSON.stringify(L)}`);
+          if (i === 0) check(`${width}: pointing at a callout lifts its object`, L.lift > 0.5, String(L.lift));
+        }
+        check(`${width}: each stage lights its row: name and link, the chokepoint mark on chokepoints alone, its first three firms, one sentence its chapter states`, !wrongLit.length, wrongLit.slice(0, 3).join(' | '));
+        // the keyboard: focus a callout, Down walks the stages, Right turns the lit object, which eases back
+        await t.ev("(document.querySelector('.fx-co[data-n=\"04\"] a').focus(), 1)"); await sleep(900);
+        check(`${width}: a focused callout lights its stage`, (await lit(3)).n === '04');
+        await key('ArrowDown', 'ArrowDown', 40); await sleep(600);
+        check(`${width}: Down walks to the next stage`, (await lit(4)).n === '05' && await t.ev("document.activeElement === document.querySelector('.fx-co[data-n=\"05\"] a')"));
+        await t.s('Input.dispatchKeyEvent', { type: 'keyDown', key: 'ArrowRight', code: 'ArrowRight', windowsVirtualKeyCode: 39 }); await sleep(200);
+        const yawK = await t.ev('window.FX.objs[4].yaw');
+        await t.s('Input.dispatchKeyEvent', { type: 'keyUp', key: 'ArrowRight', code: 'ArrowRight', windowsVirtualKeyCode: 39 }); await sleep(2200);
+        check(`${width}: Right turns the lit object and it eases back`, Math.abs(yawK) > 0.05 && Math.abs(await t.ev('window.FX.objs[4].yaw')) < 0.01, `turned ${yawK.toFixed ? yawK.toFixed(3) : yawK}`);
+        // a drag on the lit object turns it, and it eases back on release (the labels-free sheet: the object itself)
+        await t.ev('(document.activeElement.blur(), 1)');
+        const objP = await t.ev("(function(){var o=window.FX.objs[7],r=o.cv.getBoundingClientRect();return {x:Math.round(r.left+r.width/2),y:Math.round(r.top+r.height*0.6)};})()");
+        await mouse('mouseMoved', objP); await sleep(900);
+        await mouse('mousePressed', objP); await sleep(60);
+        for (let k = 1; k <= 6; k++) { await mouse('mouseMoved', { x: objP.x + k * 14, y: objP.y }, { buttons: 1 }); await sleep(40); }
+        const yawD = await t.ev('window.FX.objs[7].yaw');
+        await mouse('mouseReleased', { x: objP.x + 84, y: objP.y }); await sleep(1200);
+        check(`${width}: a drag turns the lit object and it eases back on release`, Math.abs(yawD) > 0.1 && Math.abs(await t.ev('window.FX.objs[7].yaw')) < 0.01 && (await lit(7)).n === '08', `turned ${typeof yawD === 'number' ? yawD.toFixed(3) : yawD}`);
+        // a click on a callout opens its chapter
+        const p = await ball('09');
+        await mouse('mouseMoved', p); await sleep(300); await mouse('mousePressed', p); await mouse('mouseReleased', p); await sleep(2500);
+        check(`${width}: a click on a callout opens its chapter`, await t.ev("location.pathname === '/memory-and-hbm/'"), await t.ev('location.pathname'));
+        await t.ev('(history.back(), 1)'); await sleep(2500);
+      } else {
+        // a phone: a first tap lights the stage, the lit row rides at the foot of the screen; a second tap opens the chapter
+        const p = await ball('04'); await sleep(300);
+        await tap(p); await sleep(1200);
+        const L = await lit(3);
+        check(`${width}: a first tap on a callout lights its stage and stays on the home`, L.n === '04' && L.t === L.title && L.mark === L.choke && L.stated && await t.ev("location.pathname === '/'"), JSON.stringify({ n: L.n, t: L.t }));
+        check(`${width}: the lit row rides at the foot of the screen`, L.sticky === 'sticky' && Math.abs(L.fb - L.vh) <= 2, `${L.sticky}, bottom ${L.fb} of ${L.vh}`);
+        const hit = await t.ev("(function(){var a=document.querySelector('.fx-co[data-n=\"06\"] .fx-co-a'),s=getComputedStyle(a,'::before'),r=a.getBoundingClientRect();return Math.round(r.height+parseFloat(s.getPropertyValue('--hit-t')||14)+parseFloat(s.getPropertyValue('--hit-b')||14));})()");
+        check(`${width}: a callout's target is at least 44 px tall where nothing stands close above or below it`, hit >= 44, hit + ' px');
+        await tap(await ball('04')); await sleep(2500);
+        check(`${width}: a second tap opens its chapter`, await t.ev("location.pathname === '/lithography/'"), await t.ev('location.pathname'));
+        await t.ev('(history.back(), 1)'); await sleep(2500);
       }
 
-      // every link goes to its chapter, named as the chapter is
-      const links = await t.ev(`[...document.querySelectorAll('.wk-gl-list li')].map(function (li) {
-        var a = li.querySelector('a.wk-gl-a'), id = (a.getAttribute('data-route') || '').replace(/^#/, ''), art = document.getElementById(id);
-        var h = art && art.querySelector('.ch-title'), name = h ? h.textContent.replace(/^Chapter \\d+: /, '') : '';
-        return { id: id, href: a.getAttribute('href'), t: li.querySelector('.wk-gl-t').textContent, name: name, spec: art ? art.getAttribute('data-specimen') : '' };
-      })`);
-      const badLinks = links.filter((l) => !l.id || l.href !== l.id + '/' || l.t !== l.name);
-      check(`${width}: every name links to its chapter (href and data-route) and is named as it`, !badLinks.length, badLinks.map((l) => l.t + ' -> ' + l.href + ' / #' + l.id + ' (' + l.name + ')').join('; '));
-
-      // every button picks its stage's specimen, by a real click, and marks its row alone
-      const wrong = [];
-      for (let i = 0; i < links.length; i++) {
-        await click(await at('.wk-gl-c', i)); await sleep(350);
-        const n = String(i + 1).padStart(2, '0'), tg = await tag(), cur = await t.ev("(CP.Stage.cur||{}).name||''"), rows = await shownRows();
-        if (!tg.includes(n + ' · ' + links[i].t) || cur !== links[i].spec || rows !== n) wrong.push(`${n}: tag "${tg}", specimen ${cur} (want ${links[i].spec}), marked ${rows}`);
-      }
-      check(`${width}: every row's button puts its own specimen on the stage and marks that row alone`, !wrong.length, wrong.join('; '));
-
-      // hover (a laptop): resting on a row's button picks it; crossing a name does not
-      if (width > 900) {
-        await t.ev('(window.scrollTo(0,0), 1)'); await sleep(300);
-        await move(await at('.wk-gl-t', 5)); await sleep(400);
-        check(`${width}: resting on a name does not pick`, /14 · Data Centers/.test(await tag()), await tag());
-        await move(await at('.wk-gl-c', 4)); await sleep(60); await move(await at('.wk-gl-c', 5)); await sleep(400);
-        check(`${width}: resting on a row's button picks it; passing over one does not`, /06 · Deposition/.test(await tag()) && (await shownRows()) === '06', await tag());
-      }
-
-      // the keyboard
-      await t.ev("(window.scrollTo(0,0), document.querySelectorAll('.wk-gl-a')[1].focus(), 1)");
-      await key('Tab', 'Tab', 9);
-      const after2 = await t.ev("document.activeElement.className + ' ' + (document.activeElement.textContent||'').trim().slice(0,30)");
-      check(`${width}: Tab from a name goes to the next name when its row is not picked`, /wk-gl-a/.test(after2) && /03/.test(after2), after2);
-      check(`${width}: one button in the Tab order, the picked one`, await t.ev("[...document.querySelectorAll('.wk-gl-c')].filter(b => b.tabIndex === 0).length === 1 && document.querySelector('.wk-gl-c[tabindex=\"0\"]').getAttribute('aria-pressed') === 'true'"));
-      const picked = await t.ev("[...document.querySelectorAll('.wk-gl-c')].findIndex(b => b.tabIndex === 0)");
-      await t.ev(`(document.querySelectorAll('.wk-gl-a')[${picked}].focus(), 1)`);
-      await key('Tab', 'Tab', 9);
-      check(`${width}: Tab from the picked row's name reaches its button`, await t.ev(`document.activeElement === document.querySelectorAll('.wk-gl-c')[${picked}]`));
-      await key('Home', 'Home', 36);
-      check(`${width}: Home picks 01 and focuses it`, /01 · Chip Design/.test(await tag()) && await t.ev("document.activeElement === document.querySelectorAll('.wk-gl-c')[0]"), await tag());
-      await key('ArrowDown', 'ArrowDown', 40);
-      check(`${width}: ArrowDown moves to 02, picks it and focuses it`, /02 · Silicon/.test(await tag()) && await t.ev("document.activeElement === document.querySelectorAll('.wk-gl-c')[1]") && (await shownRows()) === '02', await tag());
-      await key('End', 'End', 35);
-      check(`${width}: End picks 14`, /14 · Data Centers/.test(await tag()) && (await shownRows()) === '14', await tag());
-      await key('ArrowUp', 'ArrowUp', 38);
-      check(`${width}: ArrowUp moves back to 13`, /13 · Systems/.test(await tag()), await tag());
-      await key('Tab', 'Tab', 9);
-      check(`${width}: Tab from the button goes on to the next name`, await t.ev("document.activeElement === document.querySelectorAll('.wk-gl-a')[13]"), await t.ev("document.activeElement.className"));
-      await key('Enter', 'Enter', 13); await sleep(1500);
-      check(`${width}: Enter on a name opens its chapter`, await t.ev("location.hash === '#data-centers-and-power' && !document.querySelector('.view[data-view=\"stack\"]').hidden"), await t.ev('location.hash'));
-      await t.ev('(history.back(), 1)'); await sleep(1500);
-      check(`${width}: Back returns to the home`, await t.ev("!document.querySelector('.view[data-view=\"walk\"]').hidden"), await t.ev('location.hash'));
-
-      // a mouse click on a name opens the chapter
-      await t.ev('(window.scrollTo(0,0), 1)'); await sleep(300);
-      await click(await at('.wk-gl-t', 3)); await sleep(1500);
-      check(`${width}: a click on a name opens its chapter`, await t.ev("location.hash === '#lithography' && !document.querySelector('.view[data-view=\"stack\"]').hidden"), await t.ev('location.hash'));
-      await t.ev("(location.hash = '#/', 1)"); await sleep(1200);
-
-      // a pick once the walk's first step has crossed the probe still shows (Sections.hold); scrolling past the hero gives the stage back
-      const yStep = await t.ev("(function(){var vh=innerHeight,probe=CP.narrow()?vh*0.55:vh*0.42,s=document.querySelector('.wk-step').getBoundingClientRect().top+scrollY;return Math.round(s-probe+30);})()");
-      await t.ev(`(document.documentElement.style.scrollBehavior='auto', window.scrollTo(0, ${yStep}), 1)`); await sleep(600);
-      const tagWalk = await tag();
-      const lastShown = await t.ev("(function(){var r=document.querySelectorAll('.wk-gl-c')[12].getBoundingClientRect();return r.top > parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--masthead')) && r.bottom < innerHeight;})()");
-      if (lastShown) {
-        const p = await t.ev("(function(){var r=document.querySelectorAll('.wk-gl-c')[12].getBoundingClientRect();return {x:Math.round(r.left+r.width/2),y:Math.round(r.top+r.height/2)};})()");
-        await click(p); await sleep(400);
-        check(`${width}: with the walk begun under it, a pick still shows`, /13 · Systems/.test(await tag()) && (await shownRows()) === '13', `before: ${tagWalk}; after: ${await tag()}`);
-        await t.ev("(window.scrollTo(0, document.querySelector('.wk-step:nth-child(3)').getBoundingClientRect().top + scrollY - 200), 1)"); await sleep(600);
-        check(`${width}: past the hero the walk has the stage again`, !/13 · Systems/.test(await tag()), await tag());
-      } else check(`${width}: with the walk begun under it, a pick still shows`, true, 'no row on screen there at this width (skipped)');
-
-      // search from the masthead
-      await t.ev('(window.scrollTo(0,0), 1)'); await sleep(300);
-      await click(await t.ev("(function(){var r=document.querySelector('.search-btn').getBoundingClientRect();return {x:Math.round(r.left+r.width/2),y:Math.round(r.top+r.height/2)};})()")); await sleep(500);
-      check(`${width}: the masthead search opens`, await t.ev("!document.getElementById('cp-search').hidden"));
+      // the thin footer: one row, How to cite opens the citation, Escape closes it
+      await t.ev('(document.documentElement.style.scrollBehavior="auto", window.scrollTo(0, document.documentElement.scrollHeight), 1)'); await sleep(600);
+      const ft = await t.ev("(function(){var f=document.querySelector('.view[data-view=\"walk\"] .site-footer'),b=f.querySelector('.ft-cite-btn'),r=b.getBoundingClientRect();return {row:f.classList.contains('ft-row'),label:b.textContent,shown:!b.hidden,x:Math.round(r.left+r.width/2),y:Math.round(r.top+r.height/2),h:Math.round(f.getBoundingClientRect().height)};})()");
+      check(`${width}: the thin footer, its toggle named and shown`, ft.row && ft.label === 'How to cite' && ft.shown && ft.h <= (phone ? 120 : 64), JSON.stringify(ft));
+      await mouse('mousePressed', ft); await mouse('mouseReleased', ft); await sleep(400);
+      check(`${width}: How to cite opens the citation under it`, await t.ev("(function(){var f=document.querySelector('.view[data-view=\"walk\"] .site-footer'),b=f.querySelector('.ft-cite-btn'),p=document.getElementById(b.getAttribute('aria-controls'));return b.getAttribute('aria-expanded')==='true'&&!p.hidden&&p.querySelectorAll('pre').length===2&&/Sharma, Yashvardhan/.test(p.textContent);})()"));
       await key('Escape', 'Escape', 27);
-
-      t.errors.forEach((e) => check(`${width}: page error`, false, e));
+      check(`${width}: Escape closes it`, await t.ev("document.querySelector('.view[data-view=\"walk\"] .ft-cite-btn').getAttribute('aria-expanded')==='false'"));
+      t.errors.forEach((e) => check(`${width}: page error on the home`, false, e));
       await t.close();
+
+      // the Introduction
+      const u = await open(chrome, BASE + '/introduction/', { width, wait: 3000 });
+      const intro = await u.ev(`(function(){
+        var steps = [].slice.call(document.querySelectorAll('.wk-step')), marks = steps.filter(function (s) { return !!s.querySelector('.wk-foot .cpk'); }).map(function (s) { return s.id.replace('/walk/', ''); });
+        var tabs = [].slice.call(document.querySelectorAll('.masthead .tabs a')).map(function (a) { return a.textContent.trim(); });
+        return { title: document.querySelector('.wk-title').textContent, meta: document.querySelector('.wk-meta').textContent, steps: steps.length, marks: marks,
+          deck: !!document.getElementById('intro--flashcards'), other: [].slice.call(document.querySelectorAll('.wk-tabs a .wk-tab')).map(function (b) { return b.textContent; }),
+          tabs: tabs, cur: (document.querySelector('.masthead .tabs a[aria-current]') || {}).textContent, doc: document.title, view: document.documentElement.getAttribute('data-view'),
+          stage: CP.Stage.cur && CP.Stage.cur.name, labels: CP.Stage.cur ? CP.Stage.cur.pl.m.callouts.length : 0, mode: JSON.stringify(CP.Stage.mode()) };
+      })()`);
+      check(`${width}: the Introduction's title and the read's length`, intro.title === 'Introduction' && /^[\d,]+ wordsabout \d+ min$/.test(intro.meta) && intro.doc === 'Introduction · Chip Supply Chain', `${intro.meta} / ${intro.doc}`);
+      check(`${width}: sixteen steps, the chokepoint mark on the seven chokepoints alone`, intro.steps === 16 && JSON.stringify(intro.marks) === JSON.stringify(facts.want), intro.marks.join(' '));
+      check(`${width}: the flashcards and Other pages, with no Home`, intro.deck && intro.other.join('|') === 'Supply Chain|AI Chips|Suppliers|Export Controls|Glossary', intro.other.join('|'));
+      check(`${width}: Intro is marked in the menu`, intro.cur === 'Intro' && intro.tabs.indexOf('Home') < 0, intro.cur);
+      if (!phone) {
+        check(`${width}: the specimen beside the walk opens on chip design, with its labels`, intro.view === 'walk' && intro.stage === 'die-floorplan' && intro.labels > 0 && !/noLabels/.test(intro.mode), JSON.stringify({ stage: intro.stage, mode: intro.mode }));
+        await u.ev("(function(){var e=document.getElementById('/walk/lithography');document.documentElement.style.scrollBehavior='auto';window.scrollTo(0,e.getBoundingClientRect().top+scrollY-120);window.dispatchEvent(new Event('scroll'));return 1;})()"); await sleep(1800);
+        const litho = await u.ev("({name:CP.Stage.cur.name, names:CP.Stage.cur.pl.m.callouts.map(function(c){return c.text;}).join('|')})");
+        check(`${width}: at step 04 the EUV scanner shows, its numbered parts named as the chapter names them`, litho.name === 'euv-scanner' && /Light source/i.test(litho.names), litho.names);
+      }
+      u.errors.forEach((e) => check(`${width}: page error on the Introduction`, false, e));
+      await u.close();
+    }
+
+    // the old addresses
+    for (const [from, want] of [['/#/walk/lithography', '/introduction/#/walk/lithography'], ['/#/intro', '/introduction/'], ['/intro/', '/introduction/'], ['/summary/', '/introduction/'], ['/home/', '/']]) {
+      const v = await open(chrome, BASE + from, { width: 1440, wait: 3000 });
+      const at = await v.ev('location.pathname + location.hash');
+      let landed = true;
+      if (/walk\/lithography/.test(want)) landed = await v.ev("(function(){var e=document.getElementById('/walk/lithography'),t=e.getBoundingClientRect().top;return t>40&&t<260;})()");
+      check(`${from} lands on ${want}`, at === want && landed, at);
+      await v.close();
     }
   } finally { await chrome.close(); }
   console.log(out.join('\n')); console.log(bad ? `\n${bad} failed` : '\nall passed'); process.exit(bad ? 1 : 0);

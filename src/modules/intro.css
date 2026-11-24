@@ -1,0 +1,17 @@
+/* The Introduction's page, introduction/ (23 Nov 2026; built into the site from the approved mock,
+   dist/mock/home2/introduction/_src/intro.css on the plates-polish worktree). The walk and its chokepoint marks are the walk's
+   own (src/modules/walk.css, src/styles.css .cpk); these rules are the page's head and its labelled specimen. */
+/* the page head: the title, the intro line, the walk's length */
+html[data-page="introduction"] #wk-hero { padding-bottom: 8px; }
+
+/* the specimen beside the walk carries its chapter's labels (src/modules/intro.js). On a wide screen the stage keeps its labels
+   inside the page's margins: its content stands between 16 px from its left edge and the masthead's right edge (the drawing
+   ran to the window's edge when it had no labels), and starts clear under the "Back to top" pill (masthead + 14 px, 36 px
+   tall). The tag and caption share the drawing's centre; the tag stands under the lower of the drawing and its labels. */
+@media (min-width: 901px) {
+  html[data-page="introduction"] .stage { box-sizing: border-box; padding-top: 58px; padding-left: 16px; padding-right: var(--margin); }
+  /* (its height is the plate's own, set by intro.js; it still gives way first on a short window) */
+  html[data-page="introduction"] .stage canvas { aspect-ratio: auto; }
+  html[data-page="introduction"][data-view="walk"] .stage .stage-tag, html[data-page="introduction"] .stage .stage-tag { margin-left: 0; margin-right: 0; }
+  html[data-page="introduction"][data-view="walk"] .stage figcaption, html[data-page="introduction"] .stage figcaption { margin-left: 0; margin-right: 0; }
+}

@@ -10,6 +10,11 @@
    23 Nov 2026: each firm's market position (Dominant, Major, Challenger, One of many, from the data's Critical, Important,
    Contested and Diversified): the top figure, the filter, the key, a segment's count and the table's cells, every word read
    from the app (Suppliers.POSITION) and every count from the data.
+   23 Nov 2026, later: Suppliers is a page of its own, /suppliers/, the interactive page itself with the route map first under
+   the title (owner: "It should not be optional"): no "Open the interactive page", the four market positions defined in one
+   band under the key (the words the app's hover titles carry), every firm in the HTML for reading without scripts but out of
+   sight once the list is built, the addresses on its own page (an old /#/suppliers link lands there), and the static page's
+   old anchors landing on the same firm, segment, country or band.
    usage: node qa/redesign/interact-suppliers.js [base] (default http://127.0.0.1:8766) */
 'use strict';
 const { launch, open, sleep } = require('./cdp.js');
@@ -22,14 +27,18 @@ const WINE = 'rgb(122, 31, 43)', GRAY = 'rgb(210, 209, 204)', INK = 'rgb(23, 23,
   try {
     // no two numbered stops touch, at every width that numbers them
     for (const width of [768, 1024, 1200, 1280, 1440]) {
-      const t = await open(chrome, BASE + '/#/suppliers', { width, wait: 2000 });
+      const t = await open(chrome, BASE + '/suppliers/', { width, wait: 2000 });
       const hits = await t.ev(`(function(){var r=[...document.querySelectorAll('.atlas .sa-stop')].map(function(a){return [a.textContent, a.getBoundingClientRect()];}), o=[];
         for (var i=0;i<r.length;i++) for (var j=i+1;j<r.length;j++){var a=r[i][1],b=r[j][1];if(a.right>b.left+0.5&&b.right>a.left+0.5&&a.bottom>b.top+0.5&&b.bottom>a.top+0.5)o.push(r[i][0]+'x'+r[j][0]);}return o.join(' ');})()`);
       check(`${width}: no two route stops overlap`, !hits, hits);
       await t.close();
     }
     for (const width of [1440, 390]) {
-      const t = await open(chrome, BASE + '/#/suppliers', { width, wait: 2500 });
+      const t = await open(chrome, BASE + '/suppliers/', { width, wait: 2500 });
+      // the page is the interactive one: the route map first under the title and the counts, nothing that makes it optional
+      const first = await t.ev("(function(){var v=document.querySelector('.view[data-view=\"suppliers\"]'),h=v.querySelector('.vt'),m=v.querySelector('#the-route');var kids=[].filter.call(v.children,function(e){return e.getClientRects().length;});var i=kids.findIndex(function(e){return e.contains(m)||e===m;});return {path:location.pathname,h1:h&&h.textContent,afterHead:kids.slice(1,i).map(function(e){return e.className;}),btn:/interactive page/i.test(document.body.textContent),staticShown:getComputedStyle(document.querySelector('.sup-static')).display};})()");
+      check(`${width}: /suppliers/ is the interactive page, the route map first under the title and its counts`, first.path === '/suppliers/' && first.h1 === 'Suppliers' && first.afterHead.length === 0 && !first.btn, JSON.stringify(first));
+      check(`${width}: the firm list for reading without scripts is out of sight once the list is built`, first.staticShown === 'none', first.staticShown);
       check(`${width}: the page reads route, ribbons, then the firms`, await t.ev("(function(){var a=document.getElementById('the-route'),b=document.getElementById('sup-pipe'),c=document.getElementById('sup-reg');return !!(a.compareDocumentPosition(b)&Node.DOCUMENT_POSITION_FOLLOWING)&&!!(b.compareDocumentPosition(c)&Node.DOCUMENT_POSITION_FOLLOWING);})()"));
       check(`${width}: the four counts`, /226/.test(await t.ev("document.querySelector('.sup-facts-row').textContent")), await t.ev("document.querySelector('.sup-facts-row').innerText.replace(/\\s+/g,' ')"));
       // the market positions (23 Nov 2026): every word and count from the app (Suppliers.POSITION, LEVELS) and the data, none typed here
@@ -39,6 +48,8 @@ const WINE = 'rgb(122, 31, 43)', GRAY = 'rgb(210, 209, 204)', INK = 'rgb(23, 23,
       check(`${width}: the top figure counts the dominant firms from the data`, fig[3][0] === POS.word.Critical && +fig[3][1] === POS.n.Critical, JSON.stringify(fig[3]));
       const sel = await t.ev("[].map.call(document.querySelectorAll('#sup-chk option'),function(o){return [o.value,o.textContent];})");
       check(`${width}: the filter reads All market positions, then each position, filtering on the data's values`, JSON.stringify(sel) === JSON.stringify([['', 'All market positions']].concat(POS.levels.map((l) => [l, POS.word[l]]))) && (await t.ev("document.getElementById('sup-chk').getAttribute('aria-label')")) === 'Filter by market position', JSON.stringify(sel));
+      const defs = await t.ev("[].map.call(document.querySelectorAll('#sup-defs > div'),function(d){return [d.querySelector('dt').textContent,d.querySelector('dd').textContent,getComputedStyle(d.querySelector('dt')).fontFamily.split(',')[0]];})");
+      check(`${width}: the four market positions defined in one band under the key, in the interface type, in the words of the hover titles`, JSON.stringify(defs.map((d) => [d[0], d[1]])) === JSON.stringify(POS.levels.map((l) => [POS.word[l], POS.def[l]])) && defs.every((d) => /Hanken/.test(d[2])) && await t.ev("!!(document.getElementById('sup-key').compareDocumentPosition(document.getElementById('sup-defs')) & Node.DOCUMENT_POSITION_FOLLOWING)"), JSON.stringify(defs));
       check(`${width}: the key names the positions`, (await t.ev("document.getElementById('sup-key').textContent")) === POS.word.Critical + POS.word.Important + ' or ' + POS.word.Contested.toLowerCase() + POS.word.Diversified, await t.ev("document.getElementById('sup-key').textContent"));
       const rung = await t.ev("(function(){var r=document.querySelector('#sup-ladder .sup-rung'),cat=r.querySelector('.sup-rung-name').textContent,D=window.CP.DATA||window.CP_DATA;return {cat:cat,n:(D.suppliers||[]).filter(function(x){return x.category===cat&&x.chokepoint==='Critical';}).length,txt:(r.querySelector('.sup-crit-n')||{}).textContent||''};})()");
       check(`${width}: a segment counts its dominant firms`, rung.txt === (rung.n ? rung.n + ' ' + POS.word.Critical.toLowerCase() : ''), JSON.stringify(rung));
@@ -102,14 +113,27 @@ const WINE = 'rgb(122, 31, 43)', GRAY = 'rgb(210, 209, 204)', INK = 'rgb(23, 23,
       await t.close();
     }
     // the addresses
-    const a = await open(chrome, BASE + '/#/suppliers?tab=country', { width: 1440, wait: 2500 });
+    const z = await open(chrome, BASE + '/#/suppliers', { width: 1440, wait: 2500 });
+    check('an old /#/suppliers link lands on /suppliers/', await z.ev("location.pathname === '/suppliers/' && !document.querySelector('.view[data-view=\"suppliers\"]').hidden"), await z.ev('location.pathname + location.hash'));
+    await z.close();
+    // the static page's old anchors (until 23 Nov 2026) land on the same thing in the interactive page
+    const f = await open(chrome, BASE + '/suppliers/#lam-research', { width: 1440, wait: 3500 });
+    check('/suppliers/#lam-research opens Lam Research on the list', await f.ev("(function(){var b=document.activeElement;return !!b&&/Lam Research/.test(b.textContent)&&b.getAttribute('aria-expanded')==='true'&&b.getBoundingClientRect().top>0&&b.getBoundingClientRect().top<innerHeight;})()"), await f.ev("(document.activeElement||{}).textContent"));
+    await f.close();
+    const g = await open(chrome, BASE + '/suppliers/#country-jp', { width: 1440, wait: 3500 });
+    check('/suppliers/#country-jp chooses Japan on the route', await g.ev("document.querySelector('.sa-role[data-cc=\"JP\"]').getAttribute('aria-pressed') === 'true'"));
+    await g.close();
+    const k = await open(chrome, BASE + '/suppliers/#pos-k', { width: 1440, wait: 3500 });
+    check('/suppliers/#pos-k lands on the market positions', await k.ev("(function(){var t=document.getElementById('sup-defs').getBoundingClientRect().top;return t>40&&t<200;})()"), await k.ev("Math.round(document.getElementById('sup-defs').getBoundingClientRect().top)"));
+    await k.close();
+    const a = await open(chrome, BASE + '/suppliers/#/suppliers?tab=country', { width: 1440, wait: 2500 });
     check('#/suppliers?tab=country opens By country', await a.ev("!document.getElementById('sup-ladder-cc').hidden && document.querySelector('.sup-tabs a[aria-current]').getAttribute('data-tab') === 'country'"));
     await a.close();
     const b = await open(chrome, BASE + '/#/suppliers?tab=country&group=eu', { width: 1440, wait: 3000 });
     check("the Glossary's EU-27 address lists the EU-27 members' firms", /EU-27 members/.test(await b.ev("document.getElementById('sup-count').textContent")), await b.ev("document.getElementById('sup-count').textContent"));
     check('...and lands on them', Math.abs(await b.ev("Math.round(document.getElementById('sup-reg').getBoundingClientRect().top)")) < 200, await b.ev("Math.round(document.getElementById('sup-reg').getBoundingClientRect().top)"));
     await b.close();
-    const c = await open(chrome, BASE + '/#/suppliers?country=JP', { width: 1440, wait: 3000 });
+    const c = await open(chrome, BASE + '/suppliers/#/suppliers?country=JP', { width: 1440, wait: 3000 });
     check('#/suppliers?country=JP chooses Japan on the route', await c.ev("document.querySelector('.sa-role[data-cc=\"JP\"]').getAttribute('aria-pressed') === 'true' && !document.querySelector('.sa-panel[data-cc=\"JP\"]').hidden"));
     check('...with its role line in the panel', /Wafers, photoresist/.test(await c.ev("document.querySelector('.sa-panel[data-cc=\"JP\"] .sa-panel-role').textContent")));
     check('...its town names showing', (await c.ev("[...document.querySelectorAll('.sa-stop.is-on')].map(function(a){return getComputedStyle(a,'::after').content;}).join(' ')")).includes('Tokyo'));

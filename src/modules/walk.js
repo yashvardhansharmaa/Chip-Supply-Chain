@@ -1,4 +1,5 @@
-/* The walk (#/walk): a thin progress rail over the numbered spine.
+/* The walk (the Introduction's page, introduction/, since 23 Nov 2026; until then the home's, under its hero): a thin progress
+   rail over the numbered spine.
    Progressive enhancement only — the spine, the counts and the previous/next links all work without this. */
 (function () {
   var CP = window.CP;
@@ -9,8 +10,8 @@
   /* Back from a chapter returns the reader to the same place: while the walk is read, the address follows the step on
      screen (#/walk/<chapter>, replaced, never pushed), or past the last step the flashcards (#/walk/flashcards), and the
      scroll position is kept, so coming back to that address puts the page where it was left, and a reload in the deck
-     opens on the deck. */
-  var lastY = 0, lastHash = null, base = '#/', pending = null, hold = 0;
+     opens on the deck. Above the first step the address is the page's own, with no hash (base). */
+  var lastY = 0, lastHash = null, base = '', pending = null, hold = 0;
   var HOMEISH = /^(#|#\/|#\/(walk|home|intro|briefing))?$/, STEP = /^#\/walk\/[^?#\/]+$/;
 
   function head() { // the masthead is measured at runtime, so read it rather than assume 56
@@ -129,7 +130,7 @@
      them and pick as they go, as they do on the Suppliers pipeline. The stage's name is a plain link to its chapter. */
   (function hero() {
     var box = document.getElementById('wk-hero');
-    var picks = box ? CP.$$('.wk-gl-c', box) : [];
+    var picks = box ? CP.$$('button.wk-gl-c', box) : []; // (the home's drawing reads its rows, which pick nothing: src/modules/frontispiece.js)
     var wait = 0;
     function pick(i, focus) {
       var b = picks[i]; if (!b) return;
@@ -175,7 +176,7 @@
       if (!setup()) return;
       var cold = first, h = location.hash || '';
       first = false;
-      base = HOMEISH.test(h) ? h : '#/';
+      base = HOMEISH.test(h) ? h : ''; // (the page's own address: "#/" is the home's, src/preroute.js)
       // coming back (Back from a chapter, or any return) to the address the walk had when the reader left it
       var back = !cold && CP.Router.from !== 'walk' && lastHash !== null && h === lastHash, y = lastY;
       var glide = !cold && CP.Router.from === 'walk'; // a step link inside the walk glides; arriving from elsewhere jumps

@@ -1,7 +1,8 @@
 /* The readable pages' masthead (build/masthead.js): the app's own (src/styles.css, "masthead"), so a reader who lands
    from search on a chapter's page, a reference page or /summary/ meets the bar the site draws everywhere (design round nine,
-   revision 6, 28 Oct 2026). The wordmark home at the page's margin, then Home, The Chain and the four reference pages, the
-   current section on its wine rule, then search and the theme as two round buttons. The bar is in the page's flow, not fixed.
+   revision 6, 28 Oct 2026). The wordmark home at the page's margin, then Intro, Supply Chain and the four other pages (owner,
+   23 Nov 2026: no Home, the wordmark is the way home), the current section on its wine rule, then search and the theme as two
+   round buttons. The bar is in the page's flow, not fixed.
    It reads the page's tokens: --bg, --ink, --ink-2, --line, --line-2, --accent, --font-ui, --font-display, --opsz-name, --margin.
    Inlined and lightly minified, so keep it free of commas inside strings. */
 .masthead { position: relative; z-index: 40; display: flex; align-items: stretch; justify-content: space-between; gap: 16px; height: 64px; margin: 0; padding: 0 var(--margin); background: var(--bg); border-bottom: 1px solid var(--line); }
@@ -38,7 +39,11 @@
   .masthead .tabs::-webkit-scrollbar { display: none; }
   .masthead .tabs a { display: block; margin: 0; padding: 7px 8px 9px; font-size: 14px; line-height: 1.62; } /* the app's body line-height, which its tabs take: the same 76 px masthead on every page (28 Oct 2026; 71 px here before) */
 }
-/* the wordmark is the way home, so the Home tab goes and the other five fit a 360 px screen */
-@media (max-width: 480px) { .masthead .tabs a[data-view="walk"] { display: none; } .masthead .tabs { gap: 0; } .masthead .tabs a { padding: 6px 6px 9px; font-size: 11.5px; } }
-@media (max-width: 380px) { .masthead .tabs a { padding-left: 5px; padding-right: 5px; padding-bottom: 10px; font-size: 11px; } }
+/* a phone: the six tabs, Intro first, share one line, as the app's do (src/styles.css): 4 px a side, the strip reaching 4 px
+   into each margin, the labels spread across it (owner, 23 Nov 2026) */
+@media (max-width: 480px) {
+  .masthead .tabs { gap: 0; flex-basis: calc(100% + 8px); width: calc(100% + 8px); margin-left: -4px; margin-right: -4px; justify-content: space-between; }
+  .masthead .tabs a { padding: 6px 4px 9px; font-size: 11.5px; }
+}
+@media (max-width: 380px) { .masthead .tabs a { padding-bottom: 10px; font-size: 11px; } }
 @media print { .masthead .tabs, .masthead .theme-toggle { display: none !important; } }

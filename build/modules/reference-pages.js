@@ -1,4 +1,5 @@
-/* REFERENCE PAGES: /suppliers/, /export-controls/, /chips/ and /glossary/ as real pages of their own, for search engines,
+/* REFERENCE PAGES: /export-controls/ and /chips/ as real pages of their own, and the heads and crawlable parts of /suppliers/ and
+   /glossary/, which are the interactive pages themselves, for search engines,
    for citation and for anyone who reads without scripts. Until 21 Oct 2026 these four addresses were forwarding pages
    (build/modules/social.js) whose canonical was the hash route, so a search engine read them as the home page.
 
@@ -19,7 +20,16 @@
 
    Since 30 Oct 2026 /glossary/ is the interactive Glossary itself, with every entry's words in its HTML: build/build.js
    writes it from src/template.html, as it writes the chapter pages, and this module gives it its head (ctx.glossaryHead)
-   and the chapters each term is read in (DATA.glossaryRefs). The static copy, its columns and its lists, went with it. */
+   and the chapters each term is read in (DATA.glossaryRefs). The static copy, its columns and its lists, went with it.
+
+   Since 23 Nov 2026 /suppliers/ is the interactive Suppliers page too (owner: "when somebody clicks on supplier, the map to be
+   the actual first thing which they see. It should not be optional"): build/build.js writes it from src/template.html, with
+   the route map first under the title, and this module gives it its head (ctx.suppliersHead: the approved title and
+   description, the canonical, the Suppliers card and the Dataset), the four market positions and what each means, under
+   the list's key (SUPPLIERS_DEFS), and every firm in the page's HTML for search engines and for anyone who reads without
+   scripts, after the interactive parts (SUPPLIERS_STATIC; the app hides it once its own list is built). The static page's
+   anchors (#stage-<segment>, #<firm>, #countries, #country-<cc>, #pos-k) are kept on those parts as data-old, and the app
+   lands an old link on the same firm, segment or country (src/app.js Suppliers.landOld). */
 'use strict';
 const vm = require('vm');
 const S = require('./social.js');
@@ -33,7 +43,7 @@ const BASE = S.BASE;
 const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const DAY = '{{REF:DAY}}', ASOF = '{{REF:ASOF}}'; // filled after the page is hashed for its date, so neither moves the date
 const NEXT = '{{REF:NEXT}}'; // Export Controls' "Next date" row (build/latest-rule.js): it changes as days pass, so it goes in after the hash too
-const PAGES = [['suppliers', 'Suppliers'], ['export-controls', 'Export Controls'], ['chips', 'AI Chips'], ['glossary', 'Glossary']];
+const PAGES = [['suppliers', 'Suppliers'], ['export-controls', 'Export Controls'], ['chips', 'AI Chips'], ['glossary', 'Glossary']]; // (the "Reference" list at a static page's foot)
 
 const slug = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 // "15 Jan 2026": day first, as the board prints its dates
@@ -87,6 +97,7 @@ module.exports = function (ctx) {
   for (const f of ['chapter-page.css', 'masthead.css', 'reference-page.css']) { // the masthead's sheet: build/masthead.js
     try { css += S.minCSS(fs.readFileSync(path.join(root, 'build', 'assets', f), 'utf8')); } catch (e) { warn(`reference pages: build/assets/${f} is missing, so they ship part-styled`); }
   }
+  css += S.minCSS(S.footerCSS(root)); // the thin footer (src/modules/footer.css), as on every page
   const builtStr = ctx.builtStr, today = ctx.builtOn ? `${ctx.builtOn.getFullYear()}-${String(ctx.builtOn.getMonth() + 1).padStart(2, '0')}-${String(ctx.builtOn.getDate()).padStart(2, '0')}` : new Date().toISOString().slice(0, 10);
   const analytics = SITE_CONFIG.analytics ? `<script async src="https://gc.zgo.at/count.js" data-goatcounter="${esc(SITE_CONFIG.analytics)}"></script>` : '';
   const person = { '@type': 'Person', name: S.AUTHOR.name, url: S.AUTHOR.url };
@@ -139,8 +150,8 @@ ${analytics}
 ${S.masthead ? S.masthead('../' + o.slug + '/') : S.MASTHEAD}
 <main id="main" class="page ref">
 ${body}
-<footer class="site-footer">${footer}</footer>
 </main>
+<footer class="site-footer ft-row ft-static">${S.FT_MARK}${S.staticFooter(footer)}</footer>
 </body>
 </html>
 `;
@@ -208,14 +219,6 @@ ${body}
         + (facts.length ? `<dl class="facts">${facts.map((f) => `<dt>${f[0]}</dt><dd>${f[1]}</dd>`).join('')}</dl>` : '') + note
         + (r.source ? `<p class="row-src">${ext(r.source, 'Source', ` aria-label="Source for ${esc(r.name)}"`)}</p>` : '') + '</div></li>';
     };
-    const stageHTML = (s) => {
-      const rows = s.rows.slice().sort((a, b) => (rank(a) - rank(b)) || String(a.name).localeCompare(String(b.name)));
-      return `<section class="ref-sec" aria-labelledby="${s.id}-h"><h2 class="ref-h2" id="${s.id}">${esc(s.name)} <small id="${s.id}-h-n">${s.rows.length} ${s.rows.length === 1 ? 'firm' : 'firms'}${s.crit ? ` · ${s.crit} ${esc(pos('Critical').toLowerCase())}` : ''}</small></h2><span hidden id="${s.id}-h">${esc(s.name)}</span><ol class="ledger">${rows.map(firm).join('')}</ol></section>`;
-    };
-    // the four market positions and what each means, under the jump list, as Export Controls' page explains its states
-    const posKey = `<section class="ref-poskey" aria-labelledby="pos-k"><h2 class="label" id="pos-k">Market position</h2><ul class="key">${['Critical', 'Important', 'Contested', 'Diversified'].map((lv) => `<li><span class="lv lv-${lv}">${esc(pos(lv))}</span><span>${esc(POSITION_DEF[lv] || '')}</span></li>`).join('')}</ul></section>`;
-    const jump = `<nav class="jump" aria-labelledby="stages-k"><span class="label" id="stages-k">${esc(ladderLabel || 'Segments from chip design to power')}</span><ol>${ladder.map((s) => `<li><a href="#${s.id}">${esc(SHORT[s.name] || s.name)}</a><span class="n">${s.rows.length}</span></li>`).join('')}<li><a href="#countries">What each country makes</a></li></ol></nav>`;
-
     // what each country makes: the Suppliers atlas's own lines (build/modules/summary-a.js HOME_MAP), in its order, with the
     // number of firms each has in the supplier list, as the Glossary's country card counts them
     let roles = [];
@@ -230,19 +233,48 @@ ${body}
       return `<div class="card" id="${countryIds.get(c.cc)}"><dt>${c.name}</dt><dd><p class="row-meta">${c.meta}${n ? ` · ${n} ${n === 1 ? 'firm' : 'firms'} in the supplier list` : ''}</p>${c.line}.</dd></div>`;
     }).join('')}</dl></section>` : '';
 
-    const revNote = ctx.suppliersRevenueNote ? `<p class="ref-note">${ctx.suppliersRevenueNote}</p>` : '';
     const withRev = suppliers.filter((r) => r.revenueShown && r.revenueShown.filed).length;
-    return page({
-      slug: 'suppliers', route: '#/suppliers', h1: 'Suppliers',
-      ...titled('suppliers', [[/(\d+) firms/, suppliers.length, 'firms']], `What each of the ${suppliers.length} firms in the AI chip supply chain makes, where it is based and its position in its market.`),
-      dekHTML: esc(ctx.suppliersIntro || ''),
-      facts: [`${suppliers.length} firms`, `${stages.length} segments`],
-      ctaNote: 'The interactive page adds a map of the route one chip takes, a drawing of which countries supply which segments, search and filters.',
-      body: jump + posKey + revNote + ladder.map(stageHTML).join('') + countries,
-      ld: dataset('Suppliers to the AI chip supply chain', `The ${suppliers.length} firms in the AI chip supply chain across ${stages.length} segments: what each makes, where it is based, its position in its market, and the latest annual revenue of ${withRev} of them as filed, each with its source.`,
-        ['suppliers.json', 'fx-rates.json'], ['Segment', 'Country', 'Market position', 'Revenue as filed', 'Revenue in US dollars', 'China share of revenue']),
-    });
+    /* the interactive page's own parts (23 Nov 2026). The list for search engines and for reading without scripts: the
+       segments in the ladder's order, each firm as the static page had it, and what each country makes. Its ids carry the
+       sup- prefix the page's other ids have (src/preroute.js OWN), and data-old the static page's own anchor, with what it
+       named: data-stage, data-firm or data-cc (src/app.js Suppliers.landOld) */
+    const old = (id) => ` id="sup-x-${esc(id)}" data-old="${esc(id)}"`;
+    const sxFirm = (r) => firm(r).replace(/^<li class="row" id="([^"]+)">/, (m, id) => `<li class="sx-row"${old(id)} data-firm="${esc(r.name)}">`)
+      .replace(/class="row-h"/g, 'class="sx-h"').replace(/class="row-meta"/g, 'class="sx-meta"').replace(/class="row-body"/g, 'class="sx-body"').replace(/class="row-lead"/g, 'class="sx-lead"')
+      .replace(/class="row-fine"/g, 'class="sx-fine"').replace(/class="row-src"/g, 'class="sx-src"').replace(/class="facts"/g, 'class="sx-facts"').replace(/class="native"/g, 'class="sx-native"')
+      .replace(/<span class="lv lv-([A-Za-z]+)"/g, '<span class="chk $1"');
+    const sxStage = (st) => {
+      const rows = st.rows.slice().sort((x, y) => (rank(x) - rank(y)) || String(x.name).localeCompare(String(y.name)));
+      return `<section class="sx-sec" aria-labelledby="sup-x-${esc(st.id)}"><h3 class="sx-seg"${old(st.id)} data-stage="${esc(st.name)}">${esc(st.name)} <small>${st.rows.length} ${st.rows.length === 1 ? 'firm' : 'firms'}${st.crit ? ` · ${st.crit} ${esc(pos('Critical').toLowerCase())}` : ''}</small></h3><ol class="sx-list">${rows.map(sxFirm).join('')}</ol></section>`;
+    };
+    const sxCountries = roles.length ? `<section class="sx-sec" aria-labelledby="sup-x-countries"><h3 class="sx-seg"${old('countries')} data-at="atlas">What each country makes</h3><dl class="sx-cards">${roles.map((c) => {
+      const n = suppliers.filter((r) => r.country === c.cc).length;
+      return `<div${old(countryIds.get(c.cc))} data-cc="${esc(c.cc)}"><dt>${c.name}</dt><dd><p class="sx-meta">${c.meta}${n ? ` · ${n} ${n === 1 ? 'firm' : 'firms'} in the supplier list` : ''}</p>${c.line}.</dd></div>`;
+    }).join('')}</dl></section>` : '';
+    const STATIC = `<section class="sup-static" aria-labelledby="sup-x-h"><h2 class="label sup-x-h" id="sup-x-h">${esc(ladderLabel || 'Segments from chip design to power')}</h2>${ladder.map(sxStage).join('')}${sxCountries}</section>`;
+    /* the four market positions and what each means (owner, 23 Nov 2026: "the new definition seems fine"), one calm band under
+       the list's key, in the interface type; the static page's anchor #pos-k lands on it */
+    const DEFS = `<dl class="sup-defs" id="sup-defs" data-old="pos-k" aria-label="Market position">${['Critical', 'Important', 'Contested', 'Diversified'].map((lv) => `<div><dt class="k-${lv}">${esc(pos(lv))}</dt><dd>${esc(POSITION_DEF[lv] || '')}</dd></div>`).join('')}</dl>`;
+    // the page's head: the approved words, the canonical, the Suppliers card and the Dataset, dated by the page (build/build.js)
+    const t = titled('suppliers', [[/(\d+) firms/, suppliers.length, 'firms']], `What each of the ${suppliers.length} firms in the AI chip supply chain makes, where it is based and its position in its market.`);
+    const p0 = manifest.get('suppliers') || { slug: 'suppliers', kind: 'view', title: 'Suppliers', eyebrow: S.SITE, line: t.description, description: t.description, route: '#/suppliers' };
+    const p = Object.assign({}, p0, { seo: { title: t.shareTitle, description: t.description } }); // the share tags say what the search result says
+    const url = BASE + 'suppliers/';
+    const ds = dataset('Suppliers to the AI chip supply chain', `The ${suppliers.length} firms in the AI chip supply chain across ${stages.length} segments: what each makes, where it is based, its position in its market, and the latest annual revenue of ${withRev} of them as filed, each with its source.`,
+      ['suppliers.json', 'fx-rates.json'], ['Segment', 'Country', 'Market position', 'Revenue as filed', 'Revenue in US dollars', 'China share of revenue']);
+    ctx.suppliersHead = (dates) => {
+      const ld = Object.assign({ '@context': 'https://schema.org' }, ds(url), { url, inLanguage: 'en', datePublished: dates.published, dateModified: dates.modified, isPartOf: { '@type': 'WebSite', name: S.SITE, url: BASE } });
+      return `<title>${esc(t.title)}</title>
+<meta name="description" content="${esc(t.description)}">
+<link rel="canonical" href="${esc(url)}">
+<meta name="author" content="${esc(S.AUTHOR.name)}">
+${S.shareTags(p, versions)}
+<script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script>`;
+    };
+    sup.STATIC = STATIC; sup.DEFS = DEFS;
+    return null; // build/build.js writes the page
   }
+  const sup = { STATIC: '', DEFS: '' };
 
   /* ================= /export-controls/ ================= */
   const timeline = (Array.isArray(data.timeline) ? data.timeline : ((data.timeline || {}).events || [])).slice().sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : 0));
@@ -591,14 +623,14 @@ ${S.shareTags(p, versions)}
   }
 
   /* ---------------- write ---------------- */
-  // Suppliers first: the Glossary links to its firm and country anchors, and to the chips' rows
+  // Suppliers first (its anchors are made first); Suppliers and the Glossary are written by build/build.js
   const built = [['suppliers', suppliersPage], ['export-controls', controlsPage], ['chips', chipsPage], ['glossary', glossaryPage]];
   ctx.referencePages = [];
   const sizes = [];
   for (const [s, make] of built) {
     const html = make();
     ctx.referencePages.push('/' + s + '/');
-    if (html === null) continue; // the Glossary: build/build.js writes it (glossaryPage)
+    if (html === null) continue; // Suppliers and the Glossary: build/build.js writes them (suppliersPage, glossaryPage)
     const dir = path.join(root, 'dist', s);
     fs.mkdirSync(dir, { recursive: true });
     fs.writeFileSync(path.join(dir, 'index.html'), keepRanges(html));
@@ -609,5 +641,5 @@ ${S.shareTags(p, versions)}
     if (/\{\{REF:/.test(html)) warn(`reference page /${s}/ kept a placeholder`);
   }
   console.log('reference pages: ' + sizes.join(' · '));
-  return {};
+  return { SUPPLIERS_STATIC: sup.STATIC, SUPPLIERS_DEFS: sup.DEFS };
 };

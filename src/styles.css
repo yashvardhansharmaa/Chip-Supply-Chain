@@ -442,8 +442,6 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before, .gl-
    it takes the wine while its definition is open */
 .gl-term.cpk { font-family: var(--font-ui); font-size: var(--fs-cap); font-weight: 500; font-style: normal; line-height: 16px; letter-spacing: 0; color: var(--ink); text-decoration: none; }
 .gl-term.cpk:hover, .gl-term.cpk[aria-describedby] { color: var(--accent-ink); }
-.site-footer .sources-key { margin: 8px 0 0; font-family: var(--font-ui); font-size: 12.5px; letter-spacing: 0; line-height: 1.6; color: var(--muted); }
-.site-footer .updated { display: block; margin-top: 6px; font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); color: var(--muted); }
 .gl-tip { position: fixed; z-index: 50; width: max-content; max-width: min(340px, calc(100vw - 16px)); background: var(--bg); border: 1px solid var(--line-2); border-top: 2px solid var(--ink); border-radius: 0; box-shadow: var(--shadow); padding: 12px 16px 13px; }
 .gl-tip b { display: block; font-size: var(--t-text); line-height: 1.2; margin-bottom: 6px; }
 .gl-tip p { font-family: var(--font-body); font-size: var(--fs-small); line-height: 1.45; color: var(--ink-2); margin: 0 0 10px; }
@@ -679,14 +677,6 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before, .gl-
 @media (max-width: 899px) { .tl-bar .export-bar.xq { margin: 0; width: 100%; } }
 .cite { margin-top: 14px; }
 .cite summary { cursor: pointer; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: 0; color: var(--ink-2); padding: 4px 0; margin: -4px 0; }
-/* in the footer, wider than a phone, "How to cite" sits at the right of the "Updated" line, which saves the footer a row; opened, its
-   text takes the full width under that line (owner, 20 Nov 2026) */
-@media screen and (min-width: 641px) {
-  .site-footer { padding-bottom: 32px; }
-  .site-footer > .cite { margin-top: -24px; }
-  .view[data-view="walk"] .site-footer > .cite { margin-top: -20px; } /* the home footer is a grid, whose rows keep their margins apart */
-  .site-footer > .cite > summary { width: fit-content; margin-left: auto; }
-}
 .cite pre { margin: 10px 0 0; padding: 12px 14px; background: var(--bg-2); border: 1px solid var(--line); border-radius: 0; font-family: var(--font-code); font-size: 11.5px; line-height: 1.5; white-space: pre-wrap; overflow-x: auto; color: var(--ink); }
 
 /* ---------- sources view ---------- */
@@ -697,29 +687,15 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before, .gl-
 .src-meta { display: block; font-family: var(--font-mono); font-size: 11px; line-height: 1.4; color: var(--muted); }
 
 /* ---------- footer ---------- */
-/* as wide as the chapter's card and figures, 720 px, with tighter spacing (owner, 11 Nov 2026: "reduce the width of the footer") */
-.site-footer { max-width: 720px; border-top: 1px solid var(--rule-ink); margin-top: 56px; padding: 22px 0 44px; font-family: var(--font-ui); font-size: 14px; line-height: 1.6; color: var(--muted); }
+/* the thin footer, one line as wide as the masthead on every page (owner, 23 Nov 2026): src/modules/footer.css. Here only its
+   links and the tile's colours, which every footer shares; the tile shows in the thin row (screen) and never on paper
+   (print.css sets the PDF's own colophon) */
 .site-footer a { color: var(--ink); text-underline-offset: 3px; }
 .site-footer a:hover { color: var(--accent-ink); }
-.site-footer .credits { margin: 0 0 2px; font-size: 14px; line-height: 1.5; color: var(--ink); }
 .site-footer .credits b { font-weight: 500; }
-/* on the two ledger pages (the walk and The Chain) the footer is the ledger's last row: the favicon's tile (build.js puts the
-   masthead's own tile first in the footer) signs off in the ledger column and the words keep to the text's edge. A phone's
-   chapters drop the column, so there The Chain's footer stays flush with the text; the walk keeps its 34 px column. Screen
-   only: the PDF sets its own footer (print.css). Elsewhere the tile stays hidden. */
 .site-footer .ft-mark { display: none; }
-.ft-mark .wm-tile { display: block; width: 22px; height: 22px; }
 .ft-mark .wm-tile rect { fill: #7a1f2b; } /* the favicon's own wine and white in both themes, as in the masthead */
 .ft-mark .wm-tile path { fill: #ffffff; }
-@media screen {
-  .view[data-view="walk"] .site-footer { max-width: calc(720px + var(--gutter) + var(--gutter-gap)); display: grid; grid-template-columns: var(--gutter) minmax(0, 1fr); column-gap: var(--gutter-gap); align-items: start; }
-  .view[data-view="walk"] .site-footer > * { grid-column: 2; min-width: 0; }
-  .view[data-view="walk"] .site-footer > .ft-mark { display: block; grid-column: 1; grid-row: 1 / span 3; justify-self: end; margin: 1px 14px 0 0; }
-}
-@media screen and (max-width: 900px) {
-  .ft-mark .wm-tile { width: 18px; height: 18px; }
-  .view[data-view="walk"] .site-footer > .ft-mark { margin-right: 8px; }
-}
 
 
 /* ---------- hero: a thesis, three claims, the chain scored ---------- */
@@ -1101,9 +1077,17 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before, .gl-
   .gl-tip.is-sheet { left: 10px; right: 10px; top: auto; width: auto; max-width: none; }
   .timeline li { grid-template-columns: 1fr; gap: 4px; }
 }
-/* a phone: the wordmark is the way home, so the Home tab goes and the other five fit a 360 px screen without scrolling */
-@media (max-width: 480px) { :root { --masthead: 76px; } .tabs a[data-view="walk"] { display: none; } .tabs { gap: 0; } .tabs a { padding: 6px 6px 9px; font-size: 11.5px; } }
-@media (max-width: 380px) { .tabs a { padding-left: 5px; padding-right: 5px; padding-bottom: 10px; font-size: 11px; } } /* the extra pixel keeps the masthead's height, so the page sits where it does at 390 px */
+/* a phone: the wordmark is the way home, and the six tabs, Intro first (owner, 23 Nov 2026: "Intro is fine for both web and
+   mobile"), share one line. The label Intro left the strip 24 px too long at 390 px with 6 px a side, so each tab's side padding
+   is 4 px, the strip reaches 4 px into each margin so the first and last labels stand on the masthead's edges, and the labels
+   spread across the line; the type keeps its size (11.5 px, 11 px under 380 px). It fits at 390 and 375 px (the owner kept it,
+   23 Nov 2026). build/assets/masthead.css sets the static pages' strip the same way */
+@media (max-width: 480px) {
+  :root { --masthead: 76px; }
+  .tabs { gap: 0; flex-basis: calc(100% + 8px); width: calc(100% + 8px); margin-left: -4px; margin-right: -4px; justify-content: space-between; }
+  .tabs a { padding: 6px 4px 9px; font-size: 11.5px; }
+}
+@media (max-width: 380px) { .tabs a { padding-bottom: 10px; font-size: 11px; } } /* the extra pixel keeps the masthead's height, so the page sits where it does at 390 px */
 
 
 /* the chapter head on a phone: the numeral beside its two labels on one ruled line, so the title starts in the first screen */

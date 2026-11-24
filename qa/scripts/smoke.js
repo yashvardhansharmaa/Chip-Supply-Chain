@@ -4,7 +4,9 @@
  *   - any console error, uncaught exception, "module ... failed" or "specimen ... failed" warning, or a request to the
  *     local server that finds nothing (404), on every route;
  *   - a page that scrolls sideways at 320 or 390 (document wider than the screen);
- *   - a route that is missing its key part (The Chain's contents with a row per chapter and no chapter held in the home page, a
+ *   - a route that is missing its key part (the home's drawing with its fourteen objects and callouts and no walk under it (the
+ *     Introduction's page holds the walk since 23 Nov 2026, and an old /#/walk/<chapter> link lands there), Suppliers' own page
+ *     with the route map first (an old /#/suppliers link lands there), The Chain's contents with a row per chapter and no chapter held in the home page, a
  *     chapter's own page, /<id>/, showing that chapter alone with its card, its live drawing and its door, an old /#<chapter>
  *     link landing there, the print-only book holding every chapter, a row per flow on the board, and so on);
  *   - a page that follows the device's dark setting: with prefers-color-scheme: dark and no saved choice, the main page,
@@ -82,7 +84,11 @@ const CHAIN_STATE = `(function () {
 const CHAIN_OK = `(function (s) { return s.at === '/supply-chain/' && s.stages >= 14 && s.rows && s.drawn === s.chapters && s.groups && s.across >= 2 && s.marks && s.ink && s.chokes > 0 && s.flat && s.cols && s.label && s.standfirst && s.list && s.downloads && !s.howToRead; })(${CHAIN_STATE})`;
 // the counts below follow the chain since the merge of chapters 8 and 9 (27 Oct 2026): 14 stages, 16 chapters
 const ROUTES = [
-  { name: 'walk', url: '/#/', ready: `${view('walk')} && ${count('.view[data-view="walk"] .wk-step')} >= 14`, detail: `'walk view shown: ' + ${view('walk')} + ', steps: ' + ${count('.view[data-view="walk"] .wk-step')}` },
+  // the home is the drawing alone (23 Nov 2026): fourteen objects drawn, a callout per stage and one for final test, and no walk
+  // under it; the walk is the Introduction's page, which an old link to a step of the home's walk reaches
+  { name: 'home', url: '/#/', ready: `${view('walk')} && ${count('.fx-objs canvas.fx-o')} === 14 && ${count('.fx-cos .fx-co')} === 15 && ${count('.wk-step')} === 0 && ${shown('.fx-key')}`, detail: `'objects: ' + ${count('.fx-objs canvas.fx-o')} + ', callouts: ' + ${count('.fx-cos .fx-co')} + ', steps: ' + ${count('.wk-step')}` },
+  { name: 'walk', url: '/introduction/', ready: `${view('walk')} && ${count('.view[data-view="walk"] .wk-step')} >= 14 && !!document.getElementById('intro--flashcards')`, detail: `'walk view shown: ' + ${view('walk')} + ', steps: ' + ${count('.view[data-view="walk"] .wk-step')}` },
+  { name: 'walk-old', url: '/#/walk/lithography', ready: `location.pathname === '/introduction/' && location.hash === '#/walk/lithography' && ${view('walk')}`, detail: `'at ' + location.pathname + location.hash` },
   // The Chain's contents are on the home page (#/chain) and each chapter on a page of its own (28 Oct 2026): the home page holds
   // no chapter; a chapter's page shows that chapter alone, and an old link to a chapter on the home page lands there
   // The contents page is option 3 "clean" (design round eight, 28 Oct 2026): a row per chapter with its drawing, its number with
@@ -95,7 +101,9 @@ const ROUTES = [
   // the shelves (design round seven): a chip on a shelf for every chip in CP_DATA, a drawing for every chip with a layout, and
   // a dot on the field chart for every chip with a published FP16 figure
   { name: 'landscape', url: '/#/landscape', ready: `${view('landscape')} && ${count('#aic .shelf .it-b')} === CP_DATA.landscape.length && ${count('#aic .shelf svg.plan')} === CP_DATA.landscape.filter((c) => c.layout).length && ${count('#aic-c-head svg.chart circle.dot, #aic-c-head svg.chart path.off')} === CP_DATA.landscape.filter((c) => (c.compute || {}).fp16TFLOPS != null).length`, detail: `'chips on the shelves: ' + ${count('#aic .shelf .it-b')} + ', drawings: ' + ${count('#aic .shelf svg.plan')} + ', dots on the chart: ' + ${count('#aic-c-head svg.chart circle.dot, #aic-c-head svg.chart path.off')}` },
-  { name: 'suppliers', url: '/#/suppliers', ready: `${view('suppliers')} && /\\d/.test((document.getElementById('sup-count') || {}).textContent || '') && document.querySelector('#sup-ladder') && document.querySelector('#sup-ladder').children.length > 0`, detail: `'count: ' + ((document.getElementById('sup-count') || {}).textContent || 'none') + ', ladder parts: ' + (document.querySelector('#sup-ladder') ? document.querySelector('#sup-ladder').children.length : 0)` },
+  // Suppliers is a page of its own (23 Nov 2026), the route map first under the title; an old link to it on the home page lands there
+  { name: 'suppliers-old', url: '/#/suppliers', ready: `location.pathname === '/suppliers/' && ${view('suppliers')}`, detail: `'at ' + location.pathname + location.hash` },
+  { name: 'suppliers', url: '/suppliers/', ready: `${view('suppliers')} && (function () { var v = document.querySelector('.view[data-view="suppliers"]'), m = v.querySelector('.atlas'), r = v.querySelector('#sup-reg'); return !!m && !!r && m.getBoundingClientRect().height > 0 && !!(m.compareDocumentPosition(r) & Node.DOCUMENT_POSITION_FOLLOWING); })() && !/interactive page/i.test(document.body.textContent) && /\\d/.test((document.getElementById('sup-count') || {}).textContent || '') && document.querySelector('#sup-ladder') && document.querySelector('#sup-ladder').children.length > 0`, detail: `'count: ' + ((document.getElementById('sup-count') || {}).textContent || 'none') + ', ladder parts: ' + (document.querySelector('#sup-ladder') ? document.querySelector('#sup-ladder').children.length : 0)` },
   { name: 'controls', url: '/#/controls', ready: `${view('controls')} && ${count('.cf-row')} >= (window.CP_DATA && CP_DATA.flows && CP_DATA.flows.flows ? CP_DATA.flows.flows.length : 1)`, detail: `'board rows: ' + ${count('.cf-row')}` },
   { name: 'exposure-asml', url: '/#/exposure/asml', ready: `${view('controls')} && !!document.getElementById('ex-asml') && document.getElementById('ex-asml').getBoundingClientRect().height > 0 && Math.abs(document.getElementById('ex-asml').getBoundingClientRect().top) < innerHeight`, detail: `'ASML chart: ' + (document.getElementById('ex-asml') ? 'top ' + Math.round(document.getElementById('ex-asml').getBoundingClientRect().top) + ', height ' + Math.round(document.getElementById('ex-asml').getBoundingClientRect().height) : 'missing')` },
   // the Glossary is a page of its own (30 Oct 2026), its rows in its HTML; an old link to it on the home page lands there, in place
@@ -108,7 +116,7 @@ const ROUTES = [
   { name: 'summary', url: '/summary/?print', ready: `${count('.ladder li')} === 14 && ${count('.grid .card')} >= 14`, detail: `'ladder rows: ' + ${count('.ladder li')} + ', cards: ' + ${count('.grid .card')}` },
 ];
 // the theme default: these three page types, with the device set to dark
-const THEMED = [['main page', '/#/', '/?theme=dark#/'], ['contents page', '/supply-chain/', '/supply-chain/?theme=dark'], ['chapter page', '/lithography/', '/lithography/?theme=dark'], ['summary', '/summary/?print', '/summary/?print&theme=dark']];
+const THEMED = [['main page', '/#/', '/?theme=dark#/'], ['Introduction page', '/introduction/', '/introduction/?theme=dark'], ['contents page', '/supply-chain/', '/supply-chain/?theme=dark'], ['chapter page', '/lithography/', '/lithography/?theme=dark'], ['summary', '/summary/?print', '/summary/?print&theme=dark']];
 
 /* ---------- a static server for dist/ ---------- */
 const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png', '.jpg': 'image/jpeg', '.ico': 'image/x-icon', '.mp4': 'video/mp4', '.pdf': 'application/pdf', '.txt': 'text/plain', '.xml': 'application/xml', '.webmanifest': 'application/manifest+json' };

@@ -1,0 +1,69 @@
+/* The thin footer (owner, 23 Nov 2026: "reduce the width and add the citation line / updated date on the right empty side
+   ... otherwise, it stays thin"; built into the site on 23 Nov 2026 from the approved mock, dist/mock/home2/frontispiece/
+   _src/footer/ on the plates-polish worktree). One line on a wide screen, as wide as the masthead: the tile and the made-by
+   line at the left, the "Updated" day and the "How to cite" toggle at the right. The rule spans the row. The citation takes no
+   room until the toggle opens it, under the toggle at the row's right end; a second click or Escape closes it. Phones: the
+   made-by line, then the day and the toggle under it. Markup: build/build.js footer (and ftLead, the tile); behaviour:
+   src/modules/footer.js; the citation's words: src/app.js. Screen only: on paper the colophon is src/modules/print.css's.
+   The static pages (the reference pages, the 404 page) take these rules too (build/modules/social.js inlines this file). */
+@media screen {
+  .site-footer.ft-row {
+    /* the masthead's width: from the left margin to the right one, whatever column the footer sits in */
+    width: calc(100vw - 2 * var(--margin) - var(--ft-sbw, 0px)); max-width: none; box-sizing: border-box;
+    display: grid; grid-template-columns: auto minmax(0, 1fr) auto; column-gap: 12px; align-items: baseline;
+    margin-top: 56px; padding: 15px 0 22px; border-top: 1px solid var(--rule-ink);
+    font-family: var(--font-ui); font-size: 14px; line-height: 21px; color: var(--muted);
+  }
+  .site-footer.ft-row > * { min-width: 0; }
+  .site-footer.ft-row > .ft-mark { display: block; grid-column: 1; grid-row: 1; align-self: start; justify-self: start; margin: 0; }
+  .site-footer.ft-row .ft-mark .wm-tile { display: block; width: 21px; height: 21px; }
+  .site-footer.ft-row > .credits { grid-column: 2; grid-row: 1; margin: 0; font-size: 14px; line-height: 21px; color: var(--ink); }
+  /* the day and the toggle, at the row's right end, on the made-by line's baseline */
+  .site-footer.ft-row > .ft-meta { grid-column: 3; grid-row: 1; display: flex; align-items: baseline; gap: 24px; margin: 0; padding-left: 32px; white-space: nowrap; }
+  .site-footer.ft-row .ft-meta .updated { display: inline; margin: 0; font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; line-height: 21px; letter-spacing: var(--tr-label); text-transform: var(--tt-label); color: var(--muted); }
+  .ft-cite-btn { display: inline-flex; align-items: baseline; gap: 6px; margin: 0; padding: 0; border: 0; background: none; cursor: pointer;
+    font-family: var(--font-mono); font-size: var(--fs-cap); font-weight: 500; line-height: 21px; letter-spacing: 0; color: var(--ink-2); }
+  .ft-cite-btn[hidden] { display: none; }
+  /* (a 44 px target round the line, without moving it) */
+  .ft-cite-btn { position: relative; }
+  .ft-cite-btn::before { content: ""; position: absolute; inset: -12px -8px; }
+  .ft-cite-btn::after { content: ""; flex: none; align-self: center; width: 5px; height: 5px; margin: -3px 1px 0 1px; border-right: 1.25px solid currentColor; border-bottom: 1.25px solid currentColor; transform: rotate(45deg); transition: transform 0.2s ease, margin 0.2s ease; }
+  .ft-cite-btn[aria-expanded="true"]::after { transform: rotate(-135deg); margin-top: 3px; }
+  .ft-cite-btn:hover { color: var(--ink); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  .ft-cite-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+  /* the citation: closed, it takes no room; open, it stands under the toggle at the row's right end, as wide as its lines need,
+     set as text between hairlines (v5 designer pass: no grey blocks) */
+  .site-footer.ft-row > .ft-cite { grid-column: 1 / -1; grid-row: 2; justify-self: end; width: min(100%, 580px); margin: 14px 0 0; border-top: 1px solid var(--line-2); }
+  .site-footer.ft-row > .ft-cite[hidden] { display: none; }
+  .site-footer.ft-row .ft-cite pre { margin: 0; padding: 12px 0; background: none; border: 0; border-radius: 0; font-family: var(--font-code); font-size: 11.5px; line-height: 1.6;
+    white-space: pre-wrap; overflow-x: auto; color: var(--ink); }
+  .site-footer.ft-row .ft-cite pre + pre { border-top: 1px solid var(--line); }
+}
+/* a phone: the made-by line, then the day and the toggle under it, flush with its words; the citation under them */
+@media screen and (max-width: 640px) {
+  .site-footer.ft-row { margin-top: 44px; padding: 14px 0 20px; column-gap: 10px; }
+  .site-footer.ft-row .ft-mark .wm-tile { width: 18px; height: 18px; margin-top: 2px; }
+  .site-footer.ft-row > .ft-meta { grid-column: 2 / -1; grid-row: 2; justify-content: space-between; flex-wrap: wrap; row-gap: 2px; padding-left: 0; margin-top: 4px; }
+  /* (a chapter's longer toggle, "How to cite this chapter", goes under the day where the two do not fit one line) */
+  .site-footer.ft-row > .ft-meta > * { white-space: nowrap; }
+  .site-footer.ft-row > .ft-cite { grid-column: 2 / -1; grid-row: 3; justify-self: stretch; width: auto; margin-top: 12px; }
+  /* (design review, 23 Nov 2026: at 390 px the BibTeX's aligned fields broke across lines, "url =" on one line and its value
+     on the next. Its lines stay whole and the block scrolls sideways; the plain citation still wraps) */
+  .site-footer.ft-row .ft-cite pre + pre { white-space: pre; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
+/* a wide screen's specimen stage (the Introduction's walk) steps aside while the footer is on screen, so the right side of the
+   row is empty (footer.js sets ft-near) */
+@media (min-width: 901px) {
+  html.ft-near .stage { opacity: 0; visibility: hidden; transition: opacity 0.25s ease, visibility 0s 0.25s; }
+  html:not(.ft-near) .stage { transition: opacity 0.25s ease; }
+}
+/* the fixed "Back to top" pill rides up with the footer while the footer is on screen, so it never covers the row's right end,
+   where the day and the toggle are (footer.js sets --ft-lift) */
+.to-top { translate: 0 calc(-1 * var(--ft-lift, 0px)); }
+@media (prefers-reduced-motion: reduce) { .ft-cite-btn::after, html.ft-near .stage, html:not(.ft-near) .stage { transition: none; } }
+@media print { .ft-cite-btn, .site-footer.ft-row > .ft-cite, .site-footer.ft-row > .ft-meta { display: none !important; } }
+/* a static page's footer (the reference pages, the 404 page) stands after the page's centred column, in the body: its margins
+   set it, as wide as the masthead; the tile keeps the favicon's own wine and white there too */
+@media screen { .site-footer.ft-row.ft-static { width: auto; margin-left: var(--margin); margin-right: var(--margin); } }
+.ft-static .ft-mark .wm-tile rect { fill: #7a1f2b; }
+.ft-static .ft-mark .wm-tile path { fill: #ffffff; }

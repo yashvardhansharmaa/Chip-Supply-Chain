@@ -402,6 +402,7 @@
     var title = $('#gl-title');
     var from = animate && L.state === 'home' && !reduce() ? [title.getBoundingClientRect(), box.getBoundingClientRect()] : null;
     L.state = s; main.setAttribute('data-state', s);
+    if (s !== 'home') main.style.paddingBottom = ''; // (the room lift() gave the first screen)
     $('.gl-az-link', head)[s === 'browse' ? 'setAttribute' : 'removeAttribute']('aria-current', 'page');
     $('#gl-btns').inert = s !== 'home'; $('#gl-hold').inert = s !== 'home';
     measure();
@@ -561,7 +562,14 @@
     choose(act >= 0 ? opts[act] : opts[0]);
   }
   // on a phone the field rises to the top of the window as the reader types, so the suggestions clear the keyboard
-  function lift() { if (L.state !== 'home' || !narrow()) return; var y = field.getBoundingClientRect().top + window.pageYOffset - mh() - 10; if (window.pageYOffset < y) jump(y); }
+  // (the page under the field may be too short to scroll that far, since the thin footer of 23 Nov 2026: it gains the room it
+  // lacks, which goes once the Glossary leaves its first screen)
+  function lift() {
+    if (L.state !== 'home' || !narrow()) return;
+    var y = field.getBoundingClientRect().top + window.pageYOffset - mh() - 10, room = Math.ceil(y + window.innerHeight - root.scrollHeight);
+    if (room > 0) main.style.paddingBottom = (parseFloat(main.style.paddingBottom) || 0) + room + 'px';
+    if (window.pageYOffset < y) jump(y);
+  }
 
   /* ---------- Browse A to Z: every name under its letter, one kind at a time ---------- */
   function setKind(k) {

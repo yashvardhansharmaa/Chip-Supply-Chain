@@ -623,6 +623,8 @@
      when it does (src/preroute.js away()); addr(hash) is the address a link the app writes should carry: the hash itself
      where this page serves it, else that page's address, so a link to a chapter is a real link */
   var PAGE = (window.CP_PRE && window.CP_PRE.page) || { kind: 'book', chapter: '', root: '' };
+  var INTRO = 'introduction'; // the Introduction's page, introduction/ (23 Nov 2026): the walk alone (src/preroute.js INTRO)
+  // (Suppliers' page, suppliers/, is kind "suppliers": src/preroute.js SUPPLIERS)
   var away = function (h) { return window.CP_PRE && window.CP_PRE.away ? window.CP_PRE.away(h) : ''; };
   var addr = function (h) { return away(h) || h; };
   /* An action that used to follow a route on the same page (a search result's chip card, supplier filter or flashcard, a
@@ -702,7 +704,7 @@
       var h = location.hash || '#/', m = h.match(/^#\/([a-z-]+)/), bare = h.replace(/^#/, '');
       var atHome = bare === '' || bare === '/' || bare.indexOf('/?') === 0; // '#/?country=JP' is the home page with a query
       var v = (atHome || m) ? 'walk' : 'stack'; // the site opens on the walk (trial, 11 Sept 2026); an unknown #/route goes home; a bare chapter anchor opens the chain
-      if (PAGE.kind !== 'home' && v === 'walk') { v = 'stack'; m = null; bare = ''; } // a chapter's page and the book hold The Chain alone (their own top)
+      if (PAGE.kind !== 'home' && PAGE.kind !== INTRO && v === 'walk') { v = 'stack'; m = null; bare = ''; } // a chapter's page and the book hold The Chain alone (their own top)
       if (PAGE.kind === 'glossary') { v = 'glossary'; m = null; bare = ''; } // the Glossary's page holds the Glossary alone, and every address it serves is the Glossary's
       if (m && VIEWS.indexOf(m[1]) >= 0) v = m[1];
       var anchor = v === 'geopolitics' ? 'geopolitics' : ((!m && bare && !atHome) ? dec(bare) : null);
@@ -713,6 +715,10 @@
         else if (window.CP_PRE && window.CP_PRE.route) v = window.CP_PRE.route(h).view || v; // not on the page yet (the Glossary's entries come with glossary.js): the view its prefix names
       }
       if (ALIAS[v]) v = ALIAS[v];
+      // the Introduction's page holds its walk alone (a bare anchor in it keeps its place), and Suppliers' page Suppliers alone (an
+      // old anchor of its static page lands in it: Suppliers.landOld)
+      if (PAGE.kind === INTRO && v !== 'walk') v = 'walk';
+      if (PAGE.kind === 'suppliers' && v !== 'suppliers') v = 'suppliers';
       var sub = null; // the Export Controls page has three sections
       if (v === 'exposure') { v = 'controls'; sub = 'exposure'; } else if (v === 'controls') sub = 'timeline';
       var em = h.match(/^#\/controls\/([^?#\/]+)/), evId = em ? dec(em[1]) : null; // #/controls/<event-id> opens the chronology on that entry
@@ -760,11 +766,13 @@
         document.documentElement.classList.add('booted');
         if (pre.view && pre.view !== v) console.warn('src/preroute.js showed "' + pre.view + '" while the page loaded, but the router opens "' + v + '" for ' + location.hash);
       }
-      $$('.tabs a').forEach(function (a) { var dv = a.getAttribute('data-view'); var on = dv === v; if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
+      // the tab of the view shown is the current one; the walk's tab, Intro, only on the Introduction's page, since the home's
+      // walk view is the drawing, whose way back is the wordmark (owner, 23 Nov 2026)
+      $$('.tabs a').forEach(function (a) { var dv = a.getAttribute('data-view'); var on = dv === v && !(dv === 'walk' && PAGE.kind !== INTRO); if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
       if (narrow()) { var strip = $('.tabs'), onTab = $('.tabs a[aria-current="page"]'); if (strip && onTab) { var sr = strip.getBoundingClientRect(), tr = onTab.getBoundingClientRect(); if (tr.left < sr.left) strip.scrollLeft -= sr.left - tr.left; else if (tr.right > sr.right) strip.scrollLeft += tr.right - sr.right; } } // the phone tab strip scrolls; keep the current tab in view by moving the strip alone (scrollIntoView would also move the Tab starting point to the tab, so the first Tab skipped the skip link)
       // the printed cover's art is fetched only on the way to print (src/template.html), never because The Chain was read
       var mv = MODULE_VIEWS[v];
-      Stage.setVisible(v === 'stack' || v === 'walk' || !!(mv && mv.stage)); // AI Chips draws its own packages, so the stage does not show there
+      Stage.setVisible(v === 'stack' || (v === 'walk' && PAGE.kind !== 'home') || !!(mv && mv.stage)); // AI Chips draws its own packages, and the home's walk view is the drawing alone, so the stage does not show there
       if (mv && mv.activate) { try { mv.activate(); } catch (err) { console.warn('view module failed', v, err); } }
       if (v === 'landscape') Landscape.activate();
       else if (v === 'suppliers') Suppliers.activate();
@@ -817,7 +825,7 @@
     title: function () {
       if (!this.titles) { try { this.titles = JSON.parse(document.querySelector('meta[name="cp-titles"]').getAttribute('content')) || {}; } catch (e) { this.titles = {}; } }
       var T = this.titles, v = this.current, ch = v === 'stack' && this.chain !== 'contents' && Sections.currentId ? '/' + Sections.currentId + '/' : '';
-      var page = { walk: '/', landscape: '/chips/', suppliers: '/suppliers/', controls: '/export-controls/', glossary: '/glossary/', stack: '/supply-chain/' }[v];
+      var page = { walk: PAGE.kind === INTRO ? '/' + INTRO + '/' : '/', landscape: '/chips/', suppliers: '/suppliers/', controls: '/export-controls/', glossary: '/glossary/', stack: '/supply-chain/' }[v];
       document.title = (ch && T[ch]) || (page && T[page]) || (v === 'stack' ? 'Supply Chain · Chip Supply Chain' : T['/'] || 'Chip Supply Chain');
     },
     /* what The Chain shows for an anchor: the chapter that holds it, or the contents (#/chain, the contents' own ids, an id
@@ -1851,6 +1859,29 @@
       this.setTab(tab || this.savedTab || 'segment', true);
       // the router has just put the page at its top; the EU-27 address lands on the firms, under the ribbons
       if (eu) { this.show({ country: '__eu' }); setTimeout(function () { var t = $('#sup-reg'); if (t && !t.closest('[hidden]')) { scrollToEl(t, false); Router.settle(t); } }, 0); }
+      else this.landOld();
+    },
+    /* an old link to the static reference page that stood at suppliers/ until 23 Nov 2026 (#stage-<segment>, #<firm>, #countries,
+       #country-<cc>, #pos-k): the page keeps those anchors as data-old on its firm list for search engines and on the market
+       positions' band (build/modules/reference-pages.js), and the link lands on the same thing in the interactive page: the
+       firm opened on the list, the segment's firms, the country chosen on the route map, the route map, or the band. The
+       address then becomes the page's own */
+    landOld: function () {
+      var id = (location.hash || '').slice(1), self = this, el = null;
+      if (!id || id.charAt(0) === '/') return;
+      try { id = decodeURIComponent(id); } catch (e) { }
+      try { el = document.querySelector('.view[data-view="suppliers"] [data-old="' + id.replace(/["\\]/g, '') + '"]'); } catch (e) { el = null; }
+      if (!el) return;
+      var firm = el.getAttribute('data-firm'), stage = el.getAttribute('data-stage'), cc = el.getAttribute('data-cc'), at = el.getAttribute('data-at');
+      try { history.replaceState(history.state, '', location.pathname + location.search); } catch (e) { }
+      setTimeout(function () {
+        var to = null;
+        if (firm) { self.setTab('segment', true); self.show({ q: firm }); return; } // (show opens the firm and brings it in)
+        if (stage) { self.setTab('segment', true); self.show({ stage: stage }); to = $('#sup-reg'); }
+        else if (cc || at === 'atlas') { if (cc && CP.SummaryA) CP.SummaryA.selectCountry(cc, false); to = $('.view[data-view="suppliers"] .atlas') || $('#atlas-h'); }
+        else if (!el.closest('.sup-static')) to = el; // the market positions' band
+        if (to && !to.closest('[hidden]')) { scrollToEl(to, false); Router.settle(to); }
+      }, 0);
     },
     /* the address follows the tab, without a new history entry */
     url: function () {
@@ -3189,12 +3220,12 @@
       // the skip link moves focus to the main column and leaves the address alone, so the route stays as it was
       var skip = $('.skip'), main = $('#main');
       if (skip && main) skip.addEventListener('click', function (e) { e.preventDefault(); self.focus(main); });
-      // Home while on the home page: back to the top, as the wordmark goes, with focus on the title there
-      var home = $('.tabs a[data-view="walk"]');
-      if (home) home.addEventListener('click', function (e) {
-        if (Router.current !== 'walk' || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return;
+      // Intro while on the Introduction's page: back to the top, as the wordmark goes home, with focus on the title there (the
+      // walk's own address follows the page back to its top, src/modules/walk.js)
+      var intro = $('.tabs a[data-view="walk"]');
+      if (intro) intro.addEventListener('click', function (e) {
+        if (PAGE.kind !== INTRO || Router.current !== 'walk' || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return;
         e.preventDefault();
-        if (location.hash && location.hash !== '#/') location.hash = '#/';
         window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
         self.focus(self.title($('.view[data-view="walk"]')));
       });
@@ -3700,7 +3731,14 @@
       var rows = [['title', chTitle || WORK], ['author', 'Sharma, Yashvardhan']].concat(chTitle ? [['howpublished', WORK]] : [], [['year', year]], um ? [['month', um[2]]] : [],
         [['url', canon], ['note', (dayUp ? 'Updated ' + dayUp + '. ' : '') + 'Accessed ' + d0]]);
       var bib = '@misc{chipsupplychain' + (chTitle ? '-' + PAGE.chapter + '-' : '') + year + ',\n' + rows.map(function (r) { return '  ' + (r[0] + '            ').slice(0, 12) + ' = {' + r[1] + '}'; }).join(',\n') + '\n}';
-      $$('.site-footer').forEach(function (foot) { foot.insertAdjacentHTML('beforeend', '<details class="cite"><summary>' + (chTitle ? 'How to cite this chapter' : 'How to cite') + '</summary><pre>' + esc(plain) + '</pre><pre>' + esc(bib) + '</pre></details>'); });
+      // the thin footer (23 Nov 2026) has its toggle at the row's right end and a place for the citation under it (build/build.js
+      // footer, src/modules/footer.js): the toggle takes the block's name and shows, and the two citations go in its place; a
+      // footer of the earlier shape takes the folded block
+      $$('.site-footer').forEach(function (foot) {
+        var name = chTitle ? 'How to cite this chapter' : 'How to cite', btn = $('.ft-cite-btn', foot), box = $('.ft-cite', foot), two = '<pre>' + esc(plain) + '</pre><pre>' + esc(bib) + '</pre>';
+        if (btn && box) { box.innerHTML = two; btn.textContent = name; btn.hidden = false; return; }
+        foot.insertAdjacentHTML('beforeend', '<details class="cite"><summary>' + name + '</summary>' + two + '</details>');
+      });
     }
   };
 

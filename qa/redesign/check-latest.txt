@@ -1,0 +1,84 @@
+ok   /export-controls/ 1440: the latest row shows
+ok   /export-controls/ 1440: kicker "Latest rule" (Latest rule)
+ok   /export-controls/ 1440: latest date "19 Nov 2026" is the newest entry's (19 Nov 2026)
+ok   /export-controls/ 1440: actor "US (BIS)"
+ok   /export-controls/ 1440: latest words are the entry's plain words
+ok   /export-controls/ 1440: latest words carry no codes (D:5, TPP, long figures)
+ok   /export-controls/ 1440: latest links to its entry (#2026-11-19-remote-access-rule)
+ok   /export-controls/ 1440: one next-date row shows
+ok   /export-controls/ 1440: next date 2026-11-27 is the earliest not yet passed (2026-11-27)
+ok   /export-controls/ 1440: next date 2026-11-27 is not in the past (2026-11-23)
+ok   /export-controls/ 1440: next date printed "27 Nov 2026"
+ok   /export-controls/ 1440: countdown "In 4 days" (In 4 days)
+ok   /export-controls/ 1440: next words are the upcoming label
+ok   /export-controls/ 1440: next date links to its entry (#2025-11-09-us-ban-suspended)
+ok   /export-controls/ 1440: the rows sit under the button, in the head
+ok   /export-controls/ 1440: the words start on the note's left edge and the kicker under the button (0, 0 px)
+ok   /export-controls/ 1440: Latest rule text at 11.5 px or more (11.5)
+ok   /export-controls/ 1440: Next date text at 11.5 px or more (11.5)
+ok   /export-controls/ 1440: Entry in the timeline lands on the entry (#2026-11-19-remote-access-rule target in view)
+ok   #/controls 1440: the latest row shows
+ok   #/controls 1440: kicker "Latest rule" (Latest rule)
+ok   #/controls 1440: latest date "19 Nov 2026" is the newest entry's (19 Nov 2026)
+ok   #/controls 1440: actor "US (BIS)"
+ok   #/controls 1440: latest words are the entry's plain words
+ok   #/controls 1440: latest words carry no codes (D:5, TPP, long figures)
+ok   #/controls 1440: latest links to its entry (#/controls/2026-11-19-remote-access-rule)
+ok   #/controls 1440: one next-date row shows
+ok   #/controls 1440: next date 2026-11-27 is the earliest not yet passed (2026-11-27)
+ok   #/controls 1440: next date 2026-11-27 is not in the past (2026-11-23)
+ok   #/controls 1440: next date printed "27 Nov 2026"
+ok   #/controls 1440: countdown "In 4 days" (In 4 days)
+ok   #/controls 1440: next words are the upcoming label
+ok   #/controls 1440: next date links to its entry (#/controls/2025-11-09-us-ban-suspended)
+ok   #/controls 1440: Latest rule text at 11.5 px or more (11.5)
+ok   #/controls 1440: Next date text at 11.5 px or more (11.5)
+ok   #/controls 1440: row 1 opens its entry (#/controls/2026-11-19-remote-access-rule marked in view)
+ok   #/controls 1440: row 2 opens its entry (#/controls/2025-11-09-us-ban-suspended marked in view)
+ok   #/controls 1440: the latest row on its own entry's address scrolls back to the entry
+ok   #/controls 1440: no script errors
+ok   /export-controls/ 390: the latest row shows
+ok   /export-controls/ 390: kicker "Latest rule" (Latest rule)
+ok   /export-controls/ 390: latest date "19 Nov 2026" is the newest entry's (19 Nov 2026)
+ok   /export-controls/ 390: actor "US (BIS)"
+ok   /export-controls/ 390: latest words are the entry's plain words
+ok   /export-controls/ 390: latest words carry no codes (D:5, TPP, long figures)
+ok   /export-controls/ 390: latest links to its entry (#2026-11-19-remote-access-rule)
+ok   /export-controls/ 390: one next-date row shows
+ok   /export-controls/ 390: next date 2026-11-27 is the earliest not yet passed (2026-11-27)
+ok   /export-controls/ 390: next date 2026-11-27 is not in the past (2026-11-23)
+ok   /export-controls/ 390: next date printed "27 Nov 2026"
+ok   /export-controls/ 390: countdown "In 4 days" (In 4 days)
+ok   /export-controls/ 390: next words are the upcoming label
+ok   /export-controls/ 390: next date links to its entry (#2025-11-09-us-ban-suspended)
+ok   /export-controls/ 390: the rows sit under the button, in the head
+ok   /export-controls/ 390: Latest rule text at 11.5 px or more (11.5)
+ok   /export-controls/ 390: Next date text at 11.5 px or more (11.5)
+ok   /export-controls/ 390: no sideways scroll
+ok   /export-controls/ 390: Entry in the timeline lands on the entry (#2026-11-19-remote-access-rule target in view)
+ok   #/controls 390: the latest row shows
+ok   #/controls 390: kicker "Latest rule" (Latest rule)
+ok   #/controls 390: latest date "19 Nov 2026" is the newest entry's (19 Nov 2026)
+ok   #/controls 390: actor "US (BIS)"
+ok   #/controls 390: latest words are the entry's plain words
+ok   #/controls 390: latest words carry no codes (D:5, TPP, long figures)
+ok   #/controls 390: latest links to its entry (#/controls/2026-11-19-remote-access-rule)
+ok   #/controls 390: one next-date row shows
+ok   #/controls 390: next date 2026-11-27 is the earliest not yet passed (2026-11-27)
+ok   #/controls 390: next date 2026-11-27 is not in the past (2026-11-23)
+ok   #/controls 390: next date printed "27 Nov 2026"
+ok   #/controls 390: countdown "In 4 days" (In 4 days)
+ok   #/controls 390: next words are the upcoming label
+ok   #/controls 390: next date links to its entry (#/controls/2025-11-09-us-ban-suspended)
+ok   #/controls 390: Latest rule text at 11.5 px or more (11.5)
+ok   #/controls 390: Next date text at 11.5 px or more (11.5)
+ok   #/controls 390: no sideways scroll
+ok   #/controls 390: row 1 opens its entry (#/controls/2026-11-19-remote-access-rule marked in view)
+ok   #/controls 390: row 2 opens its entry (#/controls/2025-11-09-us-ban-suspended marked in view)
+ok   #/controls 390: the latest row on its own entry's address scrolls back to the entry
+ok   #/controls 390: no script errors
+ok   /export-controls/ clock 2026-11-27 (on the day): the next date says "Today" (Today)
+ok   /#/controls clock 2026-11-27 (on the day): the next date says "Today" (Today)
+ok   /export-controls/ clock 2026-11-28 (the day after): the passed date is gone and the latest row stays
+ok   /#/controls clock 2026-11-28 (the day after): the passed date is gone and the latest row stays
+check-latest: ok

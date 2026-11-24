@@ -1479,7 +1479,12 @@ const glossaryHTML = glossary.length ? glossary.slice().sort((a, b) => a.term.lo
 const totalWords = all.reduce((a, c) => a + c.words, 0);
 const credits = `Made by <b><a href="https://www.linkedin.com/in/yashvardhan07/" target="_blank" rel="noopener">Yashvardhan Sharma</a></b>. Corrections and questions: <a href="mailto:contact@chipsupplychain.org">contact@chipsupplychain.org</a>.`;
 const builtOn = new Date(); const builtStr = `${builtOn.getDate()} ${MONTHS[builtOn.getMonth()]} ${builtOn.getFullYear()}`;
-const footer = `<p class="credits">${credits}<span class="updated">Updated ${builtStr}</span></p>`;
+/* the thin footer (owner, 23 Nov 2026: "reduce the width and add the citation line / updated date on the right empty side ...
+   otherwise, it stays thin"): one line as wide as the masthead, the tile (ftLead, below) and the made-by line at the left, the
+   "Updated" day and the "How to cite" toggle at the right, the citation under the toggle once it is opened (src/modules/
+   footer.css, footer.js). src/app.js names the toggle and writes the citation as it boots, as it always wrote the citation,
+   so the words a page is dated by are the credits and the day alone, as before */
+const footer = `<p class="credits">${credits}</p><p class="ft-meta"><span class="updated">Updated ${builtStr}</span><button type="button" class="ft-cite-btn" aria-expanded="false" hidden></button></p><div class="ft-cite" hidden></div>`;
 
 /* ---------------- page dates ----------------
    The day each page last changed. build/page-dates.json keeps, for each page, a hash of its content, the day that hash
@@ -1677,11 +1682,13 @@ fill('SITE_URL', SITE.url); fill('SITE_HOST', SITE.host);
 // the template's counts of the chain (the home card's alt text, the printed title page, The Chain's standfirst): never typed
 fill('N_STAGES', String(stages.length)); fill('STAGES_WORD', word(stages.length)); fill('CHAPTERS_WORD', word(all.length));
 // the counter: each hash route counts as its own page ("/lithography", "/suppliers"), and the query string is dropped;
-// the walk's step addresses (#/walk/<chapter>, replaced as the reader scrolls Start here) all count as the home page; a chapter's
-// own page counts as its address, /lithography/, whatever section it is at (as the readable pages counted until 28 Oct 2026)
+// the walk's step addresses (#/walk/<chapter>, replaced as the reader scrolls the walk) count as the page they are on: the
+// Introduction's page, /introduction/, since 23 Nov 2026 (an old link to the home's /#/walk/<chapter> forwards there first); a
+// chapter's own page counts as its address, /lithography/, whatever section it is at (as the readable pages counted until 28 Oct 2026)
 fill('ANALYTICS', SITE.analytics ? `<script>window.goatcounter={path:function(){var p=location.pathname.replace(/index\\.html$/,'');if(p!=='/')return p;return (location.hash||'').replace(/^#\\/?/,'/').replace(/\\?.*$/,'').replace(/^\\/walk\\/.*$/,'/')||'/';}};</script>\n<script async src="https://gc.zgo.at/count.js" data-goatcounter="${esc(SITE.analytics)}"></script>` : ''); fill('THESIS', thesisHTML); fill('SUBTITLE', subtitleHTML);
-// Home is the Start here walk (#/ and #/intro open the same view), so it has one entry
-const sheetPages = [['#/', 'Home'], ['#/chain', 'Supply Chain'], ['#/landscape', 'AI Chips'], ['#/suppliers', 'Suppliers'], ['#/controls', 'Export Controls'], ['#/glossary', 'Glossary']].map((p) => `<a href="${p[0]}">${p[1]}</a>`).join('');
+// the pages, as the masthead names them (owner, 23 Nov 2026): the Introduction first, as "Intro", and no Home, since the
+// wordmark is the way home
+const sheetPages = [['#/intro', 'Intro'], ['#/chain', 'Supply Chain'], ['#/landscape', 'AI Chips'], ['#/suppliers', 'Suppliers'], ['#/controls', 'Export Controls'], ['#/glossary', 'Glossary']].map((p) => `<a href="${p[0]}">${p[1]}</a>`).join('');
 const sheetItem = (ch) => `<li><a href="${ch.id === 'geopolitics' ? '#geopolitics' : '#' + esc(ch.id)}"><span class="n">${pad(ch.number)}</span><span class="t">${esc(ch.title)}</span></a></li>`;
 const sheetChapters = stages.map(sheetItem).join('') + (acrossChapters.length ? `<li class="sheet-k" aria-hidden="true">Across the chain</li>` + acrossChapters.map(sheetItem).join('') : '');
 fill('SHEET_PAGES', sheetPages); fill('SHEET_CHAPTERS', sheetChapters);
@@ -1796,9 +1803,9 @@ const glEntries = PT.all(glossaryDoc).filter((n) => PT.hasClass(n, 'gl-entry')).
 });
 const searchData = (() => {
   const idx = [];
-  // the home page is "Home" in the results, as the masthead names it (28 Oct 2026; it said "Start here", a page the home replaced)
-  idx.push({ kind: 'Home', title: 'How AI chips are made', text: 'One plain paragraph per stage, in order, with the specimens', href: '#/intro' });
-  data.chapters.forEach((c) => { if (c.plain && c.id !== 'introduction-and-goals') idx.push({ kind: 'Home', title: c.title + ', in plain terms', text: c.plain, href: '#/walk/' + c.id }); });
+  // the walk is the Introduction's (its page, introduction/, since 23 Nov 2026; until then the home page's, "Home" in the results)
+  idx.push({ kind: 'Introduction', title: 'Introduction', text: 'One plain paragraph per stage, in order, with the specimens', href: '#/intro' });
+  data.chapters.forEach((c) => { if (c.plain && c.id !== 'introduction-and-goals') idx.push({ kind: 'Introduction', title: c.title + ', in plain terms', text: c.plain, href: '#/walk/' + c.id }); });
   const arts = all.map((c) => chArticle(c.id)).filter(Boolean);
   arts.forEach((art) => {
     const title = chTitle(art), lede = ptFind(art, (n) => PT.hasClass(n, 'ch-lede'));
@@ -1833,8 +1840,8 @@ const searchData = (() => {
   (data.landscape || []).forEach((c) => idx.push({ kind: 'Chip', title: c.vendor + ' ' + c.name, text: ((c.process || {}).node || '') + ' · ' + ((c.memory || {}).type || '') + ' · ' + (c.status || ''), href: '#/landscape?pick=' + encodeURIComponent(c.id), chip: c.id }));
   (data.timeline || []).forEach((e) => idx.push({ kind: 'Event ' + e.date, title: e.title, text: e.summary || '', href: e.id ? '#/controls/' + encodeURIComponent(e.id) : '#/controls' }));
   (data.exposure || []).forEach((r) => { if (r.chinaShare != null) idx.push({ kind: 'China revenue', title: r.firm + ' ' + r.fiscalYear, text: 'China was ' + r.chinaShare + '% of revenue' + (r.basis ? ' · ' + r.basis : ''), href: (data.exposureLinks || {})[r.firm] || '#/exposure' }); });
-  // each flashcard: Start here's deck (the walk comes first in the page), then each chapter's
-  const walkDoc = PT.parse(html.slice(html.indexOf('data-view="walk"'), html.indexOf('<!--/home-->')));
+  // each flashcard: Start here's deck (the Introduction's walk, the template's intro part), then each chapter's
+  const walkDoc = PT.parse(html.slice(html.indexOf('<!--intro-->'), html.indexOf('<!--/intro-->')));
   const decks = PT.all(walkDoc).filter((n) => PT.hasClass(n, 'fc') && n.attrs.id).map((fc) => [fc, fc.attrs['data-name'] || ''])
     .concat(...arts.map((art) => PT.all(art).filter((n) => PT.hasClass(n, 'fc') && n.attrs.id).map((fc) => [fc, chTitle(art)])));
   decks.forEach(([fc, name]) => {
@@ -1913,7 +1920,7 @@ fill('STYLESHEET', `<link rel="stylesheet" href="${assetURL['site.css']}">`);
    Each page's preroute line says which page it is (src/preroute.js PAGE), and relink settles its links for where it sits.
    Until 28 Oct 2026 dist/index.html held every chapter and dist/<id>/ a static readable copy of it. */
 const pre = require(path.join(root, 'src', 'preroute.js'));
-const unmark = (h) => h.replace(/[ \t]*<!--\/?(head|home|chain|book|cover|glossary)-->\n?/g, '');
+const unmark = (h) => h.replace(/[ \t]*<!--\/?(head|home|intro|chain|book|cover|suppliers|glossary)-->\n?/g, '');
 const cutOut = (h, mark) => h.replace(new RegExp(`[ \\t]*<!--${mark}-->[\\s\\S]*?<!--/${mark}-->\\n?`, 'g'), '');
 // the page's scripts, in order, after the addresses of the two the app fetches when it needs them (src/app.js need())
 const scriptTags = (names, up) => `<script>window.CP_ASSETS = ${JSON.stringify({ 'search.js': up + assetURL['search.js'], 'glossary.js': up + assetURL['glossary.js'] })};</script>\n`
@@ -1935,6 +1942,8 @@ function relink(h, page) {
       const to = pre.away(v.replace(/&amp;/g, '&'), '', page, chainIds);
       if (!to && page.kind === 'contents' && v.charAt(1) === '/') return page.root + pre.CONTENTS + '/'; // its own route (the Supply Chain tab): its own address
       if (!to && page.kind === pre.GLOSSARY && /^#\/glossary\b/.test(v)) return page.root + pre.GLOSSARY + '/'; // and the Glossary's (its tab, its name)
+      if (!to && page.kind === pre.INTRO && /^#\/(intro|walk)$/.test(v)) return page.root + pre.INTRO + '/'; // and the Introduction's (its tab)
+      if (!to && page.kind === pre.SUPPLIERS && v === '#/suppliers') return page.root + pre.SUPPLIERS + '/'; // and Suppliers' (its tab)
       return to ? esc(to) : v;
     }
     if (routed && page.chapter && v === page.chapter + '/') return '#' + page.chapter; // the chapter's own page: its top, in place
@@ -1956,12 +1965,16 @@ function makePage(kind, o) {
   let h = html;
   const put = (k, v) => { h = h.split(`{{${k}}}`).join(v); };
   if (kind !== 'home') h = cutOut(h, 'home');
-  if (kind === 'home' || kind === 'glossary') h = cutOut(h, 'chain'); // the home page holds no part of The Chain: its contents have their own page
+  if (kind !== pre.INTRO) h = cutOut(h, 'intro'); // the Introduction's walk is its own page's alone (23 Nov 2026)
+  if (kind !== pre.SUPPLIERS) h = cutOut(h, 'suppliers'); // and Suppliers its own page's (23 Nov 2026)
+  if (kind === 'home' || kind === 'glossary' || kind === pre.INTRO || kind === pre.SUPPLIERS) h = cutOut(h, 'chain'); // the home page holds no part of The Chain: its contents have their own page
   if (kind !== 'glossary') h = cutOut(h, 'glossary'); // the Glossary is its own page's alone
   if (kind === 'chapter') h = cutOut(h, 'book');
   if (kind === 'contents') h = cutOut(h, 'cover'); // the cover is the book's
   if (o.head) h = h.replace(/<!--head-->[\s\S]*?<!--\/head-->/, () => o.head); // as a function: a head's "$6,400" is text
   h = unmark(h);
+  // the page's kind on <html>, for the few styles that are one page's own (the home's drawing, the Introduction's stage)
+  h = h.replace('<html lang="en">', () => `<html lang="en" data-page="${kind}">`);
   const page = { kind, chapter: o.chapter || '', root: o.root };
   put('PREROUTE', preBase.replace(PRE_PAGE, `var PAGE = ${JSON.stringify(page)};`).replace(/<\/script/gi, '<\\/script'));
   put('CHAIN_ONE', chainOne(o.ids));
@@ -2001,6 +2014,35 @@ let glossaryPageHTML = '';
   glossaryPageHTML = relink(citeDays(x.split(DAY_TOKEN).join(dayStr(dates.modified)).replace('<!--glossary-head-->', () => head)), page);
   writePage('glossary/index.html', glossaryPageHTML);
 }
+// the Introduction's page, /introduction/ (23 Nov 2026; until then the home page's walk, under its hero, at #/intro): the walk
+// through the stages with their specimens, the flashcards and Other pages, dated by its text, headed by social.js. Its view is
+// the walk, so the router, the stage and src/modules/walk.js serve it as they served the home's
+if (pre.INTRO !== 'introduction') warn(`preroute: src/preroute.js names the Introduction's page ${pre.INTRO}/, but the build writes introduction/`);
+let introPageHTML = '';
+{
+  const { h, page } = makePage(pre.INTRO, { root: '../', chapters: '', ids: [], scripts: ['kit.js', 'terms.js', 'app.js'], head: '<!--intro-head-->' });
+  const x = h.split(`Updated ${builtStr}`).join(`Updated ${DAY_TOKEN}`);
+  const dates = pageDate('/introduction/', x.slice(x.indexOf('<main'), x.indexOf('</main>')));
+  const head = ctx.introHead ? ctx.introHead(dates) : '';
+  if (!head) warn('introduction page: social.js gave it no head');
+  introPageHTML = relink(citeDays(x.split(DAY_TOKEN).join(dayStr(dates.modified)).replace('<!--intro-head-->', () => head)), page);
+  writePage('introduction/index.html', introPageHTML);
+}
+// Suppliers' page, /suppliers/ (23 Nov 2026; until then the home page's #/suppliers, with a static reference page at this address
+// whose button opened it): the interactive page itself, the route map first under the title (owner: "when somebody clicks on
+// supplier, the map to be the actual first thing which they see. It should not be optional"), with every firm in its HTML after
+// the interactive parts, dated by its text, headed by reference-pages.js
+if (pre.SUPPLIERS !== 'suppliers') warn(`preroute: src/preroute.js names Suppliers' page ${pre.SUPPLIERS}/, but the build writes suppliers/`);
+let suppliersPageHTML = '';
+{
+  const { h, page } = makePage(pre.SUPPLIERS, { root: '../', chapters: '', ids: [], scripts: ['kit.js', 'data.js', 'terms.js', 'app.js'], head: '<!--suppliers-head-->' });
+  const x = h.split(`Updated ${builtStr}`).join(`Updated ${DAY_TOKEN}`);
+  const dates = pageDate('/suppliers/', x.slice(x.indexOf('<main'), x.indexOf('</main>')));
+  const head = ctx.suppliersHead ? ctx.suppliersHead(dates) : '';
+  if (!head) warn('suppliers page: reference-pages.js gave it no head');
+  suppliersPageHTML = relink(citeDays(x.split(DAY_TOKEN).join(dayStr(dates.modified)).replace('<!--suppliers-head-->', () => head)), page);
+  writePage('suppliers/index.html', suppliersPageHTML);
+}
 // the home page: dated by its text and DATA, the data its views draw from
 let homeHTML;
 {
@@ -2011,7 +2053,7 @@ let homeHTML;
   // a view with a page of its own (build/modules/reference-pages.js, which runs first) gives its footer that page's day, so
   // #/controls and /export-controls/ say the same "Updated" day for the same data (28 Oct 2026; the views all said the home
   // page's); the rest say the home page's
-  const VIEW_PAGE = { landscape: '/chips/', suppliers: '/suppliers/', controls: '/export-controls/' };
+  const VIEW_PAGE = { landscape: '/chips/', controls: '/export-controls/' };
   const homeDay = dayStr(homeDates.modified);
   x = x.split(/(?=<section class="view\b)/).map((part) => {
     const v = (/^<section class="view\b[^"]*" data-view="([a-z-]+)"/.exec(part) || [])[1], e = v && VIEW_PAGE[v] ? pageDates[VIEW_PAGE[v]] : null;
@@ -2062,8 +2104,8 @@ for (const ch of all) {
 }
 if (SITE.cname) fs.writeFileSync(path.join(root, 'dist', 'CNAME'), SITE.cname + '\n'); else if (fs.existsSync(path.join(root, 'dist', 'CNAME'))) fs.unlinkSync(path.join(root, 'dist', 'CNAME'));
 // for search engines: everything may be crawled, and the sitemap lists the HTML pages that carry their own content
-// (the site itself, each chapter's page, the summary, the three reference pages that reference-pages.js writes and the
-// Glossary's page, which it heads and lists (ctx.referencePages); the
+// (the site itself, the Introduction's page, each chapter's page, the two reference pages that reference-pages.js writes and
+// Suppliers' and the Glossary's pages, which it heads and lists (ctx.referencePages); the summary, which forwards to the Introduction, the
 // other view share pages only forward to the site, and the book is for print, so they are left out). The PDFs are still dated
 // here, by their bytes. Each with the day its content last changed (page dates, above): a chapter's page hashes its article,
 // a PDF its bytes
@@ -2087,7 +2129,7 @@ const lastmod = (key) => (pageDates[key] || {}).modified || today;
 fs.writeFileSync(path.join(root, 'dist', 'robots.txt'), `User-agent: *\nAllow: /\nDisallow: /book/\n${Object.keys(OLD_PDFS).map((o) => `Disallow: /${o}\n`).join('')}\nSitemap: ${SITE.url}sitemap.xml\n`);
 fs.writeFileSync(path.join(root, 'dist', 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
   // HTML pages only (the owner, 21 Oct 2026): the PDFs stay on the site and are linked from their pages, but are not listed
-  ['/', '/supply-chain/', ...chapterPages, ...(ctx.referencePages || [])].map((k) => `  <url><loc>${SITE.url}${k.slice(1)}</loc><lastmod>${lastmod(k)}</lastmod></url>`).join('\n') + `\n</urlset>\n`);
+  ['/', '/introduction/', '/supply-chain/', ...chapterPages, ...(ctx.referencePages || [])].map((k) => `  <url><loc>${SITE.url}${k.slice(1)}</loc><lastmod>${lastmod(k)}</lastmod></url>`).join('\n') + `\n</urlset>\n`);
 // keep the dates of the pages this build wrote (a retired page drops out); the file is rewritten only when a date or hash moved
 {
   const kept = {};
@@ -2105,7 +2147,7 @@ fs.readdirSync(ASSET_DIR).forEach((f) => { if (!assetURL[f]) fs.unlinkSync(path.
 const tierTotal = tierCounts([].concat(...all.map((c) => c.cites)));
 const report = [`built ${new Date().toISOString()}`, `source tiers: A ${tierTotal.A} · B ${tierTotal.B} · disallowed ${tierTotal.C + tierTotal.D} · unclassified ${tierTotal['?']}`, `chapters: ${chapters.length}${geo ? ' + geopolitics' : ''}`, `words: ${totalWords}`, `sources: ${all.reduce((a, c) => a + c.cites.length, 0)}`,
   `landscape: ${landscape.length} chips · suppliers: ${suppliers.length} · timeline: ${timeline.length} · matrix: ${matrix.length} · glossary: ${glossary.length} · controls: ${controls.length} · exposure: ${exposure.length}`, `specimens: ${[...specNames].join(', ')}`,
-  `size: home ${(homeHTML.length / 1024).toFixed(0)} KB · glossary ${(Buffer.byteLength(glossaryPageHTML) / 1024).toFixed(0)} KB`, ...all.map((c) => { const tc = tierCounts(c.cites); return `  ${pad(c.number)} ${c.id}: ${c.words} words, ${c.cites.length} sources (D ${tc.D}, ? ${tc['?']}), ${(c.meta.figures || []).length} figures`; }), ...warnings.map((w) => 'WARN ' + w)].join('\n');
+  `size: home ${(homeHTML.length / 1024).toFixed(0)} KB · introduction ${(Buffer.byteLength(introPageHTML) / 1024).toFixed(0)} KB · suppliers ${(Buffer.byteLength(suppliersPageHTML) / 1024).toFixed(0)} KB · glossary ${(Buffer.byteLength(glossaryPageHTML) / 1024).toFixed(0)} KB`, ...all.map((c) => { const tc = tierCounts(c.cites); return `  ${pad(c.number)} ${c.id}: ${c.words} words, ${c.cites.length} sources (D ${tc.D}, ? ${tc['?']}), ${(c.meta.figures || []).length} figures`; }), ...warnings.map((w) => 'WARN ' + w)].join('\n');
 fs.writeFileSync(path.join(root, 'dist', 'build-report.txt'), report);
 console.log(report);
 if (fatal.length) { console.error(`build failed: ${fatal.length} problem${fatal.length === 1 ? '' : 's'}; dist/ is incomplete, do not deploy it`); fatal.forEach((p) => console.error('  ' + p)); process.exit(1); }

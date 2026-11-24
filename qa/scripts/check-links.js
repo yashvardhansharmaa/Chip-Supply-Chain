@@ -38,8 +38,10 @@ if (LOCAL) {
       const r = await get(base), where = [...from].slice(0, 3).join(', ');
       if (r.status !== 200) { bad.push(`${u.pathname}${u.search} answers ${r.status} (linked from ${where})`); continue; }
       if (!frag || !r.html) continue;
-      // a route belongs to the home page; the book serves The Chain's own (#/chain), its contents
-      if (frag.startsWith('/')) { if (u.pathname !== '/' && !(u.pathname === '/book/' && /^\/(chain|stack)$/.test(frag))) bad.push(`#${frag} is a route on ${u.pathname}, which has none (linked from ${where})`); continue; }
+      // a route belongs to the home page; the book serves The Chain's own (#/chain), its contents; the Introduction's page its walk's
+      // (#/intro, #/walk, #/walk/<chapter>) and Suppliers' page Suppliers' (#/suppliers with its query), since 23 Nov 2026
+      const ownRoute = (u.pathname === '/book/' && /^\/(chain|stack)$/.test(frag)) || (u.pathname === '/introduction/' && /^\/(intro|walk)(\/[a-z-]+)?$/.test(frag)) || (u.pathname === '/suppliers/' && /^\/suppliers(\?.*)?$/.test(frag));
+      if (frag.startsWith('/')) { if (u.pathname !== '/' && !ownRoute) bad.push(`#${frag} is a route on ${u.pathname}, which has none (linked from ${where})`); else if (u.pathname === '/introduction/' && /^\/walk\/[a-z-]+$/.test(frag) && !ids(r.html).has(frag)) bad.push(`${u.pathname}#${frag}: no such step (linked from ${where})`); continue; }
       // the Glossary's page holds every entry's row (since 30 Oct 2026), and its A to Z index has addresses with no element
       // behind them (#a-z, a kind's #a-z/firms, a letter's #a-z/s; src/modules/lookup.js)
       if (!ids(r.html).has(frag) && !(u.pathname === '/glossary/' && /^a-z(\/(terms|firms|ai-chips|countries|0-9|[a-z]))?$/.test(frag))) bad.push(`${u.pathname}#${frag}: no such id (linked from ${where})`);

@@ -16,7 +16,8 @@ module.exports = function (ctx) {
   // the page's "Updated" day is the day its content last changed (page dates in build/build.js): written as DAY until the
   // page is hashed, then replaced, so a rebuild with no change in the chapters leaves the summary's day alone
   const DAY = '{{DAY:SUMMARY}}';
-  const footerKey = String(ctx.footerKey || '').split(`Updated ${builtStr}`).join(`Updated ${DAY}`);
+  // (the footer's words; the citation's toggle and place are the app's, and this page loads no app: build/modules/social.js staticFooter)
+  const footerKey = require('./social.js').staticFooter(String(ctx.footerKey || '').split(`Updated ${builtStr}`).join(`Updated ${DAY}`));
   if (!stages.length) return {};
   const stageIds = new Set(stages.map((c) => c.id));
   const across = chapters.filter((c) => !stageIds.has(c.id)).concat(geo ? [geo] : []);
@@ -392,8 +393,8 @@ h2 { margin: 16pt 0 1mm; padding-top: 2mm; border-top: 0.6pt solid var(--ink); f
 <title>${esc(seo.title)} · Chip Supply Chain</title>
 <meta name="description" content="${esc(seo.description)}">
 <meta name="robots" content="noindex">
-<link rel="canonical" href="${SITE.url}">
-<script>/* the summary's screen page was folded into home (owner, 28 Oct 2026). It stays as the page build/summary_pdf.py prints, which asks for ?print, and a reader who follows an old link lands on home */ if (!/[?&]print(=|&|$)/.test(location.search)) location.replace('../');</script>
+<link rel="canonical" href="${SITE.url}introduction/">
+<script>/* the summary's screen page was folded into home (owner, 28 Oct 2026), whose walk is the Introduction's page since 23 Nov 2026. It stays as the page build/summary_pdf.py prints, which asks for ?print, and a reader who follows an old link lands on the Introduction */ if (!/[?&]print(=|&|$)/.test(location.search)) location.replace('../introduction/' + location.hash);</script>
 <meta property="og:title" content="${esc(seo.title)}">
 <meta property="og:description" content="${esc(seo.description)}">
 <meta name="twitter:title" content="${esc(seo.title)}">
