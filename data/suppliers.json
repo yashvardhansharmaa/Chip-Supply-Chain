@@ -231,7 +231,7 @@
       "kind": "majority"
     },
     "role": "Licenses the CPU architecture and cores used in the host processors that feed data to AI accelerators. These include Nvidia's Grace and Vera CPUs and the Arm cores inside the server chips that large cloud companies design. It also licenses the interconnect and system IP around them. In 2026 it launched the Arm AGI CPU, its first production chip. By May 2026, ASRock, Lenovo, Quanta and Supermicro were taking orders for servers built on it.",
-    "chokepoint": "Critical",
+    "chokepoint": "Important",
     "shareNote": null,
     "customers": [
       "Nvidia",
@@ -1909,7 +1909,7 @@
       "product": "sputtering targets for semiconductors",
       "share": "about 65 percent",
       "year": "fiscal 2026",
-      "by": "by the company's own estimate",
+      "by": "the company's own estimate",
       "source": "https://www.jx-nmm.com/english/company/glance/"
     },
     "shareNote": null,
@@ -2426,7 +2426,7 @@
       "kind": "subsidiary"
     },
     "role": "Builds the light sources for lithography: excimer lasers for DUV scanners and the laser-produced tin plasma source that generates 13.5 nm EUV light. The EUV source is the hardest subsystem in the machine.",
-    "chokepoint": "Critical",
+    "chokepoint": "Important",
     "shareNote": null,
     "customers": [
       "ASML"
@@ -2508,7 +2508,7 @@
     "ticker": "Private",
     "ownership": "Private, family-owned",
     "role": "Builds the multi-kilowatt CO2 laser amplifier chain that vaporizes tin droplets to create EUV light. Trumpf describes the laser system as internationally unique.",
-    "chokepoint": "Critical",
+    "chokepoint": "Important",
     "shareNote": null,
     "customers": [
       "ASML",
@@ -2922,9 +2922,9 @@
     "chokepoint": "Critical",
     "dominantIn": {
       "product": "EUV mask blanks",
-      "share": "about four-fifths, read from a chart without numbers",
+      "share": "about four-fifths",
       "year": "year to March 2026",
-      "by": "by the company's own estimate",
+      "by": "the company's own estimate",
       "source": "https://www.hoya.com/ir/2026/en/review/it.html"
     },
     "shareNote": null,
@@ -3151,7 +3151,7 @@
     "ticker": "4183.T",
     "ownership": "Public",
     "role": "Supplies EUV pellicles, the thin membranes that keep particles off a photomask while it is exposed. EUV pellicles must transmit over 90 percent of 13.5 nm light and survive high source power. Only a few suppliers make them.",
-    "chokepoint": "Critical",
+    "chokepoint": "Important",
     "shareNote": null,
     "customers": [
       "TSMC",
@@ -3267,7 +3267,7 @@
     "ticker": "6920.T",
     "ownership": "Public",
     "role": "Makes actinic inspection tools, which use EUV light to inspect EUV mask blanks and patterned masks. Its ACTIS A150 was the world's first actinic EUV patterned mask inspection system. In October 2025 it launched the ACTIS A200HiT series, which it says triples the A150's inspection speed. These tools detect printable phase defects, flaws in a mask's reflective layers that DUV-based mask inspection cannot find.",
-    "chokepoint": "Critical",
+    "chokepoint": "Important",
     "shareNote": null,
     "customers": [
       "TSMC",
@@ -4998,7 +4998,7 @@
       "product": "build-up film (ABF) for package substrates",
       "share": "over 95 percent since its launch",
       "year": "June 2026",
-      "by": "by the company's own estimate",
+      "by": "the company's own estimate",
       "source": "https://www.ajinomoto.co.jp/company/en/ir/event/business_briefing/main/011117/teaserItems1/01/linkList/03/link/20260630_presentation_E.pdf#page=3"
     },
     "shareNote": "Over 95 percent of its market since its launch, Ajinomoto told investors in June 2026",
@@ -5300,7 +5300,7 @@
     "ticker": "3110.T",
     "ownership": "Public",
     "role": "Weaves the ultra-fine low thermal expansion glass cloth, known as T-glass, that reinforces high-end package substrates and server boards. Its fiber keeps large substrates flat as they heat. In August 2025 it decided to expand glass fiber cloth production at its Fukushima Enterprise Center, with the added output starting in the fourth quarter of its fiscal 2026. It says Chinese and Taiwanese companies are aggressively catching up with it in special glass.",
-    "chokepoint": "Critical",
+    "chokepoint": "Important",
     "shareNote": null,
     "customers": [
       "Ibiden",

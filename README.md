@@ -35,7 +35,7 @@ Charts put red on the largest figure. Animations show how a step works.
 </p>
 
 ### Suppliers
-Where the 224 firms sit, and which countries supply which stages. Red marks the firms rated Critical.
+Where the 224 firms sit, and which countries supply which stages. Red marks the firms with a Dominant market position.
 
 <p>
   <img src="docs/readme/suppliers-map.jpg" width="49%" alt="The Suppliers map with Taiwan's panel open">
