@@ -38,6 +38,7 @@ const keepRanges = require('../keep-ranges.js');
 const EXPOSURE = require('../exposure.js');
 const PAGE_TITLES = require('../page-titles.js');
 const LATEST = require('../latest-rule.js');
+const STRIP = require('../ec-strip.js');
 
 const BASE = S.BASE;
 const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -115,7 +116,7 @@ module.exports = function (ctx) {
 <h1 class="ch-title">${esc(o.h1)}</h1>
 <p class="ch-lede">${o.dekHTML}</p>
 <p class="ch-meta">${o.facts.map((f) => `<span>${esc(f)}</span>`).join('')}<span>Updated ${DAY}</span></p>
-${o.headAfter ? `<div class="cta-rows">${cta('')}${o.headAfter}</div>` : cta('')}
+${o.headStrip || ''}${o.headAfter ? `<div class="cta-rows">${cta('')}${o.headAfter}</div>` : cta('')}
 </header>
 ${o.body}
 <nav class="endnav" aria-label="After the page">${cta(' cta--end')}${nav}</nav>`;
@@ -290,6 +291,8 @@ ${S.shareTags(p, versions)}
     // the interactive board (Geo.stateAt in src/app.js, final QA B3)
     const lastEv = timeline.length ? String(timeline[timeline.length - 1].date) : today;
     const checked = data.flows && !Array.isArray(data.flows) && /^\d{4}-\d{2}-\d{2}$/.test(String(data.flows.checked || '')) ? String(data.flows.checked) : lastEv;
+    // a state's other review policies: one { status, for } or a list of them (Geo.alsoOf in src/app.js)
+    const alsoOf = (s) => { const raw = s && s.also, l = (Array.isArray(raw) ? raw : raw ? [raw] : []).filter((a) => a && a.status).map((a) => ({ status: norm(a.status), scope: a.for || '' })); return l.length ? l : null; };
     const stateAt = (f, date) => {
       const st = (f.states || []).slice().sort((a, b) => (String(a.date) < String(b.date) ? -1 : String(a.date) > String(b.date) ? 1 : 0));
       const upTo = String(date) > checked ? checked : date;
@@ -299,7 +302,7 @@ ${S.shareTags(p, versions)}
       if (!s) { const k = norm(typeof f.initial === 'string' ? f.initial : 'open'); return { status: k, label: STATE[k], date: null, announced: null, published: null, suspendedUntil: null, suspends: '', suspended: false, unconfirmed: false, also: null, scope: '', pending, cite: null, event: null }; }
       const until = s.suspendedUntil ? String(s.suspendedUntil) : null, holds = !!until && until >= String(date), unconfirmed = !!until && !holds && until >= checked;
       const k = norm(until && !holds && !unconfirmed && s.resumes ? s.resumes : s.status);
-      return { status: k, label: s.label || STATE[k], date: out ? out.date : (s.date || null), announced: s.announced || null, published: s.published || null, suspendedUntil: until, suspends: s.suspends || '', suspended: holds || unconfirmed, unconfirmed, also: s.also && s.also.status ? { status: norm(s.also.status), scope: s.also.for || '' } : null, scope: s.for || '', pending, cite: s.cite || null, event: s.event || null };
+      return { status: k, label: s.label || STATE[k], date: out ? out.date : (s.date || null), announced: s.announced || null, published: s.published || null, suspendedUntil: until, suspends: s.suspends || '', suspended: holds || unconfirmed, unconfirmed, also: alsoOf(s), scope: s.for || '', pending, cite: s.cite || null, event: s.event || null };
     };
     const stayText = (st) => { if (!st.suspended || !st.suspendedUntil) return ''; const d = shortDate(st.suspendedUntil), w = st.suspends || ''; return st.unconfirmed ? `${w ? w + ' due' : 'Due'} to end ${d}, extension not confirmed` : `${w ? w + ' suspended' : 'Suspended'} until ${d}`; };
     const citeText = (c) => (c ? [c.fr, c.cfr].filter(Boolean).join(' · ') : '');
@@ -314,7 +317,7 @@ ${S.shareTags(p, versions)}
       const ev = st.event && evById.get(st.event);
       return `<li class="row" id="${uid('flow-' + slug(f.id), 'board rows')}"><div><h3 class="row-h">${esc(f.name || f.id)}</h3>${f.route ? `<p class="row-meta">${esc(f.route)}</p>` : ''}</div>`
         + `<div class="row-body"><p><span class="pill is-${esc(st.status)}${st.suspended && !st.suspends ? ' is-suspended' : ''}">${esc(word)}</span>${st.scope ? `<span class="susp">${esc(st.scope)}</span>` : ''}`
-        + (st.also ? ` <span class="pill is-${esc(st.also.status)}">${esc(STATE[st.also.status])}</span>${st.also.scope ? `<span class="susp">${esc(st.also.scope)}</span>` : ''}` : '')
+        + (st.also || []).map((a) => ` <span class="pill is-${esc(a.status)}">${esc(STATE[a.status])}</span>${a.scope ? `<span class="susp">${esc(a.scope)}</span>` : ''}`).join('')
         + `${stay ? `<span class="susp">${esc(stay)}</span>` : ''}${st.pending ? `<span class="susp">Change due ${esc(shortDate(st.pending.date))}, not confirmed</span>` : ''}</p>`
         + (st.label && st.label !== word ? `<p class="row-lead">${esc(st.label)}</p>` : '')
         + `<p class="row-meta">${esc(when)}${citeText(st.cite) || (st.cite && st.cite.url) ? ` · ${cite(st.cite)}` : ''}${ev ? ` · <a class="src-a" href="#${evIds.get(ev)}">Entry in the timeline</a>` : ''}</p>`
@@ -327,12 +330,22 @@ ${S.shareTags(p, versions)}
     const instWord = (v) => { const k = String(v || ''); if (!k) return ''; if (INSTRUMENT[k]) return INSTRUMENT[k]; const w = k.replace(/-/g, ' '); return w.charAt(0).toUpperCase() + w.slice(1); };
     const years = [];
     timeline.forEach((e) => { const y = String(e.date || '').slice(0, 4); let g = years[years.length - 1]; if (!g || g.y !== y) years.push(g = { y, rows: [] }); g.rows.push(e); });
+    const effText = (e) => {
+      const ds = (Array.isArray(e.effectiveDates) && e.effectiveDates.length ? e.effectiveDates : (e.effectiveDate ? [e.effectiveDate] : [])).filter((d) => /^\d{4}-\d{2}-\d{2}$/.test(String(d)));
+      const days = ds.length === 1 && ds[0] === e.date && !e.complianceDate ? [] : ds;
+      const sameY = days.every((d) => d.slice(0, 4) === days[0].slice(0, 4)), sameM = sameY && days.every((d) => d.slice(0, 7) === days[0].slice(0, 7));
+      const parts = days.map((d, i) => { const last = i === days.length - 1, full = shortDate(d); return sameM && !last ? String(+d.slice(8, 10)) : sameY && !last ? full.slice(0, -5) : full; });
+      const out = [];
+      if (parts.length) out.push('effective ' + (parts.length > 1 ? parts.slice(0, -1).join(', ') + ' and ' + parts[parts.length - 1] : parts[0]));
+      if (e.complianceDate) out.push('compliance ' + shortDate(e.complianceDate));
+      return out.join(' · ');
+    };
     const entry = (e) => {
-      const eff = e.effectiveDate && e.effectiveDate !== e.date ? e.effectiveDate : null;
+      const eff = effText(e);
       const ct = citeText({ fr: e.frCitation, cfr: e.cfr }), host = e.source ? hostOf(e.source) : '';
       const cu = (e.cite && e.cite.url) || e.source; // the legal citation's own text when the data gives it (cite.url)
       const src = e.source ? (ct ? `${ext(cu, esc(ct))}${cu !== e.source ? ` · ${ext(e.source, esc(host))}` : `<span class="host">${esc(host)}</span>`}` : ext(e.source, esc(host))) : esc(ct);
-      return `<li class="row ev" id="${evIds.get(e)}"><p class="row-meta"><b>${esc(shortDate(e.date))}</b>${eff ? `<span class="eff">in force ${esc(shortDate(eff))}</span>` : ''}${esc(e.actor || '')}</p>`
+      return `<li class="row ev" id="${evIds.get(e)}"><p class="row-meta"><b>${esc(shortDate(e.date))}</b>${eff ? `<span class="eff">${esc(eff)}</span>` : ''}${esc(e.actor || '')}</p>`
         + `<div class="row-body"><p class="ev-tags">${[e.category, instWord(e.instrument)].filter(Boolean).map(esc).join(' · ')}</p><h4>${esc(e.title)}</h4>`
         + (e.gist ? `<p class="gist">${esc(e.gist)}</p>` : '') + (e.summary ? `<p class="sum">${esc(e.summary)}</p>` : '')
         + (src ? `<p class="row-src">${src}</p>` : '') + '</div></li>';
@@ -375,8 +388,14 @@ ${S.shareTags(p, versions)}
 
     // the latest rule and the next date, under the button (build/latest-rule.js): each row links to its entry in the timeline below
     const lr = LATEST.rows(LATEST.pick(data, today), { esc, safe, cls: 'latest', nextToken: NEXT, entryHref: (e) => '#' + esc(evIds.get(e)) });
+    // the history strip from 2018 to today, as the interactive page has it under its standfirst (build/ec-strip.js), drawn by the
+    // same script and sheet (src/modules/ec-strip.js and .css), each mark linking to its entry below
+    const stripHTML = STRIP.html(data, { esc, warn, href: (e) => '#' + esc(evIds.get(e)) });
+    const stripJS = ctx.read(path.join(root, 'src', 'modules', 'ec-strip.js')) || '';
     return page({
       slug: 'export-controls', route: '#/controls', h1: 'Export Controls',
+      headStrip: stripHTML ? stripHTML + (stripJS ? `<script>${stripJS.replace(/<\/script/gi, '<\\/script')}</script>` : '') : '',
+      css: S.minCSS((ctx.read(path.join(root, 'src', 'modules', 'ec-strip.css')) || '') + '\n.ref .ch-head { max-width: none; }\n.ref .ch-head > :not(.ec-a) { max-width: 52rem; }\n.ref .ch-head .ec-a { margin: 30px 0 34px; }'),
       headAfter: lr.html ? lr.html + LATEST.SCRIPT : '', next: lr.next,
       ...titled('export-controls', [[/since (\d{4})/g, +first, 'as the first year'], [/at (\d+) firms/, fOrder.length, 'firms']], ctx.controlsDek || ''),
       dekHTML: esc(ctx.controlsDek || ''),

@@ -2593,7 +2593,7 @@ a.cf-cite:hover, a.cf-cite:focus-visible { color: var(--accent); text-decoration
 .cf-row[data-open="1"] .cf-hist-in { visibility: visible; transition-delay: 0s; }
 
 .cf-evs { list-style: none; margin: 0; padding: 2px 0 14px; }
-.cf-ev { display: grid; grid-template-columns: 150px 108px minmax(0, 1fr); gap: 14px; padding: 10px 0 11px; border-top: 1px dashed var(--line); }
+.cf-ev { display: grid; grid-template-columns: 168px 108px minmax(0, 1fr); gap: 14px; padding: 10px 0 11px; border-top: 1px dashed var(--line); }
 .cf-ev:first-child { border-top: 0; }
 .cf-ev-d { font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.02em; color: var(--muted); line-height: 1.4; font-variant-numeric: tabular-nums; }
 .cf-ev-d b { display: block; font-weight: 500; font-size: 11.5px; color: var(--ink); }
@@ -2760,14 +2760,14 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
 .cf-legend li { display: grid; gap: 4px; align-items: start; align-content: start; }
 .cf-legend .cf-pill, .cf-legend .cf-susp { justify-self: start; }
 .cf-legend li > span:last-child { font-family: var(--font-body); font-size: var(--fs-note); line-height: 1.4; color: var(--muted); }
-/* six entries read as three and three, not five and a stray */
+/* nine entries read as three rows of three, not a stray last line */
 @media (min-width: 900px) { .cf-legend { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (min-width: 900px) { .cf[data-mode="date"] .cf-legend { grid-template-columns: 1fr; gap: 9px 0; } }
 /* a glossary term inside a state label answers for itself, above the button that opens the row */
 .cf-lab .gl-term { font: inherit; color: inherit; position: relative; z-index: 1; }
 
 /* ---------- histories: the state's own label, and an honest gutter ---------- */
-.cf-ev-lab { display: block; margin-top: 5px; font-family: var(--font-mono); font-size: 11px; line-height: 1.4; color: var(--ink-2); max-width: 150px; }
+.cf-ev-lab { display: block; margin-top: 5px; font-family: var(--font-mono); font-size: 11px; line-height: 1.4; color: var(--ink-2); max-width: 168px; }
 .cf-ev-none { font-family: var(--font-mono); font-size: var(--fs-cap-s); letter-spacing: 0; color: var(--muted); }
 /* ---------- the years look like buttons and meet a fingertip ---------- */
 .cf-year { border: 1px solid var(--line); border-right-width: 1px; background: none; border-radius: 0; min-height: 44px; margin: 0 1px; }
@@ -2776,10 +2776,6 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
 .cf-now, .cf-mode { min-height: 34px; }
 @media (max-width: 899px) { .cf-now, .cf-mode { min-height: 44px; } .cf-year { min-height: 48px; } }
 
-/* the line above the board that points down to the chronology */
-.cf-jump { margin: 0; }
-.cf-jump-btn { font: inherit; font-family: var(--font-body); font-size: var(--fs-small); line-height: 1.4; color: var(--ink-2); background: none; border: 0; padding: 0; cursor: pointer; text-align: left; text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 3px; }
-.cf-jump-btn:hover, .cf-jump-btn:focus-visible { color: var(--ink); text-decoration-color: var(--accent); }
 #timeline { scroll-margin-top: calc(var(--masthead) + 16px); }
 
 /* ---------- the board as a chart: one five-step scale a row, No license to Prohibited ----------
@@ -2831,68 +2827,53 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
 
 /* ==========================================================================
    The redesign (stage 3, qa/redesign/BRIEF.md): today's deadline-first layout, restyled. The title over its standfirst
-   (.view-head.vh, suppliers.css), the two sub-tabs, the countdown, then the timeline and the board. No data value takes the
+   (.view-head.vh, suppliers.css), the two sub-tabs, then the timeline and the board (the countdown went on 24 Nov 2026). No data value takes the
    accent: the board's states, its scale and the countdown are ink, gray or an outline; the wine marks only the reader's place
    (the current tab, the entry a link opened) and links.
    ========================================================================== */
 .view[data-view="controls"] { width: 100%; padding: 0 var(--margin); }
 
-/* the latest rule and the next date under the title (build/latest-rule.js), as /export-controls/ has them under its button:
-   two hairline rows under the standfirst and as wide as it, each one link to its entry in the timeline. The kicker, the date
-   and the actor or the countdown stack in Coming up's date column, so the words start on Coming up's text edge below, at its
-   size. The countdown is counted on each visit, from the reader's day (Geo.renderLatest in src/app.js) */
-.view-head .cf-latest { grid-column: 1 / 8; max-width: 760px; margin: 28px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+/* The head the owner chose on 24 Nov 2026 (mock A, qa/builds-nov/round-24nov/shots/ec/a-1440.png): under the standfirst, the
+   history strip (src/modules/ec-strip.css), then the latest rule and the next date (build/latest-rule.js) as two hairline lines
+   across the column, each one link to its entry: the date and the actor or the countdown in a narrow column, then the kicker
+   and the words on one line. The latest rule's kicker is wine, as its mark on the strip is. Under 760 px the latest line goes,
+   since the upright strip ends on the latest rule with its full title, and the next date reads kicker, date and countdown over
+   its words. The countdown is counted on each visit, from the reader's day (Geo.renderLatest in src/app.js) */
+.view-head .ec-a { grid-column: 1 / -1; }
+.view-head .cf-latest { grid-column: 1 / -1; margin: 30px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
 .cf-latest > li[hidden] { display: none; }
-.cf-latest-row { display: grid; grid-template-columns: 110px minmax(0, 1fr); column-gap: 16px; align-items: start; padding: 12px 0 13px; border-bottom: 1px solid var(--line); color: inherit; text-decoration: none; }
-.cf-latest-h { display: flex; flex-direction: column; min-width: 0; }
-.cf-latest-k { font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); line-height: 20px; color: var(--muted); }
-.cf-latest-d { font-family: var(--font-ui); font-size: 12.5px; line-height: 20px; color: var(--ink); font-variant-numeric: tabular-nums; }
-.cf-latest-d small { display: block; font-size: 12.5px; line-height: 18px; color: var(--muted); }
+.cf-latest-row { display: grid; grid-template-columns: 110px minmax(84px, max-content) minmax(0, 1fr); column-gap: 16px; align-items: baseline; padding: 12px 0 13px; border-bottom: 1px solid var(--line); color: inherit; text-decoration: none; }
+.cf-latest-h { display: contents; }
+.cf-latest-d { grid-column: 1; grid-row: 1; font-family: var(--font-ui); font-size: 12.5px; line-height: 20px; color: var(--ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.cf-latest-d small { display: block; font-size: 12.5px; line-height: 20px; color: var(--muted); }
 .cf-latest-d small:empty { display: none; }
-.cf-latest-t { min-width: 0; padding-top: 1px; font-family: var(--font-body); font-size: var(--t-small); line-height: 1.45; color: var(--ink-2); max-width: 36em; text-wrap: wrap; } /* the plain wrap of Coming up below, not the inherited "pretty" */
+.cf-latest-k { grid-column: 2; grid-row: 1; font-family: var(--font-kicker); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--tr-label); text-transform: var(--tt-label); line-height: 20px; color: var(--muted); white-space: nowrap; }
+.cf-latest > li:not([data-due]) .cf-latest-k { color: var(--accent-ink); }
+.cf-latest-t { grid-column: 3; grid-row: 1; min-width: 0; font-family: var(--font-body); font-size: var(--t-small); line-height: 1.45; color: var(--ink); max-width: 62em; text-wrap: wrap; }
 .cf-latest-sp { word-spacing: 6px; } /* the gap before the link's words, a space that leaves no indent when they wrap */
 .cf-latest-go { display: inline-block; padding: 2px 0; font-family: var(--font-ui); font-size: 13px; line-height: 18px; white-space: nowrap; color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--rule-ink); text-underline-offset: 0.2em; }
-a.cf-latest-row:hover .cf-latest-t { color: var(--ink); }
 a.cf-latest-row:hover .cf-latest-go { color: var(--accent-ink); text-decoration-color: var(--accent); }
 .cf-latest-row:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-@media (max-width: 1199px) { .view-head .cf-latest { grid-column: 1 / -1; } }
 @media (max-width: 760px) {
   .view-head .cf-latest { margin-top: 22px; }
-  .cf-latest-row { grid-template-columns: minmax(0, 1fr); row-gap: 4px; }
-  .cf-latest-h { flex-direction: row; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 0 12px; }
-  .cf-latest-d { text-align: right; }
+  .view-head .cf-latest > li:not([data-due]) { display: none; }
+  .cf-latest-row { grid-template-columns: minmax(0, 1fr); row-gap: 3px; padding: 12px 0; }
+  .cf-latest-h { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 12px; }
   .cf-latest-d small { display: inline; }
   .cf-latest-d small::before { content: "\00a0\00b7\00a0"; }
+  .cf-latest-t { grid-column: 1; grid-row: auto; }
   .cf-latest-go { display: table; margin: 6px 0 0; padding: 4px 0; }
 }
+/* the timeline starts at once under the tabs: the order switch on the right, above the board */
+.view[data-view="controls"] .sub[data-sub="timeline"] > .cf-top { justify-content: flex-end; margin: 18px 0 0; }
+@media (min-width: 900px) { .view[data-view="controls"] .sub[data-sub="timeline"] > .cf-top { position: relative; z-index: 2; height: 0; margin: 0; top: -42px; } .view[data-view="controls"] .sub[data-sub="timeline"] > .cf-top .cf-modes { margin: 0; } .view[data-view="controls"] .sub[data-sub="timeline"] > .cf { margin-top: 22px; } }
+@media (max-width: 899px) { .view[data-view="controls"] .sub[data-sub="timeline"] > .cf-top { justify-content: flex-start; margin-top: 16px; } }
 
-/* the countdown: the date, how far off it is, what happens, and its entry */
-.cf-up { margin: 40px 0 36px; }
+/* the section heading that the countdown used, kept for the China revenue share and the held-back chips under the line */
 .cf-up-h { margin: 0; padding-bottom: 12px; border-bottom: 1px solid var(--ink); font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: var(--t-block); line-height: 1.2; letter-spacing: -0.01em; color: var(--ink); }
-.cf-up-list { list-style: none; margin: 0; padding: 0; }
-.cf-up-i { display: grid; grid-template-columns: 8.6em 7.4em minmax(0, 1fr); column-gap: 24px; align-items: baseline; padding: 13px 0 12px; border-bottom: 1px solid var(--line); }
-.cf-up-d, .cf-up-n { font-family: var(--font-ui); font-size: 12.5px; line-height: 20px; color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
-.cf-up-d { color: var(--ink); }
-.cf-up-i.is-soon .cf-up-n { color: var(--ink); }
-.cf-up-t { min-width: 0; font-family: var(--font-body); font-size: var(--t-small); line-height: 1.45; color: var(--ink); }
-.cf-up-link { display: inline-block; margin-left: 12px; padding: 2px 0; font-family: var(--font-ui); font-size: 13px; line-height: 18px; color: var(--ink-2); white-space: nowrap; text-decoration-color: var(--rule-ink); }
-.cf-up-link:hover { color: var(--accent-ink); text-decoration-color: var(--accent); }
-/* from 761 px the date and its countdown stack in one column, so the text shares the timeline's left edge and a reading measure (design10 data P2.1) */
-@media (min-width: 761px) {
-  .cf-up-i { grid-template-columns: 110px minmax(0, 1fr); column-gap: 16px; row-gap: 2px; }
-  .cf-up-d { grid-area: 1 / 1; }
-  .cf-up-n { grid-area: 2 / 1; }
-  .cf-up-t { grid-column: 2; grid-row: 1 / span 2; max-width: 76ch; }
-}
-@media (max-width: 760px) {
-  .cf-up { margin: 28px 0 28px; }
-  .cf-up-h { font-size: var(--t-lead); }
-  .cf-up-i { grid-template-columns: auto minmax(0, 1fr); column-gap: 16px; row-gap: 4px; }
-  .cf-up-t { grid-column: 1 / -1; font-size: var(--t-small); }
-}
+@media (max-width: 760px) { .cf-up-h { font-size: var(--t-lead); } }
 
-/* the line that points down to the chronology, and the order switch */
-.cf-jump-btn { font-family: var(--font-body); font-size: var(--t-text); color: var(--ink); text-decoration-color: var(--rule-ink); }
+/* the order switch */
 .cf-modes { padding: 3px; gap: 2px; border: 1px solid var(--control-edge); border-radius: 999px; }
 .cf-mode, .cf-mode:first-child, .cf-mode:last-child { border: 0; border-radius: 999px; font-family: var(--font-ui); font-weight: 400; font-size: 13.5px; line-height: 1; padding: 8px 14px; min-height: 30px; color: var(--ink-2); }
 .cf-mode[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
@@ -2963,7 +2944,6 @@ a.cf-latest-row:hover .cf-latest-go { color: var(--accent-ink); text-decoration-
 .cf-susp.is-unconfirmed { border-color: var(--ink-2); color: var(--ink); white-space: normal; }
 .cf-checked { margin-left: 10px; font-size: 12px; color: var(--muted); }
 .cf-checked[hidden] { display: none; }
-.cf-up-i.is-passed .cf-up-n { white-space: normal; color: var(--ink); }
 /* the compact board (By date, desktop): two policies and a named stay wrap within the state's column, flush right, so the
    row's name keeps its width */
 @media (min-width: 900px) {
@@ -2972,6 +2952,94 @@ a.cf-latest-row:hover .cf-latest-go { color: var(--accent-ink); text-decoration-
   .cf[data-mode="date"] .cf-for { margin-right: 0; }
   .cf[data-mode="date"] .cf-susp { white-space: normal; text-align: right; }
 }
+
+/* ---------- the board while it scrolls (24 Nov 2026, qa/builds-nov/ux/REPORT.md shortlist item 1) ----------
+   Two more outcomes: a presumption of approval, a license that will normally be granted (a dotted outline), and a license
+   required by letter, with no review policy published (an outline on a tint). Each review policy is a pill with whom it covers,
+   kept together; in the histories each takes a line of its own, so stacked pills never run into the date column. While the
+   board shows a past date, "Past state" stands beside the date. In By date the scrubber stays pinned at the top of the board,
+   and the rows are tightened so all of them fit beside the list on a 1280 x 800 screen. */
+.cf-pill.is-approval { border-style: dotted; border-color: var(--ink-2); color: var(--ink-2); }
+.cf-pill.is-letter { border-color: var(--ink-2); color: var(--ink); background: var(--bg-2); }
+.cf-pol { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 2px 6px; max-width: 100%; }
+.cf-pol .cf-for { margin-right: 0; white-space: normal; }
+.cf-ev-p { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; min-width: 0; }
+.cf-ev-p .cf-pol { display: flex; flex-wrap: wrap; gap: 2px 6px; }
+.cf-ev-p .cf-pill { white-space: normal; text-align: left; }
+.cf-ev-p .cf-ev-lab { margin-top: 0; }
+.cf-past { margin-left: 10px; padding: 1px 7px 2px; border: 1px solid var(--ink-2); border-radius: 3px; font-family: var(--font-ui); font-size: 12px; font-weight: 500; color: var(--ink); vertical-align: 2px; white-space: nowrap; }
+.cf-past[hidden] { display: none; }
+@media (min-width: 900px) {
+  .cf[data-mode="date"] .cf-side { padding-top: 0; }
+  .cf[data-mode="date"] .cf-scrub { position: sticky; top: 0; z-index: 2; margin: 0 0 4px; padding: 10px 0 6px; background: var(--bg); }
+  .cf[data-mode="date"] .cf-pills { flex-direction: column; align-items: flex-end; gap: 2px; max-width: 21em; }
+  /* a policy reads whom it covers, then its pill, on one line, the words wrapping on their own beside the pill */
+  .cf[data-mode="date"] .cf-pol { flex-direction: row-reverse; flex-wrap: nowrap; align-items: flex-start; justify-content: flex-start; text-align: right; }
+  .cf[data-mode="date"] .cf-pol .cf-pill { flex: 0 0 auto; }
+  .cf[data-mode="date"] .cf-pol .cf-for { flex: 1 1 auto; min-width: 0; text-align: right; }
+  .cf[data-mode="date"] .cf-rowh { padding: 5px 2px 5px 0; }
+  .cf[data-mode="date"] .cf-id { display: block; line-height: 1.2; }
+  .cf[data-mode="date"] .cf-name { display: block; font-size: var(--t-small); line-height: 1.2; }
+  .cf[data-mode="date"] .cf-susp { white-space: normal; padding: 1px 6px 2px; }
+  .cf[data-mode="date"] .cf-route { font-size: 12px; line-height: 16px; white-space: normal; }
+  .cf[data-mode="date"] .cf-pill { font-size: 11.5px; line-height: 15px; padding: 1px 7px 2px; }
+  .cf[data-mode="date"] .cf-pill.is-denial { padding: 0.5px 6.5px 1.5px; }
+  .cf[data-mode="date"] .cf-for, .cf[data-mode="date"] .cf-susp { font-size: 11.5px; line-height: 15px; }
+  .cf[data-mode="date"] .cf-year { min-height: 30px; padding: 4px 1px 4px; justify-content: center; }
+  .cf[data-mode="date"] .cf-yb, .cf[data-mode="date"] .cf-yn { display: none; } /* each year's count is in the list's own year heads */
+  .cf[data-mode="date"] .cf-route { display: none; } /* the compact board names each row; its route is in the row's name for screen readers and in By subject */
+}
+@media (min-width: 900px) and (max-width: 1399px) {
+  .cf[data-mode="date"] .cf-side { flex-basis: 42%; } /* a little wider below 1400 px, so every row still fits beside the list at 1280 x 800 */
+  body:has(.view[data-view="controls"]:not([hidden]) .sub:not([hidden]) > .cf[data-mode="date"]) .to-top {
+    right: calc(clamp(16px, 4vw, 56px) + 0.42 * (100vw - clamp(16px, 4vw, 56px) - clamp(16px, 3vw, 44px)) + 12px);
+  }
+}
+
+
+/* module: ec-strip.css */
+/* The history strip at the head of Export Controls (build/ec-strip.js, src/modules/ec-strip.js), on the interactive board and
+   on /export-controls/, which inlines this sheet. From 760 px the script draws it: the marks absolute on their true dates, the
+   line in ink, the years at 1 January, and the wine on the latest rule alone. Under 760 px it is an upright list on a thin
+   spine, the latest rule last with its full title. The site's tokens only. */
+.ec-a { position: relative; margin: 34px 0 0; padding: 0; }
+.ec-strip { list-style: none; margin: 0; padding: 0; position: relative; }
+.ec-m { margin: 0; padding: 0; }
+.ec-m a { color: inherit; text-decoration: none; }
+.ec-mt { font-family: var(--font-ui); font-size: 14px; line-height: 18px; color: var(--ink); }
+.ec-md { font-family: var(--font-ui); font-size: 12.5px; line-height: 18px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.ec-m.is-latest .ec-mt { color: var(--accent-ink); font-weight: 500; }
+.ec-mt-rest { display: none; font-weight: 400; color: var(--ink); }
+.ec-m a:hover .ec-mt, .ec-m a:focus-visible .ec-mt { text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 0.2em; }
+.ec-m a:focus-visible { outline: none; }
+.ec-m a:focus-visible .ec-lab { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* drawn (760 px and wider): absolute marks on true dates */
+.ec-a.is-drawn .ec-m { position: static; height: 0; }
+.ec-a.is-drawn .ec-lab { position: absolute; display: block; max-width: 212px; font-size: 14px; line-height: 18px; text-wrap: balance; }
+.ec-a.is-drawn .ec-md { display: none; }
+.ec-a.is-drawn .ec-dot { position: absolute; width: 9px; height: 9px; margin: -4.5px 0 0 -4.5px; border-radius: 50%; background: var(--ink); box-shadow: 0 0 0 2px var(--bg); }
+.ec-a.is-drawn .ec-m.is-latest .ec-dot { width: 11px; height: 11px; margin: -5.5px 0 0 -5.5px; background: var(--accent); }
+.ec-a.is-drawn .ec-lead { position: absolute; width: 1px; background: var(--line-2); }
+.ec-a.is-drawn .ec-m a:hover .ec-lead { background: var(--ink-2); }
+.ec-axis { position: absolute; left: 0; right: 0; top: 0; height: 0; pointer-events: none; }
+.ec-a:not(.is-drawn) .ec-axis { display: none; }
+.ec-ax-line { position: absolute; left: 0; height: 1px; background: var(--ink); margin-top: -0.5px; }
+.ec-ax-tick { position: absolute; width: 1px; height: 6px; background: var(--ink); }
+.ec-ax-y { position: absolute; transform: translateX(-1px); font-family: var(--font-ui); font-size: 12.5px; line-height: 18px; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+/* before the script has drawn it, and under 760 px: one row per rule on a thin spine, the latest last */
+.ec-a:not(.is-drawn) .ec-strip { border-left: 1px solid var(--line-2); margin-left: 4px; }
+.ec-a:not(.is-drawn) .ec-m a { position: relative; display: grid; grid-template-columns: 66px minmax(0, 1fr); column-gap: 10px; align-items: baseline; padding: 5px 0 5px 16px; }
+.ec-a:not(.is-drawn) .ec-lab { display: contents; }
+.ec-a:not(.is-drawn) .ec-dot { position: absolute; left: -4.5px; top: 11px; width: 8px; height: 8px; border-radius: 50%; background: var(--ink); box-shadow: 0 0 0 2px var(--bg); }
+.ec-a:not(.is-drawn) .ec-m.is-latest .ec-dot { background: var(--accent); width: 10px; height: 10px; left: -5.5px; top: 10px; }
+.ec-a:not(.is-drawn) .ec-lead { display: none; }
+.ec-a:not(.is-drawn) .ec-mt { font-size: 15px; line-height: 20px; }
+.ec-a:not(.is-drawn) .ec-mt-rest { display: inline; }
+.ec-a:not(.is-drawn) .ec-m.is-latest .ec-md { color: var(--accent-ink); }
+@media (max-width: 759px) { .ec-a { margin-top: 24px; } }
+@media print { .ec-a { display: none; } }
 
 
 /* module: figsteps.css */

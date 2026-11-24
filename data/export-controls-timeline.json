@@ -57,7 +57,7 @@
     "frCitation": "84 FR 22961",
     "cfr": "15 CFR 744.11",
     "source": "https://www.federalregister.gov/documents/2019/05/21/2019-10616/addition-of-entities-to-the-entity-list",
-    "gist": "US suppliers needed a license to sell Huawei anything, chips included.",
+    "gist": "Every item subject to US export rules, chips included, needed a license to reach Huawei.",
     "id": "2019-05-16-huawei-listed",
     "flows": [
       "entity"
@@ -243,7 +243,7 @@
   },
   {
     "date": "2022-10-07",
-    "effectiveDate": "2022-10-21",
+    "effectiveDate": "2022-10-07",
     "actor": "US (BIS)",
     "title": "October 2022 rules on advanced computing and semiconductor equipment",
     "summary": "BIS created ECCN 3A090 and imposed China-wide controls on advanced chips, capturing the A100 and H100. The controls covered chips with a total processing performance (TPP), the rules' measure of computing power, of 4,800 or more, combined with interconnect bandwidth of 600 GB/s or more. New foreign direct product rules extended the chip controls to such chips and computers made outside the United States with US technology or software. Equipment controls covered fabs making logic at 16/14 nm or below or with non-planar transistors, DRAM at 18 nm half-pitch or below and NAND with 128 layers or more. US persons needed a BIS license to support advanced chipmaking in China. The interim final rule was published on 13 October. Parts of §§742.6 and 744.23 and the new equipment ECCN 3B090 took effect on 7 October, and §744.6 on 12 October. The chip ECCNs 3A090 and 4A090, the direct product rules and the Entity List changes took effect on 21 October.",
@@ -252,12 +252,17 @@
     "frCitation": "87 FR 62186",
     "cfr": "15 CFR 742.6(a)(6), (b)(10); 744.6; 744.23; 734.9",
     "source": "https://www.federalregister.gov/documents/2022/10/13/2022-21658/implementation-of-additional-export-controls-certain-advanced-computing-and-semiconductor",
-    "gist": "China lost access to top chips, the tools to make them, and American engineers.",
+    "gist": "China lost access to top chips and the tools to make them, and US citizens, residents and companies needed a license to support its advanced fabs.",
     "id": "2022-10-07-october-rules",
     "flows": [
       "ai-chips",
       "ai-chips-top",
       "us-tools"
+    ],
+    "effectiveDates": [
+      "2022-10-07",
+      "2022-10-12",
+      "2022-10-21"
     ]
   },
   {
@@ -413,13 +418,13 @@
     "effectiveDate": "2023-11-17",
     "actor": "US (BIS)",
     "title": "October 2023 update closes the A800 and H800 workaround",
-    "summary": "BIS replaced the interconnect-bandwidth test with a performance-density test, which divides a chip's computing power by its area. It split ECCN 3A090 into a controlled tier, 3A090.a, and a notification tier, 3A090.b, which together captured Nvidia's A800, H800, L40S and RTX 4090, a gaming card. BIS extended license requirements to companies headquartered in Macau or in Country Group D:5, the US list of arms-embargoed countries that includes China, wherever those companies are located. It also extended them to further destinations in Country Groups D:1, D:4 and D:5, to stop transshipment, the routing of chips through third countries. A companion rule tightened equipment controls. It also made certain immersion lithography tools for advanced chipmaking subject to US export rules if they held any American content at all, unless the country they were first exported from already controlled them. BIS separately added the Chinese GPU designers Biren and Moore Threads to the Entity List the same day. The rules were published on 25 October 2023 and took effect from 17 November.",
+    "summary": "BIS dropped the 2022 rule's interconnect-bandwidth test, so a total processing performance (TPP) of 4,800 or more now brought a chip under control on its own. That caught Nvidia's A800 and H800, which kept a TPP above 4,800 but had been cut to stay under the 600 GB/s interconnect limit. BIS also added a performance-density test, which divides a chip's computing power by its area and reaches chips below 4,800 TPP. It split ECCN 3A090 into a controlled tier, 3A090.a, and a notification tier, 3A090.b, which together also captured Nvidia's L40S and the RTX 4090, a gaming card. BIS extended license requirements to companies headquartered in Macau or in Country Group D:5, the US list of arms-embargoed countries that includes China, wherever those companies are located. It also extended them to further destinations in Country Groups D:1, D:4 and D:5, to stop transshipment, the routing of chips through third countries. A companion rule tightened equipment controls. It also made certain immersion lithography tools for advanced chipmaking subject to US export rules if they held any American content at all, unless the country they were first exported from already controlled them. BIS separately added the Chinese GPU designers Biren and Moore Threads to the Entity List the same day. The rules were published on 25 October 2023 and took effect from 17 November.",
     "category": "US export control",
     "instrument": "rule",
     "frCitation": "88 FR 73458; 88 FR 73424",
     "cfr": "15 CFR 742.6(a)(6), (b)(10); 744.23",
     "source": "https://www.federalregister.gov/documents/2023/10/25/2023-23055/implementation-of-additional-export-controls-certain-advanced-computing-items-supercomputer-and",
-    "gist": "A density test caught the cut-down chips, and Chinese firms needed a license to buy them anywhere.",
+    "gist": "Dropping the interconnect test brought the A800 and H800 under control, and Chinese firms needed a license to buy such chips anywhere.",
     "id": "2023-10-17-density-test",
     "flows": [
       "ai-chips",
@@ -523,7 +528,7 @@
   },
   {
     "date": "2024-12-02",
-    "effectiveDate": "2024-12-31",
+    "effectiveDate": "2024-12-02",
     "actor": "US (BIS)",
     "title": "December 2024 equipment and HBM package",
     "summary": "BIS controlled 24 additional types of semiconductor manufacturing equipment and three software tools. For the first time it also controlled high bandwidth memory (HBM), the stacked memory used in AI chips, under ECCN 3A090.c. The rule defines HBM as memory with a bandwidth density above 2 GB/s per square millimeter of package or stack area. BIS said every HBM stack then in production exceeded that line. The HBM control excludes packaged chips that combine HBM with logic and whose main function is processing. The chip controls may cover those instead. New foreign direct product rules extended the equipment and HBM controls to production outside the United States. But the equipment direct product rule largely exempts tools exported by firms located in Japan, the Netherlands and the 31 other countries listed in Supplement No. 4 to Part 742. Under License Exception HBM at §740.25, a US or Country Group A:5 exporter needs no license to ship stacks below 3.3 GB/s per square millimeter. The stacks must go directly to a packaging site for the designer that bought them. On the same day BIS added 140 entities in China, Japan, South Korea and Singapore to the Entity List. The rules were published on 5 December 2024 and took effect on 2 December. Compliance for the new ECCNs, the direct product rules and the DRAM definitions was required from 31 December.",
@@ -537,13 +542,14 @@
     "flows": [
       "us-tools",
       "hbm"
-    ]
+    ],
+    "complianceDate": "2024-12-31"
   },
   {
     "date": "2024-12-03",
     "actor": "China (MOFCOM)",
     "title": "Ban on gallium, germanium and antimony exports to the US",
-    "summary": "MOFCOM Notice No. 46 of 2024, issued the day after the US equipment package, banned exports of all dual-use items to US military users or for military uses. It said exports of gallium, germanium, antimony and superhard materials to the United States would in principle not be permitted. It also imposed stricter end-user and end-use checks on dual-use graphite sent to the United States. Unlike the 2023 measures, which set up licensing, this was a country-specific prohibition. The US Geological Survey estimated the gallium and germanium ban alone could cost the US economy about $3.4 billion of GDP.",
+    "summary": "MOFCOM Announcement 2024 No. 46, issued the day after the US equipment package, banned exports of all dual-use items to US military users or for military uses. It said exports of gallium, germanium, antimony and superhard materials to the United States would in principle not be permitted. It also imposed stricter end-user and end-use checks on dual-use graphite sent to the United States. Unlike the 2023 measures, which set up licensing, this was a country-specific prohibition. The US Geological Survey estimated the gallium and germanium ban alone could cost the US economy about $3.4 billion of GDP.",
     "category": "China",
     "instrument": "rule",
     "frCitation": "MOFCOM Announcement 2024 No. 46",
@@ -762,7 +768,6 @@
     "summary": "Nvidia said the US government had assured it that licenses for H20 sales to China would be granted, and that it hoped to start deliveries soon. AMD received the same assurance for the MI308. At the same time, Nvidia announced the RTX PRO 6000D, a chip built for the Chinese market. Chinese regulators then raised security concerns with domestic buyers in August. In September they told large firms to stop ordering the RTX PRO 6000D. In the same month, China's market regulator found that Nvidia had breached the conditions China set when it cleared Nvidia's purchase of the networking company Mellanox in 2020. Actual H20 shipments stayed small.",
     "category": "US export control",
     "instrument": "licence-policy",
-    "cfr": "15 CFR 744.23",
     "source": "https://blogs.nvidia.com/blog/nvidia-ceo-promotes-ai-in-dc-and-china/",
     "gist": "The US agreed to license H20 sales, but Beijing discouraged Chinese buyers, so few chips shipped.",
     "id": "2025-07-14-h20-restored",
@@ -792,7 +797,7 @@
     "instrument": "licence-policy",
     "frCitation": "NVIDIA Form 10-K, FY2026",
     "source": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
-    "gist": "Licenses to sell in China came with a demand for a share of revenue, but no rule or published legal basis backed it.",
+    "gist": "US officials expressed an expectation of 15 percent or more of the revenue from licensed China sales, and published no regulation requiring it.",
     "id": "2025-08-11-fifteen-percent",
     "flows": [
       "ai-chips"
@@ -969,12 +974,12 @@
     "date": "2025-12-08",
     "actor": "US (White House)",
     "title": "White House clears H200 sales to China",
-    "summary": "President Trump announced that the United States would allow the H200 and similar products to be shipped to approved customers in China. BIS announced the implementing rule on 13 January 2026, and it took effect on publication on 15 January. It moved license applications for the Nvidia H200, the AMD MI325X and similar chips from a presumption of denial, under which they are normally refused, to case-by-case review. The applicant must show that the exports will not reduce the global semiconductor capacity available to US customers. It must also show that the Chinese purchaser has adopted export compliance procedures, including customer screening, and that the item has passed independent third-party testing in the United States. Nvidia's filings state that the licenses require each H200 to pass a US inspection before shipment. The filings say that, as a result, any H200 shipped under the program is subject to a 25 percent tariff on importation into the United States. Nvidia says it has been unable to pass the tariff on to customers.",
+    "summary": "President Trump said in a social media post on 8 December 2025 that the United States would let Nvidia sell its H200 chips to China in exchange for 25 percent of the sales. Nvidia's newer Blackwell chips were left out. BIS set out the terms in a rule it announced on 13 January 2026, which took effect on publication on 15 January.",
     "category": "US export control",
     "instrument": "licence-policy",
-    "frCitation": "BIS press release, 13 January 2026",
-    "source": "https://www.bis.gov/press-release/department-commerce-revises-license-review-policy-semiconductors-exported-china",
-    "gist": "China could buy the chip, but only after US testing and a 25 percent tariff.",
+    "frCitation": "Nikkei Asia, 9 December 2025",
+    "source": "https://asia.nikkei.com/business/technology/artificial-intelligence/us-to-let-nvidia-sell-h200-ai-chips-to-china-but-not-blackwell-trump",
+    "gist": "The President said Nvidia could sell the H200 in China in exchange for 25 percent of the sales, with its newer Blackwell chips left out.",
     "id": "2025-12-08-h200-cleared",
     "flows": [
       "ai-chips"

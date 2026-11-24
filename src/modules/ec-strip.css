@@ -1,0 +1,42 @@
+/* The history strip at the head of Export Controls (build/ec-strip.js, src/modules/ec-strip.js), on the interactive board and
+   on /export-controls/, which inlines this sheet. From 760 px the script draws it: the marks absolute on their true dates, the
+   line in ink, the years at 1 January, and the wine on the latest rule alone. Under 760 px it is an upright list on a thin
+   spine, the latest rule last with its full title. The site's tokens only. */
+.ec-a { position: relative; margin: 34px 0 0; padding: 0; }
+.ec-strip { list-style: none; margin: 0; padding: 0; position: relative; }
+.ec-m { margin: 0; padding: 0; }
+.ec-m a { color: inherit; text-decoration: none; }
+.ec-mt { font-family: var(--font-ui); font-size: 14px; line-height: 18px; color: var(--ink); }
+.ec-md { font-family: var(--font-ui); font-size: 12.5px; line-height: 18px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.ec-m.is-latest .ec-mt { color: var(--accent-ink); font-weight: 500; }
+.ec-mt-rest { display: none; font-weight: 400; color: var(--ink); }
+.ec-m a:hover .ec-mt, .ec-m a:focus-visible .ec-mt { text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 0.2em; }
+.ec-m a:focus-visible { outline: none; }
+.ec-m a:focus-visible .ec-lab { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* drawn (760 px and wider): absolute marks on true dates */
+.ec-a.is-drawn .ec-m { position: static; height: 0; }
+.ec-a.is-drawn .ec-lab { position: absolute; display: block; max-width: 212px; font-size: 14px; line-height: 18px; text-wrap: balance; }
+.ec-a.is-drawn .ec-md { display: none; }
+.ec-a.is-drawn .ec-dot { position: absolute; width: 9px; height: 9px; margin: -4.5px 0 0 -4.5px; border-radius: 50%; background: var(--ink); box-shadow: 0 0 0 2px var(--bg); }
+.ec-a.is-drawn .ec-m.is-latest .ec-dot { width: 11px; height: 11px; margin: -5.5px 0 0 -5.5px; background: var(--accent); }
+.ec-a.is-drawn .ec-lead { position: absolute; width: 1px; background: var(--line-2); }
+.ec-a.is-drawn .ec-m a:hover .ec-lead { background: var(--ink-2); }
+.ec-axis { position: absolute; left: 0; right: 0; top: 0; height: 0; pointer-events: none; }
+.ec-a:not(.is-drawn) .ec-axis { display: none; }
+.ec-ax-line { position: absolute; left: 0; height: 1px; background: var(--ink); margin-top: -0.5px; }
+.ec-ax-tick { position: absolute; width: 1px; height: 6px; background: var(--ink); }
+.ec-ax-y { position: absolute; transform: translateX(-1px); font-family: var(--font-ui); font-size: 12.5px; line-height: 18px; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+/* before the script has drawn it, and under 760 px: one row per rule on a thin spine, the latest last */
+.ec-a:not(.is-drawn) .ec-strip { border-left: 1px solid var(--line-2); margin-left: 4px; }
+.ec-a:not(.is-drawn) .ec-m a { position: relative; display: grid; grid-template-columns: 66px minmax(0, 1fr); column-gap: 10px; align-items: baseline; padding: 5px 0 5px 16px; }
+.ec-a:not(.is-drawn) .ec-lab { display: contents; }
+.ec-a:not(.is-drawn) .ec-dot { position: absolute; left: -4.5px; top: 11px; width: 8px; height: 8px; border-radius: 50%; background: var(--ink); box-shadow: 0 0 0 2px var(--bg); }
+.ec-a:not(.is-drawn) .ec-m.is-latest .ec-dot { background: var(--accent); width: 10px; height: 10px; left: -5.5px; top: 10px; }
+.ec-a:not(.is-drawn) .ec-lead { display: none; }
+.ec-a:not(.is-drawn) .ec-mt { font-size: 15px; line-height: 20px; }
+.ec-a:not(.is-drawn) .ec-mt-rest { display: inline; }
+.ec-a:not(.is-drawn) .ec-m.is-latest .ec-md { color: var(--accent-ink); }
+@media (max-width: 759px) { .ec-a { margin-top: 24px; } }
+@media print { .ec-a { display: none; } }
