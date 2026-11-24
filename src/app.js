@@ -357,9 +357,10 @@
         this.userYaw = b.yaw * (1 - e); this.userPitch = b.pitch * (1 - e);
         if (u >= 1) { this.back = null; this.userYaw = 0; this.userPitch = 0; this.rawYaw = 0; this.rawPitch = 0; } else more = true;
       }
-      // the labels fade out while the plate is turned, and start back once it is within about 4 degrees of its drawn view
+      // the labels fade out while the plate is turned, and start back once it is within about 4 degrees of its drawn view; a page
+      // may hold them back until the plate is at rest (holdLabels: the Introduction's turn-in, src/modules/intro.js)
       var near = 4 * Math.PI / 180, cue = this.cueYaw();
-      var turned = (this.dragging && this.dragMoved) || this.keyTurn || Math.abs(this.userYaw) > near || Math.abs(this.userPitch) > near || cue > 1e-4;
+      var turned = (this.dragging && this.dragMoved) || this.keyTurn || Math.abs(this.userYaw) > near || Math.abs(this.userPitch) > near || cue > 1e-4 || !!this.holdLabels;
       var want = turned ? 0 : 1;
       if (reduced) this.labA = want;
       else if (this.labA !== want) { this.labA = want ? Math.min(1, this.labA + dt / 0.28) : Math.max(0, this.labA - dt / 0.14); more = true; }

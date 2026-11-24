@@ -3298,42 +3298,31 @@ html.fx-on .fx-head .wk-meta { margin: calc(12px * var(--fx-s)) 0 0 -18px; }
 /* the page head: the title, the intro line, the walk's length */
 html[data-page="introduction"] #wk-hero { padding-bottom: 8px; }
 
-/* The specimen beside the walk carries its chapter's labels (src/modules/intro.js). On a wide screen the panel keeps one
-   relation to the text column at every width (24 Nov 2026; owner: "the alignment of the specimen on the introduction pages is a
-   bit off"; it stood at the window's right edge, 430 px from the text at 2000 px):
-   - its left edge a set gap from the text column: the column's own right padding and the panel's 16 px, 72 px from 1400 px up,
-     as the panel stood at 1440 px (--intro-x: the ledger, the walk's measure and that padding; a narrower window's column ends
-     there itself, so up to 1440 px the panel stands where it stood);
-   - its right edge on the masthead's right edge (padding-right: --margin) while the drawing is no wider than the site's figure
-     width (--intro-plate-max, 720 px) or the width the panel had (the window less the text column, which sets each plate's
-     size), whichever is wider. So no plate is drawn smaller than before, and up to 1440 px each keeps its size within 5 px.
-     From about 1720 px the panel keeps that width beside the text and the window's spare width stays at its right, as a
-     chapter page's does (a larger --intro-plate-max takes the panel to the masthead's edge on any window, and the plates grow
-     with it);
-   - the plate's top level with a step's "Stage N of 14" label when that step's specimen comes on: the canvas starts 4 px over
-     the line where a step lands (the step's scroll-margin-top, masthead + 66 px), so the drawing's ink (8 px inside the canvas,
-     src/plate.js PAD_Y) meets the label's capitals, and the specimen changes as a step's top crosses the walk's reading line
-     (src/modules/intro.js probeAt, the line the rail and the ledger's wine number follow). Above the first step the panel stands
-     level with that step's label and rises with it (--intro-drop, intro.js), then stays put, as a sticky panel does;
-   - the tag and the caption flush left under the drawing, as a chapter page sets its plate's label and caption.
-   The panel clears the "Back to top" pill (masthead + 14 px, 36 px tall). Its height is the plate's own, set by intro.js; it
-   still gives way first on a short window. The walk's rail ends where the panel begins. */
+/* The specimen beside the walk carries its chapter's labels (src/modules/intro.js). On a wide screen it stands as the live
+   home's specimen did (24 Nov 2026; owner: "for introduction, why can't we have it the same way we have specimen on the live
+   home page now? similarly aligned and rotating on the center right?"; until then the panel kept a set gap from the text and
+   pinned the plate's top to the active stage's label):
+   - the panel is the stage's own fixed area right of the text column (src/styles.css .stage: from the column's edge, 63
+     percent, to the window's edge, under the masthead), as on the live home;
+   - the plate stands in the middle of it, across and up and down: the canvas, the tag and the caption are centred as one, and
+     a group taller than the window starts at the panel's top (safe). The canvas spans the panel less --intro-pad a side, so the
+     plate is about the live home's size at each width (its canvas was 740 px at 2000 px, 533 at 1440) and its labels keep
+     clear of the window's edge; it is as tall as the plate asks, at most as tall as it is wide (intro.js);
+   - the tag and the caption are centred under it, as the live home set them (src/styles.css, the walk's stage), between the
+     page's margins;
+   - it clears the "Back to top" pill (masthead + 14 px, 36 px tall) at its top. Its height is the plate's own, set by
+     intro.js; it still gives way first on a short window. */
 @media (min-width: 901px) {
-  html[data-page="introduction"] {
-    --intro-x: min(var(--col), calc(var(--margin) + var(--gutter) + var(--gutter-gap) + var(--measure) + clamp(16px, 4vw, 56px)));
-    --intro-plate-max: 720px;
-  }
+  html[data-page="introduction"] { --intro-pad: 24px; }
   html[data-page="introduction"] .stage {
-    box-sizing: border-box; left: var(--intro-x); right: auto;
-    width: min(calc(100% - var(--intro-x)), max(calc(16px + var(--intro-plate-max) + var(--margin)), calc(100% - var(--col))));
-    padding-top: 62px; padding-left: 16px; padding-right: var(--margin); /* (the stage starts at the masthead: 66 - 4 px under it) */
+    box-sizing: border-box; justify-content: safe center; align-items: center;
+    padding: 58px var(--intro-pad) 16px;
   }
-  html[data-page="introduction"][data-view="walk"] .stage { transform: translateY(var(--intro-drop, 0px)); }
-  html[data-page="introduction"] .wk-rail { width: var(--intro-x); }
   html[data-page="introduction"] .stage canvas { aspect-ratio: auto; }
-  html[data-page="introduction"][data-view="walk"] .stage .stage-tag, html[data-page="introduction"] .stage .stage-tag { align-self: stretch; margin-left: 0; margin-right: 0; text-align: left; }
-  html[data-page="introduction"][data-view="walk"] .stage .stage-tag:has(.stage-pause) { padding-left: 0; }
-  html[data-page="introduction"][data-view="walk"] .stage figcaption, html[data-page="introduction"] .stage figcaption { align-self: stretch; margin-left: 0; margin-right: 0; max-width: 40em; text-align: left; text-wrap: pretty; }
+  /* (the walk's tag and caption keep the page's margins inside the panel, as on the live home: the panel's own padding is
+     taken off them) */
+  html[data-page="introduction"][data-view="walk"] .stage .stage-tag,
+  html[data-page="introduction"][data-view="walk"] .stage figcaption { margin-left: max(0px, calc(var(--margin) - var(--intro-pad))); margin-right: max(0px, calc(var(--margin) - var(--intro-pad))); }
 }
 
 
