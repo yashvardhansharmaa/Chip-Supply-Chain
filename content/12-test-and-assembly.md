@@ -8,7 +8,7 @@
   "openOnExplainer": true,
   "bridge": "Nothing yet proves that any of it works, and a package this far along is worth too much to guess about.",
   "specimen": "probe-card",
-  "specimenCaption": "A vertical probe card over a 300 mm wafer, pulled apart, its needles pointing straight down at four dies. The dies are drawn at 26 by 33 mm, the largest area a scanner prints in one exposure. A real card has thousands of needles, and here a few rows stand for them.",
+  "specimenCaption": "A vertical probe card pulled apart over a 300 mm wafer, its needles pointing straight down at four dies. The dies are drawn at 26 by 33 mm, the largest area a scanner prints in one exposure. A real card has thousands of needles, and here a few rows stand for them.",
   "card": {
     "concentration": "High",
     "chokepointScore": 4,
@@ -32,7 +32,7 @@
     "usSources": ["https://chipexplorer.eto.tech/?parentNode=N78&selectedNode=N120", "https://ir.amkor.com/news-releases/news-release-details/amkor-technology-breaks-ground-new-semiconductor-advanced", "https://ir.amkor.com/news-releases/news-release-details/tsmc-and-amkor-technology-announce-long-term-partnership"],
     "costSignal": "$9.1 billion market for chip test tools in 2025, by CSET's analysis of TechInsights data",
     "costSources": ["https://chipexplorer.eto.tech/?parentNode=N78&selectedNode=N120"],
-    "substitutability": {"band": "Moderate", "test": "Switching to another tester maker means rebuilding a customer's whole test setup, Advantest says.", "testSources": ["https://www.advantest.com/document/en/investors/ir-library/investors-guide/Investors_Guide_2607E.pdf#page=12"], "why": "Customers such as ASE already buy testers from both firms. The barrier is cost, because switching means rebuilding a customer's whole test setup, Advantest says.", "whySources": ["https://www.sec.gov/Archives/edgar/data/1122411/000119312526135585/d50802d20f.htm", "https://www.advantest.com/document/en/investors/ir-library/investors-guide/Investors_Guide_2607E.pdf#page=12"]}
+    "substitutability": {"band": "Moderate", "test": "Switching to another tester maker means rebuilding a customer's whole test setup, Advantest says.", "testSources": ["https://www.advantest.com/document/en/investors/ir-library/investors-guide/Investors_Guide_2607E.pdf#page=12"], "why": "Customers such as ASE already buy testers from both firms. The barrier is the cost of that rebuild, Advantest says.", "whySources": ["https://www.sec.gov/Archives/edgar/data/1122411/000119312526135585/d50802d20f.htm", "https://www.advantest.com/document/en/investors/ir-library/investors-guide/Investors_Guide_2607E.pdf#page=12"]}
   },
   "keyFacts": [
     {"fact": "CSET's analysis of TechInsights data puts Advantest at 62.7 percent of a $9.1 billion market for test tools in 2025, ahead of Teradyne at 21.8 percent", "source": "https://chipexplorer.eto.tech/?parentNode=N78&selectedNode=N120"},
@@ -54,7 +54,7 @@
     {
       "id": "ate-share",
       "type": "stack",
-      "title": "Advantest's own estimate: its share of the ~$9.0 billion tester market, 2025",
+      "title": "Advantest's share of a tester market of about $9.0 billion in 2025, by its own estimate",
       "finding": "Advantest put its tester market share at about 65 percent in 2025",
       "unit": "%",
       "data": [["Advantest", 65], ["Teradyne and all others", 35]],
@@ -114,7 +114,7 @@ The bigger the package, the more one bad die can cost. TSMC told investors in Ju
 
 ## Who makes it
 
-Georgetown University's Center for Security and Emerging Technology (CSET), analyzing data from the research firm TechInsights, puts Advantest at 62.7 percent of a $9.1 billion market for test tools in 2025 and Teradyne at 21.8 percent ([source](https://chipexplorer.eto.tech/?parentNode=N78&selectedNode=N120)). Japanese firms held 63.0 percent of that market and American firms 23.5 percent ([source](https://chipexplorer.eto.tech/?parentNode=N78&selectedNode=N120)).
+Georgetown University's Center for Security and Emerging Technology (CSET) puts Advantest at 62.7 percent of a $9.1 billion market for test tools in 2025 and Teradyne at 21.8 percent ([source](https://chipexplorer.eto.tech/?parentNode=N78&selectedNode=N120)). It draws on data from the research firm TechInsights ([source](https://chipexplorer.eto.tech/?parentNode=N78&selectedNode=N120)). Japanese firms held 63.0 percent of that market and American firms 23.5 percent ([source](https://chipexplorer.eto.tech/?parentNode=N78&selectedNode=N120)).
 
 Advantest estimates its own share at about 65 percent of a $9.0 billion tester market in 2025 ([source](https://www.advantest.com/document/en/investors/ir-library/result/JE_BIZ_260427_note.pdf#page=13)). It puts its 2025 share of system-on-chip (SoC) testers, the machines that test processors and other non-memory chips, at 66 percent, up about ten points in a year ([source](https://www.advantest.com/document/en/investors/ir-library/result/JE_BIZ_260427_note.pdf#page=13)). In memory test, it puts its share at about 60 percent ([source](https://www.advantest.com/document/en/investors/ir-library/result/JE_BIZ_260427_note.pdf#page=13)).
 

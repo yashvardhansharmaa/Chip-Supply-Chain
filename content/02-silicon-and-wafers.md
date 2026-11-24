@@ -8,7 +8,7 @@
  "openOnExplainer": true,
  "bridge": "A chip design in a file does nothing until it is printed onto a disc of pure silicon.",
  "specimen": "boule-and-wafer",
- "specimenCaption": "A silicon ingot, one crystal pulled whole from molten silicon, with two wafers sawn from it. The 300 mm width and the wafers' thickness are true to scale. The length, the seed, the neck and the notch are drawn for illustration.",
+ "specimenCaption": "A silicon ingot, one crystal pulled whole from molten silicon, with two wafers sawn from it. The ingot's 300 mm width and the wafers' thickness are to scale. Its length, seed, neck and notch are not.",
  "card": {
  "concentration": "High",
  "chokepointScore": 4,

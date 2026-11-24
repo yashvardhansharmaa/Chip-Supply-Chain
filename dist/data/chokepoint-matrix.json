@@ -398,7 +398,7 @@
     ],
     "source": "https://www.sec.gov/Archives/edgar/data/2120882/000119312526299963/d32785d424b4.htm",
     "aiCritical": true,
-    "trend": "Korea's share has fallen from 94.2 percent in 2024 (SK hynix 56.4, Samsung 37.8) to 82.5 in 2025 (SK hynix 63.2, Samsung 19.3) and 76.9 in the first quarter of 2026 (SK hynix 56.4, Samsung 20.5), all of it lost to Micron. The ranking among the three follows which supplier passes customers' qualification tests, and none of the three is Chinese."
+    "trend": "South Korea's share fell from 94.2 percent in 2024 (SK hynix 56.4, Samsung 37.8) to 82.5 percent in 2025 (SK hynix 63.2, Samsung 19.3), and to 76.9 percent in the first quarter of 2026 (SK hynix 56.4, Samsung 20.5). Micron gained all of the share South Korea lost. The ranking among the three follows which supplier passes customers' qualification tests, and none of the three is Chinese."
   },
   {
     "segment": "Advanced packaging (2.5D/3D)",

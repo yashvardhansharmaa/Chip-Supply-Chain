@@ -8,7 +8,7 @@
   "openOnExplainer": true,
   "bridge": "A tested package is still a single chip. Training a model takes a room full of them working as one machine.",
   "specimen": "gpu-baseboard",
-  "specimenCaption": "An eight-GPU baseboard, with four of its accelerator modules lifted off the board. On Nvidia's baseboard, switch chips pass data between any two modules at full speed. The parts are simplified and not to scale.",
+  "specimenCaption": "An eight-GPU baseboard, with four of its accelerator modules lifted off to show the switch chips that pass data between any two of them. The parts are simplified and not to scale.",
   "card": {
     "concentration": "High",
     "chokepointScore": 3,

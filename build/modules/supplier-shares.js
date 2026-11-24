@@ -350,7 +350,7 @@ module.exports = function (ctx) {
             <div class="sup-tip ss-tip" id="sup-tip" role="tooltip" hidden></div><span class="sr-only" id="sup-ss-hint">Left and right arrow keys step through the countries in this segment.</span></div>
           <div class="sup-note ss-side-note"><p>Each segment is drawn as one whole. Where a ribbon meets a segment, its width is that country’s share.</p>
             <p>The firms named for each segment come from the supplier list, ordered by their country’s share, then by any share the list gives the firm. A firm counts where the matrix counts its revenue, so Siemens EDA and Linde count under Germany. On the capacity segments, firms count under their headquarters, wherever their plants are.</p></div>
-          <div class="sup-note sup-pipe-note ss-src"><span class="fs-src">Source: the country-share matrix, <span class="ss-code">data/chokepoint-matrix.json</span>, and the supplier list, <span class="ss-code">data/suppliers.json</span>. The tip over a segment gives its year and links its source.</span>
+          <div class="sup-note sup-pipe-note ss-src"><span class="fs-src">Sources: the country-share table and the supplier list. Each segment’s year and source are in its tip.</span>
             <span class="fs-acts ss-acts"><button type="button" class="ch-cite-btn" aria-expanded="false" aria-controls="sup-pipe-cite">Cite</button><button type="button" class="fs-tab ss-tab" aria-pressed="false">Table</button><a class="fs-csv" href="${csv}" download="chip-supply-chain-suppliers-country-shares.csv">CSV</a></span>${cite}</div>
         </div>
         <script type="application/json" id="sup-shares-data">${json}</script>

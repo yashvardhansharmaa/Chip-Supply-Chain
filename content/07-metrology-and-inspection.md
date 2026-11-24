@@ -8,7 +8,7 @@
  "openOnExplainer": true,
  "bridge": "Every one of those films can be laid down wrong, and the fault is invisible until a tool looks for it.",
  "specimen": "sem-column",
- "specimenCaption": "An electron-beam inspection column cut in half down its axis, over a 300 mm wafer, with its parts simplified. The beam scans a small patch, and the detector builds a picture from the electrons the beam knocks loose. That shows faults too small for light to find.",
+ "specimenCaption": "An electron-beam inspection column cut in half down its axis, over a 300 mm wafer, with its parts simplified. The beam scans a small patch, and the detector builds a picture from the electrons the beam knocks loose. The picture shows faults too small for light to find.",
  "card": {
  "concentration": "High",
  "chokepointScore": 4,

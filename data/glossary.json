@@ -66,7 +66,7 @@
     "term": "capex",
     "aka": "capital expenditure, capital spending",
     "plain": "Money a company spends on long-lived physical assets such as buildings, machines and servers, as distinct from salaries and other running costs.",
-    "why": "The hyperscalers' capex pays for the chips, racks and buildings of the AI buildout. Amazon spent $77,259 million on property and equipment in the three months to September 2026, the most of the five hyperscalers.",
+    "why": "The hyperscalers' capex pays for the chips, racks and buildings of their AI data centers. Amazon spent $77,259 million on property and equipment in the three months to September 2026, the most of the five hyperscalers.",
     "chapter": "data-centers-and-power"
   },
   {
@@ -79,7 +79,7 @@
   {
     "term": "Chokepoint",
     "aka": "chokepoints",
-    "plain": "A step in the supply chain where so few firms can do the work that losing one of them would hit the whole industry. A stage counts as a chokepoint when three or fewer firms can supply it, or one firm holds more than 65 percent of it. Each stage is judged on the whole market for its main tools or products, and on any one tool that only the most advanced chips need, such as ASML's EUV scanners.",
+    "plain": "A step in the supply chain where so few firms can do the work that the whole industry depends on them. A stage counts as a chokepoint when three or fewer firms can supply it, or one firm holds more than 65 percent of it. Each stage is judged on the whole market for its main tools or products, and on any one tool that only the most advanced chips need, such as ASML's EUV scanners.",
     "why": "One sanction or one factory fire at a chokepoint reaches the whole industry, and so does a government policy aimed at one.",
     "chapter": "introduction-and-goals"
   },
@@ -500,7 +500,7 @@
     "term": "performance density",
     "aka": "",
     "plain": "An export control test of how densely a chip packs its computing power. It divides the chip's TPP, the export rules' measure of computing power, by its applicable die area in square millimeters. That area counts all logic dies made on a process with non-planar transistors, such as FinFETs. The test applies only to a chip that reaches 1,600 TPP. It came in with the October 2023 rule, which also dropped the 2022 test of interconnect bandwidth, the speed at which a chip exchanges data with its neighbors.",
-    "why": "It reaches chips below 4,800 TPP that pack their computing power densely. Nvidia's China-specific A800 and H800 were caught by the other change in the same rule: with the interconnect test gone, their TPP of more than 4,800 controlled them on its own. The top band, ECCN 3A090.a, now starts at 4,800 TPP, or at 1,600 TPP with a performance density of 5.92 (88 FR 73458).",
+    "why": "It reaches chips below 4,800 TPP that pack their computing power densely. The other change in the same rule caught Nvidia's China-specific A800 and H800. With the interconnect test gone, their TPP of more than 4,800 controlled them on its own. The top band, ECCN 3A090.a, now starts at 4,800 TPP, or at 1,600 TPP with a performance density of 5.92 (88 FR 73458).",
     "chapter": "geopolitics"
   },
   {
@@ -1207,7 +1207,7 @@
     "term": "lead time",
     "aka": "lead times, delivery time",
     "plain": "Lead time is the wait between placing an order and receiving it. In 2024 a large power transformer commonly took three years to arrive in the United States.",
-    "why": "Data center projects wait on power equipment. In the United States in 2024 the longest lead times for a large power transformer reached 60 months. Before the pandemic one could be ordered with a lead time of under a year.",
+    "why": "Data center projects wait on power equipment. In the United States in 2024 the longest lead times for a large power transformer reached 60 months. Before the pandemic a large transformer could be ordered with a lead time of under a year.",
     "chapter": "data-centers-and-power"
   },
   {
@@ -1255,7 +1255,7 @@
   {
     "term": "export control",
     "aka": "export controls, export licensing, export license, export licenses, export licence, export licences, export-control",
-    "plain": "An export control is a rule that requires the government's permission to send an item abroad, or to pass it on once it is there. The government names an item, or the technology to make it, and a country or a buyer. From then on anyone who sends that item to that country or buyer, or passes it on to them, must hold a license. The United States extends some of these rules to American items already abroad and to goods made abroad with American technology.",
+    "plain": "An export control is a rule that requires a government's permission to send an item abroad, or to pass it on once it is there. A government names an item, or the technology to make it, and a country or a buyer. From then on anyone who sends that item to that country or buyer, or passes it on to them, must hold a license. The United States extends some of these rules to American items already abroad and to goods made abroad with American technology.",
     "why": "It works only when the controlling country's firms make something the buyer cannot get elsewhere.",
     "chapter": "geopolitics"
   },

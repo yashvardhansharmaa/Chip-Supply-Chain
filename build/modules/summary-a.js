@@ -78,7 +78,7 @@ const ROLE = {
   NL: 'The only maker of EUV scanners, the machines that print the finest layers',
   JP: 'Wafers, photoresist, masks and the substrates that chips are packaged on',
   TW: 'Makes nearly every leading-edge chip and packages most of them',
-  KR: 'Memory, including the high-bandwidth stacks every accelerator needs',
+  KR: 'Memory, including the high-bandwidth stacks that most AI accelerators use',
   DE: 'The optics inside every EUV scanner, and specialty chemicals',
   CN: 'The largest market, now building its own tools, memory and chips',
   MY: 'Test and assembly, the last stage before the server',
@@ -187,6 +187,9 @@ module.exports = function (ctx) {
   const num = (v) => (Math.round(v) === v ? String(v) : String(Math.round(v * 10) / 10));
   // lower-case a label for use inside a sentence, leaving acronyms alone
   const lc = (s) => (/^[A-Z]{2,}\b/.test(s) ? s : s.charAt(0).toLowerCase() + s.slice(1));
+  // a segment's name inside a sentence, with its symbols in words: "(≥28 nm)" reads "(28 nm and up)", "(<10 nm)" "(below 10 nm)",
+  // "&" "and" (the writing check of 24 Nov 2026: no %, ≥, < or & in prose)
+  const segProse = (s) => lc(String(s).replace(/\(≥\s*(\d+) nm\)/, '($1 nm and up)').replace(/\(<\s*(\d+) nm\)/, '(below $1 nm)').replace(/ & /g, ' and '));
   const lcCat = (s) => String(s).replace(/&/g, 'and').split(/\s+/)
     .map((w) => (/^[A-Z0-9]{2,}s?$/.test(w) ? w : w.toLowerCase())).join(' ');
   // the country names that take a definite article in a sentence
@@ -334,7 +337,7 @@ module.exports = function (ctx) {
     const top = d.segs[0];
     const subject = theName(cc, true);
     const lede = top
-      ? `${subject} holds ${num(top.v)}% of ${lc(top.seg)}${top.rank === 1 ? ', more than any other country' : ''}, and is named on ${word(d.named.length)} of the ${word(cardCount)} stage cards.`
+      ? `${subject} holds ${num(top.v)} percent of ${segProse(top.seg)}${top.rank === 1 ? ', more than any other country' : ''}. It is named on ${word(d.named.length)} of the ${word(cardCount)} stage cards.`
       : `${subject} is named on ${word(d.named.length)} of the ${word(cardCount)} stage cards${d.firms.length ? `, and ${word(d.firms.length)} of the ${totalFirms} firms in the supplier list ${d.firms.length > 1 ? 'are' : 'is'} based there` : ''}.`;
 
     // up to three segment shares: anything it leads, or holds a tenth of

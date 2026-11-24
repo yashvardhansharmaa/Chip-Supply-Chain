@@ -8,7 +8,7 @@
  "openOnExplainer": true,
  "bridge": "The chain starts before any material does, when a company still has nothing but an idea for a processor.",
  "specimen": "die-floorplan",
- "specimenCaption": "A GPU die drawn from Nvidia's 2022 block diagram of its H100, which packs 80 billion transistors into 814 mm². It is drawn at 26 by 33 mm, the largest area a scanner prints in one shot, a little larger than the real die. H100 has one die, so the die-to-die link comes from two-die chips such as Blackwell.",
+ "specimenCaption": "A GPU die drawn from Nvidia's 2022 block diagram of its H100, which packs 80 billion transistors into 814 mm². It is drawn a little larger than the real die, at 26 by 33 mm, the largest area a scanner prints in one shot. H100 has one die, so the drawing takes its die-to-die link from two-die chips such as Blackwell.",
  "card": {
  "concentration": "Extreme",
  "chokepointScore": 4,
@@ -20,7 +20,7 @@
  {"name": "Broadcom", "country": "US", "share": "$16.7 billion of AI semiconductor revenue in the third quarter of fiscal 2026, custom accelerators and networking combined", "source": "https://www.sec.gov/Archives/edgar/data/0001730168/000173016826000076/avgo-08022026x8kxex99.htm"}
  ],
  "countries": [
- {"code": "US", "note": "Synopsys, Cadence, Broadcom, Marvell, Nvidia, and Amazon's Annapurna Labs, the AWS design house behind Trainium and Graviton"},
+ {"code": "US", "note": "Synopsys, Cadence, Broadcom, Marvell, Nvidia and Amazon's Annapurna Labs, the Amazon Web Services design house behind Trainium and Graviton"},
  {"code": "GB", "note": "Arm processor and interconnect designs licensed from Cambridge, and since 2026 its own server chip"},
  {"code": "TW", "note": "Alchip, Global Unichip and MediaTek: design services that carry a chip to the factory"},
  {"code": "IN", "note": "Nearly 20 percent of the world's chip design engineers, on the Indian government's count"}

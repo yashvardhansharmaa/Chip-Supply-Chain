@@ -1,6 +1,9 @@
-// Release check: no Claude-speak in the reader-facing text. node qa/scripts/check-speak.js
-// Scans the built pages (dist/index.html and each chapter's dist/<id>/index.html, with scripts, styles and tags stripped; the bibliography titles are verbatim and are excluded)
-// and the prose fields of the data files. Prints every match with its location and exits 1 if any remain.
+// Release check: no Claude-speak in the reader-facing text. node qa/scripts/check-speak.js [--rendered http://127.0.0.1:8811]
+// Scans the built pages (dist/index.html, each chapter's dist/<id>/index.html and, since 24 Nov 2026, the Introduction, Suppliers,
+// Export Controls, the Glossary, The Chain's contents and AI Chips, with scripts, styles and tags stripped; the bibliography titles
+// are verbatim and are excluded) and the prose fields of the data files. With --rendered <base> it also opens each of those pages in
+// headless Chrome and scans document.body.innerText after the scripts have run, with every <details> opened, so the interface
+// strings that src/*.js writes are read too. Prints every match with its location and exits 1 if any remain.
 const fs = require('fs');
 const path = require('path');
 const root = path.join(__dirname, '..', '..');
@@ -46,13 +49,18 @@ const distPath = path.join(root, 'dist', 'index.html');
 if (!fs.existsSync(distPath)) { console.log('check-speak: dist/index.html is missing, run node build/build.js first'); process.exit(1); }
 const H0 = '«H»', H1 = '«/H»'; // heading markers, so h1-h4 may carry a question and every match can say where it sits
 // the home page and each chapter's own page (the chapters left the home page on 28 Oct 2026)
-const chapterPages = fs.readdirSync(path.join(root, 'dist')).filter((d) => d !== 'book' && fs.existsSync(path.join(root, 'dist', d, 'index.html')))
-  .map((d) => fs.readFileSync(path.join(root, 'dist', d, 'index.html'), 'utf8')).filter((h) => /<article class="chapter[^"]*" id="/.test(h));
+const chapterDirs = fs.readdirSync(path.join(root, 'dist')).filter((d) => d !== 'book' && d !== 'mock' && fs.existsSync(path.join(root, 'dist', d, 'index.html')))
+  .filter((d) => /<article class="chapter[^"]*" id="/.test(fs.readFileSync(path.join(root, 'dist', d, 'index.html'), 'utf8')));
+// the pages of their own that are not chapters (24 Nov 2026): each is scanned as the chapters are
+const OWN_PAGES = ['introduction', 'suppliers', 'export-controls', 'glossary', 'supply-chain', 'chips'];
+const ownPages = OWN_PAGES.filter((d) => fs.existsSync(path.join(root, 'dist', d, 'index.html')));
+const chapterPages = chapterDirs.concat(ownPages).map((d) => fs.readFileSync(path.join(root, 'dist', d, 'index.html'), 'utf8'));
 let html = [fs.readFileSync(distPath, 'utf8')].concat(chapterPages).join('\n')
   .replace(/<script[\s\S]*?<\/script>/g, '\n').replace(/<style[\s\S]*?<\/style>/g, '\n')
   .replace(/<details class="chapter-sources"[\s\S]*?<\/details>/g, '\n') // each chapter's source list: verbatim titles
   .replace(/(<p class="fc-q"[^>]*>[\s\S]*?)\?(<\/p>)/g, '$1.$2') // flashcard questions are real questions; every other rule still reads them
   .replace(/<sup class="cite">[\s\S]*?<\/sup>/g, ' ') // citation superscripts carry the source title as a tooltip
+  .replace(/<li id="[a-z0-9-]+-s\d+">[\s\S]*?<\/li>/g, '\n') // AI Chips' numbered sources under each chip: verbatim titles
   .replace(/<section[^>]*data-view="sources"[\s\S]*?<\/section>/g, '\n') // bibliography, if ever rendered statically
   .replace(/<(?:ol|ul|div)[^>]*class="[^"]*\b(?:sources|bib(?:liography)?)\b[^"]*"[\s\S]*?<\/(?:ol|ul|div)>/g, '\n');
 html = html.replace(/<(h[1-4])\b[^>]*>([\s\S]*?)<\/\1>/g, (_, tag, inner) => `\n${H0}${tag}${H1}${inner.replace(/<[^>]+>/g, ' ')}\n`);
@@ -86,5 +94,44 @@ for (const f of ['chokepoint-matrix-notes.md', 'landscape-notes.md']) {
   fs.readFileSync(p, 'utf8').split('\n').forEach((line, i) => { const s = line.trim(); if (!s || /^#{1,6}\s/.test(s)) return; scan(s, `data/${f}:${i + 1}`, false); });
 }
 
-if (findings.length) { console.log(findings.join('\n')); console.log(`\ncheck-speak: ${findings.length} matches`); process.exit(1); }
-console.log('check-speak: no matches');
+/* ---- the pages as readers see them, after the scripts run (--rendered <base>) ----
+   Source lists, citation tooltips and source links are removed first, as above; flashcard questions lose their question mark,
+   and headings may carry a question. Each page is read with every <details> opened. Lines already found in the static pass are
+   not reported twice. */
+const finish = () => {
+  if (findings.length) { console.log(findings.join('\n')); console.log(`\ncheck-speak: ${findings.length} matches`); process.exit(1); }
+  console.log(`check-speak: no matches${rendered ? ` (with the pages as rendered at ${rendered})` : ''}`);
+};
+const ai = process.argv.indexOf('--rendered'), rendered = ai > 0 ? String(process.argv[ai + 1] || '').replace(/\/$/, '') : '';
+if (!rendered) finish();
+else (async () => {
+  const { launch, open, sleep } = require(path.join(root, 'qa', 'redesign', 'cdp.js'));
+  const seen = new Set(lines);
+  const PROBE = `(function(){
+    var rm = function (sel) { document.querySelectorAll(sel).forEach(function (e) { e.remove(); }); };
+    rm('script, style, details.chapter-sources, sup.cite, section[data-view="sources"], .sources, .bib, .bibliography, .row-src, .sx-src, .src-list');
+    document.querySelectorAll('li[id]').forEach(function (e) { if (/-s\\d+$/.test(e.id)) e.remove(); });
+    document.querySelectorAll('details').forEach(function (d) { d.open = true; });
+    document.querySelectorAll('.fc-q').forEach(function (e) { e.textContent = e.textContent.replace(/\\?\\s*$/, '.'); });
+    document.querySelectorAll('h1, h2, h3, h4').forEach(function (h) { h.insertBefore(document.createTextNode('${H0}'), h.firstChild); });
+    return document.body.innerText;
+  })()`;
+  const pages = ['/'].concat(chapterDirs.concat(ownPages).map((d) => '/' + d + '/'));
+  const chrome = launch();
+  try {
+    for (const p of pages) {
+      const t = await open(chrome, rendered + p, { width: 1440, wait: 2500 });
+      const h = await t.ev('document.documentElement.scrollHeight');
+      for (let y = 0; y < h; y += 1600) { await t.ev(`(window.scrollTo(0, ${y}), 1)`); await sleep(80); }
+      await sleep(500);
+      const text = await t.ev(PROBE);
+      await t.close();
+      String(text || '').split('\n').map((s) => s.replace(/[ \t]+/g, ' ').trim()).filter(Boolean).forEach((line) => {
+        if (line.startsWith(H0)) { const hd = line.slice(H0.length).trim(); if (!seen.has(hd)) scan(hd, `rendered ${p} > heading "${hd}"`, true); return; }
+        if (seen.has(line)) return; seen.add(line);
+        scan(line, `rendered ${p}`, false);
+      });
+    }
+  } finally { await chrome.close(); }
+  finish();
+})();

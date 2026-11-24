@@ -6658,9 +6658,11 @@ try {
     var cp = led.filter(function (ch) { return ch.chokepoint; }).length; // the stages it leads that are chokepoints (build/build.js isChoke)
     var firms = (DATA.suppliers || []).filter(function (r) { return r.country === cc; });
     var critical = firms.filter(function (r) { return r.chokepoint === 'Critical'; }).length, meta = []; // the dominant firms
-    if (led.length === 1) meta.push('leads 1 stage' + (cp ? ', a chokepoint' : ''));
-    else if (led.length) meta.push('leads ' + led.length + ' stages' + (!cp ? '' : cp === led.length ? ', all of them chokepoints' : cp === 1 ? ', 1 of them a chokepoint' : ', ' + cp + ' of them chokepoints'));
-    meta.push('named on ' + named.length + ' of ' + cardCount + ' stage cards');
+    // counts in words, as the Suppliers page gives them ("leads five stages, two of them chokepoints"; build/modules/summary-a.js)
+    var W = function (n) { return ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen'][n] || String(n); };
+    if (led.length === 1) meta.push('leads one stage' + (cp ? ', a chokepoint' : ''));
+    else if (led.length) meta.push('leads ' + W(led.length) + ' stages' + (!cp ? '' : cp === led.length ? ', all of them chokepoints' : cp === 1 ? ', one of them a chokepoint' : ', ' + W(cp) + ' of them chokepoints'));
+    meta.push('named on ' + W(named.length) + ' of the ' + W(cardCount) + ' stage cards');
     if (firms.length) meta.push(firms.length + (firms.length === 1 ? ' firm' : ' firms') + ' in the supplier list' + (critical ? ', ' + critical + ' ' + posWord('Critical').toLowerCase() : ''));
     return { named: named, firms: firms, meta: meta.join(' · ') };
   }

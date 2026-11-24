@@ -7,7 +7,7 @@
  "plain": "Deposition and etch build the chip itself, one layer at a time. Deposition lays down a thin film, sometimes only a few atoms thick. Lithography prints a pattern on it. Etch then eats away everything the pattern does not protect, and the next film goes down on top. Making one chip takes 1,000 to 1,500 steps, the Semiconductor Industry Association estimated in 2025 ([source](https://www.finance.senate.gov/download/051425-isaacs-testimony&download=1#page=2)). Some of the holes the etch cuts in memory chips are more than 50 times deeper than they are wide, like a finger-wide shaft about a meter deep ([source](https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf#page=17)). The film has to coat them right to the bottom. The etch has to eat one material and leave the one beside it untouched. Applied Materials and Lam Research in the United States, Tokyo Electron in Japan and ASM International in the Netherlands make most of these machines. Chinese toolmakers have gained share in both kinds of tool since 2019.",
  "bridge": "A printed pattern is not yet a circuit, and the machines that turn it into one run many times on every wafer.",
  "specimen": "process-chamber",
- "specimenCaption": "A plasma etch chamber cut in half, around one wafer on its holder, the chuck. A pump empties the chamber, gas flows in, and a radio-frequency field turns the gas into a plasma that eats away the film the pattern leaves bare. Only the 300 mm wafer is drawn at a true size. The loupe shows one hole etched into the silicon, ten times deeper than it is wide, the ratio in a US export rule of December 2024.",
+ "specimenCaption": "A plasma etch chamber cut in half, with one wafer on its holder, the chuck. A pump empties the chamber, gas flows in, and a radio-frequency field turns the gas into a plasma that eats away the film the pattern leaves bare. Only the 300 mm wafer is drawn to scale. The loupe shows one hole etched into the silicon, ten times deeper than it is wide.",
  "card": {
  "concentration": "High",
  "chokepointScore": 4,
@@ -162,7 +162,7 @@ Among deposition and etch tool segments, China-based suppliers have their larges
 
 ## The narrowest step
 
-In dry etch, Lam Research held 41.1 percent in 2025, Tokyo Electron 23.4 percent and Applied Materials 17.4 percent, by CSET's count ([source](https://chipexplorer.eto.tech/?parentNode=N46&selectedNode=N103)). In deposition tools as a whole, Applied Materials held 41.2 percent in 2025, by the same count ([source](https://chipexplorer.eto.tech/?parentNode=N35&selectedNode=N36)).
+Different firms lead etch and deposition. In dry etch, Lam Research held 41.1 percent in 2025, Tokyo Electron 23.4 percent and Applied Materials 17.4 percent, by CSET's count ([source](https://chipexplorer.eto.tech/?parentNode=N46&selectedNode=N103)). In deposition tools as a whole, Applied Materials held 41.2 percent in 2025, by the same count ([source](https://chipexplorer.eto.tech/?parentNode=N35&selectedNode=N36)).
 
 ## Takeaways
 
