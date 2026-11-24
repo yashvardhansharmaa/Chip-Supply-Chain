@@ -1180,10 +1180,11 @@ function partsHTML(ch) {
   return `<p class="ch-parts-k">Parts, as numbered on the drawing</p><ol class="ch-parts">${ps.map((p) => `<li data-n="${+p.n}"><b aria-hidden="true">${+p.n}</b><span>${line(p)}</span></li>`).join('')}</ol>`;
 }
 // the card's verdict in the kicker, in the words the card uses: a chokepoint's mark, then the substitutability rating
-// ("Chokepoint · Very hard to substitute"); a stage that is not a chokepoint shows its substitutability alone
+// ("Chokepoint · Very hard to substitute"); a stage that is not a chokepoint shows its substitutability alone. The mark is the
+// button that opens the word's glossary entry, as on the Introduction and the stage card (UX test, 24 Nov 2026: it was plain text)
 const verdictHTML = (b, sub) => {
   const subW = sub ? `<span>${esc(SUBWORD[sub] || sub)}</span>` : '';
-  if (isChoke(b)) return `<span class="ch-band ch-verdict">${chokeMark()}${subW ? `<span class="sep" aria-hidden="true">·</span>${subW}` : ''}</span>`;
+  if (isChoke(b)) return `<span class="ch-band ch-verdict">${chokeMark({ tag: 'button', cls: 'gl-term', attrs: ' type="button" data-term="chokepoint"' })}${subW ? `<span class="sep" aria-hidden="true">·</span>${subW}` : ''}</span>`;
   return subW ? `<span class="ch-band ch-verdict">${subW}</span>` : '';
 };
 const TILE_WORD = { 'component-costs': 'The economics', geopolitics: 'The contest' }; // the second item of the kicker for the two chapters that are not stages

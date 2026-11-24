@@ -217,7 +217,7 @@
       "unit": "GW/yr",
       "data": [
         [
-          "Q3 2026",
+          "Q3 2026 (annual rate)",
           20
         ],
         [

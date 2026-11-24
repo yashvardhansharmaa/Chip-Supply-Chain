@@ -571,8 +571,11 @@
       };
       if (menu) menu.addEventListener('click', function () {
         markSheet(); open(true);
-        var cur = $('.sheet-chapters a[aria-current]', sheet); // the chapter being read in view, under the head
-        if (cur) sheet.scrollTop = Math.max(0, cur.getBoundingClientRect().top - sheet.getBoundingClientRect().top + sheet.scrollTop - 160);
+        // the chapter being read in view at the top of the list, with the line before it showing; the list alone scrolls, so the
+        // sheet's title and × stay on the screen (src/styles.css .sheet)
+        var cur = $('.sheet-chapters a[aria-current]', sheet), list = $('.sheet-chapters', sheet);
+        if (list) list.scrollTop = 0;
+        if (cur && list) list.scrollTop = Math.max(0, cur.getBoundingClientRect().top - list.getBoundingClientRect().top - Math.round(cur.getBoundingClientRect().height * 0.6));
       });
       if (sheet) {
         sheet.addEventListener('click', function (e) { var a = e.target.closest('a'); if (a || e.target.closest('.sheet-close')) { open(false, a ? a.getAttribute('href') : null); self.set(true); } });
@@ -3102,6 +3105,14 @@
     },
     init: function () {
       var self = this, term = function (e) { return e.target.closest ? e.target.closest('.gl-term') : null; };
+      /* on a phone the panel is a sheet at the foot of the screen, and a tap sends mouseover, which opens it, before its click.
+         A term low on the screen then has the sheet open under the finger, and the same tap's click landed on the sheet's link
+         and left for the Glossary (UX test, 24 Nov 2026). For half a second after the sheet opens, a tap inside it does nothing.
+         This listens first (capture), so neither the link nor the handler below sees that click; a key's click (detail 0) passes */
+      document.addEventListener('click', function (e) {
+        if (!self.el || self.el.hidden || !self.el.classList.contains('is-sheet') || !self.el.contains(e.target) || e.detail === 0) return;
+        if (Date.now() - self.at < 500) { e.preventDefault(); e.stopPropagation(); }
+      }, true);
       document.addEventListener('mouseover', function (e) { var b = term(e); if (b) self.show(b); });
       document.addEventListener('mouseout', function (e) { if (term(e)) self.later(); });
       // quiet: Escape hands focus back to the term with the panel shut, so that focus must not open it again

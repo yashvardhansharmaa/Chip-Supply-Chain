@@ -1010,15 +1010,18 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before, .gl-
   .stage[data-collapsed="0"] .stage-actions { grid-column: 2; grid-row: 1; align-self: center; }
   .stage[data-collapsed="0"] figcaption { grid-column: 1 / -1; grid-row: 3; margin: 6px 0 0; -webkit-line-clamp: 6; }
   body { padding-bottom: calc(var(--strip-h, 64px) + 12px); }
-  /* the contents sheet */
-  .sheet { display: block; position: fixed; inset: 0; z-index: 60; background: var(--bg); overflow-y: auto; padding: 14px 16px 90px; }
+  /* the contents sheet: its title, its close button and the pages stay put, and only the list of chapters scrolls (UX test,
+     24 Nov 2026: the whole sheet scrolled to the chapter being read, which took the title and the × above the screen). The
+     list keeps room at its foot so its last line can scroll clear of the screen's edge */
+  .sheet { display: flex; flex-direction: column; position: fixed; inset: 0; z-index: 60; background: var(--bg); overflow: hidden; padding: 14px 16px 0; }
   .sheet[hidden] { display: none; }
-  .sheet-head { display: flex; justify-content: space-between; align-items: center; margin: 0 0 14px; }
+  .sheet-head { flex: none; display: flex; justify-content: space-between; align-items: center; margin: 0 0 14px; }
   .sheet-head b { font-size: var(--t-lead); }
   .sheet-close { font-size: 22px; line-height: 1; background: none; border: 1px solid var(--rule-ink); border-radius: 50%; width: 36px; height: 36px; color: var(--ink); }
-  .sheet-pages { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 18px; }
+  .sheet-pages { flex: none; display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 18px; }
   .sheet-pages a { font-family: var(--font-ui); font-weight: 500; font-size: var(--fs-ui); padding: 7px 14px; border: 1px solid var(--rule-ink); border-radius: 999px; color: var(--ink); text-decoration: none; }
-  .sheet-chapters { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
+  .sheet-chapters { flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
+  .sheet-chapters::after { content: ''; display: block; height: 90px; }
   .sheet-chapters a { display: grid; grid-template-columns: 34px 1fr; align-items: baseline; gap: 10px; padding: 11px 0; border-bottom: 1px solid var(--line); color: var(--ink); text-decoration: none; }
   .sheet-chapters .n { font-family: var(--font-mono); font-size: var(--fs-cap); color: var(--muted); font-variant-numeric: tabular-nums; }
   /* the chapter being read, in wine, with its sections under it (src/app.js Band) */
@@ -4008,7 +4011,7 @@ html.kb:has(.view[data-view="glossary"]:not([hidden]) .gl:not([data-state="home"
   .chapter .ch-open { display: block; margin: 0; padding: 0 0 4.2mm; border-bottom: 0.6pt solid var(--ink); }
   .chapter .ch-kick { display: flex; flex-wrap: wrap; align-items: center; gap: 1mm 5mm; margin: 0; font-family: var(--font-code); font-size: 7.4pt; line-height: 1.3; color: var(--muted); }
   .chapter .ch-band { gap: 1.6mm; font-family: var(--font-ui); font-size: 7.6pt; font-weight: 500; color: var(--ink); }
-  .chapter .ch-band .cpk { gap: 1.2mm; font-size: inherit; font-weight: 600; color: var(--ink); }
+  .chapter .ch-band .cpk { display: inline-flex; align-items: center; gap: 1.2mm; font-size: inherit; font-weight: 600; color: var(--ink); }
   .chapter .ch-band .cpk > i { width: 1.6mm; height: 1.6mm; }
   .chapter .ch-title, .chapter .ch-title.is-long { margin: 4.4mm 0 0 -0.04em; font-family: var(--font-display); font-weight: 400; font-size: 34pt; line-height: 0.98; letter-spacing: -0.02em; color: var(--ink); text-wrap: balance; }
   .chapter .ch-title.is-long { font-size: 27pt; line-height: 1.02; }

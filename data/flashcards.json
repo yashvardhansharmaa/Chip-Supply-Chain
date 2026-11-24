@@ -34,7 +34,7 @@
   "cards": [
    {
     "q": "What is a wafer?",
-    "a": "A thin disc of pure silicon, about 30 centimeters across, that carries hundreds of chips.",
+    "a": "A thin disc of pure silicon, about 30 centimeters across, that carries dozens to hundreds of chips, fewer when each chip is large.",
     "section": "How it works"
    },
    {
@@ -144,13 +144,13 @@
    },
    {
     "q": "Who makes the blank plates for EUV masks?",
-    "a": "Only three firms, and two of them are AGC and Hoya of Japan. AGC says it took more than a decade to master them.",
+    "a": "AGC says only three firms make them, and two of them are AGC itself and Hoya, both of Japan. AGC says it took more than a decade to master them.",
     "section": "The chokepoint"
    }
   ],
   "takeaways": [
    "A photomask is the stencil for one layer of a chip, and any flaw on it repeats on every wafer.",
-   "Three firms make EUV mask blanks, and Lasertec launched the first tool that checks finished masks in EUV light.",
+   "AGC says only three firms make EUV mask blanks, and Lasertec launched the first tool that checks finished masks in EUV light.",
    "AGC spent more than a decade learning to make EUV blanks before mass production began in 2017.",
    "China makes masks for deep ultraviolet machines and older ones, in SMIC's own mask shops and at independent firms such as Shenzhen Qingyi and Shenzhen Newway."
   ]
@@ -521,7 +521,7 @@
    {
     "q": "Why is the mask for an EUV layer a mirror?",
     "a": "No glass lets EUV light through.",
-    "why": "The mirror is built up from about forty pairs of thin layers. Only three firms make the blank plates for these masks, and two of them are Japan's AGC and Hoya.",
+    "why": "The mirror is built up from about forty pairs of thin layers. AGC says only three firms make the blank plates for these masks, and two of them are AGC itself and Hoya, both of Japan.",
     "chapter": "photomasks-and-pellicles"
    },
    {
@@ -565,7 +565,7 @@
    "A foundry accepts only designs that have passed the checks of software from Synopsys, Cadence and Siemens EDA.",
    "A fab builds a chip one layer at a time, printing a pattern on each film and etching away what the pattern does not protect.",
    "Only ASML, a Dutch company, makes the extreme ultraviolet (EUV) machines that print a chip's finest layers.",
-   "Each EUV mask is a mirror, and Japan's AGC and Hoya are two of the three firms that make the blank plates.",
+   "Each EUV mask is a mirror, and AGC says only three firms make the blank plates, among them AGC itself and Hoya, both of Japan.",
    "TSMC, the biggest foundry, has all six of its largest plants in Taiwan.",
    "Only SK hynix, Samsung and Micron make HBM in volume, and stacking the chips is the hard part.",
    "Packaging joins an AI accelerator's calculating chips and memory, and Nvidia, Google, AMD and Amazon all use TSMC's version, made in Taiwan.",

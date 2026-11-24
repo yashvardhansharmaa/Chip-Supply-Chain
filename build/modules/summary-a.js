@@ -93,7 +93,7 @@ const SEG_CH = {
   'EDA software': 'design-and-eda', 'Core IP': 'design-and-eda', 'AI accelerator design': 'design-and-eda',
   'Silicon wafers': 'silicon-and-wafers', Photoresist: 'chemicals-gases-and-photoresist',
   'Specialty gases': 'chemicals-gases-and-photoresist', 'EUV lithography tools': 'lithography',
-  'DUV lithography tools': 'lithography', 'Deposition tools': 'deposition-and-etch', 'Etch tools': 'deposition-and-etch',
+  'DUV lithography tools': 'lithography', 'Deposition tools': 'deposition-and-etch', 'Etch and clean tools': 'deposition-and-etch',
   'Metrology & inspection tools': 'metrology-and-inspection', Photomasks: 'photomasks-and-pellicles',
   'Leading-edge logic manufacturing (<10 nm)': 'foundries-and-fabs',
   'Mature logic manufacturing (≥28 nm)': 'foundries-and-fabs',

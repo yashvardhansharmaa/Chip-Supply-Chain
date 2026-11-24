@@ -42,7 +42,7 @@ const BASIS = { estimate: 'in-house estimate', relayed: 'relayed', derived: 'der
 const HOME = {
   'EDA software': 'Design and EDA', 'Core IP': 'IP and architecture', 'Silicon wafers': 'Silicon and wafers',
   'Photoresist': 'Photoresist and materials', 'Specialty gases': 'Chemicals and gases', 'EUV lithography tools': 'Lithography',
-  'DUV lithography tools': 'Lithography', 'Deposition tools': 'Deposition and etch', 'Etch tools': 'Deposition and etch',
+  'DUV lithography tools': 'Lithography', 'Deposition tools': 'Deposition and etch', 'Etch and clean tools': 'Deposition and etch',
   'Metrology & inspection tools': 'Metrology and inspection', 'Photomasks': 'Photomasks',
   'Leading-edge logic manufacturing (<10 nm)': 'Foundry', 'Mature logic manufacturing (≥28 nm)': 'Foundry',
   'DRAM manufacturing': 'Memory', 'HBM': 'Memory', 'Advanced packaging (2.5D/3D)': 'Advanced packaging and OSAT',
@@ -119,7 +119,7 @@ const FIRMS = {
     ["Naura Technology", "list", "deposition (PVD, CVD and ALD)"],
     ["Piotech", "list", "plasma-enhanced CVD and ALD systems"],
   ],
-  "Etch tools": [
+  "Etch and clean tools": [
     ["Tokyo Electron", "list", "It also makes etch"],
     ["Applied Materials", "ch:06", "Tokyo Electron 23.4 percent and Applied Materials 17.4 percent"],
     ["Lam Research", "list", "The largest supplier of plasma etch systems"],
@@ -235,8 +235,8 @@ const STATED = {
   "Silicon wafers|SUMCO": [20, "SUMCO", "It held an estimated 20 percent of global 300 mm wafer capacity"],
   "Silicon wafers|GlobalWafers": [15, "GlobalWafers", "about 15 to 20 percent of global semiconductor wafer output"],
   "Silicon wafers|Eswin Material": [7.7, "Eswin Material", "about 7.7 percent of global 300 mm shipments"],
-  "Etch tools|Lam Research": [41.1, "Lam Research", "it had 41.1 percent of the $21.9 billion dry etch tool market in 2025"],
-  "Etch tools|Tokyo Electron": [23.4, "Lam Research", "against 23.4 percent for Tokyo Electron"],
+  "Etch and clean tools|Lam Research": [41.1, "Lam Research", "it had 41.1 percent of the $21.9 billion dry etch tool market in 2025"],
+  "Etch and clean tools|Tokyo Electron": [23.4, "Lam Research", "against 23.4 percent for Tokyo Electron"],
   "Metrology & inspection tools|KLA": [56.8, "KLA", "56.8 percent of the process control market in 2025"],
   "Metrology & inspection tools|Applied Materials": [11.2, "KLA", "against 11.2 percent for Applied Materials"],
 };
