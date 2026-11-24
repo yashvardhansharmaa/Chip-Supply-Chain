@@ -55,14 +55,15 @@ R('euv-scanner', function (m) {
     var th = Math.atan2(-nv[0], nv[1]);
     // the illuminator's and the projection optics' mirrors carry one tag, so Mirrors lights all of them (the collector is the source's)
     if (!o.notag) m.tag('mirror');
-    var sv = m.revolve(prof, mat || 'turnedDark', { seg: 28, rot: [0, 0, th], pos: [q[0], q[1], 0], sortFaces: true });
+    var sv = m.revolve(prof, mat || 'turnedDark', { seg: 28, rot: [0, 0, th], pos: [q[0], q[1], 0], sortFaces: true, real: 'glassBody', capMat: { d: 0.32, real: 'mlm' } });
     m.tag(null);
     return sv;
   }
   // a module's housing cut open on the optical plane (z = 0): back wall, floor, roof and side walls, cut edges hatched
   function housing(cx, cy, w, h, d, t) {
     var cutF = { pz: 'cut' };
-    m.box({ c: [cx, cy, -d + t / 2], s: [w, h, t] }, 'paper');
+    m.real('vac');
+    m.box({ c: [cx, cy, -d + t / 2], s: [w, h, t], real: 'vacIn', inner: true }, 'paper');
     m.box({ c: [cx, cy - h / 2 + t / 2, -d / 2], s: [w, t, d], fmat: cutF }, 'light');
     m.box({ c: [cx, cy + h / 2 - t / 2, -d / 2], s: [w, t, d], fmat: cutF }, 'light');
     m.box({ c: [cx - w / 2 + t / 2, cy, -d / 2], s: [t, h - 2 * t, d], fmat: cutF }, 'light');
@@ -70,16 +71,19 @@ R('euv-scanner', function (m) {
   }
   var src = m.part('source', { ex: [EXS.src[0], EXS.src[1], 0], seq: 0 });
   var vesR = 0.66, vx0 = -1.94, vx1 = -0.72, vc = (vx0 + vx1) / 2;
+  m.real('vac');
   // the vessel, cut on the optical plane (z = 0) with the far half kept, as the other modules are
   m.revolve([[0.62, -0.61], [vesR, -0.61], [vesR, 0.61], [0.62, 0.61]], 'turned', { seg: 40, a0: Math.PI, a1: Math.PI * 2, rot: [0, 0, -Math.PI / 2], pos: [vc, PLASMA[1], 0], cut: 'cut', sortFaces: true });
   mirror(COLL, [1, 0], 0.56, 'turned', { rIn: 0.075, notag: true });
   // the tin plasma, in the light's own hue: it is where the light is made
   m.dots([[PLASMA[0], PLASMA[1], 0]], { r: 4.2, col: 'acc', alpha: 0.35 });
   m.dots([[PLASMA[0], PLASMA[1], 0]], { r: 2.2, col: 'acc', alpha: 1 });
+  m.real('steelDk');
   m.cyl([PLASMA[0], PLASMA[1] + 0.72, 0], 0.05, 0.30, 'turnedDark', { seg: 20 });
   var drops = []; for (var i = 0; i < 7; i++) drops.push([PLASMA[0], PLASMA[1] + 0.52 - i * 0.07, 0]);
-  m.dots(drops, { r: 1.3, alpha: 0.9 });
+  m.dots(drops, { r: 1.3, alpha: 0.9, real: 'sac' });
   m.wire([[-2.14, PLASMA[1], 0], [PLASMA[0] - 0.05, PLASMA[1], 0]], { lw: 0.8, dash: [5, 3], alpha: 0.8 });
+  m.real('steelDk');
   m.box({ c: [-2.02, PLASMA[1], 0], s: [0.26, 0.30, 0.30] }, 'mid');
   m.anchor(1, 'Light source', [PLASMA[0], PLASMA[1], 0]);
   // illuminator: its housing, cut open, and three mirrors; its roof stops short of the mask, so the light crosses open air
@@ -90,8 +94,11 @@ R('euv-scanner', function (m) {
   // the reticle stage on top, the mask hanging pattern-down beneath it
   var ret = m.part('reticle', { ex: [EXS.ret[0], EXS.ret[1], 0], seq: 3 });
   var Rp = NODE[4].p;
+  m.real('glass');
   m.box({ c: [Rp[0], Rp[1] + MASKT / 2, 0], s: [MASK, MASKT, MASK], decals: { ny: [D.rect(-MASK * 0.34, -MASK * 0.27, MASK * 0.34, MASK * 0.27, -MASKT / 2, { lw: 0.5 })] } }, 'light');
+  m.real('granite');
   m.box({ c: [Rp[0], Rp[1] + MASKT + 0.035, 0], s: [MASK + 0.08, 0.07, MASK + 0.06] }, 'mid');
+  m.real('steelDk');
   [-1, 1].forEach(function (s) { m.box({ c: [Rp[0], Rp[1] + MASKT + 0.095, s * (MASK / 2 + 0.06)], s: [1.30, 0.045, 0.055] }, 'dark'); });
   m.anchor(3, 'Mask', [Rp[0] - MASK * 0.3, Rp[1], 0]);
   // the projection optics: six mirrors in their box
@@ -104,22 +111,26 @@ R('euv-scanner', function (m) {
   var waf = m.part('wafer', { ex: [EXS.waf[0], EXS.waf[1], 0], seq: 4, mode: 'stack' });
   var Wp = NODE[11].p;
   [0, -0.78].forEach(function (dx, j) {
+    m.real('granite');
     m.cyl([Wp[0] + dx, Wp[1] - 0.042 - WT / 2, 0], WR * 1.08, 0.075, 'turnedDark', { seg: 32 });
+    m.real('siProc');
     if (!j) m.tag('wafer');
-    m.cyl([Wp[0] + dx, Wp[1] - WT / 2, 0], WR, WT, 'acc2Light', { seg: 32, top: j ? [] : [D.rect(-0.026, -0.033, 0.026, 0.033, WT / 2, { fill: 'acc', lw: 0.6, col: 'acc' })] });
+    m.cyl([Wp[0] + dx, Wp[1] - WT / 2, 0], WR, WT, 'acc2Light', { seg: 32, top: (function () { var gd = []; for (var gx = -5; gx <= 5; gx++) for (var gz = -5; gz <= 5; gz++) { var ux = gx * 0.052, uz = gz * 0.066; if (Math.abs(ux) + 0.026 > WR * 0.92 || ux * ux + uz * uz > WR * WR * 0.78) continue; gd.push(D.rect(ux - 0.025, uz - 0.032, ux + 0.025, uz + 0.032, WT / 2, { lw: 0.3, alpha: 0.45, fill: 'steel', sheen: 0.1 })); } return gd; })().concat(j ? [] : [D.rect(-0.026, -0.033, 0.026, 0.033, WT / 2, { fill: 'acc', lw: 0.6, col: 'acc', diagram: true })]) });
     m.tag(null);
   });
+  m.real('steelDk');
   m.box({ c: [Wp[0] - 0.39, Wp[1] - 0.135, 0], s: [1.66, 0.10, 0.66] }, 'mid');
   m.anchor(4, 'Wafer', [Wp[0] - WR * 0.5, Wp[1], 0]);
   var base = m.part('base', { ex: [0, -0.62, 0], seq: 5, pri: -1 });
+  m.real('paint');
   m.box({ c: [-0.16, -2.16, 0], s: [3.66, 0.20, 1.36] }, 'steel');
-  for (i = 0; i < 4; i++) { var lx = -0.16 - 1.83 + 0.36 + i * (3.66 - 0.72) / 3; [0.5, -0.5].forEach(function (z) { m.cyl([lx, -2.38, z], 0.085, 0.24, 'turnedDark', { seg: 16 }); }); }
+  for (i = 0; i < 4; i++) { var lx = -0.16 - 1.83 + 0.36 + i * (3.66 - 0.72) / 3; [0.5, -0.5].forEach(function (z) { m.cyl([lx, -2.38, z], 0.085, 0.24, 'turnedDark', { seg: 16, real: 'steelDk' }); }); }
   void base;
   // the light: through each module, attached to the part it is in at each end
   var idx = { ill: ill.idx, ret: ret.idx, pob: pob.idx, waf: waf.idx };
   var pts = [[PLASMA[0], PLASMA[1], 0, src.idx]].concat(NODE.map(function (q) { var a = AT(q); return [a[0], a[1], 0, idx[q.o]]; }));
-  m.guide(pts, { style: 'beam', col: 'acc', lw: 1.5 });
+  m.guide(pts, { style: 'beam', col: 'acc', lw: 1.4, knockDark: true });
   // the collector's cone of light, from its rim to the plasma and on to the focus
   [0.27, -0.27, 0.5, -0.5].forEach(function (rr) { m.guide([[COLL[0] + 0.28 * (rr / 0.56) * (rr / 0.56), PLASMA[1] + rr, 0, src.idx], [NODE[0].p[0], NODE[0].p[1], 0, src.idx]], { style: 'beam', col: 'acc', lw: 0.7, alpha: 0.55 }); });
-  return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, calloutOpts: { 2: { tag: 'mirror' }, 4: { tag: 'wafer' } }, accent: [78, 96, 186], accentDark: [167, 180, 245], accent2: [111, 139, 166], accent2Dark: [195, 211, 226] };
+  return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, calloutOpts: { 2: { tag: 'mirror' }, 4: { tag: 'wafer' } }, accent: [78, 96, 186], accentDark: [154, 166, 255], accent2: [111, 139, 166], accent2Dark: [195, 211, 226] };
 });

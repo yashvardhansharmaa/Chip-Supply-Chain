@@ -13,18 +13,18 @@
 R('substrate-layers', function (m) {
   var W = 95, Dd = 68, tc = 7.5, tb = 1.0, nb = 11, tr = 1.0, top = tc / 2 + nb * tb + tr, cTop = tc / 2;
   var lay = []; for (var k = 0; k <= nb; k++) lay.push(cTop + k * tb);
-  var FILM_A = { d: 0.24, c: 'acc' }, FILM_B = { d: 0.40, c: 'acc' };
+  var FILM_A = { d: 0.24, c: 'acc', real: 'abf' }, FILM_B = { d: 0.40, c: 'acc', real: 'abf2' };
   // the section on a cut face, as decal items in (u, y), u running 0..L along the face
   function section(L, toP) {
     var it = [], i, u;
     var poly = function (u0, ya, u1, yb, o) { return Object.assign({ pts: [toP(u0, ya), toP(u1, ya), toP(u1, yb), toP(u0, yb)], closed: true }, o); };
-    it.push(poly(0, -cTop, L, cTop, { fill: { d: 0.07, hatch: 3 }, lw: 0.5, tag: 'core' }));
+    it.push(poly(0, -cTop, L, cTop, { fill: { d: 0.07, hatch: 3, real: 'coreSec' }, lw: 0.5, tag: 'core', real: 'coreSec' }));
     for (k = 1; k <= nb; k++) {
       // review: a deeper olive (d 0.24 and 0.40, was 0.17 and 0.34), so the bands read as the caption's olive green
       it.push(poly(0, lay[k - 1], L, lay[k], { fill: k % 2 ? FILM_A : FILM_B, lw: 0, keep: true, tag: 'film' }));
       it.push(poly(0, -lay[k], L, -lay[k - 1], { fill: k % 2 ? FILM_A : FILM_B, lw: 0, keep: true, tag: 'film' }));
     }
-    [1, -1].forEach(function (sg) { it.push(poly(0, sg > 0 ? lay[nb] : -top, L, sg > 0 ? top : -lay[nb], { fill: 'dark', lw: 0 })); });
+    [1, -1].forEach(function (sg) { it.push(poly(0, sg > 0 ? lay[nb] : -top, L, sg > 0 ? top : -lay[nb], { fill: 'dark', lw: 0, real: 'subMask' })); });
     /* 22 Nov 2026 plates refine: the copper on every conductor plane runs the whole cut, broken only round the vias that land on
        it (each landing a pad of its own, with a clearance either side), so the eleven bands a side can be counted between the
        twelve lines of copper (random runs and breaks read as a brick wall). Every microvia column climbs every band, stacked or
@@ -34,7 +34,7 @@ R('substrate-layers', function (m) {
     var np = Math.max(3, Math.round(L / 11)), hw = 0.62;
     for (i = 0; i < np; i++) {
       u = (i + 0.5) * L / np;
-      it.push({ pts: [toP(u - hw, -cTop), toP(u - hw, cTop)], col: 'acc2', lw: 1.1, tag: 'cu' }, { pts: [toP(u + hw, -cTop), toP(u + hw, cTop)], col: 'acc2', lw: 1.1, tag: 'cu' });
+      it.push({ pts: [toP(u - hw, -cTop), toP(u - hw, cTop)], col: 'acc2', lw: 1.1, tag: 'cu', real: 'cu' }, { pts: [toP(u + hw, -cTop), toP(u + hw, cTop)], col: 'acc2', lw: 1.1, tag: 'cu', real: 'cu' });
       pads[0].push([u - hw * 2.6, u + hw * 2.6]);
     }
     // microvias, stacked in some columns and staggered in others, each column through every band
@@ -49,7 +49,7 @@ R('substrate-layers', function (m) {
       }
     }
     [1, -1].forEach(function (sg) {
-      vias.forEach(function (v) { var yl = sg * lay[v[0] - 1], yh = sg * lay[v[0]], x = v[1]; it.push({ pts: [toP(x - 0.58, yh), toP(x - 0.3, yl), toP(x + 0.3, yl), toP(x + 0.58, yh)], closed: true, fill: { d: 0.62, c: 'acc2' }, col: 'acc2', lw: 0.4, tag: 'cu' }); });
+      vias.forEach(function (v) { var yl = sg * lay[v[0] - 1], yh = sg * lay[v[0]], x = v[1]; it.push({ pts: [toP(x - 0.58, yh), toP(x - 0.3, yl), toP(x + 0.3, yl), toP(x + 0.58, yh)], closed: true, fill: { d: 0.62, c: 'acc2', real: 'cu' }, col: 'acc2', lw: 0.4, tag: 'cu', real: 'cu' }); });
       for (k = 0; k <= nb; k++) {
         var y = sg * lay[k], lw = k % 3 === 0 ? 0.85 : 0.75;
         // the plane's pads, merged where they touch, then the copper between them, each run stopping 0.5 short of a pad
@@ -57,16 +57,16 @@ R('substrate-layers', function (m) {
         ps.forEach(function (pq) { var l = mg[mg.length - 1]; if (l && pq[0] <= l[1] + 0.2) l[1] = Math.max(l[1], pq[1]); else mg.push([pq[0], pq[1]]); });
         var x0 = 0.4;
         mg.forEach(function (pq) {
-          if (pq[0] - 0.5 > x0 + 0.3) it.push({ pts: [toP(x0, y), toP(pq[0] - 0.5, y)], col: 'acc2', lw: lw, tag: 'cu' });
-          it.push({ pts: [toP(Math.max(0.4, pq[0]), y), toP(Math.min(L - 0.4, pq[1]), y)], col: 'acc2', lw: k === 0 ? 1.3 : lw + 0.3, tag: 'cu' });
+          if (pq[0] - 0.5 > x0 + 0.3) it.push({ pts: [toP(x0, y), toP(pq[0] - 0.5, y)], col: 'acc2', lw: lw + 0.25, edge: true, tag: 'cu', real: 'cu' });
+          it.push({ pts: [toP(Math.max(0.4, pq[0]), y), toP(Math.min(L - 0.4, pq[1]), y)], col: 'acc2', lw: (k === 0 ? 1.3 : lw + 0.3) + 0.25, edge: true, tag: 'cu', real: 'cu' });
           x0 = pq[1] + 0.5;
         });
-        if (L - 0.4 > x0 + 0.3) it.push({ pts: [toP(x0, y), toP(L - 0.4, y)], col: 'acc2', lw: lw, tag: 'cu' });
+        if (L - 0.4 > x0 + 0.3) it.push({ pts: [toP(x0, y), toP(L - 0.4, y)], col: 'acc2', lw: lw + 0.25, edge: true, tag: 'cu', real: 'cu' });
       }
     });
     // solder balls in section along the foot
     var nbz = Math.max(4, Math.round(L / 4.5));
-    for (i = 0; i < nbz; i++) { u = (i + 0.5) * L / nbz; var arc = []; for (var a = 0; a <= 12; a++) { var th = Math.PI * a / 12; arc.push(toP(u - 1.1 * Math.cos(th), -top - 1.1 * Math.sin(th) * 0.85)); } it.push({ pts: arc, lw: 0.7, fill: 'mid' }); }
+    for (i = 0; i < nbz; i++) { u = (i + 0.5) * L / nbz; var arc = []; for (var a = 0; a <= 12; a++) { var th = Math.PI * a / 12; arc.push(toP(u - 1.1 * Math.cos(th), -top - 1.1 * Math.sin(th) * 0.85)); } it.push({ pts: arc, lw: 0.7, fill: 'mid', real: 'sac' }); }
     return it;
   }
   var body = m.part('body', { ex: [0, 0, 0], seq: 0 });
@@ -76,9 +76,18 @@ R('substrate-layers', function (m) {
   var sw = 78, sd = 50, tp = [];
   tp.push({ pts: [[0, top, -sd / 2], [-sw / 2, top, -sd / 2], [-sw / 2, top, sd / 2], [0, top, sd / 2]], lw: 0.7, dash: [2.4, 1.6] });
   tp.push({ pts: [[0, top, -sd / 2], [sw / 2, top, -sd / 2], [sw / 2, top, 0]], lw: 0.7, dash: [2.4, 1.6] });
-  tp.push({ dots: H.gridPts(30, 20, sw / 31, sd / 21, top, 0, 0, function (x, z) { return !(x > 0.5 && z > 0.5); }), r: 0.55, alpha: 0.6 });
-  for (var q = 0; q < 30; q++) { var cu = (q - 14.5) * (W * 0.94 / 30); if (Math.abs(cu) > sw / 2 + 2) continue; [-1, 1].forEach(function (sg) { if (cu > 0 && sg > 0) return; tp.push(D.rect(cu - 0.9, sg * (sd / 2 + 4.2) - 1.4, cu + 0.9, sg * (sd / 2 + 4.2) + 1.4, top, { fill: 'dark', lw: 0.3 })); }); }
-  m.prism(Lsh, -top, top, 'light', { sideMat: { 2: 'paper', 3: 'paper' }, sideDecals: { 2: secZ, 3: secX }, top: tp });
+  tp.push({ dots: H.gridPts(30, 20, sw / 31, sd / 21, top, 0, 0, function (x, z) { return !(x > 0.5 && z > 0.5); }), r: 0.55, alpha: 0.6, real: 'sac' });
+  for (var q = 0; q < 30; q++) { var cu = (q - 14.5) * (W * 0.94 / 30); if (Math.abs(cu) > sw / 2 + 2) continue; [-1, 1].forEach(function (sg) { if (cu > 0 && sg > 0) return; tp.push(D.rect(cu - 0.9, sg * (sd / 2 + 4.2) - 1.4, cu + 0.9, sg * (sd / 2 + 4.2) + 1.4, top, { fill: 'dark', lw: 0.3, real: 'sac' })); }); }
+  m.real('subMask');
+  var sMat = { 2: 'paper', 3: 'paper' }, sDec = { 2: secZ, 3: secX };
+  // (the outer sides: a routed laminate edge, thin green resist bands top and bottom, the core's band and faint layer lines)
+  [0, 1, 4, 5].forEach(function (i) {
+    var a = Lsh[i], b = Lsh[(i + 1) % 6], band = function (y0, y1, o) { return Object.assign({ pts: [[a[0], y0, a[1]], [b[0], y0, b[1]], [b[0], y1, b[1]], [a[0], y1, a[1]]], closed: true }, o); };
+    var it = [band(top - tr, top, { fill: { d: 0.3, real: 'subMask' }, lw: 0 }), band(-top, -top + tr, { fill: { d: 0.3, real: 'subMask' }, lw: 0 }), band(-cTop, cTop, { fill: { d: 0.1, real: 'core', hatch: 3 }, lw: 0 })];
+    for (var q = 1; q <= nb; q++) [1, -1].forEach(function (sg) { it.push(band(sg * lay[q], sg * lay[q], { lw: 0.3, alpha: 0.35 })); });
+    sMat[i] = { d: 0.1, real: 'laminate' }; sDec[i] = it;
+  });
+  m.prism(Lsh, -top, top, 'light', { sideMat: sMat, sideDecals: sDec, top: tp });
   m.callout([W * 0.3, (lay[2] + lay[3]) / 2, 0.001, body.idx], 'Build-up film', { side: 'r', tag: 'film' });
   // review: on a plated hole's copper pad at the near end of the right-hand cut (the leader ran right across the top); round two:
   // on the fifth build-up plane above the core, clear of the vias, so it names the layers rather than a hole

@@ -19,6 +19,7 @@
 R('boule-and-wafer', function (m, params) {
   var Rb = 0.15, wT = 0.000775 / 2, yTip = -0.71, yB0 = -0.45, yB1 = 1.05, Rc = Rb * 1.03;
   var ing = m.part('ingot', { ex: [0, 0, 0], seq: 0 });
+  m.real('siIngot');
   // the crystal's slate: the wafers' tone, on a turned surface
   var white = params && params.ingot === 'white', SI = white ? { d: 0.08, c: 'acc', curve: true } : 'accTurned', SI_FLAT = white ? 'accLight' : 'acc';
   var prof = [[0, yTip], [0.038, yTip], [0.078, yTip + 0.045, 0], [0.110, yTip + 0.095, 0], [0.133, yTip + 0.16, 0], [0.146, yTip + 0.215, 0], [Rb, yB0]];
@@ -30,7 +31,19 @@ R('boule-and-wafer', function (m, params) {
   // the ingot, the neck and the seed are solids of their own, so each lights alone when its part is pointed at
   m.tag('ingot');
   // (lip: the ring where the crown's ground band stands proud of the body keeps its shade weight)
-  m.revolve(prof, SI, { seg: 48, lip: true });
+  // (round 2: crown and tail resampled along a smooth curve, so their tone runs smoothly)
+  prof = (function (p) {
+    var out = [p[0]], cr = function (a, b, c, d, t) { var t2 = t * t, t3 = t2 * t; return [0, 1].map(function (i) { return 0.5 * (2 * b[i] + (-a[i] + c[i]) * t + (2 * a[i] - 5 * b[i] + 4 * c[i] - d[i]) * t2 + (-a[i] + 3 * b[i] - 3 * c[i] + d[i]) * t3); }); };
+    for (var i = 1; i < p.length; i++) {
+      var a = p[i - 1], b = p[i], smooth = b[2] === 0 && a[2] !== 1 && i > 1;
+      if (smooth) { var pa = p[i - 2], pb = p[i + 1] || b; for (var s = 1; s < 4; s++) { var q = cr(pa, a, b, pb, s / 4); out.push([q[0], q[1], 0]); } }
+      out.push(b);
+    }
+    return out;
+  })(prof);
+  m.revolve(prof, SI, { seg: 96, lip: true });
+  // (four faint growth ridges along the body)
+  [0.3, 1.87, 3.44, 5.01].forEach(function (an) { m.wire([[Rb * 1.002 * Math.cos(an), yB0 + 0.03, Rb * 1.002 * Math.sin(an)], [Rb * 1.002 * Math.cos(an), yB1 - 0.03, Rb * 1.002 * Math.sin(an)]], { lw: 0.6, alpha: 0.4, real: 'siIngot' }); });
   m.tag('neck');
   m.cyl([0, 1.465, 0], 0.0052, 0.13, SI, { seg: 12 });
   // the saw cuts: the slab the wafers came from, dashed round the body
@@ -39,12 +52,14 @@ R('boule-and-wafer', function (m, params) {
   m.tag('seed');
   m.box({ c: [0, 1.565, 0], s: [0.015, 0.07, 0.015] }, SI_FLAT);
   m.tag(null);
+  m.real('steelDk');
   m.cyl([0, 1.6225, 0], 0.026, 0.045, 'turnedDark', { seg: 20 });
   m.anchor(1, 'Seed', [0, 1.565, 0]); m.anchor(2, 'Neck', [0, 1.465, 0]); m.anchor(3, 'Ingot', [-0.05, 0.62, Rb * 0.8]);
   // the two wafers, as thick as they are, each with its notch
   function waferShape() { var s = []; for (var k = 0; k < 64; k++) { var a = k * TAU / 64; if (k === 16) { s.push([0.009, Rb * 0.998]); s.push([0, Rb - 0.01]); s.push([-0.009, Rb * 0.998]); continue; } s.push([Rb * Math.cos(a), Rb * Math.sin(a)]); } return s; }
   var ws = waferShape();
   var w1 = m.part('wafer1', { ex: [0.40, 0, 0], seq: 1 });
+  m.real('siWafer');
   m.prism(ws, cuts[0] - wT, cuts[0] + wT, 'acc', { smooth: true, top: [D.circle(0, 0, Rb * 0.965, cuts[0] + wT, 48, { lw: 0.4, col: 'acc', alpha: 0.7 })] });
   var w2 = m.part('wafer2', { ex: [0.80, 0, 0], seq: 2 });
   m.prism(ws, cuts[1] - wT, cuts[1] + wT, 'acc', { smooth: true, top: [D.circle(0, 0, Rb * 0.965, cuts[1] + wT, 48, { lw: 0.4, col: 'acc', alpha: 0.7 })] });
@@ -57,5 +72,5 @@ R('boule-and-wafer', function (m, params) {
   // review: the diameter is taken rim to rim across the wafer's centre (it was taken off the corners of the square round
   // the wafer, so its extension lines started in the air beside the disc)
   m.dim([-Rb, cuts[1] - wT, 0], [Rb, cuts[1] - wT, 0], [0, -0.1, 0], '300 mm', { part: w2.idx });
-  return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, sortAxis: [1, 0, 0], calloutOpts: { 1: { tag: 'seed' }, 2: { tag: 'neck' }, 3: { tag: 'ingot' }, 4: { dy: -40 } }, accent: [111, 139, 166], accentDark: [195, 211, 226] };
+  return { noGround: true, elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, sortAxis: [1, 0, 0], calloutOpts: { 1: { tag: 'seed' }, 2: { tag: 'neck' }, 3: { tag: 'ingot' }, 4: { dy: -40 } }, accent: [111, 139, 166], accentDark: [195, 211, 226] };
 });

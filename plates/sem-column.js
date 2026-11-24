@@ -16,22 +16,28 @@ R('sem-column', function (m) {
   function o(extra) { var r = {}; for (var k in O) r[k] = O[k]; for (k in extra) r[k] = extra[k]; return r; }
   function lens(y0, y1, rOut, rB) {
     var hh = y1 - y0, mid = (y0 + y1) / 2, c0 = rB + (rOut - rB) * 0.30, c1 = rOut - (rOut - rB) * 0.14, w0 = y0 + hh * 0.16, w1 = y1 - hh * 0.16, g = 0.028;
+    m.real('iron');
     m.revolve([[rB, y0], [rOut, y0], [rOut, y1], [rB, y1], [rB, mid + g], [c0, w1], [c1, w1], [c1, w0], [c0, w0], [rB, mid - g]], 'turned', o({}));
-    m.revolve([[c0 + 0.008, w0 + 0.008], [c1 - 0.008, w0 + 0.008], [c1 - 0.008, w1 - 0.008], [c0 + 0.008, w1 - 0.008]], 'dark', o({ cut: 'cutDense' }));
+    m.real('cu');
+    var coil = m.revolve([[c0 + 0.008, w0 + 0.008], [c1 - 0.008, w0 + 0.008], [c1 - 0.008, w1 - 0.008], [c0 + 0.008, w1 - 0.008]], 'dark', o({ cut: 'cutDense' }));
+    coil.c = [coil.c[0] + 0.08 * Math.cos(tv), coil.c[1], coil.c[2] + 0.08 * Math.sin(tv)];
   }
-  function tube(y0, y1, r0, r1) { m.revolve([[r0, y0], [r1, y0], [r1, y1], [r0, y1]], 'turned', o({})); }
-  function plate(y, r, hole) { m.revolve([[hole, y - 0.004], [r, y - 0.004], [r, y + 0.004], [hole, y + 0.004]], 'turnedDark', o({ cut: 'cutDense' })); }
+  function tube(y0, y1, r0, r1) { m.revolve([[r0, y0], [r1, y0], [r1, y1], [r0, y1]], 'turned', o({ real: 'steel' })); }
+  function plate(y, r, hole) { m.revolve([[hole, y - 0.004], [r, y - 0.004], [r, y + 0.004], [hole, y + 0.004]], 'turnedDark', o({ cut: 'cutDense', real: 'w' })); }
   var u = [Math.cos(a0), Math.sin(a0)];
   var parts = {}, beam = [];
   // gun and its insulator
   parts.gun = m.part('gun', { ex: [0, 0.34, 0], seq: 5 });
+  m.real('steel');
   m.revolve([[0.085, 1.10], [0.20, 1.10], [0.20, 1.36], [0.10, 1.47], [0.085, 1.47]], 'turned', o({}));
-  [0, 1, 2].forEach(function (q) { var iy = 1.47 + q * 0.082, ir = 0.100 - q * 0.017; m.revolve([[0.03, iy], [ir, iy], [ir, iy + 0.07, 2], [0.03, iy + 0.07]], 'turnedDark', o({ cut: 'cutDense' })); });
+  [0, 1, 2].forEach(function (q) { var iy = 1.47 + q * 0.082, ir = 0.100 - q * 0.017; m.revolve([[0.03, iy], [ir, iy], [ir, iy + 0.07, 2], [0.03, iy + 0.07]], 'turnedDark', o({ cut: 'cutDense', real: 'ceramic' })); });
   tube(1.72, 1.85, 0.02, 0.04);
-  m.revolve([[0, 1.244], [0.003, 1.244], [0.026, 1.292], [0, 1.292]], 'acc', o({ cut: 'cutAcc' }));
+  m.revolve([[0, 1.244], [0.003, 1.244], [0.026, 1.292], [0, 1.292]], 'acc', o({ cut: 'cutAcc', real: 'w' }));
   plate(1.205, 0.075, 0.010); plate(1.12, 0.085, 0.012);
   var ipA = tv + Math.PI;
+  m.real('steel');
   m.cyl([0.30 * Math.cos(ipA), 1.245, 0.30 * Math.sin(ipA)], 0.072, 0.20, 'turned', { seg: 24, rot: [0, -ipA, Math.PI / 2] });
+  m.real('steelDk');
   m.box({ c: [0.48 * Math.cos(ipA), 1.245, 0.48 * Math.sin(ipA)], s: [0.14, 0.17, 0.17], rot: [0, -ipA, 0] }, 'mid');
   // the first condenser and its tube
   parts.c1 = m.part('cond1', { ex: [0, 0.22, 0], seq: 4 });
@@ -42,30 +48,37 @@ R('sem-column', function (m) {
   // stigmator and scan coils
   parts.sc = m.part('scan', { ex: [0, 0, 0], seq: 2 });
   tube(-0.06, 0.12, 0.084, 0.094);
-  m.revolve([[0.10, -0.03], [0.142, -0.03], [0.142, 0.07], [0.10, 0.07]], 'turnedDark', o({}));
-  m.revolve([[0.094, -0.26], [0.20, -0.26], [0.20, -0.10], [0.094, -0.10]], 'turned', o({}));
-  m.revolve([[0.118, -0.238], [0.184, -0.238], [0.184, -0.122], [0.118, -0.122]], 'dark', o({ cut: 'cutDense' }));
+  m.revolve([[0.10, -0.03], [0.142, -0.03], [0.142, 0.07], [0.10, 0.07]], 'turnedDark', o({ real: 'cu' }));
+  m.revolve([[0.094, -0.26], [0.20, -0.26], [0.20, -0.10], [0.094, -0.10]], 'turned', o({ real: 'iron' }));
+  var scoil = m.revolve([[0.118, -0.238], [0.184, -0.238], [0.184, -0.122], [0.118, -0.122]], 'dark', o({ cut: 'cutDense', real: 'cu' }));
+  scoil.c = [scoil.c[0] + 0.08 * Math.cos(tv), scoil.c[1], scoil.c[2] + 0.08 * Math.sin(tv)];
   // the objective lens and its conical pole piece
   parts.ob = m.part('objective', { ex: [0, -0.12, 0], seq: 1 });
   lens(-0.56, -0.30, 0.44, 0.115);
-  m.revolve([[0.105, -0.815], [0.145, -0.815], [0.145, -0.76], [0.44, -0.56], [0.105, -0.56]], 'turned', o({}));
+  m.revolve([[0.105, -0.815], [0.145, -0.815], [0.145, -0.76], [0.44, -0.56], [0.105, -0.56]], 'turned', o({ real: 'iron' }));
   // the ring detector
   parts.det = m.part('detector', { ex: [0, -0.2, 0], seq: 1 });
   m.tag('detector');
-  m.revolve([[0.052, -0.859], [0.175, -0.859], [0.175, -0.851], [0.052, -0.851]], 'turnedDark', o({ cut: 'cutDense' }));
+  m.revolve([[0.052, -0.859], [0.175, -0.859], [0.175, -0.851], [0.052, -0.851]], 'turnedDark', o({ cut: 'cutDense', real: 'siFace' }));
   m.tag(null);
   // wafer and stage
   parts.st = m.part('stage', { ex: [0, -0.32, 0], seq: 0, pri: -1, mode: 'stack' });
   var yW = -0.98, wr = 0.40, wt = wr * 0.775 / 150, dies = [];  // the wafer 300 mm across and 775 micrometres thick (SEMI M1)
-  for (var gx = -4; gx <= 4; gx++) for (var gz = -4; gz <= 4; gz++) { var cx = gx * 0.092, cz = gz * 0.076; if (cx * cx + cz * cz > (wr - 0.055) * (wr - 0.055)) continue; dies.push(D.rect(cx - 0.044, cz - 0.036, cx + 0.044, cz + 0.036, wt / 2, { lw: 0.35, alpha: 0.6 })); }
+  for (var gx = -4; gx <= 4; gx++) for (var gz = -4; gz <= 4; gz++) { var cx = gx * 0.092, cz = gz * 0.076; if (cx * cx + cz * cz > (wr - 0.055) * (wr - 0.055)) continue; dies.push(D.rect(cx - 0.044, cz - 0.036, cx + 0.044, cz + 0.036, wt / 2, { lw: 0.35, alpha: 0.6, fill: 'steel', sheen: 0.18 })); }
   dies.push({ dots: [[0, wt / 2, 0]], r: 2.4, col: 'acc', alpha: 1 });
+  m.real('granite');
   m.box({ c: [0, yW - 0.21, 0], s: [1.42, 0.09, 1.10] }, 'steel');
+  m.real('steel');
   [-1, 1].forEach(function (i) { m.box({ c: [0, yW - 0.147, i * 0.33], s: [1.30, 0.034, 0.056] }, 'dark'); });
+  m.real('alu');
   m.box({ c: [0, yW - 0.088, 0], s: [0.98, 0.07, 0.86] }, 'light');
+  m.real('ceramic');
   m.cyl([0, yW - 0.027, 0], 0.428, 0.05, 'turned', { seg: 48 });
+  m.real('siProc');
   m.tag('wafer');
   m.cyl([0, yW - 0.003 + wt / 2, 0], wr, wt, 'acc2Light', { seg: 56, top: dies });
   m.tag(null);
+  m.real('steelDk');
   m.box({ c: [-wr - 0.048, yW - 0.02, 0], s: [0.02, 0.055, 0.80] }, 'dark');
   m.box({ c: [0, yW - 0.02, -wr - 0.048], s: [0.80, 0.055, 0.02] }, 'dark');
   var du = [Math.cos(yaw), Math.sin(yaw)]; // the direction that runs straight across the page at the resting turn
@@ -87,5 +100,5 @@ R('sem-column', function (m) {
   var nr = Math.atan2(Math.cos(yaw), -Math.sin(yaw)) + 0.35;
   m.callout([wr * 0.95 * Math.cos(nr), yW + 0.004, wr * 0.95 * Math.sin(nr), parts.st.idx], 'Wafer', { side: 'l', tag: 'wafer' });
   m.callout([0.15 * u[0], -0.855, 0.15 * u[1], parts.det.idx], 'Detector', { side: 'l', tag: 'detector' });
-  return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, sortAxis: [0, 1, 0], accent: [78, 96, 186], accentDark: [167, 180, 245], accent2: [111, 139, 166], accent2Dark: [195, 211, 226] };
+  return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, sortAxis: [0, 1, 0], accent: [78, 96, 186], accentDark: [154, 166, 255], accent2: [111, 139, 166], accent2Dark: [195, 211, 226] };
 });

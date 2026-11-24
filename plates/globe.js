@@ -91,5 +91,5 @@ R('globe', function (m, params) {
     co.spikes = ps.map(function (q) { return SPK[q.i]; });
     co.focus = ps.map(function (q) { return partOf(q.i); });
   });
-  return { elev: ELEV, yaw: YAW, spin: 0.06, start: 1, rest: 0, maxH: 430, trackRows: true, accent: [122, 31, 43], accentDark: [201, 83, 106] };
+  return { noGround: true, elev: ELEV, yaw: YAW, spin: 0.06, start: 1, rest: 0, maxH: 430, trackRows: true, accent: [122, 31, 43], accentDark: [201, 83, 106] };
 });

@@ -34,21 +34,22 @@ R('cowos-exploded', function (m) {
   for (var q = 0; q < 30; q++) {
     var cu = (q - 14.5) * (subW * 0.94 / 30);
     if (Math.abs(cu) > ipW / 2 + 2) continue;
-    [-1, 1].forEach(function (sg) { capItems.push(D.rect(cu - 0.9, sg * (ipD / 2 + 3.2) - 1.1, cu + 0.9, sg * (ipD / 2 + 3.2) + 1.1, subH / 2, { fill: 'dark', lw: 0.4 })); });
+    [-1, 1].forEach(function (sg) { capItems.push(D.rect(cu - 0.9, sg * (ipD / 2 + 3.2) - 1.1, cu + 0.9, sg * (ipD / 2 + 3.2) + 1.1, subH / 2, { fill: 'dark', lw: 0.4, real: 'mlcc' })); [-1, 1].forEach(function (e) { capItems.push(D.rect(cu - 0.9, sg * (ipD / 2 + 3.2) + e * 1.1 - (e > 0 ? 0.42 : 0), cu + 0.9, sg * (ipD / 2 + 3.2) + e * 1.1 + (e < 0 ? 0.42 : 0), subH / 2, { fill: 'light', lw: 0.25, real: 'sac' })); }); });
   }
   for (q = 0; q < 18; q++) {
     var cv = (q - 8.5) * (subD * 0.92 / 18);
     if (Math.abs(cv) > ipD / 2 + 2) continue;
-    [-1, 1].forEach(function (sg) { capItems.push(D.rect(sg * (ipW / 2 + 3.2) - 1.1, cv - 0.9, sg * (ipW / 2 + 3.2) + 1.1, cv + 0.9, subH / 2, { fill: 'dark', lw: 0.4 })); });
+    [-1, 1].forEach(function (sg) { capItems.push(D.rect(sg * (ipW / 2 + 3.2) - 1.1, cv - 0.9, sg * (ipW / 2 + 3.2) + 1.1, cv + 0.9, subH / 2, { fill: 'dark', lw: 0.4, real: 'mlcc' })); [-1, 1].forEach(function (e) { capItems.push(D.rect(sg * (ipW / 2 + 3.2) + e * 1.1 - (e > 0 ? 0.42 : 0), cv - 0.9, sg * (ipW / 2 + 3.2) + e * 1.1 + (e < 0 ? 0.42 : 0), cv + 0.9, subH / 2, { fill: 'light', lw: 0.25, real: 'sac' })); }); });
   }
   capItems.push(D.rect(-ipW / 2, -ipD / 2, ipW / 2, ipD / 2, subH / 2, { dash: [3, 2], lw: 0.6, alpha: 0.8 }));
-  capItems.push({ dots: gridPts(18, 11, 3.8, 3.8, subH / 2, 0, 0), r: 0.5, col: 'acc2', alpha: 0.75, tag: 'c4' });
+  capItems.push({ dots: gridPts(18, 11, 3.8, 3.8, subH / 2, 0, 0), r: 0.5, col: 'acc2', alpha: 0.75, tag: 'c4', real: 'sac' });
   capItems.push(D.rect(-subW / 2 + 2.5, -subD / 2 + 2.5, subW / 2 - 2.5, subD / 2 - 2.5, subH / 2, { lw: 0.45, alpha: 0.5 }));
-  m.box({ c: [0, subH / 2, 0], s: [subW, subH, subD], decals: { py: capItems } }, 'steel');
+  m.real('subMask');
+  m.box({ c: [0, subH / 2, 0], s: [subW, subH, subD], decals: { py: capItems }, fmat: { px: { d: 0.11, real: 'core' }, nx: { d: 0.11, real: 'core' }, pz: { d: 0.11, real: 'core' }, nz: { d: 0.11, real: 'core' } } }, 'steel');
   var balls = [];
   for (var bx = -subW / 2 + 2; bx <= subW / 2 - 1.9; bx += 2.5) balls.push([bx, -0.75, subD / 2 - 1.5]);
   for (var bz = -subD / 2 + 2; bz <= subD / 2 - 3.9; bz += 2.5) balls.push([subW / 2 - 1.5, -0.75, bz]);
-  m.dots(balls, { r: 1.0, ring: true, alpha: 0.75, front: true, c: [subW / 2, -0.75, subD / 2] });
+  m.dots(balls, { r: 1.0, ring: true, alpha: 0.75, front: true, c: [subW / 2, -0.75, subD / 2], real: 'sac' });
   m.anchor(4, 'Substrate', [-subW / 2 + 16, subH * 0.15, subD / 2]);
   // 2 the interposer: redistribution wiring in ink, its copper lines, the microbump pads under each chip and, set into it, the
   // silicon bridges
@@ -59,49 +60,46 @@ R('cowos-exploded', function (m) {
   hbm.forEach(function (h) { var sg = h[0] < 0 ? -1 : 1; BR.push([sg * (dieX + dieW / 2 + 1.6), h[1] * 0.8, 6, 5]); });
   // each bridge's traces, in (x, z) across it: 12 on the seam bridge at 2 mm, 4 on each memory bridge at 1 mm
   var traces = function (b, i) { var n = i ? 4 : 12, pt = i ? 1 : 2, out = []; for (var t = 0; t < n; t++) out.push(b[1] + (t - (n - 1) / 2) * pt); return out; };
-  var pad = function (x, z, y, sz) { return D.rect(x - sz / 2, z - sz / 2, x + sz / 2, z + sz / 2, y, { fill: { d: 0.62, c: 'acc2' }, col: 'acc2', lw: 0.3 }); };
+  var pad = function (x, z, y, sz) { return D.rect(x - sz / 2, z - sz / 2, x + sz / 2, z + sz / 2, y, { fill: { d: 0.62, c: 'acc2', real: 'cu' }, col: 'acc2', lw: 0.3, real: 'cu' }); };
   // the interposer's traces stop at each pocket's edge and run on to a pad under the chip: from the seam bridge out to 11 mm, from
   // each memory bridge 1 mm on either side
   BR.forEach(function (b, i) {
     traces(b, i).forEach(function (z) {
       [-1, 1].forEach(function (sd) {
         var x0 = b[0] + sd * b[2] / 2, x1 = i ? x0 + sd * 1.2 : sd * 11;
-        wiring.push(D.line([x0, yT, z], [x1, yT, z], { col: 'acc2', lw: 0.6 }));
+        wiring.push(D.line([x0, yT, z], [x1, yT, z], { col: 'acc2', lw: 0.6, real: 'cu' }));
         wiring.push(pad(x1, z, yT, i ? 0.7 : 0.9));
       });
     });
   });
   // (the pad grids keep inside each chip's footprint, clear of the bridges' pockets and the bundles, and thinner)
   var clear = function (x, z) { return !BR.some(function (b) { return Math.abs(x - b[0]) < b[2] / 2 + 2 && Math.abs(z - b[1]) < b[3] / 2 + 1.2; }) && !(Math.abs(x) < 12.5 && Math.abs(z) < 12.5); };
-  dies.forEach(function (d) { wiring.push(D.rect(d[0] - dieW / 2, d[1] - dieD / 2, d[0] + dieW / 2, d[1] + dieD / 2, yT, { lw: 0.5, alpha: 0.7, dash: [2, 1.6] })); wiring.push({ dots: gridPts(6, 8, 3.4, 3.6, yT, d[0], d[1], clear), r: 0.45, col: 'acc2', alpha: 0.8, tag: 'ubump' }); });
-  hbm.forEach(function (h) { wiring.push(D.rect(h[0] - hbmW / 2, h[1] - hbmD / 2, h[0] + hbmW / 2, h[1] + hbmD / 2, yT, { lw: 0.5, alpha: 0.7, dash: [2, 1.6] })); wiring.push({ dots: gridPts(3, 3, 2.6, 2.6, yT, h[0] + (h[0] < 0 ? -1 : 1) * 1.2, h[1], clear), r: 0.45, col: 'acc2', alpha: 0.8, tag: 'ubump' }); });
+  dies.forEach(function (d) { wiring.push(D.rect(d[0] - dieW / 2, d[1] - dieD / 2, d[0] + dieW / 2, d[1] + dieD / 2, yT, { lw: 0.5, alpha: 0.7, dash: [2, 1.6] })); wiring.push({ dots: gridPts(6, 8, 3.4, 3.6, yT, d[0], d[1], clear), r: 0.45, col: 'acc2', alpha: 0.8, tag: 'ubump', real: 'cu' }); });
+  hbm.forEach(function (h) { wiring.push(D.rect(h[0] - hbmW / 2, h[1] - hbmD / 2, h[0] + hbmW / 2, h[1] + hbmD / 2, yT, { lw: 0.5, alpha: 0.7, dash: [2, 1.6] })); wiring.push({ dots: gridPts(3, 3, 2.6, 2.6, yT, h[0] + (h[0] < 0 ? -1 : 1) * 1.2, h[1], clear), r: 0.45, col: 'acc2', alpha: 0.8, tag: 'ubump', real: 'cu' }); });
   // each bridge's pocket in the interposer's face, a plain hairline
   BR.forEach(function (b) { wiring.push(D.rect(b[0] - b[2] / 2, b[1] - b[3] / 2, b[0] + b[2] / 2, b[1] + b[3] / 2, yT, { lw: 0.5, alpha: 0.5 })); });
-  m.tag('ip');
-  m.box({ c: [0, y0 + ipH / 2, 0], s: [ipW, ipH, ipD], decals: { py: wiring } }, 'light');
+  m.tag('ip'); m.real('pi');
+  m.box({ c: [0, y0 + ipH / 2, 0], s: [ipW, ipH, ipD], decals: { py: wiring }, fmat: { px: { d: 0.3, real: 'mould' }, nx: { d: 0.3, real: 'mould' }, pz: { d: 0.3, real: 'mould' }, nz: { d: 0.3, real: 'mould' } } }, 'light');
   m.tag(null);
   m.anchor(3, 'Interposer', [ipW / 2, y0 + ipH, ipD / 4]);
   var pB = m.part('bridges', { ex: [0, 44, 0], seq: 2 });
-  m.tag('bridge');
+  m.tag('bridge'); m.real('siFace');
   // each bridge with its traces across its top face, a pad at each end
   BR.forEach(function (b, i) {
     var top = [];
-    traces(b, i).forEach(function (z) { var zz = z - b[1], xe = b[2] / 2 - 0.55; top.push(D.line([-xe, 0.6, zz], [xe, 0.6, zz], { col: 'acc2', lw: 0.6 })); top.push(pad(-xe, zz, 0.6, i ? 0.6 : 0.8), pad(xe, zz, 0.6, i ? 0.6 : 0.8)); });
+    traces(b, i).forEach(function (z) { var zz = z - b[1], xe = b[2] / 2 - 0.55; top.push(D.line([-xe, 0.6, zz], [xe, 0.6, zz], { col: 'acc2', lw: 0.6, real: 'cu' })); top.push(pad(-xe, zz, 0.6, i ? 0.6 : 0.8), pad(xe, zz, 0.6, i ? 0.6 : 0.8)); });
     m.box({ c: [b[0], y0 + ipH - 0.6, b[1]], s: [b[2], 1.2, b[3]], decals: { py: top } }, 'acc');
   });
   m.tag(null);
   m.anchor(5, 'Silicon bridges', [BR[5][0] - BR[5][2] / 2, y0 + ipH - 0.6, BR[5][1]], pB.idx);
-  // 3 the chips: two logic dies with a hint of their floorplan, eight HBM stacks with their eight layers
+  // 3 the chips: two logic dies (their ground silicon backs, plain), eight HBM stacks with their eight layers
   var pK = m.part('chips', { ex: [0, 56, 0], seq: 3 });
   var yK = y0 + ipH;
-  m.tag('logic');
+  m.tag('logic'); m.real('siBack');
   dies.forEach(function (d) {
-    var fp = [], sg = d[0] < 0 ? -1 : 1;
-    for (var a = 0; a < 4; a++) for (var b = 0; b < 7; b++) fp.push(D.rect((a - 1.5) * dieW * 0.205 - dieW * 0.09 - sg * dieW * 0.05, (b - 3) * dieD * 0.13 - dieD * 0.055, (a - 1.5) * dieW * 0.205 + dieW * 0.09 - sg * dieW * 0.05, (b - 3) * dieD * 0.13 + dieD * 0.055, dieH / 2, { lw: 0.45, alpha: 0.75 }));
-    fp.push(D.rect(sg * dieW * 0.38, -dieD * 0.45, sg * dieW * 0.47, dieD * 0.45, dieH / 2, { lw: 0.55, fill: 'mid' }));
-    m.box({ c: [d[0], yK + dieH / 2, d[1]], s: [dieW, dieH, dieD], decals: { py: fp } }, 'steel');
+    m.box({ c: [d[0], yK + dieH / 2, d[1]], s: [dieW, dieH, dieD] }, 'steel');
   });
-  m.tag('hbm');
+  m.tag('hbm'); m.real('siBack');
   hbm.forEach(function (h) {
     var side = [];
     for (var k = 1; k < 8; k++) {
@@ -111,7 +109,7 @@ R('cowos-exploded', function (m) {
     var sideX = side.map(function (it) { return { pts: [[hbmW / 2, it.pts[0][1], -hbmD / 2], [hbmW / 2, it.pts[0][1], hbmD / 2]], lw: 0.35, alpha: 0.75 }; });
     var sideNX = side.map(function (it) { return { pts: [[-hbmW / 2, it.pts[0][1], -hbmD / 2], [-hbmW / 2, it.pts[0][1], hbmD / 2]], lw: 0.35, alpha: 0.75 }; });
     var sideNZ = side.map(function (it) { return { pts: [[-hbmW / 2, it.pts[0][1], -hbmD / 2], [hbmW / 2, it.pts[0][1], -hbmD / 2]], lw: 0.35, alpha: 0.75 }; });
-    m.box({ c: [h[0], yK + hbmH / 2, h[1]], s: [hbmW, hbmH, hbmD], decals: { pz: side, px: sideX, nx: sideNX, nz: sideNZ, py: [D.rect(-hbmW / 2 + 1.2, -hbmD / 2 + 1.2, hbmW / 2 - 1.2, hbmD / 2 - 1.2, hbmH / 2, { lw: 0.4, alpha: 0.6 })] } }, 'steel');
+    m.box({ c: [h[0], yK + hbmH / 2, h[1]], s: [hbmW, hbmH, hbmD], fmat: { px: { d: 0.3, real: 'mould' }, nx: { d: 0.3, real: 'mould' }, pz: { d: 0.3, real: 'mould' }, nz: { d: 0.3, real: 'mould' } }, decals: { pz: side, px: sideX, nx: sideNX, nz: sideNZ, py: [D.rect(-hbmW / 2 + 1.2, -hbmD / 2 + 1.2, hbmW / 2 - 1.2, hbmD / 2 - 1.2, hbmH / 2, { lw: 0.4, alpha: 0.6 })] } }, 'steel');
   });
   m.tag(null);
   m.anchor(1, 'Logic dies', [dieX - dieW * 0.38, yK + dieH, -dieD * 0.36]);

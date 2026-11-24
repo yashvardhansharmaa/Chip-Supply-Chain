@@ -22,42 +22,47 @@ R('gaa-transistor', function (m) {
   var epiShape = [[12.5, -13], [16.3, -17], [20.2, -17], [24, -13], [24, 13], [20.2, 17], [16.3, 17], [12.5, 13]];
   // source half, cut at x = 0
   var L = m.part('source', { mode: 'fixed', ex: [0, 0, 0], seq: 0 });
+  m.real('siCut');
   bx(-30, -23, -25, 0, -16, 25, SUB, { px: SUBCUT });
+  m.real('stiOx');
   bx(-27, -16, -22, 0, -11, 22, 'steel', { px: 'cut' });
-  m.tag('src');
+  m.tag('src'); m.real('siEpi');
   m.prism(epiShape.map(function (q) { return [-q[0], q[1]]; }), -2, 40, SD, {});
-  m.tag('spacer');
+  m.tag('spacer'); m.real('sin');
   // (the spacers a pale grey, so they read apart from the gate metal, in ink, round them: designer pass, 22 Nov 2026)
   SPL.forEach(function (b) { bx(-spX, b[0], -sW / 2, -gX, b[1], sW / 2, 'steel'); });
-  m.tag('sheet');
+  m.tag('sheet'); m.real('siSheet');
   y0.forEach(function (yb) { bx(-spX, yb, -sW / 2, -gX, yb + sT, sW / 2, 'acc'); });
-  m.tag('gate');
+  m.tag('gate'); m.real('gate');
   bx(-gX, gY0, -gZ, 0, gY1, gZ, GATE, { px: GATECUT });
-  m.tag('sheet');
+  m.tag('sheet'); m.real('siSheet');
   y0.forEach(function (yb) { m.sheet([[0.05, yb, -sW / 2], [0.05, yb, sW / 2], [0.05, yb + sT, sW / 2], [0.05, yb + sT, -sW / 2]], 'cutAcc'); });
-  m.tag(null);
+  m.tag(null); m.real('w');
   bx(-5, gY1, -8, 0, 51, 8, 'dark', { px: 'cut' });
   var cL = m.part('contactS', { ex: [0, 10, 0], seq: 2 });
   bx(-23, 40, -10, -14.5, 48, 10, 'dark');
   // drain half, pulled away along the channel
   var Rr = m.part('drain', { mode: 'fixed', ex: [PULL, 0, 0], seq: 1 });
+  m.real('siCut');
   bx(0, -23, -25, 30, -16, 25, SUB);
+  m.real('stiOx');
   bx(0, -16, -22, 27, -11, 22, 'steel');
-  m.tag('gate');
+  m.tag('gate'); m.real('gate');
   bx(0, gY0, -gZ, gX, gY1, gZ, GATE);
-  m.tag('spacer');
+  m.tag('spacer'); m.real('sin');
   SPL.forEach(function (b) { bx(gX, b[0], -sW / 2, spX, b[1], sW / 2, 'steel'); });
-  m.tag('sheet');
+  m.tag('sheet'); m.real('siSheet');
   y0.forEach(function (yb) { bx(gX, yb, -sW / 2, spX, yb + sT, sW / 2, 'acc'); });
-  m.tag(null);
+  m.tag(null); m.real('w');
   bx(0, gY1, -8, 5, 51, 8, 'dark');
   // the drain itself pulled a little further along the channel (designer pass, 22 Nov 2026), so the sheets' ends and the inner
   // spacers between them face the reader in the gap it leaves; at the half's own pull they showed only as slivers
   var DG = 26, Re = m.part('drainEpi', { mode: 'fixed', ex: [PULL + DG, 0, 0], seq: 2 });
-  m.tag('drn');
+  m.tag('drn'); m.real('siEpi');
   m.prism(epiShape, -2, 40, SD, {});
   m.tag(null);
   var cR = m.part('contactD', { ex: [PULL + DG, 10, 0], seq: 4 });
+  m.real('w');
   bx(14.5, 40, -10, 23, 48, 10, 'dark');
   [[38, -13], [38, 13], [-2, 13]].forEach(function (q) { m.guide([[spX, q[0], q[1], Rr.idx], [spX, q[0], q[1], Re.idx]], { alpha: 0.8 }); });
   m.guide([[-34, 19, 0, L.idx], [0, 19, 0, L.idx], [0, 19, 0, Rr.idx], [34, 19, 0, Re.idx]], { style: 'axis', alpha: 0.8 });
@@ -73,5 +78,5 @@ R('gaa-transistor', function (m) {
   m.anchor(3, 'Silicon sheets', [spX, 16 + sT / 2, -8], Rr.idx);
   m.anchor(4, 'Gate metal', [0.05, -6.5, 9], L.idx);
   m.anchor(5, 'Inner spacers', [spX, 27, 4], Rr.idx);
-  return { elev: PLATE.ISO.elev, yaw: PLATE.ISO.yaw, order: { r: [5, 3, 2] }, calloutOpts: { 1: { tag: 'src', side: 'l' }, 2: { tag: 'drn', side: 'r' }, 3: { tag: 'sheet', side: 'r' }, 4: { tag: 'gate', side: 'l' }, 5: { tag: 'spacer', side: 'r' } }, accent: [111, 139, 166], accentDark: [195, 211, 226] };
+  return { noPolish: true, elev: PLATE.ISO.elev, yaw: PLATE.ISO.yaw, order: { r: [5, 3, 2] }, calloutOpts: { 1: { tag: 'src', side: 'l' }, 2: { tag: 'drn', side: 'r' }, 3: { tag: 'sheet', side: 'r' }, 4: { tag: 'gate', side: 'l' }, 5: { tag: 'spacer', side: 'r' } }, accent: [111, 139, 166], accentDark: [195, 211, 226] };
 });

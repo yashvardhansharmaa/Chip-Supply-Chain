@@ -20,22 +20,26 @@ R('gpu-baseboard', function (m) {
   var mods = [];
   colX.forEach(function (x) { [[-rowZ, 1], [rowZ, -1]].forEach(function (r) { mods.push([x, r[0], r[1]]); }); });
   // each module's seat inside its frame: the land-grid socket it presses onto
-  mods.forEach(function (md) { dec.push({ dots: H.gridPts(11, 16, 0.017, 0.0175, top, md[0], md[1]), r: 0.5, alpha: 0.55 }); });
+  mods.forEach(function (md) { dec.push({ dots: H.gridPts(11, 16, 0.017, 0.0175, top, md[0], md[1]), r: 0.6, alpha: 0.85, real: 'au' }); });
+  // the board's traces, bundles from each switch chip out to the modules, seen through the solder mask
+  [-0.175, 0.175].forEach(function (sx) { for (var tq = 0; tq < 7; tq++) { var oz = (tq - 3) * 0.012; [-1, 1].forEach(function (sz) { colX.forEach(function (cxq) { dec.push(D.poly([[sx + oz, top, sz * 0.11], [sx + oz, top, sz * 0.15], [cxq + oz, top, sz * 0.19]], { lw: 0.3, alpha: 0.55, real: 'trace' })); }); }); } });
+  m.real('pcb');
   m.box({ c: [0, 0, 0], s: [BW, BH, BD], decals: { py: dec } }, 'steel');
-  m.tag('frames');
+  m.tag('frames'); m.real('steelDk');
   mods.forEach(function (md) { H.frame(m, [md[0], 0, md[1]], MW, MD, MW - 2 * kerb, MD - 2 * kerb, top, top + MH, 'light'); });
   m.tag(null);
   // the two NVLink switch chips, silicon
-  m.tag('switch');
+  m.tag('switch'); m.real('subMask');
   [-0.175, 0.175].forEach(function (x) {
-    var SW = 0.24, SD = 0.2, SH = 0.05, d = [D.rect(-SW / 2 + 0.025, -SD / 2 + 0.025, SW / 2 - 0.025, SD / 2 - 0.025, SH / 2, { lw: 0.6 }), D.rect(-SW * 0.21, -SD * 0.22, SW * 0.21, SD * 0.22, SH / 2, { lw: 0.6 })];
+    var SW = 0.24, SD = 0.2, SH = 0.05, d = [D.rect(-SW / 2 + 0.025, -SD / 2 + 0.025, SW / 2 - 0.025, SD / 2 - 0.025, SH / 2, { lw: 0.6 }), D.rect(-SW * 0.21, -SD * 0.22, SW * 0.21, SD * 0.22, SH / 2, { lw: 0.6, fill: { d: 0.4, real: 'siBack' } })];
     m.box({ c: [x, top + SH / 2, 0], s: [SW, SH, SD], decals: { py: d } }, 'acc');
   });
   m.tag(null);
   // voltage regulators down the long edges, bulk capacitors, power blades and connectors
+  m.real('plastic');
   for (var i2 = 0; i2 < 13; i2++) { var vx = (i2 - 6) * 0.085; [-1, 1].forEach(function (s) { m.box({ c: [vx, top + 0.013, s * (BD / 2 - 0.05)], s: [0.044, 0.026, 0.044] }, 'mid'); }); }
   [-1, 1].forEach(function (s) { m.box({ c: [-BW / 2 + 0.062, top + 0.029, s * 0.17], s: [0.084, 0.058, 0.20] }, 'dark'); });
-  for (i2 = 0; i2 < 4; i2++) { var pins = []; for (var k2 = 0; k2 < 14; k2++) pins.push(D.line([0.026, -0.017, (k2 - 6.5) * 0.0118], [0.026, 0.015, (k2 - 6.5) * 0.0118], { lw: 0.35, alpha: 0.8 })); m.box({ c: [BW / 2 - 0.042, top + 0.025, (i2 - 1.5) * 0.245], s: [0.052, 0.05, 0.185], decals: { px: pins } }, 'mid'); }
+  for (i2 = 0; i2 < 4; i2++) { var pins = []; for (var k2 = 0; k2 < 14; k2++) pins.push(D.line([0.026, -0.017, (k2 - 6.5) * 0.0118], [0.026, 0.015, (k2 - 6.5) * 0.0118], { lw: 0.35, alpha: 0.8, real: 'au' })); m.box({ c: [BW / 2 - 0.042, top + 0.025, (i2 - 1.5) * 0.245], s: [0.052, 0.05, 0.185], decals: { px: pins } }, 'mid'); }
   // the modules, lifted off the board: each a small board carrying its package (the substrate, its interposer and two
   // logic dies, at this site's B200 estimate)
   // the back row lifts out; the front row stays seated, so the switch chips between the rows stay in view
@@ -45,10 +49,12 @@ R('gpu-baseboard', function (m) {
     if (md[1] > 0 && !mpS) { mpS = m.part('seated', { ex: [0, 0, 0], seq: 1, mode: 'stack' }); m.tag('modules'); }
     if (md[1] < 0) m.use(mp); else m.use(mpS);
     var yL = top + MH - 0.016, pk = [];
-    pk.push(D.rect(-PKW / 2, -PKD / 2, PKW / 2, PKD / 2, 0.011, { lw: 0.55, fill: 'paper' }));
-    pk.push(D.rect(-25 * U, -39 * U, 25 * U, 39 * U, 0.011, { lw: 0.45 }));
-    [-1, 1].forEach(function (s) { pk.push(D.rect(-16.25 * U, (s * 13.5 - 13) * U, 16.25 * U, (s * 13.5 + 13) * U, 0.011, { lw: 0.4, fill: 'mid' })); });
+    pk.push(D.rect(-PKW / 2, -PKD / 2, PKW / 2, PKD / 2, 0.011, { lw: 0.55, fill: 'paper', real: 'subMask' }));
+    pk.push(D.rect(-25 * U, -39 * U, 25 * U, 39 * U, 0.011, { lw: 0.45, fill: 'mid', real: 'mould' }));
+    [-1, 1].forEach(function (s) { pk.push(D.rect(-16.25 * U, (s * 13.5 - 13) * U, 16.25 * U, (s * 13.5 + 13) * U, 0.011, { lw: 0.4, fill: 'mid', real: 'siBack' })); });
+    m.real('steelDk');
     m.box({ c: [md[0], yL - 0.0165, md[1]], s: [LW + 0.024, 0.011, LD + 0.02] }, 'mid');
+    m.real('pcbDk');
     m.box({ c: [md[0], yL, md[1]], s: [LW, 0.022, LD], decals: { py: pk } }, 'light');
   });
   m.tag(null);

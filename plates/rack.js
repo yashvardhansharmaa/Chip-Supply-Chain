@@ -12,10 +12,12 @@
 R('rack', function (m) {
   var W = 0.60, Dp = 1.068, Ht = 2.236, U = 0.0445, post = 0.042, front = Dp / 2, back = -Dp / 2;
   var cab = m.part('cabinet', { ex: [0, 0, 0], seq: 0 });
+  m.real('black');
   [[-1, -1], [1, -1], [1, 1], [-1, 1]].forEach(function (q) { m.box({ c: [q[0] * (W / 2 - post / 2), Ht / 2, q[1] * (Dp / 2 - post / 2)], s: [post, Ht, post] }, 'mid'); });
   m.box({ c: [0, 0.045, 0], s: [W, 0.09, Dp] }, 'mid');
   m.box({ c: [0, Ht - 0.031, 0], s: [W, 0.062, Dp] }, 'steel');
   [-1, 1].forEach(function (s) { m.box({ c: [s * (W / 2 - 0.004), 0.09 + (Ht - 0.22) / 2, 0], s: [0.008, Ht - 0.22, Dp - 0.10] }, 'ghost'); });
+  m.real('black');
   // the trays, floor up: [kind, count, gap above]
   var y = 0.114, slots = [];
   [['cdu', 4, 0.040], ['power', 4, 0.030], ['compute', 8, 0.020], ['switch', 9, 0.020], ['compute', 10, 0.030], ['power', 4, 0.026], ['mgmt', 1, 0]].forEach(function (s) { for (var i = 0; i < s[1]; i++) { slots.push({ k: s[0], y: y + U / 2 }); y += U; } y += s[2]; });
@@ -25,21 +27,24 @@ R('rack', function (m) {
     var k = sl.k, d = [], f = tD / 2 + 0.0005;
     if (k === 'compute') { [-1, 1].forEach(function (s) { d.push(D.rectXY(s * 0.132 - 0.1025, -tH * 0.34, s * 0.132 + 0.1025, tH * 0.34, f, { lw: 0.45 })); }); }
     else if (k === 'switch') { d.push(D.rectXY(-tW * 0.4, -tH * 0.26, tW * 0.4, tH * 0.26, f, { lw: 0.45, fill: 'dark' })); }
-    else if (k === 'power') { for (var q = 0; q < 6; q++) { var qx = (q - 2.5) * ((tW - 0.02) / 6); d.push(D.rectXY(qx - (tW - 0.05) / 12, -tH * 0.37, qx + (tW - 0.05) / 12, tH * 0.37, f, { lw: 0.45, col: 'acc2' })); } }
+    else if (k === 'power') { for (var q = 0; q < 6; q++) { var qx = (q - 2.5) * ((tW - 0.02) / 6); d.push(D.rectXY(qx - (tW - 0.05) / 12, -tH * 0.37, qx + (tW - 0.05) / 12, tH * 0.37, f, { lw: 0.45, col: 'acc2', fill: 'mid' })); } }
     // (round two: the power shelves in the steel grey at the accent's middle weight; at acc2Dark they were the plate's heaviest mark)
     var mat = k === 'power' ? 'acc2' : k === 'switch' ? 'mid' : k === 'cdu' ? 'steel' : 'light';
-    m.box({ c: [0, sl.y, tzc], s: [tW, tH, tD], decals: { pz: d } }, mat);
+    // the trays' steel bodies, their fronts black; the power shelves' fronts the bare metal of their supplies
+    var fr = k === 'power' ? 'alu' : 'black';
+    m.box({ c: [0, sl.y, tzc], s: [tW, tH, tD], decals: { pz: d }, real: 'steel', fmat: { pz: { d: 0.2, real: fr } } }, mat);
   }
   slots.forEach(function (sl, i) { if (pullIdx[i] || sl.k === 'cdu') return; tray(sl); });
   var cduY = (slots[0].y + slots[3].y) / 2;
+  m.real('black');
   m.box({ c: [0, cduY, tzc], s: [tW, 4 * U * 0.94, tD], decals: { pz: [-1, 1].map(function (s) { return D.circle(0, 0, 0.046, 0, 24, { lw: 0.6 }); }).map(function (it, j) { return { pts: it.pts.map(function (p) { return [p[0] + (j ? 0.155 : -0.155), p[2], tD / 2 + 0.0005]; }), closed: true, lw: 0.6 }; }) } }, 'steel');
   // the rear: the NVLink cable cartridge either side of the busbar's place, and the coolant manifold
   var sy0 = 0.164, sy1 = stackTop - 0.02, sh = sy1 - sy0, syc = (sy0 + sy1) / 2, zS = back + 0.085;
   [-1, 1].forEach(function (s) {
     var ln = []; for (var i = 0; i < 18; i++) { var lx = (i - 8.5) * 0.0112; ln.push(D.line([lx, -sh / 2, -0.011], [lx, sh / 2, -0.011], { lw: 0.35, alpha: 0.7 })); }
-    m.box({ c: [s * 0.172, syc, zS], s: [0.212, sh, 0.02], decals: { nz: ln } }, 'mid');
+    m.box({ c: [s * 0.172, syc, zS], s: [0.212, sh, 0.02], decals: { nz: ln }, real: 'cable' }, 'mid');
   });
-  [back + 0.30, back + 0.40].forEach(function (pz) { var prof = [[0, sy0 - 0.13], [0.03, sy0 - 0.13]]; for (var q = 0; q <= 10; q++) prof.push([0.03, sy0 - 0.10 + q * (sh + 0.24) / 10, 2]); prof.push([0.03, sy1 + 0.17]); prof.push([0, sy1 + 0.17]); m.revolve(prof, 'turned', { seg: 12, pos: [W / 2 - 0.058, 0, pz] }); });
+  [back + 0.30, back + 0.40].forEach(function (pz) { var prof = [[0, sy0 - 0.13], [0.03, sy0 - 0.13]]; for (var q = 0; q <= 10; q++) prof.push([0.03, sy0 - 0.10 + q * (sh + 0.24) / 10, 2]); prof.push([0.03, sy1 + 0.17]); prof.push([0, sy1 + 0.17]); m.revolve(prof, 'turned', { seg: 12, pos: [W / 2 - 0.058, 0, pz], real: 'steel' }); });
   // pulled trays
   var pulled = [];
   Object.keys(pullIdx).forEach(function (i) {
@@ -50,7 +55,7 @@ R('rack', function (m) {
   var bb = m.part('busbar', { ex: [0, 0, -2.25], seq: 4 });
   // (round two: a deeper copper fill, d 0.5, so the thin bar keeps its colour under its outline: src/plate.js draws a part under
   // about 16 px across with its outline tinted, never the ink shade line, which swallowed it)
-  m.box({ c: [0, syc, zS + 0.02], s: [0.052, sh + 0.10, 0.03] }, { d: 0.5, c: 'acc' });
+  m.box({ c: [0, syc, zS + 0.02], s: [0.052, sh + 0.10, 0.03] }, { d: 0.5, c: 'acc', real: 'cu' });
   // its trace lines back to its place at the rear, top and foot, so the bar reads as pulled from the rack (designer pass)
   [syc + (sh + 0.10) / 2, syc - (sh + 0.10) / 2].forEach(function (yy) { m.guide([[0, yy, zS + 0.035, cab.idx], [0, yy, zS + 0.035, bb.idx]], { alpha: 0.7 }); });
   // (designer pass, 22 Nov 2026: the figure stands low on its line, under the busbar's foot; at 0.62 it ran into the bar; plates

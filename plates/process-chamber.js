@@ -15,7 +15,8 @@ R('process-chamber', function (m) {
   var O = { a0: a0, a1: a1, cut: 'cut', seg: 56 };
   function o(extra) { var r = {}; for (var k in O) r[k] = O[k]; for (k in extra) r[k] = extra[k]; return r; }
   var ves = m.part('vessel', { pri: 0 });
-  var vs = m.revolve([[0.058, yTop], [rI, yTop], [rI, yBot], [0.105, yBot], [0.105, yFlo], [rO, yFlo], [rO, yLid], [0.058, yLid]], 'turned', o({}));
+  m.real('aluCh');
+  var vs = m.revolve([[0.058, yTop], [rI, yTop], [rI, yBot], [0.105, yBot], [0.105, yFlo], [rO, yFlo], [rO, yLid], [0.058, yLid]], 'turned', o({ innerMat: { d: 0.05, real: 'yttria' } }));
   // the slit valve the wafer travels through, in the far wall, and a viewport
   var svA = tv + Math.PI, sv = [];
   for (var k = 0; k <= 16; k++) { var aa = svA - 0.42 + 0.84 * k / 16; sv.push([rI * 0.995 * Math.cos(aa), -0.02 + 0.03, rI * 0.995 * Math.sin(aa)]); }
@@ -24,36 +25,50 @@ R('process-chamber', function (m) {
   // chuck: aluminium base, ceramic puck, focus ring and stem
   var chk = m.part('chuck', { pri: 1, mode: 'fixed' });
   var yPed = -0.025, pedH = 0.088;
+  m.real('alu');
   m.revolve([[0.058, yFlo], [0.072, yFlo], [0.072, yPed - pedH], [0.058, yPed - pedH]], 'turned', o({}));
   m.revolve([[0, yPed - pedH], [0.17, yPed - pedH], [0.17, yPed - 0.014], [0, yPed - 0.014]], 'turned', o({}));
+  m.real('ceramic');
   m.revolve([[0, yPed - 0.014], [0.17, yPed - 0.014], [0.17, yPed], [0, yPed]], 'turnedDark', o({ cut: 'cutDense' }));
+  m.real('siCut');
   m.revolve([[0.154, yPed], [0.185, yPed], [0.185, yPed + 0.010], [0.154, yPed + 0.010]], 'turnedDark', o({ cut: 'cutDense' }));
   // the wafer, at its true thickness
   var wfp = m.part('wafer', { pri: 2 });
   var WT = 0.000775;
-  m.revolve([[0, yPed], [0.15, yPed], [0.15, yPed + WT], [0, yPed + WT]], 'acc2Light', o({ cut: 'cutAcc2' }));
+  m.real('siProc');
+  // (the wafer under etch carries its die grid)
+  var wTop = [];
+  for (var gx = -6; gx <= 6; gx++) for (var gz = -6; gz <= 6; gz++) { var dx0 = gx * 0.024, dz0 = gz * 0.03; if (dx0 * dx0 + dz0 * dz0 > 0.128 * 0.128) continue; var an0 = Math.atan2(dz0, dx0); var dA = an0 - (a0 + a1) / 2; while (dA > Math.PI) dA -= TAU; while (dA < -Math.PI) dA += TAU; if (Math.abs(dA) > (a1 - a0) / 2 - 0.08) continue; wTop.push(D.rect(dx0 - 0.011, dz0 - 0.014, dx0 + 0.011, dz0 + 0.014, yPed + WT, { lw: 0.3, alpha: 0.55, fill: 'steel', sheen: 0.18 })); }
+  m.revolve([[0, yPed], [0.15, yPed], [0.15, yPed + WT], [0, yPed + WT]], 'acc2Light', o({ cut: 'cutAcc2', top: wTop }));
   // the plasma: a lens of clear violet between the wafer and the showerhead, and two fine lines just over the wafer, the sheath
   var plp = m.part('plasma', { pri: 3 });
   var gTop = 0.058, gBot = yPed + 0.006, gR = 0.168, PL = { d: 0.16, c: 'acc', alpha: 0.6 };
+  m.real('plasma');
   m.revolve([[0, gBot], [gR * 0.9, gBot], [gR, gBot + 0.008, 0], [gR * 1.02, (gBot + gTop) / 2, 0], [gR, gTop - 0.008, 0], [gR * 0.9, gTop], [0, gTop]], PL, o({ cut: { d: 0.22, c: 'acc' }, seg: 56 }));
   [0.0035, 0.0065].forEach(function (dy) { var sh = []; for (var k2 = 0; k2 <= 24; k2++) { var an = a0 + (a1 - a0) * k2 / 24; sh.push([0.15 * Math.cos(an), yPed + WT + dy, 0.15 * Math.sin(an)]); } m.wire(sh, { col: 'acc', lw: 0.6, alpha: 0.85, c: [0, yPed + 0.01, 0] }); });
   // showerhead: face plate, plenum wall, backing plate, with its gas holes cut through the face plate
   m.part('shower', { pri: 4 });
+  m.real('alu');
   var holes = [];
   for (var rr = 0.012; rr < 0.2; rr += 0.0132) holes.push({ pts: [[rr, 0.0625], [rr, 0.0915]].map(function (q) { return [q[0], q[1], 0]; }), col: 'bg', lw: 1.1 });
   var hcut = function (arr) { return arr.map(function (it) { return { pts: it.pts.map(function (q) { return [q[0], q[1]]; }), col: it.col, lw: it.lw }; }); };
   m.revolve([[0, 0.062], [0.205, 0.062], [0.205, 0.142], [0, 0.142], [0, 0.128], [0.193, 0.128], [0.193, 0.092], [0, 0.092]], 'turned', o({ cut0: hcut(holes), cut1: hcut(holes) }));
   // the lid feed: gas in, RF on, lifted off
   var lid = m.part('lid', { pri: 5, ex: [0, 0.10, 0], seq: 1 });
+  m.real('steel');
   m.revolve([[0.03, yLid], [0.058, yLid], [0.058, yLid + 0.078], [0.03, yLid + 0.078]], 'turned', o({}));
+  m.real('steel');
   m.revolve([[0.03, yLid + 0.078], [0.086, yLid + 0.078], [0.086, yLid + 0.10], [0.03, yLid + 0.10]], 'turnedDark', o({}));
+  m.real('steel');
   m.revolve([[0, yLid + 0.10], [0.026, yLid + 0.10], [0.026, yLid + 0.152], [0, yLid + 0.152]], 'turned', o({}));
   m.guide([[0, yLid, 0, ves.idx], [0, yLid + 0.17, 0, lid.idx]], { style: 'axis', alpha: 0.85 });
   // the turbopump, dropped away below
   var pump = m.part('pump', { pri: -2, ex: [0, -0.07, 0], seq: 3 });
+  m.real('alu');
   var bl = [];
   for (k = 0; k < 30; k++) { var ba = k * TAU / 30; bl.push(D.line([0.046 * Math.cos(ba), 0.074, 0.046 * Math.sin(ba)], [0.128 * Math.cos(ba + 0.3), 0.074, 0.128 * Math.sin(ba + 0.3)], { lw: 0.4, alpha: 0.75 })); }
   m.revolve([[0, -0.074], [0.146, -0.074], [0.146, 0.074], [0.13, 0.074], [0.13, 0.068], [0, 0.068]], 'turned', { seg: 40, pos: [0, yFlo - 0.2, 0], top: bl.map(function (it) { return { pts: it.pts.map(function (q) { return [q[0], q[1] - 0.006, q[2]]; }), lw: 0.4, alpha: 0.7 }; }) });
+  m.real('steel');
   m.cyl([0.228, yFlo - 0.23, 0], 0.03, 0.165, 'turned', { seg: 18, rot: [0, 0, Math.PI / 2] });
   m.guide([[0, yFlo, 0, ves.idx], [0, yFlo - 0.36, 0, pump.idx]], { style: 'axis', alpha: 0.85 });
   var cu = [Math.cos(a0), Math.sin(a0)], cw = [Math.cos(a1), Math.sin(a1)];
@@ -84,7 +99,7 @@ R('etch-loupe', function (m) {
   /* a block x X0..X1, y ya..yb, z -Dz..0 (its cut face toward the reader at z = 0), with the far half of a round hole of
      radius r down its axis from its top to y = yh (a blind hole has a floor there; yh = ya runs it through) */
   // the hole's wall a shade deeper than the block's faces, so it reads as a hollow
-  var wallMat = { d: 0.42, c: 'acc2', even: true };
+  var wallMat = { d: 0.42, c: 'acc2', even: true, real: 'siHole' };
   function holeBlock(ya, yb, yh, r, mat, cutMat, blind) {
     var s = m.begin(mat, { sortFaces: true }), v = function (x, y, z) { return m.v([x, y, z]); };
     var th = []; for (var j = 0; j <= N; j++) th.push(Math.PI + Math.PI * j / N);
@@ -104,7 +119,9 @@ R('etch-loupe', function (m) {
     if (blind) m.face(Ab.slice(), [0, 1, 0]);
     return m.end();
   }
+  m.real('siCut');
   holeBlock(Y0, 0, -Dp, W / 2, 'acc2Light', 'cutAcc2', true);
+  m.real('resist');
   holeBlock(0, RT, 0, W / 2, 'mid', { d: 0.08, hatch: 1, ang: 45, gap: 2.2 }, false);
   tag(m, [X1 + 1.5, RT + 1.1, 0], 'Resist', { align: 'left', lead: [X1 - 0.6, RT, -0.9] });
   tag(m, [X1 + 1.5, -6.2, 0], 'Silicon', { align: 'left', lead: [X1, -5.2, -1.1] });

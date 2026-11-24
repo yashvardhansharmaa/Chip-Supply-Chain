@@ -5,26 +5,31 @@
 R('wafer-cost', function (m) {
   var S = 1.9 / 6380, CW = 0.60, PW = 0.84, PH = 0.038;
   var BOM = [['$2,900 of memory', 2900, 'acc'], ['$1,100 of packaging', 1100, 'light'], ['$1,000 of packaging yield loss', 1000, 'ghost'], ['$900 of logic dies', 900, 'mid'], ['$480 of power delivery, board and test', 480, 'steel']];
+  // (each layer in the material its share of the bill buys: the memory's stacked silicon and copper vias, the
+  // package's substrate and bumps, the logic dies' face, the board's green solder mask)
+  var REALS = ['wine', 'subMask', null, 'siFace', 'pcb'];
   m.part('plinth', { ex: [0, 0, 0], seq: 0 });
   var gl = []; var GE = PW / 2 - 0.03;
   for (var gi = 1; gi < 10; gi++) { var gp = -GE + gi * 2 * GE / 10; gl.push(D.line([gp, PH / 2, -GE], [gp, PH / 2, GE], { lw: 0.3, alpha: 0.5 })); gl.push(D.line([-GE, PH / 2, gp], [GE, PH / 2, gp], { lw: 0.3, alpha: 0.5 })); }
   gl.push(D.rect(-(CW + 0.1) / 2, -(CW + 0.1) / 2, (CW + 0.1) / 2, (CW + 0.1) / 2, PH / 2, { lw: 0.6 }));
+  m.real('granite');
   m.box({ c: [0, PH / 2, 0], s: [PW, PH, PW], decals: { py: gl } }, 'light');
   var y = PH, rx = -(CW / 2 + 0.155), rz = -(CW / 2 + 0.155);
   BOM.forEach(function (b, i) {
     var h = b[1] * S, y0 = y, yc = y + h / 2;
     m.part('layer' + i, { ex: [0, 0.4 + 0.22 * i, 0], seq: i + 1 });
+    m.real(REALS[i]);
     var faces = function (fn) { return { pz: fn('pz'), px: fn('px'), nz: fn('nz'), nx: fn('nx') }; };
     var at = function (f, u, yy) { return f === 'pz' ? [u, yy, CW / 2] : f === 'px' ? [CW / 2, yy, -u] : f === 'nz' ? [-u, yy, -CW / 2] : [-CW / 2, yy, u]; };
     var dec = null;
     if (i === 0) dec = faces(function (f) { var a = []; for (var k = 1; k <= 12; k++) { var yy = -h / 2 + h * 0.18 + (k / 12) * h * 0.8; a.push({ pts: [at(f, -CW / 2, yy), at(f, CW / 2, yy)], lw: 0.4, col: 'acc', alpha: 0.9 }); } for (var t = 0; t < 4; t++) { var tx = (t - 1.5) * CW * 0.22; a.push({ pts: [at(f, tx, -h / 2 + h * 0.18), at(f, tx, h / 2)], lw: 0.5, col: 'acc', alpha: 0.8 }); } return a; });
-    else if (i === 1) dec = faces(function (f) { var d = []; for (var a = 0; a < 15; a++) for (var c = 0; c < 4; c++) d.push(at(f, (a - 7) * CW * 0.062, (c - 1.5) * h * 0.2)); return [{ dots: d, r: 0.8, alpha: 0.8 }]; });
+    else if (i === 1) dec = faces(function (f) { var d = []; for (var a = 0; a < 15; a++) for (var c = 0; c < 4; c++) d.push(at(f, (a - 7) * CW * 0.062, (c - 1.5) * h * 0.2)); var o2 = [{ dots: d, r: 0.8, alpha: 0.8, real: 'sac' }]; o2.unshift({ pts: [at(f, -CW / 2, h / 2), at(f, CW / 2, h / 2), at(f, CW / 2, h * 0.36), at(f, -CW / 2, h * 0.36)], closed: true, fill: { d: 0.3, real: 'subMask' }, lw: 0 }); return o2; });
     else if (i === 3) dec = faces(function (f) { var a = [{ pts: [at(f, -CW / 2, 0), at(f, CW / 2, 0)], lw: 0.5 }]; for (var v = 0; v < 11; v++) a.push({ pts: [at(f, (v - 5) * CW * 0.084, -h * 0.4), at(f, (v - 5) * CW * 0.084, h * 0.4)], lw: 0.35, alpha: 0.75 }); return a; });
-    else if (i === 4) dec = faces(function (f) { var d = []; for (var a = 0; a < 9; a++) for (var c = 0; c < 2; c++) d.push(at(f, (a - 4) * CW * 0.1, (c - 0.5) * h * 0.34)); return [{ dots: d, r: 1.1, alpha: 0.8 }]; });
+    else if (i === 4) dec = faces(function (f) { var d = []; for (var a = 0; a < 9; a++) for (var c = 0; c < 2; c++) d.push(at(f, (a - 4) * CW * 0.1, (c - 0.5) * h * 0.34)); return [{ dots: d, r: 1.1, alpha: 0.8, real: 'sac' }]; });
     if (b[2] === 'ghost') {
       m.box({ c: [0, yc, 0], s: [CW, h, CW] }, 'ghost');
       ['pz', 'px', 'nz', 'nx'].forEach(function (f) { m.wire([at(f, -CW / 2, -h / 2), at(f, CW / 2, h / 2)].map(function (p) { return [p[0], p[1] + yc, p[2]]; }), { lw: 0.6, alpha: 0.7, c: [0, yc, 0] }); m.wire([at(f, CW / 2, -h / 2), at(f, -CW / 2, h / 2)].map(function (p) { return [p[0], p[1] + yc, p[2]]; }), { lw: 0.6, alpha: 0.7, c: [0, yc, 0] }); });
-    } else m.box({ c: [0, yc, 0], s: [CW, h, CW], decals: dec }, b[2]);
+    } else m.box({ c: [0, yc, 0], s: [CW, h, CW], decals: dec, fmat: i === 1 ? { px: { d: 0.1, real: 'core' }, nx: { d: 0.1, real: 'core' }, pz: { d: 0.1, real: 'core' }, nz: { d: 0.1, real: 'core' } } : null }, b[2]);
     // (on a phone, where the labels stand in rows, the three lower layers are named from under the column and the two upper from
     // over it, so no leader rises across a layer it does not name: designer pass, 22 Nov 2026)
     // (round two: the $1,000 and $480 labels level with their dots)
@@ -38,5 +43,5 @@ R('wafer-cost', function (m) {
   m.dim([-CW / 2, PH, CW / 2], [-CW / 2, TOP, CW / 2], [-0.17, 0, 0], 'about $6,400', { part: 0 });
   // (22 Nov 2026 plates refine: the joints between layers at shade weight and the yield loss's edges at outline weight, as the
   // first plates drew them; at crease weight the layers ran together into one block)
-  return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, start: 1, rest: 0, sortAxis: [0, 1, 0], joints: 'shade', ghostW: 'out', accent: [122, 31, 43], accentDark: [201, 83, 106] };
+  return { chart: true, chartSat: 0.6, noPolish: true, ghostFill: true, elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, start: 1, rest: 0, sortAxis: [0, 1, 0], joints: 'shade', ghostW: 'out', accent: [122, 31, 43], accentDark: [201, 83, 106] };
 });

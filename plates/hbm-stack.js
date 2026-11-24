@@ -22,8 +22,8 @@ R('hbm-stack', function (m) {
   function L(w) { return [[-w, -w], [w, -w], [w, 0], [0, 0], [0, w], [-w, w]]; }
   function tsvLines(y0, y1, w, tag) {
     var onZ = [], onX = [];
-    for (var x = 0; x <= w - 0.2; x += TX) onZ.push(D.line([x + 0.0001, y0, 0], [x + 0.0001, y1, 0], { col: 'acc', lw: 1.0, tag: tag }));
-    for (var z = 0; z <= w - 0.2; z += TZ) onX.push(D.line([0, y0, z + 0.0001], [0, y1, z + 0.0001], { col: 'acc', lw: 1.0, tag: tag }));
+    for (var x = 0; x <= w - 0.2; x += TX) onZ.push(D.line([x + 0.0001, y0, 0], [x + 0.0001, y1, 0], { col: 'acc', lw: 2.0, edge: true, tag: tag, real: 'cu' }));
+    for (var z = 0; z <= w - 0.2; z += TZ) onX.push(D.line([0, y0, z + 0.0001], [0, y1, z + 0.0001], { col: 'acc', lw: 2.0, edge: true, tag: tag, real: 'cu' }));
     return [onZ, onX];
   }
   function bumps(y, w) { var p = []; for (var x = 0; x <= w - 0.2; x += TX) p.push([x, y, 0]); for (var z = TZ; z <= w - 0.2; z += TZ) p.push([0, y, z]); return p; }
@@ -31,10 +31,11 @@ R('hbm-stack', function (m) {
   var base = m.part('base', { ex: [0, -1.15, 0], seq: 0 });
   var tb = tsvLines(-bt, 0, bw);
   var bl = [D.rect(-bw * 0.86, -bw * 0.43, bw * 0.86, -bw * 0.23, 0, { lw: 0.5 }), D.rect(-bw * 0.86, bw * 0.23, 0, bw * 0.43, 0, { lw: 0.5 })];
+  m.real('siBase');
   m.prism(L(bw), -bt, 0, 'steel', { sideMat: { 2: 'cutDense', 3: 'cutDense' }, sideDecals: { 2: tb[0], 3: tb[1] }, top: bl });
   var under = [];
   for (var a = 0; a < 16; a++) for (var b = 0; b < 17; b++) { var ux = (a - 7.5) * 11 / 17, uz = (b - 8) * 11 / 18; if (!(ux > 0 && uz > 0)) under.push([ux, -bt - 0.12, uz]); }
-  m.dots(under, { col: 'acc', r: 0.9, alpha: 0.5 });
+  m.dots(under, { col: 'acc', r: 0.9, alpha: 0.5, real: 'cu' });
   // (22 Nov 2026 plates refine: named from the left, on its front face, so the microbumps' leader has the right to itself)
   m.anchor(2, 'Base die', [-bw * 0.55, -bt / 2, bw]);
   // review: the quarter cut away is drawn as a phantom corner, so the 11 mm dimension ends on a drawn corner (it ended
@@ -49,16 +50,12 @@ R('hbm-stack', function (m) {
     var yb = gap0 + pitch * i, p = m.part('die' + (i + 1), { ex: [0, EX * (i + 1), 0], seq: i + 1 });
     var tl = tsvLines(yb, yb + t, hw, 'tsv');
     var o = { sideMat: { 2: 'cutDense', 3: 'cutDense' }, sideDecals: { 2: tl[0], 3: tl[1] } };
-    if (i === 11) {
-      var bank = [];
-      for (a = 0; a < 2; a++) for (b = 0; b < 4; b++) { var bx = (a - 0.5) * 10.6 * 0.44, bz = (b - 1.5) * 10.6 * 0.225; if (bx > 0 && bz > 0) continue; bank.push(D.rect(bx - 1.8, bz - 1.0, bx + 1.8, bz + 1.0, yb + t, { lw: 0.5, alpha: 0.75 })); }
-      o.top = bank;
-    }
-    m.tag('dies');
+    if (i === 11) o.top = []; // (the top die's ground back, plain)
+    m.tag('dies'); m.real('siBack');
     m.prism(L(hw), yb, yb + t, 'light', o);
     m.tag('bumps');
     // the bumps are left out of the small stills (lod 1): at 52 px their twelve rows ran together into a copper band
-    m.dots(bumps(yb - gap0 / 2 - 0.08, hw), { col: 'acc', r: 1.6, alpha: 1, lod: 1 });
+    m.dots(bumps(yb - gap0 / 2 - 0.08, hw), { col: 'acc', r: 2.4, alpha: 1, lod: 1, real: 'cu', cap: true });
     m.tag(null);
     if (i === 10) m.anchor(1, 'Memory dies', [-hw, yb + t / 2, hw * 0.6]);
     // the vias' and the bumps' points sit low in the stack, so their leaders run short to labels under the loupe
@@ -94,12 +91,16 @@ R('hbm-loupe', function (m) {
   var t = 30, g = 7, Z = 40, x0 = -50, x1 = 50, n = 3, P = 20, FILL = { d: 0.08 }, FILL_CUT = { d: 0.12 };
   for (var i = 0; i < n; i++) {
     var y0 = i * (t + g);
+    m.real('siCut');
     bx(x0, y0, -Z, x1, y0 + t, Z, 'light', { pz: 'cut' });
     if (i < n - 1) {
       // the fill round the bumps, its cut face just behind theirs
+      m.real('underfill');
       bx(x0, y0 + t, -Z, x1, y0 + t + g - 0.05, Z - 0.4, FILL, { pz: FILL_CUT });
+      m.real('cu');
       for (var bp = x0 + 10; bp < x1 - 5; bp += P) bx(bp - 4.5, y0 + t, -2, bp + 4.5, y0 + t + g, Z, 'acc', { pz: 'cutAcc' });
     }
+    m.real('cu');
     [x0 + 10, x0 + 70].forEach(function (vx) { bx(vx - 2.2, y0, -2, vx + 2.2, y0 + t, Z + 0.02, 'acc', { pz: 'cutAcc' }); });
   }
   bar(m, [x1 + 22, t, Z + 1], [x1 + 22, t + g, Z + 1], '7 \u00b5m', { side: 1 });

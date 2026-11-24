@@ -88,11 +88,12 @@
     this.parts.push(p); this.cur = p; return p;
   };
   M.use = function (p) { this.cur = p; return p; };
+  M.real = function (r) { this._real = r || null; };
   M.mat = function (m) { return typeof m === 'string' ? (MATS[m] || MATS.steel) : (m || MATS.steel); };
   // a solid: faces added between begin and end; its edges are paired at end
   M.begin = function (mat, o) {
     o = o || {};
-    var s = { kind: 'solid', part: this.cur.idx, mat: this.mat(mat), f0: this.F.length, f1: 0, decals: [], sortFaces: !!o.sortFaces, two: !!o.two, keep: o.keep !== false, lod: o.lod || 0, alpha: o.alpha };
+    var mm0 = this.mat(mat), s = { kind: 'solid', real: o.real || mm0.real || this._real || null, soft: !!o.soft, noCast: !!o.noCast || !!o.soft, inner: !!o.inner, part: this.cur.idx, mat: mm0, f0: this.F.length, f1: 0, decals: [], sortFaces: !!o.sortFaces, two: !!o.two, keep: o.keep !== false, lod: o.lod || 0, alpha: o.alpha };
     this._s = s; this._ec = {}; return s;
   };
   M.v = function (p) { this.V.push(p[0], p[1], p[2]); this.VP.push(this.cur.idx); return this.V.length / 3 - 1; };
@@ -119,8 +120,8 @@
     // centre of the solid, for sorting
     var cx = 0, cy = 0, cz = 0, m = 0, seen = {};
     for (i = s.f0; i < s.f1; i++) F[i].v.forEach(function (vi) { if (seen[vi]) return; seen[vi] = 1; cx += this.V[vi * 3]; cy += this.V[vi * 3 + 1]; cz += this.V[vi * 3 + 2]; m++; }, this);
-    s.c = [cx / m, cy / m, cz / m]; s.ymin = Infinity; s.tag = this._tag;
-    for (var vk in seen) s.ymin = Math.min(s.ymin, this.V[vk * 3 + 1]);
+    s.c = [cx / m, cy / m, cz / m]; s.ymin = Infinity; s.ymax = -Infinity; s.tag = this._tag;
+    for (var vk in seen) { s.ymin = Math.min(s.ymin, this.V[vk * 3 + 1]); s.ymax = Math.max(s.ymax, this.V[vk * 3 + 1]); }
     if (o && o.c) s.c = o.c;
     this.S.push(s); this.cur.items.push(s); this._s = null;
     return s;
@@ -191,7 +192,8 @@
         var q = [grid[i][j], grid[i][j + 1], grid[i2][j + 1], grid[i2][j]];
         var vq = q.filter(function (v, k) { return q.indexOf(v) === k; });
         if (vq.length < 3) continue;
-        var fc = this.face(vq, nrm, { curve: !flat, mj: vq.length === 4 && !flat ? j : -1 });
+        var fc = this.face(vq, nrm, { curve: !flat, mj: vq.length === 4 && !flat ? j : -1, mat: cap && o.capMat ? this.mat(o.capMat) : nr < -0.3 && o.innerMat ? this.mat(o.innerMat) : null });
+        if (nr < -0.3) fc.inner = true;
         fc.ri = i; fc.cap = cap;
         // meridian edge at j: smooth, unless marked
         var mc = 0; if (mer && j % mer === 0) mc = 2; if (heavy.indexOf(j) >= 0) mc = 1;
@@ -243,13 +245,13 @@
   // a line drawn in its place among the solids (a pipe, a wire, a probe needle)
   M.wire = function (pts, o) {
     o = o || {};
-    var it = { kind: 'wire', part: this.cur.idx, pts: pts, c: o.c || centroid(pts), col: o.col || 'ink', lw: o.lw || 1, dash: o.dash || null, alpha: o.alpha == null ? 1 : o.alpha, lod: o.lod || 0, closed: !!o.closed, vis: o.vis || null };
+    var it = { kind: 'wire', real: o.real || this._real || null, edge: !!o.edge, part: this.cur.idx, pts: pts, c: o.c || centroid(pts), col: o.col || 'ink', lw: o.lw || 1, dash: o.dash || null, alpha: o.alpha == null ? 1 : o.alpha, lod: o.lod || 0, closed: !!o.closed, vis: o.vis || null };
     it.tag = this._tag; this.cur.items.push(it); this.S.push(it); return it;
   };
   // a field of dots in its place among the solids (a bump array, a ball grid, a plasma)
   M.dots = function (pts, o) {
     o = o || {};
-    var it = { kind: 'dots', part: this.cur.idx, pts: pts, c: o.c || centroid(pts), col: o.col || 'ink', r: o.r || 1, alpha: o.alpha == null ? 1 : o.alpha, lod: o.lod || 0, ring: !!o.ring, front: !!o.front, keepThumb: !!o.keepThumb };
+    var it = { kind: 'dots', real: o.real || this._real || null, cap: !!o.cap, part: this.cur.idx, pts: pts, c: o.c || centroid(pts), col: o.col || 'ink', r: o.r || 1, alpha: o.alpha == null ? 1 : o.alpha, lod: o.lod || 0, ring: !!o.ring, front: !!o.front, keepThumb: !!o.keepThumb };
     it.tag = this._tag; this.cur.items.push(it); this.S.push(it); return it;
   };
   /* a spike: a pin that stands straight up the page from its foot, its drawn length len (model units, at the drawing's scale)
@@ -263,7 +265,7 @@
     it.tag = this._tag; this.cur.items.push(it); this.S.push(it); return it;
   };
   // lines that are not parts: guides between parts (each point may name its part), the assembly axis, the light path
-  M.guide = function (pts, o) { o = o || {}; this.lines.push({ pts: pts, style: o.style || 'guide', col: o.col || 'ink', lw: o.lw, alpha: o.alpha, lod: o.lod || 0, front: !!o.front, knock: !!o.knock }); };
+  M.guide = function (pts, o) { o = o || {}; this.lines.push({ pts: pts, style: o.style || 'guide', col: o.col || 'ink', lw: o.lw, alpha: o.alpha, lod: o.lod || 0, front: !!o.front, knock: !!o.knock, knockDark: !!o.knockDark }); };
   // a sphere seen as a disc (the globe), lines on its surface (drawn on the near side only) and filled land
   M.globe = function (r, o) { o = o || {}; var it = { kind: 'globe', part: this.cur.idx, r: r, c: [0, 0, 0], fill: o.fill || 'paper' }; it.tag = this._tag; this.cur.items.push(it); this.S.push(it); return it; };
   M.swire = function (pts, o) { o = o || {}; var it = { kind: 'swire', part: this.cur.idx, pts: pts, c: [0, 0, 0], col: o.col || 'ink', lw: o.lw || 0.6, alpha: o.alpha == null ? 1 : o.alpha, back: o.back || 0, lod: o.lod || 0 }; it.tag = this._tag; this.cur.items.push(it); this.S.push(it); return it; };
@@ -596,6 +598,12 @@
       var x = this.x; x.beginPath(); x.moveTo(pts[0][0], pts[0][1]); for (var i = 1; i < pts.length; i++) x.lineTo(pts[i][0], pts[i][1]); x.closePath();
       x.globalAlpha = (alpha == null ? 1 : alpha) * this.ga; x.fillStyle = fill; x.fill(); x.globalAlpha = 1;
     },
+    fillAny: function (pts, f, alpha) {
+      if (typeof f === 'string') return this.poly(pts, f, alpha);
+      var x = this.x, gr = f.r != null ? x.createRadialGradient(f.x0, f.y0, 0, f.x0, f.y0, f.r) : x.createLinearGradient(f.x0, f.y0, f.x1, f.y1); f.stops.forEach(function (s) { gr.addColorStop(s[0], s[1]); });
+      x.beginPath(); x.moveTo(pts[0][0], pts[0][1]); for (var i = 1; i < pts.length; i++) x.lineTo(pts[i][0], pts[i][1]); x.closePath();
+      x.globalAlpha = (alpha == null ? 1 : alpha) * this.ga; x.fillStyle = gr; x.fill(); x.globalAlpha = 1;
+    },
     // ruled at ang degrees up from level, from a fixed page origin, so neighbouring cut faces of one ruling share their lines
     hatch: function (pts, col, gap, lw, kind, alpha, ang) {
       var x = this.x;
@@ -637,10 +645,40 @@
     arrow: function (tip, dir, len, col, wid, alpha) { var x = this.x, n = [-dir[1], dir[0]], w = wid || len * 0.28; x.globalAlpha = (alpha == null ? 1 : alpha) * this.ga; x.beginPath(); x.moveTo(tip[0], tip[1]); x.lineTo(tip[0] - dir[0] * len + n[0] * w, tip[1] - dir[1] * len + n[1] * w); x.lineTo(tip[0] - dir[0] * len - n[0] * w, tip[1] - dir[1] * len - n[1] * w); x.closePath(); x.fillStyle = col; x.fill(); x.globalAlpha = 1; }
   };
   // ids carry a prefix of their own, so several stills inline in one page (the book, printed) never share a clip
-  function SvgG(w, h, pre) { this.out = []; this.defs = {}; this.w = w; this.h = h; this.cid = 0; this.pre = pre || ''; this.mfn = null; this.ga = 1; }
+  function SvgG(w, h, pre) { this.out = []; this.defs = {}; this.gk = {}; this.w = w; this.h = h; this.cid = 0; this.pre = pre || ''; this.mfn = null; this.ga = 1; }
   function f1(v) { return Math.round(v * 10) / 10; }
   function ptsStr(pts) { return pts.map(function (p) { return f1(p[0]) + ',' + f1(p[1]); }).join(' '); }
   SvgG.prototype = {
+    // an opaque face also strokes its own edge at half a pixel, so PDF viewers show no seams between neighbouring faces
+    fillAny: function (pts, f, alpha) {
+      var paint = typeof f === 'string' ? f : 'url(#' + this.grad(f) + ')';
+      if (alpha != null && alpha < 0.999) return this.poly(pts, paint, alpha);
+      this.out.push('<polygon points="' + ptsStr(pts) + '" fill="' + paint + '" stroke="' + paint + '" stroke-width="0.5" stroke-linejoin="round"/>');
+    },
+    // a gradient as a def: linear (x0, y0 to x1, y1) or radial (centre x0, y0, radius r, focus fx, fy, fr); stops [offset, colour, opacity]
+    grad: function (f) {
+      var st = f.stops.map(function (q) { return '<stop offset="' + Math.round(q[0] * 1000) / 1000 + '" stop-color="' + q[1] + '"' + (q[2] != null && q[2] < 1 ? ' stop-opacity="' + Math.round(q[2] * 1000) / 1000 + '"' : '') + '/>'; }).join('');
+      var geo = f.r != null ? 'cx="' + f1(f.x0) + '" cy="' + f1(f.y0) + '" r="' + f1(Math.max(0.1, f.r)) + '"' + (f.fx != null ? ' fx="' + f1(f.fx) + '" fy="' + f1(f.fy) + '" fr="' + f1(f.fr || 0) + '"' : '') : 'x1="' + f1(f.x0) + '" y1="' + f1(f.y0) + '" x2="' + f1(f.x1) + '" y2="' + f1(f.y1) + '"';
+      var key = geo + st, id = this.gk[key];
+      if (!id) { var tag = f.r != null ? 'radialGradient' : 'linearGradient'; id = this.gk[key] = this.pre + 'g' + (this.cid++); this.defs[id] = '<' + tag + ' id="' + id + '" gradientUnits="userSpaceOnUse" ' + geo + '>' + st + '</' + tag + '>'; }
+      return id;
+    },
+    circleAny: function (cx, cy, r, f, alpha) { this.out.push('<circle cx="' + f1(cx) + '" cy="' + f1(cy) + '" r="' + f1(r) + '" fill="' + (typeof f === 'string' ? f : 'url(#' + this.grad(f) + ')') + '"' + (alpha != null && alpha < 1 ? ' fill-opacity="' + f1(alpha * 100) / 100 + '"' : '') + '/>'); },
+    // a soft shadow: its shapes filled as one in col, blurred by blur px, at alpha; clipped to the faces that receive it, or
+    // (the ground's) faded over the still's last 24 px
+    shadow: function (shapes, blur, alpha, col, clip, fade) {
+      if (!shapes.length || alpha <= 0.003) return;
+      var bid = this.pre + 'b' + Math.round(blur * 10), o = '', cl = '';
+      if (!this.defs[bid]) this.defs[bid] = '<filter id="' + bid + '" filterUnits="userSpaceOnUse" x="-40" y="-40" width="' + Math.round(this.w + 80) + '" height="' + Math.round(this.h + 80) + '" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="' + f1(blur) + '"/></filter>';
+      if (clip) { var cid = this.pre + 'c' + (this.cid++); this.out.push('<clipPath id="' + cid + '">' + clip.map(function (p) { return '<polygon points="' + ptsStr(p) + '"/>'; }).join('') + '</clipPath>'); cl = ' clip-path="url(#' + cid + ')"'; }
+      else if (fade) {
+        var mid = this.pre + 'fade';
+        if (!this.defs[mid]) this.defs[mid] = '<filter id="' + mid + 'b" filterUnits="userSpaceOnUse" x="0" y="0" width="' + Math.round(this.w) + '" height="' + Math.round(this.h) + '"><feGaussianBlur stdDeviation="6"/></filter><mask id="' + mid + '" maskUnits="userSpaceOnUse" x="0" y="0" width="' + Math.round(this.w) + '" height="' + Math.round(this.h) + '"><rect x="12" y="12" width="' + Math.max(1, Math.round(this.w - 24)) + '" height="' + Math.max(1, Math.round(this.h - 24)) + '" fill="#fff" filter="url(#' + mid + 'b)"/></mask>';
+        cl = ' mask="url(#' + mid + ')"';
+      }
+      shapes.forEach(function (p) { if (p.length > 2) o += '<polygon points="' + ptsStr(p) + '"/>'; });
+      this.out.push('<g' + cl + '><g fill="' + col + '" opacity="' + Math.round(alpha * 1000) / 1000 + '" filter="url(#' + bid + ')">' + o + '</g></g>');
+    },
     poly: function (pts, fill, alpha) { this.out.push('<polygon points="' + ptsStr(pts) + '" fill="' + fill + '"' + (alpha != null && alpha < 1 ? ' fill-opacity="' + f1(alpha * 100) / 100 + '"' : '') + '/>'); },
     hatch: function (pts, col, gap, lw, kind, alpha, ang) {
       var id = this.pre + 'c' + (this.cid++), d = '', seg = function (a, b) { d += 'M' + f1(a[0]) + ' ' + f1(a[1]) + 'L' + f1(b[0]) + ' ' + f1(b[1]); };
@@ -685,6 +723,116 @@
     if (h < 60) o = [c, x, 0]; else if (h < 120) o = [x, c, 0]; else if (h < 180) o = [0, c, x]; else if (h < 240) o = [0, x, c]; else if (h < 300) o = [x, 0, c]; else o = [c, 0, x];
     return [(o[0] + m) * 255, (o[1] + m) * 255, (o[2] + m) * 255];
   }
+  /* ---------------- the materials (specimen colour, 24 Nov 2026: treatment C, Rendered) ----------------
+     A solid names its real material (m.real in the plates, or real: on a face, a decal or a wire), and the plate draws it in that
+     material's colour. L is the colour on the paper ground and D on the night ground (objects keep their colour within a few
+     percent there, and the pale masses are capped so the true colours lead). g is the polish: mirror 0.85 and over, satin 0.5 to
+     0.85, matte under 0.5. metal: its reflection takes its own colour. studio: a stainless finish, cool on top with a warm bounce
+     below. strip: how far a polished turned part's highlight goes toward white (mstrip the same for a flat mirror). clear: the
+     share of light it stops. edge: a clear or glass part's edge. cut: its section colour (else derived, paler and warmer than any
+     outside face; cutD on the night ground). noHatch: a cut face with no ruling. lineK: the tone of lines drawn in it.
+     The reasons are in qa/builds-nov/round-24nov/shots/spec-color/NOTES.md (main checkout), one line each here. */
+  var REAL = P.REAL = {
+    // silicon: the circuit face graphite with a violet cast and a teal cache; bare silicon a near-neutral grey with a slight blue
+    siFace:   { L: '#474c66', D: '#454a63', g: 0.55 },                                // a die's circuit face: graphite with the violet-blue cast of its top metal and dielectric
+    siLogic:  { L: '#57557a', D: '#545276', g: 0.5 },                                 // logic blocks on that face: the violet cast a little stronger
+    siSram:   { L: '#3f6873', D: '#3d646f', g: 0.6 },                                 // SRAM arrays: the green-teal cast large regular arrays show in die photos
+    siPhy:    { L: '#4b5064', D: '#494e62', g: 0.45 },                                // interface and wiring blocks: plain graphite
+    siChan:   { L: '#33374a', D: '#353a4d', g: 0.5 },                                 // the die face between blocks (01): the darkest channels
+    siBack:   { L: '#8d929c', D: '#868b95', g: 0.9, mstrip: 0.68, cut: '#b4bac6' },   // a die's ground back: polished silicon, a mirror with a real dark band
+    siWafer:  { L: '#a8adb6', D: '#9da2ab', g: 0.95, cut: '#b4bac6' },                // a bare polished wafer: a silver-grey mirror
+    siProc:   { L: '#9296aa', D: '#888ca0', g: 0.9, cut: '#b4bac6' },                 // a patterned wafer: a mirror under the die grid's violet sheen
+    siIngot:  { L: '#7f8590', D: '#777d88', g: 0.9, metal: true, strip: 0.72 },       // the ingot: polished silicon's gunmetal grey
+    siCut:    { L: '#8f96a3', D: '#868d9a', g: 0.3, cut: '#b4bac6' },                 // silicon in section and in thin layers: slate grey
+    siSheet:  { L: '#7a8191', D: '#737a8a', g: 0.2 },                                 // 08's nanosheets: a step darker than the gate's lit face
+    siEpi:    { L: '#b5bccb', D: '#a7aebd', g: 0.2 },                                 // doped silicon grown on the sheets' ends: paler and cooler, so it reads apart
+    siBase:   { L: '#6a707d', D: '#646a77', g: 0.6, cut: '#b4bac6' },                 // 09's base die: a step darker than the memory dies
+    siHole:   { L: '#545b6b', D: '#4f5666', g: 0.2 },                                 // the wall of an etched hole, in its own shadow
+    siProbed: { L: '#7a7e93', D: '#707489', g: 0.9, lineK: 1.4 },                     // 12's dies under test: the wafer's hue a step darker
+    stiOx:    { L: '#cddce3', D: '#93a4ac', g: 0.2 },                                 // isolation oxide in section: glassy pale blue-white
+    // metals: near neutral, apart by warmth and value; the coloured metals at full strength
+    cu:       { L: '#c8733f', D: '#c26e3b', g: 0.75, metal: true, strip: 0.5, cut: '#e09a72' }, // copper: wiring, vias, bumps, the busbar and coils
+    au:       { L: '#d4a646', D: '#cc9f42', g: 0.8, metal: true, strip: 0.5 },       // gold plating on pads, lands and connector pins
+    brass:    { L: '#c29b47', D: '#b8933f', g: 0.6, metal: true, strip: 0.5 },       // brass fittings (no plate uses it since the expert ruled the valves steel)
+    sac:      { L: '#c4c6c3', D: '#b3b5b2', g: 0.6, metal: true },                    // tin-silver-copper solder: a bright matte silver
+    ni:       { L: '#babbbd', D: '#aaabad', g: 0.7, metal: true },                    // nickel plating (the prober's chuck) and the probe needles' alloys
+    w:        { L: '#84878c', D: '#7b7e83', g: 0.5, metal: true, cut: '#c3c5c8' },    // tungsten: contacts, aperture plates, the emitter
+    gate:     { L: '#5d5f63', D: '#6b6d71', g: 0.2, metal: true, cut: '#74767a', cutD: '#828488' }, // 08's gate: a deep neutral metal grey (the expert's ruling)
+    tin:      { L: '#c09a4e', D: '#b8934a', g: 0.2, metal: true, noHatch: true, cut: '#c9a457' }, // titanium nitride in bulk: matte gold-bronze (no plate uses it since the gate went grey)
+    steel:    { L: '#9da2a7', D: '#8e9398', g: 0.65, metal: true, studio: true, cut: '#c3c5c8' }, // stainless and machine steel: a cool neutral
+    vacIn:    { L: '#8a8d91', D: '#64676b', g: 0.5, metal: true, cut: '#d4d6d8' },    // a housing's back wall, in its own shade
+    vac:      { L: '#c0c3c6', D: '#7b7e82', g: 0.8, metal: true, studio: true, cut: '#d4d6d8' }, // electropolished stainless: brighter than machine steel (capped in dark)
+    steelDk:  { L: '#6c7177', D: '#666b71', g: 0.5, metal: true, cut: '#c3c5c8' },    // darker steel: rails, frames, feet, fittings
+    aluCh:    { L: '#bdbfbf', D: '#7c7e7e', g: 0.55, metal: true, cut: '#d4d6d6' },   // 06's chamber body: the darker aluminium
+    yttria:   { L: '#ece6d7', D: '#8e897d', g: 0.3 },                                 // 06's inner walls the plasma touches: yttria off-white
+    alu:      { L: '#c6c7c6', D: '#808281', g: 0.55, metal: true, cut: '#d4d6d6' },   // aluminium: a warm neutral (capped in dark)
+    iron:     { L: '#85878a', D: '#7d7f82', g: 0.6, metal: true, cut: '#c3c5c8' },    // soft iron: the electron lenses' yokes and pole pieces
+    panel:    { L: '#6b6f75', D: '#63676d', g: 0.3 },                                 // the gas panel's mounting plate: a mid grey under bright tubing
+    paint:    { L: '#eeeae0', D: '#7c7d7f', g: 0.15 },                                // off-white painted steel: the gas cabinet, the scanner's base frame (capped in dark)
+    paintIn:  { L: '#9a9c97', D: '#5f615d', g: 0.15 },                                // the same paint inside the cabinet, in its own shade
+    black:    { L: '#3d4046', D: '#43464c', g: 0.6, metal: true, strip: 0.28 },       // black painted steel: the rack, tray fronts, the coolant unit (satin, so it shows its form)
+    plastic:  { L: '#36383d', D: '#45474c', g: 0.2 },                                 // black plastic: connectors, power stages, inductors
+    cable:    { L: '#2a2c30', D: '#3a3c41', g: 0.25 },                                // black-jacketed copper cable: the rack's NVLink cartridges
+    granite:  { L: '#45484d', D: '#4b4e53', g: 0.35 },                                // black ceramic and stone: chucks, guide plates, the stage base
+    mould:    { L: '#2b2c30', D: '#3a3b40', g: 0.3 },                                 // epoxy moulding compound: black
+    // boards and packages
+    pcb:      { L: '#2c7149', D: '#2b6c46', g: 0.45 },                                // green solder mask on a circuit board
+    pcbDk:    { L: '#1e3b31', D: '#22413a', g: 0.45 },                                // the accelerator modules' boards: darker and cooler
+    subMask:  { L: '#2f5242', D: '#2e4f40', g: 0.45 },                                // a package substrate's solder resist: dark green
+    core:     { L: '#b08f5c', D: '#a3854f', g: 0.2 },                                 // a substrate core's edge: glass cloth in resin, amber tan
+    coreSec:  { L: '#957a4f', D: '#8d7349', g: 0.2 },                                 // the core in section: darker, under its weave
+    laminate: { L: '#7a7452', D: '#716b4b', g: 0.2 },                                 // a routed substrate edge
+    abf:      { L: '#cbc68e', D: '#bdb883', g: 0.2 },                                 // build-up film: a pale olive band
+    abf2:     { L: '#b8b278', D: '#aca66f', g: 0.2 },                                 // build-up film, the second tone, so the bands count
+    pi:       { L: '#7c5634', D: '#77522f', g: 0.4 },                                 // polyimide redistribution layers: a dark amber film
+    mlcc:     { L: '#b8946a', D: '#ac8a61', g: 0.3 },                                 // multilayer ceramic capacitors' bodies: tan
+    trace:    { L: '#5a9a72', D: '#55916b', g: 0.3, lineK: 1.0 },                     // copper traces seen through green solder mask: a lighter green
+    // glass, coatings and process materials
+    glass:    { L: '#dbe7ee', D: '#5e676c', g: 0.9, clear: 0.5, edge: '#6f9db3' },    // quartz and low-expansion glass: pale, with a faint blue edge
+    glassBody:{ L: '#d9d6cf', D: '#66645f', g: 0.2, edge: '#b8b4ab' },                // a mirror's substrate: opaque, matte, a pale warm grey (the expert's ruling)
+    film:     { L: '#d6d9dd', D: '#8d9399', g: 0.4, clear: 0.24, edge: '#f2f4f6' },   // the pellicle: a clear thin film with a light edge
+    mlm:      { L: '#4c4d5b', D: '#4a4b59', g: 0.95, strip: 0.62 },                   // molybdenum-silicon multilayer mirrors: a dark mirror with a faint violet cast
+    mo:       { L: '#3c3b52', D: '#3a3950', g: 0.5 },                                 // molybdenum layers in the loupe's section
+    absorber: { L: '#26272d', D: '#36373e', g: 0.4 },                                 // the mask's tantalum absorber and black border: near black
+    ru:       { L: '#9ea1a6', D: '#91949a', g: 0.6, metal: true },                    // the ruthenium cap
+    resist:   { L: '#d49b3c', D: '#c9923a', g: 0.4 },                                 // photoresist: amber
+    ceramic:  { L: '#ece6d7', D: '#8e897d', g: 0.3 },                                 // alumina: insulators, the chuck's puck, the space transformer (capped in dark)
+    sin:      { L: '#cfccc4', D: '#9b988f', g: 0.2 },                                 // silicon nitride spacers: a pale ceramic film
+    plasma:   { L: '#8a70d8', D: '#9a84e6', g: 0, clear: 0.32, edge: '#6c55c4' },     // a fluorocarbon etch plasma's violet glow, see-through
+    underfill:{ L: '#cfc9b6', D: '#8f8a7a', g: 0.2 },                                 // film or underfill between stacked dies
+    // the world: land and sea apart by value
+    ocean:    { L: '#8eb0c8', D: '#6f8ea6' },                                         // the globe's sea, as a physical globe prints it
+    land:     { L: '#e2dcc8', D: '#aaa594' },                                         // the globe's dry land, sand, lighter than the sea
+    // markings that are part of the real object
+    cylGrey:  { L: '#8d8e8b', D: '#83847f', g: 0.3 },                                 // a gas cylinder's painted body: warm, low gloss
+    capY:     { L: '#e0ab22', D: '#d8a420', g: 0.35 },                                // a cylinder shoulder in yellow: toxic or corrosive (EN 1089-3)
+    capR:     { L: '#cc3f33', D: '#c43c31', g: 0.35 },                                // a cylinder shoulder in red: flammable (EN 1089-3; no plate uses it since round 3)
+    n2:       { L: '#2f3134', D: '#3a3c40', g: 0.35 },                                // the nitrogen purge cylinder's shoulder: black (EN 1089-3)
+    emo:      { L: '#c8102e', D: '#c0122d', g: 0.4 },                                 // the cabinet's emergency-off button: signal red
+    screen:   { L: '#22252a', D: '#2c2f35', g: 0.5 },                                 // the cabinet controller's screen: near black
+    ghsRed:   { L: '#c8102e', D: '#c0122d', g: 0.2 },                                 // a hazard diamond's red border (GHS)
+    ghsGreen: { L: '#2e8b3e', D: '#2e8b3e', g: 0.2 },                                 // a non-flammable gas diamond's green
+    label:    { L: '#f6f4ee', D: '#bdbbb4', g: 0.2 },                                 // a cylinder's white shoulder label
+    gauge:    { L: '#f1efe8', D: '#b9b7b0', g: 0.5 },                                 // a pressure gauge's white dial
+    // a chart's emphasis
+    wine:     { L: '#dcb9be', D: '#6e3b45', g: 0 }                                    // the cost column's largest share keeps the site's wine tint
+  };
+  // sRGB and linear light
+  function s2l(v) { v /= 255; return v <= 0.04045 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); }
+  function l2s(v) { v = Math.max(0, Math.min(1, v)); return 255 * (v <= 0.0031308 ? 12.92 * v : 1.055 * Math.pow(v, 1 / 2.4) - 0.055); }
+  // a colour under k times the light: under 1 it is shaded, over 1 lifted, and what runs past white goes toward white
+  function litC(c, k) {
+    var r = s2l(c[0]) * k, g = s2l(c[1]) * k, b = s2l(c[2]) * k, mx = Math.max(r, g, b);
+    if (mx > 1) { var w = Math.min(1, (mx - 1) * 0.6); r += (1 - r) * w; g += (1 - g) * w; b += (1 - b) * w; }
+    return [l2s(r), l2s(g), l2s(b)];
+  }
+  function mixL(a, b, t) { return [l2s(s2l(a[0]) + (s2l(b[0]) - s2l(a[0])) * t), l2s(s2l(a[1]) + (s2l(b[1]) - s2l(a[1])) * t), l2s(s2l(a[2]) + (s2l(b[2]) - s2l(a[2])) * t)]; }
+  function lumC(c) { return 0.2126 * s2l(c[0]) + 0.7152 * s2l(c[1]) + 0.0722 * s2l(c[2]); }
+  function darkOf(c) { var d = litC(c, 0.9); if (lumC(d) < 0.03) d = mixL(d, [255, 255, 255], 0.06); return d; }
+  // a colour at s of its saturation (the chart's smaller shares)
+  function desat(c, s) { var y = lumC(c), gy = [l2s(y), l2s(y), l2s(y)]; return mixL(gy, c, s); }
+  P.litC = litC; P.mixL = mixL; P.lumC = lumC;
+
   P.palette = function (el, spec, dark, print) {
     var cs = typeof getComputedStyle !== 'undefined' && el ? getComputedStyle(el) : { getPropertyValue: function () { return ''; } };
     var bg = hex(cs.getPropertyValue('--bg') || (dark ? '#141413' : '#fcfcfa')), ink = hex(cs.getPropertyValue('--ink') || (dark ? '#ecebe6' : '#171716')), muted = hex(cs.getPropertyValue('--muted') || '#6b6a64');
@@ -1047,9 +1195,415 @@
       if (tint) c = mix(c, pal.hl, pal.dark ? 0.22 : 0.12);
       return css(c);
     };
+    /* ---- the colour (specimen colour, 24 Nov 2026: the owner chose treatment C, Rendered, from three). Every part in its real
+       material (REAL), lit as an object: tone and reflections on every face, no ink on the object (its silhouette in its own deep
+       shade), soft shadows where parts rest on each other and one ground. Leaders, balloons, dimensions and labels are the only
+       ink. A chart (plate 15) takes the illustrated tone (TB: a flat face graded along the light, no reflections) with the same
+       lines and no shadows, since dressing a number in light can mislead. */
+    var plateSelf = this, CHART = !!m.spec.chart, TB = CHART;
+    var WHITE = [255, 255, 255], CREAM = [246, 242, 232], COOLS = [223, 230, 238], WARMB = [207, 198, 184], COOL = pal.dark ? [28, 38, 64] : [56, 74, 112], WARM = [255, 244, 224];
+    // while the plate turns or makes its entrance, the cheaper path: no gradients along turned strips, a coarser shadow
+    var cheap = turned || K < 0.999, NOPOL = !!m.spec.noPolish;
+    var gOf = function (Rm) { return NOPOL ? Math.min(0.2, Rm.g || 0) : (Rm.g || 0); };
+    var tBase = function (Rm) {
+      if (!Rm) return pal.ink;
+      var key = pal.dark ? '_d' : '_l', c = Rm[key] || (Rm[key] = pal.dark ? (Rm.D ? hex(Rm.D) : darkOf(hex(Rm.L))) : hex(Rm.L));
+      return m.spec.chartSat && Rm !== REAL.wine ? desat(c, m.spec.chartSat) : c;
+    };
+    // a part pointed at keeps its own material, a little lighter (mixing toward wine turned colour to mud)
+    var FADE = 0.4, curFade = 0;
+    var lift = function (c, on) { return on ? litC(c, 1.18) : curFade ? mix(c, pal.bg, curFade) : c; };
+    // (a part not pointed at is drawn opaque, mixed toward the ground, so nothing shows through: round 3)
+    var fzC = function (cs) { return curFade && typeof cs === 'string' ? css(mix(hex(cs), pal.bg, curFade)) : cs; };
+    var GL = function (segs, col, lw, dash, al, cap) { g.lines(segs, fzC(col), lw, dash, al, cap); };
+    var smooth = function (e0, e1, x) { var t = Math.max(0, Math.min(1, (x - e0) / (e1 - e0))); return t * t * (3 - 2 * t); };
+    var HK = (function () { var h = [Lt[0], Lt[1], Lt[2] + 1], n = Math.hypot(h[0], h[1], h[2]); return [h[0] / n, h[1] / n, h[2] / n]; })();
+    // the page's direction from a lit edge to its far edge (the key light comes from the upper left)
+    var LD = (function () { var x = -Lt[0], y = Lt[1], n = Math.hypot(x, y); return [x / n, y / n]; })();
+    var axisOf = function (bb) { var cx = (bb[0] + bb[2]) / 2, cy = (bb[1] + bb[3]) / 2, hf = (Math.abs(LD[0]) * (bb[2] - bb[0]) + Math.abs(LD[1]) * (bb[3] - bb[1])) / 2 || 1; return [cx - LD[0] * hf, cy - LD[1] * hf, cx + LD[0] * hf, cy + LD[1] * hf]; };
+    /* reflections per plane (round 2, S2): every flat face of the model lying in one plane shares one gradient axis, taken from
+       that plane's extent on the page, so one band runs across a wafer's wedges or a die's blocks together */
+    var GR = null;
+    var planeKey = function (n, d) { return Math.round(n[0] * 50) + ',' + Math.round(n[1] * 50) + ',' + Math.round(n[2] * 50) + '|' + Math.round(d / ((m.size || 1) * 1e-3)); };
+    var groups = function () {
+      if (GR) return GR; GR = {};
+      m.S.forEach(function (s) {
+        if (s.kind !== 'solid' || s.mat.ghost || s.mat.phantom) return;
+        var o = O[s.part];
+        for (var fi = s.f0; fi < s.f1; fi++) {
+          var f = F[fi]; if (f.curve || !front[fi]) continue;
+          var v0 = f.v[0], d = f.n[0] * (V[v0 * 3] + o[0]) + f.n[1] * (V[v0 * 3 + 1] + o[1]) + f.n[2] * (V[v0 * 3 + 2] + o[2]);
+          var key = planeKey(f.n, d), b = GR[key] || (GR[key] = [Infinity, Infinity, -Infinity, -Infinity]);
+          for (var q = 0; q < f.v.length; q++) { var x = X[f.v[q] * 3], y = X[f.v[q] * 3 + 1]; if (x < b[0]) b[0] = x; if (y < b[1]) b[1] = y; if (x > b[2]) b[2] = x; if (y > b[3]) b[3] = y; }
+          f._gk = key;
+        }
+      });
+      return GR;
+    };
+    // polished flat faces by class (the rendered stops; the chart's illustrated ones), and the tone on every other flat face along the light
+    var MIR_C = [[0, 0.6], [0.3, 0.68], [0.4, 's'], [0.54, 's2'], [0.64, 0.78], [1, 0.56]], MIR_CW = [[0, 0.66], [0.3, 0.72], [0.4, 's'], [0.54, 's2'], [0.64, 0.86], [1, 0.74]];
+    var SAT_C = [[0, 0.84], [0.3, 1.35], [0.48, 1.02], [1, 0.78]];
+    var MIR_B = [[0, 0.85], [0.38, 'b'], [0.6, 1.0], [1, 0.78]], SAT_B = [[0, 0.95], [0.38, 1.18], [0.6, 1.0], [1, 0.82]], TONE = [[0, 1.22], [1, 0.74]], TONE_C = [[0, 1.06], [1, 0.84]];
+    var CAPL = 0.79; // (a reflection's brightest stop, about #e4e7eb)
+    /* turned parts (S3): smooth tone, each strip a gradient from its left meridian edge to its right, each edge lit by its own
+       normal; a polished metal reflects a studio (anchors from the part's own colour: a rim light, a dark core, a bright strip),
+       a painted one stays near its colour */
+    var ENVP = [[-1, 'k', 1.1], [-0.7, 'k', 0.75], [-0.25, 'k', 0.32], [0.15, 'k', 1.0], [0.45, 's', 1], [0.6, 's', 0.55], [0.85, 'k', 1.1], [1, 'k', 0.9]];
+    var PAINTED = [[-1, 0.75], [-0.3, 0.8], [0.4, 1.25], [1, 0.9]];
+    var envCol = function (b, t, strip) {
+      t = Math.max(-1, Math.min(1, t)); var i = 1; while (i < ENVP.length - 1 && t > ENVP[i][0]) i++;
+      var a = ENVP[i - 1], c = ENVP[i], u = (t - a[0]) / (c[0] - a[0]);
+      var ca = a[1] === 's' ? mixL(b, WHITE, strip * a[2]) : litC(b, a[2]), cc = c[1] === 's' ? mixL(b, WHITE, strip * c[2]) : litC(b, c[2]);
+      return mixL(ca, cc, u);
+    };
+    var paintK = function (t) { t = Math.max(-1, Math.min(1, t)); var i = 1; while (i < PAINTED.length - 1 && t > PAINTED[i][0]) i++; var a = PAINTED[i - 1], c = PAINTED[i]; return a[1] + (c[1] - a[1]) * (t - a[0]) / (c[0] - a[0]); };
+    var across = function (axV) {
+      var ax = axV[0], ay = axV[1], L = Math.hypot(ax, ay);
+      if (L < 0.25) return null;
+      var u = [-ay / L, ax / L]; if (u[0] * Lt[0] + u[1] * Lt[1] < 0) u = [-u[0], -u[1]];
+      return u;
+    };
+    var stripModel = function (Rm, b, n, axV, gl) {
+      var lam = lamC(n), k0 = (0.34 + 0.8 * lam + (lam < 0.1 ? 0.05 : 0)) * (TB ? 1 : 0.9), col = litC(b, k0), u = axV ? across(axV) : null;
+      if (u) {
+        var t = n[0] * u[0] + n[1] * u[1];
+        if (gl >= 0.5) col = mixL(col, envCol(b, t, Rm.strip == null ? 0.62 : Rm.strip), (gl >= 0.7 ? gl * 0.9 : 0.55) * (TB ? 0.5 : 1));
+        else if (!TB) col = mixL(col, litC(b, paintK(t)), 0.5);
+        if (Rm.studio) col = mixL(col, t > 0 ? COOLS : WARMB, 0.1);
+      }
+      if (k0 < 0.8) col = mixL(col, COOL, 0.06 * (0.8 - k0) / 0.45);
+      return col;
+    };
+    var capModel = function (Rm, b, n, gl) {
+      var lam = lamOf(n), k0 = (0.34 + 0.8 * lam) * (TB ? 1 : 0.9), col = litC(b, k0);
+      if (gl >= 0.5) { var nh = Math.max(0, n[0] * HK[0] + n[1] * HK[1] + n[2] * HK[2]), sp = Math.min(0.8, Math.pow(nh, 10) * gl * (TB ? 0.5 : 1)); col = mixL(col, Rm.metal ? mixL(b, WHITE, Rm.strip || 0.6) : WHITE, sp); }
+      if (Rm.studio) col = mixL(col, COOLS, 0.1);
+      if (k0 < 0.8) col = mixL(col, COOL, 0.06 * (0.8 - k0) / 0.45);
+      return col;
+    };
+    // (round 3: the strip and the cap models blended by the face's turn to the axis, so a crown or a dome has no seam)
+    var shadeCurve = function (Rm, b, n, capForce, axV) {
+      var gl = gOf(Rm), wc = capForce ? 1 : axV ? smooth(0.25, 0.65, Math.abs(n[0] * axV[0] + n[1] * axV[1] + n[2] * axV[2])) : 0;
+      if (wc <= 0) return stripModel(Rm, b, n, axV, gl);
+      if (wc >= 1) return capModel(Rm, b, n, gl);
+      return mixL(stripModel(Rm, b, n, axV, gl), capModel(Rm, b, n, gl), wc);
+    };
+    var add3 = function (a, b) { var x = a[0] + b[0], y = a[1] + b[1], z = a[2] + b[2], n = Math.hypot(x, y, z) || 1; return [x / n, y / n, z / n]; };
+    var stripInfo = function (f, pts) {
+      if (cheap || !f.e || f.mj < 0 || pts.length !== 4) return null;
+      var a = f.e[3][0], b = f.e[1][0];
+      if (a < 0 || b < 0 || !F[a].curve || !F[b].curve) return null;
+      return { nL: rotN(add3(f.n, F[a].n)), nR: rotN(add3(f.n, F[b].n)), pL: [(pts[3][0] + pts[0][0]) / 2, (pts[3][1] + pts[0][1]) / 2], pR: [(pts[1][0] + pts[2][0]) / 2, (pts[1][1] + pts[2][1]) / 2] };
+    };
+    // a flat face's tone by its turn to the key light
+    var flatTone = function (Rm, b, lam, top) {
+      var k0 = TB ? (top ? 1.04 : 0.42 + 0.72 * lam) : top ? 0.9 : (0.36 + 0.72 * lam) * 0.95;
+      var col = litC(b, k0);
+      if (k0 < 0.8) col = mixL(col, COOL, 0.07 * (0.8 - k0) / 0.45); else if (top) col = mixL(col, WARM, 0.025);
+      if (Rm.studio) col = mixL(col, top ? COOLS : WARMB, 0.1);
+      return col;
+    };
+    // a cut face (S6): paler and warmer than any outside face
+    var cutCol = function (Rm, b) {
+      if (pal.dark && Rm.cutD) return hex(Rm.cutD);
+      var c = Rm.cut ? hex(Rm.cut) : mixL(litC(pal.dark ? hex(Rm.L) : b, 1.3), CREAM, 0.25);
+      return pal.dark ? litC(c, 0.62) : c;
+    };
+    var bbOf = function (pts) { var b = [Infinity, Infinity, -Infinity, -Infinity]; pts.forEach(function (p) { if (p[0] < b[0]) b[0] = p[0]; if (p[1] < b[1]) b[1] = p[1]; if (p[0] > b[2]) b[2] = p[0]; if (p[1] > b[3]) b[3] = p[1]; }); return b; };
+    // a patterned wafer's static diffraction sheen: one broad run of two neighbouring hues, violet into teal, fixed to the part
+    var hueAt = function (t) { return mixL([138, 124, 196], [104, 168, 176], Math.max(0, Math.min(1, t))); };
+    var grad = function (ax, stops, col, on, Rm, sheen) {
+      var ms = Rm && Rm.mstrip, capL = CAPL, out = stops.map(function (q) {
+        var v = q[1], c = v === 's' ? (ms ? mixL(col, WHITE, ms) : litC(col, 1.85)) : v === 's2' ? (ms ? mixL(col, WHITE, ms * 0.8) : litC(col, 1.7)) : v === 'b' ? (ms ? mixL(col, WHITE, ms * 0.55) : litC(col, 1.3)) : litC(col, v);
+        if (lumC(c) > capL) c = mixL(c, [228, 231, 235], 0.7);
+        return [q[0], c];
+      });
+      // (inside the die grid only, 10 to 20 percent, never over 25: the expert's ruling)
+      if (sheen) out = out.map(function (q) { return [q[0], mixL(q[1], hueAt(q[0]), Math.min(0.25, sheen))]; });
+      return { x0: ax[0], y0: ax[1], x1: ax[2], y1: ax[3], stops: out.map(function (q) { return [q[0], css(lift(q[1], on))]; }) };
+    };
+    /* a face of material Rm: { f: its fill (a colour, a linear gradient or a radial one), rgb: its colour }. opt: gk (the plane
+       a decal lies in), mul (a decal's tone against its face) */
+    var tFace = function (Rm, nvw, f, fi, pts, cut, on, axV, s, opt) {
+      opt = opt || {};
+      var b = tBase(Rm), mul = opt.mul || 1;
+      if (cut) { var cc = litC(cutCol(Rm, b), mul); return { f: css(lift(cc, on)), rgb: cc }; }
+      var gl = gOf(Rm);
+      if (f && f.curve) {
+        var isCap = !!f.cap || !!(s && s.axisN && Math.abs(f.n[0] * s.axisN[0] + f.n[1] * s.axisN[1] + f.n[2] * s.axisN[2]) > 0.35);
+        var inr = (f.inner ? (TB ? 0.8 : 0.72) : 1) * mul, cm = litC(shadeCurve(Rm, b, nvw, !!f.cap, axV), inr);
+        var si = stripInfo(f, pts);
+        if (!si) return { f: css(lift(cm, on)), rgb: cm };
+        var cL = litC(shadeCurve(Rm, b, si.nL, !!f.cap, axV), inr), cR = litC(shadeCurve(Rm, b, si.nR, !!f.cap, axV), inr);
+        return { f: { x0: si.pL[0], y0: si.pL[1], x1: si.pR[0], y1: si.pR[1], stops: [[0, css(lift(cL, on))], [1, css(lift(cR, on))]] }, rgb: cm };
+      }
+      var lam = lamOf(nvw), top = lam > 0.72, col = litC(flatTone(Rm, b, lam, top), mul);
+      if (!pts) return { f: css(lift(col, on)), rgb: col };
+      var bb;
+      // a face seen from inside a cavity darkens toward its corners (S5)
+      if (s && s.inner) {
+        bb = bbOf(pts); var cx = (bb[0] + bb[2]) / 2, cy = (bb[1] + bb[3]) / 2, r = Math.hypot(bb[2] - bb[0], bb[3] - bb[1]) / 2 || 1;
+        return { f: { x0: cx, y0: cy, r: r, stops: [[0, css(lift(col, on))], [0.5, css(lift(col, on))], [1, css(lift(litC(col, TB ? 0.74 : 0.68), on))]] }, rgb: col };
+      }
+      // a matte side face takes bounce light at its foot, and a dark band only where its foot is a joint
+      if (!TB && !top && gl < 0.5) {
+        bb = bbOf(pts); var foot = false;
+        if (s && s.joint && f) for (var q = 0; q < f.v.length; q++) { var va = f.v[q], vb = f.v[(q + 1) % f.v.length]; if (s.joint[va < vb ? va + '_' + vb : vb + '_' + va] && (pts[q][1] + pts[(q + 1) % pts.length][1]) / 2 >= bb[3] - 1.5) { foot = true; break; } }
+        var mx = (bb[0] + bb[2]) / 2;
+        return { f: grad([mx, bb[1], mx, bb[3]], foot ? [[0, 1], [0.86, 1.02], [1, 0.74]] : [[0, 1], [1, 1.06]], col, on, null), rgb: col };
+      }
+      var gk = opt.gk || (f && (groups(), f._gk)), gb = gk && GR[gk] ? GR[gk] : bbOf(pts);
+      var wide = gb[2] - gb[0] > 0.4 * w;
+      var stops = gl >= 0.85 ? (TB ? MIR_B : wide ? MIR_CW : MIR_C) : gl >= 0.5 ? (TB ? SAT_B : SAT_C) : TB ? TONE : TONE_C;
+      return { f: grad(axisOf(gb), stops, col, on, Rm, opt.sheen), rgb: col };
+    };
+    // a cut face's ruling: in the face's own shade at 0.4 (a weave: lighter, in its own colour)
+    var tHatch = function (pts, rgb, fm, f, alpha, weave) {
+      var gap = (fm.gap || (fm.hatch === 2 ? 2.4 : 3.4)) * k, ang = f && f.hv != null ? f.hv : fm.ang;
+      if (weave) g.hatch(pts, fzC(pal.dark ? css(litC(rgb, 1.5)) : '#c9a870'), gap * 1.3, Math.max(1, LW.hatch * 1.6), fm.hatch, 0.6 * alpha, ang);
+      else g.hatch(pts, fzC(css(litC(rgb, 0.6))), gap, LW.hatch * 0.8, fm.hatch, 0.4 * alpha, ang);
+    };
+    // an object's outline: its own deep shade (on the dark ground a darker tone of the part)
+    var outC = function (b) {
+      var Lb = lumC(b);
+      return css(litC(b, pal.dark ? (Lb < 0.03 ? 0.62 : 0.45) : Lb < 0.03 ? 0.5 : Lb > 0.45 ? 0.24 : 0.28));
+    };
+    // a line inside a face: darker than the face, and lighter on a dark face
+    var inC = function (rgb) {
+      var Ld = lumC(rgb);
+      return css(Ld < 0.09 ? litC(rgb, 2.6) : litC(rgb, 0.55));
+    };
+    var tEdges = function (TF, Rf, s, f, shl, fine, crease, out, shade, on, alpha, szK, thinTint, nvw) {
+      var rgb = TF.rgb, b = tBase(Rf), edge = Rf.edge && !pal.dark ? hex(Rf.edge) : null, hiW = 1.5 * Math.max(0.8, k);
+      // no ink on the object: its silhouette in its own deep shade at one weight, the light edge alone where a polished top
+      // meets a side, every other crease soft in the face's own colour
+      var sil = out.concat(shade);
+      if (s.soft && !on) { crease = crease.concat(sil); sil = []; }
+      var polished = gOf(Rf) >= 0.6 && !s.soft && !s.inner && !(Rf.clear < 1);
+      if (crease.length) {
+        var hi = [], lo = [], meTop = !f.curve && lamOf(nvw) > 0.72;
+        crease.forEach(function (sg) { var nb = sg.nb; if (!polished || nb == null) { lo.push(sg); return; } var o = F[nb], nbTop = !o.curve && lamOf(rotN(o.n)) > 0.72; (meTop !== nbTop ? hi : lo).push(sg); });
+        if (lo.length) GL(lo, s.soft && m.spec.softLine && !pal.dark ? m.spec.softLine : css(litC(rgb, pal.dark ? 0.7 : 0.55)), s.soft ? 0.5 : LW.crease * 0.8, null, (s.soft ? 0.6 : 0.55) * alpha);
+        if (hi.length) GL(hi, css(litC(b, pal.dark ? 1.9 : 1.55)), LW.crease * 1.2, null, 0.85 * alpha);
+      }
+      if (fine.length) GL(fine, css(litC(rgb, 0.55)), LW.fine, null, 0.4 * alpha);
+      if (sil.length) GL(sil, on ? hlC : edge ? css(edge) : outC(b), on ? hiW : LW.out * 0.9, null, 0.95 * alpha);
+      if (pal.dark && shade.length && !on && !s.soft) GL(shade, css(litC(b, 1.9)), 1, null, 0.45 * alpha);
+    };
+    // a clear part's far faces, seen through its near ones
+    var tBack = function (s, a, on) {
+      var Rm = REAL[s.real], list = [];
+      for (var fi = s.f0; fi < s.f1; fi++) if (!front[fi] && !F[fi].two) list.push(fi);
+      if (!list.length) return;
+      var z = {}; list.forEach(function (fi) { var vv = F[fi].v, t = 0; for (var q = 0; q < vv.length; q++) t += X[vv[q] * 3 + 2]; z[fi] = t / vv.length; });
+      list.sort(function (x, y) { return z[x] - z[y]; });
+      var b = tBase(Rm);
+      list.forEach(function (fi) { g.poly(F[fi].v.map(P2), css(lift(litC(b, 0.82), on)), Rm.clear * 0.45 * a); });
+      var segs = edgesOf(s, function (fa, fb) { return !fa && !fb; });
+      if (segs.length) GL(segs, css(Rm.edge && !pal.dark ? hex(Rm.edge) : litC(b, pal.dark ? 1.6 : 0.6)), Math.max(0.45, LW.fine || 0.4), null, 0.5 * a);
+    };
+    // decals on a solid in a real material: fills from the face they lie on (its tone and reflection, scaled), or their own material
+    var REL = { paper: 1.35, light: 1.2, steel: 1.0, turned: 1.0, mid: 0.8, dark: 0.6, black: 0.36, turnedDark: 0.7, acc: 0.8, accLight: 1.1, accDark: 0.6 };
+    var tDotC = function (Rm, ring) { return css(ring ? litC(tBase(Rm), 0.75) : tBase(Rm)); };
+    var tDecals = function (s, d, Rs, a, pa, on) {
+      var nv = rotN(d.n), alpha0 = (s.alpha == null ? 1 : s.alpha) * a, o0 = O[s.part], gk = null;
+      var it0 = d.items[0], p0 = it0 ? (it0.pts || it0.dots || [])[0] : null;
+      if (p0) { groups(); gk = planeKey(d.n, d.n[0] * (p0[0] + o0[0]) + d.n[1] * (p0[1] + o0[1]) + d.n[2] * (p0[2] + o0[2])); if (!GR[gk]) gk = null; }
+      var host = tFace(Rs, nv, null, -1, null, false, false, null, s).rgb;
+      d.items.forEach(function (it) {
+        if (thumb && !it.keep) return;
+        var dl = foc ? P.lit(foc, it, s) : false, al = foc ? (pa == null ? 1 : pa) : alpha0, keepF = curFade;
+        curFade = foc && !dl ? FADE : 0;
+        // (a diagram mark on a face, the field the light exposes, keeps the plate's own colour)
+        if (it.diagram) { var pd = it.pts.map(function (q) { return proj(q, s.part).slice(0, 2); }), fd = typeof it.fill === 'string' ? MATS[it.fill] : it.fill; if (fd) g.poly(pd, fzC(fillOf(fd, nv, false, dl)), al); if (it.lw !== 0) GL([it.closed ? pd.concat([pd[0]]) : pd], dl ? hlC : lineCol(it.col), (it.lw || LW.decal / k) * k * 0.9, null, al); curFade = keepF; return; }
+        var fo = it.fill && typeof it.fill === 'object' ? it.fill : null, Rd = REAL[it.real || (fo && fo.real) || ''] || null;
+        var lc = dl ? hlC : Rd ? css(litC(tBase(Rd), Rd.metal ? 1.18 : Rd.lineK || 0.6)) : it.col === 'bg' ? bgC : it.col === 'acc' || it.col === 'acc2' ? lineCol(it.col) : inC(host);
+        if (it.dots) {
+          var dp = it.dots.map(function (q) { return proj(q, s.part); });
+          count.dots += dp.length;
+          g.dots(dp, Math.max(0.45, (it.r || 0.9) * k), fzC(dl ? hlC : Rd ? tDotC(Rd, it.ring) : it.fillCol ? css(colOf(it.fillCol)) : lc), (it.alpha == null ? 0.9 : it.alpha) * al, it.ring);
+          curFade = keepF;
+          return;
+        }
+        var pts = it.pts.map(function (q) { return proj(q, s.part).slice(0, 2); });
+        if (it.fill) {
+          var fm = typeof it.fill === 'string' ? MATS[it.fill] : it.fill;
+          if (Rd) {
+            var tf = tFace(Rd, nv, null, -1, pts, false, dl, null, s, { gk: gk, sheen: it.sheen });
+            g.fillAny(pts, tf.f, (fm.alpha == null ? 1 : fm.alpha) * (Rd.clear || 1) * al);
+            if (fm.hatch && !thumb) tHatch(pts, tf.rgb, fm, null, al, true);
+            // a metal pad: its rim a darker tone of the metal, so it reads as a pad
+            if (Rd.metal && it.lw !== 0 && !dl) lc = css(litC(tBase(Rd), 0.5));
+          } else if (fm.hatch) { var hc = cutCol(Rs, host); g.poly(pts, fzC(css(hc)), al); if (!thumb) tHatch(pts, hc, fm, null, al); }
+          else { var tf2 = tFace(Rs, nv, null, -1, pts, false, dl, null, s, { gk: gk, mul: typeof it.fill === 'string' ? (REL[it.fill] || 1) : 1.3 - (fm.d || 0.3), sheen: it.sheen }); g.fillAny(pts, tf2.f, (fm.alpha == null ? 1 : fm.alpha) * al); }
+        }
+        if (it.lw !== 0) {
+          if (it.closed) pts = pts.concat([pts[0]]);
+          var lw0 = (it.lw || LW.decal / k) * k * 0.9, dash = it.dash ? it.dash.map(function (v) { return v * k; }) : null;
+          // (a copper line with an edge: a darker rim each side, as the TSVs and the substrate's planes take it)
+          if (it.edge && Rd && !dl) GL([pts], css(litC(tBase(Rd), 0.42)), lw0 + 0.9, dash, (it.alpha == null ? 1 : it.alpha) * al);
+          GL([pts], lc, lw0, dash, (it.alpha == null ? 1 : it.alpha) * al);
+        }
+        curFade = keepF;
+      });
+    };
+    // dots of a real material (bumps, balls): a large dot takes a darker rim
+    var tDots = function (dp, dr, Rm, it, fa, on) {
+      var b = tBase(Rm);
+      // (a microbump: a copper pillar under a tin-silver cap, its rim dark)
+      if (it.cap && !on) { g.dots(dp, dr + 0.5, fzC(css(litC(b, 0.42))), it.alpha * fa); g.dots(dp, dr, fzC(css(b)), it.alpha * fa); g.dots(dp, dr * 0.66, fzC(css(tBase(REAL.sac))), it.alpha * fa); return; }
+      if (!it.ring && dr >= 1.5 && !on) { g.dots(dp, dr + 0.55, fzC(css(litC(b, 0.42))), it.alpha * fa); g.dots(dp, dr, fzC(css(b)), it.alpha * fa); return; }
+      g.dots(dp, dr, on ? hlC : fzC(tDotC(Rm, it.ring)), it.alpha * fa, it.ring);
+    };
+    // a wire of a real material: a tube, its shade, its body and a lit line along it (a thin or dashed one a line in its colour)
+    var tWire = function (pts, Rm, lw, dash, al, on, edge) {
+      var b = tBase(Rm);
+      if (on) { GL([pts], hlC, lw, dash, al); return; }
+      if (dash || lw < 0.9) { if (edge && !dash) GL([pts], css(litC(b, 0.42)), lw + 0.9, null, al); GL([pts], css(litC(b, 1.0)), lw, dash, al); return; }
+      GL([pts], css(litC(b, 0.45)), lw * 1.25, null, al, 'round');
+      GL([pts], css(b), lw * 0.8, null, al, 'round');
+      GL([pts], css(mixL(b, WHITE, 0.45)), lw * 0.3, null, al * 0.85, 'round');
+    };
+    // the globe: the sea, modelled as a sphere, the sphere's shading over the land, and its rim
+    var tGlobe = function (x, y, r, fa) {
+      var b = tBase(REAL.ocean);
+      b = curFade ? mix(b, pal.bg, curFade) : b;
+      if (!g.x) { g.circleAny(x, y, r, { x0: x, y0: y, r: r, fx: x - r * 0.35, fy: y - r * 0.4, fr: r * 0.05, stops: [[0, css(litC(b, 1.14))], [0.7, css(b)], [1, css(litC(b, 0.74))]] }, fa); return; }
+      var c = g.x, gr = c.createRadialGradient(x - r * 0.35, y - r * 0.4, r * 0.05, x, y, r);
+      gr.addColorStop(0, css(litC(b, 1.14))); gr.addColorStop(0.7, css(b)); gr.addColorStop(1, css(litC(b, 0.74)));
+      c.globalAlpha = fa * g.ga; c.beginPath(); c.arc(x, y, r, 0, Math.PI * 2); c.fillStyle = gr; c.fill(); c.globalAlpha = 1;
+    };
+    var tRim = function (G2) {
+      if (g.x) {
+        var c = g.x, gr = c.createRadialGradient(G2.x - G2.r * 0.35, G2.y - G2.r * 0.4, G2.r * 0.1, G2.x, G2.y, G2.r);
+        gr.addColorStop(0, 'rgba(255,255,255,' + 0.12 + ')'); gr.addColorStop(0.5, 'rgba(255,255,255,0)'); gr.addColorStop(0.8, 'rgba(8,18,40,0)'); gr.addColorStop(1, 'rgba(8,18,40,' + (pal.dark ? 0.32 : 0.24) + ')');
+        c.globalAlpha = g.ga; c.beginPath(); c.arc(G2.x, G2.y, G2.r, 0, Math.PI * 2); c.fillStyle = gr; c.fill(); c.globalAlpha = 1;
+      } else g.circleAny(G2.x, G2.y, G2.r, { x0: G2.x, y0: G2.y, r: G2.r, fx: G2.x - G2.r * 0.35, fy: G2.y - G2.r * 0.4, fr: G2.r * 0.1, stops: [[0, 'rgb(255,255,255)', 0.12], [0.5, 'rgb(255,255,255)', 0], [0.8, 'rgb(8,18,40)', 0], [1, 'rgb(8,18,40)', pal.dark ? 0.32 : 0.24]] }, 1);
+      g.circle(G2.x, G2.y, G2.r, null, css(pal.dark ? litC(tBase(REAL.ocean), 0.55) : hex('#3d5a70')), 1);
+    };
+    var tSwire = function (runs, it, fa) {
+      var sea = tBase(REAL.ocean), land = tBase(REAL.land), grat = it.alpha < 0.6;
+      var col = grat ? litC(sea, pal.dark ? 1.3 : 0.78) : litC(land, pal.dark ? 0.62 : 0.5);
+      GL(runs, css(col), it.lw * k, null, (grat ? 0.6 : 0.95) * fa);
+    };
+    /* shadow discipline (round 2, S4). The key light, from the current turn. A part casts on the upward faces under it only
+       where it rests on them (within 3 percent of the drawing's size, fading with the gap) and only within its own exploded
+       group, never across an exploded gap; less on polished faces, which show reflections. One ground under the parts that
+       touch it, a tight core and a soft penumbra (the core alone on the dark ground), faded before the canvas edge. On the canvas
+       each shadow is a blurred offscreen mask; in the still (SvgG, the print) the same shapes are a blurred SVG group, clipped
+       to the faces that receive it */
+    var VEC = !g.x && !!g.shadow;
+    var SHD = !CHART && !thumb && !lite && !st.noShadow && (VEC || (g.x && typeof document !== 'undefined')) ? (function () {
+      var Lw = [R[0] * Lt[0] + R[3] * Lt[1] + R[6] * Lt[2], R[1] * Lt[0] + R[4] * Lt[1] + R[7] * Lt[2], R[2] * Lt[0] + R[5] * Lt[1] + R[8] * Lt[2]];
+      if (Lw[1] < 0.35) { Lw[1] = 0.35; var n2 = Math.hypot(Lw[0], Lw[1], Lw[2]); Lw = [Lw[0] / n2, Lw[1] / n2, Lw[2] / n2]; }
+      var dLx = sc * (R[0] * Lw[0] + R[1] * Lw[1] + R[2] * Lw[2]), dLy = -sc * (R[3] * Lw[0] + R[4] * Lw[1] + R[5] * Lw[2]);
+      var LG = [Lw[0] * 0.2, Lw[1], Lw[2] * 0.2], lg = Math.hypot(LG[0], LG[1], LG[2]); LG = [LG[0] / lg, LG[1] / lg, LG[2] / lg];
+      var dLgx = sc * (R[0] * LG[0] + R[1] * LG[1] + R[2] * LG[2]), dLgy = -sc * (R[3] * LG[0] + R[4] * LG[1] + R[5] * LG[2]);
+      var ms = turned ? 0.25 : 0.5, MW = Math.max(1, Math.round(w * ms)), MH = Math.max(1, Math.round(h * ms));
+      var cv = VEC ? null : plateSelf._shCv || (plateSelf._shCv = [document.createElement('canvas'), document.createElement('canvas')]);
+      if (cv) cv.forEach(function (c) { if (c.width !== MW || c.height !== MH) { c.width = MW; c.height = MH; } });
+      var size = m.size || 1, eps = size * 0.0015, reach = size * 0.03, fall = size * 0.012, SC = pal.dark ? 'rgb(0,0,0)' : 'rgb(22,28,46)', SA = pal.dark ? 0.45 : 0.3;
+      var casters = null, lastKey = null;
+      var Yv = function (vi) { return V[vi * 3 + 1] + O[VP[vi]][1]; };
+      var sameRest = function (pa, pb) { if (pa === pb) return true; var ea = m.parts[pa].ex, eb = m.parts[pb].ex; return ea[0] === eb[0] && ea[1] === eb[1] && ea[2] === eb[2]; };
+      var cast = function () {
+        if (casters) return casters;
+        casters = m.S.filter(function (s) { if (s.kind !== 'solid' || s.mat.ghost || s.mat.phantom || s.two || s.noCast || A[s.part] <= 0.01) return false; var Rm = s.real && REAL[s.real]; return !(Rm && Rm.clear != null && Rm.clear < 0.6); });
+        casters.forEach(function (s) {
+          s._y0 = s.ymin + O[s.part][1]; s._y1 = s.ymax + O[s.part][1];
+          var b = [Infinity, Infinity, -Infinity, -Infinity];
+          for (var fi = s.f0; fi < s.f1; fi++) { var vv = F[fi].v; for (var q = 0; q < vv.length; q++) { var x = X[vv[q] * 3], y = X[vv[q] * 3 + 1]; if (x < b[0]) b[0] = x; if (y < b[1]) b[1] = y; if (x > b[2]) b[2] = x; if (y > b[3]) b[3] = y; } }
+          s._bb = b;
+        });
+        return casters;
+      };
+      var hull = function (p) {
+        p.sort(function (a, b) { return a[0] - b[0] || a[1] - b[1]; });
+        var cr = function (o, a, b) { return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]); }, lo = [], up = [], i;
+        for (i = 0; i < p.length; i++) { while (lo.length >= 2 && cr(lo[lo.length - 2], lo[lo.length - 1], p[i]) <= 0) lo.pop(); lo.push(p[i]); }
+        for (i = p.length - 1; i >= 0; i--) { while (up.length >= 2 && cr(up[up.length - 2], up[up.length - 1], p[i]) <= 0) up.pop(); up.push(p[i]); }
+        up.pop(); lo.pop(); return lo.concat(up);
+      };
+      var shapes = function (y0, list, L3, dx, dy) {
+        var out = [];
+        list.forEach(function (s) {
+          if (s.f1 - s.f0 > 30) {
+            var P0 = [], seen = {};
+            for (var fj = s.f0; fj < s.f1; fj++) { var vw = F[fj].v; for (var r = 0; r < vw.length; r++) { var vi0 = vw[r]; if (seen[vi0]) continue; seen[vi0] = 1; var t0 = (Yv(vi0) - y0) / L3[1]; P0.push([X[vi0 * 3] - t0 * dx, X[vi0 * 3 + 1] - t0 * dy]); } }
+            var Hh = hull(P0); if (Hh.length > 2) out.push(Hh);
+            return;
+          }
+          for (var fi = s.f0; fi < s.f1; fi++) {
+            var f = F[fi], n = f.n; if (!f.two && n[0] * L3[0] + n[1] * L3[1] + n[2] * L3[2] < -1e-3) continue;
+            var vv = f.v, pg = [];
+            for (var q = 0; q < vv.length; q++) { var vi = vv[q], t = (Yv(vi) - y0) / L3[1]; pg.push([X[vi * 3] - t * dx, X[vi * 3 + 1] - t * dy]); }
+            out.push(pg);
+          }
+        });
+        return out;
+      };
+      var mask = function (y0, list, blur, L3, dx, dy, fade) {
+        if (VEC) return { shapes: shapes(y0, list, L3, dx, dy), blur: blur, fade: fade };
+        var mc = cv[0].getContext('2d'); mc.setTransform(1, 0, 0, 1, 0, 0); mc.clearRect(0, 0, MW, MH); mc.setTransform(ms, 0, 0, ms, 0, 0); mc.fillStyle = SC;
+        shapes(y0, list, L3, dx, dy).forEach(function (pg) { mc.beginPath(); mc.moveTo(pg[0][0], pg[0][1]); for (var q = 1; q < pg.length; q++) mc.lineTo(pg[q][0], pg[q][1]); mc.closePath(); mc.fill(); });
+        var bc = cv[1].getContext('2d'); bc.setTransform(1, 0, 0, 1, 0, 0); bc.clearRect(0, 0, MW, MH);
+        if (!turned && 'filter' in bc) { bc.filter = 'blur(' + Math.max(0.4, blur * ms).toFixed(2) + 'px)'; bc.drawImage(cv[0], 0, 0); bc.filter = 'none'; }
+        else {
+          var fct = Math.max(1, Math.min(4, blur * ms / 1.2)), src = cv[0], sw = MW, sh = MH, step = 2;
+          while (fct >= 1.5 && step <= 5) {
+            var tcv = cv[step] || (cv[step] = document.createElement('canvas')), nw = Math.max(1, Math.round(sw / Math.min(2, fct))), nh = Math.max(1, Math.round(sh / Math.min(2, fct)));
+            if (tcv.width !== nw || tcv.height !== nh) { tcv.width = nw; tcv.height = nh; }
+            var tc = tcv.getContext('2d'); tc.setTransform(1, 0, 0, 1, 0, 0); tc.clearRect(0, 0, nw, nh); tc.imageSmoothingEnabled = true; tc.drawImage(src, 0, 0, sw, sh, 0, 0, nw, nh);
+            src = tcv; fct /= Math.min(2, fct); sw = nw; sh = nh; step++;
+          }
+          bc.imageSmoothingEnabled = true; bc.drawImage(src, 0, 0, sw, sh, 0, 0, MW, MH);
+        }
+        // (the ground's shadow fades out over the canvas's last 24 px, so the canvas never clips it)
+        if (fade) {
+          var E = 24 * ms; bc.save(); bc.globalCompositeOperation = 'destination-out';
+          [[0, 0, E, 0, 0, 0, E, MH], [MW, 0, MW - E, 0, MW - E, 0, E, MH], [0, 0, 0, E, 0, 0, MW, E], [0, MH, 0, MH - E, 0, MH - E, MW, E]].forEach(function (q) {
+            var gq = bc.createLinearGradient(q[0], q[1], q[2], q[3]); gq.addColorStop(0, 'rgba(0,0,0,1)'); gq.addColorStop(1, 'rgba(0,0,0,0)'); bc.fillStyle = gq; bc.fillRect(q[4], q[5], q[6], q[7]);
+          });
+          bc.restore();
+        }
+        return cv[1];
+      };
+      var put = function (mk, al, polys) {
+        if (VEC) { g.shadow(mk.shapes, mk.blur, al, SC, polys, mk.fade); return; }
+        var c = g.x; c.save();
+        if (polys) { c.beginPath(); polys.forEach(function (p) { c.moveTo(p[0][0], p[0][1]); for (var i = 1; i < p.length; i++) c.lineTo(p[i][0], p[i][1]); c.closePath(); }); c.clip(); }
+        c.globalAlpha = al * g.ga; c.drawImage(mk, 0, 0, w, h); c.restore();
+      };
+      var shBox = function (c, y0) { var t0 = (c._y0 - y0) / Lw[1], t1 = (c._y1 - y0) / Lw[1], b = c._bb, mg = 12; return [Math.min(b[0] - t0 * dLx, b[0] - t1 * dLx) - mg, Math.min(b[1] - t0 * dLy, b[1] - t1 * dLy) - mg, Math.max(b[2] - t0 * dLx, b[2] - t1 * dLx) + mg, Math.max(b[3] - t0 * dLy, b[3] - t1 * dLy) + mg]; };
+      return {
+        ground: function () {
+          var L = cast(); lastKey = null; if (!L.length || m.spec.noGround) return;
+          var gy = Infinity; L.forEach(function (s) { gy = Math.min(gy, s._y0); }); gy -= eps;
+          var touch = L.filter(function (s) { return s._y0 - gy < size * 0.02; });
+          if (!touch.length) return;
+          put(mask(gy, touch, 3, LG, dLgx, dLgy, true), pal.dark ? 0.42 : 0.4);
+          if (!pal.dark) put(mask(gy, touch, 12, LG, dLgx, dLgy, true), 0.16);
+          lastKey = null;
+        },
+        receive: function (s, faces, a) {
+          var L = cast(), lv = {}, keys = [], Rr = s.real && REAL[s.real], gr0 = Rr ? gOf(Rr) : 0;
+          faces.forEach(function (fi) { var f = F[fi]; if (f.n[1] < 0.9 || f.curve) return; var y0 = Yv(f.v[0]), kk = Math.round(y0 / eps); if (!lv[kk]) { lv[kk] = { y0: y0, ps: [], bb: [Infinity, Infinity, -Infinity, -Infinity] }; keys.push(kk); } var p = f.v.map(P2), b = lv[kk].bb; lv[kk].ps.push(p); p.forEach(function (q) { if (q[0] < b[0]) b[0] = q[0]; if (q[1] < b[1]) b[1] = q[1]; if (q[0] > b[2]) b[2] = q[0]; if (q[1] > b[3]) b[3] = q[1]; }); });
+          keys.forEach(function (kk) {
+            var o = lv[kk], y0 = o.y0, bb = o.bb;
+            var list = L.filter(function (c) { if (c === s || !sameRest(c.part, s.part) || c._y0 < y0 - eps || c._y0 - y0 > reach) return false; var sb = shBox(c, y0); return sb[0] < bb[2] && sb[2] > bb[0] && sb[1] < bb[3] && sb[3] > bb[1]; });
+            if (!list.length) return;
+            var gap = Infinity; list.forEach(function (c) { gap = Math.min(gap, Math.max(0, c._y0 - y0)); });
+            var key = kk + '|' + list.map(function (c) { return c._id; }).join(','), mk;
+            if (key === lastKey && !VEC) mk = cv[1]; else { mk = mask(y0, list, Math.min(8, 1.5 + gap * sc * 0.08), Lw, dLx, dLy, false); lastKey = key; }
+            put(mk, SA * a * Math.exp(-gap / fall) * (1 - 0.7 * gr0), o.ps);
+          });
+        }
+      };
+    })() : null;
+
     // the reader's pointer on a label or a part lights that part; the rest steps back (P.lit says what a focus lights)
     var foc = this.focus, inF = function (it) { return P.lit(foc, it); };
-    var dimF = function (it) { return foc ? (inF(it) ? 1 : 0.2) : 1; };
+    var dimF = function (it) { return foc ? (inF(it) ? 1 : it.real || it.kind === 'globe' || it.kind === 'land' || it.kind === 'swire' || it.kind === 'rim' ? 1 : 0.55) : 1; };
     var pick = st.pick ? (this._pick = []) : null;
     // the labels are laid out once the plate is at rest (callouts): the faces drawn then, in order, are the map the leaders are
     // routed over, so a frame that lays them out keeps a list of them
@@ -1089,6 +1643,7 @@
       });
     };
     under(false);
+    if (SHD) SHD.ground();
 
     // ---- the parts, back to front
     parts.forEach(function (p) {
@@ -1100,6 +1655,7 @@
         if (it.kind === 'solid' && it.mat.phantom) { ph.push(it); return false; }
         return true;
       });
+      if (m.spec.ghostFill) gh.forEach(function (s) { for (var fi = s.f0; fi < s.f1; fi++) if (front[fi]) g.poly(F[fi].v.map(P2), bgC, 0.94 * a); });
       gh.forEach(function (s) { ghostEdges(s, false, a * dimF(s)); });
       // under 560 px, where leaders find their way out of the drawing to a row of labels, an outline-only part still counts as
       // drawing (the cost column's yield loss), so no leader runs down its face
@@ -1109,6 +1665,7 @@
       if (p.mode === 'fixed') ord = items.map(function (it, i) { return i; });
       ord.forEach(function (ii) {
         var it = items[ii], fa = a * dimF(it), hl = foc && inF(it);
+        curFade = foc && !hl ? FADE : 0;
         // a pin on the globe fades as its foot goes round the rim, rather than blinking out
         if (it.vis) { var vz = proj(it.vis, it.part)[2]; if (vz < -0.04) return; fa *= clamp01((vz + 0.04) / 0.14); }
         if (it.kind === 'solid') solid(it, fa, hl, a);
@@ -1116,30 +1673,27 @@
           if (thumb && it.lw < 0.9) return;
           var pts = it.pts.map(function (q) { return proj(q, it.part).slice(0, 2); });
           if (it.closed) pts.push(pts[0]);
-          g.lines([pts], hl ? hlC : lineCol(it.col), (thumb ? Math.max(0.5, it.lw * 0.6) * ik : it.lw * k), it.dash ? it.dash.map(function (v) { return v * k; }) : null, it.alpha * fa);
+          if (it.real && REAL[it.real]) tWire(pts, REAL[it.real], (thumb ? Math.max(0.5, it.lw * 0.6) * ik : it.lw * k), it.dash ? it.dash.map(function (v) { return v * k; }) : null, it.alpha * fa, hl, it.edge);
+          else g.lines([pts], hl ? hlC : lineCol(it.col), (thumb ? Math.max(0.5, it.lw * 0.6) * ik : it.lw * k), it.dash ? it.dash.map(function (v) { return v * k; }) : null, it.alpha * fa);
         } else if (it.kind === 'globe') {
           var gc = proj([0, 0, 0], it.part);
-          g.circle(gc[0], gc[1], it.r * sc, fillOf(MATS[it.fill] || MATS.paper, [0, 0, 1], false), null, 0);
+          tGlobe(gc[0], gc[1], it.r * sc, fa);
           self._globe = { x: gc[0], y: gc[1], r: it.r * sc };
         } else if (it.kind === 'rim') {
-          var G2 = self._globe; if (G2) {
-            g.circle(G2.x, G2.y, G2.r, null, inkC, LW.out);
-            var arc = []; for (var q = 0; q <= 40; q++) { var an = -Math.PI * 0.25 + Math.PI * q / 40; arc.push([G2.x + G2.r * Math.cos(an), G2.y + G2.r * Math.sin(an)]); }
-            g.lines([arc], inkC, LW.shade, null, 1, 'round');
-          }
+          var G2 = self._globe; if (G2) tRim(G2);
         } else if (it.kind === 'land') {
           var G = self._globe || { x: cx, y: cy, r: sc };
           it.rings.forEach(function (rg, ri) {
             var pts = rg.map(function (q) { var pp = proj(q, it.part); if (pp[2] < 0) { var dx = pp[0] - G.x, dy = pp[1] - G.y, L = Math.hypot(dx, dy) || 1; return [G.x + dx / L * G.r, G.y + dy / L * G.r]; } return [pp[0], pp[1]]; });
             var hole = it.holes.indexOf(ri) >= 0;
-            g.poly(pts, hole ? fillOf(MATS.paper, [0, 0, 1], false) : fillOf(it.mat, [0, 0, 1], false), fa);
+            g.poly(pts, fzC(css(hole ? tBase(REAL.ocean) : tBase(REAL.land))), fa);
           });
         } else if (it.kind === 'swire') {
           if (thumb && it.lod > 0) return;
           var pp = it.pts.map(function (q) { return proj(q, it.part); }), runs = [], run = [];
           pp.forEach(function (q) { if (q[2] >= 0) run.push([q[0], q[1]]); else { if (run.length > 1) runs.push(run); run = []; } });
           if (run.length > 1) runs.push(run);
-          g.lines(runs, it.col === 'ink' ? inkC : lineCol(it.col), (thumb ? Math.max(0.45, it.lw * 0.7) : it.lw * k), null, it.alpha * fa);
+          if (it.col === 'ink') tSwire(runs, it, fa); else g.lines(runs, it.col === 'ink' ? inkC : lineCol(it.col), (thumb ? Math.max(0.45, it.lw * 0.7) : it.lw * k), null, it.alpha * fa);
         } else if (it.kind === 'spike') {
           var sh = spikeXY(it, proj), sf = proj(it.foot, it.part), scol = hl ? hlC : lineCol(it.col), slw = thumb ? Math.max(0.6, it.lw * 0.6) * ik : it.lw * k;
           if (it.sx) g.lines([[[sf[0], sf[1]], [sh[0], sf[1]]]], scol, slw * 0.7, null, fa, 'butt');
@@ -1155,7 +1709,7 @@
           if (it.front) dp = dp.filter(function (q) { return q[2] >= 0; });
           count.dots += dp.length;
           var dr = Math.max(0.5, it.r * (thumb ? 0.6 : k));
-          g.dots(dp, dr, hl ? hlC : it.col === 'ink' ? inkC : css(colOf(it.col)), it.alpha * fa, it.ring);
+          if (it.real && REAL[it.real]) tDots(dp, dr, REAL[it.real], it, fa, hl); else g.dots(dp, dr, hl ? hlC : it.col === 'ink' ? inkC : css(colOf(it.col)), it.alpha * fa, it.ring);
           if (pick && it.alpha > 0.05) pick.push({ dots: dp, r: Math.max(3, dr + 1.5), it: it });
           if (occ && it.alpha > 0.05) occ.push({ dots: dp, r: Math.max(1.5, dr), it: it });
         }
@@ -1168,6 +1722,9 @@
     function solid(s, a, hl, pa) {
       var mat = s.mat, faces = [];
       for (var fi = s.f0; fi < s.f1; fi++) if (front[fi]) faces.push(fi);
+      var Rs = s.real ? REAL[s.real] || null : null, clear = Rs && Rs.clear != null && Rs.clear < 1 ? Rs.clear : 1, axV = Rs && s.axisN ? rotN(s.axisN) : null;
+      curFade = foc && !hl ? FADE : 0;
+      if (Rs && clear < 1 && !thumb) tBack(s, a * (s.alpha == null ? 1 : s.alpha), hl);
       if (s.sortFaces) {
         var fd = {}; faces.forEach(function (fi) { var f = F[fi], z = 0; for (var q = 0; q < f.v.length; q++) z += X[f.v[q] * 3 + 2]; fd[fi] = z / f.v.length; });
         faces.sort(function (x, y) { return fd[x] - fd[y]; });
@@ -1184,7 +1741,7 @@
       // outline in its own tinted line, so the colour still shows
       var area2 = 0; faces.forEach(function (fi) { var vv = F[fi].v, a2 = 0; for (var q = 0; q < vv.length; q++) { var q2 = (q + 1) % vv.length; a2 += X[vv[q] * 3] * X[vv[q2] * 3 + 1] - X[vv[q2] * 3] * X[vv[q] * 3 + 1]; } area2 += Math.abs(a2) / 2; });
       var thin = !thumb && diag > 0 && area2 / diag < 16;
-      var small = !thumb && (diag < 60 || thin), thinTint = thin && !pal.dark && isAcc(mat.c);
+      var small = !thumb && (diag < 60 || thin), thinTint = thin && !pal.dark && (isAcc(mat.c) || !!Rs);
       // a dished end of a turned part turned toward the reader (a mirror's face) takes two concentric rings, never shading lines,
       // which there read as the blades of a fan
       var rings = [], dish = !!(s.axisN && Math.abs(rotN(s.axisN)[2]) > 0.4);
@@ -1196,7 +1753,12 @@
         var f = F[fi], fm = f.mat || mat, pts = f.v.map(P2), nvw = rotN(f.n);
         if (f.two && nvw[2] < 0) nvw = [-nvw[0], -nvw[1], -nvw[2]];
         count.faces++;
-        if (fm.hatch) {
+        var Rf = (fm.real && REAL[fm.real]) || Rs, TF = null;
+        if (Rf) {
+          TF = tFace(Rf, nvw, f, fi, pts, !!fm.hatch, hl, axV, s);
+          g.fillAny(pts, TF.f, (Rf.clear != null && Rf.clear < 1 ? Rf.clear : 1) * alpha);
+          if (fm.hatch && !thumb && !lite && !Rf.noHatch) tHatch(pts, TF.rgb, fm, f, alpha);
+        } else if (fm.hatch) {
           g.poly(pts, css(mix(pal.bg, colOf(fm.c), fm.d)), alpha);
           if (!thumb && !lite) g.hatch(pts, fm.c ? lineCol(fm.c) : inkC, (fm.gap || (fm.hatch === 2 ? 2.4 : 3.4)) * k, LW.hatch, fm.hatch, (pal.dark ? 0.7 : 0.8) * alpha, f.hv != null ? f.hv : fm.ang);
         } else g.poly(pts, fillOf(fm, nvw, f.curve, hl), (fm.alpha == null ? 1 : fm.alpha) * alpha);
@@ -1224,11 +1786,11 @@
             continue;
           }
           if (stamp[nb] !== frame) continue;
-          if (cls === 1) { ((F[nb].mat || mat).hatch || fm.hatch) ? out.push(seg) : crease.push(seg); }
+          if (cls === 1) { ((F[nb].mat || mat).hatch || fm.hatch) ? out.push(seg) : (seg.nb = nb, crease.push(seg)); }
           else if (cls === 2 && LW.fine) fine.push(seg);
         }
         // shading lines on a turned surface: along its axis, gathering toward the shade side
-        if (!thumb && !lite && f.curve && f.mj >= 0 && pts.length === 4 && !fm.hatch) {
+        if (!thumb && !lite && f.curve && f.mj >= 0 && pts.length === 4 && !fm.hatch && !(TF && !(f.cap && dish))) {
           if (f.cap && dish) { if (s.rings.indexOf(f.ri) >= 0) rings.push([pts[0], pts[1]]); }
           else {
             var lam = lamC(nvw), sh = 1 - lam, j = f.mj, ring = Math.hypot(pts[1][0] - pts[0][0], pts[1][1] - pts[0][1]), mer = Math.hypot(pts[3][0] - pts[0][0], pts[3][1] - pts[0][1]);
@@ -1237,6 +1799,7 @@
         }
         if (small && shade.length) { out = out.concat(shade); shade = []; }
         var lcK = fm.c || mat.c;
+        if (TF) { tEdges(TF, Rf, s, f, shl, fine, crease, out, shade, hl, alpha, szK, thinTint, nvw); count.edges += out.length + shade.length + crease.length + fine.length; return; }
         if (shl.length) g.lines(shl, hl ? hlC : strokeOf(lcK, 'shl'), LW.shadeLn * (pal.dark ? 1.2 : 1), null, (pal.dark ? 0.55 : 0.75) * alpha, 'butt');
         if (fine.length) g.lines(fine, hl ? hlC : strokeOf(lcK, 'fine'), LW.fine, null, 0.8 * alpha);
         if (crease.length) g.lines(crease, hl ? hlC : strokeOf(lcK, 'crease'), LW.crease, null, alpha);
@@ -1249,6 +1812,7 @@
       if (s.decals.length) s.decals.forEach(function (d) {
         var nz = R[6] * d.n[0] + R[7] * d.n[1] + R[8] * d.n[2];
         if (nz <= 1e-4 && !s.two) return;
+        if (Rs) { tDecals(s, d, Rs, a, pa, hl); return; }
         d.items.forEach(function (it) {
           if (thumb && !it.keep) return;
           // a decal lights on its own (the HBM stack's vias), so its alpha and colour are its own while a part is pointed at
@@ -1272,6 +1836,7 @@
           }
         });
       });
+      if (SHD && !s.two && clear >= 1) SHD.receive(s, faces, a);
     }
     function edgesOf(s, test) {
       var segs = [];
@@ -1308,11 +1873,11 @@
     // then every path, so no knock-out cuts another path where they meet)
     [true, false].forEach(function (knockPass) {
       m.lines.forEach(function (L) {
-        if (L.style !== 'beam' || (knockPass && (!L.knock || thumb))) return;
+        if (L.style !== 'beam' || (knockPass && (!(L.knock || (pal.dark && L.knockDark)) || thumb))) return;
         var pts = L.pts.map(function (p) { return proj(p, p[3] == null ? null : p[3]).slice(0, 2); });
         // a label on the light path (P.focusOf beam) lights the path
         var col = css(colOf(L.col || 'acc')), lb = !!(foc && foc.beam), aa = (L.alpha == null ? 1 : L.alpha) * Math.min(1, K * 1.6) * (foc && !lb ? 0.35 : 1);
-        if (knockPass) g.lines([pts], bgC, (L.lw || 1.4) * k * 2.4, null, Math.min(1, K * 1.6) * (foc && !lb ? 0.35 : 1), 'butt');
+        if (knockPass) g.lines([pts], bgC, pal.dark ? (L.lw || 1.4) * k + 2 : (L.lw || 1.4) * k * 2.4, null, Math.min(1, K * 1.6) * (foc && !lb ? 0.35 : 1), 'butt');
         else g.lines([pts], col, (L.lw || 1.4) * (thumb ? 0.8 : k) * (lb ? 1.5 : 1), null, aa);
       });
     });
@@ -1350,7 +1915,7 @@
       var S2 = G.r * 2, x0 = G.x - G.r, y0 = G.y - G.r, f0 = lp.fit(S2, S2), sk = L.scale || 1;
       var f2 = { s: f0.s * sk, cx: x0 + G.r + (f0.cx - G.r) * sk + (L.dx || 0) * S2, cy: y0 + G.r + (f0.cy - G.r) * sk + (L.dy || 0) * S2, e: f0.e };
       g.clip(G.x, G.y, G.r - 0.5);
-      lp.paint({ k: 1, w: S2, h: S2, g: g, pal: pal, fit: f2, noDims: true, noLabels: true });
+      lp.paint({ k: 1, w: S2, h: S2, g: g, pal: pal, fit: f2, noDims: true, noLabels: true, noShadow: true });
       var R1 = viewM(lp.m.yaw0, lp.m.elev), pj = function (q) { return [f2.cx + f2.s * (R1[0] * q[0] + R1[1] * q[1] + R1[2] * q[2]), f2.cy - f2.s * (R1[3] * q[0] + R1[4] * q[1] + R1[5] * q[2])]; };
       var size = 11.5, txt = css(pal.ink), lh = Math.round(size * 1.2);
       // a block of one or two lines, centred on (x, y), its lines set to the side the block's align names
@@ -2063,6 +2628,7 @@ try{(function(PLATE){'use strict';var R = PLATE.register, D = PLATE.D, H = PLATE
 R('boule-and-wafer', function (m, params) {
   var Rb = 0.15, wT = 0.000775 / 2, yTip = -0.71, yB0 = -0.45, yB1 = 1.05, Rc = Rb * 1.03;
   var ing = m.part('ingot', { ex: [0, 0, 0], seq: 0 });
+  m.real('siIngot');
   // the crystal's slate: the wafers' tone, on a turned surface
   var white = params && params.ingot === 'white', SI = white ? { d: 0.08, c: 'acc', curve: true } : 'accTurned', SI_FLAT = white ? 'accLight' : 'acc';
   var prof = [[0, yTip], [0.038, yTip], [0.078, yTip + 0.045, 0], [0.110, yTip + 0.095, 0], [0.133, yTip + 0.16, 0], [0.146, yTip + 0.215, 0], [Rb, yB0]];
@@ -2074,7 +2640,19 @@ R('boule-and-wafer', function (m, params) {
   // the ingot, the neck and the seed are solids of their own, so each lights alone when its part is pointed at
   m.tag('ingot');
   // (lip: the ring where the crown's ground band stands proud of the body keeps its shade weight)
-  m.revolve(prof, SI, { seg: 48, lip: true });
+  // (round 2: crown and tail resampled along a smooth curve, so their tone runs smoothly)
+  prof = (function (p) {
+    var out = [p[0]], cr = function (a, b, c, d, t) { var t2 = t * t, t3 = t2 * t; return [0, 1].map(function (i) { return 0.5 * (2 * b[i] + (-a[i] + c[i]) * t + (2 * a[i] - 5 * b[i] + 4 * c[i] - d[i]) * t2 + (-a[i] + 3 * b[i] - 3 * c[i] + d[i]) * t3); }); };
+    for (var i = 1; i < p.length; i++) {
+      var a = p[i - 1], b = p[i], smooth = b[2] === 0 && a[2] !== 1 && i > 1;
+      if (smooth) { var pa = p[i - 2], pb = p[i + 1] || b; for (var s = 1; s < 4; s++) { var q = cr(pa, a, b, pb, s / 4); out.push([q[0], q[1], 0]); } }
+      out.push(b);
+    }
+    return out;
+  })(prof);
+  m.revolve(prof, SI, { seg: 96, lip: true });
+  // (four faint growth ridges along the body)
+  [0.3, 1.87, 3.44, 5.01].forEach(function (an) { m.wire([[Rb * 1.002 * Math.cos(an), yB0 + 0.03, Rb * 1.002 * Math.sin(an)], [Rb * 1.002 * Math.cos(an), yB1 - 0.03, Rb * 1.002 * Math.sin(an)]], { lw: 0.6, alpha: 0.4, real: 'siIngot' }); });
   m.tag('neck');
   m.cyl([0, 1.465, 0], 0.0052, 0.13, SI, { seg: 12 });
   // the saw cuts: the slab the wafers came from, dashed round the body
@@ -2083,12 +2661,14 @@ R('boule-and-wafer', function (m, params) {
   m.tag('seed');
   m.box({ c: [0, 1.565, 0], s: [0.015, 0.07, 0.015] }, SI_FLAT);
   m.tag(null);
+  m.real('steelDk');
   m.cyl([0, 1.6225, 0], 0.026, 0.045, 'turnedDark', { seg: 20 });
   m.anchor(1, 'Seed', [0, 1.565, 0]); m.anchor(2, 'Neck', [0, 1.465, 0]); m.anchor(3, 'Ingot', [-0.05, 0.62, Rb * 0.8]);
   // the two wafers, as thick as they are, each with its notch
   function waferShape() { var s = []; for (var k = 0; k < 64; k++) { var a = k * TAU / 64; if (k === 16) { s.push([0.009, Rb * 0.998]); s.push([0, Rb - 0.01]); s.push([-0.009, Rb * 0.998]); continue; } s.push([Rb * Math.cos(a), Rb * Math.sin(a)]); } return s; }
   var ws = waferShape();
   var w1 = m.part('wafer1', { ex: [0.40, 0, 0], seq: 1 });
+  m.real('siWafer');
   m.prism(ws, cuts[0] - wT, cuts[0] + wT, 'acc', { smooth: true, top: [D.circle(0, 0, Rb * 0.965, cuts[0] + wT, 48, { lw: 0.4, col: 'acc', alpha: 0.7 })] });
   var w2 = m.part('wafer2', { ex: [0.80, 0, 0], seq: 2 });
   m.prism(ws, cuts[1] - wT, cuts[1] + wT, 'acc', { smooth: true, top: [D.circle(0, 0, Rb * 0.965, cuts[1] + wT, 48, { lw: 0.4, col: 'acc', alpha: 0.7 })] });
@@ -2101,7 +2681,7 @@ R('boule-and-wafer', function (m, params) {
   // review: the diameter is taken rim to rim across the wafer's centre (it was taken off the corners of the square round
   // the wafer, so its extension lines started in the air beside the disc)
   m.dim([-Rb, cuts[1] - wT, 0], [Rb, cuts[1] - wT, 0], [0, -0.1, 0], '300 mm', { part: w2.idx });
-  return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, sortAxis: [1, 0, 0], calloutOpts: { 1: { tag: 'seed' }, 2: { tag: 'neck' }, 3: { tag: 'ingot' }, 4: { dy: -40 } }, accent: [111, 139, 166], accentDark: [195, 211, 226] };
+  return { noGround: true, elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, sortAxis: [1, 0, 0], calloutOpts: { 1: { tag: 'seed' }, 2: { tag: 'neck' }, 3: { tag: 'ingot' }, 4: { dy: -40 } }, accent: [111, 139, 166], accentDark: [195, 211, 226] };
 });
 
 })(window.PLATE);}catch(e){console.warn('plate boule-and-wafer.js failed to load', e);}
@@ -2143,21 +2723,22 @@ R('cowos-exploded', function (m) {
   for (var q = 0; q < 30; q++) {
     var cu = (q - 14.5) * (subW * 0.94 / 30);
     if (Math.abs(cu) > ipW / 2 + 2) continue;
-    [-1, 1].forEach(function (sg) { capItems.push(D.rect(cu - 0.9, sg * (ipD / 2 + 3.2) - 1.1, cu + 0.9, sg * (ipD / 2 + 3.2) + 1.1, subH / 2, { fill: 'dark', lw: 0.4 })); });
+    [-1, 1].forEach(function (sg) { capItems.push(D.rect(cu - 0.9, sg * (ipD / 2 + 3.2) - 1.1, cu + 0.9, sg * (ipD / 2 + 3.2) + 1.1, subH / 2, { fill: 'dark', lw: 0.4, real: 'mlcc' })); [-1, 1].forEach(function (e) { capItems.push(D.rect(cu - 0.9, sg * (ipD / 2 + 3.2) + e * 1.1 - (e > 0 ? 0.42 : 0), cu + 0.9, sg * (ipD / 2 + 3.2) + e * 1.1 + (e < 0 ? 0.42 : 0), subH / 2, { fill: 'light', lw: 0.25, real: 'sac' })); }); });
   }
   for (q = 0; q < 18; q++) {
     var cv = (q - 8.5) * (subD * 0.92 / 18);
     if (Math.abs(cv) > ipD / 2 + 2) continue;
-    [-1, 1].forEach(function (sg) { capItems.push(D.rect(sg * (ipW / 2 + 3.2) - 1.1, cv - 0.9, sg * (ipW / 2 + 3.2) + 1.1, cv + 0.9, subH / 2, { fill: 'dark', lw: 0.4 })); });
+    [-1, 1].forEach(function (sg) { capItems.push(D.rect(sg * (ipW / 2 + 3.2) - 1.1, cv - 0.9, sg * (ipW / 2 + 3.2) + 1.1, cv + 0.9, subH / 2, { fill: 'dark', lw: 0.4, real: 'mlcc' })); [-1, 1].forEach(function (e) { capItems.push(D.rect(sg * (ipW / 2 + 3.2) + e * 1.1 - (e > 0 ? 0.42 : 0), cv - 0.9, sg * (ipW / 2 + 3.2) + e * 1.1 + (e < 0 ? 0.42 : 0), cv + 0.9, subH / 2, { fill: 'light', lw: 0.25, real: 'sac' })); }); });
   }
   capItems.push(D.rect(-ipW / 2, -ipD / 2, ipW / 2, ipD / 2, subH / 2, { dash: [3, 2], lw: 0.6, alpha: 0.8 }));
-  capItems.push({ dots: gridPts(18, 11, 3.8, 3.8, subH / 2, 0, 0), r: 0.5, col: 'acc2', alpha: 0.75, tag: 'c4' });
+  capItems.push({ dots: gridPts(18, 11, 3.8, 3.8, subH / 2, 0, 0), r: 0.5, col: 'acc2', alpha: 0.75, tag: 'c4', real: 'sac' });
   capItems.push(D.rect(-subW / 2 + 2.5, -subD / 2 + 2.5, subW / 2 - 2.5, subD / 2 - 2.5, subH / 2, { lw: 0.45, alpha: 0.5 }));
-  m.box({ c: [0, subH / 2, 0], s: [subW, subH, subD], decals: { py: capItems } }, 'steel');
+  m.real('subMask');
+  m.box({ c: [0, subH / 2, 0], s: [subW, subH, subD], decals: { py: capItems }, fmat: { px: { d: 0.11, real: 'core' }, nx: { d: 0.11, real: 'core' }, pz: { d: 0.11, real: 'core' }, nz: { d: 0.11, real: 'core' } } }, 'steel');
   var balls = [];
   for (var bx = -subW / 2 + 2; bx <= subW / 2 - 1.9; bx += 2.5) balls.push([bx, -0.75, subD / 2 - 1.5]);
   for (var bz = -subD / 2 + 2; bz <= subD / 2 - 3.9; bz += 2.5) balls.push([subW / 2 - 1.5, -0.75, bz]);
-  m.dots(balls, { r: 1.0, ring: true, alpha: 0.75, front: true, c: [subW / 2, -0.75, subD / 2] });
+  m.dots(balls, { r: 1.0, ring: true, alpha: 0.75, front: true, c: [subW / 2, -0.75, subD / 2], real: 'sac' });
   m.anchor(4, 'Substrate', [-subW / 2 + 16, subH * 0.15, subD / 2]);
   // 2 the interposer: redistribution wiring in ink, its copper lines, the microbump pads under each chip and, set into it, the
   // silicon bridges
@@ -2168,49 +2749,46 @@ R('cowos-exploded', function (m) {
   hbm.forEach(function (h) { var sg = h[0] < 0 ? -1 : 1; BR.push([sg * (dieX + dieW / 2 + 1.6), h[1] * 0.8, 6, 5]); });
   // each bridge's traces, in (x, z) across it: 12 on the seam bridge at 2 mm, 4 on each memory bridge at 1 mm
   var traces = function (b, i) { var n = i ? 4 : 12, pt = i ? 1 : 2, out = []; for (var t = 0; t < n; t++) out.push(b[1] + (t - (n - 1) / 2) * pt); return out; };
-  var pad = function (x, z, y, sz) { return D.rect(x - sz / 2, z - sz / 2, x + sz / 2, z + sz / 2, y, { fill: { d: 0.62, c: 'acc2' }, col: 'acc2', lw: 0.3 }); };
+  var pad = function (x, z, y, sz) { return D.rect(x - sz / 2, z - sz / 2, x + sz / 2, z + sz / 2, y, { fill: { d: 0.62, c: 'acc2', real: 'cu' }, col: 'acc2', lw: 0.3, real: 'cu' }); };
   // the interposer's traces stop at each pocket's edge and run on to a pad under the chip: from the seam bridge out to 11 mm, from
   // each memory bridge 1 mm on either side
   BR.forEach(function (b, i) {
     traces(b, i).forEach(function (z) {
       [-1, 1].forEach(function (sd) {
         var x0 = b[0] + sd * b[2] / 2, x1 = i ? x0 + sd * 1.2 : sd * 11;
-        wiring.push(D.line([x0, yT, z], [x1, yT, z], { col: 'acc2', lw: 0.6 }));
+        wiring.push(D.line([x0, yT, z], [x1, yT, z], { col: 'acc2', lw: 0.6, real: 'cu' }));
         wiring.push(pad(x1, z, yT, i ? 0.7 : 0.9));
       });
     });
   });
   // (the pad grids keep inside each chip's footprint, clear of the bridges' pockets and the bundles, and thinner)
   var clear = function (x, z) { return !BR.some(function (b) { return Math.abs(x - b[0]) < b[2] / 2 + 2 && Math.abs(z - b[1]) < b[3] / 2 + 1.2; }) && !(Math.abs(x) < 12.5 && Math.abs(z) < 12.5); };
-  dies.forEach(function (d) { wiring.push(D.rect(d[0] - dieW / 2, d[1] - dieD / 2, d[0] + dieW / 2, d[1] + dieD / 2, yT, { lw: 0.5, alpha: 0.7, dash: [2, 1.6] })); wiring.push({ dots: gridPts(6, 8, 3.4, 3.6, yT, d[0], d[1], clear), r: 0.45, col: 'acc2', alpha: 0.8, tag: 'ubump' }); });
-  hbm.forEach(function (h) { wiring.push(D.rect(h[0] - hbmW / 2, h[1] - hbmD / 2, h[0] + hbmW / 2, h[1] + hbmD / 2, yT, { lw: 0.5, alpha: 0.7, dash: [2, 1.6] })); wiring.push({ dots: gridPts(3, 3, 2.6, 2.6, yT, h[0] + (h[0] < 0 ? -1 : 1) * 1.2, h[1], clear), r: 0.45, col: 'acc2', alpha: 0.8, tag: 'ubump' }); });
+  dies.forEach(function (d) { wiring.push(D.rect(d[0] - dieW / 2, d[1] - dieD / 2, d[0] + dieW / 2, d[1] + dieD / 2, yT, { lw: 0.5, alpha: 0.7, dash: [2, 1.6] })); wiring.push({ dots: gridPts(6, 8, 3.4, 3.6, yT, d[0], d[1], clear), r: 0.45, col: 'acc2', alpha: 0.8, tag: 'ubump', real: 'cu' }); });
+  hbm.forEach(function (h) { wiring.push(D.rect(h[0] - hbmW / 2, h[1] - hbmD / 2, h[0] + hbmW / 2, h[1] + hbmD / 2, yT, { lw: 0.5, alpha: 0.7, dash: [2, 1.6] })); wiring.push({ dots: gridPts(3, 3, 2.6, 2.6, yT, h[0] + (h[0] < 0 ? -1 : 1) * 1.2, h[1], clear), r: 0.45, col: 'acc2', alpha: 0.8, tag: 'ubump', real: 'cu' }); });
   // each bridge's pocket in the interposer's face, a plain hairline
   BR.forEach(function (b) { wiring.push(D.rect(b[0] - b[2] / 2, b[1] - b[3] / 2, b[0] + b[2] / 2, b[1] + b[3] / 2, yT, { lw: 0.5, alpha: 0.5 })); });
-  m.tag('ip');
-  m.box({ c: [0, y0 + ipH / 2, 0], s: [ipW, ipH, ipD], decals: { py: wiring } }, 'light');
+  m.tag('ip'); m.real('pi');
+  m.box({ c: [0, y0 + ipH / 2, 0], s: [ipW, ipH, ipD], decals: { py: wiring }, fmat: { px: { d: 0.3, real: 'mould' }, nx: { d: 0.3, real: 'mould' }, pz: { d: 0.3, real: 'mould' }, nz: { d: 0.3, real: 'mould' } } }, 'light');
   m.tag(null);
   m.anchor(3, 'Interposer', [ipW / 2, y0 + ipH, ipD / 4]);
   var pB = m.part('bridges', { ex: [0, 44, 0], seq: 2 });
-  m.tag('bridge');
+  m.tag('bridge'); m.real('siFace');
   // each bridge with its traces across its top face, a pad at each end
   BR.forEach(function (b, i) {
     var top = [];
-    traces(b, i).forEach(function (z) { var zz = z - b[1], xe = b[2] / 2 - 0.55; top.push(D.line([-xe, 0.6, zz], [xe, 0.6, zz], { col: 'acc2', lw: 0.6 })); top.push(pad(-xe, zz, 0.6, i ? 0.6 : 0.8), pad(xe, zz, 0.6, i ? 0.6 : 0.8)); });
+    traces(b, i).forEach(function (z) { var zz = z - b[1], xe = b[2] / 2 - 0.55; top.push(D.line([-xe, 0.6, zz], [xe, 0.6, zz], { col: 'acc2', lw: 0.6, real: 'cu' })); top.push(pad(-xe, zz, 0.6, i ? 0.6 : 0.8), pad(xe, zz, 0.6, i ? 0.6 : 0.8)); });
     m.box({ c: [b[0], y0 + ipH - 0.6, b[1]], s: [b[2], 1.2, b[3]], decals: { py: top } }, 'acc');
   });
   m.tag(null);
   m.anchor(5, 'Silicon bridges', [BR[5][0] - BR[5][2] / 2, y0 + ipH - 0.6, BR[5][1]], pB.idx);
-  // 3 the chips: two logic dies with a hint of their floorplan, eight HBM stacks with their eight layers
+  // 3 the chips: two logic dies (their ground silicon backs, plain), eight HBM stacks with their eight layers
   var pK = m.part('chips', { ex: [0, 56, 0], seq: 3 });
   var yK = y0 + ipH;
-  m.tag('logic');
+  m.tag('logic'); m.real('siBack');
   dies.forEach(function (d) {
-    var fp = [], sg = d[0] < 0 ? -1 : 1;
-    for (var a = 0; a < 4; a++) for (var b = 0; b < 7; b++) fp.push(D.rect((a - 1.5) * dieW * 0.205 - dieW * 0.09 - sg * dieW * 0.05, (b - 3) * dieD * 0.13 - dieD * 0.055, (a - 1.5) * dieW * 0.205 + dieW * 0.09 - sg * dieW * 0.05, (b - 3) * dieD * 0.13 + dieD * 0.055, dieH / 2, { lw: 0.45, alpha: 0.75 }));
-    fp.push(D.rect(sg * dieW * 0.38, -dieD * 0.45, sg * dieW * 0.47, dieD * 0.45, dieH / 2, { lw: 0.55, fill: 'mid' }));
-    m.box({ c: [d[0], yK + dieH / 2, d[1]], s: [dieW, dieH, dieD], decals: { py: fp } }, 'steel');
+    m.box({ c: [d[0], yK + dieH / 2, d[1]], s: [dieW, dieH, dieD] }, 'steel');
   });
-  m.tag('hbm');
+  m.tag('hbm'); m.real('siBack');
   hbm.forEach(function (h) {
     var side = [];
     for (var k = 1; k < 8; k++) {
@@ -2220,7 +2798,7 @@ R('cowos-exploded', function (m) {
     var sideX = side.map(function (it) { return { pts: [[hbmW / 2, it.pts[0][1], -hbmD / 2], [hbmW / 2, it.pts[0][1], hbmD / 2]], lw: 0.35, alpha: 0.75 }; });
     var sideNX = side.map(function (it) { return { pts: [[-hbmW / 2, it.pts[0][1], -hbmD / 2], [-hbmW / 2, it.pts[0][1], hbmD / 2]], lw: 0.35, alpha: 0.75 }; });
     var sideNZ = side.map(function (it) { return { pts: [[-hbmW / 2, it.pts[0][1], -hbmD / 2], [hbmW / 2, it.pts[0][1], -hbmD / 2]], lw: 0.35, alpha: 0.75 }; });
-    m.box({ c: [h[0], yK + hbmH / 2, h[1]], s: [hbmW, hbmH, hbmD], decals: { pz: side, px: sideX, nx: sideNX, nz: sideNZ, py: [D.rect(-hbmW / 2 + 1.2, -hbmD / 2 + 1.2, hbmW / 2 - 1.2, hbmD / 2 - 1.2, hbmH / 2, { lw: 0.4, alpha: 0.6 })] } }, 'steel');
+    m.box({ c: [h[0], yK + hbmH / 2, h[1]], s: [hbmW, hbmH, hbmD], fmat: { px: { d: 0.3, real: 'mould' }, nx: { d: 0.3, real: 'mould' }, pz: { d: 0.3, real: 'mould' }, nz: { d: 0.3, real: 'mould' } }, decals: { pz: side, px: sideX, nx: sideNX, nz: sideNZ, py: [D.rect(-hbmW / 2 + 1.2, -hbmD / 2 + 1.2, hbmW / 2 - 1.2, hbmD / 2 - 1.2, hbmH / 2, { lw: 0.4, alpha: 0.6 })] } }, 'steel');
   });
   m.tag(null);
   m.anchor(1, 'Logic dies', [dieX - dieW * 0.38, yK + dieH, -dieD * 0.36]);
@@ -2269,21 +2847,23 @@ R('die-floorplan', function (m, params) {
   var W = 26, Dd = 33, T = 0.9, yT = T / 2, bh = 0.06, yB = yT + bh / 2, bt = bh / 2;
   var dieP = m.part('die', { ex: [0, 0, 0], seq: 0, mode: 'stack' }).idx;
   // a block of the floorplan: a thin solid lying on the die's face, so a pointer on it names its own group
-  function blk(x0, z0, x1, z1, mat, tag, dec) { m.tag(tag || null); var s = m.box({ c: [(x0 + x1) / 2, yB, (z0 + z1) / 2], s: [x1 - x0, bh, z1 - z0], decals: dec ? { py: dec } : null }, mat); m.tag(null); return s; }
+  function blk(x0, z0, x1, z1, mat, tag, dec) { m.tag(tag || null); var s = m.box({ c: [(x0 + x1) / 2, yB, (z0 + z1) / 2], s: [x1 - x0, bh, z1 - z0], decals: dec ? { py: dec } : null, skip: ['px', 'nx', 'pz', 'nz', 'ny'], soft: true }, mat); m.tag(null); return s; }
   // the host interface and NVLink ports across the far short edge, drawn on the die's face
   var face = [D.rect(-11.6, 14.2, 11.6, 16.1, yT, { fill: 'steel', lw: 0.45 })];
+  face[0].real = 'siPhy';
   for (var n = 0; n < 9; n++) { var nx = -10.8 + n * 2.62; face.push(D.rect(nx, 14.55, nx + 1.9, 15.75, yT, { lw: 0.3, fill: 'light' })); }
   // the link's seat: its footprint on the near short edge, dashed, as an exploded drawing marks where a part sits
   var LX = 11.6, Lz0 = -16.1, Lz1 = -14.3, LT = 0.6, flush = !(params && params.link === 'lifted');
   if (!flush) face.push(D.rect(-LX, Lz0, LX, Lz1, yT, { dash: [1.4, 1], lw: 0.5, alpha: 0.85 }));
-  var die = m.box({ c: [0, 0, 0], s: [W, T, Dd], decals: { py: face } }, 'light');
+  m.real('siChan');
+  var die = m.box({ c: [0, 0, 0], s: [W, T, Dd], decals: { py: face }, fmat: { px: { d: 0.065, real: 'siBack' }, nx: { d: 0.065, real: 'siBack' }, pz: { d: 0.065, real: 'siBack' }, nz: { d: 0.065, real: 'siBack' } } }, 'light');
   // memory interfaces down the long edges, the controllers inside them
   [-1, 1].forEach(function (s) {
     for (var k = 0; k < 6; k++) {
       var z0 = -13.6 + k * 4.55, z1 = z0 + 4.1, xa = Math.min(s * 10.5, s * 12.3), xb = Math.max(s * 10.5, s * 12.3), rule = [];
       for (var q = 1; q <= 5; q++) { var zz = (z1 - z0) * (q / 6 - 0.5); rule.push(D.line([-(xb - xa) / 2 + 0.2, bt, zz], [(xb - xa) / 2 - 0.2, bt, zz], { lw: 0.3, alpha: 0.7 })); }
-      blk(xa, z0, xb, z1, 'mid', 'mem', rule);
-      blk(Math.min(s * 8.75, s * 10.2), z0 + 0.25, Math.max(s * 8.75, s * 10.2), z1 - 0.25, 'steel', 'mem');
+      m.real('siPhy'); blk(xa, z0, xb, z1, 'mid', 'mem', rule);
+      m.real('siFace'); blk(Math.min(s * 8.75, s * 10.2), z0 + 0.25, Math.max(s * 8.75, s * 10.2), z1 - 0.25, 'steel', 'mem');
     }
   });
   // eight clusters of eighteen compute units, four above and four below the cache band
@@ -2295,17 +2875,19 @@ R('die-floorplan', function (m, params) {
       for (var a = 0; a < 3; a++) for (var c = 0; c < 6; c++) {
         var tx0 = x0 + 0.15 + a * tw + 0.09 - cxm, tz0 = bz[0] + 0.2 + c * td + 0.09 - czm;
         tiles.push(D.rect(tx0, tz0, tx0 + tw - 0.18, tz0 + td - 0.18, bt, { fill: 'paper', lw: 0.3, alpha: 0.9 }));
+        var mxx = tx0 + (tw - 0.18) / 2, mzz = tz0 + (td - 0.18) / 2; tiles.push(D.line([mxx, bt, tz0 + 0.12], [mxx, bt, tz0 + td - 0.3], { lw: 0.22, alpha: 0.7 }), D.line([tx0 + 0.12, bt, mzz], [tx0 + tw - 0.3, bt, mzz], { lw: 0.22, alpha: 0.7 }));
       }
-      blk(x0, bz[0], x1, bz[1], 'light', 'sm', tiles);
+      m.real('siLogic'); blk(x0, bz[0], x1, bz[1], 'light', 'sm', tiles);
     }
   });
   // the L2 cache in two partitions across the middle, ruled as memory arrays are, with the crossbar between them
   [[-8.6, -0.5], [0.5, 8.6]].forEach(function (b) {
     var rule = [], hw = (b[1] - b[0]) / 2;
-    for (var q = 1; q < 12; q++) { var zz = -2.8 + 5.6 * q / 12; rule.push(D.line([-hw + 0.2, bt, zz], [hw - 0.2, bt, zz], { lw: 0.28, alpha: 0.75 })); }
-    blk(b[0], -2.8, b[1], 2.8, 'steel', 'l2', rule);
+    var NQ = 24;
+    for (var q = 1; q < NQ; q++) { var zz = -2.8 + 5.6 * q / NQ; rule.push(D.line([-hw + 0.2, bt, zz], [hw - 0.2, bt, zz], { lw: 0.28, alpha: 0.75 })); }
+    m.real('siSram'); blk(b[0], -2.8, b[1], 2.8, 'steel', 'l2', rule);
   });
-  blk(-0.4, -2.8, 0.4, 2.8, 'dark', 'l2');
+  m.real('siPhy'); blk(-0.4, -2.8, 0.4, 2.8, 'dark', 'l2');
   void die;
   m.dim([-W / 2, -yT, Dd / 2], [W / 2, -yT, Dd / 2], [0, 0, 4.2], '26 mm');
   // the 33 mm along the far long edge (designer pass, 22 Nov 2026): along the near one it fenced off the die from its labels,
@@ -2318,13 +2900,13 @@ R('die-floorplan', function (m, params) {
   // the link: a slate strip of its own, lifted and slid straight out from its seat over the near edge, one row of small copper
   // contacts along its top (flush: a block of the die on its face, in its own stronger slate, the same contacts on it)
   var pads = [], NP = 26, pw = 0.56, hT = flush ? bh / 2 : LT / 2;
-  for (var k2 = 0; k2 < NP; k2++) { var px = -LX + 0.75 + k2 * (2 * LX - 1.5) / (NP - 1); pads.push(D.rect(px - pw / 2, -pw / 2, px + pw / 2, pw / 2, hT, { fill: { d: 0.62, c: 'acc2' }, col: 'acc2', lw: 0.3, tag: 'd2d' })); }
+  for (var k2 = 0; k2 < NP; k2++) { var px = -LX + 0.75 + k2 * (2 * LX - 1.5) / (NP - 1); pads.push(D.rect(px - pw / 2, -pw / 2, px + pw / 2, pw / 2, hT, { fill: { d: 0.62, c: 'acc2', real: 'cu' }, col: 'acc2', real: 'cu', lw: 0.3, tag: 'd2d' })); }
   if (flush) {
-    blk(-LX, Lz0, LX, Lz1, { d: 0.42, c: 'acc' }, 'd2d', pads);
+    m.real('siPhy'); blk(-LX, Lz0, LX, Lz1, { d: 0.42, c: 'acc' }, 'd2d', pads);
     m.callout([-LX * 0.35, yT + bh, (Lz0 + Lz1) / 2 - 0.35], 'Die-to-die link', { side: 'l', tag: 'd2d' });
   } else {
     var ln = m.part('link', { ex: [0, 0.9, -5.2], seq: 1 });
-    m.tag('d2d');
+    m.tag('d2d'); m.real('siPhy');
     m.box({ c: [0, yT + LT / 2, (Lz0 + Lz1) / 2], s: [2 * LX, LT, Lz1 - Lz0], decals: { py: pads } }, 'acc');
     m.tag(null);
     m.callout([-LX * 0.35, yT + LT, (Lz0 + Lz1) / 2 - 0.35], 'Die-to-die link', { side: 'l', tag: 'd2d' });
@@ -2332,7 +2914,7 @@ R('die-floorplan', function (m, params) {
     [[-LX, Lz1], [LX, Lz1]].forEach(function (q) { m.guide([[q[0], yT, q[1], dieP], [q[0], yT, q[1], ln.idx]], { alpha: 0.9 }); });
   }
   // (tuck: the labels' column set in toward the die, into the empty corner over its long edge, 22 Nov 2026 plates refine)
-  return { elev: PLATE.ISO.elev, yaw: 3 * Math.PI / 4, sortAxis: [0, 1, 0], start: 2.2, thumbX: 0.5, tuck: flush ? null : { l: 150 },
+  return { elev: PLATE.ISO.elev, yaw: 3 * Math.PI / 4, sortAxis: [0, 1, 0], start: 2.2, thumbX: 0.5, tuck: flush ? null : { l: 150 }, softLine: '#33374a',
     accent: [111, 139, 166], accentDark: [195, 211, 226], accent2: [176, 102, 44], accent2Dark: [224, 154, 92] };
 });
 
@@ -2396,14 +2978,15 @@ R('euv-scanner', function (m) {
     var th = Math.atan2(-nv[0], nv[1]);
     // the illuminator's and the projection optics' mirrors carry one tag, so Mirrors lights all of them (the collector is the source's)
     if (!o.notag) m.tag('mirror');
-    var sv = m.revolve(prof, mat || 'turnedDark', { seg: 28, rot: [0, 0, th], pos: [q[0], q[1], 0], sortFaces: true });
+    var sv = m.revolve(prof, mat || 'turnedDark', { seg: 28, rot: [0, 0, th], pos: [q[0], q[1], 0], sortFaces: true, real: 'glassBody', capMat: { d: 0.32, real: 'mlm' } });
     m.tag(null);
     return sv;
   }
   // a module's housing cut open on the optical plane (z = 0): back wall, floor, roof and side walls, cut edges hatched
   function housing(cx, cy, w, h, d, t) {
     var cutF = { pz: 'cut' };
-    m.box({ c: [cx, cy, -d + t / 2], s: [w, h, t] }, 'paper');
+    m.real('vac');
+    m.box({ c: [cx, cy, -d + t / 2], s: [w, h, t], real: 'vacIn', inner: true }, 'paper');
     m.box({ c: [cx, cy - h / 2 + t / 2, -d / 2], s: [w, t, d], fmat: cutF }, 'light');
     m.box({ c: [cx, cy + h / 2 - t / 2, -d / 2], s: [w, t, d], fmat: cutF }, 'light');
     m.box({ c: [cx - w / 2 + t / 2, cy, -d / 2], s: [t, h - 2 * t, d], fmat: cutF }, 'light');
@@ -2411,16 +2994,19 @@ R('euv-scanner', function (m) {
   }
   var src = m.part('source', { ex: [EXS.src[0], EXS.src[1], 0], seq: 0 });
   var vesR = 0.66, vx0 = -1.94, vx1 = -0.72, vc = (vx0 + vx1) / 2;
+  m.real('vac');
   // the vessel, cut on the optical plane (z = 0) with the far half kept, as the other modules are
   m.revolve([[0.62, -0.61], [vesR, -0.61], [vesR, 0.61], [0.62, 0.61]], 'turned', { seg: 40, a0: Math.PI, a1: Math.PI * 2, rot: [0, 0, -Math.PI / 2], pos: [vc, PLASMA[1], 0], cut: 'cut', sortFaces: true });
   mirror(COLL, [1, 0], 0.56, 'turned', { rIn: 0.075, notag: true });
   // the tin plasma, in the light's own hue: it is where the light is made
   m.dots([[PLASMA[0], PLASMA[1], 0]], { r: 4.2, col: 'acc', alpha: 0.35 });
   m.dots([[PLASMA[0], PLASMA[1], 0]], { r: 2.2, col: 'acc', alpha: 1 });
+  m.real('steelDk');
   m.cyl([PLASMA[0], PLASMA[1] + 0.72, 0], 0.05, 0.30, 'turnedDark', { seg: 20 });
   var drops = []; for (var i = 0; i < 7; i++) drops.push([PLASMA[0], PLASMA[1] + 0.52 - i * 0.07, 0]);
-  m.dots(drops, { r: 1.3, alpha: 0.9 });
+  m.dots(drops, { r: 1.3, alpha: 0.9, real: 'sac' });
   m.wire([[-2.14, PLASMA[1], 0], [PLASMA[0] - 0.05, PLASMA[1], 0]], { lw: 0.8, dash: [5, 3], alpha: 0.8 });
+  m.real('steelDk');
   m.box({ c: [-2.02, PLASMA[1], 0], s: [0.26, 0.30, 0.30] }, 'mid');
   m.anchor(1, 'Light source', [PLASMA[0], PLASMA[1], 0]);
   // illuminator: its housing, cut open, and three mirrors; its roof stops short of the mask, so the light crosses open air
@@ -2431,8 +3017,11 @@ R('euv-scanner', function (m) {
   // the reticle stage on top, the mask hanging pattern-down beneath it
   var ret = m.part('reticle', { ex: [EXS.ret[0], EXS.ret[1], 0], seq: 3 });
   var Rp = NODE[4].p;
+  m.real('glass');
   m.box({ c: [Rp[0], Rp[1] + MASKT / 2, 0], s: [MASK, MASKT, MASK], decals: { ny: [D.rect(-MASK * 0.34, -MASK * 0.27, MASK * 0.34, MASK * 0.27, -MASKT / 2, { lw: 0.5 })] } }, 'light');
+  m.real('granite');
   m.box({ c: [Rp[0], Rp[1] + MASKT + 0.035, 0], s: [MASK + 0.08, 0.07, MASK + 0.06] }, 'mid');
+  m.real('steelDk');
   [-1, 1].forEach(function (s) { m.box({ c: [Rp[0], Rp[1] + MASKT + 0.095, s * (MASK / 2 + 0.06)], s: [1.30, 0.045, 0.055] }, 'dark'); });
   m.anchor(3, 'Mask', [Rp[0] - MASK * 0.3, Rp[1], 0]);
   // the projection optics: six mirrors in their box
@@ -2445,24 +3034,28 @@ R('euv-scanner', function (m) {
   var waf = m.part('wafer', { ex: [EXS.waf[0], EXS.waf[1], 0], seq: 4, mode: 'stack' });
   var Wp = NODE[11].p;
   [0, -0.78].forEach(function (dx, j) {
+    m.real('granite');
     m.cyl([Wp[0] + dx, Wp[1] - 0.042 - WT / 2, 0], WR * 1.08, 0.075, 'turnedDark', { seg: 32 });
+    m.real('siProc');
     if (!j) m.tag('wafer');
-    m.cyl([Wp[0] + dx, Wp[1] - WT / 2, 0], WR, WT, 'acc2Light', { seg: 32, top: j ? [] : [D.rect(-0.026, -0.033, 0.026, 0.033, WT / 2, { fill: 'acc', lw: 0.6, col: 'acc' })] });
+    m.cyl([Wp[0] + dx, Wp[1] - WT / 2, 0], WR, WT, 'acc2Light', { seg: 32, top: (function () { var gd = []; for (var gx = -5; gx <= 5; gx++) for (var gz = -5; gz <= 5; gz++) { var ux = gx * 0.052, uz = gz * 0.066; if (Math.abs(ux) + 0.026 > WR * 0.92 || ux * ux + uz * uz > WR * WR * 0.78) continue; gd.push(D.rect(ux - 0.025, uz - 0.032, ux + 0.025, uz + 0.032, WT / 2, { lw: 0.3, alpha: 0.45, fill: 'steel', sheen: 0.1 })); } return gd; })().concat(j ? [] : [D.rect(-0.026, -0.033, 0.026, 0.033, WT / 2, { fill: 'acc', lw: 0.6, col: 'acc', diagram: true })]) });
     m.tag(null);
   });
+  m.real('steelDk');
   m.box({ c: [Wp[0] - 0.39, Wp[1] - 0.135, 0], s: [1.66, 0.10, 0.66] }, 'mid');
   m.anchor(4, 'Wafer', [Wp[0] - WR * 0.5, Wp[1], 0]);
   var base = m.part('base', { ex: [0, -0.62, 0], seq: 5, pri: -1 });
+  m.real('paint');
   m.box({ c: [-0.16, -2.16, 0], s: [3.66, 0.20, 1.36] }, 'steel');
-  for (i = 0; i < 4; i++) { var lx = -0.16 - 1.83 + 0.36 + i * (3.66 - 0.72) / 3; [0.5, -0.5].forEach(function (z) { m.cyl([lx, -2.38, z], 0.085, 0.24, 'turnedDark', { seg: 16 }); }); }
+  for (i = 0; i < 4; i++) { var lx = -0.16 - 1.83 + 0.36 + i * (3.66 - 0.72) / 3; [0.5, -0.5].forEach(function (z) { m.cyl([lx, -2.38, z], 0.085, 0.24, 'turnedDark', { seg: 16, real: 'steelDk' }); }); }
   void base;
   // the light: through each module, attached to the part it is in at each end
   var idx = { ill: ill.idx, ret: ret.idx, pob: pob.idx, waf: waf.idx };
   var pts = [[PLASMA[0], PLASMA[1], 0, src.idx]].concat(NODE.map(function (q) { var a = AT(q); return [a[0], a[1], 0, idx[q.o]]; }));
-  m.guide(pts, { style: 'beam', col: 'acc', lw: 1.5 });
+  m.guide(pts, { style: 'beam', col: 'acc', lw: 1.4, knockDark: true });
   // the collector's cone of light, from its rim to the plasma and on to the focus
   [0.27, -0.27, 0.5, -0.5].forEach(function (rr) { m.guide([[COLL[0] + 0.28 * (rr / 0.56) * (rr / 0.56), PLASMA[1] + rr, 0, src.idx], [NODE[0].p[0], NODE[0].p[1], 0, src.idx]], { style: 'beam', col: 'acc', lw: 0.7, alpha: 0.55 }); });
-  return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, calloutOpts: { 2: { tag: 'mirror' }, 4: { tag: 'wafer' } }, accent: [78, 96, 186], accentDark: [167, 180, 245], accent2: [111, 139, 166], accent2Dark: [195, 211, 226] };
+  return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, calloutOpts: { 2: { tag: 'mirror' }, 4: { tag: 'wafer' } }, accent: [78, 96, 186], accentDark: [154, 166, 255], accent2: [111, 139, 166], accent2Dark: [195, 211, 226] };
 });
 
 })(window.PLATE);}catch(e){console.warn('plate euv-scanner.js failed to load', e);}
@@ -2492,42 +3085,47 @@ R('gaa-transistor', function (m) {
   var epiShape = [[12.5, -13], [16.3, -17], [20.2, -17], [24, -13], [24, 13], [20.2, 17], [16.3, 17], [12.5, 13]];
   // source half, cut at x = 0
   var L = m.part('source', { mode: 'fixed', ex: [0, 0, 0], seq: 0 });
+  m.real('siCut');
   bx(-30, -23, -25, 0, -16, 25, SUB, { px: SUBCUT });
+  m.real('stiOx');
   bx(-27, -16, -22, 0, -11, 22, 'steel', { px: 'cut' });
-  m.tag('src');
+  m.tag('src'); m.real('siEpi');
   m.prism(epiShape.map(function (q) { return [-q[0], q[1]]; }), -2, 40, SD, {});
-  m.tag('spacer');
+  m.tag('spacer'); m.real('sin');
   // (the spacers a pale grey, so they read apart from the gate metal, in ink, round them: designer pass, 22 Nov 2026)
   SPL.forEach(function (b) { bx(-spX, b[0], -sW / 2, -gX, b[1], sW / 2, 'steel'); });
-  m.tag('sheet');
+  m.tag('sheet'); m.real('siSheet');
   y0.forEach(function (yb) { bx(-spX, yb, -sW / 2, -gX, yb + sT, sW / 2, 'acc'); });
-  m.tag('gate');
+  m.tag('gate'); m.real('gate');
   bx(-gX, gY0, -gZ, 0, gY1, gZ, GATE, { px: GATECUT });
-  m.tag('sheet');
+  m.tag('sheet'); m.real('siSheet');
   y0.forEach(function (yb) { m.sheet([[0.05, yb, -sW / 2], [0.05, yb, sW / 2], [0.05, yb + sT, sW / 2], [0.05, yb + sT, -sW / 2]], 'cutAcc'); });
-  m.tag(null);
+  m.tag(null); m.real('w');
   bx(-5, gY1, -8, 0, 51, 8, 'dark', { px: 'cut' });
   var cL = m.part('contactS', { ex: [0, 10, 0], seq: 2 });
   bx(-23, 40, -10, -14.5, 48, 10, 'dark');
   // drain half, pulled away along the channel
   var Rr = m.part('drain', { mode: 'fixed', ex: [PULL, 0, 0], seq: 1 });
+  m.real('siCut');
   bx(0, -23, -25, 30, -16, 25, SUB);
+  m.real('stiOx');
   bx(0, -16, -22, 27, -11, 22, 'steel');
-  m.tag('gate');
+  m.tag('gate'); m.real('gate');
   bx(0, gY0, -gZ, gX, gY1, gZ, GATE);
-  m.tag('spacer');
+  m.tag('spacer'); m.real('sin');
   SPL.forEach(function (b) { bx(gX, b[0], -sW / 2, spX, b[1], sW / 2, 'steel'); });
-  m.tag('sheet');
+  m.tag('sheet'); m.real('siSheet');
   y0.forEach(function (yb) { bx(gX, yb, -sW / 2, spX, yb + sT, sW / 2, 'acc'); });
-  m.tag(null);
+  m.tag(null); m.real('w');
   bx(0, gY1, -8, 5, 51, 8, 'dark');
   // the drain itself pulled a little further along the channel (designer pass, 22 Nov 2026), so the sheets' ends and the inner
   // spacers between them face the reader in the gap it leaves; at the half's own pull they showed only as slivers
   var DG = 26, Re = m.part('drainEpi', { mode: 'fixed', ex: [PULL + DG, 0, 0], seq: 2 });
-  m.tag('drn');
+  m.tag('drn'); m.real('siEpi');
   m.prism(epiShape, -2, 40, SD, {});
   m.tag(null);
   var cR = m.part('contactD', { ex: [PULL + DG, 10, 0], seq: 4 });
+  m.real('w');
   bx(14.5, 40, -10, 23, 48, 10, 'dark');
   [[38, -13], [38, 13], [-2, 13]].forEach(function (q) { m.guide([[spX, q[0], q[1], Rr.idx], [spX, q[0], q[1], Re.idx]], { alpha: 0.8 }); });
   m.guide([[-34, 19, 0, L.idx], [0, 19, 0, L.idx], [0, 19, 0, Rr.idx], [34, 19, 0, Re.idx]], { style: 'axis', alpha: 0.8 });
@@ -2543,7 +3141,7 @@ R('gaa-transistor', function (m) {
   m.anchor(3, 'Silicon sheets', [spX, 16 + sT / 2, -8], Rr.idx);
   m.anchor(4, 'Gate metal', [0.05, -6.5, 9], L.idx);
   m.anchor(5, 'Inner spacers', [spX, 27, 4], Rr.idx);
-  return { elev: PLATE.ISO.elev, yaw: PLATE.ISO.yaw, order: { r: [5, 3, 2] }, calloutOpts: { 1: { tag: 'src', side: 'l' }, 2: { tag: 'drn', side: 'r' }, 3: { tag: 'sheet', side: 'r' }, 4: { tag: 'gate', side: 'l' }, 5: { tag: 'spacer', side: 'r' } }, accent: [111, 139, 166], accentDark: [195, 211, 226] };
+  return { noPolish: true, elev: PLATE.ISO.elev, yaw: PLATE.ISO.yaw, order: { r: [5, 3, 2] }, calloutOpts: { 1: { tag: 'src', side: 'l' }, 2: { tag: 'drn', side: 'r' }, 3: { tag: 'sheet', side: 'r' }, 4: { tag: 'gate', side: 'l' }, 5: { tag: 'spacer', side: 'r' } }, accent: [111, 139, 166], accentDark: [195, 211, 226] };
 });
 
 })(window.PLATE);}catch(e){console.warn('plate gaa-transistor.js failed to load', e);}
@@ -2562,26 +3160,33 @@ R('gas-cabinet', function (m) {
   // (its open front always toward the reader), so this order holds at every frame.
   var shell = m.part('shell', { ex: [0, 0, 0], seq: 0, pri: -1, mode: 'depth' });
   var CH = CTOP - CPL, CY = (CPL + CTOP) / 2;
+  m.real('steelDk');
   m.box({ c: [CBX, CPL / 2, 0], s: [CW, CPL, CD] }, 'mid');                                  // plinth
-  m.box({ c: [CBX, CY, -CD / 2 + t / 2], s: [CW, CH, t] }, 'light');                       // back wall
-  m.box({ c: [CBX - CW / 2 + t / 2, CY, 0], s: [t, CH, CD] }, 'steel');                   // far side
+  m.real('paint');
+  m.box({ c: [CBX, CY, -CD / 2 + t / 2], s: [CW, CH, t], real: 'paintIn', inner: true }, 'light');                       // back wall
+  m.box({ c: [CBX - CW / 2 + t / 2, CY, 0], s: [t, CH, CD], real: 'paintIn', inner: true }, 'steel');                   // far side
   var grille = [D.rectZY(-0.15, -0.17, 0.15, 0.17, t / 2 + 0.001, { lw: 0.6 })];
   for (var i = 0; i < 5; i++) grille.push(D.line([t / 2 + 0.001, -0.12 + i * 0.055, -0.13], [t / 2 + 0.001, -0.12 + i * 0.055, 0.13], { lw: 0.45 }));
   grille = grille.map(function (it) { return { pts: it.pts.map(function (p) { return [p[0], p[1] + CPL + 0.34 - CY, p[2]]; }), closed: it.closed, lw: it.lw }; });
   var front = m.part('front', { ex: [0, 0, 0], seq: 0, pri: 1, mode: 'depth' });
+  m.real('paint');
   m.box({ c: [CBX + CW / 2 - t / 2, CY, 0], s: [t, CH, CD], decals: { px: grille } }, 'steel');   // near side
   m.box({ c: [CBX, CTOP - t / 2, 0], s: [CW, t, CD] }, 'light');                          // roof
   // the open front's frame return, and three hinges
   m.box({ c: [CBX, CY, CD / 2 - 0.01], s: [CW, CH, 0.02], skip: [] }, 'phantom');
+  m.real('steel');
   for (i = 0; i < 3; i++) m.box({ c: [CBX + CW / 2 + 0.018, CPL + 0.28 + i * 0.63, CD / 2 - 0.045], s: [0.045, 0.09, 0.045] }, 'mid');
+  // (round 3: the cabinet's emergency-off button and its controller's screen, small, on the near side's front edge)
+  m.real('screen'); m.box({ c: [CBX + CW / 2 + 0.006, CTOP - 0.17, CD / 2 - 0.12], s: [0.012, 0.075, 0.1] }, 'dark'); m.real('emo'); m.cyl([CBX + CW / 2 + 0.014, CTOP - 0.29, CD / 2 - 0.12], 0.022, 0.028, 'turned', { seg: 20, rot: [0, 0, Math.PI / 2] }); m.real('steel');
   // restraint bars, in front of the cylinders
+  m.real('steel');
   [0.58, 1.04].forEach(function (by) { m.box({ c: [CBX, by, 0.045], s: [CW - 0.13, 0.038, 0.038] }, 'dark'); });
   m.use(shell);
   // the gas panel, steel-gray, on the back wall: plate, headers, valve blocks, gauges, regulator
   var PZ = -CD / 2 + 0.035, PY0 = 1.44, cylX = [-0.29, 0, 0.29];
-  m.tag('panel');
+  m.tag('panel'); m.real('vac');
   // (round two: the panel a step deeper, d 0.45, so it holds its place as the cabinet's one coloured part)
-  m.box({ c: [CBX - 0.02, PY0 + 0.25, PZ - 0.008], s: [0.84, 0.46, 0.012] }, { d: 0.45, c: 'acc' });
+  m.box({ c: [CBX - 0.02, PY0 + 0.25, PZ - 0.008], s: [0.84, 0.46, 0.012] }, { d: 0.45, c: 'acc', real: 'panel' });
   m.wire([[CBX - 0.40, PY0 + 0.06, PZ + 0.03], [CBX + 0.40, PY0 + 0.06, PZ + 0.03]], { col: 'acc', lw: 1.6 });
   m.wire([[CBX - 0.40, PY0 + 0.44, PZ + 0.03], [CBX + 0.40, PY0 + 0.44, PZ + 0.03]], { col: 'acc', lw: 1.6 });
   cylX.forEach(function (cx) {
@@ -2589,7 +3194,7 @@ R('gas-cabinet', function (m) {
     m.box({ c: [px, PY0 + 0.06, PZ + 0.03], s: [0.058, 0.062, 0.058] }, 'accDark');
     m.box({ c: [px, PY0 + 0.44, PZ + 0.03], s: [0.052, 0.056, 0.052] }, 'accDark');
     m.wire([[px, PY0 + 0.10, PZ + 0.03], [px, PY0 + 0.41, PZ + 0.03]], { col: 'acc', lw: 1.4 });
-    m.cyl([px, PY0 + 0.265, PZ + 0.04], 0.05, 0.02, 'accLight', { seg: 24, rot: [Math.PI / 2, 0, 0], top: [] });
+    m.real('gauge'); m.cyl([px, PY0 + 0.265, PZ + 0.04], 0.05, 0.02, 'accLight', { seg: 24, rot: [Math.PI / 2, 0, 0], top: [] }); m.real('steel');
     m.wire(H.ring(px, PY0 + 0.265, PZ + 0.051, 0.02, 20, 'z'), { col: 'acc', lw: 0.6 });
   });
   m.cyl([CBX + 0.40, PY0 + 0.06, PZ + 0.03], 0.048, 0.052, 'accTurned', { seg: 24 });
@@ -2598,10 +3203,16 @@ R('gas-cabinet', function (m) {
   m.wire([[CBX - 0.40, PY0 + 0.44, PZ + 0.03], [CBX - 0.40, CTOP - 0.03, PZ + 0.03]], { col: 'acc', lw: 1.4 });
   m.tag(null);
   // three cylinders; the middle one slides out
+  var CAPS = ['capY', 'capY', 'n2'], nB = 0;
   function bottle(x, hgt, cz) {
     m.tag('cyl');
     var b0 = CPL, b1 = CPL + hgt, sh = b1 + 0.11, CR = 0.114;
-    m.revolve([[0, b0], [CR, b0], [CR, b0 + 0.02, 2], [CR, b1 - 0.135, 2], [CR, b1 - 0.085, 2], [CR, b1, 0], [0.034, sh], [0.034, sh + 0.02], [0, sh + 0.02]], 'turned', { seg: 32, pos: [x, 0, cz] });
+    m.real('cylGrey'); m.revolve([[0, b0], [CR, b0], [CR, b0 + 0.02, 2], [CR, b1 - 0.2, 2], [0, b1 - 0.2]], 'turned', { seg: 48, pos: [x, 0, cz] });
+    m.real(CAPS[nB++ % 3]); m.revolve([[0, b1 - 0.2], [CR, b1 - 0.2], [CR, b1 - 0.085, 2], [CR, b1, 0], [0.034, sh], [0.034, sh + 0.02], [0, sh + 0.02]], 'turned', { seg: 48, pos: [x, 0, cz] });
+    m.real('steel');
+    // (a hazard diamond on the shoulder label, facing the cabinet's open front)
+    var hzG = CAPS[nB - 1] === 'n2', dz = cz + CR * 1.02, dyc = b1 - 0.14, dd = 0.034, dx0 = x - 0.045;
+    m.sheet([[dx0, dyc - dd, dz], [dx0 + dd, dyc, dz], [dx0, dyc + dd, dz], [dx0 - dd, dyc, dz]], { d: 0.05, real: 'label' }, { decals: [{ pts: [[dx0, dyc - dd * 0.82, dz + 0.0005], [dx0 + dd * 0.82, dyc, dz + 0.0005], [dx0, dyc + dd * 0.82, dz + 0.0005], [dx0 - dd * 0.82, dyc, dz + 0.0005]], closed: true, lw: 1.1, real: hzG ? 'ghsGreen' : 'ghsRed' }] });
     m.box({ c: [x, sh + 0.058, cz], s: [0.058, 0.078, 0.058] }, 'mid');
     m.tag(null);
     return [x, sh + 0.1, cz];
@@ -2614,7 +3225,7 @@ R('gas-cabinet', function (m) {
   vt.push(bottle(CBX + cylX[1], 1.16, -0.055));
   vt.push(bottle(CBX + cylX[2], 0.98, -0.055));
   // pigtails from the valves to the panel (the one that slides out is disconnected)
-  m.tag('panel');
+  m.tag('panel'); m.real('vac');
   [1, 2].forEach(function (k) {
     var v = vt[k], px = CBX + cylX[k], coil = [];
     for (var a = 0; a <= 2.6 * 24; a++) { var th = a / 24 * TAU; coil.push([v[0] + 0.048 + 0.048 * Math.cos(th), v[1] + 0.03 + a / 24 * 0.038, v[2] + 0.048 * Math.sin(th)]); }
@@ -2627,13 +3238,14 @@ R('gas-cabinet', function (m) {
   m.guide([[CBX + cylX[0] + 0.114, CPL, -0.055, cab.idx], [CBX + cylX[0] + 0.114, CPL, -0.055, out.idx]], { alpha: 0.85 });
   // the exhaust plenum and collar, lifted off the roof
   var ex = m.part('exhaust', { ex: [0, 0.14, 0], seq: 2, pri: 3 });
+  m.real('steel');
   m.box({ c: [CBX, CTOP + 0.085, -0.02], s: [0.66, 0.17, 0.40] }, 'steel');
   m.cyl([CBX, CTOP + 0.37, -0.02], 0.102, 0.40, 'turned', { seg: 28, rIn: 0.09 });
   m.guide([[CBX, CTOP, -0.02, cab.idx], [CBX, CTOP + 0.62, -0.02, ex.idx]], { style: 'axis', alpha: 0.85 });
   // the bulk liquid cylinder behind
   var bulk = m.part('bulk', { ex: [0, 0, 0], seq: 0, pri: -2 });
   var TX = 0.86, TZ = -0.40, TR = 0.205, TB = 0.15, TT = 1.06;
-  m.tag('bulk');
+  m.tag('bulk'); m.real('vac');
   var bp = [[0, 0], [TR * 0.86, 0], [TR * 0.86, TB], [TR, TB], [TR, 0.30, 2], [TR, 0.48, 2], [TR, 0.66, 2], [TR, 0.84, 2], [TR, 0.94, 2], [TR, 1.00, 2], [TR, TT]];
   for (i = 1; i <= 6; i++) { var a = i / 6 * Math.PI / 2; bp.push([TR * Math.cos(a), TT + TR * 0.52 * Math.sin(a), 0]); }
   bp.push([0, TT + TR * 0.52]);
@@ -2642,7 +3254,7 @@ R('gas-cabinet', function (m) {
   m.box({ c: [TX, TT + 0.10, TZ + 0.02], s: [0.16, 0.075, 0.10] }, 'mid');
   for (i = 0; i < 4; i++) { var pa = i * TAU / 4 + 0.5; m.wire([[TX + TR * 0.94 * Math.cos(pa), TT + 0.03, TZ + TR * 0.94 * Math.sin(pa)], [TX + TR * 0.96 * Math.cos(pa), TT + 0.19, TZ + TR * 0.96 * Math.sin(pa)]], { lw: 1.1 }); }
   var coil2 = []; for (i = 0; i <= 5 * 24; i++) { var tt = i / 24 * TAU; coil2.push([TX - TR - 0.046 + 0.042 * Math.cos(tt), 0.49 + i / 24 * 0.046, TZ + 0.02 + 0.042 * Math.sin(tt)]); }
-  m.wire(coil2, { lw: 0.7 });
+  m.wire(coil2, { lw: 0.7, real: 'vac' });
   m.tag(null);
   // labels: each lights its own group. The cylinders' one leader goes to the cylinder that slid out, clear of the
   // cabinet's restraint bars, and its label lights all three
@@ -2748,7 +3360,7 @@ R('globe', function (m, params) {
     co.spikes = ps.map(function (q) { return SPK[q.i]; });
     co.focus = ps.map(function (q) { return partOf(q.i); });
   });
-  return { elev: ELEV, yaw: YAW, spin: 0.06, start: 1, rest: 0, maxH: 430, trackRows: true, accent: [122, 31, 43], accentDark: [201, 83, 106] };
+  return { noGround: true, elev: ELEV, yaw: YAW, spin: 0.06, start: 1, rest: 0, maxH: 430, trackRows: true, accent: [122, 31, 43], accentDark: [201, 83, 106] };
 });
 
 })(window.PLATE);}catch(e){console.warn('plate globe.js failed to load', e);}
@@ -2776,22 +3388,26 @@ R('gpu-baseboard', function (m) {
   var mods = [];
   colX.forEach(function (x) { [[-rowZ, 1], [rowZ, -1]].forEach(function (r) { mods.push([x, r[0], r[1]]); }); });
   // each module's seat inside its frame: the land-grid socket it presses onto
-  mods.forEach(function (md) { dec.push({ dots: H.gridPts(11, 16, 0.017, 0.0175, top, md[0], md[1]), r: 0.5, alpha: 0.55 }); });
+  mods.forEach(function (md) { dec.push({ dots: H.gridPts(11, 16, 0.017, 0.0175, top, md[0], md[1]), r: 0.6, alpha: 0.85, real: 'au' }); });
+  // the board's traces, bundles from each switch chip out to the modules, seen through the solder mask
+  [-0.175, 0.175].forEach(function (sx) { for (var tq = 0; tq < 7; tq++) { var oz = (tq - 3) * 0.012; [-1, 1].forEach(function (sz) { colX.forEach(function (cxq) { dec.push(D.poly([[sx + oz, top, sz * 0.11], [sx + oz, top, sz * 0.15], [cxq + oz, top, sz * 0.19]], { lw: 0.3, alpha: 0.55, real: 'trace' })); }); }); } });
+  m.real('pcb');
   m.box({ c: [0, 0, 0], s: [BW, BH, BD], decals: { py: dec } }, 'steel');
-  m.tag('frames');
+  m.tag('frames'); m.real('steelDk');
   mods.forEach(function (md) { H.frame(m, [md[0], 0, md[1]], MW, MD, MW - 2 * kerb, MD - 2 * kerb, top, top + MH, 'light'); });
   m.tag(null);
   // the two NVLink switch chips, silicon
-  m.tag('switch');
+  m.tag('switch'); m.real('subMask');
   [-0.175, 0.175].forEach(function (x) {
-    var SW = 0.24, SD = 0.2, SH = 0.05, d = [D.rect(-SW / 2 + 0.025, -SD / 2 + 0.025, SW / 2 - 0.025, SD / 2 - 0.025, SH / 2, { lw: 0.6 }), D.rect(-SW * 0.21, -SD * 0.22, SW * 0.21, SD * 0.22, SH / 2, { lw: 0.6 })];
+    var SW = 0.24, SD = 0.2, SH = 0.05, d = [D.rect(-SW / 2 + 0.025, -SD / 2 + 0.025, SW / 2 - 0.025, SD / 2 - 0.025, SH / 2, { lw: 0.6 }), D.rect(-SW * 0.21, -SD * 0.22, SW * 0.21, SD * 0.22, SH / 2, { lw: 0.6, fill: { d: 0.4, real: 'siBack' } })];
     m.box({ c: [x, top + SH / 2, 0], s: [SW, SH, SD], decals: { py: d } }, 'acc');
   });
   m.tag(null);
   // voltage regulators down the long edges, bulk capacitors, power blades and connectors
+  m.real('plastic');
   for (var i2 = 0; i2 < 13; i2++) { var vx = (i2 - 6) * 0.085; [-1, 1].forEach(function (s) { m.box({ c: [vx, top + 0.013, s * (BD / 2 - 0.05)], s: [0.044, 0.026, 0.044] }, 'mid'); }); }
   [-1, 1].forEach(function (s) { m.box({ c: [-BW / 2 + 0.062, top + 0.029, s * 0.17], s: [0.084, 0.058, 0.20] }, 'dark'); });
-  for (i2 = 0; i2 < 4; i2++) { var pins = []; for (var k2 = 0; k2 < 14; k2++) pins.push(D.line([0.026, -0.017, (k2 - 6.5) * 0.0118], [0.026, 0.015, (k2 - 6.5) * 0.0118], { lw: 0.35, alpha: 0.8 })); m.box({ c: [BW / 2 - 0.042, top + 0.025, (i2 - 1.5) * 0.245], s: [0.052, 0.05, 0.185], decals: { px: pins } }, 'mid'); }
+  for (i2 = 0; i2 < 4; i2++) { var pins = []; for (var k2 = 0; k2 < 14; k2++) pins.push(D.line([0.026, -0.017, (k2 - 6.5) * 0.0118], [0.026, 0.015, (k2 - 6.5) * 0.0118], { lw: 0.35, alpha: 0.8, real: 'au' })); m.box({ c: [BW / 2 - 0.042, top + 0.025, (i2 - 1.5) * 0.245], s: [0.052, 0.05, 0.185], decals: { px: pins } }, 'mid'); }
   // the modules, lifted off the board: each a small board carrying its package (the substrate, its interposer and two
   // logic dies, at this site's B200 estimate)
   // the back row lifts out; the front row stays seated, so the switch chips between the rows stay in view
@@ -2801,10 +3417,12 @@ R('gpu-baseboard', function (m) {
     if (md[1] > 0 && !mpS) { mpS = m.part('seated', { ex: [0, 0, 0], seq: 1, mode: 'stack' }); m.tag('modules'); }
     if (md[1] < 0) m.use(mp); else m.use(mpS);
     var yL = top + MH - 0.016, pk = [];
-    pk.push(D.rect(-PKW / 2, -PKD / 2, PKW / 2, PKD / 2, 0.011, { lw: 0.55, fill: 'paper' }));
-    pk.push(D.rect(-25 * U, -39 * U, 25 * U, 39 * U, 0.011, { lw: 0.45 }));
-    [-1, 1].forEach(function (s) { pk.push(D.rect(-16.25 * U, (s * 13.5 - 13) * U, 16.25 * U, (s * 13.5 + 13) * U, 0.011, { lw: 0.4, fill: 'mid' })); });
+    pk.push(D.rect(-PKW / 2, -PKD / 2, PKW / 2, PKD / 2, 0.011, { lw: 0.55, fill: 'paper', real: 'subMask' }));
+    pk.push(D.rect(-25 * U, -39 * U, 25 * U, 39 * U, 0.011, { lw: 0.45, fill: 'mid', real: 'mould' }));
+    [-1, 1].forEach(function (s) { pk.push(D.rect(-16.25 * U, (s * 13.5 - 13) * U, 16.25 * U, (s * 13.5 + 13) * U, 0.011, { lw: 0.4, fill: 'mid', real: 'siBack' })); });
+    m.real('steelDk');
     m.box({ c: [md[0], yL - 0.0165, md[1]], s: [LW + 0.024, 0.011, LD + 0.02] }, 'mid');
+    m.real('pcbDk');
     m.box({ c: [md[0], yL, md[1]], s: [LW, 0.022, LD], decals: { py: pk } }, 'light');
   });
   m.tag(null);
@@ -2846,8 +3464,8 @@ R('hbm-stack', function (m) {
   function L(w) { return [[-w, -w], [w, -w], [w, 0], [0, 0], [0, w], [-w, w]]; }
   function tsvLines(y0, y1, w, tag) {
     var onZ = [], onX = [];
-    for (var x = 0; x <= w - 0.2; x += TX) onZ.push(D.line([x + 0.0001, y0, 0], [x + 0.0001, y1, 0], { col: 'acc', lw: 1.0, tag: tag }));
-    for (var z = 0; z <= w - 0.2; z += TZ) onX.push(D.line([0, y0, z + 0.0001], [0, y1, z + 0.0001], { col: 'acc', lw: 1.0, tag: tag }));
+    for (var x = 0; x <= w - 0.2; x += TX) onZ.push(D.line([x + 0.0001, y0, 0], [x + 0.0001, y1, 0], { col: 'acc', lw: 2.0, edge: true, tag: tag, real: 'cu' }));
+    for (var z = 0; z <= w - 0.2; z += TZ) onX.push(D.line([0, y0, z + 0.0001], [0, y1, z + 0.0001], { col: 'acc', lw: 2.0, edge: true, tag: tag, real: 'cu' }));
     return [onZ, onX];
   }
   function bumps(y, w) { var p = []; for (var x = 0; x <= w - 0.2; x += TX) p.push([x, y, 0]); for (var z = TZ; z <= w - 0.2; z += TZ) p.push([0, y, z]); return p; }
@@ -2855,10 +3473,11 @@ R('hbm-stack', function (m) {
   var base = m.part('base', { ex: [0, -1.15, 0], seq: 0 });
   var tb = tsvLines(-bt, 0, bw);
   var bl = [D.rect(-bw * 0.86, -bw * 0.43, bw * 0.86, -bw * 0.23, 0, { lw: 0.5 }), D.rect(-bw * 0.86, bw * 0.23, 0, bw * 0.43, 0, { lw: 0.5 })];
+  m.real('siBase');
   m.prism(L(bw), -bt, 0, 'steel', { sideMat: { 2: 'cutDense', 3: 'cutDense' }, sideDecals: { 2: tb[0], 3: tb[1] }, top: bl });
   var under = [];
   for (var a = 0; a < 16; a++) for (var b = 0; b < 17; b++) { var ux = (a - 7.5) * 11 / 17, uz = (b - 8) * 11 / 18; if (!(ux > 0 && uz > 0)) under.push([ux, -bt - 0.12, uz]); }
-  m.dots(under, { col: 'acc', r: 0.9, alpha: 0.5 });
+  m.dots(under, { col: 'acc', r: 0.9, alpha: 0.5, real: 'cu' });
   // (22 Nov 2026 plates refine: named from the left, on its front face, so the microbumps' leader has the right to itself)
   m.anchor(2, 'Base die', [-bw * 0.55, -bt / 2, bw]);
   // review: the quarter cut away is drawn as a phantom corner, so the 11 mm dimension ends on a drawn corner (it ended
@@ -2873,16 +3492,12 @@ R('hbm-stack', function (m) {
     var yb = gap0 + pitch * i, p = m.part('die' + (i + 1), { ex: [0, EX * (i + 1), 0], seq: i + 1 });
     var tl = tsvLines(yb, yb + t, hw, 'tsv');
     var o = { sideMat: { 2: 'cutDense', 3: 'cutDense' }, sideDecals: { 2: tl[0], 3: tl[1] } };
-    if (i === 11) {
-      var bank = [];
-      for (a = 0; a < 2; a++) for (b = 0; b < 4; b++) { var bx = (a - 0.5) * 10.6 * 0.44, bz = (b - 1.5) * 10.6 * 0.225; if (bx > 0 && bz > 0) continue; bank.push(D.rect(bx - 1.8, bz - 1.0, bx + 1.8, bz + 1.0, yb + t, { lw: 0.5, alpha: 0.75 })); }
-      o.top = bank;
-    }
-    m.tag('dies');
+    if (i === 11) o.top = []; // (the top die's ground back, plain)
+    m.tag('dies'); m.real('siBack');
     m.prism(L(hw), yb, yb + t, 'light', o);
     m.tag('bumps');
     // the bumps are left out of the small stills (lod 1): at 52 px their twelve rows ran together into a copper band
-    m.dots(bumps(yb - gap0 / 2 - 0.08, hw), { col: 'acc', r: 1.6, alpha: 1, lod: 1 });
+    m.dots(bumps(yb - gap0 / 2 - 0.08, hw), { col: 'acc', r: 2.4, alpha: 1, lod: 1, real: 'cu', cap: true });
     m.tag(null);
     if (i === 10) m.anchor(1, 'Memory dies', [-hw, yb + t / 2, hw * 0.6]);
     // the vias' and the bumps' points sit low in the stack, so their leaders run short to labels under the loupe
@@ -2918,12 +3533,16 @@ R('hbm-loupe', function (m) {
   var t = 30, g = 7, Z = 40, x0 = -50, x1 = 50, n = 3, P = 20, FILL = { d: 0.08 }, FILL_CUT = { d: 0.12 };
   for (var i = 0; i < n; i++) {
     var y0 = i * (t + g);
+    m.real('siCut');
     bx(x0, y0, -Z, x1, y0 + t, Z, 'light', { pz: 'cut' });
     if (i < n - 1) {
       // the fill round the bumps, its cut face just behind theirs
+      m.real('underfill');
       bx(x0, y0 + t, -Z, x1, y0 + t + g - 0.05, Z - 0.4, FILL, { pz: FILL_CUT });
+      m.real('cu');
       for (var bp = x0 + 10; bp < x1 - 5; bp += P) bx(bp - 4.5, y0 + t, -2, bp + 4.5, y0 + t + g, Z, 'acc', { pz: 'cutAcc' });
     }
+    m.real('cu');
     [x0 + 10, x0 + 70].forEach(function (vx) { bx(vx - 2.2, y0, -2, vx + 2.2, y0 + t, Z + 0.02, 'acc', { pz: 'cutAcc' }); });
   }
   bar(m, [x1 + 22, t, Z + 1], [x1 + 22, t + g, Z + 1], '7 \u00b5m', { side: 1 });
@@ -2961,8 +3580,8 @@ R('photomask', function (m) {
   pat.push(D.rect(-PW / 2 - 5, -PD / 2 - 5, PW / 2 + 5, PD / 2 + 5, top, { lw: 0.7 }));
   pat.push(D.rect(-PW / 2, -PD / 2, PW / 2, PD / 2, top, { lw: 0.7 }));
   // the black border, a filled frame
-  pat.push(D.poly([[-PW / 2 - 5, top, -PD / 2 - 5], [PW / 2 + 5, top, -PD / 2 - 5], [PW / 2 + 5, top, PD / 2 + 5], [-PW / 2 - 5, top, PD / 2 + 5]], { fill: 'black', lw: 0, alpha: 0.85 }));
-  pat.push(D.poly([[-PW / 2, top, -PD / 2], [PW / 2, top, -PD / 2], [PW / 2, top, PD / 2], [-PW / 2, top, PD / 2]], { fill: 'paper', lw: 0.6 }));
+  pat.push(D.poly([[-PW / 2 - 5, top, -PD / 2 - 5], [PW / 2 + 5, top, -PD / 2 - 5], [PW / 2 + 5, top, PD / 2 + 5], [-PW / 2 - 5, top, PD / 2 + 5]], { fill: 'black', lw: 0, alpha: 0.85, real: 'absorber' }));
+  pat.push(D.poly([[-PW / 2, top, -PD / 2], [PW / 2, top, -PD / 2], [PW / 2, top, PD / 2], [-PW / 2, top, PD / 2]], { fill: 'paper', lw: 0.6, sheen: 0.12 }));
   var COLS = 7, ROWS = 5, cw = PW / COLS, cd = PD / ROWS, MAP = ['AABBCCD', 'AABBCCD', 'EEFFGGD', 'HHIIGGJ', 'HHKKLLJ'], seen = {}, keys = [];
   for (var r = 0; r < ROWS; r++) for (var c = 0; c < COLS; c++) { var ch = MAP[r][c]; if (!seen[ch]) { seen[ch] = { c0: c, c1: c, r0: r, r1: r }; keys.push(ch); } else { seen[ch].c1 = Math.max(seen[ch].c1, c); seen[ch].r1 = Math.max(seen[ch].r1, r); } }
   keys.forEach(function (key, bi) {
@@ -2975,7 +3594,9 @@ R('photomask', function (m) {
     else { var nb = Math.max(3, Math.round(d / 9)); for (var b = 0; b < nb; b++) { var zz = z0 + (b / (nb - 1) - 0.5) * d * 0.76; pat.push(D.rect(x0 - w * 0.44, zz - d * 0.025, x0 + w * 0.44, zz + d * 0.025, top, { fill: 'dark', lw: 0.25 })); } }
   });
   [-1, 1].forEach(function (sx) { [-1, 1].forEach(function (sz) { var fx = sx * (PW / 2 + 9), fz = sz * (PD / 2 + 9); pat.push(D.rect(fx - 4.5, fz - 4.5, fx + 4.5, fz + 4.5, top, { lw: 0.5 })); pat.push(D.rect(fx - 2, fz - 2, fx + 2, fz + 2, top, { lw: 0.5 })); }); });
+  m.real('glass');
   m.box({ c: [0, 0, 0], s: [B, T, B] }, 'light');
+  m.real('mlm');
   var band = [];
   for (var q = 1; q < 8; q++) { var yy = -ml / 2 + ml * q / 8; band.push(D.line([-B / 2, yy, B / 2], [B / 2, yy, B / 2], { lw: 0.3, alpha: 0.55 })); }
   var bandX = band.map(function (it) { return { pts: [[B / 2, it.pts[0][1], B / 2], [B / 2, it.pts[0][1], -B / 2]], lw: 0.3, alpha: 0.55 }; });
@@ -2984,11 +3605,15 @@ R('photomask', function (m) {
   // pads, frame, membrane
   var FW = 145, FD = 117, bar = 4.5, fh = 2.6, stand = 2.5;
   var pads = m.part('pads', { ex: [0, 15, 0], seq: 1 });
+  m.real('steelDk');
   [-1, 1].forEach(function (sx) { [-1, 1].forEach(function (sz) { m.box({ c: [sx * (FW / 2 - bar / 2), yTop + stand / 2, sz * (FD / 2 - bar / 2)], s: [5.5, stand, 5.5] }, 'dark'); }); });
   var fr = m.part('frame', { ex: [0, 30, 0], seq: 2 });
+  m.real('alu');
   H.frame(m, [0, 0, 0], FW, FD, FW - 2 * bar, FD - 2 * bar, yTop + stand, yTop + stand + fh, 'steel');
+  m.real('steelDk');
   m.box({ c: [FW * 0.22, yTop + stand + fh / 2, -(FD / 2 + 1.6)], s: [9, fh * 0.8, 4] }, 'mid');
   var mem = m.part('membrane', { ex: [0, 48, 0], seq: 3 });
+  m.real('film');
   var yM = yTop + stand + fh;
   m.sheet([[-FW / 2 + bar, yM, -FD / 2 + bar], [FW / 2 - bar, yM, -FD / 2 + bar], [FW / 2 - bar, yM, FD / 2 - bar], [-FW / 2 + bar, yM, FD / 2 - bar]], 'glass');
   [[-1, -1], [1, -1], [1, 1], [-1, 1]].forEach(function (c) {
@@ -3031,17 +3656,21 @@ R('mask-loupe', function (m) {
   m.part('st', { mode: 'stack' });
   var X0 = -130, X1 = 90, NP = 40, g0 = -40, gB = g0 - 40;
   // (the glass ruled open at 45 degrees, the absorber close at 135: two materials, two rulings)
+  m.real('glass');
   bx(X0, gB, X1, g0, 'light', { pz: { d: 0.03, hatch: 1, ang: 45, gap: 3.6 } });
   // a pair's sublayers bottom up (Table 1 read from the glass): silicon-like, interlayer, molybdenum, interlayer, silicon-like.
   // The stack is one block in silicon's slate, the molybdenum laid on its cut face as bands with no outline (drawn as 160 blocks,
   // their outlines turned the stack black). 22 Nov 2026 plates refine: two values, molybdenum darker and silicon lighter; the
   // interlayers, where the two mix, are drawn with the silicon (three values, molybdenum near ink, read as a black block)
-  var MO = { d: 0.5 };
+  var MO = { d: 0.5, real: 'mo' };
   var SUBL = [[1.151, null], [1.422, null], [1.807, MO], [1.215, null], [1.435, null]], y = g0, bands = [];
   for (var i = 0; i < NP; i++) SUBL.forEach(function (q) { if (q[1]) bands.push([y, y + q[0], q[1]]); y += q[0]; });
   var yc = y, cyS = (g0 + yc) / 2, hx = (X1 - X0) / 2, ZF = 30;
+  m.real('siCut');
   m.box({ c: [(X0 + X1) / 2, cyS, 0], s: [X1 - X0, yc - g0, 60], decals: { pz: bands.map(function (q) { return D.poly([[-hx, q[0] - cyS, ZF], [hx, q[0] - cyS, ZF], [hx, q[1] - cyS, ZF], [-hx, q[1] - cyS, ZF]], { fill: q[2], lw: 0 }); }) } }, 'acc');
+  m.real('ru');
   bx(X0, yc, X1, yc + 3, 'mid');
+  m.real('absorber');
   [[-104, -64], [8, 48]].forEach(function (a) { bx(a[0], yc + 3, a[1], yc + 3 + 60, 'dark', { pz: { d: 0.04, hatch: 2, ang: 135, gap: 1.9 } }); });
   /* 22 Nov 2026 plates refine: the disc is a quarter smaller, tucked into the photomask's empty corner, so the names stand
      in one column right of the section, each inside the disc: the absorber's name over its height, the pairs' bar under it,
@@ -3072,6 +3701,7 @@ R('probe-card', function (m) {
   var Rw = 1.0, Rc = 1.02, Rch = 1.08, tW = 0.028, wT = tW / 2, dw = 26 / 150, dh = 33 / 150;
   var yLo = wT + 0.082, tG = 0.02, yLoT = yLo + tG, yUp = yLoT + 0.082, yUpT = yUp + tG, stH = 0.10, yST = yUpT + 0.052, stW = 0.5, tP = 0.052, pB = yST + stH + 0.03, pT = pB + tP;
   var ch = m.part('chuck', { ex: [0, -0.10, 0], seq: 0 });
+  m.real('ni');
   m.cyl([0, -wT - 0.065, 0], Rch, 0.13, 'turned', { seg: 64, top: [0.42, 0.68, 0.94, 1.06].map(function (r) { return D.circle(0, 0, r, 0.065, 64, { lw: 0.4, alpha: 0.6 }); }) });
   var wf = m.part('wafer', { ex: [0, 0, 0], seq: 1 });
   var shape = []; for (var k = 0; k < 96; k++) { var a = k * TAU / 96; if (k === 24) { shape.push([0.05, 0.998]); shape.push([0, 0.96]); shape.push([-0.05, 0.998]); continue; } shape.push([Rw * Math.cos(a), Rw * Math.sin(a)]); }
@@ -3079,13 +3709,16 @@ R('probe-card', function (m) {
   for (var gx = -6; gx <= 5; gx++) for (var gz = -5; gz <= 4; gz++) {
     var cx = (gx + 0.5) * dw, cz = (gz + 0.5) * dh, cor = [[cx - dw / 2, cz - dh / 2], [cx + dw / 2, cz - dh / 2], [cx - dw / 2, cz + dh / 2], [cx + dw / 2, cz + dh / 2]];
     if (!cor.every(function (c) { return c[0] * c[0] + c[1] * c[1] < 0.96; })) continue;
-    if (gx >= -1 && gx <= 0 && gz >= -1 && gz <= 0) { probed.push(D.rect(cx - dw / 2, cz - dh / 2, cx + dw / 2, cz + dh / 2, wT, { fill: 'accDark', lw: 0.6, col: 'acc', keep: true, tag: 'dies' })); continue; }
-    dies.push(D.rect(cx - dw / 2, cz - dh / 2, cx + dw / 2, cz + dh / 2, wT, { lw: 0.4, alpha: 0.7 }));
+    if (gx >= -1 && gx <= 0 && gz >= -1 && gz <= 0) { probed.push(D.rect(cx - dw / 2, cz - dh / 2, cx + dw / 2, cz + dh / 2, wT, { fill: 'accDark', lw: 0.6, col: 'acc', keep: true, tag: 'dies', real: 'siProbed', sheen: 0.18 })); continue; }
+    dies.push(D.rect(cx - dw / 2, cz - dh / 2, cx + dw / 2, cz + dh / 2, wT, { lw: 0.4, alpha: 0.35, fill: 'steel', sheen: 0.18 }));
   }
+  m.real('siProc');
   m.prism(shape, -wT, wT, 'accLight', { smooth: true, top: dies.concat(probed) });
   // the probe head: two guide plates and the needles bowed between them
   var hd = m.part('head', { ex: [0, 0.34, 0], seq: 2 });
+  m.real('granite');
   [yLo, yUp].forEach(function (y) { m.box({ c: [0, y + tG / 2, 0], s: [0.4, tG, 0.4] }, 'mid'); });
+  m.real('ni');
   // the needles: on each die, a sparse grid across its face, where an AI chip's bumps are, a few standing for thousands; each
   // needle the same length, bowed the same way between the guide plates, as a vertical probe's needle is
   m.tag('needles');
@@ -3103,12 +3736,17 @@ R('probe-card', function (m) {
   var st = m.part('transformer', { ex: [0, 0.66, 0], seq: 3 });
   var lines = []; for (k = 1; k < 7; k++) lines.push(-stH / 2 + stH * k / 7);
   var side = function (face) { return lines.map(function (y) { var p = face === 'pz' ? [[-stW / 2, y, stW / 2], [stW / 2, y, stW / 2]] : face === 'px' ? [[stW / 2, y, -stW / 2], [stW / 2, y, stW / 2]] : face === 'nx' ? [[-stW / 2, y, -stW / 2], [-stW / 2, y, stW / 2]] : [[-stW / 2, y, -stW / 2], [stW / 2, y, -stW / 2]]; return { pts: p, lw: 0.4, alpha: 0.8 }; }); };
-  m.box({ c: [0, yST + stH / 2, 0], s: [stW, stH, stW], decals: { pz: side('pz'), px: side('px'), nx: side('nx'), nz: side('nz'), py: [{ dots: H.gridPts(13, 13, stW * 0.07, stW * 0.07, stH / 2, 0, 0), r: 0.9, alpha: 0.75 }] } }, 'light');
+  m.real('ceramic');
+  m.box({ c: [0, yST + stH / 2, 0], s: [stW, stH, stW], decals: { pz: side('pz'), px: side('px'), nx: side('nx'), nz: side('nz'), py: [{ dots: H.gridPts(13, 13, stW * 0.07, stW * 0.07, stH / 2, 0, 0), r: 0.9, alpha: 0.75, real: 'au' }] } }, 'light');
   // the printed circuit board and the stiffener over it
   var pc = m.part('card', { ex: [0, 1.12, 0], seq: 4, mode: 'stack' });
   var pads = [];
-  [[0.56, 72], [0.66, 84], [0.76, 96]].forEach(function (r) { var d = []; for (var i = 0; i < r[1]; i++) { var aa = i * TAU / r[1]; d.push([r[0] * Math.cos(aa), tP / 2, r[0] * Math.sin(aa)]); } pads.push({ dots: d, r: 1.1, ring: true, alpha: 0.85 }); });
+  [[0.56, 72], [0.66, 84], [0.76, 96]].forEach(function (r) { var d = []; for (var i = 0; i < r[1]; i++) { var aa = i * TAU / r[1]; d.push([r[0] * Math.cos(aa), tP / 2, r[0] * Math.sin(aa)]); } pads.push({ dots: d, r: 1.1, ring: true, alpha: 0.85, real: 'au' }); });
+  // the board's traces, run in from its pads toward the centre
+  for (var tr = 0; tr < 72; tr++) { var ta = tr * TAU / 72 + 0.02; pads.push(D.line([0.25 * Math.cos(ta), tP / 2, 0.25 * Math.sin(ta)], [0.54 * Math.cos(ta), tP / 2, 0.54 * Math.sin(ta)], { lw: 0.3, alpha: 0.6, real: 'trace' })); }
+  m.real('pcb');
   m.cyl([0, pB + tP / 2, 0], Rc, tP, 'turned', { seg: 72, top: pads });
+  m.real('steel');
   [0, Math.PI / 2].forEach(function (ang) { m.box({ c: [0, pT + 0.025, 0], s: [1.72, 0.05, 0.105], rot: [0, ang, 0] }, 'mid'); });
   m.cyl([0, pT + 0.0375, 0], 0.2, 0.075, 'turnedDark', { seg: 32 });
   for (var i = 0; i < 3; i++) { var la = i * TAU / 3 + 0.4; m.cyl([0.30 * Math.cos(la), pT + 0.0525, 0.30 * Math.sin(la)], 0.036, 0.105, 'turned', { seg: 14 }); }
@@ -3145,7 +3783,8 @@ R('process-chamber', function (m) {
   var O = { a0: a0, a1: a1, cut: 'cut', seg: 56 };
   function o(extra) { var r = {}; for (var k in O) r[k] = O[k]; for (k in extra) r[k] = extra[k]; return r; }
   var ves = m.part('vessel', { pri: 0 });
-  var vs = m.revolve([[0.058, yTop], [rI, yTop], [rI, yBot], [0.105, yBot], [0.105, yFlo], [rO, yFlo], [rO, yLid], [0.058, yLid]], 'turned', o({}));
+  m.real('aluCh');
+  var vs = m.revolve([[0.058, yTop], [rI, yTop], [rI, yBot], [0.105, yBot], [0.105, yFlo], [rO, yFlo], [rO, yLid], [0.058, yLid]], 'turned', o({ innerMat: { d: 0.05, real: 'yttria' } }));
   // the slit valve the wafer travels through, in the far wall, and a viewport
   var svA = tv + Math.PI, sv = [];
   for (var k = 0; k <= 16; k++) { var aa = svA - 0.42 + 0.84 * k / 16; sv.push([rI * 0.995 * Math.cos(aa), -0.02 + 0.03, rI * 0.995 * Math.sin(aa)]); }
@@ -3154,36 +3793,50 @@ R('process-chamber', function (m) {
   // chuck: aluminium base, ceramic puck, focus ring and stem
   var chk = m.part('chuck', { pri: 1, mode: 'fixed' });
   var yPed = -0.025, pedH = 0.088;
+  m.real('alu');
   m.revolve([[0.058, yFlo], [0.072, yFlo], [0.072, yPed - pedH], [0.058, yPed - pedH]], 'turned', o({}));
   m.revolve([[0, yPed - pedH], [0.17, yPed - pedH], [0.17, yPed - 0.014], [0, yPed - 0.014]], 'turned', o({}));
+  m.real('ceramic');
   m.revolve([[0, yPed - 0.014], [0.17, yPed - 0.014], [0.17, yPed], [0, yPed]], 'turnedDark', o({ cut: 'cutDense' }));
+  m.real('siCut');
   m.revolve([[0.154, yPed], [0.185, yPed], [0.185, yPed + 0.010], [0.154, yPed + 0.010]], 'turnedDark', o({ cut: 'cutDense' }));
   // the wafer, at its true thickness
   var wfp = m.part('wafer', { pri: 2 });
   var WT = 0.000775;
-  m.revolve([[0, yPed], [0.15, yPed], [0.15, yPed + WT], [0, yPed + WT]], 'acc2Light', o({ cut: 'cutAcc2' }));
+  m.real('siProc');
+  // (the wafer under etch carries its die grid)
+  var wTop = [];
+  for (var gx = -6; gx <= 6; gx++) for (var gz = -6; gz <= 6; gz++) { var dx0 = gx * 0.024, dz0 = gz * 0.03; if (dx0 * dx0 + dz0 * dz0 > 0.128 * 0.128) continue; var an0 = Math.atan2(dz0, dx0); var dA = an0 - (a0 + a1) / 2; while (dA > Math.PI) dA -= TAU; while (dA < -Math.PI) dA += TAU; if (Math.abs(dA) > (a1 - a0) / 2 - 0.08) continue; wTop.push(D.rect(dx0 - 0.011, dz0 - 0.014, dx0 + 0.011, dz0 + 0.014, yPed + WT, { lw: 0.3, alpha: 0.55, fill: 'steel', sheen: 0.18 })); }
+  m.revolve([[0, yPed], [0.15, yPed], [0.15, yPed + WT], [0, yPed + WT]], 'acc2Light', o({ cut: 'cutAcc2', top: wTop }));
   // the plasma: a lens of clear violet between the wafer and the showerhead, and two fine lines just over the wafer, the sheath
   var plp = m.part('plasma', { pri: 3 });
   var gTop = 0.058, gBot = yPed + 0.006, gR = 0.168, PL = { d: 0.16, c: 'acc', alpha: 0.6 };
+  m.real('plasma');
   m.revolve([[0, gBot], [gR * 0.9, gBot], [gR, gBot + 0.008, 0], [gR * 1.02, (gBot + gTop) / 2, 0], [gR, gTop - 0.008, 0], [gR * 0.9, gTop], [0, gTop]], PL, o({ cut: { d: 0.22, c: 'acc' }, seg: 56 }));
   [0.0035, 0.0065].forEach(function (dy) { var sh = []; for (var k2 = 0; k2 <= 24; k2++) { var an = a0 + (a1 - a0) * k2 / 24; sh.push([0.15 * Math.cos(an), yPed + WT + dy, 0.15 * Math.sin(an)]); } m.wire(sh, { col: 'acc', lw: 0.6, alpha: 0.85, c: [0, yPed + 0.01, 0] }); });
   // showerhead: face plate, plenum wall, backing plate, with its gas holes cut through the face plate
   m.part('shower', { pri: 4 });
+  m.real('alu');
   var holes = [];
   for (var rr = 0.012; rr < 0.2; rr += 0.0132) holes.push({ pts: [[rr, 0.0625], [rr, 0.0915]].map(function (q) { return [q[0], q[1], 0]; }), col: 'bg', lw: 1.1 });
   var hcut = function (arr) { return arr.map(function (it) { return { pts: it.pts.map(function (q) { return [q[0], q[1]]; }), col: it.col, lw: it.lw }; }); };
   m.revolve([[0, 0.062], [0.205, 0.062], [0.205, 0.142], [0, 0.142], [0, 0.128], [0.193, 0.128], [0.193, 0.092], [0, 0.092]], 'turned', o({ cut0: hcut(holes), cut1: hcut(holes) }));
   // the lid feed: gas in, RF on, lifted off
   var lid = m.part('lid', { pri: 5, ex: [0, 0.10, 0], seq: 1 });
+  m.real('steel');
   m.revolve([[0.03, yLid], [0.058, yLid], [0.058, yLid + 0.078], [0.03, yLid + 0.078]], 'turned', o({}));
+  m.real('steel');
   m.revolve([[0.03, yLid + 0.078], [0.086, yLid + 0.078], [0.086, yLid + 0.10], [0.03, yLid + 0.10]], 'turnedDark', o({}));
+  m.real('steel');
   m.revolve([[0, yLid + 0.10], [0.026, yLid + 0.10], [0.026, yLid + 0.152], [0, yLid + 0.152]], 'turned', o({}));
   m.guide([[0, yLid, 0, ves.idx], [0, yLid + 0.17, 0, lid.idx]], { style: 'axis', alpha: 0.85 });
   // the turbopump, dropped away below
   var pump = m.part('pump', { pri: -2, ex: [0, -0.07, 0], seq: 3 });
+  m.real('alu');
   var bl = [];
   for (k = 0; k < 30; k++) { var ba = k * TAU / 30; bl.push(D.line([0.046 * Math.cos(ba), 0.074, 0.046 * Math.sin(ba)], [0.128 * Math.cos(ba + 0.3), 0.074, 0.128 * Math.sin(ba + 0.3)], { lw: 0.4, alpha: 0.75 })); }
   m.revolve([[0, -0.074], [0.146, -0.074], [0.146, 0.074], [0.13, 0.074], [0.13, 0.068], [0, 0.068]], 'turned', { seg: 40, pos: [0, yFlo - 0.2, 0], top: bl.map(function (it) { return { pts: it.pts.map(function (q) { return [q[0], q[1] - 0.006, q[2]]; }), lw: 0.4, alpha: 0.7 }; }) });
+  m.real('steel');
   m.cyl([0.228, yFlo - 0.23, 0], 0.03, 0.165, 'turned', { seg: 18, rot: [0, 0, Math.PI / 2] });
   m.guide([[0, yFlo, 0, ves.idx], [0, yFlo - 0.36, 0, pump.idx]], { style: 'axis', alpha: 0.85 });
   var cu = [Math.cos(a0), Math.sin(a0)], cw = [Math.cos(a1), Math.sin(a1)];
@@ -3214,7 +3867,7 @@ R('etch-loupe', function (m) {
   /* a block x X0..X1, y ya..yb, z -Dz..0 (its cut face toward the reader at z = 0), with the far half of a round hole of
      radius r down its axis from its top to y = yh (a blind hole has a floor there; yh = ya runs it through) */
   // the hole's wall a shade deeper than the block's faces, so it reads as a hollow
-  var wallMat = { d: 0.42, c: 'acc2', even: true };
+  var wallMat = { d: 0.42, c: 'acc2', even: true, real: 'siHole' };
   function holeBlock(ya, yb, yh, r, mat, cutMat, blind) {
     var s = m.begin(mat, { sortFaces: true }), v = function (x, y, z) { return m.v([x, y, z]); };
     var th = []; for (var j = 0; j <= N; j++) th.push(Math.PI + Math.PI * j / N);
@@ -3234,7 +3887,9 @@ R('etch-loupe', function (m) {
     if (blind) m.face(Ab.slice(), [0, 1, 0]);
     return m.end();
   }
+  m.real('siCut');
   holeBlock(Y0, 0, -Dp, W / 2, 'acc2Light', 'cutAcc2', true);
+  m.real('resist');
   holeBlock(0, RT, 0, W / 2, 'mid', { d: 0.08, hatch: 1, ang: 45, gap: 2.2 }, false);
   tag(m, [X1 + 1.5, RT + 1.1, 0], 'Resist', { align: 'left', lead: [X1 - 0.6, RT, -0.9] });
   tag(m, [X1 + 1.5, -6.2, 0], 'Silicon', { align: 'left', lead: [X1, -5.2, -1.1] });
@@ -3258,10 +3913,12 @@ try{(function(PLATE){'use strict';var R = PLATE.register, D = PLATE.D, H = PLATE
 R('rack', function (m) {
   var W = 0.60, Dp = 1.068, Ht = 2.236, U = 0.0445, post = 0.042, front = Dp / 2, back = -Dp / 2;
   var cab = m.part('cabinet', { ex: [0, 0, 0], seq: 0 });
+  m.real('black');
   [[-1, -1], [1, -1], [1, 1], [-1, 1]].forEach(function (q) { m.box({ c: [q[0] * (W / 2 - post / 2), Ht / 2, q[1] * (Dp / 2 - post / 2)], s: [post, Ht, post] }, 'mid'); });
   m.box({ c: [0, 0.045, 0], s: [W, 0.09, Dp] }, 'mid');
   m.box({ c: [0, Ht - 0.031, 0], s: [W, 0.062, Dp] }, 'steel');
   [-1, 1].forEach(function (s) { m.box({ c: [s * (W / 2 - 0.004), 0.09 + (Ht - 0.22) / 2, 0], s: [0.008, Ht - 0.22, Dp - 0.10] }, 'ghost'); });
+  m.real('black');
   // the trays, floor up: [kind, count, gap above]
   var y = 0.114, slots = [];
   [['cdu', 4, 0.040], ['power', 4, 0.030], ['compute', 8, 0.020], ['switch', 9, 0.020], ['compute', 10, 0.030], ['power', 4, 0.026], ['mgmt', 1, 0]].forEach(function (s) { for (var i = 0; i < s[1]; i++) { slots.push({ k: s[0], y: y + U / 2 }); y += U; } y += s[2]; });
@@ -3271,21 +3928,24 @@ R('rack', function (m) {
     var k = sl.k, d = [], f = tD / 2 + 0.0005;
     if (k === 'compute') { [-1, 1].forEach(function (s) { d.push(D.rectXY(s * 0.132 - 0.1025, -tH * 0.34, s * 0.132 + 0.1025, tH * 0.34, f, { lw: 0.45 })); }); }
     else if (k === 'switch') { d.push(D.rectXY(-tW * 0.4, -tH * 0.26, tW * 0.4, tH * 0.26, f, { lw: 0.45, fill: 'dark' })); }
-    else if (k === 'power') { for (var q = 0; q < 6; q++) { var qx = (q - 2.5) * ((tW - 0.02) / 6); d.push(D.rectXY(qx - (tW - 0.05) / 12, -tH * 0.37, qx + (tW - 0.05) / 12, tH * 0.37, f, { lw: 0.45, col: 'acc2' })); } }
+    else if (k === 'power') { for (var q = 0; q < 6; q++) { var qx = (q - 2.5) * ((tW - 0.02) / 6); d.push(D.rectXY(qx - (tW - 0.05) / 12, -tH * 0.37, qx + (tW - 0.05) / 12, tH * 0.37, f, { lw: 0.45, col: 'acc2', fill: 'mid' })); } }
     // (round two: the power shelves in the steel grey at the accent's middle weight; at acc2Dark they were the plate's heaviest mark)
     var mat = k === 'power' ? 'acc2' : k === 'switch' ? 'mid' : k === 'cdu' ? 'steel' : 'light';
-    m.box({ c: [0, sl.y, tzc], s: [tW, tH, tD], decals: { pz: d } }, mat);
+    // the trays' steel bodies, their fronts black; the power shelves' fronts the bare metal of their supplies
+    var fr = k === 'power' ? 'alu' : 'black';
+    m.box({ c: [0, sl.y, tzc], s: [tW, tH, tD], decals: { pz: d }, real: 'steel', fmat: { pz: { d: 0.2, real: fr } } }, mat);
   }
   slots.forEach(function (sl, i) { if (pullIdx[i] || sl.k === 'cdu') return; tray(sl); });
   var cduY = (slots[0].y + slots[3].y) / 2;
+  m.real('black');
   m.box({ c: [0, cduY, tzc], s: [tW, 4 * U * 0.94, tD], decals: { pz: [-1, 1].map(function (s) { return D.circle(0, 0, 0.046, 0, 24, { lw: 0.6 }); }).map(function (it, j) { return { pts: it.pts.map(function (p) { return [p[0] + (j ? 0.155 : -0.155), p[2], tD / 2 + 0.0005]; }), closed: true, lw: 0.6 }; }) } }, 'steel');
   // the rear: the NVLink cable cartridge either side of the busbar's place, and the coolant manifold
   var sy0 = 0.164, sy1 = stackTop - 0.02, sh = sy1 - sy0, syc = (sy0 + sy1) / 2, zS = back + 0.085;
   [-1, 1].forEach(function (s) {
     var ln = []; for (var i = 0; i < 18; i++) { var lx = (i - 8.5) * 0.0112; ln.push(D.line([lx, -sh / 2, -0.011], [lx, sh / 2, -0.011], { lw: 0.35, alpha: 0.7 })); }
-    m.box({ c: [s * 0.172, syc, zS], s: [0.212, sh, 0.02], decals: { nz: ln } }, 'mid');
+    m.box({ c: [s * 0.172, syc, zS], s: [0.212, sh, 0.02], decals: { nz: ln }, real: 'cable' }, 'mid');
   });
-  [back + 0.30, back + 0.40].forEach(function (pz) { var prof = [[0, sy0 - 0.13], [0.03, sy0 - 0.13]]; for (var q = 0; q <= 10; q++) prof.push([0.03, sy0 - 0.10 + q * (sh + 0.24) / 10, 2]); prof.push([0.03, sy1 + 0.17]); prof.push([0, sy1 + 0.17]); m.revolve(prof, 'turned', { seg: 12, pos: [W / 2 - 0.058, 0, pz] }); });
+  [back + 0.30, back + 0.40].forEach(function (pz) { var prof = [[0, sy0 - 0.13], [0.03, sy0 - 0.13]]; for (var q = 0; q <= 10; q++) prof.push([0.03, sy0 - 0.10 + q * (sh + 0.24) / 10, 2]); prof.push([0.03, sy1 + 0.17]); prof.push([0, sy1 + 0.17]); m.revolve(prof, 'turned', { seg: 12, pos: [W / 2 - 0.058, 0, pz], real: 'steel' }); });
   // pulled trays
   var pulled = [];
   Object.keys(pullIdx).forEach(function (i) {
@@ -3296,7 +3956,7 @@ R('rack', function (m) {
   var bb = m.part('busbar', { ex: [0, 0, -2.25], seq: 4 });
   // (round two: a deeper copper fill, d 0.5, so the thin bar keeps its colour under its outline: src/plate.js draws a part under
   // about 16 px across with its outline tinted, never the ink shade line, which swallowed it)
-  m.box({ c: [0, syc, zS + 0.02], s: [0.052, sh + 0.10, 0.03] }, { d: 0.5, c: 'acc' });
+  m.box({ c: [0, syc, zS + 0.02], s: [0.052, sh + 0.10, 0.03] }, { d: 0.5, c: 'acc', real: 'cu' });
   // its trace lines back to its place at the rear, top and foot, so the bar reads as pulled from the rack (designer pass)
   [syc + (sh + 0.10) / 2, syc - (sh + 0.10) / 2].forEach(function (yy) { m.guide([[0, yy, zS + 0.035, cab.idx], [0, yy, zS + 0.035, bb.idx]], { alpha: 0.7 }); });
   // (designer pass, 22 Nov 2026: the figure stands low on its line, under the busbar's foot; at 0.62 it ran into the bar; plates
@@ -3334,22 +3994,28 @@ R('sem-column', function (m) {
   function o(extra) { var r = {}; for (var k in O) r[k] = O[k]; for (k in extra) r[k] = extra[k]; return r; }
   function lens(y0, y1, rOut, rB) {
     var hh = y1 - y0, mid = (y0 + y1) / 2, c0 = rB + (rOut - rB) * 0.30, c1 = rOut - (rOut - rB) * 0.14, w0 = y0 + hh * 0.16, w1 = y1 - hh * 0.16, g = 0.028;
+    m.real('iron');
     m.revolve([[rB, y0], [rOut, y0], [rOut, y1], [rB, y1], [rB, mid + g], [c0, w1], [c1, w1], [c1, w0], [c0, w0], [rB, mid - g]], 'turned', o({}));
-    m.revolve([[c0 + 0.008, w0 + 0.008], [c1 - 0.008, w0 + 0.008], [c1 - 0.008, w1 - 0.008], [c0 + 0.008, w1 - 0.008]], 'dark', o({ cut: 'cutDense' }));
+    m.real('cu');
+    var coil = m.revolve([[c0 + 0.008, w0 + 0.008], [c1 - 0.008, w0 + 0.008], [c1 - 0.008, w1 - 0.008], [c0 + 0.008, w1 - 0.008]], 'dark', o({ cut: 'cutDense' }));
+    coil.c = [coil.c[0] + 0.08 * Math.cos(tv), coil.c[1], coil.c[2] + 0.08 * Math.sin(tv)];
   }
-  function tube(y0, y1, r0, r1) { m.revolve([[r0, y0], [r1, y0], [r1, y1], [r0, y1]], 'turned', o({})); }
-  function plate(y, r, hole) { m.revolve([[hole, y - 0.004], [r, y - 0.004], [r, y + 0.004], [hole, y + 0.004]], 'turnedDark', o({ cut: 'cutDense' })); }
+  function tube(y0, y1, r0, r1) { m.revolve([[r0, y0], [r1, y0], [r1, y1], [r0, y1]], 'turned', o({ real: 'steel' })); }
+  function plate(y, r, hole) { m.revolve([[hole, y - 0.004], [r, y - 0.004], [r, y + 0.004], [hole, y + 0.004]], 'turnedDark', o({ cut: 'cutDense', real: 'w' })); }
   var u = [Math.cos(a0), Math.sin(a0)];
   var parts = {}, beam = [];
   // gun and its insulator
   parts.gun = m.part('gun', { ex: [0, 0.34, 0], seq: 5 });
+  m.real('steel');
   m.revolve([[0.085, 1.10], [0.20, 1.10], [0.20, 1.36], [0.10, 1.47], [0.085, 1.47]], 'turned', o({}));
-  [0, 1, 2].forEach(function (q) { var iy = 1.47 + q * 0.082, ir = 0.100 - q * 0.017; m.revolve([[0.03, iy], [ir, iy], [ir, iy + 0.07, 2], [0.03, iy + 0.07]], 'turnedDark', o({ cut: 'cutDense' })); });
+  [0, 1, 2].forEach(function (q) { var iy = 1.47 + q * 0.082, ir = 0.100 - q * 0.017; m.revolve([[0.03, iy], [ir, iy], [ir, iy + 0.07, 2], [0.03, iy + 0.07]], 'turnedDark', o({ cut: 'cutDense', real: 'ceramic' })); });
   tube(1.72, 1.85, 0.02, 0.04);
-  m.revolve([[0, 1.244], [0.003, 1.244], [0.026, 1.292], [0, 1.292]], 'acc', o({ cut: 'cutAcc' }));
+  m.revolve([[0, 1.244], [0.003, 1.244], [0.026, 1.292], [0, 1.292]], 'acc', o({ cut: 'cutAcc', real: 'w' }));
   plate(1.205, 0.075, 0.010); plate(1.12, 0.085, 0.012);
   var ipA = tv + Math.PI;
+  m.real('steel');
   m.cyl([0.30 * Math.cos(ipA), 1.245, 0.30 * Math.sin(ipA)], 0.072, 0.20, 'turned', { seg: 24, rot: [0, -ipA, Math.PI / 2] });
+  m.real('steelDk');
   m.box({ c: [0.48 * Math.cos(ipA), 1.245, 0.48 * Math.sin(ipA)], s: [0.14, 0.17, 0.17], rot: [0, -ipA, 0] }, 'mid');
   // the first condenser and its tube
   parts.c1 = m.part('cond1', { ex: [0, 0.22, 0], seq: 4 });
@@ -3360,30 +4026,37 @@ R('sem-column', function (m) {
   // stigmator and scan coils
   parts.sc = m.part('scan', { ex: [0, 0, 0], seq: 2 });
   tube(-0.06, 0.12, 0.084, 0.094);
-  m.revolve([[0.10, -0.03], [0.142, -0.03], [0.142, 0.07], [0.10, 0.07]], 'turnedDark', o({}));
-  m.revolve([[0.094, -0.26], [0.20, -0.26], [0.20, -0.10], [0.094, -0.10]], 'turned', o({}));
-  m.revolve([[0.118, -0.238], [0.184, -0.238], [0.184, -0.122], [0.118, -0.122]], 'dark', o({ cut: 'cutDense' }));
+  m.revolve([[0.10, -0.03], [0.142, -0.03], [0.142, 0.07], [0.10, 0.07]], 'turnedDark', o({ real: 'cu' }));
+  m.revolve([[0.094, -0.26], [0.20, -0.26], [0.20, -0.10], [0.094, -0.10]], 'turned', o({ real: 'iron' }));
+  var scoil = m.revolve([[0.118, -0.238], [0.184, -0.238], [0.184, -0.122], [0.118, -0.122]], 'dark', o({ cut: 'cutDense', real: 'cu' }));
+  scoil.c = [scoil.c[0] + 0.08 * Math.cos(tv), scoil.c[1], scoil.c[2] + 0.08 * Math.sin(tv)];
   // the objective lens and its conical pole piece
   parts.ob = m.part('objective', { ex: [0, -0.12, 0], seq: 1 });
   lens(-0.56, -0.30, 0.44, 0.115);
-  m.revolve([[0.105, -0.815], [0.145, -0.815], [0.145, -0.76], [0.44, -0.56], [0.105, -0.56]], 'turned', o({}));
+  m.revolve([[0.105, -0.815], [0.145, -0.815], [0.145, -0.76], [0.44, -0.56], [0.105, -0.56]], 'turned', o({ real: 'iron' }));
   // the ring detector
   parts.det = m.part('detector', { ex: [0, -0.2, 0], seq: 1 });
   m.tag('detector');
-  m.revolve([[0.052, -0.859], [0.175, -0.859], [0.175, -0.851], [0.052, -0.851]], 'turnedDark', o({ cut: 'cutDense' }));
+  m.revolve([[0.052, -0.859], [0.175, -0.859], [0.175, -0.851], [0.052, -0.851]], 'turnedDark', o({ cut: 'cutDense', real: 'siFace' }));
   m.tag(null);
   // wafer and stage
   parts.st = m.part('stage', { ex: [0, -0.32, 0], seq: 0, pri: -1, mode: 'stack' });
   var yW = -0.98, wr = 0.40, wt = wr * 0.775 / 150, dies = [];  // the wafer 300 mm across and 775 micrometres thick (SEMI M1)
-  for (var gx = -4; gx <= 4; gx++) for (var gz = -4; gz <= 4; gz++) { var cx = gx * 0.092, cz = gz * 0.076; if (cx * cx + cz * cz > (wr - 0.055) * (wr - 0.055)) continue; dies.push(D.rect(cx - 0.044, cz - 0.036, cx + 0.044, cz + 0.036, wt / 2, { lw: 0.35, alpha: 0.6 })); }
+  for (var gx = -4; gx <= 4; gx++) for (var gz = -4; gz <= 4; gz++) { var cx = gx * 0.092, cz = gz * 0.076; if (cx * cx + cz * cz > (wr - 0.055) * (wr - 0.055)) continue; dies.push(D.rect(cx - 0.044, cz - 0.036, cx + 0.044, cz + 0.036, wt / 2, { lw: 0.35, alpha: 0.6, fill: 'steel', sheen: 0.18 })); }
   dies.push({ dots: [[0, wt / 2, 0]], r: 2.4, col: 'acc', alpha: 1 });
+  m.real('granite');
   m.box({ c: [0, yW - 0.21, 0], s: [1.42, 0.09, 1.10] }, 'steel');
+  m.real('steel');
   [-1, 1].forEach(function (i) { m.box({ c: [0, yW - 0.147, i * 0.33], s: [1.30, 0.034, 0.056] }, 'dark'); });
+  m.real('alu');
   m.box({ c: [0, yW - 0.088, 0], s: [0.98, 0.07, 0.86] }, 'light');
+  m.real('ceramic');
   m.cyl([0, yW - 0.027, 0], 0.428, 0.05, 'turned', { seg: 48 });
+  m.real('siProc');
   m.tag('wafer');
   m.cyl([0, yW - 0.003 + wt / 2, 0], wr, wt, 'acc2Light', { seg: 56, top: dies });
   m.tag(null);
+  m.real('steelDk');
   m.box({ c: [-wr - 0.048, yW - 0.02, 0], s: [0.02, 0.055, 0.80] }, 'dark');
   m.box({ c: [0, yW - 0.02, -wr - 0.048], s: [0.80, 0.055, 0.02] }, 'dark');
   var du = [Math.cos(yaw), Math.sin(yaw)]; // the direction that runs straight across the page at the resting turn
@@ -3405,7 +4078,7 @@ R('sem-column', function (m) {
   var nr = Math.atan2(Math.cos(yaw), -Math.sin(yaw)) + 0.35;
   m.callout([wr * 0.95 * Math.cos(nr), yW + 0.004, wr * 0.95 * Math.sin(nr), parts.st.idx], 'Wafer', { side: 'l', tag: 'wafer' });
   m.callout([0.15 * u[0], -0.855, 0.15 * u[1], parts.det.idx], 'Detector', { side: 'l', tag: 'detector' });
-  return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, sortAxis: [0, 1, 0], accent: [78, 96, 186], accentDark: [167, 180, 245], accent2: [111, 139, 166], accent2Dark: [195, 211, 226] };
+  return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, sortAxis: [0, 1, 0], accent: [78, 96, 186], accentDark: [154, 166, 255], accent2: [111, 139, 166], accent2Dark: [195, 211, 226] };
 });
 
 })(window.PLATE);}catch(e){console.warn('plate sem-column.js failed to load', e);}
@@ -3426,18 +4099,18 @@ try{(function(PLATE){'use strict';var R = PLATE.register, D = PLATE.D, H = PLATE
 R('substrate-layers', function (m) {
   var W = 95, Dd = 68, tc = 7.5, tb = 1.0, nb = 11, tr = 1.0, top = tc / 2 + nb * tb + tr, cTop = tc / 2;
   var lay = []; for (var k = 0; k <= nb; k++) lay.push(cTop + k * tb);
-  var FILM_A = { d: 0.24, c: 'acc' }, FILM_B = { d: 0.40, c: 'acc' };
+  var FILM_A = { d: 0.24, c: 'acc', real: 'abf' }, FILM_B = { d: 0.40, c: 'acc', real: 'abf2' };
   // the section on a cut face, as decal items in (u, y), u running 0..L along the face
   function section(L, toP) {
     var it = [], i, u;
     var poly = function (u0, ya, u1, yb, o) { return Object.assign({ pts: [toP(u0, ya), toP(u1, ya), toP(u1, yb), toP(u0, yb)], closed: true }, o); };
-    it.push(poly(0, -cTop, L, cTop, { fill: { d: 0.07, hatch: 3 }, lw: 0.5, tag: 'core' }));
+    it.push(poly(0, -cTop, L, cTop, { fill: { d: 0.07, hatch: 3, real: 'coreSec' }, lw: 0.5, tag: 'core', real: 'coreSec' }));
     for (k = 1; k <= nb; k++) {
       // review: a deeper olive (d 0.24 and 0.40, was 0.17 and 0.34), so the bands read as the caption's olive green
       it.push(poly(0, lay[k - 1], L, lay[k], { fill: k % 2 ? FILM_A : FILM_B, lw: 0, keep: true, tag: 'film' }));
       it.push(poly(0, -lay[k], L, -lay[k - 1], { fill: k % 2 ? FILM_A : FILM_B, lw: 0, keep: true, tag: 'film' }));
     }
-    [1, -1].forEach(function (sg) { it.push(poly(0, sg > 0 ? lay[nb] : -top, L, sg > 0 ? top : -lay[nb], { fill: 'dark', lw: 0 })); });
+    [1, -1].forEach(function (sg) { it.push(poly(0, sg > 0 ? lay[nb] : -top, L, sg > 0 ? top : -lay[nb], { fill: 'dark', lw: 0, real: 'subMask' })); });
     /* 22 Nov 2026 plates refine: the copper on every conductor plane runs the whole cut, broken only round the vias that land on
        it (each landing a pad of its own, with a clearance either side), so the eleven bands a side can be counted between the
        twelve lines of copper (random runs and breaks read as a brick wall). Every microvia column climbs every band, stacked or
@@ -3447,7 +4120,7 @@ R('substrate-layers', function (m) {
     var np = Math.max(3, Math.round(L / 11)), hw = 0.62;
     for (i = 0; i < np; i++) {
       u = (i + 0.5) * L / np;
-      it.push({ pts: [toP(u - hw, -cTop), toP(u - hw, cTop)], col: 'acc2', lw: 1.1, tag: 'cu' }, { pts: [toP(u + hw, -cTop), toP(u + hw, cTop)], col: 'acc2', lw: 1.1, tag: 'cu' });
+      it.push({ pts: [toP(u - hw, -cTop), toP(u - hw, cTop)], col: 'acc2', lw: 1.1, tag: 'cu', real: 'cu' }, { pts: [toP(u + hw, -cTop), toP(u + hw, cTop)], col: 'acc2', lw: 1.1, tag: 'cu', real: 'cu' });
       pads[0].push([u - hw * 2.6, u + hw * 2.6]);
     }
     // microvias, stacked in some columns and staggered in others, each column through every band
@@ -3462,7 +4135,7 @@ R('substrate-layers', function (m) {
       }
     }
     [1, -1].forEach(function (sg) {
-      vias.forEach(function (v) { var yl = sg * lay[v[0] - 1], yh = sg * lay[v[0]], x = v[1]; it.push({ pts: [toP(x - 0.58, yh), toP(x - 0.3, yl), toP(x + 0.3, yl), toP(x + 0.58, yh)], closed: true, fill: { d: 0.62, c: 'acc2' }, col: 'acc2', lw: 0.4, tag: 'cu' }); });
+      vias.forEach(function (v) { var yl = sg * lay[v[0] - 1], yh = sg * lay[v[0]], x = v[1]; it.push({ pts: [toP(x - 0.58, yh), toP(x - 0.3, yl), toP(x + 0.3, yl), toP(x + 0.58, yh)], closed: true, fill: { d: 0.62, c: 'acc2', real: 'cu' }, col: 'acc2', lw: 0.4, tag: 'cu', real: 'cu' }); });
       for (k = 0; k <= nb; k++) {
         var y = sg * lay[k], lw = k % 3 === 0 ? 0.85 : 0.75;
         // the plane's pads, merged where they touch, then the copper between them, each run stopping 0.5 short of a pad
@@ -3470,16 +4143,16 @@ R('substrate-layers', function (m) {
         ps.forEach(function (pq) { var l = mg[mg.length - 1]; if (l && pq[0] <= l[1] + 0.2) l[1] = Math.max(l[1], pq[1]); else mg.push([pq[0], pq[1]]); });
         var x0 = 0.4;
         mg.forEach(function (pq) {
-          if (pq[0] - 0.5 > x0 + 0.3) it.push({ pts: [toP(x0, y), toP(pq[0] - 0.5, y)], col: 'acc2', lw: lw, tag: 'cu' });
-          it.push({ pts: [toP(Math.max(0.4, pq[0]), y), toP(Math.min(L - 0.4, pq[1]), y)], col: 'acc2', lw: k === 0 ? 1.3 : lw + 0.3, tag: 'cu' });
+          if (pq[0] - 0.5 > x0 + 0.3) it.push({ pts: [toP(x0, y), toP(pq[0] - 0.5, y)], col: 'acc2', lw: lw + 0.25, edge: true, tag: 'cu', real: 'cu' });
+          it.push({ pts: [toP(Math.max(0.4, pq[0]), y), toP(Math.min(L - 0.4, pq[1]), y)], col: 'acc2', lw: (k === 0 ? 1.3 : lw + 0.3) + 0.25, edge: true, tag: 'cu', real: 'cu' });
           x0 = pq[1] + 0.5;
         });
-        if (L - 0.4 > x0 + 0.3) it.push({ pts: [toP(x0, y), toP(L - 0.4, y)], col: 'acc2', lw: lw, tag: 'cu' });
+        if (L - 0.4 > x0 + 0.3) it.push({ pts: [toP(x0, y), toP(L - 0.4, y)], col: 'acc2', lw: lw + 0.25, edge: true, tag: 'cu', real: 'cu' });
       }
     });
     // solder balls in section along the foot
     var nbz = Math.max(4, Math.round(L / 4.5));
-    for (i = 0; i < nbz; i++) { u = (i + 0.5) * L / nbz; var arc = []; for (var a = 0; a <= 12; a++) { var th = Math.PI * a / 12; arc.push(toP(u - 1.1 * Math.cos(th), -top - 1.1 * Math.sin(th) * 0.85)); } it.push({ pts: arc, lw: 0.7, fill: 'mid' }); }
+    for (i = 0; i < nbz; i++) { u = (i + 0.5) * L / nbz; var arc = []; for (var a = 0; a <= 12; a++) { var th = Math.PI * a / 12; arc.push(toP(u - 1.1 * Math.cos(th), -top - 1.1 * Math.sin(th) * 0.85)); } it.push({ pts: arc, lw: 0.7, fill: 'mid', real: 'sac' }); }
     return it;
   }
   var body = m.part('body', { ex: [0, 0, 0], seq: 0 });
@@ -3489,9 +4162,18 @@ R('substrate-layers', function (m) {
   var sw = 78, sd = 50, tp = [];
   tp.push({ pts: [[0, top, -sd / 2], [-sw / 2, top, -sd / 2], [-sw / 2, top, sd / 2], [0, top, sd / 2]], lw: 0.7, dash: [2.4, 1.6] });
   tp.push({ pts: [[0, top, -sd / 2], [sw / 2, top, -sd / 2], [sw / 2, top, 0]], lw: 0.7, dash: [2.4, 1.6] });
-  tp.push({ dots: H.gridPts(30, 20, sw / 31, sd / 21, top, 0, 0, function (x, z) { return !(x > 0.5 && z > 0.5); }), r: 0.55, alpha: 0.6 });
-  for (var q = 0; q < 30; q++) { var cu = (q - 14.5) * (W * 0.94 / 30); if (Math.abs(cu) > sw / 2 + 2) continue; [-1, 1].forEach(function (sg) { if (cu > 0 && sg > 0) return; tp.push(D.rect(cu - 0.9, sg * (sd / 2 + 4.2) - 1.4, cu + 0.9, sg * (sd / 2 + 4.2) + 1.4, top, { fill: 'dark', lw: 0.3 })); }); }
-  m.prism(Lsh, -top, top, 'light', { sideMat: { 2: 'paper', 3: 'paper' }, sideDecals: { 2: secZ, 3: secX }, top: tp });
+  tp.push({ dots: H.gridPts(30, 20, sw / 31, sd / 21, top, 0, 0, function (x, z) { return !(x > 0.5 && z > 0.5); }), r: 0.55, alpha: 0.6, real: 'sac' });
+  for (var q = 0; q < 30; q++) { var cu = (q - 14.5) * (W * 0.94 / 30); if (Math.abs(cu) > sw / 2 + 2) continue; [-1, 1].forEach(function (sg) { if (cu > 0 && sg > 0) return; tp.push(D.rect(cu - 0.9, sg * (sd / 2 + 4.2) - 1.4, cu + 0.9, sg * (sd / 2 + 4.2) + 1.4, top, { fill: 'dark', lw: 0.3, real: 'sac' })); }); }
+  m.real('subMask');
+  var sMat = { 2: 'paper', 3: 'paper' }, sDec = { 2: secZ, 3: secX };
+  // (the outer sides: a routed laminate edge, thin green resist bands top and bottom, the core's band and faint layer lines)
+  [0, 1, 4, 5].forEach(function (i) {
+    var a = Lsh[i], b = Lsh[(i + 1) % 6], band = function (y0, y1, o) { return Object.assign({ pts: [[a[0], y0, a[1]], [b[0], y0, b[1]], [b[0], y1, b[1]], [a[0], y1, a[1]]], closed: true }, o); };
+    var it = [band(top - tr, top, { fill: { d: 0.3, real: 'subMask' }, lw: 0 }), band(-top, -top + tr, { fill: { d: 0.3, real: 'subMask' }, lw: 0 }), band(-cTop, cTop, { fill: { d: 0.1, real: 'core', hatch: 3 }, lw: 0 })];
+    for (var q = 1; q <= nb; q++) [1, -1].forEach(function (sg) { it.push(band(sg * lay[q], sg * lay[q], { lw: 0.3, alpha: 0.35 })); });
+    sMat[i] = { d: 0.1, real: 'laminate' }; sDec[i] = it;
+  });
+  m.prism(Lsh, -top, top, 'light', { sideMat: sMat, sideDecals: sDec, top: tp });
   m.callout([W * 0.3, (lay[2] + lay[3]) / 2, 0.001, body.idx], 'Build-up film', { side: 'r', tag: 'film' });
   // review: on a plated hole's copper pad at the near end of the right-hand cut (the leader ran right across the top); round two:
   // on the fifth build-up plane above the core, clear of the vias, so it names the layers rather than a hole
@@ -3510,26 +4192,31 @@ try{(function(PLATE){'use strict';var R = PLATE.register, D = PLATE.D, H = PLATE
 R('wafer-cost', function (m) {
   var S = 1.9 / 6380, CW = 0.60, PW = 0.84, PH = 0.038;
   var BOM = [['$2,900 of memory', 2900, 'acc'], ['$1,100 of packaging', 1100, 'light'], ['$1,000 of packaging yield loss', 1000, 'ghost'], ['$900 of logic dies', 900, 'mid'], ['$480 of power delivery, board and test', 480, 'steel']];
+  // (each layer in the material its share of the bill buys: the memory's stacked silicon and copper vias, the
+  // package's substrate and bumps, the logic dies' face, the board's green solder mask)
+  var REALS = ['wine', 'subMask', null, 'siFace', 'pcb'];
   m.part('plinth', { ex: [0, 0, 0], seq: 0 });
   var gl = []; var GE = PW / 2 - 0.03;
   for (var gi = 1; gi < 10; gi++) { var gp = -GE + gi * 2 * GE / 10; gl.push(D.line([gp, PH / 2, -GE], [gp, PH / 2, GE], { lw: 0.3, alpha: 0.5 })); gl.push(D.line([-GE, PH / 2, gp], [GE, PH / 2, gp], { lw: 0.3, alpha: 0.5 })); }
   gl.push(D.rect(-(CW + 0.1) / 2, -(CW + 0.1) / 2, (CW + 0.1) / 2, (CW + 0.1) / 2, PH / 2, { lw: 0.6 }));
+  m.real('granite');
   m.box({ c: [0, PH / 2, 0], s: [PW, PH, PW], decals: { py: gl } }, 'light');
   var y = PH, rx = -(CW / 2 + 0.155), rz = -(CW / 2 + 0.155);
   BOM.forEach(function (b, i) {
     var h = b[1] * S, y0 = y, yc = y + h / 2;
     m.part('layer' + i, { ex: [0, 0.4 + 0.22 * i, 0], seq: i + 1 });
+    m.real(REALS[i]);
     var faces = function (fn) { return { pz: fn('pz'), px: fn('px'), nz: fn('nz'), nx: fn('nx') }; };
     var at = function (f, u, yy) { return f === 'pz' ? [u, yy, CW / 2] : f === 'px' ? [CW / 2, yy, -u] : f === 'nz' ? [-u, yy, -CW / 2] : [-CW / 2, yy, u]; };
     var dec = null;
     if (i === 0) dec = faces(function (f) { var a = []; for (var k = 1; k <= 12; k++) { var yy = -h / 2 + h * 0.18 + (k / 12) * h * 0.8; a.push({ pts: [at(f, -CW / 2, yy), at(f, CW / 2, yy)], lw: 0.4, col: 'acc', alpha: 0.9 }); } for (var t = 0; t < 4; t++) { var tx = (t - 1.5) * CW * 0.22; a.push({ pts: [at(f, tx, -h / 2 + h * 0.18), at(f, tx, h / 2)], lw: 0.5, col: 'acc', alpha: 0.8 }); } return a; });
-    else if (i === 1) dec = faces(function (f) { var d = []; for (var a = 0; a < 15; a++) for (var c = 0; c < 4; c++) d.push(at(f, (a - 7) * CW * 0.062, (c - 1.5) * h * 0.2)); return [{ dots: d, r: 0.8, alpha: 0.8 }]; });
+    else if (i === 1) dec = faces(function (f) { var d = []; for (var a = 0; a < 15; a++) for (var c = 0; c < 4; c++) d.push(at(f, (a - 7) * CW * 0.062, (c - 1.5) * h * 0.2)); var o2 = [{ dots: d, r: 0.8, alpha: 0.8, real: 'sac' }]; o2.unshift({ pts: [at(f, -CW / 2, h / 2), at(f, CW / 2, h / 2), at(f, CW / 2, h * 0.36), at(f, -CW / 2, h * 0.36)], closed: true, fill: { d: 0.3, real: 'subMask' }, lw: 0 }); return o2; });
     else if (i === 3) dec = faces(function (f) { var a = [{ pts: [at(f, -CW / 2, 0), at(f, CW / 2, 0)], lw: 0.5 }]; for (var v = 0; v < 11; v++) a.push({ pts: [at(f, (v - 5) * CW * 0.084, -h * 0.4), at(f, (v - 5) * CW * 0.084, h * 0.4)], lw: 0.35, alpha: 0.75 }); return a; });
-    else if (i === 4) dec = faces(function (f) { var d = []; for (var a = 0; a < 9; a++) for (var c = 0; c < 2; c++) d.push(at(f, (a - 4) * CW * 0.1, (c - 0.5) * h * 0.34)); return [{ dots: d, r: 1.1, alpha: 0.8 }]; });
+    else if (i === 4) dec = faces(function (f) { var d = []; for (var a = 0; a < 9; a++) for (var c = 0; c < 2; c++) d.push(at(f, (a - 4) * CW * 0.1, (c - 0.5) * h * 0.34)); return [{ dots: d, r: 1.1, alpha: 0.8, real: 'sac' }]; });
     if (b[2] === 'ghost') {
       m.box({ c: [0, yc, 0], s: [CW, h, CW] }, 'ghost');
       ['pz', 'px', 'nz', 'nx'].forEach(function (f) { m.wire([at(f, -CW / 2, -h / 2), at(f, CW / 2, h / 2)].map(function (p) { return [p[0], p[1] + yc, p[2]]; }), { lw: 0.6, alpha: 0.7, c: [0, yc, 0] }); m.wire([at(f, CW / 2, -h / 2), at(f, -CW / 2, h / 2)].map(function (p) { return [p[0], p[1] + yc, p[2]]; }), { lw: 0.6, alpha: 0.7, c: [0, yc, 0] }); });
-    } else m.box({ c: [0, yc, 0], s: [CW, h, CW], decals: dec }, b[2]);
+    } else m.box({ c: [0, yc, 0], s: [CW, h, CW], decals: dec, fmat: i === 1 ? { px: { d: 0.1, real: 'core' }, nx: { d: 0.1, real: 'core' }, pz: { d: 0.1, real: 'core' }, nz: { d: 0.1, real: 'core' } } : null }, b[2]);
     // (on a phone, where the labels stand in rows, the three lower layers are named from under the column and the two upper from
     // over it, so no leader rises across a layer it does not name: designer pass, 22 Nov 2026)
     // (round two: the $1,000 and $480 labels level with their dots)
@@ -3543,7 +4230,7 @@ R('wafer-cost', function (m) {
   m.dim([-CW / 2, PH, CW / 2], [-CW / 2, TOP, CW / 2], [-0.17, 0, 0], 'about $6,400', { part: 0 });
   // (22 Nov 2026 plates refine: the joints between layers at shade weight and the yield loss's edges at outline weight, as the
   // first plates drew them; at crease weight the layers ran together into one block)
-  return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, start: 1, rest: 0, sortAxis: [0, 1, 0], joints: 'shade', ghostW: 'out', accent: [122, 31, 43], accentDark: [201, 83, 106] };
+  return { chart: true, chartSat: 0.6, noPolish: true, ghostFill: true, elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, start: 1, rest: 0, sortAxis: [0, 1, 0], joints: 'shade', ghostW: 'out', accent: [122, 31, 43], accentDark: [201, 83, 106] };
 });
 
 })(window.PLATE);}catch(e){console.warn('plate wafer-cost.js failed to load', e);}

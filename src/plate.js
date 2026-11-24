@@ -88,11 +88,12 @@
     this.parts.push(p); this.cur = p; return p;
   };
   M.use = function (p) { this.cur = p; return p; };
+  M.real = function (r) { this._real = r || null; };
   M.mat = function (m) { return typeof m === 'string' ? (MATS[m] || MATS.steel) : (m || MATS.steel); };
   // a solid: faces added between begin and end; its edges are paired at end
   M.begin = function (mat, o) {
     o = o || {};
-    var s = { kind: 'solid', part: this.cur.idx, mat: this.mat(mat), f0: this.F.length, f1: 0, decals: [], sortFaces: !!o.sortFaces, two: !!o.two, keep: o.keep !== false, lod: o.lod || 0, alpha: o.alpha };
+    var mm0 = this.mat(mat), s = { kind: 'solid', real: o.real || mm0.real || this._real || null, soft: !!o.soft, noCast: !!o.noCast || !!o.soft, inner: !!o.inner, part: this.cur.idx, mat: mm0, f0: this.F.length, f1: 0, decals: [], sortFaces: !!o.sortFaces, two: !!o.two, keep: o.keep !== false, lod: o.lod || 0, alpha: o.alpha };
     this._s = s; this._ec = {}; return s;
   };
   M.v = function (p) { this.V.push(p[0], p[1], p[2]); this.VP.push(this.cur.idx); return this.V.length / 3 - 1; };
@@ -119,8 +120,8 @@
     // centre of the solid, for sorting
     var cx = 0, cy = 0, cz = 0, m = 0, seen = {};
     for (i = s.f0; i < s.f1; i++) F[i].v.forEach(function (vi) { if (seen[vi]) return; seen[vi] = 1; cx += this.V[vi * 3]; cy += this.V[vi * 3 + 1]; cz += this.V[vi * 3 + 2]; m++; }, this);
-    s.c = [cx / m, cy / m, cz / m]; s.ymin = Infinity; s.tag = this._tag;
-    for (var vk in seen) s.ymin = Math.min(s.ymin, this.V[vk * 3 + 1]);
+    s.c = [cx / m, cy / m, cz / m]; s.ymin = Infinity; s.ymax = -Infinity; s.tag = this._tag;
+    for (var vk in seen) { s.ymin = Math.min(s.ymin, this.V[vk * 3 + 1]); s.ymax = Math.max(s.ymax, this.V[vk * 3 + 1]); }
     if (o && o.c) s.c = o.c;
     this.S.push(s); this.cur.items.push(s); this._s = null;
     return s;
@@ -191,7 +192,8 @@
         var q = [grid[i][j], grid[i][j + 1], grid[i2][j + 1], grid[i2][j]];
         var vq = q.filter(function (v, k) { return q.indexOf(v) === k; });
         if (vq.length < 3) continue;
-        var fc = this.face(vq, nrm, { curve: !flat, mj: vq.length === 4 && !flat ? j : -1 });
+        var fc = this.face(vq, nrm, { curve: !flat, mj: vq.length === 4 && !flat ? j : -1, mat: cap && o.capMat ? this.mat(o.capMat) : nr < -0.3 && o.innerMat ? this.mat(o.innerMat) : null });
+        if (nr < -0.3) fc.inner = true;
         fc.ri = i; fc.cap = cap;
         // meridian edge at j: smooth, unless marked
         var mc = 0; if (mer && j % mer === 0) mc = 2; if (heavy.indexOf(j) >= 0) mc = 1;
@@ -243,13 +245,13 @@
   // a line drawn in its place among the solids (a pipe, a wire, a probe needle)
   M.wire = function (pts, o) {
     o = o || {};
-    var it = { kind: 'wire', part: this.cur.idx, pts: pts, c: o.c || centroid(pts), col: o.col || 'ink', lw: o.lw || 1, dash: o.dash || null, alpha: o.alpha == null ? 1 : o.alpha, lod: o.lod || 0, closed: !!o.closed, vis: o.vis || null };
+    var it = { kind: 'wire', real: o.real || this._real || null, edge: !!o.edge, part: this.cur.idx, pts: pts, c: o.c || centroid(pts), col: o.col || 'ink', lw: o.lw || 1, dash: o.dash || null, alpha: o.alpha == null ? 1 : o.alpha, lod: o.lod || 0, closed: !!o.closed, vis: o.vis || null };
     it.tag = this._tag; this.cur.items.push(it); this.S.push(it); return it;
   };
   // a field of dots in its place among the solids (a bump array, a ball grid, a plasma)
   M.dots = function (pts, o) {
     o = o || {};
-    var it = { kind: 'dots', part: this.cur.idx, pts: pts, c: o.c || centroid(pts), col: o.col || 'ink', r: o.r || 1, alpha: o.alpha == null ? 1 : o.alpha, lod: o.lod || 0, ring: !!o.ring, front: !!o.front, keepThumb: !!o.keepThumb };
+    var it = { kind: 'dots', real: o.real || this._real || null, cap: !!o.cap, part: this.cur.idx, pts: pts, c: o.c || centroid(pts), col: o.col || 'ink', r: o.r || 1, alpha: o.alpha == null ? 1 : o.alpha, lod: o.lod || 0, ring: !!o.ring, front: !!o.front, keepThumb: !!o.keepThumb };
     it.tag = this._tag; this.cur.items.push(it); this.S.push(it); return it;
   };
   /* a spike: a pin that stands straight up the page from its foot, its drawn length len (model units, at the drawing's scale)
@@ -263,7 +265,7 @@
     it.tag = this._tag; this.cur.items.push(it); this.S.push(it); return it;
   };
   // lines that are not parts: guides between parts (each point may name its part), the assembly axis, the light path
-  M.guide = function (pts, o) { o = o || {}; this.lines.push({ pts: pts, style: o.style || 'guide', col: o.col || 'ink', lw: o.lw, alpha: o.alpha, lod: o.lod || 0, front: !!o.front, knock: !!o.knock }); };
+  M.guide = function (pts, o) { o = o || {}; this.lines.push({ pts: pts, style: o.style || 'guide', col: o.col || 'ink', lw: o.lw, alpha: o.alpha, lod: o.lod || 0, front: !!o.front, knock: !!o.knock, knockDark: !!o.knockDark }); };
   // a sphere seen as a disc (the globe), lines on its surface (drawn on the near side only) and filled land
   M.globe = function (r, o) { o = o || {}; var it = { kind: 'globe', part: this.cur.idx, r: r, c: [0, 0, 0], fill: o.fill || 'paper' }; it.tag = this._tag; this.cur.items.push(it); this.S.push(it); return it; };
   M.swire = function (pts, o) { o = o || {}; var it = { kind: 'swire', part: this.cur.idx, pts: pts, c: [0, 0, 0], col: o.col || 'ink', lw: o.lw || 0.6, alpha: o.alpha == null ? 1 : o.alpha, back: o.back || 0, lod: o.lod || 0 }; it.tag = this._tag; this.cur.items.push(it); this.S.push(it); return it; };
@@ -596,6 +598,12 @@
       var x = this.x; x.beginPath(); x.moveTo(pts[0][0], pts[0][1]); for (var i = 1; i < pts.length; i++) x.lineTo(pts[i][0], pts[i][1]); x.closePath();
       x.globalAlpha = (alpha == null ? 1 : alpha) * this.ga; x.fillStyle = fill; x.fill(); x.globalAlpha = 1;
     },
+    fillAny: function (pts, f, alpha) {
+      if (typeof f === 'string') return this.poly(pts, f, alpha);
+      var x = this.x, gr = f.r != null ? x.createRadialGradient(f.x0, f.y0, 0, f.x0, f.y0, f.r) : x.createLinearGradient(f.x0, f.y0, f.x1, f.y1); f.stops.forEach(function (s) { gr.addColorStop(s[0], s[1]); });
+      x.beginPath(); x.moveTo(pts[0][0], pts[0][1]); for (var i = 1; i < pts.length; i++) x.lineTo(pts[i][0], pts[i][1]); x.closePath();
+      x.globalAlpha = (alpha == null ? 1 : alpha) * this.ga; x.fillStyle = gr; x.fill(); x.globalAlpha = 1;
+    },
     // ruled at ang degrees up from level, from a fixed page origin, so neighbouring cut faces of one ruling share their lines
     hatch: function (pts, col, gap, lw, kind, alpha, ang) {
       var x = this.x;
@@ -637,10 +645,40 @@
     arrow: function (tip, dir, len, col, wid, alpha) { var x = this.x, n = [-dir[1], dir[0]], w = wid || len * 0.28; x.globalAlpha = (alpha == null ? 1 : alpha) * this.ga; x.beginPath(); x.moveTo(tip[0], tip[1]); x.lineTo(tip[0] - dir[0] * len + n[0] * w, tip[1] - dir[1] * len + n[1] * w); x.lineTo(tip[0] - dir[0] * len - n[0] * w, tip[1] - dir[1] * len - n[1] * w); x.closePath(); x.fillStyle = col; x.fill(); x.globalAlpha = 1; }
   };
   // ids carry a prefix of their own, so several stills inline in one page (the book, printed) never share a clip
-  function SvgG(w, h, pre) { this.out = []; this.defs = {}; this.w = w; this.h = h; this.cid = 0; this.pre = pre || ''; this.mfn = null; this.ga = 1; }
+  function SvgG(w, h, pre) { this.out = []; this.defs = {}; this.gk = {}; this.w = w; this.h = h; this.cid = 0; this.pre = pre || ''; this.mfn = null; this.ga = 1; }
   function f1(v) { return Math.round(v * 10) / 10; }
   function ptsStr(pts) { return pts.map(function (p) { return f1(p[0]) + ',' + f1(p[1]); }).join(' '); }
   SvgG.prototype = {
+    // an opaque face also strokes its own edge at half a pixel, so PDF viewers show no seams between neighbouring faces
+    fillAny: function (pts, f, alpha) {
+      var paint = typeof f === 'string' ? f : 'url(#' + this.grad(f) + ')';
+      if (alpha != null && alpha < 0.999) return this.poly(pts, paint, alpha);
+      this.out.push('<polygon points="' + ptsStr(pts) + '" fill="' + paint + '" stroke="' + paint + '" stroke-width="0.5" stroke-linejoin="round"/>');
+    },
+    // a gradient as a def: linear (x0, y0 to x1, y1) or radial (centre x0, y0, radius r, focus fx, fy, fr); stops [offset, colour, opacity]
+    grad: function (f) {
+      var st = f.stops.map(function (q) { return '<stop offset="' + Math.round(q[0] * 1000) / 1000 + '" stop-color="' + q[1] + '"' + (q[2] != null && q[2] < 1 ? ' stop-opacity="' + Math.round(q[2] * 1000) / 1000 + '"' : '') + '/>'; }).join('');
+      var geo = f.r != null ? 'cx="' + f1(f.x0) + '" cy="' + f1(f.y0) + '" r="' + f1(Math.max(0.1, f.r)) + '"' + (f.fx != null ? ' fx="' + f1(f.fx) + '" fy="' + f1(f.fy) + '" fr="' + f1(f.fr || 0) + '"' : '') : 'x1="' + f1(f.x0) + '" y1="' + f1(f.y0) + '" x2="' + f1(f.x1) + '" y2="' + f1(f.y1) + '"';
+      var key = geo + st, id = this.gk[key];
+      if (!id) { var tag = f.r != null ? 'radialGradient' : 'linearGradient'; id = this.gk[key] = this.pre + 'g' + (this.cid++); this.defs[id] = '<' + tag + ' id="' + id + '" gradientUnits="userSpaceOnUse" ' + geo + '>' + st + '</' + tag + '>'; }
+      return id;
+    },
+    circleAny: function (cx, cy, r, f, alpha) { this.out.push('<circle cx="' + f1(cx) + '" cy="' + f1(cy) + '" r="' + f1(r) + '" fill="' + (typeof f === 'string' ? f : 'url(#' + this.grad(f) + ')') + '"' + (alpha != null && alpha < 1 ? ' fill-opacity="' + f1(alpha * 100) / 100 + '"' : '') + '/>'); },
+    // a soft shadow: its shapes filled as one in col, blurred by blur px, at alpha; clipped to the faces that receive it, or
+    // (the ground's) faded over the still's last 24 px
+    shadow: function (shapes, blur, alpha, col, clip, fade) {
+      if (!shapes.length || alpha <= 0.003) return;
+      var bid = this.pre + 'b' + Math.round(blur * 10), o = '', cl = '';
+      if (!this.defs[bid]) this.defs[bid] = '<filter id="' + bid + '" filterUnits="userSpaceOnUse" x="-40" y="-40" width="' + Math.round(this.w + 80) + '" height="' + Math.round(this.h + 80) + '" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="' + f1(blur) + '"/></filter>';
+      if (clip) { var cid = this.pre + 'c' + (this.cid++); this.out.push('<clipPath id="' + cid + '">' + clip.map(function (p) { return '<polygon points="' + ptsStr(p) + '"/>'; }).join('') + '</clipPath>'); cl = ' clip-path="url(#' + cid + ')"'; }
+      else if (fade) {
+        var mid = this.pre + 'fade';
+        if (!this.defs[mid]) this.defs[mid] = '<filter id="' + mid + 'b" filterUnits="userSpaceOnUse" x="0" y="0" width="' + Math.round(this.w) + '" height="' + Math.round(this.h) + '"><feGaussianBlur stdDeviation="6"/></filter><mask id="' + mid + '" maskUnits="userSpaceOnUse" x="0" y="0" width="' + Math.round(this.w) + '" height="' + Math.round(this.h) + '"><rect x="12" y="12" width="' + Math.max(1, Math.round(this.w - 24)) + '" height="' + Math.max(1, Math.round(this.h - 24)) + '" fill="#fff" filter="url(#' + mid + 'b)"/></mask>';
+        cl = ' mask="url(#' + mid + ')"';
+      }
+      shapes.forEach(function (p) { if (p.length > 2) o += '<polygon points="' + ptsStr(p) + '"/>'; });
+      this.out.push('<g' + cl + '><g fill="' + col + '" opacity="' + Math.round(alpha * 1000) / 1000 + '" filter="url(#' + bid + ')">' + o + '</g></g>');
+    },
     poly: function (pts, fill, alpha) { this.out.push('<polygon points="' + ptsStr(pts) + '" fill="' + fill + '"' + (alpha != null && alpha < 1 ? ' fill-opacity="' + f1(alpha * 100) / 100 + '"' : '') + '/>'); },
     hatch: function (pts, col, gap, lw, kind, alpha, ang) {
       var id = this.pre + 'c' + (this.cid++), d = '', seg = function (a, b) { d += 'M' + f1(a[0]) + ' ' + f1(a[1]) + 'L' + f1(b[0]) + ' ' + f1(b[1]); };
@@ -685,6 +723,116 @@
     if (h < 60) o = [c, x, 0]; else if (h < 120) o = [x, c, 0]; else if (h < 180) o = [0, c, x]; else if (h < 240) o = [0, x, c]; else if (h < 300) o = [x, 0, c]; else o = [c, 0, x];
     return [(o[0] + m) * 255, (o[1] + m) * 255, (o[2] + m) * 255];
   }
+  /* ---------------- the materials (specimen colour, 24 Nov 2026: treatment C, Rendered) ----------------
+     A solid names its real material (m.real in the plates, or real: on a face, a decal or a wire), and the plate draws it in that
+     material's colour. L is the colour on the paper ground and D on the night ground (objects keep their colour within a few
+     percent there, and the pale masses are capped so the true colours lead). g is the polish: mirror 0.85 and over, satin 0.5 to
+     0.85, matte under 0.5. metal: its reflection takes its own colour. studio: a stainless finish, cool on top with a warm bounce
+     below. strip: how far a polished turned part's highlight goes toward white (mstrip the same for a flat mirror). clear: the
+     share of light it stops. edge: a clear or glass part's edge. cut: its section colour (else derived, paler and warmer than any
+     outside face; cutD on the night ground). noHatch: a cut face with no ruling. lineK: the tone of lines drawn in it.
+     The reasons are in qa/builds-nov/round-24nov/shots/spec-color/NOTES.md (main checkout), one line each here. */
+  var REAL = P.REAL = {
+    // silicon: the circuit face graphite with a violet cast and a teal cache; bare silicon a near-neutral grey with a slight blue
+    siFace:   { L: '#474c66', D: '#454a63', g: 0.55 },                                // a die's circuit face: graphite with the violet-blue cast of its top metal and dielectric
+    siLogic:  { L: '#57557a', D: '#545276', g: 0.5 },                                 // logic blocks on that face: the violet cast a little stronger
+    siSram:   { L: '#3f6873', D: '#3d646f', g: 0.6 },                                 // SRAM arrays: the green-teal cast large regular arrays show in die photos
+    siPhy:    { L: '#4b5064', D: '#494e62', g: 0.45 },                                // interface and wiring blocks: plain graphite
+    siChan:   { L: '#33374a', D: '#353a4d', g: 0.5 },                                 // the die face between blocks (01): the darkest channels
+    siBack:   { L: '#8d929c', D: '#868b95', g: 0.9, mstrip: 0.68, cut: '#b4bac6' },   // a die's ground back: polished silicon, a mirror with a real dark band
+    siWafer:  { L: '#a8adb6', D: '#9da2ab', g: 0.95, cut: '#b4bac6' },                // a bare polished wafer: a silver-grey mirror
+    siProc:   { L: '#9296aa', D: '#888ca0', g: 0.9, cut: '#b4bac6' },                 // a patterned wafer: a mirror under the die grid's violet sheen
+    siIngot:  { L: '#7f8590', D: '#777d88', g: 0.9, metal: true, strip: 0.72 },       // the ingot: polished silicon's gunmetal grey
+    siCut:    { L: '#8f96a3', D: '#868d9a', g: 0.3, cut: '#b4bac6' },                 // silicon in section and in thin layers: slate grey
+    siSheet:  { L: '#7a8191', D: '#737a8a', g: 0.2 },                                 // 08's nanosheets: a step darker than the gate's lit face
+    siEpi:    { L: '#b5bccb', D: '#a7aebd', g: 0.2 },                                 // doped silicon grown on the sheets' ends: paler and cooler, so it reads apart
+    siBase:   { L: '#6a707d', D: '#646a77', g: 0.6, cut: '#b4bac6' },                 // 09's base die: a step darker than the memory dies
+    siHole:   { L: '#545b6b', D: '#4f5666', g: 0.2 },                                 // the wall of an etched hole, in its own shadow
+    siProbed: { L: '#7a7e93', D: '#707489', g: 0.9, lineK: 1.4 },                     // 12's dies under test: the wafer's hue a step darker
+    stiOx:    { L: '#cddce3', D: '#93a4ac', g: 0.2 },                                 // isolation oxide in section: glassy pale blue-white
+    // metals: near neutral, apart by warmth and value; the coloured metals at full strength
+    cu:       { L: '#c8733f', D: '#c26e3b', g: 0.75, metal: true, strip: 0.5, cut: '#e09a72' }, // copper: wiring, vias, bumps, the busbar and coils
+    au:       { L: '#d4a646', D: '#cc9f42', g: 0.8, metal: true, strip: 0.5 },       // gold plating on pads, lands and connector pins
+    brass:    { L: '#c29b47', D: '#b8933f', g: 0.6, metal: true, strip: 0.5 },       // brass fittings (no plate uses it since the expert ruled the valves steel)
+    sac:      { L: '#c4c6c3', D: '#b3b5b2', g: 0.6, metal: true },                    // tin-silver-copper solder: a bright matte silver
+    ni:       { L: '#babbbd', D: '#aaabad', g: 0.7, metal: true },                    // nickel plating (the prober's chuck) and the probe needles' alloys
+    w:        { L: '#84878c', D: '#7b7e83', g: 0.5, metal: true, cut: '#c3c5c8' },    // tungsten: contacts, aperture plates, the emitter
+    gate:     { L: '#5d5f63', D: '#6b6d71', g: 0.2, metal: true, cut: '#74767a', cutD: '#828488' }, // 08's gate: a deep neutral metal grey (the expert's ruling)
+    tin:      { L: '#c09a4e', D: '#b8934a', g: 0.2, metal: true, noHatch: true, cut: '#c9a457' }, // titanium nitride in bulk: matte gold-bronze (no plate uses it since the gate went grey)
+    steel:    { L: '#9da2a7', D: '#8e9398', g: 0.65, metal: true, studio: true, cut: '#c3c5c8' }, // stainless and machine steel: a cool neutral
+    vacIn:    { L: '#8a8d91', D: '#64676b', g: 0.5, metal: true, cut: '#d4d6d8' },    // a housing's back wall, in its own shade
+    vac:      { L: '#c0c3c6', D: '#7b7e82', g: 0.8, metal: true, studio: true, cut: '#d4d6d8' }, // electropolished stainless: brighter than machine steel (capped in dark)
+    steelDk:  { L: '#6c7177', D: '#666b71', g: 0.5, metal: true, cut: '#c3c5c8' },    // darker steel: rails, frames, feet, fittings
+    aluCh:    { L: '#bdbfbf', D: '#7c7e7e', g: 0.55, metal: true, cut: '#d4d6d6' },   // 06's chamber body: the darker aluminium
+    yttria:   { L: '#ece6d7', D: '#8e897d', g: 0.3 },                                 // 06's inner walls the plasma touches: yttria off-white
+    alu:      { L: '#c6c7c6', D: '#808281', g: 0.55, metal: true, cut: '#d4d6d6' },   // aluminium: a warm neutral (capped in dark)
+    iron:     { L: '#85878a', D: '#7d7f82', g: 0.6, metal: true, cut: '#c3c5c8' },    // soft iron: the electron lenses' yokes and pole pieces
+    panel:    { L: '#6b6f75', D: '#63676d', g: 0.3 },                                 // the gas panel's mounting plate: a mid grey under bright tubing
+    paint:    { L: '#eeeae0', D: '#7c7d7f', g: 0.15 },                                // off-white painted steel: the gas cabinet, the scanner's base frame (capped in dark)
+    paintIn:  { L: '#9a9c97', D: '#5f615d', g: 0.15 },                                // the same paint inside the cabinet, in its own shade
+    black:    { L: '#3d4046', D: '#43464c', g: 0.6, metal: true, strip: 0.28 },       // black painted steel: the rack, tray fronts, the coolant unit (satin, so it shows its form)
+    plastic:  { L: '#36383d', D: '#45474c', g: 0.2 },                                 // black plastic: connectors, power stages, inductors
+    cable:    { L: '#2a2c30', D: '#3a3c41', g: 0.25 },                                // black-jacketed copper cable: the rack's NVLink cartridges
+    granite:  { L: '#45484d', D: '#4b4e53', g: 0.35 },                                // black ceramic and stone: chucks, guide plates, the stage base
+    mould:    { L: '#2b2c30', D: '#3a3b40', g: 0.3 },                                 // epoxy moulding compound: black
+    // boards and packages
+    pcb:      { L: '#2c7149', D: '#2b6c46', g: 0.45 },                                // green solder mask on a circuit board
+    pcbDk:    { L: '#1e3b31', D: '#22413a', g: 0.45 },                                // the accelerator modules' boards: darker and cooler
+    subMask:  { L: '#2f5242', D: '#2e4f40', g: 0.45 },                                // a package substrate's solder resist: dark green
+    core:     { L: '#b08f5c', D: '#a3854f', g: 0.2 },                                 // a substrate core's edge: glass cloth in resin, amber tan
+    coreSec:  { L: '#957a4f', D: '#8d7349', g: 0.2 },                                 // the core in section: darker, under its weave
+    laminate: { L: '#7a7452', D: '#716b4b', g: 0.2 },                                 // a routed substrate edge
+    abf:      { L: '#cbc68e', D: '#bdb883', g: 0.2 },                                 // build-up film: a pale olive band
+    abf2:     { L: '#b8b278', D: '#aca66f', g: 0.2 },                                 // build-up film, the second tone, so the bands count
+    pi:       { L: '#7c5634', D: '#77522f', g: 0.4 },                                 // polyimide redistribution layers: a dark amber film
+    mlcc:     { L: '#b8946a', D: '#ac8a61', g: 0.3 },                                 // multilayer ceramic capacitors' bodies: tan
+    trace:    { L: '#5a9a72', D: '#55916b', g: 0.3, lineK: 1.0 },                     // copper traces seen through green solder mask: a lighter green
+    // glass, coatings and process materials
+    glass:    { L: '#dbe7ee', D: '#5e676c', g: 0.9, clear: 0.5, edge: '#6f9db3' },    // quartz and low-expansion glass: pale, with a faint blue edge
+    glassBody:{ L: '#d9d6cf', D: '#66645f', g: 0.2, edge: '#b8b4ab' },                // a mirror's substrate: opaque, matte, a pale warm grey (the expert's ruling)
+    film:     { L: '#d6d9dd', D: '#8d9399', g: 0.4, clear: 0.24, edge: '#f2f4f6' },   // the pellicle: a clear thin film with a light edge
+    mlm:      { L: '#4c4d5b', D: '#4a4b59', g: 0.95, strip: 0.62 },                   // molybdenum-silicon multilayer mirrors: a dark mirror with a faint violet cast
+    mo:       { L: '#3c3b52', D: '#3a3950', g: 0.5 },                                 // molybdenum layers in the loupe's section
+    absorber: { L: '#26272d', D: '#36373e', g: 0.4 },                                 // the mask's tantalum absorber and black border: near black
+    ru:       { L: '#9ea1a6', D: '#91949a', g: 0.6, metal: true },                    // the ruthenium cap
+    resist:   { L: '#d49b3c', D: '#c9923a', g: 0.4 },                                 // photoresist: amber
+    ceramic:  { L: '#ece6d7', D: '#8e897d', g: 0.3 },                                 // alumina: insulators, the chuck's puck, the space transformer (capped in dark)
+    sin:      { L: '#cfccc4', D: '#9b988f', g: 0.2 },                                 // silicon nitride spacers: a pale ceramic film
+    plasma:   { L: '#8a70d8', D: '#9a84e6', g: 0, clear: 0.32, edge: '#6c55c4' },     // a fluorocarbon etch plasma's violet glow, see-through
+    underfill:{ L: '#cfc9b6', D: '#8f8a7a', g: 0.2 },                                 // film or underfill between stacked dies
+    // the world: land and sea apart by value
+    ocean:    { L: '#8eb0c8', D: '#6f8ea6' },                                         // the globe's sea, as a physical globe prints it
+    land:     { L: '#e2dcc8', D: '#aaa594' },                                         // the globe's dry land, sand, lighter than the sea
+    // markings that are part of the real object
+    cylGrey:  { L: '#8d8e8b', D: '#83847f', g: 0.3 },                                 // a gas cylinder's painted body: warm, low gloss
+    capY:     { L: '#e0ab22', D: '#d8a420', g: 0.35 },                                // a cylinder shoulder in yellow: toxic or corrosive (EN 1089-3)
+    capR:     { L: '#cc3f33', D: '#c43c31', g: 0.35 },                                // a cylinder shoulder in red: flammable (EN 1089-3; no plate uses it since round 3)
+    n2:       { L: '#2f3134', D: '#3a3c40', g: 0.35 },                                // the nitrogen purge cylinder's shoulder: black (EN 1089-3)
+    emo:      { L: '#c8102e', D: '#c0122d', g: 0.4 },                                 // the cabinet's emergency-off button: signal red
+    screen:   { L: '#22252a', D: '#2c2f35', g: 0.5 },                                 // the cabinet controller's screen: near black
+    ghsRed:   { L: '#c8102e', D: '#c0122d', g: 0.2 },                                 // a hazard diamond's red border (GHS)
+    ghsGreen: { L: '#2e8b3e', D: '#2e8b3e', g: 0.2 },                                 // a non-flammable gas diamond's green
+    label:    { L: '#f6f4ee', D: '#bdbbb4', g: 0.2 },                                 // a cylinder's white shoulder label
+    gauge:    { L: '#f1efe8', D: '#b9b7b0', g: 0.5 },                                 // a pressure gauge's white dial
+    // a chart's emphasis
+    wine:     { L: '#dcb9be', D: '#6e3b45', g: 0 }                                    // the cost column's largest share keeps the site's wine tint
+  };
+  // sRGB and linear light
+  function s2l(v) { v /= 255; return v <= 0.04045 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); }
+  function l2s(v) { v = Math.max(0, Math.min(1, v)); return 255 * (v <= 0.0031308 ? 12.92 * v : 1.055 * Math.pow(v, 1 / 2.4) - 0.055); }
+  // a colour under k times the light: under 1 it is shaded, over 1 lifted, and what runs past white goes toward white
+  function litC(c, k) {
+    var r = s2l(c[0]) * k, g = s2l(c[1]) * k, b = s2l(c[2]) * k, mx = Math.max(r, g, b);
+    if (mx > 1) { var w = Math.min(1, (mx - 1) * 0.6); r += (1 - r) * w; g += (1 - g) * w; b += (1 - b) * w; }
+    return [l2s(r), l2s(g), l2s(b)];
+  }
+  function mixL(a, b, t) { return [l2s(s2l(a[0]) + (s2l(b[0]) - s2l(a[0])) * t), l2s(s2l(a[1]) + (s2l(b[1]) - s2l(a[1])) * t), l2s(s2l(a[2]) + (s2l(b[2]) - s2l(a[2])) * t)]; }
+  function lumC(c) { return 0.2126 * s2l(c[0]) + 0.7152 * s2l(c[1]) + 0.0722 * s2l(c[2]); }
+  function darkOf(c) { var d = litC(c, 0.9); if (lumC(d) < 0.03) d = mixL(d, [255, 255, 255], 0.06); return d; }
+  // a colour at s of its saturation (the chart's smaller shares)
+  function desat(c, s) { var y = lumC(c), gy = [l2s(y), l2s(y), l2s(y)]; return mixL(gy, c, s); }
+  P.litC = litC; P.mixL = mixL; P.lumC = lumC;
+
   P.palette = function (el, spec, dark, print) {
     var cs = typeof getComputedStyle !== 'undefined' && el ? getComputedStyle(el) : { getPropertyValue: function () { return ''; } };
     var bg = hex(cs.getPropertyValue('--bg') || (dark ? '#141413' : '#fcfcfa')), ink = hex(cs.getPropertyValue('--ink') || (dark ? '#ecebe6' : '#171716')), muted = hex(cs.getPropertyValue('--muted') || '#6b6a64');
@@ -1047,9 +1195,415 @@
       if (tint) c = mix(c, pal.hl, pal.dark ? 0.22 : 0.12);
       return css(c);
     };
+    /* ---- the colour (specimen colour, 24 Nov 2026: the owner chose treatment C, Rendered, from three). Every part in its real
+       material (REAL), lit as an object: tone and reflections on every face, no ink on the object (its silhouette in its own deep
+       shade), soft shadows where parts rest on each other and one ground. Leaders, balloons, dimensions and labels are the only
+       ink. A chart (plate 15) takes the illustrated tone (TB: a flat face graded along the light, no reflections) with the same
+       lines and no shadows, since dressing a number in light can mislead. */
+    var plateSelf = this, CHART = !!m.spec.chart, TB = CHART;
+    var WHITE = [255, 255, 255], CREAM = [246, 242, 232], COOLS = [223, 230, 238], WARMB = [207, 198, 184], COOL = pal.dark ? [28, 38, 64] : [56, 74, 112], WARM = [255, 244, 224];
+    // while the plate turns or makes its entrance, the cheaper path: no gradients along turned strips, a coarser shadow
+    var cheap = turned || K < 0.999, NOPOL = !!m.spec.noPolish;
+    var gOf = function (Rm) { return NOPOL ? Math.min(0.2, Rm.g || 0) : (Rm.g || 0); };
+    var tBase = function (Rm) {
+      if (!Rm) return pal.ink;
+      var key = pal.dark ? '_d' : '_l', c = Rm[key] || (Rm[key] = pal.dark ? (Rm.D ? hex(Rm.D) : darkOf(hex(Rm.L))) : hex(Rm.L));
+      return m.spec.chartSat && Rm !== REAL.wine ? desat(c, m.spec.chartSat) : c;
+    };
+    // a part pointed at keeps its own material, a little lighter (mixing toward wine turned colour to mud)
+    var FADE = 0.4, curFade = 0;
+    var lift = function (c, on) { return on ? litC(c, 1.18) : curFade ? mix(c, pal.bg, curFade) : c; };
+    // (a part not pointed at is drawn opaque, mixed toward the ground, so nothing shows through: round 3)
+    var fzC = function (cs) { return curFade && typeof cs === 'string' ? css(mix(hex(cs), pal.bg, curFade)) : cs; };
+    var GL = function (segs, col, lw, dash, al, cap) { g.lines(segs, fzC(col), lw, dash, al, cap); };
+    var smooth = function (e0, e1, x) { var t = Math.max(0, Math.min(1, (x - e0) / (e1 - e0))); return t * t * (3 - 2 * t); };
+    var HK = (function () { var h = [Lt[0], Lt[1], Lt[2] + 1], n = Math.hypot(h[0], h[1], h[2]); return [h[0] / n, h[1] / n, h[2] / n]; })();
+    // the page's direction from a lit edge to its far edge (the key light comes from the upper left)
+    var LD = (function () { var x = -Lt[0], y = Lt[1], n = Math.hypot(x, y); return [x / n, y / n]; })();
+    var axisOf = function (bb) { var cx = (bb[0] + bb[2]) / 2, cy = (bb[1] + bb[3]) / 2, hf = (Math.abs(LD[0]) * (bb[2] - bb[0]) + Math.abs(LD[1]) * (bb[3] - bb[1])) / 2 || 1; return [cx - LD[0] * hf, cy - LD[1] * hf, cx + LD[0] * hf, cy + LD[1] * hf]; };
+    /* reflections per plane (round 2, S2): every flat face of the model lying in one plane shares one gradient axis, taken from
+       that plane's extent on the page, so one band runs across a wafer's wedges or a die's blocks together */
+    var GR = null;
+    var planeKey = function (n, d) { return Math.round(n[0] * 50) + ',' + Math.round(n[1] * 50) + ',' + Math.round(n[2] * 50) + '|' + Math.round(d / ((m.size || 1) * 1e-3)); };
+    var groups = function () {
+      if (GR) return GR; GR = {};
+      m.S.forEach(function (s) {
+        if (s.kind !== 'solid' || s.mat.ghost || s.mat.phantom) return;
+        var o = O[s.part];
+        for (var fi = s.f0; fi < s.f1; fi++) {
+          var f = F[fi]; if (f.curve || !front[fi]) continue;
+          var v0 = f.v[0], d = f.n[0] * (V[v0 * 3] + o[0]) + f.n[1] * (V[v0 * 3 + 1] + o[1]) + f.n[2] * (V[v0 * 3 + 2] + o[2]);
+          var key = planeKey(f.n, d), b = GR[key] || (GR[key] = [Infinity, Infinity, -Infinity, -Infinity]);
+          for (var q = 0; q < f.v.length; q++) { var x = X[f.v[q] * 3], y = X[f.v[q] * 3 + 1]; if (x < b[0]) b[0] = x; if (y < b[1]) b[1] = y; if (x > b[2]) b[2] = x; if (y > b[3]) b[3] = y; }
+          f._gk = key;
+        }
+      });
+      return GR;
+    };
+    // polished flat faces by class (the rendered stops; the chart's illustrated ones), and the tone on every other flat face along the light
+    var MIR_C = [[0, 0.6], [0.3, 0.68], [0.4, 's'], [0.54, 's2'], [0.64, 0.78], [1, 0.56]], MIR_CW = [[0, 0.66], [0.3, 0.72], [0.4, 's'], [0.54, 's2'], [0.64, 0.86], [1, 0.74]];
+    var SAT_C = [[0, 0.84], [0.3, 1.35], [0.48, 1.02], [1, 0.78]];
+    var MIR_B = [[0, 0.85], [0.38, 'b'], [0.6, 1.0], [1, 0.78]], SAT_B = [[0, 0.95], [0.38, 1.18], [0.6, 1.0], [1, 0.82]], TONE = [[0, 1.22], [1, 0.74]], TONE_C = [[0, 1.06], [1, 0.84]];
+    var CAPL = 0.79; // (a reflection's brightest stop, about #e4e7eb)
+    /* turned parts (S3): smooth tone, each strip a gradient from its left meridian edge to its right, each edge lit by its own
+       normal; a polished metal reflects a studio (anchors from the part's own colour: a rim light, a dark core, a bright strip),
+       a painted one stays near its colour */
+    var ENVP = [[-1, 'k', 1.1], [-0.7, 'k', 0.75], [-0.25, 'k', 0.32], [0.15, 'k', 1.0], [0.45, 's', 1], [0.6, 's', 0.55], [0.85, 'k', 1.1], [1, 'k', 0.9]];
+    var PAINTED = [[-1, 0.75], [-0.3, 0.8], [0.4, 1.25], [1, 0.9]];
+    var envCol = function (b, t, strip) {
+      t = Math.max(-1, Math.min(1, t)); var i = 1; while (i < ENVP.length - 1 && t > ENVP[i][0]) i++;
+      var a = ENVP[i - 1], c = ENVP[i], u = (t - a[0]) / (c[0] - a[0]);
+      var ca = a[1] === 's' ? mixL(b, WHITE, strip * a[2]) : litC(b, a[2]), cc = c[1] === 's' ? mixL(b, WHITE, strip * c[2]) : litC(b, c[2]);
+      return mixL(ca, cc, u);
+    };
+    var paintK = function (t) { t = Math.max(-1, Math.min(1, t)); var i = 1; while (i < PAINTED.length - 1 && t > PAINTED[i][0]) i++; var a = PAINTED[i - 1], c = PAINTED[i]; return a[1] + (c[1] - a[1]) * (t - a[0]) / (c[0] - a[0]); };
+    var across = function (axV) {
+      var ax = axV[0], ay = axV[1], L = Math.hypot(ax, ay);
+      if (L < 0.25) return null;
+      var u = [-ay / L, ax / L]; if (u[0] * Lt[0] + u[1] * Lt[1] < 0) u = [-u[0], -u[1]];
+      return u;
+    };
+    var stripModel = function (Rm, b, n, axV, gl) {
+      var lam = lamC(n), k0 = (0.34 + 0.8 * lam + (lam < 0.1 ? 0.05 : 0)) * (TB ? 1 : 0.9), col = litC(b, k0), u = axV ? across(axV) : null;
+      if (u) {
+        var t = n[0] * u[0] + n[1] * u[1];
+        if (gl >= 0.5) col = mixL(col, envCol(b, t, Rm.strip == null ? 0.62 : Rm.strip), (gl >= 0.7 ? gl * 0.9 : 0.55) * (TB ? 0.5 : 1));
+        else if (!TB) col = mixL(col, litC(b, paintK(t)), 0.5);
+        if (Rm.studio) col = mixL(col, t > 0 ? COOLS : WARMB, 0.1);
+      }
+      if (k0 < 0.8) col = mixL(col, COOL, 0.06 * (0.8 - k0) / 0.45);
+      return col;
+    };
+    var capModel = function (Rm, b, n, gl) {
+      var lam = lamOf(n), k0 = (0.34 + 0.8 * lam) * (TB ? 1 : 0.9), col = litC(b, k0);
+      if (gl >= 0.5) { var nh = Math.max(0, n[0] * HK[0] + n[1] * HK[1] + n[2] * HK[2]), sp = Math.min(0.8, Math.pow(nh, 10) * gl * (TB ? 0.5 : 1)); col = mixL(col, Rm.metal ? mixL(b, WHITE, Rm.strip || 0.6) : WHITE, sp); }
+      if (Rm.studio) col = mixL(col, COOLS, 0.1);
+      if (k0 < 0.8) col = mixL(col, COOL, 0.06 * (0.8 - k0) / 0.45);
+      return col;
+    };
+    // (round 3: the strip and the cap models blended by the face's turn to the axis, so a crown or a dome has no seam)
+    var shadeCurve = function (Rm, b, n, capForce, axV) {
+      var gl = gOf(Rm), wc = capForce ? 1 : axV ? smooth(0.25, 0.65, Math.abs(n[0] * axV[0] + n[1] * axV[1] + n[2] * axV[2])) : 0;
+      if (wc <= 0) return stripModel(Rm, b, n, axV, gl);
+      if (wc >= 1) return capModel(Rm, b, n, gl);
+      return mixL(stripModel(Rm, b, n, axV, gl), capModel(Rm, b, n, gl), wc);
+    };
+    var add3 = function (a, b) { var x = a[0] + b[0], y = a[1] + b[1], z = a[2] + b[2], n = Math.hypot(x, y, z) || 1; return [x / n, y / n, z / n]; };
+    var stripInfo = function (f, pts) {
+      if (cheap || !f.e || f.mj < 0 || pts.length !== 4) return null;
+      var a = f.e[3][0], b = f.e[1][0];
+      if (a < 0 || b < 0 || !F[a].curve || !F[b].curve) return null;
+      return { nL: rotN(add3(f.n, F[a].n)), nR: rotN(add3(f.n, F[b].n)), pL: [(pts[3][0] + pts[0][0]) / 2, (pts[3][1] + pts[0][1]) / 2], pR: [(pts[1][0] + pts[2][0]) / 2, (pts[1][1] + pts[2][1]) / 2] };
+    };
+    // a flat face's tone by its turn to the key light
+    var flatTone = function (Rm, b, lam, top) {
+      var k0 = TB ? (top ? 1.04 : 0.42 + 0.72 * lam) : top ? 0.9 : (0.36 + 0.72 * lam) * 0.95;
+      var col = litC(b, k0);
+      if (k0 < 0.8) col = mixL(col, COOL, 0.07 * (0.8 - k0) / 0.45); else if (top) col = mixL(col, WARM, 0.025);
+      if (Rm.studio) col = mixL(col, top ? COOLS : WARMB, 0.1);
+      return col;
+    };
+    // a cut face (S6): paler and warmer than any outside face
+    var cutCol = function (Rm, b) {
+      if (pal.dark && Rm.cutD) return hex(Rm.cutD);
+      var c = Rm.cut ? hex(Rm.cut) : mixL(litC(pal.dark ? hex(Rm.L) : b, 1.3), CREAM, 0.25);
+      return pal.dark ? litC(c, 0.62) : c;
+    };
+    var bbOf = function (pts) { var b = [Infinity, Infinity, -Infinity, -Infinity]; pts.forEach(function (p) { if (p[0] < b[0]) b[0] = p[0]; if (p[1] < b[1]) b[1] = p[1]; if (p[0] > b[2]) b[2] = p[0]; if (p[1] > b[3]) b[3] = p[1]; }); return b; };
+    // a patterned wafer's static diffraction sheen: one broad run of two neighbouring hues, violet into teal, fixed to the part
+    var hueAt = function (t) { return mixL([138, 124, 196], [104, 168, 176], Math.max(0, Math.min(1, t))); };
+    var grad = function (ax, stops, col, on, Rm, sheen) {
+      var ms = Rm && Rm.mstrip, capL = CAPL, out = stops.map(function (q) {
+        var v = q[1], c = v === 's' ? (ms ? mixL(col, WHITE, ms) : litC(col, 1.85)) : v === 's2' ? (ms ? mixL(col, WHITE, ms * 0.8) : litC(col, 1.7)) : v === 'b' ? (ms ? mixL(col, WHITE, ms * 0.55) : litC(col, 1.3)) : litC(col, v);
+        if (lumC(c) > capL) c = mixL(c, [228, 231, 235], 0.7);
+        return [q[0], c];
+      });
+      // (inside the die grid only, 10 to 20 percent, never over 25: the expert's ruling)
+      if (sheen) out = out.map(function (q) { return [q[0], mixL(q[1], hueAt(q[0]), Math.min(0.25, sheen))]; });
+      return { x0: ax[0], y0: ax[1], x1: ax[2], y1: ax[3], stops: out.map(function (q) { return [q[0], css(lift(q[1], on))]; }) };
+    };
+    /* a face of material Rm: { f: its fill (a colour, a linear gradient or a radial one), rgb: its colour }. opt: gk (the plane
+       a decal lies in), mul (a decal's tone against its face) */
+    var tFace = function (Rm, nvw, f, fi, pts, cut, on, axV, s, opt) {
+      opt = opt || {};
+      var b = tBase(Rm), mul = opt.mul || 1;
+      if (cut) { var cc = litC(cutCol(Rm, b), mul); return { f: css(lift(cc, on)), rgb: cc }; }
+      var gl = gOf(Rm);
+      if (f && f.curve) {
+        var isCap = !!f.cap || !!(s && s.axisN && Math.abs(f.n[0] * s.axisN[0] + f.n[1] * s.axisN[1] + f.n[2] * s.axisN[2]) > 0.35);
+        var inr = (f.inner ? (TB ? 0.8 : 0.72) : 1) * mul, cm = litC(shadeCurve(Rm, b, nvw, !!f.cap, axV), inr);
+        var si = stripInfo(f, pts);
+        if (!si) return { f: css(lift(cm, on)), rgb: cm };
+        var cL = litC(shadeCurve(Rm, b, si.nL, !!f.cap, axV), inr), cR = litC(shadeCurve(Rm, b, si.nR, !!f.cap, axV), inr);
+        return { f: { x0: si.pL[0], y0: si.pL[1], x1: si.pR[0], y1: si.pR[1], stops: [[0, css(lift(cL, on))], [1, css(lift(cR, on))]] }, rgb: cm };
+      }
+      var lam = lamOf(nvw), top = lam > 0.72, col = litC(flatTone(Rm, b, lam, top), mul);
+      if (!pts) return { f: css(lift(col, on)), rgb: col };
+      var bb;
+      // a face seen from inside a cavity darkens toward its corners (S5)
+      if (s && s.inner) {
+        bb = bbOf(pts); var cx = (bb[0] + bb[2]) / 2, cy = (bb[1] + bb[3]) / 2, r = Math.hypot(bb[2] - bb[0], bb[3] - bb[1]) / 2 || 1;
+        return { f: { x0: cx, y0: cy, r: r, stops: [[0, css(lift(col, on))], [0.5, css(lift(col, on))], [1, css(lift(litC(col, TB ? 0.74 : 0.68), on))]] }, rgb: col };
+      }
+      // a matte side face takes bounce light at its foot, and a dark band only where its foot is a joint
+      if (!TB && !top && gl < 0.5) {
+        bb = bbOf(pts); var foot = false;
+        if (s && s.joint && f) for (var q = 0; q < f.v.length; q++) { var va = f.v[q], vb = f.v[(q + 1) % f.v.length]; if (s.joint[va < vb ? va + '_' + vb : vb + '_' + va] && (pts[q][1] + pts[(q + 1) % pts.length][1]) / 2 >= bb[3] - 1.5) { foot = true; break; } }
+        var mx = (bb[0] + bb[2]) / 2;
+        return { f: grad([mx, bb[1], mx, bb[3]], foot ? [[0, 1], [0.86, 1.02], [1, 0.74]] : [[0, 1], [1, 1.06]], col, on, null), rgb: col };
+      }
+      var gk = opt.gk || (f && (groups(), f._gk)), gb = gk && GR[gk] ? GR[gk] : bbOf(pts);
+      var wide = gb[2] - gb[0] > 0.4 * w;
+      var stops = gl >= 0.85 ? (TB ? MIR_B : wide ? MIR_CW : MIR_C) : gl >= 0.5 ? (TB ? SAT_B : SAT_C) : TB ? TONE : TONE_C;
+      return { f: grad(axisOf(gb), stops, col, on, Rm, opt.sheen), rgb: col };
+    };
+    // a cut face's ruling: in the face's own shade at 0.4 (a weave: lighter, in its own colour)
+    var tHatch = function (pts, rgb, fm, f, alpha, weave) {
+      var gap = (fm.gap || (fm.hatch === 2 ? 2.4 : 3.4)) * k, ang = f && f.hv != null ? f.hv : fm.ang;
+      if (weave) g.hatch(pts, fzC(pal.dark ? css(litC(rgb, 1.5)) : '#c9a870'), gap * 1.3, Math.max(1, LW.hatch * 1.6), fm.hatch, 0.6 * alpha, ang);
+      else g.hatch(pts, fzC(css(litC(rgb, 0.6))), gap, LW.hatch * 0.8, fm.hatch, 0.4 * alpha, ang);
+    };
+    // an object's outline: its own deep shade (on the dark ground a darker tone of the part)
+    var outC = function (b) {
+      var Lb = lumC(b);
+      return css(litC(b, pal.dark ? (Lb < 0.03 ? 0.62 : 0.45) : Lb < 0.03 ? 0.5 : Lb > 0.45 ? 0.24 : 0.28));
+    };
+    // a line inside a face: darker than the face, and lighter on a dark face
+    var inC = function (rgb) {
+      var Ld = lumC(rgb);
+      return css(Ld < 0.09 ? litC(rgb, 2.6) : litC(rgb, 0.55));
+    };
+    var tEdges = function (TF, Rf, s, f, shl, fine, crease, out, shade, on, alpha, szK, thinTint, nvw) {
+      var rgb = TF.rgb, b = tBase(Rf), edge = Rf.edge && !pal.dark ? hex(Rf.edge) : null, hiW = 1.5 * Math.max(0.8, k);
+      // no ink on the object: its silhouette in its own deep shade at one weight, the light edge alone where a polished top
+      // meets a side, every other crease soft in the face's own colour
+      var sil = out.concat(shade);
+      if (s.soft && !on) { crease = crease.concat(sil); sil = []; }
+      var polished = gOf(Rf) >= 0.6 && !s.soft && !s.inner && !(Rf.clear < 1);
+      if (crease.length) {
+        var hi = [], lo = [], meTop = !f.curve && lamOf(nvw) > 0.72;
+        crease.forEach(function (sg) { var nb = sg.nb; if (!polished || nb == null) { lo.push(sg); return; } var o = F[nb], nbTop = !o.curve && lamOf(rotN(o.n)) > 0.72; (meTop !== nbTop ? hi : lo).push(sg); });
+        if (lo.length) GL(lo, s.soft && m.spec.softLine && !pal.dark ? m.spec.softLine : css(litC(rgb, pal.dark ? 0.7 : 0.55)), s.soft ? 0.5 : LW.crease * 0.8, null, (s.soft ? 0.6 : 0.55) * alpha);
+        if (hi.length) GL(hi, css(litC(b, pal.dark ? 1.9 : 1.55)), LW.crease * 1.2, null, 0.85 * alpha);
+      }
+      if (fine.length) GL(fine, css(litC(rgb, 0.55)), LW.fine, null, 0.4 * alpha);
+      if (sil.length) GL(sil, on ? hlC : edge ? css(edge) : outC(b), on ? hiW : LW.out * 0.9, null, 0.95 * alpha);
+      if (pal.dark && shade.length && !on && !s.soft) GL(shade, css(litC(b, 1.9)), 1, null, 0.45 * alpha);
+    };
+    // a clear part's far faces, seen through its near ones
+    var tBack = function (s, a, on) {
+      var Rm = REAL[s.real], list = [];
+      for (var fi = s.f0; fi < s.f1; fi++) if (!front[fi] && !F[fi].two) list.push(fi);
+      if (!list.length) return;
+      var z = {}; list.forEach(function (fi) { var vv = F[fi].v, t = 0; for (var q = 0; q < vv.length; q++) t += X[vv[q] * 3 + 2]; z[fi] = t / vv.length; });
+      list.sort(function (x, y) { return z[x] - z[y]; });
+      var b = tBase(Rm);
+      list.forEach(function (fi) { g.poly(F[fi].v.map(P2), css(lift(litC(b, 0.82), on)), Rm.clear * 0.45 * a); });
+      var segs = edgesOf(s, function (fa, fb) { return !fa && !fb; });
+      if (segs.length) GL(segs, css(Rm.edge && !pal.dark ? hex(Rm.edge) : litC(b, pal.dark ? 1.6 : 0.6)), Math.max(0.45, LW.fine || 0.4), null, 0.5 * a);
+    };
+    // decals on a solid in a real material: fills from the face they lie on (its tone and reflection, scaled), or their own material
+    var REL = { paper: 1.35, light: 1.2, steel: 1.0, turned: 1.0, mid: 0.8, dark: 0.6, black: 0.36, turnedDark: 0.7, acc: 0.8, accLight: 1.1, accDark: 0.6 };
+    var tDotC = function (Rm, ring) { return css(ring ? litC(tBase(Rm), 0.75) : tBase(Rm)); };
+    var tDecals = function (s, d, Rs, a, pa, on) {
+      var nv = rotN(d.n), alpha0 = (s.alpha == null ? 1 : s.alpha) * a, o0 = O[s.part], gk = null;
+      var it0 = d.items[0], p0 = it0 ? (it0.pts || it0.dots || [])[0] : null;
+      if (p0) { groups(); gk = planeKey(d.n, d.n[0] * (p0[0] + o0[0]) + d.n[1] * (p0[1] + o0[1]) + d.n[2] * (p0[2] + o0[2])); if (!GR[gk]) gk = null; }
+      var host = tFace(Rs, nv, null, -1, null, false, false, null, s).rgb;
+      d.items.forEach(function (it) {
+        if (thumb && !it.keep) return;
+        var dl = foc ? P.lit(foc, it, s) : false, al = foc ? (pa == null ? 1 : pa) : alpha0, keepF = curFade;
+        curFade = foc && !dl ? FADE : 0;
+        // (a diagram mark on a face, the field the light exposes, keeps the plate's own colour)
+        if (it.diagram) { var pd = it.pts.map(function (q) { return proj(q, s.part).slice(0, 2); }), fd = typeof it.fill === 'string' ? MATS[it.fill] : it.fill; if (fd) g.poly(pd, fzC(fillOf(fd, nv, false, dl)), al); if (it.lw !== 0) GL([it.closed ? pd.concat([pd[0]]) : pd], dl ? hlC : lineCol(it.col), (it.lw || LW.decal / k) * k * 0.9, null, al); curFade = keepF; return; }
+        var fo = it.fill && typeof it.fill === 'object' ? it.fill : null, Rd = REAL[it.real || (fo && fo.real) || ''] || null;
+        var lc = dl ? hlC : Rd ? css(litC(tBase(Rd), Rd.metal ? 1.18 : Rd.lineK || 0.6)) : it.col === 'bg' ? bgC : it.col === 'acc' || it.col === 'acc2' ? lineCol(it.col) : inC(host);
+        if (it.dots) {
+          var dp = it.dots.map(function (q) { return proj(q, s.part); });
+          count.dots += dp.length;
+          g.dots(dp, Math.max(0.45, (it.r || 0.9) * k), fzC(dl ? hlC : Rd ? tDotC(Rd, it.ring) : it.fillCol ? css(colOf(it.fillCol)) : lc), (it.alpha == null ? 0.9 : it.alpha) * al, it.ring);
+          curFade = keepF;
+          return;
+        }
+        var pts = it.pts.map(function (q) { return proj(q, s.part).slice(0, 2); });
+        if (it.fill) {
+          var fm = typeof it.fill === 'string' ? MATS[it.fill] : it.fill;
+          if (Rd) {
+            var tf = tFace(Rd, nv, null, -1, pts, false, dl, null, s, { gk: gk, sheen: it.sheen });
+            g.fillAny(pts, tf.f, (fm.alpha == null ? 1 : fm.alpha) * (Rd.clear || 1) * al);
+            if (fm.hatch && !thumb) tHatch(pts, tf.rgb, fm, null, al, true);
+            // a metal pad: its rim a darker tone of the metal, so it reads as a pad
+            if (Rd.metal && it.lw !== 0 && !dl) lc = css(litC(tBase(Rd), 0.5));
+          } else if (fm.hatch) { var hc = cutCol(Rs, host); g.poly(pts, fzC(css(hc)), al); if (!thumb) tHatch(pts, hc, fm, null, al); }
+          else { var tf2 = tFace(Rs, nv, null, -1, pts, false, dl, null, s, { gk: gk, mul: typeof it.fill === 'string' ? (REL[it.fill] || 1) : 1.3 - (fm.d || 0.3), sheen: it.sheen }); g.fillAny(pts, tf2.f, (fm.alpha == null ? 1 : fm.alpha) * al); }
+        }
+        if (it.lw !== 0) {
+          if (it.closed) pts = pts.concat([pts[0]]);
+          var lw0 = (it.lw || LW.decal / k) * k * 0.9, dash = it.dash ? it.dash.map(function (v) { return v * k; }) : null;
+          // (a copper line with an edge: a darker rim each side, as the TSVs and the substrate's planes take it)
+          if (it.edge && Rd && !dl) GL([pts], css(litC(tBase(Rd), 0.42)), lw0 + 0.9, dash, (it.alpha == null ? 1 : it.alpha) * al);
+          GL([pts], lc, lw0, dash, (it.alpha == null ? 1 : it.alpha) * al);
+        }
+        curFade = keepF;
+      });
+    };
+    // dots of a real material (bumps, balls): a large dot takes a darker rim
+    var tDots = function (dp, dr, Rm, it, fa, on) {
+      var b = tBase(Rm);
+      // (a microbump: a copper pillar under a tin-silver cap, its rim dark)
+      if (it.cap && !on) { g.dots(dp, dr + 0.5, fzC(css(litC(b, 0.42))), it.alpha * fa); g.dots(dp, dr, fzC(css(b)), it.alpha * fa); g.dots(dp, dr * 0.66, fzC(css(tBase(REAL.sac))), it.alpha * fa); return; }
+      if (!it.ring && dr >= 1.5 && !on) { g.dots(dp, dr + 0.55, fzC(css(litC(b, 0.42))), it.alpha * fa); g.dots(dp, dr, fzC(css(b)), it.alpha * fa); return; }
+      g.dots(dp, dr, on ? hlC : fzC(tDotC(Rm, it.ring)), it.alpha * fa, it.ring);
+    };
+    // a wire of a real material: a tube, its shade, its body and a lit line along it (a thin or dashed one a line in its colour)
+    var tWire = function (pts, Rm, lw, dash, al, on, edge) {
+      var b = tBase(Rm);
+      if (on) { GL([pts], hlC, lw, dash, al); return; }
+      if (dash || lw < 0.9) { if (edge && !dash) GL([pts], css(litC(b, 0.42)), lw + 0.9, null, al); GL([pts], css(litC(b, 1.0)), lw, dash, al); return; }
+      GL([pts], css(litC(b, 0.45)), lw * 1.25, null, al, 'round');
+      GL([pts], css(b), lw * 0.8, null, al, 'round');
+      GL([pts], css(mixL(b, WHITE, 0.45)), lw * 0.3, null, al * 0.85, 'round');
+    };
+    // the globe: the sea, modelled as a sphere, the sphere's shading over the land, and its rim
+    var tGlobe = function (x, y, r, fa) {
+      var b = tBase(REAL.ocean);
+      b = curFade ? mix(b, pal.bg, curFade) : b;
+      if (!g.x) { g.circleAny(x, y, r, { x0: x, y0: y, r: r, fx: x - r * 0.35, fy: y - r * 0.4, fr: r * 0.05, stops: [[0, css(litC(b, 1.14))], [0.7, css(b)], [1, css(litC(b, 0.74))]] }, fa); return; }
+      var c = g.x, gr = c.createRadialGradient(x - r * 0.35, y - r * 0.4, r * 0.05, x, y, r);
+      gr.addColorStop(0, css(litC(b, 1.14))); gr.addColorStop(0.7, css(b)); gr.addColorStop(1, css(litC(b, 0.74)));
+      c.globalAlpha = fa * g.ga; c.beginPath(); c.arc(x, y, r, 0, Math.PI * 2); c.fillStyle = gr; c.fill(); c.globalAlpha = 1;
+    };
+    var tRim = function (G2) {
+      if (g.x) {
+        var c = g.x, gr = c.createRadialGradient(G2.x - G2.r * 0.35, G2.y - G2.r * 0.4, G2.r * 0.1, G2.x, G2.y, G2.r);
+        gr.addColorStop(0, 'rgba(255,255,255,' + 0.12 + ')'); gr.addColorStop(0.5, 'rgba(255,255,255,0)'); gr.addColorStop(0.8, 'rgba(8,18,40,0)'); gr.addColorStop(1, 'rgba(8,18,40,' + (pal.dark ? 0.32 : 0.24) + ')');
+        c.globalAlpha = g.ga; c.beginPath(); c.arc(G2.x, G2.y, G2.r, 0, Math.PI * 2); c.fillStyle = gr; c.fill(); c.globalAlpha = 1;
+      } else g.circleAny(G2.x, G2.y, G2.r, { x0: G2.x, y0: G2.y, r: G2.r, fx: G2.x - G2.r * 0.35, fy: G2.y - G2.r * 0.4, fr: G2.r * 0.1, stops: [[0, 'rgb(255,255,255)', 0.12], [0.5, 'rgb(255,255,255)', 0], [0.8, 'rgb(8,18,40)', 0], [1, 'rgb(8,18,40)', pal.dark ? 0.32 : 0.24]] }, 1);
+      g.circle(G2.x, G2.y, G2.r, null, css(pal.dark ? litC(tBase(REAL.ocean), 0.55) : hex('#3d5a70')), 1);
+    };
+    var tSwire = function (runs, it, fa) {
+      var sea = tBase(REAL.ocean), land = tBase(REAL.land), grat = it.alpha < 0.6;
+      var col = grat ? litC(sea, pal.dark ? 1.3 : 0.78) : litC(land, pal.dark ? 0.62 : 0.5);
+      GL(runs, css(col), it.lw * k, null, (grat ? 0.6 : 0.95) * fa);
+    };
+    /* shadow discipline (round 2, S4). The key light, from the current turn. A part casts on the upward faces under it only
+       where it rests on them (within 3 percent of the drawing's size, fading with the gap) and only within its own exploded
+       group, never across an exploded gap; less on polished faces, which show reflections. One ground under the parts that
+       touch it, a tight core and a soft penumbra (the core alone on the dark ground), faded before the canvas edge. On the canvas
+       each shadow is a blurred offscreen mask; in the still (SvgG, the print) the same shapes are a blurred SVG group, clipped
+       to the faces that receive it */
+    var VEC = !g.x && !!g.shadow;
+    var SHD = !CHART && !thumb && !lite && !st.noShadow && (VEC || (g.x && typeof document !== 'undefined')) ? (function () {
+      var Lw = [R[0] * Lt[0] + R[3] * Lt[1] + R[6] * Lt[2], R[1] * Lt[0] + R[4] * Lt[1] + R[7] * Lt[2], R[2] * Lt[0] + R[5] * Lt[1] + R[8] * Lt[2]];
+      if (Lw[1] < 0.35) { Lw[1] = 0.35; var n2 = Math.hypot(Lw[0], Lw[1], Lw[2]); Lw = [Lw[0] / n2, Lw[1] / n2, Lw[2] / n2]; }
+      var dLx = sc * (R[0] * Lw[0] + R[1] * Lw[1] + R[2] * Lw[2]), dLy = -sc * (R[3] * Lw[0] + R[4] * Lw[1] + R[5] * Lw[2]);
+      var LG = [Lw[0] * 0.2, Lw[1], Lw[2] * 0.2], lg = Math.hypot(LG[0], LG[1], LG[2]); LG = [LG[0] / lg, LG[1] / lg, LG[2] / lg];
+      var dLgx = sc * (R[0] * LG[0] + R[1] * LG[1] + R[2] * LG[2]), dLgy = -sc * (R[3] * LG[0] + R[4] * LG[1] + R[5] * LG[2]);
+      var ms = turned ? 0.25 : 0.5, MW = Math.max(1, Math.round(w * ms)), MH = Math.max(1, Math.round(h * ms));
+      var cv = VEC ? null : plateSelf._shCv || (plateSelf._shCv = [document.createElement('canvas'), document.createElement('canvas')]);
+      if (cv) cv.forEach(function (c) { if (c.width !== MW || c.height !== MH) { c.width = MW; c.height = MH; } });
+      var size = m.size || 1, eps = size * 0.0015, reach = size * 0.03, fall = size * 0.012, SC = pal.dark ? 'rgb(0,0,0)' : 'rgb(22,28,46)', SA = pal.dark ? 0.45 : 0.3;
+      var casters = null, lastKey = null;
+      var Yv = function (vi) { return V[vi * 3 + 1] + O[VP[vi]][1]; };
+      var sameRest = function (pa, pb) { if (pa === pb) return true; var ea = m.parts[pa].ex, eb = m.parts[pb].ex; return ea[0] === eb[0] && ea[1] === eb[1] && ea[2] === eb[2]; };
+      var cast = function () {
+        if (casters) return casters;
+        casters = m.S.filter(function (s) { if (s.kind !== 'solid' || s.mat.ghost || s.mat.phantom || s.two || s.noCast || A[s.part] <= 0.01) return false; var Rm = s.real && REAL[s.real]; return !(Rm && Rm.clear != null && Rm.clear < 0.6); });
+        casters.forEach(function (s) {
+          s._y0 = s.ymin + O[s.part][1]; s._y1 = s.ymax + O[s.part][1];
+          var b = [Infinity, Infinity, -Infinity, -Infinity];
+          for (var fi = s.f0; fi < s.f1; fi++) { var vv = F[fi].v; for (var q = 0; q < vv.length; q++) { var x = X[vv[q] * 3], y = X[vv[q] * 3 + 1]; if (x < b[0]) b[0] = x; if (y < b[1]) b[1] = y; if (x > b[2]) b[2] = x; if (y > b[3]) b[3] = y; } }
+          s._bb = b;
+        });
+        return casters;
+      };
+      var hull = function (p) {
+        p.sort(function (a, b) { return a[0] - b[0] || a[1] - b[1]; });
+        var cr = function (o, a, b) { return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]); }, lo = [], up = [], i;
+        for (i = 0; i < p.length; i++) { while (lo.length >= 2 && cr(lo[lo.length - 2], lo[lo.length - 1], p[i]) <= 0) lo.pop(); lo.push(p[i]); }
+        for (i = p.length - 1; i >= 0; i--) { while (up.length >= 2 && cr(up[up.length - 2], up[up.length - 1], p[i]) <= 0) up.pop(); up.push(p[i]); }
+        up.pop(); lo.pop(); return lo.concat(up);
+      };
+      var shapes = function (y0, list, L3, dx, dy) {
+        var out = [];
+        list.forEach(function (s) {
+          if (s.f1 - s.f0 > 30) {
+            var P0 = [], seen = {};
+            for (var fj = s.f0; fj < s.f1; fj++) { var vw = F[fj].v; for (var r = 0; r < vw.length; r++) { var vi0 = vw[r]; if (seen[vi0]) continue; seen[vi0] = 1; var t0 = (Yv(vi0) - y0) / L3[1]; P0.push([X[vi0 * 3] - t0 * dx, X[vi0 * 3 + 1] - t0 * dy]); } }
+            var Hh = hull(P0); if (Hh.length > 2) out.push(Hh);
+            return;
+          }
+          for (var fi = s.f0; fi < s.f1; fi++) {
+            var f = F[fi], n = f.n; if (!f.two && n[0] * L3[0] + n[1] * L3[1] + n[2] * L3[2] < -1e-3) continue;
+            var vv = f.v, pg = [];
+            for (var q = 0; q < vv.length; q++) { var vi = vv[q], t = (Yv(vi) - y0) / L3[1]; pg.push([X[vi * 3] - t * dx, X[vi * 3 + 1] - t * dy]); }
+            out.push(pg);
+          }
+        });
+        return out;
+      };
+      var mask = function (y0, list, blur, L3, dx, dy, fade) {
+        if (VEC) return { shapes: shapes(y0, list, L3, dx, dy), blur: blur, fade: fade };
+        var mc = cv[0].getContext('2d'); mc.setTransform(1, 0, 0, 1, 0, 0); mc.clearRect(0, 0, MW, MH); mc.setTransform(ms, 0, 0, ms, 0, 0); mc.fillStyle = SC;
+        shapes(y0, list, L3, dx, dy).forEach(function (pg) { mc.beginPath(); mc.moveTo(pg[0][0], pg[0][1]); for (var q = 1; q < pg.length; q++) mc.lineTo(pg[q][0], pg[q][1]); mc.closePath(); mc.fill(); });
+        var bc = cv[1].getContext('2d'); bc.setTransform(1, 0, 0, 1, 0, 0); bc.clearRect(0, 0, MW, MH);
+        if (!turned && 'filter' in bc) { bc.filter = 'blur(' + Math.max(0.4, blur * ms).toFixed(2) + 'px)'; bc.drawImage(cv[0], 0, 0); bc.filter = 'none'; }
+        else {
+          var fct = Math.max(1, Math.min(4, blur * ms / 1.2)), src = cv[0], sw = MW, sh = MH, step = 2;
+          while (fct >= 1.5 && step <= 5) {
+            var tcv = cv[step] || (cv[step] = document.createElement('canvas')), nw = Math.max(1, Math.round(sw / Math.min(2, fct))), nh = Math.max(1, Math.round(sh / Math.min(2, fct)));
+            if (tcv.width !== nw || tcv.height !== nh) { tcv.width = nw; tcv.height = nh; }
+            var tc = tcv.getContext('2d'); tc.setTransform(1, 0, 0, 1, 0, 0); tc.clearRect(0, 0, nw, nh); tc.imageSmoothingEnabled = true; tc.drawImage(src, 0, 0, sw, sh, 0, 0, nw, nh);
+            src = tcv; fct /= Math.min(2, fct); sw = nw; sh = nh; step++;
+          }
+          bc.imageSmoothingEnabled = true; bc.drawImage(src, 0, 0, sw, sh, 0, 0, MW, MH);
+        }
+        // (the ground's shadow fades out over the canvas's last 24 px, so the canvas never clips it)
+        if (fade) {
+          var E = 24 * ms; bc.save(); bc.globalCompositeOperation = 'destination-out';
+          [[0, 0, E, 0, 0, 0, E, MH], [MW, 0, MW - E, 0, MW - E, 0, E, MH], [0, 0, 0, E, 0, 0, MW, E], [0, MH, 0, MH - E, 0, MH - E, MW, E]].forEach(function (q) {
+            var gq = bc.createLinearGradient(q[0], q[1], q[2], q[3]); gq.addColorStop(0, 'rgba(0,0,0,1)'); gq.addColorStop(1, 'rgba(0,0,0,0)'); bc.fillStyle = gq; bc.fillRect(q[4], q[5], q[6], q[7]);
+          });
+          bc.restore();
+        }
+        return cv[1];
+      };
+      var put = function (mk, al, polys) {
+        if (VEC) { g.shadow(mk.shapes, mk.blur, al, SC, polys, mk.fade); return; }
+        var c = g.x; c.save();
+        if (polys) { c.beginPath(); polys.forEach(function (p) { c.moveTo(p[0][0], p[0][1]); for (var i = 1; i < p.length; i++) c.lineTo(p[i][0], p[i][1]); c.closePath(); }); c.clip(); }
+        c.globalAlpha = al * g.ga; c.drawImage(mk, 0, 0, w, h); c.restore();
+      };
+      var shBox = function (c, y0) { var t0 = (c._y0 - y0) / Lw[1], t1 = (c._y1 - y0) / Lw[1], b = c._bb, mg = 12; return [Math.min(b[0] - t0 * dLx, b[0] - t1 * dLx) - mg, Math.min(b[1] - t0 * dLy, b[1] - t1 * dLy) - mg, Math.max(b[2] - t0 * dLx, b[2] - t1 * dLx) + mg, Math.max(b[3] - t0 * dLy, b[3] - t1 * dLy) + mg]; };
+      return {
+        ground: function () {
+          var L = cast(); lastKey = null; if (!L.length || m.spec.noGround) return;
+          var gy = Infinity; L.forEach(function (s) { gy = Math.min(gy, s._y0); }); gy -= eps;
+          var touch = L.filter(function (s) { return s._y0 - gy < size * 0.02; });
+          if (!touch.length) return;
+          put(mask(gy, touch, 3, LG, dLgx, dLgy, true), pal.dark ? 0.42 : 0.4);
+          if (!pal.dark) put(mask(gy, touch, 12, LG, dLgx, dLgy, true), 0.16);
+          lastKey = null;
+        },
+        receive: function (s, faces, a) {
+          var L = cast(), lv = {}, keys = [], Rr = s.real && REAL[s.real], gr0 = Rr ? gOf(Rr) : 0;
+          faces.forEach(function (fi) { var f = F[fi]; if (f.n[1] < 0.9 || f.curve) return; var y0 = Yv(f.v[0]), kk = Math.round(y0 / eps); if (!lv[kk]) { lv[kk] = { y0: y0, ps: [], bb: [Infinity, Infinity, -Infinity, -Infinity] }; keys.push(kk); } var p = f.v.map(P2), b = lv[kk].bb; lv[kk].ps.push(p); p.forEach(function (q) { if (q[0] < b[0]) b[0] = q[0]; if (q[1] < b[1]) b[1] = q[1]; if (q[0] > b[2]) b[2] = q[0]; if (q[1] > b[3]) b[3] = q[1]; }); });
+          keys.forEach(function (kk) {
+            var o = lv[kk], y0 = o.y0, bb = o.bb;
+            var list = L.filter(function (c) { if (c === s || !sameRest(c.part, s.part) || c._y0 < y0 - eps || c._y0 - y0 > reach) return false; var sb = shBox(c, y0); return sb[0] < bb[2] && sb[2] > bb[0] && sb[1] < bb[3] && sb[3] > bb[1]; });
+            if (!list.length) return;
+            var gap = Infinity; list.forEach(function (c) { gap = Math.min(gap, Math.max(0, c._y0 - y0)); });
+            var key = kk + '|' + list.map(function (c) { return c._id; }).join(','), mk;
+            if (key === lastKey && !VEC) mk = cv[1]; else { mk = mask(y0, list, Math.min(8, 1.5 + gap * sc * 0.08), Lw, dLx, dLy, false); lastKey = key; }
+            put(mk, SA * a * Math.exp(-gap / fall) * (1 - 0.7 * gr0), o.ps);
+          });
+        }
+      };
+    })() : null;
+
     // the reader's pointer on a label or a part lights that part; the rest steps back (P.lit says what a focus lights)
     var foc = this.focus, inF = function (it) { return P.lit(foc, it); };
-    var dimF = function (it) { return foc ? (inF(it) ? 1 : 0.2) : 1; };
+    var dimF = function (it) { return foc ? (inF(it) ? 1 : it.real || it.kind === 'globe' || it.kind === 'land' || it.kind === 'swire' || it.kind === 'rim' ? 1 : 0.55) : 1; };
     var pick = st.pick ? (this._pick = []) : null;
     // the labels are laid out once the plate is at rest (callouts): the faces drawn then, in order, are the map the leaders are
     // routed over, so a frame that lays them out keeps a list of them
@@ -1089,6 +1643,7 @@
       });
     };
     under(false);
+    if (SHD) SHD.ground();
 
     // ---- the parts, back to front
     parts.forEach(function (p) {
@@ -1100,6 +1655,7 @@
         if (it.kind === 'solid' && it.mat.phantom) { ph.push(it); return false; }
         return true;
       });
+      if (m.spec.ghostFill) gh.forEach(function (s) { for (var fi = s.f0; fi < s.f1; fi++) if (front[fi]) g.poly(F[fi].v.map(P2), bgC, 0.94 * a); });
       gh.forEach(function (s) { ghostEdges(s, false, a * dimF(s)); });
       // under 560 px, where leaders find their way out of the drawing to a row of labels, an outline-only part still counts as
       // drawing (the cost column's yield loss), so no leader runs down its face
@@ -1109,6 +1665,7 @@
       if (p.mode === 'fixed') ord = items.map(function (it, i) { return i; });
       ord.forEach(function (ii) {
         var it = items[ii], fa = a * dimF(it), hl = foc && inF(it);
+        curFade = foc && !hl ? FADE : 0;
         // a pin on the globe fades as its foot goes round the rim, rather than blinking out
         if (it.vis) { var vz = proj(it.vis, it.part)[2]; if (vz < -0.04) return; fa *= clamp01((vz + 0.04) / 0.14); }
         if (it.kind === 'solid') solid(it, fa, hl, a);
@@ -1116,30 +1673,27 @@
           if (thumb && it.lw < 0.9) return;
           var pts = it.pts.map(function (q) { return proj(q, it.part).slice(0, 2); });
           if (it.closed) pts.push(pts[0]);
-          g.lines([pts], hl ? hlC : lineCol(it.col), (thumb ? Math.max(0.5, it.lw * 0.6) * ik : it.lw * k), it.dash ? it.dash.map(function (v) { return v * k; }) : null, it.alpha * fa);
+          if (it.real && REAL[it.real]) tWire(pts, REAL[it.real], (thumb ? Math.max(0.5, it.lw * 0.6) * ik : it.lw * k), it.dash ? it.dash.map(function (v) { return v * k; }) : null, it.alpha * fa, hl, it.edge);
+          else g.lines([pts], hl ? hlC : lineCol(it.col), (thumb ? Math.max(0.5, it.lw * 0.6) * ik : it.lw * k), it.dash ? it.dash.map(function (v) { return v * k; }) : null, it.alpha * fa);
         } else if (it.kind === 'globe') {
           var gc = proj([0, 0, 0], it.part);
-          g.circle(gc[0], gc[1], it.r * sc, fillOf(MATS[it.fill] || MATS.paper, [0, 0, 1], false), null, 0);
+          tGlobe(gc[0], gc[1], it.r * sc, fa);
           self._globe = { x: gc[0], y: gc[1], r: it.r * sc };
         } else if (it.kind === 'rim') {
-          var G2 = self._globe; if (G2) {
-            g.circle(G2.x, G2.y, G2.r, null, inkC, LW.out);
-            var arc = []; for (var q = 0; q <= 40; q++) { var an = -Math.PI * 0.25 + Math.PI * q / 40; arc.push([G2.x + G2.r * Math.cos(an), G2.y + G2.r * Math.sin(an)]); }
-            g.lines([arc], inkC, LW.shade, null, 1, 'round');
-          }
+          var G2 = self._globe; if (G2) tRim(G2);
         } else if (it.kind === 'land') {
           var G = self._globe || { x: cx, y: cy, r: sc };
           it.rings.forEach(function (rg, ri) {
             var pts = rg.map(function (q) { var pp = proj(q, it.part); if (pp[2] < 0) { var dx = pp[0] - G.x, dy = pp[1] - G.y, L = Math.hypot(dx, dy) || 1; return [G.x + dx / L * G.r, G.y + dy / L * G.r]; } return [pp[0], pp[1]]; });
             var hole = it.holes.indexOf(ri) >= 0;
-            g.poly(pts, hole ? fillOf(MATS.paper, [0, 0, 1], false) : fillOf(it.mat, [0, 0, 1], false), fa);
+            g.poly(pts, fzC(css(hole ? tBase(REAL.ocean) : tBase(REAL.land))), fa);
           });
         } else if (it.kind === 'swire') {
           if (thumb && it.lod > 0) return;
           var pp = it.pts.map(function (q) { return proj(q, it.part); }), runs = [], run = [];
           pp.forEach(function (q) { if (q[2] >= 0) run.push([q[0], q[1]]); else { if (run.length > 1) runs.push(run); run = []; } });
           if (run.length > 1) runs.push(run);
-          g.lines(runs, it.col === 'ink' ? inkC : lineCol(it.col), (thumb ? Math.max(0.45, it.lw * 0.7) : it.lw * k), null, it.alpha * fa);
+          if (it.col === 'ink') tSwire(runs, it, fa); else g.lines(runs, it.col === 'ink' ? inkC : lineCol(it.col), (thumb ? Math.max(0.45, it.lw * 0.7) : it.lw * k), null, it.alpha * fa);
         } else if (it.kind === 'spike') {
           var sh = spikeXY(it, proj), sf = proj(it.foot, it.part), scol = hl ? hlC : lineCol(it.col), slw = thumb ? Math.max(0.6, it.lw * 0.6) * ik : it.lw * k;
           if (it.sx) g.lines([[[sf[0], sf[1]], [sh[0], sf[1]]]], scol, slw * 0.7, null, fa, 'butt');
@@ -1155,7 +1709,7 @@
           if (it.front) dp = dp.filter(function (q) { return q[2] >= 0; });
           count.dots += dp.length;
           var dr = Math.max(0.5, it.r * (thumb ? 0.6 : k));
-          g.dots(dp, dr, hl ? hlC : it.col === 'ink' ? inkC : css(colOf(it.col)), it.alpha * fa, it.ring);
+          if (it.real && REAL[it.real]) tDots(dp, dr, REAL[it.real], it, fa, hl); else g.dots(dp, dr, hl ? hlC : it.col === 'ink' ? inkC : css(colOf(it.col)), it.alpha * fa, it.ring);
           if (pick && it.alpha > 0.05) pick.push({ dots: dp, r: Math.max(3, dr + 1.5), it: it });
           if (occ && it.alpha > 0.05) occ.push({ dots: dp, r: Math.max(1.5, dr), it: it });
         }
@@ -1168,6 +1722,9 @@
     function solid(s, a, hl, pa) {
       var mat = s.mat, faces = [];
       for (var fi = s.f0; fi < s.f1; fi++) if (front[fi]) faces.push(fi);
+      var Rs = s.real ? REAL[s.real] || null : null, clear = Rs && Rs.clear != null && Rs.clear < 1 ? Rs.clear : 1, axV = Rs && s.axisN ? rotN(s.axisN) : null;
+      curFade = foc && !hl ? FADE : 0;
+      if (Rs && clear < 1 && !thumb) tBack(s, a * (s.alpha == null ? 1 : s.alpha), hl);
       if (s.sortFaces) {
         var fd = {}; faces.forEach(function (fi) { var f = F[fi], z = 0; for (var q = 0; q < f.v.length; q++) z += X[f.v[q] * 3 + 2]; fd[fi] = z / f.v.length; });
         faces.sort(function (x, y) { return fd[x] - fd[y]; });
@@ -1184,7 +1741,7 @@
       // outline in its own tinted line, so the colour still shows
       var area2 = 0; faces.forEach(function (fi) { var vv = F[fi].v, a2 = 0; for (var q = 0; q < vv.length; q++) { var q2 = (q + 1) % vv.length; a2 += X[vv[q] * 3] * X[vv[q2] * 3 + 1] - X[vv[q2] * 3] * X[vv[q] * 3 + 1]; } area2 += Math.abs(a2) / 2; });
       var thin = !thumb && diag > 0 && area2 / diag < 16;
-      var small = !thumb && (diag < 60 || thin), thinTint = thin && !pal.dark && isAcc(mat.c);
+      var small = !thumb && (diag < 60 || thin), thinTint = thin && !pal.dark && (isAcc(mat.c) || !!Rs);
       // a dished end of a turned part turned toward the reader (a mirror's face) takes two concentric rings, never shading lines,
       // which there read as the blades of a fan
       var rings = [], dish = !!(s.axisN && Math.abs(rotN(s.axisN)[2]) > 0.4);
@@ -1196,7 +1753,12 @@
         var f = F[fi], fm = f.mat || mat, pts = f.v.map(P2), nvw = rotN(f.n);
         if (f.two && nvw[2] < 0) nvw = [-nvw[0], -nvw[1], -nvw[2]];
         count.faces++;
-        if (fm.hatch) {
+        var Rf = (fm.real && REAL[fm.real]) || Rs, TF = null;
+        if (Rf) {
+          TF = tFace(Rf, nvw, f, fi, pts, !!fm.hatch, hl, axV, s);
+          g.fillAny(pts, TF.f, (Rf.clear != null && Rf.clear < 1 ? Rf.clear : 1) * alpha);
+          if (fm.hatch && !thumb && !lite && !Rf.noHatch) tHatch(pts, TF.rgb, fm, f, alpha);
+        } else if (fm.hatch) {
           g.poly(pts, css(mix(pal.bg, colOf(fm.c), fm.d)), alpha);
           if (!thumb && !lite) g.hatch(pts, fm.c ? lineCol(fm.c) : inkC, (fm.gap || (fm.hatch === 2 ? 2.4 : 3.4)) * k, LW.hatch, fm.hatch, (pal.dark ? 0.7 : 0.8) * alpha, f.hv != null ? f.hv : fm.ang);
         } else g.poly(pts, fillOf(fm, nvw, f.curve, hl), (fm.alpha == null ? 1 : fm.alpha) * alpha);
@@ -1224,11 +1786,11 @@
             continue;
           }
           if (stamp[nb] !== frame) continue;
-          if (cls === 1) { ((F[nb].mat || mat).hatch || fm.hatch) ? out.push(seg) : crease.push(seg); }
+          if (cls === 1) { ((F[nb].mat || mat).hatch || fm.hatch) ? out.push(seg) : (seg.nb = nb, crease.push(seg)); }
           else if (cls === 2 && LW.fine) fine.push(seg);
         }
         // shading lines on a turned surface: along its axis, gathering toward the shade side
-        if (!thumb && !lite && f.curve && f.mj >= 0 && pts.length === 4 && !fm.hatch) {
+        if (!thumb && !lite && f.curve && f.mj >= 0 && pts.length === 4 && !fm.hatch && !(TF && !(f.cap && dish))) {
           if (f.cap && dish) { if (s.rings.indexOf(f.ri) >= 0) rings.push([pts[0], pts[1]]); }
           else {
             var lam = lamC(nvw), sh = 1 - lam, j = f.mj, ring = Math.hypot(pts[1][0] - pts[0][0], pts[1][1] - pts[0][1]), mer = Math.hypot(pts[3][0] - pts[0][0], pts[3][1] - pts[0][1]);
@@ -1237,6 +1799,7 @@
         }
         if (small && shade.length) { out = out.concat(shade); shade = []; }
         var lcK = fm.c || mat.c;
+        if (TF) { tEdges(TF, Rf, s, f, shl, fine, crease, out, shade, hl, alpha, szK, thinTint, nvw); count.edges += out.length + shade.length + crease.length + fine.length; return; }
         if (shl.length) g.lines(shl, hl ? hlC : strokeOf(lcK, 'shl'), LW.shadeLn * (pal.dark ? 1.2 : 1), null, (pal.dark ? 0.55 : 0.75) * alpha, 'butt');
         if (fine.length) g.lines(fine, hl ? hlC : strokeOf(lcK, 'fine'), LW.fine, null, 0.8 * alpha);
         if (crease.length) g.lines(crease, hl ? hlC : strokeOf(lcK, 'crease'), LW.crease, null, alpha);
@@ -1249,6 +1812,7 @@
       if (s.decals.length) s.decals.forEach(function (d) {
         var nz = R[6] * d.n[0] + R[7] * d.n[1] + R[8] * d.n[2];
         if (nz <= 1e-4 && !s.two) return;
+        if (Rs) { tDecals(s, d, Rs, a, pa, hl); return; }
         d.items.forEach(function (it) {
           if (thumb && !it.keep) return;
           // a decal lights on its own (the HBM stack's vias), so its alpha and colour are its own while a part is pointed at
@@ -1272,6 +1836,7 @@
           }
         });
       });
+      if (SHD && !s.two && clear >= 1) SHD.receive(s, faces, a);
     }
     function edgesOf(s, test) {
       var segs = [];
@@ -1308,11 +1873,11 @@
     // then every path, so no knock-out cuts another path where they meet)
     [true, false].forEach(function (knockPass) {
       m.lines.forEach(function (L) {
-        if (L.style !== 'beam' || (knockPass && (!L.knock || thumb))) return;
+        if (L.style !== 'beam' || (knockPass && (!(L.knock || (pal.dark && L.knockDark)) || thumb))) return;
         var pts = L.pts.map(function (p) { return proj(p, p[3] == null ? null : p[3]).slice(0, 2); });
         // a label on the light path (P.focusOf beam) lights the path
         var col = css(colOf(L.col || 'acc')), lb = !!(foc && foc.beam), aa = (L.alpha == null ? 1 : L.alpha) * Math.min(1, K * 1.6) * (foc && !lb ? 0.35 : 1);
-        if (knockPass) g.lines([pts], bgC, (L.lw || 1.4) * k * 2.4, null, Math.min(1, K * 1.6) * (foc && !lb ? 0.35 : 1), 'butt');
+        if (knockPass) g.lines([pts], bgC, pal.dark ? (L.lw || 1.4) * k + 2 : (L.lw || 1.4) * k * 2.4, null, Math.min(1, K * 1.6) * (foc && !lb ? 0.35 : 1), 'butt');
         else g.lines([pts], col, (L.lw || 1.4) * (thumb ? 0.8 : k) * (lb ? 1.5 : 1), null, aa);
       });
     });
@@ -1350,7 +1915,7 @@
       var S2 = G.r * 2, x0 = G.x - G.r, y0 = G.y - G.r, f0 = lp.fit(S2, S2), sk = L.scale || 1;
       var f2 = { s: f0.s * sk, cx: x0 + G.r + (f0.cx - G.r) * sk + (L.dx || 0) * S2, cy: y0 + G.r + (f0.cy - G.r) * sk + (L.dy || 0) * S2, e: f0.e };
       g.clip(G.x, G.y, G.r - 0.5);
-      lp.paint({ k: 1, w: S2, h: S2, g: g, pal: pal, fit: f2, noDims: true, noLabels: true });
+      lp.paint({ k: 1, w: S2, h: S2, g: g, pal: pal, fit: f2, noDims: true, noLabels: true, noShadow: true });
       var R1 = viewM(lp.m.yaw0, lp.m.elev), pj = function (q) { return [f2.cx + f2.s * (R1[0] * q[0] + R1[1] * q[1] + R1[2] * q[2]), f2.cy - f2.s * (R1[3] * q[0] + R1[4] * q[1] + R1[5] * q[2])]; };
       var size = 11.5, txt = css(pal.ink), lh = Math.round(size * 1.2);
       // a block of one or two lines, centred on (x, y), its lines set to the side the block's align names
