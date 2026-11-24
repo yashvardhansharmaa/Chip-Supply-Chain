@@ -21,7 +21,8 @@
      labels start back before the plate is at rest; a click that does not move pins a part, and a second one lets it go;
    - the canvas is named for its specimen and its labels and described by its caption; a plate with no parts list has a list
      of its labels for the keyboard, and an item with the focus lights its part;
-   - the drawing stands 40 px under the opener's links and 24 px over its caption; the small stills carry 10 to 25 percent ink;
+   - the drawing stands 40 px under the opener's links and 24 px over its caption; the small stills read: at least 10 percent ink
+     and at most 35 percent of their box near black (since 24 Nov 2026, colour C; see the check below);
    - from 640 px the plate shows in the page and the strip keeps Contents alone (768); on a phone the opened strip sizes its
      canvas to the plate, shows the whole parts list, and keeps the plate's first dimension and the HBM loupe.
    Since 22 Nov 2026 (plates refine) also: every label stands inside the plate's width, and on a phone also with the names
@@ -144,13 +145,20 @@ const STATE = `(function () { var S = CP.Stage, c = S.canvas, x = c.getContext('
         if (!S.spins) check(`${W}: the drawing stands about 40 px under the opener and 24 px over its caption`, Math.abs(sp.above - 40) <= 10 && Math.abs(sp.below - 24) <= 10, `${sp.above} px above, ${sp.below} px below`);
       }
       if (width === 1440 && theme === 'light') {
-        // the small stills (the phone strip's and the contents'), measured as build/plate-stills.js measures them: each pixel's
-        // cover times its darkness, over the drawing's box
-        const ink = await t.ev(`Promise.all(['thumb', 'line'].map(function (k) { return new Promise(function (res) { var im = new Image(); im.onload = function () { var c = document.createElement('canvas'); c.width = im.naturalWidth; c.height = im.naturalHeight; var x = c.getContext('2d'); x.drawImage(im, 0, 0); var d = x.getImageData(0, 0, c.width, c.height).data, W = c.width, H = c.height, x0 = W, y0 = H, x1 = 0, y1 = 0, s = 0, i, a, b;
+        // the small stills (the phone strip's and the contents') read: not too faint and not too heavy or dark.
+        // - ink, as build/plate-stills.js measures it: each pixel's cover times its darkness, over the drawing's box. At least 10
+        //   percent, so a still is never faint.
+        // - near black: the share of the box whose colour over the white ground is darker than luminance 0.3. At most 35 percent,
+        //   so no still turns into a dark mass that hides its parts.
+        // Until 24 Nov 2026 the rule was 10 to 25 percent ink, written for the line drawings. In colour every face's fill counts as
+        // ink (the twelve final plates' stills carry 16 to 42 percent), so its upper bound no longer measured weight. The near
+        // black share does: those twelve stills carry 0 to 31 percent (the dark baseboard and the black rack the most).
+        const ink = await t.ev(`Promise.all(['thumb', 'line'].map(function (k) { return new Promise(function (res) { var im = new Image(); im.onload = function () { var c = document.createElement('canvas'); c.width = im.naturalWidth; c.height = im.naturalHeight; var x = c.getContext('2d'); x.drawImage(im, 0, 0); var d = x.getImageData(0, 0, c.width, c.height).data, W = c.width, H = c.height, x0 = W, y0 = H, x1 = 0, y1 = 0, s = 0, dk = 0, i, a, b, al, lu;
           for (b = 0; b < H; b++) for (a = 0; a < W; a++) if (d[(b * W + a) * 4 + 3] > 8) { if (a < x0) x0 = a; if (a > x1) x1 = a; if (b < y0) y0 = b; if (b > y1) y1 = b; }
-          for (b = y0; b <= y1; b++) for (a = x0; a <= x1; a++) { i = (b * W + a) * 4; s += d[i + 3] / 255 * (1 - (0.2126 * d[i] + 0.7152 * d[i + 1] + 0.0722 * d[i + 2]) / 255); }
-          res(x1 < x0 ? 0 : s / ((x1 - x0 + 1) * (y1 - y0 + 1))); }; im.onerror = function () { res(-1); }; im.src = '../media/plate-${id}-' + k + '.webp'; }); }))`);
-        check(`${W}: the small stills carry 10 to 25 percent ink`, ink.every((v) => v >= 0.10 && v <= 0.25), `strip ${(ink[0] * 100).toFixed(0)} percent, contents ${(ink[1] * 100).toFixed(0)} percent`);
+          for (b = y0; b <= y1; b++) for (a = x0; a <= x1; a++) { i = (b * W + a) * 4; al = d[i + 3] / 255; lu = (0.2126 * d[i] + 0.7152 * d[i + 1] + 0.0722 * d[i + 2]) / 255; s += al * (1 - lu); if (al * lu + 1 - al < 0.3) dk++; }
+          var n = (x1 - x0 + 1) * (y1 - y0 + 1); res(x1 < x0 ? [0, 0] : [s / n, dk / n]); }; im.onerror = function () { res([-1, -1]); }; im.src = '../media/plate-${id}-' + k + '.webp'; }); }))`);
+        check(`${W}: the small stills read: at least 10 percent ink, at most 35 percent near black`, ink.every((v) => v[0] >= 0.10 && v[1] <= 0.35),
+          `strip ${(ink[0][0] * 100).toFixed(0)} percent ink, ${(ink[0][1] * 100).toFixed(0)} near black; contents ${(ink[1][0] * 100).toFixed(0)} percent ink, ${(ink[1][1] * 100).toFixed(0)} near black`);
       }
       // a drag: the plate turns and its labels fade, then it eases back and the labels return
       const box = await t.ev(`(function () { var r = CP.Stage.canvas.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; })()`);

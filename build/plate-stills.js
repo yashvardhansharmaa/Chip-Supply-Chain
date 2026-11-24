@@ -8,7 +8,10 @@
    at the plate's simplified weights (lod "thumb"), the door's at its own. The line and door stills are trimmed to the drawing.
    The small two are held to 10 to 25 percent ink over the drawing's box (22 Nov 2026, plates critique system 10): each is drawn,
    measured on the light ground, and drawn again with its lines and fills lighter or heavier (the kit's inkK) until it is in
-   range; the dark still takes the light one's weight.
+   range; the dark still takes the light one's weight. Since the plates went to colour (24 Nov 2026) every face's fill counts as
+   ink, so most stills sit above 20 percent at any weight and are drawn at the lightest one (0.3): their lines thin, the colour
+   carries the form. qa/redesign/check-plates.js now checks that a still reads (at least 10 percent ink, at most 35 percent of
+   its box near black) in place of the old 10 to 25 percent band.
    Writes build/assets/plates/<id>-<kind>[-dark].webp and plates.json (each still's size in pixels, and the hash of the plate's
    code it was drawn from, src/plate.js and plates/<specimen>.js, which build/build.js checks), then build again to copy them.
    usage: node build/plate-stills.js [base]   (default http://127.0.0.1:8802, a static server on dist/)

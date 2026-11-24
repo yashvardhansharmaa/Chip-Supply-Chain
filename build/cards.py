@@ -12,20 +12,22 @@ The style is "The whole chain", the home card the owner chose on 25 October 2026
 checkout): white ground, ink, Fraunces for the titles and the wordmark and Source Serif 4 for the line under them (the hybrid
 of 28 Oct 2026; Source Serif 4 for both from 27 Oct, Fraunces and Literata before; the line is set 8 percent larger than it was
 in Literata, the site's text scale), and the wine logo tile as the
-only color. Every card stands on the shelf of the stage drawings, one per stage, in the order a chip is made (14 since the
+only color besides the drawings, which are in the plates' own colours (treatment C, since 24 Nov 2026). Every card stands on
+the shelf of the stage drawings, one per stage, in the order a chip is made (14 since the
 merge of chapters 8 and 9 on 27 Oct 2026; the stages are social.js manifest()'s, by build/stages.js).
 - A chapter follows that folder's Lithography sketch: the wordmark, the chapter's title and its one-line summary at the
   left, its own drawing large at the right, and the stage drawings small along the foot, pale but for the chapter's own
-  stage, which is in ink with an ink rule under it on the shelf. The last two chapters are not stages: their rows are all
+  stage, which is in full colour with an ink rule under it on the shelf. The last two chapters are not stages: their rows are all
   in ink and no stage is marked, since each covers the whole chain.
 - A view (Start here, The Chain, AI Chips, Suppliers, Export Controls, Glossary) follows the home card: the wordmark,
   the view's short title and one line centered over the stage drawings at the home card's size. The row is copied from
   build/assets/home-card/card.html, so it matches the home card to the pixel.
 
-The drawings come from build/assets/cards-art/<chapter-id>.png (made by node build/plate-card-art.js from the plates since
-21 Nov 2026; by qa/redesign/card-art.py from the point-cloud renders until then): each chapter's specimen as ink coverage, cropped. The small ones are drawn as qa/design3/cards/chain/
-build.py draws them (same area each, the lines kept crisp, the haze dropped, the weights evened out); the large one keeps
-its stipple. The fit script shrinks a long title until it takes at most two lines in its column, then drops the
+The drawings come from build/assets/cards-art/ (made by node build/plate-card-art.js from the plates since 21 Nov 2026; by
+qa/redesign/card-art.py from the point-cloud renders until then): each chapter's plate in colour on a clear ground, cropped,
+<chapter-id>.png at full detail for the large drawing and <chapter-id>-small.png at the small stills' detail for the shelf.
+The small ones keep the same area each, as qa/design3/cards/chain/build.py placed them; the pale ones are the same drawing
+at 30 percent. Until 24 Nov 2026 the drawings were ink coverage, drawn in ink alone. The fit script shrinks a long title until it takes at most two lines in its column, then drops the
 summary's last sentence while the text would run into the row of drawings. Every PNG is quantized to a palette and must
 come in under 150 KB.
 """
@@ -42,7 +44,6 @@ CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
 PORT = 9334
 W, H = 1200, 630
 LIMIT = 150 * 1024
-INK = (23, 23, 22)          # --ink #171716
 
 args = sys.argv[1:]
 only = args[args.index('--only') + 1].split(',') if '--only' in args else None
@@ -66,9 +67,7 @@ VIEW_LINE = {
 SHELF_GAP = 7               # the shelf rule sits this far below the drawings
 CH_ROOT_AREA, CH_MAX_W, CH_MAX_H = 34.0, 56, 56   # the chapter row: each drawing about 34 x 34 px, none over 56 px
 CH_X, CH_BASE = 64, 584     # the chapter row runs from x = 64 to 1136 and stands on y = 584
-WEIGHT_RANGE = (0.62, 1.5)
-INK_GAIN = 1.2
-OFF_TONE = 0.30             # the stages that are not this chapter's
+OFF_TONE = 0.30             # the stages that are not this chapter's, at this opacity
 BIG_AREA = 150000           # the large drawing covers about this many px (Lithography: 345 x 424, as in the sketch)
 BIG_BOX = (456, 440)        # and fits a box at right: 64, top: 52
 BIG_RIGHT, BIG_TOP = 64, 52
@@ -210,51 +209,22 @@ def supplier_count():
 
 # ---------------------------------------------------------------- the drawings (qa/design3/cards/chain/build.py)
 
-def load(cid):
-    """The chapter's drawing as an 8-bit coverage image (L), already cropped to its ink."""
-    p = os.path.join(ART, cid + '.png')
+def load(cid, small=False):
+    """The chapter's plate in colour on a clear ground (RGBA), already cropped to what is drawn: full detail, or small."""
+    p = os.path.join(ART, cid + ('-small' if small else '') + '.png')
     if not os.path.exists(p):
         sys.exit('missing %s: run node build/plate-card-art.js' % os.path.relpath(p, ROOT))
-    return Image.open(p).convert('L')
+    return Image.open(p).convert('RGBA')
 
 
-def coverage(im, w, h, k=3):
-    return np.asarray(im.resize((w * k, h * k), Image.LANCZOS, reducing_gap=3.0)).astype(np.float32) / 255.0
-
-
-def lines(a):
-    """Keep the drawing's lines and drop its haze (see build.py): dense stipple goes to full ink on a smooth step set by
-    the drawing's own 93rd percentile, the open stipple stays a light gray capped at 35 percent."""
-    p = float(np.percentile(a[a > 0.03], 93))
-    lo, hi = 0.22 * p, 0.50 * p
-    t = np.clip((a - lo) / (hi - lo), 0, 1)
-    t = t * t * (3 - 2 * t)
-    return np.maximum(t, np.clip(a / p * 0.32, 0, 0.35))
-
-
-def rgba(alpha):
-    out = np.zeros(alpha.shape + (4,), np.uint8)
-    out[:, :, 0], out[:, :, 1], out[:, :, 2] = INK
-    out[:, :, 3] = np.round(np.clip(alpha, 0, 1) * 255).astype(np.uint8)
-    return Image.fromarray(out, 'RGBA')
-
-
-def draw(im, w, h, tone=1.0, weight=1.0, k=3):
-    a = np.clip(lines(coverage(im, w, h, k)) * weight, 0, 1)
-    m = np.asarray(Image.fromarray(np.round(a * 255).astype(np.uint8), 'L').resize((w, h), Image.LANCZOS)).astype(np.float32) / 255.0
-    return rgba(m * tone)
-
-
-def soft(im, w, h, gain=1.6, gamma=0.9):
-    """The large drawing keeps its stipple: a plain resample with a mild lift."""
-    a = np.asarray(im.resize((w, h), Image.LANCZOS, reducing_gap=3.0)).astype(np.float32) / 255.0
-    return rgba(np.clip(a * gain, 0, 1) ** gamma)
-
-
-def weights(ims, sz, strength=0.5, lo=0.75, hi=1.5):
-    means = [float(lines(coverage(im, w, h)).mean()) for im, (w, h) in zip(ims, sz)]
-    med = float(np.median(means))
-    return [min(hi, max(lo, (med / m) ** strength)) for m in means]
+def draw(im, w, h, tone=1.0):
+    """The drawing at w x h, resampled with its alpha premultiplied (so no dark fringe), at tone opacity."""
+    out = im.convert('RGBa').resize((w, h), Image.LANCZOS, reducing_gap=3.0).convert('RGBA')
+    if tone < 1:
+        a = np.asarray(out).copy()
+        a[:, :, 3] = np.round(a[:, :, 3].astype(np.float32) * tone).astype(np.uint8)
+        out = Image.fromarray(a, 'RGBA')
+    return out
 
 
 def place(widths, left, right):
@@ -287,19 +257,18 @@ def img(im, x, extra=''):
 
 
 class Row:
-    """The stage drawings at the chapter cards' size, in ink and pale, with their places on the shelf."""
+    """The stage drawings at the chapter cards' size, in full colour and pale, with their places on the shelf."""
     def __init__(self, ids):
         self.n = len(ids)
-        ims = [load(i) for i in ids]
+        ims = [load(i, small=True) for i in ids]
         self.sz = sizes(ims, CH_ROOT_AREA, CH_MAX_W, CH_MAX_H)
-        wt = weights(ims, self.sz, lo=WEIGHT_RANGE[0], hi=WEIGHT_RANGE[1])
-        self.on = [draw(im, w, h, weight=k * INK_GAIN) for im, (w, h), k in zip(ims, self.sz, wt)]
-        self.off = [draw(im, w, h, weight=k * INK_GAIN, tone=OFF_TONE) for im, (w, h), k in zip(ims, self.sz, wt)]
+        self.on = [draw(im, w, h) for im, (w, h) in zip(ims, self.sz)]
+        self.off = [draw(im, w, h, tone=OFF_TONE) for im, (w, h) in zip(ims, self.sz)]
         self.xs = place([w for w, h in self.sz], CH_X, CH_X)
         self.h = max(h for w, h in self.sz)
 
     def html(self, stage):
-        """stage: 1 to N marks that stage; None draws them all in ink and marks none."""
+        """stage: 1 to N marks that stage; None draws them all in full colour and marks none."""
         items = [self.on[i] if stage is None or i == stage - 1 else self.off[i] for i in range(self.n)]
         return '\n'.join(img(d, x) for d, x in zip(items, self.xs))
 
@@ -338,7 +307,7 @@ def page_html(p, ch, row, home):
         rep.update({'{{KIND}}': 'chapter', '{{TITLE}}': esc(c['title']),
                     '{{LINE}}': esc(' '.join(ss)), '{{SENTENCES}}': esc(json.dumps(ss)),
                     '{{COL}}': str(min(COL_MAX, bx - TEXT_GAP - 64)),
-                    '{{BIG}}': '<img class="big" style="left:%dpx;top:%dpx" src="%s" width="%d" height="%d" alt="">' % (bx, by, uri(soft(im, bw, bh)), bw, bh),
+                    '{{BIG}}': '<img class="big" style="left:%dpx;top:%dpx" src="%s" width="%d" height="%d" alt="">' % (bx, by, uri(draw(im, bw, bh)), bw, bh),
                     '{{FRIEZE}}': row.html(p.get('stage')),
                     '{{FRIEZE_BOTTOM}}': str(630 - CH_BASE), '{{FRIEZE_H}}': str(row.h), '{{SHELF_TOP}}': str(CH_BASE + SHELF_GAP),
                     '{{HERE}}': ('<div class="here" style="left:%dpx;width:%dpx;top:%dpx"></div>' % (row.xs[p['stage'] - 1], row.sz[p['stage'] - 1][0], CH_BASE + SHELF_GAP)) if p.get('stage') else '',
@@ -357,7 +326,7 @@ def page_html(p, ch, row, home):
 
 
 def shrink(path, colors=256):
-    """Quantize a PNG to a palette with Pillow, median cut, no dither: ink and gray drawings over a flat white ground."""
+    """Quantize a PNG to a palette with Pillow, median cut, no dither: the drawings' colours over a flat white ground."""
     im = Image.open(path).convert('RGB').quantize(colors=colors, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE)
     im.save(path, optimize=True)
     return os.path.getsize(path)

@@ -367,7 +367,9 @@
       // the globe turns on its own, unless the reader holds it or rests the pointer on it (so a pin can be pointed at), has paused
       // it, or asks for less motion
       if (slot.spin && !reduced && !this.still && !this.dragging && !this.keyTurn && !this.resting) { this.spinYaw += slot.spin * dt; more = true; }
-      var st = { k: k, mode: this.mode(), dark: this.dark, el: this.canvas, dyaw: this.spinYaw + this.userYaw + cue, delev: this.userPitch, labA: this.labA, lite: narrow() && (turned || k < 1), pick: !turned && k >= 1 && !this.back };
+      // (while it turns with its labels out, the plate draws its lighter turning frame, st.fast in src/plate.js: one device pixel per
+      // css pixel, no shadows or fine lines; the labels never draw at that resolution, and the plate at rest draws in full)
+      var st = { k: k, mode: this.mode(), dark: this.dark, el: this.canvas, dyaw: this.spinYaw + this.userYaw + cue, delev: this.userPitch, labA: this.labA, lite: narrow() && (turned || k < 1), pick: !turned && k >= 1 && !this.back, fast: turned && this.labA <= 0 };
       pl.render(this.ctx, this.w, this.h, this.dpr, st);
       // the plate moved a label to its other column: its slot is sized again and it draws once more
       if (pl.wantsFrame) { pl.wantsFrame = false; this.fit(); more = true; }

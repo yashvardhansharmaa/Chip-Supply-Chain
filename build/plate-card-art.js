@@ -1,10 +1,11 @@
 #!/usr/bin/env node
 /* The share cards' drawings from the plates (21 Nov 2026): build/assets/cards-art/<chapter-id>.png, one per chapter, which
    build/cards.py draws every card from (the chapter's own drawing large, the stages small on the shelf). Each is the chapter's
-   plate as the page draws it at rest, with no labels or dimensions, in the light theme, turned into the coverage cards.py
-   reads: an 8-bit gray image, 255 full ink, cropped to the drawing. Coverage is how far a pixel is from the white ground
-   towards the site's ink (#171716), so a line is full ink and a face's tone a light gray; the colours become grays, since the
-   cards are drawn in ink alone. Until 21 Nov 2026 qa/redesign/card-art.py made these files from the point-cloud renders.
+   plate as the page draws it at rest, with no labels or dimensions, in the light theme and in its colours (treatment C, since
+   24 Nov 2026), on a clear ground and cropped to the drawing: <id>.png at full detail for the large drawing, and
+   <id>-small.png at the small stills' level of detail (lod "thumb") for the stages along the shelf. Until 24 Nov 2026 these were
+   8-bit gray coverage images, the cards being drawn in ink alone; until 21 Nov 2026 qa/redesign/card-art.py made them from the
+   point-cloud renders.
    Then: python3 build/cards.py (the chapter and view cards) and node build/plate-home-card.js with python3 build/home_card.py.
    usage: node build/plate-card-art.js [base]   (default http://127.0.0.1:8802, a static server on dist/)
    Nothing leaves this machine but the font requests (qa/redesign/cdp.js resolves every other host to nothing). */
@@ -28,29 +29,28 @@ const chapters = fs.readdirSync(path.join(root, 'content')).filter((f) => /^\d\d
   try {
     const t = await open(chrome, BASE + '/lithography/', { width: 1200, theme: 'light', wait: 1200 });
     const res = await t.ev(`(function (list) {
-      var got = {}, S = 480, D = 2;
-      list.forEach(function (c) {
+      var got = {};
+      // a plate drawn at rest, S css px square at D, in colour on a clear ground, cropped to what is drawn (the large one at 720 px,
+      // about one and a half times the card's largest drawing, the small one at 240)
+      var draw = function (c, S, lod, D) {
         var cv = document.createElement('canvas'); cv.width = S * D; cv.height = S * D;
-        var ctx = cv.getContext('2d'), pl = new PLATE.Plate(c.spec, {});
+        var ctx = cv.getContext('2d'), pl = new PLATE.Plate(c.spec, lod ? { lod: lod } : {});
         pl.render(ctx, S, S, D, { k: 1, mode: { noLabels: true, noDims: true, pad: 0.02 }, dark: false, el: document.documentElement });
-        var im = ctx.getImageData(0, 0, cv.width, cv.height), d = im.data, x0 = cv.width, y0 = cv.height, x1 = 0, y1 = 0;
-        for (var i = 0; i < d.length; i += 4) {
-          var a = d[i + 3] / 255, lum = 0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2];
-          // over white, then how far towards the ink
-          var over = 255 - a * (255 - lum), cov = Math.max(0, Math.min(1, (255 - over) / (255 - 23))), v = Math.round(cov * 255);
-          d[i] = d[i + 1] = d[i + 2] = v; d[i + 3] = 255;
-          if (v > 6) { var p = i / 4, x = p % cv.width, y = (p - x) / cv.width; if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
-        }
-        ctx.putImageData(im, 0, 0);
+        var d = ctx.getImageData(0, 0, cv.width, cv.height).data, x0 = cv.width, y0 = cv.height, x1 = 0, y1 = 0;
+        for (var i = 3; i < d.length; i += 4) if (d[i] > 8) { var p = (i - 3) / 4, x = p % cv.width, y = (p - x) / cv.width; if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
         var o = document.createElement('canvas'); o.width = x1 - x0 + 1; o.height = y1 - y0 + 1;
-        var ox = o.getContext('2d'); ox.drawImage(cv, x0, y0, o.width, o.height, 0, 0, o.width, o.height);
-        got[c.id] = o.toDataURL('image/png');
-      });
+        o.getContext('2d').drawImage(cv, x0, y0, o.width, o.height, 0, 0, o.width, o.height);
+        return o.toDataURL('image/png');
+      };
+      list.forEach(function (c) { got[c.id] = { big: draw(c, 480, null, 1.5), small: draw(c, 120, 'thumb', 2) }; });
       return got;
     })(${JSON.stringify(chapters)})`);
     if (t.errors.length) console.log('page errors:', t.errors.join(' | '));
     await t.close();
-    for (const c of chapters) fs.writeFileSync(path.join(OUT, c.id + '.png'), Buffer.from(res[c.id].split(',')[1], 'base64'));
-    console.log(`wrote ${chapters.length} drawings to ${path.relative(root, OUT)}/`);
+    for (const c of chapters) {
+      fs.writeFileSync(path.join(OUT, c.id + '.png'), Buffer.from(res[c.id].big.split(',')[1], 'base64'));
+      fs.writeFileSync(path.join(OUT, c.id + '-small.png'), Buffer.from(res[c.id].small.split(',')[1], 'base64'));
+    }
+    console.log(`wrote ${chapters.length} drawings, each large and small, to ${path.relative(root, OUT)}/`);
   } finally { await chrome.close(); }
 })().catch((e) => { console.error(e); process.exit(1); });

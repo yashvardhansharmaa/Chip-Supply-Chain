@@ -1216,6 +1216,16 @@
     // (a part not pointed at is drawn opaque, mixed toward the ground, so nothing shows through: round 3)
     var fzC = function (cs) { return curFade && typeof cs === 'string' ? css(mix(hex(cs), pal.bg, curFade)) : cs; };
     var GL = function (segs, col, lw, dash, al, cap) { g.lines(segs, fzC(col), lw, dash, al, cap); };
+    /* a turning frame (st.fast: the reader turns the plate and its labels are out): a face's colour maths is kept in a memo, keyed
+       by its material and its turn to the light (quantized to about a degree), so the frame costs less. A plate at rest never
+       reads the memo, so it draws exactly as before */
+    var MEMO = null;
+    if (st.fast) { var mk0 = pal.dark ? 'd' : 'l'; if (plateSelf._memoKey !== mk0 || !plateSelf._memo || plateSelf._memo.size > 30000) { plateSelf._memo = new Map(); plateSelf._memoKey = mk0; } MEMO = plateSelf._memo; }
+    var rid = function (Rm) { return Rm._rid || (Rm._rid = (P._rid = (P._rid || 0) + 1)); };
+    var qn = function (v) { return Math.round(v[0] * 40) + ',' + Math.round(v[1] * 40) + ',' + Math.round(v[2] * 40); };
+    var memo = function (key, fn) { if (!MEMO) return fn(); var v = MEMO.get(key); if (v === undefined) { v = fn(); MEMO.set(key, v); } return v; };
+    // a colour's lit tone as css, kept on the colour itself in a turning frame
+    var cssL = function (c, k) { if (!MEMO) return css(litC(c, k)); var gm = c._g || (c._g = {}), key = 'L' + k; return gm[key] || (gm[key] = css(litC(c, k))); };
     var smooth = function (e0, e1, x) { var t = Math.max(0, Math.min(1, (x - e0) / (e1 - e0))); return t * t * (3 - 2 * t); };
     var HK = (function () { var h = [Lt[0], Lt[1], Lt[2] + 1], n = Math.hypot(h[0], h[1], h[2]); return [h[0] / n, h[1] / n, h[2] / n]; })();
     // the page's direction from a lit edge to its far edge (the key light comes from the upper left)
@@ -1313,6 +1323,8 @@
     // a patterned wafer's static diffraction sheen: one broad run of two neighbouring hues, violet into teal, fixed to the part
     var hueAt = function (t) { return mixL([138, 124, 196], [104, 168, 176], Math.max(0, Math.min(1, t))); };
     var grad = function (ax, stops, col, on, Rm, sheen) {
+      var gk2 = MEMO ? (stops._k || (stops._k = stops.join(';'))) + ':' + (on ? 1 : 0) + ':' + curFade + ':' + (sheen || 0) + ':' + ((Rm && Rm.mstrip) || 0) : null, got = gk2 && col._g ? col._g[gk2] : null;
+      if (got) return { x0: ax[0], y0: ax[1], x1: ax[2], y1: ax[3], stops: got };
       var ms = Rm && Rm.mstrip, capL = CAPL, out = stops.map(function (q) {
         var v = q[1], c = v === 's' ? (ms ? mixL(col, WHITE, ms) : litC(col, 1.85)) : v === 's2' ? (ms ? mixL(col, WHITE, ms * 0.8) : litC(col, 1.7)) : v === 'b' ? (ms ? mixL(col, WHITE, ms * 0.55) : litC(col, 1.3)) : litC(col, v);
         if (lumC(c) > capL) c = mixL(c, [228, 231, 235], 0.7);
@@ -1320,8 +1332,21 @@
       });
       // (inside the die grid only, 10 to 20 percent, never over 25: the expert's ruling)
       if (sheen) out = out.map(function (q) { return [q[0], mixL(q[1], hueAt(q[0]), Math.min(0.25, sheen))]; });
-      return { x0: ax[0], y0: ax[1], x1: ax[2], y1: ax[3], stops: out.map(function (q) { return [q[0], css(lift(q[1], on))]; }) };
+      var lst = out.map(function (q) { return [q[0], lift(q[1], on)]; }), cs0 = lst.map(function (q) { return [q[0], css(q[1])]; });
+      cs0.rgb = lst;
+      if (gk2) (col._g || (col._g = {}))[gk2] = cs0;
+      return { x0: ax[0], y0: ax[1], x1: ax[2], y1: ax[3], stops: cs0 };
     };
+    // (in a turning frame a small face takes one colour, its gradient's own at the face's middle, so no gradient is set up for it)
+    var flatAt = function (gr, pts) {
+      var cx = 0, cy = 0; pts.forEach(function (p) { cx += p[0]; cy += p[1]; }); cx /= pts.length; cy /= pts.length;
+      var dx = gr.x1 - gr.x0, dy = gr.y1 - gr.y0, L2 = dx * dx + dy * dy || 1, t = Math.max(0, Math.min(1, ((cx - gr.x0) * dx + (cy - gr.y0) * dy) / L2)), st0 = gr.stops.rgb;
+      if (!st0) return gr.stops[gr.stops.length >> 1][1];
+      var i = 1; while (i < st0.length - 1 && t > st0[i][0]) i++;
+      var a = st0[i - 1], c = st0[i], u = c[0] > a[0] ? Math.max(0, Math.min(1, (t - a[0]) / (c[0] - a[0]))) : 0;
+      return css(mix(a[1], c[1], u));
+    };
+    var small = function (pts) { var b = bbOf(pts); return (b[2] - b[0]) + (b[3] - b[1]) < 36; };
     /* a face of material Rm: { f: its fill (a colour, a linear gradient or a radial one), rgb: its colour }. opt: gk (the plane
        a decal lies in), mul (a decal's tone against its face) */
     var tFace = function (Rm, nvw, f, fi, pts, cut, on, axV, s, opt) {
@@ -1331,13 +1356,13 @@
       var gl = gOf(Rm);
       if (f && f.curve) {
         var isCap = !!f.cap || !!(s && s.axisN && Math.abs(f.n[0] * s.axisN[0] + f.n[1] * s.axisN[1] + f.n[2] * s.axisN[2]) > 0.35);
-        var inr = (f.inner ? (TB ? 0.8 : 0.72) : 1) * mul, cm = litC(shadeCurve(Rm, b, nvw, !!f.cap, axV), inr);
+        var inr = (f.inner ? (TB ? 0.8 : 0.72) : 1) * mul, cm = memo(MEMO && 'c' + rid(Rm) + ':' + qn(nvw) + ':' + (f.cap ? 1 : 0) + ':' + inr + ':' + (axV ? qn(axV) : '-'), function () { return litC(shadeCurve(Rm, b, nvw, !!f.cap, axV), inr); });
         var si = stripInfo(f, pts);
         if (!si) return { f: css(lift(cm, on)), rgb: cm };
         var cL = litC(shadeCurve(Rm, b, si.nL, !!f.cap, axV), inr), cR = litC(shadeCurve(Rm, b, si.nR, !!f.cap, axV), inr);
         return { f: { x0: si.pL[0], y0: si.pL[1], x1: si.pR[0], y1: si.pR[1], stops: [[0, css(lift(cL, on))], [1, css(lift(cR, on))]] }, rgb: cm };
       }
-      var lam = lamOf(nvw), top = lam > 0.72, col = litC(flatTone(Rm, b, lam, top), mul);
+      var lam = lamOf(nvw), top = lam > 0.72, col = memo(MEMO && 'f' + rid(Rm) + ':' + Math.round(lam * 400) + ':' + (top ? 1 : 0) + ':' + mul, function () { return litC(flatTone(Rm, b, lam, top), mul); });
       if (!pts) return { f: css(lift(col, on)), rgb: col };
       var bb;
       // a face seen from inside a cavity darkens toward its corners (S5)
@@ -1350,12 +1375,14 @@
         bb = bbOf(pts); var foot = false;
         if (s && s.joint && f) for (var q = 0; q < f.v.length; q++) { var va = f.v[q], vb = f.v[(q + 1) % f.v.length]; if (s.joint[va < vb ? va + '_' + vb : vb + '_' + va] && (pts[q][1] + pts[(q + 1) % pts.length][1]) / 2 >= bb[3] - 1.5) { foot = true; break; } }
         var mx = (bb[0] + bb[2]) / 2;
-        return { f: grad([mx, bb[1], mx, bb[3]], foot ? [[0, 1], [0.86, 1.02], [1, 0.74]] : [[0, 1], [1, 1.06]], col, on, null), rgb: col };
+        var gf = grad([mx, bb[1], mx, bb[3]], foot ? [[0, 1], [0.86, 1.02], [1, 0.74]] : [[0, 1], [1, 1.06]], col, on, null);
+        return { f: MEMO && small(pts) ? flatAt(gf, pts) : gf, rgb: col };
       }
       var gk = opt.gk || (f && (groups(), f._gk)), gb = gk && GR[gk] ? GR[gk] : bbOf(pts);
       var wide = gb[2] - gb[0] > 0.4 * w;
       var stops = gl >= 0.85 ? (TB ? MIR_B : wide ? MIR_CW : MIR_C) : gl >= 0.5 ? (TB ? SAT_B : SAT_C) : TB ? TONE : TONE_C;
-      return { f: grad(axisOf(gb), stops, col, on, Rm, opt.sheen), rgb: col };
+      var gp = grad(axisOf(gb), stops, col, on, Rm, opt.sheen);
+      return { f: MEMO && small(pts) ? flatAt(gp, pts) : gp, rgb: col };
     };
     // a cut face's ruling: in the face's own shade at 0.4 (a weave: lighter, in its own colour)
     var tHatch = function (pts, rgb, fm, f, alpha, weave) {
@@ -1366,7 +1393,7 @@
     // an object's outline: its own deep shade (on the dark ground a darker tone of the part)
     var outC = function (b) {
       var Lb = lumC(b);
-      return css(litC(b, pal.dark ? (Lb < 0.03 ? 0.62 : 0.45) : Lb < 0.03 ? 0.5 : Lb > 0.45 ? 0.24 : 0.28));
+      return cssL(b, pal.dark ? (Lb < 0.03 ? 0.62 : 0.45) : Lb < 0.03 ? 0.5 : Lb > 0.45 ? 0.24 : 0.28);
     };
     // a line inside a face: darker than the face, and lighter on a dark face
     var inC = function (rgb) {
@@ -1376,19 +1403,20 @@
     var tEdges = function (TF, Rf, s, f, shl, fine, crease, out, shade, on, alpha, szK, thinTint, nvw) {
       var rgb = TF.rgb, b = tBase(Rf), edge = Rf.edge && !pal.dark ? hex(Rf.edge) : null, hiW = 1.5 * Math.max(0.8, k);
       // no ink on the object: its silhouette in its own deep shade at one weight, the light edge alone where a polished top
-      // meets a side, every other crease soft in the face's own colour
+      // meets a side, every other crease soft in the face's own colour (in a turning frame the soft creases and fine lines wait
+      // for the plate to rest)
       var sil = out.concat(shade);
       if (s.soft && !on) { crease = crease.concat(sil); sil = []; }
       var polished = gOf(Rf) >= 0.6 && !s.soft && !s.inner && !(Rf.clear < 1);
       if (crease.length) {
         var hi = [], lo = [], meTop = !f.curve && lamOf(nvw) > 0.72;
         crease.forEach(function (sg) { var nb = sg.nb; if (!polished || nb == null) { lo.push(sg); return; } var o = F[nb], nbTop = !o.curve && lamOf(rotN(o.n)) > 0.72; (meTop !== nbTop ? hi : lo).push(sg); });
-        if (lo.length) GL(lo, s.soft && m.spec.softLine && !pal.dark ? m.spec.softLine : css(litC(rgb, pal.dark ? 0.7 : 0.55)), s.soft ? 0.5 : LW.crease * 0.8, null, (s.soft ? 0.6 : 0.55) * alpha);
-        if (hi.length) GL(hi, css(litC(b, pal.dark ? 1.9 : 1.55)), LW.crease * 1.2, null, 0.85 * alpha);
+        if (lo.length && !MEMO) GL(lo, s.soft && m.spec.softLine && !pal.dark ? m.spec.softLine : cssL(rgb, pal.dark ? 0.7 : 0.55), s.soft ? 0.5 : LW.crease * 0.8, null, (s.soft ? 0.6 : 0.55) * alpha);
+        if (hi.length) GL(hi, cssL(b, pal.dark ? 1.9 : 1.55), LW.crease * 1.2, null, 0.85 * alpha);
       }
-      if (fine.length) GL(fine, css(litC(rgb, 0.55)), LW.fine, null, 0.4 * alpha);
+      if (fine.length && !MEMO) GL(fine, cssL(rgb, 0.55), LW.fine, null, 0.4 * alpha);
       if (sil.length) GL(sil, on ? hlC : edge ? css(edge) : outC(b), on ? hiW : LW.out * 0.9, null, 0.95 * alpha);
-      if (pal.dark && shade.length && !on && !s.soft) GL(shade, css(litC(b, 1.9)), 1, null, 0.45 * alpha);
+      if (pal.dark && shade.length && !on && !s.soft) GL(shade, cssL(b, 1.9), 1, null, 0.45 * alpha);
     };
     // a clear part's far faces, seen through its near ones
     var tBack = function (s, a, on) {
@@ -2543,6 +2571,12 @@
      colours are read) } */
   PL.render = function (ctx, w, h, dpr, st) {
     var key = this.mode(st.mode) + '|' + Math.round(w) + 'x' + Math.round(h);
+    var fast = !!st.fast && dpr > 1 && typeof document !== 'undefined', out = ctx, odpr = dpr;
+    if (fast) {
+      var fc = this._fastCv || (this._fastCv = document.createElement('canvas')), fw = Math.ceil(w), fh = Math.ceil(h);
+      if (fc.width !== fw || fc.height !== fh) { fc.width = fw; fc.height = fh; }
+      ctx = fc.getContext('2d'); dpr = 1;
+    }
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, w, h);
     var g = new CanvasG(ctx, dpr);
     if (this._fitKey !== key || !this._fit) { this.m.callouts.forEach(function (c) { c._lines = null; }); this.ext = null; this._fit = this.fit(w, h, g); this._fitKey = key; }
@@ -2550,7 +2584,8 @@
     this._palKey = pk;
     var K = st.k == null ? 1 : st.k;
     this.paint({ k: K, w: w, h: h, g: g, pal: pal, fit: this._fit, scale: K < 1 ? 0.975 + 0.025 * easeOut(K * 1.6) : 1, noDims: this.o.noDims, oneDim: this.o.oneDim, noLabels: this.o.noLabels,
-      lite: !!st.lite, dyaw: st.dyaw || 0, delev: st.delev || 0, labA: st.labA == null ? 1 : st.labA, pick: !!st.pick, inkK: st.inkK });
+      lite: !!st.lite || fast, dyaw: st.dyaw || 0, delev: st.delev || 0, labA: st.labA == null ? 1 : st.labA, pick: !!st.pick, inkK: st.inkK, noShadow: fast, fast: fast });
+    if (fast) { out.setTransform(1, 0, 0, 1, 0, 0); out.clearRect(0, 0, out.canvas.width, out.canvas.height); out.imageSmoothingEnabled = true; out.drawImage(ctx.canvas, 0, 0, ctx.canvas.width, ctx.canvas.height, 0, 0, ctx.canvas.width * odpr, ctx.canvas.height * odpr); }
     // a label moved to its other column: fitted again on the next frame (the page asks for one, src/app.js Stage.frame)
     if (this._refit) { this._refit = false; this._fitKey = null; this.ext = null; this.wantsFrame = true; }
     this.w = w; this.h = h;
