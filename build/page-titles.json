@@ -38,7 +38,7 @@
   {
     "path": "/photomasks-and-pellicles/",
     "title": "What photomasks and pellicles are",
-    "description": "What a photomask and its pellicle are, and why an EUV mask is a mirror. Japan's AGC and Hoya are two of only three firms that make EUV mask blanks."
+    "description": "What a photomask and its pellicle are, and why an EUV mask is a mirror. AGC says only three firms make EUV mask blanks, Japan's AGC and Hoya among them."
   },
   {
     "path": "/deposition-and-etch/",
@@ -108,7 +108,7 @@
   {
     "path": "/suppliers/",
     "title": "Who makes what in the AI chip supply chain",
-    "description": "What each of the 226 firms in the AI chip supply chain makes, where it is based and its position in its market. Revenue figures come from company filings."
+    "description": "What each of the 224 firms in the AI chip supply chain makes, where it is based and its position in its market. Revenue figures come from company filings."
   },
   {
     "path": "/export-controls/",

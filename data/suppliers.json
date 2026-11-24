@@ -11,6 +11,13 @@
     "ownership": "Public",
     "role": "Makes the synthesis, place-and-route, verification and signoff software that turns the code describing an AI accelerator's logic (its RTL) into a layout a fab can build. It also sells the largest commercial catalog of silicon IP, ready-made circuit blocks that chip designers license. Its 2025 acquisition of Ansys added multiphysics simulation for thermal and power integrity.",
     "chokepoint": "Critical",
+    "dominantIn": {
+      "product": "timing signoff software at advanced nodes",
+      "share": "over 90 percent",
+      "year": "2026",
+      "by": "SemiAnalysis",
+      "source": "https://newsletter.semianalysis.com/p/eda-market-primer"
+    },
     "shareNote": "About $8 billion of calendar 2025 EDA and IP revenue including Ansys, against Cadence at $5.30 billion and Siemens EDA at an estimated $2.2 billion to $2.5 billion",
     "customers": [
       "Nvidia",
@@ -22,6 +29,9 @@
     ],
     "aiRelevance": "Every leading-edge AI accelerator is designed and checked with a full set of electronic design automation (EDA) tools before it goes to the fab. Synopsys supplies the largest single share of those tools.",
     "source": "https://newsletter.semianalysis.com/p/eda-market-primer",
+    "folded": [
+      "Ansys"
+    ],
     "revenue": {
       "amount": 7054178,
       "unit": "thousand",
@@ -79,8 +89,20 @@
     "founded": 1981,
     "ticker": "Private",
     "ownership": "Subsidiary of Siemens AG of Germany (acquired as Mentor Graphics in 2017)",
+    "parent": {
+      "name": "Siemens AG",
+      "country": "DE",
+      "kind": "subsidiary"
+    },
     "role": "The third-largest maker of chip design (EDA) software. Its Calibre tool is the de facto standard for physical verification, the check foundries use to confirm a layout follows their manufacturing rules before they accept it. It also sells design-for-test software. Foundries write the rule files they give chip designers in Calibre's format.",
     "chokepoint": "Critical",
+    "dominantIn": {
+      "product": "physical verification, the final layout check, at advanced nodes",
+      "share": "over 85 percent",
+      "year": "2026",
+      "by": "SemiAnalysis",
+      "source": "https://newsletter.semianalysis.com/p/eda-market-primer"
+    },
     "shareNote": "Estimated $2.2 billion to $2.5 billion of calendar 2025 EDA revenue, third behind Synopsys and Cadence. The EDA country share counts it under Germany, its parent's home",
     "customers": [
       "TSMC",
@@ -93,41 +115,6 @@
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://newsletter.semianalysis.com/p/eda-market-primer"
-  },
-  {
-    "name": "Ansys",
-    "nativeName": null,
-    "category": "Design and EDA",
-    "subcategory": "Multiphysics, thermal and power integrity simulation",
-    "country": "US",
-    "city": "Canonsburg",
-    "founded": 1970,
-    "ticker": "Private",
-    "ownership": "Subsidiary of Synopsys since the acquisition closed in 2025",
-    "role": "Makes the thermal, electromagnetic and structural simulation software used to model how a 1 kW accelerator package heats, warps and delivers power. Its RedHawk tool is the standard for power integrity signoff, the final check that power reaches every part of a chip as designed.",
-    "chokepoint": "Important",
-    "shareNote": null,
-    "customers": [
-      "Nvidia",
-      "AMD",
-      "TSMC",
-      "Samsung",
-      "Intel"
-    ],
-    "aiRelevance": "Heat and warpage are the limiting design problems for kilowatt-class packages and liquid-cooled racks, and Ansys software simulates both.",
-    "source": "https://www.ansys.com/products/semiconductors",
-    "revenue": {
-      "amount": 2544809,
-      "unit": "thousand",
-      "currency": "USD",
-      "scope": "company",
-      "basis": "Revenue, consolidated, US GAAP",
-      "fiscalYear": "2024",
-      "fyStart": "2024-01",
-      "fyEnd": "2024-12",
-      "source": "https://www.sec.gov/Archives/edgar/data/1013462/000101346225000009/R5.htm",
-      "note": "Ansys has filed no accounts since Synopsys bought it in July 2025, so this is its last annual figure."
-    }
   },
   {
     "name": "Empyrean Technology",
@@ -238,8 +225,13 @@
     "founded": 1990,
     "ticker": "ARM",
     "ownership": "Public, majority owned by SoftBank Group",
+    "parent": {
+      "name": "SoftBank Group",
+      "country": "JP",
+      "kind": "majority"
+    },
     "role": "Licenses the CPU architecture and cores used in the host processors that feed data to AI accelerators. These include Nvidia's Grace and Vera CPUs and the Arm cores inside the server chips that large cloud companies design. It also licenses the interconnect and system IP around them. In 2026 it launched the Arm AGI CPU, its first production chip. By May 2026, ASRock, Lenovo, Quanta and Supermicro were taking orders for servers built on it.",
-    "chokepoint": "Critical",
+    "chokepoint": "Important",
     "shareNote": null,
     "customers": [
       "Nvidia",
@@ -307,6 +299,11 @@
     "founded": 2017,
     "ticker": "Private",
     "ownership": "Acquired by Qualcomm in a deal announced in 2025 and no longer separately listed",
+    "parent": {
+      "name": "Qualcomm",
+      "country": "US",
+      "kind": "subsidiary"
+    },
     "role": "Supplies multi-gigabit connection IP (SerDes, PCIe, UCIe and Ethernet) that moves data between chiplets and between accelerators. Qualcomm bought it to build data-center silicon.",
     "chokepoint": "Important",
     "shareNote": null,
@@ -390,6 +387,13 @@
     "ownership": "Public",
     "role": "Designs the Blackwell and Rubin GPUs, the NVLink connections that join many GPUs into one system, and the NVL72 rack systems. Most AI training and a large share of inference run on this hardware. It also makes the CUDA software stack that ties developers to its hardware.",
     "chokepoint": "Critical",
+    "dominantIn": {
+      "product": "high-end AI accelerators",
+      "share": "60.3 percent of the CoWoS packaging capacity they are built with",
+      "year": "2025",
+      "by": "Epoch AI's estimate",
+      "source": "https://epoch.ai/data-insights/ai-chip-supply-chain-constraints"
+    },
     "shareNote": null,
     "customers": [
       "Microsoft",
@@ -423,7 +427,7 @@
     "founded": 1969,
     "ticker": "AMD",
     "ownership": "Public",
-    "role": "Designs the Instinct MI355X and MI400 accelerators and EPYC server CPUs. Since buying ZT Systems in 2025 it also designs rack-scale AI systems. It is the only company other than Nvidia that sells AI accelerators on the open market at scale.",
+    "role": "Designs the Instinct MI355X and MI400 accelerators and EPYC server CPUs. Since buying ZT Systems in 2025 it also designs rack-scale AI systems. It kept ZT Systems' design and customer enablement teams and sold ZT's manufacturing business to Sanmina in October 2025. It is the only company other than Nvidia that sells AI accelerators on the open market at scale.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -436,6 +440,19 @@
     ],
     "aiRelevance": "AMD is the main competitive check on Nvidia's pricing, and most large buyers are qualifying it as a second source.",
     "source": "https://www.amd.com/en/products/accelerators/instinct.html",
+    "moreSources": [
+      {
+        "label": "ZT Systems purchase",
+        "url": "https://www.amd.com/en/newsroom/press-releases/2025-3-31-amd-completes-acquisition-of-zt-systems.html"
+      },
+      {
+        "label": "ZT Systems manufacturing sale",
+        "url": "https://ir.amd.com/news-events/press-releases/detail/1263/amd-completes-divestiture-of-zt-systems-data-center-infrastructuremanufacturing-business-to-sanmina"
+      }
+    ],
+    "folded": [
+      "ZT Systems"
+    ],
     "revenue": {
       "amount": 34639,
       "unit": "million",
@@ -492,6 +509,11 @@
     "founded": 1998,
     "ticker": "Private",
     "ownership": "Division of Alphabet Inc.",
+    "parent": {
+      "name": "Alphabet",
+      "country": "US",
+      "kind": "division"
+    },
     "role": "Designs the Tensor Processing Unit (TPU), and announced the eighth generation, the TPU 8t and TPU 8i, in April 2026. It uses TPUs in its own data centers and offers them to cloud customers. Broadcom and MediaTek work with it on the physical design, which turns a chip design into a layout, and on manufacturing at TSMC.",
     "chokepoint": "Important",
     "shareNote": null,
@@ -516,6 +538,11 @@
     "founded": 2011,
     "ticker": "Private",
     "ownership": "Subsidiary of Amazon since 2015",
+    "parent": {
+      "name": "Amazon",
+      "country": "US",
+      "kind": "subsidiary"
+    },
     "role": "Amazon's chip design arm. It designs the Trainium training chips, Inferentia inference chips and the Nitro data processing units used across AWS. Trainium 3 is the current generation.",
     "chokepoint": "Important",
     "shareNote": null,
@@ -538,6 +565,11 @@
     "founded": 1975,
     "ticker": "Private",
     "ownership": "Division of Microsoft Corporation",
+    "parent": {
+      "name": "Microsoft",
+      "country": "US",
+      "kind": "division"
+    },
     "role": "Designs the Maia accelerator family and the Cobalt Arm server CPU for Microsoft's Azure cloud. It also designs the 'sidekick' racks that sit beside the servers and supply the liquid cooling they need. Maia 200 is the current generation.",
     "chokepoint": "Contested",
     "shareNote": null,
@@ -838,6 +870,11 @@
     "founded": 2004,
     "ticker": "Private",
     "ownership": "Subsidiary of Huawei Technologies",
+    "parent": {
+      "name": "Huawei Technologies",
+      "country": "CN",
+      "kind": "subsidiary"
+    },
     "role": "Huawei's chip design arm. It designs the Ascend 910C and the announced 950 and 960 accelerators. SMIC makes its chips without EUV lithography tools, and that limits yield and volume.",
     "chokepoint": "Contested",
     "shareNote": null,
@@ -1321,6 +1358,11 @@
     "founded": 1983,
     "ticker": "Private",
     "ownership": "Part of SK Group, which agreed in July 2026 to sell a 70.6 percent stake to Doosan",
+    "parent": {
+      "name": "SK Group",
+      "country": "KR",
+      "kind": "division"
+    },
     "role": "Korea's silicon wafer maker, supplying 300 mm wafers largely to Samsung and SK hynix. It also makes silicon carbide substrates for power devices at a US plant in Michigan.",
     "chokepoint": "Important",
     "shareNote": null,
@@ -1410,6 +1452,11 @@
     "founded": 1961,
     "ticker": "Private",
     "ownership": "Private, majority owned by Corning with Japanese partners",
+    "parent": {
+      "name": "Corning",
+      "country": "US",
+      "kind": "majority"
+    },
     "role": "Makes the ultra-pure polysilicon that is melted to grow the crystal ingots wafers are cut from. Only a few plants worldwide make semiconductor-grade material. Siltronic names Hemlock among the five major suppliers of electronic-grade silicon in 2025.",
     "chokepoint": "Important",
     "shareNote": null,
@@ -1708,6 +1755,11 @@
     "founded": 2007,
     "ticker": "Private",
     "ownership": "Subsidiary of JSR Corporation",
+    "parent": {
+      "name": "JSR Corporation",
+      "country": "JP",
+      "kind": "subsidiary"
+    },
     "role": "Developed tin-oxide EUV resists that absorb EUV photons far more efficiently than organic chemically amplified resists. Higher absorption cuts the light dose needed and sharpens resolution on High-NA EUV tools.",
     "chokepoint": "Contested",
     "shareNote": null,
@@ -1853,6 +1905,13 @@
     "ownership": "Public, listed in Tokyo in 2025 after being spun out of ENEOS",
     "role": "Supplies the ultra-high-purity copper, tantalum and titanium sputtering targets used to deposit the metal interconnect on a chip, along with high-purity treated rolled copper foil for substrates.",
     "chokepoint": "Critical",
+    "dominantIn": {
+      "product": "sputtering targets for semiconductors",
+      "share": "about 65 percent",
+      "year": "fiscal 2026",
+      "by": "the company's own estimate",
+      "source": "https://www.jx-nmm.com/english/company/glance/"
+    },
     "shareNote": null,
     "customers": [
       "TSMC",
@@ -2233,6 +2292,13 @@
     "ownership": "Public",
     "role": "The only maker of extreme ultraviolet (EUV) lithography scanners, the machines that print circuit patterns onto wafers. It also makes immersion deep ultraviolet (DUV) scanners. Chipmakers use its EUV systems for the most critical layers on the most advanced logic and memory chips.",
     "chokepoint": "Critical",
+    "dominantIn": {
+      "product": "EUV lithography scanners",
+      "only": true,
+      "year": "2025",
+      "by": "ASML's 2025 annual report",
+      "source": "https://ourbrand.asml.com/m/8ab959d4926657b/original/asml-2025-annual-report-strategic-report-section.pdf#page=16"
+    },
     "shareNote": "Only manufacturer of EUV lithography systems. Recognized revenue on 48 EUV systems and 279 DUV systems in 2025",
     "customers": [
       "TSMC",
@@ -2354,8 +2420,13 @@
     "founded": 1986,
     "ticker": "Private",
     "ownership": "Subsidiary of ASML since 2013",
+    "parent": {
+      "name": "ASML",
+      "country": "NL",
+      "kind": "subsidiary"
+    },
     "role": "Builds the light sources for lithography: excimer lasers for DUV scanners and the laser-produced tin plasma source that generates 13.5 nm EUV light. The EUV source is the hardest subsystem in the machine.",
-    "chokepoint": "Critical",
+    "chokepoint": "Important",
     "shareNote": null,
     "customers": [
       "ASML"
@@ -2375,6 +2446,11 @@
     "founded": 2000,
     "ticker": "Private",
     "ownership": "Subsidiary of Komatsu",
+    "parent": {
+      "name": "Komatsu",
+      "country": "JP",
+      "kind": "subsidiary"
+    },
     "role": "Makes ArF and KrF excimer laser light sources for DUV scanners, including ASML immersion tools. It describes itself as the world's leading excimer laser light source manufacturer. It also offers retrofit sources for installed DUV tools.",
     "chokepoint": "Important",
     "shareNote": null,
@@ -2398,8 +2474,20 @@
     "founded": 1846,
     "ticker": "Private",
     "ownership": "Part of the Zeiss Group, with ASML holding a minority stake in Carl Zeiss SMT",
+    "parent": {
+      "name": "Zeiss Group",
+      "country": "DE",
+      "kind": "division"
+    },
     "role": "Makes the multilayer mirrors and projection optics inside every EUV scanner, polished to atomic-scale flatness, plus the larger anamorphic optics for High-NA EUV scanners. Zeiss SMT exclusively supplies the optics for ASML's EUV scanners. It also makes AIMS EUV, which checks how a mask will print under the scanner's own imaging conditions, and MeRiT systems that repair masks.",
     "chokepoint": "Critical",
+    "dominantIn": {
+      "product": "the lenses, mirrors and other critical optics in ASML's scanners",
+      "only": true,
+      "year": "2025",
+      "by": "ASML's 2025 annual report",
+      "source": "https://ourbrand.asml.com/m/8ab959d4926657b/original/asml-2025-annual-report-strategic-report-section.pdf#page=68"
+    },
     "shareNote": null,
     "customers": [
       "ASML"
@@ -2420,7 +2508,7 @@
     "ticker": "Private",
     "ownership": "Private, family-owned",
     "role": "Builds the multi-kilowatt CO2 laser amplifier chain that vaporizes tin droplets to create EUV light. Trumpf describes the laser system as internationally unique.",
-    "chokepoint": "Critical",
+    "chokepoint": "Important",
     "shareNote": null,
     "customers": [
       "ASML",
@@ -2495,6 +2583,11 @@
     "founded": 1919,
     "ticker": "Private",
     "ownership": "Subsidiary of Atlas Copco",
+    "parent": {
+      "name": "Atlas Copco",
+      "country": "SE",
+      "kind": "subsidiary"
+    },
     "role": "Supplies the dry pumps that hold process chambers at vacuum and the abatement systems that destroy the toxic and greenhouse gases leaving them. A leading-edge fab runs thousands of pumps continuously.",
     "chokepoint": "Important",
     "shareNote": null,
@@ -2652,6 +2745,13 @@
     "ownership": "Public",
     "role": "Makes the high-vacuum isolation and control valves that seal and gate every process chamber. How many particles a valve sheds and how many cycles it lasts directly affect tool uptime and wafer defect counts.",
     "chokepoint": "Critical",
+    "dominantIn": {
+      "product": "vacuum valves for chipmaking and related industries",
+      "share": "about 71 percent",
+      "year": "2025",
+      "by": "TechInsights data in the company's results presentation",
+      "source": "https://www.vatgroup.com/files/live/sites/vat/files/Investor%20relations/annual-report/2025/full-year-2025-results-presentation.pdf"
+    },
     "shareNote": "About 71 percent of the semiconductor and semiconductor-related vacuum valve market (2025)",
     "customers": [
       "Applied Materials",
@@ -2683,6 +2783,11 @@
     "founded": 1890,
     "ticker": "PFV.DE",
     "ownership": "Majority owned by Busch Group",
+    "parent": {
+      "name": "Busch Group",
+      "country": "DE",
+      "kind": "majority"
+    },
     "role": "Makes turbomolecular pumps, which spin at tens of thousands of revolutions per minute to reach the high vacuum that etch, deposition and EUV chambers require. It also makes leak detection instruments.",
     "chokepoint": "Important",
     "shareNote": null,
@@ -2815,6 +2920,13 @@
     "ownership": "Public",
     "role": "Makes the ultra-flat low-thermal-expansion glass blanks, coated with molybdenum-silicon multilayers, that become EUV photomasks. Hoya says it holds an exceptionally high share of the EUV mask blank market.",
     "chokepoint": "Critical",
+    "dominantIn": {
+      "product": "EUV mask blanks",
+      "share": "about four-fifths",
+      "year": "year to March 2026",
+      "by": "the company's own estimate",
+      "source": "https://www.hoya.com/ir/2026/en/review/it.html"
+    },
     "shareNote": null,
     "customers": [
       "TSMC",
@@ -2979,6 +3091,11 @@
     "founded": 1985,
     "ticker": "Private",
     "ownership": "Majority owned by Intel, with Bain Capital and TSMC holding minority stakes",
+    "parent": {
+      "name": "Intel",
+      "country": "US",
+      "kind": "majority"
+    },
     "role": "Builds the multi-beam electron mask writers that pattern EUV masks with hundreds of thousands of parallel beamlets. On CSET's count it led the market for all electron-beam mask writers in 2025. NuFlare is the only other maker of multi-beam writers.",
     "chokepoint": "Important",
     "shareNote": "46.6 percent of the $994 million market for all electron-beam mask writers in 2025, ahead of NuFlare (39.2 percent) and JEOL (14.2 percent), on CSET's analysis of TechInsights data",
@@ -3004,6 +3121,11 @@
     "founded": 2002,
     "ticker": "Private",
     "ownership": "Subsidiary of Toshiba",
+    "parent": {
+      "name": "Toshiba",
+      "country": "JP",
+      "kind": "subsidiary"
+    },
     "role": "Makes variable-shaped-beam and multi-beam electron mask writers and mask inspection systems. Its MBM series competes with IMS Nanofabrication in multi-beam mask writing.",
     "chokepoint": "Important",
     "shareNote": null,
@@ -3029,7 +3151,7 @@
     "ticker": "4183.T",
     "ownership": "Public",
     "role": "Supplies EUV pellicles, the thin membranes that keep particles off a photomask while it is exposed. EUV pellicles must transmit over 90 percent of 13.5 nm light and survive high source power. Only a few suppliers make them.",
-    "chokepoint": "Critical",
+    "chokepoint": "Important",
     "shareNote": null,
     "customers": [
       "TSMC",
@@ -3105,6 +3227,13 @@
     "ownership": "Public",
     "role": "Supplies process control equipment: optical and electron beam wafer inspection, reticle inspection, overlay and film metrology. Its tools find the defects that determine yield on large dies.",
     "chokepoint": "Critical",
+    "dominantIn": {
+      "product": "process control tools",
+      "share": "56.8 percent",
+      "year": "2025",
+      "by": "CSET's analysis of TechInsights data",
+      "source": "https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60"
+    },
     "shareNote": "56.8 percent of the process control market in 2025 on CSET's count, against 11.2 percent for Applied Materials, the next largest. Gartner data in KLA's 2026 investor day put it at 56.5 percent in 2024, 6.5 times the nearest competitor.",
     "customers": [
       "TSMC",
@@ -3138,7 +3267,7 @@
     "ticker": "6920.T",
     "ownership": "Public",
     "role": "Makes actinic inspection tools, which use EUV light to inspect EUV mask blanks and patterned masks. Its ACTIS A150 was the world's first actinic EUV patterned mask inspection system. In October 2025 it launched the ACTIS A200HiT series, which it says triples the A150's inspection speed. These tools detect printable phase defects, flaws in a mask's reflective layers that DUV-based mask inspection cannot find.",
-    "chokepoint": "Critical",
+    "chokepoint": "Important",
     "shareNote": null,
     "customers": [
       "TSMC",
@@ -3169,8 +3298,20 @@
     "founded": 1947,
     "ticker": "Private",
     "ownership": "Wholly owned subsidiary of Hitachi",
+    "parent": {
+      "name": "Hitachi",
+      "country": "JP",
+      "kind": "subsidiary"
+    },
     "role": "The largest supplier of critical dimension scanning electron microscopes (CD-SEMs), which measure feature widths after lithography and etch. It also makes plasma etch systems and electron beam review tools.",
     "chokepoint": "Critical",
+    "dominantIn": {
+      "product": "critical dimension metrology tools (CD-SEMs)",
+      "share": "71.9 percent",
+      "year": "2025",
+      "by": "CSET's analysis of TechInsights data",
+      "source": "https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N66"
+    },
     "shareNote": null,
     "customers": [
       "TSMC",
@@ -3456,6 +3597,13 @@
     "ownership": "Public",
     "role": "Makes the coater/developer track, which applies photoresist, develops it after exposure and is physically linked to every scanner in a fab. It also makes etch, deposition, cleaning and wafer bonding systems, and wafer probers for chip testing.",
     "chokepoint": "Critical",
+    "dominantIn": {
+      "product": "coater/developer tracks",
+      "share": "91 percent",
+      "year": "2025",
+      "by": "Gartner data in the company's results presentation",
+      "source": "https://www.tel.com/ir/library/report/pjuomj00000000tf-att/fy26q4presentations-e.pdf"
+    },
     "shareNote": "91 percent of the world coater/developer (track) market in CY2025, on Gartner data published in Tokyo Electron's own results presentation",
     "customers": [
       "TSMC",
@@ -3490,6 +3638,13 @@
     "ownership": "Public",
     "role": "Makes atomic layer deposition (ALD) tools, which grow films one atomic layer at a time. Chipmakers use ALD to build gate-all-around transistors and high-k dielectrics. ASM also makes epitaxy and plasma-enhanced ALD tools.",
     "chokepoint": "Critical",
+    "dominantIn": {
+      "product": "atomic layer deposition tools",
+      "share": "54.5 percent",
+      "year": "2025",
+      "by": "CSET's analysis of TechInsights data",
+      "source": "https://chipexplorer.eto.tech/?parentNode=N35&selectedNode=N41"
+    },
     "shareNote": null,
     "customers": [
       "TSMC",
@@ -3688,6 +3843,11 @@
     "founded": 1993,
     "ticker": "Private",
     "ownership": "Majority owned by Samsung Electronics",
+    "parent": {
+      "name": "Samsung Electronics",
+      "country": "KR",
+      "kind": "majority"
+    },
     "role": "Supplies wafer cleaning, coater/developer track, etch and packaging systems, mainly to Samsung. By its own description it is Korea's largest maker of chip and display equipment, with sales of about KRW 2.46 trillion in 2025. Through SEMES, Samsung keeps some tool technology in house.",
     "chokepoint": "Contested",
     "shareNote": null,
@@ -3746,6 +3906,13 @@
     "ownership": "Public, with the Taiwanese state holding a minority stake",
     "role": "Manufactures almost every leading-edge AI accelerator, including those of Nvidia, AMD and Broadcom and the custom chips of large cloud companies, on its N4, N3 and N2 processes. It also owns CoWoS and SoIC advanced packaging, and its packaging capacity is a tighter constraint than its wafer capacity.",
     "chokepoint": "Critical",
+    "dominantIn": {
+      "product": "CoWoS packaging, used for virtually all high-end AI accelerators",
+      "only": true,
+      "year": "2026",
+      "by": "Epoch AI",
+      "source": "https://epoch.ai/data/ai-chip-components-documentation/methodology"
+    },
     "shareNote": null,
     "customers": [
       "Nvidia",
@@ -3779,6 +3946,11 @@
     "founded": 2005,
     "ticker": "Private",
     "ownership": "Division of Samsung Electronics (005930.KS)",
+    "parent": {
+      "name": "Samsung Electronics",
+      "country": "KR",
+      "kind": "division"
+    },
     "role": "A foundry running its 2 nm class SF2 process in Korea and building a fab in Taylor, Texas. Its gate-all-around transistors, introduced at 3 nm, are in production. Large AI customers keep qualifying it as a second source.",
     "chokepoint": "Contested",
     "shareNote": null,
@@ -3804,6 +3976,11 @@
     "founded": 2021,
     "ticker": "Private",
     "ownership": "Division of Intel Corporation, in which the US government took an equity stake in 2025",
+    "parent": {
+      "name": "Intel",
+      "country": "US",
+      "kind": "division"
+    },
     "role": "Intel's manufacturing arm, running the 18A process with RibbonFET gate-all-around and PowerVia backside power, plus EMIB and Foveros packaging. Most of its output is still Intel's own chips. Outside customers provided only $293 million of its $5.765 billion of segment revenue in the quarter to 27 June 2026.",
     "chokepoint": "Contested",
     "shareNote": null,
@@ -4016,6 +4193,13 @@
     "ownership": "Public, part of SK Group",
     "role": "The largest supplier of high bandwidth memory (HBM), with a large conventional DRAM and NAND business that includes Solidigm. HBM is a stack of DRAM chips connected by through-silicon vias, copper columns that run through the chips.",
     "chokepoint": "Critical",
+    "dominantIn": {
+      "product": "HBM",
+      "share": "63.2 percent of revenue",
+      "year": "2025",
+      "by": "IDC, in SK hynix's July 2026 US prospectus",
+      "source": "https://www.sec.gov/Archives/edgar/data/2120882/000119312526299963/d32785d424b4.htm"
+    },
     "shareNote": null,
     "customers": [
       "Nvidia",
@@ -4048,6 +4232,11 @@
     "founded": 1983,
     "ticker": "Private",
     "ownership": "Division of Samsung Electronics (005930.KS)",
+    "parent": {
+      "name": "Samsung Electronics",
+      "country": "KR",
+      "kind": "division"
+    },
     "role": "Samsung Electronics' memory business, supplying DRAM, NAND and HBM. It began mass production of HBM4 in 2026 and says it was the first to ship commercial HBM4, at 11.7 Gbps per pin.",
     "chokepoint": "Important",
     "shareNote": null,
@@ -4666,6 +4855,13 @@
     "ownership": "Public",
     "role": "Makes the dicing saws, laser dicers and back-grinders that cut wafers into dies and thin them for stacking. HBM and other 3D stacks need wafers thinned to tens of micrometers.",
     "chokepoint": "Critical",
+    "dominantIn": {
+      "product": "dicing saws and grinders",
+      "share": "87 percent of a $1.9 billion market",
+      "year": "2025",
+      "by": "CSET's analysis of TechInsights data",
+      "source": "https://chipexplorer.eto.tech/?parentNode=N69&selectedNode=N71"
+    },
     "shareNote": "87 percent of the $1.9 billion market for dicing saws and wafer grinders in 2025, on CSET's analysis of TechInsights data",
     "customers": [
       "TSMC",
@@ -4700,6 +4896,13 @@
     "ownership": "Public",
     "role": "Makes wire bonders, the standard tool of low-cost packaging, and is developing thermocompression and fluxless bonding systems for advanced packages.",
     "chokepoint": "Critical",
+    "dominantIn": {
+      "product": "wire bonding tools",
+      "share": "64.9 percent",
+      "year": "2025",
+      "by": "CSET's analysis of TechInsights data",
+      "source": "https://raw.githubusercontent.com/georgetown-cset/eto-chip-explorer/main/data/provision.csv"
+    },
     "shareNote": null,
     "customers": [
       "ASE",
@@ -4791,6 +4994,13 @@
     "ownership": "Public",
     "role": "Makes Ajinomoto Build-up Film (ABF), the insulating layer between the copper layers of flip-chip package substrates. Ajinomoto, a food company, developed the material from its amino acid chemistry. It told investors in June 2026 that ABF has held over 95 percent of its market since its launch.",
     "chokepoint": "Critical",
+    "dominantIn": {
+      "product": "build-up film (ABF) for package substrates",
+      "share": "over 95 percent since its launch",
+      "year": "June 2026",
+      "by": "the company's own estimate",
+      "source": "https://www.ajinomoto.co.jp/company/en/ir/event/business_briefing/main/011117/teaserItems1/01/linkList/03/link/20260630_presentation_E.pdf#page=3"
+    },
     "shareNote": "Over 95 percent of its market since its launch, Ajinomoto told investors in June 2026",
     "customers": [
       "Ibiden",
@@ -5090,7 +5300,7 @@
     "ticker": "3110.T",
     "ownership": "Public",
     "role": "Weaves the ultra-fine low thermal expansion glass cloth, known as T-glass, that reinforces high-end package substrates and server boards. Its fiber keeps large substrates flat as they heat. In August 2025 it decided to expand glass fiber cloth production at its Fukushima Enterprise Center, with the added output starting in the fourth quarter of its fiscal 2026. It says Chinese and Taiwanese companies are aggressively catching up with it in special glass.",
-    "chokepoint": "Critical",
+    "chokepoint": "Important",
     "shareNote": null,
     "customers": [
       "Ibiden",
@@ -5143,6 +5353,11 @@
     "founded": 1918,
     "ticker": "Private",
     "ownership": "Division of Panasonic Holdings",
+    "parent": {
+      "name": "Panasonic Holdings",
+      "country": "JP",
+      "kind": "division"
+    },
     "role": "Makes the Megtron series of low-loss copper-clad laminates used in high-speed server and switch boards. At 112 Gbps, too much signal loss in the board makes a link fail.",
     "chokepoint": "Important",
     "shareNote": null,
@@ -5300,6 +5515,11 @@
     "founded": 2021,
     "ticker": "Private",
     "ownership": "Subsidiary of SKC, part of SK Group",
+    "parent": {
+      "name": "SKC",
+      "country": "KR",
+      "kind": "subsidiary"
+    },
     "role": "A subsidiary of Korea's SKC with a final CHIPS Act award of up to $75 million for a 120,000-square-foot glass core substrate plant in Covington, Georgia. As of October 2026, NIST's project page expected the plant's production capacity to come online in 2027. NIST says the glass substrates allow smaller, more densely packed and shorter connections, for faster and more energy-efficient computing.",
     "chokepoint": "Contested",
     "shareNote": null,
@@ -5323,6 +5543,13 @@
     "ownership": "Public",
     "role": "Makes automated test equipment for logic and memory, including the V93000 platform used to test AI accelerators and the testers used for HBM. Test time on AI dies is long and rising.",
     "chokepoint": "Critical",
+    "dominantIn": {
+      "product": "chip test tools",
+      "share": "62.7 percent",
+      "year": "2025",
+      "by": "CSET's analysis of TechInsights data",
+      "source": "https://chipexplorer.eto.tech/?parentNode=N78&selectedNode=N120"
+    },
     "shareNote": "66 percent of the SoC tester market in CY2025, up from 56 percent in CY2024, on Advantest's own tester market share report",
     "customers": [
       "TSMC",
@@ -6238,6 +6465,11 @@
     "founded": 2012,
     "ticker": "6669.TW",
     "ownership": "Public, majority owned by Wistron",
+    "parent": {
+      "name": "Wistron",
+      "country": "TW",
+      "kind": "majority"
+    },
     "role": "Designs and builds hyperscale servers, storage and rack systems to Open Compute designs for cloud operators, including liquid-cooled AI racks.",
     "chokepoint": "Important",
     "shareNote": null,
@@ -6421,28 +6653,6 @@
       "fyEnd": "2026-03",
       "source": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0626/2026062600475.pdf#page=175"
     }
-  },
-  {
-    "name": "ZT Systems",
-    "nativeName": null,
-    "category": "Systems and servers",
-    "subcategory": "Rack-scale AI system design",
-    "country": "US",
-    "city": "Secaucus",
-    "founded": 1994,
-    "ticker": "Private",
-    "ownership": "Acquired by AMD in 2025, and AMD sold the manufacturing operation on to Sanmina",
-    "role": "Designs and validates rack-scale AI systems for hyperscalers. AMD bought it for its systems engineering team, so that AMD could ship complete racks.",
-    "chokepoint": "Important",
-    "shareNote": null,
-    "customers": [
-      "AMD",
-      "Hyperscale cloud operators"
-    ],
-    "aiRelevance": "Competing with Nvidia now requires shipping an integrated rack.",
-    "revenueUSDb": null,
-    "revenueYear": null,
-    "source": "https://www.amd.com/en/newsroom/press-releases/2025-3-31-amd-completes-acquisition-of-zt-systems.html"
   },
   {
     "name": "Celestica",
@@ -6650,6 +6860,11 @@
     "founded": 2001,
     "ticker": "Private",
     "ownership": "Subsidiary of Ecolab since July 2026",
+    "parent": {
+      "name": "Ecolab",
+      "country": "US",
+      "kind": "subsidiary"
+    },
     "role": "Makes direct-to-chip liquid cooling cold plates, coolant distribution units and manifolds for servers, and is one of the specialists the server ODMs buy from.",
     "chokepoint": "Important",
     "shareNote": null,
@@ -6705,6 +6920,11 @@
     "founded": 2020,
     "ticker": "Private",
     "ownership": "Subsidiary of Hitachi (formerly ABB Power Grids)",
+    "parent": {
+      "name": "Hitachi",
+      "country": "JP",
+      "kind": "subsidiary"
+    },
     "role": "Makes the high voltage transformers, switchgear and grid connection equipment that data center campuses need to draw hundreds of megawatts. Transformer lead times run to several years.",
     "chokepoint": "Important",
     "shareNote": null,

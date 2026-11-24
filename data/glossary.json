@@ -79,7 +79,7 @@
   {
     "term": "Chokepoint",
     "aka": "chokepoints",
-    "plain": "A step in the supply chain where so few firms or countries can do the work that losing one of them stops everybody. A stage counts as a chokepoint when three or fewer firms can supply it, or one firm holds more than 65 percent of it. Each stage is judged on the whole market for its main tools or products, and on any one tool that only the most advanced chips need, such as ASML's EUV scanners.",
+    "plain": "A step in the supply chain where so few firms can do the work that losing one of them would hit the whole industry. A stage counts as a chokepoint when three or fewer firms can supply it, or one firm holds more than 65 percent of it. Each stage is judged on the whole market for its main tools or products, and on any one tool that only the most advanced chips need, such as ASML's EUV scanners.",
     "why": "One sanction or one factory fire at a chokepoint reaches the whole industry, and so does a government policy aimed at one.",
     "chapter": "introduction-and-goals"
   },
@@ -185,7 +185,7 @@
     "term": "ECCN",
     "aka": "Export Control Classification Number",
     "plain": "The catalog number that US export rules assign to a controlled item, similar to a customs tariff code but for security-sensitive technology. Number 3A090 covers advanced computing chips and 3B001 covers chipmaking equipment.",
-    "why": "An item's classification number determines whether it needs a license. So the technical thresholds written into each number set which products are controlled.",
+    "why": "Whether an item needs a license depends on its classification number together with its destination, its end user and its end use. The technical thresholds written into each number set which products are controlled.",
     "chapter": "geopolitics"
   },
   {
@@ -507,7 +507,7 @@
     "term": "photomask",
     "aka": "mask, reticle, mask set, photomasks, masks, mask sets, mask blank set",
     "plain": "The master template for one layer of a chip: a quartz plate, or for the shortest wavelengths a mirror, that carries the pattern projected onto the wafer. A chip needs dozens of them, at least one per layer. In July 2022 SemiAnalysis put a full set above $1 million at 28 nm and above $10 million at 7 nm. In May 2026 it put a leading-edge set at $40 million.",
-    "why": "The cost of a mask set limits which chips are worth making on a leading-edge process at all. Only three firms supply the blank plates for EUV masks, and two of them are Japanese.",
+    "why": "The cost of a mask set limits which chips are worth making on a leading-edge process at all. AGC says only three firms supply the blank plates for EUV masks, and two of them are Japanese.",
     "chapter": "photomasks-and-pellicles"
   },
   {
@@ -1255,7 +1255,7 @@
   {
     "term": "export control",
     "aka": "export controls, export licensing, export license, export licenses, export licence, export licences, export-control",
-    "plain": "An export control is a rule that requires the government's permission for a sale. The government names an item and a country or a buyer. From then on its own companies must hold a license before they ship that item to that country or buyer. The United States extends some of these rules to goods made abroad with American technology.",
+    "plain": "An export control is a rule that requires the government's permission to send an item abroad, or to pass it on once it is there. The government names an item, or the technology to make it, and a country or a buyer. From then on anyone who sends that item to that country or buyer, or passes it on to them, must hold a license. The United States extends some of these rules to American items already abroad and to goods made abroad with American technology.",
     "why": "It works only when the controlling country's firms make something the buyer cannot get elsewhere.",
     "chapter": "geopolitics"
   },
@@ -1424,8 +1424,8 @@
     "term": "rare earths",
     "aka": "rare earth, rare-earth, rare earth elements, medium and heavy rare earths",
     "plain": "The rare earths are a group of 17 metals. Neodymium goes into the strong magnets in motors, disk drives and wind turbines, samarium into some heat-resistant magnets, and yttrium into ceramics, phosphors and some lasers. In chipmaking, cerium oxide is the grit in some polishing slurries, and yttrium coatings protect parts inside some etch and deposition chambers from plasma. SEMI, the chip-equipment industry association, said in 2021 that neodymium magnets are in almost every chipmaking tool.",
-    "why": "China put seven of them under export license in April 2025. In October 2025 it required licenses for magnets, sputtering targets and parts made abroad that contain Chinese rare earths worth 0.1 percent or more of their value. That rule was suspended in November 2025, and on 9 November 2026 the suspension was extended to 10 January 2027.",
-    "chapter": "geopolitics"
+    "why": "China put seven of them under export license in April 2025. In October 2025 it announced that from 1 December 2025 it would require licenses for magnets, sputtering targets and parts made abroad that contain Chinese rare earths worth 0.1 percent or more of their value. That rule was suspended in November 2025, before it took effect, and on 9 November 2026 the suspension was extended to 10 January 2027.",
+    "chapter": "chemicals-gases-and-photoresist"
   },
   {
     "term": "metal-oxide resist",

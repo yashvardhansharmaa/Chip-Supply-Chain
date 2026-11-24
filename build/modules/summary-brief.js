@@ -49,7 +49,7 @@ module.exports = function (ctx) {
 
   /* ---------- screen layout ---------- */
   const ladder = stages.map((ch, i) => {
-    const who = leaders(card(ch), 2).map((l) => `${esc(l.name)}${l.country ? ` <span class="cc">${esc(l.country)}</span>` : ''}`).join('<span class="sep">, </span>');
+    const who = leaders(card(ch), 2).map((l) => `${esc(l.name)}${l.country ? ` <span class="cc">${esc(l.country)}${l.parentCC ? ` · parent ${esc(l.parentCC)}` : ''}</span>` : ''}`).join('<span class="sep">, </span>');
     return `<li${isChoke(conc(ch)) ? ' data-cpk="1"' : ''}><a href="#s-${esc(ch.id)}"><span class="n">${pad(i + 1)}</span><span class="t">${esc(ch.title)}</span><span class="c">${isChoke(conc(ch)) ? mark() : ''}</span><span class="s">${esc(subShort(ch))}<span class="s-x"> to substitute</span></span><span class="who">${who}</span></a></li>`;
   }).join('');
   const nChoke = stages.filter((ch) => isChoke(conc(ch))).length;
@@ -66,7 +66,7 @@ module.exports = function (ctx) {
   const gw = (h, used) => (ctx.glossaryWrap ? ctx.glossaryWrap(h, used) : h);
   const stageCards = stages.map((ch, i) => {
     const c = card(ch), used = new Set();
-    const who = leaders(c, 3).map((l) => `<li><b>${esc(l.name)}</b>${l.country ? ` <span class="cc" title="${esc(COUNTRY[l.country] || l.country)}">${esc(l.country)}</span>` : ''}${l.share ? `<span class="share">${esc(l.share)}${srcLink(l.source)}</span>` : ''}</li>`).join('');
+    const who = leaders(c, 3).map((l) => `<li><b>${esc(l.name)}</b>${l.country ? ` <span class="cc" title="${esc(COUNTRY[l.country] || l.country)}">${esc(l.country)}${l.parentCC ? ` · parent ${esc(l.parentCC)}` : ''}</span>` : ''}${l.share ? `<span class="share">${esc(l.share)}${srcLink(l.source)}</span>` : ''}</li>`).join('');
     const sides = [['China', c.chinaStatus], ['United States', c.usStatus]].filter((x) => x[1]);
     return `<article class="card"${isChoke(conc(ch)) ? ' data-cpk="1"' : ''} id="s-${esc(ch.id)}">
 <p class="card-k"><span class="n">${pad(i + 1)}</span>Stage ${i + 1} of ${stages.length}</p>
@@ -138,12 +138,12 @@ window.addEventListener('scroll',upd,{passive:true});upd();})();</script>`;
      It opens on the wordmark (the tile and the name, as on every page of the site), then "Summary" as a label. */
   const rows = stages.map((ch, i) => {
     const c = card(ch);
-    const who = leaders(c, 2).map((l) => `${esc(l.name)}${l.country ? ` <span class="cc">${esc(l.country)}</span>` : ''}`).join(', ');
+    const who = leaders(c, 2).map((l) => `${esc(l.name)}${l.country ? ` <span class="cc">${esc(l.country)}${l.parentCC ? ` · parent ${esc(l.parentCC)}` : ''}</span>` : ''}`).join(', ');
     return `<tr><td class="n">${pad(i + 1)}</td><td class="t"><a href="${url(ch.id)}">${esc(ch.title)}</a></td><td>${who}</td><td class="band cpk-cell">${isChoke(c.concentration) ? mark({ word: false }) + '<span class="sr">Chokepoint</span>' : ''}</td><td class="band">${esc(subShort(ch))}</td></tr>`;
   }).join('');
   const blocks = stages.map((ch, i) => {
     const c = card(ch);
-    const who = leaders(c, 2).map((l) => `<li><b>${esc(l.name)}</b>${l.country ? ` <span class="cc">${esc(COUNTRY[l.country] || l.country)}</span>` : ''}${l.share ? `. ${esc(l.share)}` : ''}</li>`).join('');
+    const who = leaders(c, 2).map((l) => `<li><b>${esc(l.name)}</b>${l.country ? ` <span class="cc">${esc(COUNTRY[l.country] || l.country)}${l.parentCC ? `, parent ${esc(COUNTRY[l.parentCC] || l.parentCC)}` : ''}</span>` : ''}${l.share ? `. ${esc(l.share)}` : ''}</li>`).join('');
     return `<section class="stage">
 <h3><span class="n">${pad(i + 1)}</span> ${esc(ch.title)}</h3>
 ${isChoke(c.concentration) || sub(ch) ? `<p class="tags">${[isChoke(c.concentration) ? mark() : '', sub(ch) ? esc(subWords(ch)) : ''].filter(Boolean).join(' · ')}</p>` : ''}

@@ -7289,5 +7289,19 @@
     "date": "2026-04-29",
     "type": "article",
     "accessed": "2026-11-23"
+  },
+  "https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-third-quarter-fiscal-2027": {
+    "title": "NVIDIA Announces Financial Results for Third Quarter Fiscal 2027",
+    "publisher": "Nvidia",
+    "date": "2026-11-17",
+    "type": "press release",
+    "accessed": "2026-11-23"
+  },
+  "https://www.ecfr.gov/current/title-15/subtitle-B/chapter-VII/subchapter-C/part-744/section-744.8": {
+    "title": "15 CFR 744.8, Restrictions when certain persons on the SDN List are a party to the transaction",
+    "publisher": "Electronic Code of Federal Regulations",
+    "date": "2026-11-09",
+    "type": "regulation",
+    "accessed": "2026-11-23"
   }
 }

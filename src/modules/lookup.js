@@ -163,13 +163,14 @@
      firm's small China chart, as the Suppliers panel draws it (Suppliers.revenueHTML and exMini in src/app.js) */
   function firmHTML(it, used) {
     var r = it.data || {}, rows = [], S = CP.Suppliers || {};
-    var where = [r.city, cname(r.country)].filter(Boolean).join(', ');
+    var pl = S.parentLine ? S.parentLine(r) : '', where = [r.city, cname(r.country)].filter(Boolean).join(', ') + (pl ? ', ' + pl : ''); // a parent based abroad beside the firm's own home (Suppliers.parentLine)
     // its market position, in the Suppliers page's word, and what that position means (Suppliers.POSITION and POSITION_DEF)
     if (r.chokepoint) rows.push(['Market position', '<span class="gl-chk gl-chk--' + esc(String(r.chokepoint).toLowerCase()) + '">' + esc(posWord(r.chokepoint)) + '</span>' +
       ((S.POSITION_DEF || {})[r.chokepoint] ? '<span class="gl-chk-def">' + esc(S.POSITION_DEF[r.chokepoint]) + '</span>' : ''), true]);
+    if (S.domHTML && S.domLine && S.domLine(r)) rows.push(['Dominant in', S.domHTML(r), true]); // what a dominant firm dominates (Suppliers.domLine)
     if (where) rows.push(['Based in', where]);
     if (r.founded) rows.push(['Founded', String(r.founded)]);
-    if (r.ownership || r.ticker) rows.push(['Ownership', [r.ownership, r.ticker ? 'ticker ' + r.ticker : ''].filter(Boolean).join(', ')]);
+    if (r.ownership || r.ticker) rows.push(['Ownership', [r.ownership, r.ticker && !/^private$/i.test(r.ticker) ? 'ticker ' + r.ticker : ''].filter(Boolean).join(', ')]);
     if (r.customers && r.customers.length) rows.push(['Named customers', r.customers.join(', ')]);
     var rs = r.revenueShown, rev = rs && S.revenueHTML ? S.revenueHTML(rs) : '';
     if (rev) rows.push(['Revenue', rev, true]);
@@ -706,9 +707,19 @@
   /* a term folded into another keeps its old addresses: its #gl-, its #lk-term- and the static copy's bare anchor open the term
      that holds it now, in place (22 Nov 2026: Concentration into Chokepoint, when readers came to see one rating word) */
   var RENAMED = { concentration: 'chokepoint' };
+  /* a firm folded into its parent keeps its old #lk-firm- address, which opens the parent's entry in place, as /suppliers/#ansys
+     opens Synopsys (data/suppliers.json "folded", 24 Nov 2026: Ansys into Synopsys, ZT Systems into AMD) */
+  var lkSlug = function (s) { return String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }; // build/build.js lkSlug
+  var foldedInto = function (h) {
+    var to = '';
+    if (/^lk-firm-/.test(h) && !L.byId[h]) (DATA.suppliers || []).forEach(function (r) { (r.folded || []).forEach(function (n) { if (!to && 'lk-firm-' + lkSlug(n) === h && L.byId['lk-firm-' + lkSlug(r.name)]) to = 'lk-firm-' + lkSlug(r.name); }); });
+    return to;
+  };
   function oldAnchor(h) {
     var was = /^(?:gl-|lk-term-)?([a-z0-9-]+)$/.exec(h || ''), now = was && RENAMED[was[1]];
     if (now && L.byKey['gl-' + now]) { history.replaceState(history.state, '', location.pathname + location.search + '#gl-' + now); return 'gl-' + now; }
+    var fold = foldedInto(h || '');
+    if (fold) { history.replaceState(history.state, '', location.pathname + location.search + '#' + fold); return fold; }
     if (!h || /^(gl|lk)-|^a-z(\/|$)|^\//.test(h)) return '';
     var m = /^letter-(0-9|[a-z])$/.exec(h);
     var to = OLD[h] || (m ? 'a-z/' + m[1] : L.byKey['gl-' + h] ? 'gl-' + h : '');

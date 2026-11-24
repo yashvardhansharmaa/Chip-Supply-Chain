@@ -206,19 +206,25 @@ ${body}
     const exHref = (h) => { const m = /#\/exposure\/([a-z0-9-]+)/.exec(String(h || '')); return m ? `../export-controls/#ex-${m[1]}` : '../export-controls/#china-revenue'; };
     const firm = (r) => {
       const facts = [];
+      // what a dominant firm dominates (src/app.js Suppliers.domLine, the same words)
+      const d = r.chokepoint === 'Critical' && r.dominantIn && r.dominantIn.product ? r.dominantIn : null;
+      if (d) facts.push(['Dominant in', esc(`${d.product}, ${d.only ? 'as its only supplier' : d.share} (${[d.year, d.by].filter(Boolean).join(', ')})`) + (d.source ? ' ' + ext(d.source, 'Source') : '')]);
       if ((r.customers || []).length) facts.push(['Customers', esc(r.customers.join(', '))]);
       if (r.shareNote) facts.push(['Share', esc(r.shareNote)]);
       if (r.founded) facts.push(['Founded', esc(r.founded)]);
       if (r.ownership) facts.push(['Ownership', esc(r.ownership)]);
       const rev = revenue(r); if (rev) facts.push(['Revenue', rev]);
       if (r.china) facts.push(['From China', `<a href="${esc(exHref(r.china.href))}">${esc(String(r.china.label).replace(/^China /, ''))}</a>`]);
-      const where = [cname(r.country) + (r.city ? ', ' + r.city : ''), /^private$/i.test(r.ticker || '') ? '' : r.ticker].filter(Boolean).join(' · ');
+      // a parent based abroad beside the firm's own home (src/app.js Suppliers.parentLine), and the sources after the first
+      const par = r.parent && r.parent.country && r.parent.country !== r.country ? `, parent ${r.parent.name} (${cname(r.parent.country)})` : '';
+      const where = [cname(r.country) + (r.city ? ', ' + r.city : '') + par, /^private$/i.test(r.ticker || '') ? '' : r.ticker].filter(Boolean).join(' · ');
+      const more = (r.moreSources || []).filter((s) => s && s.url).map((s) => ' ' + ext(s.url, esc(s.label || 'Source'))).join('');
       const note = r.revenueShown && r.revenueShown.note ? `<p class="row-fine"><b>About the revenue figure.</b> ${esc(r.revenueShown.note)}</p>` : '';
       return `<li class="row" id="${firmIds.get(r.name)}"><div><h3 class="row-h">${esc(r.name)}${r.nativeName ? `<span class="native" lang="${/[\u3040-\u30ff]/.test(r.nativeName) ? 'ja' : /[\uac00-\ud7af]/.test(r.nativeName) ? 'ko' : /[\u4e00-\u9fff]/.test(r.nativeName) ? 'zh' : 'en'}">${esc(r.nativeName)}</span>` : ''}</h3>`
         + `<p class="row-meta">${esc(where)}</p>${r.chokepoint ? `<p class="row-meta"><span class="sr-only">Market position: </span><span class="lv lv-${esc(r.chokepoint)}"${POSITION_DEF[r.chokepoint] ? ` title="${esc(POSITION_DEF[r.chokepoint])}"` : ''}>${esc(pos(r.chokepoint))}</span></p>` : ''}</div>`
         + `<div class="row-body">${r.subcategory ? `<p class="row-lead">${esc(r.subcategory)}</p>` : ''}${r.role ? `<p>${esc(r.role)}</p>` : ''}`
         + (facts.length ? `<dl class="facts">${facts.map((f) => `<dt>${f[0]}</dt><dd>${f[1]}</dd>`).join('')}</dl>` : '') + note
-        + (r.source ? `<p class="row-src">${ext(r.source, 'Source', ` aria-label="Source for ${esc(r.name)}"`)}</p>` : '') + '</div></li>';
+        + (r.source ? `<p class="row-src">${ext(r.source, 'Source', ` aria-label="Source for ${esc(r.name)}"`)}${more}</p>` : '') + '</div></li>';
     };
     // what each country makes: the Suppliers atlas's own lines (build/modules/summary-a.js HOME_MAP), in its order, with the
     // number of firms each has in the supplier list, as the Glossary's country card counts them
@@ -240,7 +246,9 @@ ${body}
        sup- prefix the page's other ids have (src/preroute.js OWN), and data-old the static page's own anchor, with what it
        named: data-stage, data-firm or data-cc (src/app.js Suppliers.landOld) */
     const old = (id) => ` id="sup-x-${esc(id)}" data-old="${esc(id)}"`;
-    const sxFirm = (r) => firm(r).replace(/^<li class="row" id="([^"]+)">/, (m, id) => `<li class="sx-row"${old(id)} data-firm="${esc(r.name)}">`)
+    // a firm folded into this one keeps its old anchor here, so /suppliers/#ansys and #zt-systems land on Synopsys and AMD
+    const folded = (r) => (r.folded || []).map((n) => `<span${old(slug(n))} data-firm="${esc(r.name)}" hidden></span>`).join('');
+    const sxFirm = (r) => firm(r).replace(/^<li class="row" id="([^"]+)">/, (m, id) => `<li class="sx-row"${old(id)} data-firm="${esc(r.name)}">${folded(r)}`)
       .replace(/class="row-h"/g, 'class="sx-h"').replace(/class="row-meta"/g, 'class="sx-meta"').replace(/class="row-body"/g, 'class="sx-body"').replace(/class="row-lead"/g, 'class="sx-lead"')
       .replace(/class="row-fine"/g, 'class="sx-fine"').replace(/class="row-src"/g, 'class="sx-src"').replace(/class="facts"/g, 'class="sx-facts"').replace(/class="native"/g, 'class="sx-native"')
       .replace(/<span class="lv lv-([A-Za-z]+)"/g, '<span class="chk $1"');

@@ -572,8 +572,11 @@
       };
       if (menu) menu.addEventListener('click', function () {
         markSheet(); open(true);
-        var cur = $('.sheet-chapters a[aria-current]', sheet); // the chapter being read in view, under the head
-        if (cur) sheet.scrollTop = Math.max(0, cur.getBoundingClientRect().top - sheet.getBoundingClientRect().top + sheet.scrollTop - 160);
+        // the chapter being read in view at the top of the list, with the line before it showing; the list alone scrolls, so the
+        // sheet's title and × stay on the screen (src/styles.css .sheet)
+        var cur = $('.sheet-chapters a[aria-current]', sheet), list = $('.sheet-chapters', sheet);
+        if (list) list.scrollTop = 0;
+        if (cur && list) list.scrollTop = Math.max(0, cur.getBoundingClientRect().top - list.getBoundingClientRect().top - Math.round(cur.getBoundingClientRect().height * 0.6));
       });
       if (sheet) {
         sheet.addEventListener('click', function (e) { var a = e.target.closest('a'); if (a || e.target.closest('.sheet-close')) { open(false, a ? a.getAttribute('href') : null); self.set(true); } });
@@ -1833,12 +1836,29 @@
     LEVELS: ['Critical', 'Important', 'Contested', 'Diversified'],
     RANK: { Critical: 0, Important: 1, Contested: 2, Diversified: 3 },
     /* each firm's market position as readers see it, and what each means (owner, 23 Nov 2026: the column "Market position";
-       "more than half for dominant"). The data keeps its four values (data/suppliers.json "chokepoint"), which the classes,
+       "more than half for dominant"; 24 Nov 2026: the main-product rule dropped, so a firm with more than half of an essential
+       product, or its only supplier, is dominant). The data keeps its four values (data/suppliers.json "chokepoint"), which the classes,
        the filter's values and the sort use. build/build.js, build/modules/reference-pages.js and src/modules/lookup.js read
        these two, so every page uses the same words */
     POSITION: { Critical: 'Dominant', Important: 'Major', Contested: 'Challenger', Diversified: 'One of many' },
-    POSITION_DEF: { Critical: 'Holds more than half of the market for its main product.', Important: 'A leading supplier of its main product, with rivals.', Contested: 'A smaller supplier competing with the leaders.', Diversified: 'One of many firms that make its main product.' },
+    POSITION_DEF: { Critical: 'Holds more than half of the market for an essential product, or is its only supplier.', Important: 'A leading supplier, with rivals.', Contested: 'A smaller supplier competing with the leaders.', Diversified: 'One of many firms that make the same product.' },
     pos: function (lv) { return this.POSITION[lv] || lv || ''; },
+    /* a firm owned by another company keeps the country where it is based, and its parent shows beside it when the parent's
+       home is another country (UX test, 24 Nov 2026: Siemens EDA read US here and Germany in the ribbons' note). data/suppliers.json
+       "parent" names the owner, its home and how it owns the firm. build/build.js and build/modules/reference-pages.js print the same */
+    abroad: function (r) { return r && r.parent && r.parent.country && r.parent.country !== r.country ? r.parent : null; },
+    ccTag: function (r) { var p = this.abroad(r); return r.country + (p ? ' · parent ' + p.country : ''); },
+    parentLine: function (r) { var p = this.abroad(r); return p ? 'parent ' + p.name + ' (' + cname(p.country) + ')' : ''; },
+    ownedBy: function (r) { var p = r && r.parent; return p ? (p.kind === 'division' ? 'Part of ' : p.kind === 'majority' ? 'Majority owned by ' : 'Subsidiary of ') + p.name : ''; },
+    // the line under a firm's name in the Table: its ticker, and for a firm with a parent, who owns it in place of "Private"
+    tickerLine: function (r) { return r.parent ? [/^private$/i.test(r.ticker || '') ? '' : r.ticker, this.ownedBy(r)].filter(Boolean).join(' · ') : (r.ticker || ''); },
+    /* what a dominant firm dominates, in one line with its share or "as its only supplier", the year and who measured it
+       (data/suppliers.json dominantIn, each figure as a chapter, a card or ETO's provision table cites it). The detail panel, the
+       Table and Copy table print it; build/modules/reference-pages.js and src/modules/lookup.js print the same words */
+    domLine: function (r) { var d = r && r.chokepoint === 'Critical' && r.dominantIn; if (!d || !d.product) return ''; return d.product + ', ' + (d.only ? 'as its only supplier' : d.share) + ' (' + [d.year, d.by].filter(Boolean).join(', ') + ')'; },
+    domHTML: function (r, cls) { var t = this.domLine(r); return t ? esc(t) + (r.dominantIn.source ? ' <a' + (cls ? ' class="' + cls + '"' : '') + ' href="' + safeUrl(r.dominantIn.source) + '" target="_blank" rel="noopener">Source</a>' : '') : ''; },
+    // a firm's other sources (data/suppliers.json moreSources), after its Source link
+    moreSrc: function (r, cls) { return (r.moreSources || []).filter(function (s) { return s && s.url; }).map(function (s) { return ' <a' + (cls ? ' class="' + cls + '"' : '') + ' href="' + safeUrl(s.url) + '" target="_blank" rel="noopener">' + esc(s.label || 'Source') + '</a>'; }).join(''); },
     // a level's pill: the word readers see, and its meaning as the pill's title
     pill: function (lv) { return lv ? '<span class="chk ' + esc(lv) + '" title="' + esc(this.POSITION_DEF[lv] || '') + '">' + esc(this.pos(lv)) + '</span>' : ''; },
     ORDER: ['Design and EDA', 'IP and architecture', 'Silicon and wafers', 'Photomasks', 'Lithography', 'Deposition and etch', 'Photoresist and materials', 'Chemicals and gases', 'Optics and photonics', 'Equipment subsystems and components', 'Metrology and inspection', 'Foundry', 'Memory', 'Advanced packaging and OSAT', 'Test', 'Substrates and PCBs', 'Interconnect and networking', 'Power and cooling', 'Systems and servers', 'AI accelerator vendors'], // chain order, design first
@@ -2027,7 +2047,8 @@
       if (this.stage && r.category !== this.stage) return false; // a stage picked on the pipeline filters the list and the export
       if (!this.inCountry(r)) return false;
       if (this.chk && r.chokepoint !== this.chk) return false;
-      if (this.q) { var hay = [r.name, r.nativeName, r.city, r.ticker, r.role, r.subcategory, (r.customers || []).join(' '), cname(r.country)].join(' ').toLowerCase(); if (hay.indexOf(this.q) < 0) return false; }
+      // a parent's name and a firm folded into this one (data/suppliers.json "folded": Ansys into Synopsys, ZT Systems into AMD) find it too
+      if (this.q) { var hay = [r.name, r.nativeName, r.city, r.ticker, r.role, r.subcategory, (r.customers || []).join(' '), cname(r.country), (r.parent || {}).name, (r.folded || []).join(' ')].join(' ').toLowerCase(); if (hay.indexOf(this.q) < 0) return false; }
       return true;
     },
     filtered: function () {
@@ -2065,7 +2086,7 @@
           return (self.RANK[a.chokepoint] - self.RANK[b.chokepoint]) || String(a.name).localeCompare(String(b.name));
         }).map(function (f) {
           return '<span class="sup-nw" data-r="' + f._ix + '"><button type="button" class="sup-name lv-' + esc(f.chokepoint || 'Important') +
-            '" aria-expanded="false" aria-controls="' + s.id + '-p">' + esc(f.name) + '<i class="sup-cc">' + esc(f.country) + '</i>' +
+            '" aria-expanded="false" aria-controls="' + s.id + '-p">' + esc(f.name) + '<i class="sup-cc">' + esc(self.ccTag(f)) + '</i>' +
             (f.chokepoint === 'Critical' || f.chokepoint === 'Diversified' ? '<span class="sr-only">, ' + esc(self.pos(f.chokepoint)) + '</span>' : '') + // the name's color, said aloud
             '</button></span>'; // the list stays names only: a firm's revenue and its China share open with the firm (detail, below)
         }).join(' '); // the lines break at these spaces, so a name never leaves its comma at the start of the next line
@@ -2141,6 +2162,7 @@
     detail: function (r) {
       if (!r) return '';
       var facts = [];
+      if (this.domLine(r)) facts.push(['Dominant in', this.domHTML(r)]);
       if ((r.customers || []).length) facts.push(['Customers', esc(r.customers.join(', '))]);
       if (r.shareNote) facts.push(['Share', esc(r.shareNote)]);
       if (r.founded) facts.push(['Founded', esc(r.founded)]);
@@ -2154,13 +2176,13 @@
       // parent's share, and the label says so), linked to the firm's chart of every year
       if (r.china) facts.push(['From China', '<a href="' + safeUrl(r.china.href) + '">' + esc(String(r.china.label).replace(/^China /, '')) +
         '<span class="sr-only">. Opens the chart of every year</span> <span aria-hidden="true">→</span></a>' + this.exMini(r.china.href)]);
-      var tag = [r.subcategory, cname(r.country) + (r.city ? ', ' + r.city : ''), /^private$/i.test(r.ticker || '') ? '' : r.ticker].filter(Boolean).join(' · ');
+      var pl = this.parentLine(r), tag = [r.subcategory, cname(r.country) + (r.city ? ', ' + r.city : '') + (pl ? ', ' + pl : ''), /^private$/i.test(r.ticker || '') ? '' : r.ticker].filter(Boolean).join(' · ');
       return '<div class="sup-detail-body">' +
         '<p class="sup-detail-h">' + esc(r.name) + (r.chokepoint ? ' ' + this.pill(r.chokepoint) : '') +
         (tag ? '<em>' + esc(tag) + '</em>' : '') + '</p>' +
         (r.role ? '<p class="sup-role">' + esc(r.role) + '</p>' : '') +
         (facts.length ? '<dl class="sup-facts">' + facts.map(function (f) { return '<dt>' + f[0] + '</dt><dd>' + f[1] + '</dd>'; }).join('') + '</dl>' : '') +
-        (r.source ? '<a class="sup-src" href="' + safeUrl(r.source) + '" target="_blank" rel="noopener" aria-label="Source for ' + esc(r.name) + '">Source</a>' : '') + '</div>';
+        (r.source ? '<a class="sup-src" href="' + safeUrl(r.source) + '" target="_blank" rel="noopener" aria-label="Source for ' + esc(r.name) + '">Source</a>' : '') + this.moreSrc(r, 'sup-src') + '</div>';
     },
     // the firm's China revenue chart, small, under its From China line: a copy of its panel on Export Controls (#ex-<slug>, written by
     // build/build.js and already in the page), its links unwrapped and hidden from screen readers, since the line beside it says the
@@ -2189,25 +2211,26 @@
       var th = function (k, label) { return '<th' + (self.sortKey === k ? ' aria-sort="' + (self.sortDir > 0 ? 'ascending' : 'descending') + '"' : '') + '><button type="button" data-sort="' + k + '">' + label + '</button></th>'; };
       var html = '<thead><tr>' + th('name', 'Supplier') + th('category', 'Segment') + th('country', 'Country') + th('founded', 'Founded') + th('chokepoint', 'Market position') + '<th>What they make</th><th>Customers</th></tr></thead><tbody>';
       rows.forEach(function (r) {
-        html += '<tr><td class="name"><b>' + esc(r.name) + '</b><span>' + esc([r.nativeName, r.ticker].filter(Boolean).join(' · ')) + '</span>' +
+        html += '<tr><td class="name"><b>' + esc(r.name) + '</b><span>' + esc([r.nativeName, self.tickerLine(r)].filter(Boolean).join(' · ')) + '</span>' +
           (r.china ? '<a class="sup-ex-a" href="' + safeUrl(r.china.href) + '">' + esc(r.china.label) + '</a>' : '') + '</td>' +
           '<td>' + esc(r.category) + (r.subcategory ? '<br><span class="cc" style="color:var(--muted)">' + esc(r.subcategory) + '</span>' : '') + '</td>' +
-          '<td><span class="cc">' + esc(r.country) + '</span> ' + esc(r.city || '') + '</td>' +
+          '<td><span class="cc">' + esc(self.ccTag(r)) + '</span> ' + esc(r.city || '') + '</td>' +
           '<td class="num">' + (r.founded || '—') + '</td>' +
-          '<td>' + self.pill(r.chokepoint) + (r.shareNote ? '<br><span class="cc" style="color:var(--muted)">' + esc(r.shareNote) + '</span>' : '') + '</td>' +
-          '<td class="role">' + esc(r.role || '') + (r.source ? ' <a href="' + safeUrl(r.source) + '" target="_blank" rel="noopener" class="cc" aria-label="Source for ' + esc(r.name) + '">Source</a>' : '') + '</td>' +
+          '<td>' + self.pill(r.chokepoint) + (self.domLine(r) ? '<br><span class="cc sup-dom">Dominant in: ' + self.domHTML(r) + '</span>' : '') + (r.shareNote ? '<br><span class="cc" style="color:var(--muted)">' + esc(r.shareNote) + '</span>' : '') + '</td>' +
+          '<td class="role">' + esc(r.role || '') + (r.source ? ' <a href="' + safeUrl(r.source) + '" target="_blank" rel="noopener" class="cc" aria-label="Source for ' + esc(r.name) + '">Source</a>' : '') + self.moreSrc(r, 'cc') + '</td>' +
           '<td style="font-size:13px;color:var(--ink-2)">' + esc((r.customers || []).join(', ')) + '</td></tr>';
       });
       $('#sup-table').innerHTML = html + '</tbody>';
     },
     copy: function () {
-      var rows = this.filtered(), cols = ['name', 'nativeName', 'category', 'subcategory', 'country', 'city', 'founded', 'ticker', 'ownership', 'marketPosition', 'shareNote', 'role', 'customers', 'revenueUSDb', 'revenueYear', 'source',
+      var rows = this.filtered(), cols = ['name', 'nativeName', 'category', 'subcategory', 'country', 'city', 'founded', 'ticker', 'ownership', 'parent', 'parentCountry', 'marketPosition', 'dominantIn', 'dominantInSource', 'shareNote', 'role', 'customers', 'revenueUSDb', 'revenueYear', 'source',
         'revenueAmount', 'revenueUnit', 'revenueCurrency', 'revenueFiscalYear', 'revenueFyEnd', 'revenueSource', 'revenueUSD', 'revenueUSDBasis'];
       // the filed revenue after the earlier columns: the amount as filed (without commas, so a spreadsheet reads it as a number) and the
       // revenue object's own fields, then the dollar figure build/build.js converted and the rates it used
       var REV = { revenueUnit: 'unit', revenueCurrency: 'currency', revenueFiscalYear: 'fiscalYear', revenueFyEnd: 'fyEnd', revenueSource: 'source' };
       // the market position in the reader's word (the data's own value is "chokepoint")
-      var self = this, val = function (r, c) { return c === 'marketPosition' ? (r.chokepoint ? self.pos(r.chokepoint) : '') : c === 'revenueAmount' ? (r.revenueShown || {}).amount : REV[c] ? (r.revenue || {})[REV[c]] : r[c]; };
+      // a firm's parent, by name and home (data/suppliers.json "parent")
+      var self = this, val = function (r, c) { return c === 'marketPosition' ? (r.chokepoint ? self.pos(r.chokepoint) : '') : c === 'parent' ? (r.parent || {}).name : c === 'parentCountry' ? (r.parent || {}).country : c === 'dominantIn' ? self.domLine(r) : c === 'dominantInSource' ? (self.domLine(r) ? r.dominantIn.source : '') : c === 'revenueAmount' ? (r.revenueShown || {}).amount : REV[c] ? (r.revenue || {})[REV[c]] : r[c]; };
       var q = function (v) { if (v == null) return ''; if (Array.isArray(v)) v = v.join('; '); return String(v).replace(/[\t\n\r]+/g, ' '); }; // tab-separated: a spreadsheet splits it on paste
       var csv = cols.join('\t') + '\n' + rows.map(function (r) { return cols.map(function (c) { return q(val(r, c)); }).join('\t'); }).join('\n');
       var btn = $('#sup-copy');
@@ -3152,6 +3175,14 @@
     },
     init: function () {
       var self = this, term = function (e) { return e.target.closest ? e.target.closest('.gl-term') : null; };
+      /* on a phone the panel is a sheet at the foot of the screen, and a tap sends mouseover, which opens it, before its click.
+         A term low on the screen then has the sheet open under the finger, and the same tap's click landed on the sheet's link
+         and left for the Glossary (UX test, 24 Nov 2026). For half a second after the sheet opens, a tap inside it does nothing.
+         This listens first (capture), so neither the link nor the handler below sees that click; a key's click (detail 0) passes */
+      document.addEventListener('click', function (e) {
+        if (!self.el || self.el.hidden || !self.el.classList.contains('is-sheet') || !self.el.contains(e.target) || e.detail === 0) return;
+        if (Date.now() - self.at < 500) { e.preventDefault(); e.stopPropagation(); }
+      }, true);
       document.addEventListener('mouseover', function (e) { var b = term(e); if (b) self.show(b); });
       document.addEventListener('mouseout', function (e) { if (term(e)) self.later(); });
       // quiet: Escape hands focus back to the term with the panel shut, so that focus must not open it again
