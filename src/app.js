@@ -1834,11 +1834,12 @@
     LEVELS: ['Critical', 'Important', 'Contested', 'Diversified'],
     RANK: { Critical: 0, Important: 1, Contested: 2, Diversified: 3 },
     /* each firm's market position as readers see it, and what each means (owner, 23 Nov 2026: the column "Market position";
-       "more than half for dominant"). The data keeps its four values (data/suppliers.json "chokepoint"), which the classes,
+       "more than half for dominant"; 24 Nov 2026: the main-product rule dropped, so a firm with more than half of an essential
+       product, or its only supplier, is dominant). The data keeps its four values (data/suppliers.json "chokepoint"), which the classes,
        the filter's values and the sort use. build/build.js, build/modules/reference-pages.js and src/modules/lookup.js read
        these two, so every page uses the same words */
     POSITION: { Critical: 'Dominant', Important: 'Major', Contested: 'Challenger', Diversified: 'One of many' },
-    POSITION_DEF: { Critical: 'Holds more than half of the market for its main product.', Important: 'A leading supplier of its main product, with rivals.', Contested: 'A smaller supplier competing with the leaders.', Diversified: 'One of many firms that make its main product.' },
+    POSITION_DEF: { Critical: 'Holds more than half of the market for an essential product, or is its only supplier.', Important: 'A leading supplier, with rivals.', Contested: 'A smaller supplier competing with the leaders.', Diversified: 'One of many firms that make the same product.' },
     pos: function (lv) { return this.POSITION[lv] || lv || ''; },
     /* a firm owned by another company keeps the country where it is based, and its parent shows beside it when the parent's
        home is another country (UX test, 24 Nov 2026: Siemens EDA read US here and Germany in the ribbons' note). data/suppliers.json
@@ -1849,6 +1850,11 @@
     ownedBy: function (r) { var p = r && r.parent; return p ? (p.kind === 'division' ? 'Part of ' : p.kind === 'majority' ? 'Majority owned by ' : 'Subsidiary of ') + p.name : ''; },
     // the line under a firm's name in the Table: its ticker, and for a firm with a parent, who owns it in place of "Private"
     tickerLine: function (r) { return r.parent ? [/^private$/i.test(r.ticker || '') ? '' : r.ticker, this.ownedBy(r)].filter(Boolean).join(' · ') : (r.ticker || ''); },
+    /* what a dominant firm dominates, in one line with its share or "as its only supplier", the year and who measured it
+       (data/suppliers.json dominantIn, each figure as a chapter, a card or ETO's provision table cites it). The detail panel, the
+       Table and Copy table print it; build/modules/reference-pages.js and src/modules/lookup.js print the same words */
+    domLine: function (r) { var d = r && r.chokepoint === 'Critical' && r.dominantIn; if (!d || !d.product) return ''; return d.product + ', ' + (d.only ? 'as its only supplier' : d.share) + ' (' + [d.year, d.by].filter(Boolean).join(', ') + ')'; },
+    domHTML: function (r, cls) { var t = this.domLine(r); return t ? esc(t) + (r.dominantIn.source ? ' <a' + (cls ? ' class="' + cls + '"' : '') + ' href="' + safeUrl(r.dominantIn.source) + '" target="_blank" rel="noopener">Source</a>' : '') : ''; },
     // a firm's other sources (data/suppliers.json moreSources), after its Source link
     moreSrc: function (r, cls) { return (r.moreSources || []).filter(function (s) { return s && s.url; }).map(function (s) { return ' <a' + (cls ? ' class="' + cls + '"' : '') + ' href="' + safeUrl(s.url) + '" target="_blank" rel="noopener">' + esc(s.label || 'Source') + '</a>'; }).join(''); },
     // a level's pill: the word readers see, and its meaning as the pill's title
@@ -2154,6 +2160,7 @@
     detail: function (r) {
       if (!r) return '';
       var facts = [];
+      if (this.domLine(r)) facts.push(['Dominant in', this.domHTML(r)]);
       if ((r.customers || []).length) facts.push(['Customers', esc(r.customers.join(', '))]);
       if (r.shareNote) facts.push(['Share', esc(r.shareNote)]);
       if (r.founded) facts.push(['Founded', esc(r.founded)]);
@@ -2207,21 +2214,21 @@
           '<td>' + esc(r.category) + (r.subcategory ? '<br><span class="cc" style="color:var(--muted)">' + esc(r.subcategory) + '</span>' : '') + '</td>' +
           '<td><span class="cc">' + esc(self.ccTag(r)) + '</span> ' + esc(r.city || '') + '</td>' +
           '<td class="num">' + (r.founded || '—') + '</td>' +
-          '<td>' + self.pill(r.chokepoint) + (r.shareNote ? '<br><span class="cc" style="color:var(--muted)">' + esc(r.shareNote) + '</span>' : '') + '</td>' +
+          '<td>' + self.pill(r.chokepoint) + (self.domLine(r) ? '<br><span class="cc sup-dom">Dominant in: ' + self.domHTML(r) + '</span>' : '') + (r.shareNote ? '<br><span class="cc" style="color:var(--muted)">' + esc(r.shareNote) + '</span>' : '') + '</td>' +
           '<td class="role">' + esc(r.role || '') + (r.source ? ' <a href="' + safeUrl(r.source) + '" target="_blank" rel="noopener" class="cc" aria-label="Source for ' + esc(r.name) + '">Source</a>' : '') + self.moreSrc(r, 'cc') + '</td>' +
           '<td style="font-size:13px;color:var(--ink-2)">' + esc((r.customers || []).join(', ')) + '</td></tr>';
       });
       $('#sup-table').innerHTML = html + '</tbody>';
     },
     copy: function () {
-      var rows = this.filtered(), cols = ['name', 'nativeName', 'category', 'subcategory', 'country', 'city', 'founded', 'ticker', 'ownership', 'parent', 'parentCountry', 'marketPosition', 'shareNote', 'role', 'customers', 'revenueUSDb', 'revenueYear', 'source',
+      var rows = this.filtered(), cols = ['name', 'nativeName', 'category', 'subcategory', 'country', 'city', 'founded', 'ticker', 'ownership', 'parent', 'parentCountry', 'marketPosition', 'dominantIn', 'dominantInSource', 'shareNote', 'role', 'customers', 'revenueUSDb', 'revenueYear', 'source',
         'revenueAmount', 'revenueUnit', 'revenueCurrency', 'revenueFiscalYear', 'revenueFyEnd', 'revenueSource', 'revenueUSD', 'revenueUSDBasis'];
       // the filed revenue after the earlier columns: the amount as filed (without commas, so a spreadsheet reads it as a number) and the
       // revenue object's own fields, then the dollar figure build/build.js converted and the rates it used
       var REV = { revenueUnit: 'unit', revenueCurrency: 'currency', revenueFiscalYear: 'fiscalYear', revenueFyEnd: 'fyEnd', revenueSource: 'source' };
       // the market position in the reader's word (the data's own value is "chokepoint")
       // a firm's parent, by name and home (data/suppliers.json "parent")
-      var self = this, val = function (r, c) { return c === 'marketPosition' ? (r.chokepoint ? self.pos(r.chokepoint) : '') : c === 'parent' ? (r.parent || {}).name : c === 'parentCountry' ? (r.parent || {}).country : c === 'revenueAmount' ? (r.revenueShown || {}).amount : REV[c] ? (r.revenue || {})[REV[c]] : r[c]; };
+      var self = this, val = function (r, c) { return c === 'marketPosition' ? (r.chokepoint ? self.pos(r.chokepoint) : '') : c === 'parent' ? (r.parent || {}).name : c === 'parentCountry' ? (r.parent || {}).country : c === 'dominantIn' ? self.domLine(r) : c === 'dominantInSource' ? (self.domLine(r) ? r.dominantIn.source : '') : c === 'revenueAmount' ? (r.revenueShown || {}).amount : REV[c] ? (r.revenue || {})[REV[c]] : r[c]; };
       var q = function (v) { if (v == null) return ''; if (Array.isArray(v)) v = v.join('; '); return String(v).replace(/[\t\n\r]+/g, ' '); }; // tab-separated: a spreadsheet splits it on paste
       var csv = cols.join('\t') + '\n' + rows.map(function (r) { return cols.map(function (c) { return q(val(r, c)); }).join('\t'); }).join('\n');
       var btn = $('#sup-copy');

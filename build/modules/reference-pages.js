@@ -205,6 +205,9 @@ ${body}
     const exHref = (h) => { const m = /#\/exposure\/([a-z0-9-]+)/.exec(String(h || '')); return m ? `../export-controls/#ex-${m[1]}` : '../export-controls/#china-revenue'; };
     const firm = (r) => {
       const facts = [];
+      // what a dominant firm dominates (src/app.js Suppliers.domLine, the same words)
+      const d = r.chokepoint === 'Critical' && r.dominantIn && r.dominantIn.product ? r.dominantIn : null;
+      if (d) facts.push(['Dominant in', esc(`${d.product}, ${d.only ? 'as its only supplier' : d.share} (${[d.year, d.by].filter(Boolean).join(', ')})`) + (d.source ? ' ' + ext(d.source, 'Source') : '')]);
       if ((r.customers || []).length) facts.push(['Customers', esc(r.customers.join(', '))]);
       if (r.shareNote) facts.push(['Share', esc(r.shareNote)]);
       if (r.founded) facts.push(['Founded', esc(r.founded)]);

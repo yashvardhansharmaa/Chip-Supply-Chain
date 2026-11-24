@@ -167,6 +167,7 @@
     // its market position, in the Suppliers page's word, and what that position means (Suppliers.POSITION and POSITION_DEF)
     if (r.chokepoint) rows.push(['Market position', '<span class="gl-chk gl-chk--' + esc(String(r.chokepoint).toLowerCase()) + '">' + esc(posWord(r.chokepoint)) + '</span>' +
       ((S.POSITION_DEF || {})[r.chokepoint] ? '<span class="gl-chk-def">' + esc(S.POSITION_DEF[r.chokepoint]) + '</span>' : ''), true]);
+    if (S.domHTML && S.domLine && S.domLine(r)) rows.push(['Dominant in', S.domHTML(r), true]); // what a dominant firm dominates (Suppliers.domLine)
     if (where) rows.push(['Based in', where]);
     if (r.founded) rows.push(['Founded', String(r.founded)]);
     if (r.ownership || r.ticker) rows.push(['Ownership', [r.ownership, r.ticker && !/^private$/i.test(r.ticker) ? 'ticker ' + r.ticker : ''].filter(Boolean).join(', ')]);

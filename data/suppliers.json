@@ -11,6 +11,13 @@
     "ownership": "Public",
     "role": "Makes the synthesis, place-and-route, verification and signoff software that turns the code describing an AI accelerator's logic (its RTL) into a layout a fab can build. It also sells the largest commercial catalog of silicon IP, ready-made circuit blocks that chip designers license. Its 2025 acquisition of Ansys added multiphysics simulation for thermal and power integrity.",
     "chokepoint": "Critical",
+    "dominantIn": {
+      "product": "timing signoff software at advanced nodes",
+      "share": "over 90 percent",
+      "year": "2026",
+      "by": "SemiAnalysis",
+      "source": "https://newsletter.semianalysis.com/p/eda-market-primer"
+    },
     "shareNote": "About $8 billion of calendar 2025 EDA and IP revenue including Ansys, against Cadence at $5.30 billion and Siemens EDA at an estimated $2.2 billion to $2.5 billion",
     "customers": [
       "Nvidia",
@@ -89,6 +96,13 @@
     },
     "role": "The third-largest maker of chip design (EDA) software. Its Calibre tool is the de facto standard for physical verification, the check foundries use to confirm a layout follows their manufacturing rules before they accept it. It also sells design-for-test software. Foundries write the rule files they give chip designers in Calibre's format.",
     "chokepoint": "Critical",
+    "dominantIn": {
+      "product": "physical verification, the final layout check, at advanced nodes",
+      "share": "over 85 percent",
+      "year": "2026",
+      "by": "SemiAnalysis",
+      "source": "https://newsletter.semianalysis.com/p/eda-market-primer"
+    },
     "shareNote": "Estimated $2.2 billion to $2.5 billion of calendar 2025 EDA revenue, third behind Synopsys and Cadence. The EDA country share counts it under Germany, its parent's home",
     "customers": [
       "TSMC",
@@ -373,6 +387,13 @@
     "ownership": "Public",
     "role": "Designs the Blackwell and Rubin GPUs, the NVLink connections that join many GPUs into one system, and the NVL72 rack systems. Most AI training and a large share of inference run on this hardware. It also makes the CUDA software stack that ties developers to its hardware.",
     "chokepoint": "Critical",
+    "dominantIn": {
+      "product": "high-end AI accelerators",
+      "share": "60.3 percent of the CoWoS packaging capacity they are built with",
+      "year": "2025",
+      "by": "Epoch AI's estimate",
+      "source": "https://epoch.ai/data-insights/ai-chip-supply-chain-constraints"
+    },
     "shareNote": null,
     "customers": [
       "Microsoft",
@@ -1884,6 +1905,13 @@
     "ownership": "Public, listed in Tokyo in 2025 after being spun out of ENEOS",
     "role": "Supplies the ultra-high-purity copper, tantalum and titanium sputtering targets used to deposit the metal interconnect on a chip, along with high-purity treated rolled copper foil for substrates.",
     "chokepoint": "Critical",
+    "dominantIn": {
+      "product": "sputtering targets for semiconductors",
+      "share": "about 65 percent",
+      "year": "fiscal 2026",
+      "by": "by the company's own estimate",
+      "source": "https://www.jx-nmm.com/english/company/glance/"
+    },
     "shareNote": null,
     "customers": [
       "TSMC",
@@ -2264,6 +2292,13 @@
     "ownership": "Public",
     "role": "The only maker of extreme ultraviolet (EUV) lithography scanners, the machines that print circuit patterns onto wafers. It also makes immersion deep ultraviolet (DUV) scanners. Chipmakers use its EUV systems for the most critical layers on the most advanced logic and memory chips.",
     "chokepoint": "Critical",
+    "dominantIn": {
+      "product": "EUV lithography scanners",
+      "only": true,
+      "year": "2025",
+      "by": "ASML's 2025 annual report",
+      "source": "https://ourbrand.asml.com/m/8ab959d4926657b/original/asml-2025-annual-report-strategic-report-section.pdf#page=16"
+    },
     "shareNote": "Only manufacturer of EUV lithography systems. Recognized revenue on 48 EUV systems and 279 DUV systems in 2025",
     "customers": [
       "TSMC",
@@ -2446,6 +2481,13 @@
     },
     "role": "Makes the multilayer mirrors and projection optics inside every EUV scanner, polished to atomic-scale flatness, plus the larger anamorphic optics for High-NA EUV scanners. Zeiss SMT exclusively supplies the optics for ASML's EUV scanners. It also makes AIMS EUV, which checks how a mask will print under the scanner's own imaging conditions, and MeRiT systems that repair masks.",
     "chokepoint": "Critical",
+    "dominantIn": {
+      "product": "the lenses, mirrors and other critical optics in ASML's scanners",
+      "only": true,
+      "year": "2025",
+      "by": "ASML's 2025 annual report",
+      "source": "https://ourbrand.asml.com/m/8ab959d4926657b/original/asml-2025-annual-report-strategic-report-section.pdf#page=68"
+    },
     "shareNote": null,
     "customers": [
       "ASML"
@@ -2703,6 +2745,13 @@
     "ownership": "Public",
     "role": "Makes the high-vacuum isolation and control valves that seal and gate every process chamber. How many particles a valve sheds and how many cycles it lasts directly affect tool uptime and wafer defect counts.",
     "chokepoint": "Critical",
+    "dominantIn": {
+      "product": "vacuum valves for chipmaking and related industries",
+      "share": "about 71 percent",
+      "year": "2025",
+      "by": "TechInsights data in the company's results presentation",
+      "source": "https://www.vatgroup.com/files/live/sites/vat/files/Investor%20relations/annual-report/2025/full-year-2025-results-presentation.pdf"
+    },
     "shareNote": "About 71 percent of the semiconductor and semiconductor-related vacuum valve market (2025)",
     "customers": [
       "Applied Materials",
@@ -2871,6 +2920,13 @@
     "ownership": "Public",
     "role": "Makes the ultra-flat low-thermal-expansion glass blanks, coated with molybdenum-silicon multilayers, that become EUV photomasks. Hoya says it holds an exceptionally high share of the EUV mask blank market.",
     "chokepoint": "Critical",
+    "dominantIn": {
+      "product": "EUV mask blanks",
+      "share": "about four-fifths, read from a chart without numbers",
+      "year": "year to March 2026",
+      "by": "by the company's own estimate",
+      "source": "https://www.hoya.com/ir/2026/en/review/it.html"
+    },
     "shareNote": null,
     "customers": [
       "TSMC",
@@ -3171,6 +3227,13 @@
     "ownership": "Public",
     "role": "Supplies process control equipment: optical and electron beam wafer inspection, reticle inspection, overlay and film metrology. Its tools find the defects that determine yield on large dies.",
     "chokepoint": "Critical",
+    "dominantIn": {
+      "product": "process control tools",
+      "share": "56.8 percent",
+      "year": "2025",
+      "by": "CSET's analysis of TechInsights data",
+      "source": "https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60"
+    },
     "shareNote": "56.8 percent of the process control market in 2025 on CSET's count, against 11.2 percent for Applied Materials, the next largest. Gartner data in KLA's 2026 investor day put it at 56.5 percent in 2024, 6.5 times the nearest competitor.",
     "customers": [
       "TSMC",
@@ -3242,6 +3305,13 @@
     },
     "role": "The largest supplier of critical dimension scanning electron microscopes (CD-SEMs), which measure feature widths after lithography and etch. It also makes plasma etch systems and electron beam review tools.",
     "chokepoint": "Critical",
+    "dominantIn": {
+      "product": "critical dimension metrology tools (CD-SEMs)",
+      "share": "71.9 percent",
+      "year": "2025",
+      "by": "CSET's analysis of TechInsights data",
+      "source": "https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N66"
+    },
     "shareNote": null,
     "customers": [
       "TSMC",
@@ -3527,6 +3597,13 @@
     "ownership": "Public",
     "role": "Makes the coater/developer track, which applies photoresist, develops it after exposure and is physically linked to every scanner in a fab. It also makes etch, deposition, cleaning and wafer bonding systems, and wafer probers for chip testing.",
     "chokepoint": "Critical",
+    "dominantIn": {
+      "product": "coater/developer tracks",
+      "share": "91 percent",
+      "year": "2025",
+      "by": "Gartner data in the company's results presentation",
+      "source": "https://www.tel.com/ir/library/report/pjuomj00000000tf-att/fy26q4presentations-e.pdf"
+    },
     "shareNote": "91 percent of the world coater/developer (track) market in CY2025, on Gartner data published in Tokyo Electron's own results presentation",
     "customers": [
       "TSMC",
@@ -3561,6 +3638,13 @@
     "ownership": "Public",
     "role": "Makes atomic layer deposition (ALD) tools, which grow films one atomic layer at a time. Chipmakers use ALD to build gate-all-around transistors and high-k dielectrics. ASM also makes epitaxy and plasma-enhanced ALD tools.",
     "chokepoint": "Critical",
+    "dominantIn": {
+      "product": "atomic layer deposition tools",
+      "share": "54.5 percent",
+      "year": "2025",
+      "by": "CSET's analysis of TechInsights data",
+      "source": "https://chipexplorer.eto.tech/?parentNode=N35&selectedNode=N41"
+    },
     "shareNote": null,
     "customers": [
       "TSMC",
@@ -3822,6 +3906,13 @@
     "ownership": "Public, with the Taiwanese state holding a minority stake",
     "role": "Manufactures almost every leading-edge AI accelerator, including those of Nvidia, AMD and Broadcom and the custom chips of large cloud companies, on its N4, N3 and N2 processes. It also owns CoWoS and SoIC advanced packaging, and its packaging capacity is a tighter constraint than its wafer capacity.",
     "chokepoint": "Critical",
+    "dominantIn": {
+      "product": "CoWoS packaging, used for virtually all high-end AI accelerators",
+      "only": true,
+      "year": "2026",
+      "by": "Epoch AI",
+      "source": "https://epoch.ai/data/ai-chip-components-documentation/methodology"
+    },
     "shareNote": null,
     "customers": [
       "Nvidia",
@@ -4102,6 +4193,13 @@
     "ownership": "Public, part of SK Group",
     "role": "The largest supplier of high bandwidth memory (HBM), with a large conventional DRAM and NAND business that includes Solidigm. HBM is a stack of DRAM chips connected by through-silicon vias, copper columns that run through the chips.",
     "chokepoint": "Critical",
+    "dominantIn": {
+      "product": "HBM",
+      "share": "63.2 percent of revenue",
+      "year": "2025",
+      "by": "IDC, in SK hynix's July 2026 US prospectus",
+      "source": "https://www.sec.gov/Archives/edgar/data/2120882/000119312526299963/d32785d424b4.htm"
+    },
     "shareNote": null,
     "customers": [
       "Nvidia",
@@ -4757,6 +4855,13 @@
     "ownership": "Public",
     "role": "Makes the dicing saws, laser dicers and back-grinders that cut wafers into dies and thin them for stacking. HBM and other 3D stacks need wafers thinned to tens of micrometers.",
     "chokepoint": "Critical",
+    "dominantIn": {
+      "product": "dicing saws and grinders",
+      "share": "87 percent of a $1.9 billion market",
+      "year": "2025",
+      "by": "CSET's analysis of TechInsights data",
+      "source": "https://chipexplorer.eto.tech/?parentNode=N69&selectedNode=N71"
+    },
     "shareNote": "87 percent of the $1.9 billion market for dicing saws and wafer grinders in 2025, on CSET's analysis of TechInsights data",
     "customers": [
       "TSMC",
@@ -4791,6 +4896,13 @@
     "ownership": "Public",
     "role": "Makes wire bonders, the standard tool of low-cost packaging, and is developing thermocompression and fluxless bonding systems for advanced packages.",
     "chokepoint": "Critical",
+    "dominantIn": {
+      "product": "wire bonding tools",
+      "share": "64.9 percent",
+      "year": "2025",
+      "by": "CSET's analysis of TechInsights data",
+      "source": "https://raw.githubusercontent.com/georgetown-cset/eto-chip-explorer/main/data/provision.csv"
+    },
     "shareNote": null,
     "customers": [
       "ASE",
@@ -4882,6 +4994,13 @@
     "ownership": "Public",
     "role": "Makes Ajinomoto Build-up Film (ABF), the insulating layer between the copper layers of flip-chip package substrates. Ajinomoto, a food company, developed the material from its amino acid chemistry. It told investors in June 2026 that ABF has held over 95 percent of its market since its launch.",
     "chokepoint": "Critical",
+    "dominantIn": {
+      "product": "build-up film (ABF) for package substrates",
+      "share": "over 95 percent since its launch",
+      "year": "June 2026",
+      "by": "by the company's own estimate",
+      "source": "https://www.ajinomoto.co.jp/company/en/ir/event/business_briefing/main/011117/teaserItems1/01/linkList/03/link/20260630_presentation_E.pdf#page=3"
+    },
     "shareNote": "Over 95 percent of its market since its launch, Ajinomoto told investors in June 2026",
     "customers": [
       "Ibiden",
@@ -5424,6 +5543,13 @@
     "ownership": "Public",
     "role": "Makes automated test equipment for logic and memory, including the V93000 platform used to test AI accelerators and the testers used for HBM. Test time on AI dies is long and rising.",
     "chokepoint": "Critical",
+    "dominantIn": {
+      "product": "chip test tools",
+      "share": "62.7 percent",
+      "year": "2025",
+      "by": "CSET's analysis of TechInsights data",
+      "source": "https://chipexplorer.eto.tech/?parentNode=N78&selectedNode=N120"
+    },
     "shareNote": "66 percent of the SoC tester market in CY2025, up from 56 percent in CY2024, on Advantest's own tester market share report",
     "customers": [
       "TSMC",

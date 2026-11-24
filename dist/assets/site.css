@@ -5026,6 +5026,7 @@ html.kb:has(.view[data-view="glossary"]:not([hidden]) .gl:not([data-state="home"
 .sup-name.lv-Diversified { color: var(--muted); }
 .sup-name:hover { background: var(--bg-2); }
 .sup-name[aria-expanded="true"] { box-shadow: inset 0 -1.5px 0 var(--accent); }
+.sup-dom { color: var(--ink-2); } /* the Table's evidence line under a dominant firm's pill (src/app.js Suppliers.domHTML) */
 .sup-cc { font-style: normal; font-family: var(--font-ui); font-weight: 400; font-size: 11px; color: var(--muted); margin-left: 4px; font-variant-numeric: tabular-nums; }
 .sup-ladder-cc .sup-cc { font-family: var(--font-ui); } /* by country, the tag is the firm's segment, a word */
 .sup-rung[data-empty="1"] .sup-names, .sup-rung[data-empty="1"] .sup-panel { display: none; }
