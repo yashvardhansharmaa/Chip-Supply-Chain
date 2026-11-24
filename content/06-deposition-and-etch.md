@@ -60,12 +60,10 @@
  "id": "tel-tool-share",
  "type": "bars",
  "title": "Tokyo Electron world market share by tool type, 2025. Some types overlap, because deposition includes furnace, ALD and low-pressure CVD tools",
- "finding": "Tokyo Electron held 92.6 percent of coater/developers in 2025, by CSET's count from TechInsights data",
+ "finding": "Tokyo Electron held 38 percent of tube and low-pressure CVD tools in 2025, by Gartner's count",
  "unit": "%",
- "data": [["Coater/developer", 92.6], ["Tube and low-pressure CVD", 38], ["Oxidation/diffusion", 31], ["Deposition (furnace, ALD, LPCVD)", 27], ["Dry etch", 23], ["Cleaning", 20], ["ALD", 15]],
- "note": "The coater/developer share is CSET's count from TechInsights data. The other shares are Gartner's, as Tokyo Electron reports them.",
- "source": {"label": "Gartner, as reported in Tokyo Electron's FY2026 Q4 results presentation", "url": "https://www.tel.com/ir/library/report/pjuomj00000000tf-att/fy26q4transcript-e.pdf#page=28"},
- "sources": [{"label": "CSET analysis of TechInsights data, ETO Chip Explorer", "url": "https://chipexplorer.eto.tech/?parentNode=N25&selectedNode=N32"}]
+ "data": [["Tube and low-pressure CVD", 38], ["Oxidation/diffusion", 31], ["Deposition (furnace, ALD, LPCVD)", 27], ["Dry etch", 23], ["Cleaning", 20], ["ALD", 15]],
+ "source": {"label": "Gartner, as reported in Tokyo Electron's FY2026 Q4 results presentation", "url": "https://www.tel.com/ir/library/report/pjuomj00000000tf-att/fy26q4transcript-e.pdf#page=28"}
  },
  {
  "id": "china-tool-share",
