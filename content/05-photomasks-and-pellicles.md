@@ -21,7 +21,7 @@
  ],
  "countries": [
  {"code": "JP", "note": "Mask blanks (AGC, Hoya), DUV blanks (Shin-Etsu), inspection (Lasertec), writers (NuFlare), pellicles (Mitsui Chemicals)"},
- {"code": "AT", "note": "IMS Nanofabrication multi-beam mask writers"},
+ {"code": "AT", "note": "IMS Nanofabrication multi-beam mask writers (parent Intel, United States)"},
  {"code": "DE", "note": "Zeiss mask checking in EUV light (AIMS EUV) and mask repair"},
  {"code": "US", "note": "Photronics merchant mask shops, KLA inspection"},
  {"code": "TW", "note": "TSMC, which held 10 percent of IMS at the end of 2024"}

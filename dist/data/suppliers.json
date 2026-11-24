@@ -22,6 +22,9 @@
     ],
     "aiRelevance": "Every leading-edge AI accelerator is designed and checked with a full set of electronic design automation (EDA) tools before it goes to the fab. Synopsys supplies the largest single share of those tools.",
     "source": "https://newsletter.semianalysis.com/p/eda-market-primer",
+    "folded": [
+      "Ansys"
+    ],
     "revenue": {
       "amount": 7054178,
       "unit": "thousand",
@@ -79,6 +82,11 @@
     "founded": 1981,
     "ticker": "Private",
     "ownership": "Subsidiary of Siemens AG of Germany (acquired as Mentor Graphics in 2017)",
+    "parent": {
+      "name": "Siemens AG",
+      "country": "DE",
+      "kind": "subsidiary"
+    },
     "role": "The third-largest maker of chip design (EDA) software. Its Calibre tool is the de facto standard for physical verification, the check foundries use to confirm a layout follows their manufacturing rules before they accept it. It also sells design-for-test software. Foundries write the rule files they give chip designers in Calibre's format.",
     "chokepoint": "Critical",
     "shareNote": "Estimated $2.2 billion to $2.5 billion of calendar 2025 EDA revenue, third behind Synopsys and Cadence. The EDA country share counts it under Germany, its parent's home",
@@ -93,41 +101,6 @@
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://newsletter.semianalysis.com/p/eda-market-primer"
-  },
-  {
-    "name": "Ansys",
-    "nativeName": null,
-    "category": "Design and EDA",
-    "subcategory": "Multiphysics, thermal and power integrity simulation",
-    "country": "US",
-    "city": "Canonsburg",
-    "founded": 1970,
-    "ticker": "Private",
-    "ownership": "Subsidiary of Synopsys since the acquisition closed in 2025",
-    "role": "Makes the thermal, electromagnetic and structural simulation software used to model how a 1 kW accelerator package heats, warps and delivers power. Its RedHawk tool is the standard for power integrity signoff, the final check that power reaches every part of a chip as designed.",
-    "chokepoint": "Important",
-    "shareNote": null,
-    "customers": [
-      "Nvidia",
-      "AMD",
-      "TSMC",
-      "Samsung",
-      "Intel"
-    ],
-    "aiRelevance": "Heat and warpage are the limiting design problems for kilowatt-class packages and liquid-cooled racks, and Ansys software simulates both.",
-    "source": "https://www.ansys.com/products/semiconductors",
-    "revenue": {
-      "amount": 2544809,
-      "unit": "thousand",
-      "currency": "USD",
-      "scope": "company",
-      "basis": "Revenue, consolidated, US GAAP",
-      "fiscalYear": "2024",
-      "fyStart": "2024-01",
-      "fyEnd": "2024-12",
-      "source": "https://www.sec.gov/Archives/edgar/data/1013462/000101346225000009/R5.htm",
-      "note": "Ansys has filed no accounts since Synopsys bought it in July 2025, so this is its last annual figure."
-    }
   },
   {
     "name": "Empyrean Technology",
@@ -238,6 +211,11 @@
     "founded": 1990,
     "ticker": "ARM",
     "ownership": "Public, majority owned by SoftBank Group",
+    "parent": {
+      "name": "SoftBank Group",
+      "country": "JP",
+      "kind": "majority"
+    },
     "role": "Licenses the CPU architecture and cores used in the host processors that feed data to AI accelerators. These include Nvidia's Grace and Vera CPUs and the Arm cores inside the server chips that large cloud companies design. It also licenses the interconnect and system IP around them. In 2026 it launched the Arm AGI CPU, its first production chip. By May 2026, ASRock, Lenovo, Quanta and Supermicro were taking orders for servers built on it.",
     "chokepoint": "Critical",
     "shareNote": null,
@@ -307,6 +285,11 @@
     "founded": 2017,
     "ticker": "Private",
     "ownership": "Acquired by Qualcomm in a deal announced in 2025 and no longer separately listed",
+    "parent": {
+      "name": "Qualcomm",
+      "country": "US",
+      "kind": "subsidiary"
+    },
     "role": "Supplies multi-gigabit connection IP (SerDes, PCIe, UCIe and Ethernet) that moves data between chiplets and between accelerators. Qualcomm bought it to build data-center silicon.",
     "chokepoint": "Important",
     "shareNote": null,
@@ -423,7 +406,7 @@
     "founded": 1969,
     "ticker": "AMD",
     "ownership": "Public",
-    "role": "Designs the Instinct MI355X and MI400 accelerators and EPYC server CPUs. Since buying ZT Systems in 2025 it also designs rack-scale AI systems. It is the only company other than Nvidia that sells AI accelerators on the open market at scale.",
+    "role": "Designs the Instinct MI355X and MI400 accelerators and EPYC server CPUs. Since buying ZT Systems in 2025 it also designs rack-scale AI systems. It kept ZT Systems' design and customer enablement teams and sold ZT's manufacturing business to Sanmina in October 2025. It is the only company other than Nvidia that sells AI accelerators on the open market at scale.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -436,6 +419,19 @@
     ],
     "aiRelevance": "AMD is the main competitive check on Nvidia's pricing, and most large buyers are qualifying it as a second source.",
     "source": "https://www.amd.com/en/products/accelerators/instinct.html",
+    "moreSources": [
+      {
+        "label": "ZT Systems purchase",
+        "url": "https://www.amd.com/en/newsroom/press-releases/2025-3-31-amd-completes-acquisition-of-zt-systems.html"
+      },
+      {
+        "label": "ZT Systems manufacturing sale",
+        "url": "https://ir.amd.com/news-events/press-releases/detail/1263/amd-completes-divestiture-of-zt-systems-data-center-infrastructuremanufacturing-business-to-sanmina"
+      }
+    ],
+    "folded": [
+      "ZT Systems"
+    ],
     "revenue": {
       "amount": 34639,
       "unit": "million",
@@ -492,6 +488,11 @@
     "founded": 1998,
     "ticker": "Private",
     "ownership": "Division of Alphabet Inc.",
+    "parent": {
+      "name": "Alphabet",
+      "country": "US",
+      "kind": "division"
+    },
     "role": "Designs the Tensor Processing Unit (TPU), and announced the eighth generation, the TPU 8t and TPU 8i, in April 2026. It uses TPUs in its own data centers and offers them to cloud customers. Broadcom and MediaTek work with it on the physical design, which turns a chip design into a layout, and on manufacturing at TSMC.",
     "chokepoint": "Important",
     "shareNote": null,
@@ -516,6 +517,11 @@
     "founded": 2011,
     "ticker": "Private",
     "ownership": "Subsidiary of Amazon since 2015",
+    "parent": {
+      "name": "Amazon",
+      "country": "US",
+      "kind": "subsidiary"
+    },
     "role": "Amazon's chip design arm. It designs the Trainium training chips, Inferentia inference chips and the Nitro data processing units used across AWS. Trainium 3 is the current generation.",
     "chokepoint": "Important",
     "shareNote": null,
@@ -538,6 +544,11 @@
     "founded": 1975,
     "ticker": "Private",
     "ownership": "Division of Microsoft Corporation",
+    "parent": {
+      "name": "Microsoft",
+      "country": "US",
+      "kind": "division"
+    },
     "role": "Designs the Maia accelerator family and the Cobalt Arm server CPU for Microsoft's Azure cloud. It also designs the 'sidekick' racks that sit beside the servers and supply the liquid cooling they need. Maia 200 is the current generation.",
     "chokepoint": "Contested",
     "shareNote": null,
@@ -838,6 +849,11 @@
     "founded": 2004,
     "ticker": "Private",
     "ownership": "Subsidiary of Huawei Technologies",
+    "parent": {
+      "name": "Huawei Technologies",
+      "country": "CN",
+      "kind": "subsidiary"
+    },
     "role": "Huawei's chip design arm. It designs the Ascend 910C and the announced 950 and 960 accelerators. SMIC makes its chips without EUV lithography tools, and that limits yield and volume.",
     "chokepoint": "Contested",
     "shareNote": null,
@@ -1321,6 +1337,11 @@
     "founded": 1983,
     "ticker": "Private",
     "ownership": "Part of SK Group, which agreed in July 2026 to sell a 70.6 percent stake to Doosan",
+    "parent": {
+      "name": "SK Group",
+      "country": "KR",
+      "kind": "division"
+    },
     "role": "Korea's silicon wafer maker, supplying 300 mm wafers largely to Samsung and SK hynix. It also makes silicon carbide substrates for power devices at a US plant in Michigan.",
     "chokepoint": "Important",
     "shareNote": null,
@@ -1410,6 +1431,11 @@
     "founded": 1961,
     "ticker": "Private",
     "ownership": "Private, majority owned by Corning with Japanese partners",
+    "parent": {
+      "name": "Corning",
+      "country": "US",
+      "kind": "majority"
+    },
     "role": "Makes the ultra-pure polysilicon that is melted to grow the crystal ingots wafers are cut from. Only a few plants worldwide make semiconductor-grade material. Siltronic names Hemlock among the five major suppliers of electronic-grade silicon in 2025.",
     "chokepoint": "Important",
     "shareNote": null,
@@ -1708,6 +1734,11 @@
     "founded": 2007,
     "ticker": "Private",
     "ownership": "Subsidiary of JSR Corporation",
+    "parent": {
+      "name": "JSR Corporation",
+      "country": "JP",
+      "kind": "subsidiary"
+    },
     "role": "Developed tin-oxide EUV resists that absorb EUV photons far more efficiently than organic chemically amplified resists. Higher absorption cuts the light dose needed and sharpens resolution on High-NA EUV tools.",
     "chokepoint": "Contested",
     "shareNote": null,
@@ -2354,6 +2385,11 @@
     "founded": 1986,
     "ticker": "Private",
     "ownership": "Subsidiary of ASML since 2013",
+    "parent": {
+      "name": "ASML",
+      "country": "NL",
+      "kind": "subsidiary"
+    },
     "role": "Builds the light sources for lithography: excimer lasers for DUV scanners and the laser-produced tin plasma source that generates 13.5 nm EUV light. The EUV source is the hardest subsystem in the machine.",
     "chokepoint": "Critical",
     "shareNote": null,
@@ -2375,6 +2411,11 @@
     "founded": 2000,
     "ticker": "Private",
     "ownership": "Subsidiary of Komatsu",
+    "parent": {
+      "name": "Komatsu",
+      "country": "JP",
+      "kind": "subsidiary"
+    },
     "role": "Makes ArF and KrF excimer laser light sources for DUV scanners, including ASML immersion tools. It describes itself as the world's leading excimer laser light source manufacturer. It also offers retrofit sources for installed DUV tools.",
     "chokepoint": "Important",
     "shareNote": null,
@@ -2398,6 +2439,11 @@
     "founded": 1846,
     "ticker": "Private",
     "ownership": "Part of the Zeiss Group, with ASML holding a minority stake in Carl Zeiss SMT",
+    "parent": {
+      "name": "Zeiss Group",
+      "country": "DE",
+      "kind": "division"
+    },
     "role": "Makes the multilayer mirrors and projection optics inside every EUV scanner, polished to atomic-scale flatness, plus the larger anamorphic optics for High-NA EUV scanners. Zeiss SMT exclusively supplies the optics for ASML's EUV scanners. It also makes AIMS EUV, which checks how a mask will print under the scanner's own imaging conditions, and MeRiT systems that repair masks.",
     "chokepoint": "Critical",
     "shareNote": null,
@@ -2495,6 +2541,11 @@
     "founded": 1919,
     "ticker": "Private",
     "ownership": "Subsidiary of Atlas Copco",
+    "parent": {
+      "name": "Atlas Copco",
+      "country": "SE",
+      "kind": "subsidiary"
+    },
     "role": "Supplies the dry pumps that hold process chambers at vacuum and the abatement systems that destroy the toxic and greenhouse gases leaving them. A leading-edge fab runs thousands of pumps continuously.",
     "chokepoint": "Important",
     "shareNote": null,
@@ -2683,6 +2734,11 @@
     "founded": 1890,
     "ticker": "PFV.DE",
     "ownership": "Majority owned by Busch Group",
+    "parent": {
+      "name": "Busch Group",
+      "country": "DE",
+      "kind": "majority"
+    },
     "role": "Makes turbomolecular pumps, which spin at tens of thousands of revolutions per minute to reach the high vacuum that etch, deposition and EUV chambers require. It also makes leak detection instruments.",
     "chokepoint": "Important",
     "shareNote": null,
@@ -2979,6 +3035,11 @@
     "founded": 1985,
     "ticker": "Private",
     "ownership": "Majority owned by Intel, with Bain Capital and TSMC holding minority stakes",
+    "parent": {
+      "name": "Intel",
+      "country": "US",
+      "kind": "majority"
+    },
     "role": "Builds the multi-beam electron mask writers that pattern EUV masks with hundreds of thousands of parallel beamlets. On CSET's count it led the market for all electron-beam mask writers in 2025. NuFlare is the only other maker of multi-beam writers.",
     "chokepoint": "Important",
     "shareNote": "46.6 percent of the $994 million market for all electron-beam mask writers in 2025, ahead of NuFlare (39.2 percent) and JEOL (14.2 percent), on CSET's analysis of TechInsights data",
@@ -3004,6 +3065,11 @@
     "founded": 2002,
     "ticker": "Private",
     "ownership": "Subsidiary of Toshiba",
+    "parent": {
+      "name": "Toshiba",
+      "country": "JP",
+      "kind": "subsidiary"
+    },
     "role": "Makes variable-shaped-beam and multi-beam electron mask writers and mask inspection systems. Its MBM series competes with IMS Nanofabrication in multi-beam mask writing.",
     "chokepoint": "Important",
     "shareNote": null,
@@ -3169,6 +3235,11 @@
     "founded": 1947,
     "ticker": "Private",
     "ownership": "Wholly owned subsidiary of Hitachi",
+    "parent": {
+      "name": "Hitachi",
+      "country": "JP",
+      "kind": "subsidiary"
+    },
     "role": "The largest supplier of critical dimension scanning electron microscopes (CD-SEMs), which measure feature widths after lithography and etch. It also makes plasma etch systems and electron beam review tools.",
     "chokepoint": "Critical",
     "shareNote": null,
@@ -3688,6 +3759,11 @@
     "founded": 1993,
     "ticker": "Private",
     "ownership": "Majority owned by Samsung Electronics",
+    "parent": {
+      "name": "Samsung Electronics",
+      "country": "KR",
+      "kind": "majority"
+    },
     "role": "Supplies wafer cleaning, coater/developer track, etch and packaging systems, mainly to Samsung. By its own description it is Korea's largest maker of chip and display equipment, with sales of about KRW 2.46 trillion in 2025. Through SEMES, Samsung keeps some tool technology in house.",
     "chokepoint": "Contested",
     "shareNote": null,
@@ -3779,6 +3855,11 @@
     "founded": 2005,
     "ticker": "Private",
     "ownership": "Division of Samsung Electronics (005930.KS)",
+    "parent": {
+      "name": "Samsung Electronics",
+      "country": "KR",
+      "kind": "division"
+    },
     "role": "A foundry running its 2 nm class SF2 process in Korea and building a fab in Taylor, Texas. Its gate-all-around transistors, introduced at 3 nm, are in production. Large AI customers keep qualifying it as a second source.",
     "chokepoint": "Contested",
     "shareNote": null,
@@ -3804,6 +3885,11 @@
     "founded": 2021,
     "ticker": "Private",
     "ownership": "Division of Intel Corporation, in which the US government took an equity stake in 2025",
+    "parent": {
+      "name": "Intel",
+      "country": "US",
+      "kind": "division"
+    },
     "role": "Intel's manufacturing arm, running the 18A process with RibbonFET gate-all-around and PowerVia backside power, plus EMIB and Foveros packaging. Most of its output is still Intel's own chips. Outside customers provided only $293 million of its $5.765 billion of segment revenue in the quarter to 27 June 2026.",
     "chokepoint": "Contested",
     "shareNote": null,
@@ -4048,6 +4134,11 @@
     "founded": 1983,
     "ticker": "Private",
     "ownership": "Division of Samsung Electronics (005930.KS)",
+    "parent": {
+      "name": "Samsung Electronics",
+      "country": "KR",
+      "kind": "division"
+    },
     "role": "Samsung Electronics' memory business, supplying DRAM, NAND and HBM. It began mass production of HBM4 in 2026 and says it was the first to ship commercial HBM4, at 11.7 Gbps per pin.",
     "chokepoint": "Important",
     "shareNote": null,
@@ -5143,6 +5234,11 @@
     "founded": 1918,
     "ticker": "Private",
     "ownership": "Division of Panasonic Holdings",
+    "parent": {
+      "name": "Panasonic Holdings",
+      "country": "JP",
+      "kind": "division"
+    },
     "role": "Makes the Megtron series of low-loss copper-clad laminates used in high-speed server and switch boards. At 112 Gbps, too much signal loss in the board makes a link fail.",
     "chokepoint": "Important",
     "shareNote": null,
@@ -5300,6 +5396,11 @@
     "founded": 2021,
     "ticker": "Private",
     "ownership": "Subsidiary of SKC, part of SK Group",
+    "parent": {
+      "name": "SKC",
+      "country": "KR",
+      "kind": "subsidiary"
+    },
     "role": "A subsidiary of Korea's SKC with a final CHIPS Act award of up to $75 million for a 120,000-square-foot glass core substrate plant in Covington, Georgia. As of October 2026, NIST's project page expected the plant's production capacity to come online in 2027. NIST says the glass substrates allow smaller, more densely packed and shorter connections, for faster and more energy-efficient computing.",
     "chokepoint": "Contested",
     "shareNote": null,
@@ -6238,6 +6339,11 @@
     "founded": 2012,
     "ticker": "6669.TW",
     "ownership": "Public, majority owned by Wistron",
+    "parent": {
+      "name": "Wistron",
+      "country": "TW",
+      "kind": "majority"
+    },
     "role": "Designs and builds hyperscale servers, storage and rack systems to Open Compute designs for cloud operators, including liquid-cooled AI racks.",
     "chokepoint": "Important",
     "shareNote": null,
@@ -6421,28 +6527,6 @@
       "fyEnd": "2026-03",
       "source": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0626/2026062600475.pdf#page=175"
     }
-  },
-  {
-    "name": "ZT Systems",
-    "nativeName": null,
-    "category": "Systems and servers",
-    "subcategory": "Rack-scale AI system design",
-    "country": "US",
-    "city": "Secaucus",
-    "founded": 1994,
-    "ticker": "Private",
-    "ownership": "Acquired by AMD in 2025, and AMD sold the manufacturing operation on to Sanmina",
-    "role": "Designs and validates rack-scale AI systems for hyperscalers. AMD bought it for its systems engineering team, so that AMD could ship complete racks.",
-    "chokepoint": "Important",
-    "shareNote": null,
-    "customers": [
-      "AMD",
-      "Hyperscale cloud operators"
-    ],
-    "aiRelevance": "Competing with Nvidia now requires shipping an integrated rack.",
-    "revenueUSDb": null,
-    "revenueYear": null,
-    "source": "https://www.amd.com/en/newsroom/press-releases/2025-3-31-amd-completes-acquisition-of-zt-systems.html"
   },
   {
     "name": "Celestica",
@@ -6650,6 +6734,11 @@
     "founded": 2001,
     "ticker": "Private",
     "ownership": "Subsidiary of Ecolab since July 2026",
+    "parent": {
+      "name": "Ecolab",
+      "country": "US",
+      "kind": "subsidiary"
+    },
     "role": "Makes direct-to-chip liquid cooling cold plates, coolant distribution units and manifolds for servers, and is one of the specialists the server ODMs buy from.",
     "chokepoint": "Important",
     "shareNote": null,
@@ -6705,6 +6794,11 @@
     "founded": 2020,
     "ticker": "Private",
     "ownership": "Subsidiary of Hitachi (formerly ABB Power Grids)",
+    "parent": {
+      "name": "Hitachi",
+      "country": "JP",
+      "kind": "subsidiary"
+    },
     "role": "Makes the high voltage transformers, switchgear and grid connection equipment that data center campuses need to draw hundreds of megawatts. Transformer lead times run to several years.",
     "chokepoint": "Important",
     "shareNote": null,

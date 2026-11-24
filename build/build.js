@@ -662,7 +662,7 @@ function nameplate(card, title, gl, ctx, where) {
   const F = {}; cardFields(card).forEach((f) => { F[f.what] = f.urls; });
   // a leader's share with its mark (the firm's China share of revenue is not repeated here, decision 13 of 21 Oct 2026: it stays
   // in the Suppliers drawer, the Glossary's firm card and the Export Controls chart)
-  const leaders = (card.leaders || []).map((l) => `<li><span class="chip">${esc(l.country || '')}</span><span class="who">${esc(l.name)}</span>${l.share ? ` <span class="note">${cardText(l.share, l.source ? [String(l.source)] : [], ctx, plain)}</span>` : ''}</li>`).join('');
+  const leaders = (card.leaders || []).map((l) => `<li><span class="chip">${esc(l.country || '')}</span><span class="who">${esc(l.name)}${l.parentCC ? `<small class="who-par">parent ${esc(l.parentCC)}</small>` : ''}</span>${l.share ? ` <span class="note">${cardText(l.share, l.source ? [String(l.source)] : [], ctx, plain)}</span>` : ''}</li>`).join('');
   const countries = (card.countries || []).map((c) => `<li><span class="chip">${esc(c.code)}</span><span class="who">${esc(COUNTRY[c.code] || c.code)}</span>${c.note ? ` <span class="note">${esc(c.note)}</span>` : ''}</li>`).join('');
   const sub = card.substitution || {};
   const sb = card.substitutability && card.substitutability.band ? card.substitutability : null;
@@ -721,6 +721,17 @@ for (const f of files) {
 }
 chapters.sort((a, b) => a.number - b.number);
 if (!chapters.length) warn('no chapters found; building with a placeholder');
+/* a card's leader owned by a company based in another country carries its parent's country (parentCC), which every "Who leads"
+   prints beside the leader's own ("US · parent DE"): the supplier list's rule, a subsidiary under the country where it is based
+   with its parent shown (UX test, 24 Nov 2026). The parent is data/suppliers.json's, matched by name or its first word(s) */
+{
+  const SUP0 = readJSON(path.join(root, 'data', 'suppliers.json'), []) || [];
+  const supOf = (n) => SUP0.find((s) => s.name === n) || SUP0.find((s) => s.name.startsWith(n + ' '));
+  chapters.concat(geo ? [geo] : []).forEach((ch) => ((ch.meta.card || {}).leaders || []).forEach((l) => {
+    const s = l && l.name ? supOf(l.name) : null;
+    if (s && s.parent && s.parent.country && s.parent.country !== (l.country || s.country)) l.parentCC = s.parent.country;
+  }));
+}
 // data/section-headings.json names only chapters that exist, and only headings each of them has, as content/*.md writes them
 // (a "Takeaways" heading leads the chapter as In short, so it is not one); each entry's words are a line of text
 if (!SECTION_HEADINGS || typeof SECTION_HEADINGS !== 'object' || Array.isArray(SECTION_HEADINGS)) warn('section headings: data/section-headings.json is not an object keyed by chapter id');
@@ -1461,7 +1472,7 @@ const sourcesHTML = `<div class="tier-key"><span class="tier tier-A">A</span> pr
 /* ---------------- briefing (all the "in short" blocks on one page) ---------------- */
 const briefingHTML = all.map((ch) => {
   const c = ch.meta.card || {};
-  const leaders = (c.leaders || []).slice(0, 3).map((l) => `${esc(l.name)}${l.country ? ` <span class="chip">${esc(l.country)}</span>` : ''}`).join(' · ');
+  const leaders = (c.leaders || []).slice(0, 3).map((l) => `${esc(l.name)}${l.country ? ` <span class="chip">${esc(l.country)}${l.parentCC ? ` · parent ${esc(l.parentCC)}` : ''}</span>` : ''}`).join(' · ');
   const href = ch.id === 'geopolitics' ? '#geopolitics' : `#${esc(ch.id)}`;
   return `<article class="brief-card" id="brief-${esc(ch.id)}">
 <div class="brief-head"><span class="n">${pad(ch.number)}</span><a href="${href}" class="t">${esc(ch.title)}</a>
@@ -1731,7 +1742,7 @@ const LK_SUFFIX = /\s+(Holdings?|Inc\.?|Incorporated|Corporation|Corp\.?|Co\.?|L
 const LK_NICK = { 'Hon Hai Precision': 'Foxconn', 'Carl Zeiss SMT': 'Zeiss', 'Hewlett Packard Enterprise': 'HPE', 'Tokyo Ohka Kogyo': 'TOK', 'Samsung Electronics': 'Samsung', 'Taiwan Semiconductor Manufacturing': 'TSMC', 'Semiconductor Manufacturing International': 'SMIC', 'Advanced Micro Devices': 'AMD', 'BE Semiconductor Industries': 'Besi', 'Yangtze Memory Technologies': 'YMTC', 'ChangXin Memory Technologies': 'CXMT', 'Shanghai Micro Electronics Equipment': 'SMEE', 'Alphawave Semi': 'Alphawave', 'Nippon Sanso Holdings': 'Nippon Sanso', 'Shin-Etsu Chemical': 'Shin-Etsu', 'Super Micro Computer': 'Supermicro' };
 const lkAliases = (name) => { const out = []; let n = name; for (let i = 0; i < 3; i++) { const m = n.replace(LK_SUFFIX, ''); if (m === n) break; n = m; if (n.length >= 3 && n !== name) out.push(n); } if (LK_NICK[name]) out.push(LK_NICK[name]); return out; };
 glossary.forEach((g) => { const akas = String(g.aka || '').split(/[;,]/).map((x) => x.trim()).filter((x) => x.length >= 3 && x.toLowerCase() !== g.term.toLowerCase() && !/^[a-z]+$/.test(x)); lkItems.push({ kind: 'term', id: 'lk-term-' + lkSlug(g.term), key: 'gl-' + lkSlug(g.term), name: g.term, alias: akas, label: g.chapter === 'geopolitics' ? 'Export control' : 'Term', g, text: [g.term, g.aka || '', g.plain].join(' ') }); });
-suppliers.forEach((r) => lkItems.push({ kind: 'firm', id: 'lk-firm-' + lkSlug(r.name), name: r.name, alias: lkAliases(r.name).concat(r.nativeName ? [r.nativeName] : []), label: lkStage(r.category), key: r.name, native: r.nativeName || '', def: r.role || '', text: [r.name, r.nativeName || '', r.city || '', COUNTRY[r.country] || r.country || '', r.ticker || '', r.category || '', r.subcategory || '', LK_NICK[r.name] || ''].join(' ') })); // and its role, which its row holds under its link (lkWords, below)
+suppliers.forEach((r) => lkItems.push({ kind: 'firm', id: 'lk-firm-' + lkSlug(r.name), name: r.name, alias: lkAliases(r.name).concat(r.nativeName ? [r.nativeName] : [], r.folded || []), label: lkStage(r.category), key: r.name, native: r.nativeName || '', def: r.role || '', text: [r.name, r.nativeName || '', r.city || '', COUNTRY[r.country] || r.country || '', r.ticker || '', r.category || '', r.subcategory || '', LK_NICK[r.name] || ''].join(' ') })); // and its role, which its row holds under its link (lkWords, below)
 landscape.forEach((c) => { const al = []; const bare = c.name.replace(/\s*\(.*\)$/, ''); al.push(bare); bare.split(/\s+/).forEach((t) => { if (/\d/.test(t) && t.length >= 3 && t !== bare) al.push(t); }); const paren = (c.name.match(/\(([^)]*)\)/) || [])[1] || ''; paren.split(/[\s,]+/).forEach((t) => { if ((/^[A-Z][a-z]{3,}$/.test(t) && !/variant|configuration|China|licensed|of|the/i.test(t)) || (/\d/.test(t) && t.length >= 4)) al.push(t); }); if (c.family && c.family.length >= 5 && !/^(TPU|Ascend|Siyuan|Pinghu)\b/.test(c.family) && !/\(/.test(c.family)) al.push(c.family); lkItems.push({ kind: 'chip', id: 'lk-chip-' + lkSlug(c.id), name: `${c.vendor} ${c.name}`, alias: al.filter((x, i, arr) => arr.indexOf(x) === i), label: 'AI chip', key: c.id, def: c.notes || '', text: [c.vendor, c.name, c.family || '', (c.process || {}).node || '', (c.memory || {}).type || ''].join(' ') }); });
 // countries: any with three or more firms in the supplier list, a share in the country-share matrix, or a line on the home page's leverage table.
 // The role line is the home page's own (build/modules/summary-a.js exports ROLE), never retyped here; the card reads it from DATA.countries.

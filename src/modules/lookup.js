@@ -163,13 +163,13 @@
      firm's small China chart, as the Suppliers panel draws it (Suppliers.revenueHTML and exMini in src/app.js) */
   function firmHTML(it, used) {
     var r = it.data || {}, rows = [], S = CP.Suppliers || {};
-    var where = [r.city, cname(r.country)].filter(Boolean).join(', ');
+    var pl = S.parentLine ? S.parentLine(r) : '', where = [r.city, cname(r.country)].filter(Boolean).join(', ') + (pl ? ', ' + pl : ''); // a parent based abroad beside the firm's own home (Suppliers.parentLine)
     // its market position, in the Suppliers page's word, and what that position means (Suppliers.POSITION and POSITION_DEF)
     if (r.chokepoint) rows.push(['Market position', '<span class="gl-chk gl-chk--' + esc(String(r.chokepoint).toLowerCase()) + '">' + esc(posWord(r.chokepoint)) + '</span>' +
       ((S.POSITION_DEF || {})[r.chokepoint] ? '<span class="gl-chk-def">' + esc(S.POSITION_DEF[r.chokepoint]) + '</span>' : ''), true]);
     if (where) rows.push(['Based in', where]);
     if (r.founded) rows.push(['Founded', String(r.founded)]);
-    if (r.ownership || r.ticker) rows.push(['Ownership', [r.ownership, r.ticker ? 'ticker ' + r.ticker : ''].filter(Boolean).join(', ')]);
+    if (r.ownership || r.ticker) rows.push(['Ownership', [r.ownership, r.ticker && !/^private$/i.test(r.ticker) ? 'ticker ' + r.ticker : ''].filter(Boolean).join(', ')]);
     if (r.customers && r.customers.length) rows.push(['Named customers', r.customers.join(', ')]);
     var rs = r.revenueShown, rev = rs && S.revenueHTML ? S.revenueHTML(rs) : '';
     if (rev) rows.push(['Revenue', rev, true]);

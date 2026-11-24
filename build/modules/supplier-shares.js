@@ -57,7 +57,6 @@ const FIRMS = {
     ["Synopsys", "ch:01", "Synopsys, Cadence and Siemens EDA make the software used to design every advanced chip"],
     ["Cadence Design Systems", "ch:01", "Synopsys, Cadence and Siemens EDA make the software used to design every advanced chip"],
     ["Siemens EDA", "ch:01", "Synopsys, Cadence and Siemens EDA make the software used to design every advanced chip"],
-    ["Ansys", "list", "Its RedHawk tool is the standard for power integrity signoff"],
     ["Empyrean Technology", "list", "A Chinese EDA vendor"],
     ["Primarius Technologies", "list", "A Chinese EDA vendor"],
     ["Semitronix", "list", "Yield-analysis EDA"],

@@ -56,7 +56,7 @@
       },
       {
         "code": "CH",
-        "note": "Hitachi Energy transformers and switchgear, and ABB switchgear"
+        "note": "Hitachi Energy (parent Hitachi, Japan) transformers and switchgear, and ABB switchgear"
       },
       {
         "code": "DE",

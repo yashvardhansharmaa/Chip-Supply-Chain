@@ -1840,6 +1840,17 @@
     POSITION: { Critical: 'Dominant', Important: 'Major', Contested: 'Challenger', Diversified: 'One of many' },
     POSITION_DEF: { Critical: 'Holds more than half of the market for its main product.', Important: 'A leading supplier of its main product, with rivals.', Contested: 'A smaller supplier competing with the leaders.', Diversified: 'One of many firms that make its main product.' },
     pos: function (lv) { return this.POSITION[lv] || lv || ''; },
+    /* a firm owned by another company keeps the country where it is based, and its parent shows beside it when the parent's
+       home is another country (UX test, 24 Nov 2026: Siemens EDA read US here and Germany in the ribbons' note). data/suppliers.json
+       "parent" names the owner, its home and how it owns the firm. build/build.js and build/modules/reference-pages.js print the same */
+    abroad: function (r) { return r && r.parent && r.parent.country && r.parent.country !== r.country ? r.parent : null; },
+    ccTag: function (r) { var p = this.abroad(r); return r.country + (p ? ' · parent ' + p.country : ''); },
+    parentLine: function (r) { var p = this.abroad(r); return p ? 'parent ' + p.name + ' (' + cname(p.country) + ')' : ''; },
+    ownedBy: function (r) { var p = r && r.parent; return p ? (p.kind === 'division' ? 'Part of ' : p.kind === 'majority' ? 'Majority owned by ' : 'Subsidiary of ') + p.name : ''; },
+    // the line under a firm's name in the Table: its ticker, and for a firm with a parent, who owns it in place of "Private"
+    tickerLine: function (r) { return r.parent ? [/^private$/i.test(r.ticker || '') ? '' : r.ticker, this.ownedBy(r)].filter(Boolean).join(' · ') : (r.ticker || ''); },
+    // a firm's other sources (data/suppliers.json moreSources), after its Source link
+    moreSrc: function (r, cls) { return (r.moreSources || []).filter(function (s) { return s && s.url; }).map(function (s) { return ' <a' + (cls ? ' class="' + cls + '"' : '') + ' href="' + safeUrl(s.url) + '" target="_blank" rel="noopener">' + esc(s.label || 'Source') + '</a>'; }).join(''); },
     // a level's pill: the word readers see, and its meaning as the pill's title
     pill: function (lv) { return lv ? '<span class="chk ' + esc(lv) + '" title="' + esc(this.POSITION_DEF[lv] || '') + '">' + esc(this.pos(lv)) + '</span>' : ''; },
     ORDER: ['Design and EDA', 'IP and architecture', 'Silicon and wafers', 'Photomasks', 'Lithography', 'Deposition and etch', 'Photoresist and materials', 'Chemicals and gases', 'Optics and photonics', 'Equipment subsystems and components', 'Metrology and inspection', 'Foundry', 'Memory', 'Advanced packaging and OSAT', 'Test', 'Substrates and PCBs', 'Interconnect and networking', 'Power and cooling', 'Systems and servers', 'AI accelerator vendors'], // chain order, design first
@@ -2028,7 +2039,8 @@
       if (this.stage && r.category !== this.stage) return false; // a stage picked on the pipeline filters the list and the export
       if (!this.inCountry(r)) return false;
       if (this.chk && r.chokepoint !== this.chk) return false;
-      if (this.q) { var hay = [r.name, r.nativeName, r.city, r.ticker, r.role, r.subcategory, (r.customers || []).join(' '), cname(r.country)].join(' ').toLowerCase(); if (hay.indexOf(this.q) < 0) return false; }
+      // a parent's name and a firm folded into this one (data/suppliers.json "folded": Ansys into Synopsys, ZT Systems into AMD) find it too
+      if (this.q) { var hay = [r.name, r.nativeName, r.city, r.ticker, r.role, r.subcategory, (r.customers || []).join(' '), cname(r.country), (r.parent || {}).name, (r.folded || []).join(' ')].join(' ').toLowerCase(); if (hay.indexOf(this.q) < 0) return false; }
       return true;
     },
     filtered: function () {
@@ -2066,7 +2078,7 @@
           return (self.RANK[a.chokepoint] - self.RANK[b.chokepoint]) || String(a.name).localeCompare(String(b.name));
         }).map(function (f) {
           return '<span class="sup-nw" data-r="' + f._ix + '"><button type="button" class="sup-name lv-' + esc(f.chokepoint || 'Important') +
-            '" aria-expanded="false" aria-controls="' + s.id + '-p">' + esc(f.name) + '<i class="sup-cc">' + esc(f.country) + '</i>' +
+            '" aria-expanded="false" aria-controls="' + s.id + '-p">' + esc(f.name) + '<i class="sup-cc">' + esc(self.ccTag(f)) + '</i>' +
             (f.chokepoint === 'Critical' || f.chokepoint === 'Diversified' ? '<span class="sr-only">, ' + esc(self.pos(f.chokepoint)) + '</span>' : '') + // the name's color, said aloud
             '</button></span>'; // the list stays names only: a firm's revenue and its China share open with the firm (detail, below)
         }).join(' '); // the lines break at these spaces, so a name never leaves its comma at the start of the next line
@@ -2155,13 +2167,13 @@
       // parent's share, and the label says so), linked to the firm's chart of every year
       if (r.china) facts.push(['From China', '<a href="' + safeUrl(r.china.href) + '">' + esc(String(r.china.label).replace(/^China /, '')) +
         '<span class="sr-only">. Opens the chart of every year</span> <span aria-hidden="true">→</span></a>' + this.exMini(r.china.href)]);
-      var tag = [r.subcategory, cname(r.country) + (r.city ? ', ' + r.city : ''), /^private$/i.test(r.ticker || '') ? '' : r.ticker].filter(Boolean).join(' · ');
+      var pl = this.parentLine(r), tag = [r.subcategory, cname(r.country) + (r.city ? ', ' + r.city : '') + (pl ? ', ' + pl : ''), /^private$/i.test(r.ticker || '') ? '' : r.ticker].filter(Boolean).join(' · ');
       return '<div class="sup-detail-body">' +
         '<p class="sup-detail-h">' + esc(r.name) + (r.chokepoint ? ' ' + this.pill(r.chokepoint) : '') +
         (tag ? '<em>' + esc(tag) + '</em>' : '') + '</p>' +
         (r.role ? '<p class="sup-role">' + esc(r.role) + '</p>' : '') +
         (facts.length ? '<dl class="sup-facts">' + facts.map(function (f) { return '<dt>' + f[0] + '</dt><dd>' + f[1] + '</dd>'; }).join('') + '</dl>' : '') +
-        (r.source ? '<a class="sup-src" href="' + safeUrl(r.source) + '" target="_blank" rel="noopener" aria-label="Source for ' + esc(r.name) + '">Source</a>' : '') + '</div>';
+        (r.source ? '<a class="sup-src" href="' + safeUrl(r.source) + '" target="_blank" rel="noopener" aria-label="Source for ' + esc(r.name) + '">Source</a>' : '') + this.moreSrc(r, 'sup-src') + '</div>';
     },
     // the firm's China revenue chart, small, under its From China line: a copy of its panel on Export Controls (#ex-<slug>, written by
     // build/build.js and already in the page), its links unwrapped and hidden from screen readers, since the line beside it says the
@@ -2190,25 +2202,26 @@
       var th = function (k, label) { return '<th' + (self.sortKey === k ? ' aria-sort="' + (self.sortDir > 0 ? 'ascending' : 'descending') + '"' : '') + '><button type="button" data-sort="' + k + '">' + label + '</button></th>'; };
       var html = '<thead><tr>' + th('name', 'Supplier') + th('category', 'Segment') + th('country', 'Country') + th('founded', 'Founded') + th('chokepoint', 'Market position') + '<th>What they make</th><th>Customers</th></tr></thead><tbody>';
       rows.forEach(function (r) {
-        html += '<tr><td class="name"><b>' + esc(r.name) + '</b><span>' + esc([r.nativeName, r.ticker].filter(Boolean).join(' · ')) + '</span>' +
+        html += '<tr><td class="name"><b>' + esc(r.name) + '</b><span>' + esc([r.nativeName, self.tickerLine(r)].filter(Boolean).join(' · ')) + '</span>' +
           (r.china ? '<a class="sup-ex-a" href="' + safeUrl(r.china.href) + '">' + esc(r.china.label) + '</a>' : '') + '</td>' +
           '<td>' + esc(r.category) + (r.subcategory ? '<br><span class="cc" style="color:var(--muted)">' + esc(r.subcategory) + '</span>' : '') + '</td>' +
-          '<td><span class="cc">' + esc(r.country) + '</span> ' + esc(r.city || '') + '</td>' +
+          '<td><span class="cc">' + esc(self.ccTag(r)) + '</span> ' + esc(r.city || '') + '</td>' +
           '<td class="num">' + (r.founded || '—') + '</td>' +
           '<td>' + self.pill(r.chokepoint) + (r.shareNote ? '<br><span class="cc" style="color:var(--muted)">' + esc(r.shareNote) + '</span>' : '') + '</td>' +
-          '<td class="role">' + esc(r.role || '') + (r.source ? ' <a href="' + safeUrl(r.source) + '" target="_blank" rel="noopener" class="cc" aria-label="Source for ' + esc(r.name) + '">Source</a>' : '') + '</td>' +
+          '<td class="role">' + esc(r.role || '') + (r.source ? ' <a href="' + safeUrl(r.source) + '" target="_blank" rel="noopener" class="cc" aria-label="Source for ' + esc(r.name) + '">Source</a>' : '') + self.moreSrc(r, 'cc') + '</td>' +
           '<td style="font-size:13px;color:var(--ink-2)">' + esc((r.customers || []).join(', ')) + '</td></tr>';
       });
       $('#sup-table').innerHTML = html + '</tbody>';
     },
     copy: function () {
-      var rows = this.filtered(), cols = ['name', 'nativeName', 'category', 'subcategory', 'country', 'city', 'founded', 'ticker', 'ownership', 'marketPosition', 'shareNote', 'role', 'customers', 'revenueUSDb', 'revenueYear', 'source',
+      var rows = this.filtered(), cols = ['name', 'nativeName', 'category', 'subcategory', 'country', 'city', 'founded', 'ticker', 'ownership', 'parent', 'parentCountry', 'marketPosition', 'shareNote', 'role', 'customers', 'revenueUSDb', 'revenueYear', 'source',
         'revenueAmount', 'revenueUnit', 'revenueCurrency', 'revenueFiscalYear', 'revenueFyEnd', 'revenueSource', 'revenueUSD', 'revenueUSDBasis'];
       // the filed revenue after the earlier columns: the amount as filed (without commas, so a spreadsheet reads it as a number) and the
       // revenue object's own fields, then the dollar figure build/build.js converted and the rates it used
       var REV = { revenueUnit: 'unit', revenueCurrency: 'currency', revenueFiscalYear: 'fiscalYear', revenueFyEnd: 'fyEnd', revenueSource: 'source' };
       // the market position in the reader's word (the data's own value is "chokepoint")
-      var self = this, val = function (r, c) { return c === 'marketPosition' ? (r.chokepoint ? self.pos(r.chokepoint) : '') : c === 'revenueAmount' ? (r.revenueShown || {}).amount : REV[c] ? (r.revenue || {})[REV[c]] : r[c]; };
+      // a firm's parent, by name and home (data/suppliers.json "parent")
+      var self = this, val = function (r, c) { return c === 'marketPosition' ? (r.chokepoint ? self.pos(r.chokepoint) : '') : c === 'parent' ? (r.parent || {}).name : c === 'parentCountry' ? (r.parent || {}).country : c === 'revenueAmount' ? (r.revenueShown || {}).amount : REV[c] ? (r.revenue || {})[REV[c]] : r[c]; };
       var q = function (v) { if (v == null) return ''; if (Array.isArray(v)) v = v.join('; '); return String(v).replace(/[\t\n\r]+/g, ' '); }; // tab-separated: a spreadsheet splits it on paste
       var csv = cols.join('\t') + '\n' + rows.map(function (r) { return cols.map(function (c) { return q(val(r, c)); }).join('\t'); }).join('\n');
       var btn = $('#sup-copy');
@@ -6244,13 +6257,13 @@ try {
      firm's small China chart, as the Suppliers panel draws it (Suppliers.revenueHTML and exMini in src/app.js) */
   function firmHTML(it, used) {
     var r = it.data || {}, rows = [], S = CP.Suppliers || {};
-    var where = [r.city, cname(r.country)].filter(Boolean).join(', ');
+    var pl = S.parentLine ? S.parentLine(r) : '', where = [r.city, cname(r.country)].filter(Boolean).join(', ') + (pl ? ', ' + pl : ''); // a parent based abroad beside the firm's own home (Suppliers.parentLine)
     // its market position, in the Suppliers page's word, and what that position means (Suppliers.POSITION and POSITION_DEF)
     if (r.chokepoint) rows.push(['Market position', '<span class="gl-chk gl-chk--' + esc(String(r.chokepoint).toLowerCase()) + '">' + esc(posWord(r.chokepoint)) + '</span>' +
       ((S.POSITION_DEF || {})[r.chokepoint] ? '<span class="gl-chk-def">' + esc(S.POSITION_DEF[r.chokepoint]) + '</span>' : ''), true]);
     if (where) rows.push(['Based in', where]);
     if (r.founded) rows.push(['Founded', String(r.founded)]);
-    if (r.ownership || r.ticker) rows.push(['Ownership', [r.ownership, r.ticker ? 'ticker ' + r.ticker : ''].filter(Boolean).join(', ')]);
+    if (r.ownership || r.ticker) rows.push(['Ownership', [r.ownership, r.ticker && !/^private$/i.test(r.ticker) ? 'ticker ' + r.ticker : ''].filter(Boolean).join(', ')]);
     if (r.customers && r.customers.length) rows.push(['Named customers', r.customers.join(', ')]);
     var rs = r.revenueShown, rev = rs && S.revenueHTML ? S.revenueHTML(rs) : '';
     if (rev) rows.push(['Revenue', rev, true]);

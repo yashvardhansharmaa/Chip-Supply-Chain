@@ -40,7 +40,7 @@ const WINE = 'rgb(122, 31, 43)', GRAY = 'rgb(210, 209, 204)', INK = 'rgb(23, 23,
       check(`${width}: /suppliers/ is the interactive page, the route map first under the title and its counts`, first.path === '/suppliers/' && first.h1 === 'Suppliers' && first.afterHead.length === 0 && !first.btn, JSON.stringify(first));
       check(`${width}: the firm list for reading without scripts is out of sight once the list is built`, first.staticShown === 'none', first.staticShown);
       check(`${width}: the page reads route, ribbons, then the firms`, await t.ev("(function(){var a=document.getElementById('the-route'),b=document.getElementById('sup-pipe'),c=document.getElementById('sup-reg');return !!(a.compareDocumentPosition(b)&Node.DOCUMENT_POSITION_FOLLOWING)&&!!(b.compareDocumentPosition(c)&Node.DOCUMENT_POSITION_FOLLOWING);})()"));
-      check(`${width}: the four counts`, /226/.test(await t.ev("document.querySelector('.sup-facts-row').textContent")), await t.ev("document.querySelector('.sup-facts-row').innerText.replace(/\\s+/g,' ')"));
+      check(`${width}: the four counts`, /224/.test(await t.ev("document.querySelector('.sup-facts-row').textContent")), await t.ev("document.querySelector('.sup-facts-row').innerText.replace(/\\s+/g,' ')"));
       // the market positions (23 Nov 2026): every word and count from the app (Suppliers.POSITION, LEVELS) and the data, none typed here
       const POS = await t.ev(`(function(){var S=window.CP.Suppliers,D=window.CP.DATA||window.CP_DATA,n={};S.LEVELS.forEach(function(l){n[l]=0;});(D.suppliers||[]).forEach(function(r){n[r.chokepoint]=(n[r.chokepoint]||0)+1;});return {levels:S.LEVELS,word:S.POSITION,def:S.POSITION_DEF,n:n};})()`);
       const words = POS.levels.map((l) => POS.word[l]);
@@ -86,7 +86,7 @@ const WINE = 'rgb(122, 31, 43)', GRAY = 'rgb(210, 209, 204)', INK = 'rgb(23, 23,
       await t.ev("(document.querySelector('#sup-ladder-cc .sup-name').click(), 1)"); await sleep(400);
       check(`${width}: ...a name opens its panel`, await t.ev("document.querySelector('#sup-ladder-cc .sup-panel[data-open=\"1\"] .sup-detail-h') !== null"));
       await t.ev("(document.querySelector('.sup-tabs a[data-tab=\"table\"]').click(), 1)"); await sleep(400);
-      check(`${width}: Table shows every firm`, (await t.ev("document.querySelectorAll('#sup-table tbody tr').length")) === 226 && /Segment/.test(await t.ev("document.querySelector('#sup-table thead').textContent")) && /tab=table/.test(await t.ev('location.hash')));
+      check(`${width}: Table shows every firm`, (await t.ev("document.querySelectorAll('#sup-table tbody tr').length")) === 224 && /Segment/.test(await t.ev("document.querySelector('#sup-table thead').textContent")) && /tab=table/.test(await t.ev('location.hash')));
       check(`${width}: ...its column is Market position`, (await t.ev("[].map.call(document.querySelectorAll('#sup-table thead th'),function(h){return h.textContent;}).join('|')")).split('|').includes('Market position'));
       const cells = await t.ev("(function(){var c={};document.querySelectorAll('#sup-table tbody .chk').forEach(function(e){c[e.textContent]=(c[e.textContent]||0)+1;});return c;})()");
       check(`${width}: ...each cell shows its position, as many of each as the data holds`, POS.levels.every((l) => (cells[POS.word[l]] || 0) === POS.n[l]) && Object.keys(cells).every((k) => words.includes(k)), JSON.stringify(cells));

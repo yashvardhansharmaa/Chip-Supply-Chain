@@ -20,10 +20,9 @@
  {"name": "Broadcom", "country": "US", "share": "$16.7 billion of AI semiconductor revenue in the third quarter of fiscal 2026, custom accelerators and networking combined", "source": "https://www.sec.gov/Archives/edgar/data/0001730168/000173016826000076/avgo-08022026x8kxex99.htm"}
  ],
  "countries": [
- {"code": "US", "note": "Synopsys, Cadence, Broadcom, Marvell and Nvidia"},
+ {"code": "US", "note": "Synopsys, Cadence, Broadcom, Marvell, Nvidia, and Amazon's Annapurna Labs, the AWS design house behind Trainium and Graviton"},
  {"code": "GB", "note": "Arm processor and interconnect designs licensed from Cambridge, and since 2026 its own server chip"},
  {"code": "TW", "note": "Alchip, Global Unichip and MediaTek: design services that carry a chip to the factory"},
- {"code": "IL", "note": "Annapurna Labs, the AWS design house behind Trainium and Graviton"},
  {"code": "IN", "note": "Nearly 20 percent of the world's chip design engineers, on the Indian government's count"}
  ],
  "chinaStatus": "China designs its own AI accelerators, but Huawei's most powerful chip in 2026, the Ascend 950, delivers about half the computing performance of Nvidia's H100 from 2022, on Epoch AI's estimate. CSIS found that as of 2025 Chinese design tools were still far from replacing the full range of advanced capabilities US firms offer, especially for 5 nm and 3 nm chips.",

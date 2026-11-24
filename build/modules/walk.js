@@ -44,7 +44,7 @@ module.exports = function (ctx) {
     const ls = (c.leaders || []).slice(0, 3);
     if (!ls.length) return '';
     const line = ls
-      .map((l) => `<span class="wk-lead">${esc(l.name)}${l.country ? ` <span class="chip">${esc(l.country)}</span>` : ''}</span>`)
+      .map((l) => `<span class="wk-lead">${esc(l.name)}${l.country ? ` <span class="chip">${esc(l.country)}${l.parentCC ? ` · parent ${esc(l.parentCC)}` : ''}</span>` : ''}</span>`) // a parent abroad (build/build.js parentCC)
       .join('<i class="wk-sep" aria-hidden="true">·</i>');
     return `<p class="wk-leaders"><span class="label">Who leads</span>${line}</p>`;
   }
