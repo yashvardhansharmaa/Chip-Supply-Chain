@@ -8,7 +8,7 @@
      - the menu: Intro first, no Home, no tab marked on the home, the wordmark named "Chip Supply Chain, home";
      - fourteen objects drawn, a numbered callout for each stage and one for final test, each linking to its chapter; the solid
        balloons are the stages the data rates Extreme (seven since the owner kept the 65 percent rule), and the key counts them
-       in the cards' own words;
+       in the approved short form of the cards' note (design review, 23 Nov 2026);
      - the two chapters across the chain, linked and named as the chapters are;
      - the list of stages the drawing is made from (the page without scripts) stays out of sight, and no stage, rail or Back to
        top shows beside the drawing;
@@ -66,7 +66,7 @@ const BASE = (process.argv[2] || 'http://127.0.0.1:8766').replace(/\/$/, '');
       check(`${width}: a callout for each stage and one for final test, each linking to its chapter`, facts.cos === 15 && JSON.stringify(facts.links) === JSON.stringify(wantLinks), facts.links.join(' '));
       const solidIds = facts.solid.filter((h, i, a) => a.indexOf(h) === i);
       check(`${width}: the solid balloons are the stages the data rates Extreme (seven)`, JSON.stringify(solidIds) === JSON.stringify(facts.want) && facts.want.length === 7, solidIds.join(' '));
-      check(`${width}: the key counts the chokepoints in the cards' own words`, facts.key.indexOf(`${facts.want.length} of the ${facts.stages.length} stages are chokepoints: three or fewer firms can supply each, or one firm holds more than 65 percent.`) === 0 && /Objects drawn at different scales\.$/.test(facts.key), facts.key);
+      check(`${width}: the key counts the chokepoints in the approved short form of the cards' note`, facts.key.indexOf(`${facts.want.length} of the ${facts.stages.length} stages are chokepoints: three or fewer firms, or one with more than 65 percent.`) === 0 && /Objects drawn at different scales\.$/.test(facts.key), facts.key);
       check(`${width}: the two chapters across the chain, linked and named as the chapters are`, JSON.stringify(facts.across) === JSON.stringify(facts.acrossWant), JSON.stringify(facts.across));
       check(`${width}: the list of stages stays out of sight, and no stage, rail or Back to top shows beside the drawing`, facts.glance === 'none' && facts.stage === 'none' && !facts.rail && facts.toTop === 'none', JSON.stringify({ glance: facts.glance, stage: facts.stage, rail: facts.rail, toTop: facts.toTop }));
 

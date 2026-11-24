@@ -361,17 +361,20 @@ function figure(f, ctx) {
   const head = `<div class="fig-head"><a class="fig-k" href="#${fid}">${esc(kick)}</a>`
     + `<p class="fig-title${finding ? ' fig-find' : ''}">${esc(big)}${small ? '' : unitTag}</p>${small ? `<p class="fig-sub">${esc(small)}${unitTag}</p>` : ''}</div>`;
   // the source line: Source (or a note) first, then the actions
-  const src = f.source && f.source.url ? `<span class="fs-src"><span class="fs-k">${f.type === 'explore' && Array.isArray(f.sources) && f.sources.length ? 'Sources:' : 'Source:'}</span> <a href="${safeUrl(f.source.url)}" target="_blank" rel="noopener">${esc(f.source.label || host(f.source.url))}</a>&nbsp;${srcMark}${FS.more(f, (u) => cite(u, ctx), safeUrl)}</span>`
+  const src = f.source && f.source.url ? `<span class="fs-src"><span class="fs-k">${Array.isArray(f.sources) && f.sources.some((x) => x && x.url) ? 'Sources:' : 'Source:'}</span> <a href="${safeUrl(f.source.url)}" target="_blank" rel="noopener">${esc(f.source.label || host(f.source.url))}</a>&nbsp;${srcMark}${FS.more(f, (u) => cite(u, ctx), safeUrl)}</span>`
     : (f.source && f.source.label ? `<span class="fs-src"><span class="fs-k">Source:</span> ${esc(f.source.label)}</span>` : '');
   const note = f.note ? `<span class="fs-note fig-source"><span class="fs-k">Note:</span> ${esc(f.note)}</span>` : '';
   const box = `cite-${fid}`;
   // the figure's source by name and date, for the citation's Data line and the CSV (28 Oct 2026): the bibliography's date, or none
   const srcB = f.source && f.source.url ? bibOf(f.source.url) : null;
-  const srcName = f.source ? String(f.source.label || (f.source.url ? host(f.source.url) : '')) : '';
+  // a chart with more sources than its main one names them all, joined by semicolons, so the Data line and the CSV credit
+  // each (23 Nov 2026: 14.3 draws each hyperscaler's figure from its own results); an explorable keeps its main source here
+  const allSrc = f.source ? [f.source].concat(f.type !== 'explore' && Array.isArray(f.sources) ? f.sources : []).filter((x) => x && (x.url || x.label)) : [];
+  const srcName = allSrc.map((x) => String(x.label || (x.url ? host(x.url) : ''))).filter(Boolean).join('; ');
   // (a label that already gives a day, or names more than one source, keeps its own words: one date would be wrong for it)
   const srcWhen = srcB && srcB.date && !/\b(January|February|March|April|May|June|July|August|September|October|November|December) \d{4}|;/.test(srcName) ? bibDate(srcB.date) : '';
   const figURL = SITE.url + ctx.id + '/#' + fid;
-  const csv = data.length && !isAnim ? `<a class="fs-csv" href="${figCSV(f, data, { num, source: srcName, when: srcWhen, url: f.source && f.source.url ? String(f.source.url) : '', page: figURL })}" download="chip-supply-chain-figure-${num.replace('.', '-')}-${esc(f.id)}.csv">CSV</a>` : '';
+  const csv = data.length && !isAnim ? `<a class="fs-csv" href="${figCSV(f, data, { num, source: srcName, when: srcWhen, url: allSrc.filter((x) => x.url).map((x) => String(x.url)).join('; '), page: figURL })}" download="chip-supply-chain-figure-${num.replace('.', '-')}-${esc(f.id)}.csv">CSV</a>` : '';
   // an explainer animation has no Cite (owner, 27 Oct): it explains a process and holds no figures of its own to cite
   const acts = isAnim ? '' : `<span class="fs-acts" data-kind="${esc(f.type)}"><button type="button" class="ch-cite-btn" aria-expanded="false" aria-controls="${box}">Cite</button>${csv}</span>`;
   // the citation names the figure by its title's first sentence (the sentences after it, and the note, are not its title) and

@@ -133,8 +133,8 @@
       "source": "https://www.energy.gov/documents/united-states-data-center-energy-usage-report-2025-update"
     },
     {
-      "fact": "Capital spending by Alphabet, Amazon, Meta, Microsoft and Oracle came to $140,648 million in the fourth quarter of 2025, by Epoch AI's count",
-      "source": "https://epoch.ai/data-insights/hyperscaler-capex-trend"
+      "fact": "Amazon's purchases of property and equipment came to $77,259 million in the three months to September 2026",
+      "source": "https://s2.q4cdn.com/299287126/files/doc_earnings/2026/q3/earnings-result/AMZN-Q3-2026-Earnings-Release.pdf#page=6"
     },
     {
       "fact": "ERCOT, the grid operator for most of Texas, was tracking about 474 GW of large loads seeking a grid connection in June 2026, about 90 percent of it data centers. In July 2026, ERCOT found that only about 205 GW of those requests had the engineering study needed to enter Batch Zero, the first batch of requests it studies together",
@@ -145,16 +145,24 @@
       "source": "https://gov.texas.gov/news/post/governor-abbott-directs-comprehensive-data-center-audit"
     },
     {
-      "fact": "ERCOT's operational overview for September 2026, published on 16 October 2026, counted 9,456 MW approved to energize. Judging by peak monthly use in September, ERCOT believed 4,132 MW of it was operating",
-      "source": "https://www.ercot.com/files/docs/2026/10/16/ERCOT-Monthly-Operational-Overview-September.pdf"
+      "fact": "ERCOT's operational overview for October 2026, published on 17 November 2026, counted 9,456 MW approved to energize. Judging by peak monthly use in October, ERCOT believed 5,115 MW of it was operating",
+      "source": "https://www.ercot.com/files/docs/2026/11/17/ERCOT-Monthly-Operational-Overview-October-2026.pdf#page=9"
     },
     {
-      "fact": "GE Vernova's gas power equipment backlog and reserved factory slots grew from 100 GW to 116 GW in the second quarter of 2026. It expects annual gas turbine output of 20 GW in the third quarter of 2026 and 24 GW in 2028, and is taking steps to reach 30 GW in 2030",
+      "fact": "GE Vernova's gas power equipment backlog and reserved factory slots grew from 116 GW to 122 GW in the third quarter of 2026",
+      "source": "https://www.gevernova.com/news/ge-vernova-reports-strong-third-quarter-2026-financial-performance"
+    },
+    {
+      "fact": "In July 2026 GE Vernova expected annual gas turbine output of 20 GW in the third quarter of 2026 and 24 GW in 2028, and was taking steps to reach 30 GW in 2030",
       "source": "https://www.gevernova.com/news/press-releases/ge-vernova-reports-second-quarter-2026-financial-results-raises-2026-financial"
     },
     {
-      "fact": "In its October 2026 Short-Term Energy Outlook, the US Energy Information Administration expects US electricity sales of 4,152.0 TWh in 2026 and 4,216.6 TWh in 2027. It expects electricity demand from the commercial sector, which includes data centers, to grow 2.8 percent in 2027",
-      "source": "https://www.eia.gov/outlooks/steo/archives/oct26.pdf"
+      "fact": "In its November 2026 Short-Term Energy Outlook, the US Energy Information Administration expects US electricity sales of 4,170.8 TWh in 2026 and 4,231.5 TWh in 2027",
+      "source": "https://www.eia.gov/outlooks/steo/archives/nov26.pdf#page=48"
+    },
+    {
+      "fact": "In its October 2026 outlook, the US Energy Information Administration expected electricity demand from the commercial sector, which includes data centers, to grow 2.8 percent in 2027",
+      "source": "https://www.eia.gov/outlooks/steo/archives/oct26.pdf#page=12"
     }
   ],
   "figures": [
@@ -163,36 +171,43 @@
     {
       "id": "hyperscaler-capex",
       "type": "bars",
-      "title": "Capital spending by the five US hyperscalers, fourth quarter of 2025",
-      "finding": "Amazon spent the most of the five hyperscalers, $40,465 million in the fourth quarter of 2025",
+      "title": "Cash spent on property and equipment by the five US hyperscalers in their latest reported quarter",
+      "finding": "Amazon spent the most of the five hyperscalers, $77,259 million in the three months to September 2026",
       "unit": "$M",
       "data": [
         [
           "Amazon",
-          40465
-        ],
-        [
-          "Microsoft",
-          36206
+          77259
         ],
         [
           "Alphabet",
-          28468
+          51355
+        ],
+        [
+          "Microsoft",
+          39367
         ],
         [
           "Meta",
-          22463
+          33942
         ],
         [
-          "Oracle",
-          13046
+          "Oracle, June to August",
+          28499
         ]
       ],
       "source": {
-        "label": "Epoch AI, hyperscaler capex trend, February 2026, table of capital spending by quarter, fourth quarter of 2025",
-        "url": "https://epoch.ai/data-insights/hyperscaler-capex-trend"
+        "label": "Amazon, third-quarter 2026 results, October 2026",
+        "url": "https://s2.q4cdn.com/299287126/files/doc_earnings/2026/q3/earnings-result/AMZN-Q3-2026-Earnings-Release.pdf#page=6"
       },
-      "note": "Epoch AI's figures, from company filings, add cash spent on property and equipment to new finance leases, leases recorded much like purchases paid for over time. The companies' own figures count capital spending in different ways. Alphabet is Google's parent company. Microsoft's fiscal year ends in June, but its quarters match calendar quarters. Oracle's ends in May, and Epoch AI counts Oracle's quarter from September to November 2025 as the fourth quarter of 2025."
+      "sources": [
+        {"label": "Alphabet, third-quarter 2026 results, October 2026", "url": "https://s206.q4cdn.com/479360582/files/doc_financials/2026/q3/2026q3-alphabet-earnings-release.pdf#page=6"},
+        {"label": "Microsoft, first-quarter fiscal 2027 results, October 2026", "url": "https://www.microsoft.com/en-us/investor/earnings/FY-2027-Q1/press-release-webcast"},
+        {"label": "Microsoft, first-quarter fiscal 2027 earnings call, October 2026", "url": "https://www.microsoft.com/en-us/investor/events/fy-2027/earnings-fy-2027-q1"},
+        {"label": "Meta, third-quarter 2026 results, October 2026", "url": "https://s21.q4cdn.com/399680738/files/content_files/Meta-09-30-2026-Exhibit-99-1_FINAL.pdf#page=8"},
+        {"label": "Oracle, first-quarter fiscal 2027 results, September 2026", "url": "https://investor.oracle.com/investor-news/news-details/2026/Oracle-Announces-Q1-Results-Driven-by-Triple-Digit-Growth-in-Cloud-Infrastructure-Revenues/default.aspx"}
+      ],
+      "note": "Each firm's cash spending on property and equipment, from its own cash flow statement. Amazon, Alphabet and Meta call it purchases of property and equipment, Microsoft additions to property and equipment, and Oracle capital expenditures. It leaves out equipment taken on finance leases, leases recorded much like purchases paid for over time. Counting finance leases, Microsoft put its capital expenditures at $45.2 billion. Meta put its capital expenditures, including principal payments on finance leases, at $34.91 billion. The figures for Amazon, Alphabet, Microsoft and Meta cover July to September 2026, which is Microsoft's first quarter of fiscal 2027. Oracle's covers June to August 2026, its first quarter of fiscal 2027. Alphabet is Google's parent company."
     },
     {
       "id": "turbine-output",
@@ -263,7 +278,7 @@ A data center is a building full of computers, and an AI data center holds racks
 
 {{figure:power-in-heat-out}}
 
-The rack is the basic unit of AI compute. Nvidia's GB300 NVL72 rack draws up to 142 kW through eight 33 kW power shelves, the rack's own power supplies ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)). Supermicro's datasheet of February 2025 gives the GB200 NVL72, the rack before it, as 2,236 mm tall and 600 mm wide ([source](https://www.supermicro.com/datasheet/datasheet_SuperCluster_GB200_NVL72.pdf)). Large sites hold many such racks. Colossus 1, an AI data center in Memphis, Tennessee, held an estimated 230,000 Nvidia GPUs by July 2025 ([source](https://epoch.ai/data/ai-data-centers/directory/colossus-1)).
+The rack is the basic unit of AI compute. Nvidia's GB300 NVL72 rack draws up to 142 kW through eight 33 kW power shelves, the rack's own power supplies ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)). Supermicro's datasheet of February 2025 gives the GB200 NVL72, the rack before it, as 2,236 mm tall and 600 mm wide ([source](https://www.supermicro.com/datasheet/datasheet_SuperCluster_GB200_NVL72.pdf)). Large sites hold many such racks. Colossus 1, an AI data center in Memphis, Tennessee, held over 220,000 Nvidia GPUs in May 2026, Anthropic said ([source](https://www.anthropic.com/news/higher-limits-spacex)).
 
 Power reaches the rack through a chain of heavy equipment, and each piece has its own lead time, the wait between order and delivery. Between the grid and the rack, a substation steps the high voltage down with transformers. Switchgear, the building's heavy circuit breakers, can cut any part of the site off in a fault. Battery-backed supplies keep the racks running for the seconds it takes backup generators to start. Distribution boards split the feed among the rows of racks.
 
@@ -285,19 +300,19 @@ All the hyperscalers except Meta are cloud companies, which rent part of their c
 
 Oracle rents out its AI chips through its cloud, and in September 2026 it said it had delivered more than 300,000 GPUs to its AI cloud customers since the end of May ([source](https://www.oracle.com/news/announcement/q1fy27-earnings-release-2026-09-10/)). In July 2025 OpenAI agreed with Oracle to develop up to 4.5 GW of further Stargate capacity, a partnership OpenAI said would exceed $300 billion over five years ([source](https://openai.com/index/five-new-stargate-sites/)). Oracle's remaining performance obligations, revenue under contract that it has yet to earn, reached $664 billion at the end of August 2026 ([source](https://www.oracle.com/news/announcement/q1fy27-earnings-release-2026-09-10/)). Oracle said most of the rise in those obligations in the six months to May 2026 came from large AI contracts in which the customer prepaid for the chips or bought and supplied them itself ([source](https://www.oracle.com/news/announcement/q4fy26-earnings-release-2026-06-10/)). Those terms reduce the capital Oracle must raise to build its AI data centers, the company said ([source](https://www.oracle.com/news/announcement/q4fy26-earnings-release-2026-06-10/)).
 
-Epoch AI judges that neoclouds, smaller and newer cloud companies that generally focus on AI, are probably the most important owners of AI chips after the hyperscalers ([source](https://epoch.ai/data/ai-chip-owners)). SemiAnalysis, a research firm, tracked 209 cloud companies renting out AI chips in November 2025 and counted CoreWeave among the neoclouds ([source](https://newsletter.semianalysis.com/p/clustermax-20-the-industry-standard)). CoreWeave ran 52 data centers with more than 1.7 GW of active power at the end of September 2026 ([source](https://s205.q4cdn.com/133937190/files/content_files/CoreWeave-3Q-2026-Infographic.pdf#page=1)).
+Epoch AI judges that neoclouds, smaller and newer cloud companies that generally focus on AI, are probably the most important owners of AI chips after the hyperscalers ([source](https://epoch.ai/data/ai-chip-owners)). SemiAnalysis, a research firm, tracked 323 cloud companies renting out AI chips in September 2026 and counted CoreWeave among the neoclouds ([source](https://newsletter.semianalysis.com/p/clustermax-30-the-industry-standard)). CoreWeave ran 52 data centers with more than 1.7 GW of active power at the end of September 2026 ([source](https://s205.q4cdn.com/133937190/files/content_files/CoreWeave-3Q-2026-Infographic.pdf#page=1)).
 
 CoreWeave's 2025 annual report says it leases all of its data centers ([source](https://s205.q4cdn.com/133937190/files/doc_financials/2025/ar/2025-Annual-Report.pdf#page=59)). It pays for its buildout mostly with debt backed by customer contracts ([source](https://s205.q4cdn.com/133937190/files/doc_financials/2025/ar/2025-Annual-Report.pdf#page=12)). Those contracts usually run one to six years, and customers pay for all the capacity even if they use less, often paying part in advance ([source](https://s205.q4cdn.com/133937190/files/doc_financials/2025/ar/2025-Annual-Report.pdf#page=107)).
 
 Two hyperscalers, Microsoft and Meta, rent from neoclouds too. Microsoft supplied about 67 percent of CoreWeave's revenue in 2025 ([source](https://s205.q4cdn.com/133937190/files/doc_financials/2025/ar/2025-Annual-Report.pdf#page=26)). Microsoft buys some computing power from neoclouds and rents it out again to its own customers, Epoch AI found ([source](https://epoch.ai/data/ai-chip-owners)). Nebius, a neocloud headquartered in Amsterdam, agreed in March 2026 to supply Meta with capacity worth up to about $27 billion over five years ([source](https://nebius.com/newsroom/nebius-signs-new-ai-infrastructure-agreement-with-meta)).
 
-AI labs sign large contracts for computing power. In October 2025 OpenAI contracted to buy a further $250 billion of Azure cloud services from Microsoft ([source](https://openai.com/index/next-chapter-of-microsoft-openai-partnership/)). Its Stargate program with Oracle and the investment company SoftBank had more than 8 GW of planned capacity in the United States by October 2025, OpenAI said ([source](https://openai.com/index/expanding-stargate-to-michigan/)). Epoch AI projects that the program's seven US sites will exceed 9 GW by 2029 ([source](https://epoch.ai/publications/openai-stargate-where-the-us-sites-stand)).
+AI labs sign large contracts for computing power. In October 2025 OpenAI contracted to buy a further $250 billion of Azure cloud services from Microsoft ([source](https://openai.com/index/next-chapter-of-microsoft-openai-partnership/)). When it announced Stargate in January 2025, OpenAI committed to securing 10 GW of AI infrastructure in the United States by 2029, and in April 2026 it said it had already passed that goal ([source](https://openai.com/index/building-the-compute-infrastructure-for-the-intelligence-age/)). Epoch AI projects that the planned power capacity of the program's seven US sites will exceed 9 GW by 2029 ([source](https://epoch.ai/publications/openai-stargate-where-the-us-sites-stand)).
 
 SpaceX bought xAI in February 2026 ([source](https://x.ai/news/xai-joins-spacex)). Until then, xAI was the only major stand-alone AI lab that owned most of the computing power it used, Epoch AI found ([source](https://epoch.ai/data/ai-chip-owners)). In May 2026 Anthropic agreed to use all of the computing capacity of SpaceX's Colossus 1 data center ([source](https://www.anthropic.com/news/higher-limits-spacex)).
 
 Firms outside the United States are building too. In May 2025 Abu Dhabi's media office said that G42, an Emirati AI company, would build a 1 GW cluster there called Stargate UAE, which OpenAI and Oracle would operate ([source](https://www.mediaoffice.abudhabi/en/technology/global-tech-alliance-launches-stargate-uae/)). Alibaba said in February 2025 that it would invest at least RMB 380 billion ($53 billion) in cloud computing and AI infrastructure over three years ([source](https://www.alibabagroup.com/en-US/document-1830678592242057216)). Chinese companies together owned just over 5 percent of the world's AI computing power at the end of 2025, by Epoch AI's estimate, which leaves out chips smuggled past US export controls ([source](https://epoch.ai/latest/introducing-the-ai-chip-owners-explorer)).
 
-The hyperscalers' capital spending grew an average of 72 percent a year from the second quarter of 2023 to the end of 2025, driven by investment in AI infrastructure, Epoch AI found ([source](https://epoch.ai/data-insights/hyperscaler-capex-trend)). The five firms' spending came to $140,648 million in the fourth quarter of 2025, by Epoch AI's count ([source](https://epoch.ai/data-insights/hyperscaler-capex-trend)).
+Of the five hyperscalers, Amazon spent the most on property and equipment in its latest reported quarter, $77,259 million in the three months to September 2026 ([source](https://s2.q4cdn.com/299287126/files/doc_earnings/2026/q3/earnings-result/AMZN-Q3-2026-Earnings-Release.pdf#page=6)). Amazon said the year-on-year rise in that spending over the twelve months to September 2026 mainly reflects its investment in artificial intelligence ([source](https://s2.q4cdn.com/299287126/files/doc_earnings/2026/q3/earnings-result/AMZN-Q3-2026-Earnings-Release.pdf#page=1)). Microsoft said roughly three quarters of its capital spending in the same three months went on short-lived assets, mainly CPUs and GPUs ([source](https://www.microsoft.com/en-us/investor/events/fy-2027/earnings-fy-2027-q1)).
 
 {{figure:hyperscaler-capex}}
 
@@ -341,22 +356,22 @@ The International Energy Agency expected worldwide investment in data centers to
 
 Electricity grids are under strain in many places. In April 2025 the International Energy Agency estimated that around 20 percent of planned data center projects could be at risk of delay unless that strain is addressed ([source](https://www.iea.org/reports/energy-and-ai/executive-summary)). The agency also found that a new transmission line can take four to eight years to build in advanced economies ([source](https://www.iea.org/reports/energy-and-ai/executive-summary)).
 
-On the Texas grid, big power users have asked for far more electricity than is connected and running. ERCOT, the grid operator for most of Texas, was tracking about 474 GW of large loads seeking a connection in June 2026, roughly 90 percent of it data centers ([source](https://www.ercot.com/files/docs/2026/07/29/ERCOT-Senate-July-29-Panel-1-Assessing-The-Grid.pdf#page=6)). In its operational overview for September 2026, ERCOT counted 9,456 MW of large loads approved to energize, that is, cleared to switch on ([source](https://www.ercot.com/files/docs/2026/10/16/ERCOT-Monthly-Operational-Overview-September.pdf#page=9)). Judging by peak monthly use in September, it believed only 4,132 MW of it was operating ([source](https://www.ercot.com/files/docs/2026/10/16/ERCOT-Monthly-Operational-Overview-September.pdf#page=9)).
+On the Texas grid, big power users have asked for far more electricity than is connected and running. ERCOT, the grid operator for most of Texas, was tracking about 474 GW of large loads seeking a connection in June 2026, roughly 90 percent of it data centers ([source](https://www.ercot.com/files/docs/2026/07/29/ERCOT-Senate-July-29-Panel-1-Assessing-The-Grid.pdf#page=6)). In its operational overview for October 2026, ERCOT counted 9,456 MW of large loads approved to energize, that is, cleared to switch on ([source](https://www.ercot.com/files/docs/2026/11/17/ERCOT-Monthly-Operational-Overview-October-2026.pdf#page=9)). Judging by peak monthly use in October, it believed only 5,115 MW of it was operating ([source](https://www.ercot.com/files/docs/2026/11/17/ERCOT-Monthly-Operational-Overview-October-2026.pdf#page=9)).
 
 Texas has paused new connections for large data centers while it audits them. On 3 August 2026 Texas Governor Greg Abbott ordered the state's Public Utility Commission and ERCOT to audit every data center waiting to connect to the grid before any data center project moves forward ([source](https://gov.texas.gov/news/post/governor-abbott-directs-comprehensive-data-center-audit)). ERCOT then paused approvals to energize data centers and crypto mining sites of 75 MW or more until the audit and a review of their impact on local communities are complete ([source](https://www.ercot.com/files/docs/2026/09/11/14-Batch-Zero-Update.pdf)).
 
 Data center projects also wait on power equipment from makers such as GE Vernova. GE Vernova builds large gas turbines, and its 2025 annual report names Siemens Energy and Mitsubishi Power among the key competitors of its power generation business ([source](https://www.gevernova.com/sites/default/files/gevernova_2025_form10-k.pdf#page=5)). Its electrification business makes power transformers and switchgear, and the report names Hitachi Energy, Siemens Energy, Schneider Electric and ABB among that business's key competitors ([source](https://www.gevernova.com/sites/default/files/gevernova_2025_form10-k.pdf#page=5)).
 
 - **Large power transformers.** In the United States in 2024, lead times of 36 months were commonly quoted and the longest reached 60 months ([source](https://www.energy.gov/sites/default/files/2024-10/EXEC-2022-001242%20-%20Large%20Power%20Transformer%20Resilience%20Report%20signed%20by%20Secretary%20Granholm%20on%207-10-24.pdf#page=8)). Before the pandemic, a large transformer could be ordered with a lead time of under a year ([source](https://www.energy.gov/sites/default/files/2024-10/EXEC-2022-001242%20-%20Large%20Power%20Transformer%20Resilience%20Report%20signed%20by%20Secretary%20Granholm%20on%207-10-24.pdf#page=18)). In an industry survey published in 2025, the International Energy Agency found that large power transformers took up to four years to secure worldwide ([source](https://www.iea.org/reports/building-the-future-transmission-grid/executive-summary)). It also found that their average lead times had almost doubled since 2021 ([source](https://www.iea.org/reports/building-the-future-transmission-grid/executive-summary)). By a US Commerce Department estimate, 82 percent of the units put into US service in 2019 were imported ([source](https://www.energy.gov/sites/default/files/2024-10/EXEC-2022-001242%20-%20Large%20Power%20Transformer%20Resilience%20Report%20signed%20by%20Secretary%20Granholm%20on%207-10-24.pdf#page=20)). A transformer's size is given as a power rating in megavolt-amperes (MVA), a measure of how much power it can handle ([source](https://www.energy.gov/sites/default/files/2024-10/EXEC-2022-001242%20-%20Large%20Power%20Transformer%20Resilience%20Report%20signed%20by%20Secretary%20Granholm%20on%207-10-24.pdf#page=8)). Measured by capacity, US factories supplied 29.2 percent of the transformers rated 60 MVA and above bought in the US in 2023, and imports supplied the rest ([source](https://www.usitc.gov/publications/701_731/pub5531.pdf#page=90)).
-- **Gas turbines.** GE Vernova's gas equipment backlog and reserved factory slots grew from 100 GW to 116 GW in the second quarter of 2026 ([source](https://www.gevernova.com/news/press-releases/ge-vernova-reports-second-quarter-2026-financial-results-raises-2026-financial)). In July 2026 it expected yearly gas turbine output of 20 GW in the third quarter of 2026 and 24 GW in 2028, and it was taking steps to reach 30 GW in 2030 ([source](https://www.gevernova.com/news/press-releases/ge-vernova-reports-second-quarter-2026-financial-results-raises-2026-financial)).
+- **Gas turbines.** GE Vernova's gas equipment backlog and reserved factory slots grew from 116 GW to 122 GW in the third quarter of 2026 ([source](https://www.gevernova.com/news/ge-vernova-reports-strong-third-quarter-2026-financial-performance)). In July 2026 it expected yearly gas turbine output of 20 GW in the third quarter of 2026 and 24 GW in 2028, and it was taking steps to reach 30 GW in 2030 ([source](https://www.gevernova.com/news/press-releases/ge-vernova-reports-second-quarter-2026-financial-results-raises-2026-financial)).
 - **Grid equipment for data centers.** In the first half of 2026, data center orders for GE Vernova's electrification business passed $5 billion, more than double that business's data center orders for all of 2025 ([source](https://www.gevernova.com/news/press-releases/ge-vernova-reports-second-quarter-2026-financial-results-raises-2026-financial)).
 
 {{figure:turbine-output}}
 
-Memory chips are also in short supply. Micron's quarterly report for the period ended 28 May 2026 says AI-driven growth in demand for memory and storage is outpacing industry supply ([source](https://s25.q4cdn.com/621799436/files/doc_financials/2026/q3/0000723125-26-000015.pdf#page=27)).
+Memory chips are also in short supply. Micron's annual report for the fiscal year ended 3 September 2026 says AI-driven growth in demand for memory and storage is outpacing industry supply ([source](https://d18rn0p25nwr6d.cloudfront.net/CIK-0000723125/5dafce68-38e8-4cad-a8f3-ab56d04d73fd.pdf#page=55)).
 
 ## Takeaways
 
 The research group Epoch AI judges that neoclouds, smaller and newer cloud companies that generally focus on AI, are probably the most important owners of AI chips after the hyperscalers ([source](https://epoch.ai/data/ai-chip-owners)). Cloud companies also rent from one another, and Microsoft supplied about 67 percent of the revenue of the cloud company CoreWeave in 2025 ([source](https://s205.q4cdn.com/133937190/files/doc_financials/2025/ar/2025-Annual-Report.pdf#page=26)). Oracle booked more than $30 billion of new AI cloud contracts in the three months to August 2026, which raised the revenue under contract that it had yet to earn to $664 billion ([source](https://www.oracle.com/news/announcement/q1fy27-earnings-release-2026-09-10/)).
 
-ERCOT, the grid operator for most of Texas, was tracking about 474 GW of demand from big power users seeking a grid connection in June 2026, roughly 90 percent of it from data centers ([source](https://www.ercot.com/files/docs/2026/07/29/ERCOT-Senate-July-29-Panel-1-Assessing-The-Grid.pdf#page=6)). In September 2026 ERCOT said it had paused approvals to energize data centers of 75 MW or more until a state audit and a review of their impact on local communities are complete ([source](https://www.ercot.com/files/docs/2026/09/11/14-Batch-Zero-Update.pdf)). The gas turbine maker GE Vernova had a gas equipment backlog and reserved factory slots of 116 GW in mid-2026, against planned output of 20 GW a year from the third quarter ([source](https://www.gevernova.com/news/press-releases/ge-vernova-reports-second-quarter-2026-financial-results-raises-2026-financial)).
+ERCOT, the grid operator for most of Texas, was tracking about 474 GW of demand from big power users seeking a grid connection in June 2026, roughly 90 percent of it from data centers ([source](https://www.ercot.com/files/docs/2026/07/29/ERCOT-Senate-July-29-Panel-1-Assessing-The-Grid.pdf#page=6)). In September 2026 ERCOT said it had paused approvals to energize data centers of 75 MW or more until a state audit and a review of their impact on local communities are complete ([source](https://www.ercot.com/files/docs/2026/09/11/14-Batch-Zero-Update.pdf)). The gas turbine maker GE Vernova held 122 GW of gas equipment backlog and reserved factory slots at the end of September 2026 ([source](https://www.gevernova.com/news/ge-vernova-reports-strong-third-quarter-2026-financial-performance)), against planned output of 20 GW a year from the third quarter ([source](https://www.gevernova.com/news/press-releases/ge-vernova-reports-second-quarter-2026-financial-results-raises-2026-financial)).

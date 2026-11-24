@@ -7205,5 +7205,89 @@
     "date": "2025-10-30",
     "type": "press release",
     "accessed": "2026-11-23"
+  },
+  "https://s2.q4cdn.com/299287126/files/doc_earnings/2026/q3/earnings-result/AMZN-Q3-2026-Earnings-Release.pdf": {
+    "title": "Amazon.com Announces Third Quarter Results",
+    "publisher": "Amazon",
+    "date": "2026-10-29",
+    "type": "press release",
+    "accessed": "2026-11-23"
+  },
+  "https://s206.q4cdn.com/479360582/files/doc_financials/2026/q3/2026q3-alphabet-earnings-release.pdf": {
+    "title": "Alphabet Announces Third Quarter 2026 Results",
+    "publisher": "Alphabet",
+    "date": "2026-10-28",
+    "type": "press release",
+    "accessed": "2026-11-23"
+  },
+  "https://www.microsoft.com/en-us/investor/earnings/FY-2027-Q1/press-release-webcast": {
+    "title": "Microsoft Announces First Quarter Results (fiscal year 2027)",
+    "publisher": "Microsoft",
+    "date": "2026-10-28",
+    "type": "press release",
+    "accessed": "2026-11-23"
+  },
+  "https://www.microsoft.com/en-us/investor/events/fy-2027/earnings-fy-2027-q1": {
+    "title": "Microsoft Fiscal Year 2027 First Quarter Earnings Conference Call",
+    "publisher": "Microsoft",
+    "date": "2026-10-28",
+    "type": "transcript",
+    "accessed": "2026-11-23"
+  },
+  "https://s21.q4cdn.com/399680738/files/content_files/Meta-09-30-2026-Exhibit-99-1_FINAL.pdf": {
+    "title": "Meta Reports Third Quarter 2026 Results",
+    "publisher": "Meta",
+    "date": "2026-10-21",
+    "type": "press release",
+    "accessed": "2026-11-23"
+  },
+  "https://investor.oracle.com/investor-news/news-details/2026/Oracle-Announces-Q1-Results-Driven-by-Triple-Digit-Growth-in-Cloud-Infrastructure-Revenues/default.aspx": {
+    "title": "Oracle Announces Q1 Results Driven by Triple Digit Growth in Cloud Infrastructure Revenues",
+    "publisher": "Oracle",
+    "date": "2026-09-10",
+    "type": "press release",
+    "accessed": "2026-11-23"
+  },
+  "https://www.gevernova.com/news/ge-vernova-reports-strong-third-quarter-2026-financial-performance": {
+    "title": "GE Vernova reports strong third quarter 2026 financial performance, raises 2026 guidance, and increases share repurchase authorization",
+    "publisher": "GE Vernova",
+    "date": "2026-10-28",
+    "type": "press release",
+    "accessed": "2026-11-23"
+  },
+  "https://www.ercot.com/files/docs/2026/11/17/ERCOT-Monthly-Operational-Overview-October-2026.pdf": {
+    "title": "Electric Reliability Council of Texas, ERCOT Monthly Operational Overview (October 2026)",
+    "publisher": "Electric Reliability Council of Texas",
+    "date": "2026-11-17",
+    "type": "pdf",
+    "accessed": "2026-11-23"
+  },
+  "https://www.eia.gov/outlooks/steo/archives/nov26.pdf": {
+    "title": "Short-Term Energy Outlook, November 2026",
+    "publisher": "U.S. Energy Information Administration",
+    "date": "2026-11-10",
+    "type": "pdf",
+    "accessed": "2026-11-23"
+  },
+  "https://d18rn0p25nwr6d.cloudfront.net/CIK-0000723125/5dafce68-38e8-4cad-a8f3-ab56d04d73fd.pdf": {
+    "title": "Micron Technology, annual report on Form 10-K for the fiscal year ended 3 September 2026",
+    "publisher": "Micron Technology",
+    "date": "2026-10-09",
+    "type": "filing",
+    "accessed": "2026-11-23"
+  },
+  "https://newsletter.semianalysis.com/p/clustermax-30-the-industry-standard": {
+    "title": "ClusterMAX 3.0: The Industry Standard GPU Cloud Rating System Returns",
+    "publisher": "SemiAnalysis",
+    "date": "2026-09-23",
+    "type": "article",
+    "accessed": "2026-11-23"
+  },
+  "https://openai.com/index/building-the-compute-infrastructure-for-the-intelligence-age/": {
+    "title": "Building the compute infrastructure for the Intelligence Age",
+    "publisher": "OpenAI",
+    "date": "2026-04-29",
+    "type": "article",
+    "accessed": "2026-11-23"
   }
 }

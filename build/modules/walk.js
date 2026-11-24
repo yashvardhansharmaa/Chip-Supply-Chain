@@ -130,7 +130,11 @@ ${nChoke ? `<p class="wk-gl-p"><b>${nChoke} of the ${stages.length} stages</b> a
   // The key waits hidden until the drawing shows it, since without scripts the glance's sentence says the same
   const acrossCh = all.filter((c) => !stages.some((s) => s.id === c.id) && c.id !== 'introduction-and-goals').sort((a, b) => (a.number || 0) - (b.number || 0));
   const ACROSS_HOME = acrossCh.length ? `<nav class="fx-across" aria-label="Across the chain"><span class="label fx-across-k">Across the chain</span>${acrossCh.map((c) => `<a class="fx-ac" ${pageLink(c.id)}><span class="fx-ac-n">${c.number}</span><span class="fx-ac-t">${esc(c.title)}</span></a>`).join('')}</nav>` : '';
-  const KEY_HOME = nChoke ? `<p class="fx-key" hidden><span class="fx-k"><i class="fx-kb is-x" aria-hidden="true"></i><span><b>${nChoke} of the ${stages.length} stages are chokepoints${xMeaning ? ':' : '.'}</b>${xMeaning ? ` ${esc(xMeaning)}.` : ''}</span></span><span class="fx-k fx-k-note">Objects drawn at different scales.</span></p>` : '';
+  // the home's key keeps the approved short form so it fits one line beside its note (design review, 23 Nov 2026):
+  // "three or fewer firms, or one with more than 65 percent", derived from the same note; a changed note drops it.
+  const xKey = /^Three or fewer firms can supply this stage, or one firm holds more than [\d.]+ percent of it\.$/.test(xNote)
+    ? xNote.replace(' can supply this stage', '').replace('one firm holds', 'one with').replace(/ of it\.$/, '').replace(/^\w/, (m) => m.toLowerCase()) : xMeaning;
+  const KEY_HOME = nChoke ? `<p class="fx-key" hidden><span class="fx-k"><i class="fx-kb is-x" aria-hidden="true"></i><span><b>${nChoke} of the ${stages.length} stages are chokepoints${xKey ? ':' : '.'}</b>${xKey ? ` ${esc(xKey)}.` : ''}</span></span><span class="fx-k fx-k-note">Objects drawn at different scales.</span></p>` : '';
 
   // the flashcards that end the walk (below), which the last step's Next leads on to
   const introDeck = (ctx.flashcards || {}).intro;
