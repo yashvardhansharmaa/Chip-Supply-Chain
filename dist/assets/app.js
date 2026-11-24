@@ -888,7 +888,8 @@
       if (Router.current !== 'stack' && Router.current !== 'walk') return;
       var items = Router.current === 'walk' ? this.walkItems : this.items;
       if (!items || !items.length) return; // before init, or a view with nothing to track
-      var vh = window.innerHeight, probe = narrow() ? vh * 0.55 : vh * 0.42, best = null, bestTop = -Infinity;
+      // (a page may set its own line, probeAt: the Introduction's is the walk's reading line, level with its plate's top, src/modules/intro.js)
+      var vh = window.innerHeight, own = this.probeAt ? this.probeAt() : null, probe = own != null ? own : narrow() ? vh * 0.55 : vh * 0.42, best = null, bestTop = -Infinity;
       var first = null;
       for (var i = 0; i < items.length; i++) {
         var r = items[i].getBoundingClientRect();
@@ -5111,20 +5112,66 @@ try {
     var h = pl.heightFor(w, 220, hi - grow) + grow + 'px';
     if (cv.style.height !== h) cv.style.height = h;
   };
+  /* The panel beside the walk (24 Nov 2026, src/modules/intro.css: owner, "the alignment of the specimen on the introduction pages
+     is a bit off"). The specimen changes as a step's top crosses the walk's reading line, the line the rail and the ledger's wine
+     number follow (src/modules/walk.js line: the masthead and 62 px, or 8 px under the place a step lands), so a step's label
+     meets the plate's top as its specimen comes on. It changed at 42 percent of the window, with the label far under the plate.
+     Above the first step the panel stands level with that step's label and rises with it to its place (--intro-drop, a
+     transform, so the plate keeps its size), as a sticky panel does, and never stands so low that its caption leaves the
+     window. */
+  var Sec = CP.Sections;
+  var onWalk = function () { return !!(CP.Router && CP.Router.current === 'walk') && !CP.narrow(); };
+  var firstStep = function () { return document.querySelector('.view[data-view="walk"] .wk-step'); };
+  if (Sec) Sec.probeAt = function () {
+    if (!onWalk()) return null;
+    var st = firstStep(), mh = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--masthead')) || 56;
+    return Math.max(mh + 62, (st ? CP.landAt(st) : 0) + 8);
+  };
+  function drop() {
+    var fig = S.fig;
+    if (!fig) return;
+    var d = 0, st = S.ok && onWalk() ? firstStep() : null;
+    if (st) {
+      d = Math.max(0, st.getBoundingClientRect().top - CP.landAt(st));
+      var cap = fig.querySelector('figcaption'), now = parseFloat(fig.style.getPropertyValue('--intro-drop')) || 0;
+      if (d && cap) d = Math.min(d, Math.max(0, window.innerHeight - 16 - (cap.getBoundingClientRect().bottom - now)));
+    }
+    var v = Math.round(d) + 'px';
+    if (fig.style.getPropertyValue('--intro-drop') !== v) fig.style.setProperty('--intro-drop', v);
+  }
+  var fit1 = S.fit;
+  S.fit = function () { fit1.call(this); drop(); }; // (a new plate or caption changes the height the window must hold)
+  window.addEventListener('scroll', drop, { passive: true });
+  window.addEventListener('resize', drop);
   /* Captions and loupes (23 Nov 2026): a plate trimmed to its drawing at the panel's width keeps 8 px under it (src/plate.js
      PAD_Y), and a dimension too short for its arrows sets them outside, pointing in, past that pad: at 1920 the photomask's
      6.35 mm arrow ran off the canvas's foot (on v3 too; the chapter's taller slot leaves it room). Once a plate rests with its
      labels in, its canvas's outer rows are read, and while any is drawn on, the canvas grows 8 px (centred, so 4 a side; at most
-     48), so every dimension, label and loupe stays inside the panel's drawing area */
+     48), so every dimension, label and loupe stays inside the panel's drawing area.
+     A plate the height limits (its canvas already the tallest the panel allows) keeps its canvas, and its drawing is fitted that
+     much shorter and centred in it (fitInside, 24 Nov 2026: at 2560 px the photomask, drawn at 560 px, touched the canvas's foot
+     however far the canvas was meant to grow) */
+  function fitInside(pl) {
+    if (pl._introFit) return;
+    pl._introFit = true;
+    var fitK = pl.fit;
+    pl.fit = function (w, h, g) {
+      var gr = S.hostEl || CP.narrow() ? 0 : this._introGrow || 0;
+      if (!gr || h - gr < 120) return fitK.call(this, w, h, g);
+      var o = fitK.call(this, w, h - gr, g);
+      if (o) o.cy += gr / 2;
+      return o;
+    };
+  }
   function edgeRoom(S) {
     var pl = S.cur && S.cur.pl;
     if (!pl || S.hostEl || CP.narrow() || !S.w || !S.h || S.inK() < 1 || S.labA < 1 || S.userYaw || S.userPitch || S.back || S.snap || S.dragging) return;
-    var key = pl._fitKey + '|' + Math.round(S.h);
+    var key = pl._fitKey + '|' + Math.round(S.h) + '|' + (pl._introGrow || 0);
     if (pl._edgeKey === key) return;
     pl._edgeKey = key;
     try {
       var c = S.canvas, W = c.width, H = c.height, n = Math.max(1, Math.round(S.dpr)), ink = function (y) { var d = S.ctx.getImageData(0, y, W, n).data; for (var i = 3; i < d.length; i += 4) if (d[i] > 24) return true; return false; };
-      if ((ink(H - n) || ink(0)) && (pl._introGrow || 0) < 48) { pl._introGrow = (pl._introGrow || 0) + 8; S.fit(); S.wake(); }
+      if ((ink(H - n) || ink(0)) && (pl._introGrow || 0) < 48) { pl._introGrow = (pl._introGrow || 0) + 8; pl._fitKey = null; S.fit(); S.wake(); }
     } catch (e) { }
   }
   var frame0 = S.frame;
@@ -5137,6 +5184,7 @@ try {
     var ps = this.parts ? null : partsOf(name);
     if (ps) this.cur.pl.names(ps);
     footWithLabels(this.cur.pl);
+    fitInside(this.cur.pl);
   };
 })();
 

@@ -888,7 +888,8 @@
       if (Router.current !== 'stack' && Router.current !== 'walk') return;
       var items = Router.current === 'walk' ? this.walkItems : this.items;
       if (!items || !items.length) return; // before init, or a view with nothing to track
-      var vh = window.innerHeight, probe = narrow() ? vh * 0.55 : vh * 0.42, best = null, bestTop = -Infinity;
+      // (a page may set its own line, probeAt: the Introduction's is the walk's reading line, level with its plate's top, src/modules/intro.js)
+      var vh = window.innerHeight, own = this.probeAt ? this.probeAt() : null, probe = own != null ? own : narrow() ? vh * 0.55 : vh * 0.42, best = null, bestTop = -Infinity;
       var first = null;
       for (var i = 0; i < items.length; i++) {
         var r = items[i].getBoundingClientRect();

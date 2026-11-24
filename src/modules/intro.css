@@ -4,14 +4,40 @@
 /* the page head: the title, the intro line, the walk's length */
 html[data-page="introduction"] #wk-hero { padding-bottom: 8px; }
 
-/* the specimen beside the walk carries its chapter's labels (src/modules/intro.js). On a wide screen the stage keeps its labels
-   inside the page's margins: its content stands between 16 px from its left edge and the masthead's right edge (the drawing
-   ran to the window's edge when it had no labels), and starts clear under the "Back to top" pill (masthead + 14 px, 36 px
-   tall). The tag and caption share the drawing's centre; the tag stands under the lower of the drawing and its labels. */
+/* The specimen beside the walk carries its chapter's labels (src/modules/intro.js). On a wide screen the panel keeps one
+   relation to the text column at every width (24 Nov 2026; owner: "the alignment of the specimen on the introduction pages is a
+   bit off"; it stood at the window's right edge, 430 px from the text at 2000 px):
+   - its left edge a set gap from the text column: the column's own right padding and the panel's 16 px, 72 px from 1400 px up,
+     as the panel stood at 1440 px (--intro-x: the ledger, the walk's measure and that padding; a narrower window's column ends
+     there itself, so up to 1440 px the panel stands where it stood);
+   - its right edge on the masthead's right edge (padding-right: --margin) while the drawing is no wider than the site's figure
+     width (--intro-plate-max, 720 px) or the width the panel had (the window less the text column, which sets each plate's
+     size), whichever is wider. So no plate is drawn smaller than before, and up to 1440 px each keeps its size within 5 px.
+     From about 1720 px the panel keeps that width beside the text and the window's spare width stays at its right, as a
+     chapter page's does (a larger --intro-plate-max takes the panel to the masthead's edge on any window, and the plates grow
+     with it);
+   - the plate's top level with a step's "Stage N of 14" label when that step's specimen comes on: the canvas starts 4 px over
+     the line where a step lands (the step's scroll-margin-top, masthead + 66 px), so the drawing's ink (8 px inside the canvas,
+     src/plate.js PAD_Y) meets the label's capitals, and the specimen changes as a step's top crosses the walk's reading line
+     (src/modules/intro.js probeAt, the line the rail and the ledger's wine number follow). Above the first step the panel stands
+     level with that step's label and rises with it (--intro-drop, intro.js), then stays put, as a sticky panel does;
+   - the tag and the caption flush left under the drawing, as a chapter page sets its plate's label and caption.
+   The panel clears the "Back to top" pill (masthead + 14 px, 36 px tall). Its height is the plate's own, set by intro.js; it
+   still gives way first on a short window. The walk's rail ends where the panel begins. */
 @media (min-width: 901px) {
-  html[data-page="introduction"] .stage { box-sizing: border-box; padding-top: 58px; padding-left: 16px; padding-right: var(--margin); }
-  /* (its height is the plate's own, set by intro.js; it still gives way first on a short window) */
+  html[data-page="introduction"] {
+    --intro-x: min(var(--col), calc(var(--margin) + var(--gutter) + var(--gutter-gap) + var(--measure) + clamp(16px, 4vw, 56px)));
+    --intro-plate-max: 720px;
+  }
+  html[data-page="introduction"] .stage {
+    box-sizing: border-box; left: var(--intro-x); right: auto;
+    width: min(calc(100% - var(--intro-x)), max(calc(16px + var(--intro-plate-max) + var(--margin)), calc(100% - var(--col))));
+    padding-top: 62px; padding-left: 16px; padding-right: var(--margin); /* (the stage starts at the masthead: 66 - 4 px under it) */
+  }
+  html[data-page="introduction"][data-view="walk"] .stage { transform: translateY(var(--intro-drop, 0px)); }
+  html[data-page="introduction"] .wk-rail { width: var(--intro-x); }
   html[data-page="introduction"] .stage canvas { aspect-ratio: auto; }
-  html[data-page="introduction"][data-view="walk"] .stage .stage-tag, html[data-page="introduction"] .stage .stage-tag { margin-left: 0; margin-right: 0; }
-  html[data-page="introduction"][data-view="walk"] .stage figcaption, html[data-page="introduction"] .stage figcaption { margin-left: 0; margin-right: 0; }
+  html[data-page="introduction"][data-view="walk"] .stage .stage-tag, html[data-page="introduction"] .stage .stage-tag { align-self: stretch; margin-left: 0; margin-right: 0; text-align: left; }
+  html[data-page="introduction"][data-view="walk"] .stage .stage-tag:has(.stage-pause) { padding-left: 0; }
+  html[data-page="introduction"][data-view="walk"] .stage figcaption, html[data-page="introduction"] .stage figcaption { align-self: stretch; margin-left: 0; margin-right: 0; max-width: 40em; text-align: left; text-wrap: pretty; }
 }
