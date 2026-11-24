@@ -7,9 +7,9 @@ ok   /export-controls/ 1440: latest words carry no codes (D:5, TPP, long figures
 ok   /export-controls/ 1440: latest links to its entry (#2026-11-19-remote-access-rule)
 ok   /export-controls/ 1440: one next-date row shows
 ok   /export-controls/ 1440: next date 2026-11-27 is the earliest not yet passed (2026-11-27)
-ok   /export-controls/ 1440: next date 2026-11-27 is not in the past (2026-11-23)
+ok   /export-controls/ 1440: next date 2026-11-27 is not in the past (2026-11-24)
 ok   /export-controls/ 1440: next date printed "27 Nov 2026"
-ok   /export-controls/ 1440: countdown "In 4 days" (In 4 days)
+ok   /export-controls/ 1440: countdown "In 3 days" (In 3 days)
 ok   /export-controls/ 1440: next words are the upcoming label
 ok   /export-controls/ 1440: next date links to its entry (#2025-11-09-us-ban-suspended)
 ok   /export-controls/ 1440: the rows sit under the button, in the head
@@ -26,11 +26,12 @@ ok   #/controls 1440: latest words carry no codes (D:5, TPP, long figures)
 ok   #/controls 1440: latest links to its entry (#/controls/2026-11-19-remote-access-rule)
 ok   #/controls 1440: one next-date row shows
 ok   #/controls 1440: next date 2026-11-27 is the earliest not yet passed (2026-11-27)
-ok   #/controls 1440: next date 2026-11-27 is not in the past (2026-11-23)
+ok   #/controls 1440: next date 2026-11-27 is not in the past (2026-11-24)
 ok   #/controls 1440: next date printed "27 Nov 2026"
-ok   #/controls 1440: countdown "In 4 days" (In 4 days)
+ok   #/controls 1440: countdown "In 3 days" (In 3 days)
 ok   #/controls 1440: next words are the upcoming label
 ok   #/controls 1440: next date links to its entry (#/controls/2025-11-09-us-ban-suspended)
+ok   #/controls 1440: the strip ends on the latest rule (2026-11-19 #/controls/2026-11-19-remote-access-rule)
 ok   #/controls 1440: Latest rule text at 11.5 px or more (11.5)
 ok   #/controls 1440: Next date text at 11.5 px or more (11.5)
 ok   #/controls 1440: row 1 opens its entry (#/controls/2026-11-19-remote-access-rule marked in view)
@@ -46,9 +47,9 @@ ok   /export-controls/ 390: latest words carry no codes (D:5, TPP, long figures)
 ok   /export-controls/ 390: latest links to its entry (#2026-11-19-remote-access-rule)
 ok   /export-controls/ 390: one next-date row shows
 ok   /export-controls/ 390: next date 2026-11-27 is the earliest not yet passed (2026-11-27)
-ok   /export-controls/ 390: next date 2026-11-27 is not in the past (2026-11-23)
+ok   /export-controls/ 390: next date 2026-11-27 is not in the past (2026-11-24)
 ok   /export-controls/ 390: next date printed "27 Nov 2026"
-ok   /export-controls/ 390: countdown "In 4 days" (In 4 days)
+ok   /export-controls/ 390: countdown "In 3 days" (In 3 days)
 ok   /export-controls/ 390: next words are the upcoming label
 ok   /export-controls/ 390: next date links to its entry (#2025-11-09-us-ban-suspended)
 ok   /export-controls/ 390: the rows sit under the button, in the head
@@ -56,7 +57,7 @@ ok   /export-controls/ 390: Latest rule text at 11.5 px or more (11.5)
 ok   /export-controls/ 390: Next date text at 11.5 px or more (11.5)
 ok   /export-controls/ 390: no sideways scroll
 ok   /export-controls/ 390: Entry in the timeline lands on the entry (#2026-11-19-remote-access-rule target in view)
-ok   #/controls 390: the latest row shows
+ok   #/controls 390: the latest line is hidden on a phone, where the strip ends on the latest rule
 ok   #/controls 390: kicker "Latest rule" (Latest rule)
 ok   #/controls 390: latest date "19 Nov 2026" is the newest entry's (19 Nov 2026)
 ok   #/controls 390: actor "US (BIS)"
@@ -65,11 +66,13 @@ ok   #/controls 390: latest words carry no codes (D:5, TPP, long figures)
 ok   #/controls 390: latest links to its entry (#/controls/2026-11-19-remote-access-rule)
 ok   #/controls 390: one next-date row shows
 ok   #/controls 390: next date 2026-11-27 is the earliest not yet passed (2026-11-27)
-ok   #/controls 390: next date 2026-11-27 is not in the past (2026-11-23)
+ok   #/controls 390: next date 2026-11-27 is not in the past (2026-11-24)
 ok   #/controls 390: next date printed "27 Nov 2026"
-ok   #/controls 390: countdown "In 4 days" (In 4 days)
+ok   #/controls 390: countdown "In 3 days" (In 3 days)
 ok   #/controls 390: next words are the upcoming label
 ok   #/controls 390: next date links to its entry (#/controls/2025-11-09-us-ban-suspended)
+ok   #/controls 390: the strip ends on the latest rule (2026-11-19 #/controls/2026-11-19-remote-access-rule)
+ok   #/controls 390: the strip's latest row carries the whole title
 ok   #/controls 390: Latest rule text at 11.5 px or more (11.5)
 ok   #/controls 390: Next date text at 11.5 px or more (11.5)
 ok   #/controls 390: no sideways scroll

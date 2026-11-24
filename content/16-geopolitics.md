@@ -209,7 +209,7 @@
         ],
         [
           "2025-05-13",
-          "BIS stops enforcing the AI Diffusion rule"
+          "BIS says it will not enforce the AI Diffusion Rule"
         ],
         [
           "2025-08-11",

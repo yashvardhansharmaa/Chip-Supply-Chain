@@ -1340,7 +1340,7 @@
     "term": "15 CFR",
     "aka": "CFR, Code of Federal Regulations, 15 CFR 742.6, part 742, part 740, part 734, supplement no. 5 to part 740, supplement no. 5",
     "plain": "The Code of Federal Regulations is the standing text of US rules, sorted into titles and parts. Title 15 holds the Export Administration Regulations. Part 734 says what is subject to them. Part 740 lists the license exceptions. Until 19 November 2026 its supplement no. 5 listed the nineteen destinations eligible for License Exception AIA. Part 742 sets the licensing policy for each control.",
-    "why": "A rule announced in the Federal Register stays in the CFR until it is removed. BIS stopped enforcing the AI Diffusion rule in May 2025, and its text stayed in the CFR until a rule of 19 November 2026 removed it (91 FR 74970).",
+    "why": "A rule announced in the Federal Register stays in the CFR until it is removed. BIS said in May 2025 that it would not enforce the AI Diffusion rule, and its text stayed in the CFR until a rule of 19 November 2026 removed it (91 FR 74970).",
     "chapter": "geopolitics"
   },
   {

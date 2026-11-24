@@ -574,7 +574,7 @@
     "frCitation": "90 FR 4544",
     "cfr": "15 CFR 740.27, 740.28, 740.29; 742.6; 748.15",
     "source": "https://www.federalregister.gov/documents/2025/01/15/2025-00636/framework-for-artificial-intelligence-diffusion",
-    "gist": "The top band of AI chips needed a license everywhere, and closed AI model weights came under control.",
+    "gist": "The rule put a license requirement on the top band of AI chips everywhere, due from 15 May 2025, and brought closed AI model weights under control.",
     "id": "2025-01-13-diffusion-rule",
     "flows": [
       "diffusion"
@@ -713,13 +713,13 @@
   {
     "date": "2025-05-13",
     "actor": "US (BIS)",
-    "title": "BIS stops enforcing the AI Diffusion Rule",
+    "title": "BIS says it will not enforce the AI Diffusion Rule",
     "summary": "Two days before the rule's compliance date, Commerce announced it would not enforce the AI Diffusion Rule and would issue a replacement rule. Nothing was withdrawn from the regulations at the time. Until 19 November 2026 the Code of Federal Regulations still contained License Exceptions AIA and LPP at 15 CFR 740.27 and 740.29, and the list of nineteen destinations in supplement no. 5 to part 740. It also still contained the worldwide license requirement at 742.6(a)(6)(iii)(A) and the 790 million TPP per-country allocation at 742.6(b)(10)(iii)(B). A rule published on 19 November 2026 removed them and kept License Exception ACM at 740.28 (91 FR 74970). On 13 May 2025 BIS also issued three pieces of guidance. The first said that using Huawei Ascend 910B, 910C and 910D chips risks violating the EAR, because they were likely made with controlled US technology. The second warned that letting US AI chips train or run Chinese AI models could have consequences. The third set out how exporters should guard against diversion. The Ascend guidance originally said the chips were restricted \"anywhere in the world\", wording BIS softened after Chinese protests.",
     "category": "US export control",
     "instrument": "licence-policy",
     "cfr": "15 CFR 740.27, 740.28, 740.29; 742.6(a)(6)(iii)(A)",
     "source": "https://www.bis.gov/press-release/department-commerce-rescinds-biden-era-artificial-intelligence-diffusion-rule-strengthens-chip-related",
-    "gist": "The US stopped enforcing the rule and struck deals country by country, but every line of it stayed in the regulations until November 2026.",
+    "gist": "The US said it would not enforce the rule and struck deals country by country, but every line of it stayed in the regulations until November 2026.",
     "id": "2025-05-13-diffusion-rescinded",
     "flows": [
       "diffusion"

@@ -1,4 +1,4 @@
-ok   #/controls 1440x900: title, standfirst, strip, Latest, Next date, tabs, then the timeline (127 < 228 < 320 < 545 < 616 < 728 < 945)
+ok   #/controls 1440x900: title, standfirst, strip, Latest, Next date, tabs, then the timeline (127 < 228 < 320 < 591 < 662 < 774 < 991)
 ok   #/controls 1440x900: one Latest line and one Next date line (Latest rule, Next date)
 ok   #/controls 1440x900: no Coming up list and no jump line
 ok   #/controls 1440x900: the board sits beside the timeline from its start
@@ -77,7 +77,7 @@ ok   #/controls 390: the latest rule's dot is in the accent (rgb(122, 31, 43))
 ok   #/controls 390: one row per rule, top to bottom in date order
 ok   #/controls 390: no sideways scroll
 ok   #/controls 390: under the upright strip, the one Next date line (Next date)
-ok   /export-controls/ 1440: title, standfirst, strip, Latest, Next date, then the body (168 < 263 < 388 < 729 < 851 < 5091)
+ok   /export-controls/ 1440: title, standfirst, strip, Latest, Next date, then the body (168 < 263 < 388 < 729 < 851 < 5278)
 ok   /export-controls/ 1440: no Coming up list, and every mark lands on an entry on the page
 ok   /export-controls/ 1440: the strip is drawn as a line
 ok   /export-controls/ 1440: 13 marks in date order
@@ -88,7 +88,7 @@ ok   /export-controls/ 1440: the latest rule's dot is in the accent (rgb(122, 31
 ok   /export-controls/ 1440: the dots run left to right in date order, the latest at the right end
 ok   /export-controls/ 1440: no label covers another
 ok   /export-controls/ 1440: no leader runs through a label
-ok   /export-controls/ 390: title, standfirst, strip, Latest, Next date, then the body (176 < 301 < 462 < 1142 < 1366 < 7489)
+ok   /export-controls/ 390: title, standfirst, strip, Latest, Next date, then the body (176 < 301 < 462 < 1142 < 1366 < 7895)
 ok   /export-controls/ 390: no Coming up list, and every mark lands on an entry on the page
 ok   /export-controls/ 390: the strip is an upright list
 ok   /export-controls/ 390: 13 marks in date order
