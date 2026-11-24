@@ -2426,7 +2426,14 @@
       "kind": "subsidiary"
     },
     "role": "Builds the light sources for lithography: excimer lasers for DUV scanners and the laser-produced tin plasma source that generates 13.5 nm EUV light. The EUV source is the hardest subsystem in the machine.",
-    "chokepoint": "Important",
+    "chokepoint": "Critical",
+    "dominantIn": {
+      "product": "EUV light sources",
+      "only": true,
+      "year": "2026",
+      "by": "ASML, which develops and builds them at its San Diego site",
+      "source": "https://www.asml.com/en/company/about-asml/locations/san-diego"
+    },
     "shareNote": null,
     "customers": [
       "ASML"
@@ -2508,7 +2515,13 @@
     "ticker": "Private",
     "ownership": "Private, family-owned",
     "role": "Builds the multi-kilowatt CO2 laser amplifier chain that vaporizes tin droplets to create EUV light. Trumpf describes the laser system as internationally unique.",
-    "chokepoint": "Important",
+    "chokepoint": "Critical",
+    "dominantIn": {
+      "product": "the drive lasers that power EUV light sources",
+      "only": true,
+      "by": "TNO, the Dutch research institute",
+      "source": "https://esi.tno.nl/news/trumpf-strategic-partner-asml-help-esi/"
+    },
     "shareNote": null,
     "customers": [
       "ASML",
