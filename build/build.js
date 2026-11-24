@@ -438,7 +438,7 @@ function markdown(src, ctx) {
       if (level === 2) {
         closeTakeaways();
         if (/^takeaways?$/i.test(text)) { out.push(`<div class="takeaways"><h${top} id="${id}">Takeaways</h${top}>`); inTakeaways = true; i++; continue; }
-        headings.push({ id, text });
+        headings.push({ id, text, shown }); // shown: the words the heading prints, which the contents rail prints too
         named.push(text);
         // data-k: the section's name in plain words, for its kicker ("05 · The chokepoint", src/modules/chapter.css)
         const kick = text.replace(/\[([^\]]*)\]\([^)]*\)/g, '$1').replace(/[*_`]/g, '').trim();
@@ -872,7 +872,9 @@ function reviewHTML(ch) {
     if (c.section === 'Stage card') return { href: `#${ch.id}--card`, text: 'Reread: Stage card' };
     const anchor = c.section ? `${ch.id}--${slug(c.section)}` : '';
     if (anchor && !ch.html.includes(`id="${anchor}"`)) warn(`flashcards ${ch.id} #${i + 1}: no section "${c.section}"`);
-    return anchor ? { href: '#' + anchor, text: 'Reread: ' + c.section } : null;
+    // the link names the section as its heading prints it (data/section-headings.json), the anchor keeps the short key's id
+    const shown = (SECTION_HEADINGS[ch.id] || {})[c.section];
+    return anchor ? { href: '#' + anchor, text: 'Reread: ' + (typeof shown === 'string' && shown.trim() ? shown.trim() : c.section) } : null;
   } });
 }
 // one deck, wherever it sits: o.id makes its address ("<id>--flashcards"), o.title its label, o.more(card, i) the link that
@@ -1254,9 +1256,11 @@ function chapterHTML(ch) {
   const spec = `<figure class="ch-spec"${plateH[specimen] ? ` style="--draw-h:${plateH[specimen]}px"` : ''}${night ? ' data-night="1"' : ''}${ps.length ? ` data-parts="${esc(JSON.stringify(ps.map((p) => Object.assign({ n: +p.n, name: p.label || p.name }, Array.isArray(p.light) && p.light.length ? { light: p.light.map((h) => (h.only ? { only: h.only } : {})) } : {}))))}"` : ''}>`
     + `<div class="ch-spec-draw"></div>`
     + `<figcaption class="ch-spec-cap${ch.rendered.parts ? ' has-parts' : ''}"><span class="label">Specimen ${pad(ch.number)} · ${esc(ch.title)}</span>${m.specimenCaption ? `<p>${esc(m.specimenCaption)}</p>` : ''}${ch.rendered.parts}</figcaption></figure>`;
-  // On this page: In plain terms, the stage card, the chapter's own sections, the flashcards and the sources
+  // On this page: In plain terms, the stage card, the chapter's own sections, the flashcards and the sources. Each section is named
+  // as its heading prints it (data/section-headings.json), not by the short key its id keeps (UX test, 24 Nov 2026: "The shape of the
+  // contest" opened "How chip export controls work"); the ids stay as they were, so old links land
   const fc = flashcards[ch.id], hasDeck = fc && Array.isArray(fc.cards) && fc.cards.length;
-  const toc = (m.plain ? [[`${ch.id}--plain`, 'In plain terms']] : []).concat(plate ? [[`${ch.id}--card`, 'Stage card']] : []).concat((ch.headings || []).map((h) => [h.id, inline(h.text, { id: ch.id, cites: [], figures: [] }).replace(/<sup[\s\S]*?<\/sup>/g, '')]))
+  const toc = (m.plain ? [[`${ch.id}--plain`, 'In plain terms']] : []).concat(plate ? [[`${ch.id}--card`, 'Stage card']] : []).concat((ch.headings || []).map((h) => [h.id, inline(h.shown || h.text, { id: ch.id, cites: [], figures: [] }).replace(/<sup[\s\S]*?<\/sup>/g, '')]))
     .concat(hasDeck ? [[`${ch.id}--flashcards`, 'Flashcards']] : []).concat(ch.cites.length ? [[`${ch.id}--sources`, 'Sources']] : []);
   // data-open: the chapter opens on its explainer (openingExplainer), which follows In plain terms in the head (.fig-open)
   return `<article class="chapter" id="${esc(ch.id)}" data-specimen="${esc(specimen)}" data-number="${pad(ch.number)}" data-title="${esc(ch.title)}" data-caption="${esc(m.specimenCaption || '')}"${ch.openFig ? ' data-open="explainer"' : ''}>

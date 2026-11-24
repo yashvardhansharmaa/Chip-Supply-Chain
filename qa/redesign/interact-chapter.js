@@ -53,7 +53,9 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8766';
       check('1440: the specimen is a plate at the measure, in the text column', col.specW === 666 && col.specX === col.textX, `${col.specW} px at x ${col.specX}, text at ${col.textX}`);
       check('1440: the plate is fitted to its drawing (--draw-h, 360 to 470 px)', /^\d+px$/.test(col.drawH) && parseInt(col.drawH, 10) >= 360 && parseInt(col.drawH, 10) <= 470, `--draw-h ${col.drawH}`);
       check('1440: the card is in the text after the lead, before section 01, as wide as the flashcards (owner, 27 Oct) and wider than the text', !col.inHead && col.prev === 'P' && col.next === 'lithography--how-it-works' && col.cardW === col.revW && col.cardW > 666 && col.cardId === 'lithography--card', JSON.stringify({ prev: col.prev, next: col.next, w: col.cardW, flashcards: col.revW }));
-      check('1440: On this page lists the card after In plain terms', col.toc === 'In plain terms | Stage card | How it works', col.toc);
+      // each section named as its heading prints it (data/section-headings.json, 24 Nov 2026), its id the short key's
+      const howH = await t.ev("document.getElementById('lithography--how-it-works').textContent.replace(/#\\s*$/, '').trim()");
+      check('1440: On this page lists the card after In plain terms, and names the first section by its heading', col.toc === 'In plain terms | Stage card | ' + howH && howH !== 'How it works', col.toc);
       // the chokepoint mark (22 Nov 2026, in place of the band's four-bar meter): a chokepoint carries one mark, a solid ink dot
       // and the word in Hanken Grotesk, in the kicker and on the card (with what the word means); the rail gives each chokepoint
       // the dot alone and its link's label says it; no meter is left anywhere on the page, and a stage that is not a chokepoint
@@ -84,7 +86,7 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8766';
       await t.ev("(document.documentElement.style.scrollBehavior='auto', window.scrollTo(0,0), 1)"); await sleep(600);
       check('1440: the parts list names the four parts', await t.ev("[].map.call(document.querySelectorAll('#lithography .ch-spec .ch-parts li > span'),function(l){return l.textContent}).join(' | ')") === 'Light source: ASML San Diego (US), laser by Trumpf (DE) | Mirrors: Zeiss SMT (DE) | Mask: see stage 05, Photomasks and Pellicles | Wafer: see stage 02, Silicon and Wafers');
       await scrollTo(t, '#lithography--how-it-works', 200);
-      check('1440: the rail marks How it works', await t.ev("(document.querySelector('#lithography .rail-toc a[aria-current]')||{}).textContent") === 'How it works', await t.ev("(document.querySelector('#lithography .rail-toc a[aria-current]')||{}).textContent"));
+      check('1440: the rail marks the first section, by its heading', await t.ev("(document.querySelector('#lithography .rail-toc a[aria-current]')||{}).textContent") === await t.ev("document.getElementById('lithography--how-it-works').textContent.replace(/#\\s*$/, '').trim()"), await t.ev("(document.querySelector('#lithography .rail-toc a[aria-current]')||{}).textContent"));
       check('1440: the rail stays in view (sticky)', await t.ev("(function(){var r=document.querySelector('#lithography .ch-rail').getBoundingClientRect();return r.top>=0&&r.top<200;})()"));
       // Lithography's seventh figure (04.2, 21 Nov 2026) took its rail 34 px past a 900 px window, as Foundries and Fabs' and Who
       // Controls the Chain's rails already ran (877 and 959 px in 808): the rail scrolls inside itself (chapter.css, overflow-y
