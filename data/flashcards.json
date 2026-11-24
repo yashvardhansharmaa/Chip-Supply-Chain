@@ -34,7 +34,7 @@
   "cards": [
    {
     "q": "What is a wafer?",
-    "a": "A thin disc of pure silicon, about 30 centimeters across, that carries dozens to hundreds of chips, fewer when each chip is large.",
+    "a": "A thin disc of pure silicon, about 30 centimeters across, that carries dozens to thousands of chips, depending on how large each chip is.",
     "section": "How it works"
    },
    {
@@ -565,7 +565,7 @@
    "A foundry accepts only designs that have passed the checks of software from Synopsys, Cadence and Siemens EDA.",
    "A fab builds a chip one layer at a time, printing a pattern on each film and etching away what the pattern does not protect.",
    "Only ASML, a Dutch company, makes the extreme ultraviolet (EUV) machines that print a chip's finest layers.",
-   "Each EUV mask is a mirror, and AGC says only three firms make the blank plates, among them AGC itself and Hoya, both of Japan.",
+   "Each EUV mask is a mirror, and AGC says only three firms make the blank plates and that it is one of them. Hoya, also of Japan, is another.",
    "TSMC, the biggest foundry, has all six of its largest plants in Taiwan.",
    "Only SK hynix, Samsung and Micron make HBM in volume, and stacking the chips is the hard part.",
    "Packaging joins an AI accelerator's calculating chips and memory, and Nvidia, Google, AMD and Amazon all use TSMC's version, made in Taiwan.",

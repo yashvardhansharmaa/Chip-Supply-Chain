@@ -17,7 +17,9 @@
    Round two (expert FIX 1): the bridges carry the die-to-die and die-to-memory wiring, so the traces lie on each bridge's top
    face, a pad at each end (12 across the seam bridge at 2 mm, 4 across each memory bridge at 1 mm); the interposer's traces
    stop at each pocket's edge and run on to pads under the chips. The pockets are a plain hairline, so nothing reads as a cut
-   face. The count is not a claim. */
+   face. The count is not a claim.
+   24 Nov 2026 expert accuracy review (D2): the B200's 192 GB is eight stacks of 24 GB, Micron's eight-high HBM3E, so each
+   stack is drawn eight layers high (it was twelve, the 36 GB part). */
 R('cowos-exploded', function (m) {
   var dieW = 26, dieD = 32.5, dieX = 13.5, hbmW = 11, hbmD = 11, hbmX = 33.5, hbmZ = [-17.7, -5.9, 5.9, 17.7];
   var ipW = 78, ipD = 50, subW = 95, subD = 68;
@@ -89,7 +91,7 @@ R('cowos-exploded', function (m) {
   });
   m.tag(null);
   m.anchor(5, 'Silicon bridges', [BR[5][0] - BR[5][2] / 2, y0 + ipH - 0.6, BR[5][1]], pB.idx);
-  // 3 the chips: two logic dies with a hint of their floorplan, eight HBM stacks with their twelve layers
+  // 3 the chips: two logic dies with a hint of their floorplan, eight HBM stacks with their eight layers
   var pK = m.part('chips', { ex: [0, 56, 0], seq: 3 });
   var yK = y0 + ipH;
   m.tag('logic');
@@ -102,8 +104,8 @@ R('cowos-exploded', function (m) {
   m.tag('hbm');
   hbm.forEach(function (h) {
     var side = [];
-    for (var k = 1; k < 12; k++) {
-      var yy = -hbmH / 2 + hbmH * (k + 0.6) / 12.6;
+    for (var k = 1; k < 8; k++) {
+      var yy = -hbmH / 2 + hbmH * (k + 0.6) / 8.6;
       side.push(D.line([-hbmW / 2, yy, hbmD / 2], [hbmW / 2, yy, hbmD / 2], { lw: 0.35, alpha: 0.75 }));
     }
     var sideX = side.map(function (it) { return { pts: [[hbmW / 2, it.pts[0][1], -hbmD / 2], [hbmW / 2, it.pts[0][1], hbmD / 2]], lw: 0.35, alpha: 0.75 }; });

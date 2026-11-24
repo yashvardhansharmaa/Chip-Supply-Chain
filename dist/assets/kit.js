@@ -2126,7 +2126,9 @@ try{(function(PLATE){'use strict';var R = PLATE.register, D = PLATE.D, H = PLATE
    Round two (expert FIX 1): the bridges carry the die-to-die and die-to-memory wiring, so the traces lie on each bridge's top
    face, a pad at each end (12 across the seam bridge at 2 mm, 4 across each memory bridge at 1 mm); the interposer's traces
    stop at each pocket's edge and run on to pads under the chips. The pockets are a plain hairline, so nothing reads as a cut
-   face. The count is not a claim. */
+   face. The count is not a claim.
+   24 Nov 2026 expert accuracy review (D2): the B200's 192 GB is eight stacks of 24 GB, Micron's eight-high HBM3E, so each
+   stack is drawn eight layers high (it was twelve, the 36 GB part). */
 R('cowos-exploded', function (m) {
   var dieW = 26, dieD = 32.5, dieX = 13.5, hbmW = 11, hbmD = 11, hbmX = 33.5, hbmZ = [-17.7, -5.9, 5.9, 17.7];
   var ipW = 78, ipD = 50, subW = 95, subD = 68;
@@ -2198,7 +2200,7 @@ R('cowos-exploded', function (m) {
   });
   m.tag(null);
   m.anchor(5, 'Silicon bridges', [BR[5][0] - BR[5][2] / 2, y0 + ipH - 0.6, BR[5][1]], pB.idx);
-  // 3 the chips: two logic dies with a hint of their floorplan, eight HBM stacks with their twelve layers
+  // 3 the chips: two logic dies with a hint of their floorplan, eight HBM stacks with their eight layers
   var pK = m.part('chips', { ex: [0, 56, 0], seq: 3 });
   var yK = y0 + ipH;
   m.tag('logic');
@@ -2211,8 +2213,8 @@ R('cowos-exploded', function (m) {
   m.tag('hbm');
   hbm.forEach(function (h) {
     var side = [];
-    for (var k = 1; k < 12; k++) {
-      var yy = -hbmH / 2 + hbmH * (k + 0.6) / 12.6;
+    for (var k = 1; k < 8; k++) {
+      var yy = -hbmH / 2 + hbmH * (k + 0.6) / 8.6;
       side.push(D.line([-hbmW / 2, yy, hbmD / 2], [hbmW / 2, yy, hbmD / 2], { lw: 0.35, alpha: 0.75 }));
     }
     var sideX = side.map(function (it) { return { pts: [[hbmW / 2, it.pts[0][1], -hbmD / 2], [hbmW / 2, it.pts[0][1], hbmD / 2]], lw: 0.35, alpha: 0.75 }; });
@@ -2833,7 +2835,10 @@ try{(function(PLATE){'use strict';var R = PLATE.register, D = PLATE.D, H = PLATE
    with a pale neutral, as film or underfill fills them (chapter 9), where they were empty, as if air.
    22 Nov 2026 plates refine: the base die stands further off the stack, about two and a half times the gap between memory
    dies, so it reads as a different part; the microbumps are named on the row under the lowest memory die, at its right
-   end, their leader running out to the right, under the vias' (3 over 4); the base die is named from the left. */
+   end, their leader running out to the right, under the vias' (3 over 4); the base die is named from the left.
+   24 Nov 2026 expert accuracy review (D10): no source gives the microbump pitch inside an HBM stack (the tech note's 20 um is
+   a typical pitch in general), so the loupe names the microbumps with no pitch and its 20 um bar is gone. The bumps keep
+   their drawn spacing, and the 7 um gap keeps its figure. */
 var LOUPE = true;
 R('hbm-stack', function (m) {
   var hw = 5.3, bw = 5.5, t = 0.45, bt = 0.9, gap0 = 0.105, pitch = t + gap0, EX = 0.62;
@@ -2895,12 +2900,12 @@ R('hbm-stack', function (m) {
   [[-hw, -hw], [hw, -hw], [-hw, hw]].forEach(function (c) { m.guide([[c[0], 0, c[1], base.idx], [c[0], gap0 + pitch * 11, c[1], prev.idx]], { alpha: 0.6 }); });
   // what each numbered part lights, as its light table in data/specimen-parts.json does: every memory die in ink, every via and
   // every microbump in copper
-  var loupe = LOUPE ? { model: 'hbm-loupe', at: [TX * 2.5, gap0 + pitch * 9 + t / 2, hw * 0.55], part: 'die10', side: 'r', r: 0.155, rMax: 100, scale: 0.6, dx: -0.1, dy: 0.04, caption: ['Microbumps about 20\u00a0\u00b5m apart', 'in a gap as small as 7\u00a0\u00b5m.', 'Dies not to scale'] } : null;
+  var loupe = LOUPE ? { model: 'hbm-loupe', at: [TX * 2.5, gap0 + pitch * 9 + t / 2, hw * 0.55], part: 'die10', side: 'r', r: 0.155, rMax: 100, scale: 0.6, dx: -0.1, dy: 0.04, caption: ['Microbumps in a gap', 'as small as 7\u00a0\u00b5m.', 'Dies not to scale'] } : null;
   return { elev: PLATE.ISO.elev, yaw: PLATE.ISO.yaw, sortAxis: [0, 1, 0], loupe: loupe, calloutOpts: { 1: { tag: 'dies', only: 'ink' }, 2: { side: 'l' }, 3: { tag: 'tsv', only: 'accent', level: true }, 4: { tag: 'bumps', only: 'accent', side: 'r', level: true } }, order: { r: [3, 4] }, accent: [176, 102, 44], accentDark: [224, 154, 92] };
 });
 
 /* The loupe's own small plate, in micrometres, seen almost face on so its cut face reads as a section: three dies with the
-   microbumps between them, 20 um apart (the typical microbump spacing in a tech note on SK hynix's newsroom, chapter 9), in a
+   microbumps between them, drawn 20 um apart with no figure (no source gives the pitch inside an HBM stack), in a
    7 um gap (the smallest in Samsung's 12-high HBM3E release), and a via through each die. The dies' thickness and the vias'
    width are drawn, not sourced, so they carry no figure, and the caption says the dies are not to scale. The gap round the
    bumps is filled in a pale neutral (film or underfill, chapter 9). */
@@ -2921,7 +2926,6 @@ R('hbm-loupe', function (m) {
     }
     [x0 + 10, x0 + 70].forEach(function (vx) { bx(vx - 2.2, y0, -2, vx + 2.2, y0 + t, Z + 0.02, 'acc', { pz: 'cutAcc' }); });
   }
-  bar(m, [x0 + 30, -8, Z], [x0 + 50, -8, Z], '20 \u00b5m', { side: -1, wit: [[x0 + 30, t, Z], [x0 + 50, t, Z]] });
   bar(m, [x1 + 22, t, Z + 1], [x1 + 22, t + g, Z + 1], '7 \u00b5m', { side: 1 });
   tag(m, [-6, n * t + (n - 1) * g + 17, -Z], 'Memory die', {});
   return { elev: 0.16, yaw: -0.14, accent: [176, 102, 44], accentDark: [224, 154, 92] };
@@ -3060,7 +3064,10 @@ try{(function(PLATE){'use strict';var R = PLATE.register, D = PLATE.D, H = PLATE
    30 x 36.75 mm. The needles stand in ordered rows of equal length, a few rows standing for thousands (the caption says
    so); they were a random bowed tangle. The card's rim ticks, which read as a dial, are gone. The card's size (305 mm in
    the old file) has no allowed source and carries no figure. Colours (the set's legend): the wafer in silicon slate, the
-   four dies under the needles in a deeper slate. */
+   four dies under the needles in a deeper slate.
+   24 Nov 2026 expert accuracy review (D4): a vertical probe card on an AI processor lands on an area array of bumps across the
+   die's face (FormFactor), so the needles stand in a sparse grid across each die, four columns by five rows, where they stood
+   in a row along each long edge, which reads as a perimeter-pad chip. */
 R('probe-card', function (m) {
   var Rw = 1.0, Rc = 1.02, Rch = 1.08, tW = 0.028, wT = tW / 2, dw = 26 / 150, dh = 33 / 150;
   var yLo = wT + 0.082, tG = 0.02, yLoT = yLo + tG, yUp = yLoT + 0.082, yUpT = yUp + tG, stH = 0.10, yST = yUpT + 0.052, stW = 0.5, tP = 0.052, pB = yST + stH + 0.03, pT = pB + tP;
@@ -3079,17 +3086,17 @@ R('probe-card', function (m) {
   // the probe head: two guide plates and the needles bowed between them
   var hd = m.part('head', { ex: [0, 0.34, 0], seq: 2 });
   [yLo, yUp].forEach(function (y) { m.box({ c: [0, y + tG / 2, 0], s: [0.4, tG, 0.4] }, 'mid'); });
-  // the needles: on each die, a row along each long edge, where the pads are, a few standing for thousands; each needle the same length, bowed the same
-  // way between the guide plates, as a vertical probe's needle is
+  // the needles: on each die, a sparse grid across its face, where an AI chip's bumps are, a few standing for thousands; each
+  // needle the same length, bowed the same way between the guide plates, as a vertical probe's needle is
   m.tag('needles');
   for (gx = -1; gx <= 0; gx++) for (gz = -1; gz <= 0; gz++) {
     var ox = (gx + 0.5) * dw, oz = (gz + 0.5) * dh;
-    [-1, 1].forEach(function (sx) { [0.38].forEach(function (fx) {
-      for (var b1 = 0; b1 < 9; b1++) {
-        var qx = ox + sx * dw * fx, qz = oz + (b1 - 4) * (dh * 0.8 / 8), bo = 0.012;
+    [-0.36, -0.12, 0.12, 0.36].forEach(function (fx) {
+      [-0.36, -0.18, 0, 0.18, 0.36].forEach(function (fz) {
+        var qx = ox + dw * fx, qz = oz + dh * fz, bo = 0.012;
         m.wire([[qx, wT + 0.004, qz], [qx, yLo + tG * 0.4, qz], [qx + bo, (yLoT + yUp) / 2, qz], [qx, yUp + tG * 0.6, qz], [qx, yUpT + 0.004, qz]], { lw: 0.6, alpha: 0.85 });
-      }
-    }); });
+      });
+    });
   }
   m.tag(null);
   // the space transformer: multi-layer ceramic
@@ -3112,7 +3119,7 @@ R('probe-card', function (m) {
   });
   m.guide([[0, -0.3, 0, ch.idx], [0, pT + 0.2, 0, pc.idx]], { style: 'axis', alpha: 0.8 });
   m.callout([0.62, pT, -0.3, pc.idx], 'Probe card', { side: 'r' });
-  m.callout([-dw * 0.4 + 0.012, (yLoT + yUp) / 2, 0.5 * dh, hd.idx], 'Needles', { side: 'l', tag: 'needles' });
+  m.callout([-dw * 0.38 + 0.012, (yLoT + yUp) / 2, 0.5 * dh, hd.idx], 'Needles', { side: 'l', tag: 'needles' });
   m.callout([-0.62, wT, 0.72, wf.idx], 'Wafer', { side: 'l' });
   m.callout([dw * 0.5, wT, dh * 0.5 + 0.04, wf.idx], 'Dies under test', { side: 'r', tag: 'dies' });
   return { elev: PLATE.ISO.elev, yaw: PLATE.ISO.yaw, sortAxis: [0, 1, 0], accent: [111, 139, 166], accentDark: [195, 211, 226] };

@@ -6,7 +6,10 @@
    30 x 36.75 mm. The needles stand in ordered rows of equal length, a few rows standing for thousands (the caption says
    so); they were a random bowed tangle. The card's rim ticks, which read as a dial, are gone. The card's size (305 mm in
    the old file) has no allowed source and carries no figure. Colours (the set's legend): the wafer in silicon slate, the
-   four dies under the needles in a deeper slate. */
+   four dies under the needles in a deeper slate.
+   24 Nov 2026 expert accuracy review (D4): a vertical probe card on an AI processor lands on an area array of bumps across the
+   die's face (FormFactor), so the needles stand in a sparse grid across each die, four columns by five rows, where they stood
+   in a row along each long edge, which reads as a perimeter-pad chip. */
 R('probe-card', function (m) {
   var Rw = 1.0, Rc = 1.02, Rch = 1.08, tW = 0.028, wT = tW / 2, dw = 26 / 150, dh = 33 / 150;
   var yLo = wT + 0.082, tG = 0.02, yLoT = yLo + tG, yUp = yLoT + 0.082, yUpT = yUp + tG, stH = 0.10, yST = yUpT + 0.052, stW = 0.5, tP = 0.052, pB = yST + stH + 0.03, pT = pB + tP;
@@ -25,17 +28,17 @@ R('probe-card', function (m) {
   // the probe head: two guide plates and the needles bowed between them
   var hd = m.part('head', { ex: [0, 0.34, 0], seq: 2 });
   [yLo, yUp].forEach(function (y) { m.box({ c: [0, y + tG / 2, 0], s: [0.4, tG, 0.4] }, 'mid'); });
-  // the needles: on each die, a row along each long edge, where the pads are, a few standing for thousands; each needle the same length, bowed the same
-  // way between the guide plates, as a vertical probe's needle is
+  // the needles: on each die, a sparse grid across its face, where an AI chip's bumps are, a few standing for thousands; each
+  // needle the same length, bowed the same way between the guide plates, as a vertical probe's needle is
   m.tag('needles');
   for (gx = -1; gx <= 0; gx++) for (gz = -1; gz <= 0; gz++) {
     var ox = (gx + 0.5) * dw, oz = (gz + 0.5) * dh;
-    [-1, 1].forEach(function (sx) { [0.38].forEach(function (fx) {
-      for (var b1 = 0; b1 < 9; b1++) {
-        var qx = ox + sx * dw * fx, qz = oz + (b1 - 4) * (dh * 0.8 / 8), bo = 0.012;
+    [-0.36, -0.12, 0.12, 0.36].forEach(function (fx) {
+      [-0.36, -0.18, 0, 0.18, 0.36].forEach(function (fz) {
+        var qx = ox + dw * fx, qz = oz + dh * fz, bo = 0.012;
         m.wire([[qx, wT + 0.004, qz], [qx, yLo + tG * 0.4, qz], [qx + bo, (yLoT + yUp) / 2, qz], [qx, yUp + tG * 0.6, qz], [qx, yUpT + 0.004, qz]], { lw: 0.6, alpha: 0.85 });
-      }
-    }); });
+      });
+    });
   }
   m.tag(null);
   // the space transformer: multi-layer ceramic
@@ -58,7 +61,7 @@ R('probe-card', function (m) {
   });
   m.guide([[0, -0.3, 0, ch.idx], [0, pT + 0.2, 0, pc.idx]], { style: 'axis', alpha: 0.8 });
   m.callout([0.62, pT, -0.3, pc.idx], 'Probe card', { side: 'r' });
-  m.callout([-dw * 0.4 + 0.012, (yLoT + yUp) / 2, 0.5 * dh, hd.idx], 'Needles', { side: 'l', tag: 'needles' });
+  m.callout([-dw * 0.38 + 0.012, (yLoT + yUp) / 2, 0.5 * dh, hd.idx], 'Needles', { side: 'l', tag: 'needles' });
   m.callout([-0.62, wT, 0.72, wf.idx], 'Wafer', { side: 'l' });
   m.callout([dw * 0.5, wT, dh * 0.5 + 0.04, wf.idx], 'Dies under test', { side: 'r', tag: 'dies' });
   return { elev: PLATE.ISO.elev, yaw: PLATE.ISO.yaw, sortAxis: [0, 1, 0], accent: [111, 139, 166], accentDark: [195, 211, 226] };

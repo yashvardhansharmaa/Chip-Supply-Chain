@@ -161,7 +161,7 @@
  },
  "memory-and-hbm": {
   "specimen": "hbm-stack",
-  "src": "52670e64321f373b",
+  "src": "5c6089cb50224fc9",
   "thumb": [
    104,
    104
@@ -181,7 +181,7 @@
  },
  "advanced-packaging": {
   "specimen": "cowos-exploded",
-  "src": "44a0e4a1cb63a3fd",
+  "src": "5c604162a856a074",
   "thumb": [
    104,
    104
@@ -221,7 +221,7 @@
  },
  "test-and-assembly": {
   "specimen": "probe-card",
-  "src": "9b62c9d10ae28aff",
+  "src": "7608ca14f2155756",
   "thumb": [
    104,
    104

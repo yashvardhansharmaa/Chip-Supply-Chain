@@ -307,10 +307,10 @@ ${S.shareTags(p, versions)}
       let out = null, due = null; st.forEach((s) => { if (!s || !s.date) return; if (s.date <= upTo) out = s; else if (s.date <= date && !due) due = s; });
       const s = out || (f.initial && typeof f.initial === 'object' ? f.initial : null);
       const pending = due ? { date: due.date } : null;
-      if (!s) { const k = norm(typeof f.initial === 'string' ? f.initial : 'open'); return { status: k, label: STATE[k], date: null, announced: null, published: null, suspendedUntil: null, suspends: '', suspended: false, unconfirmed: false, also: null, scope: '', pending, cite: null, event: null }; }
+      if (!s) { const k = norm(typeof f.initial === 'string' ? f.initial : 'open'); return { status: k, label: STATE[k], date: null, announced: null, published: null, effective: null, compliance: null, suspendedUntil: null, suspends: '', suspended: false, unconfirmed: false, also: null, scope: '', pending, cite: null, event: null }; }
       const until = s.suspendedUntil ? String(s.suspendedUntil) : null, holds = !!until && until >= String(date), unconfirmed = !!until && !holds && until >= checked;
       const k = norm(until && !holds && !unconfirmed && s.resumes ? s.resumes : s.status);
-      return { status: k, label: s.label || STATE[k], date: out ? out.date : (s.date || null), announced: s.announced || null, published: s.published || null, suspendedUntil: until, suspends: s.suspends || '', suspended: holds || unconfirmed, unconfirmed, also: alsoOf(s), scope: s.for || '', pending, cite: s.cite || null, event: s.event || null };
+      return { status: k, label: s.label || STATE[k], date: out ? out.date : (s.date || null), announced: s.announced || null, published: s.published || null, effective: s.effective || null, compliance: s.compliance || null, suspendedUntil: until, suspends: s.suspends || '', suspended: holds || unconfirmed, unconfirmed, also: alsoOf(s), scope: s.for || '', pending, cite: s.cite || null, event: s.event || null };
     };
     const stayText = (st) => { if (!st.suspended || !st.suspendedUntil) return ''; const d = shortDate(st.suspendedUntil), w = st.suspends || ''; return st.unconfirmed ? `${w ? w + ' due' : 'Due'} to end ${d}, extension not confirmed` : `${w ? w + ' suspended' : 'Suspended'} until ${d}`; };
     const citeText = (c) => (c ? [c.fr, c.cfr].filter(Boolean).join(' · ') : '');
@@ -318,9 +318,15 @@ ${S.shareTags(p, versions)}
     const first = timeline.length ? String(timeline[0].date).slice(0, 4) : '2018';
     const flowHTML = (f) => {
       const st = stateAt(f, today), word = STATE[st.status];
+      // the dates as the interactive board prints them (Geo.datesText in src/app.js): a state dated by the day compliance began
+      // names the day the rule took effect, and a later compliance day follows the effective one (expert review F10)
       let when = st.date ? 'from ' + shortDate(st.date) : `open since ${first}`;
-      if (st.published && st.date && st.published !== st.date) when += ' · published ' + shortDate(st.published); // the Federal Register's day
-      else if (st.announced && st.date && st.announced !== st.date) when += ' · announced ' + shortDate(st.announced);
+      if (st.date && st.effective && st.effective !== st.date) when = 'compliance from ' + shortDate(st.date) + ' · effective ' + shortDate(st.effective);
+      else {
+        if (st.published && st.date && st.published !== st.date) when += ' · published ' + shortDate(st.published); // the Federal Register's day
+        else if (st.announced && st.date && st.announced !== st.date) when += ' · announced ' + shortDate(st.announced);
+        if (st.date && st.compliance && st.compliance > st.date) when += ' · compliance ' + shortDate(st.compliance);
+      }
       const stay = stayText(st);
       const ev = st.event && evById.get(st.event);
       return `<li class="row" id="${uid('flow-' + slug(f.id), 'board rows')}"><div><h3 class="row-h">${esc(f.name || f.id)}</h3>${f.route ? `<p class="row-meta">${esc(f.route)}</p>` : ''}</div>`

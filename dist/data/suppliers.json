@@ -2749,7 +2749,7 @@
       "product": "vacuum valves for chipmaking and related industries",
       "share": "about 71 percent",
       "year": "2025",
-      "by": "TechInsights data in the company's results presentation",
+      "by": "preliminary TechInsights data in the company's results presentation",
       "source": "https://www.vatgroup.com/files/live/sites/vat/files/Investor%20relations/annual-report/2025/full-year-2025-results-presentation.pdf"
     },
     "shareNote": "About 71 percent of the semiconductor and semiconductor-related vacuum valve market (2025)",
@@ -3599,10 +3599,10 @@
     "chokepoint": "Critical",
     "dominantIn": {
       "product": "coater/developer tracks",
-      "share": "91 percent",
+      "share": "92.6 percent",
       "year": "2025",
-      "by": "Gartner data in the company's results presentation",
-      "source": "https://www.tel.com/ir/library/report/pjuomj00000000tf-att/fy26q4presentations-e.pdf"
+      "by": "CSET's analysis of TechInsights data",
+      "source": "https://chipexplorer.eto.tech/?parentNode=N25&selectedNode=N32"
     },
     "shareNote": "91 percent of the world coater/developer (track) market in CY2025, on Gartner data published in Tokyo Electron's own results presentation",
     "customers": [
@@ -3907,8 +3907,8 @@
     "role": "Manufactures almost every leading-edge AI accelerator, including those of Nvidia, AMD and Broadcom and the custom chips of large cloud companies, on its N4, N3 and N2 processes. It also owns CoWoS and SoIC advanced packaging, and its packaging capacity is a tighter constraint than its wafer capacity.",
     "chokepoint": "Critical",
     "dominantIn": {
-      "product": "CoWoS packaging, used for virtually all high-end AI accelerators",
-      "only": true,
+      "product": "CoWoS packaging",
+      "share": "its own technology, used for virtually all high-end AI accelerators",
       "year": "2026",
       "by": "Epoch AI",
       "source": "https://epoch.ai/data/ai-chip-components-documentation/methodology"
@@ -6463,11 +6463,12 @@
     "city": "New Taipei",
     "founded": 2012,
     "ticker": "6669.TW",
-    "ownership": "Public, majority owned by Wistron",
+    "ownership": "Public. Wistron is its largest shareholder, with 35.46 percent in March 2026",
     "parent": {
       "name": "Wistron",
       "country": "TW",
-      "kind": "majority"
+      "kind": "subsidiary",
+      "stake": "35.46 percent"
     },
     "role": "Designs and builds hyperscale servers, storage and rack systems to Open Compute designs for cloud operators, including liquid-cooled AI racks.",
     "chokepoint": "Important",
@@ -6479,6 +6480,16 @@
     ],
     "aiRelevance": "Hyperscalers use Open Compute rack designs to deploy AI capacity built to their own specifications.",
     "source": "https://www.wiwynn.com/products",
+    "moreSources": [
+      {
+        "label": "Wiwynn's top ten shareholders, March 2026",
+        "url": "https://www.wiwynn.com/hubfs/Investors/Shareholders_Services/2026_Top10_Shareholders_EN.pdf"
+      },
+      {
+        "label": "Wistron's 2025 consolidated financial statements, list of subsidiaries",
+        "url": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=3231&filename=202504_3231_AIA.pdf#page=17"
+      }
+    ],
     "revenue": {
       "amount": 950663310,
       "unit": "thousand",

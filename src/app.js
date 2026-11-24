@@ -1849,7 +1849,7 @@
     abroad: function (r) { return r && r.parent && r.parent.country && r.parent.country !== r.country ? r.parent : null; },
     ccTag: function (r) { var p = this.abroad(r); return r.country + (p ? ' · parent ' + p.country : ''); },
     parentLine: function (r) { var p = this.abroad(r); return p ? 'parent ' + p.name + ' (' + cname(p.country) + ')' : ''; },
-    ownedBy: function (r) { var p = r && r.parent; return p ? (p.kind === 'division' ? 'Part of ' : p.kind === 'majority' ? 'Majority owned by ' : 'Subsidiary of ') + p.name : ''; },
+    ownedBy: function (r) { var p = r && r.parent; return p ? (p.kind === 'division' ? 'Part of ' : p.kind === 'majority' ? 'Majority owned by ' : 'Subsidiary of ') + p.name + (p.stake ? ', which holds ' + p.stake : '') : ''; }, // stake: a parent's holding where it is under half (Wiwynn, expert review C1)
     // the line under a firm's name in the Table: its ticker, and for a firm with a parent, who owns it in place of "Private"
     tickerLine: function (r) { return r.parent ? [/^private$/i.test(r.ticker || '') ? '' : r.ticker, this.ownedBy(r)].filter(Boolean).join(' · ') : (r.ticker || ''); },
     /* what a dominant firm dominates, in one line with its share or "as its only supplier", the year and who measured it
@@ -2259,8 +2259,9 @@
     ],
     /* the license outcome a flow stands in, and the word the pill carries, from open to closed. Restricted is a
        government limiting sales to some buyers or uses without banning them outright. A presumption of approval is a license
-       that will normally be granted. A license required by letter is a requirement BIS set in a letter to one company, with no
-       review policy published (24 Nov 2026, from the Federal Register reading behind qa/builds-nov/ux/REPORT.md items 3 to 6).
+       that will normally be granted. A license required by letter is a requirement BIS set in a letter to one company, under a
+       section that sets the review policy, 744.21 or 744.23 (24 Nov 2026, qa/builds-nov/ux/REPORT.md items 3 to 6, and the
+       expert review's F2).
        Policy is the off-ramp for money and tariffs, which gate nothing. */
     STATE: { open: 'No license', restricted: 'Restricted', approval: 'Presumption of approval', 'case': 'Case by case', letter: 'License required by letter', denial: 'Presumption of denial', prohibited: 'Prohibited', policy: 'Policy' },
     /* the outcomes from the most closed down, the order a year's tally reads in */
@@ -2416,7 +2417,7 @@
       var pending = due ? { date: due.date, label: due.label || '' } : null;
       if (!s) {
         k = this.norm(typeof f.initial === 'string' ? f.initial : 'open');
-        return { status: k, label: this.STATE[k], date: null, announced: null, published: null, suspendedUntil: null, suspends: '', suspended: false, unconfirmed: false, also: null, scope: '', pending: pending, cite: null, event: null };
+        return { status: k, label: this.STATE[k], date: null, announced: null, published: null, effective: null, compliance: null, suspendedUntil: null, suspends: '', suspended: false, unconfirmed: false, also: null, scope: '', pending: pending, cite: null, event: null };
       }
       var until = s.suspendedUntil ? String(s.suspendedUntil) : null;
       var holds = !!until && until >= String(date); // the stay runs to the end of its last day
@@ -2429,6 +2430,8 @@
         date: out ? out.date : (s.date || null),
         announced: s.announced || null, // missing: the effective date stands for both
         published: s.published || null, // the Federal Register's publication day, when that is the second date
+        effective: s.effective || null, // the day the rule took effect, when the state is dated by its later compliance date
+        compliance: s.compliance || null, // the day compliance was due, when it came after the state's date
         suspendedUntil: until,
         suspends: s.suspends || '',
         suspended: holds || unconfirmed,
@@ -2447,7 +2450,7 @@
       return list.length ? list : null;
     },
     keyOf: function (s) {
-      return s.status + '|' + s.label + '|' + (s.date || '') + '|' + (s.announced || '') + '|' + (s.published || '') +
+      return s.status + '|' + s.label + '|' + (s.date || '') + '|' + (s.announced || '') + '|' + (s.published || '') + '|' + (s.effective || '') + '|' + (s.compliance || '') +
         '|' + (s.suspended ? s.suspendedUntil + (s.unconfirmed ? '?' : '') : '') + '|' + (s.also ? s.also.map(function (a) { return a.status + a.scope; }).join(',') : '') +
         '|' + (s.pending ? s.pending.date : '') + '|' + this.citeText(s.cite) + '|' + ((s.cite && s.cite.url) || '');
     },
@@ -2701,7 +2704,7 @@
       return [f.name || f.id, f.route, this.STATE[st.status] + (st.scope ? ' for ' + st.scope : ''),
       st.also ? st.also.map(function (a) { return this.STATE[a.status] + (a.scope ? ' for ' + a.scope : ''); }, this).join(', ') : '', this.stayText(st),
       st.pending ? 'change due ' + this.fmtDate(st.pending.date) + ', not confirmed' : '',
-      st.date ? 'from ' + this.fmtDate(st.date) : 'open since 2018', n + (n === 1 ? ' event' : ' events')].filter(function (x) { return x; }).join(', ');
+      this.datesText(st), n + (n === 1 ? ' event' : ' events')].filter(function (x) { return x; }).join(', ');
     },
     /* the glossary's own terms inside a state label become popover buttons, so TPP and the Entity List are defined in place */
     GLOSS: [[/\bTPP\b/g, 'tpp', 'TPP'], [/\bEntity List\b/g, 'entity list', 'Entity List'], [/\bFDPR\b/g, 'foreign direct product rule', 'FDPR'], [/\bforeign direct product rule\b/gi, 'foreign direct product rule', 'foreign direct product rule'], [/\blicen[cs]e exception\b/gi, 'license exception', 'license exception']],
@@ -2711,6 +2714,18 @@
       this.GLOSS.forEach(function (g) { out = out.replace(g[0], '<span class="gl-term gl-term--inline" data-term="' + g[1] + '">' + g[2] + '</span>'); });
       return out;
     },
+    /* a state's dates: "from 13 Jan 2025 · published 15 Jan 2025 · compliance 15 May 2025", or, for a state dated by the day
+       compliance began, "compliance from 31 Dec 2024 · effective 2 Dec 2024" (expert review F10, 24 Nov 2026). The static
+       /export-controls/ page prints the same (build/modules/reference-pages.js) */
+    datesText: function (st) {
+      if (!st.date) return 'open since 2018';
+      if (st.effective && st.effective !== st.date) return 'compliance from ' + this.fmtDate(st.date) + ' · effective ' + this.fmtDate(st.effective);
+      var dates = 'from ' + this.fmtDate(st.date);
+      if (st.published && st.published !== st.date) dates += ' · published ' + this.fmtDate(st.published); // the Federal Register's day
+      else if (st.announced && st.announced !== st.date) dates += ' · announced ' + this.fmtDate(st.announced);
+      if (st.compliance && st.compliance > st.date) dates += ' · compliance ' + this.fmtDate(st.compliance);
+      return dates;
+    },
     /* the pill, the stay beside it, the label, the two dates and the citation */
     /* one review policy: its pill and whom it covers, kept together on a line of their own */
     polHTML: function (status, scope, cls) {
@@ -2719,9 +2734,7 @@
     },
     pillHTML: function (st) {
       var self = this, word = this.STATE[st.status];
-      var dates = st.date ? 'from ' + this.fmtDate(st.date) : 'open since 2018';
-      if (st.published && st.date && st.published !== st.date) dates += ' · published ' + this.fmtDate(st.published); // the Federal Register's day
-      else if (st.announced && st.date && st.announced !== st.date) dates += ' · announced ' + this.fmtDate(st.announced);
+      var dates = this.datesText(st);
       var stay = this.stayText(st);
       return '<span class="cf-pills">' +
         this.polHTML(st.status, st.scope, st.suspended && !st.suspends ? ' is-suspended' : '') +
@@ -2810,7 +2823,7 @@
         var moves = tl.filter(function (e) { return (e.flows || []).indexOf(f.id) >= 0; }).length;
         return {
           flow: f.name, route: f.route, asOf: asOf, state: self.STATE[st.status] + (st.scope ? ' for ' + st.scope : ''), label: st.label || '',
-          since: st.date || '', announced: st.announced || '', published: st.published || '', suspendedUntil: st.suspended ? st.suspendedUntil || '' : '', suspends: st.suspended ? st.suspends : '',
+          since: st.date || '', announced: st.announced || '', published: st.published || '', effective: st.effective || '', compliance: st.compliance || '', suspendedUntil: st.suspended ? st.suspendedUntil || '' : '', suspends: st.suspended ? st.suspends : '',
           stay: self.stayText(st), alsoState: st.also ? st.also.map(function (a) { return self.STATE[a.status] + (a.scope ? ' for ' + a.scope : ''); }).join(', ') : '', dataChecked: self.checkedOn(),
           setBy: ev ? ev.title : '', fr: c.fr || '', cfr: c.cfr || '', url: c.url || '', source: ev ? ev.source : '', moves: moves
         };

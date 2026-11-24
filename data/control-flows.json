@@ -5,7 +5,7 @@
       "id": "ai-chips",
       "name": "AI chips up to the H200",
       "route": "US → China",
-      "what": "Data center accelerators up to the H200's level that were on sale in the United States when the January 2026 rule was published: the A100, the H100, the H200 and AMD's MI325X. Since 15 January 2026, license applications to export chips below 21,000 TPP and 6,500 GB/s of memory bandwidth from the United States to China or Macau are reviewed case by case. The exporter must certify, among other things, that US supply is sufficient and that a third party in the United States has tested the chips. The rule covers only chips commercially available in the United States when it was published, so applications for Nvidia's China-only A800 and H800 still meet a presumption of denial. The H20 falls below the thresholds of ECCN 3A090, the US export category for advanced chips. It has needed a license for China since April 2025 because the US government told Nvidia so in a letter, and BIS has published no review policy for it.",
+      "what": "Data center accelerators up to the H200's level that were on sale in the United States when the January 2026 rule was published, such as the H100, the H200 and AMD's MI325X. Since 15 January 2026, license applications to export chips below 21,000 TPP and 6,500 GB/s of memory bandwidth from the United States to China or Macau are reviewed case by case. The exporter must certify, among other things, that US supply is sufficient and that a third party in the United States has tested the chips. BIS's summary of the rule limits it to chips on sale in the United States when it was published. The exporter must also certify that the chips sent to China and Macau add up to no more than half the computing power of the same chip shipped to US customers. A chip sold only in China, such as Nvidia's A800 or H800, cannot qualify, so applications for it still meet a presumption of denial. The H20 falls below the thresholds of ECCN 3A090, the US export category for advanced chips. It has needed a license for China since April 2025 because the US government told Nvidia so in a letter, under 15 CFR 744.23. The review policy that rule sets for buyers in China is a presumption of denial (744.23(d)).",
       "order": 1,
       "chapter": "geopolitics",
       "initial": "open",
@@ -14,10 +14,11 @@
           "date": "2022-08-26",
           "announced": "2022-08-31",
           "status": "letter",
-          "label": "License required for A100 and H100, by letter to Nvidia",
+          "label": "License required for A100 and H100 by letter to Nvidia, under the military end-use rule (15 CFR 744.21), which presumes denial",
           "event": "2022-08-31-a100-h100-licence",
           "cite": {
             "fr": "NVIDIA Form 8-K, 31 August 2022",
+            "cfr": "15 CFR 744.21(b), (e)",
             "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581022000146/nvda-20220826.htm"
           }
         },
@@ -55,17 +56,18 @@
             "fr": "90 FR 5298",
             "cfr": "15 CFR 744.23",
             "url": "https://www.govinfo.gov/content/pkg/FR-2025-01-16/html/2025-00711.htm"
-          }
+          },
+          "compliance": "2025-01-31"
         },
         {
           "date": "2025-04-09",
           "announced": "2025-04-15",
           "status": "denial",
-          "label": "H20, built to stay within the 2023 limits, needs a license by letter to Nvidia",
+          "label": "H20, built to stay within the 2023 limits, needs a license by letter to Nvidia, under the supercomputer end-use rule (15 CFR 744.23), which presumes denial for China",
           "event": "2025-04-09-h20-licence",
           "cite": {
             "fr": "NVIDIA Form 8-K, 15 April 2025",
-            "cfr": "15 CFR 744.23",
+            "cfr": "15 CFR 744.23(b), (d)",
             "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000082/nvda-20250409.htm"
           },
           "also": {
@@ -90,7 +92,7 @@
         {
           "date": "2025-08-11",
           "status": "denial",
-          "label": "US officials expect 15 percent of revenue from licensed China sales",
+          "label": "US officials expect 15 percent or more of revenue from licensed China sales",
           "event": "2025-08-11-fifteen-percent",
           "cite": {
             "fr": "NVIDIA Form 10-K, FY2026",
@@ -148,10 +150,11 @@
           "date": "2022-08-26",
           "announced": "2022-08-31",
           "status": "letter",
-          "label": "License required for any future Nvidia chip at or above the A100's level, by letter to Nvidia",
+          "label": "License required for any future Nvidia chip at or above the A100's level by letter to Nvidia, under the military end-use rule (15 CFR 744.21), which presumes denial",
           "event": "2022-08-31-a100-h100-licence",
           "cite": {
             "fr": "NVIDIA Form 8-K, 31 August 2022",
+            "cfr": "15 CFR 744.21(b), (e)",
             "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581022000146/nvda-20220826.htm"
           }
         },
@@ -189,7 +192,8 @@
             "fr": "90 FR 5298",
             "cfr": "15 CFR 744.23",
             "url": "https://www.govinfo.gov/content/pkg/FR-2025-01-16/html/2025-00711.htm"
-          }
+          },
+          "compliance": "2025-01-31"
         },
         {
           "date": "2026-01-15",
@@ -221,7 +225,7 @@
       "id": "us-tools",
       "name": "Chipmaking tools",
       "route": "US → China",
-      "what": "Semiconductor manufacturing equipment and the software that runs it. A license is needed. Applications for tools bound for advanced fabs in China meet a presumption of denial. Since 17 November 2023, applications for the fabs of firms headquartered in the United States or in Country Groups A:5 and A:6, the US lists of close partners, meet a presumption of approval, unless a firm based in China or Macau owns most of the firm. Applications for other fabs, and for tools that a foreign maker sells free of US rules, are reviewed case by case.",
+      "what": "Semiconductor manufacturing equipment and the software that runs it. A license is needed. Applications for tools bound for advanced fabs in China meet a presumption of denial. Since 17 November 2023, applications for the fabs of firms headquartered in the United States or in Country Groups A:5 and A:6, the US lists of close partners, meet a presumption of approval, unless a firm headquartered in China, Macau or another US arms-embargoed country owns most of the firm. Applications for other fabs, and for tools that a foreign maker sells free of US rules, are reviewed case by case.",
       "order": 3,
       "chapter": "deposition-and-etch",
       "initial": "open",
@@ -309,7 +313,8 @@
             "fr": "89 FR 96790",
             "cfr": "15 CFR 742.6(a)(6)",
             "url": "https://www.govinfo.gov/content/pkg/FR-2024-12-05/html/2024-28270.htm"
-          }
+          },
+          "effective": "2024-12-02"
         },
         {
           "date": "2025-12-31",
@@ -340,7 +345,7 @@
     {
       "id": "allies",
       "name": "Dutch and Japanese controls",
-      "route": "Netherlands and Japan → all destinations, China included",
+      "route": "Netherlands → outside the EU, and Japan → all destinations, China included",
       "what": "Advanced immersion DUV scanners (machines that print chip patterns) and some measuring and inspection tools from the Netherlands, and the chipmaking equipment Japan added to its license list in 2023 and 2025. The Dutch controls cover exports to every destination outside the EU, and the Japanese controls cover every destination.",
       "order": 4,
       "chapter": "lithography",
@@ -408,7 +413,7 @@
       "id": "hbm",
       "name": "High-bandwidth memory",
       "route": "US → China, including HBM made abroad",
-      "what": "Memory stacks with more than 2 GB per second of bandwidth per square millimeter, wherever they are made, including foreign stacks that the direct product rule brings under US control. The license requirement covers only Macau and Country Group D:5, the US list of arms-embargoed countries that includes China. For buyers in China or Macau, approval is presumed if they are headquartered elsewhere, and denial if they are headquartered there. License Exception HBM still lets an exporter in the US or in Country Group A:5, a group of close US partners, ship stacks below 3.3 GB per second per square millimeter without a license. The stacks must go directly to a packaging site for the designer that bought them.",
+      "what": "Memory stacks with more than 2 GB per second of bandwidth per square millimeter, wherever they are made, including foreign stacks that the direct product rule brings under US control. A license is required to send them to Macau or Country Group D:5, the US list of arms-embargoed countries that includes China, and to send them anywhere for a firm headquartered there. Approval is presumed for buyers in China or Macau headquartered elsewhere, and denial for firms headquartered there, wherever the stacks go. License Exception HBM still lets an exporter in the US or in Country Group A:5, a group of close US partners, ship stacks below 3.3 GB per second per square millimeter without a license. The stacks must go directly to a packaging site for the designer that bought them.",
       "order": 5,
       "chapter": "memory-and-hbm",
       "initial": "open",
@@ -417,18 +422,19 @@
           "date": "2024-12-31",
           "announced": "2024-12-02",
           "status": "denial",
-          "label": "Denial for buyers headquartered in Macau or a D:5 country such as China, and approval for the rest",
+          "label": "Denial for buyers headquartered in Macau or a D:5 country such as China, wherever they are, and approval for other buyers in China or Macau",
           "event": "2024-12-02-hbm-package",
           "cite": {
             "fr": "89 FR 96790",
-            "cfr": "15 CFR 742.6(a)(6)(i)(B), (b)(10)(ii); 740.25",
+            "cfr": "15 CFR 742.6(a)(6)(i)(B), (b)(10)(ii); 744.23(a)(3)(i)(B); 740.25",
             "url": "https://www.govinfo.gov/content/pkg/FR-2024-12-05/html/2024-28270.htm"
           },
           "for": "buyers headquartered in D:5 or Macau",
           "also": {
             "status": "approval",
-            "for": "other buyers"
-          }
+            "for": "buyers in China or Macau headquartered elsewhere"
+          },
+          "effective": "2024-12-02"
         }
       ],
       "short": "HBM"
@@ -437,10 +443,19 @@
       "id": "entity",
       "name": "US goods and technology",
       "route": "US → Chinese firms on US lists",
-      "what": "Anything subject to the US Export Administration Regulations (EAR), from processors to design software, when a firm on the Entity List is a party to the transaction, or when a denial order bars the firm. Each Entity List listing sets how license applications are reviewed. A denial order, as BIS issued against ZTE in 2018, puts the firm on the Denied Persons List and bars US exports to it outright.",
+      "what": "Anything subject to the US Export Administration Regulations (EAR), from processors to design software, when a firm on the Entity List is a party to the transaction, or when a denial order bars the firm. Each Entity List listing sets how license applications are reviewed. A denial order, as BIS activated against ZTE in 2018, puts the firm on the Denied Persons List and bars US exports to it outright.",
       "order": 6,
       "chapter": "geopolitics",
-      "initial": "open",
+      "initial": {
+        "date": "2015-07-28",
+        "status": "denial",
+        "label": "Chinese entities already on the Entity List need a license, such as the 11th Research Institute of China Electronics Technology Group, listed in 2015 with a presumption of denial",
+        "cite": {
+          "fr": "80 FR 44846",
+          "cfr": "15 CFR 744.11",
+          "url": "https://www.govinfo.gov/content/pkg/FR-2015-07-28/html/2015-18511.htm"
+        }
+      },
       "states": [
         {
           "date": "2018-04-15",
@@ -457,7 +472,7 @@
         {
           "date": "2018-07-13",
           "published": "2018-07-23",
-          "status": "open",
+          "status": "denial",
           "label": "After a settlement, the order ends and ZTE comes off the Denied Persons List",
           "event": "2018-07-13-zte-order-terminated",
           "cite": {
@@ -795,39 +810,57 @@
       "id": "diffusion",
       "name": "AI chips to the rest of the world",
       "route": "US → D:1, D:4 and D:5, the UAE, five more countries, and D:5 or Macau firms",
-      "what": "Advanced AI chips, ECCN 3A090 except its memory entry 3A090.c, and the computers built from them, ECCN 4A090. Since 19 November 2026 a license is required to or within Indonesia, Malaysia, Singapore, Brazil and Thailand, under 15 CFR 742.6(a)(6)(iii)(A)(1). Shipments there to a consignee or end user headquartered in the United States, or whose ultimate parent is, need no license if the exporter reports them to BIS each month. Under 742.6(a)(6)(iii)(A)(2), a license is also required for destinations in Country Groups D:1, D:4 and D:5 that are not also in A:5 or A:6, and for the United Arab Emirates. Shipments to the approved entities in the UAE listed in supplement no. 8 to part 740 need no license. Under 15 CFR 744.23(a)(3), a license is required in any other destination when the items are for an entity headquartered in Country Group D:5 or Macau, or whose ultimate parent is. Under 15 CFR 744.24, a license is required in any destination when the shipper knows the items are bound for a data center that gives such entities access to more than 12,000,000 aggregate TPP, the sum of the TPP of the chips. Applications for the five countries, and for such data centers, are reviewed case by case. Applications for the other destinations in D:1 and D:4 and for the UAE meet a presumption of approval, and those for D:5, Macau and their firms a presumption of denial. The rule of 19 November 2026 also removed the AI Diffusion Rule of January 2025 from the regulations. That rule had required a license for the top band of these chips to or within any destination, and the Commerce Department said on 13 May 2025 it would rescind it. It let exporters ship without a license to nineteen destinations, the United States and eighteen allies listed in supplement no. 5 to part 740, under License Exception AIA. License Exception LPP allowed up to 26,900,000 TPP a year per recipient elsewhere. The rule reviewed license applications for the nineteen with a presumption of approval, and those for other destinations the same way up to a cap of 790,000,000 TPP per country through 2027. Applications for D:5, Macau and their firms met a presumption of denial.",
+      "what": "Advanced AI chips, ECCN 3A090 except its memory entry 3A090.c, and the computers built from them, ECCN 4A090. Since 19 November 2026 a license is required to or within Indonesia, Malaysia, Singapore, Brazil and Thailand, under 15 CFR 742.6(a)(6)(iii)(A)(1). Shipments there to a consignee or end user headquartered in the United States, or whose ultimate parent is, need no license if the exporter reports them to BIS each month. Under 742.6(a)(6)(iii)(A)(2), a license is also required for destinations in Country Groups D:1, D:4 and D:5 that are not also in A:5 or A:6, and for the United Arab Emirates. Shipments to the approved entities in the UAE listed in supplement no. 8 to part 740 need no license. Under 15 CFR 744.23(a)(3), a license is required in any other destination when the items are for an entity headquartered in Country Group D:5 or Macau, or whose ultimate parent is. Under 15 CFR 744.24, a license is required in any destination when the shipper knows the items are bound for a data center that gives such entities access to more than 12,000,000 aggregate TPP, the sum of the TPP of the chips. Applications for the five countries, and for such data centers, are reviewed case by case. Applications for the other destinations in D:1 and D:4 and for the UAE meet a presumption of approval, and those for D:5, Macau and their firms a presumption of denial. The rule of 19 November 2026 also removed the AI Diffusion Rule of January 2025 from the regulations. That rule had required a license for the top band of these chips to or within any destination, and the Commerce Department said on 13 May 2025 it would rescind it. Compliance had been due on 15 May 2025, and the rule of 19 November 2026 says the AI Diffusion Rule was never enforced. BIS went on enforcing the license requirement for D:1, D:4 and D:5 destinations outside A:5 and A:6, and for firms headquartered in D:5 or Macau. The AI Diffusion Rule let exporters ship without a license to nineteen destinations, the United States and eighteen allies listed in supplement no. 5 to part 740, under License Exception AIA. License Exception LPP allowed up to 26,900,000 TPP a year per recipient elsewhere. The rule reviewed license applications for the nineteen with a presumption of approval, and those for other destinations the same way up to a cap of 790,000,000 TPP per country through 2027. Applications for D:5, Macau and their firms met a presumption of denial.",
       "order": 10,
       "chapter": "geopolitics",
       "initial": "open",
       "states": [
         {
-          "date": "2025-01-13",
-          "published": "2025-01-15",
+          "date": "2023-11-17",
+          "announced": "2023-10-17",
           "status": "approval",
-          "label": "License required worldwide, with AIA for nineteen destinations and LPP elsewhere",
-          "event": "2025-01-13-diffusion-rule",
+          "label": "License required for D:1, D:4 and D:5 countries outside A:5 and A:6, and for firms headquartered in D:5 or Macau anywhere",
+          "event": "2023-10-17-density-test",
           "cite": {
-            "fr": "90 FR 4544",
-            "cfr": "15 CFR 742.6(a)(6)(iii)(A); 740.27; 740.29",
-            "url": "https://www.govinfo.gov/content/pkg/FR-2025-01-15/html/2025-00636.htm"
+            "fr": "88 FR 73458",
+            "cfr": "15 CFR 742.6(a)(6)(iii), (b)(10)(ii); 744.23(a)(3)",
+            "url": "https://www.govinfo.gov/content/pkg/FR-2023-10-25/html/2023-23055.htm"
           },
-          "for": "other destinations, up to a cap",
+          "for": "D:1 and D:4 countries outside A:5 and A:6",
           "also": {
             "status": "denial",
             "for": "D:5, Macau and their firms"
           }
         },
         {
+          "date": "2025-01-13",
+          "published": "2025-01-15",
+          "status": "approval",
+          "label": "AI Diffusion Rule published, with compliance due on 15 May 2025",
+          "event": "2025-01-13-diffusion-rule",
+          "cite": {
+            "fr": "90 FR 4544",
+            "cfr": "15 CFR 742.6(a)(6)(iii)(A); 740.27; 740.29",
+            "url": "https://www.govinfo.gov/content/pkg/FR-2025-01-15/html/2025-00636.htm"
+          },
+          "for": "D:1 and D:4 countries outside A:5 and A:6",
+          "also": {
+            "status": "denial",
+            "for": "D:5, Macau and their firms"
+          },
+          "compliance": "2025-05-15"
+        },
+        {
           "date": "2025-05-13",
           "status": "approval",
-          "label": "Commerce Department stops enforcing the rule, but its text stays in the Code of Federal Regulations",
+          "label": "Commerce Department says it will not enforce the AI Diffusion Rule, two days before compliance was due. Licenses stay required for D:1, D:4 and D:5 countries and for D:5 or Macau firms",
           "event": "2025-05-13-diffusion-rescinded",
           "cite": {
             "url": "https://www.bis.gov/press-release/department-commerce-rescinds-biden-era-artificial-intelligence-diffusion-rule-strengthens-chip-related",
             "fr": "BIS press release, 13 May 2025",
             "cfr": "15 CFR 742.6(a)(6)(iii)(A)"
           },
-          "for": "other destinations, up to a cap",
+          "for": "D:1 and D:4 countries outside A:5 and A:6",
           "also": {
             "status": "denial",
             "for": "D:5, Macau and their firms"
@@ -842,7 +875,7 @@
             "url": "https://www.whitehouse.gov/fact-sheets/2025/05/fact-sheet-president-donald-j-trump-secures-200-billion-in-new-u-s-uae-deals-and-accelerates-previously-committed-1-4-trillion-uae-investment/",
             "fr": "White House fact sheet, 15 May 2025"
           },
-          "for": "other destinations, up to a cap",
+          "for": "D:1 and D:4 countries outside A:5 and A:6",
           "also": {
             "status": "denial",
             "for": "D:5, Macau and their firms"
@@ -859,7 +892,7 @@
             "cfr": "15 CFR 742.6(a)(6)(iii)(A) and (B); supplement no. 8 to part 740",
             "url": "https://www.govinfo.gov/content/pkg/FR-2026-07-14/html/2026-14132.htm"
           },
-          "for": "other destinations, up to a cap",
+          "for": "D:1 and D:4 countries outside A:5 and A:6, and the UAE",
           "also": {
             "status": "denial",
             "for": "D:5, Macau and their firms"

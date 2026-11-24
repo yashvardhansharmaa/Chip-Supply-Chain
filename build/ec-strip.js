@@ -31,11 +31,13 @@ const NON_US = [
   ['2023-07-23-japan-tools', 'Japanese controls on 23 categories'],
   ['2023-09-01-dutch-licence', 'Dutch license requirement'],
 ];
-// later Dutch and Japanese tightenings, drawn only while their labels still fit the strip (see src/modules/ec-strip.js)
+// later Dutch and Japanese tightenings, drawn only while their labels still fit the strip (see src/modules/ec-strip.js).
+// A third field 'effective' sets the mark on the day the entry took effect (its effectiveDate), as the 2023 non-US marks
+// already stand: Japan's 2025 order was promulgated on 28 March and took effect on 28 May (expert review F12, 24 Nov 2026)
 const NON_US_LATER = true;
 const LATER = [
   ['2024-09-06-dutch-extension', 'Dutch controls extended'],
-  ['2025-03-28-japan-advanced-chips', 'Japan adds advanced chips'],
+  ['2025-03-28-japan-advanced-chips', 'Japan adds advanced chips', 'effective'],
 ];
 
 const entriesOf = (data) => { const t = data && data.timeline; return Array.isArray(t) ? t : ((t || {}).events || []); };
@@ -44,7 +46,7 @@ const dayFull = (iso) => { const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(iso 
 // the latest entry's short label: its title's opening words, up to the first that reaches 18 characters ("Remote access rule")
 const opening = (title) => { const w = String(title || '').split(/\s+/); let out = ''; for (const x of w) { out = out ? out + ' ' + x : x; if (out.length >= 18) break; } return out; };
 
-// the marks in date order: { entry, short, latest }
+// the marks in date order: { entry, short, latest, date } (date: the day the mark stands on)
 function marks(data, warn) {
   const evs = entriesOf(data).filter((e) => e && /^\d{4}-\d{2}-\d{2}$/.test(String(e.date || '')));
   const sorted = evs.map((e, i) => [e, i]).sort((a, b) => (a[0].date < b[0].date ? -1 : a[0].date > b[0].date ? 1 : a[1] - b[1])).map((x) => x[0]);
@@ -52,15 +54,16 @@ function marks(data, warn) {
   const latest = sorted[sorted.length - 1];
   const want = MAIN.concat(NON_US_2023 ? NON_US : []).concat(NON_US_2023 && NON_US_LATER ? LATER : []);
   const out = [];
-  want.forEach(([id, short]) => {
+  want.forEach(([id, short, on]) => {
     const e = byId.get(id);
     if (!e) { if (warn) warn(`history strip: no timeline entry ${id}, so its mark is left out`); return; }
     if (!String(e.title || '').startsWith(short)) { if (warn) warn(`history strip: "${short}" is not the opening of the title of ${id}, so the full title labels it`); short = e.title; }
     if (latest && e === latest) return;
-    out.push({ entry: e, short, latest: false });
+    const day = on === 'effective' && /^\d{4}-\d{2}-\d{2}$/.test(String(e.effectiveDate || '')) ? e.effectiveDate : e.date;
+    out.push({ entry: e, short, latest: false, date: day });
   });
-  if (latest) out.push({ entry: latest, short: opening(latest.title), latest: true });
-  return out.sort((a, b) => (a.entry.date < b.entry.date ? -1 : a.entry.date > b.entry.date ? 1 : (a.latest ? 1 : b.latest ? -1 : 0)));
+  if (latest) out.push({ entry: latest, short: opening(latest.title), latest: true, date: latest.date });
+  return out.sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : (a.latest ? 1 : b.latest ? -1 : 0)));
 }
 
 // the strip's markup. o: { esc, href (an entry -> its address on this page) }
@@ -68,13 +71,13 @@ function html(data, o) {
   const esc = o.esc, ms = marks(data, o.warn);
   if (!ms.length) return '';
   const li = (m) => {
-    const e = m.entry, rest = String(e.title).slice(m.short.length);
-    const name = `${dayFull(e.date)}, ${e.title}`;
-    return `<li class="ec-m${m.latest ? ' is-latest' : ''}" data-date="${esc(e.date)}"><a href="${o.href(e)}" title="${esc(dayFull(e.date) + ' · ' + e.title)}" aria-label="${esc((m.latest ? 'Latest rule, ' : '') + name)}">`
+    const e = m.entry, rest = String(e.title).slice(m.short.length), day = m.date || e.date;
+    const name = `${dayFull(day)}, ${e.title}`;
+    return `<li class="ec-m${m.latest ? ' is-latest' : ''}" data-date="${esc(day)}"><a href="${o.href(e)}" title="${esc(dayFull(day) + ' · ' + e.title)}" aria-label="${esc((m.latest ? 'Latest rule, ' : '') + name)}">`
       + '<i class="ec-dot" aria-hidden="true"></i><i class="ec-lead" aria-hidden="true"></i>'
-      + `<span class="ec-lab"><span class="ec-md">${esc(monthYear(e.date))}</span><span class="ec-mt">${esc(m.short)}${m.latest && rest ? `<span class="ec-mt-rest">${esc(rest)}</span>` : ''}</span></span></a></li>`;
+      + `<span class="ec-lab"><span class="ec-md">${esc(monthYear(day))}</span><span class="ec-mt">${esc(m.short)}${m.latest && rest ? `<span class="ec-mt-rest">${esc(rest)}</span>` : ''}</span></span></a></li>`;
   };
-  return `<figure class="ec-a" aria-label="The main export control rules since ${esc(String(ms[0].entry.date).slice(0, 4))}"><ol class="ec-strip">${ms.map(li).join('')}</ol><div class="ec-axis" aria-hidden="true"></div></figure>`;
+  return `<figure class="ec-a" aria-label="The main export control rules since ${esc(String(ms[0].date || ms[0].entry.date).slice(0, 4))}"><ol class="ec-strip">${ms.map(li).join('')}</ol><div class="ec-axis" aria-hidden="true"></div></figure>`;
 }
 
 module.exports = { marks, html, MAIN, NON_US, LATER, NON_US_2023, NON_US_LATER };

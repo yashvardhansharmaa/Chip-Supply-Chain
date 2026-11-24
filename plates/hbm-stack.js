@@ -11,7 +11,10 @@
    with a pale neutral, as film or underfill fills them (chapter 9), where they were empty, as if air.
    22 Nov 2026 plates refine: the base die stands further off the stack, about two and a half times the gap between memory
    dies, so it reads as a different part; the microbumps are named on the row under the lowest memory die, at its right
-   end, their leader running out to the right, under the vias' (3 over 4); the base die is named from the left. */
+   end, their leader running out to the right, under the vias' (3 over 4); the base die is named from the left.
+   24 Nov 2026 expert accuracy review (D10): no source gives the microbump pitch inside an HBM stack (the tech note's 20 um is
+   a typical pitch in general), so the loupe names the microbumps with no pitch and its 20 um bar is gone. The bumps keep
+   their drawn spacing, and the 7 um gap keeps its figure. */
 var LOUPE = true;
 R('hbm-stack', function (m) {
   var hw = 5.3, bw = 5.5, t = 0.45, bt = 0.9, gap0 = 0.105, pitch = t + gap0, EX = 0.62;
@@ -73,12 +76,12 @@ R('hbm-stack', function (m) {
   [[-hw, -hw], [hw, -hw], [-hw, hw]].forEach(function (c) { m.guide([[c[0], 0, c[1], base.idx], [c[0], gap0 + pitch * 11, c[1], prev.idx]], { alpha: 0.6 }); });
   // what each numbered part lights, as its light table in data/specimen-parts.json does: every memory die in ink, every via and
   // every microbump in copper
-  var loupe = LOUPE ? { model: 'hbm-loupe', at: [TX * 2.5, gap0 + pitch * 9 + t / 2, hw * 0.55], part: 'die10', side: 'r', r: 0.155, rMax: 100, scale: 0.6, dx: -0.1, dy: 0.04, caption: ['Microbumps about 20\u00a0\u00b5m apart', 'in a gap as small as 7\u00a0\u00b5m.', 'Dies not to scale'] } : null;
+  var loupe = LOUPE ? { model: 'hbm-loupe', at: [TX * 2.5, gap0 + pitch * 9 + t / 2, hw * 0.55], part: 'die10', side: 'r', r: 0.155, rMax: 100, scale: 0.6, dx: -0.1, dy: 0.04, caption: ['Microbumps in a gap', 'as small as 7\u00a0\u00b5m.', 'Dies not to scale'] } : null;
   return { elev: PLATE.ISO.elev, yaw: PLATE.ISO.yaw, sortAxis: [0, 1, 0], loupe: loupe, calloutOpts: { 1: { tag: 'dies', only: 'ink' }, 2: { side: 'l' }, 3: { tag: 'tsv', only: 'accent', level: true }, 4: { tag: 'bumps', only: 'accent', side: 'r', level: true } }, order: { r: [3, 4] }, accent: [176, 102, 44], accentDark: [224, 154, 92] };
 });
 
 /* The loupe's own small plate, in micrometres, seen almost face on so its cut face reads as a section: three dies with the
-   microbumps between them, 20 um apart (the typical microbump spacing in a tech note on SK hynix's newsroom, chapter 9), in a
+   microbumps between them, drawn 20 um apart with no figure (no source gives the pitch inside an HBM stack), in a
    7 um gap (the smallest in Samsung's 12-high HBM3E release), and a via through each die. The dies' thickness and the vias'
    width are drawn, not sourced, so they carry no figure, and the caption says the dies are not to scale. The gap round the
    bumps is filled in a pale neutral (film or underfill, chapter 9). */
@@ -99,7 +102,6 @@ R('hbm-loupe', function (m) {
     }
     [x0 + 10, x0 + 70].forEach(function (vx) { bx(vx - 2.2, y0, -2, vx + 2.2, y0 + t, Z + 0.02, 'acc', { pz: 'cutAcc' }); });
   }
-  bar(m, [x0 + 30, -8, Z], [x0 + 50, -8, Z], '20 \u00b5m', { side: -1, wit: [[x0 + 30, t, Z], [x0 + 50, t, Z]] });
   bar(m, [x1 + 22, t, Z + 1], [x1 + 22, t + g, Z + 1], '7 \u00b5m', { side: 1 });
   tag(m, [-6, n * t + (n - 1) * g + 17, -Z], 'Memory die', {});
   return { elev: 0.16, yaw: -0.14, accent: [176, 102, 44], accentDark: [224, 154, 92] };

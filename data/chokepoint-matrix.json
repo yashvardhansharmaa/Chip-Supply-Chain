@@ -239,7 +239,7 @@
     "hhi": 3941,
     "top2": 85,
     "method": "Node N55 in ETO's provision table: CSET's analysis of TechInsights 2025 data on a $29.1bn etch-and-clean market, published in July 2026. The source's 'various countries' column is carried here as Other.",
-    "note": "Firm-to-country mapping: US is Lam Research (36.7 points), Applied Materials (12.7) and ACM Research (2.4). ACM Research is US-listed but operates mainly through its Shanghai subsidiary, so it arguably belongs partly in the CN column. JP is Tokyo Electron (22.1), SCREEN Holdings (7.8) and Hitachi High-Tech (1.7) on the clean side. CN is NAURA (5.2) and AMEC (4.4). CSIS reports that Chinese tool vendors already hold about 40 percent of China's own etch and thin-film deposition market, which matters more than their global share. The shares are TechInsights' measurement, relayed by CSET.",
+    "note": "Firm-to-country mapping: US is Lam Research (36.7 points), Applied Materials (12.7) and ACM Research (2.4). ACM Research is US-listed but operates mainly through its Shanghai subsidiary, so it arguably belongs partly in the CN column. JP is Tokyo Electron (22.1), SCREEN Holdings (7.8), mainly cleaning tools, and Hitachi High-Tech (1.7), etch tools. CN is NAURA (5.2) and AMEC (4.4). CSIS reports that Chinese tool vendors already hold about 40 percent of China's own etch and thin-film deposition market, which matters more than their global share. The shares are TechInsights' measurement, relayed by CSET.",
     "sources": [
       "https://raw.githubusercontent.com/georgetown-cset/eto-chip-explorer/main/data/provision.csv",
       "https://www.csis.org/analysis/chinas-localization-drive-semiconductors-gains-impetus-allied-chip-export-controls",

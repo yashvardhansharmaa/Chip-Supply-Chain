@@ -429,7 +429,8 @@
     "flows": [
       "ai-chips",
       "ai-chips-top",
-      "us-tools"
+      "us-tools",
+      "diffusion"
     ]
   },
   {
@@ -503,6 +504,9 @@
     "category": "Other governments",
     "instrument": "rule",
     "frCitation": "Staatscourant 2024, 29008",
+    "cite": {
+      "url": "https://zoek.officielebekendmakingen.nl/stcrt-2024-29008.html"
+    },
     "source": "https://www.sec.gov/Archives/edgar/data/937966/000093796625000009/asml-20241231.htm",
     "gist": "The Dutch government took over from the United States the licensing of ASML's NXT:1970i and NXT:1980i immersion scanners.",
     "id": "2024-09-06-dutch-extension",
@@ -574,7 +578,8 @@
     "id": "2025-01-13-diffusion-rule",
     "flows": [
       "diffusion"
-    ]
+    ],
+    "complianceDate": "2025-05-15"
   },
   {
     "date": "2025-01-15",
@@ -607,7 +612,8 @@
     "flows": [
       "ai-chips",
       "ai-chips-top"
-    ]
+    ],
+    "complianceDate": "2025-01-31"
   },
   {
     "date": "2025-02-04",

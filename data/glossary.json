@@ -318,7 +318,7 @@
     "term": "hybrid bonding",
     "aka": "direct bond interconnect, SoIC, Foveros Direct, copper pad to copper pad",
     "plain": "Joining two chips by bonding their copper pads, and the glass-like insulator around them, directly to each other, with no solder in between. Removing the solder lets connections be packed much more tightly and shortens the path heat has to travel out.",
-    "why": "An SK hynix tech note puts microbumps about 20 micrometers apart and hybrid-bonded pads under 1 micrometer apart. It expects full-scale use in HBM at HBM4E or HBM5, where stacks are projected to pass twenty layers.",
+    "why": "A tech note on SK hynix's newsroom puts typical microbumps about 20 micrometers apart and hybrid-bonded pads under 1 micrometer apart. It expects full-scale use in HBM at HBM4E or HBM5, where stacks are projected to pass twenty layers.",
     "chapter": "advanced-packaging"
   },
   {
@@ -367,7 +367,7 @@
     "term": "license exception",
     "aka": "license exception",
     "plain": "A written carve-out in export rules that lets a shipment go without an individual license, if it meets stated conditions. The ones that matter for AI chips and chipmaking tools are NAC and ACA (15 CFR 740.8), HBM (740.25), ACM (740.28), IEC (740.24) and RPL (740.10). ACM covers controlled AI chips going to firms that develop, make or store them. IEC covers countries that adopt matching controls, and RPL covers servicing and spare parts.",
-    "why": "Exceptions let the US government adjust its controls without rewriting them and ease the rules for allies. License Exception IEC, added in September 2024, covers exports to and by countries that have put equivalent controls in place (89 FR 72926). BIS can also remove an exception. On 19 November 2026 it removed AIA and LPP, the two that the AI Diffusion rule had created for the top band of accelerators (91 FR 74970).",
+    "why": "Exceptions let the US government adjust its controls without rewriting them and ease the rules for allies. License Exception IEC, added in September 2024, covers exports to and by countries that have put equivalent controls in place (89 FR 72926). BIS can also remove an exception. On 19 November 2026 it removed AIA and LPP, two of the three exceptions the AI Diffusion rule had created, and kept the third, ACM (91 FR 74970).",
     "chapter": "geopolitics"
   },
   {
@@ -381,7 +381,7 @@
     "term": "License Exception HBM",
     "aka": "",
     "plain": "An export rule that lets high bandwidth memory go to a packaging site with no license, to be packaged beside a chip. It applies if the memory's bandwidth density is below 3.3 GB/s per square millimeter, measured over the area of the package or stack. The exporter must be headquartered in the United States or Country Group A:5. If the memory is bound for Macau or Country Group D:5, the chip's designer must buy it. The stacks must go straight to the packaging site. It does not cover packaging at a facility in Macau or D:5 that also makes advanced-node chips. It sits at 15 CFR 740.25.",
-    "why": "It lets Chinese packaging houses stay in the supply chain of American and allied chip designers. But a sale of the same stacks to a Chinese buyer still needs a license. HBM needs a license only for Macau and Country Group D:5, and the exception was written into the December 2024 rule that first controlled HBM (89 FR 96790).",
+    "why": "It lets Chinese packaging houses stay in the supply chain of American and allied chip designers. But a sale of the same stacks to a Chinese buyer still needs a license. HBM needs a license for Macau and Country Group D:5, and for firms headquartered there wherever the stacks go. The exception was written into the December 2024 rule that first controlled HBM (89 FR 96790).",
     "chapter": "geopolitics"
   },
   {
@@ -654,13 +654,13 @@
     "term": "VEU",
     "aka": "Validated End-User, Validated End User, Validated End-User status, VEU status, VEU cover, validated end users",
     "plain": "An authorization that BIS, the US Commerce Department office that licenses exports, grants to a named foreign facility, so approved items can ship to it without an individual license each time. The approved facilities are listed in supplement no. 7 to 15 CFR part 748, and the procedure is set out in 15 CFR 748.15.",
-    "why": "It let the China subsidiaries of Samsung and SK hynix, and the Dalian NAND flash memory fab that SK hynix bought from Intel, receive US equipment without individual licenses. BIS revoked that status effective 31 December 2025 (90 FR 42321). It said it would license those fabs to keep running, but not to expand capacity or upgrade technology (90 FR 42321). In December 2025 BIS granted SK hynix an annual license to ship approved US equipment to its China fabs during 2026.",
+    "why": "It let the China subsidiaries of Samsung and SK hynix, and the Dalian NAND flash memory fab that SK hynix bought from Intel, receive US equipment without individual licenses. BIS revoked that status effective 31 December 2025 (90 FR 42321). BIS said in August 2025 that it would license those fabs to keep running, but not to expand capacity or upgrade technology. In December 2025 BIS granted SK hynix an annual license to ship approved US equipment to its China fabs during 2026.",
     "chapter": "geopolitics"
   },
   {
     "term": "wafer",
     "aka": "silicon wafer, 300 mm wafer, wafers, silicon wafers, 300 mm wafers",
-    "plain": "The polished disc of ultrapure silicon that chips are built on, 300 millimeters across for advanced chips. Hundreds of chips are printed on one wafer and cut apart at the end.",
+    "plain": "The polished disc of ultrapure silicon that chips are built on, 300 millimeters across for advanced chips. Dozens to thousands of chips, depending on how large each is, are printed on one wafer and cut apart at the end.",
     "why": "A flaw wastes more silicon on a large AI chip than on a small one, so AI chips need wafers that are nearly flawless and flat to the edge. The top five wafer makers hold around 75 percent of a market worth $11.4 billion in 2025.",
     "chapter": "silicon-and-wafers"
   },

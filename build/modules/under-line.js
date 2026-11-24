@@ -72,8 +72,8 @@ const RULES = [
     lines: [[4800, '4,800', 'k'], [21000, '21,000', 'k']],
     note: 'The H200 and MI325X, which the rule names, can be licensed case by case, as can the A100 and H100. The A800 and H800, built for the China market, were left out. In its filing for the quarter ended 26 July 2026, Nvidia said China’s government had restricted H200 sales.',
     checks: [['BIS announced the policy on 13 January 2026', '@2026-01-15'], ['That rule names the H200 and the AMD MI325X', 'nvidia-h200-china'], ['can be reviewed case by case', 'nvidia-a100'], ['can be reviewed case by case', 'nvidia-h100'], ['falls under both ceilings', 'amd-mi325x'],
-      ['commercially available in the United States when it was published, and Nvidia built the A800 for the China market', 'nvidia-a800'],
-      ['commercially available in the United States when it was published, and Nvidia built the H800 for the China market', 'nvidia-h800'],
+      ['limits it to chips on sale in the United States when it was published', 'nvidia-a800'], ['Nvidia built the A800 for the China market', 'nvidia-a800'],
+      ['limits it to chips on sale in the United States when it was published', 'nvidia-h800'], ['Nvidia built the H800 for the China market', 'nvidia-h800'],
       ['In its filing for the quarter ended 26 July 2026, Nvidia said China\'s government had restricted these sales', 'nvidia-h200-china']] },
 ];
 const LANE = { lic: 'Needs a license', case: 'Case by case', none: 'No license' };
