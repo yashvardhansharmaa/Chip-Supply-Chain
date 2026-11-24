@@ -125,15 +125,20 @@ module.exports = function (ctx) {
 ${nChoke ? `<p class="wk-gl-p"><b>${nChoke} of the ${stages.length} stages</b> are chokepoints${xMeaning ? `: ${esc(xMeaning)}` : ''}.</p>` : ''}
 <ol class="wk-gl-list">${stages.map(homeRow).join('')}</ol>
 </section>` : '';
-  // the two chapters across the chain, at the drawing's top right, and the key at its foot: the solid balloon, the count and
-  // what a chokepoint is in the chapter cards' own words (CHOKE_NOTE, as the glance's sentence has them), and the note on scale.
-  // The key waits hidden until the drawing shows it, since without scripts the glance's sentence says the same
+  // the two chapters across the chain and the key at the drawing's foot: the solid balloon, the count and what a chokepoint is
+  // in the chapter cards' own words (CHOKE_NOTE, as the glance's sentence has them), and the note on scale. The key waits hidden
+  // until the drawing shows it, since without scripts the glance's sentence says the same.
+  // Without scripts the two chapters are two links; the drawing draws them in its top-right corner with their chapters' plates
+  // (home option A, 24 Nov 2026), from each link's number, title, specimen and one-line summary (data-n, data-t, data-spec,
+  // data-line), as a stage's row carries its own
   const acrossCh = all.filter((c) => !stages.some((s) => s.id === c.id) && c.id !== 'introduction-and-goals').sort((a, b) => (a.number || 0) - (b.number || 0));
-  const ACROSS_HOME = acrossCh.length ? `<nav class="fx-across" aria-label="Across the chain"><span class="label fx-across-k">Across the chain</span>${acrossCh.map((c) => `<a class="fx-ac" ${pageLink(c.id)}><span class="fx-ac-n">${c.number}</span><span class="fx-ac-t">${esc(c.title)}</span></a>`).join('')}</nav>` : '';
-  // the home's key keeps the approved short form so it fits one line beside its note (design review, 23 Nov 2026):
-  // "three or fewer firms, or one with more than 65 percent", derived from the same note; a changed note drops it.
+  acrossCh.forEach((c) => { const m = c.meta || {}; if (!m.specimen || !m.oneLiner) ctx.warn(`walk: chapter ${c.id} has no specimen or one-line summary, so the home draws neither chapter across the chain`); });
+  const ACROSS_HOME = acrossCh.length ? `<nav class="fx-across" aria-label="Across the chain"><span class="label fx-across-k">Across the chain</span>${acrossCh.map((c) => { const m = c.meta || {}; return `<a class="fx-ac" ${pageLink(c.id)} data-n="${pad(c.number)}" data-t="${esc(c.title)}" data-spec="${esc(m.specimen || '')}" data-line="${esc(m.oneLiner || '')}"><span class="fx-ac-n">${c.number}</span><span class="fx-ac-t">${esc(c.title)}</span></a>`; }).join('')}</nav>` : '';
+  // the home's key keeps the approved short form so it fits one line beside its note (design review, 23 Nov 2026), and says
+  // what the share is of (the reader test, 24 Nov 2026): "three or fewer firms, or one with more than 65 percent of its
+  // market", derived from the same note ("of it", the stage, is its market); a changed note drops it.
   const xKey = /^Three or fewer firms can supply this stage, or one firm holds more than [\d.]+ percent of it\.$/.test(xNote)
-    ? xNote.replace(' can supply this stage', '').replace('one firm holds', 'one with').replace(/ of it\.$/, '').replace(/^\w/, (m) => m.toLowerCase()) : xMeaning;
+    ? xNote.replace(' can supply this stage', '').replace('one firm holds', 'one with').replace(/ of it\.$/, ' of its market').replace(/^\w/, (m) => m.toLowerCase()) : xMeaning;
   const KEY_HOME = nChoke ? `<p class="fx-key" hidden><span class="fx-k"><i class="fx-kb is-x" aria-hidden="true"></i><span><b>${nChoke} of the ${stages.length} stages are chokepoints${xKey ? ':' : '.'}</b>${xKey ? ` ${esc(xKey)}.` : ''}</span></span><span class="fx-k fx-k-note">Objects drawn at different scales.</span></p>` : '';
 
   // the flashcards that end the walk (below), which the last step's Next leads on to

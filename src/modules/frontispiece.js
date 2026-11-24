@@ -18,8 +18,18 @@
      systems -> data centers   ch 14 "Racks like that need a building designed around the power they draw"
    (Stated but left out to keep the line in one order: design -> masks, ch 1 and 5.)
    The inputs meet the trunk in their numbers' order and the line thickens as each flow joins, with an arrowhead at every
-   join. Stage 12 stands twice: its probe card between the fab and the package (wafer sort), and a small second balloon on the
-   line after the package (final test). Both link to its one chapter.
+   join. Stage 12 stands twice: its probe card between the fab and the package (wafer sort), and a small station on the line
+   after the package (final test). Both link to its one chapter. Final test has no balloon of its own: its label reads
+   "12 · Final test" in the lighter label style and its leader leaves from the label's edge nearest the station (the reader
+   test, 24 Nov 2026).
+   The two chapters that run across the chain, 15 (The Economics of AI Chips) and 16 (Who Controls the Chain), are drawn too
+   (home option A, "Coda", chosen by the owner on 24 Nov 2026 from dist/mock/home3/a/): their chapters' own plates (the cost
+   column, plates/wafer-cost.js, and the globe, plates/globe.js), smaller than the stages, in the top-right corner past the
+   rack, under the "Across the chain" label and its thin rule, each with a numbered balloon. On a phone they stand after the
+   rack, side by side under the rule. No process line reaches them: they span all fourteen stages, and lit, either lights the
+   whole line. Each behaves as a stage does (lit row, click, drag to turn); the lit row gives its title and its chapter's
+   one-line summary. The globe keeps its own view (from over the western Pacific, every pin in sight); the cost column stands
+   at the drawing's one isometric angle.
    Each object carries a numbered balloon and a short name; the chokepoints (the stages the chapters rate Extreme, as many as the data has)
    have a solid balloon, the others a plain one, and the key under the drawing says what solid means. Pointing at an object or its balloon, or tabbing to it, lifts it off its
    pad (its footprint stays, dashed), opens its spread as far as its neighbours allow and gives it back its colours, with
@@ -72,7 +82,9 @@
        the other densities tried (the full names, or the numbers alone with the name on point) */
     var LAB = (location.search.match(/[?&]labels=(full|short|num)/) || [])[1] || 'short';
     var SHORT = { '01': 'Design', '02': 'Wafers', '03': 'Chemicals', '04': 'Lithography', '05': 'Masks', '06': 'Deposition and etch', '07': 'Inspection',
-      '08': 'Fabs', '09': 'Memory', '10': 'Packaging', '11': 'Substrates', '12': 'Test', '13': 'Systems', '14': 'Data centers' };
+      '08': 'Fabs', '09': 'Memory', '10': 'Packaging', '11': 'Substrates', '12': 'Test', '13': 'Systems', '14': 'Data centers',
+      // (the two across the chain, faithful to their chapters' titles, "The Economics of AI Chips" and "Who Controls the Chain")
+      '15': 'Economics of AI chips', '16': 'Who controls the chain' };
     // the chapters' one-liners keep straight apostrophes in their source: set them as the page's typography does
     var smart = function (s) { return String(s || '').replace(/(\w)'(\w)/g, '$1’$2').replace(/'/g, '’'); };
 
@@ -86,8 +98,17 @@
         line: smart(li.getAttribute('data-line') || '') };
     });
     if (rows.length !== 14 || rows.some(function (r) { return !r.n || !r.spec; })) return;
+    /* the two chapters across the chain follow the fourteen stages, from the hero's own links to them (build/modules/walk.js
+       ACROSS_HOME: number, title, specimen and one-line summary): no rating, no firms, their whole one-line summary */
+    MK.$$('.fx-across .fx-ac[data-n]', hero).forEach(function (a) {
+      var href = a.getAttribute('href') || '', id = href.replace(/^(\.\.\/)+/, '').replace(/^\/+|\/+$/g, '').split('/').pop();
+      rows.push({ i: rows.length, id: id, n: a.getAttribute('data-n'), t: a.getAttribute('data-t'), spec: a.getAttribute('data-spec'), href: href,
+        level: 0, firms: [], line: smart(a.getAttribute('data-line') || ''), across: true });
+    });
+    if (rows.length !== 16 || rows[14].n !== '15' || rows[15].n !== '16' || rows.some(function (r) { return !r.spec; })) return;
+    var isX = function (r) { return !!(r && r.across); };
     var byN = {}; rows.forEach(function (r) { byN[r.n] = r; });
-    // the callouts in the chapters' order, final test standing after wafer sort as stage 12's second balloon
+    // the callouts in the chapters' order, final test standing after wafer sort as stage 12's second place on the line
     var cos = rows.map(function (r) { return { key: r.n, ri: r.i, ft: false }; });
     cos.splice(12, 0, { key: '12f', ri: 11, ft: true });
 
@@ -100,7 +121,7 @@
       + '<svg class="fx-ground" aria-hidden="true" focusable="false"></svg>'
       + '<div class="fx-objs" aria-hidden="true"></div>'
       + '<svg class="fx-leads" aria-hidden="true" focusable="false"></svg>'
-      + '<ol class="fx-cos" aria-label="The fourteen stages"></ol>'
+      + '<ol class="fx-cos" aria-label="The fourteen stages and the two chapters across the chain"></ol>'
       + '<div class="fx-facts"><div class="fx-f fx-f0"></div><div class="fx-f fx-f1" hidden></div></div>'
       + '<p class="fx-note"></p>'
       + '</div>';
@@ -112,6 +133,9 @@
     if (!ACROSS) { ACROSS = document.createElement('nav'); ACROSS.className = 'fx-across'; }
     if (!KEY) { KEY = document.createElement('p'); KEY.className = 'fx-key'; }
     KEY.hidden = false; IN.appendChild(KEY); IN.appendChild(ACROSS);
+    // the corner's two links give way to the drawn chapters, whose balloons link to them; the label stays, with its thin rule
+    ACROSS.innerHTML = '<span class="label fx-across-k">Across the chain</span>'; ACROSS.setAttribute('aria-hidden', 'true'); ACROSS.removeAttribute('aria-label');
+    ACROSS.className = 'fx-across fx-across-lab';
     // the title and its one-line intro; the word count (the length of the walk) stays with the walk on the Introduction's page.
     // The home is the drawing alone; the walk is on the Introduction's page, one quiet link under the intro line
     var intro = MK.$('.fx-intro', hero);
@@ -224,6 +248,35 @@
         co: co, head: { x: 0, y: 0, w: 358 } };
     }
 
+    /* the two chapters across the chain, set after the stages are placed (and squeezed), so every stage keeps its place: their
+       anchors (the column's footprint, the globe's lowest point), their sizes, their callouts' sides and gaps (L.coFix) and the
+       small label with its thin rule (L.across: x, y, which edge it keeps, and the rule's width). Design units are the layouts'
+       own; the numbers were read off the home's boxes at 1440, 1280, 1024 and 390 px (the mock, dist/mock/home3/_src/fx3.js) */
+    function across(L) {
+      var A = L.A, fx = L.coFix = {}, H0 = L.H;
+      var put = function (n, at, sz) { A[n] = at; L.size[n] = sz; L.co[n] = []; };
+      // a callout set here: its side, its gap and whether its name takes two lines
+      var fixCo = function (n, d, g, nw) { fx[n] = { d: d, g: g, nw: nw }; };
+      if (L.narrow) {
+        // a phone: past the rack (the trunk's foot, H0), a thin rule across the page, the label over it, then the two side by side
+        var y = H0 + 4;
+        L.across = { x: 179, y: y, align: 'c', rule: 358 };
+        L.base = y + 124; put('15', [112, y + 124], { h: 82 }); put('16', [246, y + 124], { w: 84 });
+        fixCo('15', 's', 10, 1); fixCo('16', 's', 10, 1);
+        L.H = y + 190;
+      } else if (L.mid) {
+        // 900 to 1199 px: the rack's box is (992, 191) to (1088, 369); the head ends at 239
+        L.across = { x: 1060, y: 0, align: 'r', rule: 250 }; L.base = 112;
+        put('15', [852, 112], { h: 64 }); put('16', [1010, 112], { w: 62 });
+        fixCo('15', 's', 10, 1); fixCo('16', 's', 10, 1);
+      } else {
+        // the wide sheet: past the rack (its box (1134, 182) to (1244, 386)), in the corner, smaller than the stages
+        L.across = { x: 1312, y: 0, align: 'r', rule: 380 }; L.base = 132;
+        put('15', [1068, 132], { h: 88 }); put('16', [1262, 132], { w: 82 });
+        fixCo('15', 'w', 12, 1); fixCo('16', 'w', 12, 1);
+      }
+    }
+
     // a layout drawn smaller about the middle of its drawing, its words staying where they are: the drawing gets more air
     function squeeze(L, k) {
       var seen = [], pts = [];
@@ -268,7 +321,8 @@
       try { pl = new P.Plate(r.spec, {}); } catch (e) { console.warn('plate failed', r.spec, e && e.message); return null; }
       pl.mode({ noLabels: true, noDims: true });
       var m = pl.m;
-      m.elev = P.ISO.elev; m.yaw0 = P.ISO.yaw;
+      // (the globe keeps its chapter's view, every pin in sight; every other object stands at the drawing's one isometric angle)
+      if (r.spec !== 'globe') { m.elev = P.ISO.elev; m.yaw0 = P.ISO.yaw; }
       var rest = m.spec.rest == null ? 1 : m.spec.rest, minY = 0, cap = CAP[r.spec] == null ? 1 : CAP[r.spec];
       m.parts.forEach(function (p) { minY = Math.min(minY, p.ex[1] * rest); });
       // the spread at pl._ex (0 closed, 1 open); parts that open downward on the chapter's plate open from the ground up here
@@ -285,6 +339,8 @@
       pl._ex = 0; pl.ext = null;
       var R0 = P.viewM(m.yaw0, m.elev), base = [(lo[0] + hi[0]) / 2, lo[1], (lo[2] + hi[2]) / 2];
       var bs = [R0[0] * base[0] + R0[1] * base[1] + R0[2] * base[2], R0[3] * base[0] + R0[4] * base[1] + R0[5] * base[2]];
+      // (a globe has no footprint: it stands on the lowest point of its disc)
+      if (r.spec === 'globe') bs = [(e0.minx + e0.maxx) / 2, e0.miny];
       return { r: r, pl: pl, e0: e0, ext: ext, bs: bs, lo: lo, hi: hi, cv: null, ctx: null, exCap: 1, Gi: 1,
         ex: 0, exFrom: 0, exTo: 0, t0: 0, lift: 0, tint: 0, yaw: 0, rawYaw: 0, cueYaw: 0, back: null, cue: null, cued: false, pick: null, box: null };
     });
@@ -310,11 +366,12 @@
       sheet.classList.toggle('is-narrow', narrow); sheet.classList.toggle('is-mid', mid);
       // on a phone the row of facts rides at the foot of the screen while the drawing is on it; the note and the two chapters
       // across the chain follow the drawing
-      if (narrow) { sheet.appendChild(FACTS); sheet.appendChild(ACROSS); IN.appendChild(NOTE); HEAD.appendChild(KEY); }
+      if (narrow) { sheet.appendChild(FACTS); IN.appendChild(ACROSS); IN.appendChild(NOTE); HEAD.appendChild(KEY); }
       else { IN.appendChild(FACTS); IN.appendChild(ACROSS); IN.appendChild(NOTE); IN.appendChild(KEY); }
       if (narrow) { HEAD.style.width = avail + 'px'; L = narrowLayout(HEAD.offsetHeight * 358 / avail); }
       else L = mid ? midLayout() : wideLayout();
       if (L.k) squeeze(L, L.k);
+      across(L);
       lineOf(L);
       S = avail / L.W;
       if (!narrow) {
@@ -331,6 +388,12 @@
       IN.style.width = Wd + 'px'; IN.style.height = Math.round(L.H * S) + 'px'; IN.style.marginLeft = OX ? OX + 'px' : '';
       sheet.style.setProperty('--fx-s', S.toFixed(4));
       place();
+      // the two across the chain stand on one baseline (L.base): each drawing's foot is brought to it, and the sheet placed again
+      if (L.base) {
+        var moved = false;
+        objs.forEach(function (o) { if (!isX(o.r)) return; var dy = o.box.y1 / S - L.base; if (Math.abs(dy) > 0.5) { L.A[o.r.n][1] -= dy; moved = true; } });
+        if (moved) place();
+      }
     }
     function px(v) { return v * S; }
     var LIFT = function () { return 12 * Math.max(0.7, S); };
@@ -381,7 +444,8 @@
       var g = new P.CanvasG(ctx, dpr), sc = o.s * (1 + (o.Gi - 1) * o.lift);
       o.fit.s = sc; o.fit.cx = o.bx - sc * o.bs[0]; o.fit.cy = o.by + sc * o.bs[1];
       pl.paint({ k: 1, w: w, h: h, g: g, pal: palOf(o), fit: o.fit, noLabels: true, noDims: true, dyaw: o.yaw + o.cueYaw, delev: 0, labA: 1, pick: !!pick, penW: 470 * Math.max(0.85, Math.min(1.25, S)) });
-      if (pick) o.pick = pl._pick ? pl._pick.slice() : null;
+      // (the globe's disc is pointed at as one face, so a pointer between its pins still finds it)
+      if (pick) { o.pick = pl._pick ? pl._pick.slice() : null; if (o.pick && pl._globe) o.pick.push({ pts: disc(pl._globe) }); }
       o.cv.style.transform = o.lift ? 'translateY(' + (-o.lift * LIFT()).toFixed(2) + 'px)' : '';
     }
 
@@ -416,7 +480,8 @@
     function drawGround() {
       var W = Math.round(L.W * S), H = Math.round(L.H * S), out = [], ar = [];
       GROUND.setAttribute('viewBox', '0 0 ' + W + ' ' + H); GROUND.setAttribute('width', W); GROUND.setAttribute('height', H);
-      objs.forEach(function (o) { out.push('<path class="fx-pad" data-n="' + o.r.n + '" d="' + pathD(padPoly([o.ax, o.ay], o.pad.hp, o.pad.hq)) + 'Z"/>'); });
+      // (the two across the chain stand on no pad: they are not on the line)
+      objs.forEach(function (o) { if (!isX(o.r)) out.push('<path class="fx-pad" data-n="' + o.r.n + '" d="' + pathD(padPoly([o.ax, o.ay], o.pad.hp, o.pad.hq)) + 'Z"/>'); });
       // the line at rest: every segment once, as thick as the flows that run along it
       L.segs.forEach(function (sg, i) {
         var p = trimmed(sg.a, sg.b, sg.pts); sg._p = p; sg._len = 0;
@@ -446,10 +511,11 @@
       if (!cos[0].li) {
         cos.forEach(function (c) {
           var r = rows[c.ri], li = document.createElement('li');
-          li.className = 'fx-co' + (c.ft ? ' is-ft' : ''); li.setAttribute('data-n', c.key); li.setAttribute('data-level', r.level);
-          var nm = c.ft ? 'Final test' : LAB === 'full' ? r.t : SHORT[r.n];
-          var aria = c.ft ? 'Final test, the second test in stage 12, ' + r.t : r.t + (r.level === 4 ? ', a chokepoint' : '') + '. Stage ' + (+r.n) + ' of 14';
-          li.innerHTML = '<a class="fx-co-a" href="' + MK.esc(r.href) + '" aria-label="' + MK.esc(aria) + '"><span class="fx-co-b" aria-hidden="true">' + (+r.n) + '</span>'
+          li.className = 'fx-co' + (c.ft ? ' is-ft' : '') + (isX(r) ? ' is-x' : ''); li.setAttribute('data-n', c.key); li.setAttribute('data-level', r.level);
+          // final test carries stage 12's number in its label, with no balloon of its own (the reader test, 24 Nov 2026)
+          var nm = c.ft ? (+r.n) + ' · Final test' : LAB === 'full' ? r.t : SHORT[r.n];
+          var aria = c.ft ? 'Final test, the second test in stage 12, ' + r.t : isX(r) ? r.t + '. Chapter ' + (+r.n) + ', across the chain' : r.t + (r.level === 4 ? ', a chokepoint' : '') + '. Stage ' + (+r.n) + ' of 14';
+          li.innerHTML = '<a class="fx-co-a" href="' + MK.esc(r.href) + '" aria-label="' + MK.esc(aria) + '">' + (c.ft ? '' : '<span class="fx-co-b" aria-hidden="true">' + (+r.n) + '</span>')
             + '<span class="fx-co-t" aria-hidden="true"><span class="fx-co-nm">' + MK.esc(nm) + '</span></span></a>';
           COS.appendChild(li); c.li = li;
         });
@@ -476,15 +542,18 @@
       var boxD = function (b, q) { var dx = Math.max(b.x0 - q[2], q[0] - b.x1, 0), dy = Math.max(b.y0 - q[3], q[1] - b.y1, 0); return Math.hypot(dx, dy); };
       var ov = function (q, r) { var w = Math.min(q[2], r[2]) - Math.max(q[0], r[0]), h = Math.min(q[3], r[3]) - Math.max(q[1], r[1]); return w > 0 && h > 0 ? w * h : 0; };
       var Wpx = L.W * S, Hpx = L.H * S, placed = [];
-      cos.forEach(function (c) {
+      // (the two across the chain first: their callouts' places are set (L.coFix), and the stages' keep clear of them)
+      var order = cos.filter(function (c) { return isX(rows[c.ri]); }).concat(cos.filter(function (c) { return !isX(rows[c.ri]); }));
+      order.forEach(function (c) {
         var li = c.li, b = boxOf(c), bw = b.x1 - b.x0, bh = b.y1 - b.y0, cx = (b.x0 + b.x1) / 2, cy = (b.y0 + b.y1) / 2, best = null;
-        var pref = (L.co[c.key] || []).concat(['ne', 'e', 'se', 's', 'sw', 'w', 'nw', 'n']);
+        var fix = (L.coFix || {})[c.key];
+        var pref = fix ? [fix.d] : (L.co[c.key] || []).concat(['ne', 'e', 'se', 's', 'sw', 'w', 'nw', 'n']);
         li.style.left = '0px'; li.style.top = '0px';
-        var bS = MK.$('.fx-co-b', li).getBoundingClientRect().width || 19;
+        var bEl = MK.$('.fx-co-b', li), bS = bEl ? bEl.getBoundingClientRect().width || 19 : 0;
         ['r', 'l'].forEach(function (sd) { li.setAttribute('data-side', sd); [0, 1].forEach(function (nw) { li.classList.toggle('is-narrow', !!nw); var q = rect(MK.$('a', li)); li['_' + sd + nw] = [q[2] - q[0], q[3] - q[1]]; }); });
         if (DEBUG) li._c = [];
         pref.forEach(function (d, pi) {
-          [10, 22, 38, 58].forEach(function (g0, gi) { [0, 1].forEach(function (nw) {
+          (fix ? [fix.g] : [10, 22, 38, 58]).forEach(function (g0, gi) { (fix ? [fix.nw ? 1 : 0] : [0, 1]).forEach(function (nw) {
             var g = g0 * Math.max(0.8, S);
             var sd = /w/.test(d) ? 'l' : 'r', sz = li['_' + sd + nw], lw = sz[0], lh = sz[1], x0, y0;
             if (d === 'n') { x0 = Math.max(0, Math.min(Wpx - lw, cx - lw / 2)); y0 = b.y0 - g - lh; }
@@ -528,6 +597,12 @@
           });
         } else { tx = ftp[0]; ty = ftp[1]; }
         var dx = tx - bx, dy = ty - by, l = Math.hypot(dx, dy) || 1, rB = bS / 2, stopAt = c.ft ? FTR() + 2 : 0;
+        if (!bEl) {
+          // (no balloon, final test: the leader leaves from the point of the label's box nearest the station, just off the words)
+          var qq = best.q;
+          bx = Math.max(qq[0] - 3, Math.min(qq[2] + 3, tx)); by = Math.max(qq[1] - 2, Math.min(qq[3] + 2, ty));
+          dx = tx - bx; dy = ty - by; l = Math.hypot(dx, dy) || 1; rB = 0;
+        }
         if (l > rB + 4 + stopAt) leads.push('<g class="fx-ld" data-n="' + c.key + '"><path d="M' + f1(bx + dx / l * rB) + ' ' + f1(by + dy / l * rB) + 'L' + f1(tx - dx / l * stopAt) + ' ' + f1(ty - dy / l * stopAt) + '"/>' + (c.ft ? '' : '<circle cx="' + f1(tx) + '" cy="' + f1(ty) + '" r="1.6"/>') + '</g>');
       });
       LEADS.innerHTML = leads.join('');
@@ -546,7 +621,14 @@
       var h = L.head || { x: 0, y: 0, w: 600 };
       // (OX and XR: the spare width left and right of the drawing, where the window's height holds it; see layout)
       HEAD.style.left = (px(h.x) - OX) + 'px'; HEAD.style.top = px(h.y) + 'px'; HEAD.style.width = px(h.w) + 'px';
-      if (narrow) { FACTS.style.left = FACTS.style.top = FACTS.style.width = ''; ACROSS.style.right = ACROSS.style.top = ''; KEY.style.left = KEY.style.top = KEY.style.maxWidth = ''; KEY.classList.remove('is-wrap'); return; }
+      /* the label "Across the chain" over its thin rule, as wide as the two: on a wide screen its right edge on the composition's
+         edge (where the masthead's ends), on a phone centred across the page */
+      var ac = L.across;
+      ACROSS.style.left = ACROSS.style.right = '';
+      ACROSS.setAttribute('data-align', ac.align); ACROSS.style.width = px(ac.rule) + 'px'; ACROSS.style.top = px(ac.y) + 'px';
+      if (ac.align === 'r') ACROSS.style.right = (Math.round(L.W * S) - px(ac.x) - XR) + 'px';
+      else ACROSS.style.left = px(ac.x) + 'px';
+      if (narrow) { FACTS.style.left = FACTS.style.top = FACTS.style.width = ''; KEY.style.left = KEY.style.top = KEY.style.maxWidth = ''; KEY.classList.remove('is-wrap'); return; }
       KEY.style.left = (px(L.key.x) - OX) + 'px'; KEY.style.top = px(L.key.y) + 'px';
       /* the key's note goes under its sentence where the one line would run under the lit row, whose sentence can reach the
          key's line (the cards' own chokepoint wording is longer than the mock's, 23 Nov 2026: at 1280 to about 1500 px wide).
@@ -556,7 +638,6 @@
       if (!L.mid) { var keyRoom = px(Math.min(L.facts.x, L.facts.x0)) - (px(L.key.x) - OX) - 16; if (KEY.scrollWidth > keyRoom) { KEY.style.maxWidth = Math.max(0, Math.floor(keyRoom)) + 'px'; KEY.classList.add('is-wrap'); } }
       NOTE.style.left = NOTE.style.top = '';
       FACTS.style.left = px(L.facts.x) + 'px'; FACTS.style.top = px(L.facts.y) + 'px'; FACTS.style.width = (px(L.facts.w) + XR) + 'px';
-      ACROSS.style.right = (Math.round(L.W * S) - px(L.across.x) - XR) + 'px'; ACROSS.style.top = px(L.across.y) + 'px';
     }
 
     /* every drawing's silhouette: the convex hull of the faces the kit draws, in view units round the object's base, at rest and
@@ -569,12 +650,16 @@
       up.pop(); lo.pop(); return lo.concat(up);
     }
     var scratch = document.createElement('canvas'); scratch.width = scratch.height = 2;
+    // a globe's disc as a polygon
+    function disc(G) { var out = []; for (var k = 0; k < 32; k++) { var a = k * Math.PI / 16; out.push([G.x + G.r * Math.cos(a), G.y + G.r * Math.sin(a)]); } return out; }
     function unitHull(o, x) {
       var pl = o.pl, ctx = scratch.getContext('2d'); pl._ex = x;
       pl.paint({ k: 1, w: 2, h: 2, g: new P.CanvasG(ctx, 1), pal: P.palette(html, pl.m.spec, false, false), fit: { s: 1, cx: -o.bs[0], cy: o.bs[1], e: o.e0, rooms: { l: 0, r: 0, t: 0, b: 0 } },
         noLabels: true, noDims: true, dyaw: 0, delev: 0, labA: 1, pick: true, penW: 470 });
       var pts = [];
-      (pl._pick || []).forEach(function (e) { if (e.pts) e.pts.forEach(function (q) { pts.push([q[0], q[1]]); }); else if (e.dots) e.dots.forEach(function (q) { pts.push([q[0], q[1]]); }); });
+      // (the globe: its disc, with room for the pins that stand up off it)
+      if (pl._globe) { var G0 = pl._globe; disc({ x: G0.x, y: G0.y - 0.1 * G0.r, r: G0.r * 1.22 }).forEach(function (q) { pts.push(q); }); }
+      else (pl._pick || []).forEach(function (e) { if (e.pts) e.pts.forEach(function (q) { pts.push([q[0], q[1]]); }); else if (e.dots) e.dots.forEach(function (q) { pts.push([q[0], q[1]]); }); });
       pl._ex = 0; pl._pick = null;
       return pts.length > 2 ? hull(pts) : [];
     }
@@ -630,7 +715,8 @@
       if (i == null || i < 0) { F1.hidden = true; F0.hidden = false; FACTS.removeAttribute('data-n'); return; }
       var r = rows[i];
       F1.innerHTML = '<p class="fx-f1-h"><a class="fx-f1-t" href="' + MK.esc(r.href) + '">' + MK.esc(r.t) + '</a></p>'
-        + '<p class="fx-f1-m">' + (r.level === 4 ? glyph(1) + '<span class="fx-f1-w">Chokepoint</span>' : '') + '<span class="fx-f1-firms">' + r.firms.map(MK.esc).join(', ') + '</span></p>'
+        // (one of the two across the chain says so where a stage shows its rating and firms)
+        + (isX(r) ? '<p class="fx-f1-m fx-f1-x">Across the chain</p>' : '<p class="fx-f1-m">' + (r.level === 4 ? glyph(1) + '<span class="fx-f1-w">Chokepoint</span>' : '') + '<span class="fx-f1-firms">' + r.firms.map(MK.esc).join(', ') + '</span></p>')
         + '<p class="fx-f1-one">' + MK.esc(r.line) + '</p>';
       F1.hidden = false; F0.hidden = true; FACTS.setAttribute('data-n', r.n);
     }
@@ -648,14 +734,16 @@
     function marks() {
       var i = active, n = i >= 0 ? rows[i].n : null;
       sheet.classList.toggle('is-active', i >= 0);
-      GROUND.classList.toggle('is-lit', i >= 0);
+      // (lit, one of the two across the chain lights the whole line, which it spans; the stages keep their ink)
+      var xl = i >= 0 && isX(rows[i]);
+      GROUND.classList.toggle('is-lit', i >= 0 && !xl); GROUND.classList.toggle('is-all', xl);
       var nk = function (id) { return id === 'ft' ? '12' : id; };
       MK.$$('.fx-hl', GROUND).forEach(function (g) { g.classList.toggle('is-on', !!n && (nk(g.getAttribute('data-a')) === n || nk(g.getAttribute('data-b')) === n)); });
       MK.$$('.fx-pad', GROUND).forEach(function (g) { g.classList.toggle('is-on', g.getAttribute('data-n') === n); });
       var ft = MK.$('.fx-ft', GROUND); if (ft) ft.classList.toggle('is-on', n === '12');
       cos.forEach(function (c) { c.li.classList.toggle('is-on', c.ri === i); });
       MK.$$('.fx-ld', LEADS).forEach(function (g) { var k = g.getAttribute('data-n'); g.classList.toggle('is-on', !!n && (k === n || (k === '12f' && n === '12'))); });
-      objs.forEach(function (o, k) { o.cv.style.zIndex = k === i ? 60 : o.z; o.cv.classList.toggle('is-back', i >= 0 && k !== i); });
+      objs.forEach(function (o, k) { o.cv.style.zIndex = k === i ? 60 : o.z; o.cv.classList.toggle('is-back', i >= 0 && k !== i && (!xl || isX(o.r))); });
       var ob = i >= 0 ? objs[i].obox : null;
       cos.forEach(function (c) { var q = c.li._q, under = !!(ob && q && c.ri !== i && q[0] < ob.x1 - 4 && q[2] > ob.x0 + 4 && q[1] < ob.y1 - 4 && q[3] > ob.y0 + 4); c.li.classList.toggle('is-under', under); });
     }
@@ -803,6 +891,8 @@
         else if (isObj(id)) T[id] = cur - 60;
       }
       var end = cur;
+      // the two across the chain, their label and its rule come once the line has reached the rack
+      T['15'] = end + 80; T['16'] = end + 220; end += 420; sheet.style.setProperty('--fx-xd', (T['15'] - 120) + 'ms');
       objs.forEach(function (o) { o.cv.style.setProperty('--d', T[o.r.n] + 'ms'); });
       MK.$$('.fx-pad', GROUND).forEach(function (g) { g.style.setProperty('--d', (T[g.getAttribute('data-n')] - 80) + 'ms'); });
       cos.forEach(function (c) { c.li.style.setProperty('--d', ((T[c.key] || 0) + 260) + 'ms'); });

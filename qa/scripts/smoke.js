@@ -4,7 +4,8 @@
  *   - any console error, uncaught exception, "module ... failed" or "specimen ... failed" warning, or a request to the
  *     local server that finds nothing (404), on every route;
  *   - a page that scrolls sideways at 320 or 390 (document wider than the screen);
- *   - a route that is missing its key part (the home's drawing with its fourteen objects and callouts and no walk under it (the
+ *   - a route that is missing its key part (the home's drawing with its sixteen objects and callouts (the fourteen stages and the
+ *     two chapters across the chain, since 24 Nov 2026) and no walk under it (the
  *     Introduction's page holds the walk since 23 Nov 2026, and an old /#/walk/<chapter> link lands there), Suppliers' own page
  *     with the route map first (an old /#/suppliers link lands there), The Chain's contents with a row per chapter and no chapter held in the home page, a
  *     chapter's own page, /<id>/, showing that chapter alone with its card, its live drawing and its door, an old /#<chapter>
@@ -86,7 +87,7 @@ const CHAIN_OK = `(function (s) { return s.at === '/supply-chain/' && s.stages >
 const ROUTES = [
   // the home is the drawing alone (23 Nov 2026): fourteen objects drawn, a callout per stage and one for final test, and no walk
   // under it; the walk is the Introduction's page, which an old link to a step of the home's walk reaches
-  { name: 'home', url: '/#/', ready: `${view('walk')} && ${count('.fx-objs canvas.fx-o')} === 14 && ${count('.fx-cos .fx-co')} === 15 && ${count('.wk-step')} === 0 && ${shown('.fx-key')}`, detail: `'objects: ' + ${count('.fx-objs canvas.fx-o')} + ', callouts: ' + ${count('.fx-cos .fx-co')} + ', steps: ' + ${count('.wk-step')}` },
+  { name: 'home', url: '/#/', ready: `${view('walk')} && ${count('.fx-objs canvas.fx-o')} === 16 && ${count('.fx-cos .fx-co')} === 17 && ${count('.wk-step')} === 0 && ${shown('.fx-key')}`, detail: `'objects: ' + ${count('.fx-objs canvas.fx-o')} + ', callouts: ' + ${count('.fx-cos .fx-co')} + ', steps: ' + ${count('.wk-step')}` },
   { name: 'walk', url: '/introduction/', ready: `${view('walk')} && ${count('.view[data-view="walk"] .wk-step')} >= 14 && !!document.getElementById('intro--flashcards')`, detail: `'walk view shown: ' + ${view('walk')} + ', steps: ' + ${count('.view[data-view="walk"] .wk-step')}` },
   { name: 'walk-old', url: '/#/walk/lithography', ready: `location.pathname === '/introduction/' && location.hash === '#/walk/lithography' && ${view('walk')}`, detail: `'at ' + location.pathname + location.hash` },
   // The Chain's contents are on the home page (#/chain) and each chapter on a page of its own (28 Oct 2026): the home page holds

@@ -1,7 +1,9 @@
 /* The home page: the frontispiece, the owner's "V" (22 and 23 Nov 2026; built into the site on 23 Nov 2026 from the approved
    mock, dist/mock/home2/frontispiece/_src/fx.css on the plates-polish worktree): the whole chain as one composed drawing
    (src/modules/frontispiece.js). Its rules are the sheet's own (.fx-) or hang on html.fx-on, which only the home's drawing sets.
-   The phone's lit sentence stays at 14.5 px and the wide one at the lit row's full width (owner, 23 Nov 2026). */
+   The phone's lit sentence stays at 14.5 px and the wide one at the lit row's full width (owner, 23 Nov 2026).
+   Chapters 15 and 16 are drawn in the top-right corner under "Across the chain" and its thin rule (home option A, 24 Nov 2026,
+   from dist/mock/home3/_src/fx3.css), and final test's label carries stage 12's number with no balloon (the reader test). */
 
 /* the hero's own column gives way to the sheet: the title, intro and line of facts move into the sheet's head, the chain at a
    glance becomes the drawing (its rows stay in the page for walk.js, out of sight) */
@@ -47,6 +49,8 @@ html.fx-on .fx-head .wk-meta { margin: calc(12px * var(--fx-s)) 0 0 -18px; }
 .fx-hl { display: none; }
 .fx-hl path { fill: none; stroke: var(--ink); stroke-width: 1.9; stroke-linejoin: round; stroke-linecap: round; }
 .fx-hl.is-on { display: inline; }
+/* lit, one of the two chapters across the chain lights the whole line, which it spans: every segment and arrowhead in ink */
+.fx-ground.is-all .fx-sg, .fx-ground.is-all .fx-ar { stroke: var(--ink); }
 
 /* the callouts: a numbered balloon as the chapters' plates number their parts, solid for an Extreme stage, and its name */
 .fx-ld path { fill: none; stroke: var(--line-2); stroke-width: 0.8; }
@@ -61,8 +65,12 @@ html.fx-on .fx-head .wk-meta { margin: calc(12px * var(--fx-s)) 0 0 -18px; }
 .fx-co-b { flex: none; display: grid; place-items: center; width: var(--b); height: var(--b); box-sizing: border-box; border: 1px solid var(--ink-2); border-radius: 50%; background: var(--bg);
   font-family: var(--font-ui); font-size: calc(var(--b) * 0.56); font-weight: 600; font-variant-numeric: tabular-nums; line-height: 1; color: var(--ink); transition: box-shadow 0.2s; }
 .fx-co[data-level="4"] .fx-co-b { background: var(--ink); border-color: var(--ink); color: var(--bg); }
-.fx-co.is-ft .fx-co-a { --b: calc(14px * clamp(0.9, var(--fx-s), 1.12)); }
-.fx-co.is-ft .fx-co-b { font-size: calc(var(--b) * 0.6); }
+/* final test, stage 12's second place on the line, has no balloon of its own (the reader test, 24 Nov 2026): its label,
+   "12 · Final test", keeps the lighter label style, and its anchor is the label's own corner (frontispiece.js drawCallouts) */
+.fx-cos .fx-co.is-ft .fx-co-a { --b: 0px; gap: 0; }
+.fx-cos .fx-co.is-ft .fx-co-t { margin-top: 0; white-space: nowrap; max-width: none; }
+.fx-cos .fx-co.is-ft .fx-co-nm { font-variant-numeric: tabular-nums; }
+.fx-cos .fx-co.is-ft .fx-co-a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
 .fx-co-t { display: block; font-family: var(--font-ui); font-size: calc(13.5px * clamp(0.9, var(--fx-s), 1.1)); line-height: 17px; margin-top: calc(var(--b) * 0.5 - 8.5px); width: max-content; max-width: calc(156px * clamp(0.86, var(--fx-s), 1.12)); }
 .fx-co.is-narrow .fx-co-t { max-width: calc(104px * clamp(0.86, var(--fx-s), 1.12)); }
 .fx-co-nm { font-family: var(--font-ui); font-size: calc(13.5px * clamp(0.9, var(--fx-s), 1.1)); font-weight: 400; line-height: 17px; letter-spacing: 0; color: var(--ink-2);
@@ -85,6 +93,8 @@ html.fx-on .fx-head .wk-meta { margin: calc(12px * var(--fx-s)) 0 0 -18px; }
 .fx-f1-m { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 8px; margin-top: calc(7px * var(--fx-s)) !important; font-family: var(--font-ui); font-size: calc(13.5px * var(--fx-s)); color: var(--ink-2); }
 .fx-f1-w { font-weight: 600; color: var(--ink); margin-right: 4px; }
 .fx-f1-m .fx-f1-w { color: var(--accent-ink); }
+/* (one of the two across the chain: its row says so where a stage shows its rating and firms) */
+.fx-f1-m.fx-f1-x { color: var(--muted); }
 /* (v5 designer pass: the sentence's lines balanced, so none ends on a word or two; it ran to a short last line in five of the
    fourteen at 1440, more once the row narrowed by its nudge) */
 .fx-f1-one { margin-top: calc(9px * var(--fx-s)) !important; font-family: var(--font-body); font-size: calc(16.5px * var(--fx-s)); line-height: 1.45; color: var(--ink-2); text-wrap: balance; max-width: 30em; }
@@ -102,12 +112,18 @@ html.fx-on .fx-head .wk-meta { margin: calc(12px * var(--fx-s)) 0 0 -18px; }
 /* the note on scale lives in the key on a wide screen, under the drawing on a phone */
 .fx-note { display: none; }
 
-/* at the sheet's top right, flush with its edge, the two chapters that run across the chain */
+/* the two chapters that run across the chain: in the page without scripts, two links (build/modules/walk.js ACROSS_HOME) */
 .fx-across { z-index: 6; display: flex; flex-direction: column; align-items: flex-end; gap: 3px; text-align: right; }
 .fx-across-k { margin: 0 0 4px; color: var(--muted); }
 .fx-ac { color: var(--ink-2); text-decoration: none; font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-size: calc(16px * clamp(0.92, var(--fx-s), 1.08)); line-height: 1.4; font-weight: 400; }
 .fx-ac-n { font-family: var(--font-ui); font-size: 0.75em; font-weight: 500; font-variant-numeric: tabular-nums; color: var(--muted); margin-right: 7px; }
 .fx-ac:hover .fx-ac-t { color: var(--accent-ink); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+/* drawn, the label "Across the chain" over its thin rule, as wide as the two: right-set at the sheet's top right, centred on a
+   phone (frontispiece.js placeText) */
+.fx-in > .fx-across-lab { display: block; box-sizing: border-box; margin: 0; padding-bottom: 5px; border-bottom: 0.8px solid var(--line-2); text-align: left; white-space: nowrap; pointer-events: none; line-height: 18px; }
+.fx-in > .fx-across-lab[data-align="r"] { text-align: right; }
+.fx-in > .fx-across-lab[data-align="c"] { transform: translateX(-50%); text-align: center; }
+.fx-in > .fx-across-lab .fx-across-k { display: inline-block; vertical-align: top; margin: 0; color: var(--muted); line-height: 18px; }
 
 .fx-in.is-turning { cursor: grabbing !important; }
 
@@ -119,6 +135,9 @@ html.fx-on .fx-head .wk-meta { margin: calc(12px * var(--fx-s)) 0 0 -18px; }
 .fx-sheet.is-entering.is-in .fx-co, .fx-sheet.is-entering.is-in .fx-ld, .fx-sheet.is-entering.is-in .fx-pad, .fx-sheet.is-entering.is-in .fx-ar, .fx-sheet.is-entering.is-in .fx-ft { opacity: 1; transition: opacity 0.3s ease-out var(--d, 0ms); }
 .fx-sheet.is-entering .fx-sg { stroke-dashoffset: calc(var(--len, 0) * 1px); }
 .fx-sheet.is-entering.is-in .fx-sg { stroke-dashoffset: 0; transition: stroke-dashoffset var(--dur, 200ms) linear var(--d, 0ms); }
+/* (the label and its rule come with the two across the chain, once the line has reached the rack) */
+.fx-sheet.is-pre .fx-across-lab, .fx-sheet.is-entering .fx-across-lab { opacity: 0; }
+.fx-sheet.is-entering.is-in .fx-across-lab { opacity: 1; transition: opacity 0.4s ease-out var(--fx-xd, 0ms); }
 
 @media (max-width: 899px) {
   .fx-sheet { width: auto; margin: 10px 0 0; }
@@ -128,7 +147,7 @@ html.fx-on .fx-head .wk-meta { margin: calc(12px * var(--fx-s)) 0 0 -18px; }
   html.fx-on .fx-head .wk-dek { font-size: 16.5px; line-height: 1.4; margin-top: 10px; }
   html.fx-on .fx-intro { margin-top: 10px; font-size: 15px; }
   .fx-co-a { --b: 17px; gap: 6px; }
-  .fx-co.is-ft .fx-co-a { --b: 14px; }
+  .fx-cos .fx-co.is-ft .fx-co-a { --b: 0px; }
   .fx-co-nm, .fx-co-t { font-size: 13.5px; line-height: 17px; }
   .fx-co.is-ft .fx-co-nm { font-size: 12.5px; }
   .fx-co-t { max-width: 140px; }
@@ -148,10 +167,8 @@ html.fx-on .fx-head .wk-meta { margin: calc(12px * var(--fx-s)) 0 0 -18px; }
   .fx-sheet.is-narrow .fx-f1-t { font-size: 21px; }
   .fx-sheet.is-narrow .fx-f1-m { font-size: 12.5px; margin-top: 4px !important; }
   .fx-sheet.is-narrow .fx-f1-one { font-size: 14.5px; line-height: 1.4; margin-top: 5px !important; }
-  .fx-sheet.is-narrow .fx-across { position: static; align-items: flex-start; text-align: left; margin: 30px 0 4px; }
-  .fx-sheet.is-narrow .fx-ac { font-size: 17px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .fx-sg, .fx-ar, .fx-pad, .fx-ft, .fx-co-b, .fx-o { transition: none; }
+  .fx-sg, .fx-ar, .fx-pad, .fx-ft, .fx-co-b, .fx-o, .fx-across-lab { transition: none; }
 }
 
