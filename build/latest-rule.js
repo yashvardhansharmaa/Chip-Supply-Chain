@@ -11,7 +11,7 @@
 //   - the next date: the earliest date in data/control-flows.json "upcoming" not yet passed on the build day (the day itself has
 //     not passed), with its label. Once that day passes the next build drops it and shows the date after it, or no row at all;
 //     the bi-weekly upkeep rebuilds the site. Between builds each page counts the days in the reader's own browser, as the
-//     interactive page's Coming up does, and hides the row once the reader's day has passed it, so a past date never reads as next.
+//     interactive page's next-date row does, and hides the row once the reader's day has passed it, so a past date never reads as next.
 // Each row links to its entry in the timeline, at the address the page gives that entry (the static page's anchor, or the
 // interactive page's #/controls/<id>); an upcoming date with no entry links to its source. Pure functions: build.js, its
 // modules and the checks (qa/redesign/check-latest.js) require this file.
@@ -76,7 +76,7 @@ function rows(p, o) {
   return { html: list, next: nextHTML };
 }
 
-// the countdown on the static page, in the reader's own day, worded as the interactive page's Coming up words it
+// the countdown on the static page, in the reader's own day, worded as the interactive page's next-date row words it
 // (Geo.whenText in src/app.js); a row whose day has passed for the reader is hidden. It runs once, where it stands, after the list.
 const SCRIPT = `<script>(function(){var t=new Date();t=new Date(t.getFullYear(),t.getMonth(),t.getDate());[].forEach.call(document.querySelectorAll('.latest [data-due]'),function(li){var p=li.getAttribute('data-due').split('-').map(Number),n=Math.round((new Date(p[0],p[1]-1,p[2])-t)/864e5),s=li.querySelector('small');if(n<0){li.hidden=true;return;}if(s)s.textContent=n===0?'Today':n===1?'Tomorrow':'In '+n+' days';});})();</script>`;
 

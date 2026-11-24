@@ -499,8 +499,8 @@
   {
     "term": "performance density",
     "aka": "",
-    "plain": "An export control test of how densely a chip packs its computing power. It divides the chip's TPP, the export rules' measure of computing power, by its applicable die area in square millimeters. That area counts all logic dies made on a process with non-planar transistors, such as FinFETs. The test applies only to a chip that reaches 1,600 TPP. It replaced the 2022 test, which was based on interconnect bandwidth, the speed at which a chip exchanges data with its neighbors.",
-    "why": "It closed a gap that Nvidia's China-specific chips, such as the A800 and H800, had used. Nvidia had designed those chips to stay under the 2022 interconnect-speed threshold. The top band, ECCN 3A090.a, now starts at 4,800 TPP, or at 1,600 TPP with a performance density of 5.92 (88 FR 73458).",
+    "plain": "An export control test of how densely a chip packs its computing power. It divides the chip's TPP, the export rules' measure of computing power, by its applicable die area in square millimeters. That area counts all logic dies made on a process with non-planar transistors, such as FinFETs. The test applies only to a chip that reaches 1,600 TPP. It came in with the October 2023 rule, which also dropped the 2022 test of interconnect bandwidth, the speed at which a chip exchanges data with its neighbors.",
+    "why": "It reaches chips below 4,800 TPP that pack their computing power densely. Nvidia's China-specific A800 and H800 were caught by the other change in the same rule: with the interconnect test gone, their TPP of more than 4,800 controlled them on its own. The top band, ECCN 3A090.a, now starts at 4,800 TPP, or at 1,600 TPP with a performance density of 5.92 (88 FR 73458).",
     "chapter": "geopolitics"
   },
   {

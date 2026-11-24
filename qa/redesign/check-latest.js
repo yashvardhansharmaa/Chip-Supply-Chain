@@ -10,7 +10,9 @@
        the countdown in Coming up's words ("Today", "Tomorrow", "In 7 days") and a link that lands on its entry;
      - with the reader's clock moved (a Date override before the page's scripts): on the next date's own day the row says
        "Today", and on the day after it is gone from both pages while the latest row stays;
-     - on a phone, no sideways scroll and no text in the rows under 11.5 px.
+     - on a phone, no sideways scroll and no text in the rows under 11.5 px. On the board's phone layout the latest line is
+       hidden by design (the owner's mock A, 24 Nov 2026): the upright history strip above it ends on the latest rule, with its
+       full title and a link to its entry, and that row is checked in its place.
    A day the build has not caught up with (the next date passed since the last build) fails here as it does in
    qa/scripts/check-dates.js: the bi-weekly upkeep rebuilds the site.
    usage: node qa/redesign/check-latest.js [--base http://127.0.0.1:8804] [--today YYYY-MM-DD] [--out qa/redesign/check-latest.txt] */
@@ -52,10 +54,11 @@ const READ = (sel) => `(function(){var L=document.querySelector(${JSON.stringify
     var fs=[].map.call(li.querySelectorAll('*'),function(e){return e.children.length?99:parseFloat(getComputedStyle(e).fontSize);});
     return {visible:vis(li),hidden:li.hidden,due:li.getAttribute('data-due'),kicker:k?k.textContent.trim():'',date:date,small:s?s.textContent.trim():'',words:words,go:go?go.textContent.replace(/\\s+/g,' ').trim():'',href:a?a.getAttribute('href'):'',h:a?Math.round(a.getBoundingClientRect().height):0,minFont:Math.min.apply(null,fs.concat([99]))};});})()`;
 
-function checkRows(where, rows, day, board) {
+function checkRows(where, rows, day, board, phone) {
   if (!rows) { say(false, `${where}: no latest-rule list`); return; }
   const [L, N] = rows;
-  say(!!L && L.visible, `${where}: the latest row shows`);
+  if (board && phone) say(!!L && !L.visible, `${where}: the latest line is hidden on a phone, where the strip ends on the latest rule`);
+  else say(!!L && L.visible, `${where}: the latest row shows`);
   if (!L) return;
   say(L.kicker === LATEST.kicker, `${where}: kicker "${L.kicker}" (${LATEST.kicker})`);
   say(L.date === LATEST.date, `${where}: latest date "${L.date}" is the newest entry's (${LATEST.date})`);
@@ -102,19 +105,23 @@ function checkRows(where, rows, day, board) {
       // ---------- the interactive board ----------
       t = await open(chrome, BASE + '/#/controls', { width, wait: 2500 });
       const rb = await t.ev(READ('.view[data-view="controls"] .view-head .cf-latest'));
-      checkRows(`#/controls ${W}`, rb, TODAY, true);
+      checkRows(`#/controls ${W}`, rb, TODAY, true, phone);
+      // the history strip: its last mark is the newest entry, links to it, and on a phone shows the entry's whole title
+      const sl = await t.ev(`(function(){var m=document.querySelector('.view[data-view="controls"] .ec-m.is-latest');if(!m)return null;var a=m.querySelector('a'),r=m.querySelector('.ec-mt').getBoundingClientRect();return {date:m.getAttribute('data-date'),href:a.getAttribute('href'),text:a.textContent.replace(/\\s+/g,' ').trim(),visible:!!(r.width&&r.height)}})()`);
+      say(!!sl && sl.visible && sl.date === newest.date && sl.href === '#/controls/' + LATEST.id, `#/controls ${W}: the strip ends on the latest rule (${sl ? sl.date + ' ' + sl.href : 'no mark'})`);
+      if (phone && sl) say(sl.text.indexOf(flat(newest.title)) >= 0, `#/controls ${W}: the strip's latest row carries the whole title`);
       if (rb) for (const r of rb) say(r.minFont >= 11.5, `#/controls ${W}: ${r.kicker} text at ${r.minFont} px or more (11.5)`);
       if (phone) say((await t.ev('document.documentElement.scrollWidth <= innerWidth')), `#/controls ${W}: no sideways scroll`);
       for (const [i, id] of [[0, LATEST.id], [1, (expectNext(TODAY) || {}).event]]) {
         if (!id) continue;
         await t.ev("(location.hash='#/controls',window.scrollTo(0,0),1)"); await sleep(900);
-        await t.ev(`(document.querySelectorAll('.cf-latest a')[${i}].click(),1)`); await sleep(1800);
+        await t.ev(`(${phone && i === 0 ? "document.querySelector('.ec-m.is-latest a')" : `document.querySelectorAll('.cf-latest a')[${i}]`}.click(),1)`); await sleep(1800);
         const on = await t.ev(`(function(){var e=document.querySelector('.tl-e[data-ev="${id}"]');if(!e)return 'no entry';var r=e.getBoundingClientRect();return location.hash+' '+(e.classList.contains('is-target')?'marked':'not marked')+' '+(r.top>=0&&r.top<innerHeight?'in view':'out of view');})()`);
         say(on === `#/controls/${id} marked in view`, `#/controls ${W}: row ${i + 1} opens its entry (${on})`);
       }
       // the same address again (no hashchange): the click still brings the entry back into view
       await t.ev('(window.scrollTo(0,0),1)'); await sleep(500);
-      await t.ev("(document.querySelector('.cf-latest a').click(),1)"); await sleep(1800);
+      await t.ev(`(document.querySelector(${JSON.stringify(phone ? '.ec-m.is-latest a' : '.cf-latest a')}).click(),1)`); await sleep(1800);
       const again = await t.ev(`(function(){var e=document.querySelector('.tl-e[data-ev="${LATEST.id}"]');var r=e.getBoundingClientRect();return r.top>=0&&r.top<innerHeight;})()`);
       say(again, `#/controls ${W}: the latest row on its own entry's address scrolls back to the entry`);
       say(!t.errors.length, `#/controls ${W}: no script errors${t.errors.length ? ': ' + t.errors.join(' | ') : ''}`);

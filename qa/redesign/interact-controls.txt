@@ -1,0 +1,100 @@
+ok   #/controls 1440x900: title, standfirst, strip, Latest, Next date, tabs, then the timeline (127 < 228 < 320 < 545 < 616 < 728 < 945)
+ok   #/controls 1440x900: one Latest line and one Next date line (Latest rule, Next date)
+ok   #/controls 1440x900: no Coming up list and no jump line
+ok   #/controls 1440x900: the board sits beside the timeline from its start
+ok   #/controls 1440x900: the strip is drawn as a line
+ok   #/controls 1440x900: 13 marks in date order
+ok   #/controls 1440x900: the latest rule is the last mark, and the only one marked latest
+ok   #/controls 1440x900: the Japanese (Jul 2023) and Dutch (Sep 2023) tool controls are on the strip
+ok   #/controls 1440x900: every mark links to its entry and carries the full title
+ok   #/controls 1440x900: the latest rule's dot is in the accent (rgb(122, 31, 43))
+ok   #/controls 1440x900: the dots run left to right in date order, the latest at the right end
+ok   #/controls 1440x900: no label covers another
+ok   #/controls 1440x900: no leader runs through a label
+ok   #/controls 1440x900: at the first entry the board reads 15 Apr 2018 and says "Past state"
+ok   #/controls 1440x900: pressing 2022 brings 2022-08-09 to the reading line and the board to 9 Aug 2022
+ok   #/controls 1440x900: the 2022 board says "Past state"
+ok   #/controls 1440x900: "Board as of" in view under the masthead mid-list (top 78)
+ok   #/controls 1440x900: pressing 2019 goes back to 2019-05-16
+ok   #/controls 1440x900: the last entry reaches the reading line (309 <= 315)
+ok   #/controls 1440x900: there the board shows today (24 Nov 2026), with no past mark and no lapsed stay
+ok   #/controls 1440x900: all 11 rows sit inside the panel (64 to 886)
+ok   #/controls 1440x900: at the page's end "Board as of" stays under the masthead and every row still fits (78, 886)
+ok   #/controls 1440x900: Now returns the list to its end and the board to today (24 Nov 2026)
+ok   #/controls 1440x900: in the opened tools history no pill or scope runs into the date column
+ok   #/controls 1440x900: each of 5 stacked policies takes a line of its own
+ok   #/controls 1440x900: no script errors
+ok   #/controls 1280x800: title, standfirst, strip, Latest, Next date, tabs, then the timeline (120 < 212 < 304 < 557 < 651 < 763 < 1014)
+ok   #/controls 1280x800: one Latest line and one Next date line (Latest rule, Next date)
+ok   #/controls 1280x800: no Coming up list and no jump line
+ok   #/controls 1280x800: the board sits beside the timeline from its start
+ok   #/controls 1280x800: the strip is drawn as a line
+ok   #/controls 1280x800: 13 marks in date order
+ok   #/controls 1280x800: the latest rule is the last mark, and the only one marked latest
+ok   #/controls 1280x800: the Japanese (Jul 2023) and Dutch (Sep 2023) tool controls are on the strip
+ok   #/controls 1280x800: every mark links to its entry and carries the full title
+ok   #/controls 1280x800: the latest rule's dot is in the accent (rgb(122, 31, 43))
+ok   #/controls 1280x800: the dots run left to right in date order, the latest at the right end
+ok   #/controls 1280x800: no label covers another
+ok   #/controls 1280x800: no leader runs through a label
+ok   #/controls 1280x800: at the first entry the board reads 15 Apr 2018 and says "Past state"
+ok   #/controls 1280x800: pressing 2022 brings 2022-08-09 to the reading line and the board to 9 Aug 2022
+ok   #/controls 1280x800: the 2022 board says "Past state"
+ok   #/controls 1280x800: "Board as of" in view under the masthead mid-list (top 78)
+ok   #/controls 1280x800: pressing 2019 goes back to 2019-05-16
+ok   #/controls 1280x800: the last entry reaches the reading line (279 <= 285)
+ok   #/controls 1280x800: there the board shows today (24 Nov 2026), with no past mark and no lapsed stay
+ok   #/controls 1280x800: all 11 rows sit inside the panel (64 to 786)
+ok   #/controls 1280x800: at the page's end "Board as of" stays under the masthead and every row still fits (78, 786)
+ok   #/controls 1280x800: Now returns the list to its end and the board to today (24 Nov 2026)
+ok   #/controls 1280x800: in the opened tools history no pill or scope runs into the date column
+ok   #/controls 1280x800: each of 5 stacked policies takes a line of its own
+ok   #/controls 1280x800: no script errors
+ok   #/controls 1920: the strip is drawn as a line
+ok   #/controls 1920: 13 marks in date order
+ok   #/controls 1920: the latest rule is the last mark, and the only one marked latest
+ok   #/controls 1920: the Japanese (Jul 2023) and Dutch (Sep 2023) tool controls are on the strip
+ok   #/controls 1920: every mark links to its entry and carries the full title
+ok   #/controls 1920: the latest rule's dot is in the accent (rgb(122, 31, 43))
+ok   #/controls 1920: the dots run left to right in date order, the latest at the right end
+ok   #/controls 1920: no label covers another
+ok   #/controls 1920: no leader runs through a label
+ok   #/controls 1024: the strip is drawn as a line
+ok   #/controls 1024: 13 marks in date order
+ok   #/controls 1024: the latest rule is the last mark, and the only one marked latest
+ok   #/controls 1024: the Japanese (Jul 2023) and Dutch (Sep 2023) tool controls are on the strip
+ok   #/controls 1024: every mark links to its entry and carries the full title
+ok   #/controls 1024: the latest rule's dot is in the accent (rgb(122, 31, 43))
+ok   #/controls 1024: the dots run left to right in date order, the latest at the right end
+ok   #/controls 1024: no label covers another
+ok   #/controls 1024: no leader runs through a label
+ok   #/controls 390: the strip is an upright list
+ok   #/controls 390: 13 marks in date order
+ok   #/controls 390: the latest rule is the last mark, and the only one marked latest
+ok   #/controls 390: the Japanese (Jul 2023) and Dutch (Sep 2023) tool controls are on the strip
+ok   #/controls 390: every mark links to its entry and carries the full title
+ok   #/controls 390: the latest rule's dot is in the accent (rgb(122, 31, 43))
+ok   #/controls 390: one row per rule, top to bottom in date order
+ok   #/controls 390: no sideways scroll
+ok   #/controls 390: under the upright strip, the one Next date line (Next date)
+ok   /export-controls/ 1440: title, standfirst, strip, Latest, Next date, then the body (168 < 263 < 388 < 729 < 851 < 5091)
+ok   /export-controls/ 1440: no Coming up list, and every mark lands on an entry on the page
+ok   /export-controls/ 1440: the strip is drawn as a line
+ok   /export-controls/ 1440: 13 marks in date order
+ok   /export-controls/ 1440: the latest rule is the last mark, and the only one marked latest
+ok   /export-controls/ 1440: the Japanese (Jul 2023) and Dutch (Sep 2023) tool controls are on the strip
+ok   /export-controls/ 1440: every mark links to its entry and carries the full title
+ok   /export-controls/ 1440: the latest rule's dot is in the accent (rgb(122, 31, 43))
+ok   /export-controls/ 1440: the dots run left to right in date order, the latest at the right end
+ok   /export-controls/ 1440: no label covers another
+ok   /export-controls/ 1440: no leader runs through a label
+ok   /export-controls/ 390: title, standfirst, strip, Latest, Next date, then the body (176 < 301 < 462 < 1142 < 1366 < 7489)
+ok   /export-controls/ 390: no Coming up list, and every mark lands on an entry on the page
+ok   /export-controls/ 390: the strip is an upright list
+ok   /export-controls/ 390: 13 marks in date order
+ok   /export-controls/ 390: the latest rule is the last mark, and the only one marked latest
+ok   /export-controls/ 390: the Japanese (Jul 2023) and Dutch (Sep 2023) tool controls are on the strip
+ok   /export-controls/ 390: every mark links to its entry and carries the full title
+ok   /export-controls/ 390: the latest rule's dot is in the accent (rgb(122, 31, 43))
+ok   /export-controls/ 390: one row per rule, top to bottom in date order
+interact-controls: ok

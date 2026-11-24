@@ -184,8 +184,8 @@
     {
       "id": "control-timeline",
       "type": "timeline",
-      "title": "Eight US actions that shaped chip export controls",
-      "finding": "US chip export controls tightened through January 2025, then partly eased",
+      "title": "Nine US actions that shaped chip export controls",
+      "finding": "US chip export controls tightened through January 2025, partly eased in 2025 and January 2026, then tightened again in November 2026",
       "data": [
         [
           "2019-05-16",
@@ -197,7 +197,7 @@
         ],
         [
           "2023-10-17",
-          "Performance-density test added, covering Nvidia's A800 and H800"
+          "Interconnect test dropped, bringing in Nvidia's A800 and H800"
         ],
         [
           "2024-12-02",
@@ -218,6 +218,10 @@
         [
           "2026-01-15",
           "H200 and MI325X move to case-by-case review"
+        ],
+        [
+          "2026-11-19",
+          "Remote access rule: licenses for five more countries and for data centers serving firms from China and other US arms-embargoed countries"
         ]
       ],
       "source": {
@@ -237,7 +241,7 @@ China cannot yet make the most advanced lithography machines, which print a chip
 
 In September 2022 US National Security Advisor Jake Sullivan said the United States had previously aimed to stay "only a couple of generations ahead" in some key technologies ([source](https://bidenwhitehouse.archives.gov/briefing-room/speeches-remarks/2022/09/16/remarks-by-national-security-advisor-jake-sullivan-at-the-special-competitive-studies-project-global-emerging-technologies-summit/)). He said it must now keep "as large of a lead as possible" in foundational technologies such as advanced logic and memory chips ([source](https://bidenwhitehouse.archives.gov/briefing-room/speeches-remarks/2022/09/16/remarks-by-national-security-advisor-jake-sullivan-at-the-special-competitive-studies-project-global-emerging-technologies-summit/)). The export rules of October 2022 were the first to apply his doctrine of a small yard with a high fence, meaning strict controls on a narrow set of technologies ([source](https://www.csis.org/analysis/where-chips-fall-us-export-controls-under-biden-administration-2022-2024)). The Center for Strategic and International Studies (CSIS), a research institute in Washington, judged that those rules went beyond the old aim of staying two technology nodes ahead of China and tried to push China's capability back below the level it had already reached ([source](https://www.csis.org/analysis/choking-chinas-access-future-ai)).
 
-US license rules can target a single buyer or a whole country, and in 2022 the rules on advanced AI chips and the tools for advanced fabs began to cover all of China. In October 2018, for example, the Bureau of Industry and Security (BIS), the US Commerce Department's export control office, put the Chinese chip company Fujian Jinhua Integrated Circuit on its Entity List ([source](https://www.federalregister.gov/documents/2018/10/30/2018-23693/addition-of-an-entity-to-the-entity-list)). From then on any item under US export rules needed a license to reach the company ([source](https://www.federalregister.gov/documents/2018/10/30/2018-23693/addition-of-an-entity-to-the-entity-list)). The 2022 rules went further and required a license for any advanced AI chip, and any tool for an advanced fab, bound for China ([source](https://www.federalregister.gov/documents/2022/10/13/2022-21658/implementation-of-additional-export-controls-certain-advanced-computing-and-semiconductor)). BIS reviewed most applications under a presumption of denial, meaning it would normally refuse them ([source](https://www.federalregister.gov/documents/2022/10/13/2022-21658/implementation-of-additional-export-controls-certain-advanced-computing-and-semiconductor)). It reviewed applications for equipment bound for the China fabs of firms headquartered in the United States or allied and partner countries case by case ([source](https://www.federalregister.gov/documents/2022/10/13/2022-21658/implementation-of-additional-export-controls-certain-advanced-computing-and-semiconductor)).
+US license rules can target a single buyer or a whole country, and in 2022 the rules on advanced AI chips and the tools for advanced fabs began to cover all of China. In October 2018, for example, the Bureau of Industry and Security (BIS), the US Commerce Department's export control office, put the Chinese chip company Fujian Jinhua Integrated Circuit on its Entity List ([source](https://www.federalregister.gov/documents/2018/10/30/2018-23693/addition-of-an-entity-to-the-entity-list)). From then on any item under US export rules needed a license to reach the company ([source](https://www.federalregister.gov/documents/2018/10/30/2018-23693/addition-of-an-entity-to-the-entity-list)). The 2022 rules went further and required a license for any advanced AI chip, and any tool for an advanced fab, bound for China ([source](https://www.federalregister.gov/documents/2022/10/13/2022-21658/implementation-of-additional-export-controls-certain-advanced-computing-and-semiconductor)). BIS reviewed most applications under a presumption of denial, meaning it would normally refuse them ([source](https://www.federalregister.gov/documents/2022/10/13/2022-21658/implementation-of-additional-export-controls-certain-advanced-computing-and-semiconductor)). It reviewed applications for equipment bound for the China fabs of firms headquartered in the United States or allied and partner countries case by case ([source](https://www.federalregister.gov/documents/2022/10/13/2022-21658/implementation-of-additional-export-controls-certain-advanced-computing-and-semiconductor)). Since 17 November 2023 it has reviewed those applications with a presumption of approval, meaning it would normally grant them, unless a firm based in China or Macau owns most of the fab's owner ([source](https://www.ecfr.gov/current/title-15/subtitle-B/chapter-VII/subchapter-C/part-744/section-744.23)).
 
 ## Who leads each segment
 

@@ -777,7 +777,7 @@
       if (mv && mv.activate) { try { mv.activate(); } catch (err) { console.warn('view module failed', v, err); } }
       if (v === 'landscape') Landscape.activate();
       else if (v === 'suppliers') Suppliers.activate();
-      else if (v === 'controls') { Controls.activate(); if (!Geo.built) Geo.build(); Geo.renderUpcoming(); Geo.renderLatest(); } // the countdowns are redrawn each visit, from that day
+      else if (v === 'controls') { Controls.activate(); if (!Geo.built) Geo.build(); Geo.renderLatest(); } // the next date's countdown is redrawn each visit, from that day
       // an entry's address (#/controls/<event-id>) opens and marks that entry; leaving it for the board's own address (the tab, a
       // link) is a new place too, so the mark goes, a By subject choice the entry set aside comes back, and the page starts at the top
       var leftEntry = v === 'controls' && !evId && !!this.evId, focused = false;
@@ -2235,11 +2235,13 @@
       { name: 'Corporate', label: 'Firms', short: 'Firm', cls: 'corp' }
     ],
     /* the license outcome a flow stands in, and the word the pill carries, from open to closed. Restricted is a
-       government limiting sales to some buyers or uses without banning them outright. Policy is the off-ramp for
-       money and tariffs, which gate nothing. */
-    STATE: { open: 'No license', restricted: 'Restricted', 'case': 'Case by case', denial: 'Presumption of denial', prohibited: 'Prohibited', policy: 'Policy' },
+       government limiting sales to some buyers or uses without banning them outright. A presumption of approval is a license
+       that will normally be granted. A license required by letter is a requirement BIS set in a letter to one company, with no
+       review policy published (24 Nov 2026, from the Federal Register reading behind qa/builds-nov/ux/REPORT.md items 3 to 6).
+       Policy is the off-ramp for money and tariffs, which gate nothing. */
+    STATE: { open: 'No license', restricted: 'Restricted', approval: 'Presumption of approval', 'case': 'Case by case', letter: 'License required by letter', denial: 'Presumption of denial', prohibited: 'Prohibited', policy: 'Policy' },
     /* the outcomes from the most closed down, the order a year's tally reads in */
-    SEVERITY: ['prohibited', 'denial', 'case', 'restricted', 'policy'],
+    SEVERITY: ['prohibited', 'denial', 'letter', 'case', 'approval', 'restricted', 'policy'],
     /* the board's first schema had five states that did not map to outcomes: a license and a listing are
        one fact, and "shut" covered both a presumption of denial and a ban. Old data still reads. */
     OLD_STATE: { license: 'denial', shut: 'prohibited' },
@@ -2326,6 +2328,7 @@
       // Now is the reader's own today, or the last entry's date if the chronology runs past it, so a stay reads as lapsed from
       // the day after it ends (9 and 10 Nov 2026), not from the next entry the data adds (correctness P1-3)
       var today = localISO(), lastDay = tl.length ? String(tl[tl.length - 1].date || '') : '';
+      this.lastDay = lastDay;
       this.now = lastDay > today ? lastDay : today;
       this.asOf = this.now;
       // the day the board's data was last checked against its sources (control-flows.json "checked"; else the newest entry).
@@ -2407,16 +2410,22 @@
         suspends: s.suspends || '',
         suspended: holds || unconfirmed,
         unconfirmed: unconfirmed,
-        also: s.also && s.also.status ? { status: this.norm(s.also.status), scope: s.also.for || '' } : null, // a second review policy, with whom it covers
+        also: this.alsoOf(s), // the other review policies in the same state, each with whom it covers, or null
         scope: s.for || '',
         pending: pending,
         cite: s.cite || null, // missing: nothing is printed
         event: s.event || null
       };
     },
+    /* a state's other review policies: "also" is one { status, for } or a list of them (the tools row has three policies at once) */
+    alsoOf: function (s) {
+      var self = this, raw = s && s.also, list = Object.prototype.toString.call(raw) === '[object Array]' ? raw : (raw ? [raw] : []);
+      list = list.filter(function (a) { return a && a.status; }).map(function (a) { return { status: self.norm(a.status), scope: a.for || '' }; });
+      return list.length ? list : null;
+    },
     keyOf: function (s) {
       return s.status + '|' + s.label + '|' + (s.date || '') + '|' + (s.announced || '') + '|' + (s.published || '') +
-        '|' + (s.suspended ? s.suspendedUntil + (s.unconfirmed ? '?' : '') : '') + '|' + (s.also ? s.also.status + s.also.scope : '') +
+        '|' + (s.suspended ? s.suspendedUntil + (s.unconfirmed ? '?' : '') : '') + '|' + (s.also ? s.also.map(function (a) { return a.status + a.scope; }).join(',') : '') +
         '|' + (s.pending ? s.pending.date : '') + '|' + this.citeText(s.cite) + '|' + ((s.cite && s.cite.url) || '');
     },
     checkedOn: function () { // works before the board is built, for the export bar at boot
@@ -2448,6 +2457,23 @@
     fmtDate: function (iso, noYear) {
       var m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(iso || ''));
       return m && +m[2] >= 1 && +m[2] <= 12 ? +m[3] + ' ' + this.MON[+m[2] - 1] + (noYear ? '' : ' ' + m[1]) : String(iso || '');
+    },
+    /* the days a rule took effect, and the day compliance began where the rule set one: "effective 7, 12 and 21 Oct 2022",
+       "effective 2 Dec 2024 · compliance 31 Dec 2024". Nothing when the rule took effect on the day it is listed under. */
+    effDays: function (e) {
+      var ds = (e.effectiveDates && e.effectiveDates.length ? e.effectiveDates : (e.effectiveDate ? [e.effectiveDate] : [])).filter(function (d) { return /^\d{4}-\d{2}-\d{2}$/.test(String(d)); });
+      return ds.length === 1 && ds[0] === e.date && !e.complianceDate ? [] : ds;
+    },
+    daysText: function (ds) { // "7, 12 and 21 Oct 2022", "15 Aug and 14 Oct 2022", or whole dates across years
+      var self = this, sameY = ds.every(function (d) { return d.slice(0, 4) === ds[0].slice(0, 4); }), sameM = sameY && ds.every(function (d) { return d.slice(0, 7) === ds[0].slice(0, 7); });
+      var parts = ds.map(function (d, i) { var last = i === ds.length - 1; return sameM && !last ? String(+d.slice(8, 10)) : sameY && !last ? self.fmtDate(d, true) : self.fmtDate(d); });
+      return parts.length > 1 ? parts.slice(0, -1).join(', ') + ' and ' + parts[parts.length - 1] : parts[0] || '';
+    },
+    effText: function (e) {
+      var ds = this.effDays(e), out = [];
+      if (ds.length) out.push('effective ' + this.daysText(ds));
+      if (e.complianceDate) out.push('compliance ' + this.fmtDate(e.complianceDate));
+      return out.join(' · ');
     },
     readMode: function () { try { var v = localStorage.getItem(this.MODE_KEY); return v === 'date' || v === 'subject' ? v : null; } catch (e) { return null; } },
     saveMode: function (m) { try { localStorage.setItem(this.MODE_KEY, m); } catch (e) { } },
@@ -2490,10 +2516,10 @@
         }
         var ds = esc(self.fmtDate(e.date, true)); // "15 Apr": day first, as the board and the static page print dates
         var host = e.source ? e.source.replace(/^https?:\/\//, '').split('/')[0] : '';
-        var eff = e.effectiveDate && e.effectiveDate !== e.date ? e.effectiveDate : null; // a rule takes force after it is announced
+        var eff = self.effText(e); // a rule takes effect after it is announced, sometimes in parts, and compliance can come later
         var inst = self.instWord(e.instrument), cite = self.citeText({ fr: e.frCitation, cfr: e.cfr });
         html += '<li class="tl-e" id="tl-e' + i + '" data-i="' + i + '" data-ev="' + esc(e.id || '') + '" data-date="' + esc(e.date || '') + '">' +
-          '<div class="d"><b>' + ds + '</b>' + (eff ? '<span class="tl-eff">in force ' + esc(self.fmtDate(eff)) + '</span>' : '') + esc(e.actor || '') + '</div>' +
+          '<div class="d"><b>' + ds + '</b>' + (eff ? '<span class="tl-eff">' + esc(eff) + '</span>' : '') + esc(e.actor || '') + '</div>' +
           '<div class="tl-body"><span class="cf-ev-tags"><span class="cat ' + self.CATS[self.lane(e.category)].cls + '">' + esc(e.category || '') + '</span>' +
           (inst ? '<span class="cf-inst">' + esc(inst) + '</span>' : '') + '</span>' +
           '<h4>' + esc(e.title) + '</h4><p class="tl-gist">' + esc(self.gistOf(e)) + '</p>' +
@@ -2509,6 +2535,7 @@
       this.items = $$('.tl-e', list);
       if (this.full) this.setFull(true);
       this.reveal();
+      this.pad();
       this.at = -1; this.spy();
       list.dispatchEvent(new CustomEvent('cp:rows'));
     },
@@ -2535,6 +2562,7 @@
       btn.textContent = open ? 'Less' : 'More';
       var p = document.getElementById(btn.getAttribute('aria-controls'));
       if (p) p.hidden = !open;
+      if (btn.closest && btn.closest('#timeline') && !this.padQ) { var self = this; this.padQ = true; setTimeout(function () { self.padQ = false; self.pad(); }, 0); }
     },
     setFull: function (on) {
       var self = this;
@@ -2573,11 +2601,11 @@
       if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(done, function () { window.prompt('Copy this link', url); });
       else window.prompt('Copy this link', url);
     },
-    /* how far off a deadline is, in the words Coming up and the next-date row under the head print (sentence case as written:
-       CSS sets no capitals); /export-controls/ counts in the same words (build/latest-rule.js SCRIPT) */
+    /* how far off a deadline is, in the words the next-date row under the head prints (sentence case as written: CSS sets no
+       capitals); /export-controls/ counts in the same words (build/latest-rule.js SCRIPT) */
     whenText: function (n) { return n < 0 ? 'Passed, outcome not confirmed' : n === 0 ? 'Today' : n === 1 ? 'Tomorrow' : 'In ' + n + ' days'; },
     /* the latest rule and the next date under the head, which the build writes from the data (build/latest-rule.js): the next
-       date's countdown from the reader's own today, redrawn each visit as Coming up is, and its row hidden once that day has
+       date's countdown from the reader's own today, redrawn each visit, and its row hidden once that day has
        passed for the reader, so a past date never reads as next before the site is rebuilt. Each row's link opens its entry */
     renderLatest: function () {
       var self = this, list = $('.cf-latest');
@@ -2590,49 +2618,15 @@
         li.hidden = n < 0;
         if (s) s.textContent = n < 0 ? '' : self.whenText(n);
       });
-      if (!list._wired) { // the address may already be that entry's, so no hashchange would come: go there anyway (as Coming up)
+      if (!list._wired) { // the address may already be that entry's, so no hashchange would come: go there anyway (the history strip too)
         list._wired = true;
-        list.addEventListener('click', function (e) {
-          var a = e.target.closest ? e.target.closest('a.cf-latest-row') : null;
+        var again = function (e) {
+          var a = e.target.closest ? e.target.closest('a.cf-latest-row, .ec-m a') : null;
           if (a && a.getAttribute('href') === location.hash && !(e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button)) { e.preventDefault(); Router.route(); }
-        });
+        };
+        list.addEventListener('click', again);
+        var strip = $('.view[data-view="controls"] .ec-a'); if (strip) strip.addEventListener('click', again);
       }
-    },
-    /* "Coming up": the dated deadlines ahead (DATA.flows.upcoming), counted down from the reader's own today;
-       gone when there are none or every date has passed */
-    renderUpcoming: function () {
-      var raw = DATA.flows && DATA.flows.upcoming, host = $('#cf-upcoming');
-      var today = new Date(); today = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-      var day = function (iso) { var p = String(iso || '').split('-').map(Number); return p.length === 3 && p[0] ? new Date(p[0], p[1] - 1, p[2]) : null; };
-      var ck = this.checkedOn();
-      var list = (Object.prototype.toString.call(raw) === '[object Array]' ? raw : []).map(function (u) {
-        var d = u && day(u.date); return d ? { u: u, n: Math.round((d - today) / 86400000) } : null;
-      }).filter(function (x) { return x && (x.n >= 0 || (ck && String(x.u.date) >= ck)); }).sort(function (a, b) { return a.n - b.n; }); // passed, but after the data was checked: kept, not confirmed
-      if (!list.length) { if (host) host.hidden = true; return; }
-      if (!host) {
-        var sub = $('.view[data-view="controls"] .sub[data-sub="timeline"]'); if (!sub) return;
-        host = document.createElement('section'); host.className = 'cf-up'; host.id = 'cf-upcoming'; host.setAttribute('aria-labelledby', 'cf-up-h');
-        sub.insertBefore(host, sub.firstChild);
-      }
-      var self = this;
-      if (!host._wired) { // the address may already be that entry's, so no hashchange would come: go there anyway
-        host._wired = true;
-        host.addEventListener('click', function (e) {
-          var a = e.target.closest ? e.target.closest('a.cf-up-link') : null;
-          if (a && a.getAttribute('href') === location.hash && !(e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button)) { e.preventDefault(); Router.route(); }
-        });
-      }
-      host.hidden = false;
-      // the deadlines first (the page's own order): the date, how far off it is, what happens, and the entry or source behind it.
-      // A deadline within a month is ink, the others muted; the accent never marks a data value (src/modules/controls.css .cf-up)
-      host.innerHTML = '<h2 class="cf-up-h" id="cf-up-h">Coming up</h2><ol class="cf-up-list">' + list.map(function (x) {
-        var u = x.u, when = self.whenText(x.n);
-        var link = u.event ? '<a class="cf-up-link" href="' + esc('#/controls/' + encodeURIComponent(u.event)) + '" aria-label="Entry in the timeline">Entry <span aria-hidden="true">→</span></a>'
-          : (u.source && safeUrl(u.source) !== '#' ? '<a class="cf-up-link" href="' + safeUrl(u.source) + '" target="_blank" rel="noopener">Source</a>' : '');
-        return '<li class="cf-up-i' + (x.n < 0 ? ' is-passed' : x.n <= 30 ? ' is-soon' : '') + '"><span class="cf-up-d">' + esc(self.fmtDate(u.date)) + '</span>' +
-          '<span class="cf-up-n">' + esc(when) + '</span>' +
-          '<span class="cf-up-t">' + esc(u.label || '') + link + '</span></li>';
-      }).join('') + '</ol>';
     },
     /* entries rise into view once; with no observer they simply stay readable */
     reveal: function () {
@@ -2674,14 +2668,15 @@
        presumption of denial. Policy rows get the bare track (money and tariffs gate nothing). The row's button already says the
        state, so the scale is hidden from screen readers */
     RAMP: ['open', 'restricted', 'case', 'denial', 'prohibited'],
-    rampAt: function (st) { return Math.max(0, this.RAMP.indexOf(st.status)); },
+    RAMP_AT: { open: 0, restricted: 1, approval: 1.5, 'case': 2, letter: 2, denial: 3, prohibited: 4 },
+    rampAt: function (st) { var v = this.RAMP_AT[st.status]; return v == null ? 0 : v; },
     rampClass: function (st) {
       return 'cf-ramp' + (st.status === 'policy' ? ' is-policy' : '') + (this.rampAt(st) >= 3 ? ' is-closed' : '') + (st.suspended && !st.suspends ? ' is-susp' : '');
     },
     /* the row read aloud: the button carries no text of its own, so it says what the row says */
     rowLabel: function (f, st, n) {
       return [f.name || f.id, f.route, this.STATE[st.status] + (st.scope ? ' for ' + st.scope : ''),
-      st.also ? this.STATE[st.also.status] + (st.also.scope ? ' for ' + st.also.scope : '') : '', this.stayText(st),
+      st.also ? st.also.map(function (a) { return this.STATE[a.status] + (a.scope ? ' for ' + a.scope : ''); }, this).join(', ') : '', this.stayText(st),
       st.pending ? 'change due ' + this.fmtDate(st.pending.date) + ', not confirmed' : '',
       st.date ? 'from ' + this.fmtDate(st.date) : 'open since 2018', n + (n === 1 ? ' event' : ' events')].filter(function (x) { return x; }).join(', ');
     },
@@ -2694,16 +2689,20 @@
       return out;
     },
     /* the pill, the stay beside it, the label, the two dates and the citation */
+    /* one review policy: its pill and whom it covers, kept together on a line of their own */
+    polHTML: function (status, scope, cls) {
+      return '<span class="cf-pol"><span class="cf-pill is-' + esc(status) + (cls || '') + '">' + esc(this.STATE[status]) + '</span>' +
+        (scope ? '<span class="cf-for">' + esc(scope) + '</span>' : '') + '</span>';
+    },
     pillHTML: function (st) {
-      var word = this.STATE[st.status];
+      var self = this, word = this.STATE[st.status];
       var dates = st.date ? 'from ' + this.fmtDate(st.date) : 'open since 2018';
       if (st.published && st.date && st.published !== st.date) dates += ' · published ' + this.fmtDate(st.published); // the Federal Register's day
       else if (st.announced && st.date && st.announced !== st.date) dates += ' · announced ' + this.fmtDate(st.announced);
       var stay = this.stayText(st);
       return '<span class="cf-pills">' +
-        '<span class="cf-pill is-' + esc(st.status) + (st.suspended && !st.suspends ? ' is-suspended' : '') + '">' + esc(word) + '</span>' +
-        (st.scope ? '<span class="cf-for">' + esc(st.scope) + '</span>' : '') +
-        (st.also ? '<span class="cf-pill is-' + esc(st.also.status) + '">' + esc(this.STATE[st.also.status]) + '</span>' + (st.also.scope ? '<span class="cf-for">' + esc(st.also.scope) + '</span>' : '') : '') +
+        this.polHTML(st.status, st.scope, st.suspended && !st.suspends ? ' is-suspended' : '') +
+        (st.also || []).map(function (a) { return self.polHTML(a.status, a.scope); }).join('') +
         (stay ? '<span class="cf-susp' + (st.unconfirmed ? ' is-unconfirmed' : '') + '">' + esc(stay) + '</span>' : '') +
         (st.pending ? '<span class="cf-susp is-unconfirmed">Change due ' + esc(this.fmtDate(st.pending.date)) + ', not confirmed</span>' : '') +
         '</span>' +
@@ -2787,9 +2786,9 @@
         var ev = st.event ? byEv[st.event] : null, c = st.cite || {};
         var moves = tl.filter(function (e) { return (e.flows || []).indexOf(f.id) >= 0; }).length;
         return {
-          flow: f.name, route: f.route, asOf: asOf, state: self.STATE[st.status], label: st.label || '',
+          flow: f.name, route: f.route, asOf: asOf, state: self.STATE[st.status] + (st.scope ? ' for ' + st.scope : ''), label: st.label || '',
           since: st.date || '', announced: st.announced || '', published: st.published || '', suspendedUntil: st.suspended ? st.suspendedUntil || '' : '', suspends: st.suspended ? st.suspends : '',
-          stay: self.stayText(st), alsoState: st.also ? self.STATE[st.also.status] : '', dataChecked: self.checkedOn(),
+          stay: self.stayText(st), alsoState: st.also ? st.also.map(function (a) { return self.STATE[a.status] + (a.scope ? ' for ' + a.scope : ''); }).join(', ') : '', dataChecked: self.checkedOn(),
           setBy: ev ? ev.title : '', fr: c.fr || '', cfr: c.cfr || '', url: c.url || '', source: ev ? ev.source : '', moves: moves
         };
       });
@@ -2799,24 +2798,24 @@
       (f.states || []).forEach(function (s) { if (s.event) byEv[s.event] = s; });
       var body = evs.length ? '<ol class="cf-evs">' + evs.map(function (e, k) {
         var s = byEv[e.id], id = 'cf-p-' + f.id + '-' + k;
-        var eff = e.effectiveDate && e.effectiveDate !== e.date ? e.effectiveDate : null;
+        var effDs = self.effDays(e), eff = effDs.length ? effDs[0] : null;
         var host = e.source ? e.source.replace(/^https?:\/\//, '').split('/')[0] : '';
         var word = s ? self.word(s.status) : '';
         var sCite = s ? self.citeLabel(s.cite) : '', eCite = self.citeText({ fr: e.frCitation, cfr: e.cfr });
         var inst = self.instWord(e.instrument);
         return '<li class="cf-ev' + (s ? ' is-move' : '') + '">' +
           '<div class="cf-ev-p">' + (s
-            ? '<span class="cf-pill is-' + esc(self.norm(s.status)) + '">' + esc(word) + '</span>' +
-            (s.for ? '<span class="cf-for">' + esc(s.for) + '</span>' : '') +
-            (s.also && s.also.status ? '<span class="cf-pill is-' + esc(self.norm(s.also.status)) + '">' + esc(self.word(s.also.status)) + '</span>' + (s.also.for ? '<span class="cf-for">' + esc(s.also.for) + '</span>' : '') : '') +
+            ? self.polHTML(self.norm(s.status), s.for || '') +
+            (self.alsoOf(s) || []).map(function (a) { return self.polHTML(a.status, a.scope); }).join('') +
             (s.label ? '<span class="cf-ev-lab">' + self.gloss(s.label) + '</span>' : '') +
             (s.suspendedUntil ? '<span class="cf-susp">' + esc((s.suspends ? s.suspends + ' suspended' : 'Suspended') + ' until ' + self.fmtDate(s.suspendedUntil)) + '</span>' : '') +
             (s.date && s.date !== (eff || e.date) ? '<span class="cf-ev-from">from ' + esc(self.fmtDate(s.date)) + '</span>' : '') +
             (sCite && sCite !== eCite ? self.citeHTML(s.cite, 'cf-ev-cite') : '')
             : '<span class="cf-ev-none">no change</span>') + '</div>' +
           '<div class="cf-ev-d">' +
-          (eff ? '<span class="cf-ev-k">announced</span>' : '') + '<b>' + esc(self.fmtDate(e.date)) + '</b>' +
-          (eff ? '<span class="cf-ev-k">in force</span><b>' + esc(self.fmtDate(eff)) + '</b>' : '') +
+          (effDs.length || e.complianceDate ? '<span class="cf-ev-k">announced</span>' : '') + '<b>' + esc(self.fmtDate(e.date)) + '</b>' +
+          (effDs.length ? '<span class="cf-ev-k">effective</span><b>' + esc(self.daysText(effDs)) + '</b>' : '') +
+          (e.complianceDate ? '<span class="cf-ev-k">compliance</span><b>' + esc(self.fmtDate(e.complianceDate)) + '</b>' : '') +
           '<span>' + esc(e.actor || '') + '</span></div>' +
           '<div class="cf-ev-b"><span class="cf-ev-tags"><span class="cat ' + self.CATS[self.lane(e.category)].cls + '">' + esc(e.category || '') + '</span>' +
           (inst ? '<span class="cf-inst">' + esc(inst) + '</span>' : '') + '</span>' +
@@ -2841,6 +2840,7 @@
       var self = this, host = $('#cf-scrub');
       if (!host || !this.flows) return;
       host.innerHTML = '<div class="cf-scrub-h"><p class="cf-asof">Board as of <b id="cf-asof">' + esc(this.fmtDate(this.asOf)) + '</b>' +
+        '<span class="cf-past" id="cf-past"' + (this.isPast(this.asOf) ? '' : ' hidden') + '>Past state</span>' +
         '<span class="cf-checked" id="cf-checked"' + (this.asOf > this.checked ? '' : ' hidden') + '>· data checked ' + esc(this.fmtDate(this.checked)) + '</span></p>' +
         '<button type="button" class="cf-now" id="cf-now">Now</button></div>' +
         '<div class="cf-track"><div class="cf-years" id="cf-years" role="group" aria-label="Set the date by year">' +
@@ -2852,7 +2852,8 @@
             '<span class="cf-yl">' + y + '</span><span class="cf-ys">’' + String(y).slice(2) + '</span><span class="cf-yn">' + n + '</span></button>';
         }).join('') + '</div><div class="cf-head" id="cf-head" aria-hidden="true"></div></div>';
       var years = $('#cf-years'), now = $('#cf-now');
-      if (now) now.addEventListener('click', function () { self.sayAsOf(self.setAsOf(self.now, [self.years[self.years.length - 1] + '-01-01', self.now])); });
+      // Now: in By date the list goes to its last entry, where the board shows today; in By subject the board moves to today
+      if (now) now.addEventListener('click', function () { if (!self.toEntry(self.items.length - 1)) self.sayAsOf(self.setAsOf(self.now, [self.years[self.years.length - 1] + '-01-01', self.now])); });
       if (years) {
         years.addEventListener('click', function (e) { var b = e.target.closest ? e.target.closest('.cf-year') : null; if (b) self.pickYear(parseInt(b.getAttribute('data-y'), 10)); });
         years.addEventListener('keydown', function (e) {
@@ -2867,10 +2868,56 @@
       }
       this.markYears(); this.placeHead();
     },
-    pickYear: function (y) { // a year pressed, or reached with the arrow keys: the board moves, and the status says to when
-      var last = this.years[this.years.length - 1];
+    pickYear: function (y) { // a year pressed, or reached with the arrow keys: in By date the list goes to that year's first entry
+      // and the board follows it; in By subject the board moves to the year's end. The status says to when
+      var last = this.years[this.years.length - 1], k = -1;
+      (this.items || []).some(function (el, i) { if (String(el.getAttribute('data-date') || '').slice(0, 4) >= String(y)) { k = i; return true; } return false; });
+      if (this.toEntry(k)) return;
       this.sayAsOf(this.setAsOf(y >= last ? this.now : y + '-12-31', [y + '-01-01', y + '-12-31']));
     },
+    /* By date, with the board beside the list: scroll entry k to the reading line, so the board reads its date; false when the
+       list is not showing (By subject, a phone) or there is no such entry */
+    toEntry: function (k) {
+      var items = this.items || [], side = $('#cf-side'), el = items[k];
+      if (!el || !this.flows || this.mode !== 'date' || !side || !side.offsetParent || getComputedStyle(side).position !== 'sticky') return false;
+      this.pad();
+      var y = Math.max(0, el.getBoundingClientRect().top + window.pageYOffset - this.probe() + 6);
+      this.say('The list goes to ' + this.fmtDate(el.getAttribute('data-date')) + ', and the board follows it.');
+      window.scrollTo({ top: y, behavior: reduced ? 'auto' : 'smooth' });
+      return true;
+    },
+    /* the reading line, a third of the way down below the masthead: the entry crossing it sets the board's date */
+    probe: function () {
+      var mast = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--masthead')) || 56;
+      return mast + Math.round((window.innerHeight - mast) * 0.3);
+    },
+    /* room after the last entry, so it can reach the reading line and the board can end on today's state; only while the board
+       rides beside the list */
+    pad: function () {
+      var chron = $('#cf-chron'), side = $('#cf-side'), cf = $('#cf'), board = $('#cf-board'), items = this.items || [], lastEl = items[items.length - 1];
+      var foot = $('.view[data-view="controls"] > .site-footer');
+      if (!chron || !cf) return;
+      var on = this.flows && this.mode === 'date' && side && side.offsetParent && getComputedStyle(side).position === 'sticky' && lastEl && board;
+      if (!on) { chron.style.paddingBottom = ''; cf.style.marginBottom = ''; if (foot) foot.style.maxWidth = ''; return; }
+      // the page's foot keeps to the list's column, so the board can run down beside it (below)
+      if (foot) { var fw = Math.floor(chron.getBoundingClientRect().width) + 'px'; if (foot.style.maxWidth !== fw) foot.style.maxWidth = fw; }
+      // measured as if neither the room below the list nor the footer's lift were there, without resetting them, so the reader's
+      // place on the page never jumps
+      var curPad = parseFloat(chron.style.paddingBottom) || 0, curLift = -(parseFloat(cf.style.marginBottom) || 0);
+      var y = window.pageYOffset, probe = this.probe(), mast = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--masthead')) || 56;
+      var docH = document.documentElement.scrollHeight - curPad + curLift, top = lastEl.getBoundingClientRect().top + y;
+      var cfBottom = cf.getBoundingClientRect().bottom + y - curPad, tail = Math.max(0, Math.round(docH - cfBottom)), st = side.getBoundingClientRect();
+      var boardEnd = board.getBoundingClientRect().bottom - st.top + side.scrollTop; // the board's foot, from the top of the panel
+      // the last entry can reach the reading line, and when it does the whole board shows beside it
+      var need = Math.max(0, Math.ceil(top + window.innerHeight - probe + 8 - docH), Math.ceil(mast + boardEnd + 8 + top - probe - cfBottom));
+      // and the footer moves up under the list by its own height, so the board runs to the bottom of the window to the very end
+      // of the page and never slides under the masthead
+      var p = (need + tail) + 'px', m = tail ? -tail + 'px' : '';
+      if (chron.style.paddingBottom !== p) chron.style.paddingBottom = p;
+      if (cf.style.marginBottom !== m) cf.style.marginBottom = m;
+    },
+    /* a date before the last entry's: the board shows a past state, and says so beside the date */
+    isPast: function (date) { return !!this.lastDay && String(date) < this.lastDay; },
     /* the one lever on the page: move the as-of date, and the board re-reads itself from it; returns the rows that changed.
        The scroll moves it too, in By date, and that is not announced: the reader is already reading the entry that moved it */
     setAsOf: function (date, span) {
@@ -2879,6 +2926,7 @@
       this.asOf = date;
       var lab = $('#cf-asof'); if (lab) lab.textContent = this.fmtDate(date);
       var chk = $('#cf-checked'); if (chk) chk.hidden = !(String(date) > String(this.checked)); // the board is the data's as of its check
+      var past = $('#cf-past'); if (past) past.hidden = !this.isPast(date);
       if (!span && prev && prev !== date) span = prev < date ? [prev, date] : [date, prev];
       var changed = this.paintBoard(prev === date ? null : span);
       this.markYears(); this.placeHead();
@@ -2921,8 +2969,7 @@
     spyNow: function () {
       var items = this.items || [], side = $('#cf-side');
       if (!this.flows || this.mode !== 'date' || !items.length || !side || !side.offsetParent) return;
-      var mast = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--masthead')) || 56;
-      var probe = mast + Math.round((window.innerHeight - mast) * 0.3); // the reading line sits a third of the way down, not at the masthead
+      var probe = this.probe(); // the reading line sits a third of the way down, not at the masthead
       if (items[0].getBoundingClientRect().top > probe) { // the reader has not reached the chronology yet: the board shows today
         if (this.at !== -1 || this.asOf !== this.now) { this.at = -1; this.setAsOf(this.now, [this.now, this.now]); }
         return;
@@ -2933,6 +2980,7 @@
       var step = this.at >= 0 && Math.abs(at - this.at) <= 2; // reading, not jumping: a jump would flash the whole board
       this.at = at;
       var d = items[at].getAttribute('data-date');
+      if (at === items.length - 1 && !this.cat && d === this.lastDay) d = this.now; // the last entry is today's state, so the board says today
       if (d) this.setAsOf(d, step ? null : [d, d]);
     },
     /* the scrubber is placed from its own width, so settle it whenever the sub-tab opens or the window changes */
@@ -2940,7 +2988,7 @@
       var self = this;
       if (!this.flows) return;
       this.headW = 0;
-      var run = function () { self.placeHead(); self.spy(); };
+      var run = function () { self.pad(); self.placeHead(); self.spy(); };
       if (window.requestAnimationFrame) window.requestAnimationFrame(run); else window.setTimeout(run, 32);
     }
   };
@@ -3716,8 +3764,6 @@
       addExport('#cf-side .cf-legend', 'chokepoint board', function () { return Geo.boardRows ? Geo.boardRows() : []; }, 'after', 'board'); // under the board's key, in both modes
       addExport('.tl-bar', 'export-control timeline', function () { return Geo.visible || DATA.timeline; }, 'append', 'timeline'); // on the filter row
       addExport('[data-sub="exposure"] .matrix-wrap', 'China revenue share by firm and year', DATA.exposure, 'after', 'figures'); // under the table it copies
-      // the line above the board that takes a reader down to the chronology
-      document.addEventListener('click', function (e) { var j = e.target.closest ? e.target.closest('.cf-jump-btn') : null; if (!j) return; var t = $('#timeline'); if (t) scrollToEl(t, true); });
       // cite-this block in the footer, in the form "Cite this chapter" and the PDFs use (build/build.js citeBlock, src/modules/print.js):
       // on a chapter's page the chapter, its title and its own "Updated" day; elsewhere the site, with the footer's "Updated" day.
       // The access date is the reader's own day, written day first as every date on the site is (28 Oct 2026; it was ISO)

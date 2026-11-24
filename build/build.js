@@ -1780,6 +1780,10 @@ fill('CONTROLS_DEK', controlsDek);
 const LATEST_RULE = require('./latest-rule.js'), LATEST_NEXT = '{{LATEST:NEXT}}'; // a colon: the sweep of unfilled placeholders leaves it
 const latestRows = LATEST_RULE.rows(LATEST_RULE.pick(data, today), { esc, safe: safeUrl, cls: 'cf-latest', nextToken: LATEST_NEXT, entryHref: (e) => (e.id ? esc('#/controls/' + encodeURIComponent(e.id)) : '') });
 fill('CONTROLS_LATEST', latestRows.html);
+// the history strip from 2018 to today above them (build/ec-strip.js; the owner's choice of mock A, 24 Nov 2026), each mark
+// opening its entry in the timeline as the rows do
+const EC_STRIP = require('./ec-strip.js');
+fill('CONTROLS_STRIP', EC_STRIP.html(data, { esc, warn, href: (e) => (e.id ? esc('#/controls/' + encodeURIComponent(e.id)) : '') }));
 const exposureVizHTML = exposureViz(exposure); // the China revenue panels, on Export Controls and, for its firms' entries, in glossary.js (below)
 fill('EXPOSURE_VIZ', exposureVizHTML);
 fill('EXPOSURE_NOTE', exposureNote);

@@ -55,6 +55,8 @@
 .pill.is-open { color: var(--muted); }
 .pill.is-restricted { border-style: dashed; border-color: var(--muted); }
 .pill.is-case { border-style: dashed; border-color: var(--ink); color: var(--ink); }
+.pill.is-approval { border-style: dotted; border-color: var(--ink-2); color: var(--ink-2); } /* a license that will normally be granted */
+.pill.is-letter { border-color: var(--ink-2); color: var(--ink); background: var(--bg-2); } /* a license set by letter, with no review policy published */
 .pill.is-denial { border: 1.5px solid var(--ink); color: var(--ink); padding: 1.5px 6.5px 2.5px; } /* a state is data: ink, never the accent */
 .pill.is-prohibited { background: var(--ink); border-color: var(--ink); color: var(--bg); }
 .pill.is-policy { border-color: var(--ink-2); }
