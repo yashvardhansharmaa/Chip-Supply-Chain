@@ -1156,10 +1156,11 @@ try {
   // laid out once first (a still at that size), so a label the layout moves to its other column counts in the height
   platesKit.names.forEach((n) => { try { const pl = new PL.Plate(n, {}); pl.svg(666, pl.heightFor(666, 160, 470)); plateH[n] = pl.heightFor(666, 160, 470); } catch (e) { warn(`plates: ${n} does not draw in Node: ${e.message}`); } });
 } catch (e) { warn(`plates: the kit does not run in Node: ${e.message}`); }
-// each chapter's stills of its plate (build/plate-stills.js writes build/assets/plates/: <id>-thumb, -line and -door, each light
-// and dark, and plates.json with their sizes, at twice the pixels shown, and a hash of the plate's code they were drawn from),
-// copied to dist/media/plate-<id>-<kind>[-dark].webp: the phone strip's thumbnail, The Chain's contents and the door that
-// leads to the chapter
+// each chapter's stills of its plate (build/plate-stills.js writes build/assets/plates/: <id>-thumb, -line, -door and -lineart,
+// each light and dark, and plates.json with their sizes, at twice the pixels shown, and a hash of the plate's code they were
+// drawn from), copied to dist/media/plate-<id>-<kind>[-dark].webp: the phone strip's thumbnail, The Chain's contents (its
+// colour still and, since 25 Nov 2026, the same plate in line, which the rows show at rest on a screen that can point) and
+// the door that leads to the chapter
 const PLATE_DIR = path.join(root, 'build', 'assets', 'plates');
 const plateStills = readJSON(path.join(PLATE_DIR, 'plates.json'), {});
 const plateHash = (spec) => require('crypto').createHash('sha256').update((read(path.join(root, 'src', 'plate.js')) || '') + (read(path.join(root, 'plates', spec + '.js')) || '')).digest('hex').slice(0, 16);
@@ -1169,6 +1170,15 @@ const plateImg = (id, kind, extra) => {
   if (!sz) return '';
   const a = `width="${Math.round(sz[0] / 2)}" height="${Math.round(sz[1] / 2)}" alt="" loading="lazy" decoding="async"${extra || ''}`;
   return `<img class="pl-lt" src="media/plate-${esc(id)}-${kind}.webp" ${a}><img class="pl-dk" src="media/plate-${esc(id)}-${kind}-dark.webp" ${a}>`;
+};
+// the line drawing a contents row shows at rest (the owner's choice of 25 Nov 2026, "J, line at rest"), the size of its colour
+// still, light and dark under classes of its own: the site's .pl-lt and .pl-dk rules are !important and would show the dark one
+// on a phone, which keeps the colour still at rest (src/modules/contents.css)
+const plateLineImg = (id) => {
+  const s = plateStills[id], sz = s && s.lineart;
+  if (!sz) return '';
+  const a = `width="${Math.round(sz[0] / 2)}" height="${Math.round(sz[1] / 2)}" alt="" loading="lazy" decoding="async"`;
+  return `<img class="ct-ln ct-ln-lt" src="media/plate-${esc(id)}-lineart.webp" ${a}><img class="ct-ln ct-ln-dk" src="media/plate-${esc(id)}-lineart-dark.webp" ${a}>`;
 };
 const partsOf = (ch) => { const e = specimenParts[ch.id]; return e && Array.isArray(e.parts) ? e.parts : []; };
 const chapterById = (id) => chapters.find((c) => c.id === id) || (geo && geo.id === id ? geo : null);
@@ -1293,15 +1303,16 @@ const bandOf = (ch) => ((ch.meta && ch.meta.card) || {}).concentration || '';
 const contentsMark = (band) => (isChoke(band) ? chokeMark({ word: false, cls: 'ct-cpk' }) : '');
 const stageIds = new Set(stages.map((c) => c.id));
 const acrossChapters = chapters.filter((c) => !stageIds.has(c.id)).concat(geo ? [geo] : []);
-// the drawings: each chapter's plate, small and with no labels, light and dark (build/plate-stills.js), copied with the strip's
-// thumbnail and the door's still to dist/media/plate-<id>-<kind>[-dark].webp; the build warns when a plate's code has changed
-// since its stills were drawn (until 21 Nov 2026 the rows showed line drawings made from the point clouds' stills)
+// the drawings: each chapter's plate, small and with no labels, light and dark, in colour and in line (build/plate-stills.js),
+// copied with the strip's thumbnail and the door's still to dist/media/plate-<id>-<kind>[-dark].webp; the build warns when a
+// plate's code has changed since its stills were drawn (until 21 Nov 2026 the rows showed line drawings made from the point
+// clouds' stills; since 25 Nov 2026 they show the plates' own line drawings at rest)
 {
   const stale = [], missing = [];
   fs.mkdirSync(path.join(root, 'dist', 'media'), { recursive: true });
   stages.concat(acrossChapters).forEach((c) => {
     const s = plateStills[c.id], spec = c.meta.specimen;
-    const files = ['thumb', 'line', 'door'].reduce((a, k) => a.concat([`${c.id}-${k}.webp`, `${c.id}-${k}-dark.webp`]), []);
+    const files = ['thumb', 'line', 'door', 'lineart'].reduce((a, k) => a.concat([`${c.id}-${k}.webp`, `${c.id}-${k}-dark.webp`]), []);
     if (!s || files.some((f) => !fs.existsSync(path.join(PLATE_DIR, f)))) { missing.push(c.id); return; }
     if (spec && s.src !== plateHash(spec)) stale.push(c.id);
     files.forEach((f) => fs.copyFileSync(path.join(PLATE_DIR, f), path.join(root, 'dist', 'media', 'plate-' + f)));
@@ -1309,9 +1320,11 @@ const acrossChapters = chapters.filter((c) => !stageIds.has(c.id)).concat(geo ? 
   if (missing.length) warn(`plate stills: none for ${missing.join(', ')} in build/assets/plates/ (build, serve dist/, then run node build/plate-stills.js and build again)`);
   if (stale.length) warn(`plate stills: the plate of ${stale.join(', ')} changed since its stills were drawn (run node build/plate-stills.js)`);
 }
-// a row: the drawing, the number with the mark, the title (the link, which covers the row) and the chapter's one line
+// a row: the drawing (its colour still, then its line drawing, which shows at rest where the reader can point and gives way to
+// the colour on the row pointed at or focused: src/modules/contents.css), the number with the mark, the title (the link, which
+// covers the row) and the chapter's one line
 const contentsItem = (ch) => {
-  const b = bandOf(ch), img = plateImg(ch.id, 'line');
+  const b = bandOf(ch), img = plateImg(ch.id, 'line') + plateLineImg(ch.id);
   return `<li class="item" data-ch="${esc(ch.id)}"${isChoke(b) ? ' data-cpk="1"' : ''}><span class="ct-tile">${img}</span><span class="n">${pad(ch.number)}${contentsMark(b)}</span>`
     + `<a class="t" href="#${esc(ch.id)}" aria-label="${pad(ch.number)} ${esc(ch.title)}${isChoke(b) ? ', chokepoint' : ''}">${esc(ch.title)}</a>`
     + `${ch.meta.oneLiner ? `<p class="ol">${esc(ch.meta.oneLiner)}</p>` : ''}</li>`;

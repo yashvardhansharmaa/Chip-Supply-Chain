@@ -8,14 +8,15 @@
 /* ---------- The head: the title with one finding and the key to the marks under it on the left, and the downloads as a
    short column of small links on the right (the owner's option 2 of 28 Oct 2026). Space under it, no rule.
    ---------- The rows: one per chapter, with no route. The drawing in a fixed box on the page's ground (no tint: the owner
-   rejects gray blocks under drawings), centered, every drawing at the same area of it (build/line-stills.py); the number
+   rejects gray blocks under drawings), centered, every drawing at the same area of it (build/plate-stills.js; where the
+   reader can point, the plate drawn in line at rest and in colour on the row in hand, the owner's choice of 25 Nov 2026); the number
    with a chokepoint's dot (the site's one rating mark, src/styles.css .cpk; any other stage has none); the title, which links to the
    chapter and covers the row; and the chapter's one line in the quieter ink. The stages in two columns from 1300 px, the
    first half on the left; from 1000 to 1299 px one column, each title with its one line beside it; from 760 to 999 px one
    column as at 1440; under 760 px the drawing, number and title on one line with the one line under them, and the sentence
    at the foot under a hairline. The two chapters across the chain follow as the same rows, with no mark, under a small label.
    Screen only: on paper the head and the rows are the book's title and contents (src/modules/print.css), with no drawing. */
-.ct-cpk { color: var(--ink); } /* a chokepoint's dot beside its number, in ink while the number turns wine under the pointer */
+.ct-cpk { color: var(--ink); } /* a chokepoint's dot beside its number, in ink while the number turns wine on a phone's row */
 .contents ol.contents-grid { list-style: none; margin: 0; padding: 0; } /* the rows are lists on screen and on paper */
 @media screen {
   /* the head */
@@ -61,14 +62,40 @@
   }
   .contents .ct-col .t::after { content: ""; position: absolute; inset: 0 0 18px; } /* the whole row opens the chapter */
   .contents .ct-col .ol { grid-column: 3; grid-row: 2; margin: 5px 0 0; max-width: 33em; font-family: var(--font-body); font-size: var(--t-small); line-height: 1.55; color: var(--muted); }
-  /* the reader's selection: the chapter pointed at or focused (src/app.js) */
-  .contents .ct-col > .item:hover .t, .contents .ct-col > .item.is-hot .t, .contents .ct-col > .item:hover .n, .contents .ct-col > .item.is-hot .n { color: var(--accent-ink); }
-  /* and its drawing lifts off the page (owner, 28 Oct 2026); with reduced motion it stays where it is */
-  .contents .ct-tile img { transition: transform .3s cubic-bezier(.2, .7, .2, 1); }
-  .contents .ct-col > .item:hover .ct-tile img, .contents .ct-col > .item.is-hot .ct-tile img { transform: translateY(-6px) scale(1.08); }
-  @media (prefers-reduced-motion: reduce) {
-    .contents .ct-tile img { transition: none; }
-    .contents .ct-col > .item:hover .ct-tile img, .contents .ct-col > .item.is-hot .ct-tile img { transform: none; }
+  /* the reader's selection: the chapter pointed at or focused (.is-hot, src/app.js).
+     Line at rest (the owner's choice of 25 Nov 2026, "J, line at rest", from the third round of hover concepts, in place of the
+     lift of 28 Oct 2026): where the reader can point (a fine pointer that can hover, 760 px and wider), every row shows its plate
+     drawn in line (the -lineart still, build/plate-stills.js), and the row pointed at or focused comes into its colour. The
+     colour lies over the line drawing and comes in over it in 320 ms, after 60 ms, so a pointer crossing the list colours
+     nothing; the line drawing goes from under it once it is in, and comes back at once, still covered, when the colour fades out
+     on leave, so the drawing never passes through a washed half of each. The title stays in ink: the colour is the row's one
+     mark. With reduced motion the change is immediate. On a phone or a touch screen the rows keep their colour stills at rest,
+     and the number and title turn wine and the drawing lifts, as since 28 Oct 2026. */
+  .contents .ct-tile img.ct-ln { display: none; }
+  @media not all and (hover: hover) and (pointer: fine) and (min-width: 760px) {
+    .contents .ct-col > .item:hover .t, .contents .ct-col > .item.is-hot .t, .contents .ct-col > .item:hover .n, .contents .ct-col > .item.is-hot .n { color: var(--accent-ink); }
+    .contents .ct-tile img { transition: transform .3s cubic-bezier(.2, .7, .2, 1); }
+    .contents .ct-col > .item:hover .ct-tile img, .contents .ct-col > .item.is-hot .ct-tile img { transform: translateY(-6px) scale(1.08); }
+    @media (prefers-reduced-motion: reduce) {
+      .contents .ct-tile img { transition: none; }
+      .contents .ct-col > .item:hover .ct-tile img, .contents .ct-col > .item.is-hot .ct-tile img { transform: none; }
+    }
+  }
+  @media (hover: hover) and (pointer: fine) and (min-width: 760px) {
+    /* the box sets its stills one over another, each centred as the flex box centred one */
+    .ct-tile { display: grid; grid-template: minmax(0, 1fr) / minmax(0, 1fr); place-items: center; }
+    .ct-tile img { grid-area: 1 / 1; }
+    :root:not([data-theme="dark"]) .contents .ct-tile img.ct-ln-lt, :root[data-theme="dark"] .contents .ct-tile img.ct-ln-dk { display: block; }
+    .contents .ct-tile img:not(.ct-ln) { position: relative; z-index: 1; opacity: 0; transition: opacity .32s cubic-bezier(.33, 0, .2, 1); }
+    .contents .ct-tile img.ct-ln { opacity: 1; transition: opacity 0s; }
+    .contents .ct-col > .item:hover .ct-tile img:not(.ct-ln), .contents .ct-col > .item.is-hot .ct-tile img:not(.ct-ln) { opacity: 1; transition-delay: .06s; }
+    .contents .ct-col > .item:hover .ct-tile img.ct-ln, .contents .ct-col > .item.is-hot .ct-tile img.ct-ln { opacity: 0; transition: opacity .12s linear .38s; }
+    /* (as specific as the rules above, so no delay is left either) */
+    @media (prefers-reduced-motion: reduce) {
+      .contents .ct-tile img:not(.ct-ln), .contents .ct-tile img.ct-ln,
+      .contents .ct-col > .item:hover .ct-tile img:not(.ct-ln), .contents .ct-col > .item.is-hot .ct-tile img:not(.ct-ln),
+      .contents .ct-col > .item:hover .ct-tile img.ct-ln, .contents .ct-col > .item.is-hot .ct-tile img.ct-ln { transition: none; }
+    }
   }
 
   /* the chapters across the chain: the same rows, under a small label and space */

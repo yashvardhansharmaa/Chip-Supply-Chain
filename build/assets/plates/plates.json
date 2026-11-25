@@ -17,6 +17,10 @@
   "door": [
    368,
    342
+  ],
+  "lineart": [
+   130,
+   132
   ]
  },
  "silicon-and-wafers": {
@@ -37,6 +41,10 @@
   "door": [
    164,
    338
+  ],
+  "lineart": [
+   52,
+   126
   ]
  },
  "chemicals-gases-and-photoresist": {
@@ -57,6 +65,10 @@
   "door": [
    294,
    338
+  ],
+  "lineart": [
+   108,
+   132
   ]
  },
  "lithography": {
@@ -77,6 +89,10 @@
   "door": [
    274,
    338
+  ],
+  "lineart": [
+   110,
+   132
   ]
  },
  "photomasks-and-pellicles": {
@@ -97,6 +113,10 @@
   "door": [
    448,
    330
+  ],
+  "lineart": [
+   182,
+   128
   ]
  },
  "deposition-and-etch": {
@@ -117,6 +137,10 @@
   "door": [
    194,
    336
+  ],
+  "lineart": [
+   84,
+   132
   ]
  },
  "metrology-and-inspection": {
@@ -137,6 +161,10 @@
   "door": [
    166,
    342
+  ],
+  "lineart": [
+   68,
+   132
   ]
  },
  "foundries-and-fabs": {
@@ -157,6 +185,10 @@
   "door": [
    344,
    340
+  ],
+  "lineart": [
+   120,
+   132
   ]
  },
  "memory-and-hbm": {
@@ -177,6 +209,10 @@
   "door": [
    354,
    334
+  ],
+  "lineart": [
+   138,
+   132
   ]
  },
  "advanced-packaging": {
@@ -197,6 +233,10 @@
   "door": [
    356,
    342
+  ],
+  "lineart": [
+   148,
+   132
   ]
  },
  "substrates-and-pcbs": {
@@ -217,6 +257,10 @@
   "door": [
    516,
    342
+  ],
+  "lineart": [
+   182,
+   128
   ]
  },
  "test-and-assembly": {
@@ -237,6 +281,10 @@
   "door": [
    304,
    342
+  ],
+  "lineart": [
+   124,
+   132
   ]
  },
  "systems-and-networking": {
@@ -257,6 +305,10 @@
   "door": [
    502,
    342
+  ],
+  "lineart": [
+   182,
+   120
   ]
  },
  "data-centers-and-power": {
@@ -277,6 +329,10 @@
   "door": [
    186,
    338
+  ],
+  "lineart": [
+   64,
+   132
   ]
  },
  "component-costs": {
@@ -297,6 +353,10 @@
   "door": [
    594,
    342
+  ],
+  "lineart": [
+   182,
+   112
   ]
  },
  "geopolitics": {
@@ -317,6 +377,10 @@
   "door": [
    324,
    342
+  ],
+  "lineart": [
+   130,
+   132
   ]
  }
 }
