@@ -57,11 +57,11 @@ R('substrate-layers', function (m) {
         ps.forEach(function (pq) { var l = mg[mg.length - 1]; if (l && pq[0] <= l[1] + 0.2) l[1] = Math.max(l[1], pq[1]); else mg.push([pq[0], pq[1]]); });
         var x0 = 0.4;
         mg.forEach(function (pq) {
-          if (pq[0] - 0.5 > x0 + 0.3) it.push({ pts: [toP(x0, y), toP(pq[0] - 0.5, y)], col: 'acc2', lw: lw + 0.25, edge: true, tag: 'cu', real: 'cu' });
-          it.push({ pts: [toP(Math.max(0.4, pq[0]), y), toP(Math.min(L - 0.4, pq[1]), y)], col: 'acc2', lw: (k === 0 ? 1.3 : lw + 0.3) + 0.25, edge: true, tag: 'cu', real: 'cu' });
+          if (pq[0] - 0.5 > x0 + 0.3) it.push({ pts: [toP(x0, y), toP(pq[0] - 0.5, y)], col: 'acc2', lw: lw + 0.25, edge: true, tag: 'cu', real: 'cu', pick: true });
+          it.push({ pts: [toP(Math.max(0.4, pq[0]), y), toP(Math.min(L - 0.4, pq[1]), y)], col: 'acc2', lw: (k === 0 ? 1.3 : lw + 0.3) + 0.25, edge: true, tag: 'cu', real: 'cu', pick: true });
           x0 = pq[1] + 0.5;
         });
-        if (L - 0.4 > x0 + 0.3) it.push({ pts: [toP(x0, y), toP(L - 0.4, y)], col: 'acc2', lw: lw + 0.25, edge: true, tag: 'cu', real: 'cu' });
+        if (L - 0.4 > x0 + 0.3) it.push({ pts: [toP(x0, y), toP(L - 0.4, y)], col: 'acc2', lw: lw + 0.25, edge: true, tag: 'cu', real: 'cu', pick: true });
       }
     });
     // solder balls in section along the foot

@@ -270,7 +270,7 @@
   M.globe = function (r, o) { o = o || {}; var it = { kind: 'globe', part: this.cur.idx, r: r, c: [0, 0, 0], fill: o.fill || 'paper' }; it.tag = this._tag; this.cur.items.push(it); this.S.push(it); return it; };
   M.swire = function (pts, o) { o = o || {}; var it = { kind: 'swire', part: this.cur.idx, pts: pts, c: [0, 0, 0], col: o.col || 'ink', lw: o.lw || 0.6, alpha: o.alpha == null ? 1 : o.alpha, back: o.back || 0, lod: o.lod || 0 }; it.tag = this._tag; this.cur.items.push(it); this.S.push(it); return it; };
   M.land = function (rings, o) { o = o || {}; var it = { kind: 'land', part: this.cur.idx, rings: rings, holes: o.holes || [], c: [0, 0, 0], r: o.r || 1, mat: this.mat(o.mat || 'mid') }; it.tag = this._tag; this.cur.items.push(it); this.S.push(it); return it; };
-  M.dim = function (a, b, off, text, o) { o = o || {}; this.dims.push({ a: a, b: b, off: off, text: text, part: o.part == null ? this.cur.idx : o.part, bpart: o.bpart, side: o.side || 0, t: o.t == null ? 0.5 : o.t }); };
+  M.dim = function (a, b, off, text, o) { o = o || {}; this.dims.push({ a: a, b: b, off: off, text: text, part: o.part == null ? this.cur.idx : o.part, bpart: o.bpart, side: o.side || 0, t: o.t == null ? 0.5 : o.t, out: o.out || 0 }); };
   M.anchor = function (n, name, at, part) { this.anchors.push({ n: n, name: name, at: at, part: part == null ? this.cur.idx : part }); };
   M.label = function (at, text, o) { o = o || {}; this.labels.push({ at: at, text: text, part: o.part == null ? this.cur.idx : o.part, align: o.align || 'left', dx: o.dx || 0, dy: o.dy || 0, col: o.col || 'muted', size: o.size || 12, weight: o.weight || 500, lead: o.lead }); };
 
@@ -1002,7 +1002,7 @@
       var list = m.callouts.filter(function (c) { return c._side === rw; }); if (!list.length) return;
       var meas = function (s) { return g ? g.measure(s, { size: ls.fs, weight: 500 }) : s.length * ls.fs * 0.53; }, r0 = ls.num * 1.1;
       var bwOf = function (c) { var tw = 0; (c._lines || []).forEach(function (s) { tw = Math.max(tw, meas(s)); }); return (ls.numbersOnly && c.n ? 0 : tw) + (c.n ? 2 * r0 + (ls.numbersOnly ? 0 : 6) : 0); };
-      var total = function () { return list.reduce(function (a, c) { return a + bwOf(c); }, 0) + 12 * (list.length - 1); };
+      var total = function () { return list.reduce(function (a, c) { return a + bwOf(c); }, 0) + ((m.spec.rowGap && m.spec.rowGap[rw]) || 12) * (list.length - 1); };
       for (var gd = 0; gd < list.length && total() > w - 8; gd++) {
         var cand = list.filter(function (c) { return c._lines && c._lines.length === 1 && c._lines[0].indexOf(' ') > 0; }).sort(function (a, b) { return bwOf(b) - bwOf(a); })[0];
         if (!cand) break;
@@ -1523,7 +1523,7 @@
           var lw0 = (it.lw || LW.decal / k) * k * 0.9, dash = it.dash ? it.dash.map(function (v) { return v * k; }) : null;
           // (a heavy line on a face, the TSVs on a die's side, is recorded for the pointer too; fine rulings and traces are not, so the
           // face or film they cross keeps its own label)
-          if (pick && !it.fill && lw0 >= 1.6) pick.push({ line: pts, r: lw0 / 2 + 0.75, it: it, host: s });
+          if (pick && !it.fill && (lw0 >= 1.6 || it.pick)) pick.push({ line: pts, r: lw0 / 2 + 0.75, it: it, host: s });
           // (a copper line with an edge: a darker rim each side, as the TSVs and the substrate's planes take it)
           if (it.edge && Rd && !dl) GL([pts], css(litC(tBase(Rd), 0.42)), lw0 + 0.9, dash, (it.alpha == null ? 1 : it.alpha) * al);
           GL([pts], lc, lw0, dash, (it.alpha == null ? 1 : it.alpha) * al);
@@ -1970,7 +1970,7 @@
       });
     });
     // the dimensions: all of them in a chapter's slot, the plate's first (the size its caption leads with) in the phone's view
-    if (!thumb && !st.noDims && LA > 0.01) (st.oneDim ? m.dims.slice(0, 1) : m.dims).forEach(function (d) { dimension(d); });
+    if (!thumb && !st.noDims && LA > 0.01 && !(m.spec.dimsFrom && w < m.spec.dimsFrom && !st.oneDim)) (st.oneDim ? m.dims.slice(0, 1) : m.dims).forEach(function (d) { dimension(d); });
     if (!thumb && LA > 0.01) m.labels.forEach(function (L) {
       var p = proj(L.at, L.part), c = L.col === 'muted' ? css(pal.muted) : css(colOf(L.col));
       g.text(L.text, p[0] + L.dx * k, p[1] + L.dy * k, { size: Math.round(L.size * Math.max(0.85, Math.min(1.1, k))), weight: L.weight, fill: c, align: L.align, halo: bgC, haloW: 4, alpha: labT * LA });
@@ -2000,7 +2000,7 @@
       }
       g.circle(G.x, G.y, G.r, bgC, null, 0);
       // the small plate, fitted to the disc, then its scale bars and names
-      var S2 = G.r * 2, x0 = G.x - G.r, y0 = G.y - G.r, f0 = lp.fit(S2, S2), sk = L.scale || 1;
+      var S2 = G.r * 2, x0 = G.x - G.r, y0 = G.y - G.r, f0 = lp.fit(S2, S2), sk = (L.small && G.r <= L.small.r ? L.small.scale : L.scale) || 1;
       var f2 = { s: f0.s * sk, cx: x0 + G.r + (f0.cx - G.r) * sk + (L.dx || 0) * S2, cy: y0 + G.r + (f0.cy - G.r) * sk + (L.dy || 0) * S2, e: f0.e };
       g.clip(G.x, G.y, G.r - 0.5);
       lp.paint({ k: 1, w: S2, h: S2, g: g, pal: pal, fit: f2, noDims: true, noLabels: true, noShadow: true });
@@ -2075,7 +2075,7 @@
         else if (inside) segs = [[a1, [tx - u[0] * half, ty - u[1] * half]], [[tx + u[0] * half, ty + u[1] * half], b1]];
         else {
           segs = [[[a1[0] - u[0] * tail, a1[1] - u[1] * tail], [b1[0] + u[0] * tail, b1[1] + u[1] * tail]]];
-          var tside = t >= 0.5 ? 1 : -1, base = tside > 0 ? b1 : a1;
+          var tside = d.out || (t >= 0.5 ? 1 : -1), base = tside > 0 ? b1 : a1;
           tx = base[0] + u[0] * tside * (half + 3 * k + tail); ty = base[1] + u[1] * tside * (half + 3 * k + tail);
         }
         tx = Math.max(tw / 2 + 2, Math.min(w - tw / 2 - 2, tx)); ty = Math.max(size, Math.min(h - size, ty));
@@ -2552,7 +2552,7 @@
           var edge = rw === 't' ? dt - 9 * k : db + 9 * k, bw = list.map(function (L) { return (L.c.n && ls.numbersOnly ? 0 : L.tw) + (L.r ? 2 * L.r + (L.c.n && ls.numbersOnly ? 0 : 6) : 0); });
           var xs = list.map(function (L, i) { return Math.max(bw[i] / 2 + 4, Math.min(w - bw[i] / 2 - 4, L.x)); });
           // (the gap between labels closes, down to 4 px, where the row would not fit the width with 12)
-          var sumW = bw.reduce(function (a, b) { return a + b; }, 0), gp = list.length > 1 ? Math.max(4, Math.min(12, (w - 8 - sumW) / (list.length - 1))) : 12;
+          var sumW = bw.reduce(function (a, b) { return a + b; }, 0), gmx = (m.spec.rowGap && m.spec.rowGap[rw]) || 12, gp = list.length > 1 ? Math.max(4, Math.min(gmx, (w - 8 - sumW) / (list.length - 1))) : gmx;
           for (var i = 1; i < list.length; i++) { var lo = xs[i - 1] + (bw[i - 1] + bw[i]) / 2 + gp; if (xs[i] < lo) xs[i] = lo; }
           var over = xs[list.length - 1] + bw[list.length - 1] / 2 - (w - 4);
           if (over > 0) { xs[list.length - 1] -= over; for (i = list.length - 2; i >= 0; i--) { var hi = xs[i + 1] - (bw[i + 1] + bw[i]) / 2 - gp; if (xs[i] > hi) xs[i] = hi; } }
@@ -2996,7 +2996,7 @@ R('die-floorplan', function (m) {
   function diePhoto(s, y, detail, seed, flip) {
     var it = [], rnd = H.rng(seed || 11), dt = detail == null ? 2 : detail, f = flip ? -1 : 1, FN = false;
     var P3 = function (x, z) { return [f * x * s, y, f * z * s]; };
-    var rect = function (x0, z0, x1, z1, real, tag) { it.push({ pts: [P3(x0, z0), P3(x1, z0), P3(x1, z1), P3(x0, z1)], closed: true, lw: 0, fill: { d: 0.5, real: real }, tag: tag || null, fine: FN }); };
+    var rect = function (x0, z0, x1, z1, real, tag) { it.push({ pts: [P3(x0, z0), P3(x1, z0), P3(x1, z1), P3(x0, z1)], closed: true, lw: 0, fill: { d: 0.5, real: real }, tag: tag || null, fine: FN, keep: !FN }); };
     var line = function (x0, z0, x1, z1, real, lw, al, tag) { it.push({ pts: [P3(x0, z0), P3(x1, z1)], lw: lw, real: real, alpha: al == null ? 1 : al, tag: tag || null, fine: FN }); };
     // memory interfaces: coarse PHY bars, copper-tone lines across them; the controllers beside them, coarse logic
     [-1, 1].forEach(function (sd) {
@@ -3074,7 +3074,7 @@ R('die-floorplan', function (m) {
     if (!ok) continue;
     var u = 0.5 + (cx * LX + cz * LZ) / (2 * Rw), b = 'wfT' + Math.max(0, Math.min(NB - 1, Math.round(u * (NB - 1))));
     var x0 = cx - W / 2 + 0.35, z0 = cz - Dd / 2 + 0.35, x1 = cx + W / 2 - 0.35, z1 = cz + Dd / 2 - 0.35;
-    var R4 = function (a0, c0, a1, c1, rl, fine) { tiles.push({ pts: [[a0, wT / 2, c0], [a1, wT / 2, c0], [a1, wT / 2, c1], [a0, wT / 2, c1]], closed: true, lw: 0, fill: { d: 0.5, real: rl }, tag: 'wafer', fine: !!fine }); };
+    var R4 = function (a0, c0, a1, c1, rl, fine) { tiles.push({ pts: [[a0, wT / 2, c0], [a1, wT / 2, c0], [a1, wT / 2, c1], [a0, wT / 2, c1]], closed: true, lw: 0, fill: { d: 0.5, real: rl }, tag: 'wafer', fine: !!fine, keep: !fine }); };
     if (gx === SX && gz === SZ) { seat = [x0, z0, x1, z1]; R4(x0, z0, x1, z1, 'dpFace'); continue; }
     R4(x0, z0, x1, z1, b + 'f');
     // each die's floorplan, small: the compute halves, the cache across the middle, memory down both sides
@@ -3774,10 +3774,15 @@ R('hbm-stack', function (m) {
   m.callout([[TX[4], yOf(2) + t / 2, wallZ(2), pi(2)]], 'TSVs', { n: 3, tag: ['tsv', 'tsvWall'], only: 'accent', side: 'r', level: true, row: 'b', rowAt: [[TX[1], yOf(0) + t / 2, wallZ(0), pi(0)]] });
   m.callout([[TX[5], yOf(1) - g * 0.6, bumpZ(1), pi(1)]], 'Microbumps', { n: 4, tag: ['bumps', 'bumpGap'], only: 'accent', side: 'r', level: true, row: 'b', rowAt: [[TX[4], yOf(0) - g * 0.6, bumpZ(0), pi(0)]] });
   // (the disc in the empty corner beside the top die, so the deck takes the slot's width; its caption under it. 25 Nov 2026: 24 px
-  // further left, tdx 46, not 70, so it no longer runs past the canvas's right edge, which shrank the deck and left a band under it)
-  var loupe = { model: 'hbm-loupe', at: [TX[2], yOf(6) - g * 0.5, zOf(6) + hw - N + 0.003], part: 'die7', side: 'r', r: 0.14, rMax: 88, scale: 0.63, dx: 0.075, dy: 0.01, tuck: 'tr', tdx: 46, tdy: 70, caption: ['Microbumps in a gap', 'as small as 7 µm.', 'Dies not to scale'] };
+  // further left, tdx 46, not 70, so it no longer runs past the canvas's right edge, which shrank the deck and left a band under it.
+  // Print QA, 25 Nov 2026: there it covered the top dies' corners, so it stands up in the empty corner over the deck, its centre
+  // 30 px over the drawing's top, and its caption beside it on the left, over the deck, where under it the caption met the top die)
+  var loupe = { model: 'hbm-loupe', at: [TX[2], yOf(6) - g * 0.5, zOf(6) + hw - N + 0.003], part: 'die7', side: 'r', r: 0.14, rMax: 88, scale: 0.63, dx: 0.075, dy: 0.01, tuck: 'tr', tdx: 46, tdy: -30, capSide: 'l', capDy: -34, small: { r: 80, scale: 0.56 }, caption: ['Microbumps in a gap', 'as small as 7 µm.', 'Dies not to scale'] };
   return {
-    elev: PLATE.ISO.elev, yaw: PLATE.ISO.yaw, sortAxis: [0, 1, 0], loupe: loupe, thinHover: true,
+    // (final QA, 25 Nov 2026: in the Introduction's small panel, 1024 to 1280 px, the 11 mm stood among the labels: it is left out
+    // under 560 px but on the phone's strip, and in a disc of 80 px or less the loupe's plate is drawn smaller, so its names keep
+    // inside the ring)
+    elev: PLATE.ISO.elev, yaw: PLATE.ISO.yaw, sortAxis: [0, 1, 0], loupe: loupe, thinHover: true, dimsFrom: 560,
     order: { r: [3, 4] }, accent: [176, 102, 44], accentDark: [224, 154, 92]
   };
 });
@@ -3864,7 +3869,7 @@ R('photomask', function (m) {
   for (var q = 1; q < 8; q++) { var yy = -ml / 2 + ml * q / 8; band.push(D.line([-B / 2, yy, B / 2], [B / 2, yy, B / 2], { lw: 0.3, alpha: 0.55 })); }
   var bandX = band.map(function (it) { return { pts: [[B / 2, it.pts[0][1], B / 2], [B / 2, it.pts[0][1], -B / 2]], lw: 0.3, alpha: 0.55 }; });
   m.box({ c: [0, yTop - ml / 2, 0], s: [B, ml, B], decals: { py: pat, pz: band, px: bandX } }, 'acc');
-  m.dim([-B / 2, -T / 2, B / 2], [B / 2, -T / 2, B / 2], [0, 0, 12], '152.4 mm');
+  m.dim([-B / 2, -T / 2, B / 2], [B / 2, -T / 2, B / 2], [0, 0, 12], '152.4 mm', { t: 0.7, out: -1 });
   // pads, frame, membrane
   var FW = 145, FD = 117, bar = 4.5, fh = 2.6, stand = 2.5;
   var pads = m.part('pads', { ex: [0, 15, 0], seq: 1 });
@@ -4406,11 +4411,11 @@ R('substrate-layers', function (m) {
         ps.forEach(function (pq) { var l = mg[mg.length - 1]; if (l && pq[0] <= l[1] + 0.2) l[1] = Math.max(l[1], pq[1]); else mg.push([pq[0], pq[1]]); });
         var x0 = 0.4;
         mg.forEach(function (pq) {
-          if (pq[0] - 0.5 > x0 + 0.3) it.push({ pts: [toP(x0, y), toP(pq[0] - 0.5, y)], col: 'acc2', lw: lw + 0.25, edge: true, tag: 'cu', real: 'cu' });
-          it.push({ pts: [toP(Math.max(0.4, pq[0]), y), toP(Math.min(L - 0.4, pq[1]), y)], col: 'acc2', lw: (k === 0 ? 1.3 : lw + 0.3) + 0.25, edge: true, tag: 'cu', real: 'cu' });
+          if (pq[0] - 0.5 > x0 + 0.3) it.push({ pts: [toP(x0, y), toP(pq[0] - 0.5, y)], col: 'acc2', lw: lw + 0.25, edge: true, tag: 'cu', real: 'cu', pick: true });
+          it.push({ pts: [toP(Math.max(0.4, pq[0]), y), toP(Math.min(L - 0.4, pq[1]), y)], col: 'acc2', lw: (k === 0 ? 1.3 : lw + 0.3) + 0.25, edge: true, tag: 'cu', real: 'cu', pick: true });
           x0 = pq[1] + 0.5;
         });
-        if (L - 0.4 > x0 + 0.3) it.push({ pts: [toP(x0, y), toP(L - 0.4, y)], col: 'acc2', lw: lw + 0.25, edge: true, tag: 'cu', real: 'cu' });
+        if (L - 0.4 > x0 + 0.3) it.push({ pts: [toP(x0, y), toP(L - 0.4, y)], col: 'acc2', lw: lw + 0.25, edge: true, tag: 'cu', real: 'cu', pick: true });
       }
     });
     // solder balls in section along the foot
@@ -4641,7 +4646,7 @@ R('wafer-cost', function (m) {
   m.callout([[cpx - 20, felt + iH, zI + 10, parts.pack.idx]], '$1,100 of packaging', { row: 'b', tag: 'pack' });
   m.callout([[(cells.yld[0] + cells.yld[2]) / 2, 0.05, cells.yld[3] - 40, parts.yld.idx]], '$1,000 of packaging yield loss', { row: 'b', tag: 'yield' });
   return {
-    rows: true, labelFs: 15.5, wrapW: 210, foot: { text: 'about $6,400 in all', from: [Xo, 0, Ze], to: [Xe, 0, Ze], room: 16 },
+    rows: true, rowGap: { b: 28 }, labelFs: 15.5, wrapW: 210, foot: { text: 'about $6,400 in all', from: [Xo, 0, Ze], to: [Xe, 0, Ze], room: 16 },
     elev: 0.9, yaw: -0.16, sortAxis: [0, 1, 0], start: 1, rest: 0, noPolish: false,
     accent: [122, 31, 43], accentDark: [201, 83, 106], accent2: [154, 152, 143], accent2Dark: [138, 136, 128]
   };

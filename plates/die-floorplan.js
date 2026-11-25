@@ -27,7 +27,7 @@ R('die-floorplan', function (m) {
   function diePhoto(s, y, detail, seed, flip) {
     var it = [], rnd = H.rng(seed || 11), dt = detail == null ? 2 : detail, f = flip ? -1 : 1, FN = false;
     var P3 = function (x, z) { return [f * x * s, y, f * z * s]; };
-    var rect = function (x0, z0, x1, z1, real, tag) { it.push({ pts: [P3(x0, z0), P3(x1, z0), P3(x1, z1), P3(x0, z1)], closed: true, lw: 0, fill: { d: 0.5, real: real }, tag: tag || null, fine: FN }); };
+    var rect = function (x0, z0, x1, z1, real, tag) { it.push({ pts: [P3(x0, z0), P3(x1, z0), P3(x1, z1), P3(x0, z1)], closed: true, lw: 0, fill: { d: 0.5, real: real }, tag: tag || null, fine: FN, keep: !FN }); };
     var line = function (x0, z0, x1, z1, real, lw, al, tag) { it.push({ pts: [P3(x0, z0), P3(x1, z1)], lw: lw, real: real, alpha: al == null ? 1 : al, tag: tag || null, fine: FN }); };
     // memory interfaces: coarse PHY bars, copper-tone lines across them; the controllers beside them, coarse logic
     [-1, 1].forEach(function (sd) {
@@ -105,7 +105,7 @@ R('die-floorplan', function (m) {
     if (!ok) continue;
     var u = 0.5 + (cx * LX + cz * LZ) / (2 * Rw), b = 'wfT' + Math.max(0, Math.min(NB - 1, Math.round(u * (NB - 1))));
     var x0 = cx - W / 2 + 0.35, z0 = cz - Dd / 2 + 0.35, x1 = cx + W / 2 - 0.35, z1 = cz + Dd / 2 - 0.35;
-    var R4 = function (a0, c0, a1, c1, rl, fine) { tiles.push({ pts: [[a0, wT / 2, c0], [a1, wT / 2, c0], [a1, wT / 2, c1], [a0, wT / 2, c1]], closed: true, lw: 0, fill: { d: 0.5, real: rl }, tag: 'wafer', fine: !!fine }); };
+    var R4 = function (a0, c0, a1, c1, rl, fine) { tiles.push({ pts: [[a0, wT / 2, c0], [a1, wT / 2, c0], [a1, wT / 2, c1], [a0, wT / 2, c1]], closed: true, lw: 0, fill: { d: 0.5, real: rl }, tag: 'wafer', fine: !!fine, keep: !fine }); };
     if (gx === SX && gz === SZ) { seat = [x0, z0, x1, z1]; R4(x0, z0, x1, z1, 'dpFace'); continue; }
     R4(x0, z0, x1, z1, b + 'f');
     // each die's floorplan, small: the compute halves, the cache across the middle, memory down both sides

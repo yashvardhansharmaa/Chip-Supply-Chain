@@ -8,7 +8,7 @@
  "openOnExplainer": true,
  "bridge": "The chain starts before any material does, when a company still has nothing but an idea for a processor.",
  "specimen": "die-floorplan",
- "specimenCaption": "A GPU die lifted out of a 300 mm wafer, which carries the same design again and again. The die is drawn from Nvidia’s 2022 block diagram of its H100, which packs 80 billion transistors into 814 mm². It is drawn a little larger than the real die, at 26 by 33 mm, the largest area a scanner prints in one shot. H100 has one die, so the drawing takes its die-to-die link from two-die chips such as Blackwell. The die is colored as die photographs show such chips, and the wafer as a patterned wafer looks under one lamp. The wafer is drawn thicker than it is.",
+ "specimenCaption": "An enlarged GPU die lifted from a 300 mm wafer of identical dies. It follows Nvidia’s 2022 block diagram of its H100, with 80 billion transistors in 814 mm². On the wafer each die is drawn at 26 by 33 mm, a little larger than the real one, the largest area a scanner prints in one shot. H100 has one die, so the drawing takes its die-to-die link from two-die chips such as Blackwell. The die is colored as in die photographs. The wafer, drawn thicker than it is, has the rainbow sheen of a patterned wafer under one light.",
  "card": {
  "concentration": "Extreme",
  "chokepointScore": 4,

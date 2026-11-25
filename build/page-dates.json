@@ -21,8 +21,8 @@
   },
   "/component-costs/": {
     "published": "2026-09-09",
-    "modified": "2026-11-24",
-    "content": "ca68779c0bb7e558"
+    "modified": "2026-11-25",
+    "content": "bb7255b21355348e"
   },
   "/data-centers-and-power/": {
     "published": "2026-09-09",
@@ -36,8 +36,8 @@
   },
   "/design-and-eda/": {
     "published": "2026-09-09",
-    "modified": "2026-11-24",
-    "content": "3bc67f5ea90d6a28"
+    "modified": "2026-11-25",
+    "content": "d824602dde0ef3ea"
   },
   "/export-controls/": {
     "published": "2026-10-21",
@@ -132,7 +132,7 @@
   "/pdf/memory-and-hbm.pdf": {
     "published": "2026-10-20",
     "modified": "2026-11-25",
-    "content": "dd02ea3730cb89e4"
+    "content": "f19a6656d2143342"
   },
   "/pdf/metrology-and-inspection.pdf": {
     "published": "2026-10-20",

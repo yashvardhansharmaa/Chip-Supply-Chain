@@ -270,7 +270,7 @@
   M.globe = function (r, o) { o = o || {}; var it = { kind: 'globe', part: this.cur.idx, r: r, c: [0, 0, 0], fill: o.fill || 'paper' }; it.tag = this._tag; this.cur.items.push(it); this.S.push(it); return it; };
   M.swire = function (pts, o) { o = o || {}; var it = { kind: 'swire', part: this.cur.idx, pts: pts, c: [0, 0, 0], col: o.col || 'ink', lw: o.lw || 0.6, alpha: o.alpha == null ? 1 : o.alpha, back: o.back || 0, lod: o.lod || 0 }; it.tag = this._tag; this.cur.items.push(it); this.S.push(it); return it; };
   M.land = function (rings, o) { o = o || {}; var it = { kind: 'land', part: this.cur.idx, rings: rings, holes: o.holes || [], c: [0, 0, 0], r: o.r || 1, mat: this.mat(o.mat || 'mid') }; it.tag = this._tag; this.cur.items.push(it); this.S.push(it); return it; };
-  M.dim = function (a, b, off, text, o) { o = o || {}; this.dims.push({ a: a, b: b, off: off, text: text, part: o.part == null ? this.cur.idx : o.part, bpart: o.bpart, side: o.side || 0, t: o.t == null ? 0.5 : o.t }); };
+  M.dim = function (a, b, off, text, o) { o = o || {}; this.dims.push({ a: a, b: b, off: off, text: text, part: o.part == null ? this.cur.idx : o.part, bpart: o.bpart, side: o.side || 0, t: o.t == null ? 0.5 : o.t, out: o.out || 0 }); };
   M.anchor = function (n, name, at, part) { this.anchors.push({ n: n, name: name, at: at, part: part == null ? this.cur.idx : part }); };
   M.label = function (at, text, o) { o = o || {}; this.labels.push({ at: at, text: text, part: o.part == null ? this.cur.idx : o.part, align: o.align || 'left', dx: o.dx || 0, dy: o.dy || 0, col: o.col || 'muted', size: o.size || 12, weight: o.weight || 500, lead: o.lead }); };
 
@@ -1002,7 +1002,7 @@
       var list = m.callouts.filter(function (c) { return c._side === rw; }); if (!list.length) return;
       var meas = function (s) { return g ? g.measure(s, { size: ls.fs, weight: 500 }) : s.length * ls.fs * 0.53; }, r0 = ls.num * 1.1;
       var bwOf = function (c) { var tw = 0; (c._lines || []).forEach(function (s) { tw = Math.max(tw, meas(s)); }); return (ls.numbersOnly && c.n ? 0 : tw) + (c.n ? 2 * r0 + (ls.numbersOnly ? 0 : 6) : 0); };
-      var total = function () { return list.reduce(function (a, c) { return a + bwOf(c); }, 0) + 12 * (list.length - 1); };
+      var total = function () { return list.reduce(function (a, c) { return a + bwOf(c); }, 0) + ((m.spec.rowGap && m.spec.rowGap[rw]) || 12) * (list.length - 1); };
       for (var gd = 0; gd < list.length && total() > w - 8; gd++) {
         var cand = list.filter(function (c) { return c._lines && c._lines.length === 1 && c._lines[0].indexOf(' ') > 0; }).sort(function (a, b) { return bwOf(b) - bwOf(a); })[0];
         if (!cand) break;
@@ -1523,7 +1523,7 @@
           var lw0 = (it.lw || LW.decal / k) * k * 0.9, dash = it.dash ? it.dash.map(function (v) { return v * k; }) : null;
           // (a heavy line on a face, the TSVs on a die's side, is recorded for the pointer too; fine rulings and traces are not, so the
           // face or film they cross keeps its own label)
-          if (pick && !it.fill && lw0 >= 1.6) pick.push({ line: pts, r: lw0 / 2 + 0.75, it: it, host: s });
+          if (pick && !it.fill && (lw0 >= 1.6 || it.pick)) pick.push({ line: pts, r: lw0 / 2 + 0.75, it: it, host: s });
           // (a copper line with an edge: a darker rim each side, as the TSVs and the substrate's planes take it)
           if (it.edge && Rd && !dl) GL([pts], css(litC(tBase(Rd), 0.42)), lw0 + 0.9, dash, (it.alpha == null ? 1 : it.alpha) * al);
           GL([pts], lc, lw0, dash, (it.alpha == null ? 1 : it.alpha) * al);
@@ -1970,7 +1970,7 @@
       });
     });
     // the dimensions: all of them in a chapter's slot, the plate's first (the size its caption leads with) in the phone's view
-    if (!thumb && !st.noDims && LA > 0.01) (st.oneDim ? m.dims.slice(0, 1) : m.dims).forEach(function (d) { dimension(d); });
+    if (!thumb && !st.noDims && LA > 0.01 && !(m.spec.dimsFrom && w < m.spec.dimsFrom && !st.oneDim)) (st.oneDim ? m.dims.slice(0, 1) : m.dims).forEach(function (d) { dimension(d); });
     if (!thumb && LA > 0.01) m.labels.forEach(function (L) {
       var p = proj(L.at, L.part), c = L.col === 'muted' ? css(pal.muted) : css(colOf(L.col));
       g.text(L.text, p[0] + L.dx * k, p[1] + L.dy * k, { size: Math.round(L.size * Math.max(0.85, Math.min(1.1, k))), weight: L.weight, fill: c, align: L.align, halo: bgC, haloW: 4, alpha: labT * LA });
@@ -2000,7 +2000,7 @@
       }
       g.circle(G.x, G.y, G.r, bgC, null, 0);
       // the small plate, fitted to the disc, then its scale bars and names
-      var S2 = G.r * 2, x0 = G.x - G.r, y0 = G.y - G.r, f0 = lp.fit(S2, S2), sk = L.scale || 1;
+      var S2 = G.r * 2, x0 = G.x - G.r, y0 = G.y - G.r, f0 = lp.fit(S2, S2), sk = (L.small && G.r <= L.small.r ? L.small.scale : L.scale) || 1;
       var f2 = { s: f0.s * sk, cx: x0 + G.r + (f0.cx - G.r) * sk + (L.dx || 0) * S2, cy: y0 + G.r + (f0.cy - G.r) * sk + (L.dy || 0) * S2, e: f0.e };
       g.clip(G.x, G.y, G.r - 0.5);
       lp.paint({ k: 1, w: S2, h: S2, g: g, pal: pal, fit: f2, noDims: true, noLabels: true, noShadow: true });
@@ -2075,7 +2075,7 @@
         else if (inside) segs = [[a1, [tx - u[0] * half, ty - u[1] * half]], [[tx + u[0] * half, ty + u[1] * half], b1]];
         else {
           segs = [[[a1[0] - u[0] * tail, a1[1] - u[1] * tail], [b1[0] + u[0] * tail, b1[1] + u[1] * tail]]];
-          var tside = t >= 0.5 ? 1 : -1, base = tside > 0 ? b1 : a1;
+          var tside = d.out || (t >= 0.5 ? 1 : -1), base = tside > 0 ? b1 : a1;
           tx = base[0] + u[0] * tside * (half + 3 * k + tail); ty = base[1] + u[1] * tside * (half + 3 * k + tail);
         }
         tx = Math.max(tw / 2 + 2, Math.min(w - tw / 2 - 2, tx)); ty = Math.max(size, Math.min(h - size, ty));
@@ -2552,7 +2552,7 @@
           var edge = rw === 't' ? dt - 9 * k : db + 9 * k, bw = list.map(function (L) { return (L.c.n && ls.numbersOnly ? 0 : L.tw) + (L.r ? 2 * L.r + (L.c.n && ls.numbersOnly ? 0 : 6) : 0); });
           var xs = list.map(function (L, i) { return Math.max(bw[i] / 2 + 4, Math.min(w - bw[i] / 2 - 4, L.x)); });
           // (the gap between labels closes, down to 4 px, where the row would not fit the width with 12)
-          var sumW = bw.reduce(function (a, b) { return a + b; }, 0), gp = list.length > 1 ? Math.max(4, Math.min(12, (w - 8 - sumW) / (list.length - 1))) : 12;
+          var sumW = bw.reduce(function (a, b) { return a + b; }, 0), gmx = (m.spec.rowGap && m.spec.rowGap[rw]) || 12, gp = list.length > 1 ? Math.max(4, Math.min(gmx, (w - 8 - sumW) / (list.length - 1))) : gmx;
           for (var i = 1; i < list.length; i++) { var lo = xs[i - 1] + (bw[i - 1] + bw[i]) / 2 + gp; if (xs[i] < lo) xs[i] = lo; }
           var over = xs[list.length - 1] + bw[list.length - 1] / 2 - (w - 4);
           if (over > 0) { xs[list.length - 1] -= over; for (i = list.length - 2; i >= 0; i--) { var hi = xs[i + 1] - (bw[i + 1] + bw[i]) / 2 - gp; if (xs[i] > hi) xs[i] = hi; } }
