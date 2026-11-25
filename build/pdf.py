@@ -187,8 +187,10 @@ try:
            "}).catch(function (e) { window.__cp = {state: 'error', err: String((e && e.stack) || e)}; }); 'started'")
         t0 = time.time(); last = -1
         while True:
+            # (the poll waits up to 600 s for an answer: the book's colour stills, 24 Nov 2026, can hold the page's main thread
+            # past the old 120 s while Paged.js lays out one chapter, and a timed-out poll fell back to endnotes)
             st = json.loads(js("JSON.stringify(Object.assign({laid: document.querySelectorAll('.pagedjs_page').length},"
-                               " window.__cp))", timeout=120))
+                               " window.__cp))", timeout=max(120, min(budget, 600))))
             if st['state'] != 'running':
                 break
             if st['laid'] != last:

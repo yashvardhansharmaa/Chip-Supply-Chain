@@ -38,8 +38,9 @@ The PDF tools need Google Chrome in `/Applications`, Python 3 with `websocket-cl
 ```sh
 python3 build/chapter_pdfs.py <id> ... --logs /tmp/pdf-logs           # the chapters whose words, card or figures changed (ids such as lithography)
 python3 build/summary_pdf.py                                           # when a stage's card or one-line summary changed
-python3 build/pdf.py "http://127.0.0.1:8765/book/?theme=light#/chain" dist/chip-supply-chain-the-chain.pdf --wait 8   # the book, once per edition
+python3 build/pdf.py "http://127.0.0.1:8765/book/?theme=light#/chain" dist/pdf/how-ai-chips-are-made.pdf --wait 8 --timeout 1800   # the book, once per edition, alone (up to 8 layouts of 15-20 min each with the colour stills: 2 h 15 min on 24 Nov 2026; the build copies it to dist/chip-supply-chain-the-chain.pdf)
 node build/build.js                                                    # again, so the cite lines link the new PDFs
+# a set printed across midnight: give all three the same --edition YYYY-MM-DD, the day on the site's "Updated" line
 ```
 
 Look for four things:
