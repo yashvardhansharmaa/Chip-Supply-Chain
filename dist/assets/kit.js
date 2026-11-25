@@ -731,7 +731,8 @@
      below. strip: how far a polished turned part's highlight goes toward white (mstrip the same for a flat mirror). clear: the
      share of light it stops. edge: a clear or glass part's edge. cut: its section colour (else derived, paler and warmer than any
      outside face; cutD on the night ground). noHatch: a cut face with no ruling. lineK: the tone of lines drawn in it.
-     stopsC: the material's own reflection stops across a flat face, in place of its polish class's.
+     stopsC: the material's own reflection stops across a flat face, in place of its polish class's. kMin: the least light its
+     flat faces take, so a pale section stays pale on its shade side. edgeD: its edge line on the night ground.
      The reasons are in qa/builds-nov/round-24nov/shots/spec-color/NOTES.md (main checkout), one line each here. */
   var REAL = P.REAL = {
     // silicon: the circuit face graphite with a violet cast and a teal cache; bare silicon a near-neutral grey with a slight blue
@@ -832,6 +833,17 @@
     dpEdge:   { L: '#2f323a', D: '#2f323a', g: 0.9, stopsC: [[0, 1], [1, 1]], edge: '#8d93a0' }, // the polished sawn edge, with a light edge line
     dpStreet: { L: '#34324a', D: '#34324a', g: 0.4, stopsC: [[0, 1], [1, 1]], lineK: 1.0 }, // the streets between the cache's sub-arrays
     wfSi:     { L: '#a7abb3', D: '#7f838b', g: 0.9, stopsC: [[0, 0.9], [0.35, 0.97], [0.5, 1.12], [0.65, 0.97], [1, 0.9]] }, // the wafer's edge ring and notch: plain polished silicon
+    // 09, The deck, spread (24 Nov 2026, the owner's pick of four plates): the notch walls, the vias and microbumps told apart (pale
+    // silicon with copper threads, black mould with tin-silver capped pillars), and the dies' sawn edges; the faces are 01's dp*
+    hb4Si:    { L: '#c7c9cc', D: '#a3a6ab', g: 0.3, cut: '#c7c9cc', noHatch: true, stopsC: [[0, 1], [1, 1]] }, // silicon in section, the dies' cut faces
+    hb4Edge:  { L: '#2f323a', D: '#3a3d46', g: 0.9, stopsC: [[0, 1], [1, 1]], edge: '#8d93a0', edgeD: '#9aa0ad' }, // a die's polished sawn edge, a light edge line
+    hb4CuSec: { L: '#c8733f', D: '#d07a45', g: 0.3, lineK: 0.62 },                     // a via in section on the notch wall: a copper thread, dark on the pale wall in greyscale
+    hb4Bead:  { L: '#c4c6c3', D: '#b3b5b2', g: 0.3, kMin: 0.95, stopsC: [[0, 1.04], [1, 0.96]] }, // a microbump's tin-silver cap: light and even, light on the mould in greyscale
+    hb4SiWall:{ L: '#d9dbde', D: '#b9bcc1', g: 0.3, stopsC: [[0, 1], [1, 1]], kMin: 0.95 }, // the notch wall: silicon in section, pale, so the copper threads read on it
+    hbCu:     { L: '#c8733f', D: '#c26e3b', g: 0.75, metal: true, strip: 0.5, cut: '#e09a72', noHatch: true }, // copper in the loupe: the via and the microbump's pillar
+    hbSnAg:   { L: '#c4c6c3', D: '#b3b5b2', g: 0.6, metal: true, cut: '#dcdedb', noHatch: true }, // tin-silver solder: the bump caps on the faces and in the loupe
+    hb4Rim:   { L: '#9a5a32', D: '#a5633a', g: 0.4 },                                   // a bump's copper pillar, seen round its cap
+    hbMould:  { L: '#33353a', D: '#46484e', g: 0.6, cut: '#3b3d42', noHatch: true },   // the black moulding (MR-MUF) that fills the gaps between dies
     // a chart's emphasis
     wine:     { L: '#dcb9be', D: '#6e3b45', g: 0 }                                    // the cost column's largest share keeps the site's wine tint
   };
@@ -1326,6 +1338,7 @@
     // a flat face's tone by its turn to the key light
     var flatTone = function (Rm, b, lam, top) {
       var k0 = TB ? (top ? 1.04 : 0.42 + 0.72 * lam) : top ? 0.9 : (0.36 + 0.72 * lam) * 0.95;
+      if (Rm.kMin) k0 = Math.max(k0, Rm.kMin);
       var col = litC(b, k0);
       if (k0 < 0.8) col = mixL(col, COOL, 0.07 * (0.8 - k0) / 0.45); else if (top) col = mixL(col, WARM, 0.025);
       if (Rm.studio) col = mixL(col, top ? COOLS : WARMB, 0.1);
@@ -1419,7 +1432,10 @@
       return css(Ld < 0.09 ? litC(rgb, 2.6) : litC(rgb, 0.55));
     };
     var tEdges = function (TF, Rf, s, f, shl, fine, crease, out, shade, on, alpha, szK, thinTint, nvw) {
-      var rgb = TF.rgb, b = tBase(Rf), edge = Rf.edge && !pal.dark ? hex(Rf.edge) : null, hiW = 1.5 * Math.max(0.8, k);
+      var rgb = TF.rgb, b = tBase(Rf), edge = Rf.edge && !pal.dark ? hex(Rf.edge) : Rf.edgeD && pal.dark ? hex(Rf.edgeD) : null, hiW = 1.5 * Math.max(0.8, k);
+      // (a plate that asks, spec.thinHover, outlines its small parts at 0.75 px when pointed at, so a row of thin copper pillars
+      // keeps its copper under the wine: 09's thin-part hover rule)
+      if (on && m.spec.thinHover && szK < 0.7) hiW = 0.75;
       // no ink on the object: its silhouette in its own deep shade at one weight, the light edge alone where a polished top
       // meets a side, every other crease soft in the face's own colour (in a turning frame the soft creases and fine lines wait
       // for the plate to rest)
@@ -1471,6 +1487,9 @@
           count.dots += dp.length;
           // (the pointer finds the decal it is on, so a face painted with several labelled parts answers part by part)
           if (pick) pick.push({ dots: dp, r: Math.max(3, (it.r || 0.9) * k + 1.5), it: it, host: s });
+          // (dots marked thinLit keep their own colour, a step lighter, under a fine wine ring when pointed at, so a field of small
+          // bumps never turns into wine dots: 09's thin-part hover rule; thinRing false leaves the ring off)
+          if (dl && it.thinLit && Rd) { var dr0 = Math.max(0.45, (it.r || 0.9) * k); g.dots(dp, dr0, css(litC(tBase(Rd), 1.18)), (it.alpha == null ? 0.9 : it.alpha) * al); if (it.thinRing !== false) g.dots(dp, dr0 + 0.35, hlC, (it.alpha == null ? 0.9 : it.alpha) * al, true); curFade = keepF; return; }
           g.dots(dp, Math.max(0.45, (it.r || 0.9) * k), fzC(dl ? hlC : Rd ? tDotC(Rd, it.ring) : it.fillCol ? css(colOf(it.fillCol)) : lc), (it.alpha == null ? 0.9 : it.alpha) * al, it.ring);
           curFade = keepF;
           return;
@@ -3598,113 +3617,188 @@ R('gpu-baseboard', function (m) {
 /* plates/hbm-stack.js */
 try{(function(PLATE){'use strict';var R = PLATE.register, D = PLATE.D, H = PLATE.H, TAU = H.TAU, frame = H.frame, gridPts = H.gridPts, ring = H.ring, farHalf = H.farHalf, rng = H.rng;
 /* =====================================================================================================
-   09 Memory: a twelve-high HBM stack, pulled apart and cut open, in millimetres: an 11 x 11 mm footprint (this site's own
-   estimate, data/landscape-layouts.json; the caption says so), the heights drawn far taller than they are.
-   22 Nov 2026 review: the base die is silicon, so it is drawn in ink and copper means copper: the through-silicon vias and
-   the microbumps, where the quarter cut passes through them. The loupe (LOUPE, below) carries only figures with an allowed
-   source: microbumps about 20 micrometres apart (a tech note on SK hynix's newsroom, chapter 9) in a gap between dies as
-   small as 7 micrometres (Samsung's 12-high HBM3E release, 27 Feb 2024, a record gap). The hair and the 30 micrometre die
-   figure had none and are gone. Set LOUPE to false to drop it. Colours (the set's legend): copper only.
-   22 Nov 2026 expert review: the loupe's caption says the dies are not to scale and gives the gap as "as small as 7 um" (it
-   read as a typical gap); the 20 um bar has witness lines up to the bump row it measures; the gaps round the bumps are filled
-   with a pale neutral, as film or underfill fills them (chapter 9), where they were empty, as if air.
-   22 Nov 2026 plates refine: the base die stands further off the stack, about two and a half times the gap between memory
-   dies, so it reads as a different part; the microbumps are named on the row under the lowest memory die, at its right
-   end, their leader running out to the right, under the vias' (3 over 4); the base die is named from the left.
-   24 Nov 2026 expert accuracy review (D10): no source gives the microbump pitch inside an HBM stack (the tech note's 20 um is
-   a typical pitch in general), so the loupe names the microbumps with no pitch and its 20 um bar is gone. The bumps keep
-   their drawn spacing, and the 7 um gap keeps its figure. */
-var LOUPE = true;
+   09 Memory, option 1 · The deck, spread (four plates, round 4, 24 Nov 2026, late; the round 3 concept 09-C, kept by the owner).
+   A twelve-high HBM stack's dies spread out like a deck of cards over their base die, each a step higher and a step further
+   back than the one under it, so a band of each die's face shows. The idea: each layer is a whole memory die, and every die
+   connects to the next through a stripe of copper down its middle.
+   - Footprint 11 x 11 mm (Micron's twelve-high HBM3E, the caption): the base die 11 mm, the memory dies 10.6 mm (drawn).
+     Twelve memory dies on one base die. Thicknesses and gaps far exaggerated, the dies spread apart.
+   - The dies are drawn face up so their faces show. In a real stack each faces down (the caption says so; expert to confirm).
+   - Each memory die's face in the expert's die-photo palette (round 3 rulings): the face #3d3b57 with one soft static band;
+     sixteen memory arrays, eight either side of the central stripe, as a fine even grid in teal #3f6873 shading toward blue
+     #3e5a86; the central stripe, coarse grey-bronze #8a8170 framed by copper-tone lines #b07a52, carrying the bump pads.
+     Sixteen is a drawn count (expert to confirm it as a symbol).
+   - The stripe holds the through-silicon vias. A notch is cut into each die's front edge where the stripe meets it, and its wall
+     shows the vias as copper columns through the die. The top die has none (the expert confirmed in round 1), so it has no notch.
+   - Between the dies, in the stripe, the microbumps: copper pillars with tin-silver caps, one row under each die's front edge,
+     so vias and bumps run as one copper staircase from the base die to the top.
+   - The base die: wider, its face the logic of the die-photo palette (a fine mottle about #5e5678) with a coarse PHY strip along
+     its front edge and its own stripe and vias.
+   - Die edges: the polished dark sawn edge #2f323a with a light edge line (01's), so each die reads as a thin card.
+   - The finest textures (the arrays' grid, the logic mottle) are marked fine, so the kit leaves them out while the plate turns,
+     and they are drawn only where a face shows.
+   The labels keep the parts list's numbers and names: 1 Memory dies, 2 Base die, 3 TSVs, 4 Microbumps. The loupe keeps the
+   microbumps in a gap as small as 7 um (Samsung's twelve-high HBM3E release).
+   Its materials (hb4*, hbCu, hbSnAg, hbMould) and 01's die-photo materials (dp*) are in the kit's palette (src/plate.js REAL). */
+
 R('hbm-stack', function (m) {
-  var hw = 5.3, bw = 5.5, t = 0.45, bt = 0.9, gap0 = 0.105, pitch = t + gap0, EX = 0.62;
-  var TX = 0.7, TZ = 0.8;
-  function L(w) { return [[-w, -w], [w, -w], [w, 0], [0, 0], [0, w], [-w, w]]; }
-  function tsvLines(y0, y1, w, tag) {
-    var onZ = [], onX = [];
-    for (var x = 0; x <= w - 0.2; x += TX) onZ.push(D.line([x + 0.0001, y0, 0], [x + 0.0001, y1, 0], { col: 'acc', lw: 2.0, edge: true, tag: tag, real: 'cu' }));
-    for (var z = 0; z <= w - 0.2; z += TZ) onX.push(D.line([0, y0, z + 0.0001], [0, y1, z + 0.0001], { col: 'acc', lw: 2.0, edge: true, tag: tag, real: 'cu' }));
-    return [onZ, onX];
+  var hw = 5.3, W = 5.5, t = 0.4, g = 0.46, d = 0.95, bt = 0.5, n = 12;
+  var B = 1.15, N = 0.42, TX = [-0.95, -0.57, -0.19, 0.19, 0.57, 0.95], TW = 0.09, RP = 0.14, CAP = 0.36;
+  var yOf = function (i) { return g + i * (t + g); }, zOf = function (i) { return -(i + 1) * d - 0.85; };
+  var EDGE = { d: 0.1, real: 'hb4Edge' }, CUTS = { d: 0.04, hatch: 2, real: 'hb4Si' };
+  // a die's plan (die-local x, z), its front edge notched where the stripe meets it (notch false: a plain square)
+  function plan(w, notch) { return notch ? [[-w, -w], [w, -w], [w, w], [B, w], [B, w - N], [-B, w - N], [-B, w], [-w, w]] : [[-w, -w], [w, -w], [w, w], [-w, w]]; }
+  var rect = function (it, x0, z0, x1, z1, y, real, o) { o = o || {}; it.push({ pts: [[x0, y, z0], [x1, y, z0], [x1, y, z1], [x0, y, z1]], closed: true, lw: 0, fill: { d: 0.5, real: real }, tag: o.tag || null, col: o.col || null, fine: !!o.fine }); };
+  var line = function (it, x0, z0, x1, z1, y, real, lw, al, o) { o = o || {}; it.push({ pts: [[x0, y, z0], [x1, y, z1]], lw: lw, real: real, alpha: al == null ? 1 : al, fine: !!o.fine, tag: o.tag || null }); };
+  // a memory die's face at height y (die-local x, z): sixteen arrays and the central stripe with its pads; the fine grid only
+  // where z is over zSeen (the band that shows)
+  function dramFace(y, zSeen, top) {
+    var it = [], xs = [[-hw + 0.28, -B - 1.95], [-B - 1.85, -B - 0.22], [B + 0.22, B + 1.85], [B + 1.95, hw - 0.28]];
+    xs.forEach(function (cx, ci) {
+      for (var r = 0; r < 4; r++) {
+        var z0 = -hw + 0.28 + r * (2 * hw - 0.56) / 4 + 0.06, z1 = z0 + (2 * hw - 0.56) / 4 - 0.12;
+        rect(it, cx[0], z0, cx[1], z1, y, (ci + r) % 2 ? 'dpSramB' : 'dpSram');
+        if (z1 < zSeen) continue;
+        // the fine even grid of the array (drawn, a symbol of its sub-arrays)
+        for (var gx = cx[0] + 0.27; gx < cx[1] - 0.05; gx += 0.27) line(it, gx, Math.max(z0, zSeen - 0.3), gx, z1, y, 'dpSramLn', 0.35, 0.7, { fine: true });
+        for (var gz = z0 + 0.31; gz < z1 - 0.05; gz += 0.31) if (gz > zSeen - 0.3) line(it, cx[0], gz, cx[1], gz, y, 'dpSramLn', 0.35, 0.7, { fine: true });
+      }
+    });
+    // the central stripe: coarse grey-bronze, framed by copper-tone lines, its bump pads in six rows
+    rect(it, -B, -hw + 0.28, B, top ? hw - 0.28 : hw - N - 0.04, y, 'dpPhy');
+    line(it, -B + 0.08, -hw + 0.32, -B + 0.08, top ? hw - 0.32 : hw - N - 0.06, y, 'dpCu', 0.7, 0.95);
+    line(it, B - 0.08, -hw + 0.32, B - 0.08, top ? hw - 0.32 : hw - N - 0.06, y, 'dpCu', 0.7, 0.95);
+    var pd = []; TX.forEach(function (x) { for (var z = -hw + 0.55; z <= (top ? hw - 0.45 : hw - N - 0.2); z += 0.5) if (top || z > zSeen - 0.6) pd.push([x, y, z]); });
+    it.push({ dots: pd, r: 1.25, alpha: 1, real: 'hb4Rim', tag: 'bumps', col: 'acc', thinLit: true, thinRing: false });
+    it.push({ dots: pd, r: 1.05, alpha: 1, real: 'hbSnAg', tag: 'bumps', col: 'acc', thinLit: true });
+    return it;
   }
-  function bumps(y, w) { var p = []; for (var x = 0; x <= w - 0.2; x += TX) p.push([x, y, 0]); for (var z = TZ; z <= w - 0.2; z += TZ) p.push([0, y, z]); return p; }
-  // base die, silicon, in ink
-  var base = m.part('base', { ex: [0, -1.15, 0], seq: 0 });
-  var tb = tsvLines(-bt, 0, bw);
-  var bl = [D.rect(-bw * 0.86, -bw * 0.43, bw * 0.86, -bw * 0.23, 0, { lw: 0.5 }), D.rect(-bw * 0.86, bw * 0.23, 0, bw * 0.43, 0, { lw: 0.5 })];
-  m.real('siBase');
-  m.prism(L(bw), -bt, 0, 'steel', { sideMat: { 2: 'cutDense', 3: 'cutDense' }, sideDecals: { 2: tb[0], 3: tb[1] }, top: bl });
-  var under = [];
-  for (var a = 0; a < 16; a++) for (var b = 0; b < 17; b++) { var ux = (a - 7.5) * 11 / 17, uz = (b - 8) * 11 / 18; if (!(ux > 0 && uz > 0)) under.push([ux, -bt - 0.12, uz]); }
-  m.dots(under, { col: 'acc', r: 0.9, alpha: 0.5, real: 'cu' });
-  // (22 Nov 2026 plates refine: named from the left, on its front face, so the microbumps' leader has the right to itself)
-  m.anchor(2, 'Base die', [-bw * 0.55, -bt / 2, bw]);
-  // review: the quarter cut away is drawn as a phantom corner, so the 11 mm dimension ends on a drawn corner (it ended
-  // in empty space where the cut had removed the corner)
-  var ph = { lw: 0.55, dash: [4, 2.5], alpha: 0.7 };
-  m.wire([[0, -bt, bw], [bw, -bt, bw], [bw, -bt, 0]], Object.assign({ c: [bw, -bt, bw] }, ph));
-  m.wire([[0, 0, bw], [bw, 0, bw], [bw, 0, 0]], Object.assign({ c: [bw, 0, bw] }, ph));
-  m.wire([[bw, -bt, bw], [bw, 0, bw]], Object.assign({ c: [bw, -bt / 2, bw] }, ph));
-  m.dim([-bw, -bt, bw], [bw, -bt, bw], [0, 0, 1.6], '11 mm');
-  var prev = base;
-  for (var i = 0; i < 12; i++) {
-    var yb = gap0 + pitch * i, p = m.part('die' + (i + 1), { ex: [0, EX * (i + 1), 0], seq: i + 1 });
-    var tl = tsvLines(yb, yb + t, hw, 'tsv');
-    var o = { sideMat: { 2: 'cutDense', 3: 'cutDense' }, sideDecals: { 2: tl[0], 3: tl[1] } };
-    if (i === 11) o.top = []; // (the top die's ground back, plain)
-    m.tag('dies'); m.real('siBack');
-    m.prism(L(hw), yb, yb + t, 'light', o);
-    m.tag('bumps');
-    // the bumps are left out of the small stills (lod 1): at 52 px their twelve rows ran together into a copper band
-    m.dots(bumps(yb - gap0 / 2 - 0.08, hw), { col: 'acc', r: 2.4, alpha: 1, lod: 1, real: 'cu', cap: true });
+  // the base die's face: logic (a fine mottle), a coarse PHY strip along its front, its stripe and pads
+  function baseFace(y, zSeen) {
+    var it = [], rnd = H.rng(29);
+    rect(it, -W + 0.25, -W + 0.25, -B - 0.15, W - 1.25, y, 'dpLogic');
+    rect(it, B + 0.15, -W + 0.25, W - 0.25, W - 1.25, y, 'dpLogic');
+    for (var cx = -W + 0.3; cx < W - 0.4; cx += 0.42) for (var cz = zSeen - 0.4; cz < W - 1.3; cz += 0.42) {
+      if (Math.abs(cx + 0.21) < B + 0.2) continue;
+      var v = rnd(), rl = v < 0.1 ? 'dpBronze' : v < 0.42 ? 'dpLogicHi' : v < 0.74 ? 'dpLogicLo' : null;
+      if (rl) rect(it, cx + 0.02, cz + 0.02, cx + 0.4, cz + 0.4, y, rl, { fine: true });
+    }
+    [[-W + 0.25, -B - 0.15], [B + 0.15, W - 0.25]].forEach(function (s) {
+      rect(it, s[0], W - 1.1, s[1], W - 0.25, y, 'dpPhy');
+      for (var q = 0; q < 7; q++) { var x = s[0] + 0.2 + q * (s[1] - s[0] - 0.4) / 6; line(it, x, W - 1.0, x, W - 0.35, y, 'dpCu', 0.7, 0.95); }
+    });
+    rect(it, -B, -W + 0.25, B, W - N - 0.04, y, 'dpPhy');
+    var pd = []; TX.forEach(function (x) { for (var z = zSeen - 0.4; z <= W - N - 0.2; z += 0.5) pd.push([x, y, z]); });
+    it.push({ dots: pd, r: 1.25, alpha: 1, real: 'hb4Rim', tag: 'bumps', col: 'acc', thinLit: true, thinRing: false });
+    it.push({ dots: pd, r: 1.05, alpha: 1, real: 'hbSnAg', tag: 'bumps', col: 'acc', thinLit: true });
+    return it;
+  }
+  // the vias on a notch's wall (die-local), as decals: copper threads through the die's whole thickness, a fine darker rim, a
+  // 0.75 px wine outline when pointed at
+  function vias(y0, y1, z) { return TX.map(function (x) { return { pts: [[x - TW / 2, y0, z], [x + TW / 2, y0, z], [x + TW / 2, y1, z], [x - TW / 2, y1, z]], closed: true, fill: { d: 0.1, real: 'hb4CuSec' }, real: 'hb4CuSec', lw: 0.7, col: 'acc', tag: 'tsv' }; }); }
+  // the notch's back wall (die-local, at z), the vias drawn on it: its own thin section, so the pointer anywhere on it finds
+  // the TSVs
+  function wall(y0, y1, z, zc) {
+    m.tag('tsvWall'); m.real('hb4SiWall');
+    m.sheet([[-B, y0, z + zc], [B, y0, z + zc], [B, y1, z + zc], [-B, y1, z + zc]], { d: 0.04 }, { decals: vias(y0, y1, z + zc) });
     m.tag(null);
-    if (i === 10) m.anchor(1, 'Memory dies', [-hw, yb + t / 2, hw * 0.6]);
-    // the vias' and the bumps' points sit low in the stack, so their leaders run short to labels under the loupe
-    // (round two: the vias named in the second die's cut face, low enough that their label can stand level with its dot, under
-    // the loupe's caption, over the bumps' label)
-    if (i === 1) m.anchor(3, 'TSVs', [TX * 5, yb + t / 2, 0]);
-    if (i === 0) m.anchor(4, 'Microbumps', [TX * 7, yb - gap0 / 2 - 0.08, 0]);
-    prev = p;
   }
-  // memory dies anchor: two dies
-  var md = m.anchors.filter(function (q) { return q.n === 1; })[0];
-  var d8 = m.parts.filter(function (q) { return q.name === 'die8'; })[0];
-  md.multi = [[d8.idx, [-hw, gap0 + pitch * 7 + t / 2, hw * 0.6]]];
-  m.guide([[0, -bt - 1.2, 0, base.idx], [0, gap0 + pitch * 11 + t + 1.5, 0, prev.idx]], { style: 'axis', alpha: 0.8 });
-  [[-hw, -hw], [hw, -hw], [-hw, hw]].forEach(function (c) { m.guide([[c[0], 0, c[1], base.idx], [c[0], gap0 + pitch * 11, c[1], prev.idx]], { alpha: 0.6 }); });
-  // what each numbered part lights, as its light table in data/specimen-parts.json does: every memory die in ink, every via and
-  // every microbump in copper
-  var loupe = LOUPE ? { model: 'hbm-loupe', at: [TX * 2.5, gap0 + pitch * 9 + t / 2, hw * 0.55], part: 'die10', side: 'r', r: 0.155, rMax: 100, scale: 0.6, dx: -0.1, dy: 0.04, caption: ['Microbumps in a gap', 'as small as 7\u00a0\u00b5m.', 'Dies not to scale'] } : null;
-  return { elev: PLATE.ISO.elev, yaw: PLATE.ISO.yaw, sortAxis: [0, 1, 0], loupe: loupe, calloutOpts: { 1: { tag: 'dies', only: 'ink' }, 2: { side: 'l' }, 3: { tag: 'tsv', only: 'accent', level: true }, 4: { tag: 'bumps', only: 'accent', side: 'r', level: true } }, order: { r: [3, 4] }, accent: [176, 102, 44], accentDark: [224, 154, 92] };
+  /* The gap under a die, in the plane of its notch's wall, so the cut passes through the vias and the microbumps alike: the black
+     mould that fills the gap (MR-MUF, as the loupe draws it), and on it, under each via, a microbump in section: a wide copper
+     pillar, about three and a half times the via's width (the expert: HBM vias are a few micrometres across, the pillars several
+     times wider), on the die below (the dies are drawn face up, so the pillar stands on the face), and on it a short tin-silver
+     cap, slightly domed after reflow, bulging only a little past the pillar, which meets the die above. So down the staircase the
+     vias read as thin copper threads in pale silicon and the bumps as wide copper posts with silver caps in the black gaps: apart
+     by width, by setting and by the cap. The bumps are decals on the band: pointed at anywhere on the band, the microbumps light,
+     each keeping its own colour a step lighter under a fine wine outline. */
+  function studs(yBot, yTop, z) {
+    var h = yTop - yBot, yc = yTop - h * CAP, dec = [];
+    TX.forEach(function (x) {
+      dec.push({ pts: [[x - RP, yBot, z], [x + RP, yBot, z], [x + RP, yc + 0.006, z], [x - RP, yc + 0.006, z]], closed: true, fill: { d: 0.1, real: 'hb4CuSec' }, real: 'hb4CuSec', lw: 0.6, col: 'acc', tag: 'bumps' });
+      // the cap: from the pillar's top, its sides bulging a little past the pillar, its top slightly domed to meet the die above
+      var cp = [], RC = RP * 1.1, hc = yTop - yc;
+      cp.push([x - RP, yc, z], [x + RP, yc, z]);
+      for (var k = 0; k <= 4; k++) { var u = k / 4; cp.push([x + RP + (RC - RP) * Math.sin(u * Math.PI / 2), yc + hc * 0.55 * u, z]); }
+      for (k = 0; k <= 6; k++) { var a = k / 6; cp.push([x + RC * Math.cos(a * Math.PI), yc + hc * (0.55 + 0.45 * Math.sin(a * Math.PI)), z]); }
+      for (k = 4; k >= 0; k--) { var v = k / 4; cp.push([x - RP - (RC - RP) * Math.sin(v * Math.PI / 2), yc + hc * 0.55 * v, z]); }
+      dec.push({ pts: cp, closed: true, fill: { d: 0.1, real: 'hb4Bead' }, real: 'hb4Bead', lw: 0.6, col: 'acc', tag: 'bumps' });
+    });
+    m.tag('bumpGap'); m.real('hbMould');
+    m.sheet([[-B, yBot, z], [B, yBot, z], [B, yTop, z], [-B, yTop, z]], { d: 0.3 }, { decals: dec });
+    m.tag(null);
+  }
+
+  // ---- the base die
+  var base = m.part('base', { seq: 0, mode: 'fixed' });
+  var zSeen0 = zOf(0) + hw;                              // the base die's face shows in front of die 1's front edge
+  m.tag('base'); m.real('dpFace');
+  m.prism(plan(W, true), -bt, 0, 'steel', { sideMat: { 0: EDGE, 1: EDGE, 2: EDGE, 3: CUTS, 4: CUTS, 5: CUTS, 6: EDGE, 7: EDGE }, top: baseFace(0.001, zSeen0) });
+  m.tag(null);
+  wall(-bt, 0, W - N + 0.003, 0);
+  m.dim([-W, -bt, W], [W, -bt, W], [0, 0, 1.5], '11 mm');
+  // ---- the twelve memory dies, each with the microbumps under its front edge
+  var parts = [];
+  for (var i = 0; i < n; i++) {
+    var y0 = yOf(i), zc = zOf(i), top = i === n - 1, p = m.part('die' + (i + 1), { seq: i + 1, mode: 'fixed' });
+    var yBelow = i ? yOf(i - 1) + t : 0;
+    // (the bumps stand under the vias, in the plane of the notch's wall, so the cut passes through vias and bumps alike)
+    studs(yBelow, y0, zc + hw - N + 0.003);
+    var zSeen = top ? -hw : (zOf(i + 1) + hw) - zc;      // this die's face shows in front of the next die's front edge (die-local)
+    m.tag('dies'); m.real('dpFace');
+    m.prism(plan(hw, !top), y0, y0 + t, 'light', {
+      pos: [0, 0, zc],
+      sideMat: top ? { 0: EDGE, 1: EDGE, 2: EDGE, 3: EDGE } : { 0: EDGE, 1: EDGE, 2: EDGE, 3: CUTS, 4: CUTS, 5: CUTS, 6: EDGE, 7: EDGE },
+      top: dramFace(y0 + t + 0.001, zSeen, top)
+    });
+    m.tag(null);
+    if (!top) wall(y0, y0 + t, hw - N + 0.003, zc);
+    parts.push(p);
+  }
+  /* The four numbered labels, in the parts list's order. On a phone they stand in rows, each pointing at another spot on its part
+     (rowAt) where an upright leader runs clear of the deck: the memory dies from the top die up to the row over the drawing; the
+     TSVs, the microbumps and the base die from the deck's foot down to the row under it. */
+  var pi = function (i) { return parts[i].idx; }, bumpZ = function (i) { return zOf(i) + hw - N + 0.003; }, wallZ = function (i) { return zOf(i) + hw - N + 0.003; };
+  m.callout([[-hw * 0.62, yOf(6) + t, zOf(6) + hw - 0.3, pi(6)], [-hw * 0.62, yOf(2) + t, zOf(2) + hw - 0.3, pi(2)]], 'Memory dies', { n: 1, tag: 'dies', only: 'ink', side: 'l', row: 't', rowAt: [[-hw * 0.55, yOf(11) + t, zOf(11) - hw * 0.55, pi(11)]] });
+  m.callout([[-W * 0.72, -bt / 2, W, base.idx]], 'Base die', { n: 2, tag: 'base', only: 'ink', side: 'l', row: 'b', rowAt: [[W, -bt / 2, W * 0.35, base.idx]] });
+  m.callout([[TX[4], yOf(2) + t / 2, wallZ(2), pi(2)]], 'TSVs', { n: 3, tag: ['tsv', 'tsvWall'], only: 'accent', side: 'r', level: true, row: 'b', rowAt: [[TX[1], yOf(0) + t / 2, wallZ(0), pi(0)]] });
+  m.callout([[TX[5], yOf(1) - g * 0.6, bumpZ(1), pi(1)]], 'Microbumps', { n: 4, tag: ['bumps', 'bumpGap'], only: 'accent', side: 'r', level: true, row: 'b', rowAt: [[TX[4], yOf(0) - g * 0.6, bumpZ(0), pi(0)]] });
+  // (the disc in the empty corner beside the top die, so the deck takes the slot's width; its caption under it)
+  var loupe = { model: 'hbm-loupe', at: [TX[2], yOf(6) - g * 0.5, zOf(6) + hw - N + 0.003], part: 'die7', side: 'r', r: 0.14, rMax: 88, scale: 0.63, dx: 0.075, dy: 0.01, tuck: 'tr', tdx: 70, tdy: 70, caption: ['Microbumps in a gap', 'as small as 7 µm.', 'Dies not to scale'] };
+  return {
+    elev: PLATE.ISO.elev, yaw: PLATE.ISO.yaw, sortAxis: [0, 1, 0], loupe: loupe, thinHover: true,
+    order: { r: [3, 4] }, accent: [176, 102, 44], accentDark: [224, 154, 92]
+  };
 });
 
-/* The loupe's own small plate, in micrometres, seen almost face on so its cut face reads as a section: three dies with the
-   microbumps between them, drawn 20 um apart with no figure (no source gives the pitch inside an HBM stack), in a
-   7 um gap (the smallest in Samsung's 12-high HBM3E release), and a via through each die. The dies' thickness and the vias'
-   width are drawn, not sourced, so they carry no figure, and the caption says the dies are not to scale. The gap round the
-   bumps is filled in a pale neutral (film or underfill, chapter 9). */
+/* The loupe, in micrometres, face on: two memory dies in section, a via through each, and between them a microbump, its copper
+   pillar and its tin-silver cap, in a 7 um gap (Samsung's twelve-high HBM3E release) filled with black mould (MR-MUF, as the
+   expert ruled for a finished stack). Widths and the dies' thickness are drawn, not sourced; the caption says not to scale. */
 R('hbm-loupe', function (m) {
   var bar = PLATE.loupeBar, tag = PLATE.loupeTag;
-  function bx(x0, y0, z0, x1, y1, z1, mat, fmat) { return m.box({ c: [(x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2], s: [x1 - x0, y1 - y0, z1 - z0], fmat: fmat }, mat); }
-  m.part('st', { mode: 'stack' });
-  // (designer pass, 22 Nov 2026: the section is narrower and stands left of the disc's middle, so the gap's figure sits in
-  // clear ground beside it and the die's name over the stack, neither on the cut faces nor past the disc's edge)
-  var t = 30, g = 7, Z = 40, x0 = -50, x1 = 50, n = 3, P = 20, FILL = { d: 0.08 }, FILL_CUT = { d: 0.12 };
-  for (var i = 0; i < n; i++) {
-    var y0 = i * (t + g);
-    m.real('siCut');
-    bx(x0, y0, -Z, x1, y0 + t, Z, 'light', { pz: 'cut' });
-    if (i < n - 1) {
-      // the fill round the bumps, its cut face just behind theirs
-      m.real('underfill');
-      bx(x0, y0 + t, -Z, x1, y0 + t + g - 0.05, Z - 0.4, FILL, { pz: FILL_CUT });
-      m.real('cu');
-      for (var bp = x0 + 10; bp < x1 - 5; bp += P) bx(bp - 4.5, y0 + t, -2, bp + 4.5, y0 + t + g, Z, 'acc', { pz: 'cutAcc' });
-    }
-    m.real('cu');
-    [x0 + 10, x0 + 70].forEach(function (vx) { bx(vx - 2.2, y0, -2, vx + 2.2, y0 + t, Z + 0.02, 'acc', { pz: 'cutAcc' }); });
-  }
-  bar(m, [x1 + 22, t, Z + 1], [x1 + 22, t + g, Z + 1], '7 \u00b5m', { side: 1 });
-  tag(m, [-6, n * t + (n - 1) * g + 17, -Z], 'Memory die', {});
-  return { elev: 0.16, yaw: -0.14, accent: [176, 102, 44], accentDark: [224, 154, 92] };
+  var CUTF = function (real) { return { pz: { d: 0.1, hatch: 2, real: real }, px: { d: 0.1, real: real }, py: { d: 0.1, real: real } }; };
+  function bx(x0, y0, z0, x1, y1, z1, real, mat) { m.real(real); return m.box({ c: [(x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2], s: [x1 - x0, y1 - y0, z1 - z0], fmat: CUTF(real) }, mat || 'light'); }
+  m.part('st', { mode: 'fixed' });
+  /* In its true orientation: each die faces down, its copper pillar hanging from the die above, the tin-silver cap on the pad of
+     the die below. The pillar about three and a half times the via's width (the expert: vias a few micrometres across, pillars
+     several times wider), the cap a short layer about as wide, bulging only a little past the pillar, slightly domed into the pad.
+     Widths and the dies' thickness are drawn, not sourced; the caption says not to scale. */
+  var t = 26, g = 7, Z = 20, x0 = -15, x1 = 15, cols = [0], VW = 2.0, PW = 7.0, CH = g * 0.4;
+  bx(x0, 0, -Z, x1, t, Z, 'hb4SiWall');
+  cols.forEach(function (vx) { bx(vx - VW, 0, -2, vx + VW, t, Z + 0.05, 'hbCu', 'acc'); });
+  bx(x0, t, -Z, x1, t + g - 0.05, Z - 0.5, 'hbMould', 'mid');
+  cols.forEach(function (vx) {
+    bx(vx - PW * 1.02, t, -8, vx + PW * 1.02, t + 0.6, Z + 0.1, 'hbSnAg', 'acc');         // the cap's foot, curving into the pad
+    bx(vx - PW * 1.09, t + 0.6, -8, vx + PW * 1.09, t + CH, Z + 0.1, 'hbSnAg', 'acc');      // the cap, bulging a little past the pillar
+    bx(vx - PW, t + CH, -8, vx + PW, t + g, Z + 0.1, 'hbCu', 'acc');                        // the pillar
+  });
+  bx(x0, t + g, -Z, x1, 2 * t + g, Z, 'hb4SiWall');
+  cols.forEach(function (vx) { bx(vx - VW, t + g, -2, vx + VW, 2 * t + g, Z + 0.05, 'hbCu', 'acc'); });
+  bar(m, [x1 + 7, t, Z + 1], [x1 + 7, t + g, Z + 1], '7 \u00b5m', { side: 1 });
+  tag(m, [0, 2 * t + g + 12, -Z], 'Memory die', {});
+  // the two parts named inside the disc, each with a short leader: the via in the die, the bump in the gap
+  tag(m, [x0 - 5, t * 0.42, Z], 'TSV', { align: 'right', lead: [cols[0] - VW, t * 0.42, Z + 0.1] });
+  tag(m, [x0 - 5, t + g * 0.55, Z], 'Microbump', { align: 'right', lead: [cols[0] - PW, t + g * 0.55, Z + 0.1] });
+  return { elev: 0.15, yaw: -0.13, accent: [176, 102, 44], accentDark: [224, 154, 92] };
 });
 
 })(window.PLATE);}catch(e){console.warn('plate hbm-stack.js failed to load', e);}

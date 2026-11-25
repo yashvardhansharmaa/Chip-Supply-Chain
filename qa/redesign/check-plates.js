@@ -54,7 +54,9 @@ const info = (line) => out.push(`info ${line}`);
     const m = P.build(nm), solidLit = (f, it) => P.lit(f, it), decalLit = (f, it) => it.kind === 'solid' && it.decals.some((d) => d.items.some((q) => P.lit(f, q, it)));
     m.callouts.forEach((c) => {
       const f = P.focusOf(c), T = c._targets || [];
-      const unlit = T.filter((t) => !t.beam && !(t.decal ? decalLit(f, t.it) : solidLit(f, t.it)));
+      // (since 24 Nov 2026 a leader may land on a face whose painted parts are what it names, 09's notch wall under its TSVs and
+      // the mould band under its microbumps: the target counts as lit when its decals light)
+      const unlit = T.filter((t) => !t.beam && !(t.decal ? decalLit(f, t.it) : solidLit(f, t.it) || decalLit(f, t.it)));
       const theirs = m.callouts.filter((o) => o !== c).flatMap((o) => (o._targets || []).filter((t) => t.it && !t.decal && !T.some((u) => u.it === t.it)).map((t) => t.it));
       const stray = m.S.filter((it) => solidLit(f, it) && theirs.includes(it));
       check(`${nm}: "${c.text}" lights its own part and nothing else`, T.length > 0 && !unlit.length && !stray.length, `${T.length} targets${unlit.length ? `, ${unlit.length} unlit` : ''}${stray.length ? `, lights ${stray.length} another label points at` : ''}`);

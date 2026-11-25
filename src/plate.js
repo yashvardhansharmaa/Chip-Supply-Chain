@@ -731,7 +731,8 @@
      below. strip: how far a polished turned part's highlight goes toward white (mstrip the same for a flat mirror). clear: the
      share of light it stops. edge: a clear or glass part's edge. cut: its section colour (else derived, paler and warmer than any
      outside face; cutD on the night ground). noHatch: a cut face with no ruling. lineK: the tone of lines drawn in it.
-     stopsC: the material's own reflection stops across a flat face, in place of its polish class's.
+     stopsC: the material's own reflection stops across a flat face, in place of its polish class's. kMin: the least light its
+     flat faces take, so a pale section stays pale on its shade side. edgeD: its edge line on the night ground.
      The reasons are in qa/builds-nov/round-24nov/shots/spec-color/NOTES.md (main checkout), one line each here. */
   var REAL = P.REAL = {
     // silicon: the circuit face graphite with a violet cast and a teal cache; bare silicon a near-neutral grey with a slight blue
@@ -832,6 +833,17 @@
     dpEdge:   { L: '#2f323a', D: '#2f323a', g: 0.9, stopsC: [[0, 1], [1, 1]], edge: '#8d93a0' }, // the polished sawn edge, with a light edge line
     dpStreet: { L: '#34324a', D: '#34324a', g: 0.4, stopsC: [[0, 1], [1, 1]], lineK: 1.0 }, // the streets between the cache's sub-arrays
     wfSi:     { L: '#a7abb3', D: '#7f838b', g: 0.9, stopsC: [[0, 0.9], [0.35, 0.97], [0.5, 1.12], [0.65, 0.97], [1, 0.9]] }, // the wafer's edge ring and notch: plain polished silicon
+    // 09, The deck, spread (24 Nov 2026, the owner's pick of four plates): the notch walls, the vias and microbumps told apart (pale
+    // silicon with copper threads, black mould with tin-silver capped pillars), and the dies' sawn edges; the faces are 01's dp*
+    hb4Si:    { L: '#c7c9cc', D: '#a3a6ab', g: 0.3, cut: '#c7c9cc', noHatch: true, stopsC: [[0, 1], [1, 1]] }, // silicon in section, the dies' cut faces
+    hb4Edge:  { L: '#2f323a', D: '#3a3d46', g: 0.9, stopsC: [[0, 1], [1, 1]], edge: '#8d93a0', edgeD: '#9aa0ad' }, // a die's polished sawn edge, a light edge line
+    hb4CuSec: { L: '#c8733f', D: '#d07a45', g: 0.3, lineK: 0.62 },                     // a via in section on the notch wall: a copper thread, dark on the pale wall in greyscale
+    hb4Bead:  { L: '#c4c6c3', D: '#b3b5b2', g: 0.3, kMin: 0.95, stopsC: [[0, 1.04], [1, 0.96]] }, // a microbump's tin-silver cap: light and even, light on the mould in greyscale
+    hb4SiWall:{ L: '#d9dbde', D: '#b9bcc1', g: 0.3, stopsC: [[0, 1], [1, 1]], kMin: 0.95 }, // the notch wall: silicon in section, pale, so the copper threads read on it
+    hbCu:     { L: '#c8733f', D: '#c26e3b', g: 0.75, metal: true, strip: 0.5, cut: '#e09a72', noHatch: true }, // copper in the loupe: the via and the microbump's pillar
+    hbSnAg:   { L: '#c4c6c3', D: '#b3b5b2', g: 0.6, metal: true, cut: '#dcdedb', noHatch: true }, // tin-silver solder: the bump caps on the faces and in the loupe
+    hb4Rim:   { L: '#9a5a32', D: '#a5633a', g: 0.4 },                                   // a bump's copper pillar, seen round its cap
+    hbMould:  { L: '#33353a', D: '#46484e', g: 0.6, cut: '#3b3d42', noHatch: true },   // the black moulding (MR-MUF) that fills the gaps between dies
     // a chart's emphasis
     wine:     { L: '#dcb9be', D: '#6e3b45', g: 0 }                                    // the cost column's largest share keeps the site's wine tint
   };
@@ -1326,6 +1338,7 @@
     // a flat face's tone by its turn to the key light
     var flatTone = function (Rm, b, lam, top) {
       var k0 = TB ? (top ? 1.04 : 0.42 + 0.72 * lam) : top ? 0.9 : (0.36 + 0.72 * lam) * 0.95;
+      if (Rm.kMin) k0 = Math.max(k0, Rm.kMin);
       var col = litC(b, k0);
       if (k0 < 0.8) col = mixL(col, COOL, 0.07 * (0.8 - k0) / 0.45); else if (top) col = mixL(col, WARM, 0.025);
       if (Rm.studio) col = mixL(col, top ? COOLS : WARMB, 0.1);
@@ -1419,7 +1432,10 @@
       return css(Ld < 0.09 ? litC(rgb, 2.6) : litC(rgb, 0.55));
     };
     var tEdges = function (TF, Rf, s, f, shl, fine, crease, out, shade, on, alpha, szK, thinTint, nvw) {
-      var rgb = TF.rgb, b = tBase(Rf), edge = Rf.edge && !pal.dark ? hex(Rf.edge) : null, hiW = 1.5 * Math.max(0.8, k);
+      var rgb = TF.rgb, b = tBase(Rf), edge = Rf.edge && !pal.dark ? hex(Rf.edge) : Rf.edgeD && pal.dark ? hex(Rf.edgeD) : null, hiW = 1.5 * Math.max(0.8, k);
+      // (a plate that asks, spec.thinHover, outlines its small parts at 0.75 px when pointed at, so a row of thin copper pillars
+      // keeps its copper under the wine: 09's thin-part hover rule)
+      if (on && m.spec.thinHover && szK < 0.7) hiW = 0.75;
       // no ink on the object: its silhouette in its own deep shade at one weight, the light edge alone where a polished top
       // meets a side, every other crease soft in the face's own colour (in a turning frame the soft creases and fine lines wait
       // for the plate to rest)
@@ -1471,6 +1487,9 @@
           count.dots += dp.length;
           // (the pointer finds the decal it is on, so a face painted with several labelled parts answers part by part)
           if (pick) pick.push({ dots: dp, r: Math.max(3, (it.r || 0.9) * k + 1.5), it: it, host: s });
+          // (dots marked thinLit keep their own colour, a step lighter, under a fine wine ring when pointed at, so a field of small
+          // bumps never turns into wine dots: 09's thin-part hover rule; thinRing false leaves the ring off)
+          if (dl && it.thinLit && Rd) { var dr0 = Math.max(0.45, (it.r || 0.9) * k); g.dots(dp, dr0, css(litC(tBase(Rd), 1.18)), (it.alpha == null ? 0.9 : it.alpha) * al); if (it.thinRing !== false) g.dots(dp, dr0 + 0.35, hlC, (it.alpha == null ? 0.9 : it.alpha) * al, true); curFade = keepF; return; }
           g.dots(dp, Math.max(0.45, (it.r || 0.9) * k), fzC(dl ? hlC : Rd ? tDotC(Rd, it.ring) : it.fillCol ? css(colOf(it.fillCol)) : lc), (it.alpha == null ? 0.9 : it.alpha) * al, it.ring);
           curFade = keepF;
           return;

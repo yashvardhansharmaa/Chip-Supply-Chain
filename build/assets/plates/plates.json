@@ -1,7 +1,7 @@
 {
  "design-and-eda": {
   "specimen": "die-floorplan",
-  "src": "d5d6578140c5f65f",
+  "src": "44239915f0d43a2e",
   "thumb": [
    104,
    104
@@ -21,7 +21,7 @@
  },
  "silicon-and-wafers": {
   "specimen": "boule-and-wafer",
-  "src": "43a4727337ff6d18",
+  "src": "5f4e6c50c1bbc0fe",
   "thumb": [
    104,
    104
@@ -41,7 +41,7 @@
  },
  "chemicals-gases-and-photoresist": {
   "specimen": "gas-cabinet",
-  "src": "0d2462e18acb9ad7",
+  "src": "e4005c831288c1fb",
   "thumb": [
    104,
    104
@@ -61,7 +61,7 @@
  },
  "lithography": {
   "specimen": "euv-scanner",
-  "src": "47f37af3953a835b",
+  "src": "8b638acac1ffa1ad",
   "thumb": [
    104,
    104
@@ -81,7 +81,7 @@
  },
  "photomasks-and-pellicles": {
   "specimen": "photomask",
-  "src": "bc64cd93dd7bf3c5",
+  "src": "9eaa4311b1d923ef",
   "thumb": [
    104,
    104
@@ -101,7 +101,7 @@
  },
  "deposition-and-etch": {
   "specimen": "process-chamber",
-  "src": "8060c44f65813c99",
+  "src": "3bd9d297b74a1ef1",
   "thumb": [
    104,
    104
@@ -121,7 +121,7 @@
  },
  "metrology-and-inspection": {
   "specimen": "sem-column",
-  "src": "cab86115f902ca97",
+  "src": "cd62b141950290fb",
   "thumb": [
    104,
    104
@@ -141,7 +141,7 @@
  },
  "foundries-and-fabs": {
   "specimen": "gaa-transistor",
-  "src": "9f39c0c3baf662ab",
+  "src": "b495ff3364e1ba97",
   "thumb": [
    104,
    104
@@ -161,27 +161,27 @@
  },
  "memory-and-hbm": {
   "specimen": "hbm-stack",
-  "src": "737d04ab24a83305",
+  "src": "17821a1939984018",
   "thumb": [
    104,
    104
   ],
   "ink": {
-   "thumb": 0.312,
-   "line": 0.312
+   "thumb": 0.339,
+   "line": 0.344
   },
   "line": [
-   108,
-   118
+   138,
+   132
   ],
   "door": [
-   248,
-   328
+   354,
+   334
   ]
  },
  "advanced-packaging": {
   "specimen": "cowos-exploded",
-  "src": "b2e0b5e050d9f0a7",
+  "src": "12cd36a3a85e95e4",
   "thumb": [
    104,
    104
@@ -201,7 +201,7 @@
  },
  "substrates-and-pcbs": {
   "specimen": "substrate-layers",
-  "src": "af1163284236f8bc",
+  "src": "c91a96c66c731491",
   "thumb": [
    104,
    104
@@ -221,7 +221,7 @@
  },
  "test-and-assembly": {
   "specimen": "probe-card",
-  "src": "de4f5310920eb48b",
+  "src": "bbcb3af1abff40bf",
   "thumb": [
    104,
    104
@@ -241,7 +241,7 @@
  },
  "systems-and-networking": {
   "specimen": "gpu-baseboard",
-  "src": "90bb2ef64d47c20d",
+  "src": "d6e0a9cd3c3f4233",
   "thumb": [
    104,
    104
@@ -261,7 +261,7 @@
  },
  "data-centers-and-power": {
   "specimen": "rack",
-  "src": "9660a044d70d4b6c",
+  "src": "f94c81cd5613ed9b",
   "thumb": [
    104,
    104
@@ -281,7 +281,7 @@
  },
  "component-costs": {
   "specimen": "wafer-cost",
-  "src": "0fc43e81b7496e43",
+  "src": "56431adcc226469f",
   "thumb": [
    104,
    104
@@ -301,7 +301,7 @@
  },
  "geopolitics": {
   "specimen": "globe",
-  "src": "716b7d2c5227d7cb",
+  "src": "bde602b8299d58b3",
   "thumb": [
    104,
    104
