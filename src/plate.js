@@ -731,6 +731,7 @@
      below. strip: how far a polished turned part's highlight goes toward white (mstrip the same for a flat mirror). clear: the
      share of light it stops. edge: a clear or glass part's edge. cut: its section colour (else derived, paler and warmer than any
      outside face; cutD on the night ground). noHatch: a cut face with no ruling. lineK: the tone of lines drawn in it.
+     stopsC: the material's own reflection stops across a flat face, in place of its polish class's.
      The reasons are in qa/builds-nov/round-24nov/shots/spec-color/NOTES.md (main checkout), one line each here. */
   var REAL = P.REAL = {
     // silicon: the circuit face graphite with a violet cast and a teal cache; bare silicon a near-neutral grey with a slight blue
@@ -814,6 +815,23 @@
     ghsGreen: { L: '#2e8b3e', D: '#2e8b3e', g: 0.2 },                                 // a non-flammable gas diamond's green
     label:    { L: '#f6f4ee', D: '#bdbbb4', g: 0.2 },                                 // a cylinder's white shoulder label
     gauge:    { L: '#f1efe8', D: '#b9b7b0', g: 0.5 },                                 // a pressure gauge's white dial
+    // 01, One design, many dies (24 Nov 2026, the owner's pick of four plates): the lifted die as die photographs show such chips
+    // (the expert's round 3 rulings), one soft static band (stopsC) on every face material, and the wafer's plain silicon. The
+    // die grid's band colours (wfT*) are made by plates/die-floorplan.js when the kit loads
+    dpFace:   { L: '#3d3b57', D: '#3d3b57', g: 0.85, stopsC: [[0, 0.86], [0.3, 0.94], [0.44, 1.3], [0.53, 1.26], [0.66, 0.95], [1, 0.86]] }, // the die's face between blocks: graphite-violet
+    dpLogic:  { L: '#5e5678', D: '#5e5678', g: 0.6, stopsC: [[0, 0.86], [0.3, 0.94], [0.44, 1.3], [0.53, 1.26], [0.66, 0.95], [1, 0.86]] },  // logic, a fine mottle about this tone
+    dpLogicHi:{ L: '#665e81', D: '#665e81', g: 0.6, stopsC: [[0, 0.86], [0.3, 0.94], [0.44, 1.3], [0.53, 1.26], [0.66, 0.95], [1, 0.86]] },  // the mottle's light cells (8 percent lighter)
+    dpLogicLo:{ L: '#564f6e', D: '#564f6e', g: 0.6, stopsC: [[0, 0.86], [0.3, 0.94], [0.44, 1.3], [0.53, 1.26], [0.66, 0.95], [1, 0.86]] },  // the mottle's dark cells (8 percent darker)
+    dpBronze: { L: '#7a6650', D: '#7a6650', g: 0.6, stopsC: [[0, 0.86], [0.3, 0.94], [0.44, 1.3], [0.53, 1.26], [0.66, 0.95], [1, 0.86]] },  // bronze flecks in the logic, under 15 percent of it
+    dpSram:   { L: '#3f6873', D: '#3f6873', g: 0.6, stopsC: [[0, 0.86], [0.3, 0.94], [0.44, 1.3], [0.53, 1.26], [0.66, 0.95], [1, 0.86]] },  // SRAM: a fine even grid in teal
+    dpSramB:  { L: '#3e5a86', D: '#3e5a86', g: 0.6, stopsC: [[0, 0.86], [0.3, 0.94], [0.44, 1.3], [0.53, 1.26], [0.66, 0.95], [1, 0.86]] },  // SRAM sub-arrays shading toward blue
+    dpSramLn: { L: '#2c4b55', D: '#2c4b55', g: 0.4, stopsC: [[0, 0.86], [0.3, 0.94], [0.44, 1.3], [0.53, 1.26], [0.66, 0.95], [1, 0.86]], lineK: 1.0 }, // the SRAM grid's lines
+    dpPhy:    { L: '#8a8170', D: '#8a8170', g: 0.6, stopsC: [[0, 0.86], [0.3, 0.94], [0.44, 1.3], [0.53, 1.26], [0.66, 0.95], [1, 0.86]] },  // I/O and PHY: coarse grey-bronze
+    dpCu:     { L: '#b07a52', D: '#b07a52', g: 0.6, metal: true, stopsC: [[0, 1], [1, 1]], lineK: 1.0 }, // copper-tone lines and the seal ring
+    dpPad:    { L: '#c8733f', D: '#c8733f', g: 0.6, metal: true, stopsC: [[0, 1], [1, 1]] }, // the die-to-die link's copper pads
+    dpEdge:   { L: '#2f323a', D: '#2f323a', g: 0.9, stopsC: [[0, 1], [1, 1]], edge: '#8d93a0' }, // the polished sawn edge, with a light edge line
+    dpStreet: { L: '#34324a', D: '#34324a', g: 0.4, stopsC: [[0, 1], [1, 1]], lineK: 1.0 }, // the streets between the cache's sub-arrays
+    wfSi:     { L: '#a7abb3', D: '#7f838b', g: 0.9, stopsC: [[0, 0.9], [0.35, 0.97], [0.5, 1.12], [0.65, 0.97], [1, 0.9]] }, // the wafer's edge ring and notch: plain polished silicon
     // a chart's emphasis
     wine:     { L: '#dcb9be', D: '#6e3b45', g: 0 }                                    // the cost column's largest share keeps the site's wine tint
   };
@@ -1380,7 +1398,7 @@
       }
       var gk = opt.gk || (f && (groups(), f._gk)), gb = gk && GR[gk] ? GR[gk] : bbOf(pts);
       var wide = gb[2] - gb[0] > 0.4 * w;
-      var stops = gl >= 0.85 ? (TB ? MIR_B : wide ? MIR_CW : MIR_C) : gl >= 0.5 ? (TB ? SAT_B : SAT_C) : TB ? TONE : TONE_C;
+      var stops = !TB && Rm.stopsC ? Rm.stopsC : gl >= 0.85 ? (TB ? MIR_B : wide ? MIR_CW : MIR_C) : gl >= 0.5 ? (TB ? SAT_B : SAT_C) : TB ? TONE : TONE_C;
       var gp = grad(axisOf(gb), stops, col, on, Rm, opt.sheen);
       return { f: MEMO && small(pts) ? flatAt(gp, pts) : gp, rgb: col };
     };
@@ -1440,20 +1458,25 @@
       var host = tFace(Rs, nv, null, -1, null, false, false, null, s).rgb;
       d.items.forEach(function (it) {
         if (thumb && !it.keep) return;
+        // (a texture marked fine is left out while the plate turns: 01's die photo draws about 1,600 decals at rest)
+        if (cheap && it.fine) return;
         var dl = foc ? P.lit(foc, it, s) : false, al = foc ? (pa == null ? 1 : pa) : alpha0, keepF = curFade;
         curFade = foc && !dl ? FADE : 0;
         // (a diagram mark on a face, the field the light exposes, keeps the plate's own colour)
-        if (it.diagram) { var pd = it.pts.map(function (q) { return proj(q, s.part).slice(0, 2); }), fd = typeof it.fill === 'string' ? MATS[it.fill] : it.fill; if (fd) g.poly(pd, fzC(fillOf(fd, nv, false, dl)), al); if (it.lw !== 0) GL([it.closed ? pd.concat([pd[0]]) : pd], dl ? hlC : lineCol(it.col), (it.lw || LW.decal / k) * k * 0.9, null, al); curFade = keepF; return; }
+        if (it.diagram) { var pd = it.pts.map(function (q) { return proj(q, s.part).slice(0, 2); }), fd = typeof it.fill === 'string' ? MATS[it.fill] : it.fill; if (fd) g.poly(pd, fzC(fillOf(fd, nv, false, dl)), al); if (pick && fd) pick.push({ pts: pd, it: it, host: s }); if (it.lw !== 0) GL([it.closed ? pd.concat([pd[0]]) : pd], dl ? hlC : lineCol(it.col), (it.lw || LW.decal / k) * k * 0.9, null, al); curFade = keepF; return; }
         var fo = it.fill && typeof it.fill === 'object' ? it.fill : null, Rd = REAL[it.real || (fo && fo.real) || ''] || null;
         var lc = dl ? hlC : Rd ? css(litC(tBase(Rd), Rd.metal ? 1.18 : Rd.lineK || 0.6)) : it.col === 'bg' ? bgC : it.col === 'acc' || it.col === 'acc2' ? lineCol(it.col) : inC(host);
         if (it.dots) {
           var dp = it.dots.map(function (q) { return proj(q, s.part); });
           count.dots += dp.length;
+          // (the pointer finds the decal it is on, so a face painted with several labelled parts answers part by part)
+          if (pick) pick.push({ dots: dp, r: Math.max(3, (it.r || 0.9) * k + 1.5), it: it, host: s });
           g.dots(dp, Math.max(0.45, (it.r || 0.9) * k), fzC(dl ? hlC : Rd ? tDotC(Rd, it.ring) : it.fillCol ? css(colOf(it.fillCol)) : lc), (it.alpha == null ? 0.9 : it.alpha) * al, it.ring);
           curFade = keepF;
           return;
         }
         var pts = it.pts.map(function (q) { return proj(q, s.part).slice(0, 2); });
+        if (pick && it.fill) pick.push({ pts: pts, it: it, host: s });
         if (it.fill) {
           var fm = typeof it.fill === 'string' ? MATS[it.fill] : it.fill;
           if (Rd) {
@@ -1468,6 +1491,9 @@
         if (it.lw !== 0) {
           if (it.closed) pts = pts.concat([pts[0]]);
           var lw0 = (it.lw || LW.decal / k) * k * 0.9, dash = it.dash ? it.dash.map(function (v) { return v * k; }) : null;
+          // (a heavy line on a face, the TSVs on a die's side, is recorded for the pointer too; fine rulings and traces are not, so the
+          // face or film they cross keeps its own label)
+          if (pick && !it.fill && lw0 >= 1.6) pick.push({ line: pts, r: lw0 / 2 + 0.75, it: it, host: s });
           // (a copper line with an edge: a darker rim each side, as the TSVs and the substrate's planes take it)
           if (it.edge && Rd && !dl) GL([pts], css(litC(tBase(Rd), 0.42)), lw0 + 0.9, dash, (it.alpha == null ? 1 : it.alpha) * al);
           GL([pts], lc, lw0, dash, (it.alpha == null ? 1 : it.alpha) * al);
@@ -1683,7 +1709,7 @@
         if (it.kind === 'solid' && it.mat.phantom) { ph.push(it); return false; }
         return true;
       });
-      if (m.spec.ghostFill) gh.forEach(function (s) { for (var fi = s.f0; fi < s.f1; fi++) if (front[fi]) g.poly(F[fi].v.map(P2), bgC, 0.94 * a); });
+      if (m.spec.ghostFill) gh.forEach(function (s) { for (var fi = s.f0; fi < s.f1; fi++) if (front[fi]) { var gp = F[fi].v.map(P2); g.poly(gp, bgC, 0.94 * a); if (pick) pick.push({ pts: gp, it: s }); } });
       gh.forEach(function (s) { ghostEdges(s, false, a * dimF(s)); });
       // under 560 px, where leaders find their way out of the drawing to a row of labels, an outline-only part still counts as
       // drawing (the cost column's yield loss), so no leader runs down its face
@@ -1703,6 +1729,7 @@
           if (it.closed) pts.push(pts[0]);
           if (it.real && REAL[it.real]) tWire(pts, REAL[it.real], (thumb ? Math.max(0.5, it.lw * 0.6) * ik : it.lw * k), it.dash ? it.dash.map(function (v) { return v * k; }) : null, it.alpha * fa, hl, it.edge);
           else g.lines([pts], hl ? hlC : lineCol(it.col), (thumb ? Math.max(0.5, it.lw * 0.6) * ik : it.lw * k), it.dash ? it.dash.map(function (v) { return v * k; }) : null, it.alpha * fa);
+          if (pick && !thumb && it.alpha > 0.05) pick.push({ line: pts, r: Math.max(3, it.lw * k / 2 + 2), it: it });
         } else if (it.kind === 'globe') {
           var gc = proj([0, 0, 0], it.part);
           tGlobe(gc[0], gc[1], it.r * sc, fa);
@@ -1791,8 +1818,9 @@
           if (!thumb && !lite) g.hatch(pts, fm.c ? lineCol(fm.c) : inkC, (fm.gap || (fm.hatch === 2 ? 2.4 : 3.4)) * k, LW.hatch, fm.hatch, (pal.dark ? 0.7 : 0.8) * alpha, f.hv != null ? f.hv : fm.ang);
         } else g.poly(pts, fillOf(fm, nvw, f.curve, hl), (fm.alpha == null ? 1 : fm.alpha) * alpha);
         stamp[fi] = frame;
-        if (pick) pick.push({ pts: pts, it: s });
-        if (occ) occ.push({ pts: pts, it: s });
+        var seeT = s.real && REAL[s.real] && REAL[s.real].seeThru;
+        if (pick) pick.push({ pts: pts, it: s, soft: !!seeT });
+        if (occ && !seeT) occ.push({ pts: pts, it: s });
         var out = [], shade = [], crease = [], fine = [], shl = [];
         var gx = 0, gy = 0; for (var q = 0; q < pts.length; q++) { gx += pts[q][0]; gy += pts[q][1]; } gx /= pts.length; gy /= pts.length;
         for (q = 0; q < f.v.length; q++) {
@@ -1849,10 +1877,12 @@
           if (it.dots) {
             var dp = it.dots.map(function (q) { return proj(q, s.part); });
             count.dots += dp.length;
+            if (pick) pick.push({ dots: dp, r: Math.max(3, (it.r || 0.9) * k + 1.5), it: it, host: s });
             g.dots(dp, Math.max(0.45, (it.r || 0.9) * k), it.fillCol && !dl ? css(colOf(it.fillCol)) : col, (it.alpha == null ? 0.9 : it.alpha) * alpha, it.ring);
             return;
           }
           var pts = it.pts.map(function (q) { return proj(q, s.part).slice(0, 2); });
+          if (pick && it.fill) pick.push({ pts: pts, it: it, host: s });
           if (it.fill) {
             var fm = typeof it.fill === 'string' ? MATS[it.fill] : it.fill;
             if (fm.hatch) { g.poly(pts, css(mix(pal.bg, colOf(fm.c), fm.d)), alpha); if (!thumb) g.hatch(pts, fm.c ? lineCol(fm.c) : inkC, 3 * k, LW.hatch, fm.hatch, 0.75 * alpha); }
@@ -1906,7 +1936,7 @@
         // a label on the light path (P.focusOf beam) lights the path
         var col = css(colOf(L.col || 'acc')), lb = !!(foc && foc.beam), aa = (L.alpha == null ? 1 : L.alpha) * Math.min(1, K * 1.6) * (foc && !lb ? 0.35 : 1);
         if (knockPass) g.lines([pts], bgC, pal.dark ? (L.lw || 1.4) * k + 2 : (L.lw || 1.4) * k * 2.4, null, Math.min(1, K * 1.6) * (foc && !lb ? 0.35 : 1), 'butt');
-        else g.lines([pts], col, (L.lw || 1.4) * (thumb ? 0.8 : k) * (lb ? 1.5 : 1), null, aa);
+        else { g.lines([pts], col, (L.lw || 1.4) * (thumb ? 0.8 : k) * (lb ? 1.5 : 1), null, aa); if (pick && !thumb) pick.push({ line: pts, r: 5, beam: L }); }
       });
     });
     // the dimensions: all of them in a chapter's slot, the plate's first (the size its caption leads with) in the phone's view
@@ -2601,18 +2631,69 @@
     var hit = null, self = this;
     (this._hit || []).forEach(function (b) { if (x >= b.x0 && x <= b.x1 && y >= b.y0 && y <= b.y1) hit = b.c; });
     if (hit) return hit;
-    var pk = this._pick || [], it = null;
-    for (var i = pk.length - 1; i >= 0 && !it; i--) {
-      var e = pk[i];
-      if (e.pts) { if (inPoly(x, y, e.pts)) it = e.it; }
-      else for (var j = 0; j < e.dots.length; j++) { var d = e.dots[j]; if (Math.abs(d[0] - x) < e.r && Math.abs(d[1] - y) < e.r) { it = e.it; break; } }
+    var pk = this._pick || [], i, j;
+    // the label that names an item: a numbered one first, then the others, in their order. A decal is named by its own label;
+    // a solid by its own, or, where its decals were not recorded (lines), by a label that lights one of them
+    var list = this.m.callouts.slice().sort(function (a, b) { return (a.n ? 0 : 1) - (b.n ? 0 : 1); }), foci = list.map(function (c) { return P.focusOf(c); });
+    var hosts = []; pk.forEach(function (e) { if (e.host && hosts.indexOf(e.host) < 0) hosts.push(e.host); });
+    var name = function (it, host) {
+      // (a label with the item's own tag first: the dies under test before the wafer they lie on)
+      if (it.tag) for (var n0 = 0; n0 < list.length; n0++) { var f0 = foci[n0]; if (f0.tags && f0.tags.indexOf(it.tag) >= 0 && P.lit(f0, it, host)) return list[n0]; }
+      for (var n = 0; n < list.length; n++) {
+        var f = foci[n];
+        if (host ? P.lit(f, it, host) : (P.lit(f, it) || (it.kind === 'solid' && hosts.indexOf(it) < 0 && it.decals.some(function (d) { return d.items.some(function (q) { return P.lit(f, q, it); }); })))) return list[n];
+      }
+      return null;
+    };
+    var segD = function (px, py, a, b) { var dx = b[0] - a[0], dy = b[1] - a[1], L2 = dx * dx + dy * dy, t = L2 ? Math.max(0, Math.min(1, ((px - a[0]) * dx + (py - a[1]) * dy) / L2)) : 0; return Math.hypot(px - a[0] - t * dx, py - a[1] - t * dy); };
+    // how far the pointer is from a recorded item: its outline, its line or its dots
+    var gapD = function (q) {
+      var dd = Infinity, a, b;
+      if (q.pts) for (a = 0, b = q.pts.length - 1; a < q.pts.length; b = a++) dd = Math.min(dd, segD(x, y, q.pts[b], q.pts[a]));
+      else if (q.line) for (a = 0; a + 1 < q.line.length; a++) dd = Math.min(dd, Math.max(0, segD(x, y, q.line[a], q.line[a + 1]) - q.r));
+      else if (q.dots) q.dots.forEach(function (d) { dd = Math.min(dd, Math.max(0, Math.hypot(d[0] - x, d[1] - y) - q.r)); });
+      return dd;
+    };
+    var smallUnder = function (top) {
+      for (var u = top - 1; u >= 0; u--) {
+        var q = pk[u]; if (!q.pts || q.beam || !inPoly(x, y, q.pts)) continue;
+        var bx0 = Infinity, by0 = Infinity, bx1 = -Infinity, by1 = -Infinity;
+        q.pts.forEach(function (p) { if (p[0] < bx0) bx0 = p[0]; if (p[0] > bx1) bx1 = p[0]; if (p[1] < by0) by0 = p[1]; if (p[1] > by1) by1 = p[1]; });
+        if (bx1 - bx0 > 24 || by1 - by0 > 24) return null;
+        var qc = name(q.it, q.host); if (qc && !P.focusOf(qc).beam) return qc;
+        return null;
+      }
+      return null;
+    };
+    var soft;
+    for (i = pk.length - 1; i >= 0; i--) {
+      var e = pk[i], on = false;
+      if (e.line) { for (j = 0; j + 1 < e.line.length && !on; j++) on = segD(x, y, e.line[j], e.line[j + 1]) < e.r; if (on && e.beam) { var sm = smallUnder(i); if (sm) return sm; for (j = 0; j < list.length; j++) if (foci[j].beam) return list[j]; } if (!on || e.beam) continue; }
+      else if (e.pts) on = inPoly(x, y, e.pts);
+      else for (j = 0; j < e.dots.length && !on; j++) { var d = e.dots[j]; on = Math.abs(d[0] - x) < e.r && Math.abs(d[1] - y) < e.r; }
+      if (!on) continue;
+      var c = name(e.it, e.host);
+      // a decal no label names: the face under it answers. A clear film: what lies under it answers first
+      if (e.host) { if (c) return c; continue; }
+      if (e.soft) { if (soft === undefined) soft = c; continue; }
+      // a face painted with labelled parts, met in a gap between them: the nearest within 10 px answers, so the light holds
+      // steady as the pointer crosses the die's blocks
+      if (!c && hosts.indexOf(e.it) >= 0) {
+        var bd = 10;
+        pk.forEach(function (q) {
+          if (q.host !== e.it || q.line) return;
+          var dd = Infinity, a, b;
+          dd = gapD(q);
+          if (dd < bd) { var qc = name(q.it, q.host); if (qc) { bd = dd; c = qc; } }
+        });
+      }
+      return c || soft || null;
     }
-    if (!it) return null;
-    // the label that names this item: a numbered one first, then the others, in their order
-    var list = this.m.callouts.slice().sort(function (a, b) { return (a.n ? 0 : 1) - (b.n ? 0 : 1); });
-    for (i = 0; i < list.length; i++) { var f = P.focusOf(list[i]); if (P.lit(f, it) || (it.kind === 'solid' && it.decals.some(function (d) { return d.items.some(function (q) { return P.lit(f, q, it); }); }))) return list[i]; }
+    // nothing labelled under the pointer: the nearest part within 4 px answers, so a part thinner than the aim (the ingot's seed
+    // and neck, a needle) lights from the drawing too
+    if (!soft) { var best = 4; pk.forEach(function (q) { if (q.beam) return; var dd = gapD(q); if (dd < best) { var qc = name(q.it, q.host); if (qc) { best = dd; soft = qc; } } }); }
     void self;
-    return null;
+    return soft || null;
   };
   // the still: the same drawing as SVG, for print and for the small stills (o: dark, print, lod, noDims, noLabels, numbersOnly,
   // measure, the width of a string in the page's faces)

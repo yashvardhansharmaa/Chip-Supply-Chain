@@ -191,9 +191,10 @@ const STATE = `(function () { var S = CP.Stage, c = S.canvas, x = c.getContext('
       const kb2 = await t.ev(STATE);
       check(`${W}: and it eases back after the keys`, kb2.yaw === 0 && kb2.pitch === 0 && kb2.labA === 1, JSON.stringify({ yaw: kb2.yaw, labA: kb2.labA }));
       await t.ev(`(CP.Stage.canvas.blur(), 1)`);
-      // pointing at a label, then at a part, lights it; a row of the parts list lights the plate
+      // pointing at a label, then at a part, lights it; a row of the parts list lights the plate (since 24 Nov 2026 the pick list
+      // also holds lines, a wire, a heavy line on a face or a light path, as { line })
       const tgt = await t.ev(`(function () { var S = CP.Stage, pl = S.cur.pl, r = S.canvas.getBoundingClientRect(), hits = pl._hit || [], lab = hits[0], part = null;
-        for (var i = (pl._pick || []).length - 1; i >= 0 && !part; i--) { var e = pl._pick[i], cx = 0, cy = 0; if (e.pts) { e.pts.forEach(function (p) { cx += p[0]; cy += p[1]; }); cx /= e.pts.length; cy /= e.pts.length; } else { cx = e.dots[0][0]; cy = e.dots[0][1]; }
+        for (var i = (pl._pick || []).length - 1; i >= 0 && !part; i--) { var e = pl._pick[i], cx = 0, cy = 0; if (e.pts) { e.pts.forEach(function (p) { cx += p[0]; cy += p[1]; }); cx /= e.pts.length; cy /= e.pts.length; } else if (e.line) { cx = (e.line[0][0] + e.line[1][0]) / 2; cy = (e.line[0][1] + e.line[1][1]) / 2; } else { cx = e.dots[0][0]; cy = e.dots[0][1]; }
           if (cx < 2 || cy < 2 || cx > S.w - 2 || cy > S.h - 2) continue;
           if (hits.some(function (b) { return cx >= b.x0 && cx <= b.x1 && cy >= b.y0 && cy <= b.y1; })) continue; var c = pl.hitAt(cx, cy); if (c) part = { x: r.left + cx, y: r.top + cy, n: c.n, text: c.text }; }
         return { lab: lab ? { x: r.left + (lab.x0 + lab.x1) / 2, y: r.top + (lab.y0 + lab.y1) / 2, n: lab.c.n, text: lab.c.text } : null, part: part }; })()`);

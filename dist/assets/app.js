@@ -4552,8 +4552,10 @@ try {
       var A = {}, J = {}, feeds = [];
       var T0 = [90, 336], tr = function (t) { return mv(T0, 'P', t); };
       var feed = function (n, t, side, d) { J[n] = tr(t); A[n] = mv(J[n], 'Q', side * d); feeds.push({ n: n, pts: [A[n], J[n]] }); };
-      A['01'] = T0;
-      feed('02', 165, -1, 140); feed('03', 292, -1, 165); feed('04', 348, 1, 290); feed('05', 412, -1, 168); feed('06', 486, 1, 146); feed('07', 562, -1, 150);
+      // (24 Nov 2026: plate 01 became a wafer with its die lifted over it, and its wafer touched the ingot; the design moves 11
+      // units up the trunk and the ingot's junction 11 down, so the two stand about 10 px apart at 1440, as the old die did)
+      A['01'] = tr(-11);
+      feed('02', 176, -1, 140); feed('03', 292, -1, 165); feed('04', 348, 1, 290); feed('05', 412, -1, 168); feed('06', 486, 1, 146); feed('07', 562, -1, 150);
       A['08'] = tr(652);
       var B = function (u) { return mv(A['08'], 'Q', u); };
       A['12'] = B(186);
@@ -4575,8 +4577,9 @@ try {
       var A = {}, J = {}, feeds = [];
       var T0 = [70, 318], tr = function (t) { return mv(T0, 'P', t); };
       var feed = function (n, t, side, d) { J[n] = tr(t); A[n] = mv(J[n], 'Q', side * d); feeds.push({ n: n, pts: [A[n], J[n]] }); };
-      A['01'] = T0;
-      feed('02', 150, -1, 120); feed('03', 262, -1, 140); feed('04', 318, 1, 250); feed('05', 372, -1, 140); feed('06', 430, 1, 132); feed('07', 500, -1, 128);
+      // (24 Nov 2026: the same nudge for the new plate 01, half as far: about 11 px clear at 1024)
+      A['01'] = tr(-6);
+      feed('02', 156, -1, 120); feed('03', 262, -1, 140); feed('04', 318, 1, 250); feed('05', 372, -1, 140); feed('06', 430, 1, 132); feed('07', 500, -1, 128);
       A['08'] = tr(580);
       var B = function (u) { return mv(A['08'], 'Q', u); };
       A['12'] = B(160);
