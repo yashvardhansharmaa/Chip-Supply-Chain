@@ -158,7 +158,7 @@
   ]
 }
 ---
-# Component Costs
+# The Economics of AI Chips
 
 A B200, one of Nvidia's Blackwell AI chips, sells for far more than it costs to build. In December 2025 Epoch AI estimated that building one cost about $6,400 ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Epoch AI cites reports from March 2024 that put its selling price at $30,000 to $40,000 per chip ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Most B200s are sold inside Nvidia's GB200 rack systems ([source](https://epoch.ai/data/ai-chip-sales-documentation/methodology#nvidia)). Epoch AI's chip sales model, with data through October 2025, puts what Nvidia earns per GPU for the computing hardware in those racks at $33,000 to $42,000 ([source](https://epoch.ai/data/ai-chip-sales-documentation/methodology#nvidia)). That figure leaves out the networking gear in the racks ([source](https://epoch.ai/data/ai-chip-sales-documentation/methodology#nvidia)).
 

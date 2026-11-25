@@ -185,11 +185,11 @@ R('wafer-cost', function (m) {
   m.tag(null);
 
   // ---- the labels: the back compartments named from over the drawer, the front ones from under it
-  m.callout([[cmx - 6.25, felt + 0.72, cmz - 17.7, parts.mem.idx]], '$2,900 of memory', { row: 't', col: 'acc', strong: true, tag: 'mem' });
-  m.callout([[clx + 16, felt + 0.8, clz - 8, parts.logic.idx]], '$900 of logic dies', { row: 't', tag: 'logic' });
-  m.callout([[cbx - 6, top, cbz - 20, parts.board.idx]], '$480 of power delivery, board and test', { row: 't', tag: 'board' });
-  m.callout([[cpx - 20, felt + iH, zI + 10, parts.pack.idx]], '$1,100 of packaging', { row: 'b', tag: 'pack' });
-  m.callout([[(cells.yld[0] + cells.yld[2]) / 2, 0.05, cells.yld[3] - 40, parts.yld.idx]], '$1,000 of packaging yield loss', { row: 'b', tag: 'yield' });
+  m.callout([[cmx - 6.25, felt + 0.72, cmz - 17.7, parts.mem.idx]], '$2,900 of memory', { n: 1, row: 't', col: 'acc', strong: true, tag: 'mem' });
+  m.callout([[clx + 16, felt + 0.8, clz - 8, parts.logic.idx]], '$900 of logic dies', { n: 2, row: 't', tag: 'logic' });
+  m.callout([[cbx - 6, top, cbz - 20, parts.board.idx]], '$480 of power delivery, board and test', { n: 3, row: 't', tag: 'board' });
+  m.callout([[cpx - 20, felt + iH, zI + 10, parts.pack.idx]], '$1,100 of packaging', { n: 4, row: 'b', tag: 'pack' });
+  m.callout([[(cells.yld[0] + cells.yld[2]) / 2, 0.05, cells.yld[3] - 40, parts.yld.idx]], '$1,000 of packaging yield loss', { n: 5, row: 'b', tag: 'yield' });
   return {
     rows: true, rowGap: { b: 28 }, labelFs: 15.5, wrapW: 210, foot: { text: 'about $6,400 in all', from: [Xo, 0, Ze], to: [Xe, 0, Ze], room: 16 },
     elev: 0.9, yaw: -0.16, sortAxis: [0, 1, 0], start: 1, rest: 0, noPolish: false,

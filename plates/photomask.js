@@ -39,13 +39,16 @@ R('photomask', function (m) {
     else { var nb = Math.max(3, Math.round(d / 9)); for (var b = 0; b < nb; b++) { var zz = z0 + (b / (nb - 1) - 0.5) * d * 0.76; pat.push(D.rect(x0 - w * 0.44, zz - d * 0.025, x0 + w * 0.44, zz + d * 0.025, top, { fill: 'dark', lw: 0.25 })); } }
   });
   [-1, 1].forEach(function (sx) { [-1, 1].forEach(function (sz) { var fx = sx * (PW / 2 + 9), fz = sz * (PD / 2 + 9); pat.push(D.rect(fx - 4.5, fz - 4.5, fx + 4.5, fz + 4.5, top, { lw: 0.5 })); pat.push(D.rect(fx - 2, fz - 2, fx + 2, fz + 2, top, { lw: 0.5 })); }); });
-  m.real('glass');
+  // (the glass and the coating carry tags of their own, 25 Nov 2026: their two numbered labels share the blank, and a numbered
+  // label lights its whole part unless a tag keeps it to its own items)
+  m.tag('glass'); m.real('glass');
   m.box({ c: [0, 0, 0], s: [B, T, B] }, 'light');
-  m.real('mlm');
+  m.tag('coating'); m.real('mlm');
   var band = [];
   for (var q = 1; q < 8; q++) { var yy = -ml / 2 + ml * q / 8; band.push(D.line([-B / 2, yy, B / 2], [B / 2, yy, B / 2], { lw: 0.3, alpha: 0.55 })); }
   var bandX = band.map(function (it) { return { pts: [[B / 2, it.pts[0][1], B / 2], [B / 2, it.pts[0][1], -B / 2]], lw: 0.3, alpha: 0.55 }; });
   m.box({ c: [0, yTop - ml / 2, 0], s: [B, ml, B], decals: { py: pat, pz: band, px: bandX } }, 'acc');
+  m.tag(null);
   m.dim([-B / 2, -T / 2, B / 2], [B / 2, -T / 2, B / 2], [0, 0, 12], '152.4 mm', { t: 0.7, out: -1 });
   // pads, frame, membrane
   var FW = 145, FD = 117, bar = 4.5, fh = 2.6, stand = 2.5;
@@ -68,12 +71,12 @@ R('photomask', function (m) {
   });
   m.guide([[0, -T / 2 - 6, 0, blank.idx], [0, yM + 4, 0, mem.idx]], { style: 'axis', alpha: 0.8 });
   // (round two: the glass's dot further along the face, so the two dots read apart)
-  m.callout([-B / 2 + 45, 1.2, B / 2, blank.idx], 'Glass plate', { side: 'l' });
+  m.callout([-B / 2 + 45, 1.2, B / 2, blank.idx], 'Glass plate', { n: 3, side: 'l', tag: 'glass' });
   m.dim([B / 2, -T / 2, B / 2], [B / 2, T / 2, B / 2], [10, 0, 0], '6.35 mm', { t: 0.5, part: blank.idx });
   // (on a phone, in rows, the coating is named on the right face, by the corner, where its upright leader crosses nothing: on
   // the left face it ran through the 152.4 mm figure)
-  m.callout([-B / 2 + 11, yTop - ml / 2, B / 2, blank.idx], 'Mirror coating', { side: 'l', rowAt: [B / 2, yTop - ml / 2, -B * 0.34, blank.idx] });
-  m.callout([-FW * 0.28, yM, FD * 0.22, mem.idx], 'Pellicle', { side: 'l' });
+  m.callout([-B / 2 + 11, yTop - ml / 2, B / 2, blank.idx], 'Mirror coating', { n: 2, side: 'l', tag: 'coating', rowAt: [B / 2, yTop - ml / 2, -B * 0.34, blank.idx] });
+  m.callout([-FW * 0.28, yM, FD * 0.22, mem.idx], 'Pellicle', { n: 1, side: 'l' });
   // the ring on the coating's top face, in the pattern area: on one of the dark bars of the block in the pattern's right-hand
   // column (block D of MAP, its last bar, so the cone's lower edge passes clear of the glass plate's leader), the absorber
   // lines the loupe cuts across

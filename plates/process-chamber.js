@@ -72,16 +72,16 @@ R('process-chamber', function (m) {
   m.cyl([0.228, yFlo - 0.23, 0], 0.03, 0.165, 'turned', { seg: 18, rot: [0, 0, Math.PI / 2] });
   m.guide([[0, yFlo, 0, ves.idx], [0, yFlo - 0.36, 0, pump.idx]], { style: 'axis', alpha: 0.85 });
   var cu = [Math.cos(a0), Math.sin(a0)], cw = [Math.cos(a1), Math.sin(a1)];
-  m.callout([0.03 * cw[0], yLid + 0.13, 0.03 * cw[1], lid.idx], 'Gas in', { side: 'r' });
+  m.callout([0.03 * cw[0], yLid + 0.13, 0.03 * cw[1], lid.idx], 'Gas in', { n: 1, side: 'r' });
   // (designer pass, 22 Nov 2026: the plasma is named from the right, on the lens's own cut face, and the loupe takes the wafer's
   // left side, so neither the plasma's leader nor the loupe's cone runs across the whole chamber)
-  m.callout([0.1 * cw[0], 0.03, 0.1 * cw[1], plp.idx], 'Plasma', { side: 'r' });
-  m.callout([0.148 * cw[0], yPed + WT, 0.148 * cw[1], wfp.idx], 'Wafer', { side: 'r' });
+  m.callout([0.1 * cw[0], 0.03, 0.1 * cw[1], plp.idx], 'Plasma', { n: 2, side: 'r' });
+  m.callout([0.148 * cw[0], yPed + WT, 0.148 * cw[1], wfp.idx], 'Wafer', { n: 3, side: 'r' });
   // (22 Nov 2026 plates refine: the chuck named straight across from its cut face, from the right, under the wafer, since the
   // loupe's caption fills the left column at its height; the pump half as far below; on a phone the loupe at most 60 percent
   // of the chamber's width)
-  m.callout([0.13 * cw[0], yPed - 0.084, 0.13 * cw[1], chk.idx], 'Chuck', { side: 'r', level: true });
-  m.callout([0.146 * cw[0], yFlo - 0.2, 0.146 * cw[1], pump.idx], 'Pump', { side: 'r' });
+  m.callout([0.13 * cw[0], yPed - 0.084, 0.13 * cw[1], chk.idx], 'Chuck', { n: 4, side: 'r', level: true });
+  m.callout([0.146 * cw[0], yFlo - 0.2, 0.146 * cw[1], pump.idx], 'Pump', { n: 5, side: 'r' });
   var lt = a0 + 0.55, loupe = { model: 'etch-loupe', at: [0.1 * Math.cos(lt), yPed + WT, 0.1 * Math.sin(lt)], part: 'wafer', side: 'l', r: 0.15, rMax: 92, scale: 0.8, dx: -0.12, rPhone: 52, caption: ['A hole ten times', 'deeper than it is wide'] };
   return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, loupe: loupe, accent: [109, 92, 201], accentDark: [176, 164, 240], accent2: [111, 139, 166], accent2Dark: [195, 211, 226] };
 });

@@ -88,10 +88,10 @@ R('substrate-layers', function (m) {
     sMat[i] = { d: 0.1, real: 'laminate' }; sDec[i] = it;
   });
   m.prism(Lsh, -top, top, 'light', { sideMat: sMat, sideDecals: sDec, top: tp });
-  m.callout([W * 0.3, (lay[2] + lay[3]) / 2, 0.001, body.idx], 'Build-up film', { side: 'r', tag: 'film' });
+  m.callout([W * 0.3, (lay[2] + lay[3]) / 2, 0.001, body.idx], 'Build-up film', { n: 2, side: 'r', tag: 'film' });
   // review: on a plated hole's copper pad at the near end of the right-hand cut (the leader ran right across the top); round two:
   // on the fifth build-up plane above the core, clear of the vias, so it names the layers rather than a hole
-  m.callout([13, lay[5], 0.001, body.idx], 'Copper layers', { side: 'r', tag: 'cu' });
-  m.callout([W * 0.22, 0.4, 0.001, body.idx], 'Core of glass cloth and resin', { side: 'r', tag: 'core' });
+  m.callout([13, lay[5], 0.001, body.idx], 'Copper layers', { n: 1, side: 'r', tag: 'cu' });
+  m.callout([W * 0.22, 0.4, 0.001, body.idx], 'Core of glass cloth and resin', { n: 3, side: 'r', tag: 'core' });
   return { elev: PLATE.ISO.elev, yaw: PLATE.ISO.yaw, accent: [111, 122, 47], accentDark: [178, 189, 96], accent2: [176, 102, 44], accent2Dark: [224, 154, 92] };
 });

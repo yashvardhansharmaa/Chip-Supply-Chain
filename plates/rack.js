@@ -64,10 +64,10 @@ R('rack', function (m) {
   // designer pass (21 Nov 2026): the width taken further out in front, so its figure clears the rack's foot
   m.dim([-W / 2, 0, front], [W / 2, 0, front], [0, 0, 0.2], '600 mm', { part: cab.idx });
   var pp = {}; pulled.forEach(function (q) { pp[q[0]] = q[1]; });
-  m.callout([-tW * 0.3, slots[6].y, fz, pp[6].idx], 'Power shelf', { side: 'l' });
-  m.callout([-tW * 0.3, slots[20].y, fz, pp[20].idx], 'NVLink switch tray', { side: 'l' });
+  m.callout([-tW * 0.3, slots[6].y, fz, pp[6].idx], 'Power shelf', { n: 4, side: 'l' });
+  m.callout([-tW * 0.3, slots[20].y, fz, pp[20].idx], 'NVLink switch tray', { n: 3, side: 'l' });
   // (on a phone, where the labels stand in rows, the compute tray is named from the top row, clear of the trays under it)
-  m.callout([-tW * 0.3, slots[30].y, fz, pp[30].idx], 'Compute tray', { side: 'l', row: 't' });
-  m.callout([0.026, syc + 0.35, zS + 0.02, bb.idx], 'Copper busbar', { side: 'r' });
+  m.callout([-tW * 0.3, slots[30].y, fz, pp[30].idx], 'Compute tray', { n: 2, side: 'l', row: 't' });
+  m.callout([0.026, syc + 0.35, zS + 0.02, bb.idx], 'Copper busbar', { n: 1, side: 'r' });
   return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, accent: [176, 102, 44], accentDark: [224, 154, 92], accent2: [122, 122, 122], accent2Dark: [200, 200, 200] };
 });

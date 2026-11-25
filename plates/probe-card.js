@@ -69,9 +69,9 @@ R('probe-card', function (m) {
     m.guide([[c[0] * stW / 2, yST + stH, c[1] * stW / 2, st.idx], [c[0] * stW / 2, pB, c[1] * stW / 2, pc.idx]], { alpha: 0.8 });
   });
   m.guide([[0, -0.3, 0, ch.idx], [0, pT + 0.2, 0, pc.idx]], { style: 'axis', alpha: 0.8 });
-  m.callout([0.62, pT, -0.3, pc.idx], 'Probe card', { side: 'r' });
-  m.callout([-dw * 0.38 + 0.012, (yLoT + yUp) / 2, 0.5 * dh, hd.idx], 'Needles', { side: 'l', tag: 'needles' });
-  m.callout([-0.62, wT, 0.72, wf.idx], 'Wafer', { side: 'l' });
-  m.callout([dw * 0.5, wT, dh * 0.5 + 0.04, wf.idx], 'Dies under test', { side: 'r', tag: 'dies' });
+  m.callout([0.62, pT, -0.3, pc.idx], 'Probe card', { n: 1, side: 'r' });
+  m.callout([-dw * 0.38 + 0.012, (yLoT + yUp) / 2, 0.5 * dh, hd.idx], 'Needles', { n: 2, side: 'l', tag: 'needles' });
+  m.callout([-0.62, wT, 0.72, wf.idx], 'Wafer', { n: 3, side: 'l' });
+  m.callout([dw * 0.5, wT, dh * 0.5 + 0.04, wf.idx], 'Dies under test', { n: 4, side: 'r', tag: 'dies' });
   return { elev: PLATE.ISO.elev, yaw: PLATE.ISO.yaw, sortAxis: [0, 1, 0], accent: [111, 139, 166], accentDark: [195, 211, 226] };
 });

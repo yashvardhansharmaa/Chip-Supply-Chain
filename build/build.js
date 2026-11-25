@@ -414,6 +414,7 @@ function markdown(src, ctx) {
   const out = [];
   const headings = [];
   const named = []; // every heading's text as written, for the check of data/section-headings.json
+  const subs = []; // the ids of its "###" subsections, which a parts line may link to (partsHTML, 25 Nov 2026)
   // a "##" section's level: h2 on a chapter's page, under its h1 title (29 Oct 2026; it was h3, from when every chapter sat under
   // a page's h2), and h3 for any other Markdown (the AI Chips notes); "###" and "####" sit one and two levels below it
   const top = ctx.sectionLevel || 3;
@@ -443,7 +444,7 @@ function markdown(src, ctx) {
         // data-k: the section's name in plain words, for its kicker ("05 · The chokepoint", src/modules/chapter.css)
         const kick = text.replace(/\[([^\]]*)\]\([^)]*\)/g, '$1').replace(/[*_`]/g, '').trim();
         out.push(`<h${top} id="${id}" data-k="${esc(kick)}">${inline(shown, ctx)}</h${top}>`);
-      } else if (level === 3) { named.push(text); out.push(`<h${top + 1} id="${id}">${inline(shown, ctx)}</h${top + 1}>`); }
+      } else if (level === 3) { named.push(text); subs.push(id); out.push(`<h${top + 1} id="${id}">${inline(shown, ctx)}</h${top + 1}>`); }
       else { named.push(text); out.push(`<h${top + 2} id="${id}">${inline(shown, ctx)}</h${top + 2}>`); }
       i++; continue;
     }
@@ -528,7 +529,7 @@ function markdown(src, ctx) {
   }
   flushPara();
   closeTakeaways();
-  return { html: out.join('\n'), headings, named };
+  return { html: out.join('\n'), headings, named, subs };
 }
 
 function wordCount(body) {
@@ -711,11 +712,11 @@ for (const f of files) {
   const open = openingExplainer(meta, body, id);
   let openFig = '';
   readingOrderCites(meta, body, ctx, STAGES.isStage({ id, number: meta.number }), open ? () => { openFig = figure(open, ctx).replace(/^<figure class="figure/, '<figure class="figure fig-open'); ctx.openFig = open.id; } : null);
-  const { html, headings, named } = markdown(body, ctx);
+  const { html, headings, named, subs } = markdown(body, ctx);
   headingsOf.set(id, named);
   const words = wordCount(body);
   // figList: the figures in the order the page shows them, numbered "04.1" on, for the contents rail (chapterHTML)
-  const ch = { file: f, id, meta, html, openFig, headings, words, cites: ctx.cites, figList: ctx.figList, number: meta.number || chapters.length + 1, title: meta.title || id };
+  const ch = { file: f, id, meta, html, openFig, headings, subHeadings: subs, words, cites: ctx.cites, figList: ctx.figList, number: meta.number || chapters.length + 1, title: meta.title || id };
   (meta.figures || []).forEach((fig) => { if (!body.includes(`{{figure:${fig.id}}}`)) warn(`${id}: figure ${fig.id} defined but never placed`); });
   if (id === 'geopolitics') geo = ch; else chapters.push(ch);
 }
@@ -1195,7 +1196,8 @@ function partsHTML(ch) {
     }
     if (Array.isArray(p.link)) {
       const [href, words] = p.link;
-      if (/^#/.test(href) && !(ch.headings || []).some((h) => '#' + h.id === href)) warn(`specimen-parts: ${ch.id} part ${p.n} links to ${href}, which is no section of the chapter`);
+      // (a section or, since 25 Nov 2026, one of its "###" subsections: both carry ids on the page)
+      if (/^#/.test(href) && !(ch.headings || []).some((h) => '#' + h.id === href) && !(ch.subHeadings || []).some((id) => '#' + id === href)) warn(`specimen-parts: ${ch.id} part ${p.n} links to ${href}, which is no section or subsection of the chapter`);
       return `${esc(p.name)}: ${esc(p.maker || '')}, <a href="${esc(href)}">${esc(words)}</a>`;
     }
     return `${esc(p.name)}: ${esc(p.maker || '')}`;

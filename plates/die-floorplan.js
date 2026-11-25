@@ -127,11 +127,11 @@ R('die-floorplan', function (m) {
   });
   // labels: on the lifted die (its face turned half round, so a point at x, z of plate 01 lies at -x, -z), and the wafer
   var on = function (x, z) { return [dc[0] - x * EX, dc[1] + DT / 2, dc[2] - z * EX, die.idx]; };
-  m.callout(on(10.9, 12.5), 'Memory controllers', { side: 'l', tag: 'mem', rowAt: on(-11.4, 9) });
-  m.callout(on(6.4, 5.5), 'Compute units', { side: 'l', tag: 'sm' });
-  m.callout(on(4.6, -1.2), 'Cache', { side: 'l', tag: 'l2' });
-  m.callout(on(4, -15.2), 'Die-to-die link', { side: 'l', tag: 'd2d' });
-  m.callout([-Rw * 0.66, wT / 2, Rw * 0.7, wf.idx], 'Wafer, 300 mm', { side: 'l', tag: 'wafer' });
+  m.callout(on(10.9, 12.5), 'Memory controllers', { n: 1, side: 'l', tag: 'mem', rowAt: on(-11.4, 9) });
+  m.callout(on(6.4, 5.5), 'Compute units', { n: 2, side: 'l', tag: 'sm' });
+  m.callout(on(4.6, -1.2), 'Cache', { n: 3, side: 'l', tag: 'l2' });
+  m.callout(on(4, -15.2), 'Die-to-die link', { n: 4, side: 'l', tag: 'd2d' });
+  m.callout([-Rw * 0.66, wT / 2, Rw * 0.7, wf.idx], 'Wafer, 300 mm', { n: 5, side: 'l', tag: 'wafer' });
   return { elev: PLATE.ISO.elev, yaw: -Math.PI / 4, sortAxis: [0, 1, 0], start: 1.4, thumbX: 0.5, softLine: '#2b2a3d',
     accent: [111, 139, 166], accentDark: [195, 211, 226], accent2: [176, 102, 44], accent2Dark: [224, 154, 92] };
 });

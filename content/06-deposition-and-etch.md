@@ -97,6 +97,16 @@ Not every step runs one wafer at a time. Batch furnaces such as Tokyo Electron's
 
 For etch, the gas attacks one material and leaves the one beside it. Wherever the photoresist covers the wafer, it shields the film beneath. Wherever it does not, the radicals react with the surface and turn it into a gas, which the pump carries away. A second field pulls the ions straight down at the wafer, so the etch cuts vertically and a narrow hole keeps its width as it deepens ([source](https://newsroom.lamresearch.com/etch-essentials-semiconductor-manufacturing)). When the etch reaches the material underneath, which the gas was chosen not to touch, it slows almost to a stop, and the tool ends the step.
 
+The gas reaches the chamber through a gas delivery system. Most toolmakers outsource some or all of the design and manufacture of these systems to a few specialized suppliers, Ichor said in November 2025 ([source](https://ir.ichorsystems.com/media/document/e96a8c45-93c9-4c66-980c-f86282ec146f/assets/1e506abf-840f-4cf1-8035-fd55d44df749.pdf?disposition=inline#page=19)). Ichor, an American firm, is one of them ([source](https://ir.ichorsystems.com/media/document/e96a8c45-93c9-4c66-980c-f86282ec146f/assets/1e506abf-840f-4cf1-8035-fd55d44df749.pdf?disposition=inline#page=19)).
+
+Inside the system, a mass flow controller pairs a sensor with a valve to hold a gas at a set flow rate ([source](https://www.horiba.com/int/semiconductor/products/mass-flow-controller-and-module/)). HORIBA, a Japanese firm, makes these controllers for etching and deposition tools ([source](https://www.horiba.com/int/company/news/detail/news/1/2025/20250114dz/)). MKS, an American firm, sells them for atomic layer deposition ([source](https://www.mks.com/n/thin-film-deposition-overview)). Its products for etch tools include flow measurement and control ([source](https://www.mks.com/s/semiconductor-etching-solutions/)).
+
+Radio-frequency generators supply the power that ignites the plasma and keeps it under control ([source](https://www.mks.com/n/pulsed-radio-frequency-rf-solution-for-critical-processes)). Advanced Energy, an American firm, makes them for etch and deposition ([source](https://www.advancedenergy.com/en-us/about/news/press/advanced-energy-at-semicon-west-2026/)). So does MKS ([source](https://www.mks.com/n/pulsed-radio-frequency-rf-solution-for-critical-processes)).
+
+The wafer rests on an electrostatic chuck, a ceramic holder that grips the wafer by electric attraction. Shinko, a Japanese firm, designs ceramic electrostatic chucks used in etching and deposition equipment ([source](https://www.shinko.co.jp/english/product/equipment/esc.php)).
+
+Below the chamber, a turbomolecular pump, or turbopump, empties it. Its blades spin fast and push the gas molecules out of the chamber ([source](https://www.pfeiffer-vacuum.com/ie/en/knowledge/vacuum-technology/knowledge-book/4-vacuum-generation/4_9_turbomolecular_pumps/)). Edwards, a British firm, makes turbopumps for etch tools ([source](https://www.edwardsvacuum.com/en-us/semiconductor/our-products/turbomolecular-pumps)). So does Pfeiffer Vacuum, a German firm ([source](https://www.pfeiffer-vacuum.com/global/en/product/hipace-700.html)).
+
 ## Variants and trade-offs
 
 ### Deposition families

@@ -93,12 +93,13 @@ R('sem-column', function (m) {
   var w2 = [Math.cos(a1), Math.sin(a1)];
   // (the emitter named level with its tip, its leader straight out to the right; the wafer on its near rim, 22 Nov 2026 plates
   // refine)
-  m.callout([0, 1.268, 0, parts.gun.idx], 'Emitter', { side: 'r', level: true });
-  m.callout([[0.27 * u[0], 0.60, 0.27 * u[1], parts.c1.idx], [0.3 * u[0], -0.43, 0.3 * u[1], parts.ob.idx]], 'Lenses', { side: 'l', row: 't' });
+  m.callout([0, 1.268, 0, parts.gun.idx], 'Emitter', { n: 1, side: 'r', level: true });
+  m.callout([[0.27 * u[0], 0.60, 0.27 * u[1], parts.c1.idx], [0.3 * u[0], -0.43, 0.3 * u[1], parts.ob.idx]], 'Lenses', { n: 2, side: 'l', row: 't' });
   // (on a phone the lenses and the beam are named from the top row, so their leaders rise beside the narrow column)
-  m.callout([0, 0.03, 0, parts.sc.idx], 'Electron beam', { side: 'r', row: 't' });
+  m.callout([0, 0.03, 0, parts.sc.idx], 'Electron beam', { n: 3, side: 'r', row: 't' });
   var nr = Math.atan2(Math.cos(yaw), -Math.sin(yaw)) + 0.35;
-  m.callout([wr * 0.95 * Math.cos(nr), yW + 0.004, wr * 0.95 * Math.sin(nr), parts.st.idx], 'Wafer', { side: 'l', tag: 'wafer' });
-  m.callout([0.15 * u[0], -0.855, 0.15 * u[1], parts.det.idx], 'Detector', { side: 'l', tag: 'detector' });
-  return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, sortAxis: [0, 1, 0], accent: [78, 96, 186], accentDark: [154, 166, 255], accent2: [111, 139, 166], accent2Dark: [195, 211, 226] };
+  m.callout([wr * 0.95 * Math.cos(nr), yW + 0.004, wr * 0.95 * Math.sin(nr), parts.st.idx], 'Wafer', { n: 5, side: 'l', tag: 'wafer' });
+  m.callout([0.15 * u[0], -0.855, 0.15 * u[1], parts.det.idx], 'Detector', { n: 4, side: 'l', tag: 'detector' });
+  // (the parts list's numbers read down the left column, 25 Nov 2026: the lenses, then the detector, then the wafer)
+  return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, sortAxis: [0, 1, 0], order: { l: [2, 4, 5] }, accent: [78, 96, 186], accentDark: [154, 166, 255], accent2: [111, 139, 166], accent2Dark: [195, 211, 226] };
 });
