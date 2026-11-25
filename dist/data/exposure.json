@@ -257,6 +257,20 @@
     "source": "https://www.sec.gov/Archives/edgar/data/6951/000162828025056742/R85.htm"
   },
   {
+    "firm": "Applied Materials",
+    "ticker": "AMAT",
+    "country": "US",
+    "category": "Deposition and etch",
+    "fiscalYear": "FY2026",
+    "fyEnd": "2026-10",
+    "chinaRevenue": 9330,
+    "totalRevenue": 34446,
+    "currency": "USD million",
+    "chinaShare": 27.1,
+    "basis": "Revenue by geography from Applied's fiscal 2026 results release of 12 November 2026 (its Form 10-K for the year was not yet filed). The release does not say whether Hong Kong is counted in China. Share computed from the revenue amounts in the release.",
+    "source": "https://www.globenewswire.com/news-release/2026/11/12/3402149/0/en/applied-materials-announces-fourth-quarter-and-fiscal-year-2026-results.html"
+  },
+  {
     "firm": "BE Semiconductor Industries",
     "ticker": "BESI.AS",
     "country": "NL",

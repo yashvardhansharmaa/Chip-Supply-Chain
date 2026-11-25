@@ -1,8 +1,8 @@
 {
   "/": {
     "published": "2026-10-01",
-    "modified": "2026-11-24",
-    "content": "7aa7c5e982778d4f"
+    "modified": "2026-11-25",
+    "content": "241dfbd1065ba18a"
   },
   "/advanced-packaging/": {
     "published": "2026-09-09",
@@ -31,8 +31,8 @@
   },
   "/deposition-and-etch/": {
     "published": "2026-09-09",
-    "modified": "2026-11-24",
-    "content": "e3e7795e50906a9f"
+    "modified": "2026-11-25",
+    "content": "a153bcfac5af960b"
   },
   "/design-and-eda/": {
     "published": "2026-09-09",
@@ -41,8 +41,8 @@
   },
   "/export-controls/": {
     "published": "2026-10-21",
-    "modified": "2026-11-24",
-    "content": "55f4601b30dbaab7"
+    "modified": "2026-11-25",
+    "content": "39c11c276a75b29d"
   },
   "/foundries-and-fabs/": {
     "published": "2026-09-09",
@@ -51,8 +51,8 @@
   },
   "/geopolitics/": {
     "published": "2026-09-09",
-    "modified": "2026-11-24",
-    "content": "c4bdf25ce279d853"
+    "modified": "2026-11-25",
+    "content": "3e97ab608667b384"
   },
   "/glossary/": {
     "published": "2026-10-21",
@@ -102,7 +102,7 @@
   "/pdf/deposition-and-etch.pdf": {
     "published": "2026-10-20",
     "modified": "2026-11-25",
-    "content": "0cc9eb6a12485cae"
+    "content": "bcf3a2f53eb9f94f"
   },
   "/pdf/design-and-eda.pdf": {
     "published": "2026-10-20",
@@ -117,7 +117,7 @@
   "/pdf/geopolitics.pdf": {
     "published": "2026-10-20",
     "modified": "2026-11-25",
-    "content": "1c957b375d15039c"
+    "content": "da6f9816a56b422d"
   },
   "/pdf/how-ai-chips-are-made.pdf": {
     "published": "2026-10-26",
@@ -191,8 +191,8 @@
   },
   "/suppliers/": {
     "published": "2026-10-21",
-    "modified": "2026-11-24",
-    "content": "a3f8824e7d1c08b3"
+    "modified": "2026-11-25",
+    "content": "00e2791b5871b28c"
   },
   "/supply-chain/": {
     "published": "2026-10-28",

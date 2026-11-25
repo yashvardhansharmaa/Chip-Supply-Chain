@@ -79,7 +79,7 @@
 ---
 # Deposition and Etch
 
-Applied Materials and Lam Research are the two largest deposition and etch suppliers. Applied Materials' revenue across all its businesses was $28.368 billion in fiscal 2025 ([source](https://data.sec.gov/api/xbrl/companyconcept/CIK0000006951/us-gaap/RevenueFromContractWithCustomerExcludingAssessedTax.json)). Lam Research's was $23.233 billion in fiscal 2026, the year to June 2026 ([source](https://www.sec.gov/Archives/edgar/data/707549/000070754926000033/lrcx_exhibitx991xq4x2026.htm)).
+Applied Materials and Lam Research are the two largest deposition and etch suppliers. Applied Materials' revenue across all its businesses was $34.446 billion in fiscal 2026, the year to October 2026 ([source](https://www.globenewswire.com/news-release/2026/11/12/3402149/0/en/applied-materials-announces-fourth-quarter-and-fiscal-year-2026-results.html)). Lam Research's was $23.233 billion in fiscal 2026, the year to June 2026 ([source](https://www.sec.gov/Archives/edgar/data/707549/000070754926000033/lrcx_exhibitx991xq4x2026.htm)).
 
 ## How it works
 

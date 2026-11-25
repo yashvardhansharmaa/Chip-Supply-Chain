@@ -80,8 +80,8 @@
           37.2
         ],
         [
-          "Applied Materials, FY2025",
-          30.1
+          "Applied Materials, FY2026",
+          27.1
         ],
         [
           "Lam Research, FY2024",
@@ -101,9 +101,17 @@
         ]
       ],
       "source": {
-        "label": "ASML 2025 Form 20-F (total net sales), Applied Materials and Lam Research 10-K filings and Tokyo Electron FY2024 and FY2026 consolidated financial statements, each China share computed from the filing's sales by region",
+        "label": "ASML 2025 Form 20-F",
         "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026011378/R71.htm"
-      }
+      },
+      "sources": [
+        {"label": "Applied Materials fiscal 2025 Form 10-K", "url": "https://www.sec.gov/Archives/edgar/data/6951/000162828025056742/R85.htm"},
+        {"label": "Applied Materials fiscal 2026 results release, 12 November 2026", "url": "https://www.globenewswire.com/news-release/2026/11/12/3402149/0/en/applied-materials-announces-fourth-quarter-and-fiscal-year-2026-results.html"},
+        {"label": "Lam Research fiscal 2026 Form 10-K", "url": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000037/R94.htm"},
+        {"label": "Tokyo Electron FY2024 consolidated financial statements", "url": "https://www.tel.com/ir/library/consolidated-financial-statements/hbu2s80000000099-att/Consolidated_Financial_Statements_FY2024.pdf#page=11"},
+        {"label": "Tokyo Electron FY2026 consolidated financial statements", "url": "https://www.tel.com/ir/library/consolidated-financial-statements/i242su00000000yk-att/Consolidated_Financial_Statements_FY2026.pdf#page=53"}
+      ],
+      "note": "Each China share is computed from the company's revenue by region. ASML's is a share of its total net sales."
     },
     {
       "id": "ascend-memory",
