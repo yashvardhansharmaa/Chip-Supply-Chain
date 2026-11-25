@@ -144,8 +144,9 @@ R('hbm-stack', function (m) {
   m.callout([[-W * 0.72, -bt / 2, W, base.idx]], 'Base die', { n: 2, tag: 'base', only: 'ink', side: 'l', row: 'b', rowAt: [[W, -bt / 2, W * 0.35, base.idx]] });
   m.callout([[TX[4], yOf(2) + t / 2, wallZ(2), pi(2)]], 'TSVs', { n: 3, tag: ['tsv', 'tsvWall'], only: 'accent', side: 'r', level: true, row: 'b', rowAt: [[TX[1], yOf(0) + t / 2, wallZ(0), pi(0)]] });
   m.callout([[TX[5], yOf(1) - g * 0.6, bumpZ(1), pi(1)]], 'Microbumps', { n: 4, tag: ['bumps', 'bumpGap'], only: 'accent', side: 'r', level: true, row: 'b', rowAt: [[TX[4], yOf(0) - g * 0.6, bumpZ(0), pi(0)]] });
-  // (the disc in the empty corner beside the top die, so the deck takes the slot's width; its caption under it)
-  var loupe = { model: 'hbm-loupe', at: [TX[2], yOf(6) - g * 0.5, zOf(6) + hw - N + 0.003], part: 'die7', side: 'r', r: 0.14, rMax: 88, scale: 0.63, dx: 0.075, dy: 0.01, tuck: 'tr', tdx: 70, tdy: 70, caption: ['Microbumps in a gap', 'as small as 7 µm.', 'Dies not to scale'] };
+  // (the disc in the empty corner beside the top die, so the deck takes the slot's width; its caption under it. 25 Nov 2026: 24 px
+  // further left, tdx 46, not 70, so it no longer runs past the canvas's right edge, which shrank the deck and left a band under it)
+  var loupe = { model: 'hbm-loupe', at: [TX[2], yOf(6) - g * 0.5, zOf(6) + hw - N + 0.003], part: 'die7', side: 'r', r: 0.14, rMax: 88, scale: 0.63, dx: 0.075, dy: 0.01, tuck: 'tr', tdx: 46, tdy: 70, caption: ['Microbumps in a gap', 'as small as 7 µm.', 'Dies not to scale'] };
   return {
     elev: PLATE.ISO.elev, yaw: PLATE.ISO.yaw, sortAxis: [0, 1, 0], loupe: loupe, thinHover: true,
     order: { r: [3, 4] }, accent: [176, 102, 44], accentDark: [224, 154, 92]
