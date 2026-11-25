@@ -732,7 +732,8 @@
      share of light it stops. edge: a clear or glass part's edge. cut: its section colour (else derived, paler and warmer than any
      outside face; cutD on the night ground). noHatch: a cut face with no ruling. lineK: the tone of lines drawn in it.
      stopsC: the material's own reflection stops across a flat face, in place of its polish class's. kMin: the least light its
-     flat faces take, so a pale section stays pale on its shade side. edgeD: its edge line on the night ground.
+     flat faces take, so a pale section stays pale on its shade side. edgeD: its edge line on the night ground. noWarm: a top face
+     keeps its true dark, with no warm lift. seeThru: a clear sheet the pointer looks through to what lies under it.
      The reasons are in qa/builds-nov/round-24nov/shots/spec-color/NOTES.md (main checkout), one line each here. */
   var REAL = P.REAL = {
     // silicon: the circuit face graphite with a violet cast and a teal cache; bare silicon a near-neutral grey with a slight blue
@@ -844,6 +845,16 @@
     hbSnAg:   { L: '#c4c6c3', D: '#b3b5b2', g: 0.6, metal: true, cut: '#dcdedb', noHatch: true }, // tin-silver solder: the bump caps on the faces and in the loupe
     hb4Rim:   { L: '#9a5a32', D: '#a5633a', g: 0.4 },                                   // a bump's copper pillar, seen round its cap
     hbMould:  { L: '#33353a', D: '#46484e', g: 0.6, cut: '#3b3d42', noHatch: true },   // the black moulding (MR-MUF) that fills the gaps between dies
+    // 15, The specimen drawer (24 Nov 2026, the owner's pick): a museum drawer of the B200's parts, each compartment's floor as large
+    // as its share of the cost
+    d5Oak:    { L: '#e4cfa8', D: '#8c7656', g: 0.3, stopsC: [[0, 1.03], [1, 0.95]] }, // the drawer's frame and dividers: pale oak, a quiet satin
+    d5OakEnd: { L: '#d3b88c', D: '#7f6a4c', g: 0.2 },                                  // the oak's end grain, a step darker
+    d5OakLn:  { L: '#cdb48a', D: '#7a6548', g: 0.2, lineK: 1.0 },                     // the oak's grain, faint lines
+    d5Felt:   { L: '#d8d2c5', D: '#5f5b54', g: 0.15, stopsC: [[0, 1.02], [1, 0.97]], noWarm: true }, // linen felt lining the compartments: matte
+    d5Velvet: { L: '#8a2533', D: '#7a2a38', g: 0.2, stopsC: [[0, 1.04], [0.5, 0.98], [1, 0.9]], noWarm: true }, // garnet velvet under the memory, the plate's one wine
+    d5Empty:  { L: '#fcfcfa', D: '#141413', g: 0, clear: 0.02, seeThru: true, edge: '#9a988f', edgeD: '#8a8880' }, // the yield loss's empty floor: an outline only
+    d5Brass:  { L: '#b9995a', D: '#a88b52', g: 0.55, metal: true },                   // the drawer's brass label holder
+    d5Card:   { L: '#f2efe6', D: '#8a877f', g: 0.1 },                                  // the holder's blank card
     // a chart's emphasis
     wine:     { L: '#dcb9be', D: '#6e3b45', g: 0 }                                    // the cost column's largest share keeps the site's wine tint
   };
@@ -1340,7 +1351,7 @@
       var k0 = TB ? (top ? 1.04 : 0.42 + 0.72 * lam) : top ? 0.9 : (0.36 + 0.72 * lam) * 0.95;
       if (Rm.kMin) k0 = Math.max(k0, Rm.kMin);
       var col = litC(b, k0);
-      if (k0 < 0.8) col = mixL(col, COOL, 0.07 * (0.8 - k0) / 0.45); else if (top) col = mixL(col, WARM, 0.025);
+      if (k0 < 0.8) col = mixL(col, COOL, 0.07 * (0.8 - k0) / 0.45); else if (top && !Rm.noWarm) col = mixL(col, WARM, 0.025);
       if (Rm.studio) col = mixL(col, top ? COOLS : WARMB, 0.1);
       return col;
     };

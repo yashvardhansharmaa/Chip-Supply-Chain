@@ -4646,8 +4646,10 @@ try {
         fixCo('15', 's', 10, 1); fixCo('16', 's', 10, 1);
       } else {
         // the wide sheet: past the rack (its box (1134, 182) to (1244, 386)), in the corner, smaller than the stages
+        // (24 Nov 2026: plate 15 became a wide, shallow drawer that ran under 16's label; its cell is smaller, h 88 to 72, and
+        // 38 units further left, so it stands 12 to 15 px clear of the label at 1280 and 1440)
         L.across = { x: 1312, y: 0, align: 'r', rule: 380 }; L.base = 132;
-        put('15', [1068, 132], { h: 88 }); put('16', [1262, 132], { w: 82 });
+        put('15', [1030, 132], { h: 72 }); put('16', [1262, 132], { w: 82 });
         fixCo('15', 'w', 12, 1); fixCo('16', 'w', 12, 1);
       }
     }
