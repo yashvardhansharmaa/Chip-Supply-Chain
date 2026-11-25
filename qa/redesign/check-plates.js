@@ -232,8 +232,10 @@ const STATE = `(function () { var S = CP.Stage, c = S.canvas, x = c.getContext('
           await mouse('mouseMoved', 4, 4);
         }
       } else if (hasParts) {
-        // a tap on a row of the opened strip's list lights its part, and a second tap lets it go
-        const li = await t.ev(`(function () { var li = document.querySelector('#stage-caption .ch-parts li[data-n="1"]'); if (!li) return null; li.scrollIntoView({ block: 'nearest' }); var r = li.getBoundingClientRect(); return { x: r.left + 30, y: r.top + r.height / 2 }; })()`);
+        // a tap on a row of the opened strip's list lights its part, and a second tap lets it go.
+        // The tap lands on the row's number: a row that runs to two lines can start its "see ..." link
+        // at the left of the second line, and a tap there follows the link, as it should.
+        const li = await t.ev(`(function () { var li = document.querySelector('#stage-caption .ch-parts li[data-n="1"]'); if (!li) return null; li.scrollIntoView({ block: 'nearest' }); var b = li.querySelector('b') || li, r = b.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; })()`);
         if (li) { await touch('touchStart', li.x, li.y); await touch('touchEnd'); await sleep(250); }
         const h = await t.ev(STATE);
         check(`${W}: a tap on a part in the opened strip's list lights it on the plate`, !!li && h.focusN === 1 && h.focus === 1, JSON.stringify({ focusN: h.focusN, focus: h.focus }));

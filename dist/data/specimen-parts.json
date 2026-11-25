@@ -1,5 +1,5 @@
 {
-  "_about": "The numbered parts on a chapter's specimen drawing, keyed by chapter id (the owner's decisions of 25 Oct 2026, Lithography, and 29 Oct 2026, Silicon and Wafers, Memory and HBM and Advanced Packaging, from the labels mockup; add a chapter only from a sourced list). Each part has its number (n), its name, the shorter name its label on the drawing carries where the list's name is long (label), and either its maker as the chapter's card and text source it (maker, with link: [href, words] where a section of the chapter covers it) or the chapter that covers it (stage, a chapter id, shown as 'see stage NN, Title'). Where a part has no maker of its own, maker is a short phrase from the chapter's text (approved by the owner, 29 Oct 2026). build/build.js draws the list under the specimen's caption. Foundries and Fabs and the fifth part of Advanced Packaging were added on 22 Nov 2026 from the parts chapter 8 and chapter 10 name. Since 21 Nov 2026 the specimen is an exploded technical plate (src/plate.js, plates/<specimen>.js): its numbered labels take their names from here (label, else name), and the part each lights is set in the plate's model to match the part's light table. 'light' lists the shapes the point-cloud drawing lit when the reader pointed at a part, in the old specimen's own units (specimens/<specimen>.js): a rod from one point to another with its radius (r), a ball round a point (r), or a box between two corners; soft is the width of the edge over which the light falls off; only keeps it to the ink or the accent points, which the plate reads too; layers [y, pitch, half] keeps it to thin layers. 'at' lists the points the old drawing's balloon pointed at, in the same units, kept as the record of where each part is.",
+  "_about": "The numbered parts on a chapter's specimen drawing, keyed by chapter id (the owner's decisions of 25 Oct 2026, Lithography, and 29 Oct 2026, Silicon and Wafers, Memory and HBM and Advanced Packaging, from the labels mockup; add a chapter only from a sourced list). Each part has its number (n), its name, the shorter name its label on the drawing carries where the list's name is long (label), and either its maker as the chapter's card and text source it (maker, with link: [href, words] where a section of the chapter covers it) or the chapter that covers it (stage, a chapter id, shown as 'see stage NN, Title'). Where a part has no maker of its own, maker is a short phrase from the chapter's text (approved by the owner, 29 Oct 2026). build/build.js draws the list under the specimen's caption. Foundries and Fabs and the fifth part of Advanced Packaging were added on 22 Nov 2026 from the parts chapter 8 and chapter 10 name. Since 21 Nov 2026 the specimen is an exploded technical plate (src/plate.js, plates/<specimen>.js): its numbered labels take their names from here (label, else name), and the part each lights is set in the plate's model to match the part's light table. 'light' lists the shapes the point-cloud drawing lit when the reader pointed at a part, in the old specimen's own units (specimens/<specimen>.js): a rod from one point to another with its radius (r), a ball round a point (r), or a box between two corners; soft is the width of the edge over which the light falls off; only keeps it to the ink or the accent points, which the plate reads too; layers [y, pitch, half] keeps it to thin layers. 'at' lists the points the old drawing's balloon pointed at, in the same units, kept as the record of where each part is. On 25 Nov 2026 the parts of ten more chapters were added (Chip Design, EDA and IP; Chemicals, Gases and Photoresist; Photomasks and Pellicles; Deposition and Etch; Metrology and Inspection; Substrates and PCBs; Test and Assembly; Systems and Networking; Data Centers and Power; and The Economics of AI Chips), and Advanced Packaging's fifth part now names TSMC, all at the final text of that day's expert and fact-check pass on the parts reviews. Each of those lists is numbered top to bottom as its labels stand on the drawing (two labels level with each other read left, then right), a maker is named only where the chapter's text sources it, and a link may point at a ### subsection as well as a section.",
   "silicon-and-wafers": {
     "specimen": "boule-and-wafer",
     "parts": [
@@ -34,7 +34,7 @@
       { "n": 2, "name": "HBM stacks, eight", "label": "HBM stacks", "stage": "memory-and-hbm", "at": [[0.5667, 0.46, 0.1067]], "light": [{"box": [[-0.662, 0.374, -0.42], [-0.471, 0.464, 0.42]], "soft": 0.006}, {"box": [[0.471, 0.374, -0.42], [0.662, 0.464, 0.42]], "soft": 0.006}] },
       { "n": 3, "name": "Interposer", "maker": "TSMC (TW), as CoWoS", "at": [[0.6833, 0.229, 0]], "light": [{"box": [[-0.687, 0.196, -0.446], [0.687, 0.266, 0.446]], "soft": 0.006}] },
       { "n": 4, "name": "Substrate", "stage": "substrates-and-pcbs", "at": [[-0.8333, 0, 0.6]], "light": [{"box": [[-0.837, -0.09, -0.604], [0.837, 0.058, 0.604]], "soft": 0.006}] },
-      { "n": 5, "name": "Silicon bridges", "maker": "set into the wiring where it is densest", "link": ["#advanced-packaging--variants-and-trade-offs", "see Variants and trade-offs"] }
+      { "n": 5, "name": "Silicon bridges", "maker": "TSMC (TW), which calls them LSIs, short for local silicon interconnect", "link": ["#advanced-packaging--2-5d-silicon-rdl-and-bridges", "see 2.5D: silicon, RDL and bridges"] }
     ]
   },
   "foundries-and-fabs": {
@@ -45,6 +45,95 @@
       { "n": 3, "name": "Silicon sheets", "maker": "the channel, hanging between the source and drain like shelves", "link": ["#foundries-and-fabs--how-a-transistor-is-built", "see How a transistor is built"] },
       { "n": 4, "name": "Gate metal", "maker": "fills the gaps above, below and beside each sheet", "link": ["#foundries-and-fabs--how-a-transistor-is-built", "see How a transistor is built"] },
       { "n": 5, "name": "Inner spacers", "maker": "keep the gate apart from the source and drain", "link": ["#foundries-and-fabs--how-a-transistor-is-built", "see How a transistor is built"] }
+    ]
+  },
+  "design-and-eda": {
+    "specimen": "die-floorplan",
+    "parts": [
+      { "n": 1, "name": "Memory controllers", "maker": "part of Nvidia's (US) H100 design", "link": ["#design-and-eda--buy-the-ip-or-build-it", "see Buy the IP or build it"] },
+      { "n": 2, "name": "Compute units", "maker": "Nvidia (US), which calls them streaming multiprocessors" },
+      { "n": 3, "name": "Cache", "maker": "the L2 cache, part of Nvidia's (US) H100 design" },
+      { "n": 4, "name": "Die-to-die link", "maker": "Nvidia (US), which calls it NV-HBI in Blackwell", "link": ["#design-and-eda--chiplets", "see Chiplets"] },
+      { "n": 5, "name": "Wafer, 300 mm", "stage": "foundries-and-fabs" }
+    ]
+  },
+  "chemicals-gases-and-photoresist": {
+    "specimen": "gas-cabinet",
+    "parts": [
+      { "n": 1, "name": "Valves, regulator and gauges", "maker": "part of gas cabinets from Air Liquide (FR), Nippon Sanso (JP), Linde (GB) and others", "link": ["#chemicals-gases-and-photoresist--how-it-works", "see How it works"] },
+      { "n": 2, "name": "Bulk liquid cylinder", "maker": "holds gas chilled until it turns liquid", "link": ["#chemicals-gases-and-photoresist--how-it-works", "see How it works"] },
+      { "n": 3, "name": "Gas cylinders", "maker": "filled by gas firms such as Air Liquide (FR), Nippon Sanso (JP) and Linde (GB)", "link": ["#chemicals-gases-and-photoresist--who-makes-it", "see Who makes it"] }
+    ]
+  },
+  "photomasks-and-pellicles": {
+    "specimen": "photomask",
+    "parts": [
+      { "n": 1, "name": "Pellicle", "maker": "Mitsui Chemicals (JP) is one maker, under license from ASML (NL)", "link": ["#photomasks-and-pellicles--pellicles", "see Pellicles"] },
+      { "n": 2, "name": "Mirror coating", "maker": "AGC (JP) and Hoya (JP), two of the three EUV blank makers AGC counts", "link": ["#photomasks-and-pellicles--blanks", "see Blanks"] },
+      { "n": 3, "name": "Glass plate", "maker": "low-expansion glass, which AGC (JP) says it alone among EUV blank makers makes in-house", "link": ["#photomasks-and-pellicles--blanks", "see Blanks"] }
+    ]
+  },
+  "deposition-and-etch": {
+    "specimen": "process-chamber",
+    "parts": [
+      { "n": 1, "name": "Gas in", "maker": "gas metered by flow controllers from makers such as HORIBA (JP) and MKS (US)", "link": ["#deposition-and-etch--how-it-works", "see How it works"] },
+      { "n": 2, "name": "Plasma", "maker": "powered by radio-frequency generators from makers such as Advanced Energy (US) and MKS (US)", "link": ["#deposition-and-etch--how-it-works", "see How it works"] },
+      { "n": 3, "name": "Wafer", "stage": "silicon-and-wafers" },
+      { "n": 4, "name": "Chuck", "maker": "electrostatic chucks from makers such as Shinko (JP)", "link": ["#deposition-and-etch--how-it-works", "see How it works"] },
+      { "n": 5, "name": "Pump", "maker": "turbopumps from makers such as Edwards (GB) and Pfeiffer Vacuum (DE)", "link": ["#deposition-and-etch--how-it-works", "see How it works"] }
+    ]
+  },
+  "metrology-and-inspection": {
+    "specimen": "sem-column",
+    "parts": [
+      { "n": 1, "name": "Emitter", "maker": "the electron-beam source", "link": ["#metrology-and-inspection--packaging-ai-and-china", "see Packaging, AI and China"] },
+      { "n": 2, "name": "Lenses", "maker": "designed in-house by toolmakers such as ASML (NL) and KLA (US)", "link": ["#metrology-and-inspection--how-it-works", "see How it works"] },
+      { "n": 3, "name": "Electron beam", "maker": "scans a small patch and knocks electrons loose from the surface", "link": ["#metrology-and-inspection--how-it-works", "see How it works"] },
+      { "n": 4, "name": "Detector", "maker": "collects the electrons the beam knocks loose", "link": ["#metrology-and-inspection--how-it-works", "see How it works"] },
+      { "n": 5, "name": "Wafer", "stage": "silicon-and-wafers" }
+    ]
+  },
+  "substrates-and-pcbs": {
+    "specimen": "substrate-layers",
+    "parts": [
+      { "n": 1, "name": "Copper layers", "maker": "plated on by the substrate maker, such as Ibiden (JP) or Unimicron (TW)", "link": ["#substrates-and-pcbs--how-it-works", "see How it works"] },
+      { "n": 2, "name": "Build-up film", "maker": "nearly all made by Ajinomoto (JP), as Ajinomoto Build-up Film (ABF)", "link": ["#substrates-and-pcbs--abf-build-up-substrates", "see ABF build-up substrates"] },
+      { "n": 3, "name": "Core of glass cloth and resin", "maker": "glass cloth from Nitto Boseki (JP) and others, laminated by firms such as Mitsubishi Gas Chemical (JP)", "link": ["#substrates-and-pcbs--the-materials-underneath", "see The materials underneath"] }
+    ]
+  },
+  "test-and-assembly": {
+    "specimen": "probe-card",
+    "parts": [
+      { "n": 1, "name": "Probe card", "maker": "Technoprobe (IT), FormFactor (US), MPI (TW) and others", "link": ["#test-and-assembly--who-makes-it", "see Who makes it"] },
+      { "n": 2, "name": "Needles", "maker": "FormFactor (US) and Technoprobe (IT) make their own", "link": ["#test-and-assembly--wafer-sort-and-known-good-die", "see Wafer sort and known-good die"] },
+      { "n": 3, "name": "Wafer", "stage": "silicon-and-wafers" },
+      { "n": 4, "name": "Dies under test", "maker": "checked by the tester, and any that fails goes no further", "link": ["#test-and-assembly--how-it-works", "see How it works"] }
+    ]
+  },
+  "systems-and-networking": {
+    "specimen": "gpu-baseboard",
+    "parts": [
+      { "n": 1, "name": "Accelerator modules", "maker": "Nvidia (US), which calls them SXM", "link": ["#systems-and-networking--how-it-works", "see How it works"] },
+      { "n": 2, "name": "NVLink switch chips", "maker": "Nvidia (US), made by TSMC (TW)", "link": ["#systems-and-networking--the-narrowest-step", "see The narrowest step"] }
+    ]
+  },
+  "data-centers-and-power": {
+    "specimen": "rack",
+    "parts": [
+      { "n": 1, "name": "Copper busbar", "maker": "carries the current down to the trays", "link": ["#data-centers-and-power--how-it-works", "see How it works"] },
+      { "n": 2, "name": "Compute tray", "stage": "systems-and-networking" },
+      { "n": 3, "name": "NVLink switch tray", "stage": "systems-and-networking" },
+      { "n": 4, "name": "Power shelf", "maker": "made by Delta Electronics (TW), Vertiv (US) and others" }
+    ]
+  },
+  "component-costs": {
+    "specimen": "wafer-cost",
+    "parts": [
+      { "n": 1, "name": "$2,900 of memory", "stage": "memory-and-hbm" },
+      { "n": 2, "name": "$900 of logic dies", "stage": "foundries-and-fabs" },
+      { "n": 3, "name": "$480 of power delivery, board and test", "stage": "systems-and-networking" },
+      { "n": 4, "name": "$1,100 of packaging", "stage": "advanced-packaging" },
+      { "n": 5, "name": "$1,000 of packaging yield loss", "maker": "logic dies and memory stacks lost in packages that fail testing", "link": ["#component-costs--packaging-substrate-and-test", "see Packaging, substrate and test"] }
     ]
   }
 }

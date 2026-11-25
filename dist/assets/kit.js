@@ -3096,11 +3096,11 @@ R('die-floorplan', function (m) {
   });
   // labels: on the lifted die (its face turned half round, so a point at x, z of plate 01 lies at -x, -z), and the wafer
   var on = function (x, z) { return [dc[0] - x * EX, dc[1] + DT / 2, dc[2] - z * EX, die.idx]; };
-  m.callout(on(10.9, 12.5), 'Memory controllers', { side: 'l', tag: 'mem', rowAt: on(-11.4, 9) });
-  m.callout(on(6.4, 5.5), 'Compute units', { side: 'l', tag: 'sm' });
-  m.callout(on(4.6, -1.2), 'Cache', { side: 'l', tag: 'l2' });
-  m.callout(on(4, -15.2), 'Die-to-die link', { side: 'l', tag: 'd2d' });
-  m.callout([-Rw * 0.66, wT / 2, Rw * 0.7, wf.idx], 'Wafer, 300 mm', { side: 'l', tag: 'wafer' });
+  m.callout(on(10.9, 12.5), 'Memory controllers', { n: 1, side: 'l', tag: 'mem', rowAt: on(-11.4, 9) });
+  m.callout(on(6.4, 5.5), 'Compute units', { n: 2, side: 'l', tag: 'sm' });
+  m.callout(on(4.6, -1.2), 'Cache', { n: 3, side: 'l', tag: 'l2' });
+  m.callout(on(4, -15.2), 'Die-to-die link', { n: 4, side: 'l', tag: 'd2d' });
+  m.callout([-Rw * 0.66, wT / 2, Rw * 0.7, wf.idx], 'Wafer, 300 mm', { n: 5, side: 'l', tag: 'wafer' });
   return { elev: PLATE.ISO.elev, yaw: -Math.PI / 4, sortAxis: [0, 1, 0], start: 1.4, thumbX: 0.5, softLine: '#2b2a3d',
     accent: [111, 139, 166], accentDark: [195, 211, 226], accent2: [176, 102, 44], accent2Dark: [224, 154, 92] };
 });
@@ -3445,9 +3445,9 @@ R('gas-cabinet', function (m) {
   m.tag(null);
   // labels: each lights its own group. The cylinders' one leader goes to the cylinder that slid out, clear of the
   // cabinet's restraint bars, and its label lights all three
-  m.callout([CBX + cylX[0] - 0.09, 0.82, -0.055 + 0.07, out.idx], 'Gas cylinders', { side: 'l', tag: 'cyl' });
-  m.callout([CBX - 0.25, PY0 + 0.25, PZ, shell.idx], 'Valves, regulator and gauges', { side: 'l', dy: -14, tag: 'panel' });
-  m.callout([TX + TR * 0.5, 0.75, TZ + TR * 0.86, bulk.idx], 'Bulk liquid cylinder', { side: 'r', tag: 'bulk' });
+  m.callout([CBX + cylX[0] - 0.09, 0.82, -0.055 + 0.07, out.idx], 'Gas cylinders', { n: 3, side: 'l', tag: 'cyl' });
+  m.callout([CBX - 0.25, PY0 + 0.25, PZ, shell.idx], 'Valves, regulator and gauges', { n: 1, side: 'l', dy: -14, tag: 'panel' });
+  m.callout([TX + TR * 0.5, 0.75, TZ + TR * 0.86, bulk.idx], 'Bulk liquid cylinder', { n: 2, side: 'r', tag: 'bulk' });
   return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, accent: [122, 122, 122], accentDark: [200, 200, 200] };
 });
 
@@ -3617,10 +3617,10 @@ R('gpu-baseboard', function (m) {
   [mods[0], mods[6]].forEach(function (md) { [[-1, -1], [1, 1], [1, -1], [-1, 1]].forEach(function (c) { m.guide([[md[0] + c[0] * (LW / 2 + 0.012), top, md[1] + c[1] * (LD / 2 + 0.01), board.idx], [md[0] + c[0] * (LW / 2 + 0.012), top + MH - 0.033, md[1] + c[1] * (LD / 2 + 0.01), mp.idx]], { alpha: 0.75 }); }); });
   // (designer pass, 22 Nov 2026: one leader, to the lifted module nearest the labels, which crosses nothing; the second ran
   // 93 px across the board to a seated one. Pointing at the label still lights all eight, by their tag)
-  m.callout([mods[6][0] + 0.075, top + MH + 0.017, mods[6][1] - 0.045, mp.idx], 'Accelerator modules', { side: 'r', tag: 'modules' });
+  m.callout([mods[6][0] + 0.075, top + MH + 0.017, mods[6][1] - 0.045, mp.idx], 'Accelerator modules', { n: 1, side: 'r', tag: 'modules' });
   // the nearer chip's top, its leader running down the aisle between the two rows of modules, by the board's right end, to its
   // label (22 Nov 2026 plates refine: it dropped steeply across the seated modules)
-  m.callout([0.175 + 0.095, top + 0.05, 0.0, board.idx], 'NVLink switch chips', { side: 'r', tag: 'switch', via: [BW / 2 - 0.05, top + 0.05, 0.0, board.idx] });
+  m.callout([0.175 + 0.095, top + 0.05, 0.0, board.idx], 'NVLink switch chips', { n: 2, side: 'r', tag: 'switch', via: [BW / 2 - 0.05, top + 0.05, 0.0, board.idx] });
   return { elev: PLATE.ISO.elev, yaw: PLATE.ISO.yaw, sortAxis: [0, 1, 0], accent: [111, 139, 166], accentDark: [195, 211, 226] };
 });
 
@@ -3862,13 +3862,16 @@ R('photomask', function (m) {
     else { var nb = Math.max(3, Math.round(d / 9)); for (var b = 0; b < nb; b++) { var zz = z0 + (b / (nb - 1) - 0.5) * d * 0.76; pat.push(D.rect(x0 - w * 0.44, zz - d * 0.025, x0 + w * 0.44, zz + d * 0.025, top, { fill: 'dark', lw: 0.25 })); } }
   });
   [-1, 1].forEach(function (sx) { [-1, 1].forEach(function (sz) { var fx = sx * (PW / 2 + 9), fz = sz * (PD / 2 + 9); pat.push(D.rect(fx - 4.5, fz - 4.5, fx + 4.5, fz + 4.5, top, { lw: 0.5 })); pat.push(D.rect(fx - 2, fz - 2, fx + 2, fz + 2, top, { lw: 0.5 })); }); });
-  m.real('glass');
+  // (the glass and the coating carry tags of their own, 25 Nov 2026: their two numbered labels share the blank, and a numbered
+  // label lights its whole part unless a tag keeps it to its own items)
+  m.tag('glass'); m.real('glass');
   m.box({ c: [0, 0, 0], s: [B, T, B] }, 'light');
-  m.real('mlm');
+  m.tag('coating'); m.real('mlm');
   var band = [];
   for (var q = 1; q < 8; q++) { var yy = -ml / 2 + ml * q / 8; band.push(D.line([-B / 2, yy, B / 2], [B / 2, yy, B / 2], { lw: 0.3, alpha: 0.55 })); }
   var bandX = band.map(function (it) { return { pts: [[B / 2, it.pts[0][1], B / 2], [B / 2, it.pts[0][1], -B / 2]], lw: 0.3, alpha: 0.55 }; });
   m.box({ c: [0, yTop - ml / 2, 0], s: [B, ml, B], decals: { py: pat, pz: band, px: bandX } }, 'acc');
+  m.tag(null);
   m.dim([-B / 2, -T / 2, B / 2], [B / 2, -T / 2, B / 2], [0, 0, 12], '152.4 mm', { t: 0.7, out: -1 });
   // pads, frame, membrane
   var FW = 145, FD = 117, bar = 4.5, fh = 2.6, stand = 2.5;
@@ -3891,12 +3894,12 @@ R('photomask', function (m) {
   });
   m.guide([[0, -T / 2 - 6, 0, blank.idx], [0, yM + 4, 0, mem.idx]], { style: 'axis', alpha: 0.8 });
   // (round two: the glass's dot further along the face, so the two dots read apart)
-  m.callout([-B / 2 + 45, 1.2, B / 2, blank.idx], 'Glass plate', { side: 'l' });
+  m.callout([-B / 2 + 45, 1.2, B / 2, blank.idx], 'Glass plate', { n: 3, side: 'l', tag: 'glass' });
   m.dim([B / 2, -T / 2, B / 2], [B / 2, T / 2, B / 2], [10, 0, 0], '6.35 mm', { t: 0.5, part: blank.idx });
   // (on a phone, in rows, the coating is named on the right face, by the corner, where its upright leader crosses nothing: on
   // the left face it ran through the 152.4 mm figure)
-  m.callout([-B / 2 + 11, yTop - ml / 2, B / 2, blank.idx], 'Mirror coating', { side: 'l', rowAt: [B / 2, yTop - ml / 2, -B * 0.34, blank.idx] });
-  m.callout([-FW * 0.28, yM, FD * 0.22, mem.idx], 'Pellicle', { side: 'l' });
+  m.callout([-B / 2 + 11, yTop - ml / 2, B / 2, blank.idx], 'Mirror coating', { n: 2, side: 'l', tag: 'coating', rowAt: [B / 2, yTop - ml / 2, -B * 0.34, blank.idx] });
+  m.callout([-FW * 0.28, yM, FD * 0.22, mem.idx], 'Pellicle', { n: 1, side: 'l' });
   // the ring on the coating's top face, in the pattern area: on one of the dark bars of the block in the pattern's right-hand
   // column (block D of MAP, its last bar, so the cone's lower edge passes clear of the glass plate's leader), the absorber
   // lines the loupe cuts across
@@ -4024,10 +4027,10 @@ R('probe-card', function (m) {
     m.guide([[c[0] * stW / 2, yST + stH, c[1] * stW / 2, st.idx], [c[0] * stW / 2, pB, c[1] * stW / 2, pc.idx]], { alpha: 0.8 });
   });
   m.guide([[0, -0.3, 0, ch.idx], [0, pT + 0.2, 0, pc.idx]], { style: 'axis', alpha: 0.8 });
-  m.callout([0.62, pT, -0.3, pc.idx], 'Probe card', { side: 'r' });
-  m.callout([-dw * 0.38 + 0.012, (yLoT + yUp) / 2, 0.5 * dh, hd.idx], 'Needles', { side: 'l', tag: 'needles' });
-  m.callout([-0.62, wT, 0.72, wf.idx], 'Wafer', { side: 'l' });
-  m.callout([dw * 0.5, wT, dh * 0.5 + 0.04, wf.idx], 'Dies under test', { side: 'r', tag: 'dies' });
+  m.callout([0.62, pT, -0.3, pc.idx], 'Probe card', { n: 1, side: 'r' });
+  m.callout([-dw * 0.38 + 0.012, (yLoT + yUp) / 2, 0.5 * dh, hd.idx], 'Needles', { n: 2, side: 'l', tag: 'needles' });
+  m.callout([-0.62, wT, 0.72, wf.idx], 'Wafer', { n: 3, side: 'l' });
+  m.callout([dw * 0.5, wT, dh * 0.5 + 0.04, wf.idx], 'Dies under test', { n: 4, side: 'r', tag: 'dies' });
   return { elev: PLATE.ISO.elev, yaw: PLATE.ISO.yaw, sortAxis: [0, 1, 0], accent: [111, 139, 166], accentDark: [195, 211, 226] };
 });
 
@@ -4108,16 +4111,16 @@ R('process-chamber', function (m) {
   m.cyl([0.228, yFlo - 0.23, 0], 0.03, 0.165, 'turned', { seg: 18, rot: [0, 0, Math.PI / 2] });
   m.guide([[0, yFlo, 0, ves.idx], [0, yFlo - 0.36, 0, pump.idx]], { style: 'axis', alpha: 0.85 });
   var cu = [Math.cos(a0), Math.sin(a0)], cw = [Math.cos(a1), Math.sin(a1)];
-  m.callout([0.03 * cw[0], yLid + 0.13, 0.03 * cw[1], lid.idx], 'Gas in', { side: 'r' });
+  m.callout([0.03 * cw[0], yLid + 0.13, 0.03 * cw[1], lid.idx], 'Gas in', { n: 1, side: 'r' });
   // (designer pass, 22 Nov 2026: the plasma is named from the right, on the lens's own cut face, and the loupe takes the wafer's
   // left side, so neither the plasma's leader nor the loupe's cone runs across the whole chamber)
-  m.callout([0.1 * cw[0], 0.03, 0.1 * cw[1], plp.idx], 'Plasma', { side: 'r' });
-  m.callout([0.148 * cw[0], yPed + WT, 0.148 * cw[1], wfp.idx], 'Wafer', { side: 'r' });
+  m.callout([0.1 * cw[0], 0.03, 0.1 * cw[1], plp.idx], 'Plasma', { n: 2, side: 'r' });
+  m.callout([0.148 * cw[0], yPed + WT, 0.148 * cw[1], wfp.idx], 'Wafer', { n: 3, side: 'r' });
   // (22 Nov 2026 plates refine: the chuck named straight across from its cut face, from the right, under the wafer, since the
   // loupe's caption fills the left column at its height; the pump half as far below; on a phone the loupe at most 60 percent
   // of the chamber's width)
-  m.callout([0.13 * cw[0], yPed - 0.084, 0.13 * cw[1], chk.idx], 'Chuck', { side: 'r', level: true });
-  m.callout([0.146 * cw[0], yFlo - 0.2, 0.146 * cw[1], pump.idx], 'Pump', { side: 'r' });
+  m.callout([0.13 * cw[0], yPed - 0.084, 0.13 * cw[1], chk.idx], 'Chuck', { n: 4, side: 'r', level: true });
+  m.callout([0.146 * cw[0], yFlo - 0.2, 0.146 * cw[1], pump.idx], 'Pump', { n: 5, side: 'r' });
   var lt = a0 + 0.55, loupe = { model: 'etch-loupe', at: [0.1 * Math.cos(lt), yPed + WT, 0.1 * Math.sin(lt)], part: 'wafer', side: 'l', r: 0.15, rMax: 92, scale: 0.8, dx: -0.12, rPhone: 52, caption: ['A hole ten times', 'deeper than it is wide'] };
   return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, loupe: loupe, accent: [109, 92, 201], accentDark: [176, 164, 240], accent2: [111, 139, 166], accent2Dark: [195, 211, 226] };
 });
@@ -4233,11 +4236,11 @@ R('rack', function (m) {
   // designer pass (21 Nov 2026): the width taken further out in front, so its figure clears the rack's foot
   m.dim([-W / 2, 0, front], [W / 2, 0, front], [0, 0, 0.2], '600 mm', { part: cab.idx });
   var pp = {}; pulled.forEach(function (q) { pp[q[0]] = q[1]; });
-  m.callout([-tW * 0.3, slots[6].y, fz, pp[6].idx], 'Power shelf', { side: 'l' });
-  m.callout([-tW * 0.3, slots[20].y, fz, pp[20].idx], 'NVLink switch tray', { side: 'l' });
+  m.callout([-tW * 0.3, slots[6].y, fz, pp[6].idx], 'Power shelf', { n: 4, side: 'l' });
+  m.callout([-tW * 0.3, slots[20].y, fz, pp[20].idx], 'NVLink switch tray', { n: 3, side: 'l' });
   // (on a phone, where the labels stand in rows, the compute tray is named from the top row, clear of the trays under it)
-  m.callout([-tW * 0.3, slots[30].y, fz, pp[30].idx], 'Compute tray', { side: 'l', row: 't' });
-  m.callout([0.026, syc + 0.35, zS + 0.02, bb.idx], 'Copper busbar', { side: 'r' });
+  m.callout([-tW * 0.3, slots[30].y, fz, pp[30].idx], 'Compute tray', { n: 2, side: 'l', row: 't' });
+  m.callout([0.026, syc + 0.35, zS + 0.02, bb.idx], 'Copper busbar', { n: 1, side: 'r' });
   return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, accent: [176, 102, 44], accentDark: [224, 154, 92], accent2: [122, 122, 122], accent2Dark: [200, 200, 200] };
 });
 
@@ -4339,14 +4342,15 @@ R('sem-column', function (m) {
   var w2 = [Math.cos(a1), Math.sin(a1)];
   // (the emitter named level with its tip, its leader straight out to the right; the wafer on its near rim, 22 Nov 2026 plates
   // refine)
-  m.callout([0, 1.268, 0, parts.gun.idx], 'Emitter', { side: 'r', level: true });
-  m.callout([[0.27 * u[0], 0.60, 0.27 * u[1], parts.c1.idx], [0.3 * u[0], -0.43, 0.3 * u[1], parts.ob.idx]], 'Lenses', { side: 'l', row: 't' });
+  m.callout([0, 1.268, 0, parts.gun.idx], 'Emitter', { n: 1, side: 'r', level: true });
+  m.callout([[0.27 * u[0], 0.60, 0.27 * u[1], parts.c1.idx], [0.3 * u[0], -0.43, 0.3 * u[1], parts.ob.idx]], 'Lenses', { n: 2, side: 'l', row: 't' });
   // (on a phone the lenses and the beam are named from the top row, so their leaders rise beside the narrow column)
-  m.callout([0, 0.03, 0, parts.sc.idx], 'Electron beam', { side: 'r', row: 't' });
+  m.callout([0, 0.03, 0, parts.sc.idx], 'Electron beam', { n: 3, side: 'r', row: 't' });
   var nr = Math.atan2(Math.cos(yaw), -Math.sin(yaw)) + 0.35;
-  m.callout([wr * 0.95 * Math.cos(nr), yW + 0.004, wr * 0.95 * Math.sin(nr), parts.st.idx], 'Wafer', { side: 'l', tag: 'wafer' });
-  m.callout([0.15 * u[0], -0.855, 0.15 * u[1], parts.det.idx], 'Detector', { side: 'l', tag: 'detector' });
-  return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, sortAxis: [0, 1, 0], accent: [78, 96, 186], accentDark: [154, 166, 255], accent2: [111, 139, 166], accent2Dark: [195, 211, 226] };
+  m.callout([wr * 0.95 * Math.cos(nr), yW + 0.004, wr * 0.95 * Math.sin(nr), parts.st.idx], 'Wafer', { n: 5, side: 'l', tag: 'wafer' });
+  m.callout([0.15 * u[0], -0.855, 0.15 * u[1], parts.det.idx], 'Detector', { n: 4, side: 'l', tag: 'detector' });
+  // (the parts list's numbers read down the left column, 25 Nov 2026: the lenses, then the detector, then the wafer)
+  return { elev: PLATE.DIM.elev, yaw: PLATE.DIM.yaw, sortAxis: [0, 1, 0], order: { l: [2, 4, 5] }, accent: [78, 96, 186], accentDark: [154, 166, 255], accent2: [111, 139, 166], accent2Dark: [195, 211, 226] };
 });
 
 })(window.PLATE);}catch(e){console.warn('plate sem-column.js failed to load', e);}
@@ -4442,11 +4446,11 @@ R('substrate-layers', function (m) {
     sMat[i] = { d: 0.1, real: 'laminate' }; sDec[i] = it;
   });
   m.prism(Lsh, -top, top, 'light', { sideMat: sMat, sideDecals: sDec, top: tp });
-  m.callout([W * 0.3, (lay[2] + lay[3]) / 2, 0.001, body.idx], 'Build-up film', { side: 'r', tag: 'film' });
+  m.callout([W * 0.3, (lay[2] + lay[3]) / 2, 0.001, body.idx], 'Build-up film', { n: 2, side: 'r', tag: 'film' });
   // review: on a plated hole's copper pad at the near end of the right-hand cut (the leader ran right across the top); round two:
   // on the fifth build-up plane above the core, clear of the vias, so it names the layers rather than a hole
-  m.callout([13, lay[5], 0.001, body.idx], 'Copper layers', { side: 'r', tag: 'cu' });
-  m.callout([W * 0.22, 0.4, 0.001, body.idx], 'Core of glass cloth and resin', { side: 'r', tag: 'core' });
+  m.callout([13, lay[5], 0.001, body.idx], 'Copper layers', { n: 1, side: 'r', tag: 'cu' });
+  m.callout([W * 0.22, 0.4, 0.001, body.idx], 'Core of glass cloth and resin', { n: 3, side: 'r', tag: 'core' });
   return { elev: PLATE.ISO.elev, yaw: PLATE.ISO.yaw, accent: [111, 122, 47], accentDark: [178, 189, 96], accent2: [176, 102, 44], accent2Dark: [224, 154, 92] };
 });
 
@@ -4640,11 +4644,11 @@ R('wafer-cost', function (m) {
   m.tag(null);
 
   // ---- the labels: the back compartments named from over the drawer, the front ones from under it
-  m.callout([[cmx - 6.25, felt + 0.72, cmz - 17.7, parts.mem.idx]], '$2,900 of memory', { row: 't', col: 'acc', strong: true, tag: 'mem' });
-  m.callout([[clx + 16, felt + 0.8, clz - 8, parts.logic.idx]], '$900 of logic dies', { row: 't', tag: 'logic' });
-  m.callout([[cbx - 6, top, cbz - 20, parts.board.idx]], '$480 of power delivery, board and test', { row: 't', tag: 'board' });
-  m.callout([[cpx - 20, felt + iH, zI + 10, parts.pack.idx]], '$1,100 of packaging', { row: 'b', tag: 'pack' });
-  m.callout([[(cells.yld[0] + cells.yld[2]) / 2, 0.05, cells.yld[3] - 40, parts.yld.idx]], '$1,000 of packaging yield loss', { row: 'b', tag: 'yield' });
+  m.callout([[cmx - 6.25, felt + 0.72, cmz - 17.7, parts.mem.idx]], '$2,900 of memory', { n: 1, row: 't', col: 'acc', strong: true, tag: 'mem' });
+  m.callout([[clx + 16, felt + 0.8, clz - 8, parts.logic.idx]], '$900 of logic dies', { n: 2, row: 't', tag: 'logic' });
+  m.callout([[cbx - 6, top, cbz - 20, parts.board.idx]], '$480 of power delivery, board and test', { n: 3, row: 't', tag: 'board' });
+  m.callout([[cpx - 20, felt + iH, zI + 10, parts.pack.idx]], '$1,100 of packaging', { n: 4, row: 'b', tag: 'pack' });
+  m.callout([[(cells.yld[0] + cells.yld[2]) / 2, 0.05, cells.yld[3] - 40, parts.yld.idx]], '$1,000 of packaging yield loss', { n: 5, row: 'b', tag: 'yield' });
   return {
     rows: true, rowGap: { b: 28 }, labelFs: 15.5, wrapW: 210, foot: { text: 'about $6,400 in all', from: [Xo, 0, Ze], to: [Xe, 0, Ze], room: 16 },
     elev: 0.9, yaw: -0.16, sortAxis: [0, 1, 0], start: 1, rest: 0, noPolish: false,
