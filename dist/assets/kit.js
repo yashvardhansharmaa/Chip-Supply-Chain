@@ -4501,6 +4501,18 @@ try{(function(PLATE){'use strict';var R = PLATE.register, D = PLATE.D, H = PLATE
       if (F && this.rowsOn(w) && (r.b || 0) > 0) r.b += F.room || 30;
       return r;
     };
+    /* the foot the stage beside a page stands its tag on (src/app.js --slack, src/modules/intro.js) takes the total's bracket and
+       its words, so the tag keeps clear of them (25 Nov 2026: on the Introduction at 1920 and 2560 px it stood 5 px under them).
+       The bracket's place is paint's, below: 14 px under the row of labels under the drawing, its words centred on its line */
+    var baseFoot = PP.foot;
+    PP.foot = function () {
+      var f = baseFoot.apply(this, arguments), m = this.m, F = m && m.spec && m.spec.foot, fit = this._fit || this._lfit, w = this.w;
+      if (f == null || !F || !fit || !w || this.lod === 'thumb' || this.o.noLabels || !this.rowsOn(w)) return f;
+      var k = Math.max(0.8, Math.min(1.2, w / 620)), ls = this.labelStyle(w), lines = 1;
+      m.callouts.forEach(function (c) { if (c._lines && c._side === 'b') lines = Math.max(lines, c._lines.length); });
+      var y = fit.cy - fit.s * fit.e.miny + 9 * k + 4 + lines * ls.fs * 1.18 + 14;
+      return Math.max(f, y + Math.min(ls.fs, 14) * 0.5 + 2);
+    };
     PP.paint = function (st) {
       var out = basePaint.apply(this, arguments), m = this.m, F = m.spec && m.spec.foot;
       if (!F || (st.lod || this.lod) === 'thumb' || st.noLabels || this.o.noLabels || !this.rowsOn(st.w)) return out;
@@ -4628,7 +4640,7 @@ R('wafer-cost', function (m) {
   m.callout([[cpx - 20, felt + iH, zI + 10, parts.pack.idx]], '$1,100 of packaging', { row: 'b', tag: 'pack' });
   m.callout([[(cells.yld[0] + cells.yld[2]) / 2, 0.05, cells.yld[3] - 40, parts.yld.idx]], '$1,000 of packaging yield loss', { row: 'b', tag: 'yield' });
   return {
-    rows: true, labelFs: 15.5, wrapW: 210, foot: { text: 'about $6,400 in all', from: [Xo, 0, Ze], to: [Xe, 0, Ze], room: 30 },
+    rows: true, labelFs: 15.5, wrapW: 210, foot: { text: 'about $6,400 in all', from: [Xo, 0, Ze], to: [Xe, 0, Ze], room: 16 },
     elev: 0.9, yaw: -0.16, sortAxis: [0, 1, 0], start: 1, rest: 0, noPolish: false,
     accent: [122, 31, 43], accentDark: [201, 83, 106], accent2: [154, 152, 143], accent2Dark: [138, 136, 128]
   };
