@@ -275,6 +275,15 @@ try:
                     load(); prepare('footnotes', loose); again3 = run_paged()
                     if score(again3) < score(again): trial, again = loose, again3
                     seen.append(trial)
+                # still lost: once more with the chapter's "In plain terms" opening a new page (nudge 3, print.js .cp-keep),
+                # so the opening page ends after the specimen (25 Nov 2026: chapter 03's longer parts list put page 1's foot
+                # inside In plain terms, and every line spacing tried lost lines there)
+                if again.get('lost') and any(trial['nudge'].get(t) != 3 for t in again.get('lostIn') or []):
+                    keep = dict(trial, nudge=dict(trial['nudge'], **{t: 3 for t in again['lostIn']}))
+                    say('laying out again: ' + ', '.join(f'{t} In plain terms to the next page' for t in again['lostIn'] if trial['nudge'].get(t) != 3))
+                    load(); prepare('footnotes', keep); again4 = run_paged()
+                    if score(again4) < score(again): trial, again = keep, again4
+                    seen.append(trial)
             pinned.update(again.get('failed') or [])  # a card move that failed is not tried again, whichever layout is kept
             if score(again) < score(best):
                 fit, best, current = trial, again, True

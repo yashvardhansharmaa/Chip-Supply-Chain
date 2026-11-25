@@ -4358,8 +4358,9 @@ html.kb:has(.view[data-view="glossary"]:not([hidden]) .gl:not([data-state="home"
   .chapter .fig-strip sup.cite { font-size: 6.8pt; vertical-align: baseline; }
   .chapter .fig-strip sup.cite a { font-family: var(--font-code); color: var(--accent-ink); }
   .chapter .fig-strip .ch-cite-box { display: none !important; }
-  /* tables in the text: they may fill the column, never spill off it */
-  .table-wrap { overflow: visible; margin: 4mm 0 0; }
+  /* tables in the text: they may fill the column, never spill off it. Each is kept whole on one page (the longest has
+     14 rows): Paged.js cut chapter 03's resist table after its first row on 25 Nov 2026 and lost the other four */
+  .table-wrap { overflow: visible; margin: 4mm 0 0; break-inside: avoid; }
   .prose > .cp-after { margin-top: 4.5mm; } /* the block after a figure or table (print.js marks it) */
   .prose table { font-family: var(--font-ui); font-size: 8pt; line-height: 1.32; }
   .prose th, .prose td { padding: 1.3mm 2.4mm; }
@@ -4566,6 +4567,9 @@ html.kb:has(.view[data-view="glossary"]:not([hidden]) .gl:not([data-state="home"
   /* and when that still loses lines, a little looser (.cp-loose), so the page ends fall the other way */
   .chapter.cp-loose .plain p, .chapter.cp-loose .inshort p, .chapter.cp-loose > .prose > p, .chapter.cp-loose > .prose > ul,
   .chapter.cp-loose > .prose > ol { line-height: 1.55; }
+  /* and when both lose lines, its In plain terms opens page 2 (.cp-keep), so the opening page ends after the specimen and
+     its parts list. Kept whole instead, the box took the specimen with it and left the opening page half empty */
+  .chapter.cp-keep .plain { break-before: page; }
   /* a chapter whose last few sources ran onto a page of their own is laid out again with its list set closer
      (print.js finish() names it, build/pdf.py lays it out, prepare() marks it .cp-sources-tight) */
   .cp-sources-tight .cp-sources li { margin-top: 0.55mm; }
