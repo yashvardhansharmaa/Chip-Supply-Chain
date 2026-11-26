@@ -594,7 +594,10 @@
      words are its data-cp-run (print.js runningHeads): a section's short heading, as the rail lists it, so a chapter's own
      words for a heading (data/section-headings.json, 29 Oct 2026) never lengthen the head, and any other source's own text.
      The sections are h2 and the deck's two labels h3 since 29 Oct 2026 (h3 and h4 before) */
-  .prose > h2, .plate-head .label, .cp-sources .cp-sources-h, .review .cp-quiz h3.label, .review .rv-keep h3.label { string-set: section attr(data-cp-run); }
+  /* "In plain terms" is a source too (26 Nov 2026): a chapter's second page that holds only the rest of that box had no
+     source of its own, and in the book its head carried the chapter before's "Sources (31)" over. Over the opening page
+     the head is hidden, so the box names a page only when it runs past the first */
+  .plain > h2.label, .prose > h2, .plate-head .label, .cp-sources .cp-sources-h, .review .cp-quiz h3.label, .review .rv-keep h3.label { string-set: section attr(data-cp-run); }
   /* no running head over a chapter's opening page or the colophon (print.js finish() marks those pages) */
   .cp-opener .pagedjs_margin-top-left, .cp-opener .pagedjs_margin-top-right,
   .cp-colophon .pagedjs_margin-top-left, .cp-colophon .pagedjs_margin-top-right { visibility: hidden; }

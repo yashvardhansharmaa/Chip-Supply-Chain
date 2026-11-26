@@ -53,7 +53,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..600,0,0&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,400&family=Hanken+Grotesk:wght@400..700&family=Fragment+Mono&display=swap">
 <!-- the site's styles, one sheet every page shares and caches (build/build.js writes dist/assets/site.css) -->
-<link rel="stylesheet" href="../assets/site.css?v=84c138bac1">
+<link rel="stylesheet" href="../assets/site.css?v=0728a93f52">
 <style>
 /* the cite line under each chapter title, its actions: Link to chapter · Cite this chapter · Chapter PDF (build/build.js citeBlock) */
 .ch-cite { margin: 4px 0 0; }
@@ -275,6 +275,19 @@ html:not(.booted)[data-sub="exposure"] .view[data-view="controls"] .sub[data-sub
 html:not(.booted)[data-route="controls"]:not([data-sub="exposure"]) .view[data-view="controls"] > :not(.view-head):not(#controls-subtabs),
 html:not(.booted)[data-route="landscape"] .view[data-view="landscape"] > :not(.aic),
 html:not(.booted)[data-pick] .view[data-view="suppliers"] > :not(.view-head) { display: none !important; }
+/* The home's drawing (26 Nov 2026; the owner saw the old list design for half a second before the V, in a private window
+   too). The hero's markup is the page without scripts: the title, the chain at a glance as a list, the key. With scripts,
+   src/modules/frontispiece.js draws the sheet over it as app.js runs, before boot, and takes the title and its intro into the
+   sheet. So until boot the hero stays out of sight and keeps its place. If the drawing bails on the markup, boot shows the
+   hero as it is. If a script fails (no boot comes), or the line is so slow that the scripts take more than 5 s, the hero
+   shows at 5 s, and in the slow case gives way to the drawing when it comes. Only src/preroute.js sets data-route, so a page
+   read without scripts never matches */
+html:not(.booted)[data-page="home"][data-route="walk"] #wk-hero { visibility: hidden; animation: cp-hero-late 0s linear 5s forwards; }
+@keyframes cp-hero-late { to { visibility: visible; } }
+/* The masthead's search button is in the markup and keeps its place from the first paint (26 Nov 2026: made at boot, it
+   pushed the tabs left by its width half a second in). It does nothing before boot, so it stays out of sight until then, and
+   without scripts for good */
+html:not(.booted) .tabs .search-btn { visibility: hidden; }
 </style>
 <style>
 /* The Chain shows one chapter at a time. html[data-chain] names what it shows: "contents" (the head of The Chain and the
@@ -308,6 +321,7 @@ html[data-chain] .view[data-view="stack"] > article.chapter { content-visibility
       <a href="../suppliers/" data-view="suppliers">Suppliers</a>
       <a href="../#/controls" data-view="controls">Export Controls</a>
       <a href="../glossary/" data-view="glossary">Glossary</a>
+      <button class="search-btn" type="button" aria-label="Search" title="Search (Ctrl+K, or press /)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button>
       <button class="theme-toggle" type="button" aria-label="Switch to dark mode">
         <svg class="ic-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg>
         <svg class="ic-sun" viewBox="0 0 24 24" aria-hidden="true" hidden><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
@@ -412,7 +426,7 @@ html[data-chain] .view[data-view="stack"] > article.chapter { content-visibility
 <script>window.CP_ASSETS = {"search.js":"../assets/search.js?v=6f3c9fcdec","glossary.js":"../assets/glossary.js?v=be8672eea4"};</script>
 <script src="../assets/kit.js?v=1fe3a21020"></script>
 <script src="../assets/terms.js?v=0b23fe94fb"></script>
-<script src="../assets/app.js?v=72bb93b44d"></script>
+<script src="../assets/app.js?v=589e4a5e2d"></script>
 <script>
 /* The printed cover's art (print-title.png, about 490 KB) is fetched only for print, never just because a page was read:
    when the reader points at or focuses "Print this page", before that button opens the dialog (it waits for the image,

@@ -276,7 +276,7 @@
      its own text, as the head read it until then. Once the source list and the questions are in place. */
   function runningHeads() {
     each('.prose > h2', document, function (h) { h.setAttribute('data-cp-run', h.getAttribute('data-k') || h.textContent); });
-    each('.plate-head .label, .cp-sources .cp-sources-h, .review .cp-quiz h3.label, .review .rv-keep h3.label', document, function (el) { el.setAttribute('data-cp-run', el.textContent); });
+    each('.plain > h2.label, .plate-head .label, .cp-sources .cp-sources-h, .review .cp-quiz h3.label, .review .rv-keep h3.label', document, function (el) { el.setAttribute('data-cp-run', el.textContent.trim()); });
   }
 
   /* Every chapter prints its plate as a vector still above its caption, in place of the live one (21 Nov 2026): the plate kit

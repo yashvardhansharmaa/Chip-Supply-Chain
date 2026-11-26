@@ -64,7 +64,7 @@ def flag(name):
     return name in args
 wait = opt('--wait', 6.0); ev = opt('--eval', ''); only = opt('--only', 0); chapter = opt('--chapter', '')
 budget = opt('--timeout', 420.0); use_paged = not flag('--no-paged')
-port = opt('--port', 9334)
+port = opt('--port', 9334); layout = opt('--layout', '')
 # the edition is the day the PDF is made, unless --edition pins it (so a set made across midnight shares one)
 try:
     day = datetime.date.fromisoformat(opt('--edition', '')) if '--edition' in args else datetime.date.today()
@@ -217,6 +217,12 @@ try:
     # in that order. A failed move is undone and not tried again. The last layout made is the one printed, so after a
     # worse one the best is laid out again.
     def lay_out():
+        # --layout FILE: one pass with a layout already found (the JSON a past run logged as "layout:"), no search. The
+        # book's search takes about 19 minutes a pass and can run to ten passes (26 Nov 2026: three hours)
+        if layout:
+            given = json.load(open(layout, encoding='utf-8'))
+            say('layout given: ' + json.dumps(given))
+            prepare('footnotes', given); return run_paged()
         fit, seen, tried, pinned, tried_tight = {'moves': {}, 'tight': {}, 'split': {}, 'sources': {}, 'nudge': {}, 'breaks': {}}, [], set(), set(), set()
         prepare('footnotes'); best = run_paged()
         score = lambda r: (len(r.get('lost') or []), len(r.get('overlap') or []), len(r.get('stranded') or []),
@@ -291,6 +297,7 @@ try:
                 say('no better than the layout before'); current = False
         if not current:
             load(); prepare('footnotes', fit); run_paged()
+        say('layout: ' + json.dumps(fit))  # saved to a file, --layout prints this one again in a single pass
         return best
 
     load()

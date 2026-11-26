@@ -3494,12 +3494,17 @@
     },
     init: function () {
       var self = this;
-      // search button in the masthead
-      var nav = $('.tabs'), btn = document.createElement('button'); btn.type = 'button'; btn.className = 'search-btn'; btn.setAttribute('aria-label', 'Search'); btn.title = 'Search (Ctrl+K, or press /)';
-      btn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>';
+      // search button in the masthead. Since 26 Nov 2026 it is in the page's markup (src/template.html), out of sight until boot,
+      // so the tabs keep their place as the page boots (made here, they moved left by its width half a second in). A page
+      // without it gets one made here, as before
+      var nav = $('.tabs'), btn = $('.tabs .search-btn'), made = !btn;
+      if (made) {
+        btn = document.createElement('button'); btn.type = 'button'; btn.className = 'search-btn'; btn.setAttribute('aria-label', 'Search'); btn.title = 'Search (Ctrl+K, or press /)';
+        btn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>';
+      }
       btn.addEventListener('click', function () { self.open(); });
       ['pointerenter', 'focus', 'touchstart'].forEach(function (t) { btn.addEventListener(t, function () { need('search.js'); }, { passive: true }); }); // the index is fetched as the reader heads for it
-      if (nav) nav.insertBefore(btn, $('.theme-toggle'));
+      if (nav && made) nav.insertBefore(btn, $('.theme-toggle'));
       Keys.init();
       // the readable pages' masthead has a search button too, a link here with ?search=1 (build/masthead.js): the
       // dialog opens as the page comes up, and the address drops the flag, so a reload or Back does not open it again
@@ -7504,7 +7509,7 @@ try {
      its own text, as the head read it until then. Once the source list and the questions are in place. */
   function runningHeads() {
     each('.prose > h2', document, function (h) { h.setAttribute('data-cp-run', h.getAttribute('data-k') || h.textContent); });
-    each('.plate-head .label, .cp-sources .cp-sources-h, .review .cp-quiz h3.label, .review .rv-keep h3.label', document, function (el) { el.setAttribute('data-cp-run', el.textContent); });
+    each('.plain > h2.label, .plate-head .label, .cp-sources .cp-sources-h, .review .cp-quiz h3.label, .review .rv-keep h3.label', document, function (el) { el.setAttribute('data-cp-run', el.textContent.trim()); });
   }
 
   /* Every chapter prints its plate as a vector still above its caption, in place of the live one (21 Nov 2026): the plate kit
