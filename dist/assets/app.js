@@ -4755,6 +4755,8 @@ try {
       if (L.k) squeeze(L, L.k);
       across(L);
       lineOf(L);
+      // (src/template.html's pre-boot style repeats this scale as --fx-u, and the head's place and sizes, so the title, its line
+      // and the Introduction link show before the drawing in the place the head gives them: a change here goes there too)
       S = avail / L.W;
       if (!narrow) {
         // the whole drawing holds the first screen: it shrinks to the window's height below the masthead (design review, 23 Nov

@@ -74,6 +74,10 @@
 (function(){try{var q=/[?&]theme=(light|dark)/.exec(location.search);var t=q?q[1]:localStorage.getItem('cp-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 /* ...and the chapter's contents rail, hidden if the reader hid it (build/build.js RAIL_TOGGLE_JS) */
 (function(){try{if(localStorage.getItem('cp-rail')==='off')document.documentElement.classList.add('rail-off');}catch(e){}})();
+/* ...and on the home page the scrollbar's width, which the drawing takes off its width (src/modules/frontispiece.js MK.sbw sets
+   it again), so the title shown before the drawing has its size from the first paint (the pre-boot style below; 0 where
+   scrollbars float over the page) */
+(function(){try{var h=document.documentElement;if(h.getAttribute('data-page')!=='home')return;var d=document.createElement('div');d.style.cssText='position:absolute;top:-200px;width:100px;height:100px;overflow:scroll;visibility:hidden';h.appendChild(d);h.style.setProperty('--mk-sbw',(d.offsetWidth-d.clientWidth)+'px');h.removeChild(d);}catch(e){}})();
 </script>
 <script>/* The route before boot. build/build.js inlines this file into <head> (the PREROUTE placeholder in src/template.html), where it runs
    before any of the body has arrived. It reads the address by the router's own rules (src/app.js Router.route) and sets
@@ -278,11 +282,36 @@ html:not(.booted)[data-pick] .view[data-view="suppliers"] > :not(.view-head) { d
 /* The home's drawing (26 Nov 2026; the owner saw the old list design for half a second before the V, in a private window
    too). The hero's markup is the page without scripts: the title, the chain at a glance as a list, the key. With scripts,
    src/modules/frontispiece.js draws the sheet over it as app.js runs, before boot, and takes the title and its intro into the
-   sheet. So until boot the hero stays out of sight and keeps its place. If the drawing bails on the markup, boot shows the
-   hero as it is. If a script fails (no boot comes), or the line is so slow that the scripts take more than 5 s, the hero
-   shows at 5 s, and in the slow case gives way to the drawing when it comes. Only src/preroute.js sets data-route, so a page
-   read without scripts never matches */
-html:not(.booted)[data-page="home"][data-route="walk"] #wk-hero { visibility: hidden; animation: cp-hero-late 0s linear 5s forwards; }
+   sheet. So until boot the rest of the hero stays out of sight and keeps its place. If the drawing bails on the markup, boot
+   shows the hero as it is. If a script fails (no boot comes), or the line is so slow that the scripts take more than 5 s, the
+   rest shows at 5 s, and in the slow case gives way to the drawing when it comes. Only src/preroute.js sets data-route, so a
+   page read without scripts never matches.
+   The title, its one line and the link to the Introduction show at once (the owner, 26 Nov 2026: "why aren't the text and the
+   subtitle instant?"), set where and as the sheet's head sets them (src/modules/frontispiece.css .fx-head, frontispiece.js
+   layout and placeText), so nothing moves when the sheet takes them: the head stands at the sheet's top left, 28 px under the
+   masthead (10 on a phone), 470 design units wide (420 between 900 and 1200 px, the whole column on a phone), its sizes the
+   design's times the sheet's scale S, which layout() takes as min(sheet width / W, max(0.62, (window height - masthead -
+   56) / H)) with W 1312, H 790 (mid: 1060, 800 and 0.8). --fx-u is S as a length, 1px * S. Change these with layout() */
+html:not(.booted):not(.fx-on)[data-page="home"][data-route="walk"] {
+  --fx-u: min(calc((100vw - 2 * var(--margin) - var(--mk-sbw, 0px)) / 1312), max(0.62px, calc((100vh - var(--masthead) - 56px) / 790)));
+}
+html:not(.booted):not(.fx-on)[data-page="home"][data-route="walk"] #wk-hero { padding: 0; margin: 28px 0 0; min-height: 0; width: calc(470 * var(--fx-u)); }
+html:not(.booted):not(.fx-on)[data-page="home"][data-route="walk"] #wk-hero .wk-title { font-size: calc(70 * var(--fx-u)); line-height: 0.98; letter-spacing: -0.025em; margin: 0 0 0 -0.045em; text-wrap: balance; }
+html:not(.booted):not(.fx-on)[data-page="home"][data-route="walk"] #wk-hero .wk-dek { font-size: calc(19 * var(--fx-u)); line-height: 1.4; margin: calc(14 * var(--fx-u)) 0 0; max-width: 22em; color: var(--muted); }
+html:not(.booted):not(.fx-on)[data-page="home"][data-route="walk"] #wk-hero .fx-intro { margin: calc(12 * var(--fx-u)) 0 0; font-family: var(--font-ui); font-size: calc(14.5 * clamp(0.92px, var(--fx-u), 1.08px)); line-height: 1.4; }
+html:not(.booted):not(.fx-on)[data-page="home"][data-route="walk"] #wk-hero .fx-intro a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--line-2); text-decoration-thickness: 1px; text-underline-offset: 4px; }
+html:not(.booted):not(.fx-on)[data-page="home"][data-route="walk"] #wk-hero .fx-intro a::after { content: "\2192"; display: inline-block; margin-left: 6px; text-decoration: none; color: var(--muted); }
+@media (min-width: 900px) and (max-width: 1199.98px) {
+  html:not(.booted):not(.fx-on)[data-page="home"][data-route="walk"] { --fx-u: min(calc((100vw - 2 * var(--margin) - var(--mk-sbw, 0px)) / 1060), max(0.8px, calc((100vh - var(--masthead) - 56px) / 800))); }
+  html:not(.booted):not(.fx-on)[data-page="home"][data-route="walk"] #wk-hero { width: calc(420 * var(--fx-u)); }
+}
+@media (max-width: 899.98px) {
+  html:not(.booted):not(.fx-on)[data-page="home"][data-route="walk"] #wk-hero { margin-top: 10px; width: auto; }
+  html:not(.booted):not(.fx-on)[data-page="home"][data-route="walk"] #wk-hero .wk-title { font-size: min(44px, 11.2vw); line-height: 1.02; letter-spacing: -0.02em; }
+  html:not(.booted):not(.fx-on)[data-page="home"][data-route="walk"] #wk-hero .wk-dek { font-size: 16.5px; line-height: 1.4; margin-top: 10px; }
+  html:not(.booted):not(.fx-on)[data-page="home"][data-route="walk"] #wk-hero .fx-intro { margin-top: 10px; font-size: 15px; }
+}
+html:not(.booted)[data-page="home"][data-route="walk"] #wk-hero > :not(.wk-title):not(.wk-dek):not(.fx-intro) { visibility: hidden; animation: cp-hero-late 0s linear 5s forwards; }
 @keyframes cp-hero-late { to { visibility: visible; } }
 /* The masthead's search button is in the markup and keeps its place from the first paint (26 Nov 2026: made at boot, it
    pushed the tabs left by its width half a second in). It does nothing before boot, so it stays out of sight until then, and
@@ -449,7 +478,7 @@ html[data-chain] .view[data-view="stack"] > article.chapter { content-visibility
 <script>window.CP_ASSETS = {"search.js":"../assets/search.js?v=6f3c9fcdec","glossary.js":"../assets/glossary.js?v=be8672eea4"};</script>
 <script src="../assets/kit.js?v=1fe3a21020"></script>
 <script src="../assets/terms.js?v=0b23fe94fb"></script>
-<script src="../assets/app.js?v=589e4a5e2d"></script>
+<script src="../assets/app.js?v=a9db9352e5"></script>
 <script>
 /* The printed cover's art (print-title.png, about 490 KB) is fetched only for print, never just because a page was read:
    when the reader points at or focuses "Print this page", before that button opens the dialog (it waits for the image,
